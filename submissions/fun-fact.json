@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "prompts": [
+    {
+      "id": "fun-fact",
+      "name": "Fun Fact",
+      "prompt": "Share one surprising and genuinely true fun fact in a single sentence. Return only the fact, without any introduction or explanation.",
+      "requiresSelection": false,
+      "autoApply": false
+    }
+  ]
+}
