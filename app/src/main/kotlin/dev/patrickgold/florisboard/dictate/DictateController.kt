@@ -733,7 +733,8 @@ object DictateController {
                 delay(perChar)
             }
         }
-        if (prefs.dictate.autoEnter.get()) {
+        // No auto-enter on an empty result (e.g. silence): don't fire a stray newline into the field (#124).
+        if (prefs.dictate.autoEnter.get() && text.isNotEmpty()) {
             sink.performEnter()
         }
     }
@@ -1318,7 +1319,15 @@ object DictateController {
             // Hint the model with the readable language name ("German"), or "unknown" for auto-detect.
             val languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get())
             val formatPrompt = DictatePromptDefaults.buildAutoFormattingPrompt(languageName, text)
-            text = runCatching { requestRewordRaw(formatPrompt).ifBlank { text } }.getOrDefault(text)
+            val formatted = runCatching { requestRewordRaw(formatPrompt) }.getOrDefault(text)
+            // Safety net (#124): on (near-)empty input the model sometimes echoes the formatting prompt
+            // itself instead of returning nothing. If the result looks like that prompt, discard it and keep
+            // the original text — the master prompt must never land in the field.
+            text = if (formatted.isBlank() || DictatePromptDefaults.looksLikeAutoFormattingPrompt(formatted)) {
+                text
+            } else {
+                formatted
+            }
         }
 
         // 2) Auto-apply prompts, in POS order; each operates on the running text if it needs input.

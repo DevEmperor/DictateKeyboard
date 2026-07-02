@@ -48,6 +48,17 @@ class DictateAutoFormattingTest : FunSpec({
         prompt.endsWith("Transcript:\nHallo Welt") shouldBe true
     }
 
+    test("looksLikeAutoFormattingPrompt flags an echoed prompt but not real transcripts (#124)") {
+        // A verbatim echo of the prompt / its wrapper is detected...
+        DictatePromptDefaults.looksLikeAutoFormattingPrompt(
+            DictatePromptDefaults.buildAutoFormattingPrompt("German", "anything"),
+        ) shouldBe true
+        DictatePromptDefaults.looksLikeAutoFormattingPrompt(DictatePromptDefaults.AUTO_FORMATTING_PROMPT) shouldBe true
+        // ...while genuine formatted output is not.
+        DictatePromptDefaults.looksLikeAutoFormattingPrompt("Hello, how are you?") shouldBe false
+        DictatePromptDefaults.looksLikeAutoFormattingPrompt("") shouldBe false
+    }
+
     context("buildAutoFormattingPrompt falls back to \"unknown\" for a missing language") {
         withData(nameFn = { "name=<${it ?: "null"}>" }, null, "", "   ") { languageName ->
             DictatePromptDefaults.buildAutoFormattingPrompt(languageName, "text")
