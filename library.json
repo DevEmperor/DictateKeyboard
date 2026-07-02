@@ -195,6 +195,83 @@
       "requiresSelection": false,
       "autoApply": false,
       "author": "DevEmperor"
+    },
+    {
+      "id": "to-do-list",
+      "name": "Extract To-Dos",
+      "prompt": "Turn the text into a clear checklist of actionable to-do items, one per line, each starting with '- '. Keep the original language. Return only the checklist, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tools",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Turns notes into an actionable checklist."
+    },
+    {
+      "id": "draft-reply",
+      "name": "Draft a Reply",
+      "prompt": "Write a concise, appropriate reply to the message in the text, matching its language and tone. Do not invent specific facts. Return only the reply, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tools",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Drafts a fitting reply to a message."
+    },
+    {
+      "id": "define-word",
+      "name": "Define",
+      "prompt": "Give a short, clear definition of the selected word or phrase in its language, in one or two sentences. Return only the definition, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tools",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Defines the selected word or phrase."
+    },
+    {
+      "id": "explain-code",
+      "name": "Explain Code",
+      "prompt": "Explain what the selected code does in plain language, briefly and clearly. Keep it concise. Return only the explanation, without quotation marks.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Coding",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Explains the selected code in plain words."
+    },
+    {
+      "id": "commit-message",
+      "name": "Commit Message",
+      "prompt": "Write a concise git commit message in imperative mood summarizing the change described in the text. Return only the commit message, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Coding",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Writes a commit message for the described change."
+    },
+    {
+      "id": "add-hashtags",
+      "name": "Add Hashtags",
+      "prompt": "Append a short line of 3-5 relevant, popular hashtags below the text, keeping the original text unchanged and matching its language. Return only the text followed by the hashtags, without explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Social",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Adds a few fitting hashtags under your text."
+    },
+    {
+      "id": "make-post",
+      "name": "Make a Post",
+      "prompt": "Rewrite the text as an engaging short social media post in the same language, keeping its meaning. Return only the post, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Social",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Turns your text into a catchy social post."
     }
   ]
 }
