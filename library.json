@@ -189,14 +189,6 @@
       "description": "Generates a fresh short motivational quote."
     },
     {
-      "id": "fun-fact",
-      "name": "Fun Fact",
-      "prompt": "Share one surprising and genuinely true fun fact in a single sentence. Return only the fact, without any introduction or explanation.",
-      "requiresSelection": false,
-      "autoApply": false,
-      "author": "DevEmperor"
-    },
-    {
       "id": "to-do-list",
       "name": "Extract To-Dos",
       "prompt": "Turn the text into a clear checklist of actionable to-do items, one per line, each starting with '- '. Keep the original language. Return only the checklist, without quotation marks or explanations.",
