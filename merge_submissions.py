@@ -67,6 +67,16 @@ def author_login(repo, path):
     return "community"
 
 
+def unique_id(base, by_id):
+    """First of `base`, `base-2`, `base-3`, ... that is not already a key in `by_id`."""
+    n = 2
+    candidate = f"{base}-{n}"
+    while candidate in by_id:
+        n += 1
+        candidate = f"{base}-{n}"
+    return candidate
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit("usage: merge_submissions.py <owner/repo>")
@@ -78,9 +88,9 @@ def main():
 
     validator = Draft7Validator(load("schema.json"))
     library = load("library.json")
-    existing = {p["id"] for p in library.get("prompts", [])}
+    by_id = {p["id"]: p for p in library.get("prompts", [])}
 
-    added, skipped = [], []
+    added, skipped, renamed = [], [], []
     for path in files:
         doc = load(path)
         errors = sorted(validator.iter_errors(doc), key=lambda e: list(e.path))
@@ -90,19 +100,29 @@ def main():
         author = author_login(repo, path)
         for entry in doc.get("prompts", []):
             pid = entry.get("id", "")
-            if pid in existing:
-                skipped.append(pid)
-                continue
+            clash = by_id.get(pid)
+            if clash is not None:
+                # Ids are the permanent key and there is no update mechanism, so a collision is either a
+                # true re-submission (identical prompt → skip) or a distinct prompt that happens to share
+                # the slug (→ give it a unique -2/-3/... id so nothing is silently dropped).
+                if clash.get("prompt", "").strip() == entry.get("prompt", "").strip():
+                    skipped.append(pid)
+                    continue
+                pid = unique_id(pid, by_id)
+                entry["id"] = pid
+                renamed.append(pid)
             entry["author"] = author
             library["prompts"].append(entry)
-            existing.add(pid)
+            by_id[pid] = entry
             added.append(f"{pid} (@{author})")
         os.remove(path)
 
     dump("library.json", library)
     print(f"Folded {len(added)} prompt(s): {added}")
+    if renamed:
+        print(f"Re-ided {len(renamed)} colliding prompt(s): {renamed}")
     if skipped:
-        print(f"Skipped {len(skipped)} duplicate id(s): {skipped}")
+        print(f"Skipped {len(skipped)} identical re-submission(s): {skipped}")
 
 
 if __name__ == "__main__":
