@@ -52,10 +52,12 @@ with the prompt pre-filled as a submission file under `submissions/` — sign in
 3. Make sure your JSON validates against [`schema.json`](schema.json) and your `id` is unique.
 4. Open a pull request.
 
-### What happens on merge
+### What happens after it lands
 Submissions are **reviewed by a maintainer before merging** — that review is the gate; nothing lands
-automatically. Once a maintainer merges your PR, a GitHub Action ([`merge-submissions.yml`](.github/workflows/merge-submissions.yml))
+automatically. Once your submission reaches the `prompt-library` branch (a merged PR, or a direct
+commit if you have write access), a GitHub Action ([`merge-submissions.yml`](.github/workflows/merge-submissions.yml))
 folds your prompt into `library.json`, **stamps the `author` field with your GitHub handle
-automatically**, and removes the submission file. So you never have to fill in an author yourself.
+automatically** (resolved from the commit that added the file), and removes the submission file. So
+you never have to fill in an author yourself.
 
 Keep prompts useful, safe, and free of personal data.
