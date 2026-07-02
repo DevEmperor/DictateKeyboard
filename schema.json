@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DictateKeyboard community prompt library",
+  "type": "object",
+  "required": ["version", "prompts"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "prompts": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/prompt" }
+    }
+  },
+  "definitions": {
+    "prompt": {
+      "type": "object",
+      "required": ["id", "name", "prompt"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 48,
+          "description": "Unique lowercase slug, e.g. \"fix-grammar\"."
+        },
+        "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "requiresSelection": { "type": "boolean" },
+        "autoApply": { "type": "boolean" },
+        "category": { "type": "string", "maxLength": 40 },
+        "language": { "type": "string", "maxLength": 12 },
+        "author": { "type": "string", "maxLength": 60 },
+        "description": { "type": "string", "maxLength": 160 }
+      }
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "prompts": [
+    {
+      "id": "fix-grammar",
+      "name": "Fix Grammar",
+      "prompt": "Correct all spelling, grammar and punctuation mistakes in the text. Keep the original wording, tone and language as much as possible and do not add new information. Return only the corrected text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Editing",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Fixes spelling, grammar and punctuation without changing your wording."
+    },
+    {
+      "id": "improve-writing",
+      "name": "Improve Writing",
+      "prompt": "Rewrite the text so it reads more clearly and flows better, while keeping its meaning, tone and language. Do not add new information. Return only the improved text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Editing",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Rewrites for clarity and flow while keeping your meaning."
+    },
+    {
+      "id": "simplify",
+      "name": "Simplify",
+      "prompt": "Rewrite the text in plain, simple language that anyone can understand. Keep the meaning and language, avoid jargon and long sentences, and add no new information. Return only the simplified text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Editing",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Turns complex text into plain, easy-to-read language."
+    },
+    {
+      "id": "remove-filler",
+      "name": "Remove Filler Words",
+      "prompt": "Remove filler words, false starts and repetitions (such as \"um\", \"uh\", \"like\", \"you know\") from the dictated text without changing the wording or meaning of what remains. Keep the original language. Return only the cleaned-up text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Editing",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Cleans up ums, uhs and repetitions from dictated speech."
+    },
+    {
+      "id": "make-formal",
+      "name": "Make Formal",
+      "prompt": "Rewrite the text in a polite, professional and formal tone. Keep its meaning and language and add no new information. Return only the rewritten text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tone",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Rewrites your text in a professional, formal tone."
+    },
+    {
+      "id": "make-friendly",
+      "name": "Make Friendly",
+      "prompt": "Rewrite the text in a warm, friendly and casual tone. Keep its meaning and language and add no new information. Return only the rewritten text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tone",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Warms up your text with a friendly, casual tone."
+    },
+    {
+      "id": "make-confident",
+      "name": "Make Confident",
+      "prompt": "Rewrite the text so it sounds more confident and assertive, removing hedging and unnecessary apologies. Keep its meaning, language and core content. Return only the rewritten text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tone",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Removes hedging so your message sounds self-assured."
+    },
+    {
+      "id": "soften",
+      "name": "Make Diplomatic",
+      "prompt": "Rewrite the text so it sounds more polite, tactful and diplomatic, softening anything that could come across as harsh, while keeping the message, meaning and language. Return only the rewritten text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Tone",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Softens a blunt message into a tactful, diplomatic one."
+    },
+    {
+      "id": "make-shorter",
+      "name": "Make Shorter",
+      "prompt": "Make the text noticeably shorter and more concise while keeping all important information, its tone and its language. Return only the shortened text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Length",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Trims your text down while keeping what matters."
+    },
+    {
+      "id": "expand",
+      "name": "Elaborate",
+      "prompt": "Expand the text with more detail and explanation so it is clearer and more complete, while keeping its meaning, tone and language and without inventing facts. Return only the expanded text, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Length",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Fleshes out a short note into a fuller message."
+    },
+    {
+      "id": "bullet-points",
+      "name": "To Bullet Points",
+      "prompt": "Reformat the text as a clear, concise bulleted list, grouping related points together. Keep the original meaning and language and add no new information. Return only the bulleted list, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Format",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Turns a paragraph into a tidy bulleted list."
+    },
+    {
+      "id": "to-email",
+      "name": "Turn Into Email",
+      "prompt": "Rewrite the text as a well-structured, polite email with a suitable greeting and sign-off. Keep the core message, meaning and language, and do not invent names or facts. Return only the email, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Format",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Shapes rough notes into a polite, ready-to-send email."
+    },
+    {
+      "id": "summarize",
+      "name": "Summarize",
+      "prompt": "Summarize the text in one or two clear sentences that capture the key points. Keep the original language and add no new information. Return only the summary, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Format",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Condenses the selection into a one or two sentence gist."
+    },
+    {
+      "id": "translate-english",
+      "name": "Translate to English",
+      "prompt": "Translate the text into natural, fluent English. Keep the original meaning and tone. Return only the translation, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Translation",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Translates the selected text into natural English."
+    },
+    {
+      "id": "translate-spanish",
+      "name": "Translate to Spanish",
+      "prompt": "Translate the text into natural, fluent Spanish. Keep the original meaning and tone. Return only the translation, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Translation",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Translates the selected text into natural Spanish."
+    },
+    {
+      "id": "emoji-sprinkle",
+      "name": "Add Emojis",
+      "prompt": "Add a few fitting emojis to the text to make it more expressive, without changing the words, meaning or language. Do not overdo it. Return only the text with emojis, without quotation marks or explanations.",
+      "requiresSelection": true,
+      "autoApply": false,
+      "category": "Fun",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Sprinkles a few fitting emojis into your text."
+    },
+    {
+      "id": "inspiring-quote",
+      "name": "Inspiring Quote",
+      "prompt": "Generate a single short, original and inspiring quote. Return only the quote itself, without an author, quotation marks or any explanation.",
+      "requiresSelection": false,
+      "autoApply": false,
+      "category": "Fun",
+      "language": "en",
+      "author": "DictateKeyboard",
+      "description": "Generates a fresh short motivational quote."
+    }
+  ]
+}
