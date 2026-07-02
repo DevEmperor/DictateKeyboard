@@ -76,11 +76,11 @@
   },
   "key[code=10]": {
     "background": "var(--primary)",
-    "foreground": "var(--on-surface)"
+    "foreground": "var(--on-primary)"
   },
   "key[code=10]:pressed": {
     "background": "var(--primary-variant)",
-    "foreground": "var(--on-surface)"
+    "foreground": "var(--on-primary)"
   },
   "key[code=32]": {
     "background": "var(--surface)",

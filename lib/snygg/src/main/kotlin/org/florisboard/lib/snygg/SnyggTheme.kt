@@ -31,6 +31,7 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import java.io.File
@@ -92,6 +93,14 @@ data class SnyggTheme internal constructor(
     }
 
     companion object {
+        /**
+         * White by default, switching to black only for *very light* accent colors. The threshold is set
+         * high on purpose (not the WCAG 0.179 contrast crossover) so ordinary accents like the default
+         * light-blue keep white foreground, and only near-white/pastel colors flip to black.
+         */
+        private fun onColorFor(bg: Color): Color =
+            if (bg.luminance() > 0.7f) Color.Black else Color.White
+
         internal fun compileFrom(
             stylesheet: SnyggStylesheet,
             assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
@@ -145,15 +154,22 @@ data class SnyggTheme internal constructor(
                     // dynamic (Material You) primaries are left as-is.
                     if (this["--primary"] is SnyggStaticColorValue) {
                         this["--primary"] = SnyggStaticColorValue(accentColor)
+                        // Flip the on-primary foreground to black/white for contrast, so icons/text on the
+                        // accent (Dictate key, enter key) stay legible when the accent is very light or dark.
+                        if (this["--on-primary"] is SnyggStaticColorValue) {
+                            this["--on-primary"] = SnyggStaticColorValue(onColorFor(accentColor))
+                        }
                     }
                     if (this["--primary-variant"] is SnyggStaticColorValue) {
-                        this["--primary-variant"] = SnyggStaticColorValue(
-                            accentColor.copy(
-                                red = accentColor.red * 0.62f,
-                                green = accentColor.green * 0.62f,
-                                blue = accentColor.blue * 0.62f,
-                            ),
+                        val variant = accentColor.copy(
+                            red = accentColor.red * 0.62f,
+                            green = accentColor.green * 0.62f,
+                            blue = accentColor.blue * 0.62f,
                         )
+                        this["--primary-variant"] = SnyggStaticColorValue(variant)
+                        if (this["--on-primary-variant"] is SnyggStaticColorValue) {
+                            this["--on-primary-variant"] = SnyggStaticColorValue(onColorFor(variant))
+                        }
                     }
                 }
             }

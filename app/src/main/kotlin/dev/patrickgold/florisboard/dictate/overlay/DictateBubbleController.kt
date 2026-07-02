@@ -41,7 +41,10 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.ui.graphics.toArgb
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
@@ -931,6 +934,16 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         if (colorRes == R.color.dictate_overlay_accent) accentColor
         else ContextCompat.getColor(context, colorRes)
 
+    /**
+     * White by default, switching to black only for *very light* button colors, so the glyph stays legible
+     * on a near-white accent without flipping on ordinary colors like the default light-blue. Threshold is
+     * intentionally high (not the WCAG contrast crossover).
+     */
+    private fun contrastForeground(bg: Int): Int {
+        val opaque = bg or 0xFF000000.toInt()
+        return if (ColorUtils.calculateLuminance(opaque) > 0.7) Color.BLACK else Color.WHITE
+    }
+
     private fun dp(value: Int): Int =
         (value * context.resources.displayMetrics.density).toInt()
 
@@ -1014,6 +1027,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             setImageResource(R.drawable.ic_dictate_overlay_mic)
             setPadding(iconInset, iconInset, iconInset, iconInset)
             elevation = sdpf(6f)
+            imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
         private val wave = WaveformView(context).apply {
             visibility = View.GONE
@@ -1081,6 +1095,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
         private fun setCore(colorRes: Int) {
             core.background = circle(colorRes)
+            icon.imageTintList = ColorStateList.valueOf(contrastForeground(color(colorRes)))
         }
 
         private fun showGlyph(resId: Int) {
@@ -1188,6 +1203,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
         private val icon = ImageView(context).apply {
             setImageResource(R.drawable.ic_dictate_overlay_mic)
+            imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
         private val timer = TextView(context).apply {
             setTextColor(color(R.color.dictate_overlay_icon))
@@ -1363,6 +1379,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
         private fun setColor(colorRes: Int) {
             bg.setColor(color(colorRes))
+            val fg = contrastForeground(color(colorRes))
+            icon.imageTintList = ColorStateList.valueOf(fg)
+            timer.setTextColor(fg)
         }
 
         private fun formatElapsed(ms: Long): String {
@@ -1390,6 +1409,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             setImageResource(R.drawable.ic_dictate_overlay_mic)
             setPadding(iconInset, iconInset, iconInset, iconInset)
             elevation = sdpf(6f)
+            imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
         private var breatheAnim: ValueAnimator? = null
         private var smoothed = 0f
@@ -1456,6 +1476,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
         private fun setCore(colorRes: Int) {
             core.background = circle(colorRes)
+            icon.imageTintList = ColorStateList.valueOf(contrastForeground(color(colorRes)))
         }
 
         private fun setGlyph(resId: Int) {
