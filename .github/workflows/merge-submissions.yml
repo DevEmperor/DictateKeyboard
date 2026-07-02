@@ -1,0 +1,60 @@
+name: Merge community submissions
+
+# When a pull request that added files under submissions/ is *merged*, fold those submissions into
+# library.json and stamp each with the PR author's GitHub handle (issue #105).
+#
+# Security: this uses `pull_request_target`, so it always runs THIS (trusted, base-branch) workflow
+# file — never a version from the fork. It executes no code from the PR: after the merge the
+# submission files already live on the trusted prompt-library branch, and the script only reads them
+# as JSON data and validates them against schema.json. The maintainer stays the gate — nothing runs
+# until they click "Merge".
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prompt-library
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install jsonschema
+
+      - name: Collect merged submission files
+        id: files
+        env:
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          FILES=$(git diff --name-only --diff-filter=AM "${MERGE_SHA}~1" "${MERGE_SHA}" -- 'submissions/*.json' | tr '\n' ' ')
+          echo "list=$FILES" >> "$GITHUB_OUTPUT"
+          echo "Submission files in this PR: ${FILES:-<none>}"
+
+      - name: Fold submissions into library.json
+        if: steps.files.outputs.list != ''
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: python3 merge_submissions.py "$AUTHOR" ${{ steps.files.outputs.list }}
+
+      - name: Commit and push
+        if: steps.files.outputs.list != ''
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add library.json
+            git add -u submissions/
+            git commit -m "Fold submission by @${{ github.event.pull_request.user.login }} into library.json (#${{ github.event.pull_request.number }})"
+            git push origin prompt-library
+          else
+            echo "Nothing to commit."
+          fi

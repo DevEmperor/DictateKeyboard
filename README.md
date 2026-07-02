@@ -33,7 +33,7 @@ Every entry in `library.json` looks like this:
 | `autoApply` | | `true` = suggested to run automatically after each transcription. Default `false`. |
 | `category` | | Grouping shown as a filter chip, e.g. `Editing`, `Tone`, `Length`, `Format`, `Translation`, `Fun`. |
 | `language` | | Language the prompt targets, e.g. `en`. Omit for language-agnostic prompts. |
-| `author` | | Your attribution (e.g. GitHub handle). |
+| `author` | | Filled automatically on merge with your GitHub handle — you don't need to set it. |
 | `description` | | One line shown under the name (≤ 160 chars). |
 
 A good prompt is **self-contained** and tells the model to *return only the result* (no quotation marks,
@@ -48,9 +48,14 @@ with the prompt pre-filled as a submission file under `submissions/` — sign in
 
 ### By hand
 1. Fork this repo and switch to the `prompt-library` branch.
-2. Either add your entry directly to `library.json`, **or** drop a `{ "version": 1, "prompts": [ … ] }`
-   file into `submissions/` (a maintainer merges it into `library.json`).
+2. Drop a `{ "version": 1, "prompts": [ … ] }` file into `submissions/`.
 3. Make sure your JSON validates against [`schema.json`](schema.json) and your `id` is unique.
 4. Open a pull request.
 
-Submissions are reviewed before merging. Keep prompts useful, safe, and free of personal data.
+### What happens on merge
+Submissions are **reviewed by a maintainer before merging** — that review is the gate; nothing lands
+automatically. Once a maintainer merges your PR, a GitHub Action ([`merge-submissions.yml`](.github/workflows/merge-submissions.yml))
+folds your prompt into `library.json`, **stamps the `author` field with your GitHub handle
+automatically**, and removes the submission file. So you never have to fill in an author yourself.
+
+Keep prompts useful, safe, and free of personal data.
