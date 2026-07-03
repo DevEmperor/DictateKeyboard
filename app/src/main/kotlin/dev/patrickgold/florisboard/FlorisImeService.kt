@@ -323,6 +323,9 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // If the service is torn down mid-recording, finalize and keep the audio and release the mic
+        // instead of leaking the (process-scoped) recorder (issue #147). No-op when not recording.
+        dev.patrickgold.florisboard.dictate.DictateController.stashRecordingOnHide(this)
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
     }

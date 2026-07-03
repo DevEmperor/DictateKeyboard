@@ -10,8 +10,10 @@
 
 package dev.patrickgold.florisboard.dictate
 
+import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.Context
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
@@ -189,6 +191,14 @@ object DictateController {
 
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
+
+    // While a recording is active we listen for the screen turning off (device locked / display timeout):
+    // that is the reliable "the user has left" signal that finalizes and keeps the recording and releases
+    // the mic, instead of depending on IME teardown callbacks that are not always delivered (issue #147).
+    // Long recordings stay possible — this never fires while the screen is on. Held at process scope
+    // (alongside the recorder) with the context used to register it, so any stop path can unregister.
+    private var screenOffReceiver: BroadcastReceiver? = null
+    private var screenOffContext: Context? = null
 
     /** Peak mic amplitude (0..32767) since the previous call, or 0 when idle. Drives the overlay waveform. */
     fun currentAmplitude(): Int = recorder?.maxAmplitude() ?: 0
@@ -399,6 +409,7 @@ object DictateController {
         startJob = null
         recorder?.cancel()
         recorder = null
+        unregisterScreenOffReceiver()
         cleanupAudioRouting()
         livePromptArmed = false
         _pendingPrompts.value = emptyList()
@@ -411,6 +422,45 @@ object DictateController {
 
     /** Kept for the legacy in-keyboard panel; identical to [cancelRecording]. */
     fun abortRecording() = cancelRecording()
+
+    /**
+     * Starts listening for [Intent.ACTION_SCREEN_OFF] while a recording is in progress (issue #147). When
+     * the screen turns off we treat it exactly like the keyboard being hidden ([stashRecordingOnHide]):
+     * the audio is finalized and kept, and the mic is released. This is the dependable catch-all for
+     * recordings that would otherwise be orphaned when no IME teardown callback is delivered (abrupt app
+     * switch, IME switch, lock). It never fires while the screen is on, so long recordings are unaffected.
+     */
+    private fun registerScreenOffReceiver(appContext: Context) {
+        if (screenOffReceiver != null) return
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == Intent.ACTION_SCREEN_OFF) {
+                    stashRecordingOnHide(appContext)
+                }
+            }
+        }
+        val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
+        val registered = runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                appContext.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                appContext.registerReceiver(receiver, filter)
+            }
+        }.isSuccess
+        if (registered) {
+            screenOffReceiver = receiver
+            screenOffContext = appContext
+        }
+    }
+
+    /** Stops listening for screen-off. Called from every path that stops a recording. Idempotent. */
+    private fun unregisterScreenOffReceiver() {
+        val receiver = screenOffReceiver ?: return
+        val ctx = screenOffContext
+        screenOffReceiver = null
+        screenOffContext = null
+        if (ctx != null) runCatching { ctx.unregisterReceiver(receiver) }
+    }
 
     /**
      * Aborts an in-flight transcription (stop button shown on the mic while transcribing). Cancels the
@@ -446,6 +496,7 @@ object DictateController {
                 val audioSource = setupBluetoothIfEnabled(appContext)
                 recorder = RecordingController(appContext).also { it.start(audioSource) }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
+                registerScreenOffReceiver(appContext)
             } catch (t: Throwable) {
                 recorder = null
                 cleanupAudioRouting()
@@ -460,6 +511,7 @@ object DictateController {
     private fun stopAndTranscribe(context: Context) {
         val activeRecorder = recorder
         recorder = null
+        unregisterScreenOffReceiver()
         // Capture the recorded length before leaving the Recording state, to credit the usage counter
         // that gates the rate/donate nudges (roadmap 9.7/9.8). Includes any carried-over seconds.
         val recordedSeconds = recordedSecondsOf(_state.value)
@@ -905,6 +957,7 @@ object DictateController {
             return
         }
         recorder = null
+        unregisterScreenOffReceiver()
         val seconds = recordedSecondsOf(current)
         val wasLive = livePromptArmed
         val audioFile = activeRecorder.stop()
