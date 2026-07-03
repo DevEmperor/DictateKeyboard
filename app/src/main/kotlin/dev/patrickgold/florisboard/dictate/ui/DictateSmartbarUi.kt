@@ -94,6 +94,7 @@ import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import androidx.compose.runtime.collectAsState
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.delay
 import org.florisboard.lib.compose.stringRes
@@ -196,7 +197,15 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
                 .background(Color(0xFFE53935)),
         )
         Spacer(modifier = Modifier.width(10.dp))
-        SnyggText(text = formatElapsed(elapsedMs))
+        // Real-time (#128): while streaming, show the live transcript (its tail) as a caption in place of
+        // the timer; the finished text still lands in the field on stop.
+        val interim by DictateController.interimText.collectAsState()
+        if (interim.isNotBlank()) {
+            val tail = interim.takeLast(42)
+            SnyggText(text = if (interim.length > 42) "…$tail" else tail)
+        } else {
+            SnyggText(text = formatElapsed(elapsedMs))
+        }
     }
 
     // Right group: language chip + pause/resume button (left of the sticky mic).

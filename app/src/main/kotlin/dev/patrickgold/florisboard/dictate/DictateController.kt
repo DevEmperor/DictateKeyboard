@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
+import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
@@ -42,6 +43,10 @@ import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
+import dev.patrickgold.florisboard.dictate.provider.RealtimeApi
+import dev.patrickgold.florisboard.dictate.provider.RealtimeCallbacks
+import dev.patrickgold.florisboard.dictate.provider.RealtimeClient
+import dev.patrickgold.florisboard.dictate.provider.RealtimeSession
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
@@ -50,6 +55,8 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.overlay.AccessibilitySink
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -200,6 +207,20 @@ object DictateController {
      */
     val livePromptActive: StateFlow<Boolean> = _livePromptActive.asStateFlow()
 
+    // --- Real-time streaming transcription (issue #128) -----------------------------------------
+    private val _interimText = MutableStateFlow("")
+    /**
+     * Live transcript while a real-time recording runs: finalized segments plus the current partial. The
+     * Smartbar shows this as a live caption; the field only receives the finished (reworded) text on stop.
+     * Empty outside a realtime recording.
+     */
+    val interimText: StateFlow<String> = _interimText.asStateFlow()
+
+    private var realtimeSession: RealtimeSession? = null
+    private val realtimeFinal = StringBuilder()      // accumulated finalized segments
+    @Volatile private var realtimeFailed = false     // stream errored → fall back to batch on stop
+    private var realtimeClosed: CompletableDeferred<Unit>? = null
+
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
 
@@ -256,6 +277,8 @@ object DictateController {
 
     /** Cache file name for the merged audio when a continued interrupted recording is stitched together. */
     private const val MERGED_AUDIO_NAME = "dictate_merged.wav"
+    // Realtime (#128): after finish(), how long to wait for the provider to flush its final segment.
+    private const val REALTIME_FINALIZE_TIMEOUT_MS = 4_000L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
@@ -420,6 +443,11 @@ object DictateController {
         startJob = null
         recorder?.cancel()
         recorder = null
+        // Tear down any realtime stream (#128) and clear the live caption.
+        realtimeSession?.cancel()
+        realtimeSession = null
+        realtimeClosed = null
+        _interimText.value = ""
         unregisterScreenOffReceiver()
         cleanupAudioRouting()
         livePromptArmed = false
@@ -506,7 +534,10 @@ object DictateController {
             try {
                 requestAudioFocusIfEnabled(appContext)
                 val audioSource = setupBluetoothIfEnabled(appContext)
-                recorder = RecordingController(appContext).also { it.start(audioSource) }
+                // Real-time (#128): open a streaming session and stream mic PCM to it; null → normal batch.
+                // The WAV is written in parallel either way (fallback / resend / interrupted flows).
+                val pcmSink = openRealtimeSession()
+                recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
                 _livePromptActive.value = livePromptArmed
@@ -524,6 +555,11 @@ object DictateController {
     }
 
     private fun stopAndTranscribe(context: Context) {
+        // Real-time recording (#128): finalize the stream instead of uploading the whole file.
+        if (realtimeSession != null) {
+            stopRealtimeAndFinalize(context)
+            return
+        }
         val activeRecorder = recorder
         recorder = null
         _livePromptActive.value = false
@@ -717,49 +753,9 @@ object DictateController {
                         fallback.transcribe(request)
                     }
                 }
-                val finalText = if (live) {
-                    // The spoken transcript is an instruction; send it to GPT (optionally operating
-                    // on the current selection) and insert the answer instead of the transcript.
-                    _pendingPrompts.value = emptyList() // a live prompt ignores any queued prompts
-                    _state.value = UiState.Rewording(appContext.getString(R.string.dictate__status_rewording))
-                    val selection = sink(appContext).selectedText().takeIf { it.isNotEmpty() }
-                    requestReword(result.text, selection)
-                } else {
-                    // Normal dictation: auto-formatting + auto-apply prompts, then the prompts the user
-                    // queued by tapping the prompt row while recording, in tap order; then commit.
-                    // Single-call multimodal (issue #130) already returns finished, formatted text in one
-                    // request (the auto-formatting/auto-apply prompts were folded into the instruction), so
-                    // the separate rewording pass is skipped; explicitly queued prompts still apply.
-                    val processed = if (chatAudio) {
-                        result.text
-                    } else {
-                        postProcessTranscript(appContext, result.text)
-                    }
-                    applyPendingPrompts(appContext, processed)
-                }
-                // Deterministic find-and-replace dictionary (issue #129), applied to the finished text
-                // right before it is inserted — independent of the AI rewording stage, so it is exact
-                // and costs no tokens. No-op when the user has no mappings configured.
-                val outputText = prefs.dictate.customMappings.get().apply(finalText)
-                // Output behavior (roadmap 10.1/10.2): instant or typed, then optional auto-enter.
-                commitOutput(appContext, outputText)
-                // Keep the committed text as the re-insert safety net (issue #111), so it can be
-                // recovered if the field is later cleared (rotation / context switch / host refresh).
-                rememberLastDictation(outputText)
-                // Lifetime statistics (issue #142): count this dictation, its words and spoken time.
-                DictateStats.recordDictation(prefs, outputText, recordedSeconds)
-                discardRetainedAudio()
-                // Credit recorded audio towards the rate/donate gating (roadmap 9.7/9.8).
-                if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
-                _state.value = UiState.Idle
-                // A positive milestone celebration (issue #142) takes precedence over the rate/donate
-                // nudge, but only on the keyboard: an overlay dictation leaves it pending so it is shown
-                // (not silently consumed) the next time the keyboard is used.
-                if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
-                    // Re-assert the rate/donate nudge: it has no auto-timeout and stays until the user
-                    // accepts/declines, so if recording temporarily replaced a pending nudge, bring it back.
-                    maybePromptForReview()
-                }
+                // Shared finalize: rewording/formatting + mappings + commit + stats. Reused by the
+                // realtime path (issue #128), which supplies its own already-streamed transcript.
+                finalizeAndCommit(appContext, result.text, recordedSeconds, live, alreadyFormatted = chatAudio)
             } catch (c: CancellationException) {
                 // User aborted via the stop button: discard quietly (state set by cancelTranscription),
                 // never show an error. The audio is dropped in the finally block.
@@ -783,6 +779,187 @@ object DictateController {
                 if (!keepAudio) audioFile.delete()
             }
         }
+    }
+
+    /**
+     * Shared finalize step for a produced transcript, used by both the batch [transcribe] path and the
+     * realtime path (issue #128): runs live-prompt rewording or the auto-formatting/auto-apply/pending
+     * prompt chain (unless [alreadyFormatted]), applies the deterministic mappings, commits, and records
+     * stats. [rawText] is the transcript to process; [live] routes it as a live-prompt instruction.
+     */
+    private suspend fun finalizeAndCommit(
+        appContext: Context,
+        rawText: String,
+        recordedSeconds: Long,
+        live: Boolean,
+        alreadyFormatted: Boolean,
+    ) {
+        val finalText = if (live) {
+            // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
+            // selection) and insert the answer instead of the transcript.
+            _pendingPrompts.value = emptyList() // a live prompt ignores any queued prompts
+            _state.value = UiState.Rewording(appContext.getString(R.string.dictate__status_rewording))
+            val selection = sink(appContext).selectedText().takeIf { it.isNotEmpty() }
+            requestReword(rawText, selection)
+        } else {
+            // Normal dictation: auto-formatting + auto-apply prompts, then the prompts the user queued by
+            // tapping the prompt row while recording, in tap order; then commit. [alreadyFormatted] skips
+            // the rewording pass (single-call multimodal #130 already returns finished text).
+            val processed = if (alreadyFormatted) rawText else postProcessTranscript(appContext, rawText)
+            applyPendingPrompts(appContext, processed)
+        }
+        // Deterministic find-and-replace dictionary (issue #129), applied right before insert.
+        val outputText = prefs.dictate.customMappings.get().apply(finalText)
+        commitOutput(appContext, outputText)
+        // Re-insert safety net (issue #111) + lifetime stats (issue #142).
+        rememberLastDictation(outputText)
+        DictateStats.recordDictation(prefs, outputText, recordedSeconds)
+        discardRetainedAudio()
+        if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
+        _state.value = UiState.Idle
+        if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
+            maybePromptForReview()
+        }
+    }
+
+    // --- Real-time streaming (issue #128) -------------------------------------------------------
+
+    /** The realtime wire API to use for the active transcription account, or null if realtime shouldn't run. */
+    private fun realtimeApiForActiveAccount(): RealtimeApi? {
+        if (!prefs.dictate.realtimeTranscription.get()) return null
+        val account = transcriptionAccount()
+        if (account.apiKey.isBlank()) return null
+        val preset = presetFor(account)
+        return if (preset.supportsRealtime) preset.realtimeApi else null
+    }
+
+    /** True if the next recording should stream in real time (global toggle on + provider supports it). */
+    fun isRealtimeActive(): Boolean = realtimeApiForActiveAccount() != null
+
+    /**
+     * Opens a realtime session for the active account and returns a PCM sink to hand [RecordingController]
+     * (which feeds captured 16 kHz frames, resampled per provider). Returns null when realtime does not
+     * apply or the session can't be created — the caller then records normally (batch).
+     */
+    private fun openRealtimeSession(): ((ByteArray, Int) -> Unit)? {
+        val api = realtimeApiForActiveAccount() ?: return null
+        val account = transcriptionAccount()
+        val preset = presetFor(account)
+        val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
+        val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
+        realtimeFinal.setLength(0)
+        realtimeFailed = false
+        _interimText.value = ""
+        val closed = CompletableDeferred<Unit>()
+        realtimeClosed = closed
+        val callbacks = object : RealtimeCallbacks {
+            override fun onPartial(text: String) {
+                scope.launch {
+                    val head = realtimeFinal.toString()
+                    _interimText.value = (if (head.isEmpty()) text else "$head $text").trim()
+                }
+            }
+            override fun onFinalSegment(text: String) {
+                scope.launch {
+                    val t = text.trim()
+                    if (t.isNotEmpty()) {
+                        if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
+                        realtimeFinal.append(t)
+                    }
+                    _interimText.value = realtimeFinal.toString()
+                }
+            }
+            override fun onError(t: Throwable) { realtimeFailed = true }
+            override fun onClosed() { closed.complete(Unit) }
+        }
+        val session = runCatching { RealtimeClient.open(api, account.apiKey, model, language, callbacks) }
+            .getOrElse { realtimeFailed = true; null } ?: return null
+        realtimeSession = session
+        val targetRate = RealtimeClient.sampleRateFor(api)
+        return { pcm, len ->
+            val out = resamplePcm16(pcm, len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
+            runCatching { session.sendAudio(out, out.size) }
+        }
+    }
+
+    /**
+     * Stops a realtime recording: finalizes the stream, then commits the accumulated transcript through the
+     * shared [finalizeAndCommit]. Keeps the recorded WAV so any stream failure (or an empty transcript)
+     * falls back to a normal batch [transcribe] of the audio — the user never loses their dictation.
+     */
+    private fun stopRealtimeAndFinalize(context: Context) {
+        val session = realtimeSession
+        realtimeSession = null
+        val activeRecorder = recorder
+        recorder = null
+        _livePromptActive.value = false
+        unregisterScreenOffReceiver()
+        val recordedSeconds = recordedSecondsOf(_state.value)
+        val wavFile = activeRecorder?.stop()
+        cleanupAudioRouting()
+        val live = livePromptArmed
+        livePromptArmed = false
+        val closed = realtimeClosed
+        realtimeClosed = null
+        _state.value = UiState.Transcribing()
+        val appContext = context.applicationContext
+        transcribeJob = scope.launch {
+            try {
+                runCatching { session?.finish() }
+                // Wait briefly for the server to flush the final segment, then take what we have.
+                withTimeoutOrNull(REALTIME_FINALIZE_TIMEOUT_MS) { closed?.await() }
+                val transcript = realtimeFinal.toString().trim()
+                _interimText.value = ""
+                if (realtimeFailed || transcript.isEmpty()) {
+                    if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
+                        livePromptArmed = live
+                        transcribe(context, wavFile, recordedSeconds, gate = false)
+                    } else {
+                        _state.value = UiState.Error(appContext.getString(R.string.dictate__error_no_audio))
+                    }
+                    return@launch
+                }
+                wavFile?.delete()
+                finalizeAndCommit(appContext, transcript, recordedSeconds, live, alreadyFormatted = false)
+            } catch (c: CancellationException) {
+                throw c
+            } catch (t: Throwable) {
+                _interimText.value = ""
+                if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
+                    livePromptArmed = live
+                    transcribe(context, wavFile, recordedSeconds, gate = false)
+                } else {
+                    _state.value = UiState.Error(appContext.getString(R.string.dictate__error_unknown))
+                }
+            }
+        }
+    }
+
+    /** Linear 16-bit PCM resampler (used to lift 16 kHz mic frames to a provider's rate, e.g. OpenAI 24 kHz). */
+    private fun resamplePcm16(pcm: ByteArray, len: Int, srcRate: Int, dstRate: Int): ByteArray {
+        if (srcRate == dstRate) return if (len == pcm.size) pcm else pcm.copyOf(len)
+        val inSamples = len / 2
+        if (inSamples <= 0) return ByteArray(0)
+        val outSamples = (inSamples.toLong() * dstRate / srcRate).toInt().coerceAtLeast(1)
+        val out = ByteArray(outSamples * 2)
+        for (i in 0 until outSamples) {
+            val srcPos = i.toDouble() * srcRate / dstRate
+            val i0 = srcPos.toInt()
+            val frac = srcPos - i0
+            val s0 = pcmSampleAt(pcm, i0, inSamples)
+            val s1 = pcmSampleAt(pcm, i0 + 1, inSamples)
+            val v = (s0 + (s1 - s0) * frac).toInt().coerceIn(-32768, 32767)
+            out[i * 2] = (v and 0xff).toByte()
+            out[i * 2 + 1] = ((v shr 8) and 0xff).toByte()
+        }
+        return out
+    }
+
+    private fun pcmSampleAt(pcm: ByteArray, idx: Int, count: Int): Int {
+        val i = idx.coerceIn(0, count - 1)
+        val lo = pcm[i * 2].toInt() and 0xff
+        val hi = pcm[i * 2 + 1].toInt()
+        return (hi shl 8) or lo
     }
 
     // --- Output behavior + resend (roadmap section 10) ------------------------------------------
@@ -990,6 +1167,11 @@ object DictateController {
         }
         recorder = null
         _livePromptActive.value = false
+        // Realtime (#128): drop the stream; the WAV is stashed below and recoverable via batch as usual.
+        realtimeSession?.cancel()
+        realtimeSession = null
+        realtimeClosed = null
+        _interimText.value = ""
         unregisterScreenOffReceiver()
         val seconds = recordedSecondsOf(current)
         val wasLive = livePromptArmed
