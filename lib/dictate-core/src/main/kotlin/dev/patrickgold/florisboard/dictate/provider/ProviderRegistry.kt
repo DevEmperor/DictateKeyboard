@@ -160,7 +160,10 @@ object ProviderRegistry {
         ),
         // Realtime (#128): Live API (BidiGenerateContent) with input_audio_transcription. Live models are
         // a distinct family — the exact id is verified when the Gemini Live session is built (later phase).
-        supportsRealtime = true,
+        // Realtime disabled: the Live API connects but never acks `setup` (no setupComplete) with our
+        // config — the bidirectional Live protocol needs verified model id + setup shape (#128). Keep the
+        // wiring so it can be re-enabled once confirmed; until then Gemini uses batch transcription.
+        supportsRealtime = false,
         realtimeApi = RealtimeApi.GEMINI,
         defaultRealtimeModel = "gemini-live-2.5-flash-preview",
         curatedRealtimeModels = listOf("gemini-live-2.5-flash-preview"),

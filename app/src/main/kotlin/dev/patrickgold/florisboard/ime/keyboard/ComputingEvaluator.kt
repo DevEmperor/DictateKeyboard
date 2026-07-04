@@ -269,9 +269,15 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.IME_UI_MODE_DICTATE -> {
             when (dev.patrickgold.florisboard.dictate.DictateController.state.value) {
-                // While recording, show a "send" arrow so it's obvious that tapping again submits
-                // the recording for transcription (rather than merely stopping it).
-                is dev.patrickgold.florisboard.dictate.DictateController.UiState.Recording -> Icons.AutoMirrored.Filled.Send
+                // While recording: a "send" arrow for batch (tapping submits the recording), but a stop
+                // button for real-time (#128) — the text is already being typed live, so tapping just ends
+                // the stream (the last chunks + rewording still finish).
+                is dev.patrickgold.florisboard.dictate.DictateController.UiState.Recording ->
+                    if (dev.patrickgold.florisboard.dictate.DictateController.isRealtimeRecording()) {
+                        Icons.Default.Stop
+                    } else {
+                        Icons.AutoMirrored.Filled.Send
+                    }
                 // While transcribing, show a stop button: tapping aborts the in-flight transcription.
                 is dev.patrickgold.florisboard.dictate.DictateController.UiState.Transcribing -> Icons.Default.Stop
                 else -> Icons.Default.Mic

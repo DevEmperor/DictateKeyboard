@@ -852,6 +852,9 @@ object DictateController {
     /** True if the next recording should stream in real time (global toggle on + provider supports it). */
     fun isRealtimeActive(): Boolean = realtimeApiForActiveAccount() != null
 
+    /** True while a real-time streaming recording is actually in progress (a session is open). */
+    fun isRealtimeRecording(): Boolean = realtimeSession != null
+
     /**
      * Opens a realtime session for the active account and returns a PCM sink to hand [RecordingController]
      * (which feeds captured 16 kHz frames, resampled per provider). Returns null when realtime does not

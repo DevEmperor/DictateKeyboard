@@ -112,7 +112,11 @@ class ImeDictationSink(context: Context) : DictationSink {
         editorInstance.replaceDictationTail(prevText.length - cp, finalText.substring(cp))
     }
 
-    override fun clearDictationPreview(prevText: String) = applyDictationDiff(prevText, "")
+    override fun clearDictationPreview(prevText: String) {
+        // Atomic delete of the whole streamed preview in one batch. Doing this per-character (backspaces)
+        // ANRs and can kill the keyboard when a long dictation is cancelled mid-recording.
+        if (prevText.isNotEmpty()) editorInstance.replaceDictationTail(prevText.length, "")
+    }
 
     /**
      * Turns the currently-shown dictation text [old] into [new] with the minimal edit: keep the common
@@ -123,9 +127,15 @@ class ImeDictationSink(context: Context) : DictationSink {
     private fun applyDictationDiff(old: String, new: String) {
         if (old == new) return
         val cp = old.commonPrefixWith(new).length
-        if (cp < old.length) deleteLastText(old.substring(cp))
-        // Raw commit (no phantom/auto space) so the field stays byte-identical to what we tracked.
-        if (cp < new.length) editorInstance.commitTextRaw(new.substring(cp))
+        val deleteLen = old.length - cp
+        if (deleteLen == 0) {
+            // Pure append (the common streaming case): editor-consistent raw commit (no phantom/auto space
+            // so the field stays byte-identical to what we tracked), no composing-region collision.
+            editorInstance.commitTextRaw(new.substring(cp))
+        } else {
+            // A revision (provider rewrote the tail): replace it in one atomic batch, never per-character.
+            editorInstance.replaceDictationTail(deleteLen, new.substring(cp))
+        }
     }
 
     private companion object {
