@@ -279,8 +279,9 @@ object DictateController {
 
     /** Cache file name for the merged audio when a continued interrupted recording is stitched together. */
     private const val MERGED_AUDIO_NAME = "dictate_merged.wav"
-    // Realtime (#128): after finish(), how long to wait for the provider to flush its final segment.
-    private const val REALTIME_FINALIZE_TIMEOUT_MS = 4_000L
+    // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
+    // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
+    private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
@@ -857,10 +858,14 @@ object DictateController {
      * apply or the session can't be created — the caller then records normally (batch).
      */
     private fun openRealtimeSession(appContext: Context): ((ByteArray, Int) -> Unit)? {
-        val api = realtimeApiForActiveAccount() ?: return null
+        val api = realtimeApiForActiveAccount() ?: run {
+            android.util.Log.i("DictateRT", "realtime NOT active → batch")
+            return null
+        }
         val account = transcriptionAccount()
         val preset = presetFor(account)
         val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
+        android.util.Log.i("DictateRT", "opening realtime session api=$api model=$model")
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
         realtimeFinal.setLength(0)
         realtimeFailed = false
@@ -931,9 +936,14 @@ object DictateController {
         transcribeJob = scope.launch {
             try {
                 runCatching { session?.finish() }
-                // Wait briefly for the server to flush the final segment, then take what we have.
+                // Wait briefly for the provider to flush the last words (ends early if it closes), then
+                // force-close the socket — several providers keep it open after finish, which otherwise
+                // stalls us until the timeout and later trips a ping/pong failure.
                 withTimeoutOrNull(REALTIME_FINALIZE_TIMEOUT_MS) { closed?.await() }
-                val transcript = realtimeFinal.toString().trim()
+                runCatching { session?.cancel() }
+                // The transcript is what we already streamed into the field (finals + last partial); fall
+                // back to the finalized-segments buffer only if nothing was shown.
+                val transcript = realtimeShown.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
                 _interimText.value = ""
                 if (realtimeFailed || transcript.isEmpty()) {
                     // Drop the live provisional text; the batch path commits fresh from the WAV.

@@ -195,7 +195,9 @@ object ProviderRegistry {
         defaultTranscriptionModel = "voxtral-mini-latest",
         curatedTranscriptionModels = listOf("voxtral-mini-latest"),
         // Realtime (#128): Voxtral realtime (/v1/realtime, vLLM-style). Model id verified when built.
-        supportsRealtime = true,
+        // Realtime disabled: Mistral's raw WS returns 403 and the protocol is SDK-only/unverified (#128).
+        // Keep the wiring (RealtimeApi + session) so it can be re-enabled once the protocol is confirmed.
+        supportsRealtime = false,
         realtimeApi = RealtimeApi.MISTRAL_VOXTRAL,
         defaultRealtimeModel = "voxtral-mini-transcribe-realtime-2602",
         curatedRealtimeModels = listOf("voxtral-mini-transcribe-realtime-2602"),

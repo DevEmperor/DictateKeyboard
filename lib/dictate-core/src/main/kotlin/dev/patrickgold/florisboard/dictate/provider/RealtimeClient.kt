@@ -232,10 +232,12 @@ private class SonioxRealtimeSession(
 
     private val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
+            android.util.Log.i("DictateRT", "soniox WS open (http ${response.code}); sending config model=$model")
             webSocket.send(config())
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
+            android.util.Log.i("DictateRT", "soniox msg: ${text.take(300)}")
             val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
             obj["tokens"]?.jsonArray?.let { tokens ->
                 val tail = StringBuilder()
@@ -497,11 +499,19 @@ private class GeminiRealtimeSession(
 
     private val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
-            webSocket.send(setup())
+            val s = setup()
+            android.util.Log.i("DictateRT", "gemini WS open (http ${response.code}); setup=$s")
+            webSocket.send(s)
         }
 
-        override fun onMessage(webSocket: WebSocket, text: String) = handle(webSocket, text)
-        override fun onMessage(webSocket: WebSocket, bytes: okio.ByteString) = handle(webSocket, bytes.utf8())
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            android.util.Log.i("DictateRT", "gemini msg(text): ${text.take(400)}")
+            handle(webSocket, text)
+        }
+        override fun onMessage(webSocket: WebSocket, bytes: okio.ByteString) {
+            android.util.Log.i("DictateRT", "gemini msg(bytes): ${bytes.utf8().take(400)}")
+            handle(webSocket, bytes.utf8())
+        }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             android.util.Log.w("DictateRT", "gemini realtime WS failed (http=${response?.code}): ${t.message}")
