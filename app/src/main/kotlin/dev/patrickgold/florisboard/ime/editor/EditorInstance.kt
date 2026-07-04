@@ -246,6 +246,23 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     fun commitTextRaw(text: String): Boolean = super.commitText(text)
 
     /**
+     * Real-time dictation finalize (issue #128): atomically replace the [deleteBefore] characters right
+     * before the cursor with [text] in a single batch edit, so swapping the live-streamed preview for the
+     * finished/reworded result happens in one step instead of flashing character-by-character. Written
+     * straight to the InputConnection; the editor resyncs on the following selection update.
+     */
+    fun replaceDictationTail(deleteBefore: Int, text: String): Boolean {
+        val ic = currentInputConnection() ?: return false
+        ic.beginBatchEdit()
+        ic.finishComposingText()
+        if (deleteBefore > 0) ic.deleteSurroundingText(deleteBefore, 0)
+        if (text.isNotEmpty()) ic.commitText(text, 1)
+        ic.endBatchEdit()
+        updateLastCommitPosition()
+        return true
+    }
+
+    /**
      * Completes the given [candidate] in the current composing region. Does nothing if the current
      * input editor is not rich or if the input connection is invalid.
      *

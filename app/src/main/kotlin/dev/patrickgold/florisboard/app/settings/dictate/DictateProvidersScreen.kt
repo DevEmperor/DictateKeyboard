@@ -127,7 +127,8 @@ fun DictateProvidersScreen() = FlorisScreen {
                 entries = buildList {
                     ProviderRegistry.presets
                         .filter { it.capabilities.transcription }
-                        .forEach { add(it.id to it.displayName) }
+                        // Flag providers with real-time streaming support (issue #128) right in the label.
+                        .forEach { add(it.id to (it.displayName + if (it.supportsRealtime) " + Realtime" else "")) }
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
             )
@@ -157,7 +158,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                     } else {
                         Icons.Default.Cloud
                     },
-                    title = preset.displayName,
+                    title = preset.displayName + if (preset.supportsRealtime) " + Realtime" else "",
                     summary = providerSummary(preset, account, keySet, noKey),
                     onClick = { editingId = preset.id },
                 )

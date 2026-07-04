@@ -104,7 +104,13 @@ class ImeDictationSink(context: Context) : DictationSink {
 
     override fun setDictationPreview(newText: String, prevText: String) = applyDictationDiff(prevText, newText)
 
-    override fun commitDictationFinal(finalText: String, prevText: String) = applyDictationDiff(prevText, finalText)
+    override fun commitDictationFinal(finalText: String, prevText: String) {
+        // Atomic swap of the streamed preview for the finished/reworded text (keeps the common prefix,
+        // replaces only the divergent tail in one batch → no character-by-character flicker).
+        if (prevText == finalText) return
+        val cp = prevText.commonPrefixWith(finalText).length
+        editorInstance.replaceDictationTail(prevText.length - cp, finalText.substring(cp))
+    }
 
     override fun clearDictationPreview(prevText: String) = applyDictationDiff(prevText, "")
 
