@@ -1267,6 +1267,8 @@
     <string name="dictate__skip_silent_summary">Избягвайте измислен текст и излишни API заявки при тих запис</string>
     <string name="dictate__realtime_title">Транскрипция в реално време</string>
     <string name="dictate__realtime_summary">Показва текста на живо, докато говорите, за доставчици, които го поддържат (OpenAI, Soniox, Deepgram, …); останалите остават на партиди</string>
+    <string name="dictate__providers_field_realtime_model">Модел в реално време</string>
+    <string name="dictate__providers_realtime_model_default">По подразбиране</string>
     <string name="dictate__instant_recording_title">Незабавен запис</string>
     <string name="dictate__instant_recording_summary">Започвай записа автоматично при отваряне на клавиатурата</string>
     <string name="dictate__instant_recording_info_title">Внимание</string>

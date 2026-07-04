@@ -1211,6 +1211,8 @@
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
     <string name="dictate__realtime_title">Reāllaika transkripcija</string>
     <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta (OpenAI, Soniox, Deepgram, …); pārējie paliek pakešrežīmā</string>
+    <string name="dictate__providers_field_realtime_model">Reāllaika modelis</string>
+    <string name="dictate__providers_realtime_model_default">Noklusējuma</string>
     <string name="dictate__instant_recording_title">Tūlītēja ierakstīšana</string>
     <string name="dictate__instant_recording_summary">Sākt ierakstīšanu automātiski, kad tiek atvērta tastatūra</string>
     <string name="dictate__instant_recording_info_title">Ievērībai</string>

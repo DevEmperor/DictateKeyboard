@@ -1141,6 +1141,8 @@
     <string name="dictate__skip_silent_summary">Evita el text al·lucinat i les crides a l\'API inútils en àudio silenciós</string>
     <string name="dictate__realtime_title">Transcripció en temps real</string>
     <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten (OpenAI, Soniox, Deepgram, …); la resta continuen per lots</string>
+    <string name="dictate__providers_field_realtime_model">Model en temps real</string>
+    <string name="dictate__providers_realtime_model_default">Predeterminat</string>
     <string name="dictate__instant_recording_title">Gravació instantània</string>
     <string name="dictate__instant_recording_summary">Comença a gravar automàticament en obrir el teclat</string>
     <string name="dictate__instant_recording_info_title">Atenció</string>

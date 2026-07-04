@@ -1122,6 +1122,8 @@
     <string name="dictate__skip_silent_summary">تجنّب النصوص المُختلَقة واستدعاءات API المهدورة في الصوت الصامت</string>
     <string name="dictate__realtime_title">النسخ الفوري</string>
     <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه (OpenAI، Soniox، Deepgram، …)؛ يبقى الآخرون بالدفعات</string>
+    <string name="dictate__providers_field_realtime_model">النموذج الفوري</string>
+    <string name="dictate__providers_realtime_model_default">افتراضي</string>
     <string name="dictate__instant_recording_title">تسجيل فوري</string>
     <string name="dictate__instant_recording_summary">بدء التسجيل تلقائيًا عند فتح لوحة المفاتيح</string>
     <string name="dictate__instant_recording_info_title">تنبيه</string>

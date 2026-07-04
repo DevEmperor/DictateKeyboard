@@ -1282,6 +1282,8 @@
     <string name="dictate__skip_silent_summary">Zabraňte vymyšlenému textu a zbytečným voláním API u tichého záznamu</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
     <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují (OpenAI, Soniox, Deepgram, …); ostatní zůstávají dávkoví</string>
+    <string name="dictate__providers_field_realtime_model">Model v reálném čase</string>
+    <string name="dictate__providers_realtime_model_default">Výchozí</string>
     <string name="dictate__instant_recording_title">Okamžité nahrávání</string>
     <string name="dictate__instant_recording_summary">Automaticky spustit nahrávání při otevření klávesnice</string>
     <string name="dictate__instant_recording_info_title">Upozornění</string>

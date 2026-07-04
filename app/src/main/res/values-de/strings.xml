@@ -1159,6 +1159,8 @@
     <string name="dictate__skip_silent_summary">Vermeidet Geistertext und unnötige API-Aufrufe bei stiller Aufnahme</string>
     <string name="dictate__realtime_title">Echtzeit-Transkription</string>
     <string name="dictate__realtime_summary">Zeigt Text live beim Sprechen an, für Anbieter, die das unterstützen (OpenAI, Soniox, Deepgram, …); andere bleiben Stapelverarbeitung</string>
+    <string name="dictate__providers_field_realtime_model">Echtzeit-Modell</string>
+    <string name="dictate__providers_realtime_model_default">Standard</string>
     <string name="dictate__instant_recording_title">Sofortaufnahme</string>
     <string name="dictate__instant_recording_summary">Aufnahme automatisch starten, wenn die Tastatur geöffnet wird</string>
     <string name="dictate__instant_recording_info_title">Hinweis</string>

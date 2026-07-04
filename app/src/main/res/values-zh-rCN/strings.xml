@@ -1262,6 +1262,8 @@
     <string name="dictate__skip_silent_summary">避免静音录音产生幻觉文本和浪费 API 调用</string>
     <string name="dictate__realtime_title">实时转录</string>
     <string name="dictate__realtime_summary">在您说话时实时显示文本，适用于支持此功能的提供商（OpenAI、Soniox、Deepgram、…）；其他仍为批量模式</string>
+    <string name="dictate__providers_field_realtime_model">实时模型</string>
+    <string name="dictate__providers_realtime_model_default">默认</string>
     <string name="dictate__instant_recording_title">即时录音</string>
     <string name="dictate__instant_recording_summary">打开键盘时自动开始录音</string>
     <string name="dictate__instant_recording_info_title">提示</string>

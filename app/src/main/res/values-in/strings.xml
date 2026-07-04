@@ -1220,6 +1220,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__skip_silent_summary">Hindari teks halusinasi dan panggilan API sia-sia pada audio senyap</string>
     <string name="dictate__realtime_title">Transkripsi waktu nyata</string>
     <string name="dictate__realtime_summary">Menampilkan teks secara langsung saat Anda berbicara, untuk penyedia yang mendukungnya (OpenAI, Soniox, Deepgram, …); lainnya tetap batch</string>
+    <string name="dictate__providers_field_realtime_model">Model waktu nyata</string>
+    <string name="dictate__providers_realtime_model_default">Bawaan</string>
     <string name="dictate__instant_recording_title">Perekaman instan</string>
     <string name="dictate__instant_recording_summary">Mulai merekam secara otomatis saat papan ketik terbuka</string>
     <string name="dictate__instant_recording_info_title">Perhatian</string>

@@ -1197,6 +1197,8 @@
     <string name="dictate__skip_silent_summary">無音の録音での幻覚テキストや無駄なAPI呼び出しを回避します</string>
     <string name="dictate__realtime_title">リアルタイム文字起こし</string>
     <string name="dictate__realtime_summary">対応するプロバイダー（OpenAI、Soniox、Deepgram、…）で、話しながらテキストをリアルタイム表示します。その他は一括処理のままです</string>
+    <string name="dictate__providers_field_realtime_model">リアルタイムモデル</string>
+    <string name="dictate__providers_realtime_model_default">デフォルト</string>
     <string name="dictate__instant_recording_title">即時録音</string>
     <string name="dictate__instant_recording_summary">キーボードを開いたときに自動的に録音を開始します</string>
     <string name="dictate__instant_recording_info_title">お知らせ</string>
