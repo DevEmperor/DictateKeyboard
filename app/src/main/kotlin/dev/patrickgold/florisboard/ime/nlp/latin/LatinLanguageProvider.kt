@@ -348,6 +348,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val isKnown = index.freq.containsKey(word.lowercase()) || isInUserDictionary(word, subtype)
         if (prefs.suggestion.autoCorrect.get() && out.isEmpty() && !isKnown && word.length >= 3) {
             val corrections = correctionsFor(word, index, maxCandidateCount, allowDistance2 = false)
+            // Keep the user's exact typed word in the strip (left-most) so they can tap it to bypass the
+            // autocorrection and keep their spelling — never auto-committed itself (issue #150).
+            if (corrections.isNotEmpty()) {
+                out.putIfAbsent(
+                    word.lowercase(),
+                    WordSuggestionCandidate(
+                        text = word,
+                        confidence = 1.0,
+                        isEligibleForAutoCommit = false,
+                        sourceProvider = this,
+                    ),
+                )
+            }
             corrections.forEachIndexed { i, correction ->
                 val text = cased(correction)
                 val freq = index.freq[correction.lowercase()] ?: 0

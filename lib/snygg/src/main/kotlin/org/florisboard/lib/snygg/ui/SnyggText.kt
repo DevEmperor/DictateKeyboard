@@ -54,6 +54,7 @@ fun SnyggText(
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
+    fontWeight: FontWeight? = null,
     text: String,
 ) {
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
@@ -68,7 +69,9 @@ fun SnyggText(
             color = style.foreground(),
             fontSize = style.fontSize(),
             fontStyle = style.fontStyle(),
-            fontWeight = style.fontWeight(),
+            // Optional override (e.g. bold the autocorrect/auto-commit candidate, issue #150) — falls back
+            // to the themed weight when null.
+            fontWeight = fontWeight ?: style.fontWeight(),
             fontFamily = style.fontFamily(LocalSnyggPreloadedCustomFontFamilies.current),
             letterSpacing = style.letterSpacing(),
             lineHeight = style.lineHeight(),

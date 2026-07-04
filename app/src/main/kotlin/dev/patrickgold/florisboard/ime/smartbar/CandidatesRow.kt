@@ -55,6 +55,7 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
+import androidx.compose.ui.text.font.FontWeight
 import org.florisboard.lib.snygg.ui.SnyggText
 
 val CandidatesRowScrollbarHeight = 2.dp
@@ -211,6 +212,9 @@ private fun CandidateItem(
                 elementName = "$elementName-text",
                 attributes = attributes,
                 selector = selector,
+                // Gboard-style: bold the suggestion that will be auto-applied (autocorrect), so it's clear
+                // what will replace the typed word; other suggestions stay normal weight (issue #150).
+                fontWeight = if (autoCommit) FontWeight.Bold else null,
                 text = candidate.text.toString(),
             )
             if (candidate.secondaryText != null) {
