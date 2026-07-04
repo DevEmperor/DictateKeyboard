@@ -1139,6 +1139,8 @@
     <string name="dictate__keep_screen_awake_summary">Evita que la pantalla s\'apagui durant la gravació</string>
     <string name="dictate__skip_silent_title">Omet les gravacions silencioses</string>
     <string name="dictate__skip_silent_summary">Evita el text al·lucinat i les crides a l\'API inútils en àudio silenciós</string>
+    <string name="dictate__realtime_title">Transcripció en temps real</string>
+    <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten (OpenAI, Soniox, Deepgram, …); la resta continuen per lots</string>
     <string name="dictate__instant_recording_title">Gravació instantània</string>
     <string name="dictate__instant_recording_summary">Comença a gravar automàticament en obrir el teclat</string>
     <string name="dictate__instant_recording_info_title">Atenció</string>

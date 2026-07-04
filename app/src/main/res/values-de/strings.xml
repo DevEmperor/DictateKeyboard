@@ -1157,6 +1157,8 @@
     <string name="dictate__keep_screen_awake_summary">Verhindern, dass sich der Bildschirm während der Aufnahme ausschaltet</string>
     <string name="dictate__skip_silent_title">Stille Aufnahmen überspringen</string>
     <string name="dictate__skip_silent_summary">Vermeidet Geistertext und unnötige API-Aufrufe bei stiller Aufnahme</string>
+    <string name="dictate__realtime_title">Echtzeit-Transkription</string>
+    <string name="dictate__realtime_summary">Zeigt Text live beim Sprechen an, für Anbieter, die das unterstützen (OpenAI, Soniox, Deepgram, …); andere bleiben Stapelverarbeitung</string>
     <string name="dictate__instant_recording_title">Sofortaufnahme</string>
     <string name="dictate__instant_recording_summary">Aufnahme automatisch starten, wenn die Tastatur geöffnet wird</string>
     <string name="dictate__instant_recording_info_title">Hinweis</string>

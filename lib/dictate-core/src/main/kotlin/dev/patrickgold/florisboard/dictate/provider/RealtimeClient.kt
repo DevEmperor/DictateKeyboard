@@ -12,7 +12,9 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -21,12 +23,13 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import okio.ByteString.Companion.toByteString
 import java.util.concurrent.TimeUnit
 
 /**
- * Opens real-time transcription sessions (issue #128). Currently implements OpenAI's realtime WebSocket
- * ([RealtimeApi.OPENAI]); the other providers ([RealtimeApi.SONIOX] etc.) are declared but not yet wired
- * and throw until their sessions are built.
+ * Opens real-time transcription sessions (issue #128). Implements OpenAI ([RealtimeApi.OPENAI], JSON
+ * base64 audio) and Deepgram ([RealtimeApi.DEEPGRAM], raw binary PCM); the remaining providers
+ * ([RealtimeApi.SONIOX] etc.) are declared but not yet wired and throw until their sessions are built.
  *
  * The WebSocket client is long-lived (no read/call timeout, periodic ping), separate from the batch HTTP
  * client. Callers keep the batch [OpenAiCompatibleClient] for the fallback path.
@@ -62,6 +65,7 @@ object RealtimeClient {
         callbacks: RealtimeCallbacks,
     ): RealtimeSession = when (api) {
         RealtimeApi.OPENAI -> OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         else -> throw DictateApiException(
             DictateApiException.Kind.UNKNOWN,
             "Real-time transcription for $api is not implemented yet",
@@ -171,6 +175,89 @@ private class OpenAiRealtimeSession(
         committing = true
         // Flush the buffered audio; the server responds with the final `completed`, then we close.
         runCatching { socket.send("""{"type":"input_audio_buffer.commit"}""") }
+    }
+
+    override fun cancel() {
+        done = true
+        runCatching { ws?.close(1000, null) }
+        callbacks.onClosed()
+    }
+
+    private fun emitError(t: Throwable) {
+        if (done) return
+        done = true
+        runCatching { ws?.cancel() }
+        callbacks.onError(t)
+        callbacks.onClosed()
+    }
+
+    private fun finishClosed(webSocket: WebSocket?) {
+        if (done) return
+        done = true
+        runCatching { (webSocket ?: ws)?.close(1000, null) }
+        callbacks.onClosed()
+    }
+}
+
+/**
+ * Deepgram streaming transcription over `wss://api.deepgram.com/v1/listen`. Streams raw 16 kHz mono PCM16
+ * as binary WebSocket frames and parses `Results` messages: each interim revises the current segment
+ * ([RealtimeCallbacks.onPartial]), `is_final` finalizes it ([onFinalSegment]). `finish()` sends
+ * `CloseStream` so the server flushes the last segment before closing.
+ */
+private class DeepgramRealtimeSession(
+    private val client: OkHttpClient,
+    private val apiKey: String,
+    private val model: String,
+    private val language: String?,
+    private val callbacks: RealtimeCallbacks,
+) : RealtimeSession {
+
+    private val json = Json { ignoreUnknownKeys = true; isLenient = true }
+    private var ws: WebSocket? = null
+    @Volatile private var done = false
+
+    fun connect() {
+        val lang = if (!language.isNullOrBlank() && language != "detect") "&language=$language" else ""
+        val url = "wss://api.deepgram.com/v1/listen?model=$model" +
+            "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang"
+        val request = Request.Builder()
+            .url(url)
+            .header("Authorization", "Token $apiKey")
+            .build()
+        ws = client.newWebSocket(request, listener)
+    }
+
+    private val listener = object : WebSocketListener() {
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
+            when (obj["type"]?.jsonPrimitive?.content) {
+                "Results" -> {
+                    val transcript = obj["channel"]?.jsonObject
+                        ?.get("alternatives")?.jsonArray?.firstOrNull()?.jsonObject
+                        ?.get("transcript")?.jsonPrimitive?.content.orEmpty()
+                    if (transcript.isBlank()) return
+                    val isFinal = obj["is_final"]?.jsonPrimitive?.booleanOrNull ?: false
+                    if (isFinal) callbacks.onFinalSegment(transcript) else callbacks.onPartial(transcript)
+                }
+            }
+        }
+
+        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+            android.util.Log.w("DictateRT", "deepgram realtime WS failed (http=${response?.code}): ${t.message}")
+            emitError(t)
+        }
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) = finishClosed(webSocket)
+    }
+
+    override fun sendAudio(pcm16: ByteArray, len: Int) {
+        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+    }
+
+    override fun finish() {
+        val socket = ws ?: return finishClosed(null)
+        // Ask Deepgram to flush the final segment; it then emits the last Results and closes.
+        runCatching { socket.send("""{"type":"CloseStream"}""") }
     }
 
     override fun cancel() {

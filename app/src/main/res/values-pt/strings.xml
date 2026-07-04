@@ -1245,6 +1245,8 @@
     <string name="dictate__keep_screen_awake_summary">Impedir que o ecrã se desligue durante a gravação</string>
     <string name="dictate__skip_silent_title">Ignorar gravações silenciosas</string>
     <string name="dictate__skip_silent_summary">Evita texto alucinado e chamadas de API desnecessárias em áudio silencioso</string>
+    <string name="dictate__realtime_title">Transcrição em tempo real</string>
+    <string name="dictate__realtime_summary">Mostra o texto ao vivo enquanto fala, para fornecedores compatíveis (OpenAI, Soniox, Deepgram, …); os restantes ficam em lote</string>
     <string name="dictate__instant_recording_title">Gravação instantânea</string>
     <string name="dictate__instant_recording_summary">Começar a gravar automaticamente ao abrir o teclado</string>
     <string name="dictate__instant_recording_info_title">Aviso</string>

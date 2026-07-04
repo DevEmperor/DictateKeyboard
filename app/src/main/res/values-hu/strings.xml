@@ -1263,6 +1263,8 @@
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
     <string name="dictate__skip_silent_title">Néma felvételek kihagyása</string>
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
+    <string name="dictate__realtime_title">Valós idejű átírás</string>
+    <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál (OpenAI, Soniox, Deepgram, …); a többi kötegelt marad</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>
     <string name="dictate__instant_recording_summary">A felvétel automatikus indítása a billentyűzet megnyitásakor</string>
     <string name="dictate__instant_recording_info_title">Figyelem</string>

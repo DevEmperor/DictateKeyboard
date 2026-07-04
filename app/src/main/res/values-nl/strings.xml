@@ -1165,6 +1165,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__keep_screen_awake_summary">Voorkomen dat het scherm uitgaat tijdens het opnemen</string>
     <string name="dictate__skip_silent_title">Stille opnames overslaan</string>
     <string name="dictate__skip_silent_summary">Voorkomt gehallucineerde tekst en overbodige API-aanroepen bij stille audio</string>
+    <string name="dictate__realtime_title">Realtime-transcriptie</string>
+    <string name="dictate__realtime_summary">Toont tekst live terwijl je spreekt, voor providers die dit ondersteunen (OpenAI, Soniox, Deepgram, …); andere blijven batch</string>
     <string name="dictate__instant_recording_title">Direct opnemen</string>
     <string name="dictate__instant_recording_summary">Automatisch beginnen met opnemen wanneer het toetsenbord wordt geopend</string>
     <string name="dictate__instant_recording_info_title">Let op</string>

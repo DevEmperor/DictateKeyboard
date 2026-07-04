@@ -1269,6 +1269,8 @@
     <string name="dictate__keep_screen_awake_summary">Не давать экрану выключаться во время записи</string>
     <string name="dictate__skip_silent_title">Пропускать тихие записи</string>
     <string name="dictate__skip_silent_summary">Избегайте выдуманного текста и лишних вызовов API при тихой записи</string>
+    <string name="dictate__realtime_title">Транскрипция в реальном времени</string>
+    <string name="dictate__realtime_summary">Показывает текст вживую во время речи для поддерживающих это провайдеров (OpenAI, Soniox, Deepgram, …); остальные работают пакетно</string>
     <string name="dictate__instant_recording_title">Мгновенная запись</string>
     <string name="dictate__instant_recording_summary">Автоматически начинать запись при открытии клавиатуры</string>
     <string name="dictate__instant_recording_info_title">Обратите внимание</string>

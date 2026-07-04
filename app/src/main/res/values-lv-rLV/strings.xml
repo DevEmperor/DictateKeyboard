@@ -1209,6 +1209,8 @@
     <string name="dictate__keep_screen_awake_summary">Neļaut ekrānam izslēgties ierakstīšanas laikā</string>
     <string name="dictate__skip_silent_title">Izlaist klusos ierakstus</string>
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
+    <string name="dictate__realtime_title">Reāllaika transkripcija</string>
+    <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta (OpenAI, Soniox, Deepgram, …); pārējie paliek pakešrežīmā</string>
     <string name="dictate__instant_recording_title">Tūlītēja ierakstīšana</string>
     <string name="dictate__instant_recording_summary">Sākt ierakstīšanu automātiski, kad tiek atvērta tastatūra</string>
     <string name="dictate__instant_recording_info_title">Ievērībai</string>
