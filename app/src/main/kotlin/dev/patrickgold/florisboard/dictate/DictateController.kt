@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
+import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
@@ -929,8 +930,13 @@ object DictateController {
             .getOrElse { realtimeFailed = true; null } ?: return null
         realtimeSession = session
         val targetRate = RealtimeClient.sampleRateFor(api)
+        if (targetRate == AudioDecode.TARGET_SAMPLE_RATE) {
+            return { pcm, len ->
+                runCatching { session.sendAudio(pcm, len) }
+            }
+        }
         return { pcm, len ->
-            val out = resamplePcm16(pcm, len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
+            val out = Pcm16Resampler.resample(pcm, len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
             runCatching { session.sendAudio(out, out.size) }
         }
     }
@@ -997,33 +1003,6 @@ object DictateController {
                 }
             }
         }
-    }
-
-    /** Linear 16-bit PCM resampler (used to lift 16 kHz mic frames to a provider's rate, e.g. OpenAI 24 kHz). */
-    private fun resamplePcm16(pcm: ByteArray, len: Int, srcRate: Int, dstRate: Int): ByteArray {
-        if (srcRate == dstRate) return if (len == pcm.size) pcm else pcm.copyOf(len)
-        val inSamples = len / 2
-        if (inSamples <= 0) return ByteArray(0)
-        val outSamples = (inSamples.toLong() * dstRate / srcRate).toInt().coerceAtLeast(1)
-        val out = ByteArray(outSamples * 2)
-        for (i in 0 until outSamples) {
-            val srcPos = i.toDouble() * srcRate / dstRate
-            val i0 = srcPos.toInt()
-            val frac = srcPos - i0
-            val s0 = pcmSampleAt(pcm, i0, inSamples)
-            val s1 = pcmSampleAt(pcm, i0 + 1, inSamples)
-            val v = (s0 + (s1 - s0) * frac).toInt().coerceIn(-32768, 32767)
-            out[i * 2] = (v and 0xff).toByte()
-            out[i * 2 + 1] = ((v shr 8) and 0xff).toByte()
-        }
-        return out
-    }
-
-    private fun pcmSampleAt(pcm: ByteArray, idx: Int, count: Int): Int {
-        val i = idx.coerceIn(0, count - 1)
-        val lo = pcm[i * 2].toInt() and 0xff
-        val hi = pcm[i * 2 + 1].toInt()
-        return (hi shl 8) or lo
     }
 
     // --- Output behavior + resend (roadmap section 10) ------------------------------------------
