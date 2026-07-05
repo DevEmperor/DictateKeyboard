@@ -478,6 +478,7 @@ private fun ProviderEditorDialog(
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
     var cachedModels by remember { mutableStateOf(account.cachedModels) }
     var cachedAudioModels by remember { mutableStateOf(account.cachedAudioModels) }
+    var cachedTranscriptionModels by remember { mutableStateOf(account.cachedTranscriptionModels) }
     var transcriptionViaChat by remember { mutableStateOf(account.transcriptionViaChat) }
     var pickerKind by remember { mutableStateOf<ModelKind?>(null) }
 
@@ -507,6 +508,7 @@ private fun ProviderEditorDialog(
                     .listModels()
                 cachedModels = models.map { it.id }
                 cachedAudioModels = models.filter { it.acceptsAudioInput }.map { it.id }
+                cachedTranscriptionModels = models.filter { it.isTranscriptionModel }.map { it.id }
             }
         }
     }
@@ -526,6 +528,7 @@ private fun ProviderEditorDialog(
                     chatModel = chatModel.trim(),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
+                    cachedTranscriptionModels = cachedTranscriptionModels,
                     transcriptionViaChat = transcriptionViaChat,
                     cachedModelsAt = if (cachedModels != account.cachedModels) {
                         System.currentTimeMillis()
@@ -649,7 +652,10 @@ private fun ProviderEditorDialog(
             current = if (kind == ModelKind.TRANSCRIPTION) transcriptionModel else chatModel,
             cachedModels = cachedModels,
             cachedAudioModels = cachedAudioModels,
-            onModelsFetched = { ids, audioIds -> cachedModels = ids; cachedAudioModels = audioIds },
+            cachedTranscriptionModels = cachedTranscriptionModels,
+            onModelsFetched = { ids, audioIds, sttIds ->
+                cachedModels = ids; cachedAudioModels = audioIds; cachedTranscriptionModels = sttIds
+            },
             onPick = { picked ->
                 if (kind == ModelKind.TRANSCRIPTION) transcriptionModel = picked else chatModel = picked
             },

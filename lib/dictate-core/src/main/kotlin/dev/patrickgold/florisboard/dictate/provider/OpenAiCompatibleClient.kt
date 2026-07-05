@@ -572,8 +572,16 @@ class OpenAiCompatibleClient(
                 .filter { it.id.isNotBlank() }
                 .sortedBy { it.id.lowercase() }
         }
+        // OpenRouter's /models defaults to output_modalities=text, which hides its DEDICATED speech-to-text
+        // models (they output "transcription", e.g. microsoft/mai-transcribe-1.5, Whisper, Parakeet). Ask
+        // for all output modalities so the picker can discover them live instead of relying on curation (#157).
+        val modelsPath = if (config.transcriptionApi == TranscriptionApi.OPENROUTER_JSON) {
+            "models?output_modalities=all"
+        } else {
+            "models"
+        }
         val httpRequest = Request.Builder()
-            .url(config.normalizedBaseUrl + "models")
+            .url(config.normalizedBaseUrl + modelsPath)
             .headers(authHeaders())
             .get()
             .build()
@@ -598,6 +606,9 @@ class OpenAiCompatibleClient(
                     // Normalize each provider's own modality reporting to a single "audio" flag, used by
                     // the single-call multimodal feature (issue #130) and the 🎤 markers (#132).
                     inputModalities = if (isAudioInputChatModel(it)) listOf("audio") else emptyList(),
+                    // Carry the raw output modalities so dedicated STT models (output "transcription") are
+                    // recognised for the transcription picker, separately from chat-audio models (#157).
+                    outputModalities = it.architecture?.outputModalities ?: emptyList(),
                 )
             }
             .sortedBy { it.id.lowercase() }
@@ -607,8 +618,9 @@ class OpenAiCompatibleClient(
      * Whether a catalog entry is an audio-input **chat** model usable for single-call multimodal
      * transcription (issue #130). Each provider reports this differently (verified against the live APIs):
      *  - **Mistral** exposes a `capabilities` object → `audio && completion_chat` (e.g. Voxtral).
-     *  - **OpenRouter** lists `architecture.input_modalities` → contains `audio` (its audio entries are
-     *    chat models; Whisper-style STT is served elsewhere and isn't listed with audio input).
+     *  - **OpenRouter** lists `architecture.input_modalities`/`output_modalities`: a chat-audio model is
+     *    `audio` in + `text` out; a dedicated STT model is `audio` in + `transcription` out and is excluded
+     *    here (with `output_modalities=all`, both are now listed — see listModels, #157).
      *  - **Groq** uses top-level `input_modalities`/`output_modalities` → audio in, **text** out; this
      *    excludes Whisper, whose output modality is `transcription` (STT-only, not a chat model).
      *  - **OpenAI** and **Gemini** report no modality info at all → treated as unknown (false).
@@ -616,7 +628,13 @@ class OpenAiCompatibleClient(
     private fun isAudioInputChatModel(m: ModelEntryDto): Boolean {
         m.capabilities?.let { return it.audio && it.completionChat }
         m.architecture?.let { arch ->
-            return arch.inputModalities.any { it.equals("audio", ignoreCase = true) }
+            val audioIn = arch.inputModalities.any { it.equals("audio", ignoreCase = true) }
+            // A dedicated STT model outputs "transcription", not "text" — it's served via the transcription
+            // endpoint, not the chat-audio (#130) path, so it must NOT count as a chat-audio model (#157).
+            // When output modalities aren't reported, assume text so existing behaviour is unchanged.
+            val chatOutput = arch.outputModalities.isEmpty() ||
+                arch.outputModalities.any { it.equals("text", ignoreCase = true) }
+            return audioIn && chatOutput
         }
         m.inputModalities?.let { inputs ->
             val audioIn = inputs.any { it.equals("audio", ignoreCase = true) }
@@ -938,6 +956,8 @@ class OpenAiCompatibleClient(
     @Serializable
     private data class ArchitectureDto(
         @SerialName("input_modalities") val inputModalities: List<String> = emptyList(),
+        // OpenRouter reports output modalities too; a dedicated STT model outputs "transcription" (#157).
+        @SerialName("output_modalities") val outputModalities: List<String> = emptyList(),
     )
 
     @Serializable

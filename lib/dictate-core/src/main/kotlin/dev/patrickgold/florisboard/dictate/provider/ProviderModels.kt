@@ -28,9 +28,25 @@ data class ModelInfo(
      * that accepts "audio" input is transcription-capable regardless of its name (issue #132).
      */
     val inputModalities: List<String> = emptyList(),
+    /**
+     * Output modalities the model produces, when reported. A dedicated speech-to-text model outputs
+     * `transcription` (not `text`), which is how it's told apart from an audio-input chat model (#157).
+     */
+    val outputModalities: List<String> = emptyList(),
 ) {
-    /** True when the catalog says this model accepts audio input → it can transcribe. */
+    /**
+     * True when the catalog says this model accepts audio input **as a chat model** (text output) → it
+     * can transcribe via the single-call multimodal chat path (issue #130).
+     */
     val acceptsAudioInput: Boolean get() = inputModalities.any { it.equals("audio", ignoreCase = true) }
+
+    /**
+     * True for a **dedicated** speech-to-text model (audio in → `transcription` out, e.g. OpenRouter's
+     * MAI-Transcribe / Whisper / Parakeet). Served via the transcription endpoint, not the chat-audio
+     * path — so it belongs in the transcription picker but must stay out of [acceptsAudioInput] (#157).
+     */
+    val isTranscriptionModel: Boolean
+        get() = outputModalities.any { it.equals("transcription", ignoreCase = true) }
 }
 
 enum class ChatRole(val wire: String) {

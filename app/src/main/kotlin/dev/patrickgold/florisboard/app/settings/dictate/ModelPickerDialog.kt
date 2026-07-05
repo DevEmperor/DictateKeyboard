@@ -65,7 +65,8 @@ fun ModelPickerDialog(
     current: String,
     cachedModels: List<String>,
     cachedAudioModels: List<String>,
-    onModelsFetched: (ids: List<String>, audioIds: List<String>) -> Unit,
+    cachedTranscriptionModels: List<String>,
+    onModelsFetched: (ids: List<String>, audioIds: List<String>, sttIds: List<String>) -> Unit,
     onPick: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -76,8 +77,11 @@ fun ModelPickerDialog(
     var error by remember { mutableStateOf<String?>(null) }
     // Live catalog fetched this session, merged on top of the curated/cached list.
     var fetched by remember { mutableStateOf(cachedModels) }
-    // Ids the catalog flags as audio-input (transcription-capable) regardless of name (issue #132).
+    // Ids the catalog flags as audio-input chat models (transcription-capable) regardless of name (#132).
     var audioModelIds by remember { mutableStateOf(cachedAudioModels) }
+    // Ids the catalog flags as dedicated STT models (audio → transcription), surfaced by modality even
+    // when the name doesn't match the heuristic (issue #157).
+    var transcriptionModelIds by remember { mutableStateOf(cachedTranscriptionModels) }
 
     // Fetches the provider's full /models catalog and caches it via [onModelsFetched]. Shared by the
     // Refresh button and the auto-load below.
@@ -94,9 +98,11 @@ fun ModelPickerDialog(
                 .listModels()
             val ids = models.map { it.id }
             val audioIds = models.filter { it.acceptsAudioInput }.map { it.id }
+            val sttIds = models.filter { it.isTranscriptionModel }.map { it.id }
             fetched = ids
             audioModelIds = audioIds
-            onModelsFetched(ids, audioIds)
+            transcriptionModelIds = sttIds
+            onModelsFetched(ids, audioIds, sttIds)
         } catch (e: DictateApiException) {
             error = e.message
         } catch (e: Exception) {
@@ -126,13 +132,15 @@ fun ModelPickerDialog(
         ModelKind.TRANSCRIPTION -> preset.curatedTranscriptionModels
         ModelKind.CHAT -> preset.curatedChatModels
     }
-    val candidates = remember(curated, fetched, audioModelIds, query, current) {
+    val candidates = remember(curated, fetched, audioModelIds, transcriptionModelIds, query, current) {
         // Gemini transcribes via its multimodal chat models (no STT-tagged ids exist), so its live STT
         // catalog is the chat catalog rather than the keyword-filtered subset.
         val liveKind = if (preset.id == "gemini") ModelKind.CHAT else kind
-        // For transcription, also include every model the catalog flagged as audio-input — surfaces STT
-        // models whose ids don't match the name heuristic (e.g. OpenRouter's Microsoft model, #132).
-        val audioForTranscription = if (kind == ModelKind.TRANSCRIPTION) audioModelIds else emptyList()
+        // For transcription, also include models the catalog flagged by MODALITY — both audio-input chat
+        // models (#132) and dedicated STT models (#157) — so they surface even when the id doesn't match
+        // the name heuristic (e.g. OpenRouter's mai-transcribe / parakeet / chirp).
+        val audioForTranscription =
+            if (kind == ModelKind.TRANSCRIPTION) audioModelIds + transcriptionModelIds else emptyList()
         (curated + audioForTranscription + fetched.filter { matchesKind(it, liveKind) } + current)
             .map { it.trim() }
             .filter { it.isNotEmpty() }
@@ -236,8 +244,11 @@ private fun ModelRow(label: String, selected: Boolean, audio: Boolean = false, o
  */
 private fun matchesKind(id: String, kind: ModelKind): Boolean {
     val l = id.lowercase()
-    val isStt = l.contains("whisper") || l.contains("transcribe") || l.contains("stt") ||
-        l.contains("voxtral")
+    // Name fallback for STT models when modality metadata is missing; the modality classification (#157)
+    // is the primary signal. Covers whisper / *-transcribe / mai-transcribe / ASR / Chirp / Parakeet / …
+    val isStt = l.contains("whisper") || l.contains("transcribe") || l.contains("transcription") ||
+        l.contains("stt") || l.contains("asr") || l.contains("voxtral") || l.contains("chirp") ||
+        l.contains("parakeet") || l.contains("speech")
     return when (kind) {
         ModelKind.TRANSCRIPTION -> isStt
         ModelKind.CHAT -> !isStt &&

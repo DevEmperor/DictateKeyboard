@@ -123,14 +123,12 @@ object ProviderRegistry {
         // live catalog. This is just a safe default to start with and is fully user-overridable.
         defaultChatModel = "openai/gpt-4o-mini",
         defaultTranscriptionModel = "openai/whisper-large-v3",
-        // OpenRouter's aggregate /models list only contains chat/completion models (incl. audio-INPUT
-        // chat models like Gemini/gpt-audio/Voxtral, which the live picker does surface). Its dedicated
-        // speech-to-text models are NOT in that list — they only resolve via /models/<id>/endpoints — so
-        // they can't be auto-discovered and must be curated here by id (issue #157). Verified live 2026-07-05.
+        // Dedicated STT models (MAI-Transcribe, Whisper, Parakeet, …) are discovered live now: the picker
+        // queries /models?output_modalities=all and classifies audio→transcription entries (issue #157).
+        // This short curated list is just an offline baseline shown before a catalog fetch / without a key.
         curatedTranscriptionModels = listOf(
             "microsoft/mai-transcribe-1.5",
-            "openai/gpt-4o-transcribe", "openai/gpt-4o-mini-transcribe",
-            "openai/whisper-large-v3", "openai/whisper-1",
+            "openai/gpt-4o-transcribe", "openai/whisper-large-v3",
         ),
         // Attribution headers recommended by OpenRouter: both are used for app ranking and some routes
         // reject requests without an HTTP-Referer. The value is a stable identifier, not a real URL.

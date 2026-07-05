@@ -51,6 +51,13 @@ data class ProviderAccount(
      */
     val cachedAudioModels: List<String> = emptyList(),
     /**
+     * Ids from [cachedModels] that are DEDICATED speech-to-text models (audio in → transcription out, e.g.
+     * OpenRouter's MAI-Transcribe / Whisper / Parakeet). Surfaced in the transcription picker but kept
+     * separate from [cachedAudioModels] so they're never mistaken for chat-audio (#130) models (issue #157).
+     * Additive field, defaults empty; repopulated on the next live model fetch.
+     */
+    val cachedTranscriptionModels: List<String> = emptyList(),
+    /**
      * Single-call multimodal transcription (issue #130): when on, this provider's transcription model is
      * an audio-capable chat model and dictation is sent to `chat/completions` with `input_audio` in one
      * request (transcribe + format together) instead of using the dedicated STT endpoint plus a separate
