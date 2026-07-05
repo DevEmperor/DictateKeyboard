@@ -65,16 +65,29 @@ object GlideDictionaryManager {
      */
     fun ensureDownloaded(context: Context, lang: String) {
         val code = LatinLanguageProvider.normalizeLang(lang)
-        if (isInstalled(context, code)) return
-        val spec = GlideDictionaryCatalog.forLang(code) ?: return
+        val dictSpec = GlideDictionaryCatalog.forLang(code)
+        val bigramSpec = BigramCatalog.forLang(code)
+        val needDict = dictSpec != null && !isInstalled(context, code)
+        // The bigram file (autocorrect context, Tier 2) is fetched together with the glide dictionary when
+        // an input language is added; also downloads on its own if the dict is already present from before.
+        val needBigram = bigramSpec != null && !bigramInstalled(context, code)
+        if (!needDict && !needBigram) return
         if (!active.add(code)) return
         val appContext = context.applicationContext
         _progress.value = _progress.value + (code to 0)
         scope.launch {
             try {
-                download(appContext, spec) { done, total ->
-                    val pct = if (total > 0) ((done * 100) / total).toInt().coerceIn(0, 100) else 0
-                    if (_progress.value[code] != pct) _progress.value = _progress.value + (code to pct)
+                if (needDict) {
+                    download(appContext, dictSpec!!) { done, total ->
+                        val pct = if (total > 0) ((done * 100) / total).toInt().coerceIn(0, 100) else 0
+                        if (_progress.value[code] != pct) _progress.value = _progress.value + (code to pct)
+                    }
+                }
+                if (needBigram) {
+                    // Best effort — a missing bigram file just means no context model for this language.
+                    runCatching {
+                        downloadTo(bigramFile(appContext, code), bigramSpec!!.url, bigramSpec.sizeBytes, bigramSpec.sha256)
+                    }
                 }
                 _installedVersion.value += 1
             } catch (_: Throwable) {
@@ -91,9 +104,17 @@ object GlideDictionaryManager {
     fun dictFile(context: Context, lang: String): File =
         File(dictsRoot(context), "${lang.lowercase()}.json")
 
+    /** The downloaded bigram file for [lang] (autocorrect Tier 2), kept next to the glide dictionary. */
+    fun bigramFile(context: Context, lang: String): File =
+        File(dictsRoot(context), "${lang.lowercase()}_bigrams.txt")
+
     /** True if a downloaded dictionary for [lang] is present on disk. */
     fun isInstalled(context: Context, lang: String): Boolean =
         dictFile(context, lang).let { it.isFile && it.length() > 0 }
+
+    /** True if a downloaded bigram file for [lang] is present on disk. */
+    fun bigramInstalled(context: Context, lang: String): Boolean =
+        bigramFile(context, lang).let { it.isFile && it.length() > 0 }
 
     /** Language codes of all downloaded dictionaries currently on disk. */
     fun installedLangs(context: Context): List<String> =
@@ -114,10 +135,16 @@ object GlideDictionaryManager {
      */
     fun deleteDownloaded(context: Context, lang: String) {
         val code = LatinLanguageProvider.normalizeLang(lang)
-        if (code in GlideDictionaryCatalog.BUNDLED) return
-        if (isInstalled(context, code) && delete(context, code)) {
-            _installedVersion.value += 1
+        var changed = false
+        // Remove the downloaded bigram file too (never a bundled one), so removing a language frees its
+        // context data as well.
+        if (code !in BigramCatalog.BUNDLED && bigramInstalled(context, code)) {
+            changed = bigramFile(context, code).delete() || changed
         }
+        if (code !in GlideDictionaryCatalog.BUNDLED && isInstalled(context, code) && delete(context, code)) {
+            changed = true
+        }
+        if (changed) _installedVersion.value += 1
     }
 
     /**
@@ -129,17 +156,29 @@ object GlideDictionaryManager {
         context: Context,
         spec: GlideDict,
         onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
+    ): Unit = downloadTo(dictFile(context, spec.lang), spec.url, spec.sizeBytes, spec.sha256, onProgress)
+
+    /**
+     * Downloads [url] into [dest] atomically (via a `.tmp` sibling), verifying the byte size and SHA-256
+     * against [sizeBytes]/[sha256]. Used for both the glide dictionary and the bigram file. [onProgress] is
+     * invoked with `(downloadedBytes, totalBytes)`. Suspends until done; throws on any failure after
+     * cleaning up the staging file, leaving any previous [dest] untouched.
+     */
+    private suspend fun downloadTo(
+        dest: File,
+        url: String,
+        sizeBytes: Long,
+        sha256: String,
+        onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
     ): Unit = withContext(Dispatchers.IO) {
-        val root = dictsRoot(context)
-        root.mkdirs()
-        val dest = dictFile(context, spec.lang)
-        val tmp = File(root, "${spec.lang.lowercase()}.json.tmp")
+        dest.parentFile?.mkdirs()
+        val tmp = File(dest.parentFile, "${dest.name}.tmp")
         tmp.delete()
         try {
-            val request = Request.Builder().url(spec.url).build()
+            val request = Request.Builder().url(url).build()
             client.newCall(request).execute().use { response ->
-                check(response.isSuccessful) { "HTTP ${response.code} downloading ${spec.url}" }
-                val body = response.body ?: error("empty response body for ${spec.url}")
+                check(response.isSuccessful) { "HTTP ${response.code} downloading $url" }
+                val body = response.body ?: error("empty response body for $url")
                 val digest = MessageDigest.getInstance("SHA-256")
                 body.byteStream().use { input ->
                     tmp.outputStream().buffered().use { output ->
@@ -152,18 +191,18 @@ object GlideDictionaryManager {
                             output.write(buffer, 0, read)
                             digest.update(buffer, 0, read)
                             done += read
-                            onProgress(done, spec.sizeBytes)
+                            onProgress(done, sizeBytes)
                         }
                     }
                 }
-                check(tmp.length() == spec.sizeBytes) {
-                    "size mismatch for ${spec.lang}: expected ${spec.sizeBytes}, got ${tmp.length()}"
+                check(tmp.length() == sizeBytes) {
+                    "size mismatch for ${dest.name}: expected $sizeBytes, got ${tmp.length()}"
                 }
                 val actual = digest.digest().joinToString("") { "%02x".format(it) }
-                check(actual.equals(spec.sha256, ignoreCase = true)) { "checksum mismatch for ${spec.lang}" }
+                check(actual.equals(sha256, ignoreCase = true)) { "checksum mismatch for ${dest.name}" }
             }
             dest.delete()
-            check(tmp.renameTo(dest)) { "could not move dictionary into place for ${spec.lang}" }
+            check(tmp.renameTo(dest)) { "could not move ${dest.name} into place" }
         } catch (t: Throwable) {
             tmp.delete()
             throw t

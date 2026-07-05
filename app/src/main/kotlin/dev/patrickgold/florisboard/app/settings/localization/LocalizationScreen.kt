@@ -44,6 +44,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
+import dev.patrickgold.florisboard.ime.nlp.latin.BigramCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryManager
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
@@ -140,24 +141,28 @@ fun LocalizationScreen() = FlorisScreen {
                         "symbols_name" to (sMeta?.label ?: "null"),
                         "currency_set_name" to (currMeta?.label ?: "null"),
                     )
-                    // Glide typing status (issue #127): downloading % / ready / available.
+                    // Data status (issue #127 + Tier 2): glide dictionary and autocorrect-context (bigram)
+                    // download state, compact on ONE line (the summary is capped at ~2 lines, so two
+                    // separate status lines would truncate). Icons: ✓ ready · ⤓ downloads on use · ✕ none ·
+                    // ⬇N% downloading.
                     val glideLang = LatinLanguageProvider.normalizeLang(subtype.primaryLocale.language)
                     @Suppress("UNUSED_EXPRESSION") glideInstalledVersion // re-read installed state on change
-                    val glideSuffix = when {
-                        glideProgress[glideLang] != null ->
-                            "\n⬇ " + stringRes(
-                                R.string.settings__localization__subtype_glide_downloading,
-                                "v" to glideProgress[glideLang].toString(),
-                            )
+                    val glideIcon = when {
+                        glideProgress[glideLang] != null -> "⬇${glideProgress[glideLang]}%"
                         glideLang in GlideDictionaryCatalog.BUNDLED ||
-                            GlideDictionaryManager.isInstalled(context, glideLang) ->
-                            "\n✓ " + stringRes(R.string.settings__localization__subtype_glide_ready)
-                        GlideDictionaryCatalog.forLang(glideLang) != null ->
-                            "\n⤓ " + stringRes(R.string.settings__localization__subtype_glide_available)
-                        else ->
-                            "\n✕ " + stringRes(R.string.settings__localization__subtype_glide_unavailable)
+                            GlideDictionaryManager.isInstalled(context, glideLang) -> "✓"
+                        GlideDictionaryCatalog.forLang(glideLang) != null -> "⤓"
+                        else -> "✕"
                     }
-                    val summary = baseSummary + glideSuffix
+                    val contextIcon = when {
+                        glideLang in BigramCatalog.BUNDLED ||
+                            GlideDictionaryManager.bigramInstalled(context, glideLang) -> "✓"
+                        BigramCatalog.forLang(glideLang) != null -> "⤓"
+                        else -> "✕"
+                    }
+                    val summary = baseSummary + "\n" +
+                        "$glideIcon " + stringRes(R.string.settings__localization__subtype_status_glide) +
+                        "   $contextIcon " + stringRes(R.string.settings__localization__subtype_status_context)
                     Preference(
                         title = when (displayLanguageNamesIn) {
                             DisplayLanguageNamesIn.SYSTEM_LOCALE -> subtype.primaryLocale.displayName()

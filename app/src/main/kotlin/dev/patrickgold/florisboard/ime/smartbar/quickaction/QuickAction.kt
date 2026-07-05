@@ -102,7 +102,6 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.REDO -> R.string.quick_action__redo
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow
             KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode
-            KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect
             KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui
             KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
@@ -147,7 +146,6 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             KeyCode.REDO -> R.string.quick_action__redo__tooltip
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow__tooltip
             KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode__tooltip
-            KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect__tooltip
             KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui__tooltip
             KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode__tooltip
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action

@@ -1455,6 +1455,8 @@
     <string name="settings__localization__subtype_glide_available">グライド入力を利用可能</string>
     <string name="settings__localization__subtype_glide_downloading">グライド入力をダウンロード中… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">グライド入力は利用できません</string>
+    <string name="settings__localization__subtype_status_glide">グライド</string>
+    <string name="settings__localization__subtype_status_context">文脈</string>
     <string name="pref__suggestion__auto_correct__label">自動修正</string>
     <string name="pref__suggestion__auto_correct__summary">スペース入力時にタイプミスを自動修正</string>
 </resources>

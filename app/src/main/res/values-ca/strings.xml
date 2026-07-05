@@ -1399,6 +1399,8 @@
     <string name="settings__localization__subtype_glide_available">Escriptura lliscant disponible</string>
     <string name="settings__localization__subtype_glide_downloading">S\'està baixant l\'escriptura lliscant… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Escriptura lliscant no disponible</string>
+    <string name="settings__localization__subtype_status_glide">Lliscar</string>
+    <string name="settings__localization__subtype_status_context">Context</string>
     <string name="pref__suggestion__auto_correct__label">Correcció automàtica</string>
     <string name="pref__suggestion__auto_correct__summary">Corregeix errades automàticament en prémer espai</string>
 </resources>

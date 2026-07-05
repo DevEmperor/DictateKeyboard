@@ -1540,6 +1540,8 @@
     <string name="settings__localization__subtype_glide_available">Psaní tahem dostupné</string>
     <string name="settings__localization__subtype_glide_downloading">Stahování psaní tahem… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Psaní tahem není k dispozici</string>
+    <string name="settings__localization__subtype_status_glide">Tah</string>
+    <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Automatické opravy</string>
     <string name="pref__suggestion__auto_correct__summary">Automaticky opravit překlepy při stisku mezerníku</string>
 </resources>

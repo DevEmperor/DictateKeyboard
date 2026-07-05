@@ -1525,6 +1525,8 @@
     <string name="settings__localization__subtype_glide_available">Плъзгащо писане — налично</string>
     <string name="settings__localization__subtype_glide_downloading">Изтегляне на плъзгащо писане… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Плъзгащо писане не е налично</string>
+    <string name="settings__localization__subtype_status_glide">Плъзгане</string>
+    <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автокоригиране</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматично поправяне на печатни грешки при интервал</string>
 </resources>

@@ -1503,6 +1503,8 @@
     <string name="settings__localization__subtype_glide_available">Kaydırarak yazma kullanılabilir</string>
     <string name="settings__localization__subtype_glide_downloading">Kaydırarak yazma indiriliyor… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Kaydırarak yazma kullanılamıyor</string>
+    <string name="settings__localization__subtype_status_glide">Kaydırma</string>
+    <string name="settings__localization__subtype_status_context">Bağlam</string>
     <string name="pref__suggestion__auto_correct__label">Otomatik düzeltme</string>
     <string name="pref__suggestion__auto_correct__summary">Boşlukta yazım hatalarını otomatik düzelt</string>
 </resources>

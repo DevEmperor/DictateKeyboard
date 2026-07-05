@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
+import dev.patrickgold.florisboard.app.settings.about.DataAttributionsScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.settings.advanced.BackupScreen
@@ -269,6 +270,10 @@ object Routes {
         @Serializable
         @Deeplink("settings/about/third-party-licenses")
         object ThirdPartyLicenses
+
+        @Serializable
+        @Deeplink("settings/about/data-attributions")
+        object DataAttributions
     }
 
     object Devtools {
@@ -410,6 +415,7 @@ object Routes {
             composableWithDeepLink(Settings.About::class) { AboutScreen() }
             composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }
             composableWithDeepLink(Settings.ThirdPartyLicenses::class) { ThirdPartyLicensesScreen() }
+            composableWithDeepLink(Settings.DataAttributions::class) { DataAttributionsScreen() }
 
             composableWithDeepLink(Devtools.Home::class) { DevtoolsScreen() }
             composableWithDeepLink(Devtools.AndroidLocales::class) { AndroidLocalesScreen() }

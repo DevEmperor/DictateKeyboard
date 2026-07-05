@@ -67,6 +67,7 @@ import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.nlp.latin.KeyProximityInfo
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
@@ -123,9 +124,14 @@ fun TextKeyboardLayout(
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
-        if (glideEnabled && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (keyboard.mode == KeyboardMode.CHARACTERS) {
             val keys = keyboard.keys().asSequence().toList()
-            glideTypingManager.setLayout(keys)
+            // Feed key geometry to the autocorrect proximity model regardless of glide (which is off for
+            // many users); the glide classifier still only gets it when glide is enabled.
+            KeyProximityInfo.update(keys)
+            if (glideEnabled) {
+                glideTypingManager.setLayout(keys)
+            }
         }
     }
     val touchEventChannel = remember { Channel<MotionEvent>(64) }

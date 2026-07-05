@@ -1519,6 +1519,8 @@
     <string name="settings__localization__subtype_glide_available">滑行输入可用</string>
     <string name="settings__localization__subtype_glide_downloading">正在下载滑行输入… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">滑行输入不可用</string>
+    <string name="settings__localization__subtype_status_glide">滑行</string>
+    <string name="settings__localization__subtype_status_context">上下文</string>
     <string name="pref__suggestion__auto_correct__label">自动更正</string>
     <string name="pref__suggestion__auto_correct__summary">按空格时自动修正拼写错误</string>
 </resources>

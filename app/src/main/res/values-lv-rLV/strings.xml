@@ -1469,6 +1469,8 @@
     <string name="settings__localization__subtype_glide_available">Slīdošā rakstīšana pieejama</string>
     <string name="settings__localization__subtype_glide_downloading">Lejupielādē slīdošo rakstīšanu… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Slīdošā rakstīšana nav pieejama</string>
+    <string name="settings__localization__subtype_status_glide">Slīdēšana</string>
+    <string name="settings__localization__subtype_status_context">Konteksts</string>
     <string name="pref__suggestion__auto_correct__label">Automātiskā labošana</string>
     <string name="pref__suggestion__auto_correct__summary">Automātiski labot drukas kļūdas, nospiežot atstarpi</string>
 </resources>

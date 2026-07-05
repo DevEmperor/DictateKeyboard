@@ -1529,6 +1529,8 @@
     <string name="settings__localization__subtype_glide_available">Свайп-ввод доступен</string>
     <string name="settings__localization__subtype_glide_downloading">Загрузка свайп-ввода… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Свайп-ввод недоступен</string>
+    <string name="settings__localization__subtype_status_glide">Свайп</string>
+    <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автоисправление</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматически исправлять опечатки при пробеле</string>
 </resources>

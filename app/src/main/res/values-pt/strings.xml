@@ -1505,6 +1505,8 @@
     <string name="settings__localization__subtype_glide_available">Escrita deslizante disponível</string>
     <string name="settings__localization__subtype_glide_downloading">A transferir escrita deslizante… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Escrita deslizante não disponível</string>
+    <string name="settings__localization__subtype_status_glide">Deslizar</string>
+    <string name="settings__localization__subtype_status_context">Contexto</string>
     <string name="pref__suggestion__auto_correct__label">Correção automática</string>
     <string name="pref__suggestion__auto_correct__summary">Corrigir erros de digitação automaticamente ao dar espaço</string>
 </resources>

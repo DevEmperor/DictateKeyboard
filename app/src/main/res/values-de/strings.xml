@@ -1397,6 +1397,8 @@
     <string name="settings__localization__subtype_glide_available">Glide-Eingabe verfügbar</string>
     <string name="settings__localization__subtype_glide_downloading">Gleittipp-Wörterbuch wird geladen… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Gleittipp nicht verfügbar</string>
+    <string name="settings__localization__subtype_status_glide">Gleiten</string>
+    <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Autokorrektur</string>
     <string name="pref__suggestion__auto_correct__summary">Tippfehler beim Leerzeichen automatisch korrigieren</string>
 </resources>

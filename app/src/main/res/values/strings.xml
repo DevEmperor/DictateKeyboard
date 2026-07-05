@@ -169,6 +169,8 @@
     <string name="settings__localization__subtype_glide_available" comment="Shown on a subtype whose glide typing dictionary downloads on first use">Glide typing available</string>
     <string name="settings__localization__subtype_glide_downloading" comment="Shown while a subtype glide typing dictionary downloads; {v} is the percent">Downloading glide typing… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable" comment="Shown on a subtype that has no glide typing dictionary">Glide typing not available</string>
+    <string name="settings__localization__subtype_status_glide" comment="Compact label next to a status icon (✓/⤓/✕/⬇%) for the glide typing dictionary on a subtype">Glide</string>
+    <string name="settings__localization__subtype_status_context" comment="Compact label next to a status icon (✓/⤓/✕) for the autocorrect context (bigram) data on a subtype">Context</string>
     <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Suggested subtype presets</string>
     <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">No suggested presets available. Use below button to view all subtype presets.</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Subtype presets</string>
@@ -625,6 +627,8 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Asset manager reference is null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
+    <string name="about__data_attributions__title" comment="Preference title for the language-data attributions screen">Language data attributions</string>
+    <string name="about__data_attributions__summary" comment="Preference summary">Attributions for the word and bigram language data (OPUS, Leipzig Corpora)</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>

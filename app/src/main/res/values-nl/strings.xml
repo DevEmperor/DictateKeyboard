@@ -1425,6 +1425,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="settings__localization__subtype_glide_available">Veegtypen beschikbaar</string>
     <string name="settings__localization__subtype_glide_downloading">Veegtypen downloaden… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Veegtypen niet beschikbaar</string>
+    <string name="settings__localization__subtype_status_glide">Vegen</string>
+    <string name="settings__localization__subtype_status_context">Context</string>
     <string name="pref__suggestion__auto_correct__label">Autocorrectie</string>
     <string name="pref__suggestion__auto_correct__summary">Typefouten automatisch corrigeren bij een spatie</string>
 </resources>

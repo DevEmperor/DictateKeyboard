@@ -1380,6 +1380,8 @@
     <string name="settings__localization__subtype_glide_available">الكتابة بالسحب متاحة</string>
     <string name="settings__localization__subtype_glide_downloading">جارٍ تنزيل الكتابة بالسحب… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">الكتابة بالسحب غير متاحة</string>
+    <string name="settings__localization__subtype_status_glide">انزلاق</string>
+    <string name="settings__localization__subtype_status_context">السياق</string>
     <string name="pref__suggestion__auto_correct__label">التصحيح التلقائي</string>
     <string name="pref__suggestion__auto_correct__summary">تصحيح الأخطاء المطبعية تلقائيًا عند كتابة مسافة</string>
 </resources>

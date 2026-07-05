@@ -1399,6 +1399,8 @@
     <string name="settings__localization__subtype_glide_available">Saisie glissée disponible</string>
     <string name="settings__localization__subtype_glide_downloading">Téléchargement de la saisie glissée… {v}%</string>
     <string name="settings__localization__subtype_glide_unavailable">Saisie glissée non disponible</string>
+    <string name="settings__localization__subtype_status_glide">Glissé</string>
+    <string name="settings__localization__subtype_status_context">Contexte</string>
     <string name="pref__suggestion__auto_correct__label">Correction automatique</string>
     <string name="pref__suggestion__auto_correct__summary">Corriger les fautes de frappe automatiquement à l\'espace</string>
 </resources>

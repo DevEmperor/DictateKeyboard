@@ -38,6 +38,7 @@ import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.kotlin.guardedByLock
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.ln
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -52,6 +53,16 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // 128..255 scale). Rarer fixes are still offered as tap suggestions but never swapped in
         // automatically, so uncommon-but-intentional words (names, jargon) aren't mangled.
         private const val AUTOCORRECT_MIN_FREQ = 170
+
+        // Keyboard-proximity noisy-channel model (Tier 1). Distances are in key-width² units.
+        private const val PROX_SIGMA2 = 1.0         // touch variance (~1 key-width std): near mis-taps cost little
+        private const val NEUTRAL_SUB_SQDIST = 2.0  // fallback substitution distance² when key geometry is unknown
+        private const val LENGTH_DIFF_PENALTY = -0.7 // flat log-penalty for insert/delete candidates
+        private const val TRANSPOSE_PENALTY = -0.3   // adjacent-swap typo; cost independent of key distance
+
+        // Bigram context model (Tier 2): weight on ln(bigram-count+1) added to a candidate that commonly
+        // follows the previous word, so context ("of the" over "of teh") re-ranks the correction.
+        private const val CONTEXT_WEIGHT = 0.3
 
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
@@ -76,6 +87,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 resolvedDictLang.clear()
                 rankedWordsByLang.withLock { it.clear() }
                 lowerIndexByLang.withLock { it.clear() }
+                bigramsByLang.withLock { it.clear() }
             }
         }
     }
@@ -143,6 +155,49 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 loaded
             }
         }
+    }
+
+    // Bigram context model (Tier 2). Per-language "w1 w2" -> count maps loaded from the bundled
+    // ime/dict/<lang>_bigrams.txt (currently English only); languages without a file get an empty map so
+    // context simply doesn't apply. Used to re-rank corrections by the previous word.
+    private val bigramsByLang = guardedByLock { mutableMapOf<String, Map<String, Long>>() }
+
+    private suspend fun bigramsFor(subtype: Subtype): Map<String, Long> {
+        val lang = dictLangFor(subtype)
+        return bigramsByLang.withLock { cache ->
+            cache[lang] ?: loadBigrams(lang).also { cache[lang] = it }
+        }
+    }
+
+    private fun loadBigrams(lang: String): Map<String, Long> = runCatching {
+        // A downloaded per-language bigram file (issue: per-language Tier 2) takes precedence over the
+        // bundled English asset — mirrors readDict for the unigram dictionaries.
+        val downloaded = GlideDictionaryManager.bigramFile(appContext, lang)
+        val text = if (downloaded.isFile && downloaded.length() > 0) {
+            downloaded.readText()
+        } else {
+            appContext.assets.readText("ime/dict/${lang}_bigrams.txt")
+        }
+        val map = HashMap<String, Long>(45_000)
+        text.lineSequence().forEach { line ->
+            val tab = line.indexOf('\t')
+            if (tab > 0) {
+                line.substring(tab + 1).toLongOrNull()?.let { map[line.substring(0, tab)] = it }
+            }
+        }
+        map
+    }.getOrDefault(emptyMap())
+
+    /** The word right before the one being composed, lowercased — the context for the bigram model. */
+    private fun previousWordOf(content: EditorContent): String? {
+        val before = content.textBeforeSelection.removeSuffix(content.composingText).trimEnd()
+        return before.takeLastWhile { it.isLetter() || it == '\'' }.lowercase().takeIf { it.isNotEmpty() }
+    }
+
+    /** Context-score function for [correctionsFor]: boosts candidates that commonly follow [prevWord]. */
+    private fun bigramContextScore(prevWord: String?, bigrams: Map<String, Long>): (String) -> Double {
+        if (prevWord == null || bigrams.isEmpty()) return { 0.0 }
+        return { cand -> CONTEXT_WEIGHT * ln(((bigrams["$prevWord $cand"] ?: 0L) + 1L).toDouble()) }
     }
 
     /** Frequency-sorted (descending) word list for [subtype]'s dictionary language, cached per language. */
@@ -216,6 +271,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         index: LowerIndex,
         maxCount: Int,
         allowDistance2: Boolean,
+        contextScore: (cand: String) -> Double = { 0.0 },
     ): List<String> {
         val lower = word.lowercase()
         val e1 = edits1(lower, index.alphabet)
@@ -225,9 +281,49 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 if (index.freq.containsKey(ee)) known.add(ee)
             }
         }
-        return known.sortedByDescending { index.freq[it] ?: 0 }
+        // Noisy-channel ranking (Tier 1): combine the unigram prior with a keyboard-proximity likelihood,
+        // so a fat-finger substitution of an adjacent key beats a merely more frequent but far-away word,
+        // instead of ranking purely by frequency.
+        return known.sortedByDescending { channelScore(lower, it, index.freq[it] ?: 0, contextScore) }
             .take(maxCount)
             .map { index.canonical[it] ?: it }
+    }
+
+    /**
+     * Noisy-channel score for ranking a correction candidate: log unigram prior + log likelihood that
+     * [typed] is a mis-tap of [cand] given the keyboard geometry (Tier 1) + a context bonus for how often
+     * [cand] follows the previous word (Tier 2 bigram). Higher is better.
+     */
+    private fun channelScore(typed: String, cand: String, freq: Int, contextScore: (String) -> Double): Double =
+        ln((freq + 1).toDouble()) + spatialLogLikelihood(typed, cand) + contextScore(cand)
+
+    /**
+     * log P(typed | cand): near-key substitutions cost little, far ones a lot (Gaussian over key distance);
+     * an adjacent transposition (finger-order slip) is a flat cost independent of distance; insert/delete
+     * candidates get a flat penalty so the frequency prior orders them. Neutral when key geometry is
+     * unavailable (layout not captured yet), which reduces this to frequency-only ranking.
+     */
+    private fun spatialLogLikelihood(typed: String, cand: String): Double {
+        if (typed.length != cand.length) return LENGTH_DIFF_PENALTY
+        if (isAdjacentTransposition(typed, cand)) return TRANSPOSE_PENALTY
+        var cost = 0.0
+        for (i in typed.indices) {
+            if (typed[i] == cand[i]) continue
+            val d2 = KeyProximityInfo.normSqDistance(typed[i], cand[i])?.toDouble() ?: NEUTRAL_SUB_SQDIST
+            cost += d2 / (2.0 * PROX_SIGMA2)
+        }
+        return -cost
+    }
+
+    /** True if [b] is [a] with exactly one pair of adjacent characters swapped (a transposition). */
+    private fun isAdjacentTransposition(a: String, b: String): Boolean {
+        if (a.length != b.length || a.length < 2) return false
+        var i = 0
+        while (i < a.length && a[i] == b[i]) i++
+        if (i >= a.length - 1) return false
+        if (a[i] != b[i + 1] || a[i + 1] != b[i]) return false
+        for (j in i + 2 until a.length) if (a[j] != b[j]) return false
+        return true
     }
 
     private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
@@ -285,7 +381,14 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             return SpellingResult.validWord()
         }
         // Unknown word → typo, offering the closest dictionary words as corrections (may be empty).
-        val suggestions = correctionsFor(trimmed, index, maxSuggestionCount, allowDistance2 = true)
+        // Re-rank by the previous word (Tier 2 bigram context) when available.
+        val prevWord = precedingWords.lastOrNull()
+            ?.takeLastWhile { it.isLetter() || it == '\'' }?.lowercase()?.takeIf { it.isNotEmpty() }
+        val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+        val suggestions = correctionsFor(
+            trimmed, index, maxSuggestionCount, allowDistance2 = true,
+            bigramContextScore(prevWord, bigrams),
+        )
         return SpellingResult.typo(suggestions.toTypedArray())
     }
 
@@ -347,7 +450,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val index = lowerIndexFor(subtype)
         val isKnown = index.freq.containsKey(word.lowercase()) || isInUserDictionary(word, subtype)
         if (prefs.suggestion.autoCorrect.get() && out.isEmpty() && !isKnown && word.length >= 3) {
-            val corrections = correctionsFor(word, index, maxCandidateCount, allowDistance2 = false)
+            val prevWord = previousWordOf(content)
+            val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+            val corrections = correctionsFor(
+                word, index, maxCandidateCount, allowDistance2 = false,
+                bigramContextScore(prevWord, bigrams),
+            )
             // Keep the user's exact typed word in the strip (left-most) so they can tap it to bypass the
             // autocorrection and keep their spelling — never auto-committed itself (issue #150).
             if (corrections.isNotEmpty()) {

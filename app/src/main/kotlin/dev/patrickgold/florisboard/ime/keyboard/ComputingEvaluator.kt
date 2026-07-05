@@ -352,9 +352,6 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 this.context()?.vectorResource(id = R.drawable.ic_incognito_off)
             }
         }
-        KeyCode.TOGGLE_AUTOCORRECT -> {
-            Icons.Default.FontDownload
-        }
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.state.isKanaKata) {
                 this.context()?.vectorResource(R.drawable.ic_keyboard_kana_switcher_kata)

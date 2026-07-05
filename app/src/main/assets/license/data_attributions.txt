@@ -1,0 +1,32 @@
+DICTATE — THIRD-PARTY DATA ATTRIBUTIONS
+=======================================
+
+Dictate bundles and/or downloads language data derived from the following freely
+licensed corpora. Only aggregate frequency data (word and word-pair counts) is
+redistributed — never the underlying source texts.
+
+
+1. Word-frequency dictionaries (glide typing, autocorrect, spell check)
+-----------------------------------------------------------------------
+Files: ime/dict/<lang>.json  (bundled English; other languages downloaded on demand)
+
+Derived from the OPUS OpenSubtitles frequency lists.
+  - OPUS — the open parallel corpus: https://opus.nlpl.eu
+  - Please cite: P. Lison & J. Tiedemann (2016), "OpenSubtitles2016: Extracting
+    Large Parallel Corpora from Movie and TV Subtitles", LREC 2016.
+Casing was restored using the Hunspell dictionaries (github.com/wooorm/dictionaries)
+as a build-time oracle only; their word lists are not redistributed.
+
+
+2. Bigram (word-pair) frequency data for autocorrect context (Tier 2)
+---------------------------------------------------------------------
+Files: ime/dict/<lang>_bigrams.txt  (bundled English; other languages downloaded on demand)
+
+Derived from the Leipzig Corpora Collection (Wortschatz), used under CC BY.
+  - © Universität Leipzig / Sächsische Akademie der Wissenschaften / InfAI
+  - https://wortschatz-leipzig.de
+  - Please cite: D. Goldhahn, T. Eckart & U. Quasthoff (2012), "Building Large
+    Monolingual Dictionaries at the Leipzig Corpora Collection: From 100 to 200
+    Languages", LREC 2012.
+  - License: Creative Commons Attribution (CC BY) — the downloadable corpus
+    packages are CC BY (the online query service is CC BY-NC and is not used here).

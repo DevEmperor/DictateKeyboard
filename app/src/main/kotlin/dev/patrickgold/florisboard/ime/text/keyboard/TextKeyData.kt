@@ -151,7 +151,6 @@ data class TextKeyData(
                 TOGGLE_ACTIONS_OVERFLOW,
                 TOGGLE_ACTIONS_EDITOR,
                 TOGGLE_INCOGNITO_MODE,
-                TOGGLE_AUTOCORRECT,
             )
         }
 
@@ -545,12 +544,6 @@ data class TextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.TOGGLE_INCOGNITO_MODE,
             label = "toggle_incognito_mode",
-        )
-        /** Predefined key data for [KeyCode.TOGGLE_AUTOCORRECT] */
-        val TOGGLE_AUTOCORRECT = TextKeyData(
-            type = KeyType.FUNCTION,
-            code = KeyCode.TOGGLE_AUTOCORRECT,
-            label = "toggle_autocorrect",
         )
     }
 }
