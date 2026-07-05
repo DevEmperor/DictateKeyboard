@@ -358,6 +358,22 @@ object DictateController {
     }
 
     /**
+     * Snaps [activeInputLanguage] back into the current [inputLanguages] selection. A stale active
+     * code — most importantly "detect" left over after the user disabled auto-detect — would otherwise
+     * keep the transcription request on auto-detect (language = null, so e.g. Portuguese gets detected
+     * as English) and show a phantom globe on the recording bar. Falls back to the first selected
+     * language and persists the correction. No-op when the active code is already selected.
+     */
+    private suspend fun reconcileActiveLanguage() {
+        val selection = DictateLanguages.parseSelection(prefs.dictate.inputLanguages.get())
+        if (selection.isEmpty()) return
+        val current = prefs.dictate.activeInputLanguage.get()
+        if (selection.none { it.code == current }) {
+            prefs.dictate.activeInputLanguage.set(selection.first().code)
+        }
+    }
+
+    /**
      * Reloads the prompt list from the shared `prompts.db` into [prompts]. Cheap and idempotent;
      * called when the keyboard (re-)appears so the chip strip reflects edits made in the settings.
      */
@@ -541,6 +557,9 @@ object DictateController {
         val appContext = context.applicationContext
         startJob = scope.launch {
             try {
+                // Correct any stale active language (e.g. leftover "detect" after auto-detect was
+                // disabled) before the realtime session / request reads it.
+                reconcileActiveLanguage()
                 requestAudioFocusIfEnabled(appContext)
                 val audioSource = setupBluetoothIfEnabled(appContext)
                 // Real-time (#128): open a streaming session and stream mic PCM to it; null → normal batch.
@@ -708,6 +727,7 @@ object DictateController {
         transcribeJob = scope.launch {
             var keepAudio = false
             try {
+                reconcileActiveLanguage() // correct a stale active language before it's read for the request
                 // Silence gate (issue #93): before spending an upload, run a local Silero VAD; if the
                 // recording contains no speech, skip transcription so silent clips can't produce "ghost
                 // text" hallucinations. Fails open (treats as speech) if the check can't run. Not applied

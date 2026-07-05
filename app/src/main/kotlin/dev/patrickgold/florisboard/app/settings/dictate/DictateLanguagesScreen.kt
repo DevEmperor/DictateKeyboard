@@ -62,7 +62,16 @@ fun DictateLanguagesScreen() = FlorisScreen {
             // Preserve catalog order and never allow an empty selection.
             val ordered = DictateLanguages.all.filter { it.code in next }
                 .ifEmpty { listOf(DictateLanguages.of(DictateLanguages.DETECT)) }
-            scope.launch { prefs.dictate.inputLanguages.set(DictateLanguages.serializeSelection(ordered)) }
+            scope.launch {
+                prefs.dictate.inputLanguages.set(DictateLanguages.serializeSelection(ordered))
+                // Keep the active language consistent: if it's no longer selected (e.g. the user just
+                // disabled auto-detect while it was active), snap to the first entry — otherwise a stale
+                // "detect" would silently keep dictation on auto-detect and show a phantom globe.
+                val active = prefs.dictate.activeInputLanguage.get()
+                if (ordered.none { it.code == active }) {
+                    prefs.dictate.activeInputLanguage.set(ordered.first().code)
+                }
+            }
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
