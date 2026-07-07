@@ -20,6 +20,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -79,6 +80,7 @@ import androidx.compose.ui.window.DialogProperties
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.florisboard.lib.util.VersionName
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 import kotlin.math.PI
@@ -91,6 +93,9 @@ import kotlin.math.sin
  * replays on later minor updates (those fall back to the regular [ChangelogDialog]).
  */
 val WHATS_NEW_TOUR_VERSION: VersionName = VersionName(5, 0, 0)
+
+/** PayPal donation link, kept in sync with the changelog dialog's donate invite. */
+private const val DONATE_URL = "https://paypal.me/DevEmperor"
 
 /**
  * Lets any screen (e.g. Settings › About) re-open the tour after it was first dismissed. The tour
@@ -417,7 +422,29 @@ private fun PageContent(page: WhatsNewPage) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+        // A gentle donation invite on the closing page — for users who enjoyed the app and the update.
+        if (page.kind == PageKind.OUTRO) {
+            DonateInvite()
+        }
     }
+}
+
+@Composable
+private fun DonateInvite() {
+    val context = LocalContext.current
+    Spacer(modifier = Modifier.height(24.dp))
+    Text(
+        text = stringRes(R.string.changelog__donate),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.primary,
+        fontWeight = FontWeight.SemiBold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .clip(RoundedCornerShape(14.dp))
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.10f))
+            .clickable { context.launchUrl(DONATE_URL) }
+            .padding(horizontal = 18.dp, vertical = 12.dp),
+    )
 }
 
 @Composable
