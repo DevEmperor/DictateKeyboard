@@ -49,6 +49,32 @@ object AppVersionUtils {
     suspend fun updateVersionLastChangelog(context: Context, prefs: FlorisPreferenceModel) {
         prefs.internal.versionLastChangelog.set(getRawVersionName(context))
     }
+
+    /** The parsed version of the currently installed build, or [VersionName.DEFAULT] when unparseable. */
+    fun currentVersion(context: Context): VersionName =
+        VersionName.fromString(getRawVersionName(context)) ?: VersionName.DEFAULT
+
+    /** Remembers that the user has seen the "What's new" tour for the current version. */
+    suspend fun updateVersionLastWhatsNew(context: Context, prefs: FlorisPreferenceModel) {
+        prefs.internal.versionLastWhatsNew.set(getRawVersionName(context))
+    }
+
+    /**
+     * Whether the full-screen "What's new" tour should auto-show. Like [shouldShowChangelog] it only
+     * fires on a real update (not a fresh install) and only once per milestone, but it is additionally
+     * scoped to a specific [tourVersion] so a minor update later falls back to the regular changelog
+     * dialog instead of replaying the tour.
+     */
+    fun shouldShowWhatsNew(context: Context, prefs: FlorisPreferenceModel, tourVersion: VersionName): Boolean {
+        val installVersion =
+            VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
+        val lastWhatsNewVersion =
+            VersionName.fromString(prefs.internal.versionLastWhatsNew.get()) ?: VersionName.DEFAULT
+        val currentVersion = currentVersion(context)
+        return installVersion != currentVersion &&
+            lastWhatsNewVersion < tourVersion &&
+            !(currentVersion < tourVersion)
+    }
 }
 
 data class VersionName(

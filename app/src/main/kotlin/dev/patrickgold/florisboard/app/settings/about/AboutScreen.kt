@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CallSplit
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.History
@@ -45,6 +46,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.WhatsNewTourState
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.util.launchUrl
@@ -105,6 +107,12 @@ fun AboutScreen() = FlorisScreen {
                     ).show()
                 }
             },
+        )
+        Preference(
+            icon = Icons.Default.AutoAwesome,
+            title = stringRes(R.string.about__whats_new__title),
+            summary = stringRes(R.string.about__whats_new__summary),
+            onClick = { WhatsNewTourState.open() },
         )
         Preference(
             icon = Icons.Default.History,

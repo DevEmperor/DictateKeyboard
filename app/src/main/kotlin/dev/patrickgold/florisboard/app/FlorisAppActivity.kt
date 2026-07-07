@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
@@ -221,10 +222,20 @@ class FlorisAppActivity : ComponentActivity() {
                     )
                     PreviewKeyboardField(previewFieldController)
                 }
-                // Show the "What's new" dialog once after an update (only when setup is complete, so
-                // it never competes with the onboarding flow).
+                // Show the "What's new" surface once after an update (only when setup is complete, so
+                // it never competes with the onboarding flow). For the 5.0 milestone this is the
+                // full-screen tour; for other updates it stays the compact changelog dialog. The tour
+                // and dialog are mutually exclusive per update so they never both appear.
                 if (isImeSetUp) {
-                    ChangelogDialog()
+                    val whatsNewContext = LocalContext.current
+                    val showTour = remember {
+                        AppVersionUtils.shouldShowWhatsNew(whatsNewContext, prefs, WHATS_NEW_TOUR_VERSION)
+                    }
+                    if (!showTour) {
+                        ChangelogDialog()
+                    }
+                    // Always composed so Settings › About can re-open it; only auto-shows when gated.
+                    WhatsNewTour(autoShow = showTour)
                 }
             }
         }

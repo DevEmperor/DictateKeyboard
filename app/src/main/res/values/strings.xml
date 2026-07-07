@@ -608,8 +608,54 @@
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copied to clipboard</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Something went wrong: {error_message}</string>
+    <string name="about__whats_new__title" comment="Preference title — reopens the What\'s new tour">What’s new in 5.0</string>
+    <string name="about__whats_new__summary" comment="Preference summary">Take the feature tour again</string>
     <string name="about__changelog__title" comment="Preference title">Changelog</string>
     <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
+    <!-- What's-new tour (in-app 5.0 feature carousel) -->
+    <string name="apptour__skip" comment="Button to dismiss the What\'s new tour">Skip</string>
+    <string name="apptour__next" comment="Button to advance to the next tour page">Next</string>
+    <string name="apptour__start" comment="Button on the intro page to start the tour">Let’s go</string>
+    <string name="apptour__done" comment="Button on the last tour page to finish">Done</string>
+    <string name="apptour__badge_highlight" comment="Small badge marking a headline feature">★ Highlight</string>
+    <string name="apptour__intro_eyebrow">Version 5.0</string>
+    <string name="apptour__intro_title">A quick tour</string>
+    <string name="apptour__intro_body">Here’s what’s new in Dictate 5.0 — the highlights in under a minute. Tap “Try it” on any page to jump straight to that setting.</string>
+    <string name="apptour__glide_eyebrow">Keyboard</string>
+    <string name="apptour__glide_title">Swipe to type</string>
+    <string name="apptour__glide_body">Slide your finger from key to key and Dictate turns the path into whole words. Each language brings its own dictionary that downloads on demand — switch it on under Gestures.</string>
+    <string name="apptour__glide_cta">Set up glide typing</string>
+    <string name="apptour__suggestions_eyebrow">Keyboard</string>
+    <string name="apptour__suggestions_title">Autocorrect &amp; suggestions</string>
+    <string name="apptour__suggestions_body">As you type, Dictate suggests fitting words and quietly fixes typos. The word you actually typed stays in the suggestion bar, so a single tap undoes any correction.</string>
+    <string name="apptour__suggestions_cta">Adjust suggestions</string>
+    <string name="apptour__realtime_eyebrow">Transcription</string>
+    <string name="apptour__realtime_title">Real-time transcription</string>
+    <string name="apptour__realtime_body">Watch your words appear live while you’re still speaking, instead of waiting for the recording to finish. Works with OpenAI, Deepgram, Soniox, AssemblyAI and ElevenLabs.</string>
+    <string name="apptour__realtime_cta">Enable real-time</string>
+    <string name="apptour__providers_eyebrow">Transcription</string>
+    <string name="apptour__providers_title">Three new cloud providers</string>
+    <string name="apptour__providers_body">ElevenLabs Scribe, Deepgram and AssemblyAI join the transcription line-up — pick whichever fits your language, accuracy, speed and budget best.</string>
+    <string name="apptour__providers_cta">Choose a provider</string>
+    <string name="apptour__legacy_eyebrow">A classic returns</string>
+    <string name="apptour__legacy_title">Classic dictation layout</string>
+    <string name="apptour__legacy_body">Prefer voice over keys? The keyboard-free screen from Dictate 3 is back — make it your default, or keep it just one swipe away from the full keyboard.</string>
+    <string name="apptour__legacy_cta">Choose a layout</string>
+    <string name="apptour__library_eyebrow">Community</string>
+    <string name="apptour__library_title">Prompt library</string>
+    <string name="apptour__library_body">Browse rewording prompts shared by the community and install them with one tap — or publish your own for others to use.</string>
+    <string name="apptour__library_cta">Open the library</string>
+    <string name="apptour__stats_eyebrow">Insights</string>
+    <string name="apptour__stats_title">Your dictation stats</string>
+    <string name="apptour__stats_body">Track how much you’ve dictated and typed over time, reach milestones, and see a quick summary right on the home screen.</string>
+    <string name="apptour__stats_cta">View statistics</string>
+    <string name="apptour__offline_eyebrow">No cloud</string>
+    <string name="apptour__offline_title">Transcribe offline</string>
+    <string name="apptour__offline_body">Run the NVIDIA Parakeet model entirely on your phone — no internet, nothing leaves the device. A silence filter also skips empty recordings, so you never get stray text.</string>
+    <string name="apptour__offline_cta">Get the offline model</string>
+    <string name="apptour__outro_eyebrow">And more</string>
+    <string name="apptour__outro_title">Polish everywhere</string>
+    <string name="apptour__outro_body">More under the hood: a steadier floating button, a reasoning-effort control for rewording, haptic feedback, a new E-Reader theme and dozens of fixes.</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Based on FlorisBoard</string>
@@ -1709,6 +1755,7 @@
          entry in DictateChangelog.kt. changelog__current holds the notes for the initial 4.0.0 release. -->
     <string name="changelog__current" comment="What's-new text for the 4.0.0 release. One change per line.">• Brand-new keyboard: Dictate now ships as a full multi-language layout keyboard with a dedicated mic key that opens the voice panel.\n• Bring your own AI: pick any OpenAI-compatible provider and enter your API key under Settings → Dictate.\n• Smart formatting and rewording powered by your chosen model.\n• Your settings from the previous Dictate app are imported automatically.</string>
     <string name="changelog__v4_1_0" comment="What's-new text for the 4.1.0 release. One change per line.">• New: search emoji right from the keyboard.\n• New transcription provider: Soniox.\n• Re-insert your last dictation, and recover recordings interrupted when the keyboard closed.\n• The prompt bar now refreshes live — long-press a prompt to edit it.\n• The AI providers screen now shows both your active transcription and rewording providers.\n• Bigger, easier-to-hit record button.\n• Fixes: a support prompt could get stuck and block the bar in some languages; backup no longer fails when prompts, keyboard or theme are selected; saved API keys are kept when upgrading.</string>
+    <string name="changelog__v5_0_0" comment="What\'s-new text for the 5.0.0 release. One change per line.">• NEW: Glide typing — swipe across the keys to type whole words, with per-language dictionaries that download on demand. 👆\n• NEW: Word suggestions &amp; autocorrect — typos get fixed automatically and the word you typed stays one tap away. ✨\n• NEW: Real-time transcription — watch your words appear as you speak, with OpenAI, Deepgram, Soniox, AssemblyAI and ElevenLabs. ⚡\n• NEW: Three more transcription providers — ElevenLabs Scribe, Deepgram and AssemblyAI. ☁️\n• NEW: Classic dictation layout — the keyboard-free voice screen from Dictate 3 is back, locked or just a swipe away. 🎙️\n• NEW: Community prompt library — browse and share rewording prompts. 📚\n• NEW: Dictation statistics with milestones. 📊\n• NEW: Offline model NVIDIA Parakeet, plus a silence filter that skips empty recordings. 📴\n• More: a steadier floating button, reasoning-effort control, haptic feedback, a new E-Reader theme and dozens of fixes. 🛠️</string>
     <string name="changelog__v4_3_0" comment="What\'s-new text for the 4.3.0 release. One change per line.">• NEW: On-device transcription — dictate completely offline. No internet needed and nothing leaves your phone. Download a speech model once in Settings ▸ Dictate ▸ Providers. 📴\n• NEW: Wear OS keyboard — dictate straight from your watch, through your phone or fully on its own. ⌚\n• NEW: Find &amp; replace rules — automatically fix recurring words, names or phrases in every transcript. Set them up in Settings ▸ Dictate ▸ Custom mappings. 🔁\n• NEW: Single-call mode — let one capable AI model transcribe and format in a single request, faster and often cheaper. Turn it on per provider. ⚡\n• NEW: Smartbar actions to jump back to your previous keyboard or open the system keyboard picker. ⌨️\n• The keyboard\'s accent color now follows the color you pick in Settings ▸ Theme. 🎨\n• Added an optional undo button to the floating dictation button. ↩️\n• Various fixes and stability improvements. 🛠️</string>
     <string name="changelog__v4_2_0" comment="What's-new text for the 4.2.0 release. One change per line.">• NEW: Floating dictation button — dictate straight into any app, even when another keyboard is active. Pick from three styles (Pill, Ring, Orb), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press to reword. Turn it on in Settings ▸ Dictate ▸ Floating button.\n• NEW: Google Gemini — bring your own AI Studio API key for both transcription and rewording.\n• Prompts now appear in an always-on row above the keys by default.\n• More reliable text insertion across apps, including browsers and other keyboards.</string>
     <string name="changelog__v4_1_1" comment="What's-new text for the 4.1.1 release. One change per line.">• Fix: the accent color could appear green on some devices — keys and buttons are back to the Dictate blue.</string>

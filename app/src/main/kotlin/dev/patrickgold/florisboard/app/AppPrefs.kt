@@ -964,6 +964,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "internal__version_last_changelog",
             default = VersionName.DEFAULT_RAW,
         )
+        val versionLastWhatsNew = string(
+            key = "internal__version_last_whats_new",
+            default = VersionName.DEFAULT_RAW,
+        )
         val notificationPermissionState = enum(
             key = "internal__notification_permission_state",
             default = NotificationPermissionState.NOT_SET,

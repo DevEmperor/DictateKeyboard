@@ -110,6 +110,7 @@ fun DictateScreen() = FlorisScreen {
         val rewordingName = remember(rewordingProviderId, accounts) {
             providerDisplayName(rewordingProviderId, accounts)
         }
+
         Preference(
             icon = Icons.Default.Insights,
             title = stringRes(R.string.dictate__stats_title),
