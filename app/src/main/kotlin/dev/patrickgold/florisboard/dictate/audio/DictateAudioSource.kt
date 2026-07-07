@@ -28,12 +28,14 @@ import android.media.MediaRecorder
  */
 enum class DictateAudioSource {
     DEFAULT,
+    VOICE_COMMUNICATION,
     VOICE_RECOGNITION,
     UNPROCESSED;
 
     /** Maps to a [MediaRecorder.AudioSource], degrading [UNPROCESSED] → [VOICE_RECOGNITION] when unsupported. */
     fun resolve(context: Context): Int = when (this) {
         DEFAULT -> MediaRecorder.AudioSource.MIC
+        VOICE_COMMUNICATION -> MediaRecorder.AudioSource.VOICE_COMMUNICATION
         VOICE_RECOGNITION -> MediaRecorder.AudioSource.VOICE_RECOGNITION
         UNPROCESSED -> {
             val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
