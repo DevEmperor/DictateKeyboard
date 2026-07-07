@@ -1360,4 +1360,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — toque para repetir</string>
     <string name="dictate__haptic_feedback_title">Vibração</string>
     <string name="dictate__haptic_feedback_summary">Vibra ao iniciar/parar a gravação, quando a transcrição fica pronta e quando uma reformulação é aplicada</string>
+    <string name="dictate__audio_source_voice_communication">Comunicação de voz</string>
+    <string name="dictate__audio_source_voice_communication_summary">Prioridade máxima — continua funcionando quando outro app (gravador, câmera) usa o microfone, mas o processamento tipo chamada pode reduzir a precisão</string>
 </resources>

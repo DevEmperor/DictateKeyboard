@@ -1335,4 +1335,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — tocca per riprovare</string>
     <string name="dictate__haptic_feedback_title">Feedback aptico</string>
     <string name="dictate__haptic_feedback_summary">Vibra all\'avvio/arresto della registrazione, quando la trascrizione è pronta e quando viene applicata una riscrittura</string>
+    <string name="dictate__audio_source_voice_communication">Comunicazione vocale</string>
+    <string name="dictate__audio_source_voice_communication_summary">Priorità massima: continua a funzionare quando un\'altra app (registratore, fotocamera) usa il microfono, ma l\'elaborazione da chiamata può ridurre la precisione</string>
 </resources>

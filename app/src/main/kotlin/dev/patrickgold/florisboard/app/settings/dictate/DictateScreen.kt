@@ -304,6 +304,11 @@ fun DictateRecordingScreen() = FlorisScreen {
                     stringRes(R.string.dictate__audio_source_unprocessed),
                     stringRes(R.string.dictate__audio_source_unprocessed_summary),
                 )
+                entry(
+                    DictateAudioSource.VOICE_COMMUNICATION,
+                    stringRes(R.string.dictate__audio_source_voice_communication),
+                    stringRes(R.string.dictate__audio_source_voice_communication_summary),
+                )
             },
         )
         SwitchPreference(

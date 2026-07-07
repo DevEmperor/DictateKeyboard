@@ -1547,4 +1547,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — 点按重试</string>
     <string name="dictate__haptic_feedback_title">触感反馈</string>
     <string name="dictate__haptic_feedback_summary">在录音开始/停止、转写完成以及应用改写时振动</string>
+    <string name="dictate__audio_source_voice_communication">语音通话</string>
+    <string name="dictate__audio_source_voice_communication_summary">最高优先级——当其他应用（录音机、相机）占用麦克风时仍可工作，但通话式处理可能降低准确度</string>
 </resources>

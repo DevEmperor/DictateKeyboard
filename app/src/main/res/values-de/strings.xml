@@ -1425,4 +1425,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — zum Wiederholen tippen</string>
     <string name="dictate__haptic_feedback_title">Haptisches Feedback</string>
     <string name="dictate__haptic_feedback_summary">Vibriert beim Aufnahmestart/-stopp, wenn die Transkription fertig ist und wenn eine Überarbeitung angewendet wurde</string>
+    <string name="dictate__audio_source_voice_communication">Sprachkommunikation</string>
+    <string name="dictate__audio_source_voice_communication_summary">Höchste Priorität — funktioniert weiter, wenn eine andere App (Diktiergerät, Kamera) das Mikrofon nutzt, aber die Anruf-Verarbeitung kann die Genauigkeit verringern</string>
 </resources>

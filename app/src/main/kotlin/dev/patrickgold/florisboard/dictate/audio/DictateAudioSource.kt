@@ -23,6 +23,9 @@ import android.media.MediaRecorder
  *  - [VOICE_RECOGNITION]: the source Android tunes for ASR (no AGC); widely supported.
  *  - [UNPROCESSED]: raw audio with no processing at all, but device-dependent — falls back to
  *    [VOICE_RECOGNITION] when the device reports no support.
+ *  - [VOICE_COMMUNICATION]: highest capture priority (#167), so Dictate keeps working when another app
+ *    (voice recorder, camera) is holding the mic — at the cost of call-tuned processing (echo cancel,
+ *    AGC, noise suppression) that can reduce transcription accuracy.
  *
  * Bluetooth-SCO recording is unaffected: it always uses `VOICE_COMMUNICATION` regardless of this choice.
  */

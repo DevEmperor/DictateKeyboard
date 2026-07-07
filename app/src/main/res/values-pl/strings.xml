@@ -1569,4 +1569,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — dotknij, aby ponowić</string>
     <string name="dictate__haptic_feedback_title">Wibracje</string>
     <string name="dictate__haptic_feedback_summary">Wibruje przy rozpoczęciu/zatrzymaniu nagrywania, gdy transkrypcja jest gotowa i gdy zastosowano przeredagowanie</string>
+    <string name="dictate__audio_source_voice_communication">Komunikacja głosowa</string>
+    <string name="dictate__audio_source_voice_communication_summary">Najwyższy priorytet — działa nawet, gdy inna aplikacja (dyktafon, aparat) używa mikrofonu, ale przetwarzanie jak w rozmowie może obniżyć dokładność</string>
 </resources>

@@ -1453,4 +1453,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_retry_hint">%1$s — tik om opnieuw te proberen</string>
     <string name="dictate__haptic_feedback_title">Haptische feedback</string>
     <string name="dictate__haptic_feedback_summary">Trilt bij start/stop van de opname, wanneer de transcriptie klaar is en wanneer een herformulering is toegepast</string>
+    <string name="dictate__audio_source_voice_communication">Spraakcommunicatie</string>
+    <string name="dictate__audio_source_voice_communication_summary">Hoogste prioriteit — blijft werken als een andere app (recorder, camera) de microfoon gebruikt, maar gespreksverwerking kan de nauwkeurigheid verlagen</string>
 </resources>

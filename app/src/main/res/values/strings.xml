@@ -1468,6 +1468,8 @@
     <string name="dictate__audio_source_voice_recognition_summary" comment="Summary for the voice-recognition audio source">Tuned for speech with less processing — try this if transcription is inaccurate</string>
     <string name="dictate__audio_source_unprocessed" comment="Audio source option: unprocessed/raw">Unprocessed (raw)</string>
     <string name="dictate__audio_source_unprocessed_summary" comment="Summary for the unprocessed audio source">No processing at all; falls back to Voice recognition if your phone doesn\'t support it</string>
+    <string name="dictate__audio_source_voice_communication" comment="Label for the voice communication audio source">Voice communication</string>
+    <string name="dictate__audio_source_voice_communication_summary" comment="Summary for the voice communication audio source">Highest priority — keeps working when another app (voice recorder, camera) is using the mic, but call-style processing may reduce accuracy</string>
     <string name="dictate__keep_screen_awake_title" comment="Setting: keep the screen on while recording">Keep screen awake</string>
     <string name="dictate__keep_screen_awake_summary" comment="Summary for the keep-screen-awake setting">Prevent the screen from turning off while recording</string>
     <string name="dictate__skip_silent_title" comment="Setting: skip transcribing recordings that contain no speech">Skip silent recordings</string>

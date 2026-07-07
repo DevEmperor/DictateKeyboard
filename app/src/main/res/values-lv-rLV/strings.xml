@@ -1497,4 +1497,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — pieskaries, lai mēģinātu vēlreiz</string>
     <string name="dictate__haptic_feedback_title">Haptiskā atsauce</string>
     <string name="dictate__haptic_feedback_summary">Vibrē, sākot/apturot ierakstu, kad transkripcija ir gatava un kad tiek lietota pārformulēšana</string>
+    <string name="dictate__audio_source_voice_communication">Balss saziņa</string>
+    <string name="dictate__audio_source_voice_communication_summary">Augstākā prioritāte — turpina darboties, kad citā lietotnē (balss ierakstītājs, kamera) tiek izmantots mikrofons, taču zvana stila apstrāde var samazināt precizitāti</string>
 </resources>

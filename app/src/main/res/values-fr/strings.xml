@@ -1427,4 +1427,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — appuyez pour réessayer</string>
     <string name="dictate__haptic_feedback_title">Retour haptique</string>
     <string name="dictate__haptic_feedback_summary">Vibre au démarrage/arrêt de l\'enregistrement, quand la transcription est prête et quand une reformulation est appliquée</string>
+    <string name="dictate__audio_source_voice_communication">Communication vocale</string>
+    <string name="dictate__audio_source_voice_communication_summary">Priorité maximale — continue de fonctionner quand une autre appli (dictaphone, caméra) utilise le micro, mais le traitement de type appel peut réduire la précision</string>
 </resources>

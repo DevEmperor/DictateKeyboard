@@ -1483,4 +1483,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — タップで再試行</string>
     <string name="dictate__haptic_feedback_title">触覚フィードバック</string>
     <string name="dictate__haptic_feedback_summary">録音の開始/停止時、文字起こしの完了時、言い換えの適用時に振動します</string>
+    <string name="dictate__audio_source_voice_communication">音声通話</string>
+    <string name="dictate__audio_source_voice_communication_summary">最高の優先度 — 他のアプリ（ボイスレコーダー、カメラ）がマイクを使用中でも動作しますが、通話向けの処理で精度が下がる場合があります</string>
 </resources>

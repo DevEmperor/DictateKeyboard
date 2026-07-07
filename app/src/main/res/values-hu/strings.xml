@@ -1551,4 +1551,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — koppints az újrapróbáláshoz</string>
     <string name="dictate__haptic_feedback_title">Rezgő visszajelzés</string>
     <string name="dictate__haptic_feedback_summary">Rezeg a felvétel indításakor/leállításakor, amikor az átirat elkészül, és amikor átfogalmazás történik</string>
+    <string name="dictate__audio_source_voice_communication">Hangkommunikáció</string>
+    <string name="dictate__audio_source_voice_communication_summary">Legmagasabb prioritás — akkor is működik, ha egy másik alkalmazás (diktafon, kamera) használja a mikrofont, de a hívásszerű feldolgozás csökkentheti a pontosságot</string>
 </resources>

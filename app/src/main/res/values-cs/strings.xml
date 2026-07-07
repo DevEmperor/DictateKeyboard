@@ -1568,4 +1568,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — klepnutím zopakovat</string>
     <string name="dictate__haptic_feedback_title">Haptická odezva</string>
     <string name="dictate__haptic_feedback_summary">Zavibruje při spuštění/zastavení nahrávání, když je přepis hotový a když se použije přeformulování</string>
+    <string name="dictate__audio_source_voice_communication">Hlasová komunikace</string>
+    <string name="dictate__audio_source_voice_communication_summary">Nejvyšší priorita — funguje i když mikrofon používá jiná aplikace (diktafon, fotoaparát), ale zpracování jako u hovoru může snížit přesnost</string>
 </resources>

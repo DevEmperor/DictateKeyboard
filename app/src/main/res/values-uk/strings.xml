@@ -1397,4 +1397,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — торкніться, щоб повторити</string>
     <string name="dictate__haptic_feedback_title">Вібровідгук</string>
     <string name="dictate__haptic_feedback_summary">Вібрація на початку/зупинці запису, коли транскрипція готова та коли застосовано переформулювання</string>
+    <string name="dictate__audio_source_voice_communication">Голосовий зв\'язок</string>
+    <string name="dictate__audio_source_voice_communication_summary">Найвищий пріоритет — працює навіть коли інший застосунок (диктофон, камера) використовує мікрофон, але обробка як під час дзвінка може знизити точність</string>
 </resources>

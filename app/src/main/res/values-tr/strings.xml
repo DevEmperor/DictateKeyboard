@@ -1531,4 +1531,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — yeniden denemek için dokun</string>
     <string name="dictate__haptic_feedback_title">Titreşimli geri bildirim</string>
     <string name="dictate__haptic_feedback_summary">Kayıt başlangıcında/durdurulmasında, transkripsiyon hazır olduğunda ve bir yeniden ifade uygulandığında titreşir</string>
+    <string name="dictate__audio_source_voice_communication">Sesli iletişim</string>
+    <string name="dictate__audio_source_voice_communication_summary">En yüksek öncelik — başka bir uygulama (ses kaydedici, kamera) mikrofonu kullanırken bile çalışır, ancak arama tarzı işleme doğruluğu azaltabilir</string>
 </resources>

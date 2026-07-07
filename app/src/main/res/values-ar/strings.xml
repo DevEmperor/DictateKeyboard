@@ -1408,4 +1408,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — انقر لإعادة المحاولة</string>
     <string name="dictate__haptic_feedback_title">ملاحظات لمسية</string>
     <string name="dictate__haptic_feedback_summary">يهتز عند بدء/إيقاف التسجيل، وعند جاهزية النسخ، وعند تطبيق إعادة الصياغة</string>
+    <string name="dictate__audio_source_voice_communication">اتصال صوتي</string>
+    <string name="dictate__audio_source_voice_communication_summary">أعلى أولوية — يستمر في العمل عندما يستخدم تطبيق آخر (مسجل صوت، كاميرا) الميكروفون، لكن معالجة نمط المكالمات قد تقلل الدقة</string>
 </resources>

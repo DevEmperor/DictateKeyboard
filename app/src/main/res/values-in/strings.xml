@@ -1506,4 +1506,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__floating_button_retry_hint">%1$s — ketuk untuk mencoba lagi</string>
     <string name="dictate__haptic_feedback_title">Umpan balik haptik</string>
     <string name="dictate__haptic_feedback_summary">Bergetar saat mulai/berhenti merekam, saat transkripsi siap, dan saat penulisan ulang diterapkan</string>
+    <string name="dictate__audio_source_voice_communication">Komunikasi suara</string>
+    <string name="dictate__audio_source_voice_communication_summary">Prioritas tertinggi — tetap bekerja saat aplikasi lain (perekam suara, kamera) memakai mikrofon, tetapi pemrosesan gaya panggilan dapat mengurangi akurasi</string>
 </resources>

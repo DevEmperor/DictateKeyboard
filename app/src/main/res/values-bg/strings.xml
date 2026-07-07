@@ -1553,4 +1553,6 @@
     <string name="dictate__floating_button_retry_hint">%1$s — докоснете за нов опит</string>
     <string name="dictate__haptic_feedback_title">Вибрация</string>
     <string name="dictate__haptic_feedback_summary">Вибрира при старт/спиране на записа, когато транскрипцията е готова и когато е приложено преформулиране</string>
+    <string name="dictate__audio_source_voice_communication">Гласова комуникация</string>
+    <string name="dictate__audio_source_voice_communication_summary">Най-висок приоритет — продължава да работи, когато друго приложение (диктофон, камера) използва микрофона, но обработката като при разговор може да намали точността</string>
 </resources>
