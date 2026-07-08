@@ -182,20 +182,13 @@ Dictate Keyboard is released under the terms of the
 
 <br>
 
-## ❤️ Support
+## ❤️ Support &amp; sponsors
 
-If Dictate makes your day a little easier, you can support development by
+Dictate is free and open source, built in my spare time. If it makes your day a little
+easier, you can support development by
 [buying the app on Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate),
 [sponsoring me on GitHub](https://github.com/sponsors/DevEmperor),
-or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — thank you!
-
-<br>
-
-## 💖 Sponsors
-
-Dictate is free and open source, built in my spare time — becoming a
-[GitHub Sponsor](https://github.com/sponsors/DevEmperor) directly funds its continued
-development. A heartfelt thank-you to everyone who chips in. 🙏
+or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — thank you! 🙏
 
 **Dictate's very first sponsor — thank you!** 🎉
 
