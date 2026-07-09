@@ -33,6 +33,7 @@ import java.io.OutputStream
 import java.net.Proxy
 import java.security.KeyStore
 import java.time.Duration
+import java.util.concurrent.ConcurrentHashMap
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
@@ -54,7 +55,15 @@ class OpenAiCompatibleClient(
 ) : LlmProvider, TranscriptionProvider {
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
-    private val client: OkHttpClient by lazy { buildClient() }
+    private val client: OkHttpClient by lazy {
+        sharedClientFor(
+            HttpClientKey(
+                timeoutSeconds = config.timeoutSeconds,
+                proxy = config.proxy,
+                trustUserCerts = config.trustUserCerts,
+            )
+        ) { buildClient() }
+    }
 
     override suspend fun complete(request: ChatRequest): ChatResult {
         val dto = ChatCompletionRequestDto(
@@ -1079,6 +1088,19 @@ class OpenAiCompatibleClient(
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
         private const val BASE64_COPY_BUFFER_SIZE = 64 * 1024
+        private val HTTP_CLIENTS = ConcurrentHashMap<HttpClientKey, OkHttpClient>()
+
+        private data class HttpClientKey(
+            val timeoutSeconds: Long,
+            val proxy: ProxyConfig?,
+            val trustUserCerts: Boolean,
+        )
+
+        private fun sharedClientFor(key: HttpClientKey, build: () -> OkHttpClient): OkHttpClient {
+            HTTP_CLIENTS[key]?.let { return it }
+            val created = build()
+            return HTTP_CLIENTS.putIfAbsent(key, created) ?: created
+        }
 
         /** Soniox / AssemblyAI async polling: interval between status checks and the overall budget. */
         private const val SONIOX_POLL_INTERVAL_MS = 1500L
