@@ -1059,9 +1059,20 @@ object DictateController {
                 runCatching { session.sendAudio(pcm, len) }
             }
         }
+        var resampleBuffer = ByteArray(0)
         return { pcm, len ->
-            val out = Pcm16Resampler.resample(pcm, len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
-            runCatching { session.sendAudio(out, out.size) }
+            val outLen = Pcm16Resampler.outputLengthBytes(len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
+            if (outLen > 0) {
+                if (resampleBuffer.size < outLen) resampleBuffer = ByteArray(outLen)
+                val written = Pcm16Resampler.resampleInto(
+                    pcm = pcm,
+                    len = len,
+                    srcRate = AudioDecode.TARGET_SAMPLE_RATE,
+                    dstRate = targetRate,
+                    out = resampleBuffer,
+                )
+                runCatching { session.sendAudio(resampleBuffer, written) }
+            }
         }
     }
 

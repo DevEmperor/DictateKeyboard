@@ -100,7 +100,8 @@ class RecordingController(private val context: Context) {
         recording = true
         rec.startRecording()
         thread = Thread {
-            val buf = ByteArray(bufferSize)
+            val readSize = if (pcmSink != null) minOf(bufferSize, REALTIME_READ_BYTES) else bufferSize
+            val buf = ByteArray(readSize)
             while (recording) {
                 val n = rec.read(buf, 0, buf.size)
                 if (!recording) break
@@ -110,10 +111,10 @@ class RecordingController(private val context: Context) {
                     recording = false
                 } else if (n > 0 && !paused) {
                     try {
+                        if (pcmSink != null) runCatching { pcmSink(buf, n) }
                         out.write(buf, 0, n)
                         pcmBytes += n
                         updatePeak(buf, n)
-                        if (pcmSink != null) runCatching { pcmSink(buf, n) }
                     } catch (t: Throwable) {
                         recordingError = t
                         recording = false
@@ -235,6 +236,10 @@ class RecordingController(private val context: Context) {
         private const val ENCODING = AudioFormat.ENCODING_PCM_16BIT
         private const val CHANNELS = 1
         private const val BITS_PER_SAMPLE = 16
+        private const val BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8
+        private const val REALTIME_READ_CHUNK_MS = 40
+        private const val REALTIME_READ_BYTES =
+            SAMPLE_RATE * CHANNELS * BYTES_PER_SAMPLE * REALTIME_READ_CHUNK_MS / 1000
         private const val WAV_HEADER_SIZE = 44
     }
 }
