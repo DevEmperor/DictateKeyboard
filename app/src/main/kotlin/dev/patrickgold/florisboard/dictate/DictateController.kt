@@ -223,13 +223,14 @@ object DictateController {
     val interimText: StateFlow<String> = _interimText.asStateFlow()
 
     private var realtimeSession: RealtimeSession? = null
+    private val realtimeTextLock = Any()
     private val realtimeFinal = StringBuilder()      // accumulated finalized segments
     @Volatile private var realtimeFailed = false     // stream errored → fall back to batch on stop
     private var realtimeClosed: CompletableDeferred<Unit>? = null
     private var realtimeContext: Context? = null     // app context to edit the field's provisional text
     private val realtimeShown = StringBuilder()       // text currently committed to the field this session
     private var realtimePreviewJob: Job? = null
-    private var realtimePreviewLatest = ""            // newest transcript received, even if not flushed yet
+    @Volatile private var realtimePreviewLatest = ""  // newest transcript received, even if not flushed yet
     private var realtimePreviewLastFlushMs = 0L
     @Volatile private var realtimeCancelled = false   // block late stream callbacks from re-adding text
 
@@ -354,7 +355,9 @@ object DictateController {
 
     private fun resetRealtimePreviewScheduler() {
         cancelRealtimePreviewJob()
-        realtimePreviewLatest = ""
+        synchronized(realtimeTextLock) {
+            realtimePreviewLatest = ""
+        }
         realtimePreviewLastFlushMs = 0L
     }
 
@@ -1031,7 +1034,10 @@ object DictateController {
         val preset = presetFor(account)
         val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
-        realtimeFinal.setLength(0)
+        synchronized(realtimeTextLock) {
+            realtimeFinal.setLength(0)
+            realtimePreviewLatest = ""
+        }
         realtimeFailed = false
         realtimeCancelled = false
         _interimText.value = ""
@@ -1056,8 +1062,7 @@ object DictateController {
 
         fun publishLive(full: String, force: Boolean = false) {
             if (realtimeCancelled) return
-            if (full == realtimePreviewLatest && !force) return
-            realtimePreviewLatest = full
+            if (full == _interimText.value && !force) return
             _interimText.value = full
 
             if (!coalescePreview || force) {
@@ -1079,21 +1084,37 @@ object DictateController {
                 realtimePreviewJob = null
             }
         }
+        fun recordPartial(text: String): String? = synchronized(realtimeTextLock) {
+            if (realtimeCancelled) {
+                null
+            } else {
+                val head = realtimeFinal.toString()
+                (if (head.isEmpty()) text else "$head $text").trim().also { realtimePreviewLatest = it }
+            }
+        }
+        fun recordFinalSegment(text: String): String? = synchronized(realtimeTextLock) {
+            if (realtimeCancelled) {
+                null
+            } else {
+                val t = text.trim()
+                if (t.isNotEmpty()) {
+                    if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
+                    realtimeFinal.append(t)
+                }
+                realtimeFinal.toString().also { realtimePreviewLatest = it }
+            }
+        }
         val callbacks = object : RealtimeCallbacks {
             override fun onPartial(text: String) {
+                val full = recordPartial(text) ?: return
                 scope.launch {
-                    val head = realtimeFinal.toString()
-                    publishLive((if (head.isEmpty()) text else "$head $text").trim())
+                    publishLive(full)
                 }
             }
             override fun onFinalSegment(text: String) {
+                val full = recordFinalSegment(text) ?: return
                 scope.launch {
-                    val t = text.trim()
-                    if (t.isNotEmpty()) {
-                        if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
-                        realtimeFinal.append(t)
-                    }
-                    publishLive(realtimeFinal.toString(), force = true)
+                    publishLive(full, force = true)
                 }
             }
             override fun onError(t: Throwable) { realtimeFailed = true }
@@ -1158,9 +1179,11 @@ object DictateController {
                 realtimeCancelled = true
                 cancelRealtimePreviewJob()
                 // Prefer the newest received transcript; it may be newer than the coalesced field preview.
-                val transcript = realtimePreviewLatest.trim()
-                    .ifEmpty { realtimeShown.toString().trim() }
-                    .ifEmpty { realtimeFinal.toString().trim() }
+                val transcript = synchronized(realtimeTextLock) {
+                    realtimePreviewLatest.trim()
+                        .ifEmpty { realtimeShown.toString().trim() }
+                        .ifEmpty { realtimeFinal.toString().trim() }
+                }
                 _interimText.value = ""
                 if (realtimeFailed || transcript.isEmpty()) {
                     // Drop the live provisional text; the batch path commits fresh from the WAV.
