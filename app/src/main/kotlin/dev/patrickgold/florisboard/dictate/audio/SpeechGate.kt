@@ -49,28 +49,48 @@ object SpeechGate {
      */
     suspend fun hasSpeech(context: Context, audioFile: File): Boolean = withContext(Dispatchers.Default) {
         val model = ensureVadModel(context.applicationContext) ?: return@withContext true
+        val streamed = runCatching { hasSpeechInRecordedWav(model, audioFile) }
+            .getOrElse { return@withContext true }
+        if (streamed != null) return@withContext streamed
+
         val samples = runCatching { AudioDecode.decodeToMono16k(audioFile) }.getOrNull()
             ?: return@withContext true
         if (samples.isEmpty()) return@withContext false
 
-        val vad = runCatching {
-            Vad(
-                config = VadModelConfig().apply {
-                    sileroVadModelConfig = SileroVadModelConfig(
-                        model = model.absolutePath,
-                        threshold = 0.5f,
-                        minSilenceDuration = 0.25f,
-                        minSpeechDuration = 0.25f,
-                        windowSize = WINDOW,
-                        maxSpeechDuration = 20f,
-                    )
-                    sampleRate = AudioDecode.TARGET_SAMPLE_RATE
-                    numThreads = 1
-                },
-            )
-        }.getOrNull() ?: return@withContext true
+        hasSpeechInDecodedSamples(model, samples)
+    }
 
-        try {
+    private fun hasSpeechInRecordedWav(model: File, audioFile: File): Boolean? {
+        val vad = newVad(model) ?: return true
+        var sawSamples = false
+        var sawSpeech = false
+
+        return try {
+            val handled = AudioDecode.streamPcm16Mono16kWav(audioFile, WINDOW) { chunk ->
+                sawSamples = true
+                vad.acceptWaveform(chunk)
+                sawSpeech = !vad.empty()
+                !sawSpeech
+            }
+            when {
+                !handled -> null
+                !sawSamples -> false
+                sawSpeech -> true
+                else -> {
+                    vad.flush()
+                    !vad.empty()
+                }
+            }
+        } catch (_: Throwable) {
+            true // fail open
+        } finally {
+            runCatching { vad.release() }
+        }
+    }
+
+    private fun hasSpeechInDecodedSamples(model: File, samples: FloatArray): Boolean {
+        val vad = newVad(model) ?: return true
+        return try {
             val window = FloatArray(WINDOW)
             var i = 0
             while (i < samples.size) {
@@ -83,7 +103,7 @@ object SpeechGate {
                 }
                 vad.acceptWaveform(chunk)
                 i = end
-                if (!vad.empty()) return@withContext true // a speech segment closed → speech present
+                if (!vad.empty()) return true // a speech segment closed → speech present
             }
             // No segment closed mid-stream (e.g. speech ran right up to the end): flush and re-check.
             vad.flush()
@@ -94,6 +114,23 @@ object SpeechGate {
             runCatching { vad.release() }
         }
     }
+
+    private fun newVad(model: File): Vad? = runCatching {
+        Vad(
+            config = VadModelConfig().apply {
+                sileroVadModelConfig = SileroVadModelConfig(
+                    model = model.absolutePath,
+                    threshold = 0.5f,
+                    minSilenceDuration = 0.25f,
+                    minSpeechDuration = 0.25f,
+                    windowSize = WINDOW,
+                    maxSpeechDuration = 20f,
+                )
+                sampleRate = AudioDecode.TARGET_SAMPLE_RATE
+                numThreads = 1
+            },
+        )
+    }.getOrNull()
 
     /**
      * Extracts the bundled Silero VAD model to a stable file path (sherpa-onnx needs a filesystem path,
