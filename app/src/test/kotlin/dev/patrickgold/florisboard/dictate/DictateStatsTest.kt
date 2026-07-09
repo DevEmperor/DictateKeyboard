@@ -19,4 +19,31 @@ class DictateStatsTest {
     fun wordCountTreatsUnspacedCjkAsOneToken() {
         assertEquals(1, DictateStats.wordCount("你好世界"))
     }
+
+    @Test
+    fun activityParsesDailyStatsIntoFixedWindow() {
+        val bars = DictateStats.activity("10:3;12:7", today = 12)
+
+        assertEquals(
+            listOf(
+                DictateStats.DayBar(6, 0),
+                DictateStats.DayBar(7, 0),
+                DictateStats.DayBar(8, 0),
+                DictateStats.DayBar(9, 0),
+                DictateStats.DayBar(10, 3),
+                DictateStats.DayBar(11, 0),
+                DictateStats.DayBar(12, 7),
+            ),
+            bars,
+        )
+    }
+
+    @Test
+    fun activityIgnoresMalformedDailyStatsEntries() {
+        val bars = DictateStats.activity("bad;8:x;9:4:extra;10:5;11:", today = 10)
+
+        assertEquals(5, bars.last().words)
+        assertEquals(0, bars.first { it.epochDay == 8L }.words)
+        assertEquals(0, bars.first { it.epochDay == 9L }.words)
+    }
 }

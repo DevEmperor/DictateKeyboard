@@ -183,12 +183,39 @@ object DictateStats {
 
     private fun parseDaily(raw: String): Map<Long, Long> {
         if (raw.isBlank()) return emptyMap()
-        return raw.split(';').mapNotNull { entry ->
-            val parts = entry.split(':')
-            val day = parts.getOrNull(0)?.toLongOrNull() ?: return@mapNotNull null
-            val words = parts.getOrNull(1)?.toLongOrNull() ?: return@mapNotNull null
-            day to words
-        }.toMap()
+        val out = mutableMapOf<Long, Long>()
+        var entryStart = 0
+        while (entryStart <= raw.length) {
+            val entryEnd = raw.indexOf(';', startIndex = entryStart).let { if (it >= 0) it else raw.length }
+            val separator = raw.indexOf(':', startIndex = entryStart).takeIf { it in entryStart + 1 until entryEnd }
+            if (separator != null) {
+                val day = parseLongOrNull(raw, entryStart, separator)
+                val words = parseLongOrNull(raw, separator + 1, entryEnd)
+                if (day != null && words != null) out[day] = words
+            }
+            if (entryEnd == raw.length) break
+            entryStart = entryEnd + 1
+        }
+        return out
+    }
+
+    private fun parseLongOrNull(raw: String, start: Int, end: Int): Long? {
+        if (start >= end) return null
+        var i = start
+        val negative = raw[i] == '-'
+        if (negative) {
+            i++
+            if (i == end) return null
+        }
+        var value = 0L
+        while (i < end) {
+            val digit = raw[i] - '0'
+            if (digit !in 0..9) return null
+            if (value > (Long.MAX_VALUE - digit) / 10L) return null
+            value = value * 10L + digit
+            i++
+        }
+        return if (negative) -value else value
     }
 
     private fun serializeDaily(map: Map<Long, Long>): String =
