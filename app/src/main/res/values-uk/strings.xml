@@ -1035,6 +1035,7 @@
     <string name="dictate__status_retrying">Повторна спроба… ({attempt})</string>
     <string name="dictate__action_cancel">Скасувати запис</string>
     <string name="dictate__action_pause">Призупинити запис</string>
+    <string name="dictate__action_next_segment">Наступний сегмент</string>
     <string name="dictate__action_resume">Відновити запис</string>
     <string name="dictate__action_resend">Повторити</string>
     <string name="dictate__action_dismiss">Закрити</string>
@@ -1115,6 +1116,16 @@
     <string name="dictate__skip_silent_summary">Уникайте вигаданого тексту й зайвих викликів API при тихому записі</string>
     <string name="dictate__realtime_title">Транскрипція в реальному часі</string>
     <string name="dictate__realtime_summary">Показує текст наживо під час мовлення для провайдерів, які це підтримують</string>
+    <string name="dictate__longform_title">Довга диктовка</string>
+    <string name="dictate__longform_summary">Транскрибує довгі диктовки у фоні, частина за частиною, поки ви продовжуєте говорити — натисніть «Наступний сегмент» під час запису, щоб надіслати поточну частину, і наприкінці не доведеться довго чекати.</string>
+    <string name="dictate__longform_autosplit_title">Автоматично ділити на паузах</string>
+    <string name="dictate__longform_autosplit_summary">Також автоматично відділяє сегмент після достатньо довгої паузи, а не лише кнопкою «Наступний сегмент».</string>
+    <string name="dictate__longform_autosplit_threshold_title">Тривалість паузи</string>
+    <string name="dictate__longform_autosplit_value">{seconds} с</string>
+    <string name="dictate__longform_mode_off">Вимк.</string>
+    <string name="dictate__longform_mode_off_summary">Транскрибувати один раз наприкінці (за замовчуванням).</string>
+    <string name="dictate__longform_mode_manual">Наступний сегмент</string>
+    <string name="dictate__longform_mode_manual_summary">Надсилайте кожну частину кнопкою «Наступний сегмент» під час запису.</string>
     <string name="dictate__providers_field_realtime_model">Модель у реальному часі</string>
     <string name="dictate__providers_realtime_model_default">За замовчуванням</string>
     <string name="dictate__instant_recording_title">Миттєвий запис</string>

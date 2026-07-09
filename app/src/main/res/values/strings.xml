@@ -1383,6 +1383,7 @@
     <string name="dictate__status_retrying" comment="Shown while a failed transcription is being retried. {attempt} is the attempt number.">Retrying… ({attempt})</string>
     <string name="dictate__action_cancel" comment="Content description for the button that discards the current recording">Cancel recording</string>
     <string name="dictate__action_pause" comment="Content description for the button that pauses the recording">Pause recording</string>
+    <string name="dictate__action_next_segment" comment="Content description for the long-form button that finishes the current segment and keeps recording">Next segment</string>
     <string name="dictate__action_resume" comment="Content description for the button that resumes the recording">Resume recording</string>
     <string name="dictate__action_resend" comment="Content description for the button that retries the last failed audio">Try again</string>
     <string name="dictate__action_save_audio" comment="Content description for the button that saves a failed recording to Downloads">Save audio</string>
@@ -1525,6 +1526,16 @@
     <string name="dictate__skip_silent_summary" comment="Summary for the skip-silent-recordings setting">Avoid ghost text and wasted API calls on silent audio</string>
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
     <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
+    <string name="dictate__longform_title" comment="Setting: long-form segmented dictation">Long-form dictation</string>
+    <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe long dictations in the background, part by part while you keep talking — tap Next during recording to send the current part, so there is no long wait at the end.</string>
+    <string name="dictate__longform_autosplit_title" comment="Setting: auto-cut a long-form segment at speech pauses">Auto-split at pauses</string>
+    <string name="dictate__longform_autosplit_summary" comment="Summary for the auto-split setting">Also cut a segment automatically after a long enough pause, not only with the Next button.</string>
+    <string name="dictate__longform_autosplit_threshold_title" comment="Setting: how long a pause must last to trigger an auto-cut">Pause length</string>
+    <string name="dictate__longform_autosplit_value" comment="Slider value for the pause length. {seconds} is a number like 2.0">{seconds} s</string>
+    <string name="dictate__longform_mode_off" comment="Long-form mode: disabled">Off</string>
+    <string name="dictate__longform_mode_off_summary" comment="Summary for the off long-form mode">Transcribe once at the end (default).</string>
+    <string name="dictate__longform_mode_manual" comment="Long-form mode: manual Next button only">Next button</string>
+    <string name="dictate__longform_mode_manual_summary" comment="Summary for the manual long-form mode">Send each part with the Next button while recording.</string>
     <string name="dictate__instant_recording_title" comment="Setting: start recording when the keyboard opens">Instant recording</string>
     <string name="dictate__instant_recording_summary" comment="Summary for the instant recording setting">Start recording automatically when the keyboard opens</string>
     <string name="dictate__instant_recording_skip_numeric_title" comment="Setting: don't auto-start recording on number-only fields">Skip number fields</string>

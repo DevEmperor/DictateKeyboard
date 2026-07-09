@@ -1046,6 +1046,7 @@
     <string name="dictate__status_retrying">إعادة المحاولة… ({attempt})</string>
     <string name="dictate__action_cancel">إلغاء التسجيل</string>
     <string name="dictate__action_pause">إيقاف التسجيل مؤقتًا</string>
+    <string name="dictate__action_next_segment">المقطع التالي</string>
     <string name="dictate__action_resume">استئناف التسجيل</string>
     <string name="dictate__action_resend">أعد المحاولة</string>
     <string name="dictate__action_dismiss">تجاهل</string>
@@ -1126,6 +1127,16 @@
     <string name="dictate__skip_silent_summary">تجنّب النصوص المُختلَقة واستدعاءات API المهدورة في الصوت الصامت</string>
     <string name="dictate__realtime_title">النسخ الفوري</string>
     <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه</string>
+    <string name="dictate__longform_title">الإملاء الطويل</string>
+    <string name="dictate__longform_summary">يفرّغ الإملاءات الطويلة نصيًّا في الخلفية، جزءًا تلو الآخر بينما تواصل التحدث — اضغط على «المقطع التالي» أثناء التسجيل لإرسال الجزء الحالي، حتى لا يكون هناك انتظار طويل في النهاية.</string>
+    <string name="dictate__longform_autosplit_title">التقسيم التلقائي عند التوقّف</string>
+    <string name="dictate__longform_autosplit_summary">يقطع مقطعًا تلقائيًّا أيضًا بعد توقّف طويل بما يكفي، وليس فقط بزر «المقطع التالي».</string>
+    <string name="dictate__longform_autosplit_threshold_title">مدة التوقّف</string>
+    <string name="dictate__longform_autosplit_value">{seconds} ث</string>
+    <string name="dictate__longform_mode_off">إيقاف</string>
+    <string name="dictate__longform_mode_off_summary">التفريغ النصي مرة واحدة في النهاية (افتراضي).</string>
+    <string name="dictate__longform_mode_manual">المقطع التالي</string>
+    <string name="dictate__longform_mode_manual_summary">أرسل كل جزء بزر «المقطع التالي» أثناء التسجيل.</string>
     <string name="dictate__providers_field_realtime_model">النموذج الفوري</string>
     <string name="dictate__providers_realtime_model_default">افتراضي</string>
     <string name="dictate__instant_recording_title">تسجيل فوري</string>

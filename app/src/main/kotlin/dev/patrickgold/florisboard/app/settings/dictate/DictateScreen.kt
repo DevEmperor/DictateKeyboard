@@ -19,6 +19,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.GraphicEq
+import androidx.compose.material.icons.filled.Segment
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
+import kotlin.math.roundToInt
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.florisboard.dictate.DictateLongformMode
 import androidx.compose.material.icons.filled.Watch
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Bluetooth
@@ -279,6 +290,23 @@ fun DictateRecordingScreen() = FlorisScreen {
             title = stringRes(R.string.dictate__realtime_title),
             summary = stringRes(R.string.dictate__realtime_summary),
         )
+        // All long-form settings live behind one entry that opens a single dialog (#170).
+        val longformMode by prefs.dictate.longformMode.collectAsState()
+        val longformSeconds by prefs.dictate.longformAutoSplitSeconds.collectAsState()
+        var showLongformDialog by remember { mutableStateOf(false) }
+        Preference(
+            icon = Icons.Default.Segment,
+            title = stringRes(R.string.dictate__longform_title),
+            summary = longformModeSummary(longformMode, longformSeconds),
+            onClick = { showLongformDialog = true },
+        )
+        if (showLongformDialog) {
+            LongformDialog(
+                mode = longformMode,
+                seconds = longformSeconds,
+                onDismiss = { showLongformDialog = false },
+            )
+        }
         SwitchPreference(
             prefs.dictate.audioFocus,
             icon = Icons.Default.VolumeOff,
@@ -470,5 +498,94 @@ private fun NewBadge() {
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.labelSmall,
         )
+    }
+}
+
+/** One-line summary of the current long-form mode for the settings entry (issue #170). */
+@Composable
+private fun longformModeSummary(mode: DictateLongformMode, seconds: Int): String = when (mode) {
+    DictateLongformMode.OFF -> stringRes(R.string.dictate__longform_mode_off)
+    DictateLongformMode.MANUAL -> stringRes(R.string.dictate__longform_mode_manual)
+    DictateLongformMode.AUTO -> stringRes(R.string.dictate__longform_autosplit_title) + " · " +
+        stringRes(R.string.dictate__longform_autosplit_value, "seconds" to "$seconds")
+}
+
+/** The single dialog holding all long-form settings: the mode, plus the pause length when auto (#170). */
+@Composable
+private fun LongformDialog(
+    mode: DictateLongformMode,
+    seconds: Int,
+    onDismiss: () -> Unit,
+) {
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
+    JetPrefAlertDialog(
+        title = stringRes(R.string.dictate__longform_title),
+        dismissLabel = stringRes(android.R.string.ok),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            LongformModeRow(
+                value = DictateLongformMode.OFF, selected = mode,
+                titleRes = R.string.dictate__longform_mode_off,
+                summaryRes = R.string.dictate__longform_mode_off_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            LongformModeRow(
+                value = DictateLongformMode.MANUAL, selected = mode,
+                titleRes = R.string.dictate__longform_mode_manual,
+                summaryRes = R.string.dictate__longform_mode_manual_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            LongformModeRow(
+                value = DictateLongformMode.AUTO, selected = mode,
+                titleRes = R.string.dictate__longform_autosplit_title,
+                summaryRes = R.string.dictate__longform_autosplit_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            if (mode == DictateLongformMode.AUTO) {
+                var sliderValue by remember(seconds) { mutableStateOf(seconds.toFloat()) }
+                Text(
+                    modifier = Modifier.padding(top = 12.dp, start = 8.dp),
+                    text = stringRes(R.string.dictate__longform_autosplit_threshold_title) + ": " +
+                        stringRes(R.string.dictate__longform_autosplit_value, "seconds" to "${sliderValue.roundToInt()}"),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Slider(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    value = sliderValue,
+                    onValueChange = { sliderValue = it },
+                    onValueChangeFinished = {
+                        scope.launch { prefs.dictate.longformAutoSplitSeconds.set(sliderValue.roundToInt()) }
+                    },
+                    valueRange = 2f..8f,
+                    steps = 5,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LongformModeRow(
+    value: DictateLongformMode,
+    selected: DictateLongformMode,
+    titleRes: Int,
+    summaryRes: Int,
+    onSelect: (DictateLongformMode) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onSelect(value) }
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = value == selected, onClick = { onSelect(value) })
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(text = stringRes(titleRes), style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = stringRes(summaryRes),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
     }
 }

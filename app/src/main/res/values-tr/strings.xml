@@ -1169,6 +1169,7 @@
     <string name="dictate__status_retrying">Yeniden deneniyor… ({attempt})</string>
     <string name="dictate__action_cancel">Kaydı iptal et</string>
     <string name="dictate__action_pause">Kaydı duraklat</string>
+    <string name="dictate__action_next_segment">Sonraki bölüm</string>
     <string name="dictate__action_resume">Kaydı sürdür</string>
     <string name="dictate__action_resend">Tekrar dene</string>
     <string name="dictate__action_dismiss">Kapat</string>
@@ -1249,6 +1250,16 @@
     <string name="dictate__skip_silent_summary">Sessiz seste uydurma metni ve gereksiz API çağrılarını önler</string>
     <string name="dictate__realtime_title">Gerçek zamanlı transkripsiyon</string>
     <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda konuşurken metni canlı gösterir</string>
+    <string name="dictate__longform_title">Uzun dikte</string>
+    <string name="dictate__longform_summary">Uzun dikteleri arka planda, siz konuşmaya devam ederken bölüm bölüm yazıya döker — kayıt sırasında “Sonraki bölüm” öğesine dokunarak mevcut bölümü gönderin, böylece sonda uzun bir bekleme olmaz.</string>
+    <string name="dictate__longform_autosplit_title">Duraklamalarda otomatik böl</string>
+    <string name="dictate__longform_autosplit_summary">Yeterince uzun bir duraklamadan sonra da bir bölümü otomatik olarak keser, yalnızca “Sonraki bölüm” düğmesiyle değil.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Duraklama süresi</string>
+    <string name="dictate__longform_autosplit_value">{seconds} sn</string>
+    <string name="dictate__longform_mode_off">Kapalı</string>
+    <string name="dictate__longform_mode_off_summary">Sonunda bir kez yazıya dök (varsayılan).</string>
+    <string name="dictate__longform_mode_manual">Sonraki bölüm</string>
+    <string name="dictate__longform_mode_manual_summary">Kayıt sırasında her bölümü “Sonraki bölüm” düğmesiyle gönderin.</string>
     <string name="dictate__providers_field_realtime_model">Gerçek zamanlı model</string>
     <string name="dictate__providers_realtime_model_default">Varsayılan</string>
     <string name="dictate__instant_recording_title">Anında kayıt</string>

@@ -1067,6 +1067,7 @@
     <string name="dictate__status_retrying">Nouvelle tentative… ({attempt})</string>
     <string name="dictate__action_cancel">Annuler l\'enregistrement</string>
     <string name="dictate__action_pause">Mettre en pause l\'enregistrement</string>
+    <string name="dictate__action_next_segment">Segment suivant</string>
     <string name="dictate__action_resume">Reprendre l\'enregistrement</string>
     <string name="dictate__action_resend">Réessayer</string>
     <string name="dictate__action_dismiss">Ignorer</string>
@@ -1147,6 +1148,16 @@
     <string name="dictate__skip_silent_summary">Évite le texte halluciné et les appels API inutiles sur un audio silencieux</string>
     <string name="dictate__realtime_title">Transcription en temps réel</string>
     <string name="dictate__realtime_summary">Affiche le texte en direct pendant que vous parlez, pour les fournisseurs compatibles</string>
+    <string name="dictate__longform_title">Dictée longue</string>
+    <string name="dictate__longform_summary">Transcrit les longues dictées en arrière-plan, partie par partie pendant que vous continuez à parler — touchez « Segment suivant » pendant l’enregistrement pour envoyer la partie en cours, afin d’éviter une longue attente à la fin.</string>
+    <string name="dictate__longform_autosplit_title">Découper automatiquement aux pauses</string>
+    <string name="dictate__longform_autosplit_summary">Découpe aussi un segment automatiquement après une pause suffisamment longue, pas seulement avec le bouton « Segment suivant ».</string>
+    <string name="dictate__longform_autosplit_threshold_title">Durée de la pause</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Désactivé</string>
+    <string name="dictate__longform_mode_off_summary">Transcrire une seule fois à la fin (par défaut).</string>
+    <string name="dictate__longform_mode_manual">Segment suivant</string>
+    <string name="dictate__longform_mode_manual_summary">Envoyez chaque partie avec « Segment suivant » pendant l’enregistrement.</string>
     <string name="dictate__providers_field_realtime_model">Modèle en temps réel</string>
     <string name="dictate__providers_realtime_model_default">Par défaut</string>
     <string name="dictate__instant_recording_title">Enregistrement instantané</string>

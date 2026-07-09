@@ -998,6 +998,7 @@
     <string name="dictate__status_retrying">Tentando novamente… ({attempt})</string>
     <string name="dictate__action_cancel">Cancelar gravação</string>
     <string name="dictate__action_pause">Pausar gravação</string>
+    <string name="dictate__action_next_segment">Próximo segmento</string>
     <string name="dictate__action_resume">Retomar gravação</string>
     <string name="dictate__action_resend">Tentar novamente</string>
     <string name="dictate__action_dismiss">Dispensar</string>
@@ -1078,6 +1079,16 @@
     <string name="dictate__skip_silent_summary">Evita texto alucinado e chamadas de API desnecessárias em áudio silencioso</string>
     <string name="dictate__realtime_title">Transcrição em tempo real</string>
     <string name="dictate__realtime_summary">Mostra o texto ao vivo enquanto você fala, para provedores compatíveis</string>
+    <string name="dictate__longform_title">Ditado longo</string>
+    <string name="dictate__longform_summary">Transcreve ditados longos em segundo plano, parte por parte enquanto você continua falando — toque em “Próximo segmento” durante a gravação para enviar a parte atual, para não haver uma longa espera no fim.</string>
+    <string name="dictate__longform_autosplit_title">Dividir automaticamente nas pausas</string>
+    <string name="dictate__longform_autosplit_summary">Também corta um segmento automaticamente após uma pausa longa o suficiente, não apenas com o botão “Próximo segmento”.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Duração da pausa</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Desativado</string>
+    <string name="dictate__longform_mode_off_summary">Transcrever uma vez no fim (padrão).</string>
+    <string name="dictate__longform_mode_manual">Próximo segmento</string>
+    <string name="dictate__longform_mode_manual_summary">Envie cada parte com “Próximo segmento” durante a gravação.</string>
     <string name="dictate__providers_field_realtime_model">Modelo em tempo real</string>
     <string name="dictate__providers_realtime_model_default">Padrão</string>
     <string name="dictate__instant_recording_title">Gravação instantânea</string>

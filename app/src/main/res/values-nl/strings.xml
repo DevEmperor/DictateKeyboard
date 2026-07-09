@@ -1091,6 +1091,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__status_retrying">Opnieuw proberen… ({attempt})</string>
     <string name="dictate__action_cancel">Opname annuleren</string>
     <string name="dictate__action_pause">Opname pauzeren</string>
+    <string name="dictate__action_next_segment">Volgend segment</string>
     <string name="dictate__action_resume">Opname hervatten</string>
     <string name="dictate__action_resend">Opnieuw proberen</string>
     <string name="dictate__action_dismiss">Negeren</string>
@@ -1171,6 +1172,16 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__skip_silent_summary">Voorkomt gehallucineerde tekst en overbodige API-aanroepen bij stille audio</string>
     <string name="dictate__realtime_title">Realtime-transcriptie</string>
     <string name="dictate__realtime_summary">Toont tekst live terwijl je spreekt, voor providers die dit ondersteunen</string>
+    <string name="dictate__longform_title">Lange dictaten</string>
+    <string name="dictate__longform_summary">Transcribeert lange dictaten op de achtergrond, deel voor deel terwijl je blijft praten — tik tijdens het opnemen op “Volgend segment” om het huidige deel te versturen, zodat je aan het einde niet lang hoeft te wachten.</string>
+    <string name="dictate__longform_autosplit_title">Automatisch splitsen bij pauzes</string>
+    <string name="dictate__longform_autosplit_summary">Knipt ook automatisch een segment af na een voldoende lange pauze, niet alleen met de knop “Volgend segment”.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Pauzeduur</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Uit</string>
+    <string name="dictate__longform_mode_off_summary">Eén keer transcriberen aan het einde (standaard).</string>
+    <string name="dictate__longform_mode_manual">Volgend segment</string>
+    <string name="dictate__longform_mode_manual_summary">Verstuur elk deel met “Volgend segment” tijdens het opnemen.</string>
     <string name="dictate__providers_field_realtime_model">Realtimemodel</string>
     <string name="dictate__providers_realtime_model_default">Standaard</string>
     <string name="dictate__instant_recording_title">Direct opnemen</string>

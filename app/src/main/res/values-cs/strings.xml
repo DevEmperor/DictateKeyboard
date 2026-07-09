@@ -1206,6 +1206,7 @@
     <string name="dictate__status_retrying">Opakování… ({attempt})</string>
     <string name="dictate__action_cancel">Zrušit nahrávání</string>
     <string name="dictate__action_pause">Pozastavit nahrávání</string>
+    <string name="dictate__action_next_segment">Další segment</string>
     <string name="dictate__action_resume">Pokračovat v nahrávání</string>
     <string name="dictate__action_resend">Zkusit znovu</string>
     <string name="dictate__action_dismiss">Zavřít</string>
@@ -1286,6 +1287,16 @@
     <string name="dictate__skip_silent_summary">Zabraňte vymyšlenému textu a zbytečným voláním API u tichého záznamu</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
     <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__longform_title">Dlouhé diktování</string>
+    <string name="dictate__longform_summary">Přepisuje dlouhá diktování na pozadí, část po části, zatímco mluvíte dál — během nahrávání klepněte na „Další segment“ a odešlete aktuální část, takže na konci nemusíte dlouho čekat.</string>
+    <string name="dictate__longform_autosplit_title">Automatické dělení v pauzách</string>
+    <string name="dictate__longform_autosplit_summary">Segment se automaticky oddělí i po dostatečně dlouhé pauze, nejen tlačítkem „Další segment“.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Délka pauzy</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Vypnuto</string>
+    <string name="dictate__longform_mode_off_summary">Přepsat jednou na konci (výchozí).</string>
+    <string name="dictate__longform_mode_manual">Další segment</string>
+    <string name="dictate__longform_mode_manual_summary">Během nahrávání odesílejte každou část tlačítkem „Další segment“.</string>
     <string name="dictate__providers_field_realtime_model">Model v reálném čase</string>
     <string name="dictate__providers_realtime_model_default">Výchozí</string>
     <string name="dictate__instant_recording_title">Okamžité nahrávání</string>

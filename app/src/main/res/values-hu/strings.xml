@@ -1189,6 +1189,7 @@
     <string name="dictate__status_retrying">Újrapróbálkozás… ({attempt})</string>
     <string name="dictate__action_cancel">Felvétel megszakítása</string>
     <string name="dictate__action_pause">Felvétel szüneteltetése</string>
+    <string name="dictate__action_next_segment">Következő szegmens</string>
     <string name="dictate__action_resume">Felvétel folytatása</string>
     <string name="dictate__action_resend">Újrapróbálkozás</string>
     <string name="dictate__action_dismiss">Elvetés</string>
@@ -1269,6 +1270,16 @@
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
     <string name="dictate__realtime_title">Valós idejű átírás</string>
     <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__longform_title">Hosszú diktálás</string>
+    <string name="dictate__longform_summary">A hosszú diktálásokat a háttérben írja át, részletről részletre, miközben tovább beszélsz — felvétel közben koppints a „Következő szegmens” gombra az aktuális rész elküldéséhez, így a végén nincs hosszú várakozás.</string>
+    <string name="dictate__longform_autosplit_title">Automatikus vágás szüneteknél</string>
+    <string name="dictate__longform_autosplit_summary">Elég hosszú szünet után automatikusan is levág egy szegmenst, nem csak a „Következő szegmens” gombbal.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Szünet hossza</string>
+    <string name="dictate__longform_autosplit_value">{seconds} mp</string>
+    <string name="dictate__longform_mode_off">Ki</string>
+    <string name="dictate__longform_mode_off_summary">Átírás egyszer a végén (alapértelmezett).</string>
+    <string name="dictate__longform_mode_manual">Következő szegmens</string>
+    <string name="dictate__longform_mode_manual_summary">Felvétel közben küldj el minden részt a „Következő szegmens” gombbal.</string>
     <string name="dictate__providers_field_realtime_model">Valós idejű modell</string>
     <string name="dictate__providers_realtime_model_default">Alapértelmezett</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>

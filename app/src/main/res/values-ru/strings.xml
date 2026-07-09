@@ -1195,6 +1195,7 @@
     <string name="dictate__status_retrying">Повторная попытка… ({attempt})</string>
     <string name="dictate__action_cancel">Отменить запись</string>
     <string name="dictate__action_pause">Приостановить запись</string>
+    <string name="dictate__action_next_segment">Следующий сегмент</string>
     <string name="dictate__action_resume">Возобновить запись</string>
     <string name="dictate__action_resend">Повторить</string>
     <string name="dictate__action_dismiss">Закрыть</string>
@@ -1275,6 +1276,16 @@
     <string name="dictate__skip_silent_summary">Избегайте выдуманного текста и лишних вызовов API при тихой записи</string>
     <string name="dictate__realtime_title">Транскрипция в реальном времени</string>
     <string name="dictate__realtime_summary">Показывает текст вживую во время речи для поддерживающих это провайдеров</string>
+    <string name="dictate__longform_title">Длинная диктовка</string>
+    <string name="dictate__longform_summary">Транскрибирует длинные диктовки в фоне, часть за частью, пока вы продолжаете говорить — нажмите «Следующий сегмент» во время записи, чтобы отправить текущую часть, и в конце не придётся долго ждать.</string>
+    <string name="dictate__longform_autosplit_title">Автоматически делить на паузах</string>
+    <string name="dictate__longform_autosplit_summary">Также автоматически отделяет сегмент после достаточно длинной паузы, а не только по кнопке «Следующий сегмент».</string>
+    <string name="dictate__longform_autosplit_threshold_title">Длительность паузы</string>
+    <string name="dictate__longform_autosplit_value">{seconds} с</string>
+    <string name="dictate__longform_mode_off">Выкл.</string>
+    <string name="dictate__longform_mode_off_summary">Транскрибировать один раз в конце (по умолчанию).</string>
+    <string name="dictate__longform_mode_manual">Следующий сегмент</string>
+    <string name="dictate__longform_mode_manual_summary">Отправляйте каждую часть кнопкой «Следующий сегмент» во время записи.</string>
     <string name="dictate__providers_field_realtime_model">Модель реального времени</string>
     <string name="dictate__providers_realtime_model_default">По умолчанию</string>
     <string name="dictate__instant_recording_title">Мгновенная запись</string>

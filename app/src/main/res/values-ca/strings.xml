@@ -1065,6 +1065,7 @@
     <string name="dictate__status_retrying">Tornant-ho a provar… ({attempt})</string>
     <string name="dictate__action_cancel">Cancel·la la gravació</string>
     <string name="dictate__action_pause">Posa en pausa la gravació</string>
+    <string name="dictate__action_next_segment">Segment següent</string>
     <string name="dictate__action_resume">Reprèn la gravació</string>
     <string name="dictate__action_resend">Torna-ho a provar</string>
     <string name="dictate__action_dismiss">Descarta</string>
@@ -1145,6 +1146,16 @@
     <string name="dictate__skip_silent_summary">Evita el text al·lucinat i les crides a l\'API inútils en àudio silenciós</string>
     <string name="dictate__realtime_title">Transcripció en temps real</string>
     <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten</string>
+    <string name="dictate__longform_title">Dictat llarg</string>
+    <string name="dictate__longform_summary">Transcriu dictats llargs en segon pla, part per part mentre continues parlant — toca «Segment següent» durant la gravació per enviar la part actual, així no hi ha una llarga espera al final.</string>
+    <string name="dictate__longform_autosplit_title">Divideix automàticament a les pauses</string>
+    <string name="dictate__longform_autosplit_summary">També talla un segment automàticament després d’una pausa prou llarga, no només amb el botó «Segment següent».</string>
+    <string name="dictate__longform_autosplit_threshold_title">Durada de la pausa</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Desactivat</string>
+    <string name="dictate__longform_mode_off_summary">Transcriu una sola vegada al final (predeterminat).</string>
+    <string name="dictate__longform_mode_manual">Segment següent</string>
+    <string name="dictate__longform_mode_manual_summary">Envia cada part amb «Segment següent» durant la gravació.</string>
     <string name="dictate__providers_field_realtime_model">Model en temps real</string>
     <string name="dictate__providers_realtime_model_default">Predeterminat</string>
     <string name="dictate__instant_recording_title">Gravació instantània</string>

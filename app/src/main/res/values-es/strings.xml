@@ -1173,6 +1173,7 @@
     <string name="dictate__status_retrying">Reintentando… ({attempt})</string>
     <string name="dictate__action_cancel">Cancelar grabación</string>
     <string name="dictate__action_pause">Pausar grabación</string>
+    <string name="dictate__action_next_segment">Segmento siguiente</string>
     <string name="dictate__action_resume">Reanudar grabación</string>
     <string name="dictate__action_resend">Intentar de nuevo</string>
     <string name="dictate__action_dismiss">Descartar</string>
@@ -1253,6 +1254,16 @@
     <string name="dictate__skip_silent_summary">Evita texto alucinado y llamadas a la API inútiles en audio silencioso</string>
     <string name="dictate__realtime_title">Transcripción en tiempo real</string>
     <string name="dictate__realtime_summary">Muestra el texto en vivo mientras hablas, para proveedores compatibles</string>
+    <string name="dictate__longform_title">Dictado largo</string>
+    <string name="dictate__longform_summary">Transcribe dictados largos en segundo plano, parte por parte mientras sigues hablando — toca «Segmento siguiente» durante la grabación para enviar la parte actual, así no hay una larga espera al final.</string>
+    <string name="dictate__longform_autosplit_title">Dividir automáticamente en las pausas</string>
+    <string name="dictate__longform_autosplit_summary">También corta un segmento automáticamente tras una pausa suficientemente larga, no solo con el botón «Segmento siguiente».</string>
+    <string name="dictate__longform_autosplit_threshold_title">Duración de la pausa</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Desactivado</string>
+    <string name="dictate__longform_mode_off_summary">Transcribir una sola vez al final (predeterminado).</string>
+    <string name="dictate__longform_mode_manual">Segmento siguiente</string>
+    <string name="dictate__longform_mode_manual_summary">Envía cada parte con «Segmento siguiente» durante la grabación.</string>
     <string name="dictate__providers_field_realtime_model">Modelo en tiempo real</string>
     <string name="dictate__providers_realtime_model_default">Predeterminado</string>
     <string name="dictate__instant_recording_title">Grabación instantánea</string>

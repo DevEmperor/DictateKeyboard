@@ -1135,6 +1135,7 @@
     <string name="dictate__status_retrying">Mēģina vēlreiz… ({attempt})</string>
     <string name="dictate__action_cancel">Atcelt ierakstīšanu</string>
     <string name="dictate__action_pause">Apturēt ierakstīšanu</string>
+    <string name="dictate__action_next_segment">Nākamais segments</string>
     <string name="dictate__action_resume">Atsākt ierakstīšanu</string>
     <string name="dictate__action_resend">Mēģināt vēlreiz</string>
     <string name="dictate__action_dismiss">Aizvērt</string>
@@ -1215,6 +1216,16 @@
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
     <string name="dictate__realtime_title">Reāllaika transkripcija</string>
     <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta</string>
+    <string name="dictate__longform_title">Gara diktēšana</string>
+    <string name="dictate__longform_summary">Transkribē garas diktēšanas fonā, daļu pa daļai, kamēr turpini runāt — ierakstīšanas laikā pieskaries „Nākamais segments“, lai nosūtītu pašreizējo daļu, tā beigās nav ilgi jāgaida.</string>
+    <string name="dictate__longform_autosplit_title">Automātiska sadalīšana pauzēs</string>
+    <string name="dictate__longform_autosplit_summary">Segmentu automātiski atdala arī pēc pietiekami garas pauzes, ne tikai ar pogu „Nākamais segments“.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Pauzes ilgums</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Izslēgts</string>
+    <string name="dictate__longform_mode_off_summary">Transkribēt vienu reizi beigās (noklusējums).</string>
+    <string name="dictate__longform_mode_manual">Nākamais segments</string>
+    <string name="dictate__longform_mode_manual_summary">Sūti katru daļu ar pogu „Nākamais segments“ ierakstīšanas laikā.</string>
     <string name="dictate__providers_field_realtime_model">Reāllaika modelis</string>
     <string name="dictate__providers_realtime_model_default">Noklusējuma</string>
     <string name="dictate__instant_recording_title">Tūlītēja ierakstīšana</string>

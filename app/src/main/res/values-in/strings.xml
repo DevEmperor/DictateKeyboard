@@ -1144,6 +1144,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__status_retrying">Mencoba lagi… ({attempt})</string>
     <string name="dictate__action_cancel">Batalkan perekaman</string>
     <string name="dictate__action_pause">Jeda perekaman</string>
+    <string name="dictate__action_next_segment">Segmen berikutnya</string>
     <string name="dictate__action_resume">Lanjutkan perekaman</string>
     <string name="dictate__action_resend">Coba lagi</string>
     <string name="dictate__action_dismiss">Tutup</string>
@@ -1224,6 +1225,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__skip_silent_summary">Hindari teks halusinasi dan panggilan API sia-sia pada audio senyap</string>
     <string name="dictate__realtime_title">Transkripsi waktu nyata</string>
     <string name="dictate__realtime_summary">Menampilkan teks secara langsung saat Anda berbicara, untuk penyedia yang mendukungnya</string>
+    <string name="dictate__longform_title">Dikte panjang</string>
+    <string name="dictate__longform_summary">Mentranskripsi dikte panjang di latar belakang, bagian demi bagian sambil Anda terus berbicara — ketuk “Segmen berikutnya” saat merekam untuk mengirim bagian saat ini, sehingga tidak ada menunggu lama di akhir.</string>
+    <string name="dictate__longform_autosplit_title">Pisah otomatis saat jeda</string>
+    <string name="dictate__longform_autosplit_summary">Juga memotong segmen secara otomatis setelah jeda yang cukup panjang, tidak hanya dengan tombol “Segmen berikutnya”.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Durasi jeda</string>
+    <string name="dictate__longform_autosplit_value">{seconds} dtk</string>
+    <string name="dictate__longform_mode_off">Nonaktif</string>
+    <string name="dictate__longform_mode_off_summary">Transkripsi sekali di akhir (bawaan).</string>
+    <string name="dictate__longform_mode_manual">Segmen berikutnya</string>
+    <string name="dictate__longform_mode_manual_summary">Kirim setiap bagian dengan “Segmen berikutnya” saat merekam.</string>
     <string name="dictate__providers_field_realtime_model">Model waktu nyata</string>
     <string name="dictate__providers_realtime_model_default">Bawaan</string>
     <string name="dictate__instant_recording_title">Perekaman instan</string>

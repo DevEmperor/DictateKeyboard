@@ -1207,6 +1207,7 @@
     <string name="dictate__status_retrying">Ponawianie… ({attempt})</string>
     <string name="dictate__action_cancel">Anuluj nagrywanie</string>
     <string name="dictate__action_pause">Wstrzymaj nagrywanie</string>
+    <string name="dictate__action_next_segment">Następny segment</string>
     <string name="dictate__action_resume">Wznów nagrywanie</string>
     <string name="dictate__action_resend">Spróbuj ponownie</string>
     <string name="dictate__action_dismiss">Odrzuć</string>
@@ -1287,6 +1288,16 @@
     <string name="dictate__skip_silent_summary">Unikaj zmyślonego tekstu i zbędnych wywołań API przy cichym nagraniu</string>
     <string name="dictate__realtime_title">Transkrypcja w czasie rzeczywistym</string>
     <string name="dictate__realtime_summary">Pokazuje tekst na żywo podczas mówienia u dostawców, którzy to obsługują</string>
+    <string name="dictate__longform_title">Długie dyktowanie</string>
+    <string name="dictate__longform_summary">Transkrybuje długie dyktowanie w tle, część po części, gdy mówisz dalej — dotknij „Następny segment” podczas nagrywania, aby wysłać bieżącą część, dzięki czemu nie ma długiego oczekiwania na końcu.</string>
+    <string name="dictate__longform_autosplit_title">Automatyczny podział przy pauzach</string>
+    <string name="dictate__longform_autosplit_summary">Wycina segment automatycznie również po wystarczająco długiej pauzie, nie tylko przyciskiem „Następny segment”.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Długość pauzy</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Wył.</string>
+    <string name="dictate__longform_mode_off_summary">Transkrybuj raz na końcu (domyślnie).</string>
+    <string name="dictate__longform_mode_manual">Następny segment</string>
+    <string name="dictate__longform_mode_manual_summary">Wysyłaj każdą część przyciskiem „Następny segment” podczas nagrywania.</string>
     <string name="dictate__providers_field_realtime_model">Model czasu rzeczywistego</string>
     <string name="dictate__providers_realtime_model_default">Domyślny</string>
     <string name="dictate__instant_recording_title">Natychmiastowe nagrywanie</string>

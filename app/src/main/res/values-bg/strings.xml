@@ -1191,6 +1191,7 @@
     <string name="dictate__status_retrying">Нов опит… ({attempt})</string>
     <string name="dictate__action_cancel">Отмени записа</string>
     <string name="dictate__action_pause">Постави записа на пауза</string>
+    <string name="dictate__action_next_segment">Следващ сегмент</string>
     <string name="dictate__action_resume">Възобнови записа</string>
     <string name="dictate__action_resend">Опитай отново</string>
     <string name="dictate__action_dismiss">Затвори</string>
@@ -1271,6 +1272,16 @@
     <string name="dictate__skip_silent_summary">Избягвайте измислен текст и излишни API заявки при тих запис</string>
     <string name="dictate__realtime_title">Транскрипция в реално време</string>
     <string name="dictate__realtime_summary">Показва текста на живо, докато говорите, за доставчици, които го поддържат</string>
+    <string name="dictate__longform_title">Дълга диктовка</string>
+    <string name="dictate__longform_summary">Транскрибира дълги диктовки на заден план, част по част, докато продължавате да говорите — докоснете „Следващ сегмент“ по време на записа, за да изпратите текущата част, така че да няма дълго изчакване накрая.</string>
+    <string name="dictate__longform_autosplit_title">Автоматично разделяне при паузи</string>
+    <string name="dictate__longform_autosplit_summary">Отделя сегмент автоматично и след достатъчно дълга пауза, не само с бутона „Следващ сегмент“.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Дължина на паузата</string>
+    <string name="dictate__longform_autosplit_value">{seconds} с</string>
+    <string name="dictate__longform_mode_off">Изкл.</string>
+    <string name="dictate__longform_mode_off_summary">Транскрибиране веднъж накрая (по подразбиране).</string>
+    <string name="dictate__longform_mode_manual">Следващ сегмент</string>
+    <string name="dictate__longform_mode_manual_summary">Изпращайте всяка част с бутона „Следващ сегмент“ по време на записа.</string>
     <string name="dictate__providers_field_realtime_model">Модел в реално време</string>
     <string name="dictate__providers_realtime_model_default">По подразбиране</string>
     <string name="dictate__instant_recording_title">Незабавен запис</string>

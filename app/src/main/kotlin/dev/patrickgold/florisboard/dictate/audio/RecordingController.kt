@@ -37,6 +37,10 @@ class RecordingController(private val context: Context) {
     private var record: AudioRecord? = null
     private var thread: Thread? = null
     private var raf: RandomAccessFile? = null
+    // Serializes access to [raf]/[pcmBytes] between the capture thread's per-frame write and a caller's
+    // [rotate]/[stop], so a mid-recording segment cut can never race with a frame write.
+    private val fileLock = Any()
+    private var segmentSeq = 0
     @Volatile private var recording = false
     @Volatile private var paused = false
     @Volatile private var pcmBytes = 0L
@@ -101,13 +105,55 @@ class RecordingController(private val context: Context) {
                 val n = rec.read(buf, 0, buf.size)
                 // Keep reading while paused (so the mic buffer never overflows) but drop the samples.
                 if (n > 0 && !paused) {
-                    runCatching { out.write(buf, 0, n) }
-                    pcmBytes += n
+                    // Write under the lock so a concurrent rotate() sees a consistent raf/pcmBytes and the
+                    // frame lands in the correct segment file (never split across a rotation).
+                    synchronized(fileLock) {
+                        runCatching { raf?.write(buf, 0, n) }
+                        pcmBytes += n
+                    }
                     updatePeak(buf, n)
                     if (pcmSink != null) runCatching { pcmSink(buf, n) }
                 }
             }
         }.also { it.start() }
+    }
+
+    /**
+     * Cuts the current segment WITHOUT stopping the microphone (long-form segmented dictation, issue
+     * #170): finalizes the in-progress WAV, hands it back for background transcription, and immediately
+     * reopens a fresh WAV so recording continues seamlessly. Returns the finalized segment file, or null
+     * if nothing usable was captured since the last cut. Safe to call off the main thread while recording.
+     */
+    fun rotate(): File? = synchronized(fileLock) {
+        if (!recording) return@synchronized null
+        val old = raf ?: return@synchronized null
+        val bytes = pcmBytes
+        val base = outputFile
+        val segment = try {
+            old.seek(0)
+            old.write(wavHeader(bytes))
+            old.close()
+            if (bytes > 0 && base != null) {
+                val seg = File(context.cacheDir, "dictate_seg_${segmentSeq++}.wav")
+                seg.delete()
+                if (base.renameTo(seg)) seg else null
+            } else null
+        } catch (_: Throwable) {
+            null
+        }
+        // Reopen a fresh WAV (the base name is now free after the rename) for the continuing recording.
+        val file = File(context.cacheDir, AUDIO_FILE_NAME)
+        raf = try {
+            RandomAccessFile(file, "rw").apply {
+                setLength(0)
+                write(ByteArray(WAV_HEADER_SIZE))
+            }
+        } catch (_: Throwable) {
+            null
+        }
+        outputFile = file
+        pcmBytes = 0
+        segment
     }
 
     /**
@@ -121,19 +167,21 @@ class RecordingController(private val context: Context) {
         thread = null
         runCatching { record?.run { stop(); release() } }
         record = null
-        val out = raf ?: return null
-        raf = null
-        val bytes = pcmBytes
-        val file = outputFile
-        return try {
-            out.seek(0)
-            out.write(wavHeader(bytes))
-            out.close()
-            if (bytes > 0) file else { file?.delete(); null }
-        } catch (_: Throwable) {
-            runCatching { out.close() }
-            file?.delete()
-            null
+        return synchronized(fileLock) {
+            val out = raf ?: return@synchronized null
+            raf = null
+            val bytes = pcmBytes
+            val file = outputFile
+            try {
+                out.seek(0)
+                out.write(wavHeader(bytes))
+                out.close()
+                if (bytes > 0) file else { file?.delete(); null }
+            } catch (_: Throwable) {
+                runCatching { out.close() }
+                file?.delete()
+                null
+            }
         }
     }
 

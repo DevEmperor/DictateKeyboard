@@ -1121,6 +1121,7 @@
     <string name="dictate__status_retrying">再試行中…（{attempt}）</string>
     <string name="dictate__action_cancel">録音をキャンセル</string>
     <string name="dictate__action_pause">録音を一時停止</string>
+    <string name="dictate__action_next_segment">次のセグメント</string>
     <string name="dictate__action_resume">録音を再開</string>
     <string name="dictate__action_resend">もう一度試す</string>
     <string name="dictate__action_dismiss">閉じる</string>
@@ -1201,6 +1202,16 @@
     <string name="dictate__skip_silent_summary">無音の録音での幻覚テキストや無駄なAPI呼び出しを回避します</string>
     <string name="dictate__realtime_title">リアルタイム文字起こし</string>
     <string name="dictate__realtime_summary">対応するプロバイダーで、話しながらテキストをリアルタイム表示します。</string>
+    <string name="dictate__longform_title">長文ディクテーション</string>
+    <string name="dictate__longform_summary">長い口述をバックグラウンドで、話し続けながら少しずつ文字起こしします。録音中に「次のセグメント」をタップすると現在の部分が送信されるので、最後に長く待つ必要がありません。</string>
+    <string name="dictate__longform_autosplit_title">無音で自動分割</string>
+    <string name="dictate__longform_autosplit_summary">「次のセグメント」ボタンだけでなく、十分に長い無音の後にも自動でセグメントを区切ります。</string>
+    <string name="dictate__longform_autosplit_threshold_title">無音の長さ</string>
+    <string name="dictate__longform_autosplit_value">{seconds} 秒</string>
+    <string name="dictate__longform_mode_off">オフ</string>
+    <string name="dictate__longform_mode_off_summary">最後に一度だけ文字起こしします（デフォルト）。</string>
+    <string name="dictate__longform_mode_manual">次のセグメント</string>
+    <string name="dictate__longform_mode_manual_summary">録音中に「次のセグメント」で各部分を送信します。</string>
     <string name="dictate__providers_field_realtime_model">リアルタイムモデル</string>
     <string name="dictate__providers_realtime_model_default">デフォルト</string>
     <string name="dictate__instant_recording_title">即時録音</string>

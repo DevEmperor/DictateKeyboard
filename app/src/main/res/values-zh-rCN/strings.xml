@@ -1186,6 +1186,7 @@
     <string name="dictate__status_retrying">重试中…（{attempt}）</string>
     <string name="dictate__action_cancel">取消录音</string>
     <string name="dictate__action_pause">暂停录音</string>
+    <string name="dictate__action_next_segment">下一段</string>
     <string name="dictate__action_resume">继续录音</string>
     <string name="dictate__action_resend">重试</string>
     <string name="dictate__action_dismiss">关闭</string>
@@ -1266,6 +1267,16 @@
     <string name="dictate__skip_silent_summary">避免静音录音产生幻觉文本和浪费 API 调用</string>
     <string name="dictate__realtime_title">实时转录</string>
     <string name="dictate__realtime_summary">在您说话时实时显示文本，适用于支持此功能的提供商</string>
+    <string name="dictate__longform_title">长篇听写</string>
+    <string name="dictate__longform_summary">在后台逐段转录较长的口述，你可以一边说一边转录——录音时点按“下一段”即可发送当前部分，这样结束时无需长时间等待。</string>
+    <string name="dictate__longform_autosplit_title">在停顿处自动分段</string>
+    <string name="dictate__longform_autosplit_summary">在足够长的停顿后也会自动切分出一段，而不仅仅通过“下一段”按钮。</string>
+    <string name="dictate__longform_autosplit_threshold_title">停顿时长</string>
+    <string name="dictate__longform_autosplit_value">{seconds} 秒</string>
+    <string name="dictate__longform_mode_off">关闭</string>
+    <string name="dictate__longform_mode_off_summary">在结束时一次性转录（默认）。</string>
+    <string name="dictate__longform_mode_manual">下一段</string>
+    <string name="dictate__longform_mode_manual_summary">录音时用“下一段”按钮发送每个部分。</string>
     <string name="dictate__providers_field_realtime_model">实时模型</string>
     <string name="dictate__providers_realtime_model_default">默认</string>
     <string name="dictate__instant_recording_title">即时录音</string>

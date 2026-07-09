@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
+import dev.patrickgold.florisboard.dictate.DictateLongformMode
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
@@ -459,6 +460,20 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val realtimeTranscription = boolean(
             key = "dictate__realtime_transcription",
             default = false,
+        )
+        // --- Long-form segmented dictation (issue #170) ------------------------------------------
+        // Transcribe long dictations segment-by-segment in the background while you keep talking, so you
+        // don't wait for one big upload at the end. OFF by default; MANUAL shows the "Next" button, AUTO
+        // additionally cuts at speech pauses. Keyboard-only, not for realtime / live-prompt / multimodal.
+        val longformMode = enum(
+            key = "dictate__longform_mode",
+            default = DictateLongformMode.OFF,
+        )
+        // Pause length (whole seconds) that triggers an auto-cut in AUTO mode; deliberately long so it
+        // fires on thought-breaks, not breathing pauses.
+        val longformAutoSplitSeconds = int(
+            key = "dictate__longform_auto_split_seconds",
+            default = 3,
         )
         // Speed of the typewriter animation when instantOutput is off (1 = slow … 10 = fast).
         val outputSpeed = int(
