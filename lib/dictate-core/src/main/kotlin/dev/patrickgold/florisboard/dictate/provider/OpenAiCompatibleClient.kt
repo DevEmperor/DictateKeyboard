@@ -39,8 +39,8 @@ import javax.net.ssl.X509TrustManager
 
 /**
  * A single client implementation that talks to any OpenAI Chat Completions / Audio Transcriptions
- * compatible endpoint. This one class covers OpenAI, Groq, OpenRouter, Together, DeepInfra, Mistral,
- * xAI, DeepSeek, local Ollama and arbitrary custom servers – they only differ by base URL, key and
+ * compatible endpoint. This one class covers OpenAI, Groq, Cerebras, OpenRouter, Together, DeepInfra,
+ * Mistral, xAI, DeepSeek, local Ollama and arbitrary custom servers – they only differ by base URL, key and
  * a few headers (see [ProviderRegistry] and [ProviderConfig]).
  *
  * Google Gemini is also handled here: chat/rewording goes through its OpenAI-compatible layer
