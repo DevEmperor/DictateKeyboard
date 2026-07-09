@@ -42,6 +42,20 @@ class Pcm16ResamplerTest {
         )
     }
 
+    @Test
+    fun resamplingDropsIncompleteTrailingPcmByte() {
+        val pcm = byteArrayOf(1, 0, 2, 0, 99)
+
+        assertContentEquals(
+            byteArrayOf(1, 0, 2, 0),
+            Pcm16Resampler.resample(pcm, len = 5, srcRate = 16_000, dstRate = 16_000),
+        )
+        assertContentEquals(
+            Pcm16Resampler.resample(pcm, len = 4, srcRate = 16_000, dstRate = 24_000),
+            Pcm16Resampler.resample(pcm, len = 5, srcRate = 16_000, dstRate = 24_000),
+        )
+    }
+
     private fun deterministicPcm16(sampleCount: Int): ByteArray {
         val out = ByteArray(sampleCount * 2)
         var state = 0x13579bdf

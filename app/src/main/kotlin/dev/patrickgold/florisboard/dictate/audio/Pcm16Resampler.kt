@@ -16,9 +16,11 @@ object Pcm16Resampler {
     fun resample(pcm: ByteArray, len: Int, srcRate: Int, dstRate: Int): ByteArray {
         require(len in 0..pcm.size) { "len must be within pcm bounds" }
         require(srcRate > 0 && dstRate > 0) { "sample rates must be positive" }
-        if (srcRate == dstRate) return if (len == pcm.size) pcm else pcm.copyOfRange(0, len)
-        if (srcRate == 16_000 && dstRate == 24_000) return resample16kTo24k(pcm, len)
-        return resampleLinear(pcm, len, srcRate, dstRate)
+        val evenLen = len and -2
+        if (evenLen == 0) return ByteArray(0)
+        if (srcRate == dstRate) return if (evenLen == pcm.size) pcm else pcm.copyOfRange(0, evenLen)
+        if (srcRate == 16_000 && dstRate == 24_000) return resample16kTo24k(pcm, evenLen)
+        return resampleLinear(pcm, evenLen, srcRate, dstRate)
     }
 
     private fun resample16kTo24k(pcm: ByteArray, len: Int): ByteArray {
@@ -33,7 +35,7 @@ object Pcm16Resampler {
             val s0 = pcmSampleAt(pcm, i0, inSamples)
             val s1 = pcmSampleAt(pcm, i0 + 1, inSamples)
             val v = ((s0 * 3) + ((s1 - s0) * rem)) / 3
-            writeSample(out, outIndex, v.coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()))
+            writeSample(out, outIndex, v)
         }
         return out
     }
@@ -49,7 +51,7 @@ object Pcm16Resampler {
             val frac = srcPos - i0
             val s0 = pcmSampleAt(pcm, i0, inSamples)
             val s1 = pcmSampleAt(pcm, i0 + 1, inSamples)
-            val v = (s0 + (s1 - s0) * frac).toInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt())
+            val v = (s0 + (s1 - s0) * frac).toInt()
             writeSample(out, outIndex, v)
         }
         return out
