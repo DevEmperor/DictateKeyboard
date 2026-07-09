@@ -183,6 +183,7 @@ private class OpenAiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
         val socket = ws ?: return
         val msg = base64AudioJson(AUDIO_APPEND_PREFIX, pcm16, len, AUDIO_APPEND_SUFFIX)
         runCatching { socket.send(msg) }
@@ -283,8 +284,9 @@ private class SonioxRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        if (!started) return   // drop audio captured before the config frame was sent
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (!started || done) return   // drop audio captured before the config frame was sent
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
@@ -368,7 +370,9 @@ private class AssemblyAiRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
@@ -450,8 +454,10 @@ private class ElevenLabsRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
+        val socket = ws ?: return
         val msg = base64AudioJson(AUDIO_CHUNK_PREFIX, pcm16, len, AUDIO_CHUNK_SUFFIX)
-        runCatching { ws?.send(msg) }
+        runCatching { socket.send(msg) }
     }
 
     override fun finish() {
@@ -554,9 +560,10 @@ private class GeminiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        if (!started) return   // wait for setupComplete before streaming audio (Gemini Live requirement)
+        if (!started || done) return   // wait for setupComplete before streaming audio (Gemini Live requirement)
+        val socket = ws ?: return
         val msg = base64AudioJson(AUDIO_PREFIX, pcm16, len, AUDIO_SUFFIX)
-        runCatching { ws?.send(msg) }
+        runCatching { socket.send(msg) }
     }
 
     override fun finish() {
@@ -651,7 +658,9 @@ private class MistralRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
@@ -734,7 +743,9 @@ private class DeepgramRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {

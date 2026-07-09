@@ -152,7 +152,7 @@ class LocalTranscriptionProvider(
         } finally {
             vad.release()
         }
-        return parts.toString().trim().ifBlank { decodeOnce(recognizer, samples) }
+        return if (parts.isEmpty()) decodeOnce(recognizer, samples).trim() else parts.toString().trim()
     }
 
     private fun drainSegments(vad: Vad, recognizer: OfflineRecognizer, out: StringBuilder) {

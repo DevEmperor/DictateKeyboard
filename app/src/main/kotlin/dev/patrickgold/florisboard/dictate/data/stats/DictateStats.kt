@@ -100,13 +100,20 @@ object DictateStats {
         val raw = d.statsPendingMilestone.get()
         if (raw.isNotEmpty()) d.statsPendingMilestone.set("")
         if (!d.statsMilestonesEnabled.get() || raw.isBlank()) return null
-        val parts = raw.split(':')
-        val kind = when (parts.getOrNull(0)) {
-            "time" -> Milestone.Kind.TIME_MINUTES
-            "count" -> Milestone.Kind.DICTATIONS
+        val valueStart: Int
+        val kind = when {
+            raw.startsWith("time:") -> {
+                valueStart = "time:".length
+                Milestone.Kind.TIME_MINUTES
+            }
+            raw.startsWith("count:") -> {
+                valueStart = "count:".length
+                Milestone.Kind.DICTATIONS
+            }
             else -> return null
         }
-        val value = parts.getOrNull(1)?.toLongOrNull() ?: return null
+        val valueEnd = raw.indexOf(':', startIndex = valueStart).let { if (it >= 0) it else raw.length }
+        val value = parseLongOrNull(raw, valueStart, valueEnd) ?: return null
         return Milestone(kind, value)
     }
 
