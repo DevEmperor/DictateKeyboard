@@ -238,7 +238,7 @@ private object RecognizerCache {
         // Language is baked into the Whisper config at build time, so it is part of the cache key
         // (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
         // as-is and ignores the language, so it stays out of the key for those.
-        val cacheKey = modelDir.absolutePath + "|" + (if (isTransducer) "" else language)
+        val cacheKey = modelDir.absolutePath + "|" + numThreads + "|" + (if (isTransducer) "" else language)
         val existing = recognizer
         if (existing != null && cacheKey == key) return existing
 
