@@ -816,7 +816,7 @@ class OpenAiCompatibleClient(
         val out = Base64StringOutput(base64Capacity(file.length()))
         file.inputStream().use { input ->
             Base64OutputStream(out, Base64.NO_WRAP).use { base64 ->
-                input.copyTo(base64)
+                input.copyTo(base64, bufferSize = BASE64_COPY_BUFFER_SIZE)
             }
         }
         return out.toString()
@@ -830,18 +830,20 @@ class OpenAiCompatibleClient(
 
     private class Base64StringOutput(initialCapacity: Int) : OutputStream() {
         private val builder = StringBuilder(initialCapacity)
+        private var chars = CharArray(BASE64_COPY_BUFFER_SIZE)
 
         override fun write(b: Int) {
             builder.append((b and 0xff).toChar())
         }
 
         override fun write(buffer: ByteArray, offset: Int, length: Int) {
-            var i = offset
-            val end = offset + length
-            while (i < end) {
-                builder.append((buffer[i].toInt() and 0xff).toChar())
+            if (chars.size < length) chars = CharArray(length)
+            var i = 0
+            while (i < length) {
+                chars[i] = (buffer[offset + i].toInt() and 0xff).toChar()
                 i++
             }
+            builder.append(chars, 0, length)
         }
 
         override fun toString(): String = builder.toString()
@@ -1076,6 +1078,7 @@ class OpenAiCompatibleClient(
     companion object {
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
+        private const val BASE64_COPY_BUFFER_SIZE = 64 * 1024
 
         /** Soniox / AssemblyAI async polling: interval between status checks and the overall budget. */
         private const val SONIOX_POLL_INTERVAL_MS = 1500L
