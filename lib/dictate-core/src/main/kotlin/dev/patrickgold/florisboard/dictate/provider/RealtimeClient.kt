@@ -91,6 +91,9 @@ object RealtimeClient {
     }
 }
 
+private fun base64AudioJson(prefix: String, pcm16: ByteArray, len: Int, suffix: String): String =
+    prefix + Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP) + suffix
+
 /**
  * OpenAI realtime transcription over `wss://api.openai.com/v1/realtime?intent=transcription`. Sends a
  * `session.update` transcription config on open, streams 24 kHz mono PCM16 as base64
@@ -114,6 +117,8 @@ private class OpenAiRealtimeSession(
 
     private companion object {
         const val URL = "wss://api.openai.com/v1/realtime?intent=transcription"
+        const val AUDIO_APPEND_PREFIX = "{\"type\":\"input_audio_buffer.append\",\"audio\":\""
+        const val AUDIO_APPEND_SUFFIX = "\"}"
     }
 
     fun connect() {
@@ -179,11 +184,7 @@ private class OpenAiRealtimeSession(
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
         val socket = ws ?: return
-        val b64 = Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP)
-        val msg = buildJsonObject {
-            put("type", "input_audio_buffer.append")
-            put("audio", b64)
-        }.toString()
+        val msg = base64AudioJson(AUDIO_APPEND_PREFIX, pcm16, len, AUDIO_APPEND_SUFFIX)
         runCatching { socket.send(msg) }
     }
 
@@ -415,6 +416,13 @@ private class ElevenLabsRealtimeSession(
     private var ws: WebSocket? = null
     @Volatile private var done = false
 
+    private companion object {
+        const val AUDIO_CHUNK_PREFIX =
+            "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\""
+        const val AUDIO_CHUNK_SUFFIX = "\",\"commit\":false,\"sample_rate\":16000}"
+        const val FINAL_CHUNK = "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\"\",\"commit\":true}"
+    }
+
     fun connect() {
         val lang = if (!language.isNullOrBlank() && language != "detect") "&language_code=$language" else ""
         val url = "wss://api.elevenlabs.io/v1/speech-to-text/realtime" +
@@ -442,23 +450,13 @@ private class ElevenLabsRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        val msg = buildJsonObject {
-            put("message_type", "input_audio_chunk")
-            put("audio_base_64", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
-            put("commit", false)
-            put("sample_rate", 16_000)
-        }.toString()
+        val msg = base64AudioJson(AUDIO_CHUNK_PREFIX, pcm16, len, AUDIO_CHUNK_SUFFIX)
         runCatching { ws?.send(msg) }
     }
 
     override fun finish() {
         val socket = ws ?: return finishClosed(null)
-        val msg = buildJsonObject {
-            put("message_type", "input_audio_chunk")
-            put("audio_base_64", "")
-            put("commit", true)
-        }.toString()
-        runCatching { socket.send(msg) }
+        runCatching { socket.send(FINAL_CHUNK) }
     }
 
     override fun cancel() {
@@ -503,6 +501,11 @@ private class GeminiRealtimeSession(
     @Volatile private var started = false    // gate audio until the server acks setup (setupComplete)
     @Volatile private var finishing = false
     @Volatile private var done = false
+
+    private companion object {
+        const val AUDIO_PREFIX = "{\"realtimeInput\":{\"audio\":{\"data\":\""
+        const val AUDIO_SUFFIX = "\",\"mimeType\":\"audio/pcm;rate=16000\"}}}"
+    }
 
     fun connect() {
         val url = "wss://generativelanguage.googleapis.com/ws/" +
@@ -552,14 +555,7 @@ private class GeminiRealtimeSession(
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
         if (!started) return   // wait for setupComplete before streaming audio (Gemini Live requirement)
-        val msg = buildJsonObject {
-            putJsonObject("realtimeInput") {
-                putJsonObject("audio") {
-                    put("data", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
-                    put("mimeType", "audio/pcm;rate=16000")
-                }
-            }
-        }.toString()
+        val msg = base64AudioJson(AUDIO_PREFIX, pcm16, len, AUDIO_SUFFIX)
         runCatching { ws?.send(msg) }
     }
 
