@@ -662,13 +662,14 @@ object DictateController {
                 // Long-form segmented dictation (#170): transcribe cut segments in the background while
                 // recording continues. Off for realtime / live-prompt / overlay / multimodal (see the gate).
                 val segmented = isSegmentedMode()
-                // Auto-split (Phase 2): a live VAD watches the mic and cuts a segment on a long pause.
+                // Auto-split: Silero VAD finds candidate pauses, then Smart Turn v3 decides whether the
+                // thought is complete; the configured pause remains the Pipecat-style safety fallback.
                 segmentVad?.release()
                 segmentVad = if (segmented && prefs.dictate.longformMode.get() == DictateLongformMode.AUTO) {
                     LiveSpeechSplitter(
                         appContext,
                         prefs.dictate.longformAutoSplitSeconds.get() * 1000,
-                    ) { flushSegment(appContext) }.also { it.start() }
+                    ) { flushSegment(appContext, splitterAlreadyReset = true) }.also { it.start() }
                 } else null
                 // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
                 val pcmSink: ((ByteArray, Int) -> Unit)? = when {
@@ -1257,8 +1258,15 @@ object DictateController {
      * segmented recording is actually in progress.
      */
     fun flushSegment(context: Context) {
+        flushSegment(context, splitterAlreadyReset = false)
+    }
+
+    private fun flushSegment(context: Context, splitterAlreadyReset: Boolean) {
         if (!segmentedActive || _state.value !is UiState.Recording) return
         val appContext = context.applicationContext
+        // Manual cuts reset the analyzer at call time so audio queued after this point belongs to the next
+        // turn. Automatic cuts already reset atomically inside LiveSpeechSplitter before invoking us.
+        if (!splitterAlreadyReset) segmentVad?.notifyCut()
         scope.launch {
             val assigned = segmentMutex.withLock {
                 if (!segmentedActive || _state.value !is UiState.Recording) return@withLock null
@@ -1271,7 +1279,6 @@ object DictateController {
                 i to w
             } ?: return@launch
             val (idx, wav) = assigned
-            segmentVad?.notifyCut() // require fresh speech before the next auto-cut
             if (wav != null && wav.exists() && wav.length() > 0L) {
                 launchSegmentTranscription(appContext, idx, wav)
             } else {

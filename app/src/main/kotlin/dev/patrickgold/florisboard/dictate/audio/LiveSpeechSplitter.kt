@@ -14,18 +14,20 @@ import android.content.Context
 import com.k2fsa.sherpa.onnx.SileroVadModelConfig
 import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
+import java.util.concurrent.Executors
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 
 /**
- * Streams live microphone PCM through the Silero VAD and fires [onPause] when a long enough speech pause
- * is detected, so long-form segmented dictation (issue #170) can auto-cut a segment without the user
- * tapping "Next". Reuses the bundled Silero model + sherpa-onnx runtime from [SpeechGate] (issue #104).
+ * Pipecat-compatible Smart Turn v3 pipeline for long-form segmentation (issue #170): Silero VAD first
+ * detects a short speech pause, then Smart Turn classifies the latest eight seconds of the current turn.
+ * A complete prediction cuts immediately; an incomplete prediction keeps buffering until speech resumes
+ * or [pauseThresholdMs] expires as the safety fallback.
  *
- * The VAD inference runs on a dedicated worker thread — [feed] (called on the recorder's capture thread)
- * only copies the frame into a queue and returns immediately, so the microphone is never blocked. Fails
- * silent: if the model can't be prepared or the VAD errors, it simply never fires and manual cutting is
- * unaffected.
+ * VAD and Smart Turn run on separate single-thread workers. [feed] only copies into a queue, so neither
+ * model blocks microphone capture. Prediction results are posted back through the same ordered event queue:
+ * if speech resumed during inference, that audio is processed first and the stale result is discarded.
+ * If Smart Turn is unavailable, the VAD silence fallback and manual Next button remain functional.
  *
  * @param pauseThresholdMs how long a pause must last (after speech) before a cut is fired.
  * @param onPause invoked (on the worker thread) when a qualifying pause is detected; must be cheap and
@@ -37,10 +39,11 @@ class LiveSpeechSplitter(
     private val onPause: () -> Unit,
 ) {
     private val appContext = context.applicationContext
-    private val queue = LinkedBlockingQueue<ShortArray>()
+    private val queue = LinkedBlockingQueue<Event>()
+    private val inferenceExecutor = Executors.newSingleThreadExecutor { runnable ->
+        Thread(runnable, "dictate-smart-turn").apply { isDaemon = true }
+    }
     @Volatile private var running = false
-    // Require fresh speech since the last cut before firing again, so one long silence yields one cut.
-    @Volatile private var hadSpeechSinceCut = false
     private var worker: Thread? = null
 
     fun start() {
@@ -62,18 +65,19 @@ class LiveSpeechSplitter(
             shorts[j++] = ((pcm16[i].toInt() and 0xff) or (pcm16[i + 1].toInt() shl 8)).toShort()
             i += 2
         }
-        queue.offer(shorts)
+        queue.offer(Event.Audio(shorts))
     }
 
     /** After a cut (manual or auto), require fresh speech before the next auto-cut can fire. */
     fun notifyCut() {
-        hadSpeechSinceCut = false
+        queue.offer(Event.Reset)
     }
 
     fun release() {
         running = false
         worker?.interrupt()
         worker = null
+        inferenceExecutor.shutdownNow()
         queue.clear()
     }
 
@@ -97,18 +101,64 @@ class LiveSpeechSplitter(
         }.getOrNull() ?: return
 
         val window = FloatArray(SpeechGate.VAD_WINDOW)
+        val turnBuffer = SmartTurnPcmBuffer()
         var filled = 0
-        var silentWindows = 0
-        // Each window is 512/16000 ≈ 32 ms of audio; convert the pause threshold to a window count.
+        // Pipecat invokes Smart Turn after Silero reports 0.2 seconds of silence. An incomplete turn then
+        // falls back to stop_secs (the user-facing maximum-pause slider, 2–8 seconds in Dictate).
         val windowMs = SpeechGate.VAD_WINDOW * 1000 / AudioDecode.TARGET_SAMPLE_RATE
-        val silentWindowsToFire = (pauseThresholdMs / windowMs).coerceAtLeast(1)
+        val smartTurnWindows = ((SMART_TURN_VAD_STOP_MS + windowMs - 1) / windowMs).coerceAtLeast(1)
+        val fallbackWindows = ((pauseThresholdMs + windowMs - 1) / windowMs).coerceAtLeast(smartTurnWindows)
+        val policy = SmartTurnPausePolicy(smartTurnWindows, fallbackWindows)
+
+        fun resetDetector() {
+            turnBuffer.clear()
+            filled = 0
+            runCatching { vad.reset() }
+        }
+
+        fun handle(action: SmartTurnPausePolicy.Action) {
+            when (action) {
+                SmartTurnPausePolicy.Action.None -> Unit
+                SmartTurnPausePolicy.Action.BeginTurn -> {
+                    // Match Pipecat's 500 ms pre-speech buffer plus the VAD's 200 ms start confirmation.
+                    turnBuffer.keepNewest(PRE_SPEECH_SAMPLES)
+                }
+                SmartTurnPausePolicy.Action.Cut -> {
+                    resetDetector()
+                    runCatching { onPause() }
+                }
+                is SmartTurnPausePolicy.Action.Analyze -> {
+                    val audio = turnBuffer.snapshotNormalizedLeftPadded()
+                    runCatching {
+                        inferenceExecutor.execute {
+                            val complete = if (running) SmartTurnModel.predictsComplete(appContext, audio) else null
+                            if (running) queue.offer(Event.Prediction(action.epoch, complete))
+                        }
+                    }.onFailure {
+                        queue.offer(Event.Prediction(action.epoch, null))
+                    }
+                }
+            }
+        }
+
         try {
             while (running) {
-                val chunk = try {
+                val event = try {
                     queue.poll(200, TimeUnit.MILLISECONDS)
                 } catch (_: InterruptedException) {
                     break
                 } ?: continue
+                if (event is Event.Reset) {
+                    policy.reset()
+                    resetDetector()
+                    continue
+                }
+                if (event is Event.Prediction) {
+                    handle(policy.onPrediction(event.epoch, event.complete))
+                    continue
+                }
+                val chunk = (event as Event.Audio).samples
+                turnBuffer.append(chunk)
                 var idx = 0
                 while (idx < chunk.size) {
                     val take = minOf(SpeechGate.VAD_WINDOW - filled, chunk.size - idx)
@@ -123,17 +173,7 @@ class LiveSpeechSplitter(
                     filled = 0
                     runCatching { vad.acceptWaveform(window) }
                     val speech = runCatching { vad.isSpeechDetected() }.getOrDefault(false)
-                    if (speech) {
-                        hadSpeechSinceCut = true
-                        silentWindows = 0
-                    } else {
-                        silentWindows++
-                        if (hadSpeechSinceCut && silentWindows >= silentWindowsToFire) {
-                            hadSpeechSinceCut = false
-                            silentWindows = 0
-                            runCatching { onPause() }
-                        }
-                    }
+                    handle(policy.onVadWindow(speech))
                 }
             }
         } catch (_: Throwable) {
@@ -141,5 +181,17 @@ class LiveSpeechSplitter(
         } finally {
             runCatching { vad.release() }
         }
+    }
+
+    private sealed interface Event {
+        data class Audio(val samples: ShortArray) : Event
+        data class Prediction(val epoch: Long, val complete: Boolean?) : Event
+        data object Reset : Event
+    }
+
+    private companion object {
+        const val SMART_TURN_VAD_STOP_MS = 200
+        const val PRE_SPEECH_MS = 500 + 200
+        const val PRE_SPEECH_SAMPLES = AudioDecode.TARGET_SAMPLE_RATE * PRE_SPEECH_MS / 1000
     }
 }

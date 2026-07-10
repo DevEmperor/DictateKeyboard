@@ -1528,9 +1528,9 @@
     <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
     <string name="dictate__longform_title" comment="Setting: long-form segmented dictation">Long-form dictation</string>
     <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe long dictations in the background, part by part while you keep talking — tap Next during recording to send the current part, so there is no long wait at the end.</string>
-    <string name="dictate__longform_autosplit_title" comment="Setting: auto-cut a long-form segment at speech pauses">Auto-split at pauses</string>
-    <string name="dictate__longform_autosplit_summary" comment="Summary for the auto-split setting">Also cut a segment automatically after a long enough pause, not only with the Next button.</string>
-    <string name="dictate__longform_autosplit_threshold_title" comment="Setting: how long a pause must last to trigger an auto-cut">Pause length</string>
+    <string name="dictate__longform_autosplit_title" comment="Setting: use Silero VAD and Smart Turn to auto-cut a long-form segment">Smart auto-split</string>
+    <string name="dictate__longform_autosplit_summary" comment="Summary for Smart Turn auto-split">Silero detects pauses, then Smart Turn checks whether your thought is complete. Continued silence uses the maximum pause as a fallback.</string>
+    <string name="dictate__longform_autosplit_threshold_title" comment="Setting: maximum silence before an incomplete Smart Turn prediction is overridden">Maximum pause</string>
     <string name="dictate__longform_autosplit_value" comment="Slider value for the pause length. {seconds} is a number like 2.0">{seconds} s</string>
     <string name="dictate__longform_mode_off" comment="Long-form mode: disabled">Off</string>
     <string name="dictate__longform_mode_off_summary" comment="Summary for the off long-form mode">Transcribe once at the end (default).</string>
