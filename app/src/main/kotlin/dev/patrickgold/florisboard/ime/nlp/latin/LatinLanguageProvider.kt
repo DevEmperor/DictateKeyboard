@@ -215,9 +215,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     private val lowerIndexByLang = guardedByLock { mutableMapOf<String, LowerIndex>() }
 
-    init {
+    private fun startDictionaryWatcher() {
         // When a dictionary finishes downloading, drop the resolved-language cache so the active subtype
-        // starts using it immediately (issue #127).
+        // starts using it immediately (issue #127). Started from create() rather than init: launching a
+        // coroutine that touches this provider's fields during construction let `this` escape before the
+        // object was safely published, so the IO thread could observe not-yet-initialized (null) caches
+        // and crash on the first StateFlow emission (issue #193).
         ioScope.launch {
             GlideDictionaryManager.installedVersion.collect {
                 resolvedDictLang.clear()
@@ -337,6 +340,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
+        // Start the dictionary-download watcher only now — after the provider is fully constructed and
+        // safely published — so the collector never sees uninitialized caches (issue #193).
+        startDictionaryWatcher()
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
