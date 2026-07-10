@@ -57,6 +57,39 @@ class OpenAiCompatibleClient(
     private val client: OkHttpClient by lazy { buildClient() }
 
     override suspend fun complete(request: ChatRequest): ChatResult {
+        // Skip reasoning_effort up-front for endpoint+model pairs already known to reject it, so we don't
+        // waste a doubled request on every rewording (#184/#186).
+        val key = "${config.normalizedBaseUrl}|${request.model}"
+        val effective = if (request.reasoningEffort != null && key in reasoningEffortUnsupported) {
+            request.copy(reasoningEffort = null)
+        } else {
+            request
+        }
+        return try {
+            completeOnce(effective)
+        } catch (e: DictateApiException) {
+            // Many models/endpoints reject `reasoning_effort`: it's an unknown option (#184), an
+            // unsupported value such as "minimal" on Ollama (#186), or the model "does not support
+            // thinking" (#186). Rather than hard-fail the rewording, remember it and retry once without it.
+            if (effective.reasoningEffort != null && isReasoningEffortRejected(e)) {
+                reasoningEffortUnsupported.add(key)
+                completeOnce(effective.copy(reasoningEffort = null))
+            } else {
+                throw e
+            }
+        }
+    }
+
+    /** True when [e] looks like the provider rejecting the `reasoning_effort` field or its value. */
+    private fun isReasoningEffortRejected(e: DictateApiException): Boolean {
+        val m = (e.message ?: return false).lowercase()
+        return "reasoning_effort" in m ||
+            "reasoning value" in m ||
+            "reasoning effort" in m ||
+            ("does not support" in m && ("thinking" in m || "reasoning" in m))
+    }
+
+    private suspend fun completeOnce(request: ChatRequest): ChatResult {
         val dto = ChatCompletionRequestDto(
             model = request.model,
             messages = request.messages.map { MessageDto(it.role.wire, it.content) },
@@ -1076,6 +1109,13 @@ class OpenAiCompatibleClient(
     companion object {
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
+
+        /**
+         * Endpoint+model pairs known to reject `reasoning_effort` (#184/#186). Remembered for the process
+         * lifetime so we omit the field up-front and don't waste a doubled request on every rewording.
+         */
+        private val reasoningEffortUnsupported =
+            java.util.Collections.synchronizedSet(HashSet<String>())
 
         /** Soniox / AssemblyAI async polling: interval between status checks and the overall budget. */
         private const val SONIOX_POLL_INTERVAL_MS = 1500L
