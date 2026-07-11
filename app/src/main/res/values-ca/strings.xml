@@ -1434,6 +1434,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Equilibri entre raonament i velocitat</string>
     <string name="dictate__reasoning_effort_high">Alt</string>
     <string name="dictate__reasoning_effort_high_summary">Màxim raonament, més lent</string>
+    <string name="dictate__reasoning_effort_custom">Personalitzat</string>
     <string name="dictate__action_save_audio">Desa l\'àudio</string>
     <string name="dictate__audio_saved">Àudio desat a Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">No s\'ha pogut desar l\'àudio</string>

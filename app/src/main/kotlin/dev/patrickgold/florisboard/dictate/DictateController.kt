@@ -2180,7 +2180,7 @@ object DictateController {
         _state.value = UiState.Rewording(prompt.name ?: appContext.getString(R.string.dictate__status_rewording))
         scope.launch {
             try {
-                val text = requestReword(raw, input, prompt.reasoningEffort)
+                val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 sink.commitText(text)
                 _state.value = UiState.Idle
@@ -2252,7 +2252,7 @@ object DictateController {
             if (instruction.isBlank()) continue
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             text = runCatching {
-                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort)
+                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(text)
         }
         return text
@@ -2281,7 +2281,7 @@ object DictateController {
             }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             result = runCatching {
-                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort)
+                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(result)
         }
         return result
@@ -2296,6 +2296,7 @@ object DictateController {
         instruction: String,
         input: String?,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val sys = systemPrompt()
         val content = buildString {
@@ -2303,7 +2304,7 @@ object DictateController {
             if (sys.isNotBlank()) append("\n\n").append(sys)
             if (!input.isNullOrBlank()) append("\n\n").append(input)
         }
-        return requestRewordRaw(content, reasoning)
+        return requestRewordRaw(content, reasoning, reasoningCustom)
     }
 
     /**
@@ -2313,6 +2314,7 @@ object DictateController {
     private suspend fun requestRewordRaw(
         userContent: String,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val account = rewordingAccount()
         // Blank rewording key falls back to the transcription account's key (legacy "reuse" behavior).
@@ -2328,13 +2330,22 @@ object DictateController {
             proxy = prefs.dictate.dictateProxyConfig(),
             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
         )
+        // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
+        // setting (#155). OFF → null → field omitted. CUSTOM (#186) uses a user-entered wire value —
+        // the per-prompt one when the override itself is CUSTOM, else the global custom value.
+        val effort = reasoning ?: prefs.dictate.rewordingReasoningEffort.get()
+        val reasoningWire = if (effort == DictateReasoningEffort.CUSTOM) {
+            val custom = if (reasoning == DictateReasoningEffort.CUSTOM) {
+                reasoningCustom
+            } else {
+                prefs.dictate.rewordingReasoningEffortCustom.get()
+            }
+            custom?.trim()?.ifBlank { null }
+        } else {
+            effort.wire
+        }
         val result = client.complete(
-            ChatRequest.ofUser(
-                model, userContent,
-                // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the
-                // global setting (#155). OFF → null → field omitted.
-                reasoningEffort = (reasoning ?: prefs.dictate.rewordingReasoningEffort.get()).wire,
-            ),
+            ChatRequest.ofUser(model, userContent, reasoningEffort = reasoningWire),
         ).text.trim()
         // Lifetime statistics (issue #142): every rewording/prompt pass funnels through here.
         DictateStats.recordRewording(prefs)

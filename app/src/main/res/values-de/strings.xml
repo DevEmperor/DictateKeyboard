@@ -1432,6 +1432,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Ausgewogen zwischen Nachdenken und Tempo</string>
     <string name="dictate__reasoning_effort_high">Hoch</string>
     <string name="dictate__reasoning_effort_high_summary">Am meisten Nachdenken, langsamer</string>
+    <string name="dictate__reasoning_effort_custom">Benutzerdefiniert</string>
     <string name="dictate__action_save_audio">Audio speichern</string>
     <string name="dictate__audio_saved">Audio in Downloads/Dictate gespeichert: %s</string>
     <string name="dictate__audio_save_failed">Audio konnte nicht gespeichert werden</string>

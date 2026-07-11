@@ -1540,6 +1540,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Equilíbrio entre raciocínio e velocidade</string>
     <string name="dictate__reasoning_effort_high">Alto</string>
     <string name="dictate__reasoning_effort_high_summary">Máximo raciocínio, mais lento</string>
+    <string name="dictate__reasoning_effort_custom">Personalizado</string>
     <string name="dictate__action_save_audio">Guardar áudio</string>
     <string name="dictate__audio_saved">Áudio guardado em Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Não foi possível guardar o áudio</string>

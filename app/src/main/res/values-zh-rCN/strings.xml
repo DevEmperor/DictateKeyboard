@@ -1554,6 +1554,7 @@
     <string name="dictate__reasoning_effort_medium_summary">思考与速度平衡</string>
     <string name="dictate__reasoning_effort_high">高</string>
     <string name="dictate__reasoning_effort_high_summary">思考最多，更慢</string>
+    <string name="dictate__reasoning_effort_custom">自定义</string>
     <string name="dictate__action_save_audio">保存音频</string>
     <string name="dictate__audio_saved">音频已保存到 Downloads/Dictate：%s</string>
     <string name="dictate__audio_save_failed">无法保存音频</string>

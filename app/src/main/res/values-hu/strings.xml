@@ -1558,6 +1558,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Kiegyensúlyozott gondolkodás és sebesség</string>
     <string name="dictate__reasoning_effort_high">Magas</string>
     <string name="dictate__reasoning_effort_high_summary">Legtöbb gondolkodás, lassabb</string>
+    <string name="dictate__reasoning_effort_custom">Egyéni</string>
     <string name="dictate__action_save_audio">Hang mentése</string>
     <string name="dictate__audio_saved">Hang mentve ide: Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Nem sikerült menteni a hangot</string>

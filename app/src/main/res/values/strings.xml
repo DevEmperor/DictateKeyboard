@@ -1647,6 +1647,7 @@
     <string name="dictate__reasoning_effort_medium_summary" comment="Summary for medium reasoning effort">Balanced thinking and speed</string>
     <string name="dictate__reasoning_effort_high" comment="Reasoning-effort option: high">High</string>
     <string name="dictate__reasoning_effort_high_summary" comment="Summary for high reasoning effort">Most thinking, slower</string>
+    <string name="dictate__reasoning_effort_custom" comment="Reasoning-effort option: a user-entered custom value">Custom</string>
     <string name="dictate__stats_title" comment="Title of the dictation statistics screen">Statistics</string>
     <string name="dictate__stats_menu_summary" comment="Summary for the statistics entry in Dictate settings">Words, time saved, streak and more</string>
     <!-- Transcription history / activity log (issue #140) -->

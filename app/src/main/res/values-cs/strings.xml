@@ -1575,6 +1575,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Vyvážené přemýšlení a rychlost</string>
     <string name="dictate__reasoning_effort_high">Vysoké</string>
     <string name="dictate__reasoning_effort_high_summary">Nejvíce přemýšlení, pomalejší</string>
+    <string name="dictate__reasoning_effort_custom">Vlastní</string>
     <string name="dictate__action_save_audio">Uložit zvuk</string>
     <string name="dictate__audio_saved">Zvuk uložen do Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Zvuk se nepodařilo uložit</string>

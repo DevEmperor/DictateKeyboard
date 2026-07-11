@@ -1504,6 +1504,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Līdzsvars starp domāšanu un ātrumu</string>
     <string name="dictate__reasoning_effort_high">Augsta</string>
     <string name="dictate__reasoning_effort_high_summary">Visvairāk domāšanas, lēnāk</string>
+    <string name="dictate__reasoning_effort_custom">Pielāgots</string>
     <string name="dictate__action_save_audio">Saglabāt audio</string>
     <string name="dictate__audio_saved">Audio saglabāts mapē Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Neizdevās saglabāt audio</string>

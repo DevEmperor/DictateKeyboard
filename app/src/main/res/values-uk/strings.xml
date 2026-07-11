@@ -1404,6 +1404,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Баланс міркувань і швидкості</string>
     <string name="dictate__reasoning_effort_high">Високе</string>
     <string name="dictate__reasoning_effort_high_summary">Найбільше міркувань, повільніше</string>
+    <string name="dictate__reasoning_effort_custom">Користувацький</string>
     <string name="dictate__action_save_audio">Зберегти аудіо</string>
     <string name="dictate__audio_saved">Аудіо збережено в Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Не вдалося зберегти аудіо</string>

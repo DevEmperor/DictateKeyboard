@@ -1576,6 +1576,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Równowaga myślenia i szybkości</string>
     <string name="dictate__reasoning_effort_high">Wysoki</string>
     <string name="dictate__reasoning_effort_high_summary">Najwięcej myślenia, wolniej</string>
+    <string name="dictate__reasoning_effort_custom">Niestandardowy</string>
     <string name="dictate__action_save_audio">Zapisz audio</string>
     <string name="dictate__audio_saved">Audio zapisane w Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Nie udało się zapisać audio</string>

@@ -1434,6 +1434,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Équilibre réflexion/vitesse</string>
     <string name="dictate__reasoning_effort_high">Élevé</string>
     <string name="dictate__reasoning_effort_high_summary">Réflexion maximale, plus lent</string>
+    <string name="dictate__reasoning_effort_custom">Personnalisé</string>
     <string name="dictate__action_save_audio">Enregistrer l\'audio</string>
     <string name="dictate__audio_saved">Audio enregistré dans Downloads/Dictate : %s</string>
     <string name="dictate__audio_save_failed">Impossible d\'enregistrer l\'audio</string>

@@ -22,8 +22,13 @@ import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -108,39 +113,40 @@ fun DictateRewordingScreen() = FlorisScreen {
             summary = stringRes(R.string.dictate__auto_formatting_summary),
         )
 
-        ListPreference(
-            prefs.dictate.rewordingReasoningEffort,
+        val reasoningScope = rememberCoroutineScope()
+        val reasoningEffort by prefs.dictate.rewordingReasoningEffort.collectAsState()
+        val reasoningCustom by prefs.dictate.rewordingReasoningEffortCustom.collectAsState()
+        var reasoningDialogOpen by remember { mutableStateOf(false) }
+        Preference(
             icon = Icons.Default.Bolt,
             title = stringRes(R.string.dictate__reasoning_effort_title),
-            entries = listPrefEntries {
-                entry(
-                    DictateReasoningEffort.OFF,
-                    stringRes(R.string.dictate__reasoning_effort_off),
-                    stringRes(R.string.dictate__reasoning_effort_off_summary),
-                )
-                entry(
-                    DictateReasoningEffort.MINIMAL,
-                    stringRes(R.string.dictate__reasoning_effort_minimal),
-                    stringRes(R.string.dictate__reasoning_effort_minimal_summary),
-                )
-                entry(
-                    DictateReasoningEffort.LOW,
-                    stringRes(R.string.dictate__reasoning_effort_low),
-                    stringRes(R.string.dictate__reasoning_effort_low_summary),
-                )
-                entry(
-                    DictateReasoningEffort.MEDIUM,
-                    stringRes(R.string.dictate__reasoning_effort_medium),
-                    stringRes(R.string.dictate__reasoning_effort_medium_summary),
-                )
-                entry(
-                    DictateReasoningEffort.HIGH,
-                    stringRes(R.string.dictate__reasoning_effort_high),
-                    stringRes(R.string.dictate__reasoning_effort_high_summary),
-                )
+            summary = when (reasoningEffort) {
+                DictateReasoningEffort.CUSTOM ->
+                    reasoningCustom.ifBlank { stringRes(R.string.dictate__reasoning_effort_custom) }
+                DictateReasoningEffort.OFF -> stringRes(R.string.dictate__reasoning_effort_off)
+                DictateReasoningEffort.MINIMAL -> stringRes(R.string.dictate__reasoning_effort_minimal)
+                DictateReasoningEffort.LOW -> stringRes(R.string.dictate__reasoning_effort_low)
+                DictateReasoningEffort.MEDIUM -> stringRes(R.string.dictate__reasoning_effort_medium)
+                DictateReasoningEffort.HIGH -> stringRes(R.string.dictate__reasoning_effort_high)
             },
+            onClick = { reasoningDialogOpen = true },
             enabledIf = { prefs.dictate.rewordingEnabled isEqualTo true },
         )
+        if (reasoningDialogOpen) {
+            ReasoningEffortDialog(
+                initialEffort = reasoningEffort,
+                initialCustom = reasoningCustom,
+                includeUseGlobal = false,
+                onConfirm = { effort, custom ->
+                    reasoningScope.launch {
+                        prefs.dictate.rewordingReasoningEffort.set(effort ?: DictateReasoningEffort.OFF)
+                        prefs.dictate.rewordingReasoningEffortCustom.set(custom)
+                    }
+                    reasoningDialogOpen = false
+                },
+                onDismiss = { reasoningDialogOpen = false },
+            )
+        }
 
         val systemSelection by prefs.dictate.systemPromptSelection.collectAsState()
         PromptSelectionPreference(

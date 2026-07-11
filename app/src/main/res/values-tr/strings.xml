@@ -1538,6 +1538,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Düşünme ve hız dengesi</string>
     <string name="dictate__reasoning_effort_high">Yüksek</string>
     <string name="dictate__reasoning_effort_high_summary">En çok düşünme, daha yavaş</string>
+    <string name="dictate__reasoning_effort_custom">Özel</string>
     <string name="dictate__action_save_audio">Sesi kaydet</string>
     <string name="dictate__audio_saved">Ses Downloads/Dictate klasörüne kaydedildi: %s</string>
     <string name="dictate__audio_save_failed">Ses kaydedilemedi</string>

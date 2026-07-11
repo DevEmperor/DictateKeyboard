@@ -1490,6 +1490,7 @@
     <string name="dictate__reasoning_effort_medium_summary">思考と速度のバランス</string>
     <string name="dictate__reasoning_effort_high">高</string>
     <string name="dictate__reasoning_effort_high_summary">最も思考、低速</string>
+    <string name="dictate__reasoning_effort_custom">カスタム</string>
     <string name="dictate__action_save_audio">音声を保存</string>
     <string name="dictate__audio_saved">音声を Downloads/Dictate に保存しました: %s</string>
     <string name="dictate__audio_save_failed">音声を保存できませんでした</string>

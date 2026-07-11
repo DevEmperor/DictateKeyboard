@@ -1513,6 +1513,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__reasoning_effort_medium_summary">Seimbang antara berpikir dan kecepatan</string>
     <string name="dictate__reasoning_effort_high">Tinggi</string>
     <string name="dictate__reasoning_effort_high_summary">Paling banyak berpikir, lebih lambat</string>
+    <string name="dictate__reasoning_effort_custom">Kustom</string>
     <string name="dictate__action_save_audio">Simpan audio</string>
     <string name="dictate__audio_saved">Audio disimpan ke Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Tidak dapat menyimpan audio</string>

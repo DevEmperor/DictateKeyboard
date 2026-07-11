@@ -1415,6 +1415,7 @@
     <string name="dictate__reasoning_effort_medium_summary">توازن بين التفكير والسرعة</string>
     <string name="dictate__reasoning_effort_high">مرتفع</string>
     <string name="dictate__reasoning_effort_high_summary">أكثر تفكيرًا، أبطأ</string>
+    <string name="dictate__reasoning_effort_custom">مخصص</string>
     <string name="dictate__action_save_audio">حفظ الصوت</string>
     <string name="dictate__audio_saved">تم حفظ الصوت في Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">تعذّر حفظ الصوت</string>

@@ -1460,6 +1460,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__reasoning_effort_medium_summary">Balans tussen nadenken en snelheid</string>
     <string name="dictate__reasoning_effort_high">Hoog</string>
     <string name="dictate__reasoning_effort_high_summary">Meest nadenken, langzamer</string>
+    <string name="dictate__reasoning_effort_custom">Aangepast</string>
     <string name="dictate__action_save_audio">Audio opslaan</string>
     <string name="dictate__audio_saved">Audio opgeslagen in Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Kan de audio niet opslaan</string>

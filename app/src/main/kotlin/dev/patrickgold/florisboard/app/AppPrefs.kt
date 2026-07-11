@@ -674,6 +674,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__rewording_reasoning_effort",
             default = DictateReasoningEffort.OFF,
         )
+        // The wire value sent as `reasoning_effort` when the setting is CUSTOM (issue #186), e.g. a value
+        // a specific provider expects. Blank → the field is omitted.
+        val rewordingReasoningEffortCustom = string(
+            key = "dictate__rewording_reasoning_effort_custom",
+            default = "",
+        )
         // How the rewording prompt chips are surfaced: a dedicated panel (PANEL) opened from the
         // Smartbar, or an always-on extra row pinned above the Smartbar (ROW). See DictatePromptsLayout.
         // Defaults to ROW so the prompts are immediately visible; existing users are moved to ROW once via

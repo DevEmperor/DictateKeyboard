@@ -1564,6 +1564,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Баланс размышлений и скорости</string>
     <string name="dictate__reasoning_effort_high">Высокое</string>
     <string name="dictate__reasoning_effort_high_summary">Больше всего размышлений, медленнее</string>
+    <string name="dictate__reasoning_effort_custom">Пользовательский</string>
     <string name="dictate__action_save_audio">Сохранить аудио</string>
     <string name="dictate__audio_saved">Аудио сохранено в Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Не удалось сохранить аудио</string>
