@@ -289,8 +289,10 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                     } else {
                         Icons.AutoMirrored.Filled.Send
                     }
-                // While transcribing, show a stop button: tapping aborts the in-flight transcription.
-                is dev.patrickgold.florisboard.dictate.DictateController.UiState.Transcribing -> Icons.Default.Stop
+                // While transcribing or rewording, show a stop button: tapping aborts the in-flight
+                // request (e.g. an accidentally sent prompt, issue #192).
+                is dev.patrickgold.florisboard.dictate.DictateController.UiState.Transcribing,
+                is dev.patrickgold.florisboard.dictate.DictateController.UiState.Rewording -> Icons.Default.Stop
                 else -> Icons.Default.Mic
             }
         }

@@ -20,6 +20,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -60,6 +61,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SpaceBar
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -444,7 +446,12 @@ private fun LegacyRecordRow(
                 .background(accent)
                 .then(
                     if (busy) {
-                        Modifier
+                        // Transcribing/rewording: a tap now cancels the in-flight request (issue #192),
+                        // matching the Smartbar stop button. No long-press (file transcription) while busy.
+                        Modifier.clickable(
+                            interactionSource = interaction,
+                            indication = ripple(),
+                        ) { feedback.keyPress(); DictateController.onMicClick(context) }
                     } else {
                         Modifier.combinedClickable(
                             interactionSource = interaction,
@@ -483,14 +490,19 @@ private fun LegacyRecordRow(
                     }
                     rewording != null -> {
                         // Reworded, not transcribed: show the rewording label (prompt name / "Rewording…").
+                        // A trailing stop icon signals a tap cancels the request (issue #192).
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), color = onAccent, strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(text = rewording.label.ifBlank { stringRes(R.string.dictate__status_rewording) }, color = onAccent)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Icon(Icons.Default.Stop, contentDescription = null, tint = onAccent, modifier = Modifier.size(20.dp))
                     }
                     busy -> {
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), color = onAccent, strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(text = stringRes(R.string.dictate__status_transcribing), color = onAccent)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Icon(Icons.Default.Stop, contentDescription = null, tint = onAccent, modifier = Modifier.size(20.dp))
                     }
                     else -> {
                         Icon(Icons.Default.Mic, contentDescription = null, tint = onAccent, modifier = Modifier.size(24.dp))

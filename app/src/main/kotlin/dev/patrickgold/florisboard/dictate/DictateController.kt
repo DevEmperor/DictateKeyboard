@@ -277,6 +277,11 @@ object DictateController {
     /** The in-flight transcription coroutine, cancellable via the stop button (see [cancelTranscription]). */
     private var transcribeJob: Job? = null
 
+    // The in-flight manual rewording coroutine (a prompt chip / "Send"), so the stop button can abort it
+    // mid-generation (issue #192). The post-transcription rewording chain instead runs inside
+    // [transcribeJob]; [cancelRewording] cancels whichever is active.
+    private var rewordJob: Job? = null
+
     private var audioManager: AudioManager? = null
     private var focusRequest: AudioFocusRequest? = null
     private var btRouter: BluetoothMicRouter? = null
@@ -385,10 +390,10 @@ object DictateController {
     fun onMicClick(context: Context, target: OutputTarget = OutputTarget.IME) {
         when (_state.value) {
             is UiState.Recording -> stopAndTranscribe(context)
-            // Tapping the mic while transcribing aborts it (the button shows a stop icon, see the
-            // ComputingEvaluator). Rewording stays a no-op.
+            // Tapping the mic while transcribing or rewording aborts it (the button shows a stop icon,
+            // see the ComputingEvaluator) — e.g. after accidentally sending a prompt (issue #192).
             is UiState.Transcribing -> cancelTranscription()
-            is UiState.Rewording -> Unit
+            is UiState.Rewording -> cancelRewording()
             else -> {
                 outputTarget = target
                 startRecording(context)
@@ -630,6 +635,23 @@ object DictateController {
      */
     fun cancelTranscription() {
         if (_state.value !is UiState.Transcribing) return
+        transcribeJob?.cancel()
+        transcribeJob = null
+        _pendingPrompts.value = emptyList()
+        _state.value = UiState.Idle
+    }
+
+    /**
+     * Aborts an in-flight rewording (the stop button shown on the mic while rewording, issue #192).
+     * Covers both a manually applied prompt ([rewordJob]) and the post-transcription / live-prompt
+     * rewording chain that runs inside [transcribeJob]. Cancelling before the model answer is committed
+     * leaves the field untouched — for a "reword the selection" prompt the original text stays selected
+     * and intact. No-op outside the rewording state.
+     */
+    fun cancelRewording() {
+        if (_state.value !is UiState.Rewording) return
+        rewordJob?.cancel()
+        rewordJob = null
         transcribeJob?.cancel()
         transcribeJob = null
         _pendingPrompts.value = emptyList()
@@ -2178,12 +2200,15 @@ object DictateController {
         }
 
         _state.value = UiState.Rewording(prompt.name ?: appContext.getString(R.string.dictate__status_rewording))
-        scope.launch {
+        // Store the job so the stop button can abort this reword mid-generation (issue #192).
+        rewordJob = scope.launch {
             try {
                 val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 sink.commitText(text)
                 _state.value = UiState.Idle
+            } catch (e: CancellationException) {
+                throw e // stop button pressed: cancelRewording already reset the state, leave the field as-is
             } catch (e: DictateApiException) {
                 _state.value = apiError(e, appContext, canResend = false)
             } catch (t: Throwable) {
@@ -2192,6 +2217,8 @@ object DictateController {
                     kind = DictateApiException.Kind.UNKNOWN,
                     detail = t.message?.takeIf { it.isNotBlank() },
                 )
+            } finally {
+                rewordJob = null
             }
         }
     }

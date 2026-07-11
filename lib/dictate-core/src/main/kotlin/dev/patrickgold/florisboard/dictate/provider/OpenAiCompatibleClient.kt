@@ -12,12 +12,16 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import android.util.Base64OutputStream
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Credentials
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -27,9 +31,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import java.net.Proxy
 import java.security.KeyStore
 import java.time.Duration
@@ -716,7 +723,12 @@ class OpenAiCompatibleClient(
         var attempt = 0
         while (true) {
             try {
-                return withContext(Dispatchers.IO) { executeOnce(request) }
+                return executeOnce(request)
+            } catch (e: CancellationException) {
+                // The caller (stop button, issue #192) cancelled: [executeOnce] already aborted the
+                // OkHttp call so no more of the response is downloaded and no tokens are wasted waiting.
+                // Propagate instead of mapping to a retryable error.
+                throw e
             } catch (e: Throwable) {
                 val mapped = when (e) {
                     is DictateApiException -> e
@@ -734,21 +746,44 @@ class OpenAiCompatibleClient(
         }
     }
 
-    /** Blocking single HTTP call. Throws [DictateApiException] on non-2xx, [IOException] on transport errors. */
-    private fun executeOnce(request: Request): String {
-        client.newCall(request).execute().use { response ->
-            val body = response.body?.string().orEmpty()
-            if (!response.isSuccessful) {
-                val error = parseError(body)
-                throw DictateApiException.fromHttp(
-                    status = response.code,
-                    message = error?.message ?: body.take(500),
-                    code = error?.code,
-                    type = error?.type,
+    /**
+     * Single HTTP call, suspending until the response arrives. Uses OkHttp's async [Call.enqueue] so that
+     * cancelling the surrounding coroutine (the stop button) actually aborts the in-flight request via
+     * [Call.cancel] — otherwise a blocking `execute()` would keep running server-side and the API would
+     * still be billed even though the UI already returned to idle (issue #192). Throws
+     * [DictateApiException] on non-2xx and [IOException] on transport errors.
+     */
+    private suspend fun executeOnce(request: Request): String = suspendCancellableCoroutine { cont ->
+        val call = client.newCall(request)
+        cont.invokeOnCancellation { runCatching { call.cancel() } }
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                if (cont.isActive) cont.resumeWithException(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val outcome = runCatching {
+                    response.use { resp ->
+                        val body = resp.body?.string().orEmpty()
+                        if (!resp.isSuccessful) {
+                            val error = parseError(body)
+                            throw DictateApiException.fromHttp(
+                                status = resp.code,
+                                message = error?.message ?: body.take(500),
+                                code = error?.code,
+                                type = error?.type,
+                            )
+                        }
+                        body
+                    }
+                }
+                if (!cont.isActive) return // cancelled while reading — drop the result
+                outcome.fold(
+                    onSuccess = { cont.resume(it) },
+                    onFailure = { cont.resumeWithException(it) },
                 )
             }
-            return body
-        }
+        })
     }
 
     /**
