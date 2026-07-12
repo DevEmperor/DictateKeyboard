@@ -1460,6 +1460,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__history_title">Riwayat</string>
     <string name="dictate__history_menu_summary">Putar ulang, sisipkan ulang, dan kelola dikte sebelumnya</string>
     <string name="dictate__history_empty">Belum ada dikte — dikte terbaru Anda akan muncul di sini.</string>
+    <string name="dictate__history_loading">Memuat…</string>
     <string name="dictate__history_enable_title">Simpan riwayat</string>
     <string name="dictate__history_enable_summary">Catat dikte untuk disisipkan ulang atau ditinjau nanti.</string>
     <string name="dictate__history_audio_title">Simpan audio</string>

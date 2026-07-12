@@ -1379,6 +1379,7 @@
     <string name="dictate__history_title">Verlauf</string>
     <string name="dictate__history_menu_summary">Frühere Diktate abspielen, erneut einfügen und verwalten</string>
     <string name="dictate__history_empty">Noch keine Diktate — deine letzten Diktate erscheinen hier.</string>
+    <string name="dictate__history_loading">Wird geladen…</string>
     <string name="dictate__history_enable_title">Verlauf speichern</string>
     <string name="dictate__history_enable_summary">Diktate protokollieren, um sie später erneut einzufügen oder anzusehen.</string>
     <string name="dictate__history_audio_title">Audio speichern</string>

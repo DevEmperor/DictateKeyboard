@@ -1437,6 +1437,7 @@
     <string name="dictate__history_title">履歴</string>
     <string name="dictate__history_menu_summary">過去の音声入力を再生・再挿入・管理します</string>
     <string name="dictate__history_empty">まだ音声入力がありません — 最近の音声入力がここに表示されます。</string>
+    <string name="dictate__history_loading">読み込み中…</string>
     <string name="dictate__history_enable_title">履歴を保存する</string>
     <string name="dictate__history_enable_summary">音声入力を記録して、後で再挿入や確認ができます。</string>
     <string name="dictate__history_audio_title">音声を保存する</string>

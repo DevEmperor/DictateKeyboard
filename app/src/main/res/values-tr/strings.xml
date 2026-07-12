@@ -1485,6 +1485,7 @@
     <string name="dictate__history_title">Geçmiş</string>
     <string name="dictate__history_menu_summary">Geçmiş dikteleri yeniden oynatın, tekrar ekleyin ve yönetin</string>
     <string name="dictate__history_empty">Henüz dikte yok — son dikteleriniz burada görünecek.</string>
+    <string name="dictate__history_loading">Yükleniyor…</string>
     <string name="dictate__history_enable_title">Geçmişi tut</string>
     <string name="dictate__history_enable_summary">Daha sonra yeniden eklemek veya incelemek için dikteleri kaydet.</string>
     <string name="dictate__history_audio_title">Sesi tut</string>

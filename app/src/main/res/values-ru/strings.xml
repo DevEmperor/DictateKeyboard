@@ -1511,6 +1511,7 @@
     <string name="dictate__history_title">История</string>
     <string name="dictate__history_menu_summary">Воспроизведение, повторная вставка и управление прошлыми диктовками</string>
     <string name="dictate__history_empty">Пока нет диктовок — здесь появятся ваши недавние диктовки.</string>
+    <string name="dictate__history_loading">Загрузка…</string>
     <string name="dictate__history_enable_title">Вести историю</string>
     <string name="dictate__history_enable_summary">Записывать диктовки, чтобы позже вставить снова или просмотреть.</string>
     <string name="dictate__history_audio_title">Хранить аудио</string>

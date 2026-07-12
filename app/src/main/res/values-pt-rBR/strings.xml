@@ -1314,6 +1314,7 @@
     <string name="dictate__history_title">Histórico</string>
     <string name="dictate__history_menu_summary">Reproduza, reinsira e gerencie ditados anteriores</string>
     <string name="dictate__history_empty">Ainda não há ditados — seus ditados recentes aparecerão aqui.</string>
+    <string name="dictate__history_loading">Carregando…</string>
     <string name="dictate__history_enable_title">Manter um histórico</string>
     <string name="dictate__history_enable_summary">Registra os ditados para você reinseri-los ou revisá-los mais tarde.</string>
     <string name="dictate__history_audio_title">Manter o áudio</string>

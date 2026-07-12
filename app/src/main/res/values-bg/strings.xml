@@ -1507,6 +1507,7 @@
     <string name="dictate__history_title">История</string>
     <string name="dictate__history_menu_summary">Възпроизвеждане, повторно вмъкване и управление на минали диктовки</string>
     <string name="dictate__history_empty">Все още няма диктовки — последните ви диктовки ще се показват тук.</string>
+    <string name="dictate__history_loading">Зареждане…</string>
     <string name="dictate__history_enable_title">Пазене на история</string>
     <string name="dictate__history_enable_summary">Записване на диктовки за повторно вмъкване или преглед по-късно.</string>
     <string name="dictate__history_audio_title">Пазене на аудио</string>

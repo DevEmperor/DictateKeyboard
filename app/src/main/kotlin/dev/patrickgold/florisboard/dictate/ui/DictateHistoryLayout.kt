@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -74,7 +75,8 @@ fun DictateHistoryLayout(
     val keyboardManager by context.keyboardManager()
     val prefs by FlorisPreferenceStore
     val accent by prefs.theme.accentColor.collectPrefAsState() // follows the user's keyboard accent.
-    val entries by remember(context) { DictateHistoryStore.flow(context) }.collectAsState(initial = emptyList())
+    // null = not loaded yet (show a spinner), empty list = genuinely no history (#205).
+    val entries by remember(context) { DictateHistoryStore.flow(context) }.collectAsState(initial = null)
     val scrollState = rememberScrollState()
 
     SnyggColumn(
@@ -119,7 +121,8 @@ fun DictateHistoryLayout(
             }
         }
 
-        if (entries.isEmpty()) {
+        val loadedEntries = entries
+        if (loadedEntries == null || loadedEntries.isEmpty()) {
             SnyggBox(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -127,10 +130,21 @@ fun DictateHistoryLayout(
                     .weight(1f)
                     .padding(horizontal = 24.dp),
             ) {
-                SnyggText(
-                    elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
-                    text = stringRes(R.string.dictate__history_empty),
-                )
+                if (loadedEntries == null) {
+                    // Still loading from disk — a simple centered accent label (#205). The in-keyboard panel
+                    // doesn't drive continuous animation frames, so an animated spinner just freezes; a
+                    // static label is the reliable choice here.
+                    Text(
+                        text = stringRes(R.string.dictate__history_loading),
+                        color = accent,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                } else {
+                    SnyggText(
+                        elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
+                        text = stringRes(R.string.dictate__history_empty),
+                    )
+                }
             }
         } else {
             Column(
@@ -140,7 +154,7 @@ fun DictateHistoryLayout(
                     .verticalScroll(scrollState)
                     .dictatePanelScrollbar(scrollState, accent),
             ) {
-                entries.forEach { entry ->
+                loadedEntries.forEach { entry ->
                     HistoryPanelRow(
                         entry = entry,
                         accent = accent,

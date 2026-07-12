@@ -1522,6 +1522,7 @@
     <string name="dictate__history_title">Historie</string>
     <string name="dictate__history_menu_summary">Přehrávejte, znovu vkládejte a spravujte minulá diktování</string>
     <string name="dictate__history_empty">Zatím žádná diktování — vaše nedávná diktování se zobrazí zde.</string>
+    <string name="dictate__history_loading">Načítání…</string>
     <string name="dictate__history_enable_title">Uchovávat historii</string>
     <string name="dictate__history_enable_summary">Zaznamenávat diktování pro pozdější vložení nebo prohlížení.</string>
     <string name="dictate__history_audio_title">Uchovávat zvuk</string>

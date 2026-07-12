@@ -1523,6 +1523,7 @@
     <string name="dictate__history_title">Historia</string>
     <string name="dictate__history_menu_summary">Odtwarzaj, wstawiaj ponownie i zarządzaj poprzednimi dyktowaniami</string>
     <string name="dictate__history_empty">Brak dyktowań — Twoje ostatnie dyktowania pojawią się tutaj.</string>
+    <string name="dictate__history_loading">Ładowanie…</string>
     <string name="dictate__history_enable_title">Zachowuj historię</string>
     <string name="dictate__history_enable_summary">Zapisuj dyktowania, aby później wstawić je ponownie lub przejrzeć.</string>
     <string name="dictate__history_audio_title">Zachowuj audio</string>

@@ -1407,6 +1407,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__history_title">Geschiedenis</string>
     <string name="dictate__history_menu_summary">Vorige dictaten afspelen, opnieuw invoegen en beheren</string>
     <string name="dictate__history_empty">Nog geen dictaten — je recente dictaten verschijnen hier.</string>
+    <string name="dictate__history_loading">Laden…</string>
     <string name="dictate__history_enable_title">Geschiedenis bijhouden</string>
     <string name="dictate__history_enable_summary">Dictaten vastleggen om ze later opnieuw in te voegen of te bekijken.</string>
     <string name="dictate__history_audio_title">Audio bewaren</string>

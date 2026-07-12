@@ -1362,6 +1362,7 @@
     <string name="dictate__history_title">السجل</string>
     <string name="dictate__history_menu_summary">إعادة تشغيل الإملاءات السابقة وإعادة إدراجها وإدارتها</string>
     <string name="dictate__history_empty">لا توجد إملاءات بعد — ستظهر إملاءاتك الأخيرة هنا.</string>
+    <string name="dictate__history_loading">جارٍ التحميل…</string>
     <string name="dictate__history_enable_title">الاحتفاظ بسجل</string>
     <string name="dictate__history_enable_summary">سجّل الإملاءات لإعادة إدراجها أو مراجعتها لاحقًا.</string>
     <string name="dictate__history_audio_title">الاحتفاظ بالصوت</string>

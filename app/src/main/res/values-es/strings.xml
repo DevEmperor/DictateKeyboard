@@ -1489,6 +1489,7 @@
     <string name="dictate__history_title">Historial</string>
     <string name="dictate__history_menu_summary">Reproduce, reinserta y gestiona dictados anteriores</string>
     <string name="dictate__history_empty">Aún no hay dictados — tus dictados recientes aparecerán aquí.</string>
+    <string name="dictate__history_loading">Cargando…</string>
     <string name="dictate__history_enable_title">Guardar un historial</string>
     <string name="dictate__history_enable_summary">Registra los dictados para reinsertarlos o revisarlos más tarde.</string>
     <string name="dictate__history_audio_title">Guardar audio</string>

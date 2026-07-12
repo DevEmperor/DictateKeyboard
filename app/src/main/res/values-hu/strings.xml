@@ -1505,6 +1505,7 @@
     <string name="dictate__history_title">Előzmények</string>
     <string name="dictate__history_menu_summary">Korábbi diktálások lejátszása, újbóli beillesztése és kezelése</string>
     <string name="dictate__history_empty">Még nincs diktálás — a legutóbbi diktálásai itt fognak megjelenni.</string>
+    <string name="dictate__history_loading">Betöltés…</string>
     <string name="dictate__history_enable_title">Előzmények megtartása</string>
     <string name="dictate__history_enable_summary">Diktálások naplózása későbbi újbóli beillesztéshez vagy áttekintéshez.</string>
     <string name="dictate__history_audio_title">Hang megtartása</string>

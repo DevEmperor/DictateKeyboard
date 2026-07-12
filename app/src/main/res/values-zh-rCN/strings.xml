@@ -1501,6 +1501,7 @@
     <string name="dictate__history_title">历史</string>
     <string name="dictate__history_menu_summary">重放、重新插入和管理过往的听写</string>
     <string name="dictate__history_empty">暂无听写 — 你最近的听写将显示在这里。</string>
+    <string name="dictate__history_loading">加载中…</string>
     <string name="dictate__history_enable_title">保留历史记录</string>
     <string name="dictate__history_enable_summary">记录听写，以便稍后重新插入或查看。</string>
     <string name="dictate__history_audio_title">保留音频</string>

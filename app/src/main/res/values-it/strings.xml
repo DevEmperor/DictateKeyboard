@@ -1289,6 +1289,7 @@
     <string name="dictate__history_title">Cronologia</string>
     <string name="dictate__history_menu_summary">Riproduci, reinserisci e gestisci le dettature passate</string>
     <string name="dictate__history_empty">Ancora nessuna dettatura — le tue dettature recenti appariranno qui.</string>
+    <string name="dictate__history_loading">Caricamento…</string>
     <string name="dictate__history_enable_title">Mantieni una cronologia</string>
     <string name="dictate__history_enable_summary">Registra le dettature per reinserirle o rivederle in seguito.</string>
     <string name="dictate__history_audio_title">Mantieni l\'audio</string>

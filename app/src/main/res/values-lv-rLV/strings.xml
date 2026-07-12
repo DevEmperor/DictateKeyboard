@@ -1451,6 +1451,7 @@
     <string name="dictate__history_title">Vēsture</string>
     <string name="dictate__history_menu_summary">Atskaņot, ievietot atkārtoti un pārvaldīt iepriekšējos diktējumus</string>
     <string name="dictate__history_empty">Vēl nav diktējumu — jūsu nesenie diktējumi parādīsies šeit.</string>
+    <string name="dictate__history_loading">Notiek ielāde…</string>
     <string name="dictate__history_enable_title">Saglabāt vēsturi</string>
     <string name="dictate__history_enable_summary">Reģistrē diktējumus, lai tos vēlāk ievietotu atkārtoti vai pārskatītu.</string>
     <string name="dictate__history_audio_title">Saglabāt audio</string>

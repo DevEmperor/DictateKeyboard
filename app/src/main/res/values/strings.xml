@@ -1690,6 +1690,7 @@
     <string name="dictate__history_title" comment="Title of the transcription history screen and in-keyboard panel">History</string>
     <string name="dictate__history_menu_summary" comment="Summary for the history entry in Dictate settings">Replay, re-insert and manage past dictations</string>
     <string name="dictate__history_empty" comment="Shown when no dictations have been recorded yet">No dictations yet — your recent dictations will appear here.</string>
+    <string name="dictate__history_loading" comment="Shown centered while the history panel is still loading">Loading…</string>
     <string name="dictate__history_enable_title" comment="Toggle: capture finished dictations into the history">Keep a history</string>
     <string name="dictate__history_enable_summary" comment="Short summary for the keep-a-history toggle">Log dictations to re-insert or review later.</string>
     <string name="dictate__history_audio_title" comment="Toggle: also keep the source audio of each dictation">Keep audio</string>

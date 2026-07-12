@@ -1381,6 +1381,7 @@
     <string name="dictate__history_title">Historique</string>
     <string name="dictate__history_menu_summary">Rejouer, réinsérer et gérer les dictées passées</string>
     <string name="dictate__history_empty">Aucune dictée pour le moment — vos dictées récentes apparaîtront ici.</string>
+    <string name="dictate__history_loading">Chargement…</string>
     <string name="dictate__history_enable_title">Conserver un historique</string>
     <string name="dictate__history_enable_summary">Enregistrez les dictées pour les réinsérer ou les consulter plus tard.</string>
     <string name="dictate__history_audio_title">Conserver l\'audio</string>

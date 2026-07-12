@@ -1381,6 +1381,7 @@
     <string name="dictate__history_title">Historial</string>
     <string name="dictate__history_menu_summary">Reprodueix, torna a inserir i gestiona els dictats anteriors</string>
     <string name="dictate__history_empty">Encara no hi ha dictats — els teus dictats recents apareixeran aquí.</string>
+    <string name="dictate__history_loading">Carregant…</string>
     <string name="dictate__history_enable_title">Desa un historial</string>
     <string name="dictate__history_enable_summary">Registra els dictats per tornar-los a inserir o revisar més tard.</string>
     <string name="dictate__history_audio_title">Desa l\'àudio</string>
