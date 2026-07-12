@@ -14,6 +14,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Undo
+import androidx.compose.material.icons.filled.Backspace
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
@@ -47,7 +48,8 @@ enum class LegacyEditAction {
     HISTORY,
     REINSERT,
     GIF,
-    SWITCH;
+    SWITCH,
+    BACKSPACE;
 
     val icon: ImageVector
         get() = when (this) {
@@ -64,6 +66,7 @@ enum class LegacyEditAction {
             REINSERT -> Icons.Default.Replay
             GIF -> Icons.Outlined.Gif
             SWITCH -> Icons.Default.KeyboardHide
+            BACKSPACE -> Icons.Default.Backspace
         }
 
     @get:StringRes
@@ -82,6 +85,8 @@ enum class LegacyEditAction {
             REINSERT -> R.string.dictate__legacy_action_reinsert
             GIF -> R.string.dictate__legacy_action_gif
             SWITCH -> R.string.dictate__legacy_action_switch
+            // Reuses the existing backspace content-description string (already localised everywhere).
+            BACKSPACE -> R.string.dictate__legacy_backspace
         }
 
     companion object {

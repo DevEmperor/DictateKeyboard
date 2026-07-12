@@ -1564,6 +1564,9 @@
     <string name="dictate__legacy_action_reinsert">Torna a inserir</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Canvia el teclat</string>
+    <string name="dictate__legacy_enter_chars_title">Caràcters de la tecla Retorn</string>
+    <string name="dictate__legacy_enter_chars_summary">Mantén premuda la tecla Retorn i, tot seguit, llisca cap a l\'esquerra o la dreta per triar un d\'aquests caràcters i deixa anar per inserir-lo.</string>
+    <string name="dictate__legacy_enter_chars_label">Caràcters (fins a 8)</string>
     <string name="dictate__legacy_action_row_title">Botons de la barra d\'accions</string>
     <string name="dictate__legacy_action_row_summary">Arrossega per organitzar els botons a la barra d\'accions de la disposició clàssica</string>
     <string name="dictate__legacy_action_row_add">Afegeix un botó</string>

@@ -1472,6 +1472,9 @@
     <string name="dictate__legacy_action_reinsert">Reinserisci</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Cambia tastiera</string>
+    <string name="dictate__legacy_enter_chars_title">Caratteri del tasto Invio</string>
+    <string name="dictate__legacy_enter_chars_summary">Tieni premuto il tasto Invio, poi scorri a sinistra o a destra per scegliere uno di questi caratteri e rilascia per inserirlo.</string>
+    <string name="dictate__legacy_enter_chars_label">Caratteri (fino a 8)</string>
     <string name="dictate__legacy_action_row_title">Pulsanti della barra delle azioni</string>
     <string name="dictate__legacy_action_row_summary">Trascina per disporre i pulsanti nella barra delle azioni del layout classico</string>
     <string name="dictate__legacy_action_row_add">Aggiungi un pulsante</string>

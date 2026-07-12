@@ -1588,6 +1588,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__legacy_action_reinsert">Opnieuw invoegen</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Toetsenbord wisselen</string>
+    <string name="dictate__legacy_enter_chars_title">Tekens voor de Enter-toets</string>
+    <string name="dictate__legacy_enter_chars_summary">Houd de Enter-toets ingedrukt en veeg vervolgens naar links of rechts om een van deze tekens te kiezen en laat los om het in te voegen.</string>
+    <string name="dictate__legacy_enter_chars_label">Tekens (maximaal 8)</string>
     <string name="dictate__legacy_action_row_title">Actiebalkknoppen</string>
     <string name="dictate__legacy_action_row_summary">Sleep om de knoppen in de actiebalk van de klassieke lay-out te ordenen</string>
     <string name="dictate__legacy_action_row_add">Knop toevoegen</string>

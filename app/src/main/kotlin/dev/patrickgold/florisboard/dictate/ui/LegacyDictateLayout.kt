@@ -27,6 +27,7 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -78,6 +79,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,8 +98,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -117,6 +125,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlin.math.abs
+import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withTimeoutOrNull
@@ -453,6 +462,13 @@ private fun LegacyActionKey(
             onLongClick = { keyboardManager.tapKey(KeyCode.SYSTEM_INPUT_METHOD_PICKER) },
             onClick = { keyboardManager.tapKey(KeyCode.SYSTEM_PREV_INPUT_METHOD) },
         )
+        // A backspace in the always-visible action row (#196): unlike the record-row backspace it stays
+        // reachable while recording / realtime dictation, which is exactly when it was missing. Reuses the
+        // record-row key verbatim, so it has the identical behaviour — tap deletes one character, holding
+        // auto-repeats, and swiping left progressively selects whole words / single characters (per the
+        // shared "Delete key swipe left" setting) that are deleted on release. Its swipe consumes the
+        // gesture, so it never flips to the modern keyboard.
+        LegacyEditAction.BACKSPACE -> LegacyBackspaceKey(modifier = modifier)
     }
 }
 
@@ -716,15 +732,184 @@ private fun LegacyBottomRow(
             modifier = Modifier.weight(1f).fillMaxHeight(),
         )
 
-        // Enter carries the ENTER code so the theme paints it with its usual accent (as on the keyboard).
-        ThemedIconKey(
-            code = KeyCode.ENTER,
-            icon = Icons.AutoMirrored.Filled.KeyboardReturn,
-            contentDescription = stringRes(R.string.dictate__legacy_enter),
+        // Enter: tap inserts a newline; long-press opens the character popup (#196). Carries the ENTER code
+        // so the theme paints it with its usual accent (as on the keyboard).
+        LegacyEnterKey(
+            keyboardManager = keyboardManager,
             modifier = sideKey,
-            onClick = { keyboardManager.tapKey(KeyCode.ENTER) },
         )
     }
+}
+
+/**
+ * The bottom-row Enter key. A tap inserts a newline as usual; holding it opens a small popup above the key
+ * showing the user's configured characters (Settings → Dictation layout → "Enter key characters", up to
+ * 8). While held, swiping left/right moves the highlight; releasing inserts the highlighted character.
+ * This reproduces the character picker from the very first Dictate versions (issue #196). With no
+ * characters configured the long-press falls back to a normal Enter.
+ */
+@Composable
+private fun LegacyEnterKey(
+    keyboardManager: KeyboardManager,
+    modifier: Modifier,
+) {
+    val prefs by FlorisPreferenceStore
+    val feedback = LocalInputFeedbackController.current
+    val accent by prefs.theme.accentColor.collectAsState()
+    val charsRaw by prefs.dictate.enterLongPressChars.collectAsState()
+    val chars = remember(charsRaw) { parseEnterChars(charsRaw) }
+
+    var showPopup by remember { mutableStateOf(false) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
+
+    val style = rememberSnyggThemeQuery(FlorisImeUi.Key.elementName, keyAttributes(KeyCode.ENTER))
+    val bg = style.background(default = Color.White.copy(alpha = 0.08f))
+    val fg = style.foreground(default = Color.White)
+
+    Box(
+        modifier = modifier
+            .padding(horizontal = KeyMarginH, vertical = KeyMarginV)
+            .clip(LegacyKeyShape)
+            .background(bg)
+            .pointerInput(chars) {
+                // One cell per ~cell-width of travel, so the highlight tracks the finger 1:1.
+                val stepPx = 36.dp.toPx()
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    val startX = down.position.x
+                    var released = false
+                    // Phase 1: tap vs. hold. A release within the long-press window is a plain Enter.
+                    withTimeoutOrNull(350L) {
+                        while (true) {
+                            val change = awaitPointerEvent().changes.firstOrNull() ?: return@withTimeoutOrNull
+                            if (!change.pressed) {
+                                released = true
+                                return@withTimeoutOrNull
+                            }
+                        }
+                    }
+                    if (released) {
+                        keyboardManager.tapKey(KeyCode.ENTER)
+                        feedback.keyPress()
+                        return@awaitEachGesture
+                    }
+                    if (chars.isEmpty()) {
+                        // Nothing configured: wait for release, then behave like a normal Enter.
+                        while (true) {
+                            val change = awaitPointerEvent().changes.firstOrNull() ?: break
+                            if (!change.pressed) break
+                        }
+                        keyboardManager.tapKey(KeyCode.ENTER)
+                        feedback.keyPress()
+                        return@awaitEachGesture
+                    }
+                    // Phase 2: popup open. The Enter key sits at the right edge and the popup extends left
+                    // from it, so the highlight starts on the rightmost cell (under the finger) and each
+                    // step of leftward travel walks it one cell left; swiping back right returns toward it.
+                    val lastIndex = chars.size - 1
+                    selectedIndex = lastIndex
+                    showPopup = true
+                    feedback.keyPress()
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        val change = event.changes.firstOrNull() ?: break
+                        if (!change.pressed) break
+                        val dx = change.position.x - startX
+                        val idx = (lastIndex + (dx / stepPx).roundToInt()).coerceIn(0, lastIndex)
+                        if (idx != selectedIndex) {
+                            selectedIndex = idx
+                            feedback.keyPress()
+                        }
+                        // Consume so the panel's swipe-to-switch gesture stands aside (see legacySwipeToggle).
+                        change.consume()
+                    }
+                    showPopup = false
+                    chars.getOrNull(selectedIndex)?.let { ch ->
+                        ic()?.commitText(ch, 1)
+                        feedback.keyPress()
+                    }
+                }
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardReturn,
+            contentDescription = stringRes(R.string.dictate__legacy_enter),
+            tint = fg,
+            modifier = Modifier.size(22.dp),
+        )
+        if (showPopup) {
+            EnterCharPopup(chars = chars, selectedIndex = selectedIndex, accent = accent)
+        }
+    }
+}
+
+/** The floating character strip shown above the Enter key while it is long-pressed. */
+@Composable
+private fun EnterCharPopup(
+    chars: List<String>,
+    selectedIndex: Int,
+    accent: Color,
+) {
+    val onAccent = if (accent.luminance() > 0.5f) Color.Black else Color.White
+    val positionProvider = remember {
+        object : PopupPositionProvider {
+            override fun calculatePosition(
+                anchorBounds: IntRect,
+                windowSize: IntSize,
+                layoutDirection: LayoutDirection,
+                popupContentSize: IntSize,
+            ): IntOffset {
+                val x = (anchorBounds.left + anchorBounds.width / 2 - popupContentSize.width / 2)
+                    .coerceIn(0, (windowSize.width - popupContentSize.width).coerceAtLeast(0))
+                val gap = anchorBounds.height / 6
+                val y = (anchorBounds.top - popupContentSize.height - gap).coerceAtLeast(0)
+                return IntOffset(x, y)
+            }
+        }
+    }
+    Popup(popupPositionProvider = positionProvider) {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color(0xFF2B2B2B))
+                .padding(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            chars.forEachIndexed { i, ch ->
+                val selected = i == selectedIndex
+                Box(
+                    modifier = Modifier
+                        .size(width = 34.dp, height = 40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (selected) accent else Color.Transparent),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = ch,
+                        color = if (selected) onAccent else Color.White,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** Splits the configured string into up to 8 individual characters (by code point), skipping whitespace. */
+fun parseEnterChars(raw: String): List<String> {
+    if (raw.isEmpty()) return emptyList()
+    val out = ArrayList<String>(8)
+    var i = 0
+    while (i < raw.length && out.size < 8) {
+        val cp = raw.codePointAt(i)
+        val s = String(Character.toChars(cp))
+        if (!s[0].isWhitespace()) out.add(s)
+        i += Character.charCount(cp)
+    }
+    return out
 }
 
 /**

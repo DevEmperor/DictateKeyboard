@@ -1704,6 +1704,9 @@
     <string name="dictate__legacy_action_reinsert">Wstaw ponownie</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Zmień klawiaturę</string>
+    <string name="dictate__legacy_enter_chars_title">Znaki klawisza Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Przytrzymaj klawisz Enter, a następnie przesuń w lewo lub w prawo, aby wybrać jeden z tych znaków, i zwolnij, aby go wstawić.</string>
+    <string name="dictate__legacy_enter_chars_label">Znaki (do 8)</string>
     <string name="dictate__legacy_action_row_title">Przyciski paska akcji</string>
     <string name="dictate__legacy_action_row_summary">Przeciągnij, aby ułożyć przyciski w pasku akcji klasycznego układu</string>
     <string name="dictate__legacy_action_row_add">Dodaj przycisk</string>

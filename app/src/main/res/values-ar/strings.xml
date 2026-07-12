@@ -1547,6 +1547,9 @@
     <string name="dictate__legacy_action_reinsert">إعادة الإدراج</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">تبديل لوحة المفاتيح</string>
+    <string name="dictate__legacy_enter_chars_title">أحرف مفتاح الإدخال</string>
+    <string name="dictate__legacy_enter_chars_summary">اضغط مطوّلًا على مفتاح الإدخال، ثم اسحب يسارًا أو يمينًا لاختيار أحد هذه الأحرف ثم حرّره لإدراجه.</string>
+    <string name="dictate__legacy_enter_chars_label">الأحرف (حتى 8)</string>
     <string name="dictate__legacy_action_row_title">أزرار شريط الإجراءات</string>
     <string name="dictate__legacy_action_row_summary">اسحب لترتيب الأزرار في شريط الإجراءات للتخطيط الكلاسيكي</string>
     <string name="dictate__legacy_action_row_add">إضافة زر</string>

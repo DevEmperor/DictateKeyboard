@@ -1683,6 +1683,9 @@
     <string name="dictate__legacy_action_reinsert">重新插入</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">切换键盘</string>
+    <string name="dictate__legacy_enter_chars_title">回车键字符</string>
+    <string name="dictate__legacy_enter_chars_summary">按住回车键，然后向左或向右滑动以选择其中一个字符，松开即可插入。</string>
+    <string name="dictate__legacy_enter_chars_label">字符（最多 8 个）</string>
     <string name="dictate__legacy_action_row_title">操作栏按钮</string>
     <string name="dictate__legacy_action_row_summary">拖动以排列经典布局操作栏中的按钮</string>
     <string name="dictate__legacy_action_row_add">添加按钮</string>

@@ -706,6 +706,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__legacy_prompt_rows",
             default = 1,
         )
+        // Characters offered by the classic layout's Enter-key long-press popup (#196): hold Enter, swipe
+        // left/right to pick one, release to insert. Up to 8 individual characters (whitespace ignored);
+        // empty disables the popup so Enter just inserts a newline as usual.
+        val enterLongPressChars = string(
+            key = "dictate__enter_long_press_chars",
+            default = ".,?!:;-…",
+        )
         // Chat (rewording) provider id – any chat-capable ProviderRegistry id ("openai", "groq",
         // "openrouter", … or "custom"). Independent from the transcription provider.
         val rewordingProviderId = string(

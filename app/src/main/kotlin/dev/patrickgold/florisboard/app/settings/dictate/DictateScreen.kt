@@ -543,6 +543,7 @@ fun DictateLayoutScreen() = FlorisScreen {
                 },
             )
             LegacyActionRowSetting()
+            EnterLongPressCharsSetting()
         }
     }
 }

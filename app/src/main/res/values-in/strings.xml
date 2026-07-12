@@ -1644,6 +1644,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__legacy_action_reinsert">Sisipkan ulang</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Ganti keyboard</string>
+    <string name="dictate__legacy_enter_chars_title">Karakter tombol Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Tahan tombol Enter, lalu geser ke kiri atau kanan untuk memilih salah satu karakter ini dan lepaskan untuk menyisipkannya.</string>
+    <string name="dictate__legacy_enter_chars_label">Karakter (maksimal 8)</string>
     <string name="dictate__legacy_action_row_title">Tombol baris tindakan</string>
     <string name="dictate__legacy_action_row_summary">Seret untuk mengatur tombol di baris tindakan tata letak klasik</string>
     <string name="dictate__legacy_action_row_add">Tambah tombol</string>

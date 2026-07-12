@@ -1689,6 +1689,9 @@
     <string name="dictate__legacy_action_reinsert">Повторно вмъкване</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Смяна на клавиатура</string>
+    <string name="dictate__legacy_enter_chars_title">Знаци за клавиша Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Задръжте клавиша Enter, след което плъзнете наляво или надясно, за да изберете един от тези знаци, и отпуснете, за да го вмъкнете.</string>
+    <string name="dictate__legacy_enter_chars_label">Знаци (до 8)</string>
     <string name="dictate__legacy_action_row_title">Бутони на лентата с действия</string>
     <string name="dictate__legacy_action_row_summary">Плъзнете, за да подредите бутоните в лентата с действия на класическата подредба</string>
     <string name="dictate__legacy_action_row_add">Добавяне на бутон</string>

@@ -1703,6 +1703,9 @@
     <string name="dictate__legacy_action_reinsert">Znovu vložit</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Přepnout klávesnici</string>
+    <string name="dictate__legacy_enter_chars_title">Znaky klávesy Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Podržte klávesu Enter, poté přejeďte doleva nebo doprava, vyberte jeden z těchto znaků a uvolněním jej vložte.</string>
+    <string name="dictate__legacy_enter_chars_label">Znaky (až 8)</string>
     <string name="dictate__legacy_action_row_title">Tlačítka řádku akcí</string>
     <string name="dictate__legacy_action_row_summary">Přetažením uspořádejte tlačítka v řádku akcí klasického rozvržení</string>
     <string name="dictate__legacy_action_row_add">Přidat tlačítko</string>

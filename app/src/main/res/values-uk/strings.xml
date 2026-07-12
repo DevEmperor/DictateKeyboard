@@ -1536,6 +1536,9 @@
     <string name="dictate__legacy_action_reinsert">Вставити знову</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Змінити клавіатуру</string>
+    <string name="dictate__legacy_enter_chars_title">Символи клавіші Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Утримуйте клавішу Enter, потім проведіть ліворуч або праворуч, щоб вибрати один із цих символів, і відпустіть, щоб вставити його.</string>
+    <string name="dictate__legacy_enter_chars_label">Символи (до 8)</string>
     <string name="dictate__legacy_action_row_title">Кнопки панелі дій</string>
     <string name="dictate__legacy_action_row_summary">Перетягуйте, щоб розташувати кнопки на панелі дій класичного макета</string>
     <string name="dictate__legacy_action_row_add">Додати кнопку</string>

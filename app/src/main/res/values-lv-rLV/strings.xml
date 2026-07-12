@@ -1632,6 +1632,9 @@
     <string name="dictate__legacy_action_reinsert">Ievietot atkārtoti</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Mainīt tastatūru</string>
+    <string name="dictate__legacy_enter_chars_title">Enter taustiņa rakstzīmes</string>
+    <string name="dictate__legacy_enter_chars_summary">Turiet nospiestu Enter taustiņu, pēc tam velciet pa kreisi vai pa labi, lai izvēlētos vienu no šīm rakstzīmēm, un atlaidiet, lai to ievietotu.</string>
+    <string name="dictate__legacy_enter_chars_label">Rakstzīmes (līdz 8)</string>
     <string name="dictate__legacy_action_row_title">Darbību rindas pogas</string>
     <string name="dictate__legacy_action_row_summary">Velc, lai sakārtotu pogas klasiskā izkārtojuma darbību rindā</string>
     <string name="dictate__legacy_action_row_add">Pievienot pogu</string>

@@ -1670,6 +1670,9 @@
     <string name="dictate__legacy_action_reinsert">Reinsertar</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Cambiar teclado</string>
+    <string name="dictate__legacy_enter_chars_title">Caracteres de la tecla Intro</string>
+    <string name="dictate__legacy_enter_chars_summary">Mantén pulsada la tecla Intro y, a continuación, desliza a la izquierda o a la derecha para elegir uno de estos caracteres y suéltala para insertarlo.</string>
+    <string name="dictate__legacy_enter_chars_label">Caracteres (hasta 8)</string>
     <string name="dictate__legacy_action_row_title">Botones de la fila de acciones</string>
     <string name="dictate__legacy_action_row_summary">Arrastra para organizar los botones en la fila de acciones del diseño clásico</string>
     <string name="dictate__legacy_action_row_add">Añadir un botón</string>

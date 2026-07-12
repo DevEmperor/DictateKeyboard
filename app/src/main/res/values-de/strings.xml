@@ -1563,6 +1563,9 @@
     <string name="dictate__legacy_action_reinsert">Erneut einfügen</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Tastatur wechseln</string>
+    <string name="dictate__legacy_enter_chars_title">Zeichen der Eingabetaste</string>
+    <string name="dictate__legacy_enter_chars_summary">Halte die Eingabetaste gedrückt, wische dann nach links oder rechts, um eines dieser Zeichen auszuwählen, und lasse los, um es einzufügen.</string>
+    <string name="dictate__legacy_enter_chars_label">Zeichen (bis zu 8)</string>
     <string name="dictate__legacy_action_row_title">Aktionsleisten-Schaltflächen</string>
     <string name="dictate__legacy_action_row_summary">Ziehen, um die Schaltflächen in der Aktionsleiste des klassischen Layouts anzuordnen</string>
     <string name="dictate__legacy_action_row_add">Schaltfläche hinzufügen</string>

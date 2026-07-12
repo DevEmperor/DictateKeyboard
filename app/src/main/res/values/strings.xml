@@ -1386,6 +1386,9 @@
     <string name="dictate__legacy_action_reinsert" comment="Action-row button: re-insert the last dictation">Reinsert</string>
     <string name="dictate__legacy_action_gif" comment="Action-row button: open GIF search">GIF</string>
     <string name="dictate__legacy_action_switch" comment="Action-row button: switch to the previous keyboard">Switch keyboard</string>
+    <string name="dictate__legacy_enter_chars_title" comment="Settings title: characters for the Enter key long-press popup in the classic layout">Enter key characters</string>
+    <string name="dictate__legacy_enter_chars_summary" comment="Settings description for the Enter key long-press popup">Hold the Enter key, then swipe left or right to pick one of these characters and release to insert it.</string>
+    <string name="dictate__legacy_enter_chars_label" comment="Text field label: the characters (up to 8) shown in the Enter key popup">Characters (up to 8)</string>
 
     <string name="dictate__legacy_action_row_title" comment="Setting: customise the classic layout action-row buttons">Action row buttons</string>
     <string name="dictate__legacy_action_row_summary" comment="Setting summary">Drag to arrange the buttons in the classic layout\'s action row</string>

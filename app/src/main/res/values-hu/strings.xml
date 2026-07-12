@@ -1687,6 +1687,9 @@
     <string name="dictate__legacy_action_reinsert">Újra beszúrás</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Billentyűzetváltás</string>
+    <string name="dictate__legacy_enter_chars_title">Az Enter billentyű karakterei</string>
+    <string name="dictate__legacy_enter_chars_summary">Tartsa lenyomva az Enter billentyűt, majd húzza balra vagy jobbra a karakterek egyikének kiválasztásához, és engedje el a beszúráshoz.</string>
+    <string name="dictate__legacy_enter_chars_label">Karakterek (legfeljebb 8)</string>
     <string name="dictate__legacy_action_row_title">Műveletsor gombjai</string>
     <string name="dictate__legacy_action_row_summary">Húzással rendezheti el a gombokat a klasszikus elrendezés műveletsorában</string>
     <string name="dictate__legacy_action_row_add">Gomb hozzáadása</string>

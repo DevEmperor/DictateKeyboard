@@ -1621,6 +1621,9 @@
     <string name="dictate__legacy_action_reinsert">再挿入</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">キーボードを切り替え</string>
+    <string name="dictate__legacy_enter_chars_title">Enter キーの文字</string>
+    <string name="dictate__legacy_enter_chars_summary">Enter キーを長押しし、左右にスワイプしてこれらの文字のいずれかを選択し、指を離して挿入します。</string>
+    <string name="dictate__legacy_enter_chars_label">文字（最大 8 個）</string>
     <string name="dictate__legacy_action_row_title">アクション行のボタン</string>
     <string name="dictate__legacy_action_row_summary">クラシックレイアウトのアクション行にボタンを配置するにはドラッグします</string>
     <string name="dictate__legacy_action_row_add">ボタンを追加</string>

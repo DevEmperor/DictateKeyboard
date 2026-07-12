@@ -1667,6 +1667,9 @@
     <string name="dictate__legacy_action_reinsert">Yeniden ekle</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Klavye değiştir</string>
+    <string name="dictate__legacy_enter_chars_title">Enter tuşu karakterleri</string>
+    <string name="dictate__legacy_enter_chars_summary">Enter tuşunu basılı tutun, ardından bu karakterlerden birini seçmek için sola veya sağa kaydırın ve eklemek için bırakın.</string>
+    <string name="dictate__legacy_enter_chars_label">Karakterler (en fazla 8)</string>
     <string name="dictate__legacy_action_row_title">Eylem çubuğu düğmeleri</string>
     <string name="dictate__legacy_action_row_summary">Klasik düzenin eylem çubuğundaki düğmeleri düzenlemek için sürükleyin</string>
     <string name="dictate__legacy_action_row_add">Düğme ekle</string>

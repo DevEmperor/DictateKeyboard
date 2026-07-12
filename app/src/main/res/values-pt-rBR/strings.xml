@@ -1497,6 +1497,9 @@
     <string name="dictate__legacy_action_reinsert">Reinserir</string>
     <string name="dictate__legacy_action_gif">GIF</string>
     <string name="dictate__legacy_action_switch">Trocar teclado</string>
+    <string name="dictate__legacy_enter_chars_title">Caracteres da tecla Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Mantenha a tecla Enter pressionada e deslize para a esquerda ou para a direita para escolher um destes caracteres e solte para inseri-lo.</string>
+    <string name="dictate__legacy_enter_chars_label">Caracteres (até 8)</string>
     <string name="dictate__legacy_action_row_title">Botões da barra de ações</string>
     <string name="dictate__legacy_action_row_summary">Arraste para organizar os botões na barra de ações do layout clássico</string>
     <string name="dictate__legacy_action_row_add">Adicionar um botão</string>
