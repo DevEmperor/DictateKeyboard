@@ -489,7 +489,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         when (prefs.keyboard.utilityKeyAction.get()) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
-            else -> FlorisImeService.switchToNextInputMethod()
+            // The utility key is explicitly configured to jump to the next keyboard app, so honour that.
+            UtilityKeyAction.SWITCH_KEYBOARD_APP -> FlorisImeService.switchToNextInputMethod()
+            // Remaining cases (utility key set to emojis / disabled) can only reach here via the Smartbar
+            // "Switch language" quick action — which should switch language regardless of the utility-key
+            // setting. Cycle the configured layouts when there is more than one, and only fall back to the
+            // next keyboard app when there is nothing to cycle (issue #200).
+            else -> if (subtypeManager.subtypes.size >= 2) {
+                subtypeManager.switchToNextSubtype()
+            } else {
+                FlorisImeService.switchToNextInputMethod()
+            }
         }
     }
 
