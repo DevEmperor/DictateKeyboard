@@ -110,6 +110,7 @@ import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -787,19 +788,29 @@ private fun LegacySpaceKey(
 
 /**
  * Backspace key with the legacy gestures: a tap deletes one character, holding auto-repeats the delete,
- * and swiping left progressively selects whole words which are deleted on release.
+ * and swiping left progressively selects text (whole words or single characters) which is deleted on
+ * release. Whether the swipe works by words or characters follows the same global setting the modern
+ * keyboard uses (Settings → Gestures → "Delete key swipe left"), so both layouts behave identically.
  */
 @Composable
 private fun LegacyBackspaceKey(modifier: Modifier) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+    val prefs by FlorisPreferenceStore
     val feedback = LocalInputFeedbackController.current
     val gesture = Modifier.pointerInput(Unit) {
         val activationPx = 12.dp.toPx()
-        val stepPx = 24.dp.toPx()
         awaitEachGesture {
             val down = awaitFirstDown()
             val startX = down.position.x
+            // Word- vs character-granularity for the swipe, shared with the modern keyboard's setting.
+            val wordMode = when (prefs.gestures.deleteKeySwipeLeft.get()) {
+                SwipeAction.DELETE_WORD,
+                SwipeAction.DELETE_WORDS_PRECISELY,
+                SwipeAction.SELECT_WORDS_PRECISELY -> true
+                else -> false
+            }
+            val stepPx = (if (wordMode) 24.dp else 12.dp).toPx()
             var mode = 0 // 0 = undecided, 1 = swipe-select, 2 = hold-repeat
 
             while (mode == 0) {
@@ -835,7 +846,7 @@ private fun LegacyBackspaceKey(modifier: Modifier) {
                 }
             }
 
-            // mode == 1: swipe-select whole words, delete the selection on release.
+            // mode == 1: swipe-select (whole words or single characters, per [wordMode]); delete on release.
             var base = -1
             var boundaries: List<Int> = emptyList()
             var steps = 0
@@ -844,7 +855,12 @@ private fun LegacyBackspaceKey(modifier: Modifier) {
                 val text = et?.text
                 if (text != null) {
                     base = maxOf(et.selectionStart, et.selectionEnd)
-                    boundaries = computeWordBoundaries(text.subSequence(0, base).toString())
+                    boundaries = if (wordMode) {
+                        computeWordBoundaries(text.subSequence(0, base).toString())
+                    } else {
+                        // One boundary per character back to the start, so each step selects one more char.
+                        (base downTo 0).toList()
+                    }
                 }
             }
             if (boundaries.isEmpty()) {
