@@ -643,7 +643,8 @@
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copied to clipboard</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Something went wrong: {error_message}</string>
-    <string name="about__whats_new__title" comment="Preference title — reopens the What\'s new tour">What’s new in 5.0</string>
+    <string name="about__whats_new__title" comment="Section/search label for the What\'s new tours">What’s new</string>
+    <string name="about__whats_new__versioned" comment="Preference title reopening a specific version\'s tour; {version} e.g. 5.1">What’s new in {version}</string>
     <string name="about__whats_new__summary" comment="Preference summary">Take the feature tour again</string>
     <string name="about__changelog__title" comment="Preference title">Changelog</string>
     <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
@@ -691,6 +692,36 @@
     <string name="apptour__outro_eyebrow">And more</string>
     <string name="apptour__outro_title">Polish everywhere</string>
     <string name="apptour__outro_body">More under the hood: a steadier floating button, a reasoning-effort control for rewording, haptic feedback, a new E-Reader theme and dozens of fixes.</string>
+    <!-- What's-new tour (in-app 5.1 feature carousel) -->
+    <string name="apptour51__cta_try" comment="Button on a 5.1 tour page to jump straight to that feature">Try it</string>
+    <string name="apptour51__continue_to" comment="Button bridging from one tour to the next; {version} is e.g. 5.1">Continue to {version}</string>
+    <string name="apptour51__intro_eyebrow">Version 5.1</string>
+    <string name="apptour51__intro_title">What’s new in 5.1</string>
+    <string name="apptour51__intro_body">Dictate has grown a lot since 5.0. Here are the highlights of 5.1 — tap “Try it” on any page to jump straight to that feature.</string>
+    <string name="apptour51__history_eyebrow">Transcription</string>
+    <string name="apptour51__history_title">Transcription history</string>
+    <string name="apptour51__history_body">Every dictation is now kept in a searchable history. Re-insert any past transcript with a tap, replay the original audio, re-transcribe it, or pin the ones you reuse most. A dedicated screen lets you manage everything, including how long audio recordings are retained.</string>
+    <string name="apptour51__longform_eyebrow">Transcription</string>
+    <string name="apptour51__longform_title">Long-form dictation</string>
+    <string name="apptour51__longform_body">Speak for as long as you like. Long recordings are automatically split into segments and transcribed in the background while you keep going, so you get your text sooner and never run into a length limit. Cut a segment yourself, or let Dictate detect natural pauses.</string>
+    <string name="apptour51__gif_eyebrow">Keyboard</string>
+    <string name="apptour51__gif_title">GIF search</string>
+    <string name="apptour51__gif_body">Find and send GIFs without ever leaving Dictate. Open the GIF panel, search for anything, and drop it straight into your chat — a fast, Gboard-style picker built right in.</string>
+    <string name="apptour51__classic_eyebrow">Classic layout</string>
+    <string name="apptour51__classic_title">Classic layout, reworked</string>
+    <string name="apptour51__classic_body">The keyboard-free dictation screen got a big upgrade: a freely arrangeable action row you build by drag &amp; drop, long-form recording controls, one or two prompt rows, an always-available backspace, a character popup on the Enter key, and an optional second “switch keyboard” button for easier one-handed use.</string>
+    <string name="apptour51__search_eyebrow">Settings</string>
+    <string name="apptour51__search_title">Search the settings</string>
+    <string name="apptour51__search_body">Can’t remember where an option lives? Just search for it. The new settings search finds any setting by name, jumps straight to it and briefly highlights the row — no more digging through menus.</string>
+    <string name="apptour51__models_eyebrow">Models &amp; providers</string>
+    <string name="apptour51__models_title">German offline model &amp; Claude</string>
+    <string name="apptour51__models_body">Two additions for how your speech is handled: a German-specialised on-device model (Parakeet German by primeline) that transcribes entirely offline on your phone, and Anthropic’s Claude joins as a new provider for rewording and formatting your dictations.</string>
+    <string name="apptour51__more_eyebrow">And more</string>
+    <string name="apptour51__more_title">Many more improvements</string>
+    <string name="apptour51__more_body">Plenty of smaller upgrades too: choose the active transcription language in settings, the stop button now truly cancels a running request, a show/hide toggle for API keys, and multilingual typing without cross-language autocorrect — plus many fixes across the classic layout, the number pad and beyond.</string>
+    <string name="apptour51__outro_eyebrow">That’s 5.1</string>
+    <string name="apptour51__outro_title">Enjoy the update</string>
+    <string name="apptour51__outro_body">Thanks for using Dictate! If it helps you every day, a small donation keeps the project going. You can revisit any of these tours anytime under Settings › About.</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Based on FlorisBoard</string>

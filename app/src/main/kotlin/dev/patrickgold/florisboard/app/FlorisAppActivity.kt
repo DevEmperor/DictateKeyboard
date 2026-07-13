@@ -228,14 +228,18 @@ class FlorisAppActivity : ComponentActivity() {
                 // and dialog are mutually exclusive per update so they never both appear.
                 if (isImeSetUp) {
                     val whatsNewContext = LocalContext.current
-                    val showTour = remember {
-                        AppVersionUtils.shouldShowWhatsNew(whatsNewContext, prefs, WHATS_NEW_TOUR_VERSION)
+                    // Every "What's new" tour the user hasn't seen yet (e.g. 4.x → 5.1 gets both 5.0 and
+                    // 5.1); empty means fall back to the compact changelog dialog for this update.
+                    val autoQueue = remember {
+                        AppVersionUtils.pendingTourVersions(
+                            whatsNewContext, prefs, WHATS_NEW_TOURS.map { it.version },
+                        )
                     }
-                    if (!showTour) {
+                    if (autoQueue.isEmpty()) {
                         ChangelogDialog()
                     }
-                    // Always composed so Settings › About can re-open it; only auto-shows when gated.
-                    WhatsNewTour(autoShow = showTour)
+                    // Always composed so Settings › About can re-open any tour; only auto-shows when queued.
+                    WhatsNewTour(autoQueue = autoQueue)
                 }
             }
         }

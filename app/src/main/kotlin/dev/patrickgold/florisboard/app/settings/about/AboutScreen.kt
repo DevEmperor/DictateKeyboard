@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.WHATS_NEW_TOURS
 import dev.patrickgold.florisboard.app.WhatsNewTourState
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -110,13 +111,19 @@ fun AboutScreen() = FlorisScreen {
                 }
             },
         )
-        Preference(
-            icon = Icons.Default.AutoAwesome,
-            modifier = Modifier.settingsSearchAnchor("about__whats_new__title"),
-            title = stringRes(R.string.about__whats_new__title),
-            summary = stringRes(R.string.about__whats_new__summary),
-            onClick = { WhatsNewTourState.open() },
-        )
+        // One entry per available "What's new" tour (newest first), so users on any prior version can view
+        // every release's tour — not just the latest. The registry is ascending, so reverse for display.
+        WHATS_NEW_TOURS.reversed().forEachIndexed { index, tour ->
+            val versionLabel = tour.version.toString().substringBeforeLast(".0")
+            Preference(
+                icon = Icons.Default.AutoAwesome,
+                // Keep the settings-search anchor on the newest tour only.
+                modifier = if (index == 0) Modifier.settingsSearchAnchor("about__whats_new__title") else Modifier,
+                title = stringRes(R.string.about__whats_new__versioned).replace("{version}", versionLabel),
+                summary = stringRes(R.string.about__whats_new__summary),
+                onClick = { WhatsNewTourState.open(tour.version) },
+            )
+        }
         Preference(
             icon = Icons.Default.History,
             modifier = Modifier.settingsSearchAnchor("about__changelog__title"),
