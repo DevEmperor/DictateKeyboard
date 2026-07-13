@@ -88,7 +88,7 @@ export function InstallTabs() {
               <div>
                 <span className="eyebrow">OFFICIAL BUILD</span>
                 <h3>The shortest route to your first sentence.</h3>
-                <p>A small one-time Play Store purchase supports development and includes lifetime app updates. Dictate itself has no subscription.</p>
+                <p>Install Dictate free from Google Play and receive automatic updates. Offline models use no cloud API; only an optional provider you connect can bill its own API usage.</p>
               </div>
             </div>
 
@@ -111,7 +111,7 @@ export function InstallTabs() {
                 Get it on Google Play
                 <ArrowUpRight size={17} weight="bold" />
               </a>
-              <p>Android 8.0+ · Regional pricing applies · Provider usage may cost extra</p>
+              <p>Android 8.0+ · Free app · Optional cloud APIs may charge for usage</p>
             </div>
           </motion.div>
         ) : (

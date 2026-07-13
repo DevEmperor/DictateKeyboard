@@ -5,8 +5,8 @@ import {
   BracketsCurly,
   Check,
   Cloud,
-  CurrencyDollar,
   DeviceMobile,
+  Gift,
   GithubLogo,
   Keyboard,
   LockKey,
@@ -32,6 +32,7 @@ import { Waveform } from "./components/Waveform";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
+const DEVELOPER_URL = "https://github.com/DevEmperor";
 
 const providers = [
   "OpenAI",
@@ -60,13 +61,13 @@ const benefits = [
     ),
   },
   {
-    icon: CurrencyDollar,
-    title: "Skip another subscription",
-    copy: "Dictate has no recurring fee. The official Play build is a one-time purchase; optional cloud usage is billed by the provider you choose.",
+    icon: Gift,
+    title: "Free and open source",
+    copy: "Dictate is free to install and use. Offline models add no API usage; optional cloud APIs bill you directly.",
     visual: (
-      <div className="zero-visual" aria-hidden="true">
-        <span>0</span>
-        <small>MONTHLY<br />DICTATE FEES</small>
+      <div className="free-visual" aria-hidden="true">
+        <span><GithubLogo size={54} weight="fill" /></span>
+        <small>FREE &amp;<br />OPEN SOURCE</small>
       </div>
     ),
   },
@@ -167,7 +168,7 @@ function App() {
                 animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
                 transition={{ delay: 0.58, duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
               >
-                Dictate is a complete Android keyboard—not another monthly voice service. Speak into any text field with the model you choose: realtime, offline, or through your own provider.
+                Dictate is a free, open-source Android keyboard—not a managed voice service. Speak into any text field with the model you choose: realtime, offline, or through your own provider.
               </motion.p>
 
               <motion.div
@@ -192,7 +193,7 @@ function App() {
                 animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
                 transition={{ delay: 0.92, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
               >
-                One-time Play Store purchase · Android 8.0+ · Provider usage may cost extra
+                Free &amp; open source · Android 8.0+ · Optional provider API charges only
               </motion.p>
             </div>
 
@@ -234,7 +235,7 @@ function App() {
           <div className="section-intro section-intro-split">
             <Reveal>
               <span className="eyebrow">WHY DICTATE</span>
-              <h2>More than voice-to-text.<br /><span>Less than another subscription.</span></h2>
+              <h2>More than voice-to-text.<br /><span>Free, open, and yours.</span></h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p>Dictate meets you where the sentence belongs. Speak into messages, notes, email, documents, and forms—without sending every thought through the same company.</p>
@@ -265,10 +266,10 @@ function App() {
           <div className="section-intro buffet-intro">
             <Reveal>
               <span className="eyebrow">THE MODEL BUFFET</span>
-              <h2>Stay local for $0.<br /><span>Or pick the cloud edge you need.</span></h2>
+              <h2>The app is free.<br /><span>The engine is your choice.</span></h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p>Choose for privacy, language, realtime speed, measured word error rate, or price. Then pair that speech model with a separate writing model for the finish.</p>
+              <p>Choose for privacy, language, realtime speed, measured word error rate, or provider API cost. Then pair that speech model with a separate writing model for the finish.</p>
             </Reveal>
           </div>
           <Reveal delay={0.1}><ModelBuffet /></Reveal>
@@ -308,7 +309,7 @@ function App() {
               <h3>Find the sentence again.</h3>
               <p>Search, reinsert, replay, re-transcribe, or pin a previous dictation. Transcript history and audio retention stay configurable in the app.</p>
               <div className="history-list" aria-hidden="true">
-                {["Product review notes", "Message to the design team", "Train of thought — pricing"].map((item, index) => (
+                {["Product review notes", "Message to the design team", "Train of thought — launch"].map((item, index) => (
                   <div key={item}><span>0{index + 1}</span><strong>{item}</strong><small>{["2 min", "38 sec", "6 min"][index]}</small></div>
                 ))}
               </div>
@@ -320,11 +321,11 @@ function App() {
           <div className="control-inner section-shell">
             <div className="control-heading">
               <Reveal>
-                <span className="eyebrow eyebrow-light">DICTATE VS. THE SUBSCRIPTION CROWD</span>
+                <span className="eyebrow eyebrow-light">DICTATE VS. MANAGED VOICE APPS</span>
                 <h2>Choose the engine.<br />Keep the control.</h2>
               </Reveal>
               <Reveal delay={0.08}>
-                <p>Hosted tools such as Wispr Flow package voice typing as a managed service. Dictate takes the opposite route: a complete Android keyboard, open code, offline models, provider choice, and no recurring Dictate fee.</p>
+                <p>Hosted tools such as Wispr Flow package voice typing as a managed service. Dictate takes the opposite route: a free Android keyboard, open code, offline models, and provider choice.</p>
               </Reveal>
             </div>
 
@@ -336,7 +337,7 @@ function App() {
               </div>
               {[
                 ["Code", "Open source", "Closed source"],
-                ["Dictate billing", "No subscription", "Recurring plan"],
+                ["Access model", "Free & open source", "Managed service"],
                 ["Speech engine", "You choose", "Service chooses"],
                 ["Offline route", "Downloaded models", "Often cloud-only"],
                 ["Android input", "Complete keyboard", "Companion layer"],
@@ -399,7 +400,7 @@ function App() {
               <h2>Before you switch.</h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p>Clear answers about price, providers, offline use, privacy, and installation.</p>
+              <p>Clear answers about free use, provider APIs, offline models, privacy, and installation.</p>
             </Reveal>
           </div>
           <Reveal delay={0.1}><Faq /></Reveal>
@@ -411,8 +412,8 @@ function App() {
             <div className="final-orbit final-orbit-two" aria-hidden="true" />
             <Reveal>
               <span className="eyebrow">YOUR NEXT SENTENCE</span>
-              <h2>Stop subscribing.<br />Start speaking on your terms.</h2>
-              <p>Get a complete, open-source voice keyboard for Android. Stay offline for $0 API usage or connect the provider that fits the job.</p>
+              <h2>Speak freely.<br />Stay in control.</h2>
+              <p>Dictate is a free, open-source voice keyboard for Android. Stay offline without API usage or connect the provider that fits the job.</p>
               <div className="final-actions">
                 <MagneticLink className="button button-accent" href={PLAY_URL} target="_blank" rel="noreferrer">
                   Get Dictate on Google Play
@@ -423,7 +424,12 @@ function App() {
                   Star on GitHub
                 </a>
               </div>
-              <small>One-time Play purchase · Provider usage may cost extra · Offline transcription has no usage fee</small>
+              <a className="creator-credit" href={DEVELOPER_URL} target="_blank" rel="noreferrer" aria-label="Jannis Zahn, creator and lead developer of Dictate on GitHub">
+                <span className="creator-credit-mark"><GithubLogo size={22} weight="fill" /></span>
+                <span className="creator-credit-copy"><small>CREATOR &amp; LEAD DEVELOPER</small><strong>Jannis Zahn <em>@DevEmperor</em></strong></span>
+                <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+              </a>
+              <small>Free app · Optional cloud APIs may charge for usage · Offline transcription uses no API</small>
             </Reveal>
           </div>
         </section>
@@ -432,14 +438,14 @@ function App() {
       <footer className="footer section-shell">
         <div className="footer-brand">
           <a className="brand" href="#top"><img src="/media/dictate-icon.png" width="36" height="36" alt="" /><span>Dictate</span></a>
-          <p>Open-source voice typing for Android.</p>
+          <p>Free, open-source voice typing for Android—created by <a href={DEVELOPER_URL} target="_blank" rel="noreferrer">Jannis Zahn / DevEmperor</a>.</p>
         </div>
         <div className="footer-links">
           <div><strong>Product</strong><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
           <div><strong>Project</strong><a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a><a href={`${GITHUB_URL}/issues`} target="_blank" rel="noreferrer">Issues</a><a href={`${GITHUB_URL}/blob/main/LICENSE`} target="_blank" rel="noreferrer">Apache 2.0</a><a href="https://paypal.me/DevEmperor" target="_blank" rel="noreferrer">Support development</a></div>
         </div>
         <div className="footer-bottom">
-          <span>Built by DevEmperor. Keyboard foundation by FlorisBoard contributors.</span>
+          <span>Created and maintained by <a href={DEVELOPER_URL} target="_blank" rel="noreferrer">Jannis Zahn / DevEmperor</a>. Keyboard foundation by FlorisBoard contributors.</span>
           <a href="#top">Back to top <ArrowUpRight size={14} weight="bold" /></a>
         </div>
       </footer>

@@ -24,6 +24,7 @@ test("desktop conversion path, model buffet, and install routes", async ({ page 
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Stop renting your own voice." })).toBeVisible();
   await expect(page.getByRole("link", { name: /Get Dictate on Google Play/i }).first()).toHaveAttribute("href", /play\.google\.com/);
+  await expect(page.locator(".hero-fineprint")).toContainText("Free & open source");
   await page.locator(".prompt-strip").getByRole("button", { name: "Translate" }).click();
   await expect(page.locator(".demo-editor p").last()).toContainText("Pouvez-vous déplacer notre réunion");
 
@@ -58,6 +59,9 @@ test("desktop conversion path, model buffet, and install routes", async ({ page 
   await page.getByRole("tab", { name: /Build from source/ }).click();
   await expect(page.getByRole("heading", { name: "Inspect it. Fork it. Build it." })).toBeVisible();
   await expect(page.getByText("GitHub does not currently provide a signed end-user APK.")).toBeVisible();
+
+  await page.locator(".final-cta").scrollIntoViewIfNeeded();
+  await expect(page.getByRole("link", { name: "Jannis Zahn, creator and lead developer of Dictate on GitHub" })).toHaveAttribute("href", "https://github.com/DevEmperor");
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);

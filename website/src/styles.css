@@ -723,30 +723,34 @@ p {
   letter-spacing: 0.07em;
 }
 
-.zero-visual {
+.free-visual {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   align-self: center;
   justify-self: center;
-  gap: 16px;
+  gap: 18px;
   color: var(--ink);
 }
 
-.zero-visual > span {
-  font-size: clamp(6rem, 10vw, 9rem);
-  font-weight: 510;
-  letter-spacing: -0.1em;
-  line-height: 0.75;
+.free-visual > span {
+  display: grid;
+  width: clamp(76px, 8vw, 104px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(48, 183, 230, 0.3);
+  border-radius: 28%;
+  background: rgba(48, 183, 230, 0.09);
+  color: var(--accent-dark);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 18px 35px rgba(13, 17, 23, 0.08);
 }
 
-.zero-visual small {
-  padding-bottom: 2px;
+.free-visual small {
   color: var(--accent-dark);
   font-family: "Geist Mono Variable", monospace;
-  font-size: 0.61rem;
+  font-size: 0.65rem;
   font-weight: 650;
-  letter-spacing: 0.06em;
-  line-height: 1.35;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
 }
 
 .prompt-visual {
@@ -2603,6 +2607,63 @@ p {
   margin-bottom: 16px;
 }
 
+.creator-credit {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin: 5px 0 18px;
+  padding: 9px 12px 9px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--paper-bright);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background-color 180ms ease, border-color 180ms ease, transform 140ms var(--ease-out);
+}
+
+.creator-credit:active {
+  transform: scale(0.985);
+}
+
+.creator-credit-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--paper-bright);
+  color: var(--ink);
+}
+
+.creator-credit-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.creator-credit .creator-credit-copy small {
+  color: #77828d;
+  font-size: 0.47rem;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+}
+
+.creator-credit strong {
+  font-size: 0.77rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+}
+
+.creator-credit em {
+  margin-left: 4px;
+  color: var(--accent);
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 0.61rem;
+  font-style: normal;
+  font-weight: 580;
+}
+
 .final-cta small {
   color: #727d88;
   font-family: "Geist Mono Variable", monospace;
@@ -2643,6 +2704,11 @@ p {
   margin: 18px 0 0;
   color: var(--muted);
   font-size: 0.86rem;
+}
+
+.footer-brand p a {
+  color: var(--ink);
+  font-weight: 620;
 }
 
 .footer-links {
@@ -2693,6 +2759,11 @@ p {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .creator-credit:hover {
+    border-color: rgba(48, 183, 230, 0.28);
+    background: rgba(48, 183, 230, 0.07);
+  }
+
   .feature-copy:hover .feature-copy-icon {
     color: var(--accent-dark);
     transform: translate3d(0, -2px, 0);

@@ -3,7 +3,7 @@ import { CaretDown } from "@phosphor-icons/react";
 const questions = [
   {
     question: "Is Dictate free?",
-    answer: "The source code is free and open source under Apache 2.0. The official Google Play build has a small one-time purchase that funds development and includes lifetime app updates. There is no Dictate subscription. Cloud-provider usage may cost extra.",
+    answer: "Yes. Dictate is free and open source under Apache 2.0, including the official Google Play build. Offline transcription uses no cloud API. If you connect a paid cloud provider, that provider bills its own API usage directly.",
   },
   {
     question: "Does Dictate work offline?",

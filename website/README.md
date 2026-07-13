@@ -1,6 +1,6 @@
 # Dictate website
 
-Conversion-focused English landing page for Dictate. The site presents Dictate as an open-source Android voice keyboard with offline transcription, provider choice, realtime routes, AI rewriting, and no recurring Dictate subscription.
+Conversion-focused English landing page for Dictate. The site presents Dictate as a free, open-source Android voice keyboard with offline transcription, provider choice, realtime routes, and AI rewriting.
 
 ## Run locally
 
@@ -26,8 +26,8 @@ The production build is written to `dist/`. Playwright covers the primary deskto
 
 - The default Model Buffet shows three curated highlights in each STT category and three LLM-provider highlights. The complete catalog remains available through the expansion controls.
 - Artificial Analysis WER and latency values are identified as independent benchmark signals; lower WER is better.
-- Provider prices are normalized snapshots dated 13 July 2026 and must be reviewed before publication because catalogs, promotions, and rates can change.
-- Dictate pricing is intentionally described without a hard-coded amount: the official Google Play build is a one-time purchase, source builds are available under Apache-2.0, optional cloud-provider usage is billed separately, and offline transcription has no API usage fee.
+- Every price in the Model Buffet refers exclusively to an external provider’s API usage. Dictate itself is free, and offline transcription uses no cloud API.
+- Provider API prices are normalized snapshots dated 13 July 2026 and must be reviewed before publication because catalogs, promotions, and rates can change.
 - The comparison section avoids unverifiable savings claims and describes product-model differences rather than claiming universal benchmark superiority.
 
 ## Main source areas
@@ -37,3 +37,7 @@ The production build is written to `dist/`. Playwright covers the primary deskto
 - `src/components/DictationDemo.jsx` — interactive hero demo
 - `src/styles.css` — responsive visual and motion system
 - `tests/site.spec.js` — browser-level regression coverage
+
+## Credits
+
+Dictate is created and maintained by [Jannis Zahn (@DevEmperor)](https://github.com/DevEmperor). Its keyboard foundation builds on the work of the FlorisBoard contributors.

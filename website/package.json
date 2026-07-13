@@ -2,6 +2,7 @@
   "name": "dictate-website",
   "private": true,
   "version": "1.0.0",
+  "author": "Jannis Zahn (https://github.com/DevEmperor)",
   "type": "module",
   "scripts": {
     "dev": "vite",

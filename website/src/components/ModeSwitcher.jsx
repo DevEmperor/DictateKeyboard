@@ -16,7 +16,7 @@ const modes = [
     id: "offline",
     label: "Offline",
     title: "Keep the audio on your phone.",
-    copy: "Download a Whisper or Parakeet model once, then transcribe on-device without an internet connection or cloud usage fee.",
+    copy: "Download a Whisper or Parakeet model once, then transcribe on-device without an internet connection or cloud API call.",
     route: "On-device model",
     icon: WifiSlash,
   },
