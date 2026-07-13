@@ -5,13 +5,13 @@ export default defineConfig({
   fullyParallel: false,
   reporter: "line",
   webServer: {
-    command: "npm run dev -- --host 127.0.0.1 --strictPort",
-    url: "http://127.0.0.1:5173",
-    reuseExistingServer: true,
+    command: "npm run dev -- --host 127.0.0.1 --port 4173 --strictPort",
+    url: "http://127.0.0.1:4173",
+    reuseExistingServer: false,
     timeout: 120_000,
   },
   use: {
-    baseURL: "http://127.0.0.1:5173",
+    baseURL: "http://127.0.0.1:4173",
     browserName: "chromium",
     colorScheme: "dark",
     reducedMotion: "reduce",
