@@ -40,6 +40,8 @@ Downloaded on demand into <filesDir>/dictate-models/<model>/ ; no audio ever lea
     https://github.com/openai/whisper
   - Parakeet TDT 0.6B v3 — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
+  - Parakeet German (primeline) — a German-specialized fine-tune of NVIDIA Parakeet TDT 0.6B v3,
+    © primeline, licensed CC BY 4.0. https://huggingface.co/primeline/parakeet-primeline
   - ONNX (int8) exports of both, and the on-device runtime, are from the sherpa-onnx / k2-fsa
     project, Apache-2.0. https://github.com/k2-fsa/sherpa-onnx
   - The Silero VAD model used to segment long recordings — © Silero Team, MIT License.

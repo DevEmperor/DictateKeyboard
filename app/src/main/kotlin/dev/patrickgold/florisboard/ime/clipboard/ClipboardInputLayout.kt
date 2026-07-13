@@ -669,7 +669,8 @@ fun ClipboardInputLayout(
     SnyggColumn(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.imeUiHeight()),
+            // Lock to the normal keyboard height so opening the clipboard never changes the IME height.
+            .height(FlorisImeSizing.panelUiHeight()),
     ) {
         HeaderRow()
         if (deviceLocked) {

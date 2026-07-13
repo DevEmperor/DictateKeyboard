@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 
 import android.content.Context
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
@@ -76,6 +77,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     private val prefs by dev.patrickgold.florisboard.app.FlorisPreferenceStore
     private val appContext by context.appContext()
+    // Used to enumerate the user's configured keyboard languages for multilingual typing (issue #190).
+    // Fully lazy so nothing is touched during construction (cf. issue #193).
+    private val subtypeManager by lazy { appContext.subtypeManager().value }
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
@@ -133,16 +137,17 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     /** Loads (and caches) the word→frequency map for [subtype]'s resolved dictionary language. */
-    private suspend fun wordDataFor(subtype: Subtype): Map<String, Int> {
-        val lang = dictLangFor(subtype)
-        return wordDataByLang.withLock { cache ->
+    private suspend fun wordDataFor(subtype: Subtype): Map<String, Int> = wordDataForLang(dictLangFor(subtype))
+
+    /** Loads (and caches) the word→frequency map for a specific dictionary [lang]. */
+    private suspend fun wordDataForLang(lang: String): Map<String, Int> =
+        wordDataByLang.withLock { cache ->
             cache[lang] ?: run {
                 val loaded = Json.decodeFromString(wordDataSerializer, readDict(lang))
                 cache[lang] = loaded
                 loaded
             }
         }
-    }
 
     // Bigram context model (Tier 2). Per-language "w1 w2" -> count maps loaded from the bundled
     // ime/dict/<lang>_bigrams.txt (currently English only); languages without a file get an empty map so
@@ -215,9 +220,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     private val lowerIndexByLang = guardedByLock { mutableMapOf<String, LowerIndex>() }
 
-    init {
+    private fun startDictionaryWatcher() {
         // When a dictionary finishes downloading, drop the resolved-language cache so the active subtype
-        // starts using it immediately (issue #127).
+        // starts using it immediately (issue #127). Started from create() rather than init: launching a
+        // coroutine that touches this provider's fields during construction let `this` escape before the
+        // object was safely published, so the IO thread could observe not-yet-initialized (null) caches
+        // and crash on the first StateFlow emission (issue #193).
         ioScope.launch {
             GlideDictionaryManager.installedVersion.collect {
                 resolvedDictLang.clear()
@@ -228,9 +236,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
-    private suspend fun lowerIndexFor(subtype: Subtype): LowerIndex {
-        val lang = dictLangFor(subtype)
-        val data = wordDataFor(subtype)
+    private suspend fun lowerIndexFor(subtype: Subtype): LowerIndex = lowerIndexForLang(dictLangFor(subtype))
+
+    private suspend fun lowerIndexForLang(lang: String): LowerIndex {
+        val data = wordDataForLang(lang)
         return lowerIndexByLang.withLock { cache ->
             cache[lang] ?: run {
                 val freq = HashMap<String, Int>(data.size)
@@ -247,6 +256,28 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 LowerIndex(freq, canonical, alphabet).also { cache[lang] = it }
             }
         }
+    }
+
+    /**
+     * The dictionary languages a typed word is accepted from: just the active subtype's, or — when
+     * multilingual typing is on (issue #190) — every configured keyboard subtype's, so a bilingual's
+     * second-language words aren't flagged as typos or autocorrected into the primary language.
+     */
+    private fun acceptedDictLangs(subtype: Subtype): List<String> {
+        val active = dictLangFor(subtype)
+        if (!prefs.suggestion.multilingualTyping.get()) return listOf(active)
+        val langs = LinkedHashSet<String>().apply { add(active) }
+        runCatching { subtypeManager.subtypes.forEach { langs.add(dictLangFor(it)) } }
+        return langs.toList()
+    }
+
+    /** True if [word] is a known dictionary word in any accepted language, or in the user dictionary. */
+    private suspend fun isKnownWord(word: String, subtype: Subtype): Boolean {
+        val lower = word.lowercase()
+        for (lang in acceptedDictLangs(subtype)) {
+            if (lowerIndexForLang(lang).freq.containsKey(lower)) return true
+        }
+        return isInUserDictionary(word, subtype)
     }
 
     /** All strings one edit away from [word] (delete / transpose / replace / insert) — Norvig's edits1. */
@@ -337,6 +368,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
+        // Start the dictionary-download watcher only now — after the provider is fully constructed and
+        // safely published — so the collector never sees uninitialized caches (issue #193).
+        startDictionaryWatcher()
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
@@ -377,7 +411,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Don't flag single characters, numbers or words containing digits.
         if (trimmed.length <= 1 || trimmed.any { it.isDigit() }) return SpellingResult.validWord()
         val index = lowerIndexFor(subtype)
-        if (index.freq.containsKey(trimmed.lowercase()) || isInUserDictionary(trimmed, subtype)) {
+        // Known in the active language OR any other configured keyboard language (multilingual, #190).
+        if (isKnownWord(trimmed, subtype)) {
             return SpellingResult.validWord()
         }
         // Unknown word → typo, offering the closest dictionary words as corrections (may be empty).
@@ -448,7 +483,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // the top one for auto-commit — the editor swaps it in on the next space/punctuation. Kept
         // conservative (edit distance 1, length >= 3) to avoid mangling intentional input.
         val index = lowerIndexFor(subtype)
-        val isKnown = index.freq.containsKey(word.lowercase()) || isInUserDictionary(word, subtype)
+        // Don't autocorrect a word that's valid in any of the user's keyboard languages (multilingual, #190).
+        val isKnown = isKnownWord(word, subtype)
         if (prefs.suggestion.autoCorrect.get() && out.isEmpty() && !isKnown && word.length >= 3) {
             val prevWord = previousWordOf(content)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()

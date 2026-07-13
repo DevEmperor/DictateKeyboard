@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.app.settings.clipboard
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
@@ -40,17 +42,20 @@ fun ClipboardScreen() = FlorisScreen {
     content {
         SwitchPreference(
             prefs.clipboard.useInternalClipboard,
+            modifier = Modifier.settingsSearchAnchor("pref__clipboard__use_internal_clipboard__label"),
             title = stringRes(R.string.pref__clipboard__use_internal_clipboard__label),
             summary = stringRes(R.string.pref__clipboard__use_internal_clipboard__summary),
         )
         ListPreference(
             prefs.clipboard.syncToFloris,
+            modifier = Modifier.settingsSearchAnchor("pref__clipboard__sync_from_system_clipboard__label"),
             title = stringRes(R.string.pref__clipboard__sync_from_system_clipboard__label),
             entries = enumDisplayEntriesOf(ClipboardSyncBehavior::class),
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
         )
         ListPreference(
             prefs.clipboard.syncToSystem,
+            modifier = Modifier.settingsSearchAnchor("pref__clipboard__sync_to_system_clipboard__label"),
             title = stringRes(R.string.pref__clipboard__sync_to_system_clipboard__label),
             entries = enumDisplayEntriesOf(ClipboardSyncBehavior::class),
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
@@ -59,11 +64,13 @@ fun ClipboardScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_suggestion__label)) {
             SwitchPreference(
                 prefs.clipboard.suggestionEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__suggestion_enabled__label"),
                 title = stringRes(R.string.pref__clipboard__suggestion_enabled__label),
                 summary = stringRes(R.string.pref__clipboard__suggestion_enabled__summary),
             )
             DialogSliderPreference(
                 prefs.clipboard.suggestionTimeout,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__suggestion_timeout__label"),
                 title = stringRes(R.string.pref__clipboard__suggestion_timeout__label),
                 valueLabel = { stringRes(R.string.pref__clipboard__suggestion_timeout__summary, "v" to it) },
                 min = 30,
@@ -76,12 +83,14 @@ fun ClipboardScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_history__label)) {
             SwitchPreference(
                 prefs.clipboard.historyEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__enable_clipboard_history__label"),
                 title = stringRes(R.string.pref__clipboard__enable_clipboard_history__label),
                 summary = stringRes(R.string.pref__clipboard__enable_clipboard_history__summary),
             )
             DialogSliderPreference(
                 primaryPref = prefs.clipboard.historyNumGridColumnsPortrait,
                 secondaryPref = prefs.clipboard.historyNumGridColumnsLandscape,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__num_history_grid_columns__label"),
                 title = stringRes(R.string.pref__clipboard__num_history_grid_columns__label),
                 primaryLabel = stringRes(R.string.screen_orientation__portrait),
                 secondaryLabel = stringRes(R.string.screen_orientation__landscape),
@@ -99,11 +108,13 @@ fun ClipboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.clipboard.historyAutoCleanOldEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__clean_up_old__label"),
                 title = stringRes(R.string.pref__clipboard__clean_up_old__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
             DialogSliderPreference(
                 prefs.clipboard.historyAutoCleanOldAfter,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__clean_up_after__label"),
                 title = stringRes(R.string.pref__clipboard__clean_up_after__label),
                 valueLabel = { pluralsRes(R.plurals.unit__minutes__written, it, "v" to it) },
                 min = 0,
@@ -113,12 +124,14 @@ fun ClipboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.clipboard.historyAutoCleanSensitiveEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__auto_clean_sensitive__label"),
                 title = stringRes(R.string.pref__clipboard__auto_clean_sensitive__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
                 visibleIf = { AndroidVersion.ATLEAST_API33_T },
             )
             DialogSliderPreference(
                 prefs.clipboard.historyAutoCleanSensitiveAfter,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__auto_clean_sensitive_after__label"),
                 title = stringRes(R.string.pref__clipboard__auto_clean_sensitive_after__label),
                 valueLabel = { pluralsRes(R.plurals.unit__seconds__written, it, "v" to it) },
                 min = 0,
@@ -129,11 +142,13 @@ fun ClipboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.clipboard.historySizeLimitEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__limit_history_size__label"),
                 title = stringRes(R.string.pref__clipboard__limit_history_size__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
             DialogSliderPreference(
                 prefs.clipboard.historySizeLimit,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__max_history_size__label"),
                 title = stringRes(R.string.pref__clipboard__max_history_size__label),
                 valueLabel = { pluralsRes(R.plurals.unit__items__written, it, "v" to it) },
                 min = 5,
@@ -144,17 +159,20 @@ fun ClipboardScreen() = FlorisScreen {
 
             SwitchPreference(
                 prefs.clipboard.historyHideOnPaste,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__history_hide_on_paste__label"),
                 title = stringRes(R.string.pref__clipboard__history_hide_on_paste__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true }
             )
             SwitchPreference(
                 prefs.clipboard.historyHideOnNextTextField,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__history_hide_on_next_text_field__label"),
                 title = stringRes(R.string.pref__clipboard__history_hide_on_next_text_field__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true }
             )
 
             SwitchPreference(
                 prefs.clipboard.clearPrimaryClipAffectsHistoryIfUnpinned,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label"),
                 title = stringRes(R.string.pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label),
                 summary = stringRes(R.string.pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },

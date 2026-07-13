@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.ui.LegacyLayoutState
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.editor.OperationScope
@@ -635,6 +636,12 @@ private class TextKeyboardLayoutController(
             pointer.activeKey = key
             initSelectionStart = editorInstance.activeContent.selection.start
             initSelectionEnd = editorInstance.activeContent.selection.end
+            // Space/backspace own a horizontal swipe (cursor move / delete). Flag it (and clear it for any
+            // other key, so it never gets stuck) so the legacy SWIPE-mode toggle doesn't hijack that swipe
+            // on the modern keyboard (issue #188).
+            val downCode = key.computedData.code
+            LegacyLayoutState.spaceOrDeleteTouch.value =
+                downCode == KeyCode.SPACE || downCode == KeyCode.CJK_SPACE || downCode == KeyCode.DELETE
         } else {
             pointer.activeKey = null
         }
@@ -668,6 +675,7 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchUpInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        LegacyLayoutState.spaceOrDeleteTouch.value = false // clear the #188 space/backspace-swipe guard
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
 
@@ -717,6 +725,7 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        LegacyLayoutState.spaceOrDeleteTouch.value = false // clear the #188 space/backspace-swipe guard
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
 

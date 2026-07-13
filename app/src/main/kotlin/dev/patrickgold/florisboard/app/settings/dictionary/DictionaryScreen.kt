@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.app.settings.dictionary
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -35,10 +37,12 @@ fun DictionaryScreen() = FlorisScreen {
     content {
         SwitchPreference(
             prefs.dictionary.enableSystemUserDictionary,
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__enable_system_user_dictionary__label"),
             title = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__summary),
         )
         Preference(
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__manage_system_user_dictionary__label"),
             title = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__summary),
             onClick = { navController.navigate(Routes.Settings.UserDictionary(UserDictionaryType.SYSTEM)) },
@@ -46,10 +50,12 @@ fun DictionaryScreen() = FlorisScreen {
         )
         SwitchPreference(
             prefs.dictionary.enableFlorisUserDictionary,
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__enable_internal_user_dictionary__label"),
             title = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__summary),
         )
         Preference(
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__manage_floris_user_dictionary__label"),
             title = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__summary),
             onClick = { navController.navigate(Routes.Settings.UserDictionary(UserDictionaryType.FLORIS)) },

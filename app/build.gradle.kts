@@ -235,6 +235,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
+    // GIF search (Klipy): Compose image loading + animated GIF/WebP decoding + OkHttp network fetcher.
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)

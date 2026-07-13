@@ -39,6 +39,10 @@ class RecordingController(private val context: Context) {
     private var record: AudioRecord? = null
     private var thread: Thread? = null
     private var raf: RandomAccessFile? = null
+    // Serializes access to [raf]/[pcmBytes] between the capture thread's per-frame write and a caller's
+    // [rotate]/[stop], so a mid-recording segment cut can never race with a frame write.
+    private val fileLock = Any()
+    private var segmentSeq = 0
     @Volatile private var recording = false
     @Volatile private var paused = false
     @Volatile private var pcmBytes = 0L
@@ -97,8 +101,18 @@ class RecordingController(private val context: Context) {
         peak.set(0)
         recordingError = null
         paused = false
+        try {
+            rec.startRecording()
+        } catch (t: Throwable) {
+            record = null
+            raf = null
+            outputFile = null
+            runCatching { out.close() }
+            file.delete()
+            runCatching { rec.release() }
+            throw t
+        }
         recording = true
-        rec.startRecording()
         thread = Thread {
             val readSize = if (pcmSink != null) minOf(bufferSize, REALTIME_READ_BYTES) else bufferSize
             val buf = ByteArray(readSize)
@@ -111,10 +125,15 @@ class RecordingController(private val context: Context) {
                     recording = false
                 } else if (n > 0 && !paused) {
                     try {
-                        if (pcmSink != null) runCatching { pcmSink(buf, n) }
-                        out.write(buf, 0, n)
-                        pcmBytes += n
+                        // Keep the file and byte count consistent with rotate()/stop(). Do not hide write
+                        // failures: a WAV whose header claims bytes that were never written is unusable.
+                        synchronized(fileLock) {
+                            val currentOut = raf ?: throw IOException("Recording output is unavailable")
+                            currentOut.write(buf, 0, n)
+                            pcmBytes += n
+                        }
                         updatePeak(buf, n)
+                        if (pcmSink != null) runCatching { pcmSink(buf, n) }
                     } catch (t: Throwable) {
                         recordingError = t
                         recording = false
@@ -125,40 +144,90 @@ class RecordingController(private val context: Context) {
     }
 
     /**
+     * Cuts the current segment WITHOUT stopping the microphone (long-form segmented dictation, issue
+     * #170): finalizes the in-progress WAV, hands it back for background transcription, and immediately
+     * reopens a fresh WAV so recording continues seamlessly. Returns the finalized segment file, or null
+     * if nothing usable was captured since the last cut. Safe to call off the main thread while recording.
+     */
+    fun rotate(): File? = synchronized(fileLock) {
+        if (!recording) return@synchronized null
+        val old = raf ?: return@synchronized null
+        val bytes = pcmBytes
+        val base = outputFile
+        val segment = try {
+            old.seek(0)
+            old.write(wavHeader(bytes))
+            old.close()
+            if (bytes > 0 && base != null) {
+                // Controllers are recreated between recordings while earlier segments may still be
+                // transcribing. Include a monotonic component so a new controller cannot delete one.
+                val seg = File(context.cacheDir, "dictate_seg_${System.nanoTime()}_${segmentSeq++}.wav")
+                check(base.renameTo(seg)) { "Could not preserve completed recording segment" }
+                seg
+            } else null
+        } catch (t: Throwable) {
+            runCatching { old.close() }
+            raf = null
+            recordingError = t
+            recording = false
+            return@synchronized null
+        }
+        // Reopen a fresh WAV (the base name is now free after the rename) for the continuing recording.
+        val file = File(context.cacheDir, AUDIO_FILE_NAME)
+        raf = try {
+            RandomAccessFile(file, "rw").apply {
+                setLength(0)
+                write(ByteArray(WAV_HEADER_SIZE))
+            }
+        } catch (t: Throwable) {
+            recordingError = t
+            recording = false
+            null
+        }
+        outputFile = file
+        pcmBytes = 0L
+        segment
+    }
+
+    /**
      * Stops the recording and returns the finished WAV file, or null if nothing usable was captured. The
      * recorder is always released.
      */
     fun stop(): File? {
         val rec = record
-        val out = raf
-        if (!recording && rec == null && thread == null && out == null) return null
+        if (!recording && rec == null && thread == null && raf == null) return null
         recording = false
         runCatching { rec?.stop() }
         runCatching { thread?.join() }
         thread = null
         runCatching { rec?.release() }
         record = null
-        raf = null
-        val bytes = pcmBytes
-        val file = outputFile
-        val failure = recordingError
-        recordingError = null
-        pcmBytes = 0L
-        peak.set(0)
-        if (out == null || failure != null) {
-            runCatching { out?.close() }
-            file?.delete()
-            return null
-        }
-        return try {
-            out.seek(0)
-            out.write(wavHeader(bytes))
-            out.close()
-            if (bytes > 0) file else { file?.delete(); null }
-        } catch (_: Throwable) {
-            runCatching { out.close() }
-            file?.delete()
-            null
+        return synchronized(fileLock) {
+            val out = raf
+            raf = null
+            val bytes = pcmBytes
+            val file = outputFile
+            val failure = recordingError
+            recordingError = null
+            pcmBytes = 0L
+            peak.set(0)
+            if (out == null || failure != null) {
+                runCatching { out?.close() }
+                file?.delete()
+                outputFile = null
+                return@synchronized null
+            }
+            try {
+                out.seek(0)
+                out.write(wavHeader(bytes))
+                out.close()
+                if (bytes > 0) file else { file?.delete(); null }
+            } catch (_: Throwable) {
+                runCatching { out.close() }
+                file?.delete()
+                outputFile = null
+                null
+            }
         }
     }
 
@@ -184,13 +253,15 @@ class RecordingController(private val context: Context) {
         thread = null
         runCatching { rec?.release() }
         record = null
-        recordingError = null
-        runCatching { raf?.close() }
-        raf = null
-        outputFile?.delete()
-        outputFile = null
-        pcmBytes = 0L
-        peak.set(0)
+        synchronized(fileLock) {
+            recordingError = null
+            runCatching { raf?.close() }
+            raf = null
+            outputFile?.delete()
+            outputFile = null
+            pcmBytes = 0L
+            peak.set(0)
+        }
     }
 
     private fun updatePeak(buf: ByteArray, length: Int) {

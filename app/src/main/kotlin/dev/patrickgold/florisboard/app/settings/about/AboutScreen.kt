@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.settings.about
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,8 +34,14 @@ import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Policy
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -44,8 +51,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.WHATS_NEW_TOURS
 import dev.patrickgold.florisboard.app.WhatsNewTourState
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -93,6 +102,7 @@ fun AboutScreen() = FlorisScreen {
         }
         Preference(
             icon = Icons.Outlined.Info,
+            modifier = Modifier.settingsSearchAnchor("about__version__title"),
             title = stringRes(R.string.about__version__title),
             summary = appVersion,
             onClick = {
@@ -108,32 +118,71 @@ fun AboutScreen() = FlorisScreen {
                 }
             },
         )
+        // A single "What's new" entry that opens a small version picker, so users on any prior version can
+        // re-view every release's tour without cluttering the list. (Auto-show on update still jumps
+        // straight to the updated version — see WhatsNewTour / pendingTourVersions.)
+        var showWhatsNewPicker by remember { mutableStateOf(false) }
         Preference(
             icon = Icons.Default.AutoAwesome,
+            modifier = Modifier.settingsSearchAnchor("about__whats_new__title"),
             title = stringRes(R.string.about__whats_new__title),
             summary = stringRes(R.string.about__whats_new__summary),
-            onClick = { WhatsNewTourState.open() },
+            onClick = { showWhatsNewPicker = true },
         )
+        if (showWhatsNewPicker) {
+            AlertDialog(
+                onDismissRequest = { showWhatsNewPicker = false },
+                title = { Text(stringRes(R.string.about__whats_new__title)) },
+                text = {
+                    // Newest first; the registry is ascending, so reverse for display.
+                    Column {
+                        WHATS_NEW_TOURS.reversed().forEach { tour ->
+                            val versionLabel = tour.version.toString().substringBeforeLast(".0")
+                            Text(
+                                text = stringRes(R.string.about__whats_new__versioned)
+                                    .replace("{version}", versionLabel),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        showWhatsNewPicker = false
+                                        WhatsNewTourState.open(tour.version)
+                                    }
+                                    .padding(vertical = 14.dp),
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showWhatsNewPicker = false }) {
+                        Text(stringRes(R.string.action__cancel))
+                    }
+                },
+            )
+        }
         Preference(
             icon = Icons.Default.History,
+            modifier = Modifier.settingsSearchAnchor("about__changelog__title"),
             title = stringRes(R.string.about__changelog__title),
             summary = stringRes(R.string.about__changelog__summary),
             onClick = { context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
         )
         Preference(
             icon = Icons.Default.Code,
+            modifier = Modifier.settingsSearchAnchor("about__repository__title"),
             title = stringRes(R.string.about__repository__title),
             summary = stringRes(R.string.about__repository__summary),
             onClick = { context.launchUrl(R.string.florisboard__repo_url) },
         )
         Preference(
             icon = Icons.Default.CallSplit,
+            modifier = Modifier.settingsSearchAnchor("about__based_on_floris__title"),
             title = stringRes(R.string.about__based_on_floris__title),
             summary = stringRes(R.string.about__based_on_floris__summary),
             onClick = { context.launchUrl(R.string.florisboard__upstream_repo_url) },
         )
         Preference(
             icon = Icons.Outlined.Email,
+            modifier = Modifier.settingsSearchAnchor("about__feedback__title"),
             title = stringRes(R.string.about__feedback__title),
             summary = stringRes(R.string.about__feedback__summary),
             onClick = {
@@ -150,12 +199,14 @@ fun AboutScreen() = FlorisScreen {
         )
         Preference(
             icon = Icons.Outlined.Policy,
+            modifier = Modifier.settingsSearchAnchor("about__privacy_policy__title"),
             title = stringRes(R.string.about__privacy_policy__title),
             summary = stringRes(R.string.about__privacy_policy__summary),
             onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
         )
         Preference(
             icon = Icons.Outlined.Description,
+            modifier = Modifier.settingsSearchAnchor("about__project_license__title"),
             title = stringRes(R.string.about__project_license__title),
             summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
             onClick = { navController.navigate(Routes.Settings.ProjectLicense) },

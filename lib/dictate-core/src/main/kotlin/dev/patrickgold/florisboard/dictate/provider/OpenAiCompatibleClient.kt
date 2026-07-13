@@ -12,12 +12,16 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import android.util.Base64OutputStream
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Credentials
 import okhttp3.Headers
 import okhttp3.MediaType
@@ -27,9 +31,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import java.net.Proxy
 import java.security.KeyStore
 import java.time.Duration
@@ -66,6 +73,39 @@ class OpenAiCompatibleClient(
     }
 
     override suspend fun complete(request: ChatRequest): ChatResult {
+        // Skip reasoning_effort up-front for endpoint+model pairs already known to reject it, so we don't
+        // waste a doubled request on every rewording (#184/#186).
+        val key = "${config.normalizedBaseUrl}|${request.model}"
+        val effective = if (request.reasoningEffort != null && key in reasoningEffortUnsupported) {
+            request.copy(reasoningEffort = null)
+        } else {
+            request
+        }
+        return try {
+            completeOnce(effective)
+        } catch (e: DictateApiException) {
+            // Many models/endpoints reject `reasoning_effort`: it's an unknown option (#184), an
+            // unsupported value such as "minimal" on Ollama (#186), or the model "does not support
+            // thinking" (#186). Rather than hard-fail the rewording, remember it and retry once without it.
+            if (effective.reasoningEffort != null && isReasoningEffortRejected(e)) {
+                reasoningEffortUnsupported.add(key)
+                completeOnce(effective.copy(reasoningEffort = null))
+            } else {
+                throw e
+            }
+        }
+    }
+
+    /** True when [e] looks like the provider rejecting the `reasoning_effort` field or its value. */
+    private fun isReasoningEffortRejected(e: DictateApiException): Boolean {
+        val m = (e.message ?: return false).lowercase()
+        return "reasoning_effort" in m ||
+            "reasoning value" in m ||
+            "reasoning effort" in m ||
+            ("does not support" in m && ("thinking" in m || "reasoning" in m))
+    }
+
+    private suspend fun completeOnce(request: ChatRequest): ChatResult {
         val dto = ChatCompletionRequestDto(
             model = request.model,
             messages = request.messages.map { MessageDto(it.role.wire, it.content) },
@@ -692,7 +732,12 @@ class OpenAiCompatibleClient(
         var attempt = 0
         while (true) {
             try {
-                return withContext(Dispatchers.IO) { executeOnce(request) }
+                return executeOnce(request)
+            } catch (e: CancellationException) {
+                // The caller (stop button, issue #192) cancelled: [executeOnce] already aborted the
+                // OkHttp call so no more of the response is downloaded and no tokens are wasted waiting.
+                // Propagate instead of mapping to a retryable error.
+                throw e
             } catch (e: Throwable) {
                 val mapped = when (e) {
                     is DictateApiException -> e
@@ -710,21 +755,44 @@ class OpenAiCompatibleClient(
         }
     }
 
-    /** Blocking single HTTP call. Throws [DictateApiException] on non-2xx, [IOException] on transport errors. */
-    private fun executeOnce(request: Request): String {
-        client.newCall(request).execute().use { response ->
-            val body = response.body?.string().orEmpty()
-            if (!response.isSuccessful) {
-                val error = parseError(body)
-                throw DictateApiException.fromHttp(
-                    status = response.code,
-                    message = error?.message ?: body.take(500),
-                    code = error?.code,
-                    type = error?.type,
+    /**
+     * Single HTTP call, suspending until the response arrives. Uses OkHttp's async [Call.enqueue] so that
+     * cancelling the surrounding coroutine (the stop button) actually aborts the in-flight request via
+     * [Call.cancel] — otherwise a blocking `execute()` would keep running server-side and the API would
+     * still be billed even though the UI already returned to idle (issue #192). Throws
+     * [DictateApiException] on non-2xx and [IOException] on transport errors.
+     */
+    private suspend fun executeOnce(request: Request): String = suspendCancellableCoroutine { cont ->
+        val call = client.newCall(request)
+        cont.invokeOnCancellation { runCatching { call.cancel() } }
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                if (cont.isActive) cont.resumeWithException(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val outcome = runCatching {
+                    response.use { resp ->
+                        val body = resp.body?.string().orEmpty()
+                        if (!resp.isSuccessful) {
+                            val error = parseError(body)
+                            throw DictateApiException.fromHttp(
+                                status = resp.code,
+                                message = error?.message ?: body.take(500),
+                                code = error?.code,
+                                type = error?.type,
+                            )
+                        }
+                        body
+                    }
+                }
+                if (!cont.isActive) return // cancelled while reading — drop the result
+                outcome.fold(
+                    onSuccess = { cont.resume(it) },
+                    onFailure = { cont.resumeWithException(it) },
                 )
             }
-            return body
-        }
+        })
     }
 
     /**
@@ -1101,6 +1169,13 @@ class OpenAiCompatibleClient(
             val created = build()
             return HTTP_CLIENTS.putIfAbsent(key, created) ?: created
         }
+
+        /**
+         * Endpoint+model pairs known to reject `reasoning_effort` (#184/#186). Remembered for the process
+         * lifetime so we omit the field up-front and don't waste a doubled request on every rewording.
+         */
+        private val reasoningEffortUnsupported =
+            java.util.Collections.synchronizedSet(HashSet<String>())
 
         /** Soniox / AssemblyAI async polling: interval between status checks and the overall budget. */
         private const val SONIOX_POLL_INTERVAL_MS = 1500L

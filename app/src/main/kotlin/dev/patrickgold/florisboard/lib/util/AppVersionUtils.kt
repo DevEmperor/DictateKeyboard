@@ -60,20 +60,33 @@ object AppVersionUtils {
     }
 
     /**
-     * Whether the full-screen "What's new" tour should auto-show. Like [shouldShowChangelog] it only
-     * fires on a real update (not a fresh install) and only once per milestone, but it is additionally
-     * scoped to a specific [tourVersion] so a minor update later falls back to the regular changelog
-     * dialog instead of replaying the tour.
+     * Remembers that the user has seen every "What's new" tour up to and including [version]. Used when
+     * more than one tour is queued (a user who skipped releases): after finishing an older tour we advance
+     * the high-water mark to it, so quitting mid-queue still resumes at the next unseen tour on relaunch.
      */
-    fun shouldShowWhatsNew(context: Context, prefs: FlorisPreferenceModel, tourVersion: VersionName): Boolean {
+    suspend fun markWhatsNewSeen(context: Context, prefs: FlorisPreferenceModel, version: VersionName) {
+        prefs.internal.versionLastWhatsNew.set(version.toString())
+    }
+
+    /**
+     * The ascending list of tour versions from [candidates] that should auto-show now: only on a real
+     * update (not a fresh install), only those newer than the last-seen high-water mark, and only those the
+     * current build has actually reached. Empty means nothing auto-shows (fall back to the changelog).
+     */
+    fun pendingTourVersions(
+        context: Context,
+        prefs: FlorisPreferenceModel,
+        candidates: List<VersionName>,
+    ): List<VersionName> {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
-        val lastWhatsNewVersion =
+        val lastWhatsNew =
             VersionName.fromString(prefs.internal.versionLastWhatsNew.get()) ?: VersionName.DEFAULT
-        val currentVersion = currentVersion(context)
-        return installVersion != currentVersion &&
-            lastWhatsNewVersion < tourVersion &&
-            !(currentVersion < tourVersion)
+        val current = currentVersion(context)
+        if (installVersion == current) return emptyList() // fresh install → setup flow, not what's-new
+        return candidates
+            .filter { it > lastWhatsNew && !(current < it) }
+            .sortedWith { a, b -> a.compareTo(b) }
     }
 }
 

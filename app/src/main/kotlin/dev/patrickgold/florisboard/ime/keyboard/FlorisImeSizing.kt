@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsChipMargin
@@ -110,6 +111,32 @@ object FlorisImeSizing {
     @Composable
     fun imeUiHeight(): Dp {
         return keyboardUiHeight() + smartbarUiHeight()
+    }
+
+    /**
+     * The IME height locked to the *normal (characters) keyboard*, for the full-screen panels (emoji,
+     * clipboard, history). [keyboardUiHeight] derives its row count from the currently active evaluator,
+     * which for a panel can differ from the typing keyboard and make the panel a different height — so it
+     * visibly jumps when opened. Basing it on the last characters keyboard (like [rowCountAsState]) keeps a
+     * panel exactly as tall as the keyboard it replaces, including the always-on rewording prompt row when
+     * that's enabled (the panels replace it too, so its height must be counted).
+     */
+    @Composable
+    fun panelUiHeight(): Dp {
+        val prefs by FlorisPreferenceStore
+        val rowCount by rowCountAsState()
+        val smartbarEnabled by prefs.smartbar.enabled.collectAsState()
+        val rewordingEnabled by prefs.dictate.rewordingEnabled.collectAsState()
+        val promptsLayout by prefs.dictate.promptsLayout.collectAsState()
+        // The rewording prompt row (ROW layout) is pinned above the Smartbar on the normal keyboard and
+        // adds its height (DictatePromptRow uses smartbarHeight * 1.25); include it so the panels match.
+        val promptRowHeight =
+            if (smartbarEnabled && rewordingEnabled && promptsLayout == DictatePromptsLayout.ROW) {
+                smartbarHeight * 1.25f
+            } else {
+                0.dp
+            }
+        return keyboardRowBaseHeight * rowCount.coerceAtLeast(4) + smartbarUiHeight() + promptRowHeight
     }
 }
 

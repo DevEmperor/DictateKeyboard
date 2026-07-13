@@ -157,10 +157,31 @@ object LocalModelCatalog {
         ),
     )
 
-    /** All catalog models in display order: Parakeet first (best overall), then Whisper multilingual and
-     * the English-only variants. */
+    /**
+     * ~670 MB. Parakeet German (primeline, issue #176) — a German-specialized fine-tune of NVIDIA
+     * Parakeet TDT 0.6B v3, notably more accurate on German (e.g. ~41 % lower WER on Tuda-De than the
+     * base) while keeping the same architecture/speed. Exported to sherpa-onnx ONNX (int8) from the
+     * primeline `.nemo` the same way as the base v3. Licensing: CC-BY-4.0 (primeline / NVIDIA base),
+     * sherpa-onnx export tooling Apache-2.0 — both allow redistribution with attribution.
+     */
+    val PARAKEET_PRIMELINE_DE = LocalModelSpec(
+        id = "parakeet-primeline-de",
+        displayName = "Parakeet German (primeline)",
+        description = "German · higher accuracy · ~670 MB",
+        files = listOf(
+            LocalModelFile("$REL/parakeet-primeline-de-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_282_409, "4ce2447d5d996f1ea369c68cd8c1a8372c5e2b4c5784c9dc9c706b5e42ddc85e"),
+            LocalModelFile("$REL/parakeet-primeline-de-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_274, "ebcae1f7cf869507c1c77932e607df5f8d650b67897b41fbdcb3aea09fc39c4d"),
+            LocalModelFile("$REL/parakeet-primeline-de-joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 6_355_277, "8220c0d117d81bdd0d8c770881932ac340f1ce4b36932941d561d11ad1aaffce"),
+            LocalModelFile("$REL/parakeet-primeline-de-tokens.txt", LocalTranscriptionProvider.TOKENS, 93_939, "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"),
+            VAD_FILE,
+        ),
+    )
+
+    /** All catalog models in display order: Parakeet first (best overall), then the German-specialized
+     * Parakeet, then Whisper multilingual and the English-only variants. */
     val all: List<LocalModelSpec> = listOf(
         PARAKEET_TDT_V3,
+        PARAKEET_PRIMELINE_DE,
         WHISPER_TINY, WHISPER_BASE, WHISPER_SMALL,
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
     )

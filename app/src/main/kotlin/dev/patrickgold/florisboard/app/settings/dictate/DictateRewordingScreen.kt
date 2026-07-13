@@ -22,9 +22,16 @@ import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -62,6 +69,7 @@ fun DictateRewordingScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.rewordingEnabled,
             icon = Icons.Default.AutoFixHigh,
+            modifier = Modifier.settingsSearchAnchor("dictate__rewording_enabled_title"),
             title = stringRes(R.string.dictate__rewording_enabled_title),
             summary = stringRes(R.string.dictate__rewording_enabled_summary),
         )
@@ -69,6 +77,7 @@ fun DictateRewordingScreen() = FlorisScreen {
         ListPreference(
             prefs.dictate.promptsLayout,
             icon = Icons.Default.ViewAgenda,
+            modifier = Modifier.settingsSearchAnchor("dictate__prompts_layout_title"),
             title = stringRes(R.string.dictate__prompts_layout_title),
             entries = listPrefEntries {
                 entry(
@@ -92,6 +101,7 @@ fun DictateRewordingScreen() = FlorisScreen {
         }
         Preference(
             icon = Icons.Default.ListAlt,
+            modifier = Modifier.settingsSearchAnchor("dictate__manage_prompts_title"),
             title = stringRes(R.string.dictate__manage_prompts_title),
             summary = if (promptCount < 0) {
                 stringRes(R.string.dictate__manage_prompts_summary_loading)
@@ -104,43 +114,46 @@ fun DictateRewordingScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.autoFormattingEnabled,
             icon = Icons.Default.AutoFixHigh,
+            modifier = Modifier.settingsSearchAnchor("dictate__auto_formatting_title"),
             title = stringRes(R.string.dictate__auto_formatting_title),
             summary = stringRes(R.string.dictate__auto_formatting_summary),
         )
 
-        ListPreference(
-            prefs.dictate.rewordingReasoningEffort,
+        val reasoningScope = rememberCoroutineScope()
+        val reasoningEffort by prefs.dictate.rewordingReasoningEffort.collectAsState()
+        val reasoningCustom by prefs.dictate.rewordingReasoningEffortCustom.collectAsState()
+        var reasoningDialogOpen by remember { mutableStateOf(false) }
+        Preference(
             icon = Icons.Default.Bolt,
+            modifier = Modifier.settingsSearchAnchor("dictate__reasoning_effort_title"),
             title = stringRes(R.string.dictate__reasoning_effort_title),
-            entries = listPrefEntries {
-                entry(
-                    DictateReasoningEffort.OFF,
-                    stringRes(R.string.dictate__reasoning_effort_off),
-                    stringRes(R.string.dictate__reasoning_effort_off_summary),
-                )
-                entry(
-                    DictateReasoningEffort.MINIMAL,
-                    stringRes(R.string.dictate__reasoning_effort_minimal),
-                    stringRes(R.string.dictate__reasoning_effort_minimal_summary),
-                )
-                entry(
-                    DictateReasoningEffort.LOW,
-                    stringRes(R.string.dictate__reasoning_effort_low),
-                    stringRes(R.string.dictate__reasoning_effort_low_summary),
-                )
-                entry(
-                    DictateReasoningEffort.MEDIUM,
-                    stringRes(R.string.dictate__reasoning_effort_medium),
-                    stringRes(R.string.dictate__reasoning_effort_medium_summary),
-                )
-                entry(
-                    DictateReasoningEffort.HIGH,
-                    stringRes(R.string.dictate__reasoning_effort_high),
-                    stringRes(R.string.dictate__reasoning_effort_high_summary),
-                )
+            summary = when (reasoningEffort) {
+                DictateReasoningEffort.CUSTOM ->
+                    reasoningCustom.ifBlank { stringRes(R.string.dictate__reasoning_effort_custom) }
+                DictateReasoningEffort.OFF -> stringRes(R.string.dictate__reasoning_effort_off)
+                DictateReasoningEffort.MINIMAL -> stringRes(R.string.dictate__reasoning_effort_minimal)
+                DictateReasoningEffort.LOW -> stringRes(R.string.dictate__reasoning_effort_low)
+                DictateReasoningEffort.MEDIUM -> stringRes(R.string.dictate__reasoning_effort_medium)
+                DictateReasoningEffort.HIGH -> stringRes(R.string.dictate__reasoning_effort_high)
             },
+            onClick = { reasoningDialogOpen = true },
             enabledIf = { prefs.dictate.rewordingEnabled isEqualTo true },
         )
+        if (reasoningDialogOpen) {
+            ReasoningEffortDialog(
+                initialEffort = reasoningEffort,
+                initialCustom = reasoningCustom,
+                includeUseGlobal = false,
+                onConfirm = { effort, custom ->
+                    reasoningScope.launch {
+                        prefs.dictate.rewordingReasoningEffort.set(effort ?: DictateReasoningEffort.OFF)
+                        prefs.dictate.rewordingReasoningEffortCustom.set(custom)
+                    }
+                    reasoningDialogOpen = false
+                },
+                onDismiss = { reasoningDialogOpen = false },
+            )
+        }
 
         val systemSelection by prefs.dictate.systemPromptSelection.collectAsState()
         PromptSelectionPreference(

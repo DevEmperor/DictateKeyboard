@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ClipData
+import android.content.ClipDescription
 import android.content.Context
+import android.net.Uri
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.editorInstance
@@ -25,6 +27,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.Closeable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -226,6 +229,27 @@ class ClipboardManager(
     fun addNewPlaintext(newText: String) {
         val newData = ClipboardItem.text(newText)
         addNewClip(newData)
+    }
+
+    /**
+     * Copies a media item (given as a readable content [uri], e.g. a downloaded GIF) into the
+     * clipboard history and the system primary clip, so it can be pasted into apps that accept
+     * images from the clipboard. Used as a fallback when the target editor does not support the
+     * Commit Content API. Returns false if the item could not be built.
+     */
+    fun copyMediaToClipboard(uri: Uri, mimeType: String): Boolean {
+        return try {
+            val clip = ClipData(
+                ClipDescription("media file", arrayOf(mimeType)),
+                ClipData.Item(uri),
+            )
+            val item = ClipboardItem.fromClipData(appContext, clip, cloneUri = true)
+            addNewClip(item)
+            true
+        } catch (e: Exception) {
+            flogError { "Failed to copy media to clipboard: ${e.message}" }
+            false
+        }
     }
 
     /**

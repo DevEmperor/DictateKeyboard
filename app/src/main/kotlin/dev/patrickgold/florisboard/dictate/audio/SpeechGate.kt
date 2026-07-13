@@ -132,12 +132,16 @@ object SpeechGate {
         )
     }.getOrNull()
 
+    /** The fixed Silero window size (samples), reused by the live splitter (issue #170). */
+    internal const val VAD_WINDOW = WINDOW
+
     /**
      * Extracts the bundled Silero VAD model to a stable file path (sherpa-onnx needs a filesystem path,
      * not an asset stream) and returns it, or null if extraction fails. Copied once; re-copied only if the
-     * on-disk size doesn't match the expected model.
+     * on-disk size doesn't match the expected model. Internal so the live splitter ([LiveSpeechSplitter])
+     * can reuse the same bundled model.
      */
-    private fun ensureVadModel(appContext: Context): File? {
+    internal fun ensureVadModel(appContext: Context): File? {
         val dest = File(File(appContext.filesDir, "vad").apply { mkdirs() }, "silero_vad.onnx")
         if (dest.isFile && dest.length() == VAD_MODEL_BYTES) return dest
         return runCatching {

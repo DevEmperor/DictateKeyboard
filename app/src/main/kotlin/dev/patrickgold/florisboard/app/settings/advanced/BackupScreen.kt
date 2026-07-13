@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -83,6 +84,10 @@ object Backup {
     // Dictate-specific: the user's saved rewording prompts (the `prompts.db` table), exported as
     // JSON rather than the raw SQLite file so the archive stays WAL-/lock-/version-independent.
     const val DICTATE_PROMPTS_JSON_NAME = "dictate_prompts.json"
+    // Dictate transcription history (the `dictate_history` Room table), exported as JSON (same rationale);
+    // any retained audio WAVs go into DICTATE_HISTORY_AUDIO_DIR named by the entry id.
+    const val DICTATE_HISTORY_JSON_NAME = "dictate_history.json"
+    const val DICTATE_HISTORY_AUDIO_DIR = "dictate_history_audio"
 
     fun defaultFileName(metadata: Metadata): String {
         return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
@@ -96,6 +101,7 @@ object Backup {
     class FilesSelector {
         var jetprefDatastore by mutableStateOf(true)
         var dictatePrompts by mutableStateOf(true)
+        var dictateHistory by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
         var clipboardTextItems by mutableStateOf(false)
@@ -125,7 +131,7 @@ object Backup {
         }
 
         fun atLeastOneSelected(): Boolean {
-            return jetprefDatastore || dictatePrompts || imeKeyboard || imeTheme || clipboardTextItems || clipboardImageItems || clipboardVideoItems
+            return jetprefDatastore || dictatePrompts || dictateHistory || imeKeyboard || imeTheme || clipboardTextItems || clipboardImageItems || clipboardVideoItems
         }
     }
 
@@ -195,6 +201,23 @@ fun BackupScreen() = FlorisScreen {
             workspace.inputDir.subDir("dictate").let { dir ->
                 dir.mkdirs()
                 dir.subFile(Backup.DICTATE_PROMPTS_JSON_NAME).writeJson(prompts)
+            }
+        }
+        if (backupFilesSelector.dictateHistory) {
+            // Export the transcription-history table as JSON, plus any retained audio WAVs (named by id).
+            val entries = DictateHistoryStore.exportAll(context)
+            workspace.inputDir.subDir("dictate").let { dir ->
+                dir.mkdirs()
+                dir.subFile(Backup.DICTATE_HISTORY_JSON_NAME).writeJson(entries)
+                val audioDir = dir.subDir(Backup.DICTATE_HISTORY_AUDIO_DIR)
+                var audioDirMade = false
+                for (entry in entries) {
+                    val src = entry.audioPath?.let { java.io.File(it) } ?: continue
+                    if (src.exists() && src.length() > 0L) {
+                        if (!audioDirMade) { audioDir.mkdirs(); audioDirMade = true }
+                        src.copyTo(audioDir.subFile("${entry.id}.wav"), overwrite = true)
+                    }
+                }
             }
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
@@ -352,6 +375,11 @@ internal fun BackupFilesSelector(
             onClick = { filesSelector.dictatePrompts = !filesSelector.dictatePrompts },
             checked = filesSelector.dictatePrompts,
             text = stringRes(R.string.backup_and_restore__back_up__files_dictate_prompts),
+        )
+        CheckboxListItem(
+            onClick = { filesSelector.dictateHistory = !filesSelector.dictateHistory },
+            checked = filesSelector.dictateHistory,
+            text = stringRes(R.string.dictate__history_title),
         )
         CheckboxListItem(
             onClick = { filesSelector.imeKeyboard = !filesSelector.imeKeyboard },

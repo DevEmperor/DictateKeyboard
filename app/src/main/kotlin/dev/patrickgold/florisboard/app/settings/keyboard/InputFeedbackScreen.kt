@@ -17,8 +17,10 @@
 package dev.patrickgold.florisboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
@@ -47,12 +49,14 @@ fun InputFeedbackScreen() = FlorisScreen {
             ListPreference(
                 listPref = prefs.inputFeedback.audioActivationMode,
                 switchPref = prefs.inputFeedback.audioEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_enabled__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_enabled__label),
                 summarySwitchDisabled = stringRes(R.string.pref__input_feedback__audio_enabled__summary_disabled),
                 entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "audio"),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.audioVolume,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_volume__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_volume__label),
                 valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
                 min = 1,
@@ -62,30 +66,35 @@ fun InputFeedbackScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.inputFeedback.audioFeatKeyPress,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_feat_key_press__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_feat_key_press__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_press__summary),
                 enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.audioFeatKeyLongPress,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_feat_key_long_press__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_feat_key_long_press__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_long_press__summary),
                 enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.audioFeatKeyRepeatedAction,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_feat_key_repeated_action__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_feat_key_repeated_action__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_repeated_action__summary),
                 enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.audioFeatGestureSwipe,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_feat_gesture_swipe__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_feat_gesture_swipe__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_gesture_swipe__summary),
                 enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.audioFeatGestureMovingSwipe,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__audio_feat_gesture_moving_swipe__label"),
                 title = stringRes(R.string.pref__input_feedback__audio_feat_gesture_moving_swipe__label),
                 summary = stringRes(R.string.pref__input_feedback__audio_feat_gesture_moving_swipe__label),
                 enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
@@ -96,18 +105,21 @@ fun InputFeedbackScreen() = FlorisScreen {
             ListPreference(
                 listPref = prefs.inputFeedback.hapticActivationMode,
                 switchPref = prefs.inputFeedback.hapticEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_enabled__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_enabled__label),
                 summarySwitchDisabled = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
                 entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "haptic")
             )
             ListPreference(
                 prefs.inputFeedback.hapticVibrationMode,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_vibration_mode__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_mode__label),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
                 entries = enumDisplayEntriesOf(HapticVibrationMode::class),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationDuration,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_vibration_duration__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_duration__label),
                 valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
                 summary = {
@@ -132,6 +144,7 @@ fun InputFeedbackScreen() = FlorisScreen {
             )
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationStrength,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_vibration_strength__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
                 valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
                 summary = { strength ->
@@ -159,30 +172,35 @@ fun InputFeedbackScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatKeyPress,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_feat_key_press__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_feat_key_press__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_press__summary),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatKeyLongPress,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_feat_key_long_press__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_feat_key_long_press__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_long_press__summary),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatKeyRepeatedAction,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_feat_key_repeated_action__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_feat_key_repeated_action__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_key_repeated_action__summary),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatGestureSwipe,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_feat_gesture_swipe__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_feat_gesture_swipe__label),
                 summary = stringRes(R.string.pref__input_feedback__any_feat_gesture_swipe__summary),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatGestureMovingSwipe,
+                modifier = Modifier.settingsSearchAnchor("pref__input_feedback__haptic_feat_gesture_moving_swipe__label"),
                 title = stringRes(R.string.pref__input_feedback__haptic_feat_gesture_moving_swipe__label),
                 summary = stringRes(R.string.pref__input_feedback__audio_feat_gesture_moving_swipe__label),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },

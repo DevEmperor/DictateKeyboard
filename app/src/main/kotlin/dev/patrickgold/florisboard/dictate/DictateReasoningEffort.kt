@@ -26,5 +26,10 @@ enum class DictateReasoningEffort(val wire: String?) {
     MINIMAL("minimal"),
     LOW("low"),
     MEDIUM("medium"),
-    HIGH("high");
+    HIGH("high"),
+
+    // A user-entered value (issue #186), so providers with non-standard values (e.g. Ollama's "max"
+    // /"none", or a value some models reject) can still be used. The actual wire string is stored
+    // separately in the `rewordingReasoningEffortCustom` preference, not in [wire].
+    CUSTOM(null);
 }

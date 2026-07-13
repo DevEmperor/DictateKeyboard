@@ -26,9 +26,11 @@ import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
@@ -71,11 +73,13 @@ fun ThemeScreen() = FlorisScreen {
         ListPreference(
             prefs.theme.mode,
             icon = Icons.Default.BrightnessAuto,
+            modifier = Modifier.settingsSearchAnchor("pref__theme__mode__label"),
             title = stringRes(R.string.pref__theme__mode__label),
             entries = enumDisplayEntriesOf(ThemeMode::class),
         )
         Preference(
             icon = Icons.Default.LightMode,
+            modifier = Modifier.settingsSearchAnchor("pref__theme__day"),
             title = stringRes(R.string.pref__theme__day),
             summary = themeManager.getThemeLabel(dayThemeId),
             enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
@@ -85,6 +89,7 @@ fun ThemeScreen() = FlorisScreen {
         )
         Preference(
             icon = Icons.Default.DarkMode,
+            modifier = Modifier.settingsSearchAnchor("pref__theme__night"),
             title = stringRes(R.string.pref__theme__night),
             summary = themeManager.getThemeLabel(nightThemeId),
             enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
@@ -106,6 +111,7 @@ fun ThemeScreen() = FlorisScreen {
         )
         ColorPickerPreference(
             pref = prefs.theme.accentColor,
+            modifier = Modifier.settingsSearchAnchor("pref__theme__theme_accent_color__label"),
             title = stringRes(R.string.pref__theme__theme_accent_color__label),
             defaultValueLabel = stringRes(R.string.action__default),
             icon = Icons.Default.ColorLens,

@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.dictate.gif.GifSearchPanel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSearchPanel
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsStyleCache
@@ -54,6 +55,7 @@ fun TextInputLayout(
     val state by keyboardManager.activeState.collectAsState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
     val emojiSearchActive by keyboardManager.emojiSearchQuery.collectAsState()
+    val gifSearchActive by keyboardManager.gifSearchQuery.collectAsState()
 
     InlineSuggestionsStyleCache()
 
@@ -71,6 +73,15 @@ fun TextInputLayout(
                     .height(FlorisImeSizing.smartbarHeight),
             ) {
                 EmojiSearchPanel()
+            }
+        } else if (gifSearchActive != null) {
+            // GIF search: a results strip takes the Smartbar's slot; the keyboard below types the query.
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FlorisImeSizing.smartbarHeight),
+            ) {
+                GifSearchPanel()
             }
         } else {
             Smartbar()

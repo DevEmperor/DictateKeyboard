@@ -48,6 +48,8 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
+import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -83,7 +85,10 @@ import org.florisboard.lib.kotlin.io.subFile
 
 object Restore {
     const val MIN_VERSION_CODE = 64
-    const val PACKAGE_NAME = "dev.patrickgold.florisboard"
+    // Dictate's own application id (base, without the .debug/.beta variant suffixes) — a backup whose
+    // metadata package starts with this is a genuine Dictate backup, not a "third-party" one. Was still
+    // the upstream FlorisBoard id after the fork, which made every Dictate backup falsely warn.
+    const val PACKAGE_NAME = "net.devemperor.dictate"
     const val BACKUP_ARCHIVE_FILE_NAME = "backup.zip"
 }
 
@@ -170,6 +175,19 @@ fun RestoreScreen() = FlorisScreen {
                     // Merge mode: append the backed-up prompts after the existing ones.
                     db.addAll(prompts)
                 }
+            }
+        }
+        if (restoreFilesSelector.dictateHistory) {
+            // Older backups (before the history feature) simply have no such file → skipped, staying
+            // compatible. Erase replaces the store, Merge appends.
+            val dictateDir = workspace.outputDir.subDir("dictate")
+            val historyFile = dictateDir.subFile(Backup.DICTATE_HISTORY_JSON_NAME)
+            if (historyFile.exists()) {
+                val entries = historyFile.readJson<List<DictateHistoryEntry>>()
+                val audioDir = dictateDir.subDir(Backup.DICTATE_HISTORY_AUDIO_DIR)
+                DictateHistoryStore.importEntries(
+                    context, entries, audioDir.takeIf { it.exists() }, replace = shouldReset,
+                )
             }
         }
         val workspaceFilesDir = workspace.outputDir.subDir("files")

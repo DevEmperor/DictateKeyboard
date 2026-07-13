@@ -12,18 +12,28 @@ package dev.patrickgold.florisboard.app.settings.dictate
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -31,6 +41,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.florisScrollbar
@@ -55,6 +66,12 @@ fun DictateLanguagesScreen() = FlorisScreen {
         val selectedCodes = remember(selectionRaw) {
             DictateLanguages.parseSelection(selectionRaw).map { it.code }.toSet()
         }
+        // The currently active language (what the recording bar's globe cycles and what is sent to the
+        // model). Selectable here too, so floating-button-only users can change it without the keyboard
+        // (issue #174 follow-up).
+        val activeCode by prefs.dictate.activeInputLanguage.collectAsState()
+        val enabledLanguages = remember(selectedCodes) { DictateLanguages.all.filter { it.code in selectedCodes } }
+        var showActivePicker by remember { mutableStateOf(false) }
         val state = rememberLazyListState()
 
         fun toggle(code: String, checked: Boolean) {
@@ -74,12 +91,24 @@ fun DictateLanguagesScreen() = FlorisScreen {
             }
         }
 
+        val detectLabel = stringRes(R.string.dictate__language_detect)
+        fun languageLabel(code: String): String =
+            if (code == DictateLanguages.DETECT) detectLabel else DictateLanguages.of(code).displayName()
+
         Column(modifier = Modifier.fillMaxSize()) {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 text = stringRes(R.string.dictate__languages_summary),
                 color = LocalContentColor.current.copy(alpha = 0.7f),
             )
+            // Directly pick the active language (mirrors the recording-bar globe).
+            JetPrefListItem(
+                modifier = Modifier.clickable { showActivePicker = true },
+                icon = { Icon(Icons.Default.Language, contentDescription = null) },
+                text = stringRes(R.string.dictate__languages_active_title),
+                secondaryText = languageLabel(activeCode),
+            )
+            HorizontalDivider()
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
@@ -104,6 +133,38 @@ fun DictateLanguagesScreen() = FlorisScreen {
                             )
                         },
                     )
+                }
+            }
+        }
+
+        if (showActivePicker) {
+            JetPrefAlertDialog(
+                title = stringRes(R.string.dictate__languages_active_title),
+                dismissLabel = stringRes(android.R.string.cancel),
+                onDismiss = { showActivePicker = false },
+            ) {
+                Column {
+                    enabledLanguages.forEach { lang ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    scope.launch { prefs.dictate.activeInputLanguage.set(lang.code) }
+                                    showActivePicker = false
+                                }
+                                .padding(vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            RadioButton(
+                                selected = lang.code == activeCode,
+                                onClick = {
+                                    scope.launch { prefs.dictate.activeInputLanguage.set(lang.code) }
+                                    showActivePicker = false
+                                },
+                            )
+                            Text(text = languageLabel(lang.code), modifier = Modifier.padding(start = 8.dp))
+                        }
+                    }
                 }
             }
         }

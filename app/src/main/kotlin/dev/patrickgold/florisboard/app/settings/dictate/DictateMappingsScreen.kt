@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -73,6 +74,7 @@ fun DictateMappingsScreen() = FlorisScreen {
             if (mappings.items.isEmpty()) {
                 Preference(
                     icon = Icons.Default.SwapHoriz,
+                    modifier = Modifier.settingsSearchAnchor("dictate__mappings_empty_title"),
                     title = stringRes(R.string.dictate__mappings_empty_title),
                     summary = stringRes(R.string.dictate__mappings_empty_summary),
                     onClick = { editingIndex = -1 },
@@ -97,6 +99,7 @@ fun DictateMappingsScreen() = FlorisScreen {
 
             Preference(
                 icon = Icons.Default.Add,
+                modifier = Modifier.settingsSearchAnchor("dictate__mappings_add"),
                 title = stringRes(R.string.dictate__mappings_add),
                 onClick = { editingIndex = -1 },
             )

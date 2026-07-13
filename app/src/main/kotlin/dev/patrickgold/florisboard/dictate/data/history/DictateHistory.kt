@@ -23,6 +23,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.Serializable
 import java.io.File
 
 private const val DICTATE_HISTORY_TABLE = "dictate_history"
@@ -41,6 +42,7 @@ object DictateHistorySource {
  * private history dir when audio retention is on; it is nullable because retention is opt-in and some
  * paths (e.g. realtime after a clean finish, or a text-only re-insert) leave no audio to keep.
  */
+@Serializable
 @Entity(tableName = DICTATE_HISTORY_TABLE)
 data class DictateHistoryEntry(
     @PrimaryKey(autoGenerate = true)
@@ -225,6 +227,36 @@ object DictateHistoryStore {
     suspend fun clearAll(context: Context) {
         db(context).dao().deleteAll()
         runCatching { audioDir(context).deleteRecursively() }
+    }
+
+    /** All entries (newest first) — for a backup export. */
+    suspend fun exportAll(context: Context): List<DictateHistoryEntry> = db(context).dao().getAllNewestFirst()
+
+    /**
+     * Restores backed-up [entries] (backup/restore). Each is re-inserted with a fresh id; when
+     * [backupAudioDir] contains a WAV named by the entry's ORIGINAL id (as written by the backup), it is
+     * copied into the history audio dir and linked, otherwise the entry restores text-only. [replace]
+     * clears the store first (the Erase restore strategy); otherwise entries are appended (Merge).
+     */
+    suspend fun importEntries(
+        context: Context,
+        entries: List<DictateHistoryEntry>,
+        backupAudioDir: File?,
+        replace: Boolean,
+    ) {
+        val dao = db(context).dao()
+        if (replace) clearAll(context)
+        val destDir = audioDir(context)
+        for (entry in entries) {
+            if (entry.text.isBlank()) continue
+            val newId = dao.insert(entry.copy(id = 0, audioPath = null, audioBytes = 0L))
+            val srcWav = backupAudioDir?.let { File(it, "${entry.id}.wav") }
+            if (srcWav != null && srcWav.exists() && srcWav.length() > 0L) {
+                val dest = File(destDir.apply { mkdirs() }, "$newId.wav")
+                runCatching { srcWav.copyTo(dest, overwrite = true) }
+                    .onSuccess { dao.setAudio(newId, dest.absolutePath, dest.length()) }
+            }
+        }
     }
 
     /** Total bytes currently used by retained audio (for the settings-screen disk-usage readout). */

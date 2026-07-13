@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.app.settings.dictate
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -44,6 +45,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
@@ -237,3 +239,77 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
         }
     }
 }
+
+/**
+ * A radio-button picker dialog for [DictateReasoningEffort] with an inline text field for the CUSTOM
+ * value (issue #186). Shared by the global rewording setting and the per-prompt override. When
+ * [includeUseGlobal] is set, a leading "use the global setting" option (value null) is offered.
+ */
+@Composable
+internal fun ReasoningEffortDialog(
+    initialEffort: DictateReasoningEffort?,
+    initialCustom: String,
+    includeUseGlobal: Boolean,
+    onConfirm: (effort: DictateReasoningEffort?, custom: String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var selected by remember { mutableStateOf(initialEffort) }
+    var custom by remember { mutableStateOf(initialCustom) }
+    val options = buildList {
+        if (includeUseGlobal) add(null)
+        add(DictateReasoningEffort.OFF)
+        add(DictateReasoningEffort.MINIMAL)
+        add(DictateReasoningEffort.LOW)
+        add(DictateReasoningEffort.MEDIUM)
+        add(DictateReasoningEffort.HIGH)
+        add(DictateReasoningEffort.CUSTOM)
+    }
+    JetPrefAlertDialog(
+        title = stringRes(R.string.dictate__reasoning_effort_title),
+        confirmLabel = stringRes(R.string.action__apply),
+        dismissLabel = stringRes(R.string.action__cancel),
+        onConfirm = { onConfirm(selected, custom.trim()) },
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            options.forEach { option ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { selected = option }
+                        .padding(vertical = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(selected = selected == option, onClick = { selected = option })
+                    Column(modifier = Modifier.weight(1f).padding(start = 4.dp)) {
+                        Text(reasoningEffortDialogLabel(option))
+                        if (option == DictateReasoningEffort.CUSTOM && selected == DictateReasoningEffort.CUSTOM) {
+                            OutlinedTextField(
+                                value = custom,
+                                onValueChange = { custom = it },
+                                singleLine = true,
+                                placeholder = { Text("minimal") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 4.dp, bottom = 4.dp),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun reasoningEffortDialogLabel(effort: DictateReasoningEffort?): String = stringRes(
+    when (effort) {
+        null -> R.string.dictate__prompt_reasoning_default
+        DictateReasoningEffort.OFF -> R.string.dictate__reasoning_effort_off
+        DictateReasoningEffort.MINIMAL -> R.string.dictate__reasoning_effort_minimal
+        DictateReasoningEffort.LOW -> R.string.dictate__reasoning_effort_low
+        DictateReasoningEffort.MEDIUM -> R.string.dictate__reasoning_effort_medium
+        DictateReasoningEffort.HIGH -> R.string.dictate__reasoning_effort_high
+        DictateReasoningEffort.CUSTOM -> R.string.dictate__reasoning_effort_custom
+    },
+)

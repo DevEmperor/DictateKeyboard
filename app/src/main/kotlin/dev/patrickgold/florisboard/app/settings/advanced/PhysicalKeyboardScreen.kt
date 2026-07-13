@@ -25,8 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -48,6 +50,7 @@ fun PhysicalKeyboardScreen() = FlorisScreen {
     content {
         if (physicalKeyboardAttached) {
             Preference(
+                modifier = Modifier.settingsSearchAnchor("physical_keyboard__system_settings__title"),
                 title = stringRes(R.string.physical_keyboard__system_settings__title),
                 summary = stringRes(R.string.physical_keyboard__system_settings__summary),
                 onClick = {
@@ -62,6 +65,7 @@ fun PhysicalKeyboardScreen() = FlorisScreen {
         }
         SwitchPreference(
             pref = prefs.physicalKeyboard.showOnScreenKeyboard,
+            modifier = Modifier.settingsSearchAnchor("physical_keyboard__show_on_screen_keyboard__title"),
             title = stringRes(R.string.physical_keyboard__show_on_screen_keyboard__title),
             summary = stringRes(R.string.physical_keyboard__show_on_screen_keyboard__summary),
         )

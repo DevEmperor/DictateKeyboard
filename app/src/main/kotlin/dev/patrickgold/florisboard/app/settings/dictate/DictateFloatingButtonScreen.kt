@@ -41,12 +41,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.overlay.DictateAccessibilityService
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -107,6 +109,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.floatingButtonEnabled,
             icon = Icons.Default.Adjust,
+            modifier = Modifier.settingsSearchAnchor("dictate__floating_button_enable_title"),
             title = stringRes(R.string.dictate__floating_button_enable_title),
             summary = stringRes(R.string.dictate__floating_button_enable_summary),
         )
@@ -117,6 +120,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             PreferenceGroup(title = stringRes(R.string.dictate__floating_button_permission_group)) {
                 Preference(
                     icon = Icons.Default.Accessibility,
+                    modifier = Modifier.settingsSearchAnchor("dictate__floating_button_service_title"),
                     title = stringRes(R.string.dictate__floating_button_service_title),
                     summary = if (serviceEnabled) {
                         stringRes(R.string.dictate__floating_button_service_enabled)
@@ -137,6 +141,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
                 if (!micGranted) {
                     Preference(
                         icon = Icons.Default.Mic,
+                        modifier = Modifier.settingsSearchAnchor("dictate__floating_button_mic_title"),
                         title = stringRes(R.string.dictate__floating_button_mic_title),
                         summary = stringRes(R.string.dictate__floating_button_mic_summary),
                         onClick = { requestMic.launch(Manifest.permission.RECORD_AUDIO) },
@@ -149,6 +154,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonShowWithDictateKeyboard,
                 icon = Icons.Default.Keyboard,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_show_with_keyboard_title"),
                 title = stringRes(R.string.dictate__floating_button_show_with_keyboard_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_show_with_keyboard_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_show_with_keyboard_summary_off),
@@ -157,6 +163,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             ListPreference(
                 prefs.dictate.floatingButtonDesign,
                 icon = Icons.Default.Brush,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_design_title"),
                 title = stringRes(R.string.dictate__floating_button_design_title),
                 entries = listPrefEntries {
                     entry(
@@ -180,6 +187,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             ListPreference(
                 prefs.dictate.floatingButtonSize,
                 icon = Icons.Default.PhotoSizeSelectSmall,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_size_title"),
                 title = stringRes(R.string.dictate__floating_button_size_title),
                 entries = listPrefEntries {
                     entry(
@@ -200,6 +208,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonSnapToEdge,
                 icon = Icons.Default.PushPin,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_snap_title"),
                 title = stringRes(R.string.dictate__floating_button_snap_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_snap_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_snap_summary_off),
@@ -208,6 +217,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             ColorPickerPreference(
                 prefs.dictate.floatingButtonColor,
                 icon = Icons.Default.ColorLens,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_color_title"),
                 title = stringRes(R.string.dictate__floating_button_color_title),
                 defaultValueLabel = stringRes(R.string.action__default),
                 showAlphaSlider = false,
@@ -219,6 +229,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonAutoDim,
                 icon = Icons.Default.BlurOn,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_auto_dim_title"),
                 title = stringRes(R.string.dictate__floating_button_auto_dim_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_auto_dim_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_auto_dim_summary_off),
@@ -227,6 +238,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonRememberPosition,
                 icon = Icons.Default.PinDrop,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_remember_position_title"),
                 title = stringRes(R.string.dictate__floating_button_remember_position_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_remember_position_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_remember_position_summary_off),
@@ -235,6 +247,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonHaptic,
                 icon = Icons.Default.Vibration,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_haptic_title"),
                 title = stringRes(R.string.dictate__floating_button_haptic_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_haptic_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_haptic_summary_off),
@@ -243,6 +256,7 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.floatingButtonUndoEnabled,
                 icon = Icons.AutoMirrored.Filled.Undo,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_undo_title"),
                 title = stringRes(R.string.dictate__floating_button_undo_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_undo_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_undo_summary_off),

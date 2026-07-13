@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Posunout klávesnici doleva.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Posunout klávesnici doprava.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emotikony</string>
+    <string name="settings__media__title">Emotikony a GIFs</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikony</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -118,13 +118,19 @@
     <string name="settings__home__title" comment="Title of the Home screen">Vítejte ve {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">{app_name} není povolena v systému a proto nemůže být použita jako metoda zadávání. Klikněte sem pro vyřešení tohoto problému.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">{app_name} není vybrán jako výchozí vstupní metoda. Kliknutím sem tento problém vyřešíte.</string>
+    <string name="settings__search__title" comment="Title of the settings search screen">Hledat v nastavení</string>
+    <string name="settings__search__placeholder" comment="Placeholder in the settings search field">Hledat v nastavení…</string>
+    <string name="settings__search__recent" comment="Header above recently used search terms">Nedávná hledání</string>
+    <string name="settings__search__clear_recent" comment="Button to clear the recent searches">Vymazat nedávná hledání</string>
+    <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Oblíbené</string>
+    <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Nebyla nalezena žádná nastavení</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zobrazovat názvy jazyků v</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Zobrazit popisky kláves v jazyce podtypu</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Přidat podtyp</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Spravovat nainstalované jazykové balíčky</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentální: správa rozšíření, která přidávají podporu určitých jazyků (prozatím čínštinu založenou na tvarech)</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentální: rozšíření přidávající konkrétní jazyky (zatím čínština podle tvarů).</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upravit podtyp</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Hlavní jazyk</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapování vyskakovacích nabídek</string>
@@ -152,6 +158,9 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Minimálně jedno pole nemá vybranou hodnotu. Vyberte ji prosím.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nenainstalováno)</string>
+    <string name="settings__localization__subtype_missing_language_pack_title">Vyžadován slovník</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Tento jazyk vyžaduje stažitelný slovník pro návrhy slov a převod (např. Rómadži → Kana). Dokud není nainstalován, psaní funguje, ale převod nic nedělá.</string>
+    <string name="settings__localization__subtype_missing_language_pack_action">Stáhnout slovník</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rozložení</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Potvrzení odstranění</string>
     <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Opravdu chcete odstranit tento podtyp?</string>
@@ -161,8 +170,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Dynamická barva (motivy Material You)
-    </string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Barva akcentu (Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace {app_name}</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
@@ -423,8 +431,8 @@
     <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Přízvuky zahrnují vyskakovací symboly</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Přidá vyskakovací symboly k výchozím přízvukům rozložení</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne na znaky</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automaticky se vrátí z nabídky čísel/symbolů ke klasické klávesnici</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník se vrátí k písmenům</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">V rozložení symbolů/čísel se mezerník vrátí ke klávesnici s písmeny.</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indikátor anonymního režimu</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
@@ -507,7 +515,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">Stisknutí klávesy pro odstranění ihned po přejetí smaže celé slovo</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesta na mezerníku</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">Další gesta / Trvání gest</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Další gesta</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Přejetí nahoru</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Přejetí dolů</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejetí doleva</string>
@@ -576,7 +584,7 @@
     <string name="setup__finish_up__finish_btn">Začít přizpůsobovat</string>
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Fyzická klávesnice</string>
-    <string name="physical_keyboard__system_settings__title">Systémová nastavení fyzické klávesnice</string>
+    <string name="physical_keyboard__system_settings__title">Nastavení fyzické klávesnice</string>
     <string name="physical_keyboard__system_settings__summary">Rozložení, klávesové zkratky a modifikátory</string>
     <string name="physical_keyboard__system_settings__summary_not_attached">Dostupné pouze při připojené klávesnici</string>
     <string name="physical_keyboard__show_on_screen_keyboard__title">Zobrazit klávesnici na obrazovce</string>
@@ -675,7 +683,7 @@
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
     <string name="pref__clipboard__history_hide_on_paste__label">Skrýt historii při vložení</string>
     <string name="pref__clipboard__history_hide_on_next_text_field__label">Skrýt historii u dalšího textového pole</string>
-    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Vymazání primární položky ovlivní historii</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Vymazání ovlivní historii</string>
     <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Vymazání primární položky ji také odstraní z historie, pokud není připnutá</string>
     <string name="send_to_clipboard__unknown_error">Došlo k neznámé chybě. Zkuste to prosím znovu!</string>
     <string name="send_to_clipboard__type_not_supported_error">Tento typ médií není podporován.</string>
@@ -1074,7 +1082,7 @@
     <string name="quick_action__dictate_prompts">Prompty AI</string>
     <string name="quick_action__dictate_prompts__tooltip">Otevřít prompty přeformulování AI</string>
     <string name="about__based_on_floris__title">Založeno na FlorisBoard</string>
-    <string name="about__based_on_floris__summary">Fork FlorisBoard od Patricka Goldingera a přispěvatelů, licencováno pod Apache 2.0. Klepnutím otevřete původní projekt.</string>
+    <string name="about__based_on_floris__summary">Fork FlorisBoard od Patricka Goldingera a přispěvatelů, Apache 2.0. Klepnutím jej otevřete.</string>
     <string name="about__made_by">Vytvořeno s ❤️ od DevEmperor\nSoli deo gloria ✝️</string>
     <string name="about__feedback__title">Zpětná vazba a podpora</string>
     <string name="about__feedback__summary">Pošlete e-mail s dotazy, chybami nebo nápady</string>
@@ -1155,7 +1163,7 @@
     <string name="dictate__floating_button_snap_title">Přichytit k okraji</string>
     <string name="dictate__interrupted_recording">Přerušeno ({time})</string>
     <string name="dictate__providers_summary_both">Přepis: {transcription} · Přeformulování: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Uchová vaše poslední úspěšné diktování, abyste ho mohli znovu vložit tlačítkem „Vložit znovu“ na Smartbaru — záchranná síť, pokud se textové pole vymaže otočením obrazovky nebo přepnutím aplikace. Tlačítko přidejte přes editor Smartbaru. Uloženo pouze v tomto zařízení do dalšího diktování.</string>
+    <string name="dictate__remember_last_dictation_summary">Uchová vaše poslední diktování, abyste ho mohli znovu vložit tlačítkem „Vložit znovu“ na Smartbaru.</string>
     <string name="dictate__remember_last_dictation_title">Zapamatovat poslední diktování</string>
     <string name="changelog__v4_2_0">• NOVÉ: plovoucí tlačítko diktování — diktujte přímo v jakékoli aplikaci, i když je aktivní jiná klávesnice. Vyberte si ze tří stylů (Pilulka, Prstenec, Koule), sledujte živý průběh zvuku, když mluvíte, přetáhněte ho kamkoli s přichytáváním k okrajům, nastavte barvu a velikost a podržením přeformulujte. Zapněte ho v Nastavení ▸ Dictate ▸ Plovoucí tlačítko.\n• NOVÉ: Google Gemini — použijte vlastní klíč API z AI Studia pro přepis i přeformulování.\n• Výzvy se nyní ve výchozím nastavení zobrazují ve stálém řádku nad klávesami.\n• Spolehlivější vkládání textu napříč aplikacemi, včetně prohlížečů a jiných klávesnic.</string>
     <string name="dictate__promo_floating_button_message">Nové: diktujte kdekoli</string>
@@ -1203,6 +1211,7 @@
     <string name="dictate__status_retrying">Opakování… ({attempt})</string>
     <string name="dictate__action_cancel">Zrušit nahrávání</string>
     <string name="dictate__action_pause">Pozastavit nahrávání</string>
+    <string name="dictate__action_next_segment">Další segment</string>
     <string name="dictate__action_resume">Pokračovat v nahrávání</string>
     <string name="dictate__action_resend">Zkusit znovu</string>
     <string name="dictate__action_dismiss">Zavřít</string>
@@ -1283,6 +1292,16 @@
     <string name="dictate__skip_silent_summary">Zabraňte vymyšlenému textu a zbytečným voláním API u tichého záznamu</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
     <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__longform_title">Dlouhé diktování</string>
+    <string name="dictate__longform_summary">Přepisuje na pozadí, zatímco mluvíte dál — klepnutím na Další odešlete každou část.</string>
+    <string name="dictate__longform_autosplit_title">Automatické dělení v pauzách</string>
+    <string name="dictate__longform_autosplit_summary">Segment se automaticky oddělí i po dostatečně dlouhé pauze, nejen tlačítkem „Další segment“.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Délka pauzy</string>
+    <string name="dictate__longform_autosplit_value">{seconds} s</string>
+    <string name="dictate__longform_mode_off">Vypnuto</string>
+    <string name="dictate__longform_mode_off_summary">Přepsat jednou na konci (výchozí).</string>
+    <string name="dictate__longform_mode_manual">Další segment</string>
+    <string name="dictate__longform_mode_manual_summary">Během nahrávání odesílejte každou část tlačítkem „Další segment“.</string>
     <string name="dictate__providers_field_realtime_model">Model v reálném čase</string>
     <string name="dictate__providers_realtime_model_default">Výchozí</string>
     <string name="dictate__instant_recording_title">Okamžité nahrávání</string>
@@ -1303,10 +1322,13 @@
     <string name="dictate__formatting_menu_summary">Výzva pro styl, vlastní slova, náhrady</string>
     <string name="dictate__recording_menu_summary">V reálném čase, zdroj zvuku, okamžité nahrávání</string>
     <string name="dictate__output_menu_summary">Automatický Enter, rychlost psaní, opětovné odeslání</string>
+    <string name="dictate__layout_title">Rozvržení diktování</string>
+    <string name="dictate__layout_menu_summary">Klasické rozvržení a vzhled klávesnice</string>
     <string name="dictate__languages_group">Jazyky</string>
     <string name="dictate__languages_title">Jazyky přepisu</string>
     <string name="dictate__languages_summary">Vyberte jazyky, ve kterých diktujete. Rychle mezi nimi přepínejte na liště nahrávání.</string>
     <string name="dictate__language_detect">Zjistit automaticky</string>
+    <string name="dictate__languages_active_title">Aktivní jazyk</string>
     <string name="dictate__prompt_selection_none">Žádný</string>
     <string name="dictate__prompt_selection_predefined">Výchozí</string>
     <string name="dictate__prompt_selection_custom">Vlastní</string>
@@ -1430,6 +1452,10 @@
     <string name="dictate__local_model_action_cancel">Zrušit</string>
     <string name="dictate__local_model_downloading">Stahování… {percent}%</string>
     <string name="dictate__local_model_download_failed">Stažení se nezdařilo — zkuste to znovu</string>
+    <string name="dictate__local_model_download_background">Stahování na pozadí — aplikaci můžete opustit.</string>
+    <string name="dictate__local_model_notif_channel_name">Stahování modelů</string>
+    <string name="dictate__local_model_notif_title">Stahování {model}</string>
+    <string name="dictate__local_model_notif_title_multi">Stahování {count} modelů</string>
     <string name="dictate__local_model_none_selected">Zatím nestažen žádný model</string>
     <string name="dictate__local_model_delete_confirm">Smazat „{model}“? Později jej můžete stáhnout znovu.</string>
     <string name="dictate__local_model_not_installed_error">Není stažen žádný místní model</string>
@@ -1442,7 +1468,7 @@
     <string name="dictate__floating_button_undo_title">Tlačítko zpět</string>
     <string name="dictate__mappings_add">Přidat pravidlo</string>
     <string name="dictate__mappings_editor_title">Pravidlo</string>
-    <string name="dictate__mappings_empty_summary">Přidejte pravidlo pro automatické nahrazení slov nebo frází v každém přepisu — přesně a bez použití AI tokenů.</string>
+    <string name="dictate__mappings_empty_summary">Přidejte pravidlo pro automatické nahrazení slov nebo frází v každém přepisu — přesně, bez AI tokenů.</string>
     <string name="dictate__mappings_empty_title">Zatím žádná pravidla</string>
     <string name="dictate__mappings_entry_summary">Pravidla najít a nahradit použitá na přepis</string>
     <string name="dictate__mappings_field_from">Nahradit</string>
@@ -1476,7 +1502,7 @@
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Možnosti diktování ze spárovaných hodinek</string>
     <string name="dictate__wear_install_title">Nainstalovat Dictate do hodinek</string>
-    <string name="dictate__wear_install_summary">Otevře Play Store. Na spárovaných hodinkách (Wear OS 3 nebo novější) vyberte jako cíl instalace své hodinky.</string>
+    <string name="dictate__wear_install_summary">Otevře Play Store — na spárovaných hodinkách Wear OS 3+ vyberte jako cíl své hodinky.</string>
     <string name="dictate__wear_auto_rewording_title">Automaticky přeformulovat diktování z hodinek</string>
     <string name="dictate__wear_auto_rewording_summary">Přeformulujte diktování z hodinek, jako v telefonu.</string>
     <string name="quick_action__system_prev_input_method">Přepnout klávesnici</string>
@@ -1492,13 +1518,14 @@
     <string name="dictate__audio_source_unprocessed">Nezpracováno (surové)</string>
     <string name="dictate__audio_source_unprocessed_summary">Žádné zpracování; když to telefon nepodporuje, použije se Rozpoznávání řeči</string>
     <string name="dictate__security_group">Zabezpečení</string>
-    <string name="dictate__trust_user_certs_title">Důvěřovat certifikátům nainstalovaným uživatelem</string>
+    <string name="dictate__trust_user_certs_title">Důvěřovat uživatelským certifikátům</string>
     <string name="dictate__trust_user_certs_summary">Důvěřovat CA certifikátům, které jste sami nainstalovali – pro vlastní koncové body za soukromou CA.</string>
     <string name="dictate__stats_title">Statistiky</string>
     <string name="dictate__stats_menu_summary">Slova, ušetřený čas, série a další</string>
     <string name="dictate__history_title">Historie</string>
     <string name="dictate__history_menu_summary">Přehrávejte, znovu vkládejte a spravujte minulá diktování</string>
     <string name="dictate__history_empty">Zatím žádná diktování — vaše nedávná diktování se zobrazí zde.</string>
+    <string name="dictate__history_loading">Načítání…</string>
     <string name="dictate__history_enable_title">Uchovávat historii</string>
     <string name="dictate__history_enable_summary">Zaznamenávat diktování pro pozdější vložení nebo prohlížení.</string>
     <string name="dictate__history_audio_title">Uchovávat zvuk</string>
@@ -1560,6 +1587,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Vyvážené přemýšlení a rychlost</string>
     <string name="dictate__reasoning_effort_high">Vysoké</string>
     <string name="dictate__reasoning_effort_high_summary">Nejvíce přemýšlení, pomalejší</string>
+    <string name="dictate__reasoning_effort_custom">Vlastní</string>
     <string name="dictate__action_save_audio">Uložit zvuk</string>
     <string name="dictate__audio_saved">Zvuk uložen do Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Zvuk se nepodařilo uložit</string>
@@ -1573,6 +1601,8 @@
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Automatické opravy</string>
     <string name="pref__suggestion__auto_correct__summary">Automaticky opravit překlepy při stisku mezerníku</string>
+    <string name="pref__suggestion__multilingual_typing__label">Vícejazyčné psaní</string>
+    <string name="pref__suggestion__multilingual_typing__summary">Přijímat slova ze všech jazyků klávesnice</string>
     <string name="dictate__legacy_record">Nahrát</string>
     <string name="dictate__legacy_stop">Zastavit</string>
     <string name="dictate__legacy_switch_keyboard">Přepnout klávesnici</string>
@@ -1591,10 +1621,11 @@
     <string name="dictate__legacy_select_all">Vybrat vše</string>
     <string name="dictate__floating_button_retry_hint">%1$s — klepnutím zopakovat</string>
     <string name="dictate__haptic_feedback_title">Haptická odezva</string>
-    <string name="dictate__haptic_feedback_summary">Zavibruje při spuštění/zastavení nahrávání, když je přepis hotový a když se použije přeformulování</string>
+    <string name="dictate__haptic_feedback_summary">Zavibruje při spuštění/zastavení nahrávání, když je přepis hotový a při přeformulování.</string>
     <string name="dictate__audio_source_voice_communication">Hlasová komunikace</string>
-    <string name="dictate__audio_source_voice_communication_summary">Nejvyšší priorita — funguje i když mikrofon používá jiná aplikace (diktafon, fotoaparát), ale zpracování jako u hovoru může snížit přesnost</string>
-    <string name="about__whats_new__title">Novinky v 5.0</string>
+    <string name="dictate__audio_source_voice_communication_summary">Nejvyšší priorita mikrofonu — funguje, i když jej používá jiná aplikace, ale může snížit přesnost.</string>
+    <string name="about__whats_new__title">Novinky</string>
+    <string name="about__whats_new__versioned">Novinky v {version}</string>
     <string name="about__whats_new__summary">Projít prohlídku funkcí znovu</string>
     <string name="apptour__skip">Přeskočit</string>
     <string name="apptour__next">Další</string>
@@ -1639,5 +1670,84 @@
     <string name="apptour__outro_eyebrow">A více</string>
     <string name="apptour__outro_title">Vyladěno všude</string>
     <string name="apptour__outro_body">Další věci pod kapotou: stabilnější plovoucí tlačítko, ovládání míry uvažování při přeformulování, haptická odezva, nový motiv E-Reader a desítky oprav.</string>
+    <string name="apptour51__cta_try">Vyzkoušet</string>
+    <string name="apptour51__continue_to">Pokračovat na {version}</string>
+    <string name="apptour51__intro_eyebrow">Version 5.1</string>
+    <string name="apptour51__intro_title">Novinky v 5.1</string>
+    <string name="apptour51__intro_body">Dictate od verze 5.0 hodně vyrostl. Tady je to nejdůležitější z 5.1 — klepnutím na „Vyzkoušet“ na kterékoli stránce přejdete rovnou k dané funkci.</string>
+    <string name="apptour51__history_eyebrow">Přepis</string>
+    <string name="apptour51__history_title">Historie přepisů</string>
+    <string name="apptour51__history_body">Každé diktování se teď ukládá do prohledávatelné historie. Jedním klepnutím znovu vložíte kterýkoli dřívější přepis, přehrajete původní zvuk, znovu jej přepíšete nebo připnete ty, které používáte nejčastěji. Samostatná obrazovka umožňuje spravovat vše, včetně toho, jak dlouho se zvukové nahrávky uchovávají.</string>
+    <string name="apptour51__longform_eyebrow">Přepis</string>
+    <string name="apptour51__longform_title">Dlouhé diktování</string>
+    <string name="apptour51__longform_body">Mluvte, jak dlouho chcete. Dlouhé nahrávky se automaticky rozdělí na části a přepisují se na pozadí, zatímco pokračujete, takže text máte dřív a nikdy nenarazíte na omezení délky. Úsek si rozdělte sami, nebo nechte Dictate rozpoznat přirozené pauzy.</string>
+    <string name="apptour51__gif_eyebrow">Klávesnice</string>
+    <string name="apptour51__gif_title">Vyhledávání GIF</string>
+    <string name="apptour51__gif_body">Najděte a odešlete GIF, aniž byste kdy opustili Dictate. Otevřete panel GIF, vyhledejte cokoli a vložte to rovnou do konverzace — rychlý výběr ve stylu Gboardu vestavěný přímo tady.</string>
+    <string name="apptour51__classic_eyebrow">Klasické rozvržení</string>
+    <string name="apptour51__classic_title">Klasické rozvržení, přepracované</string>
+    <string name="apptour51__classic_body">Obrazovka diktování bez klávesnice dostala velké vylepšení: volně uspořádatelný řádek akcí, který sestavíte přetažením, ovládání dlouhého nahrávání, jeden nebo dva řádky s prompty, vždy dostupná klávesa Backspace, vyskakovací znaky na klávese Enter a volitelné druhé tlačítko „přepnout klávesnici“ pro snazší ovládání jednou rukou.</string>
+    <string name="apptour51__search_eyebrow">Nastavení</string>
+    <string name="apptour51__search_title">Prohledat nastavení</string>
+    <string name="apptour51__search_body">Nevíte, kde nějaká volba je? Prostě ji vyhledejte. Nové vyhledávání v nastavení najde jakékoli nastavení podle názvu, přejde přímo na něj a na chvíli řádek zvýrazní — konec hrabání se v nabídkách.</string>
+    <string name="apptour51__models_eyebrow">Modely a poskytovatelé</string>
+    <string name="apptour51__models_title">Německý offline model a Claude</string>
+    <string name="apptour51__models_body">Dvě novinky pro to, jak se nakládá s vaší řečí: model v zařízení specializovaný na němčinu (Parakeet German od primeline), který přepisuje zcela offline na vašem telefonu, a Claude od Anthropicu se přidává jako nový poskytovatel pro přeformulování a formátování vašich diktátů.</string>
+    <string name="apptour51__more_eyebrow">A více</string>
+    <string name="apptour51__more_title">Mnoho dalších vylepšení</string>
+    <string name="apptour51__more_body">Spousta menších vylepšení také: v nastavení zvolte aktivní jazyk přepisu, tlačítko zastavení teď skutečně zruší běžící požadavek, přepínač zobrazení/skrytí API klíčů a vícejazyčné psaní bez automatických oprav mezi jazyky — plus řada oprav v klasickém rozvržení, číselné klávesnici a dál.</string>
+    <string name="apptour51__outro_eyebrow">To je 5.1</string>
+    <string name="apptour51__outro_title">Užijte si aktualizaci</string>
+    <string name="apptour51__outro_body">Děkujeme, že používáte Dictate! Pokud vám pomáhá každý den, drobný příspěvek udrží projekt v chodu. Kteroukoli z těchto prohlídek si můžete kdykoli znovu projít v Nastavení › O aplikaci.</string>
     <string name="changelog__v5_0_0">• NOVÉ: Psaní tahem — přejíždějte po klávesách a pište celá slova, se slovníky pro jednotlivé jazyky staženými na vyžádání. 👆\n• NOVÉ: Návrhy slov a automatické opravy — překlepy se opravují automaticky a napsané slovo zůstává na jedno klepnutí. ✨\n• NOVÉ: Přepis v reálném čase — sledujte, jak se slova objevují, zatímco mluvíte, s OpenAI, Deepgram, Soniox, AssemblyAI a ElevenLabs. ⚡\n• NOVÉ: Tři další poskytovatelé přepisu — ElevenLabs Scribe, Deepgram a AssemblyAI. ☁️\n• NOVÉ: Klasické rozvržení diktování — hlasová obrazovka bez klávesnice z Dictate 3 je zpět, zafixovaná nebo na jedno přejetí. 🎙️\n• NOVÉ: Komunitní knihovna promptů — procházejte a sdílejte prompty pro přeformulování. 📚\n• NOVÉ: Statistiky diktování s milníky. 📊\n• NOVÉ: Offline model NVIDIA Parakeet a filtr ticha, který přeskočí prázdné nahrávky. 📴\n• Více: stabilnější plovoucí tlačítko, ovládání úsilí uvažování, haptická odezva, nový motiv E-Reader a desítky oprav. 🛠️</string>
+    <string name="media__tab__gifs">GIFs</string>
+    <string name="prefs__media__gif__title">GIFs</string>
+    <string name="prefs__media__gif_enabled">Povolit vyhledávání GIFs</string>
+    <string name="prefs__media__gif_enabled__summary">Vyhledávejte a vkládejte GIFs, využívá KLIPY</string>
+    <string name="prefs__media__gif_setup__title">Nastavení vyhledávání GIFs</string>
+    <string name="prefs__media__gif_setup__summary_set">Klíč KLIPY API uložen</string>
+    <string name="prefs__media__gif_setup__summary_unset">Klepnutím přidejte svůj bezplatný klíč KLIPY API</string>
+    <string name="prefs__media__gif_setup__intro">GIFs poskytuje KLIPY, bezplatná služba. Potřebujete jen vlastní bezplatný klíč — zabere to jen minutu:</string>
+    <string name="prefs__media__gif_setup__step1">Otevřete KLIPY Partner Panel — pokud účet nemáte, budete vyzváni k vytvoření bezplatného účtu.</string>
+    <string name="prefs__media__gif_setup__step2">Na stránce API Keys vytvořte API klíč.</string>
+    <string name="prefs__media__gif_setup__step3">Zkopírujte svůj klíč a vložte jej do pole níže.</string>
+    <string name="prefs__media__gif_setup__open_klipy">Otevřít KLIPY Partner Panel</string>
+    <string name="prefs__media__gif_setup__key_label">Klíč KLIPY API</string>
+    <string name="prefs__media__gif_setup__privacy_note">Hledané výrazy se odesílají do KLIPY jen po dobu, kdy je panel GIF otevřený — nikdy během diktování.</string>
+    <string name="gif__search_placeholder">Hledat v KLIPY</string>
+    <string name="gif__powered_by">Využívá KLIPY</string>
+    <string name="gif__no_results">Žádné GIFs nenalezeny</string>
+    <string name="gif__error">GIFs se nepodařilo načíst. Zkontrolujte připojení a API klíč.</string>
+    <string name="gif__setup_needed">Přidejte v Nastavení bezplatný klíč KLIPY API pro vyhledávání GIFs</string>
+    <string name="gif__setup_needed_action">Nastavit vyhledávání GIFs</string>
+    <string name="gif__copied_to_clipboard">GIF zkopírován do schránky — vložíte dlouhým stisknutím</string>
+    <string name="gif__insert_failed">GIF se nepodařilo vložit</string>
+    <string name="quick_action__ime_ui_mode_gif">GIF</string>
+    <string name="quick_action__ime_ui_mode_gif__tooltip">Hledat GIFs</string>
+    <string name="dictate__legacy_action_select_all">Vybrat vše</string>
+    <string name="dictate__legacy_action_undo">Vrátit zpět</string>
+    <string name="dictate__legacy_action_redo">Znovu</string>
+    <string name="dictate__legacy_action_cut">Vyjmout</string>
+    <string name="dictate__legacy_action_copy">Kopírovat</string>
+    <string name="dictate__legacy_action_paste">Vložit</string>
+    <string name="dictate__legacy_action_emoji">Emoji</string>
+    <string name="dictate__legacy_action_numbers">Čísla</string>
+    <string name="dictate__legacy_action_language">Jazyk</string>
+    <string name="dictate__legacy_action_history">Historie</string>
+    <string name="dictate__legacy_action_reinsert">Znovu vložit</string>
+    <string name="dictate__legacy_action_gif">GIF</string>
+    <string name="dictate__legacy_action_switch">Přepnout klávesnici</string>
+    <string name="dictate__legacy_enter_chars_title">Znaky klávesy Enter</string>
+    <string name="dictate__legacy_enter_chars_summary">Podržte klávesu Enter, poté přejeďte doleva nebo doprava, vyberte jeden z těchto znaků a uvolněním jej vložte.</string>
+    <string name="dictate__legacy_enter_chars_label">Znaky (až 8)</string>
+    <string name="dictate__legacy_action_row_title">Tlačítka řádku akcí</string>
+    <string name="dictate__legacy_action_row_summary">Přetažením uspořádejte tlačítka v řádku akcí klasického rozvržení</string>
+    <string name="dictate__legacy_action_row_add">Přidat tlačítko</string>
+    <string name="dictate__legacy_action_row_full">Nejprve odeberte tlačítko, abyste mohli přidat toto</string>
+    <string name="dictate__legacy_action_row_remove">Odebrat</string>
+    <string name="dictate__legacy_action_row_drag">Přetažením změňte pořadí</string>
+    <string name="dictate__legacy_action_row_reset">Obnovit výchozí</string>
+    <string name="dictate__legacy_prompt_rows_title">Řádky výzev</string>
+    <string name="dictate__legacy_prompt_rows_one">Jeden řádek</string>
+    <string name="dictate__legacy_prompt_rows_two">Dva řádky</string>
 </resources>

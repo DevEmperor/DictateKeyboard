@@ -44,7 +44,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.DataUsage
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.animation.core.Animatable
 import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Language
@@ -68,6 +72,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState as collectFlowAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -146,7 +151,23 @@ fun DictateSmartbarUi(state: DictateController.UiState, modifier: Modifier = Mod
 @Composable
 private fun RecordingContent(state: DictateController.UiState.Recording) {
     val prefs by FlorisPreferenceStore
+    val context = LocalContext.current
     val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
+    // Long-form segmented dictation (#170): whether the "Next segment" button is active and how many cut
+    // segments are transcribing in the background.
+    val segmented by DictateController.segmentedRecording.collectFlowAsState()
+    val segmentsInFlight by DictateController.segmentsInFlight.collectFlowAsState()
+    // A one-shot flash of the Next button (accent tint + a brief grow) on every segment cut, so the user
+    // sees a chunk was sent off (#170).
+    val flushCount by DictateController.segmentFlushCount.collectFlowAsState()
+    val accent by prefs.theme.accentColor.collectAsState()
+    val nextFlash = remember { Animatable(0f) }
+    LaunchedEffect(flushCount) {
+        if (flushCount > 0) {
+            nextFlash.snapTo(1f)
+            nextFlash.animateTo(0f, tween(550))
+        }
+    }
 
     // Keep the screen on while the recording indicator is visible, if the user enabled it.
     val view = LocalView.current
@@ -155,10 +176,11 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         onDispose { view.keepScreenOn = false }
     }
 
-    // Cancel button (far left) – discards the recording.
+    // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
+    // segment and keeps recording, so you can scrap the last utterance without losing the transcript (#183).
     SnyggIconButton(
         elementName = FlorisImeUi.SmartbarActionKey.elementName,
-        onClick = { DictateController.cancelRecording() },
+        onClick = { DictateController.cancelOrDiscardSegment(context) },
         modifier = Modifier.fillMaxHeight().aspectRatio(1f),
     ) {
         SnyggIcon(
@@ -197,22 +219,48 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         )
         Spacer(modifier = Modifier.width(10.dp))
         SnyggText(text = formatElapsed(elapsedMs))
+        // Segmented mode: how many cut segments are transcribing in the background right now.
+        if (segmentsInFlight > 0) {
+            Spacer(modifier = Modifier.width(8.dp))
+            SnyggIcon(imageVector = Icons.Default.Sync, modifier = Modifier.size(14.dp))
+            Spacer(modifier = Modifier.width(2.dp))
+            SnyggText(text = "$segmentsInFlight")
+        }
     }
 
-    // Right group: language chip + pause/resume button (left of the sticky mic).
+    // Right group: language chip + (in long-form mode) the "Next segment" button, otherwise the
+    // pause/resume button — left of the sticky mic. Long-form replaces pause with Next: pausing is
+    // redundant there (the Next button / auto-split already handle thought-breaks).
     Row(verticalAlignment = Alignment.CenterVertically) {
         LanguageChip()
-        SnyggIconButton(
-            elementName = FlorisImeUi.SmartbarActionKey.elementName,
-            onClick = { DictateController.togglePause() },
-            modifier = Modifier.fillMaxHeight().aspectRatio(1f),
-        ) {
-            SnyggIcon(
-                imageVector = if (state.paused) Icons.Default.PlayArrow else Icons.Default.Pause,
-                contentDescription = stringRes(
-                    if (state.paused) R.string.dictate__action_resume else R.string.dictate__action_pause,
-                ),
-            )
+        if (segmented) {
+            SnyggIconButton(
+                elementName = FlorisImeUi.SmartbarActionKey.elementName,
+                onClick = { DictateController.flushSegment(context) },
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
+                    .scale(1f + nextFlash.value * 0.35f),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FastForward,
+                    contentDescription = stringRes(R.string.dictate__action_next_segment),
+                    tint = lerp(LocalContentColor.current, accent, nextFlash.value),
+                )
+            }
+        } else {
+            SnyggIconButton(
+                elementName = FlorisImeUi.SmartbarActionKey.elementName,
+                onClick = { DictateController.togglePause() },
+                modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+            ) {
+                SnyggIcon(
+                    imageVector = if (state.paused) Icons.Default.PlayArrow else Icons.Default.Pause,
+                    contentDescription = stringRes(
+                        if (state.paused) R.string.dictate__action_resume else R.string.dictate__action_pause,
+                    ),
+                )
+            }
         }
     }
 }

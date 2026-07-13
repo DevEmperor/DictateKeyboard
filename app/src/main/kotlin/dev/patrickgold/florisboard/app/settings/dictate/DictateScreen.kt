@@ -19,6 +19,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.GraphicEq
+import androidx.compose.material.icons.filled.Segment
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
+import kotlin.math.roundToInt
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.florisboard.dictate.DictateLongformMode
 import androidx.compose.material.icons.filled.Watch
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Bluetooth
@@ -42,6 +53,7 @@ import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Spellcheck
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Vibration
+import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -66,6 +78,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -113,21 +126,35 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.Insights,
+            modifier = Modifier.settingsSearchAnchor("dictate__stats_title"),
             title = stringRes(R.string.dictate__stats_title),
             summary = stringRes(R.string.dictate__stats_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateStats) },
         )
         Preference(
             icon = Icons.Default.History,
+            modifier = Modifier.settingsSearchAnchor("dictate__history_title"),
             title = stringRes(R.string.dictate__history_title),
             summary = stringRes(R.string.dictate__history_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateHistory) },
+        )
+
+        // Dictation layout: its own category (issue #199) — the classic keyboard-less layout toggle
+        // today, with more layout options to follow. Kept out of Output (it changes the whole keyboard,
+        // not how text is inserted) and given top-level prominence here.
+        Preference(
+            icon = Icons.Default.Dialpad,
+            modifier = Modifier.settingsSearchAnchor("dictate__layout_title"),
+            title = stringRes(R.string.dictate__layout_title),
+            summary = stringRes(R.string.dictate__layout_menu_summary),
+            onClick = { navController.navigate(Routes.Settings.DictateLayout) },
         )
 
         // Hub: each row opens a dedicated sub-screen (issue #153), keeping this landing page short and
         // scannable instead of one long list of every setting.
         Preference(
             icon = Icons.Default.Cloud,
+            modifier = Modifier.settingsSearchAnchor("dictate__providers_title"),
             title = stringRes(R.string.dictate__providers_title),
             summary = if (rewordingEnabled && transcriptionName != rewordingName) {
                 stringRes(
@@ -150,6 +177,7 @@ fun DictateScreen() = FlorisScreen {
         }
         Preference(
             icon = Icons.Default.Translate,
+            modifier = Modifier.settingsSearchAnchor("dictate__languages_title"),
             title = stringRes(R.string.dictate__languages_title),
             summary = languagesSummary,
             onClick = { navController.navigate(Routes.Settings.DictateLanguages) },
@@ -157,6 +185,7 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.Spellcheck,
+            modifier = Modifier.settingsSearchAnchor("dictate__formatting_title"),
             title = stringRes(R.string.dictate__formatting_title),
             summary = stringRes(R.string.dictate__formatting_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateFormatting) },
@@ -164,6 +193,7 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.AutoAwesome,
+            modifier = Modifier.settingsSearchAnchor("dictate__rewording_title"),
             title = stringRes(R.string.dictate__rewording_title),
             summary = stringRes(
                 if (rewordingEnabled) R.string.dictate__rewording_summary_on
@@ -174,6 +204,7 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.Mic,
+            modifier = Modifier.settingsSearchAnchor("dictate__recording_group"),
             title = stringRes(R.string.dictate__recording_group),
             summary = stringRes(R.string.dictate__recording_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateRecording) },
@@ -181,6 +212,7 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.Keyboard,
+            modifier = Modifier.settingsSearchAnchor("dictate__output_group"),
             title = stringRes(R.string.dictate__output_group),
             summary = stringRes(R.string.dictate__output_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateOutput) },
@@ -190,6 +222,7 @@ fun DictateScreen() = FlorisScreen {
         val floatingHintSeen by prefs.dictate.floatingButtonHintSeen.collectAsState()
         Preference(
             icon = Icons.Default.Adjust,
+            modifier = Modifier.settingsSearchAnchor("dictate__floating_button_enable_title"),
             title = stringRes(R.string.dictate__floating_button_enable_title),
             summary = stringRes(R.string.dictate__floating_button_enable_summary),
             onClick = { navController.navigate(Routes.Settings.DictateFloatingButton) },
@@ -202,6 +235,7 @@ fun DictateScreen() = FlorisScreen {
 
         Preference(
             icon = Icons.Default.Watch,
+            modifier = Modifier.settingsSearchAnchor("dictate__wear_title"),
             title = stringRes(R.string.dictate__wear_title),
             summary = stringRes(R.string.dictate__wear_summary),
             onClick = { navController.navigate(Routes.Settings.DictateWear) },
@@ -253,6 +287,7 @@ fun DictateFormattingScreen() = FlorisScreen {
         )
         Preference(
             icon = Icons.Default.SwapHoriz,
+            modifier = Modifier.settingsSearchAnchor("dictate__mappings_title"),
             title = stringRes(R.string.dictate__mappings_title),
             summary = stringRes(R.string.dictate__mappings_entry_summary),
             onClick = { navController.navigate(Routes.Settings.DictateMappings) },
@@ -276,24 +311,46 @@ fun DictateRecordingScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.realtimeTranscription,
             icon = Icons.Default.GraphicEq,
+            modifier = Modifier.settingsSearchAnchor("dictate__realtime_title"),
             title = stringRes(R.string.dictate__realtime_title),
             summary = stringRes(R.string.dictate__realtime_summary),
         )
+        // All long-form settings live behind one entry that opens a single dialog (#170).
+        val longformMode by prefs.dictate.longformMode.collectAsState()
+        val longformSeconds by prefs.dictate.longformAutoSplitSeconds.collectAsState()
+        var showLongformDialog by remember { mutableStateOf(false) }
+        Preference(
+            icon = Icons.Default.Segment,
+            modifier = Modifier.settingsSearchAnchor("dictate__longform_title"),
+            title = stringRes(R.string.dictate__longform_title),
+            summary = longformModeSummary(longformMode, longformSeconds),
+            onClick = { showLongformDialog = true },
+        )
+        if (showLongformDialog) {
+            LongformDialog(
+                mode = longformMode,
+                seconds = longformSeconds,
+                onDismiss = { showLongformDialog = false },
+            )
+        }
         SwitchPreference(
             prefs.dictate.audioFocus,
             icon = Icons.Default.VolumeOff,
+            modifier = Modifier.settingsSearchAnchor("dictate__audio_focus_title"),
             title = stringRes(R.string.dictate__audio_focus_title),
             summary = stringRes(R.string.dictate__audio_focus_summary),
         )
         SwitchPreference(
             prefs.dictate.useBluetoothMic,
             icon = Icons.Default.Bluetooth,
+            modifier = Modifier.settingsSearchAnchor("dictate__bluetooth_mic_title"),
             title = stringRes(R.string.dictate__bluetooth_mic_title),
             summary = stringRes(R.string.dictate__bluetooth_mic_summary),
         )
         ListPreference(
             prefs.dictate.audioInputSource,
             icon = Icons.Default.GraphicEq,
+            modifier = Modifier.settingsSearchAnchor("dictate__audio_source_title"),
             title = stringRes(R.string.dictate__audio_source_title),
             entries = listPrefEntries {
                 entry(
@@ -321,24 +378,28 @@ fun DictateRecordingScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.keepScreenAwake,
             icon = Icons.Default.BrightnessHigh,
+            modifier = Modifier.settingsSearchAnchor("dictate__keep_screen_awake_title"),
             title = stringRes(R.string.dictate__keep_screen_awake_title),
             summary = stringRes(R.string.dictate__keep_screen_awake_summary),
         )
         SwitchPreference(
             prefs.dictate.skipSilentRecordings,
             icon = Icons.Default.VolumeOff,
+            modifier = Modifier.settingsSearchAnchor("dictate__skip_silent_title"),
             title = stringRes(R.string.dictate__skip_silent_title),
             summary = stringRes(R.string.dictate__skip_silent_summary),
         )
         SwitchPreference(
             prefs.dictate.instantRecording,
             icon = Icons.Default.Bolt,
+            modifier = Modifier.settingsSearchAnchor("dictate__instant_recording_title"),
             title = stringRes(R.string.dictate__instant_recording_title),
             summary = stringRes(R.string.dictate__instant_recording_summary),
         )
         SwitchPreference(
             prefs.dictate.instantRecordingSkipNumeric,
             icon = Icons.Default.Dialpad,
+            modifier = Modifier.settingsSearchAnchor("dictate__instant_recording_skip_numeric_title"),
             title = stringRes(R.string.dictate__instant_recording_skip_numeric_title),
             summary = stringRes(R.string.dictate__instant_recording_skip_numeric_summary),
             enabledIf = { prefs.dictate.instantRecording.isTrue() },
@@ -382,11 +443,76 @@ fun DictateOutputScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
 
     content {
+        SwitchPreference(
+            prefs.dictate.autoEnter,
+            icon = Icons.AutoMirrored.Filled.KeyboardReturn,
+            modifier = Modifier.settingsSearchAnchor("dictate__auto_enter_title"),
+            title = stringRes(R.string.dictate__auto_enter_title),
+            summary = stringRes(R.string.dictate__auto_enter_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.instantOutput,
+            icon = Icons.Default.Keyboard,
+            modifier = Modifier.settingsSearchAnchor("dictate__instant_output_title"),
+            title = stringRes(R.string.dictate__instant_output_title),
+            summary = stringRes(R.string.dictate__instant_output_summary),
+        )
+        DialogSliderPreference(
+            prefs.dictate.outputSpeed,
+            icon = Icons.Default.Speed,
+            modifier = Modifier.settingsSearchAnchor("dictate__output_speed_title"),
+            title = stringRes(R.string.dictate__output_speed_title),
+            valueLabel = { stringRes(R.string.dictate__output_speed_value, "v" to it) },
+            min = 1,
+            max = 10,
+            stepIncrement = 1,
+            enabledIf = { prefs.dictate.instantOutput isEqualTo false },
+        )
+        SwitchPreference(
+            prefs.dictate.resendButton,
+            icon = Icons.Default.Replay,
+            modifier = Modifier.settingsSearchAnchor("dictate__resend_button_title"),
+            title = stringRes(R.string.dictate__resend_button_title),
+            summary = stringRes(R.string.dictate__resend_button_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.hapticFeedback,
+            icon = Icons.Default.Vibration,
+            modifier = Modifier.settingsSearchAnchor("dictate__haptic_feedback_title"),
+            title = stringRes(R.string.dictate__haptic_feedback_title),
+            summary = stringRes(R.string.dictate__haptic_feedback_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.rememberLastDictation,
+            icon = Icons.Default.History,
+            modifier = Modifier.settingsSearchAnchor("dictate__remember_last_dictation_title"),
+            title = stringRes(R.string.dictate__remember_last_dictation_title),
+            summary = stringRes(R.string.dictate__remember_last_dictation_summary),
+        )
+    }
+}
+
+/**
+ * Sub-screen (issue #199): dictation layout — how the dictation keyboard itself looks. Starts with the
+ * classic keyboard-less layout toggle; more layout options will be added here.
+ */
+@Composable
+fun DictateLayoutScreen() = FlorisScreen {
+    title = stringRes(R.string.dictate__layout_title)
+    previewFieldVisible = true
+    iconSpaceReserved = true
+
+    val prefs by FlorisPreferenceStore
+
+    content {
+        val legacyMode by prefs.dictate.legacyLayout.collectAsState()
+
         // Classic keyboard-less dictation layout (issue #125): a compact record-first UI, optionally
         // with a swipe back to the modern typing keyboard.
         ListPreference(
             prefs.dictate.legacyLayout,
             icon = Icons.Default.Dialpad,
+            modifier = Modifier.settingsSearchAnchor("dictate__legacy_layout_title"),
             title = stringRes(R.string.dictate__legacy_layout_title),
             entries = listPrefEntries {
                 entry(
@@ -403,46 +529,22 @@ fun DictateOutputScreen() = FlorisScreen {
                 )
             },
         )
-        SwitchPreference(
-            prefs.dictate.autoEnter,
-            icon = Icons.AutoMirrored.Filled.KeyboardReturn,
-            title = stringRes(R.string.dictate__auto_enter_title),
-            summary = stringRes(R.string.dictate__auto_enter_summary),
-        )
-        SwitchPreference(
-            prefs.dictate.instantOutput,
-            icon = Icons.Default.Keyboard,
-            title = stringRes(R.string.dictate__instant_output_title),
-            summary = stringRes(R.string.dictate__instant_output_summary),
-        )
-        DialogSliderPreference(
-            prefs.dictate.outputSpeed,
-            icon = Icons.Default.Speed,
-            title = stringRes(R.string.dictate__output_speed_title),
-            valueLabel = { stringRes(R.string.dictate__output_speed_value, "v" to it) },
-            min = 1,
-            max = 10,
-            stepIncrement = 1,
-            enabledIf = { prefs.dictate.instantOutput isEqualTo false },
-        )
-        SwitchPreference(
-            prefs.dictate.resendButton,
-            icon = Icons.Default.Replay,
-            title = stringRes(R.string.dictate__resend_button_title),
-            summary = stringRes(R.string.dictate__resend_button_summary),
-        )
-        SwitchPreference(
-            prefs.dictate.hapticFeedback,
-            icon = Icons.Default.Vibration,
-            title = stringRes(R.string.dictate__haptic_feedback_title),
-            summary = stringRes(R.string.dictate__haptic_feedback_summary),
-        )
-        SwitchPreference(
-            prefs.dictate.rememberLastDictation,
-            icon = Icons.Default.History,
-            title = stringRes(R.string.dictate__remember_last_dictation_title),
-            summary = stringRes(R.string.dictate__remember_last_dictation_summary),
-        )
+
+        // The layout customisation only makes sense once the classic layout is actually in use (#183/#194).
+        if (legacyMode != DictateLegacyLayout.OFF) {
+            ListPreference(
+                prefs.dictate.legacyPromptRows,
+                icon = Icons.Default.ViewAgenda,
+                modifier = Modifier.settingsSearchAnchor("dictate__legacy_prompt_rows_title"),
+                title = stringRes(R.string.dictate__legacy_prompt_rows_title),
+                entries = listPrefEntries {
+                    entry(key = 1, label = stringRes(R.string.dictate__legacy_prompt_rows_one))
+                    entry(key = 2, label = stringRes(R.string.dictate__legacy_prompt_rows_two))
+                },
+            )
+            LegacyActionRowSetting()
+            EnterLongPressCharsSetting()
+        }
     }
 }
 
@@ -470,5 +572,94 @@ private fun NewBadge() {
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.labelSmall,
         )
+    }
+}
+
+/** One-line summary of the current long-form mode for the settings entry (issue #170). */
+@Composable
+private fun longformModeSummary(mode: DictateLongformMode, seconds: Int): String = when (mode) {
+    DictateLongformMode.OFF -> stringRes(R.string.dictate__longform_mode_off)
+    DictateLongformMode.MANUAL -> stringRes(R.string.dictate__longform_mode_manual)
+    DictateLongformMode.AUTO -> stringRes(R.string.dictate__longform_autosplit_title) + " · " +
+        stringRes(R.string.dictate__longform_autosplit_value, "seconds" to "$seconds")
+}
+
+/** The single dialog holding all long-form settings: the mode, plus the pause length when auto (#170). */
+@Composable
+private fun LongformDialog(
+    mode: DictateLongformMode,
+    seconds: Int,
+    onDismiss: () -> Unit,
+) {
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
+    JetPrefAlertDialog(
+        title = stringRes(R.string.dictate__longform_title),
+        dismissLabel = stringRes(android.R.string.ok),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            LongformModeRow(
+                value = DictateLongformMode.OFF, selected = mode,
+                titleRes = R.string.dictate__longform_mode_off,
+                summaryRes = R.string.dictate__longform_mode_off_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            LongformModeRow(
+                value = DictateLongformMode.MANUAL, selected = mode,
+                titleRes = R.string.dictate__longform_mode_manual,
+                summaryRes = R.string.dictate__longform_mode_manual_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            LongformModeRow(
+                value = DictateLongformMode.AUTO, selected = mode,
+                titleRes = R.string.dictate__longform_autosplit_title,
+                summaryRes = R.string.dictate__longform_autosplit_summary,
+            ) { scope.launch { prefs.dictate.longformMode.set(it) } }
+            if (mode == DictateLongformMode.AUTO) {
+                var sliderValue by remember(seconds) { mutableStateOf(seconds.toFloat()) }
+                Text(
+                    modifier = Modifier.padding(top = 12.dp, start = 8.dp),
+                    text = stringRes(R.string.dictate__longform_autosplit_threshold_title) + ": " +
+                        stringRes(R.string.dictate__longform_autosplit_value, "seconds" to "${sliderValue.roundToInt()}"),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Slider(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    value = sliderValue,
+                    onValueChange = { sliderValue = it },
+                    onValueChangeFinished = {
+                        scope.launch { prefs.dictate.longformAutoSplitSeconds.set(sliderValue.roundToInt()) }
+                    },
+                    valueRange = 2f..8f,
+                    steps = 5,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LongformModeRow(
+    value: DictateLongformMode,
+    selected: DictateLongformMode,
+    titleRes: Int,
+    summaryRes: Int,
+    onSelect: (DictateLongformMode) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onSelect(value) }
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = value == selected, onClick = { onSelect(value) })
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(text = stringRes(titleRes), style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = stringRes(summaryRes),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
     }
 }

@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Billentyűzet balra helyezése.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Billentyűzet jobbra helyezése.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emodzsik</string>
+    <string name="settings__media__title">Emodzsik &amp; GIF-ek</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emodzsik</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomodzsi</string>
@@ -119,13 +119,19 @@
     <string name="settings__home__title" comment="Title of the Home screen">Üdvözli a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">A {app_name} nincs engedélyezve a rendszerben, így nem lesz elérhető beviteli módként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">Nem a {app_name} az alapértelmezett beviteli mód. A probléma megoldásához kattintson ide.</string>
+    <string name="settings__search__title" comment="Title of the settings search screen">Keresés a beállításokban</string>
+    <string name="settings__search__placeholder" comment="Placeholder in the settings search field">Keresés a beállításokban…</string>
+    <string name="settings__search__recent" comment="Header above recently used search terms">Legutóbbi keresések</string>
+    <string name="settings__search__clear_recent" comment="Button to clear the recent searches">Legutóbbi keresések törlése</string>
+    <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Népszerű</string>
+    <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Nincs találat a beállítások között</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Nyelvek neveinek megjelenítése ebben</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Billentyűzetcímkék megjelenítése altípusok nyelvén</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Altípusok</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Telepített nyelvi csomagok kezelése</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Kísérleti: olyan kiegészítők kezelése, amelyek egy bizonyos nyelvet támogatnak (egyelőre forma-alapú kínai bevitel)</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Kísérleti: kiegészítők, amelyek adott nyelveket adnak hozzá (egyelőre forma-alapú kínai).</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Elsődleges nyelv</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Felugró társítás</string>
@@ -153,6 +159,9 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Legalább egy mezőnek nincs érték kiválasztva. Kérjük válasszon értéket az összes mezőnek.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nincs telepítve)</string>
+    <string name="settings__localization__subtype_missing_language_pack_title">Szótár szükséges</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Ehhez a nyelvhez letölthető szótár szükséges a szójavaslatokhoz és az átalakításhoz (pl. Rómadzsi → Kana). Amíg nincs telepítve, a gépelés működik, de az átalakítás nem csinál semmit.</string>
+    <string name="settings__localization__subtype_missing_language_pack_action">Szótár letöltése</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Kiosztások</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Törlés megerősítése</string>
     <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Biztosan törli ezt az altípust?</string>
@@ -162,8 +171,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Éjszakai téma</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Kiemelőszín (Material You témák)
-    </string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Kiemelőszín (Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">{app_name} alkalmazásadatok</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Belső tárhely</string>
@@ -422,8 +430,8 @@
     <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Szimbólumok megjenelítése az ékezeteknél</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Szimbólumok hozzáadása az alapértelmezett kiosztás ékezeteihez</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz karaktert vált</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatikusan visszavált a karakter oldalra a szimbólumokról és számokról</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz visszavált betűkre</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szimbólum- vagy számelrendezésben a szóköz visszavált a betűs billentyűzetre.</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognitó jelző</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
@@ -506,7 +514,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">A csúsztatás után egyből megnyomott törlés gomb az egész szót törli</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok / gesztusküszöbök</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Felhúzás</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Lehúzás</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Balra húzás</string>
@@ -576,7 +584,7 @@
     <string name="setup__finish_up__finish_btn">Személyre szabás megkezdése</string>
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Fizikai billentyűzet</string>
-    <string name="physical_keyboard__system_settings__title">Rendszer fizikai billentyűzetének beállításai</string>
+    <string name="physical_keyboard__system_settings__title">Fizikai billentyűzet beállításai</string>
     <string name="physical_keyboard__system_settings__summary">Kiosztások, gyorsbillentyűk és módosító billentyűk</string>
     <string name="physical_keyboard__system_settings__summary_not_attached">Csak akkor érhető el, ha a billenytyűzet csatlakozik</string>
     <string name="physical_keyboard__show_on_screen_keyboard__title">Képernyő-billentyűzet megjelenítése</string>
@@ -675,6 +683,7 @@
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
     <string name="pref__clipboard__history_hide_on_paste__label">Előzmények elrejtése beillesztéskor</string>
     <string name="pref__clipboard__history_hide_on_next_text_field__label">Előzmények elrejtése a következő mezőnél</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">A clip törlése érinti az előzményeket</string>
     <string name="send_to_clipboard__unknown_error">Ismeretlen hiba történt. Próbálja meg újra!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ez a médiatípus nem támogatott.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Az alábbi kép a vágólapra lett másolva.</string>
@@ -1057,7 +1066,7 @@
     <string name="quick_action__dictate_prompts">MI-utasítások</string>
     <string name="quick_action__dictate_prompts__tooltip">Az MI átfogalmazási utasításainak megnyitása</string>
     <string name="about__based_on_floris__title">A FlorisBoard alapján</string>
-    <string name="about__based_on_floris__summary">A FlorisBoard egy elágazása Patrick Goldinger és a közreműködők munkája nyomán, Apache 2.0 licenc alatt. Koppintson az eredeti projekt megnyitásához.</string>
+    <string name="about__based_on_floris__summary">A FlorisBoard elágazása Patrick Goldingertől és közreműködőktől, Apache 2.0. Koppintson a megnyitáshoz.</string>
     <string name="about__made_by">Készítette ❤️-vel DevEmperor\nSoli deo gloria ✝️</string>
     <string name="about__feedback__title">Visszajelzés és támogatás</string>
     <string name="about__feedback__summary">Küldjön e-mailt kérdésekkel, hibákkal vagy ötletekkel</string>
@@ -1138,7 +1147,7 @@
     <string name="dictate__floating_button_snap_title">Illesztés a szélhez</string>
     <string name="dictate__interrupted_recording">Megszakítva ({time})</string>
     <string name="dictate__providers_summary_both">Átírás: {transcription} · Átfogalmazás: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Megőrzi a legutóbbi sikeres diktálását, hogy a Smartbar „Újrabeszúrás” gombjával ismét beszúrhassa — biztonsági háló, ha a szövegmezőt képernyőforgatás vagy alkalmazásváltás törli. A gombot a Smartbar-szerkesztőből adhatja hozzá. Csak ezen az eszközön tárolódik a következő diktálásig.</string>
+    <string name="dictate__remember_last_dictation_summary">Megőrzi a legutóbbi diktálást, hogy a Smartbar „Újrabeszúrás” gombjával ismét beszúrhassa.</string>
     <string name="dictate__remember_last_dictation_title">Utolsó diktálás megjegyzése</string>
     <string name="changelog__v4_2_0">• ÚJ: lebegő diktálógomb — diktáljon közvetlenül bármelyik appba, akkor is, ha másik billentyűzet aktív. Válasszon a három stílus közül (Pirula, Gyűrű, Gömb), nézze az élő hullámformát beszéd közben, húzza bárhová a szélhez illesztéssel, állítsa be a színét és méretét, és tartsa lenyomva az átfogalmazáshoz. Kapcsolja be a Beállítások ▸ Dictate ▸ Lebegő gomb alatt.\n• ÚJ: Google Gemini — használd saját AI Studio API-kulcsodat átíráshoz és újrafogalmazáshoz.\n• A parancsok mostantól alapértelmezetten egy állandó sorban jelennek meg a billentyűk fölött.\n• Megbízhatóbb szövegbeszúrás az appokban, beleértve a böngészőket és más billentyűzeteket.</string>
     <string name="dictate__promo_floating_button_message">Új: diktálj bárhol</string>
@@ -1186,6 +1195,7 @@
     <string name="dictate__status_retrying">Újrapróbálkozás… ({attempt})</string>
     <string name="dictate__action_cancel">Felvétel megszakítása</string>
     <string name="dictate__action_pause">Felvétel szüneteltetése</string>
+    <string name="dictate__action_next_segment">Következő szegmens</string>
     <string name="dictate__action_resume">Felvétel folytatása</string>
     <string name="dictate__action_resend">Újrapróbálkozás</string>
     <string name="dictate__action_dismiss">Elvetés</string>
@@ -1266,6 +1276,16 @@
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
     <string name="dictate__realtime_title">Valós idejű átírás</string>
     <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__longform_title">Hosszú diktálás</string>
+    <string name="dictate__longform_summary">A háttérben ír át, miközben tovább beszélsz — koppints a „Tovább” gombra minden rész elküldéséhez.</string>
+    <string name="dictate__longform_autosplit_title">Automatikus vágás szüneteknél</string>
+    <string name="dictate__longform_autosplit_summary">Elég hosszú szünet után automatikusan is levág egy szegmenst, nem csak a „Következő szegmens” gombbal.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Szünet hossza</string>
+    <string name="dictate__longform_autosplit_value">{seconds} mp</string>
+    <string name="dictate__longform_mode_off">Ki</string>
+    <string name="dictate__longform_mode_off_summary">Átírás egyszer a végén (alapértelmezett).</string>
+    <string name="dictate__longform_mode_manual">Következő szegmens</string>
+    <string name="dictate__longform_mode_manual_summary">Felvétel közben küldj el minden részt a „Következő szegmens” gombbal.</string>
     <string name="dictate__providers_field_realtime_model">Valós idejű modell</string>
     <string name="dictate__providers_realtime_model_default">Alapértelmezett</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>
@@ -1286,10 +1306,13 @@
     <string name="dictate__formatting_menu_summary">Stílusutasítás, egyéni szavak, cserék</string>
     <string name="dictate__recording_menu_summary">Valós idejű, hangforrás, azonnali felvétel</string>
     <string name="dictate__output_menu_summary">Automatikus Enter, gépelési sebesség, újraküldés</string>
+    <string name="dictate__layout_title">Diktálási elrendezés</string>
+    <string name="dictate__layout_menu_summary">Klasszikus elrendezés és billentyűzet megjelenése</string>
     <string name="dictate__languages_group">Nyelvek</string>
     <string name="dictate__languages_title">Átírási nyelvek</string>
     <string name="dictate__languages_summary">Válassza ki a nyelveket, amelyeken diktál. Gyorsan válthat közöttük a felvételi sávból.</string>
     <string name="dictate__language_detect">Automatikus felismerés</string>
+    <string name="dictate__languages_active_title">Aktív nyelv</string>
     <string name="dictate__prompt_selection_none">Nincs</string>
     <string name="dictate__prompt_selection_predefined">Alapértelmezett</string>
     <string name="dictate__prompt_selection_custom">Egyéni</string>
@@ -1413,6 +1436,10 @@
     <string name="dictate__local_model_action_cancel">Mégse</string>
     <string name="dictate__local_model_downloading">Letöltés… {percent}%</string>
     <string name="dictate__local_model_download_failed">A letöltés nem sikerült — próbáld újra</string>
+    <string name="dictate__local_model_download_background">Letöltés a háttérben — elhagyhatod az alkalmazást.</string>
+    <string name="dictate__local_model_notif_channel_name">Modellletöltések</string>
+    <string name="dictate__local_model_notif_title">{model} letöltése</string>
+    <string name="dictate__local_model_notif_title_multi">{count} modell letöltése</string>
     <string name="dictate__local_model_none_selected">Még nincs letöltött modell</string>
     <string name="dictate__local_model_delete_confirm">Törlöd a(z) „{model}“ modellt? Később újra letöltheted.</string>
     <string name="dictate__local_model_not_installed_error">Nincs letöltött helyi modell</string>
@@ -1425,7 +1452,7 @@
     <string name="dictate__floating_button_undo_title">Visszavonás gomb</string>
     <string name="dictate__mappings_add">Hozzárendelés hozzáadása</string>
     <string name="dictate__mappings_editor_title">Hozzárendelés</string>
-    <string name="dictate__mappings_empty_summary">Adj hozzá szabályt, amely minden átiratban automatikusan lecseréli a szavakat vagy kifejezéseket — pontosan és MI-tokenek felhasználása nélkül.</string>
+    <string name="dictate__mappings_empty_summary">Adj hozzá szabályt, amely minden átiratban automatikusan lecseréli a szavakat vagy kifejezéseket — pontosan, MI-tokenek nélkül.</string>
     <string name="dictate__mappings_empty_title">Még nincsenek hozzárendelések</string>
     <string name="dictate__mappings_entry_summary">Az átiratra alkalmazott keresés és csere szabályok</string>
     <string name="dictate__mappings_field_from">Erre</string>
@@ -1459,7 +1486,7 @@
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Diktálási beállítások párosított órához</string>
     <string name="dictate__wear_install_title">A Dictate telepítése az órájára</string>
-    <string name="dictate__wear_install_summary">Megnyitja a Play Store-t. Párosított órán (Wear OS 3 vagy újabb) válassza az órát telepítési célként.</string>
+    <string name="dictate__wear_install_summary">Megnyitja a Play Store-t — párosított Wear OS 3+ órán válaszd az órát célként.</string>
     <string name="dictate__wear_auto_rewording_title">Óradiktálások automatikus újrafogalmazása</string>
     <string name="dictate__wear_auto_rewording_summary">Fogalmazd újra az óradiktálásokat, mint a telefonon.</string>
     <string name="quick_action__system_prev_input_method">Billentyűzetváltás</string>
@@ -1475,13 +1502,14 @@
     <string name="dictate__audio_source_unprocessed">Feldolgozatlan (nyers)</string>
     <string name="dictate__audio_source_unprocessed_summary">Egyáltalán nincs feldolgozás; ha a telefonod nem támogatja, visszavált Beszédfelismerésre</string>
     <string name="dictate__security_group">Biztonság</string>
-    <string name="dictate__trust_user_certs_title">Felhasználó által telepített tanúsítványok megbízhatósága</string>
-    <string name="dictate__trust_user_certs_summary">Megbízik a magad telepítette CA-tanúsítványokban – saját üzemeltetésű végpontokhoz privát CA mögött.</string>
+    <string name="dictate__trust_user_certs_title">Felhasználói tanúsítványok megbízása</string>
+    <string name="dictate__trust_user_certs_summary">Megbízik a telepített CA-tanúsítványokban, saját üzemeltetésű végpontokhoz privát CA mögött.</string>
     <string name="dictate__stats_title">Statisztika</string>
     <string name="dictate__stats_menu_summary">Szavak, megspórolt idő, sorozat és több</string>
     <string name="dictate__history_title">Előzmények</string>
     <string name="dictate__history_menu_summary">Korábbi diktálások lejátszása, újbóli beillesztése és kezelése</string>
     <string name="dictate__history_empty">Még nincs diktálás — a legutóbbi diktálásai itt fognak megjelenni.</string>
+    <string name="dictate__history_loading">Betöltés…</string>
     <string name="dictate__history_enable_title">Előzmények megtartása</string>
     <string name="dictate__history_enable_summary">Diktálások naplózása későbbi újbóli beillesztéshez vagy áttekintéshez.</string>
     <string name="dictate__history_audio_title">Hang megtartása</string>
@@ -1543,6 +1571,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Kiegyensúlyozott gondolkodás és sebesség</string>
     <string name="dictate__reasoning_effort_high">Magas</string>
     <string name="dictate__reasoning_effort_high_summary">Legtöbb gondolkodás, lassabb</string>
+    <string name="dictate__reasoning_effort_custom">Egyéni</string>
     <string name="dictate__action_save_audio">Hang mentése</string>
     <string name="dictate__audio_saved">Hang mentve ide: Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Nem sikerült menteni a hangot</string>
@@ -1556,6 +1585,8 @@
     <string name="settings__localization__subtype_status_context">Kontextus</string>
     <string name="pref__suggestion__auto_correct__label">Automatikus javítás</string>
     <string name="pref__suggestion__auto_correct__summary">Elgépelések automatikus javítása szóköznél</string>
+    <string name="pref__suggestion__multilingual_typing__label">Többnyelvű gépelés</string>
+    <string name="pref__suggestion__multilingual_typing__summary">Szavak elfogadása az összes billentyűzetnyelvedből</string>
     <string name="dictate__legacy_record">Felvétel</string>
     <string name="dictate__legacy_stop">Leállítás</string>
     <string name="dictate__legacy_switch_keyboard">Billentyűzet váltása</string>
@@ -1574,10 +1605,11 @@
     <string name="dictate__legacy_select_all">Összes kijelölése</string>
     <string name="dictate__floating_button_retry_hint">%1$s — koppints az újrapróbáláshoz</string>
     <string name="dictate__haptic_feedback_title">Rezgő visszajelzés</string>
-    <string name="dictate__haptic_feedback_summary">Rezeg a felvétel indításakor/leállításakor, amikor az átirat elkészül, és amikor átfogalmazás történik</string>
+    <string name="dictate__haptic_feedback_summary">Rezeg a felvétel indításakor/leállításakor, amikor az átirat elkészül, és átfogalmazáskor.</string>
     <string name="dictate__audio_source_voice_communication">Hangkommunikáció</string>
-    <string name="dictate__audio_source_voice_communication_summary">Legmagasabb prioritás — akkor is működik, ha egy másik alkalmazás (diktafon, kamera) használja a mikrofont, de a hívásszerű feldolgozás csökkentheti a pontosságot</string>
-    <string name="about__whats_new__title">Újdonságok az 5.0-ban</string>
+    <string name="dictate__audio_source_voice_communication_summary">Legmagasabb mikrofon-prioritás — akkor is működik, ha másik alkalmazás használja a mikrofont, de csökkentheti a pontosságot.</string>
+    <string name="about__whats_new__title">Újdonságok</string>
+    <string name="about__whats_new__versioned">Újdonságok a(z) {version} verzióban</string>
     <string name="about__whats_new__summary">A funkciótúra újbóli megtekintése</string>
     <string name="apptour__skip">Kihagyás</string>
     <string name="apptour__next">Tovább</string>
@@ -1622,5 +1654,84 @@
     <string name="apptour__outro_eyebrow">És még több</string>
     <string name="apptour__outro_title">Csiszolás mindenütt</string>
     <string name="apptour__outro_body">Még több a motorháztető alatt: stabilabb lebegő gomb, gondolkodási ráfordítás szabályozása az átfogalmazáshoz, rezgő visszajelzés, új E-Reader téma és több tucat javítás.</string>
+    <string name="apptour51__cta_try">Kipróbálom</string>
+    <string name="apptour51__continue_to">Tovább a(z) {version} verzióhoz</string>
+    <string name="apptour51__intro_eyebrow">5.1-es verzió</string>
+    <string name="apptour51__intro_title">Újdonságok az 5.1-ben</string>
+    <string name="apptour51__intro_body">A Dictate sokat fejlődött az 5.0 óta. Íme az 5.1 legfontosabb újdonságai — bármelyik oldalon koppints a „Kipróbálom” gombra, hogy egyből az adott funkcióhoz ugorj.</string>
+    <string name="apptour51__history_eyebrow">Átírás</string>
+    <string name="apptour51__history_title">Átírási előzmények</string>
+    <string name="apptour51__history_body">Minden diktálás mostantól egy kereshető előzménylistába kerül. Bármelyik korábbi átírást egyetlen koppintással beszúrhatod újra, lejátszhatod az eredeti hangot, újra átírathatod, vagy kitűzheted a leggyakrabban használtakat. Egy külön képernyőn mindent kezelhetsz, azt is, hogy meddig őrizzük meg a hangfelvételeket.</string>
+    <string name="apptour51__longform_eyebrow">Átírás</string>
+    <string name="apptour51__longform_title">Hosszú diktálás</string>
+    <string name="apptour51__longform_body">Beszélj, ameddig csak akarsz. A hosszú felvételeket a rendszer automatikusan szegmensekre bontja, és a háttérben átírja, miközben te folytatod — így hamarabb megkapod a szöveget, és soha nem ütközöl hosszkorlátba. Egy szegmenst magad is elvághatsz, vagy hagyd, hogy a Dictate felismerje a természetes szüneteket.</string>
+    <string name="apptour51__gif_eyebrow">Billentyűzet</string>
+    <string name="apptour51__gif_title">GIF-keresés</string>
+    <string name="apptour51__gif_body">Keress és küldj GIF-eket anélkül, hogy elhagynád a Dictate-et. Nyisd meg a GIF-panelt, keress rá bármire, és tedd egyenesen a beszélgetésbe — egy gyors, Gboard-stílusú választó, gyárilag beépítve.</string>
+    <string name="apptour51__classic_eyebrow">Klasszikus elrendezés</string>
+    <string name="apptour51__classic_title">Klasszikus elrendezés, átdolgozva</string>
+    <string name="apptour51__classic_body">A billentyűzet nélküli diktálóképernyő nagy fejlesztést kapott: szabadon elrendezhető műveletsor, amelyet fogd és vidd módszerrel állítasz össze, hosszú felvétel vezérlők, egy vagy két prompt-sor, mindig elérhető visszatörlés, karakter-felugró az Enter billentyűn, és egy opcionális második „billentyűzetváltás” gomb a könnyebb egykezes használathoz.</string>
+    <string name="apptour51__search_eyebrow">Beállítások</string>
+    <string name="apptour51__search_title">Keresés a beállításokban</string>
+    <string name="apptour51__search_body">Nem emlékszel, hol van egy beállítás? Csak keress rá. Az új beállításkereső név alapján megtalál bármelyik beállítást, egyből odaugrik, és röviden kiemeli a sort — nincs több túrás a menükben.</string>
+    <string name="apptour51__models_eyebrow">Modellek és szolgáltatók</string>
+    <string name="apptour51__models_title">Német offline modell és Claude</string>
+    <string name="apptour51__models_body">Két újdonság a beszéded feldolgozásához: egy németre specializált, eszközön futó modell (a primeline Parakeet German modellje), amely teljesen offline írja át a szöveget a telefonodon, és az Anthropic Claude-ja új szolgáltatóként csatlakozik a diktálásaid átfogalmazásához és formázásához.</string>
+    <string name="apptour51__more_eyebrow">És még több</string>
+    <string name="apptour51__more_title">Sok további fejlesztés</string>
+    <string name="apptour51__more_body">Rengeteg apróbb fejlesztés is: a beállításokban kiválaszthatod az aktív átírási nyelvet, a leállítás gomb mostantól valóban megszakítja a futó kérést, egy megjelenítés/elrejtés kapcsoló az API-kulcsokhoz, és többnyelvű gépelés a nyelvek közötti automatikus javítás nélkül — plusz számos javítás a klasszikus elrendezésben, a számbillentyűzeten és azon túl is.</string>
+    <string name="apptour51__outro_eyebrow">Ez az 5.1</string>
+    <string name="apptour51__outro_title">Jó szórakozást a frissítéshez</string>
+    <string name="apptour51__outro_body">Köszönjük, hogy a Dictate-et használod! Ha nap mint nap segít, egy kis adomány életben tartja a projektet. Ezeket a túrákat bármikor újranézheted a Beállítások › Névjegy alatt.</string>
     <string name="changelog__v5_0_0">• ÚJ: Húzásos gépelés — húzza az ujját a billentyűkön, hogy egész szavakat írjon, igény szerint letöltődő, nyelvenkénti szótárakkal. 👆\n• ÚJ: Szójavaslatok és automatikus javítás — az elgépelések automatikusan javulnak, és a beírt szó egy koppintásra marad. ✨\n• ÚJ: Valós idejű átírás — nézze, ahogy a szavak megjelennek beszéd közben, OpenAI, Deepgram, Soniox, AssemblyAI és ElevenLabs használatával. ⚡\n• ÚJ: Három további átírási szolgáltató — ElevenLabs Scribe, Deepgram és AssemblyAI. ☁️\n• ÚJ: Klasszikus diktálási elrendezés — a Dictate 3 billentyűzet nélküli hangképernyője visszatért, rögzítve vagy egy húzásnyira. 🎙️\n• ÚJ: Közösségi prompt-könyvtár — böngésszen és osszon meg újrafogalmazási prompteket. 📚\n• ÚJ: Diktálási statisztikák mérföldkövekkel. 📊\n• ÚJ: Offline modell NVIDIA Parakeet, valamint egy csendszűrő, amely kihagyja az üres felvételeket. 📴\n• Továbbá: stabilabb lebegő gomb, gondolkodási erőfeszítés vezérlése, haptikus visszajelzés, új E-Reader téma és több tucat javítás. 🛠️</string>
+    <string name="media__tab__gifs">GIF-ek</string>
+    <string name="prefs__media__gif__title">GIF-ek</string>
+    <string name="prefs__media__gif_enabled">GIF-keresés engedélyezése</string>
+    <string name="prefs__media__gif_enabled__summary">GIF-ek keresése és beszúrása a KLIPY segítségével</string>
+    <string name="prefs__media__gif_setup__title">GIF-keresés beállítása</string>
+    <string name="prefs__media__gif_setup__summary_set">KLIPY API-kulcs elmentve</string>
+    <string name="prefs__media__gif_setup__summary_unset">Koppintson ide az ingyenes KLIPY API-kulcs hozzáadásához</string>
+    <string name="prefs__media__gif_setup__intro">A GIF-eket a KLIPY, egy ingyenes szolgáltatás biztosítja. Csak a saját ingyenes kulcsodra van szükséged — mindössze egy percet vesz igénybe:</string>
+    <string name="prefs__media__gif_setup__step1">Nyisd meg a KLIPY Partner Panelt — ha még nincs fiókod, a rendszer felkér egy ingyenes létrehozására.</string>
+    <string name="prefs__media__gif_setup__step2">Az API Keys oldalon hozz létre egy API-kulcsot.</string>
+    <string name="prefs__media__gif_setup__step3">Másold ki a kulcsot, és illeszd be az alábbi mezőbe.</string>
+    <string name="prefs__media__gif_setup__open_klipy">KLIPY Partner Panel megnyitása</string>
+    <string name="prefs__media__gif_setup__key_label">KLIPY API-kulcs</string>
+    <string name="prefs__media__gif_setup__privacy_note">A keresési kifejezéseidet csak akkor küldjük el a KLIPY-nek, amíg a GIF-panel nyitva van — soha nem diktálás közben.</string>
+    <string name="gif__search_placeholder">Keresés a KLIPY-ben</string>
+    <string name="gif__powered_by">A KLIPY szolgáltatásával</string>
+    <string name="gif__no_results">Nem található GIF</string>
+    <string name="gif__error">Nem sikerült betölteni a GIF-eket. Ellenőrizd a kapcsolatot és az API-kulcsot.</string>
+    <string name="gif__setup_needed">Adj hozzá egy ingyenes KLIPY API-kulcsot a Beállításokban a GIF-ek kereséséhez</string>
+    <string name="gif__setup_needed_action">GIF-keresés beállítása</string>
+    <string name="gif__copied_to_clipboard">GIF a vágólapra másolva — a beillesztéshez tartsd lenyomva</string>
+    <string name="gif__insert_failed">Nem sikerült beszúrni a GIF-et</string>
+    <string name="quick_action__ime_ui_mode_gif">GIF</string>
+    <string name="quick_action__ime_ui_mode_gif__tooltip">GIF-ek keresése</string>
+    <string name="dictate__legacy_action_select_all">Összes kijelölése</string>
+    <string name="dictate__legacy_action_undo">Visszavonás</string>
+    <string name="dictate__legacy_action_redo">Újra</string>
+    <string name="dictate__legacy_action_cut">Kivágás</string>
+    <string name="dictate__legacy_action_copy">Másolás</string>
+    <string name="dictate__legacy_action_paste">Beillesztés</string>
+    <string name="dictate__legacy_action_emoji">Emoji</string>
+    <string name="dictate__legacy_action_numbers">Számok</string>
+    <string name="dictate__legacy_action_language">Nyelv</string>
+    <string name="dictate__legacy_action_history">Előzmények</string>
+    <string name="dictate__legacy_action_reinsert">Újra beszúrás</string>
+    <string name="dictate__legacy_action_gif">GIF</string>
+    <string name="dictate__legacy_action_switch">Billentyűzetváltás</string>
+    <string name="dictate__legacy_enter_chars_title">Az Enter billentyű karakterei</string>
+    <string name="dictate__legacy_enter_chars_summary">Tartsa lenyomva az Enter billentyűt, majd húzza balra vagy jobbra a karakterek egyikének kiválasztásához, és engedje el a beszúráshoz.</string>
+    <string name="dictate__legacy_enter_chars_label">Karakterek (legfeljebb 8)</string>
+    <string name="dictate__legacy_action_row_title">Műveletsor gombjai</string>
+    <string name="dictate__legacy_action_row_summary">Húzással rendezheti el a gombokat a klasszikus elrendezés műveletsorában</string>
+    <string name="dictate__legacy_action_row_add">Gomb hozzáadása</string>
+    <string name="dictate__legacy_action_row_full">Előbb távolítson el egy gombot ennek hozzáadásához</string>
+    <string name="dictate__legacy_action_row_remove">Eltávolítás</string>
+    <string name="dictate__legacy_action_row_drag">Húzza az átrendezéshez</string>
+    <string name="dictate__legacy_action_row_reset">Visszaállítás alapértelmezettre</string>
+    <string name="dictate__legacy_prompt_rows_title">Prompt sorok</string>
+    <string name="dictate__legacy_prompt_rows_one">Egy sor</string>
+    <string name="dictate__legacy_prompt_rows_two">Két sor</string>
 </resources>

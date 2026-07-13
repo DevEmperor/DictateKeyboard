@@ -74,6 +74,7 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -195,6 +196,11 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val lifecycleOwner = LocalLifecycleOwner.current
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
+    val extensionManager by context.extensionManager()
+
+    // Installed downloadable dictionaries (language packs), read reactively so the missing-dictionary
+    // banner below disappears the moment the required one is installed (issue #123).
+    val installedLanguagePacks by extensionManager.languagePacks.collectAsState()
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
     val composers by keyboardManager.resources.composers.collectAsState()
@@ -295,6 +301,50 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
     content {
         Column(modifier = Modifier.padding(8.dp)) {
+            // Missing-dictionary warning (issue #123): some subtypes (e.g. Japanese/CJK) rely on the
+            // shape-based NLP provider, whose word suggestion / Romaji→Kana conversion silently does
+            // nothing until the matching downloadable dictionary (a language pack) is installed. Detect
+            // that state and offer a one-tap jump to the download screen, so it no longer looks broken.
+            val needsMissingLanguagePack = nlpProviders.suggestion == HanShapeBasedLanguageProvider.ProviderId &&
+                primaryLocale != SelectLocale &&
+                installedLanguagePacks.none { pack ->
+                    pack.items.any { it.locale.language == primaryLocale.language }
+                }
+            if (needsMissingLanguagePack) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = stringRes(R.string.settings__localization__subtype_missing_language_pack_title),
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = stringRes(R.string.settings__localization__subtype_missing_language_pack_message),
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            modifier = Modifier.align(Alignment.End),
+                            onClick = {
+                                navController.navigate(
+                                    Routes.Settings.LanguagePackManager(LanguagePackManagerScreenAction.MANAGE),
+                                )
+                            },
+                        ) {
+                            Text(stringRes(R.string.settings__localization__subtype_missing_language_pack_action))
+                        }
+                    }
+                }
+            }
             if (id == null) {
                 Card(modifier = Modifier
                     .fillMaxWidth()

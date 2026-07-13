@@ -1,7 +1,11 @@
 /*
- * Copyright (C) 2026 The Dictate Contributors
+ * Copyright (C) 2026 DevEmperor (Dictate)
  *
- * Licensed under the Apache License, Version 2.0 (the "License").
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  */
 
 package net.devemperor.dictate.wear.audio
@@ -77,9 +81,19 @@ class WearAudioRecorder(private val context: Context) {
         outputFile = file
         raf = out
         record = recorder
-        recording = true
         paused = false
-        recorder.startRecording()
+        try {
+            recorder.startRecording()
+        } catch (t: Throwable) {
+            record = null
+            raf = null
+            outputFile = null
+            runCatching { out.close() }
+            file.delete()
+            runCatching { recorder.release() }
+            throw t
+        }
+        recording = true
         thread = Thread {
             val buf = ByteArray(bufferSize)
             while (recording) {
@@ -132,7 +146,7 @@ class WearAudioRecorder(private val context: Context) {
         recording = false
         val recorder = record
         runCatching { recorder?.stop() }
-        thread?.join()
+        runCatching { thread?.join() }
         thread = null
         runCatching { recorder?.release() }
         record = null
@@ -170,7 +184,7 @@ class WearAudioRecorder(private val context: Context) {
         recording = false
         val recorder = record
         runCatching { recorder?.stop() }
-        thread?.join()
+        runCatching { thread?.join() }
         thread = null
         runCatching { recorder?.release() }
         record = null

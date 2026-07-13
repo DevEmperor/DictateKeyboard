@@ -3,4 +3,8 @@
     <cache-path
         name="backup"
         path="backup-and-restore/"/>
+    <!-- Downloaded GIFs/stickers served to the target app via the Commit Content API. -->
+    <cache-path
+        name="gif_media"
+        path="gif-media/"/>
 </paths>

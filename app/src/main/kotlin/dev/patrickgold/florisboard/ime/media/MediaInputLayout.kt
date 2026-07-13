@@ -80,7 +80,8 @@ fun MediaInputLayout(
         elementName = FlorisImeUi.Media.elementName,
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.imeUiHeight()),
+            // Lock to the normal keyboard height so opening emoji never changes the IME height (no jump).
+            .height(FlorisImeSizing.panelUiHeight()),
     ) {
         EmojiPaletteView(
             modifier = Modifier.weight(1f),

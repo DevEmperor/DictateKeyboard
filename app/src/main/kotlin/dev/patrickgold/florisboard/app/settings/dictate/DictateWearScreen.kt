@@ -16,8 +16,10 @@ import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Shop
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.util.launchUrl
@@ -50,6 +52,7 @@ fun DictateWearScreen() = FlorisScreen {
         // Wear OS 3+ / API 30 — older Tizen Galaxy watches can't run Wear OS apps at all).
         Preference(
             icon = Icons.Default.Shop,
+            modifier = Modifier.settingsSearchAnchor("dictate__wear_install_title"),
             title = stringRes(R.string.dictate__wear_install_title),
             summary = stringRes(R.string.dictate__wear_install_summary),
             onClick = {
@@ -59,12 +62,14 @@ fun DictateWearScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.wearStandaloneEnabled,
             icon = Icons.Default.Key,
+            modifier = Modifier.settingsSearchAnchor("dictate__wear_standalone_title"),
             title = stringRes(R.string.dictate__wear_standalone_title),
             summary = stringRes(R.string.dictate__wear_standalone_summary),
         )
         SwitchPreference(
             prefs.dictate.wearAutoRewordingEnabled,
             icon = Icons.Default.AutoFixHigh,
+            modifier = Modifier.settingsSearchAnchor("dictate__wear_auto_rewording_title"),
             title = stringRes(R.string.dictate__wear_auto_rewording_title),
             summary = stringRes(R.string.dictate__wear_auto_rewording_summary),
         )

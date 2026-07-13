@@ -20,7 +20,9 @@ import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -51,6 +53,7 @@ fun DictateProxyScreen() = FlorisScreen {
         SwitchPreference(
             prefs.dictate.proxyEnabled,
             icon = Icons.Default.Lan,
+            modifier = Modifier.settingsSearchAnchor("dictate__proxy_enabled_title"),
             title = stringRes(R.string.dictate__proxy_enabled_title),
             summary = stringRes(R.string.dictate__proxy_enabled_summary),
         )
@@ -60,6 +63,7 @@ fun DictateProxyScreen() = FlorisScreen {
                 ListPreference(
                     prefs.dictate.proxyType,
                     icon = Icons.Default.Router,
+                    modifier = Modifier.settingsSearchAnchor("dictate__proxy_type_title"),
                     title = stringRes(R.string.dictate__proxy_type_title),
                     entries = listPrefEntries {
                         entry(
@@ -105,6 +109,7 @@ fun DictateProxyScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.dictate.trustUserCertificates,
                 icon = Icons.Default.VerifiedUser,
+                modifier = Modifier.settingsSearchAnchor("dictate__trust_user_certs_title"),
                 title = stringRes(R.string.dictate__trust_user_certs_title),
                 summary = stringRes(R.string.dictate__trust_user_certs_summary),
             )

@@ -24,12 +24,15 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
+import dev.patrickgold.florisboard.dictate.DictateLongformMode
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
+import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
+import dev.patrickgold.florisboard.dictate.gif.GifHistory
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
@@ -460,6 +463,20 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__realtime_transcription",
             default = false,
         )
+        // --- Long-form segmented dictation (issue #170) ------------------------------------------
+        // Transcribe long dictations segment-by-segment in the background while you keep talking, so you
+        // don't wait for one big upload at the end. OFF by default; MANUAL shows the "Next" button, AUTO
+        // additionally cuts at speech pauses. Keyboard-only, not for realtime / live-prompt / multimodal.
+        val longformMode = enum(
+            key = "dictate__longform_mode",
+            default = DictateLongformMode.OFF,
+        )
+        // Pause length (whole seconds) that triggers an auto-cut in AUTO mode; deliberately long so it
+        // fires on thought-breaks, not breathing pauses.
+        val longformAutoSplitSeconds = int(
+            key = "dictate__longform_auto_split_seconds",
+            default = 3,
+        )
         // Speed of the typewriter animation when instantOutput is off (1 = slow … 10 = fast).
         val outputSpeed = int(
             key = "dictate__output_speed",
@@ -657,6 +674,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__rewording_reasoning_effort",
             default = DictateReasoningEffort.OFF,
         )
+        // The wire value sent as `reasoning_effort` when the setting is CUSTOM (issue #186), e.g. a value
+        // a specific provider expects. Blank → the field is omitted.
+        val rewordingReasoningEffortCustom = string(
+            key = "dictate__rewording_reasoning_effort_custom",
+            default = "",
+        )
         // How the rewording prompt chips are surfaced: a dedicated panel (PANEL) opened from the
         // Smartbar, or an always-on extra row pinned above the Smartbar (ROW). See DictatePromptsLayout.
         // Defaults to ROW so the prompts are immediately visible; existing users are moved to ROW once via
@@ -671,6 +694,24 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val legacyLayout = enum(
             key = "dictate__legacy_layout",
             default = DictateLegacyLayout.OFF,
+        )
+        // Configurable legacy action row (#183/#194): comma-separated LegacyEditAction names, arranged by
+        // the user via drag-and-drop. Default reproduces the original fixed row.
+        val legacyActionRow = string(
+            key = "dictate__legacy_action_row",
+            default = "SELECT_ALL,UNDO,REDO,CUT,COPY,PASTE,EMOJI,NUMBERS",
+        )
+        // How many rows of prompt/revision buttons the legacy prompt strip shows (1 or 2, issue #194/#8).
+        val legacyPromptRows = int(
+            key = "dictate__legacy_prompt_rows",
+            default = 1,
+        )
+        // Characters offered by the classic layout's Enter-key long-press popup (#196): hold Enter, swipe
+        // left/right to pick one, release to insert. Up to 8 individual characters (whitespace ignored);
+        // empty disables the popup so Enter just inserts a newline as usual.
+        val enterLongPressChars = string(
+            key = "dictate__enter_long_press_chars",
+            default = ".,?!:;-…",
         )
         // Chat (rewording) provider id – any chat-capable ProviderRegistry id ("openai", "groq",
         // "openrouter", … or "custom"). Independent from the transcription provider.
@@ -806,6 +847,34 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val suggestionCandidateMaxCount = int(
             key = "emoji__suggestion_candidate_max_count",
             default = 5,
+        )
+    }
+
+    val gif = Gif()
+    inner class Gif {
+        val enabled = boolean(
+            key = "gif__enabled",
+            default = false,
+        )
+        // Bring-your-own KLIPY API key (see KlipyGifProvider). Empty = GIF search disabled.
+        val klipyApiKey = string(
+            key = "gif__klipy_api_key",
+            default = "",
+        )
+        val contentFilter = enum(
+            key = "gif__content_filter",
+            default = GifContentFilter.HIGH,
+        )
+        // Stable per-install id sent to KLIPY for relevance/localization (generated on first use).
+        val customerId = string(
+            key = "gif__customer_id",
+            default = "",
+        )
+        // Recently searched terms + recently inserted GIFs, for quick re-access.
+        val history = custom(
+            key = "gif__history",
+            default = GifHistory.Empty,
+            serializer = GifHistory.Serializer,
         )
     }
 
@@ -982,6 +1051,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val openFloatingButtonAfterSetup = boolean(
             key = "internal__open_floating_button_after_setup",
             default = false,
+        )
+        // Newline-separated most-recent settings-search queries (newest first), for the search screen's
+        // recent-search chips (issue #187).
+        val settingsSearchHistory = string(
+            key = "internal__settings_search_history",
+            default = "",
         )
         val versionOnInstall = string(
             key = "internal__version_on_install",
@@ -1227,6 +1302,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val autoCorrect = boolean(
             key = "suggestion__auto_correct",
             default = true,
+        )
+        // Multilingual typing (issue #190): accept words from every configured keyboard language, not just
+        // the active one, so a bilingual's second-language words aren't flagged as typos or autocorrected
+        // away. Opt-in; leaves single-language behavior unchanged when off.
+        val multilingualTyping = boolean(
+            key = "suggestion__multilingual_typing",
+            default = false,
         )
         val displayMode = enum(
             key = "suggestion__display_mode",

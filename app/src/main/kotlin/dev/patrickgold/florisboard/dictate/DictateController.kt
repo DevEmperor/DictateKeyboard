@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
+import dev.patrickgold.florisboard.dictate.audio.LiveSpeechSplitter
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
@@ -72,6 +73,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.NumberFormat
@@ -234,6 +237,33 @@ object DictateController {
     private var realtimePreviewLastFlushMs = 0L
     @Volatile private var realtimeCancelled = false   // block late stream callbacks from re-adding text
 
+    // --- Long-form segmented dictation (issue #170) ---------------------------------------------
+    // Segmented mode transcribes cut segments in the background while recording continues, appending raw
+    // text to the field as a live preview (reusing [realtimeShown] as the shown-text buffer, since
+    // segmented and realtime are mutually exclusive). All formatting/rewording runs ONCE at the end via
+    // finalizeAndCommit(finalizeViaComposing=true), which replaces the preview with the finished text.
+    private var segmentedActive = false
+    private var segmentNextIndex = 0          // next index to assign to a cut segment (cut order)
+    private var segmentCommitIndex = 0        // next index expected by the ordered commit drain
+    private val segmentResults = HashMap<Int, String>()  // index -> raw text, buffered until in-order
+    private val segmentJobs = mutableSetOf<Job>()
+    private val segmentMutex = Mutex()        // orders index assignment + rotate + the commit drain
+    private var segmentInFlightCount = 0      // segments cut but not yet committed
+    private var segmentStopped = false        // stop requested; finish once the queue drains
+    private var segmentRecordedSeconds = 0L
+    private var segmentVad: LiveSpeechSplitter? = null  // live VAD auto-split, when enabled (Phase 2)
+    private val segmentAudioFiles = HashMap<Int, File>()  // kept segment WAVs (index -> file) for history merge
+    private var segmentKeepAudio = false                  // whether to keep + merge segment audio (retention on)
+    private val _segmentFlushCount = MutableStateFlow(0)
+    /** Monotonic count of segment cuts — the recording bar flashes the Next button on each change (#170). */
+    val segmentFlushCount: StateFlow<Int> = _segmentFlushCount.asStateFlow()
+    private val _segmentedRecording = MutableStateFlow(false)
+    /** True while a long-form segmented recording is active — drives the "Next segment" button (#170). */
+    val segmentedRecording: StateFlow<Boolean> = _segmentedRecording.asStateFlow()
+    private val _segmentsInFlight = MutableStateFlow(0)
+    /** How many cut segments are transcribing in the background — drives the recording-bar badge (#170). */
+    val segmentsInFlight: StateFlow<Int> = _segmentsInFlight.asStateFlow()
+
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
 
@@ -250,6 +280,11 @@ object DictateController {
 
     /** The in-flight transcription coroutine, cancellable via the stop button (see [cancelTranscription]). */
     private var transcribeJob: Job? = null
+
+    // The in-flight manual rewording coroutine (a prompt chip / "Send"), so the stop button can abort it
+    // mid-generation (issue #192). The post-transcription rewording chain instead runs inside
+    // [transcribeJob]; [cancelRewording] cancels whichever is active.
+    private var rewordJob: Job? = null
 
     private var audioManager: AudioManager? = null
     private var focusRequest: AudioFocusRequest? = null
@@ -374,10 +409,10 @@ object DictateController {
     fun onMicClick(context: Context, target: OutputTarget = OutputTarget.IME) {
         when (_state.value) {
             is UiState.Recording -> stopAndTranscribe(context)
-            // Tapping the mic while transcribing aborts it (the button shows a stop icon, see the
-            // ComputingEvaluator). Rewording stays a no-op.
+            // Tapping the mic while transcribing or rewording aborts it (the button shows a stop icon,
+            // see the ComputingEvaluator) — e.g. after accidentally sending a prompt (issue #192).
             is UiState.Transcribing -> cancelTranscription()
-            is UiState.Rewording -> Unit
+            is UiState.Rewording -> cancelRewording()
             else -> {
                 outputTarget = target
                 startRecording(context)
@@ -540,6 +575,14 @@ object DictateController {
         startJob = null
         recorder?.cancel()
         recorder = null
+        // Long-form segmented (#170): abort the background segment transcriptions; the realtime cleanup
+        // below removes the progressively-shown preview text (segmented reuses realtimeShown/Context).
+        if (segmentedActive) {
+            segmentJobs.forEach { it.cancel() }
+            segmentJobs.clear()
+            segmentAudioFiles.values.forEach { runCatching { it.delete() } }
+            resetSegmentedState()
+        }
         // Tear down any realtime stream (#128) and remove the live provisional text from the field. Set the
         // cancelled flag first so any stream callback still queued on the main thread can't re-add the text.
         realtimeCancelled = true
@@ -619,6 +662,23 @@ object DictateController {
     }
 
     /**
+     * Aborts an in-flight rewording (the stop button shown on the mic while rewording, issue #192).
+     * Covers both a manually applied prompt ([rewordJob]) and the post-transcription / live-prompt
+     * rewording chain that runs inside [transcribeJob]. Cancelling before the model answer is committed
+     * leaves the field untouched — for a "reword the selection" prompt the original text stays selected
+     * and intact. No-op outside the rewording state.
+     */
+    fun cancelRewording() {
+        if (_state.value !is UiState.Rewording) return
+        rewordJob?.cancel()
+        rewordJob = null
+        transcribeJob?.cancel()
+        transcribeJob = null
+        _pendingPrompts.value = emptyList()
+        _state.value = UiState.Idle
+    }
+
+    /**
      * Starts a recording. [seedAccumulatedMs] pre-fills the elapsed timer (and the credited length) with
      * already-captured audio when continuing an interrupted recording, so the bar shows the running
      * total; it is 0 for a normal recording.
@@ -641,16 +701,33 @@ object DictateController {
                 reconcileActiveLanguage()
                 requestAudioFocusIfEnabled(appContext)
                 val audioSource = setupBluetoothIfEnabled(appContext)
-                // Real-time (#128): open a streaming session and stream mic PCM to it; null → normal batch.
-                // The WAV is written in parallel either way (fallback / resend / interrupted flows).
-                val pcmSink = openRealtimeSession(appContext)
+                // Long-form segmented dictation (#170): transcribe cut segments in the background while
+                // recording continues. Off for realtime / live-prompt / overlay / multimodal (see the gate).
+                val segmented = isSegmentedMode()
+                // Auto-split (Phase 2): a live VAD watches the mic and cuts a segment on a long pause.
+                segmentVad?.release()
+                segmentVad = if (segmented && prefs.dictate.longformMode.get() == DictateLongformMode.AUTO) {
+                    LiveSpeechSplitter(
+                        appContext,
+                        prefs.dictate.longformAutoSplitSeconds.get() * 1000,
+                    ) { flushSegment(appContext) }.also { it.start() }
+                } else null
+                // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
+                val pcmSink: ((ByteArray, Int) -> Unit)? = when {
+                    !segmented -> openRealtimeSession(appContext)
+                    segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
+                    else -> null
+                }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
                 _livePromptActive.value = livePromptArmed
+                if (segmented) initSegmented(appContext)
                 registerScreenOffReceiver(appContext)
             } catch (t: Throwable) {
                 recorder = null
+                segmentVad?.release()
+                segmentVad = null
                 _livePromptActive.value = false
                 cleanupAudioRouting()
                 _state.value = UiState.Error(
@@ -662,6 +739,11 @@ object DictateController {
     }
 
     private fun stopAndTranscribe(context: Context) {
+        // Long-form segmented (#170): finish the segment queue instead of uploading one big file.
+        if (segmentedActive) {
+            stopSegmentedAndFinalize(context)
+            return
+        }
         // Real-time recording (#128): finalize the stream instead of uploading the whole file.
         if (realtimeSession != null) {
             stopRealtimeAndFinalize(context)
@@ -1237,6 +1319,276 @@ object DictateController {
                     _state.value = UiState.Error(appContext.getString(R.string.dictate__error_unknown))
                 }
             }
+        }
+    }
+
+    // --- Long-form segmented dictation (issue #170) ---------------------------------------------
+
+    /**
+     * Whether the next recording should run in segmented mode: the feature is on, output goes to the
+     * keyboard (not the accessibility overlay), it's not a live-prompt recording, realtime streaming is
+     * not active, and the provider isn't in single-call multimodal mode (which would format per segment).
+     */
+    private fun isSegmentedMode(): Boolean =
+        prefs.dictate.longformMode.get().isEnabled &&
+            outputTarget == OutputTarget.IME &&
+            !livePromptArmed &&
+            !isRealtimeActive() &&
+            !transcriptionAccount().transcriptionViaChat
+
+    private fun initSegmented(appContext: Context) {
+        segmentedActive = true
+        segmentNextIndex = 0
+        segmentCommitIndex = 0
+        segmentResults.clear()
+        segmentAudioFiles.clear()
+        segmentInFlightCount = 0
+        segmentStopped = false
+        segmentRecordedSeconds = 0L
+        _segmentFlushCount.value = 0
+        // Keep + merge the segment audio only when the history feature would actually store it.
+        segmentKeepAudio = prefs.dictate.historyEnabled.get() && prefs.dictate.historyAudioRetention.get()
+        realtimeShown.setLength(0)
+        // Reuse the realtime shown-text context so the existing cancel/interrupt cleanup clears the preview.
+        realtimeContext = appContext
+        realtimeCancelled = false
+        _segmentsInFlight.value = 0
+        _segmentedRecording.value = true
+    }
+
+    private fun resetSegmentedState() {
+        segmentedActive = false
+        segmentNextIndex = 0
+        segmentCommitIndex = 0
+        segmentResults.clear()
+        segmentAudioFiles.clear() // files themselves are deleted by finalize/cancel, not here
+        segmentInFlightCount = 0
+        segmentStopped = false
+        segmentVad?.release()
+        segmentVad = null
+        _segmentsInFlight.value = 0
+        _segmentedRecording.value = false
+    }
+
+    /**
+     * Cuts the current segment and keeps recording (the "Next segment" button, issue #170). The cut audio
+     * is transcribed in the background and its raw text appended to the field in order. No-op unless a
+     * segmented recording is actually in progress.
+     */
+    fun flushSegment(context: Context) {
+        if (!segmentedActive || _state.value !is UiState.Recording) return
+        val appContext = context.applicationContext
+        scope.launch {
+            val assigned = segmentMutex.withLock {
+                if (!segmentedActive || _state.value !is UiState.Recording) return@withLock null
+                val i = segmentNextIndex++
+                val w = withContext(Dispatchers.IO) { recorder?.rotate() }
+                if (segmentKeepAudio && w != null && w.exists() && w.length() > 0L) segmentAudioFiles[i] = w
+                segmentInFlightCount++
+                _segmentsInFlight.value = segmentInFlightCount
+                _segmentFlushCount.value = _segmentFlushCount.value + 1
+                i to w
+            } ?: return@launch
+            val (idx, wav) = assigned
+            segmentVad?.notifyCut() // require fresh speech before the next auto-cut
+            if (wav != null && wav.exists() && wav.length() > 0L) {
+                launchSegmentTranscription(appContext, idx, wav)
+            } else {
+                // Nothing captured since the last cut (e.g. a double tap): keep the index sequence
+                // contiguous so the ordered drain never stalls.
+                onSegmentResult(appContext, idx, "")
+            }
+        }
+    }
+
+    /**
+     * Cancel-button behaviour: in long-form mode, tapping the trash button ends the recording but keeps
+     * everything transcribed so far — the already-committed segments are finalized and saved to history as
+     * usual; only the current, not-yet-cut chunk is thrown away instead of being transcribed (#183).
+     * Outside long-form it aborts the whole recording ([cancelRecording]). Used by both the Smartbar and
+     * the legacy layout so the trash button behaves consistently.
+     */
+    fun cancelOrDiscardSegment(context: Context) {
+        if (segmentedActive && _state.value is UiState.Recording) {
+            stopSegmentedAndFinalize(context, discardFinal = true)
+        } else {
+            cancelRecording()
+        }
+    }
+
+    /**
+     * Stops a segmented recording: cuts the final open segment, then finishes once every queued segment
+     * has transcribed and been committed in order — at which point the whole assembled transcript runs
+     * through the normal post-processing once (auto-format + prompts + mappings) and replaces the preview.
+     *
+     * [discardFinal] (the cancel button, #183) throws the final open chunk away instead of transcribing it,
+     * so the session still finalizes + saves to history with everything captured up to the last cut, but
+     * the current unfinished utterance is dropped.
+     */
+    private fun stopSegmentedAndFinalize(context: Context, discardFinal: Boolean = false) {
+        val appContext = context.applicationContext
+        _livePromptActive.value = false
+        unregisterScreenOffReceiver()
+        segmentRecordedSeconds = recordedSecondsOf(_state.value)
+        _segmentedRecording.value = false
+        _state.value = UiState.Transcribing()
+        scope.launch {
+            val assigned = segmentMutex.withLock {
+                val i = segmentNextIndex++
+                val activeRecorder = recorder
+                recorder = null
+                val w = withContext(Dispatchers.IO) { activeRecorder?.stop() }
+                cleanupAudioRouting()
+                if (discardFinal) {
+                    // Deleted chunk: drop its audio so it lands in neither the transcript nor the history WAV.
+                    withContext(Dispatchers.IO) { runCatching { w?.delete() } }
+                } else if (segmentKeepAudio && w != null && w.exists() && w.length() > 0L) {
+                    segmentAudioFiles[i] = w
+                }
+                segmentStopped = true
+                segmentInFlightCount++
+                _segmentsInFlight.value = segmentInFlightCount
+                i to w
+            }
+            val (idx, wav) = assigned
+            if (!discardFinal && wav != null && wav.exists() && wav.length() > 0L) {
+                launchSegmentTranscription(appContext, idx, wav)
+            } else {
+                onSegmentResult(appContext, idx, "")
+            }
+        }
+    }
+
+    private fun launchSegmentTranscription(appContext: Context, idx: Int, wav: File) {
+        val job = scope.launch {
+            // Best-effort cross-segment continuity: bias the recognizer with what's committed so far.
+            val continuity = realtimeShown.toString()
+            // One retry before giving up; a still-failed segment leaves a gap (no placeholder), but its
+            // audio is preserved in the merged history WAV so nothing is truly lost.
+            val text = transcribeSegmentRaw(appContext, wav, continuity)
+                ?: transcribeSegmentRaw(appContext, wav, continuity)
+            // Keep the WAV when it will be merged into the history audio; otherwise drop it now.
+            if (!segmentKeepAudio) withContext(Dispatchers.IO) { runCatching { wav.delete() } }
+            onSegmentResult(appContext, idx, text ?: "")
+        }
+        segmentJobs.add(job)
+        job.invokeOnCompletion { segmentJobs.remove(job) }
+    }
+
+    /**
+     * Buffers a finished segment's raw text and drains the ordered commit queue: appends every now-in-order
+     * segment to the field's live preview. When the last segment lands after a stop, runs the end finalize.
+     */
+    private suspend fun onSegmentResult(appContext: Context, idx: Int, text: String) {
+        val shouldFinish = segmentMutex.withLock {
+            segmentResults[idx] = text
+            while (segmentResults.containsKey(segmentCommitIndex)) {
+                val raw = segmentResults.remove(segmentCommitIndex)!!.trim()
+                segmentCommitIndex++
+                if (raw.isNotEmpty()) {
+                    val prev = realtimeShown.toString()
+                    val full = if (prev.isEmpty()) raw else "$prev $raw"
+                    runCatching { sink(appContext).setDictationPreview(full, prev) }
+                    realtimeShown.setLength(0)
+                    realtimeShown.append(full)
+                }
+            }
+            segmentInFlightCount--
+            _segmentsInFlight.value = segmentInFlightCount.coerceAtLeast(0)
+            segmentStopped && segmentInFlightCount <= 0
+        }
+        if (shouldFinish) finalizeSegmentedEnd(appContext)
+    }
+
+    /**
+     * All segments are in and committed as a raw preview; run the whole dictation through the normal
+     * post-processing once and replace the preview with the finished (formatted/reworded) text.
+     */
+    private suspend fun finalizeSegmentedEnd(appContext: Context) {
+        val account = transcriptionAccount()
+        val preset = presetFor(account)
+        val model = account.transcriptionModel.takeIf { it.isNotBlank() }
+            ?: preset.defaultTranscriptionModel ?: ""
+        val assembled = realtimeShown.toString().trim()
+        val recordedSeconds = segmentRecordedSeconds
+        // Snapshot the kept segment files (in cut order) before resetting; merge them into one WAV so the
+        // whole dictation has a single retained-audio file in the history (issue #170 / #140 reuse).
+        val keepAudio = segmentKeepAudio
+        val audioFiles = segmentAudioFiles.toSortedMap().values.filter { it.exists() && it.length() > 0L }
+        resetSegmentedState()
+        val mergedWav = if (keepAudio && audioFiles.isNotEmpty()) {
+            val merged = File(appContext.cacheDir, "dictate_seg_merged.wav")
+            merged.delete()
+            if (withContext(Dispatchers.IO) { AudioConcat.concat(audioFiles, merged) } && merged.exists() && merged.length() > 0L) merged else null
+        } else null
+        withContext(Dispatchers.IO) { audioFiles.forEach { runCatching { it.delete() } } }
+        if (assembled.isEmpty()) {
+            runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
+            realtimeShown.setLength(0)
+            mergedWav?.delete()
+            _state.value = UiState.Idle
+            return
+        }
+        val capture = HistoryCapture(
+            audioFile = mergedWav, // the merged segment audio, or null when retention is off
+            providerId = account.providerId,
+            providerName = account.displayName.ifBlank { preset.displayName },
+            model = model,
+            language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT } ?: "",
+            source = DictateHistorySource.KEYBOARD,
+        )
+        finalizeAndCommit(
+            appContext, assembled, recordedSeconds, live = false,
+            alreadyFormatted = false, finalizeViaComposing = true, capture = capture,
+        )
+        mergedWav?.delete() // history already copied it during finalize
+    }
+
+    /**
+     * Transcribes one cut segment to RAW text (no formatting/rewording — that runs once at the end). Uses
+     * the dedicated STT endpoint (never the multimodal chat path, which would format), with the offline
+     * on-device fallback. Returns null on failure (the segment is dropped, keeping the sequence contiguous).
+     */
+    private suspend fun transcribeSegmentRaw(appContext: Context, wav: File, continuity: String): String? {
+        // Silence gate (issue #93): skip a segment that is just silence — e.g. the trailing pause before a
+        // cut/stop — so the model can't hallucinate ghost text ("Vielen Dank" / "Thanks for watching")
+        // from it. Fails open (transcribes) if the check can't run, so real speech is never dropped.
+        if (prefs.dictate.skipSilentRecordings.get() && !SpeechGate.hasSpeech(appContext, wav)) return null
+        val account = transcriptionAccount()
+        val apiKey = account.apiKey
+        val preset = presetFor(account)
+        val model = account.transcriptionModel.takeIf { it.isNotBlank() }
+            ?: preset.defaultTranscriptionModel ?: "gpt-4o-mini-transcribe"
+        val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
+        val style = transcriptionStylePrompt()
+        val prompt = continuity.takeLast(200).trim().let { if (it.isEmpty()) style else "$it $style".trim() }
+        val request = TranscriptionRequest(audioFile = wav, model = model, language = language, prompt = prompt)
+        return try {
+            val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
+                if (!LocalModelManager.isInstalled(appContext, model)) return null
+                withContext(Dispatchers.IO) {
+                    LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model)).transcribe(request)
+                }
+            } else {
+                if (apiKey.isBlank() && requiresKey(account)) return null
+                try {
+                    OpenAiCompatibleClient.from(
+                        preset, apiKey,
+                        baseUrlOverride = baseUrlOverrideFor(account),
+                        proxy = prefs.dictate.dictateProxyConfig(),
+                        useChatAudio = false,
+                        trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                    ).transcribe(request)
+                } catch (e: DictateApiException) {
+                    val fallback = localFallbackProvider(appContext, preset, e) ?: throw e
+                    fallback.transcribe(request)
+                }
+            }
+            result.text
+        } catch (c: CancellationException) {
+            throw c
+        } catch (t: Throwable) {
+            null
         }
     }
 
@@ -1970,12 +2322,15 @@ object DictateController {
         }
 
         _state.value = UiState.Rewording(prompt.name ?: appContext.getString(R.string.dictate__status_rewording))
-        scope.launch {
+        // Store the job so the stop button can abort this reword mid-generation (issue #192).
+        rewordJob = scope.launch {
             try {
-                val text = requestReword(raw, input, prompt.reasoningEffort)
+                val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 sink.commitText(text)
                 _state.value = UiState.Idle
+            } catch (e: CancellationException) {
+                throw e // stop button pressed: cancelRewording already reset the state, leave the field as-is
             } catch (e: DictateApiException) {
                 _state.value = apiError(e, appContext, canResend = false)
             } catch (t: Throwable) {
@@ -1984,6 +2339,8 @@ object DictateController {
                     kind = DictateApiException.Kind.UNKNOWN,
                     detail = t.message?.takeIf { it.isNotBlank() },
                 )
+            } finally {
+                rewordJob = null
             }
         }
     }
@@ -2044,7 +2401,7 @@ object DictateController {
             if (instruction.isBlank()) continue
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             text = runCatching {
-                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort)
+                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(text)
         }
         return text
@@ -2073,7 +2430,7 @@ object DictateController {
             }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             result = runCatching {
-                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort)
+                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(result)
         }
         return result
@@ -2088,6 +2445,7 @@ object DictateController {
         instruction: String,
         input: String?,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val sys = systemPrompt()
         val content = buildString {
@@ -2095,7 +2453,7 @@ object DictateController {
             if (sys.isNotBlank()) append("\n\n").append(sys)
             if (!input.isNullOrBlank()) append("\n\n").append(input)
         }
-        return requestRewordRaw(content, reasoning)
+        return requestRewordRaw(content, reasoning, reasoningCustom)
     }
 
     /**
@@ -2105,6 +2463,7 @@ object DictateController {
     private suspend fun requestRewordRaw(
         userContent: String,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val account = rewordingAccount()
         // Blank rewording key falls back to the transcription account's key (legacy "reuse" behavior).
@@ -2120,13 +2479,22 @@ object DictateController {
             proxy = prefs.dictate.dictateProxyConfig(),
             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
         )
+        // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
+        // setting (#155). OFF → null → field omitted. CUSTOM (#186) uses a user-entered wire value —
+        // the per-prompt one when the override itself is CUSTOM, else the global custom value.
+        val effort = reasoning ?: prefs.dictate.rewordingReasoningEffort.get()
+        val reasoningWire = if (effort == DictateReasoningEffort.CUSTOM) {
+            val custom = if (reasoning == DictateReasoningEffort.CUSTOM) {
+                reasoningCustom
+            } else {
+                prefs.dictate.rewordingReasoningEffortCustom.get()
+            }
+            custom?.trim()?.ifBlank { null }
+        } else {
+            effort.wire
+        }
         val result = client.complete(
-            ChatRequest.ofUser(
-                model, userContent,
-                // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the
-                // global setting (#155). OFF → null → field omitted.
-                reasoningEffort = (reasoning ?: prefs.dictate.rewordingReasoningEffort.get()).wire,
-            ),
+            ChatRequest.ofUser(model, userContent, reasoningEffort = reasoningWire),
         ).text.trim()
         // Lifetime statistics (issue #142): every rewording/prompt pass funnels through here.
         DictateStats.recordRewording(prefs)
