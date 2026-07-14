@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import android.util.Base64OutputStream
+import android.util.Log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -40,6 +41,7 @@ import kotlin.coroutines.resumeWithException
 import java.net.Proxy
 import java.security.KeyStore
 import java.time.Duration
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
@@ -193,6 +195,11 @@ class OpenAiCompatibleClient(
         request: TranscriptionRequest,
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult {
+        val preparationStartedNanos = System.nanoTime()
+        Log.i(
+            HTTP_LOG_TAG,
+            "OpenRouter STT preparing model=${request.model} audioBytes=${request.audioFile.length()}",
+        )
         val base64 = withContext(Dispatchers.IO) {
             base64EncodeFile(request.audioFile)
         }
@@ -208,7 +215,20 @@ class OpenAiCompatibleClient(
             .headers(authHeaders())
             .post(payload.toRequestBody(JSON_MEDIA_TYPE))
             .build()
-        val body = executeForBody(httpRequest, onRetry = onRetry)
+        Log.i(
+            HTTP_LOG_TAG,
+            "OpenRouter STT prepared model=${request.model} " +
+                "prepareMs=${elapsedMillis(preparationStartedNanos)}",
+        )
+        // This is a non-idempotent, billable POST. OkHttp already retries failures that are known to be
+        // safe at the connection layer; replaying after an ambiguous timeout can create duplicate jobs
+        // and charges. Surface the failure so the user can explicitly resend instead.
+        val body = executeForBody(
+            request = httpRequest,
+            maxRetries = OPENROUTER_TRANSCRIPTION_MAX_RETRIES,
+            onRetry = onRetry,
+            diagnosticLabel = "OpenRouter STT model=${request.model}",
+        )
         val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
@@ -715,15 +735,27 @@ class OpenAiCompatibleClient(
         return builder.build()
     }
 
-    private suspend fun executeForBody(
+    internal suspend fun executeForBody(
         request: Request,
         maxRetries: Int = 3,
         onRetry: (attempt: Int) -> Unit = {},
+        diagnosticLabel: String? = null,
     ): String {
         var attempt = 0
         while (true) {
+            val startedNanos = System.nanoTime()
+            diagnosticLabel?.let {
+                Log.i(HTTP_LOG_TAG, "$it requestAttempt=${attempt + 1} started")
+            }
             try {
-                return executeOnce(request)
+                return executeOnce(request).also {
+                    diagnosticLabel?.let { label ->
+                        Log.i(
+                            HTTP_LOG_TAG,
+                            "$label requestAttempt=${attempt + 1} completedMs=${elapsedMillis(startedNanos)}",
+                        )
+                    }
+                }
             } catch (e: CancellationException) {
                 // The caller (stop button, issue #192) cancelled: [executeOnce] already aborted the
                 // OkHttp call so no more of the response is downloaded and no tokens are wasted waiting.
@@ -734,6 +766,13 @@ class OpenAiCompatibleClient(
                     is DictateApiException -> e
                     is IOException -> DictateApiException.fromIo(e)
                     else -> DictateApiException(DictateApiException.Kind.UNKNOWN, e.message, e)
+                }
+                diagnosticLabel?.let { label ->
+                    Log.w(
+                        HTTP_LOG_TAG,
+                        "$label requestAttempt=${attempt + 1} failedMs=${elapsedMillis(startedNanos)} " +
+                            "kind=${mapped.kind}",
+                    )
                 }
                 if (mapped.kind.isRetryable && attempt < maxRetries) {
                     attempt++
@@ -806,13 +845,16 @@ class OpenAiCompatibleClient(
 
     private fun extractErrorMessage(body: String): String? = parseError(body)?.message
 
-    private fun buildClient(): OkHttpClient {
+    internal fun buildClient(): OkHttpClient {
         val timeout = Duration.ofSeconds(config.timeoutSeconds)
         val builder = OkHttpClient.Builder()
             .callTimeout(timeout)
-            .connectTimeout(timeout)
+            // Connection establishment needs a short budget per route. Uploading a long recording and
+            // waiting for the model keep the full configured call/read/write timeout below.
+            .connectTimeout(NETWORK_CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .readTimeout(timeout)
             .writeTimeout(timeout)
+            .dns(Ipv4FirstDns)
         config.proxy?.let { proxy ->
             builder.proxy(proxy.toJavaProxy())
             if (proxy.type == Proxy.Type.HTTP && proxy.hasCredentials) {
@@ -1142,8 +1184,13 @@ class OpenAiCompatibleClient(
     )
 
     companion object {
+        private const val HTTP_LOG_TAG = "DictateHTTP"
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
+        internal const val OPENROUTER_TRANSCRIPTION_MAX_RETRIES = 0
+
+        private fun elapsedMillis(startedNanos: Long): Long =
+            TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedNanos)
 
         /**
          * Endpoint+model pairs known to reject `reasoning_effort` (#184/#186). Remembered for the process
