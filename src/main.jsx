@@ -11,7 +11,7 @@ import "./styles.css";
 // domain shows the maintenance page. The `website-dev` branch sets it to `false`, so its Cloudflare preview
 // shows the real site. Publishing is then just `git merge website-dev` into `website` — a fast-forward that
 // flips this to false — nothing else to toggle. Set it back to true on `website` to re-enable maintenance.
-const MAINTENANCE = true;
+const MAINTENANCE = false;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
