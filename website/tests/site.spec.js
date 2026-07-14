@@ -24,11 +24,28 @@ test("desktop conversion path, model buffet, and install routes", async ({ page 
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Stop renting your own voice." })).toBeVisible();
   await expect(page.getByRole("link", { name: /Get Dictate on Google Play/i }).first()).toHaveAttribute("href", /play\.google\.com/);
-  await expect(page.locator(".hero-fineprint")).toContainText("Free & open source");
+  await expect(page.locator(".hero-fineprint")).toContainText("No monthly Dictate subscription");
   await page.locator(".prompt-strip").getByRole("button", { name: "Translate" }).click();
   await expect(page.locator(".demo-editor p").last()).toContainText("Pouvez-vous déplacer notre réunion");
 
   await revealFullPage(page);
+
+  await page.locator("#compare").scrollIntoViewIfNeeded();
+  await expect(page.getByRole("heading", { name: /voice keyboard without the monthly gatekeeper/i })).toBeVisible();
+  await expect(page.locator("#monthly-hours")).toHaveValue("20");
+  await expect(page.locator(".savings-card-dictate")).toContainText("$2.40");
+  await expect(page.locator(".savings-card-keep")).toContainText("$12.60");
+  await expect(page.locator(".savings-verdict")).toContainText("$151.20 kept per year");
+  await page.locator("#compare").screenshot({ path: "output/playwright/savings-comparison.png", scale: "css" });
+
+  await page.locator(".reword-playground").scrollIntoViewIfNeeded();
+  await page.locator(".reword-prompts").getByRole("button", { name: "Bullets" }).click();
+  await expect(page.locator(".reword-card-output")).toContainText("Proposal: send by Friday");
+  await expect(page.locator(".capability-card")).toHaveCount(6);
+  for (const card of await page.locator(".capability-card").all()) {
+    await card.scrollIntoViewIfNeeded();
+  }
+  await page.locator(".capability-section").screenshot({ path: "output/playwright/power-features.png", scale: "css" });
 
   await page.locator("#models").scrollIntoViewIfNeeded();
   await page.getByRole("tab", { name: "Rewrite LLMs" }).click();
@@ -85,6 +102,15 @@ test("mobile navigation and responsive model buffet", async ({ page }) => {
   await expect(page.locator(".buffet-row")).toHaveCount(3);
   await expect(page.locator(".buffet-row").first()).toBeVisible();
   await page.locator("#models").screenshot({ path: "output/playwright/realtime-mobile.png", scale: "css" });
+
+  await page.locator(".savings-calculator").scrollIntoViewIfNeeded();
+  await expect(page.locator(".savings-card-dictate")).toContainText("$2.40");
+  await page.locator(".savings-calculator").screenshot({ path: "output/playwright/savings-mobile.png", scale: "css" });
+
+  for (const card of await page.locator(".capability-card").all()) {
+    await card.scrollIntoViewIfNeeded();
+  }
+  await page.locator(".capability-section").screenshot({ path: "output/playwright/power-features-mobile.png", scale: "css" });
 
   await revealFullPage(page);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

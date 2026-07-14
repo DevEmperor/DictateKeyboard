@@ -286,7 +286,7 @@ export function ModelBuffet() {
 
             <div className="buffet-notes">
               <p><strong>Accuracy:</strong> AA-WER is Artificial Analysis’ independent English benchmark; lower is better. It is an edit rate, not a conventional “accuracy %,” and does not score every local or dynamic route. *Family or alias evidence is not an exact route result. †Batch WER does not measure streaming behavior.</p>
-              <p><strong>Third-party API pricing:</strong> Dictate adds no charge. These USD provider list-price snapshots are normalized per 1,000 audio minutes on 13 July 2026; token-priced Gemini rows use AA’s observed effective cost. The 44 rows cover every fixed Dictate ID plus OpenRouter’s current 10-route STT snapshot. AA observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
+              <p><strong>Third-party API pricing:</strong> Dictate adds no provider markup. These USD provider list-price snapshots are normalized per 1,000 audio minutes on 13 July 2026; token-priced Gemini rows use AA’s observed effective cost. The 44 rows cover every fixed Dictate ID plus OpenRouter’s current 10-route STT snapshot. AA observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
               <div><a href="https://artificialanalysis.ai/speech-to-text/non-streaming" target="_blank" rel="noreferrer">Async benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/streaming" target="_blank" rel="noreferrer">Realtime benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/methodology" target="_blank" rel="noreferrer">Methodology <ArrowUpRight size={13} weight="bold" /></a><a href="https://deepgram.com/pricing" target="_blank" rel="noreferrer">Deepgram billing <ArrowUpRight size={13} weight="bold" /></a></div>
             </div>
           </motion.div>
@@ -315,7 +315,7 @@ export function ModelBuffet() {
               {llmExpanded ? "Back to the three rewrite highlights" : `Show all ${llmRoutes.length} rewrite providers`}
             </button>
             <div className="buffet-notes">
-              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. Dictate is free; the USD public API-price snapshots shown here belong to external providers and are dated 13 July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
+              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. Dictate adds no monthly subscription or provider markup; the USD public API-price snapshots shown here belong to external providers and are dated 13 July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
               <p><strong>Local LLM caveat:</strong> Ollama points to your own server or LAN machine; it is not an on-phone model. Validate the current credential setup before relying on a blank-key configuration.</p>
               <div>
                 <a href="https://github.com/DevEmperor/DictateKeyboard/blob/c3bf0fe34ae0308490ff6c1572bf77ec825b0454/lib/dictate-core/src/main/kotlin/dev/patrickgold/florisboard/dictate/provider/ProviderRegistry.kt" target="_blank" rel="noreferrer">Dictate model registry <ArrowUpRight size={13} weight="bold" /></a>
