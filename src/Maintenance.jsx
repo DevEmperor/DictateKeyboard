@@ -60,10 +60,11 @@ const css = `
 }
 .mt-card { max-width: 46rem; }
 .mt-brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.7rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 .mt-logo {
   border-radius: 12px;
@@ -76,11 +77,12 @@ const css = `
   letter-spacing: -0.01em;
 }
 .mt-waves {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
-  height: 34px;
-  margin-bottom: 1.5rem;
+  height: 30px;
+  margin-bottom: 1.75rem;
 }
 .mt-waves span {
   width: 5px;
