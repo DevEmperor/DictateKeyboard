@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 /**
  * Public "under construction" page shown on the live domain while the real site is still being built.
- * Gated in main.jsx via VITE_MAINTENANCE: a production build shows this by default (fail-safe), while a
- * Cloudflare Pages *preview* deployment with VITE_MAINTENANCE=false renders the real <App/> (kept private
- * via Cloudflare Access). Matches the site's editorial cream / ink / cyan design tokens from styles.css.
+ * Rendered when the committed MAINTENANCE switch in main.jsx is true (the `website` branch); the
+ * `website-dev` branch turns it off to show the real site. Matches the site's editorial cream / ink / cyan
+ * design tokens from styles.css.
  */
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 
 export default function Maintenance() {
   const year = new Date().getFullYear();
+  useEffect(() => {
+    document.title = "Dictate Keyboard";
+  }, []);
   return (
     <main className="mt-root">
       <style>{css}</style>
       <div className="mt-card">
-        <div className="mt-wordmark">Dictate</div>
+        <div className="mt-brand">
+          <img className="mt-logo" src="/media/dictate-icon.png" width="52" height="52" alt="Dictate Keyboard logo" />
+          <span className="mt-wordmark">Dictate Keyboard</span>
+        </div>
         <div className="mt-waves" aria-hidden="true">
           {Array.from({ length: 9 }).map((_, i) => (
             <span key={i} style={{ animationDelay: `${(i * 0.09).toFixed(2)}s` }} />
@@ -32,7 +38,7 @@ export default function Maintenance() {
           <a className="mt-btn mt-ghost" href={GITHUB_URL} rel="noopener">View on GitHub</a>
         </div>
       </div>
-      <footer className="mt-footer">© {year} Dictate · dictatekeyboard.com</footer>
+      <footer className="mt-footer">© {year} Dictate Keyboard · dictatekeyboard.com</footer>
     </main>
   );
 }
@@ -53,12 +59,21 @@ const css = `
   color: var(--ink);
 }
 .mt-card { max-width: 46rem; }
+.mt-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.75rem;
+}
+.mt-logo {
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(13, 17, 23, 0.12);
+}
 .mt-wordmark {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  margin-bottom: 1.75rem;
 }
 .mt-waves {
   display: inline-flex;
