@@ -42,6 +42,8 @@ test("desktop conversion path, model buffet, and install routes", async ({ page 
   await page.locator(".reword-prompts").getByRole("button", { name: "Bullets" }).click();
   await expect(page.locator(".reword-card-output")).toContainText("Proposal: send by Friday");
   await expect(page.locator(".capability-card")).toHaveCount(6);
+  await expect(page.getByRole("heading", { name: "Transcribe existing recordings." })).toBeVisible();
+  await expect(page.getByText(/choose an audio file—or a compatible video/i)).toBeVisible();
   for (const card of await page.locator(".capability-card").all()) {
     await card.scrollIntoViewIfNeeded();
   }
@@ -118,4 +120,56 @@ test("mobile navigation and responsive model buffet", async ({ page }) => {
   expect(runtimeErrors).toEqual([]);
 
   await page.screenshot({ path: "output/playwright/mobile-revealed.png", fullPage: true, scale: "css" });
+});
+
+test("feature preview keeps its current frame until the next screenshot is decoded", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => {
+    window.requestIdleCallback = () => 1;
+    window.cancelIdleCallback = () => undefined;
+  });
+
+  const providerRequests = [];
+
+  await page.route("**/media/feature-provider.png", async (route) => {
+    let release;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    providerRequests.push({ release });
+    await gate;
+    await route.continue();
+  });
+
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+
+  const baseImage = page.locator(".feature-visual-base");
+  const incomingImage = page.locator(".feature-visual-incoming");
+  await expect(baseImage).toHaveAttribute("src", "/media/feature-anywhere.png");
+  await expect.poll(() => baseImage.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  await page.locator(".feature-dots button").nth(1).evaluate((button) => button.click());
+  await expect(page.locator(".feature-dots button").nth(1)).toHaveClass(/is-active/);
+
+  await expect.poll(() => providerRequests.length).toBe(1);
+  await expect(baseImage).toHaveAttribute("src", "/media/feature-anywhere.png");
+  await expect(incomingImage).toHaveCount(1);
+  await expect.poll(() => incomingImage.evaluate((image) => image.naturalWidth)).toBe(0);
+  await expect.poll(() => incomingImage.evaluate((image) => Number.parseFloat(getComputedStyle(image).opacity))).toBeLessThanOrEqual(0.01);
+  await expect(page.locator(".feature-visual figure")).toHaveCount(1);
+
+  providerRequests[0].release();
+  await expect.poll(() => providerRequests.length).toBe(2);
+  await expect(baseImage).toHaveAttribute("src", "/media/feature-provider.png");
+  await expect.poll(() => baseImage.evaluate((image) => image.naturalWidth)).toBe(0);
+  await expect.poll(() => incomingImage.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect.poll(() => incomingImage.evaluate((image) => Number.parseFloat(getComputedStyle(image).opacity))).toBeGreaterThanOrEqual(0.99);
+
+  await page.waitForTimeout(320);
+  await expect(incomingImage).toHaveCount(1);
+  await expect.poll(() => incomingImage.evaluate((image) => Number.parseFloat(getComputedStyle(image).opacity))).toBeGreaterThanOrEqual(0.99);
+
+  providerRequests[1].release();
+  await expect.poll(() => baseImage.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expect(incomingImage).toHaveCount(0);
+  await expect(page.locator(".feature-visual figure")).toHaveCount(1);
 });

@@ -6,7 +6,7 @@ import {
   MagicWand,
   Watch,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 
 const features = [
   {
@@ -56,6 +56,54 @@ const features = [
   },
 ];
 
+const decodedImages = new Map();
+
+function decodeFeatureImage(src) {
+  if (decodedImages.has(src)) return decodedImages.get(src);
+
+  const readiness = new Promise((resolve, reject) => {
+    const image = new Image();
+    let settled = false;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      const decode = typeof image.decode === "function" ? image.decode() : Promise.resolve();
+      decode.catch(() => undefined).then(() => resolve(src));
+    };
+
+    image.decoding = "async";
+    image.addEventListener("load", finish, { once: true });
+    image.addEventListener("error", () => {
+      if (settled) return;
+      settled = true;
+      reject(new Error(`Unable to load feature preview: ${src}`));
+    }, { once: true });
+    image.src = src;
+
+    if (image.complete && image.naturalWidth > 0) finish();
+  });
+
+  decodedImages.set(src, readiness);
+  readiness.catch(() => decodedImages.delete(src));
+  return readiness;
+}
+
+function useDesktopPreview() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1021px)");
+    const update = () => setIsDesktop(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isDesktop;
+}
+
 function FeatureCopy({ feature, index, activeIndex, setActiveIndex }) {
   const ref = useRef(null);
   const inView = useInView(ref, { margin: "-32% 0px -48% 0px" });
@@ -86,8 +134,109 @@ function FeatureCopy({ feature, index, activeIndex, setActiveIndex }) {
 
 export function FeatureStory() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [displayedIndex, setDisplayedIndex] = useState(0);
+  const [incomingIndex, setIncomingIndex] = useState(null);
+  const [incomingReady, setIncomingReady] = useState(false);
+  const baseImageRef = useRef(null);
+  const incomingImageRef = useRef(null);
   const reduceMotion = useReducedMotion();
-  const feature = features[activeIndex];
+  const isDesktopPreview = useDesktopPreview();
+  const displayedFeature = features[displayedIndex];
+
+  useEffect(() => {
+    if (!isDesktopPreview) return undefined;
+
+    const preload = () => {
+      features.slice(1).forEach((item) => {
+        decodeFeatureImage(item.image).catch(() => undefined);
+      });
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(preload, { timeout: 2400 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(preload, 700);
+    return () => window.clearTimeout(timeoutId);
+  }, [isDesktopPreview]);
+
+  useEffect(() => {
+    if (!isDesktopPreview) return;
+
+    if (activeIndex === displayedIndex) {
+      if (incomingIndex !== null && !incomingReady) setIncomingIndex(null);
+      return;
+    }
+
+    if (incomingIndex === null || (!incomingReady && incomingIndex !== activeIndex)) {
+      setIncomingReady(false);
+      setIncomingIndex(activeIndex);
+    }
+  }, [activeIndex, displayedIndex, incomingIndex, incomingReady, isDesktopPreview]);
+
+  useEffect(() => {
+    if (incomingIndex === null) return undefined;
+
+    const image = incomingImageRef.current;
+    if (!image) return undefined;
+    let cancelled = false;
+
+    const reveal = async () => {
+      try {
+        if (typeof image.decode === "function") await image.decode();
+      } catch {
+        return;
+      }
+      if (!cancelled) setIncomingReady(true);
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      reveal();
+    } else {
+      image.addEventListener("load", reveal, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      image.removeEventListener("load", reveal);
+    };
+  }, [incomingIndex]);
+
+  useEffect(() => {
+    if (incomingIndex === null || !incomingReady || displayedIndex !== incomingIndex) return undefined;
+
+    const image = baseImageRef.current;
+    if (!image) return undefined;
+    let cancelled = false;
+
+    const revealBase = async () => {
+      try {
+        if (typeof image.decode === "function") await image.decode();
+      } catch {
+        return;
+      }
+      if (cancelled) return;
+      setIncomingReady(false);
+      setIncomingIndex(null);
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      revealBase();
+    } else {
+      image.addEventListener("load", revealBase, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      image.removeEventListener("load", revealBase);
+    };
+  }, [displayedIndex, incomingIndex, incomingReady]);
+
+  const promoteIncoming = (index) => {
+    if (!incomingReady || incomingIndex !== index) return;
+    setDisplayedIndex(index);
+  };
 
   return (
     <div className="feature-story">
@@ -106,21 +255,42 @@ export function FeatureStory() {
       <div className="feature-visual-column">
         <div className="feature-visual">
           <div className="feature-visual-grid" aria-hidden="true" />
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.figure
-              key={feature.image}
-              initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 12px, 0) scale(0.985)" }}
-              animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }}
-              exit={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, -4px, 0) scale(0.995)", transition: { duration: reduceMotion ? 0.12 : 0.14, ease: [0.23, 1, 0.32, 1] } }}
-              transition={{ duration: reduceMotion ? 0.14 : 0.26, ease: [0.23, 1, 0.32, 1] }}
-            >
-              <img src={feature.image} width="1080" height="1920" loading="lazy" decoding="async" alt={feature.alt} />
-              <figcaption>
-                <span>{feature.tag}</span>
-                <span>{String(activeIndex + 1).padStart(2, "0")} / {String(features.length).padStart(2, "0")}</span>
-              </figcaption>
-            </motion.figure>
-          </AnimatePresence>
+          <figure>
+            <div className="feature-visual-media">
+              <img
+                ref={baseImageRef}
+                className="feature-visual-base"
+                src={displayedFeature.image}
+                width="1080"
+                height="1920"
+                loading={isDesktopPreview ? "eager" : "lazy"}
+                decoding="async"
+                alt={displayedFeature.alt}
+              />
+              {incomingIndex !== null && (
+                <motion.img
+                  ref={incomingImageRef}
+                  className="feature-visual-incoming"
+                  key={features[incomingIndex].image}
+                  src={features[incomingIndex].image}
+                  width="1080"
+                  height="1920"
+                  initial={{ opacity: 0, transform: reduceMotion ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0) scale(0.997)" }}
+                  animate={incomingReady
+                    ? { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }
+                    : { opacity: 0, transform: reduceMotion ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0) scale(0.997)" }}
+                  transition={{ duration: reduceMotion ? 0.12 : 0.2, ease: [0.23, 1, 0.32, 1] }}
+                  onAnimationComplete={() => promoteIncoming(incomingIndex)}
+                  alt=""
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+            <figcaption aria-live="polite">
+              <span>{displayedFeature.tag}</span>
+              <span>{String(displayedIndex + 1).padStart(2, "0")} / {String(features.length).padStart(2, "0")}</span>
+            </figcaption>
+          </figure>
           <div className="feature-dots" role="group" aria-label="Feature preview selection">
             {features.map((item, index) => (
               <button
