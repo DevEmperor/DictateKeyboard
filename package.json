@@ -11,8 +11,9 @@
     "qa": "playwright test"
   },
   "dependencies": {
-    "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource-variable/newsreader": "^5.2.10",
     "@phosphor-icons/react": "^2.1.10",
     "motion": "^12.42.2",
     "react": "^19.2.7",

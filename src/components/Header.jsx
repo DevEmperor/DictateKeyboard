@@ -4,8 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MagneticLink } from "./MagneticLink";
 
 const navItems = [
-  ["Models", "#models"],
+  ["Compare", "#compare"],
   ["Features", "#features"],
+  ["Models", "#models"],
   ["Privacy", "#privacy"],
   ["Install", "#install"],
 ];
