@@ -1768,11 +1768,25 @@ p {
   box-shadow: 0 28px 55px rgba(2, 5, 9, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 
+.feature-visual-media {
+  position: relative;
+  height: 545px;
+  overflow: hidden;
+}
+
 .feature-visual figure img {
+  display: block;
   width: 100%;
   height: 545px;
   object-fit: cover;
   object-position: top center;
+}
+
+.feature-visual-incoming {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  will-change: opacity, transform;
 }
 
 .feature-visual figcaption {
@@ -5235,5 +5249,195 @@ p {
 
   .savings-card strong {
     font-size: 4rem;
+  }
+}
+
+/* Desktop density pass: preserve the mobile rhythm while shortening the long-form story. */
+@media (min-width: 1021px) {
+  .benefits,
+  .modes,
+  .features,
+  .install {
+    padding-block: 110px;
+  }
+
+  .model-buffet-section,
+  .freedom-section,
+  .control-section {
+    padding-block: 110px;
+  }
+
+  .section-intro {
+    margin-bottom: 52px;
+  }
+
+  .benefit-panel {
+    min-height: 340px;
+  }
+
+  .freedom-heading {
+    margin-bottom: 52px;
+  }
+
+  .freedom-columns {
+    min-height: 64px;
+  }
+
+  .freedom-row {
+    min-height: 70px;
+  }
+
+  .freedom-punchline {
+    min-height: 72px;
+    margin-top: 18px;
+  }
+
+  .savings-calculator {
+    padding: 42px;
+  }
+
+  .savings-heading {
+    margin-bottom: 34px;
+  }
+
+  .savings-card {
+    min-height: 185px;
+    padding: 19px;
+  }
+
+  .savings-card strong {
+    margin-top: 25px;
+  }
+
+  .mode-panel {
+    min-height: 440px;
+    gap: 64px;
+    padding: 44px 56px 56px;
+  }
+
+  .buffet-topbar {
+    min-height: 80px;
+  }
+
+  .buffet-panel {
+    padding: 32px;
+  }
+
+  .buffet-category-row > div {
+    min-height: 58px;
+  }
+
+  .buffet-row {
+    min-height: 88px;
+  }
+
+  .feature-intro {
+    margin-bottom: 60px;
+  }
+
+  .feature-copy {
+    min-height: 320px;
+    padding-block: 36px;
+  }
+
+  .feature-copy .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .feature-copy strong {
+    margin-bottom: 14px;
+    font-size: clamp(2rem, 3vw, 3.2rem);
+  }
+
+  .feature-visual {
+    min-height: 650px;
+    padding: 28px 34px 52px;
+  }
+
+  .reword-playground,
+  .capability-section {
+    margin-top: 96px;
+  }
+
+  .reword-playground {
+    padding: 50px;
+  }
+
+  .reword-heading {
+    margin-bottom: 42px;
+  }
+
+  .reword-card {
+    min-height: 200px;
+  }
+
+  .capability-heading {
+    margin-bottom: 46px;
+  }
+
+  .capability-card {
+    min-height: 330px;
+  }
+
+  .depth-section {
+    padding-block: 70px 110px;
+  }
+
+  .depth-primary,
+  .depth-secondary {
+    min-height: 520px;
+  }
+
+  .control-heading {
+    margin-bottom: 56px;
+  }
+
+  .privacy-lock {
+    margin-bottom: 40px;
+  }
+
+  .privacy-fact {
+    min-height: 145px;
+    padding-block: 27px;
+  }
+
+  .install-panel {
+    min-height: 500px;
+    padding: 50px;
+  }
+
+  .install-panel-heading {
+    margin-bottom: 45px;
+  }
+
+  .install-steps {
+    margin-bottom: 38px;
+  }
+
+  .install-steps li {
+    min-height: 160px;
+    padding: 20px;
+  }
+
+  .faq {
+    padding-block: 90px;
+  }
+
+  .faq-list summary {
+    min-height: 82px;
+  }
+
+  .final-cta {
+    padding-block: 64px 110px;
+  }
+
+  .final-cta-inner {
+    min-height: 610px;
+    padding-block: 72px;
+  }
+
+  .footer {
+    gap: 48px;
+    padding-block: 50px 28px;
   }
 }
