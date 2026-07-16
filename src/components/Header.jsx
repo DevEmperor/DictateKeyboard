@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { List, X } from "@phosphor-icons/react";
+import { GithubLogo, List, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MagneticLink } from "./MagneticLink";
 import { GooglePlayGlyph } from "./GooglePlayBadge";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
+const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 
 const navItems = [
   ["Compare", "#compare"],
@@ -30,6 +31,15 @@ export function Header() {
       </nav>
 
       <div className="header-actions">
+        <a
+          className="github-link"
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Dictate Keyboard on GitHub"
+        >
+          <GithubLogo size={19} weight="fill" aria-hidden="true" />
+        </a>
         <MagneticLink
           className="button button-small button-dark header-cta"
           href={PLAY_URL}

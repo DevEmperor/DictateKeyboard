@@ -5991,3 +5991,179 @@ p {
   --nav-solid: rgba(244, 241, 233, 0.9);
   --row-alt: rgba(244, 241, 233, 0.32);
 }
+
+/* ============================================================================
+   MODE SWITCHER — three distinct, workflow-accurate visuals (Live / Offline /
+   Floating) replacing the old shared signal-map. Dark ground, matches the card.
+   ============================================================================ */
+.mode-viz-wrap {
+  position: relative;
+  min-height: 320px;
+  padding: 38px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 28px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    #121820;
+  background-size: 34px 34px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.mv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  height: 100%;
+  min-height: 244px;
+}
+
+/* shared typewriter + caret */
+.mv-stream,
+.mv-off-out,
+.mv-app-input {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-family: var(--font-mono);
+  color: #dbe2e9;
+}
+.mv-typed {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+.mv-typed-live { --w: 32ch; font-size: 0.82rem; animation: mvType 4s steps(32) infinite; }
+.mv-typed-off { --w: 34ch; font-size: 0.8rem; animation: mvType 4s steps(34) infinite; }
+.mv-typed-float { --w: 28ch; font-size: 0.8rem; animation: mvType 3.6s steps(28) infinite; }
+.mv-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 3px;
+  flex-shrink: 0;
+  background: var(--accent);
+  animation: mvBlink 1s steps(1) infinite;
+}
+@keyframes mvType { 0% { width: 0; } 60%, 100% { width: var(--w); } }
+@keyframes mvBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0.15; } }
+
+.mv-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: #7f8b97;
+}
+
+/* LIVE */
+.mv-field {
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.mv-field-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 13px; }
+.mv-field-bar span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); }
+.mv-field-bar em {
+  margin-left: 8px;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8e99a4;
+}
+.mv-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff5c5c; animation: mvBlink 1.3s steps(1) infinite; }
+.mv-foot-tag { margin-left: auto; }
+
+/* OFFLINE */
+.mv-off-flow { display: flex; align-items: center; gap: 13px; }
+.mv-off-node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.mv-off-mic { color: var(--accent); }
+.mv-off-chip { position: relative; overflow: hidden; color: #dbe2e9; }
+.mv-off-chip svg { color: var(--accent); flex-shrink: 0; }
+.mv-off-chip strong { display: block; font-size: 0.72rem; letter-spacing: -0.01em; }
+.mv-off-chip small { font-size: 0.58rem; color: #8e99a4; }
+.mv-off-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(48, 183, 230, 0.2), transparent);
+  transform: translateX(-100%);
+  animation: mvScan 2.6s ease-in-out infinite;
+}
+.mv-off-arrow { display: flex; gap: 4px; flex-shrink: 0; }
+.mv-off-arrow i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); animation: mvDot 1.6s ease-in-out infinite; }
+.mv-off-arrow i:nth-child(2) { animation-delay: 0.18s; }
+.mv-off-arrow i:nth-child(3) { animation-delay: 0.36s; }
+.mv-off-foot svg { color: #8e99a4; flex-shrink: 0; }
+@keyframes mvScan { 0% { transform: translateX(-100%); } 55%, 100% { transform: translateX(100%); } }
+@keyframes mvDot { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+/* FLOATING */
+.mv-app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.mv-app-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+.mv-app-avatar { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #2a6df4); }
+.mv-app-top em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #8e99a4;
+}
+.mv-app-msg { height: 11px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); }
+.mv-app-msg-them { align-self: flex-end; background: rgba(48, 183, 230, 0.18); }
+.mv-app-input {
+  margin-top: 5px;
+  padding: 11px 13px;
+  border: 1px solid rgba(48, 183, 230, 0.3);
+  border-radius: 11px;
+  background: rgba(48, 183, 230, 0.06);
+}
+.mv-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 58px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #06222c;
+  box-shadow: 0 12px 26px rgba(48, 183, 230, 0.42);
+  animation: mvFab 4s var(--ease-in-out) infinite;
+}
+.mv-fab-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--accent); animation: mvRing 2.1s ease-out infinite; }
+@keyframes mvFab { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes mvRing { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.7); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mv-typed { width: var(--w) !important; animation: none !important; }
+  .mv-caret, .mv-live-dot, .mv-off-scan, .mv-off-arrow i, .mv-fab, .mv-fab-ring { animation: none !important; }
+  .mv-off-scan { display: none; }
+}
