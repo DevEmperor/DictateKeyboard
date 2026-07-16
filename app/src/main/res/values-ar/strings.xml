@@ -1594,4 +1594,5 @@
     <string name="dictate__legacy_prompt_rows_title">صفوف المطالبات</string>
     <string name="dictate__legacy_prompt_rows_one">صف واحد</string>
     <string name="dictate__legacy_prompt_rows_two">صفان</string>
+    <string name="about__website__title">الموقع الإلكتروني</string>
 </resources>

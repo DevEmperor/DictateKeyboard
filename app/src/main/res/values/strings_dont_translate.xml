@@ -10,6 +10,8 @@
         Dictate fork has no dedicated wiki pages yet.
     -->
     <string name="florisboard__repo_url" translatable="false">https://github.com/DevEmperor/Dictate</string>
+    <!-- Marketing website -->
+    <string name="florisboard__website_url" translatable="false">https://dictatekeyboard.com</string>
     <!-- Upstream project Dictate is forked from (attribution); stays pointed at the original FlorisBoard repo. -->
     <string name="florisboard__upstream_repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/DevEmperor/Dictate/issues</string>

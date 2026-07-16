@@ -1739,4 +1739,5 @@
     <string name="dictate__legacy_prompt_rows_title">Строки подсказок</string>
     <string name="dictate__legacy_prompt_rows_one">Одна строка</string>
     <string name="dictate__legacy_prompt_rows_two">Две строки</string>
+    <string name="about__website__title">Веб-сайт</string>
 </resources>

@@ -1734,4 +1734,5 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt sorok</string>
     <string name="dictate__legacy_prompt_rows_one">Egy sor</string>
     <string name="dictate__legacy_prompt_rows_two">Két sor</string>
+    <string name="about__website__title">Weboldal</string>
 </resources>

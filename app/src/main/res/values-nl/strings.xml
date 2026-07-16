@@ -1635,4 +1635,5 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__legacy_prompt_rows_title">Promptrijen</string>
     <string name="dictate__legacy_prompt_rows_one">Eén rij</string>
     <string name="dictate__legacy_prompt_rows_two">Twee rijen</string>
+    <string name="about__website__title">Website</string>
 </resources>

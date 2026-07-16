@@ -1668,4 +1668,5 @@
     <string name="dictate__legacy_prompt_rows_title">プロンプトの行数</string>
     <string name="dictate__legacy_prompt_rows_one">1行</string>
     <string name="dictate__legacy_prompt_rows_two">2行</string>
+    <string name="about__website__title">ウェブサイト</string>
 </resources>

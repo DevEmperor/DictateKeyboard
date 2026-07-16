@@ -1736,4 +1736,5 @@
     <string name="dictate__legacy_prompt_rows_title">Редове с подкани</string>
     <string name="dictate__legacy_prompt_rows_one">Един ред</string>
     <string name="dictate__legacy_prompt_rows_two">Два реда</string>
+    <string name="about__website__title">Уебсайт</string>
 </resources>

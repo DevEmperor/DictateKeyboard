@@ -1691,4 +1691,5 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__legacy_prompt_rows_title">Baris prompt</string>
     <string name="dictate__legacy_prompt_rows_one">Satu baris</string>
     <string name="dictate__legacy_prompt_rows_two">Dua baris</string>
+    <string name="about__website__title">Situs web</string>
 </resources>

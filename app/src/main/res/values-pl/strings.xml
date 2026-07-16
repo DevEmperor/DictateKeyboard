@@ -1751,4 +1751,5 @@
     <string name="dictate__legacy_prompt_rows_title">Wiersze promptów</string>
     <string name="dictate__legacy_prompt_rows_one">Jeden wiersz</string>
     <string name="dictate__legacy_prompt_rows_two">Dwa wiersze</string>
+    <string name="about__website__title">Strona internetowa</string>
 </resources>
