@@ -11,11 +11,11 @@ import { Reveal } from "./Reveal";
 import { SavingsCalculator } from "./SavingsCalculator";
 
 const comparisonRows = [
-  [Repeat, "Recurring Dictate fee", "None", "Paid tiers can recur monthly"],
-  [UserCircleMinus, "Dictate account", "Not required", "Service account"],
-  [Key, "Provider relationship", "Your key, your account", "Bundled by the service"],
-  [CloudSlash, "Offline route", "Whisper or Parakeet", "Depends on the service"],
-  [BracketsCurly, "Source code", "Apache 2.0", "Typically closed"],
+  [Repeat, "Recurring fee", "None — no subscription", "$15/mo · $144/yr Pro plan"],
+  [UserCircleMinus, "Account", "Not required", "Wispr account required"],
+  [Key, "Provider & keys", "Your key, your account, your choice", "One bundled cloud engine"],
+  [CloudSlash, "Offline route", "Whisper or Parakeet, on-device", "Cloud only — no offline mode"],
+  [BracketsCurly, "Source code", "Open, Apache 2.0", "Closed source"],
 ];
 
 export function FreedomComparison() {
@@ -24,21 +24,21 @@ export function FreedomComparison() {
       <div className="freedom-inner section-shell">
         <div className="freedom-heading">
           <Reveal>
-            <span className="eyebrow eyebrow-light">DICTATE VS. THE MONTHLY TOLL BOOTH</span>
-            <h2>The voice keyboard<br />without the monthly gatekeeper.</h2>
+            <span className="eyebrow eyebrow-light">DICTATE KEYBOARD vs WISPR FLOW PRO</span>
+            <h2>The same dictation,<br />without the monthly bill.</h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p>Paid plans from services such as Wispr Flow bundle app access, an account, and the speech engine into one managed service. Dictate separates them: no monthly Dictate subscription, open code, offline models, and optional providers you choose.</p>
+            <p>Subscription apps like Wispr Flow bundle the app, an account, and one speech engine into a flat monthly plan. Dictate Keyboard separates them: no subscription, open code, an offline route, and any provider you choose. The priced example below pairs Dictate Keyboard with Soniox realtime — one of its fastest cloud routes — against Wispr Flow Pro at public list prices.</p>
           </Reveal>
         </div>
 
         <Reveal className="freedom-comparison" delay={0.1}>
           <div className="freedom-columns" aria-hidden="true">
             <span>WHAT YOU CONTROL</span>
-            <strong>DICTATE</strong>
-            <span>PAID VOICE SERVICE</span>
+            <strong>DICTATE KEYBOARD</strong>
+            <span>WISPR FLOW PRO</span>
           </div>
-          <div className="freedom-rows" role="table" aria-label="Dictate compared with paid managed voice services">
+          <div className="freedom-rows" role="table" aria-label="Dictate Keyboard compared with Wispr Flow Pro">
             {comparisonRows.map(([Icon, label, dictate, paid]) => (
               <div className="freedom-row" role="row" key={label}>
                 <span className="freedom-label" role="rowheader"><Icon size={17} weight="bold" aria-hidden="true" />{label}</span>
@@ -47,7 +47,7 @@ export function FreedomComparison() {
               </div>
             ))}
           </div>
-          <p className="freedom-note">Plans and capabilities vary by service. This table compares product models; the sourced usage example below uses current public list prices.</p>
+          <p className="freedom-note">Wispr Flow tiers and features change over time; this compares public product positioning as of July 2026. The sourced example below uses current public list prices.</p>
         </Reveal>
 
         <Reveal delay={0.13}>
@@ -55,7 +55,7 @@ export function FreedomComparison() {
         </Reveal>
 
         <Reveal className="freedom-punchline" delay={0.14}>
-          <span>No Dictate subscription</span>
+          <span>No subscription</span>
           <ArrowRight size={18} weight="bold" aria-hidden="true" />
           <strong>Offline with no API usage, or cloud on your terms.</strong>
         </Reveal>

@@ -9,6 +9,7 @@ import {
   SlidersHorizontal,
 } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ProviderIcon } from "./ProviderIcon";
 
 const sttModels = [
   { provider: "On-device", model: "Whisper Tiny", route: "offline", cost: "$0", unit: "API usage", quality: "Fastest local", languages: "99 languages", detail: "~99 MB · lower local accuracy" },
@@ -29,7 +30,7 @@ const sttModels = [
 
   { provider: "Groq", model: "whisper-large-v3-turbo", route: "async", cost: "$0.67", unit: "/ 1k min", wer: 4.62, languages: "Multilingual", detail: "Lowest tested batch cost in AA snapshot" },
   { provider: "Groq", model: "whisper-large-v3", route: "async", cost: "$1.85", unit: "/ 1k min", quality: "Not AA-tested", languages: "Multilingual", detail: "Dynamic Groq catalog" },
-  { provider: "Groq", model: "distil-whisper-large-v3-en", route: "async", cost: "Legacy", unit: "provider-retired", quality: "Not current", languages: "English", detail: "ID remains in Dictate; retired by provider" },
+  { provider: "Groq", model: "distil-whisper-large-v3-en", route: "async", cost: "Legacy", unit: "provider-retired", quality: "Not current", languages: "English", detail: "ID remains in Dictate Keyboard; retired by provider" },
 
   { provider: "OpenRouter", model: "Whisper Large v3 Turbo", route: "async", cost: "$0.67", unit: "/ 1k min", quality: "4.62% family WER*", languages: "Multilingual", detail: "Live catalog · exact host not AA-tested" },
   { provider: "OpenRouter", model: "NVIDIA Parakeet TDT v3", route: "async", cost: "$1.50", unit: "/ 1k min", quality: "4.55% hosted proxy*", languages: "25 European languages", detail: "Live catalog · not an on-device result" },
@@ -49,7 +50,7 @@ const sttModels = [
 
   { provider: "Mistral", model: "voxtral-mini-latest", route: "async", cost: "~$3.00", unit: "/ 1k min", quality: "3.59% alias proxy*", languages: "13 languages", detail: "Moving alias · current Voxtral Mini family benchmark" },
   { provider: "Soniox", model: "stt-async-v5", route: "async", cost: "$1.66", unit: "/ 1k min", wer: 3.81, languages: "60+ languages", detail: "Mixed-language capable" },
-  { provider: "Soniox", model: "stt-rt-v5", route: "realtime", cost: "$2.00", unit: "/ 1k min", wer: 4.5, latency: "0.054s final", languages: "60+ languages", detail: "Fastest exact active Dictate route in AA snapshot" },
+  { provider: "Soniox", model: "stt-rt-v5", route: "realtime", cost: "$2.00", unit: "/ 1k min", wer: 4.5, latency: "0.054s final", languages: "60+ languages", detail: "Fastest exact active Dictate Keyboard route in AA snapshot" },
   { provider: "ElevenLabs", model: "scribe_v2", route: "async", cost: "$3.67", unit: "/ 1k min", wer: 2.18, languages: "90+ languages", detail: "Lowest batch AA-WER in this buffet" },
   { provider: "ElevenLabs", model: "scribe_v2_realtime", route: "realtime", cost: "$6.50", unit: "/ 1k min", wer: 3.59, latency: "0.141s final", languages: "90+ languages", detail: "Lowest realtime AA-WER here" },
   { provider: "Deepgram", model: "nova-3", route: "async", cost: "~$4.80", unit: "/ 1k min", wer: 5.18, languages: "Live language catalog", detail: "Current posted promo pricing" },
@@ -58,49 +59,53 @@ const sttModels = [
   { provider: "Deepgram", model: "nova-2", route: "realtime", cost: "~$5.83", unit: "/ 1k min", quality: "Not AA-tested", languages: "Additional coverage", detail: "Enabled realtime route" },
   { provider: "AssemblyAI", model: "universal-3-pro", route: "async", cost: "$3.50", unit: "/ 1k min", wer: 3.12, languages: "6 languages", detail: "Accuracy-focused batch default" },
   { provider: "AssemblyAI", model: "universal-2", route: "async", cost: "~$2.50", unit: "/ 1k min", quality: "3.82% alias proxy*", languages: "99 languages", detail: "Wider language coverage" },
-  { provider: "AssemblyAI", model: "universal-streaming", route: "realtime", cost: "~$2.50", unit: "/ 1k min", quality: "Not AA-tested", languages: "Endpoint-dependent", detail: "Dictate realtime default" },
+  { provider: "AssemblyAI", model: "universal-streaming", route: "realtime", cost: "~$2.50", unit: "/ 1k min", quality: "Not AA-tested", languages: "Endpoint-dependent", detail: "Dictate Keyboard realtime default" },
   { provider: "Custom", model: "OpenAI-compatible STT endpoint", route: "async", cost: "Your server", unit: "your model", quality: "Model-dependent", languages: "Model-dependent", detail: "Dynamic model ID or manual entry" },
 ];
 
 const llmRoutes = [
-  { provider: "OpenAI", price: "$0.10–$2.50 in / $0.40–$10 out per 1M tokens", tier: "Fast to frontier", models: [
-    { name: "gpt-4.1-nano", price: "$0.10 in / $0.40 out" },
-    { name: "gpt-4o-mini", price: "$0.15 in / $0.60 out" },
-    { name: "gpt-4.1-mini", price: "$0.40 in / $1.60 out" },
-    { name: "gpt-4.1", price: "$2.00 in / $8.00 out" },
-    { name: "gpt-4o", price: "$2.50 in / $10.00 out" },
+  { provider: "OpenAI", price: "$0.20–$5 in / $1.25–$30 out per 1M tokens", tier: "Fast to frontier", models: [
+    { name: "GPT-5.4 nano", price: "$0.20 in / $1.25 out" },
+    { name: "GPT-5.4 mini", price: "$0.75 in / $4.50 out" },
+    { name: "GPT-5.6 Luna", price: "$1.00 in / $6.00 out" },
+    { name: "GPT-5.6 Terra", price: "$2.50 in / $15 out" },
+    { name: "GPT-5.6 Sol", price: "$5.00 in / $30 out" },
   ] },
-  { provider: "Groq", price: "$0.05–$0.59 in / $0.08–$0.79 out per 1M tokens", tier: "Fast · catalog moving", models: [
-    { name: "llama-3.1-8b-instant", price: "$0.05 / $0.08 · retires 16 Aug 2026" },
-    { name: "llama-3.3-70b-versatile", price: "$0.59 / $0.79 · retires 16 Aug 2026" },
-    { name: "gemma2-9b-it", price: "Provider-retired" },
-    { name: "live model catalog", price: "Live pricing" },
+  { provider: "Anthropic", price: "$1–$5 in / $5–$25 out per 1M tokens", tier: "Strongest writing", models: [
+    { name: "Claude Haiku 4.5", price: "$1 in / $5 out" },
+    { name: "Claude Sonnet 5", price: "$2 / $10 (intro) · then $3 / $15" },
+    { name: "Claude Opus 4.8", price: "$5 in / $25 out" },
   ] },
-  { provider: "OpenRouter", price: "$0+ · hundreds of live models", tier: "Broadest choice", models: [
-    { name: "openai/gpt-4o-mini", price: "Route pricing" },
-    { name: "free chat routes", price: "$0 model cost" },
-    { name: "live model catalog", price: "Provider-defined" },
+  { provider: "Google Gemini", price: "Free tier · $0.10–$1.25 in / $0.40–$10 out per 1M", tier: "Fast to frontier", models: [
+    { name: "Gemini 2.5 Flash-Lite", price: "$0.10 in / $0.40 out" },
+    { name: "Gemini 2.5 Flash", price: "$0.30 in / $2.50 out" },
+    { name: "Gemini 2.5 Pro", price: "$1.25 in / $10 out" },
+  ] },
+  { provider: "Groq", price: "$0.075–$1 in / $0.30–$3 out per 1M tokens", tier: "Fastest inference", models: [
+    { name: "GPT-OSS 20B", price: "$0.075 in / $0.30 out" },
+    { name: "Llama 4 Scout", price: "$0.11 in / $0.34 out" },
+    { name: "Llama 3.3 70B", price: "$0.59 in / $0.79 out" },
+    { name: "Kimi K2", price: "$1.00 in / $3.00 out" },
+  ] },
+  { provider: "Mistral AI", price: "$0.15–$1.50 in / $0.60–$7.50 out per 1M tokens", tier: "Fast European models", models: [
+    { name: "Mistral Small 4", price: "$0.15 in / $0.60 out" },
+    { name: "Mistral Large 3", price: "$0.50 in / $1.50 out" },
+    { name: "Mistral Medium 3.5", price: "$1.50 in / $7.50 out" },
+  ] },
+  { provider: "OpenRouter", price: "Pass-through · 400+ live models", tier: "Broadest choice", models: [
+    { name: "any hosted model", price: "Provider list price" },
+    { name: "25+ :free routes", price: "$0 model cost" },
     { name: "manual model ID", price: "Route pricing" },
   ] },
-  { provider: "Google Gemini", price: "Free tier · $0.10–$1.50 in / $0.40–$10 out per 1M tokens", tier: "Fast to frontier", models: [
-    { name: "gemini-2.5-flash-lite", price: "$0.10 in / $0.40 out" },
-    { name: "gemini-3.1-flash-lite", price: "$0.25 in / $1.50 out" },
-    { name: "gemini-2.5-flash", price: "$0.30 in / $2.50 out" },
-    { name: "gemini-2.5-pro", price: "$1.25 in / $10.00 out" },
-    { name: "gemini-3.5-flash", price: "$1.50 in / $9.00 out" },
+  { provider: "Ollama", price: "$0 API cost · your own compute", tier: "Self-hosted, local", models: [
+    { name: "Llama · Qwen · Gemma · Mistral", price: "$0 API cost" },
+    { name: "any model on your server", price: "Your hardware" },
   ] },
-  { provider: "Anthropic", price: "$1–$5 in / $5–$25 out per 1M tokens", tier: "Strong writing", models: [
-    { name: "claude-haiku-4-5-20251001", price: "$1 in / $5 out" },
-    { name: "claude-sonnet-5", price: "$2 / $10 through 31 Aug 2026 · then $3 / $15" },
-    { name: "claude-opus-4-8", price: "$5 in / $25 out" },
-  ] },
-  { provider: "Together AI", price: "$0.00025–$0.0042 per 1K input + 1K output tokens", tier: "Open-model range", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
-  { provider: "DeepInfra", price: "$0.00005–$0.010 per 1K input + 1K output tokens", tier: "Open-model range", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
-  { provider: "Mistral AI", price: "$0.0002–$0.009 per 1K input + 1K output tokens", tier: "Fast European models", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
-  { provider: "xAI / Grok", price: "$0.00375–$0.008 per 1K input + 1K output tokens", tier: "Provider-native", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
-  { provider: "DeepSeek", price: "$0.00042–$0.001305 per 1K input + 1K output tokens", tier: "Value reasoning", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
-  { provider: "Ollama", price: "$0 API cost · your compute", tier: "Self-hosted", models: [{ name: "models on your Ollama server", price: "$0 API cost" }, { name: "manual model ID", price: "Your hardware" }] },
-  { provider: "Custom", price: "Your server pricing", tier: "OpenAI-compatible", models: [{ name: "any compatible chat-completions model", price: "Server-defined" }] },
+  { provider: "Together AI", price: "Open-model catalog · live pricing", tier: "Open-model range", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
+  { provider: "DeepInfra", price: "Open-model catalog · live pricing", tier: "Open-model range", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
+  { provider: "xAI / Grok", price: "Provider-native · live pricing", tier: "Grok models", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
+  { provider: "DeepSeek", price: "Value reasoning · live pricing", tier: "Value reasoning", models: [{ name: "live model catalog", price: "Live pricing" }, { name: "manual model ID", price: "Model-dependent" }] },
+  { provider: "Custom", price: "Your own server pricing", tier: "OpenAI-compatible", models: [{ name: "any compatible chat-completions model", price: "Server-defined" }] },
 ];
 
 const filters = [
@@ -138,17 +143,20 @@ const sttHighlightIds = {
   ],
   async: [
     "Groq|whisper-large-v3-turbo|async",
+    "OpenAI|gpt-4o-transcribe|async",
     "Soniox|stt-async-v5|async",
     "ElevenLabs|scribe_v2|async",
+    "Google Gemini|gemini-2.5-pro|async",
   ],
   realtime: [
     "Soniox|stt-rt-v5|realtime",
     "ElevenLabs|scribe_v2_realtime|realtime",
     "Deepgram|nova-3|realtime",
+    "OpenAI|gpt-realtime-whisper|realtime",
   ],
 };
 
-const llmHighlightProviders = ["OpenRouter", "Google Gemini", "Ollama"];
+const llmHighlightProviders = ["OpenAI", "Anthropic", "Google Gemini", "Groq", "Mistral AI", "OpenRouter", "Ollama"];
 
 function sttModelId(model) {
   return `${model.provider}|${model.model}|${model.route}`;
@@ -236,7 +244,7 @@ export function ModelBuffet() {
               })}
             </div>
 
-            <div className="buffet-table" role="table" aria-label="Dictate speech-to-text model options">
+            <div className="buffet-table" role="table" aria-label="Dictate Keyboard speech-to-text model options">
               <div className="buffet-table-head" role="row">
                 <span role="columnheader">Provider / model</span>
                 <span role="columnheader">Route / language</span>
@@ -264,7 +272,10 @@ export function ModelBuffet() {
                           exit={{ opacity: 0 }}
                           transition={{ duration: reduceMotion ? 0.1 : 0.14, ease: [0.23, 1, 0.32, 1] }}
                         >
-                          <div className="buffet-model" role="cell"><span>{model.provider}</span><strong>{model.model}</strong><small>{model.detail}</small></div>
+                          <div className="buffet-model" role="cell">
+                            <ProviderIcon name={model.provider} size={30} className="buffet-model-icon" />
+                            <div className="buffet-model-copy"><span>{model.provider}</span><strong>{model.model}</strong><small>{model.detail}</small></div>
+                          </div>
                           <div className="buffet-route" role="cell"><RouteBadge route={model.route} /><span>{model.languages}</span></div>
                           <div role="cell"><AccuracyCell model={model} /></div>
                           <div className={`buffet-price ${model.cost === "$0" ? "is-free" : ""}`} role="cell"><strong>{model.cost}</strong><span>{model.unit}</span></div>
@@ -278,7 +289,7 @@ export function ModelBuffet() {
 
             <button type="button" className="buffet-expand" aria-expanded={expanded} onClick={() => setExpanded((value) => !value)}>
               {expanded
-                ? "Back to the three highlights per category"
+                ? "Back to the highlighted models per category"
                 : filter === "all"
                   ? `Explore all ${filteredModels.length} mapped STT options`
                   : `Show all ${filteredModels.length} ${filters.find((item) => item.id === filter)?.label.toLowerCase()} options`}
@@ -286,7 +297,7 @@ export function ModelBuffet() {
 
             <div className="buffet-notes">
               <p><strong>Accuracy:</strong> AA-WER is Artificial Analysis’ independent English benchmark; lower is better. It is an edit rate, not a conventional “accuracy %,” and does not score every local or dynamic route. *Family or alias evidence is not an exact route result. †Batch WER does not measure streaming behavior.</p>
-              <p><strong>Third-party API pricing:</strong> Dictate adds no provider markup. These USD provider list-price snapshots are normalized per 1,000 audio minutes on 13 July 2026; token-priced Gemini rows use AA’s observed effective cost. The 44 rows cover every fixed Dictate ID plus OpenRouter’s current 10-route STT snapshot. AA observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
+              <p><strong>Third-party API pricing:</strong> Dictate Keyboard adds no provider markup. These USD provider list-price snapshots are normalized per 1,000 audio minutes as of July 2026; token-priced Gemini rows use an observed effective cost. Rows cover every fixed Dictate Keyboard ID plus OpenRouter’s current STT snapshot. Observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
               <div><a href="https://artificialanalysis.ai/speech-to-text/non-streaming" target="_blank" rel="noreferrer">Async benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/streaming" target="_blank" rel="noreferrer">Realtime benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/methodology" target="_blank" rel="noreferrer">Methodology <ArrowUpRight size={13} weight="bold" /></a><a href="https://deepgram.com/pricing" target="_blank" rel="noreferrer">Deepgram billing <ArrowUpRight size={13} weight="bold" /></a></div>
             </div>
           </motion.div>
@@ -294,7 +305,7 @@ export function ModelBuffet() {
           <motion.div id="buffet-panel-llm" role="tabpanel" key="llm" className="buffet-panel buffet-llm" initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 4px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} exit={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, -3px, 0)", transition: { duration: reduceMotion ? 0.12 : 0.13, ease: [0.23, 1, 0.32, 1] } }} transition={{ duration: reduceMotion ? 0.12 : 0.18, ease: [0.23, 1, 0.32, 1] }}>
             <div className="buffet-llm-intro">
               <div><span className="eyebrow">MIX AND MATCH</span><h3>Your transcription model and writing model are separate choices.</h3></div>
-              <p>Start with three distinct routes: broad model choice, a free-tier cloud option, or your own Ollama server. Expand the catalog only when you want more. Rewrite quality is task-dependent, so STT-style WER does not apply.</p>
+              <p>The major writing models are here — OpenAI, Anthropic, Gemini, Groq, Mistral, plus OpenRouter’s 400+ routes and your own local Ollama. Every provider can also load its live catalog and accept manual model IDs. Rewrite quality is task-dependent, so STT-style WER does not apply.</p>
             </div>
             <div className={`llm-grid ${llmExpanded ? "" : "is-shortlist"}`}>
               {visibleLlmRoutes.map((route, index) => (
@@ -305,17 +316,17 @@ export function ModelBuffet() {
                   animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
                   transition={{ delay: reduceMotion ? 0 : Math.min(index * 0.012, 0.09), duration: reduceMotion ? 0.12 : 0.22, ease: [0.23, 1, 0.32, 1] }}
                 >
-                  <div className="llm-route-head"><span>{String(index + 1).padStart(2, "0")}</span><strong>{route.provider}</strong><small>{route.tier}</small></div>
+                  <div className="llm-route-head"><ProviderIcon name={route.provider} size={30} className="llm-route-icon" /><div className="llm-route-head-copy"><strong>{route.provider}</strong><small>{route.tier}</small></div></div>
                   <div className="llm-models">{route.models.map((model) => <code key={model.name}><span>{model.name}</span><small>{model.price}</small></code>)}</div>
                   <div className="llm-price"><span>Provider API cost</span><strong>{route.price}</strong></div>
                 </motion.article>
               ))}
             </div>
             <button type="button" className="buffet-expand" aria-expanded={llmExpanded} onClick={() => setLlmExpanded((value) => !value)}>
-              {llmExpanded ? "Back to the three rewrite highlights" : `Show all ${llmRoutes.length} rewrite providers`}
+              {llmExpanded ? "Back to the major rewrite providers" : `Show all ${llmRoutes.length} rewrite providers`}
             </button>
             <div className="buffet-notes">
-              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. Dictate adds no monthly subscription or provider markup; the USD public API-price snapshots shown here belong to external providers and are dated 13 July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
+              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. Dictate Keyboard adds no subscription or provider markup; the USD public API-price snapshots shown here belong to external providers and are dated July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
               <p><strong>Local LLM caveat:</strong> Ollama points to your own server or LAN machine; it is not an on-phone model. Validate the current credential setup before relying on a blank-key configuration.</p>
               <div>
                 <a href="https://github.com/DevEmperor/DictateKeyboard/blob/c3bf0fe34ae0308490ff6c1572bf77ec825b0454/lib/dictate-core/src/main/kotlin/dev/patrickgold/florisboard/dictate/provider/ProviderRegistry.kt" target="_blank" rel="noreferrer">Dictate model registry <ArrowUpRight size={13} weight="bold" /></a>

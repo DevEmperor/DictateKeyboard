@@ -67,7 +67,7 @@ export function DictationDemo() {
   const duration = useMemo(() => `0:${String(Math.max(1, Math.ceil(characterIndex / 9))).padStart(2, "0")}`, [characterIndex]);
 
   return (
-    <div className="demo-orbit" aria-label="Interactive Dictate product preview">
+    <div className="demo-orbit" aria-label="Interactive Dictate Keyboard product preview">
       <motion.div
         className="provider-tag provider-tag-top"
         initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 12px, 0)" }}

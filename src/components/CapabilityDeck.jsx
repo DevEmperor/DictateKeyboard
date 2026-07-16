@@ -13,7 +13,7 @@ const capabilities = [
     icon: FileAudio,
     eyebrow: "BEYOND THE MIC",
     title: "Transcribe existing recordings.",
-    copy: "Long-press the mic to choose an audio file—or a compatible video. Dictate uses your selected provider or an installed offline model. Supported formats and recording lengths vary by engine; cloud upload limits may also apply.",
+    copy: "Long-press the mic to choose an audio file—or a compatible video. Dictate Keyboard uses your selected provider or an installed offline model. Supported formats and recording lengths vary by engine; cloud upload limits may also apply.",
     visual: "files",
     wide: true,
   },

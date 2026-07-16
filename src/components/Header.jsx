@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { ArrowUpRight, GithubLogo, List, X } from "@phosphor-icons/react";
+import { List, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MagneticLink } from "./MagneticLink";
+import { GooglePlayGlyph } from "./GooglePlayBadge";
+
+const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 
 const navItems = [
   ["Compare", "#compare"],
@@ -17,9 +20,9 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="Dictate home" onClick={() => setMenuOpen(false)}>
+      <a className="brand" href="#top" aria-label="Dictate Keyboard home" onClick={() => setMenuOpen(false)}>
         <img src="/media/dictate-icon.png" width="36" height="36" alt="" />
-        <span>Dictate</span>
+        <span>Dictate Keyboard</span>
       </a>
 
       <nav className="desktop-nav" aria-label="Main navigation">
@@ -27,23 +30,14 @@ export function Header() {
       </nav>
 
       <div className="header-actions">
-        <a
-          className="github-link"
-          href="https://github.com/DevEmperor/DictateKeyboard"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Dictate on GitHub"
-        >
-          <GithubLogo size={19} weight="fill" aria-hidden="true" />
-        </a>
         <MagneticLink
           className="button button-small button-dark header-cta"
-          href="https://play.google.com/store/apps/details?id=net.devemperor.dictate"
+          href={PLAY_URL}
           target="_blank"
           rel="noreferrer"
         >
-          Get Dictate
-          <ArrowUpRight size={15} weight="bold" aria-hidden="true" />
+          <GooglePlayGlyph size={16} />
+          Google Play
         </MagneticLink>
         <button
           type="button"
@@ -76,13 +70,13 @@ export function Header() {
             ))}
             <a
               className="mobile-nav-cta"
-              href="https://play.google.com/store/apps/details?id=net.devemperor.dictate"
+              href={PLAY_URL}
               target="_blank"
               rel="noreferrer"
               onClick={() => setMenuOpen(false)}
             >
-              Get Dictate on Google Play
-              <ArrowUpRight size={18} weight="bold" />
+              <GooglePlayGlyph size={18} />
+              Get it on Google Play
             </a>
           </motion.nav>
         )}

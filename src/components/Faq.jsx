@@ -2,11 +2,11 @@ import { CaretDown } from "@phosphor-icons/react";
 
 const questions = [
   {
-    question: "Does Dictate require a subscription?",
-    answer: "No. Dictate has no monthly subscription. Its source is available under Apache 2.0, offline transcription uses no cloud API, and any optional cloud provider bills its own API usage directly.",
+    question: "Does Dictate Keyboard require a subscription?",
+    answer: "No. Dictate Keyboard has no monthly subscription. Its source is available under Apache 2.0, offline transcription uses no cloud API, and any optional cloud provider bills its own API usage directly.",
   },
   {
-    question: "Does Dictate work offline?",
+    question: "Does Dictate Keyboard work offline?",
     answer: "Yes. Download a supported Whisper or Parakeet model and transcription can run entirely on your Android device without a connection. Rewording, model downloads, and cloud transcription still require the relevant network service.",
   },
   {
@@ -15,19 +15,19 @@ const questions = [
   },
   {
     question: "Where does my audio go?",
-    answer: "In offline mode, audio stays on the device. In cloud mode, it goes to the provider you selected—not through a Dictate developer server—unless you deliberately configure an HTTP/SOCKS proxy. Provider policies apply. Local history and audio retention are configurable inside the app.",
+    answer: "In offline mode, audio stays on the device. In cloud mode, it goes to the provider you selected—not through a Dictate Keyboard developer server—unless you deliberately configure an HTTP/SOCKS proxy. Provider policies apply. Local history and audio retention are configurable inside the app.",
   },
   {
     question: "Can I keep my current keyboard?",
-    answer: "Yes. Use Dictate as your complete keyboard, or enable its optional floating button while another keyboard remains active. The floating mode uses Android’s Accessibility Service and is off by default.",
+    answer: "Yes. Use Dictate Keyboard as your complete keyboard, or enable its optional floating button while another keyboard remains active. The floating mode uses Android’s Accessibility Service and is off by default.",
   },
   {
     question: "How is this different from subscription dictation apps?",
-    answer: "Dictate is Android-first and open source, offers downloaded offline models, works as a complete keyboard, and lets you choose the provider behind it. It trades a hosted cross-platform account for more local control and Android-native flexibility.",
+    answer: "Dictate Keyboard is Android-first and open source, offers downloaded offline models, works as a complete keyboard, and lets you choose the provider behind it. It trades a hosted cross-platform account for more local control and Android-native flexibility.",
   },
   {
     question: "Can I dictate long recordings and use Wear OS?",
-    answer: "Yes. Long-form mode transcribes recordings in background segments, and Dictate also supports Wear OS 3+ through the paired phone or in standalone mode.",
+    answer: "Yes. Long-form mode transcribes recordings in background segments, and Dictate Keyboard also supports Wear OS 3+ through the paired phone or in standalone mode.",
   },
 ];
 

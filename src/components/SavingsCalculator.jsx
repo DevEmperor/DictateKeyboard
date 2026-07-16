@@ -38,9 +38,9 @@ export function SavingsCalculator() {
       <div className="savings-heading">
         <span className="savings-icon"><Calculator size={22} weight="bold" aria-hidden="true" /></span>
         <div>
-          <span className="eyebrow eyebrow-light">THE 20-HOUR REALTIME EXAMPLE</span>
+          <span className="eyebrow eyebrow-light">WORKED EXAMPLE · SONIOX REALTIME vs WISPR FLOW PRO</span>
           <h3>{hours} hours of voice. <em>{money.format(values.monthlySavings)}</em> stays yours.</h3>
-          <p>Compare Flow Pro’s month-to-month plan with Dictate’s $0 monthly subscription fee plus estimated Soniox realtime API usage.</p>
+          <p>A concrete comparison: Wispr Flow Pro’s flat monthly plan versus Dictate Keyboard with no subscription plus metered Soniox realtime API usage. Drag to see your own volume.</p>
         </div>
       </div>
 
@@ -64,14 +64,14 @@ export function SavingsCalculator() {
 
       <div className="savings-cards">
         <article className="savings-card savings-card-paid">
-          <span><Receipt size={18} weight="bold" aria-hidden="true" />FLOW PRO · MONTHLY</span>
+          <span><Receipt size={18} weight="bold" aria-hidden="true" />WISPR FLOW PRO</span>
           <strong>{money.format(FLOW_PRO_MONTHLY)}</strong>
-          <small>per month · recurring plan</small>
+          <small>per month · recurring subscription</small>
         </article>
         <article className="savings-card savings-card-dictate">
-          <span><TrendDown size={18} weight="bold" aria-hidden="true" />DICTATE + SONIOX</span>
+          <span><TrendDown size={18} weight="bold" aria-hidden="true" />DICTATE KEYBOARD + SONIOX</span>
           <strong>{money.format(values.soniox)}</strong>
-          <small>per month · estimated API usage</small>
+          <small>per month · metered API usage only</small>
         </article>
         <article className="savings-card savings-card-keep">
           <span><PiggyBank size={18} weight="bold" aria-hidden="true" />YOU KEEP</span>
@@ -82,11 +82,11 @@ export function SavingsCalculator() {
 
       <div className="savings-verdict" aria-live="polite">
         <p><strong>{money.format(values.annualSavings)} kept per year.</strong> At the same usage, the three-year difference is {money.format(values.threeYearSavings)}.</p>
-        <span>Annual-plan check: against Flow Pro’s {money.format(FLOW_PRO_ANNUAL_MONTHLY_EQUIVALENT)}/mo annual-billing equivalent, the difference is still {money.format(values.annualPlanSavings)}/mo ({values.annualPlanPercentage}% lower).</span>
+        <span>Annual-plan check: against Wispr Flow Pro’s {money.format(FLOW_PRO_ANNUAL_MONTHLY_EQUIVALENT)}/mo annual-billing equivalent, the difference is still {money.format(values.annualPlanSavings)}/mo ({values.annualPlanPercentage}% lower).</span>
       </div>
 
       <p className="savings-source">
-        Estimate checked 13 July 2026. Soniox lists realtime STT at about $0.12/hour; tokenized output can vary. Flow lists Pro at $15/user/month, or $12/user/month billed annually. Compares recurring plan and transcription API usage only; excludes taxes, free credits, optional rewrite-model usage, and any store acquisition cost. <a href="https://soniox.com/pricing" target="_blank" rel="noreferrer">Soniox pricing</a> · <a href="https://wisprflow.ai/pricing" target="_blank" rel="noreferrer">Flow pricing</a>
+        Estimate checked July 2026. Soniox lists realtime speech-to-text at about $0.12/hour. Wispr Flow lists Pro at $15/user/month, or $144/year (≈$12/month). Compares the recurring subscription with transcription API usage only; excludes taxes, free credits, optional rewrite-model usage, and any store cost. <a href="https://soniox.com/pricing" target="_blank" rel="noreferrer">Soniox pricing</a> · <a href="https://wisprflow.ai/pricing" target="_blank" rel="noreferrer">Wispr Flow pricing</a>
       </p>
     </div>
   );

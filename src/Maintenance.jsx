@@ -30,7 +30,7 @@ export default function Maintenance() {
         <p className="mt-eyebrow">Website under construction</p>
         <h1 className="mt-title">Something good is on the way.</h1>
         <p className="mt-lead">
-          Dictate — the open-source voice keyboard for Android — is getting a proper home here.
+          Dictate Keyboard — the open-source voice keyboard for Android — is getting a proper home here.
           In the meantime, you can already install it or explore the code.
         </p>
         <div className="mt-actions">

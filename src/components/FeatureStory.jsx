@@ -1,113 +1,199 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowsClockwise,
+  Cloud,
   CloudCheck,
   Keyboard,
   MagicWand,
+  Microphone,
   Watch,
+  WifiSlash,
 } from "@phosphor-icons/react";
 import { motion, useInView, useReducedMotion } from "motion/react";
+import { Waveform } from "./Waveform";
 
 const features = [
   {
     icon: Keyboard,
     label: "01 — ONE KEYBOARD",
     title: "Speak or type. Never switch context.",
-    copy: "Dictate is a complete keyboard with glide typing, suggestions, autocorrect, emoji, clipboard tools, themes, and one-handed layouts.",
-    image: "/media/feature-anywhere.png",
-    alt: "Dictate keyboard inside an Android note app",
+    copy: "A complete Android keyboard with glide typing, live word suggestions, autocorrect, emoji, clipboard tools, themes, and one-handed layouts — the mic is just one more key.",
     tag: "Full Android keyboard",
+    visual: "keyboard",
   },
   {
     icon: CloudCheck,
-    label: "02 — YOUR ROUTE",
-    title: "Choose what handles your voice.",
-    copy: "Run a downloadable model on-device, connect a cloud provider, or point Dictate at a compatible endpoint. Capabilities stay visible and configurable.",
-    image: "/media/feature-provider.png",
-    alt: "Dictate provider selection screen",
-    tag: "Offline or cloud",
+    label: "02 — ONLINE OR OFFLINE",
+    title: "You choose what handles your voice.",
+    copy: "Stream from a cloud provider for realtime speed and top accuracy, or download a model and transcribe fully on-device. Same keyboard, two honest routes — switch any time.",
+    tag: "Cloud streaming or on-device",
+    visual: "route",
   },
   {
     icon: MagicWand,
     label: "03 — READY TO SEND",
-    title: "Turn rough thoughts into useful text.",
-    copy: "Make a selection formal, concise, translated, or summarized. Install community prompts, build custom actions, and save reusable snippets.",
-    image: "/media/feature-reword.png",
-    alt: "Dictate AI rewording prompts inside the keyboard",
-    tag: "Custom AI prompts",
+    title: "Turn rough thoughts into finished text.",
+    copy: "Make a selection formal, concise, translated, or summarized with the writing model you pick. Install community prompts, build custom actions, and save reusable snippets.",
+    tag: "AI rewriting · your model",
+    visual: "reword",
   },
   {
     icon: ArrowsClockwise,
     label: "04 — ANY TEXT FIELD",
     title: "Add voice without giving up your keyboard.",
-    copy: "The optional floating button works while another keyboard is active. Move it, resize it, pick Pill, Ring, or Orb, and long-press to reword.",
-    image: "/media/feature-floating.png",
-    alt: "Dictate floating microphone button over another Android app",
-    tag: "Optional floating mode",
+    copy: "The optional floating button works while another keyboard is active. Move it, resize it, pick Pill, Ring, or Orb, and long-press to reword — anywhere on screen.",
+    tag: "Optional floating mic",
+    visual: "floating",
   },
   {
     icon: Watch,
     label: "05 — WEAR OS 3+",
     title: "Capture the thought from your wrist.",
-    copy: "Dictate from a Wear OS watch through your phone or in standalone mode—useful when pulling out a phone is the slow part.",
-    image: "/media/feature-wear.png",
-    alt: "Dictate voice input on a Wear OS watch",
+    copy: "Dictate from a Wear OS watch through your phone or fully standalone — for the moments when reaching for a phone is the slow part.",
     tag: "Wear OS 3+ · tethered or standalone",
+    visual: "wear",
   },
 ];
 
-const decodedImages = new Map();
+/* ---- animated per-feature visuals (pure CSS/motion, no screenshots) ---- */
 
-function decodeFeatureImage(src) {
-  if (decodedImages.has(src)) return decodedImages.get(src);
+const KEY_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
-  const readiness = new Promise((resolve, reject) => {
-    const image = new Image();
-    let settled = false;
-
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      const decode = typeof image.decode === "function" ? image.decode() : Promise.resolve();
-      decode.catch(() => undefined).then(() => resolve(src));
-    };
-
-    image.decoding = "async";
-    image.addEventListener("load", finish, { once: true });
-    image.addEventListener("error", () => {
-      if (settled) return;
-      settled = true;
-      reject(new Error(`Unable to load feature preview: ${src}`));
-    }, { once: true });
-    image.src = src;
-
-    if (image.complete && image.naturalWidth > 0) finish();
-  });
-
-  decodedImages.set(src, readiness);
-  readiness.catch(() => decodedImages.delete(src));
-  return readiness;
+function KeyboardVisual() {
+  return (
+    <div className="fv fv-keyboard" aria-hidden="true">
+      <div className="fv-suggest">
+        <span>hello</span>
+        <span className="is-active">world</span>
+        <span>voice</span>
+      </div>
+      <div className="fv-keys">
+        {KEY_ROWS.map((row) => (
+          <div className="fv-key-row" key={row}>
+            {row.split("").map((k) => <span key={k}>{k}</span>)}
+          </div>
+        ))}
+        <div className="fv-key-row fv-key-row-space">
+          <span className="fv-key-fn">?123</span>
+          <span className="fv-key-space" />
+          <span className="fv-key-fn"><Microphone size={13} weight="fill" /></span>
+        </div>
+        <svg className="fv-glide" viewBox="0 0 300 150" preserveAspectRatio="none">
+          <path
+            d="M40 30 L150 30 L120 66 L210 66 L95 102 L180 102"
+            fill="none"
+            stroke="var(--accent)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength="1"
+          />
+        </svg>
+      </div>
+    </div>
+  );
 }
 
-function useDesktopPreview() {
-  const [isDesktop, setIsDesktop] = useState(false);
+function RouteVisual() {
+  return (
+    <div className="fv fv-route" aria-hidden="true">
+      <div className="fv-route-node fv-route-mic"><Microphone size={22} weight="fill" /><small>YOUR VOICE</small></div>
+      <div className="fv-route-rails">
+        <div className="fv-rail fv-rail-cloud">
+          <span className="fv-rail-line"><i /></span>
+          <div className="fv-route-dest"><Cloud size={20} weight="fill" /><strong>Cloud provider</strong><small>Realtime · streaming</small></div>
+        </div>
+        <div className="fv-rail fv-rail-offline">
+          <span className="fv-rail-line"><i /></span>
+          <div className="fv-route-dest"><WifiSlash size={20} weight="bold" /><strong>On-device model</strong><small>Private · $0 API</small></div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1021px)");
-    const update = () => setIsDesktop(media.matches);
+function RewordVisual() {
+  return (
+    <div className="fv fv-reword" aria-hidden="true">
+      <div className="fv-reword-in">
+        <span>YOU SAID</span>
+        <p>“uh yeah tell the client we'll send the proposal friday and the numbers are still being checked”</p>
+      </div>
+      <div className="fv-reword-wand"><MagicWand size={18} weight="fill" /></div>
+      <div className="fv-reword-out">
+        <span>DICTATE WROTE</span>
+        <p>I'll send the proposal by Friday. The figures are currently in final review.</p>
+        <em className="fv-reword-cursor" />
+      </div>
+    </div>
+  );
+}
 
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
+function FloatingVisual() {
+  return (
+    <div className="fv fv-floating" aria-hidden="true">
+      <div className="fv-app">
+        <div className="fv-app-bar"><i /><i /><i /></div>
+        <div className="fv-app-line" style={{ width: "82%" }} />
+        <div className="fv-app-line" style={{ width: "64%" }} />
+        <div className="fv-app-line" style={{ width: "74%" }} />
+        <div className="fv-app-line fv-app-line-type" style={{ width: "40%" }} />
+      </div>
+      <div className="fv-float-btn"><Microphone size={20} weight="fill" /><span className="fv-float-ring" /></div>
+    </div>
+  );
+}
 
-  return isDesktop;
+function WearVisual() {
+  return (
+    <div className="fv fv-wear" aria-hidden="true">
+      <div className="fv-watch">
+        <div className="fv-watch-face">
+          <span className="fv-watch-dot" />
+          <span className="fv-watch-label">LISTENING</span>
+          <Waveform active />
+          <div className="fv-watch-text">Reminder: call the studio at four</div>
+        </div>
+        <span className="fv-watch-crown" />
+      </div>
+      <div className="fv-watch-sent"><CloudCheck size={15} weight="bold" />Synced to phone</div>
+    </div>
+  );
+}
+
+const VISUALS = {
+  keyboard: KeyboardVisual,
+  route: RouteVisual,
+  reword: RewordVisual,
+  floating: FloatingVisual,
+  wear: WearVisual,
+};
+
+function FeatureVisual({ feature, index, total }) {
+  const reduceMotion = useReducedMotion();
+  const Visual = VISUALS[feature.visual];
+  return (
+    <motion.div
+      key={feature.visual}
+      className={`feature-visual-stage stage-${feature.visual}`}
+      initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 10px, 0) scale(0.99)" }}
+      animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }}
+      transition={{ duration: reduceMotion ? 0.12 : 0.32, ease: [0.23, 1, 0.32, 1] }}
+    >
+      <Visual />
+      <div className="feature-visual-caption">
+        <span>{feature.tag}</span>
+        <span>{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+      </div>
+    </motion.div>
+  );
 }
 
 function FeatureCopy({ feature, index, activeIndex, setActiveIndex }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { margin: "-32% 0px -48% 0px" });
+  const inView = useInView(ref, { margin: "-38% 0px -48% 0px" });
   const Icon = feature.icon;
+  const Visual = VISUALS[feature.visual];
 
   useEffect(() => {
     if (inView) setActiveIndex(index);
@@ -127,116 +213,15 @@ function FeatureCopy({ feature, index, activeIndex, setActiveIndex }) {
         <strong>{feature.title}</strong>
         <span>{feature.copy}</span>
       </span>
-      <img className="feature-mobile-image" src={feature.image} width="1080" height="1920" loading="lazy" decoding="async" alt={feature.alt} />
+      {/* Inline animated visual on mobile, where the sticky column is hidden */}
+      <span className="feature-mobile-visual"><Visual /></span>
     </button>
   );
 }
 
 export function FeatureStory() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [displayedIndex, setDisplayedIndex] = useState(0);
-  const [incomingIndex, setIncomingIndex] = useState(null);
-  const [incomingReady, setIncomingReady] = useState(false);
-  const baseImageRef = useRef(null);
-  const incomingImageRef = useRef(null);
-  const reduceMotion = useReducedMotion();
-  const isDesktopPreview = useDesktopPreview();
-  const displayedFeature = features[displayedIndex];
-
-  useEffect(() => {
-    if (!isDesktopPreview) return undefined;
-
-    const preload = () => {
-      features.slice(1).forEach((item) => {
-        decodeFeatureImage(item.image).catch(() => undefined);
-      });
-    };
-
-    if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(preload, { timeout: 2400 });
-      return () => window.cancelIdleCallback(idleId);
-    }
-
-    const timeoutId = window.setTimeout(preload, 700);
-    return () => window.clearTimeout(timeoutId);
-  }, [isDesktopPreview]);
-
-  useEffect(() => {
-    if (!isDesktopPreview) return;
-
-    if (activeIndex === displayedIndex) {
-      if (incomingIndex !== null && !incomingReady) setIncomingIndex(null);
-      return;
-    }
-
-    if (incomingIndex === null || (!incomingReady && incomingIndex !== activeIndex)) {
-      setIncomingReady(false);
-      setIncomingIndex(activeIndex);
-    }
-  }, [activeIndex, displayedIndex, incomingIndex, incomingReady, isDesktopPreview]);
-
-  useEffect(() => {
-    if (incomingIndex === null) return undefined;
-
-    const image = incomingImageRef.current;
-    if (!image) return undefined;
-    let cancelled = false;
-
-    const reveal = async () => {
-      try {
-        if (typeof image.decode === "function") await image.decode();
-      } catch {
-        return;
-      }
-      if (!cancelled) setIncomingReady(true);
-    };
-
-    if (image.complete && image.naturalWidth > 0) {
-      reveal();
-    } else {
-      image.addEventListener("load", reveal, { once: true });
-    }
-
-    return () => {
-      cancelled = true;
-      image.removeEventListener("load", reveal);
-    };
-  }, [incomingIndex]);
-
-  useEffect(() => {
-    if (incomingIndex === null || !incomingReady || displayedIndex !== incomingIndex) return undefined;
-
-    const image = baseImageRef.current;
-    if (!image) return undefined;
-    let cancelled = false;
-
-    const revealBase = async () => {
-      try {
-        if (typeof image.decode === "function") await image.decode();
-      } catch {
-        return;
-      }
-      if (cancelled) return;
-      setIncomingReady(false);
-      setIncomingIndex(null);
-    };
-
-    if (image.complete && image.naturalWidth > 0) {
-      revealBase();
-    } else {
-      image.addEventListener("load", revealBase, { once: true });
-    }
-
-    return () => {
-      cancelled = true;
-      image.removeEventListener("load", revealBase);
-    };
-  }, [displayedIndex, incomingIndex, incomingReady]);
-
-  const promoteIncoming = (index) => {
-    if (!incomingReady || incomingIndex !== index) return;
-    setDisplayedIndex(index);
-  };
+  const active = features[activeIndex];
 
   return (
     <div className="feature-story">
@@ -255,42 +240,7 @@ export function FeatureStory() {
       <div className="feature-visual-column">
         <div className="feature-visual">
           <div className="feature-visual-grid" aria-hidden="true" />
-          <figure>
-            <div className="feature-visual-media">
-              <img
-                ref={baseImageRef}
-                className="feature-visual-base"
-                src={displayedFeature.image}
-                width="1080"
-                height="1920"
-                loading={isDesktopPreview ? "eager" : "lazy"}
-                decoding="async"
-                alt={displayedFeature.alt}
-              />
-              {incomingIndex !== null && (
-                <motion.img
-                  ref={incomingImageRef}
-                  className="feature-visual-incoming"
-                  key={features[incomingIndex].image}
-                  src={features[incomingIndex].image}
-                  width="1080"
-                  height="1920"
-                  initial={{ opacity: 0, transform: reduceMotion ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0) scale(0.997)" }}
-                  animate={incomingReady
-                    ? { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }
-                    : { opacity: 0, transform: reduceMotion ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0) scale(0.997)" }}
-                  transition={{ duration: reduceMotion ? 0.12 : 0.2, ease: [0.23, 1, 0.32, 1] }}
-                  onAnimationComplete={() => promoteIncoming(incomingIndex)}
-                  alt=""
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-            <figcaption aria-live="polite">
-              <span>{displayedFeature.tag}</span>
-              <span>{String(displayedIndex + 1).padStart(2, "0")} / {String(features.length).padStart(2, "0")}</span>
-            </figcaption>
-          </figure>
+          <FeatureVisual feature={active} index={activeIndex} total={features.length} />
           <div className="feature-dots" role="group" aria-label="Feature preview selection">
             {features.map((item, index) => (
               <button
