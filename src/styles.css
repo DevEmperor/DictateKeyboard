@@ -381,7 +381,8 @@ p {
 .mobile-nav-cta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;
   margin-top: 10px;
   padding: 15px;
   border-radius: 13px;
@@ -3402,7 +3403,7 @@ p {
   }
 
   .feature-copy .feature-copy-icon {
-    display: inline-flex;
+    /* keep the base display:grid + place-items:center so the glyph stays centred in its box */
     margin-bottom: 14px;
   }
 
