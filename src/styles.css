@@ -35,71 +35,6 @@
   --radius-large: 36px;
 }
 
-/* ============================================================================
-   DARK MODE — follows the system setting (prefers-color-scheme), with a
-   data-theme override so a future manual toggle wins in both directions.
-   Only the *neutral* tokens flip; the fixed --surface-ink / --on-dark tokens
-   keep the always-dark sections dark and their text legible in both themes.
-   ============================================================================ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --ink: #eef1f5;
-    --ink-soft: #dfe4ea;
-    --ink-lift: #c4ccd5;
-    --paper: #0c0f13;
-    --paper-soft: #12161c;
-    --paper-bright: #171d25;
-    --line: rgba(255, 253, 248, 0.13);
-    --line-dark: rgba(255, 253, 248, 0.16);
-    --muted: #98a2ad;
-    --muted-light: #6b7580;
-    --accent: #3cc0ee;
-    --accent-dark: #7bd4f4;
-    --accent-soft: rgba(60, 192, 238, 0.16);
-    --surface-ink: #090c10;
-    --surface-ink-2: #12171d;
-  }
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --ink: #0d1117;
-  --ink-soft: #171d25;
-  --ink-lift: #222a35;
-  --paper: #f4f1e9;
-  --paper-soft: #ebe7dd;
-  --paper-bright: #fffdf8;
-  --line: rgba(13, 17, 23, 0.14);
-  --line-dark: rgba(255, 253, 248, 0.14);
-  --muted: #68707b;
-  --muted-light: #aab3bd;
-  --accent: #30b7e6;
-  --accent-dark: #147b9f;
-  --accent-soft: #d8f1f9;
-  --surface-ink: #0d1117;
-  --surface-ink-2: #171d25;
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --ink: #eef1f5;
-  --ink-soft: #dfe4ea;
-  --ink-lift: #c4ccd5;
-  --paper: #0c0f13;
-  --paper-soft: #12161c;
-  --paper-bright: #171d25;
-  --line: rgba(255, 253, 248, 0.13);
-  --line-dark: rgba(255, 253, 248, 0.16);
-  --muted: #98a2ad;
-  --muted-light: #6b7580;
-  --accent: #3cc0ee;
-  --accent-dark: #7bd4f4;
-  --accent-soft: rgba(60, 192, 238, 0.16);
-  --surface-ink: #090c10;
-  --surface-ink-2: #12171d;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -540,9 +475,12 @@ p {
 
 .hero-title > span {
   display: block;
-  overflow: hidden;
+  /* clip (not hidden) + a clip margin so the slide-up reveal still hides the
+     off-screen line, but ascenders/descenders at rest are not shaved off by the
+     tight 0.87 line-height. */
+  overflow: clip;
+  overflow-clip-margin: 0.24em;
   padding-right: 0.09em;
-  padding-bottom: 0.09em;
 }
 
 .hero-title > span > span {
@@ -2363,16 +2301,65 @@ p {
 }
 
 .install-panel {
-  min-height: 555px;
   padding: clamp(32px, 5vw, 70px);
 }
 
 .install-panel-heading {
   display: grid;
-  max-width: 940px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+  margin-bottom: 48px;
+}
+
+.install-heading-text {
+  display: grid;
+  max-width: 620px;
   grid-template-columns: auto 1fr;
   gap: 22px;
-  margin-bottom: 66px;
+}
+
+.install-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  width: min(320px, 34vw);
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(120% 130% at 100% 0%, rgba(48, 183, 230, 0.1), transparent 55%),
+    var(--paper-soft);
+  box-shadow: inset 0 1px 0 #fff;
+}
+
+.install-cta-kicker {
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 0.56rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+}
+
+.install-cta .gplay-badge-link {
+  align-self: stretch;
+  width: 100%;
+}
+
+.install-cta .gplay-badge {
+  width: 100%;
+  justify-content: center;
+  padding-block: 12px;
+}
+
+.install-cta-fine {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.02em;
 }
 
 .install-route-icon {
@@ -3482,6 +3469,14 @@ p {
   .install-panel-heading {
     grid-template-columns: 1fr;
     margin-bottom: 45px;
+  }
+
+  .install-cta {
+    width: 100%;
+  }
+
+  .install-heading-text {
+    max-width: none;
   }
 
   .install-steps {
@@ -5988,11 +5983,7 @@ p {
   text-transform: uppercase;
 }
 
-/* ============================================================================
-   DARK-MODE SURFACE FIX — the card/chip/nav/zebra veils were hardcoded light
-   rgba() values that washed out as grey overlays on the dark ground. Route them
-   through theme-aware tokens instead. Light values match the original look.
-   ============================================================================ */
+/* Card/chip/nav/zebra veil tokens (single light theme). */
 :root {
   --card-veil: rgba(255, 253, 248, 0.55);
   --chip-veil: rgba(255, 255, 255, 0.5);
@@ -6000,33 +5991,3 @@ p {
   --nav-solid: rgba(244, 241, 233, 0.9);
   --row-alt: rgba(244, 241, 233, 0.32);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --card-veil: rgba(255, 255, 255, 0.045);
-    --chip-veil: rgba(255, 255, 255, 0.07);
-    --category-bar: rgba(255, 255, 255, 0.06);
-    --nav-solid: rgba(14, 18, 24, 0.9);
-    --row-alt: rgba(255, 255, 255, 0.02);
-  }
-}
-:root[data-theme="light"] {
-  --card-veil: rgba(255, 253, 248, 0.55);
-  --chip-veil: rgba(255, 255, 255, 0.5);
-  --category-bar: #eeece5;
-  --nav-solid: rgba(244, 241, 233, 0.9);
-  --row-alt: rgba(244, 241, 233, 0.32);
-}
-:root[data-theme="dark"] {
-  --card-veil: rgba(255, 255, 255, 0.045);
-  --chip-veil: rgba(255, 255, 255, 0.07);
-  --category-bar: rgba(255, 255, 255, 0.06);
-  --nav-solid: rgba(14, 18, 24, 0.9);
-  --row-alt: rgba(255, 255, 255, 0.02);
-}
-
-/* Google Play badge: give it an edge on any ground, and lift it off the dark
-   install section so it no longer reads as dark-on-dark. */
-.gplay-badge { border: 1px solid rgba(255, 255, 255, 0.16); }
-@media (prefers-color-scheme: dark) { .gplay-badge { background: var(--surface-ink-2); } }
-:root[data-theme="dark"] .gplay-badge { background: var(--surface-ink-2); }
-:root[data-theme="light"] .gplay-badge { background: var(--surface-ink); }
