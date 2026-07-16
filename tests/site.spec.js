@@ -15,8 +15,9 @@ function captureRuntimeErrors(page) {
     if (message.type() !== "error") return;
     const text = message.text();
     // The headless shell lacks proprietary H.264, so the demo <video> fails to decode — that is an
-    // environment codec limitation, not a site defect. Ignore media-load noise only.
-    if (/demo\.mp4|MEDIA_ELEMENT|could not be decoded|Failed to load because no supported source/i.test(text)) return;
+    // environment codec limitation, not a site defect. Also ignore the external Cloudflare Web Analytics
+    // beacon, which the sandbox can't reach (ERR_CONNECTION_REFUSED). Site-origin assets aren't affected.
+    if (/demo\.mp4|MEDIA_ELEMENT|could not be decoded|Failed to load because no supported source|cloudflareinsights|ERR_CONNECTION_REFUSED/i.test(text)) return;
     errors.push(text);
   });
   return errors;

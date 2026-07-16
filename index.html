@@ -43,13 +43,32 @@
         "image": "https://dictatekeyboard.com/media/og.png",
         "author": { "@type": "Person", "name": "Jannis Zahn", "url": "https://github.com/DevEmperor" },
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.77", "ratingCount": "603" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Does Dictate Keyboard require a subscription?", "acceptedAnswer": { "@type": "Answer", "text": "No. Dictate Keyboard has no monthly subscription. Its source is available under Apache 2.0, offline transcription uses no cloud API, and any optional cloud provider bills its own API usage directly." } },
+          { "@type": "Question", "name": "Does Dictate Keyboard work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Download a supported Whisper or Parakeet model and transcription can run entirely on your Android device without a connection. Rewording, model downloads, and cloud transcription still require the relevant network service." } },
+          { "@type": "Question", "name": "Do I need an API key?", "acceptedAnswer": { "@type": "Answer", "text": "On-device transcription needs no cloud API key after its model has been downloaded. Hosted providers normally require your own key. Self-hosted or custom routes can differ, so follow the setup for the endpoint you configure." } },
+          { "@type": "Question", "name": "Where does my audio go?", "acceptedAnswer": { "@type": "Answer", "text": "In offline mode, audio stays on the device. In cloud mode, it goes to the provider you selected, not through a Dictate Keyboard developer server, unless you deliberately configure an HTTP/SOCKS proxy. Provider policies apply. Local history and audio retention are configurable inside the app." } },
+          { "@type": "Question", "name": "Can I keep my current keyboard?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use Dictate Keyboard as your complete keyboard, or enable its optional floating button while another keyboard remains active. The floating mode uses Android's Accessibility Service and is off by default." } },
+          { "@type": "Question", "name": "How is this different from subscription dictation apps?", "acceptedAnswer": { "@type": "Answer", "text": "Dictate Keyboard is Android-first and open source, offers downloaded offline models, works as a complete keyboard, and lets you choose the provider behind it. It trades a hosted cross-platform account for more local control and Android-native flexibility." } },
+          { "@type": "Question", "name": "Can I dictate long recordings and use Wear OS?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Long-form mode transcribes recordings in background segments, and Dictate Keyboard also supports Wear OS 3+ through the paired phone or in standalone mode." } }
+        ]
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!--
+      Cloudflare Web Analytics (cookieless, no banner) is enabled via the Cloudflare dashboard:
+      Pages project → Metrics/Web Analytics → enable. Cloudflare then auto-injects its beacon on the live
+      domain only — nothing to add here, and it never runs on localhost/previews.
+    -->
   </body>
 </html>

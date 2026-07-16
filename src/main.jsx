@@ -5,6 +5,7 @@ import "@fontsource-variable/newsreader";
 import "@fontsource-variable/geist-mono";
 import App from "./App";
 import Maintenance from "./Maintenance";
+import Legal from "./components/Legal";
 import "./styles.css";
 
 // Single committed maintenance switch. The `website` (production) branch keeps this `true`, so the public
@@ -13,8 +14,18 @@ import "./styles.css";
 // flips this to false — nothing else to toggle. Set it back to true on `website` to re-enable maintenance.
 const MAINTENANCE = false;
 
+// Legal pages are served at /impressum and /datenschutz (SPA fallback via public/_redirects) and stay
+// reachable even during maintenance.
+const path = window.location.pathname.replace(/\/+$/, "");
+const legalPage = path === "/impressum" ? "impressum" : path === "/datenschutz" ? "datenschutz" : null;
+
+function Root() {
+  if (legalPage) return <Legal page={legalPage} />;
+  return MAINTENANCE ? <Maintenance /> : <App />;
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {MAINTENANCE ? <Maintenance /> : <App />}
+    <Root />
   </React.StrictMode>,
 );

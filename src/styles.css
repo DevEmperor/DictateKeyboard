@@ -6514,3 +6514,61 @@ p {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
 }
+
+/* ============================================================================
+   LEGAL PAGES — Impressum / Datenschutz (served at /impressum, /datenschutz)
+   ============================================================================ */
+.legal {
+  min-height: 100dvh;
+  padding: 44px 0 80px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.legal-shell { width: min(760px, calc(100% - 48px)); margin-inline: auto; }
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 42px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.legal-back:hover { color: var(--ink); }
+.legal-body h1 {
+  margin-bottom: 26px;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+.legal-body h2 {
+  margin: 34px 0 10px;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.legal-body p {
+  max-width: 68ch;
+  margin-bottom: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.legal-body a { color: var(--accent-dark); text-decoration: underline; }
+.legal-body strong { color: var(--ink); }
+.legal-updated { margin-top: 30px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-light); }
+.legal-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.legal-foot a { color: var(--muted); text-decoration: none; }
+.legal-foot a:hover { color: var(--ink); }
