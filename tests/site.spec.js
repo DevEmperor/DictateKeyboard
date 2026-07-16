@@ -12,7 +12,12 @@ function captureRuntimeErrors(page) {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
-    if (message.type() === "error") errors.push(message.text());
+    if (message.type() !== "error") return;
+    const text = message.text();
+    // The headless shell lacks proprietary H.264, so the demo <video> fails to decode — that is an
+    // environment codec limitation, not a site defect. Ignore media-load noise only.
+    if (/demo\.mp4|MEDIA_ELEMENT|could not be decoded|Failed to load because no supported source/i.test(text)) return;
+    errors.push(text);
   });
   return errors;
 }
@@ -41,7 +46,7 @@ test("desktop conversion path, model buffet, and install", async ({ page }) => {
   await page.locator(".reword-playground").scrollIntoViewIfNeeded();
   await page.locator(".reword-prompts").getByRole("button", { name: "Bullets" }).click();
   await expect(page.locator(".reword-card-output")).toContainText("Proposal: send by Friday");
-  await expect(page.locator(".capability-card")).toHaveCount(6);
+  await expect(page.locator(".capability-card")).toHaveCount(7);
   await expect(page.getByRole("heading", { name: "Transcribe existing recordings." })).toBeVisible();
 
   await page.locator("#models").scrollIntoViewIfNeeded();

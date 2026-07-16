@@ -4,6 +4,7 @@ import {
   ChartBar,
   FileAudio,
   Palette,
+  Sticker,
   TextAa,
 } from "@phosphor-icons/react";
 import { Reveal } from "./Reveal";
@@ -53,6 +54,13 @@ const capabilities = [
     copy: "Choose themes—including E-Reader mode—plus layouts, one-handed mode, gestures, sound, haptics, and a classic voice-first view.",
     visual: "themes",
   },
+  {
+    icon: Sticker,
+    eyebrow: "MORE THAN TEXT",
+    title: "Send the perfect GIF.",
+    copy: "Search millions of GIFs straight from the keyboard and drop one into any chat—no app-switching. Bring your own key; nothing bundled.",
+    visual: "gifs",
+  },
 ];
 
 function CapabilityVisual({ type }) {
@@ -61,6 +69,7 @@ function CapabilityVisual({ type }) {
   if (type === "prompts") return <div className="cap-prompts" aria-hidden="true"><span>Formal</span><span>Translate</span><span>My prompt</span></div>;
   if (type === "stats") return <div className="cap-stats" aria-hidden="true"><span style={{ "--height": "36%" }} /><span style={{ "--height": "58%" }} /><span style={{ "--height": "46%" }} /><span style={{ "--height": "78%" }} /><span style={{ "--height": "92%" }} /><strong>VOICE MOMENTUM</strong></div>;
   if (type === "audio") return <div className="cap-audio" aria-hidden="true"><span><Bluetooth size={21} weight="bold" /></span><i /><i /></div>;
+  if (type === "gifs") return <div className="cap-gifs" aria-hidden="true"><span className="cap-gif-bar">Search GIFs</span><div className="cap-gif-grid"><i /><i /><i /><i /><i /><i /></div></div>;
   return <div className="cap-themes" aria-hidden="true"><span /><span /><span /><span /></div>;
 }
 

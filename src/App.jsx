@@ -34,6 +34,10 @@ import { ScrollProgress } from "./components/ScrollProgress";
 import { Waveform } from "./components/Waveform";
 import { ProviderIcon } from "./components/ProviderIcon";
 import { GooglePlayGlyph } from "./components/GooglePlayBadge";
+import { VideoShowcase } from "./components/VideoShowcase";
+import { Languages } from "./components/Languages";
+import { Accessibility } from "./components/Accessibility";
+import { SocialProof } from "./components/SocialProof";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
@@ -263,6 +267,8 @@ function App() {
           </div>
         </section>
 
+        <VideoShowcase />
+
         <FreedomComparison />
 
         <section className="modes section-shell">
@@ -337,6 +343,10 @@ function App() {
           </div>
         </section>
 
+        <Languages />
+
+        <Accessibility />
+
         <section className="control-section" id="privacy">
           <div className="control-inner section-shell">
             <div className="control-heading">
@@ -403,6 +413,8 @@ function App() {
           </div>
           <Reveal delay={0.1}><Faq /></Reveal>
         </section>
+
+        <SocialProof />
 
         <section className="final-cta section-shell">
           <div className="final-cta-inner">
