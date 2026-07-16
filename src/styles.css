@@ -6451,27 +6451,6 @@ p {
    edges. All disabled or reduced under prefers-reduced-motion.
    ============================================================================ */
 
-/* Cursor-follow accent glow (screen-blended → shows on dark bands, subtle on cream) */
-.cursor-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 520px;
-  height: 520px;
-  margin: -260px 0 0 -260px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 6;
-  opacity: 0;
-  background: radial-gradient(circle, rgba(60, 192, 238, 0.4), transparent 62%);
-  mix-blend-mode: screen;
-  transition: opacity 0.4s ease;
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce), (pointer: coarse) {
-  .cursor-glow { display: none; }
-}
-
 /* Signature load intro */
 .intro {
   position: fixed;

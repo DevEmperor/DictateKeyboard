@@ -39,7 +39,6 @@ import { VideoShowcase } from "./components/VideoShowcase";
 import { Languages } from "./components/Languages";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
-import { CursorGlow } from "./components/CursorGlow";
 import { Intro } from "./components/Intro";
 import { useMarqueeScroll, useTilt } from "./lib/interactions";
 
@@ -152,7 +151,6 @@ function App() {
   return (
     <>
       <Intro />
-      <CursorGlow />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollProgress />
       <Header />
