@@ -1,5 +1,8 @@
+import { useRef } from "react";
 import { GlobeHemisphereWest, Keyboard, Translate } from "@phosphor-icons/react";
 import { Reveal } from "./Reveal";
+import { CountUp } from "./CountUp";
+import { useMarqueeScroll } from "../lib/interactions";
 
 const stats = [
   [Translate, "99", "languages to speak", "Whisper, Parakeet and cloud providers transcribe a huge range of languages."],
@@ -16,6 +19,8 @@ const languageNames = [
 ];
 
 export function Languages() {
+  const trackRef = useRef(null);
+  useMarqueeScroll(trackRef, 30);
   return (
     <section className="languages section-shell" id="languages">
       <div className="languages-inner">
@@ -33,7 +38,7 @@ export function Languages() {
           {stats.map(([Icon, big, label, copy], index) => (
             <Reveal className="languages-stat" delay={index * 0.06} key={label}>
               <span className="languages-stat-icon"><Icon size={20} weight="bold" aria-hidden="true" /></span>
-              <strong>{big}</strong>
+              <strong><CountUp value={big} /></strong>
               <span className="languages-stat-label">{label}</span>
               <p>{copy}</p>
             </Reveal>
@@ -41,7 +46,7 @@ export function Languages() {
         </div>
 
         <Reveal className="language-marquee" delay={0.1}>
-          <div className="language-marquee-track" aria-label={`Supported languages include ${languageNames.join(", ")}`}>
+          <div className="language-marquee-track" ref={trackRef} aria-label={`Supported languages include ${languageNames.join(", ")}`}>
             {[...languageNames, ...languageNames].map((name, index) => (
               <span key={`${name}-${index}`} aria-hidden={index >= languageNames.length}>{name}</span>
             ))}

@@ -17,6 +17,7 @@ import {
   Watch,
   WifiSlash,
 } from "@phosphor-icons/react";
+import { useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { DictationDemo } from "./components/DictationDemo";
 import { Faq } from "./components/Faq";
@@ -38,6 +39,9 @@ import { VideoShowcase } from "./components/VideoShowcase";
 import { Languages } from "./components/Languages";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
+import { CursorGlow } from "./components/CursorGlow";
+import { Intro } from "./components/Intro";
+import { useMarqueeScroll, useTilt } from "./lib/interactions";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
@@ -109,9 +113,11 @@ const benefits = [
 
 function ProviderMarquee() {
   const repeated = [...providers, ...providers];
+  const trackRef = useRef(null);
+  useMarqueeScroll(trackRef, 38);
   return (
     <div className="provider-marquee" aria-label={`Supported providers include ${providers.join(", ")}`}>
-      <div className="provider-marquee-track" aria-hidden="true">
+      <div className="provider-marquee-track" ref={trackRef} aria-hidden="true">
         {repeated.map((provider, index) => (
           <span key={`${provider}-${index}`}><ProviderIcon name={provider} size={26} />{provider}</span>
         ))}
@@ -139,9 +145,14 @@ function BenefitPanel({ item, index }) {
 
 function App() {
   const reduceMotion = useReducedMotion();
+  const heroVisualRef = useRef(null);
+  const heroTiltRef = useRef(null);
+  useTilt(heroVisualRef, heroTiltRef, 7);
 
   return (
     <>
+      <Intro />
+      <CursorGlow />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollProgress />
       <Header />
@@ -216,8 +227,10 @@ function App() {
               </motion.p>
             </div>
 
-            <div className="hero-visual">
-              <DictationDemo />
+            <div className="hero-visual" ref={heroVisualRef}>
+              <div className="hero-tilt" ref={heroTiltRef}>
+                <DictationDemo />
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CloudArrowUp, Cpu, DeviceMobile, Microphone, WifiSlash } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { Waveform } from "./Waveform";
 
 const modes = [
@@ -84,13 +84,25 @@ const VIZ = { live: LiveViz, offline: OfflineViz, floating: FloatingViz };
 
 export function ModeSwitcher() {
   const [activeMode, setActiveMode] = useState("live");
+  const [manual, setManual] = useState(false);
   const reduceMotion = useReducedMotion();
+  const rootRef = useRef(null);
+  const inView = useInView(rootRef, { margin: "-20% 0px -20% 0px" });
   const mode = modes.find((item) => item.id === activeMode);
   const Icon = mode.icon;
   const Viz = VIZ[mode.id];
 
+  // Auto-advance through the three routes while the section is on screen — until the visitor takes over.
+  useEffect(() => {
+    if (reduceMotion || manual || !inView) return undefined;
+    const id = setInterval(() => {
+      setActiveMode((cur) => modes[(modes.findIndex((m) => m.id === cur) + 1) % modes.length].id);
+    }, 3600);
+    return () => clearInterval(id);
+  }, [reduceMotion, manual, inView]);
+
   return (
-    <div className="mode-switcher">
+    <div className="mode-switcher" ref={rootRef}>
       <div className="mode-tabs" role="tablist" aria-label="Dictation modes">
         {modes.map((item) => (
           <button
@@ -100,7 +112,7 @@ export function ModeSwitcher() {
             aria-selected={activeMode === item.id}
             aria-controls={`mode-panel-${item.id}`}
             className={activeMode === item.id ? "is-active" : ""}
-            onClick={() => setActiveMode(item.id)}
+            onClick={() => { setManual(true); setActiveMode(item.id); }}
           >
             {activeMode === item.id && (
               <motion.span

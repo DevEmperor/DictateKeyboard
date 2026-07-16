@@ -6453,3 +6453,77 @@ p {
   .social-reviews { grid-template-columns: 1fr; }
   .language-marquee-track span { font-size: 0.82rem; padding: 8px 15px; }
 }
+
+/* ============================================================================
+   INTERACTION / MOTION LAYER — cursor glow, load intro, hero tilt, soft band
+   edges. All disabled or reduced under prefers-reduced-motion.
+   ============================================================================ */
+
+/* Cursor-follow accent glow (screen-blended → shows on dark bands, subtle on cream) */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  margin: -260px 0 0 -260px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(60, 192, 238, 0.4), transparent 62%);
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+
+/* Signature load intro */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--surface-ink);
+  animation: intro-out 0.5s var(--ease-out) 0.72s forwards;
+}
+.intro-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  animation: intro-in 0.5s var(--ease-out) both;
+}
+.intro-logo { border-radius: 15px; box-shadow: 0 12px 44px rgba(0, 0, 0, 0.45); }
+.intro-wave { display: flex; align-items: center; gap: 5px; height: 28px; }
+.intro-wave span {
+  width: 5px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--accent);
+  animation: intro-bounce 1s var(--ease-in-out) infinite;
+}
+@keyframes intro-in { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: none; } }
+@keyframes intro-out { to { opacity: 0; transform: translateY(-2%); visibility: hidden; } }
+@keyframes intro-bounce { 0%, 100% { height: 8px; opacity: 0.5; } 50% { height: 28px; opacity: 1; } }
+
+/* Hero phone mouse-parallax tilt */
+.hero-visual { perspective: 1300px; }
+.hero-tilt {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.3s var(--ease-out);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) { .hero-tilt { transform: none !important; } }
+
+/* Soft feathered edges where the dark bands meet the cream sections. (control-section is excluded — it has
+   a position:sticky child that a mask would clip.) */
+.freedom-section,
+.languages {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+}

@@ -1,5 +1,6 @@
 import { DownloadSimple, GithubLogo, Lock, Star } from "@phosphor-icons/react";
 import { Reveal } from "./Reveal";
+import { CountUp } from "./CountUp";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
@@ -56,7 +57,7 @@ export function SocialProof() {
             <Reveal className="social-stat" delay={index * 0.05} key={item.label}>
               <a href={item.href} target="_blank" rel="noreferrer">
                 <span className="social-stat-icon"><Icon size={19} weight="bold" aria-hidden="true" /></span>
-                <strong>{item.value}</strong>
+                <strong><CountUp value={item.value} /></strong>
                 <span className="social-stat-label">{item.label}</span>
                 <small>{item.note}</small>
               </a>
