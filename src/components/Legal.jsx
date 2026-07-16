@@ -7,7 +7,7 @@ import { ArrowLeft } from "@phosphor-icons/react";
  * based in Germany). Not legal advice.
  */
 
-const EMAIL = "accounts@devemperor.net";
+const EMAIL = "contact@devemperor.net";
 
 function Imprint() {
   return (
