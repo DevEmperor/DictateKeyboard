@@ -40,6 +40,7 @@ import { Languages } from "./components/Languages";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
 import { Intro } from "./components/Intro";
+import { SmoothScroll } from "./components/SmoothScroll";
 import { useMarqueeScroll, useTilt } from "./lib/interactions";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
@@ -151,6 +152,7 @@ function App() {
   return (
     <>
       <Intro />
+      <SmoothScroll />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollProgress />
       <Header />

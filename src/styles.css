@@ -40,7 +40,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis handles wheel + anchor smoothing (see SmoothScroll); native smooth here would fight it.
+     Reduced-motion users get instant native jumps, which is the correct behaviour for them. */
+  scroll-behavior: auto;
   background: var(--paper);
 }
 
@@ -2984,12 +2986,7 @@ p {
     border-top: 1px solid var(--line);
   }
 
-  .proof-item:nth-child(4) {
-    grid-column: span 1;
-  }
-
-  .proof-item:nth-child(5) {
-    grid-column: span 2;
+  .proof-item:nth-child(6) {
     border-right: 0;
   }
 
@@ -3187,20 +3184,13 @@ p {
   .provider-tag-bottom { bottom: 40px; left: 0; }
 
   .proof-strip-inner {
-    display: flex;
+    display: grid;
     width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
   }
 
-  .proof-strip-inner::-webkit-scrollbar { display: none; }
-
   .proof-item {
-    min-width: 220px;
-    border-top: 0 !important;
-    border-right: 1px solid var(--line) !important;
-    scroll-snap-align: start;
+    min-width: 0;
+    padding: 18px 14px;
   }
 
   .benefits,
@@ -3396,19 +3386,57 @@ p {
 
   .feature-copy-list {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
+  /* On phones each feature is a plain stacked block: icon, heading + copy (padded), then the animation as a
+     full-bleed strip below it — not a cramped card. Block (not the desktop 2-col grid) so the strip can span
+     the full viewport width. */
   .feature-copy {
-    padding: 24px;
+    display: block !important;
+    min-height: 0;
+    padding: 20px 4px 0;
+    border: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  .feature-copy .feature-copy-icon {
+    display: inline-flex;
+    margin-bottom: 14px;
   }
 
   .feature-copy strong {
-    font-size: 2.15rem;
+    margin-bottom: 8px;
+    font-size: 1.7rem;
+    line-height: 1.12;
   }
 
-  .feature-mobile-image {
-    height: min(112vw, 520px);
+  .feature-copy .eyebrow {
+    margin-bottom: 12px;
   }
+
+  .feature-copy-text > span:last-child {
+    font-size: 0.96rem;
+  }
+
+  .feature-mobile-visual {
+    display: block !important; /* beats the base `display:none` that sits later in the file */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: 20px;
+    border-block: 1px solid var(--line-dark);
+    background: var(--surface-ink);
+  }
+
+  .feature-mobile-visual .fv {
+    height: 300px;
+    max-width: 480px;
+    margin-inline: auto;
+    padding: 26px 28px;
+  }
+
+  .feature-mobile-visual .fv-watch-face { width: 188px; height: 188px; padding: 22px; }
 
   .depth-primary,
   .depth-secondary {
@@ -5875,22 +5903,9 @@ p {
   color: var(--success);
 }
 
-/* mobile: hide sticky column, show animated visual inside each feature card */
+/* The per-feature animations are built for the wide desktop panel; on phones they'd be cramped and
+   unreadable, so hide them there and let the feature cards fall back to a compact icon + text grid. */
 .feature-mobile-visual { display: none; }
-
-@media (max-width: 1020px) {
-  .feature-copy-list { grid-template-columns: 1fr !important; }
-  .feature-mobile-visual {
-    display: block;
-    margin-top: 22px;
-    overflow: hidden;
-    border: 1px solid var(--line-dark);
-    border-radius: 22px;
-    background: var(--surface-ink);
-  }
-  .feature-mobile-visual .fv { height: 300px; padding: 20px; }
-  .feature-mobile-visual .fv-watch-face { width: 168px; height: 168px; padding: 20px; }
-}
 
 /* keyframes for the feature visuals */
 @keyframes fvGlide {
@@ -6229,7 +6244,7 @@ p {
 .video-el {
   display: block;
   width: 100%;
-  aspect-ratio: 1080 / 2224;
+  aspect-ratio: 1080 / 2250;
   border-radius: 34px;
   object-fit: cover;
   background: #05070a;

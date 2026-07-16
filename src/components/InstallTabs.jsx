@@ -31,7 +31,7 @@ export function InstallTabs() {
           <div className="install-cta">
             <span className="install-cta-kicker">Ready in a minute</span>
             <GooglePlayBadge href={PLAY_URL} target="_blank" rel="noreferrer" className="install-cta-badge" />
-            <p className="install-cta-fine">Android 8.0+ · Free download · No subscription</p>
+            <p className="install-cta-fine">Android 8.0+ · No subscription</p>
           </div>
         </div>
 
