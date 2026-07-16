@@ -22,8 +22,8 @@ export function Languages() {
   const trackRef = useRef(null);
   useMarqueeScroll(trackRef, 30);
   return (
-    <section className="languages section-shell" id="languages">
-      <div className="languages-inner">
+    <section className="languages" id="languages">
+      <div className="languages-inner section-shell">
         <div className="section-intro languages-intro">
           <Reveal>
             <span className="eyebrow eyebrow-light">SPEAKS YOUR LANGUAGE</span>

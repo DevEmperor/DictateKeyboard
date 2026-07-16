@@ -264,6 +264,10 @@ function App() {
           </div>
         </section>
 
+        <VideoShowcase />
+
+        <SocialProof />
+
         <section className="benefits section-shell" id="benefits">
           <div className="section-intro section-intro-split">
             <Reveal>
@@ -279,8 +283,6 @@ function App() {
             {benefits.map((item, index) => <BenefitPanel item={item} index={index} key={item.title} />)}
           </div>
         </section>
-
-        <VideoShowcase />
 
         <FreedomComparison />
 
@@ -426,8 +428,6 @@ function App() {
           </div>
           <Reveal delay={0.1}><Faq /></Reveal>
         </section>
-
-        <SocialProof />
 
         <section className="final-cta section-shell">
           <div className="final-cta-inner">

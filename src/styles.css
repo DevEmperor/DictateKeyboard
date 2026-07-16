@@ -6223,21 +6223,13 @@ p {
   background: linear-gradient(160deg, #262d36, #12161b);
   box-shadow: 0 44px 90px rgba(13, 17, 23, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
-.video-phone-notch {
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  z-index: 3;
-  width: 36%;
-  height: 20px;
-  border-radius: 0 0 14px 14px;
-  background: #0a0d11;
-  transform: translateX(-50%);
-}
+/* No notch overlay — the app's own title bar now sits at the very top of the (cropped) recording, so a
+   notch would cover it. The bezel + rounded corners already read as a phone. */
+.video-phone-notch { display: none; }
 .video-el {
   display: block;
   width: 100%;
-  aspect-ratio: 1080 / 2340;
+  aspect-ratio: 1080 / 2224;
   border-radius: 34px;
   object-fit: cover;
   background: #05070a;
@@ -6255,7 +6247,7 @@ p {
 
 /* --- Languages (dark band) --- */
 .languages {
-  padding-block: 130px;
+  padding-block: 106px;
   background:
     radial-gradient(circle at 84% 10%, rgba(48, 183, 230, 0.12), transparent 30%),
     var(--surface-ink);
@@ -6263,7 +6255,7 @@ p {
 }
 .languages .eyebrow-light { color: var(--accent); }
 .languages-intro h2 { color: var(--on-dark); }
-.languages-intro h2 span { color: #7f8b97; }
+.languages-intro h2 span { color: #9aa5b1; }
 .languages-intro p { color: #9fa8b2; }
 .languages-stats {
   display: grid;
