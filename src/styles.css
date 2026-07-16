@@ -341,7 +341,7 @@ p {
   padding: 8px 10px 8px 14px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
-  background: rgba(244, 241, 233, 0.88);
+  background: var(--nav-solid);
   box-shadow: 0 12px 40px rgba(13, 17, 23, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(22px) saturate(130%);
   transform: translateX(-50%);
@@ -420,7 +420,7 @@ p {
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: rgba(255, 253, 248, 0.97);
+  background: var(--nav-solid);
   box-shadow: 0 24px 70px rgba(13, 17, 23, 0.18), inset 0 1px 0 #fff;
   transform-origin: top right;
 }
@@ -703,7 +703,7 @@ p {
   overflow: hidden;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 253, 248, 0.42);
+  background: var(--card-veil);
 }
 
 .benefit-panel-1,
@@ -736,7 +736,7 @@ p {
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.36);
+  background: var(--chip-veil);
   color: var(--accent-dark);
 }
 
@@ -1319,7 +1319,7 @@ p {
 .buffet-category-row {
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: #eeece5;
+  background: var(--category-bar);
   box-shadow: inset 3px 0 0 #7b858e;
 }
 
@@ -1380,12 +1380,12 @@ p {
 
 .buffet-row {
   min-height: 105px;
-  background: rgba(255, 253, 248, 0.58);
+  background: var(--card-veil);
   transition: background-color 180ms ease;
 }
 
 .buffet-row:nth-child(odd) {
-  background: rgba(244, 241, 233, 0.32);
+  background: var(--row-alt);
 }
 
 .buffet-row > * {
@@ -1591,7 +1591,7 @@ p {
   padding: 23px;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 253, 248, 0.45);
+  background: var(--card-veil);
 }
 
 .llm-route-head {
@@ -1734,7 +1734,7 @@ p {
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 253, 248, 0.46);
+  background: var(--chip-veil);
   color: #747c85;
   transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease, transform 220ms var(--ease-out);
 }
@@ -1987,7 +1987,7 @@ p {
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: 19px;
-  background: rgba(244, 241, 233, 0.82);
+  background: var(--card-veil);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -2066,7 +2066,7 @@ p {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255, 253, 248, 0.55);
+  background: var(--card-veil);
 }
 
 .history-list > div {
@@ -3057,7 +3057,7 @@ p {
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 25px;
-    background: rgba(255, 253, 248, 0.46);
+    background: var(--card-veil);
   }
 
   .feature-copy:last-child {
@@ -3358,7 +3358,7 @@ p {
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 17px;
-    background: rgba(255, 253, 248, 0.7) !important;
+    background: var(--card-veil) !important;
   }
 
   .buffet-row > * {
@@ -4295,7 +4295,7 @@ p {
   padding: 27px;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: rgba(244, 241, 233, 0.66);
+  background: var(--card-veil);
 }
 
 .reword-card > span {
@@ -4396,7 +4396,7 @@ p {
   padding: 0 15px;
   border: 1px solid var(--line);
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--chip-veil);
   color: #68717a;
   cursor: pointer;
   font-size: 0.8rem;
@@ -4446,7 +4446,7 @@ p {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 25px;
-  background: rgba(255, 253, 248, 0.62);
+  background: var(--card-veil);
   box-shadow: 0 5px 0 #d7d3c9, 0 18px 45px rgba(13, 17, 23, 0.055);
   transition: border-color 190ms ease, box-shadow 190ms ease, transform 190ms var(--ease-out);
 }
@@ -5987,3 +5987,46 @@ p {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+/* ============================================================================
+   DARK-MODE SURFACE FIX — the card/chip/nav/zebra veils were hardcoded light
+   rgba() values that washed out as grey overlays on the dark ground. Route them
+   through theme-aware tokens instead. Light values match the original look.
+   ============================================================================ */
+:root {
+  --card-veil: rgba(255, 253, 248, 0.55);
+  --chip-veil: rgba(255, 255, 255, 0.5);
+  --category-bar: #eeece5;
+  --nav-solid: rgba(244, 241, 233, 0.9);
+  --row-alt: rgba(244, 241, 233, 0.32);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --card-veil: rgba(255, 255, 255, 0.045);
+    --chip-veil: rgba(255, 255, 255, 0.07);
+    --category-bar: rgba(255, 255, 255, 0.06);
+    --nav-solid: rgba(14, 18, 24, 0.9);
+    --row-alt: rgba(255, 255, 255, 0.02);
+  }
+}
+:root[data-theme="light"] {
+  --card-veil: rgba(255, 253, 248, 0.55);
+  --chip-veil: rgba(255, 255, 255, 0.5);
+  --category-bar: #eeece5;
+  --nav-solid: rgba(244, 241, 233, 0.9);
+  --row-alt: rgba(244, 241, 233, 0.32);
+}
+:root[data-theme="dark"] {
+  --card-veil: rgba(255, 255, 255, 0.045);
+  --chip-veil: rgba(255, 255, 255, 0.07);
+  --category-bar: rgba(255, 255, 255, 0.06);
+  --nav-solid: rgba(14, 18, 24, 0.9);
+  --row-alt: rgba(255, 255, 255, 0.02);
+}
+
+/* Google Play badge: give it an edge on any ground, and lift it off the dark
+   install section so it no longer reads as dark-on-dark. */
+.gplay-badge { border: 1px solid rgba(255, 255, 255, 0.16); }
+@media (prefers-color-scheme: dark) { .gplay-badge { background: var(--surface-ink-2); } }
+:root[data-theme="dark"] .gplay-badge { background: var(--surface-ink-2); }
+:root[data-theme="light"] .gplay-badge { background: var(--surface-ink); }
