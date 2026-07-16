@@ -78,9 +78,11 @@ function KeyboardVisual() {
           <span className="fv-key-space" />
           <span className="fv-key-fn"><Microphone size={13} weight="fill" /></span>
         </div>
+        {/* Smooth glide path tracing W → O → R → L → D (the "world" suggestion). Key centres in the 300×150
+            grid: W(45,30) O(255,30) R(105,30) on row 1, L(270,66) D(90,66) on row 2; Catmull-Rom spline. */}
         <svg className="fv-glide" viewBox="0 0 300 150" preserveAspectRatio="none">
           <path
-            d="M40 30 L150 30 L120 66 L210 66 L95 102 L180 102"
+            d="M45 30 C80 30 245 30 255 30 C265 30 103 24 105 30 C108 36 273 60 270 66 C268 72 120 66 90 66"
             fill="none"
             stroke="var(--accent)"
             strokeWidth="4"
