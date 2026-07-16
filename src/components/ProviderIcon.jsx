@@ -1,13 +1,14 @@
 /*
- * Provider brand icons, hybrid:
- *   - Official logos from Simple Icons (real trademark paths, in each brand's official colour) wherever the
- *     provider exists there.
- *   - A hand-drawn fallback glyph for the providers Simple Icons does not carry (OpenAI, Groq, Soniox,
- *     AssemblyAI, Together AI, DeepInfra, xAI/Grok) plus the app's own On-device / Custom entries.
- * Each mark sits in a brand-tinted rounded tile and is always paired with the provider's name.
- *
- * Near-black brand logos (Anthropic, ElevenLabs, Ollama) are rendered with the theme-adaptive --ink token
- * instead of literal black, so they stay visible in dark mode — otherwise a #000 glyph disappears.
+ * Provider brand icons, hybrid across three sources (in priority order):
+ *   1. Official Simple Icons logos (Anthropic, Google Gemini, Mistral, Deepgram, ElevenLabs, OpenRouter,
+ *      Ollama, DeepSeek) — real trademark paths in each brand's official colour, 24x24 viewBox.
+ *   2. Official logomarks fetched from the vendor's own assets for the ones Simple Icons lacks — OpenAI,
+ *      Groq, xAI/Grok — see ../data/providerLogos.js (each keeps its native viewBox).
+ *   3. A hand-drawn fallback glyph for what neither covers: Soniox and AssemblyAI (which publish only a
+ *      horizontal wordmark, no square mark), the app's own On-device / Custom entries, and the long-tail
+ *      LLM providers (Together AI, DeepInfra) that only ship wordmarks.
+ * Each mark sits in a brand-tinted tile and is always paired with the provider's name. Near-black official
+ * marks use the theme-adaptive --ink token so they stay visible in dark mode.
  */
 import {
   siAnthropic,
@@ -19,8 +20,9 @@ import {
   siOllama,
   siOpenrouter,
 } from "simple-icons";
+import { MANUAL_LOGOS } from "../data/providerLogos";
 
-// Providers Simple Icons carries -> its official single-path icon.
+// 1. Simple Icons (24x24 viewBox, single path).
 const OFFICIAL = {
   Anthropic: siAnthropic,
   "Google Gemini": siGooglegemini,
@@ -34,30 +36,20 @@ const OFFICIAL = {
   DeepSeek: siDeepseek,
 };
 
-// Official hexes that are effectively black -> use the theme-adaptive ink token so they read in both themes.
+// Official hexes that are effectively black -> theme-adaptive ink token.
 const ADAPTIVE_HEX = new Set(["191919", "000000", "0d0d0d", "111111"]);
 
-// Fallback brand colours for providers without an official Simple Icons logo.
+// 3. Fallback brand colours + glyphs.
 const FALLBACK_COLOR = {
-  OpenAI: "#0f9d78",
-  Groq: "#f55036",
   Soniox: "#3a70f0",
   AssemblyAI: "#4a5bd4",
   "On-device": "#30b7e6",
   Custom: "#68707b",
   "Together AI": "#1f7fd6",
   DeepInfra: "#3aa76d",
-  "xAI / Grok": "#5b6470",
 };
 
-// Hand-drawn fallback glyphs (24x24 viewBox, fill currentColor).
 const FALLBACK_GLYPH = {
-  OpenAI: (
-    <path d="M21.5 10.2a5.4 5.4 0 0 0-.46-4.42 5.4 5.4 0 0 0-5.82-2.6A5.4 5.4 0 0 0 6.9 4.2a5.4 5.4 0 0 0-3.6 2.62 5.4 5.4 0 0 0 .66 6.34 5.4 5.4 0 0 0 .46 4.42 5.4 5.4 0 0 0 5.82 2.6 5.4 5.4 0 0 0 8.32-1.02 5.4 5.4 0 0 0 3.6-2.62 5.4 5.4 0 0 0-.66-6.34ZM12 20.1a4 4 0 0 1-2.57-.93l3.6-2.08a.6.6 0 0 0 .3-.52v-5.08l1.52.88v4.2A4 4 0 0 1 12 20.1Zm-8.6-3.67a4 4 0 0 1-.48-2.7l3.6 2.08a.6.6 0 0 0 .6 0l4.4-2.54v1.76l-3.65 2.1a4 4 0 0 1-5.47-.7ZM3.9 7.3a4 4 0 0 1 2.1-1.76v4.28a.6.6 0 0 0 .3.52l4.4 2.54-1.52.88-3.65-2.1A4 4 0 0 1 3.9 7.3Zm12.7 2.95-4.4-2.54 1.52-.88 3.65 2.1a4 4 0 0 1-.6 7.22v-4.28a.6.6 0 0 0-.17-.52Zm1.5-2.28-3.6-2.08a.6.6 0 0 0-.6 0l-4.4 2.54V6.67l3.65-2.1a4 4 0 0 1 5.95 4.15ZM10.7 12.9 9.18 12V7.8a4 4 0 0 1 6.56-3.07l-3.6 2.08a.6.6 0 0 0-.3.52l-.14 5.04Z" />
-  ),
-  Groq: (
-    <path d="M12 2.5A6.6 6.6 0 0 0 5.4 9.1v5.8A6.6 6.6 0 0 0 12 21.5a6.6 6.6 0 0 0 4.7-1.96l-2-2A3.77 3.77 0 0 1 12 18.7a3.8 3.8 0 0 1-3.8-3.8V9.1a3.8 3.8 0 1 1 7.6 0v3.03h-3.5v2.8h6.3V9.1A6.6 6.6 0 0 0 12 2.5Z" />
-  ),
   Soniox: (
     <path d="M3 10.5h2.2v3H3v-3Zm3.8-3h2.2v9H6.8v-9Zm3.8-3.5h2.2v16h-2.2V4Zm3.8 3.5h2.2v9h-2.2v-9Zm3.8 3h2.2v3H18v-3Z" />
   ),
@@ -75,32 +67,39 @@ const FALLBACK_GLYPH = {
 const FALLBACK_ALIAS = {
   "Together AI": "Custom",
   DeepInfra: "Custom",
-  "xAI / Grok": "Custom",
 };
 
-export function ProviderIcon({ name, size = 22, className = "" }) {
-  const official = OFFICIAL[name];
-  let color;
-  let pathData = null;
-  let glyph = null;
-
-  if (official) {
-    color = ADAPTIVE_HEX.has(official.hex.toLowerCase()) ? "var(--ink)" : `#${official.hex}`;
-    pathData = official.path;
-  } else {
-    color = FALLBACK_COLOR[name] ?? FALLBACK_COLOR.Custom;
-    const key = FALLBACK_ALIAS[name] ?? name;
-    glyph = FALLBACK_GLYPH[key] ?? FALLBACK_GLYPH.Custom;
+function resolve(name) {
+  const si = OFFICIAL[name];
+  if (si) {
+    return {
+      viewBox: "0 0 24 24",
+      paths: [si.path],
+      color: ADAPTIVE_HEX.has(si.hex.toLowerCase()) ? "var(--ink)" : `#${si.hex}`,
+    };
   }
+  const manual = MANUAL_LOGOS[name];
+  if (manual) {
+    return { viewBox: manual.viewBox, paths: manual.paths, color: manual.color };
+  }
+  const key = FALLBACK_ALIAS[name] ?? name;
+  return {
+    viewBox: "0 0 24 24",
+    glyph: FALLBACK_GLYPH[key] ?? FALLBACK_GLYPH.Custom,
+    color: FALLBACK_COLOR[name] ?? FALLBACK_COLOR.Custom,
+  };
+}
 
+export function ProviderIcon({ name, size = 22, className = "" }) {
+  const { viewBox, paths, glyph, color } = resolve(name);
   return (
     <span
       className={`provider-icon ${className}`}
       style={{ "--brand": color, width: size, height: size }}
       aria-hidden="true"
     >
-      <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6} fill="currentColor" role="presentation">
-        {pathData ? <path d={pathData} /> : glyph}
+      <svg viewBox={viewBox} width={size * 0.6} height={size * 0.6} fill="currentColor" role="presentation">
+        {paths ? paths.map((d, i) => <path key={i} d={d} />) : glyph}
       </svg>
     </span>
   );
