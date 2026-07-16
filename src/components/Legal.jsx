@@ -2,126 +2,121 @@ import { useEffect } from "react";
 import { ArrowLeft } from "@phosphor-icons/react";
 
 /**
- * Standalone legal pages (Impressum + Datenschutzerklärung), served at /impressum and /datenschutz via the
- * SPA fallback (public/_redirects). Plain German boilerplate — the operator must review and complete the
- * address before publishing. Not legal advice.
+ * Standalone legal pages (Imprint / Privacy Policy), served at /imprint and /privacy via the SPA fallback
+ * (public/_redirects). English, to match the international site, but grounded in German law (the operator is
+ * based in Germany). Not legal advice.
  */
 
-const ADDRESS_PLACEHOLDER = "[Straße & Hausnummer — bitte ergänzen]";
-const CITY_PLACEHOLDER = "[PLZ Ort — bitte ergänzen]";
 const EMAIL = "accounts@devemperor.net";
 
-function Impressum() {
+function Imprint() {
   return (
     <>
-      <h1>Impressum</h1>
+      <h1>Imprint</h1>
 
-      <h2>Angaben gemäß § 5 DDG</h2>
+      <h2>Information pursuant to § 5 DDG</h2>
       <p>
         Jannis Zahn<br />
-        {ADDRESS_PLACEHOLDER}<br />
-        {CITY_PLACEHOLDER}<br />
-        Deutschland
+        Talstraße 84<br />
+        35625 Hüttenberg<br />
+        Germany
       </p>
 
-      <h2>Kontakt</h2>
-      <p>E-Mail: <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      <h2>Contact</h2>
+      <p>Email: <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
 
-      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>Jannis Zahn (Anschrift wie oben)</p>
+      <h2>Responsible for content pursuant to § 18 (2) MStV</h2>
+      <p>Jannis Zahn (address as above)</p>
 
-      <h2>Verbraucherstreitbeilegung</h2>
+      <h2>Consumer dispute resolution</h2>
       <p>
-        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-        Verbraucherschlichtungsstelle teilzunehmen. Die Europäische Kommission stellt eine Plattform zur
-        Online-Streitbeilegung (OS) bereit:{" "}
+        We are neither willing nor obliged to participate in dispute-resolution proceedings before a consumer
+        arbitration board. The European Commission provides a platform for online dispute resolution (ODR):{" "}
         <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noreferrer">https://ec.europa.eu/consumers/odr/</a>.
       </p>
 
-      <h2>Haftung für Inhalte und Links</h2>
+      <h2>Liability for content and links</h2>
       <p>
-        Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit
-        und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden. Für Inhalte externer Links sind
-        ausschließlich deren Betreiber verantwortlich; zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße
-        erkennbar. Bei Bekanntwerden von Rechtsverletzungen werden solche Links umgehend entfernt.
+        The contents of these pages were created with the greatest care. However, no guarantee can be given
+        for the accuracy, completeness, or timeliness of the content. The operators of linked external pages
+        are solely responsible for their content; no legal violations were apparent at the time of linking.
+        Such links will be removed immediately upon becoming aware of any legal infringement.
       </p>
 
-      <h2>Urheberrecht</h2>
+      <h2>Copyright</h2>
       <p>
-        Der Quellcode der App „Dictate Keyboard“ steht unter der Apache-2.0-Lizenz. Die Inhalte und Werke
-        dieser Website unterliegen dem deutschen Urheberrecht; eine Verwertung außerhalb der Lizenz bzw. der
-        gesetzlichen Grenzen bedarf der Zustimmung des jeweiligen Urhebers.
+        The source code of the “Dictate Keyboard” app is licensed under the Apache-2.0 License. The content and
+        works on this website are subject to German copyright law; any use beyond the license or the limits of
+        the law requires the consent of the respective author.
       </p>
     </>
   );
 }
 
-function Datenschutz() {
+function Privacy() {
   return (
     <>
-      <h1>Datenschutzerklärung</h1>
+      <h1>Privacy Policy</h1>
 
-      <h2>1. Verantwortlicher</h2>
+      <h2>1. Controller</h2>
       <p>
         Jannis Zahn<br />
-        {ADDRESS_PLACEHOLDER}, {CITY_PLACEHOLDER}<br />
-        E-Mail: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        Talstraße 84, 35625 Hüttenberg, Germany<br />
+        Email: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </p>
 
       <h2>2. Hosting</h2>
       <p>
-        Diese Website wird bei Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA) über
-        Cloudflare Pages gehostet. Beim Aufruf verarbeitet Cloudflare technisch notwendige Daten (u. a.
-        IP-Adresse) zur sicheren und stabilen Auslieferung der Seite. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
-        DSGVO (berechtigtes Interesse an einem sicheren, funktionsfähigen Auftritt). Eine Übermittlung in die
-        USA ist möglich; Cloudflare stützt sich hierfür auf Standardvertragsklauseln bzw. das EU-US Data
-        Privacy Framework.
+        This website is hosted on Cloudflare Pages (Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107,
+        USA). When you access the site, Cloudflare processes technically necessary data (including your IP
+        address) in order to deliver the site securely and reliably. The legal basis is Art. 6 (1)(f) GDPR
+        (legitimate interest in a secure, functional website). A transfer to the USA may occur; Cloudflare
+        relies on Standard Contractual Clauses and/or the EU-US Data Privacy Framework.
       </p>
 
-      <h2>3. Server-Logfiles</h2>
+      <h2>3. Server log files</h2>
       <p>
-        Bei jedem Zugriff werden automatisch Informationen erhoben, die Ihr Browser übermittelt: IP-Adresse,
-        Datum und Uhrzeit, angeforderte Seite, Referrer-URL sowie Browser- und Betriebssystem-Angaben. Diese
-        Daten dienen ausschließlich dem sicheren Betrieb und werden nicht mit anderen Datenquellen
-        zusammengeführt.
+        Each time the site is accessed, information transmitted by your browser is automatically collected: IP
+        address, date and time, the requested page, the referrer URL, and browser and operating-system
+        details. This data is used solely for the secure operation of the site and is not merged with other
+        data sources.
       </p>
 
-      <h2>4. Web-Analyse (Cloudflare Web Analytics)</h2>
+      <h2>4. Web analytics (Cloudflare Web Analytics)</h2>
       <p>
-        Wir nutzen Cloudflare Web Analytics, um die Nutzung der Website statistisch auszuwerten. Der Dienst
-        arbeitet <strong>cookielos</strong>, ohne Fingerprinting und ohne Speicherung personenbezogener Daten
-        auf Ihrem Endgerät. Erhoben werden ausschließlich aggregierte, anonyme Kennzahlen (z. B. Seitenaufrufe
-        und ungefähre Herkunftsregion). Ein Rückschluss auf einzelne Personen ist nicht möglich. Rechtsgrundlage
-        ist Art. 6 Abs. 1 lit. f DSGVO.
+        We use Cloudflare Web Analytics to evaluate the use of the website statistically. The service is{" "}
+        <strong>cookieless</strong>, uses no fingerprinting, and stores no personal data on your device. Only
+        aggregated, anonymous metrics (e.g. page views and approximate region) are collected; no conclusions
+        can be drawn about individual persons. Legal basis: Art. 6 (1)(f) GDPR.
       </p>
 
       <h2>5. Cookies</h2>
       <p>
-        Diese Website setzt keine Cookies und nutzt keinen lokalen Speicher zu Tracking-Zwecken. Ein
-        Cookie-Banner ist daher nicht erforderlich.
+        This website sets no cookies and uses no local storage for tracking purposes. A cookie banner is
+        therefore not required.
       </p>
 
-      <h2>6. Externe Links</h2>
+      <h2>6. External links</h2>
       <p>
-        Die Website verweist auf externe Angebote (u. a. Google Play, GitHub, PayPal). Mit dem Klick verlassen
-        Sie diese Website; es gelten die Datenschutzbestimmungen der jeweiligen Anbieter.
+        The website links to external services (including Google Play, GitHub, and PayPal). When you click
+        them, you leave this website; the privacy policies of the respective providers then apply.
       </p>
 
-      <h2>7. Ihre Rechte</h2>
+      <h2>7. Your rights</h2>
       <p>
-        Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Widerspruch
-        gegen die Verarbeitung sowie Datenübertragbarkeit. Wenden Sie sich hierfür an die oben genannte
-        E-Mail-Adresse. Zudem steht Ihnen ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu.
+        You have the right to information, rectification, erasure, restriction of processing, objection to
+        processing, and data portability. To exercise these rights, please contact the email address above.
+        You also have the right to lodge a complaint with a data-protection supervisory authority.
       </p>
 
-      <p className="legal-updated">Stand: Juli 2026</p>
+      <p className="legal-updated">Last updated: July 2026</p>
     </>
   );
 }
 
 export default function Legal({ page }) {
   useEffect(() => {
-    document.title = page === "impressum" ? "Impressum — Dictate Keyboard" : "Datenschutz — Dictate Keyboard";
+    document.title = page === "imprint" ? "Imprint — Dictate Keyboard" : "Privacy Policy — Dictate Keyboard";
   }, [page]);
 
   return (
@@ -129,15 +124,15 @@ export default function Legal({ page }) {
       <div className="legal-shell">
         <a className="legal-back" href="/">
           <ArrowLeft size={16} weight="bold" aria-hidden="true" />
-          Zurück zu Dictate Keyboard
+          Back to Dictate Keyboard
         </a>
         <div className="legal-body">
-          {page === "impressum" ? <Impressum /> : <Datenschutz />}
+          {page === "imprint" ? <Imprint /> : <Privacy />}
         </div>
         <footer className="legal-foot">
-          <a href="/impressum">Impressum</a>
+          <a href="/imprint">Imprint</a>
           <span aria-hidden="true">·</span>
-          <a href="/datenschutz">Datenschutz</a>
+          <a href="/privacy">Privacy Policy</a>
         </footer>
       </div>
     </main>

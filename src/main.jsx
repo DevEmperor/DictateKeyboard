@@ -14,10 +14,10 @@ import "./styles.css";
 // flips this to false — nothing else to toggle. Set it back to true on `website` to re-enable maintenance.
 const MAINTENANCE = false;
 
-// Legal pages are served at /impressum and /datenschutz (SPA fallback via public/_redirects) and stay
-// reachable even during maintenance.
+// Legal pages are served at /imprint and /privacy (SPA fallback via public/_redirects) and stay reachable
+// even during maintenance.
 const path = window.location.pathname.replace(/\/+$/, "");
-const legalPage = path === "/impressum" ? "impressum" : path === "/datenschutz" ? "datenschutz" : null;
+const legalPage = path === "/imprint" ? "imprint" : path === "/privacy" ? "privacy" : null;
 
 function Root() {
   if (legalPage) return <Legal page={legalPage} />;

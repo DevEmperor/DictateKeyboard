@@ -466,7 +466,7 @@ function App() {
         <div className="footer-links">
           <div><strong>Product</strong><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
           <div><strong>Project</strong><a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a><a href={`${GITHUB_URL}/issues`} target="_blank" rel="noreferrer">Issues</a><a href={`${GITHUB_URL}/blob/main/LICENSE`} target="_blank" rel="noreferrer">Apache 2.0</a><a href="https://paypal.me/DevEmperor" target="_blank" rel="noreferrer">Support development</a></div>
-          <div><strong>Legal</strong><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a></div>
+          <div><strong>Legal</strong><a href="/imprint">Imprint</a><a href="/privacy">Privacy Policy</a></div>
         </div>
         <div className="footer-bottom">
           <span>Created and maintained by <a href={DEVELOPER_URL} target="_blank" rel="noreferrer">Jannis Zahn / DevEmperor</a>. Keyboard foundation by FlorisBoard contributors.</span>
