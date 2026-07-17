@@ -36,6 +36,7 @@ import { Waveform } from "./components/Waveform";
 import { ProviderIcon } from "./components/ProviderIcon";
 import { GooglePlayGlyph } from "./components/GooglePlayBadge";
 import { VideoShowcase } from "./components/VideoShowcase";
+import { SpeedStat } from "./components/SpeedStat";
 import { Languages } from "./components/Languages";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
@@ -265,6 +266,8 @@ function App() {
         </section>
 
         <VideoShowcase />
+
+        <SpeedStat />
 
         <SocialProof />
 
