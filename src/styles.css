@@ -6652,3 +6652,68 @@ p {
 /* Reword before/after promoted to its own section (was nested in the features block) */
 .reword-section { padding-block: 30px; }
 .reword-section .reword-playground { margin-top: 0; }
+
+/* ============================================================================
+   PERSONAS — "Made for how you work" tabbed use-cases
+   ============================================================================ */
+.personas { padding-block: 130px; }
+.persona-shell {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+  background: var(--paper-bright);
+  box-shadow: 0 26px 65px rgba(13, 17, 23, 0.06), inset 0 1px 0 #fff;
+}
+.persona-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-soft);
+}
+.persona-tabs button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #7b8289;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 180ms ease, transform 120ms var(--ease-out);
+}
+.persona-tabs button:active { transform: scale(0.98); }
+.persona-tabs button > svg,
+.persona-tabs button > span { position: relative; z-index: 2; }
+.persona-tabs button.is-active { color: var(--ink); }
+.persona-tab-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 12px;
+  background: var(--paper-bright);
+  box-shadow: 0 6px 18px rgba(13, 17, 23, 0.08), inset 0 1px 0 #fff;
+}
+.persona-panel { padding: clamp(34px, 5vw, 64px); }
+.persona-panel h3 {
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+.persona-panel p { max-width: 60ch; margin-bottom: 26px; color: var(--muted); font-size: 1.08rem; line-height: 1.65; }
+.persona-points { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.persona-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 1rem; letter-spacing: -0.01em; }
+.persona-points li svg { flex-shrink: 0; margin-top: 4px; color: var(--accent-dark); }
+
+@media (max-width: 760px) {
+  .personas { padding-block: 90px; }
+  .persona-tabs button { padding: 10px 13px; font-size: 0.84rem; }
+}
