@@ -6648,3 +6648,7 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .speed-bar-fill { transition: none; }
 }
+
+/* Reword before/after promoted to its own section (was nested in the features block) */
+.reword-section { padding-block: 30px; }
+.reword-section .reword-playground { margin-top: 0; }

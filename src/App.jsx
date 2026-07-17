@@ -287,6 +287,10 @@ function App() {
           </div>
         </section>
 
+        <section className="reword-section section-shell">
+          <RewordPlayground />
+        </section>
+
         <FreedomComparison />
 
         <section className="modes section-shell">
@@ -328,7 +332,6 @@ function App() {
             </Reveal>
           </div>
           <FeatureStory />
-          <RewordPlayground />
           <CapabilityDeck />
         </section>
 
