@@ -288,8 +288,6 @@ object DictateController {
     val segmentsInFlight: StateFlow<Int> = _segmentsInFlight.asStateFlow()
 
     private var recorder: RecordingController? = null
-    /** Live silence gate for the current normal batch recording; null for realtime/segmented modes. */
-    private var speechGateSession: SpeechGate.LiveSession? = null
     private var startJob: Job? = null
 
     // While a recording is active we listen for the screen turning off (device locked / display timeout):
@@ -585,8 +583,6 @@ object DictateController {
         startJob = null
         recorder?.cancel()
         recorder = null
-        speechGateSession?.cancel()
-        speechGateSession = null
         // Long-form segmented (#170): abort the background segment transcriptions; the realtime cleanup
         // below removes the progressively-shown preview text (segmented reuses realtimeShown/Context).
         if (segmentedActive) {
@@ -723,24 +719,17 @@ object DictateController {
                         prefs.dictate.longformAutoSplitSeconds.get() * 1000,
                     ) { flushSegment(appContext) }.also { it.start() }
                 } else null
-                // The mic PCM tap: realtime streaming, long-form splitting, or the normal batch silence
-                // gate. The latter consumes frames during recording so stopping does not re-decode and
-                // process the entire WAV before the HTTP request.
-                speechGateSession?.cancel()
-                speechGateSession = null
-                val realtimeSink = if (!segmented) openRealtimeSession(appContext) else null
-                val batchGate = if (!segmented && realtimeSink == null &&
-                    prefs.dictate.skipSilentRecordings.get()
-                ) {
-                    SpeechGate.startLive(appContext).also { speechGateSession = it }
-                } else null
+                // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
                 val pcmSink: ((ByteArray, Int) -> Unit)? = when {
-                    realtimeSink != null -> realtimeSink
+                    !segmented -> openRealtimeSession(appContext)
                     segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
-                    batchGate != null -> { pcm, len -> batchGate.feed(pcm, len) }
                     else -> null
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
+                if (prefs.dictate.skipSilentRecordings.get()) {
+                    // Hide the one-time native VAD/session setup behind the user's recording time.
+                    scope.launch { SpeechGate.prewarm(appContext) }
+                }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
                 _livePromptActive.value = livePromptArmed
@@ -748,8 +737,6 @@ object DictateController {
                 registerScreenOffReceiver(appContext)
             } catch (t: Throwable) {
                 recorder = null
-                speechGateSession?.cancel()
-                speechGateSession = null
                 segmentVad?.release()
                 segmentVad = null
                 _livePromptActive.value = false
@@ -777,8 +764,6 @@ object DictateController {
         logLatency(latencyTrace, "stopTapped")
         val activeRecorder = recorder
         recorder = null
-        val liveSpeechGate = speechGateSession
-        speechGateSession = null
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
         // Capture the recorded length before leaving the Recording state, to credit the usage counter
@@ -793,7 +778,6 @@ object DictateController {
         val carry = carryOverAudio
         carryOverAudio = null
         if (audioFile == null || !audioFile.exists() || audioFile.length() == 0L) {
-            liveSpeechGate?.cancel()
             // The new segment is unusable. If we were continuing an interrupted recording, fall back to
             // transcribing the carried-over segment alone rather than losing it.
             if (carry != null && carry.exists() && carry.length() > 0L) {
@@ -806,15 +790,9 @@ object DictateController {
             return
         }
         if (carry == null) {
-            transcribe(
-                context, audioFile, recordedSeconds,
-                latencyTrace = latencyTrace, liveSpeechGate = liveSpeechGate,
-            )
+            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
             return
         }
-        // The live gate saw only the new continuation segment, not the carried-over audio. Check the
-        // merged WAV through the normal offline fallback so the silence decision covers the whole input.
-        liveSpeechGate?.cancel()
         // Continuation: stitch the carried-over segment and the new one into a single audio so the whole
         // dictation is transcribed as one. The interrupted marker was already claimed when continuing.
         scope.launch { clearInterruptedAudioPref() }
@@ -899,7 +877,6 @@ object DictateController {
         source: String = DictateHistorySource.KEYBOARD,
         replayHistoryId: Long? = null,
         latencyTrace: BatchLatencyTrace = BatchLatencyTrace(),
-        liveSpeechGate: SpeechGate.LiveSession? = null,
     ) {
         logLatency(latencyTrace, "transcribeEntered")
         val account = transcriptionAccount()
@@ -928,7 +905,6 @@ object DictateController {
         }
 
         if (apiKey.isBlank() && requiresKey(account)) {
-            liveSpeechGate?.cancel()
             _state.value = UiState.Error(
                 message = context.getString(R.string.dictate__error_no_api_key),
                 kind = DictateApiException.Kind.INVALID_API_KEY,
@@ -942,7 +918,6 @@ object DictateController {
         if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE &&
             !LocalModelManager.isInstalled(appContext, model)
         ) {
-            liveSpeechGate?.cancel()
             _state.value = UiState.Error(
                 message = context.getString(R.string.dictate__local_model_not_installed_error),
                 kind = DictateApiException.Kind.UNKNOWN,
@@ -970,8 +945,7 @@ object DictateController {
                 // to picked files or resends of already-captured audio (see callers).
                 if (gate && prefs.dictate.skipSilentRecordings.get()) {
                     val gateStartedNanos = SystemClock.elapsedRealtimeNanos()
-                    val hasSpeech = liveSpeechGate?.finish()
-                        ?: SpeechGate.hasSpeech(appContext, audioFile)
+                    val hasSpeech = SpeechGate.hasSpeech(appContext, audioFile)
                     logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
                     if (!hasSpeech) {
                         outcome = "noSpeech"
@@ -982,8 +956,6 @@ object DictateController {
                         )
                         return@launch // audio is dropped by the finally block
                     }
-                } else {
-                    liveSpeechGate?.cancel()
                 }
                 // Single-call multimodal (issue #130): one chat/completions+input_audio request transcribes
                 // and formats together (cloud chat models only, never the on-device engine).
@@ -1074,7 +1046,6 @@ object DictateController {
                     detail = t.message?.takeIf { it.isNotBlank() },
                 )
             } finally {
-                liveSpeechGate?.cancel()
                 if (!keepAudio) audioFile.delete()
                 logLatency(latencyTrace, "terminal:$outcome")
             }
@@ -1802,8 +1773,6 @@ object DictateController {
         val seconds = recordedSecondsOf(current)
         val wasLive = livePromptArmed
         val audioFile = activeRecorder.stop()
-        speechGateSession?.cancel()
-        speechGateSession = null
         cleanupAudioRouting()
         livePromptArmed = false
         _pendingPrompts.value = emptyList()
