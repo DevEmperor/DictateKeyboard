@@ -129,7 +129,7 @@ object SpeechGate {
                 sileroVadModelConfig = SileroVadModelConfig(
                     model = model.absolutePath,
                     threshold = 0.5f,
-                    minSilenceDuration = 0.25f,
+                    minSilenceDuration = 0.10f,
                     minSpeechDuration = 0.25f,
                     windowSize = WINDOW,
                     maxSpeechDuration = 20f,
