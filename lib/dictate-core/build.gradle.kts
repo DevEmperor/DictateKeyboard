@@ -63,6 +63,12 @@ configure<LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -72,4 +78,5 @@ dependencies {
     api(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.core.ktx)
+    testImplementation(libs.kotlin.test.junit5)
 }
