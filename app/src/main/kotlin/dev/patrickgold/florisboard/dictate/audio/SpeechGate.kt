@@ -21,6 +21,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 
 /**
  * Local voice-activity gate that answers one question before a recording is sent for transcription:
@@ -44,6 +45,12 @@ object SpeechGate {
     private const val VAD_MODEL_BYTES = 643_854L
     /** Silero v5 processes fixed 512-sample windows at 16 kHz. */
     private const val WINDOW = 512
+    /**
+     * A peak below 16 PCM16 units (-66.2 dBFS) is quantization/transport noise, not usable speech.
+     * This deliberately conservative floor catches emulator/device zero-input noise without replacing
+     * Silero's classification for any recording with an audible signal.
+     */
+    private const val SILENCE_PEAK_FLOOR = 16f / 32768f
     private const val LOG_TAG = "DictateLatency"
     private val vadMutex = Mutex()
     private var cachedVad: Vad? = null
@@ -75,6 +82,14 @@ object SpeechGate {
             ?: return@withContext true
         val decodeMs = elapsedMillis(decodeStartedNanos)
         if (samples.isEmpty()) return@withContext false
+        if (!hasSignalAboveSilenceFloor(samples)) {
+            Log.i(
+                LOG_TAG,
+                "speechGate decodeMs=$decodeMs createMs=0 runMs=0 " +
+                    "totalMs=${elapsedMillis(totalStartedNanos)} speech=false reason=belowPeakFloor",
+            )
+            return@withContext false
+        }
 
         vadMutex.withLock {
             val createStartedNanos = System.nanoTime()
@@ -142,6 +157,9 @@ object SpeechGate {
 
     private fun elapsedMillis(startedNanos: Long): Long =
         TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedNanos)
+
+    internal fun hasSignalAboveSilenceFloor(samples: FloatArray): Boolean =
+        samples.any { abs(it) >= SILENCE_PEAK_FLOOR }
 
     /** The fixed Silero window size (samples), reused by the live splitter (issue #170). */
     internal const val VAD_WINDOW = WINDOW
