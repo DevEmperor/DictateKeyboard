@@ -76,6 +76,8 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
                 body shouldContain "name=\"language\""
                 body shouldContain "de"
                 body shouldContain "name=\"prompt\""
+                body shouldContain "name=\"temperature\""
+                body shouldContain "0.0"
                 body shouldContain "RIFF-test-audio"
                 body shouldNotContain "input_audio"
                 server.requestCount shouldBe 1
@@ -144,6 +146,7 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
                 multipart.getHeader("Content-Type").orEmpty() shouldStartWith "multipart/form-data"
                 json.getHeader("Content-Type").orEmpty() shouldStartWith "application/json"
                 jsonBody shouldContain "\"input_audio\""
+                jsonBody shouldContain "\"temperature\":0.0"
                 jsonBody shouldNotContain "multipart/form-data"
                 server.requestCount shouldBe 2
             }

@@ -178,7 +178,10 @@ class OpenAiCompatibleClient(
     }
 
     /** Builds the standard streaming multipart request shared by OpenAI-style STT endpoints. */
-    private fun buildMultipartTranscriptionRequest(request: TranscriptionRequest): Request {
+    private fun buildMultipartTranscriptionRequest(
+        request: TranscriptionRequest,
+        temperature: Double? = null,
+    ): Request {
         val fileBody = request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile))
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -189,6 +192,7 @@ class OpenAiCompatibleClient(
                 val lang = request.language
                 if (!lang.isNullOrEmpty() && lang != "detect") addFormDataPart("language", lang)
                 if (!request.prompt.isNullOrEmpty()) addFormDataPart("prompt", request.prompt)
+                if (temperature != null) addFormDataPart("temperature", temperature.toString())
             }
             .build()
         return Request.Builder()
@@ -199,10 +203,10 @@ class OpenAiCompatibleClient(
     }
 
     /**
-     * OpenRouter currently accepts OpenAI-compatible multipart even though its published schema documents
-     * base64-in-JSON. Multipart is the fast path because it streams the file directly: no 4/3 expansion,
-     * no complete encoded copy in memory, and no giant JSON string before the request can start. If the
-     * server explicitly rejects that wire format, retry once with its documented JSON schema.
+     * OpenRouter supports both OpenAI-compatible multipart and base64-in-JSON. Multipart is the fast path
+     * because it streams the file directly: no 4/3 expansion, no complete encoded copy in memory, and no
+     * giant JSON string before the request can start. If the server explicitly rejects that wire format,
+     * retry once with the JSON schema.
      */
     private suspend fun transcribeOpenRouterMultipart(
         request: TranscriptionRequest,
@@ -210,7 +214,10 @@ class OpenAiCompatibleClient(
     ): TranscriptionResult {
         val label = "OpenRouter STT model=${sanitizeForLog(request.model)} " +
             "audioBytes=${request.audioFile.length()} wire=multipart"
-        val httpRequest = buildMultipartTranscriptionRequest(request)
+        val httpRequest = buildMultipartTranscriptionRequest(
+            request,
+            temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
+        )
             .newBuilder()
             .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(label))
             .build()
@@ -245,6 +252,7 @@ class OpenAiCompatibleClient(
             model = request.model,
             inputAudio = InputAudioDto(data = base64, format = guessAudioFormat(request.audioFile)),
             language = request.language?.takeIf { it.isNotEmpty() && it != "detect" },
+            temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
         )
         val payload = json.encodeToString(TranscriptionJsonRequestDto.serializer(), dto)
         val fallbackLabel = "OpenRouter STT model=${sanitizeForLog(request.model)} " +
@@ -1025,6 +1033,7 @@ class OpenAiCompatibleClient(
         val model: String,
         @SerialName("input_audio") val inputAudio: InputAudioDto,
         val language: String? = null,
+        val temperature: Double? = null,
     )
 
     @Serializable
@@ -1219,6 +1228,7 @@ class OpenAiCompatibleClient(
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
         internal const val OPENROUTER_TRANSCRIPTION_MAX_RETRIES = 0
+        private const val OPENROUTER_TRANSCRIPTION_TEMPERATURE = 0.0
         internal const val NETWORK_CONNECT_TIMEOUT_SECONDS = 8L
         private val HTTP_CLIENTS = ConcurrentHashMap<HttpClientKey, OkHttpClient>()
 
