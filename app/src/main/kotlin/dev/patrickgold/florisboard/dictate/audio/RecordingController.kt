@@ -163,10 +163,15 @@ class RecordingController(private val context: Context) {
     fun stop(): File? {
         if (!recording) return null
         recording = false
+        // AudioRecord.read(byte[], …) is blocking. Stop and release the native recorder first so a read
+        // waiting for microphone frames is guaranteed to return before we join the capture thread. Keep
+        // release independent from stop: an IllegalStateException from stop must not leak the microphone.
+        val rec = record
+        record = null
+        runCatching { rec?.stop() }
+        runCatching { rec?.release() }
         runCatching { thread?.join() }
         thread = null
-        runCatching { record?.run { stop(); release() } }
-        record = null
         return synchronized(fileLock) {
             val out = raf ?: return@synchronized null
             raf = null
