@@ -33,7 +33,6 @@ def main() -> None:
         samplingRate=sample_rate,
         channels=pb2.AudioFormat.Mono,
         format=pb2.AudioFormat.AUD_FMT_S16,
-        mode=pb2.AudioFormat.MODE_REAL_TIME,
     )
 
     def packets():
