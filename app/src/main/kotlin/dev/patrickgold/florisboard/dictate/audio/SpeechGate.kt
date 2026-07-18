@@ -135,7 +135,7 @@ object SpeechGate {
                     maxSpeechDuration = 20f,
                 )
                 sampleRate = AudioDecode.TARGET_SAMPLE_RATE
-                numThreads = 3
+                numThreads = 2
             },
         )
     }.getOrNull()
