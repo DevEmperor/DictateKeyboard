@@ -1428,6 +1428,9 @@
     <string name="dictate__local_fallback_summary">Sem ligação, transcreve no dispositivo com o modelo transferido após falha do fornecedor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Prompts de reformulação guardados</string>
     <string name="dictate__floating_button_undo_failed">Não foi possível anular — o texto pode ter mudado.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copiar cada ditado para a área de transferência</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada ditado também é copiado para a área de transferência, para que possa colá-lo manualmente se a inserção falhar. Pode mostrar um aviso da área de transferência em alguns telemóveis.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Os ditados são apenas inseridos, não copiados para a área de transferência.</string>
     <string name="dictate__floating_button_undo_summary_off">Não é mostrado nenhum botão para anular.</string>
     <string name="dictate__floating_button_undo_summary_on">Após um ditado, surge um botão para anular junto ao botão, para remover o texto inserido com um só toque.</string>
     <string name="dictate__floating_button_undo_title">Botão para anular</string>

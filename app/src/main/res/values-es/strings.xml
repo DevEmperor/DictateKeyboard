@@ -1430,6 +1430,9 @@
     <string name="dictate__local_fallback_summary">Sin conexión, transcribe en el dispositivo con el modelo descargado tras fallar el proveedor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Indicaciones de reformulación guardadas</string>
     <string name="dictate__floating_button_undo_failed">No se pudo deshacer — es posible que el texto haya cambiado.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copiar cada dictado al portapapeles</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada dictado también se copia al portapapeles, para que puedas pegarlo manualmente si la inserción falla. Puede mostrar un aviso del portapapeles en algunos teléfonos.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Los dictados solo se insertan, no se copian al portapapeles.</string>
     <string name="dictate__floating_button_undo_summary_off">No se muestra ningún botón para deshacer.</string>
     <string name="dictate__floating_button_undo_summary_on">Tras un dictado, aparece un botón para deshacer junto al botón que permite eliminar el texto insertado con un solo toque.</string>
     <string name="dictate__floating_button_undo_title">Botón para deshacer</string>

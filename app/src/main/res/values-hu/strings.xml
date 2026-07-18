@@ -1447,6 +1447,9 @@
     <string name="dictate__local_fallback_summary">Offline állapotban a letöltött modellel írd át helyben, miután a szolgáltató hibázott</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Mentett átfogalmazási utasítások</string>
     <string name="dictate__floating_button_undo_failed">A visszavonás nem sikerült — a szöveg időközben megváltozhatott.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Minden diktálás másolása a vágólapra</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Minden diktálás a vágólapra is másolódik, így kézzel beillesztheted, ha a beszúrás sikertelen. Egyes telefonokon vágólap-értesítést jeleníthet meg.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">A diktálások csak beszúrásra kerülnek, a vágólapra nem másolódnak.</string>
     <string name="dictate__floating_button_undo_summary_off">Nem jelenik meg visszavonás gomb.</string>
     <string name="dictate__floating_button_undo_summary_on">Diktálás után a gomb mellett megjelenik egy visszavonás gomb, amellyel egyetlen koppintással eltávolítható a beillesztett szöveg.</string>
     <string name="dictate__floating_button_undo_title">Visszavonás gomb</string>

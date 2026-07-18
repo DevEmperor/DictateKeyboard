@@ -1257,6 +1257,9 @@
     <string name="dictate__local_fallback_summary">Sem internet, transcreva no dispositivo com o modelo baixado após falha do provedor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Prompts de reformulação salvos</string>
     <string name="dictate__floating_button_undo_failed">Não foi possível desfazer — o texto pode ter mudado.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copiar cada ditado para a área de transferência</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada ditado também é copiado para a área de transferência, para você poder colá-lo manualmente se a inserção falhar. Pode mostrar um aviso da área de transferência em alguns celulares.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Os ditados são apenas inseridos, não copiados para a área de transferência.</string>
     <string name="dictate__floating_button_undo_summary_off">Nenhum botão de desfazer é exibido.</string>
     <string name="dictate__floating_button_undo_summary_on">Após um ditado, um botão de desfazer aparece ao lado do botão para remover o texto inserido com um toque.</string>
     <string name="dictate__floating_button_undo_title">Botão de desfazer</string>

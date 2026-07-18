@@ -1464,6 +1464,9 @@
     <string name="dictate__local_fallback_summary">Offline transkrybuj na urządzeniu pobranym modelem, gdy dostawca zawiedzie</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Zapisane polecenia przeformułowania</string>
     <string name="dictate__floating_button_undo_failed">Nie można cofnąć — tekst mógł się zmienić.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Kopiuj każde dyktowanie do schowka</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Każde dyktowanie jest też kopiowane do schowka, więc możesz wkleić je ręcznie, jeśli wstawianie się nie powiedzie. Na niektórych telefonach może pokazać powiadomienie schowka.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Dyktowania są tylko wstawiane, nie kopiowane do schowka.</string>
     <string name="dictate__floating_button_undo_summary_off">Nie wyświetlono przycisku cofania.</string>
     <string name="dictate__floating_button_undo_summary_on">Po dyktowaniu obok przycisku pojawia się przycisk cofania, który jednym dotknięciem usuwa wstawiony tekst.</string>
     <string name="dictate__floating_button_undo_title">Przycisk cofania</string>

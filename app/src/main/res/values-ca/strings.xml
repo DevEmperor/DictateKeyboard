@@ -1324,6 +1324,9 @@
     <string name="dictate__local_fallback_summary">Quan no tens connexió, transcriu localment amb el model baixat després que falli el proveïdor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Indicacions de reformulació desades</string>
     <string name="dictate__floating_button_undo_failed">No s\'ha pogut desfer — pot ser que el text hagi canviat.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copia cada dictat al porta-retalls</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada dictat també es copia al porta-retalls, perquè el puguis enganxar manualment si la inserció falla. Pot mostrar un avís del porta-retalls en alguns telèfons.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Els dictats només s\'insereixen, no es copien al porta-retalls.</string>
     <string name="dictate__floating_button_undo_summary_off">No es mostra cap botó per desfer.</string>
     <string name="dictate__floating_button_undo_summary_on">Després d\'un dictat, apareix un botó per desfer al costat del botó per eliminar el text inserit amb un sol toc.</string>
     <string name="dictate__floating_button_undo_title">Botó per desfer</string>

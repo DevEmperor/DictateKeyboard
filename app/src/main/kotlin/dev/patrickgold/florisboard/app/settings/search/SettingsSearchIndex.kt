@@ -113,6 +113,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__floating_button_remember_position_title, R.string.dictate__floating_button_title, Routes.Settings.DictateFloatingButton, parentRes = R.string.dictate__title, anchor = "dictate__floating_button_remember_position_title"),
         SettingsSearchEntry(R.string.dictate__floating_button_haptic_title, R.string.dictate__floating_button_title, Routes.Settings.DictateFloatingButton, parentRes = R.string.dictate__title, anchor = "dictate__floating_button_haptic_title"),
         SettingsSearchEntry(R.string.dictate__floating_button_undo_title, R.string.dictate__floating_button_title, Routes.Settings.DictateFloatingButton, parentRes = R.string.dictate__title, anchor = "dictate__floating_button_undo_title"),
+        SettingsSearchEntry(R.string.dictate__floating_button_copy_to_clipboard_title, R.string.dictate__floating_button_title, Routes.Settings.DictateFloatingButton, parentRes = R.string.dictate__title, anchor = "dictate__floating_button_copy_to_clipboard_title"),
         SettingsSearchEntry(R.string.dictate__history_enable_title, R.string.dictate__history_title, Routes.Settings.DictateHistory, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__history_audio_title, R.string.dictate__history_title, Routes.Settings.DictateHistory, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__history_retention_title, R.string.dictate__history_title, Routes.Settings.DictateHistory, parentRes = R.string.dictate__title),

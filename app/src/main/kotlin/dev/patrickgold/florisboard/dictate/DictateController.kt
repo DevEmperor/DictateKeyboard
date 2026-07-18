@@ -11,6 +11,8 @@
 package dev.patrickgold.florisboard.dictate
 
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.IntentFilter
@@ -1036,6 +1038,16 @@ object DictateController {
             realtimeShown.setLength(0)
             if (prefs.dictate.autoEnter.get() && outputText.isNotEmpty()) outSink.performEnter()
         } else {
+            // Safety net (#214): for the floating button, optionally copy every dictation to the system
+            // clipboard so nothing is lost if the accessibility insert is silently swallowed (the known
+            // "green check but no text" case). Done BEFORE the commit on purpose: the paste-fallback captures
+            // the current clipboard as "previous" and restores it 400 ms later, so with our text already on
+            // the clipboard that restore becomes a no-op instead of wiping the copy.
+            if (outputTarget == OutputTarget.OVERLAY && outputText.isNotEmpty() &&
+                prefs.dictate.floatingButtonCopyToClipboard.get()
+            ) {
+                copyToSystemClipboard(appContext, outputText)
+            }
             val committed = commitOutput(appContext, outputText)
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
@@ -1066,6 +1078,12 @@ object DictateController {
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
             maybePromptForReview()
         }
+    }
+
+    /** Copies [text] to the system clipboard — the floating-button always-copy safety net (issue #214). */
+    private fun copyToSystemClipboard(context: Context, text: String) {
+        val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
+        runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
     }
 
     // --- Real-time streaming (issue #128) -------------------------------------------------------

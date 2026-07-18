@@ -1381,6 +1381,9 @@
     <string name="dictate__local_fallback_summary">オフライン時、プロバイダーが失敗したらダウンロード済みモデルで端末上で文字起こしします</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">保存された言い換えプロンプト</string>
     <string name="dictate__floating_button_undo_failed">元に戻せませんでした。テキストが変更された可能性があります。</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">口述をすべてクリップボードにコピー</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">各口述はクリップボードにもコピーされ、挿入が失敗しても手動で貼り付けられます。一部の端末ではクリップボードの通知が表示される場合があります。</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">口述は挿入されるだけで、クリップボードにはコピーされません。</string>
     <string name="dictate__floating_button_undo_summary_off">元に戻すボタンを表示しません。</string>
     <string name="dictate__floating_button_undo_summary_on">音声入力後、ボタンの横に元に戻すボタンが表示され、ワンタップで挿入したテキストを削除できます。</string>
     <string name="dictate__floating_button_undo_title">元に戻すボタン</string>

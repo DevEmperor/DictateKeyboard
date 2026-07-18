@@ -1326,6 +1326,9 @@
     <string name="dictate__local_fallback_summary">Hors ligne, transcrivez sur l’appareil avec le modèle téléchargé après l’échec du fournisseur</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Prompts de reformulation enregistrés</string>
     <string name="dictate__floating_button_undo_failed">Annulation impossible — le texte a peut-être changé.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copier chaque dictée dans le presse-papiers</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Chaque dictée est aussi copiée dans le presse-papiers, pour que vous puissiez la coller manuellement si l\'insertion échoue. Peut afficher une notification du presse-papiers sur certains téléphones.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Les dictées sont seulement insérées, pas copiées dans le presse-papiers.</string>
     <string name="dictate__floating_button_undo_summary_off">Aucun bouton d\'annulation affiché.</string>
     <string name="dictate__floating_button_undo_summary_on">Après une dictée, un bouton d\'annulation apparaît à côté du bouton pour supprimer le texte inséré en une seule fois.</string>
     <string name="dictate__floating_button_undo_title">Bouton d\'annulation</string>
