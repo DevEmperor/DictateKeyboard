@@ -16,11 +16,14 @@ import com.k2fsa.sherpa.onnx.SileroVadModelConfig
 import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 /**
  * Local voice-activity gate that answers one question before a recording is sent for transcription:
@@ -45,7 +48,7 @@ object SpeechGate {
     /** Silero v5 processes fixed 512-sample windows at 16 kHz. */
     private const val WINDOW = 512
     private const val LOG_TAG = "DictateLatency"
-    private val vadMutex = Mutex()
+    private val vadLock = ReentrantLock()
     private var cachedVad: Vad? = null
 
     /**
@@ -55,10 +58,162 @@ object SpeechGate {
     suspend fun prewarm(context: Context) = withContext(Dispatchers.Default) {
         val startedNanos = System.nanoTime()
         val model = ensureVadModel(context.applicationContext) ?: return@withContext
-        vadMutex.withLock {
+        val ready = vadLock.withLock {
             if (cachedVad == null) cachedVad = createVad(model)
+            cachedVad != null
         }
-        Log.i(LOG_TAG, "speechGate prewarmMs=${elapsedMillis(startedNanos)} ready=${cachedVad != null}")
+        Log.i(LOG_TAG, "speechGate prewarmMs=${elapsedMillis(startedNanos)} ready=$ready")
+    }
+
+    /**
+     * Starts a silence-gate session that consumes the recorder's existing 16 kHz mono PCM tap while the
+     * user is speaking. The native inference runs on its own worker; [LiveSession.feed] only copies and
+     * queues a frame, so it never blocks [android.media.AudioRecord]. Once speech is confirmed, later
+     * frames are ignored. This moves the normal gate off the stop-to-request critical path without
+     * clipping or otherwise changing the WAV uploaded to the provider.
+     */
+    fun startLive(context: Context): LiveSession =
+        LiveSession(context.applicationContext).also { it.start() }
+
+    /** A single recording's live gate. Create through [startLive]. */
+    class LiveSession internal constructor(private val appContext: Context) {
+        private val queue = LinkedBlockingQueue<ByteArray>(MAX_QUEUED_PCM_FRAMES)
+        private val started = AtomicBoolean(false)
+        private val completed = AtomicBoolean(false)
+        private val done = CountDownLatch(1)
+        @Volatile private var accepting = false
+        @Volatile private var result = true // fail open until the worker proves silence
+        private var worker: Thread? = null
+
+        internal fun start() {
+            if (!started.compareAndSet(false, true)) return
+            accepting = true
+            worker = Thread({ runWorker() }, "dictate-vad-gate").also {
+                it.isDaemon = true
+                it.start()
+            }
+        }
+
+        /** Called on the recorder thread. Copies one frame and returns immediately. */
+        fun feed(pcm16: ByteArray, len: Int) {
+            if (!accepting || completed.get() || len < 2) return
+            val copy = pcm16.copyOf(len)
+            if (!queue.offer(copy)) {
+                // Never back-pressure the microphone. A saturated gate becomes permissive instead of
+                // risking dropped capture frames or a false "no speech" result.
+                accepting = false
+                queue.clear()
+                queue.offer(END_OF_INPUT)
+                complete(true)
+                worker?.interrupt()
+                Log.w(LOG_TAG, "speechGate liveQueueFull failOpen=true")
+            }
+        }
+
+        /**
+         * Stops accepting PCM, drains the already-queued tail and returns the live result. Usually this is
+         * immediate because a closed speech segment was detected during recording. A stuck native worker
+         * times out permissively so dictation can never be lost because of the local gate.
+         */
+        suspend fun finish(): Boolean = withContext(Dispatchers.Default) {
+            val waitStartedNanos = System.nanoTime()
+            accepting = false
+            while (!completed.get() && !queue.offer(END_OF_INPUT, 100, TimeUnit.MILLISECONDS)) {
+                // Wait off the UI thread only until the worker makes room or has already completed.
+            }
+            val finished = done.await(FINISH_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            if (!finished) {
+                complete(true)
+                worker?.interrupt()
+            }
+            val speech = if (finished) result else true
+            Log.i(
+                LOG_TAG,
+                "speechGate liveFinishWaitMs=${elapsedMillis(waitStartedNanos)} speech=$speech " +
+                    "timedOut=${!finished}",
+            )
+            speech
+        }
+
+        /** Stops an unused session (cancel, realtime path, invalid recording). Idempotent and fail-open. */
+        fun cancel() {
+            accepting = false
+            queue.clear()
+            queue.offer(END_OF_INPUT)
+            complete(true)
+            worker?.interrupt()
+        }
+
+        private fun runWorker() {
+            val model = ensureVadModel(appContext)
+            if (model == null) {
+                complete(true)
+                return
+            }
+            try {
+                vadLock.withLock {
+                    val vad = cachedVad ?: createVad(model)?.also { cachedVad = it }
+                    if (vad == null) {
+                        complete(true)
+                        return@withLock
+                    }
+                    try {
+                        vad.reset()
+                        complete(process(vad))
+                    } catch (_: InterruptedException) {
+                        complete(true)
+                    } catch (_: Throwable) {
+                        cachedVad = null
+                        runCatching { vad.release() }
+                        complete(true)
+                    }
+                }
+            } catch (_: InterruptedException) {
+                complete(true)
+            } catch (_: Throwable) {
+                complete(true)
+            } finally {
+                queue.clear()
+            }
+        }
+
+        @Throws(InterruptedException::class)
+        private fun process(vad: Vad): Boolean {
+            val window = FloatArray(WINDOW)
+            var filled = 0
+            while (true) {
+                val chunk = queue.take()
+                if (chunk === END_OF_INPUT) break
+                var offset = 0
+                while (offset + 1 < chunk.size) {
+                    val sample = ((chunk[offset].toInt() and 0xff) or
+                        (chunk[offset + 1].toInt() shl 8)).toShort()
+                    window[filled++] = sample / 32768f
+                    offset += 2
+                    if (filled != WINDOW) continue
+                    vad.acceptWaveform(window)
+                    filled = 0
+                    if (!vad.empty()) return true
+                }
+            }
+            // Speech that runs right up to stop may never close a segment until the stream is flushed.
+            if (filled > 0) vad.acceptWaveform(window.copyOf(filled))
+            vad.flush()
+            return !vad.empty()
+        }
+
+        private fun complete(value: Boolean) {
+            if (!completed.compareAndSet(false, true)) return
+            result = value
+            accepting = false
+            done.countDown()
+        }
+
+        private companion object {
+            private val END_OF_INPUT = ByteArray(0)
+            private const val MAX_QUEUED_PCM_FRAMES = 128
+            private const val FINISH_TIMEOUT_SECONDS = 15L
+        }
     }
 
     /**
@@ -76,7 +231,7 @@ object SpeechGate {
         val decodeMs = elapsedMillis(decodeStartedNanos)
         if (samples.isEmpty()) return@withContext false
 
-        vadMutex.withLock {
+        vadLock.withLock {
             val createStartedNanos = System.nanoTime()
             val vad = cachedVad ?: createVad(model)?.also { cachedVad = it }
                 ?: return@withLock true
