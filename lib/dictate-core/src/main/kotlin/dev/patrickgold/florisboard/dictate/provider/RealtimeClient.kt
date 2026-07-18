@@ -42,16 +42,13 @@ object RealtimeClient {
 
     private val wsClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .connectTimeout(NETWORK_CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .connectTimeout(8, TimeUnit.SECONDS)   // fail a dead route fast instead of stalling the session
+            // Race IPv6/IPv4 with OkHttp 5 Happy Eyeballs instead of forcing either address family.
+            .fastFallback(true)
             .readTimeout(0, TimeUnit.SECONDS)   // long-lived stream
             .writeTimeout(20, TimeUnit.SECONDS)
             .callTimeout(0, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
-            // Prefer IPv4: some hosts (e.g. Google's generativelanguage endpoint) return many IPv6
-            // addresses, and on a network with broken/black-holed IPv6 OkHttp would try each one and
-            // hit the connect timeout before falling back to IPv4 — an ~80s stall (issue #128). Trying
-            // IPv4 first connects immediately there while still falling back to IPv6 when needed.
-            .dns(Ipv4FirstDns)
             .build()
     }
 

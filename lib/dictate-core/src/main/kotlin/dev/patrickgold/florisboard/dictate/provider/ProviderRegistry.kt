@@ -114,9 +114,11 @@ object ProviderRegistry {
         displayName = "OpenRouter",
         baseUrl = "https://openrouter.ai/api/v1/",
         // OpenRouter routes both chat and speech-to-text (its STT endpoint fronts Whisper, Voxtral,
-        // MAI-Transcribe, …) – but via a JSON/base64 body, not the OpenAI multipart upload.
+        // MAI-Transcribe, …). Its endpoint currently accepts OpenAI-compatible multipart; streaming the
+        // file avoids the extra base64 copy and oversized JSON body. The client retains documented JSON
+        // as a compatibility fallback if OpenRouter explicitly rejects multipart.
         capabilities = CHAT_AND_STT,
-        transcriptionApi = TranscriptionApi.OPENROUTER_JSON,
+        transcriptionApi = TranscriptionApi.OPENROUTER_MULTIPART,
         supportsDynamicModels = true,
         apiKeyUrl = "https://openrouter.ai/keys",
         // OpenRouter exposes hundreds of models (incl. Claude, Gemini, Llama …); users pick from the

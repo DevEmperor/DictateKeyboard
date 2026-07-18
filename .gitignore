@@ -34,6 +34,9 @@ proguard/
 # Log Files
 *.log
 
+# Python benchmark helpers
+__pycache__/
+
 # Android Studio Navigation editor temp files
 .navigation/
 

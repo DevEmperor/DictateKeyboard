@@ -11,12 +11,16 @@
 package dev.patrickgold.florisboard.dictate.audio
 
 import android.content.Context
+import android.util.Log
 import com.k2fsa.sherpa.onnx.SileroVadModelConfig
 import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 /**
  * Local voice-activity gate that answers one question before a recording is sent for transcription:
@@ -40,6 +44,22 @@ object SpeechGate {
     private const val VAD_MODEL_BYTES = 643_854L
     /** Silero v5 processes fixed 512-sample windows at 16 kHz. */
     private const val WINDOW = 512
+    private const val LOG_TAG = "DictateLatency"
+    private val vadMutex = Mutex()
+    private var cachedVad: Vad? = null
+
+    /**
+     * Creates the native VAD session while the user is still speaking so stopping a recording does not
+     * have to pay model/session setup latency. Safe to call repeatedly; only one session is retained.
+     */
+    suspend fun prewarm(context: Context) = withContext(Dispatchers.Default) {
+        val startedNanos = System.nanoTime()
+        val model = ensureVadModel(context.applicationContext) ?: return@withContext
+        vadMutex.withLock {
+            if (cachedVad == null) cachedVad = createVad(model)
+        }
+        Log.i(LOG_TAG, "speechGate prewarmMs=${elapsedMillis(startedNanos)} ready=${cachedVad != null}")
+    }
 
     /**
      * Returns true if [audioFile] contains at least one speech segment (or if the check could not be run,
@@ -48,52 +68,80 @@ object SpeechGate {
      * speech exits as soon as the first segment closes.
      */
     suspend fun hasSpeech(context: Context, audioFile: File): Boolean = withContext(Dispatchers.Default) {
+        val totalStartedNanos = System.nanoTime()
         val model = ensureVadModel(context.applicationContext) ?: return@withContext true
+        val decodeStartedNanos = System.nanoTime()
         val samples = runCatching { AudioDecode.decodeToMono16k(audioFile) }.getOrNull()
             ?: return@withContext true
+        val decodeMs = elapsedMillis(decodeStartedNanos)
         if (samples.isEmpty()) return@withContext false
 
-        val vad = runCatching {
-            Vad(
-                config = VadModelConfig().apply {
-                    sileroVadModelConfig = SileroVadModelConfig(
-                        model = model.absolutePath,
-                        threshold = 0.5f,
-                        minSilenceDuration = 0.25f,
-                        minSpeechDuration = 0.25f,
-                        windowSize = WINDOW,
-                        maxSpeechDuration = 20f,
-                    )
-                    sampleRate = AudioDecode.TARGET_SAMPLE_RATE
-                    numThreads = 1
-                },
-            )
-        }.getOrNull() ?: return@withContext true
-
-        try {
-            val window = FloatArray(WINDOW)
-            var i = 0
-            while (i < samples.size) {
-                val end = minOf(i + WINDOW, samples.size)
-                val chunk = if (end - i == WINDOW) {
-                    samples.copyInto(window, destinationOffset = 0, startIndex = i, endIndex = end)
-                    window
-                } else {
-                    samples.copyOfRange(i, end)
+        vadMutex.withLock {
+            val createStartedNanos = System.nanoTime()
+            val vad = cachedVad ?: createVad(model)?.also { cachedVad = it }
+                ?: return@withLock true
+            val createMs = elapsedMillis(createStartedNanos)
+            val runStartedNanos = System.nanoTime()
+            try {
+                vad.reset()
+                val window = FloatArray(WINDOW)
+                var i = 0
+                while (i < samples.size) {
+                    val end = minOf(i + WINDOW, samples.size)
+                    val chunk = if (end - i == WINDOW) {
+                        samples.copyInto(window, destinationOffset = 0, startIndex = i, endIndex = end)
+                        window
+                    } else {
+                        samples.copyOfRange(i, end)
+                    }
+                    vad.acceptWaveform(chunk)
+                    i = end
+                    if (!vad.empty()) {
+                        Log.i(
+                            LOG_TAG,
+                            "speechGate decodeMs=$decodeMs createMs=$createMs " +
+                                "runMs=${elapsedMillis(runStartedNanos)} totalMs=${elapsedMillis(totalStartedNanos)} speech=true",
+                        )
+                        return@withLock true
+                    }
                 }
-                vad.acceptWaveform(chunk)
-                i = end
-                if (!vad.empty()) return@withContext true // a speech segment closed → speech present
+                // No segment closed mid-stream (e.g. speech ran right up to the end): flush and re-check.
+                vad.flush()
+                val speech = !vad.empty()
+                Log.i(
+                    LOG_TAG,
+                    "speechGate decodeMs=$decodeMs createMs=$createMs " +
+                        "runMs=${elapsedMillis(runStartedNanos)} totalMs=${elapsedMillis(totalStartedNanos)} speech=$speech",
+                )
+                speech
+            } catch (_: Throwable) {
+                // A native session that faulted is not reused. The next recording gets a fresh one.
+                cachedVad = null
+                runCatching { vad.release() }
+                true // fail open
             }
-            // No segment closed mid-stream (e.g. speech ran right up to the end): flush and re-check.
-            vad.flush()
-            !vad.empty()
-        } catch (_: Throwable) {
-            true // fail open
-        } finally {
-            runCatching { vad.release() }
         }
     }
+
+    private fun createVad(model: File): Vad? = runCatching {
+        Vad(
+            config = VadModelConfig().apply {
+                sileroVadModelConfig = SileroVadModelConfig(
+                    model = model.absolutePath,
+                    threshold = 0.5f,
+                    minSilenceDuration = 0.25f,
+                    minSpeechDuration = 0.25f,
+                    windowSize = WINDOW,
+                    maxSpeechDuration = 20f,
+                )
+                sampleRate = AudioDecode.TARGET_SAMPLE_RATE
+                numThreads = 1
+            },
+        )
+    }.getOrNull()
+
+    private fun elapsedMillis(startedNanos: Long): Long =
+        TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedNanos)
 
     /** The fixed Silero window size (samples), reused by the live splitter (issue #170). */
     internal const val VAD_WINDOW = WINDOW
