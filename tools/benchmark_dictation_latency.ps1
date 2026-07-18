@@ -119,9 +119,8 @@ for ($i = 1; $i -le $Runs; $i++) {
     $measurement | ConvertTo-Json -Compress
 }
 
-# Validate the actual text committed into the Compose field, not merely the provider's HTTP response.
-& $Adb shell input keyevent 4 | Out-Null
-Start-Sleep -Milliseconds 700
+# Validate the actual text committed into the Compose field while the IME remains visible. Closing and
+# immediately reopening the keyboard is unrelated to transcription and destabilizes the API 34 renderer.
 $deviceXml = '/sdcard/dictate-latency-benchmark.xml'
 $hostXml = Join-Path $env:TEMP 'dictate-latency-benchmark.xml'
 & $Adb shell uiautomator dump $deviceXml | Out-Null
@@ -130,8 +129,6 @@ $hierarchy = Get-Content -LiteralPath $hostXml -Raw
 if (-not $hierarchy.Contains($expectedTranscript)) {
     throw 'The committed transcript did not exactly match the expected German sentence'
 }
-& $Adb shell input tap 300 2260 | Out-Null
-Start-Sleep -Milliseconds 700
 
 $sorted = @($measurements.total_ms | Sort-Object)
 $middle = [math]::Floor($sorted.Count / 2)
