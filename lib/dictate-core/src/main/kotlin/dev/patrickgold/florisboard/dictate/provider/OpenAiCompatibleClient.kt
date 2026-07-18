@@ -166,6 +166,28 @@ class OpenAiCompatibleClient(
     override suspend fun transcribe(request: TranscriptionRequest): TranscriptionResult =
         transcribe(request, onRetry = {})
 
+    /**
+     * Opens and authenticates an OpenRouter HTTP/2 connection without submitting audio. Dictation can
+     * call this while the user is still recording so DNS, TCP and TLS are hidden behind capture time and
+     * the later billable transcription POST can reuse the shared connection. Failures are best-effort:
+     * the real request still gets OkHttp's normal Happy-Eyeballs route selection and error handling.
+     */
+    suspend fun prewarmOpenRouterConnection() {
+        if (config.transcriptionApi != TranscriptionApi.OPENROUTER_MULTIPART || config.apiKey.isBlank()) return
+        val label = "OpenRouter prewarm"
+        val request = Request.Builder()
+            .url(config.normalizedBaseUrl + "key")
+            .headers(authHeaders())
+            .get()
+            .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(label))
+            .build()
+        runCatching { executeOnce(request) }
+            .onFailure { error ->
+                if (error is CancellationException) throw error
+                DictateHttpLog.warn("$label failed error=${error::class.simpleName}")
+            }
+    }
+
     /** OpenAI-style `multipart/form-data` upload (OpenAI, Groq, Mistral, most custom servers). */
     private suspend fun transcribeMultipart(
         request: TranscriptionRequest,

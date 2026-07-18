@@ -726,6 +726,7 @@ object DictateController {
                     else -> null
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
+                prewarmBatchTranscriptionConnection()
                 if (prefs.dictate.skipSilentRecordings.get()) {
                     // Hide the one-time native VAD/session setup behind the user's recording time.
                     scope.launch { SpeechGate.prewarm(appContext) }
@@ -746,6 +747,23 @@ object DictateController {
                     appContext.getString(R.string.dictate__error_recording_failed, t.message ?: ""),
                 )
             }
+        }
+    }
+
+    /** Hides OpenRouter DNS/TCP/TLS setup behind capture time; never sends or retries audio. */
+    private fun prewarmBatchTranscriptionConnection() {
+        val account = transcriptionAccount()
+        val preset = presetFor(account)
+        if (preset.transcriptionApi != TranscriptionApi.OPENROUTER_MULTIPART || account.apiKey.isBlank()) return
+        scope.launch {
+            OpenAiCompatibleClient.from(
+                preset,
+                account.apiKey,
+                baseUrlOverride = baseUrlOverrideFor(account),
+                proxy = prefs.dictate.dictateProxyConfig(),
+                useChatAudio = account.transcriptionViaChat,
+                trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+            ).prewarmOpenRouterConnection()
         }
     }
 
