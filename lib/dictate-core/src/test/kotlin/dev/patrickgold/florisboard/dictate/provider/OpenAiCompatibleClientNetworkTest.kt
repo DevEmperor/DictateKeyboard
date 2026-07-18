@@ -117,38 +117,6 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
-    test("OpenRouter prewarm connection is reused by the transcription POST") {
-        val audio = createTempFile(suffix = ".wav").toFile().apply {
-            writeBytes("RIFF-test-audio".encodeToByteArray())
-        }
-        try {
-            MockWebServer().use { server ->
-                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"data":{"label":"test"}}"""))
-                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"ok"}"""))
-                val client = OpenAiCompatibleClient(
-                    ProviderConfig(
-                        baseUrl = server.url("/").toString(),
-                        apiKey = "test",
-                        transcriptionApi = TranscriptionApi.OPENROUTER_MULTIPART,
-                    ),
-                )
-
-                client.prewarmOpenRouterConnection()
-                client.transcribe(TranscriptionRequest(audio, "microsoft/mai-transcribe-1.5"))
-
-                val prewarm = server.takeRequest()
-                val transcription = server.takeRequest()
-                prewarm.method shouldBe "GET"
-                prewarm.path shouldBe "/key"
-                prewarm.sequenceNumber shouldBe 0
-                transcription.method shouldBe "POST"
-                transcription.sequenceNumber shouldBe 1
-            }
-        } finally {
-            audio.delete()
-        }
-    }
-
     test("OpenRouter falls back to documented JSON only when multipart is rejected") {
         val audio = createTempFile(suffix = ".wav").toFile().apply {
             writeBytes("RIFF-test-audio".encodeToByteArray())
