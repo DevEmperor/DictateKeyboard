@@ -125,8 +125,9 @@ $deviceXml = '/sdcard/dictate-latency-benchmark.xml'
 $hostXml = Join-Path $env:TEMP 'dictate-latency-benchmark.xml'
 & $Adb shell uiautomator dump $deviceXml | Out-Null
 & $Adb pull $deviceXml $hostXml | Out-Null
-$hierarchy = Get-Content -LiteralPath $hostXml -Raw
-if (-not $hierarchy.Contains($expectedTranscript)) {
+$hierarchy = [xml](Get-Content -LiteralPath $hostXml -Raw)
+$focusedTextFields = @($hierarchy.SelectNodes('//node[@focused="true" and contains(@class,"EditText")]'))
+if ($focusedTextFields.Count -ne 1 -or [string]$focusedTextFields[0].text -cne $expectedTranscript) {
     throw 'The committed transcript did not exactly match the expected German sentence'
 }
 
