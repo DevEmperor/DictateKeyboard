@@ -3,6 +3,7 @@
 
 import argparse
 import sys
+import threading
 import time
 import wave
 from pathlib import Path
@@ -35,6 +36,8 @@ def main() -> None:
         format=pb2.AudioFormat.AUD_FMT_S16,
     )
 
+    all_packets_sent = threading.Event()
+
     def packets():
         yield pb2.AudioPacket(format=audio_format)
         started = time.monotonic()
@@ -49,10 +52,25 @@ def main() -> None:
         silence = b"\x00" * (sample_rate * 2 * 300 // 1000)
         yield pb2.AudioPacket(audio=silence)
         time.sleep(0.3)
+        all_packets_sent.set()
 
     channel = grpc.insecure_channel(args.target)
     stub = pb2_grpc.EmulatorControllerStub(channel)
-    stub.injectAudio(packets(), timeout=120)
+    call = stub.injectAudio.future(packets(), timeout=120)
+    stream_deadline = time.monotonic() + len(pcm) / (sample_rate * 2) + 10
+    while not all_packets_sent.wait(timeout=0.1):
+        if call.done():
+            call.result()
+            raise RuntimeError("injectAudio ended before all audio packets were sent")
+        if time.monotonic() >= stream_deadline:
+            call.cancel()
+            raise TimeoutError("injectAudio did not consume all audio packets")
+    try:
+        call.result(timeout=2)
+    except grpc.FutureTimeoutError:
+        # Some emulator builds consume the full paced stream but never acknowledge this stream-unary RPC.
+        # Once every packet plus trailing silence has been delivered, cancelling only releases the client.
+        call.cancel()
 
 
 if __name__ == "__main__":
