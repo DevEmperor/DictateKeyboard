@@ -17,9 +17,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PixelFormat
-import android.graphics.RadialGradient
 import android.graphics.RectF
-import android.graphics.Shader
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.SystemClock
@@ -52,6 +50,7 @@ import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -72,9 +71,9 @@ import kotlin.math.hypot
  * dragged, and routes the result through [DictateController] with [DictateController.OutputTarget.OVERLAY]
  * so the text is injected into the focused field.
  *
- * The visuals are provided by a [BubbleSkin] — either the compact [RingSkin] or the expanding [PillSkin],
- * selected by the `floatingButtonDesign` preference. While recording, a level ticker polls the mic
- * amplitude and feeds a live waveform.
+ * The visuals are provided by a [BubbleSkin] — [RingSkin], [PillSkin], or [OrbSkin] — selected by the
+ * `floatingButtonDesign` preference. While recording, a level ticker feeds the chosen skin the shared
+ * normalized microphone level.
  *
  * Created and owned by [DictateAccessibilityService], which also provides the foreground-microphone
  * promotion the recording needs while the app is in the background.
@@ -910,7 +909,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 val level = if (rec?.paused == true) {
                     0f
                 } else {
-                    (DictateController.currentAmplitude() / AMP_FULL).coerceIn(0f, 1f)
+                    DictateController.audioLevel.value
                 }
                 val elapsed = rec?.let { elapsedOf(it) } ?: 0L
                 skin?.onRecordingTick(level, elapsed)
@@ -1414,11 +1413,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val viewSize = sdp(64)
         private val coreSize = sdp(44)
         private val iconInset = sdp(11)
-        private val coreRadiusPx = coreSize / 2f
-        private val minGlowPx = sdpf(2f)
-        private val maxGlowPx = sdpf(8f)
+        private val activeIconInset = sdp(16)
 
-        private val glow = GlowView(context)
+        private val cloud = AudioReactiveCloudOrbView(context)
         private val core = View(context).apply {
             background = circle(R.color.dictate_overlay_accent)
             elevation = sdpf(6f)
@@ -1429,48 +1426,39 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             elevation = sdpf(6f)
             imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
-        private var breatheAnim: ValueAnimator? = null
-        private var smoothed = 0f
 
         override val fixedHeight: Int? = null
 
         override val root: View = FrameLayout(context).apply {
-            addView(glow, FrameLayout.LayoutParams(viewSize, viewSize))
+            addView(cloud, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
             addView(core, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
             addView(icon, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
+            minimumWidth = viewSize
+            minimumHeight = viewSize
         }
 
         override fun applyState(state: DictateController.UiState) {
-            stopBreathe()
             when (state) {
                 is DictateController.UiState.Recording -> {
-                    setCore(R.color.dictate_overlay_recording)
-                    setGlyph(R.drawable.ic_dictate_overlay_stop)
-                    glow.glowColor = color(R.color.dictate_overlay_recording)
-                    smoothed = 0f
-                    setGlow(0f) // the ticker drives it from the live amplitude
+                    showCloud(AudioReactiveCloudOrbView.Mode.LISTENING, showStop = true)
+                    cloud.setPaused(state.paused)
+                    cloud.setLevel(0f) // the shared level ticker takes over immediately after this state update
                 }
                 is DictateController.UiState.Transcribing -> {
-                    setCore(R.color.dictate_overlay_accent)
-                    setGlyph(R.drawable.ic_dictate_overlay_mic)
-                    startBreathe(R.color.dictate_overlay_accent)
+                    showCloud(AudioReactiveCloudOrbView.Mode.THINKING, showStop = false)
                 }
                 is DictateController.UiState.Rewording -> {
-                    setCore(R.color.dictate_overlay_accent)
-                    setGlyph(R.drawable.ic_dictate_overlay_mic)
-                    startBreathe(R.color.dictate_overlay_rewording)
+                    showCloud(AudioReactiveCloudOrbView.Mode.THINKING, showStop = false)
                 }
-                else -> {
-                    setCore(R.color.dictate_overlay_accent)
-                    setGlyph(R.drawable.ic_dictate_overlay_mic)
-                    setGlow(0f)
-                }
+                else -> showIdle()
             }
         }
 
         override fun showFlash(kind: FlashKind) {
-            stopBreathe()
-            setGlow(0f)
+            cloud.stop()
+            core.visibility = View.VISIBLE
+            icon.visibility = View.VISIBLE
+            icon.setPadding(iconInset, iconInset, iconInset, iconInset)
             when (kind) {
                 FlashKind.ERROR -> {
                     setCore(R.color.dictate_overlay_recording)
@@ -1484,12 +1472,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
 
         override fun onRecordingTick(level: Float, elapsedMs: Long) {
-            smoothed += (level - smoothed) * 0.35f
-            setGlow(smoothed)
+            cloud.setLevel(level)
         }
 
         override fun destroy() {
-            stopBreathe()
+            cloud.stop()
         }
 
         private fun setCore(colorRes: Int) {
@@ -1502,58 +1489,26 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             icon.alpha = 1f
         }
 
-        /** Drives the glow radius/alpha and a subtle orb scale from a 0..1 level. */
-        private fun setGlow(level: Float) {
-            val l = level.coerceIn(0f, 1f)
-            glow.level = l
-            glow.invalidate()
-            val s = 1f + l * 0.08f
-            core.scaleX = s
-            core.scaleY = s
-            icon.scaleX = s
-            icon.scaleY = s
-        }
-
-        private fun startBreathe(colorRes: Int) {
-            glow.glowColor = color(colorRes)
-            breatheAnim?.cancel()
-            breatheAnim = ValueAnimator.ofFloat(0f, 1f).apply {
-                duration = 1100
-                repeatCount = ValueAnimator.INFINITE
-                repeatMode = ValueAnimator.REVERSE
-                addUpdateListener { setGlow(0.2f + 0.5f * (it.animatedValue as Float)) }
-                start()
+        private fun showCloud(mode: AudioReactiveCloudOrbView.Mode, showStop: Boolean) {
+            core.visibility = View.INVISIBLE
+            cloud.setPaused(false)
+            cloud.setLevel(0f)
+            cloud.setMode(mode)
+            icon.visibility = if (showStop) View.VISIBLE else View.INVISIBLE
+            if (showStop) {
+                setGlyph(R.drawable.ic_dictate_overlay_stop)
+                icon.setPadding(activeIconInset, activeIconInset, activeIconInset, activeIconInset)
+                icon.imageTintList = ColorStateList.valueOf(CLOUD_GLYPH_COLOR)
             }
         }
 
-        private fun stopBreathe() {
-            breatheAnim?.cancel()
-            breatheAnim = null
-        }
-
-        private inner class GlowView(context: Context) : View(context) {
-            var glowColor: Int = color(R.color.dictate_overlay_accent)
-            var level: Float = 0f
-            private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-
-            override fun onDraw(canvas: Canvas) {
-                if (level <= 0.01f || width == 0) return
-                val cx = width / 2f
-                val cy = height / 2f
-                val glowR = coreRadiusPx + minGlowPx + level * maxGlowPx
-                if (glowR <= coreRadiusPx) return
-                val inner = (coreRadiusPx / glowR).coerceIn(0f, 0.95f)
-                val a = (50 + level * 150f).toInt().coerceIn(0, 255)
-                val rgb = glowColor and 0x00FFFFFF
-                val cIn = rgb or (a shl 24)
-                paint.shader = RadialGradient(
-                    cx, cy, glowR,
-                    intArrayOf(cIn, cIn, rgb),
-                    floatArrayOf(0f, inner, 1f),
-                    Shader.TileMode.CLAMP,
-                )
-                canvas.drawCircle(cx, cy, glowR, paint)
-            }
+        private fun showIdle() {
+            cloud.stop()
+            core.visibility = View.VISIBLE
+            icon.visibility = View.VISIBLE
+            icon.setPadding(iconInset, iconInset, iconInset, iconInset)
+            setCore(R.color.dictate_overlay_accent)
+            setGlyph(R.drawable.ic_dictate_overlay_mic)
         }
     }
 
@@ -1563,8 +1518,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private const val TICK_MS = 50L
         private const val AUTO_DIM_DELAY_MS = 3500L
         private const val WAVE_BARS = 7
-        // MediaRecorder.getMaxAmplitude tops out at 32767; speech rarely peaks there, so normalize to a
-        // lower full-scale to keep the waveform lively without constantly clipping at the top.
-        private const val AMP_FULL = 16000f
+        private const val CLOUD_GLYPH_COLOR = 0xFF343B8F.toInt()
     }
 }

@@ -11,7 +11,6 @@
 package dev.patrickgold.florisboard.dictate.ui
 
 import android.os.SystemClock
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -89,6 +88,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -113,7 +113,7 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * sticky mic button) while [DictateController] is recording or transcribing, so the keyboard itself
  * stays fully visible instead of being replaced by a separate panel.
  *
- * - Recording: a cancel button, a pulsing red dot + an elapsed `m:ss` timer, and a pause/resume
+ * - Recording: a cancel button, an audio-reactive cloud orb + an elapsed `m:ss` timer, and a pause/resume
  *   button. The sticky mic (rendered by the Smartbar) stops the recording and starts transcribing.
  * - Transcribing: a spinning icon + label, or a retry indicator while a transient failure is retried.
  * - Error: the error message, auto-cleared after a few seconds.
@@ -189,7 +189,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         )
     }
 
-    // Center: pulsing dot + elapsed timer.
+    // Center: audio-reactive orb + elapsed timer.
     Row(verticalAlignment = Alignment.CenterVertically) {
         var elapsedMs by remember { mutableLongStateOf(state.accumulatedMs) }
         LaunchedEffect(state.startedAtMs, state.accumulatedMs, state.paused) {
@@ -202,21 +202,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
                 }
             }
         }
-        val transition = rememberInfiniteTransition(label = "recording")
-        val pulse by transition.animateFloat(
-            initialValue = 0.65f,
-            targetValue = 1.15f,
-            animationSpec = infiniteRepeatable(tween(650), RepeatMode.Reverse),
-            label = "pulse",
-        )
-        Spacer(
-            modifier = Modifier
-                .size(12.dp)
-                .scale(if (state.paused) 1f else pulse)
-                .alpha(if (state.paused) 0.4f else 1f)
-                .clip(CircleShape)
-                .background(Color(0xFFE53935)),
-        )
+        RecordingAudioOrb(paused = state.paused)
         Spacer(modifier = Modifier.width(10.dp))
         SnyggText(text = formatElapsed(elapsedMs))
         // Segmented mode: how many cut segments are transcribing in the background right now.
@@ -263,6 +249,27 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
             }
         }
     }
+}
+
+/**
+ * Native port of orb-ui's current Cloud theme. The procedural surface stays isolated in a tiny Android
+ * view while the shared 20 Hz microphone level drives the same inward listening response as the source.
+ */
+@Composable
+private fun RecordingAudioOrb(paused: Boolean) {
+    val level by DictateController.audioLevel.collectFlowAsState()
+    AndroidView(
+        factory = { context ->
+            AudioReactiveCloudOrbView(context).apply {
+                setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
+            }
+        },
+        update = { orb ->
+            orb.setPaused(paused)
+            orb.setLevel(if (paused) 0f else level)
+        },
+        modifier = Modifier.size(28.dp),
+    )
 }
 
 /**
