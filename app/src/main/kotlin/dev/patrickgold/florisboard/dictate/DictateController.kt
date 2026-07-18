@@ -288,8 +288,6 @@ object DictateController {
     val segmentsInFlight: StateFlow<Int> = _segmentsInFlight.asStateFlow()
 
     private var recorder: RecordingController? = null
-    /** Live fast path for the normal batch silence gate; offline VAD remains the fallback. */
-    private var batchSpeechVad: LiveSpeechSplitter? = null
     private var startJob: Job? = null
 
     // While a recording is active we listen for the screen turning off (device locked / display timeout):
@@ -585,8 +583,6 @@ object DictateController {
         startJob = null
         recorder?.cancel()
         recorder = null
-        batchSpeechVad?.release()
-        batchSpeechVad = null
         // Long-form segmented (#170): abort the background segment transcriptions; the realtime cleanup
         // below removes the progressively-shown preview text (segmented reuses realtimeShown/Context).
         if (segmentedActive) {
@@ -723,29 +719,14 @@ object DictateController {
                         prefs.dictate.longformAutoSplitSeconds.get() * 1000,
                     ) { flushSegment(appContext) }.also { it.start() }
                 } else null
-                // The mic PCM tap: realtime streaming, long-form splitting, or the normal batch gate.
-                // For the batch gate, a completed speech segment observed while recording lets stop skip
-                // the redundant full-file VAD scan. No live proof means the existing offline gate runs.
-                val realtimeSink = if (!segmented) openRealtimeSession(appContext) else null
-                batchSpeechVad?.release()
-                batchSpeechVad = if (!segmented && realtimeSink == null &&
-                    prefs.dictate.skipSilentRecordings.get()
-                ) {
-                    LiveSpeechSplitter(
-                        appContext,
-                        pauseThresholdMs = Int.MAX_VALUE,
-                        onPause = {},
-                        stopAfterFirstSegment = true,
-                    ).also { it.start() }
-                } else null
+                // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
                 val pcmSink: ((ByteArray, Int) -> Unit)? = when {
-                    realtimeSink != null -> realtimeSink
+                    !segmented -> openRealtimeSession(appContext)
                     segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
-                    batchSpeechVad != null -> { val v = batchSpeechVad!!; { pcm, len -> v.feed(pcm, len) } }
                     else -> null
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
-                if (prefs.dictate.skipSilentRecordings.get() && batchSpeechVad == null) {
+                if (prefs.dictate.skipSilentRecordings.get()) {
                     // Hide the one-time native VAD/session setup behind the user's recording time.
                     scope.launch { SpeechGate.prewarm(appContext) }
                 }
@@ -756,8 +737,6 @@ object DictateController {
                 registerScreenOffReceiver(appContext)
             } catch (t: Throwable) {
                 recorder = null
-                batchSpeechVad?.release()
-                batchSpeechVad = null
                 segmentVad?.release()
                 segmentVad = null
                 _livePromptActive.value = false
@@ -785,9 +764,6 @@ object DictateController {
         logLatency(latencyTrace, "stopTapped")
         val activeRecorder = recorder
         recorder = null
-        val liveSpeechConfirmed = batchSpeechVad?.confirmedSpeechSegment == true
-        batchSpeechVad?.release()
-        batchSpeechVad = null
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
         // Capture the recorded length before leaving the Recording state, to credit the usage counter
@@ -814,10 +790,7 @@ object DictateController {
             return
         }
         if (carry == null) {
-            transcribe(
-                context, audioFile, recordedSeconds,
-                latencyTrace = latencyTrace, liveSpeechConfirmed = liveSpeechConfirmed,
-            )
+            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
             return
         }
         // Continuation: stitch the carried-over segment and the new one into a single audio so the whole
@@ -828,17 +801,11 @@ object DictateController {
         carry.delete()
         if (ok && merged.exists() && merged.length() > 0L) {
             audioFile.delete()
-            transcribe(
-                context, merged, recordedSeconds,
-                latencyTrace = latencyTrace, liveSpeechConfirmed = liveSpeechConfirmed,
-            )
+            transcribe(context, merged, recordedSeconds, latencyTrace = latencyTrace)
         } else {
             // Merge failed (rare): transcribe at least the newly recorded segment.
             merged.delete()
-            transcribe(
-                context, audioFile, recordedSeconds,
-                latencyTrace = latencyTrace, liveSpeechConfirmed = liveSpeechConfirmed,
-            )
+            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
         }
     }
 
@@ -910,7 +877,6 @@ object DictateController {
         source: String = DictateHistorySource.KEYBOARD,
         replayHistoryId: Long? = null,
         latencyTrace: BatchLatencyTrace = BatchLatencyTrace(),
-        liveSpeechConfirmed: Boolean = false,
     ) {
         logLatency(latencyTrace, "transcribeEntered")
         val account = transcriptionAccount()
@@ -979,7 +945,7 @@ object DictateController {
                 // to picked files or resends of already-captured audio (see callers).
                 if (gate && prefs.dictate.skipSilentRecordings.get()) {
                     val gateStartedNanos = SystemClock.elapsedRealtimeNanos()
-                    val hasSpeech = liveSpeechConfirmed || SpeechGate.hasSpeech(appContext, audioFile)
+                    val hasSpeech = SpeechGate.hasSpeech(appContext, audioFile)
                     logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
                     if (!hasSpeech) {
                         outcome = "noSpeech"
@@ -1247,8 +1213,6 @@ object DictateController {
         realtimeContext = null
         val activeRecorder = recorder
         recorder = null
-        batchSpeechVad?.release()
-        batchSpeechVad = null
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
         val recordedSeconds = recordedSecondsOf(_state.value)
@@ -1795,8 +1759,6 @@ object DictateController {
             return
         }
         recorder = null
-        batchSpeechVad?.release()
-        batchSpeechVad = null
         _livePromptActive.value = false
         // Realtime (#128): drop the stream; the WAV is stashed below and recoverable via batch as usual.
         realtimeCancelled = true
