@@ -28,17 +28,23 @@ import java.util.concurrent.TimeUnit
  * unaffected.
  *
  * @param pauseThresholdMs how long a pause must last (after speech) before a cut is fired.
+ * @param stopAfterFirstSegment ends the worker once one complete segment is proven; used by the normal
+ *   batch gate, which only needs a Boolean and otherwise falls back to the full offline gate.
  * @param onPause invoked (on the worker thread) when a qualifying pause is detected; must be cheap and
  *   thread-safe (e.g. it hands off to a coroutine).
  */
 class LiveSpeechSplitter(
     context: Context,
     private val pauseThresholdMs: Int,
+    private val stopAfterFirstSegment: Boolean = false,
     private val onPause: () -> Unit,
 ) {
     private val appContext = context.applicationContext
     private val queue = LinkedBlockingQueue<ShortArray>()
     @Volatile private var running = false
+    /** True once Silero has emitted a complete speech segment for the current input stream. */
+    @Volatile var confirmedSpeechSegment = false
+        private set
     // Require fresh speech since the last cut before firing again, so one long silence yields one cut.
     @Volatile private var hadSpeechSinceCut = false
     private var worker: Thread? = null
@@ -103,7 +109,7 @@ class LiveSpeechSplitter(
         val windowMs = SpeechGate.VAD_WINDOW * 1000 / AudioDecode.TARGET_SAMPLE_RATE
         val silentWindowsToFire = (pauseThresholdMs / windowMs).coerceAtLeast(1)
         try {
-            while (running) {
+            workerLoop@ while (running) {
                 val chunk = try {
                     queue.poll(200, TimeUnit.MILLISECONDS)
                 } catch (_: InterruptedException) {
@@ -122,6 +128,13 @@ class LiveSpeechSplitter(
                     if (filled < SpeechGate.VAD_WINDOW) continue
                     filled = 0
                     runCatching { vad.acceptWaveform(window) }
+                    if (!vad.empty()) {
+                        confirmedSpeechSegment = true
+                        if (stopAfterFirstSegment) {
+                            running = false
+                            break@workerLoop
+                        }
+                    }
                     val speech = runCatching { vad.isSpeechDetected() }.getOrDefault(false)
                     if (speech) {
                         hadSpeechSinceCut = true
