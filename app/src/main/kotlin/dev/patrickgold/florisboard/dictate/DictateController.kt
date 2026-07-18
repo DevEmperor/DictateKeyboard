@@ -1012,7 +1012,15 @@ object DictateController {
                     replayHistoryId = replayHistoryId,
                 )
                 val finalizeStartedNanos = SystemClock.elapsedRealtimeNanos()
-                finalizeAndCommit(appContext, result.text, recordedSeconds, live, alreadyFormatted = chatAudio, capture = capture)
+                finalizeAndCommit(
+                    appContext,
+                    result.text,
+                    recordedSeconds,
+                    live,
+                    alreadyFormatted = chatAudio,
+                    capture = capture,
+                    latencyTrace = latencyTrace,
+                )
                 logLatency(latencyTrace, "finalizeCompleted", finalizeStartedNanos)
                 outcome = "success"
             } catch (c: CancellationException) {
@@ -1066,7 +1074,13 @@ object DictateController {
         alreadyFormatted: Boolean,
         finalizeViaComposing: Boolean = false,
         capture: HistoryCapture? = null,
+        latencyTrace: BatchLatencyTrace? = null,
     ) {
+        var phaseStartedNanos = SystemClock.elapsedRealtimeNanos()
+        fun logFinalizePhase(phase: String) {
+            latencyTrace?.let { logLatency(it, phase, phaseStartedNanos) }
+            phaseStartedNanos = SystemClock.elapsedRealtimeNanos()
+        }
         val finalText = if (live) {
             // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
             // selection) and insert the answer instead of the transcript.
@@ -1081,8 +1095,10 @@ object DictateController {
             val processed = if (alreadyFormatted) rawText else postProcessTranscript(appContext, rawText)
             applyPendingPrompts(appContext, processed)
         }
+        logFinalizePhase("finalizeTextProcessed")
         // Deterministic find-and-replace dictionary (issue #129), applied right before insert.
         val outputText = prefs.dictate.customMappings.get().apply(finalText)
+        logFinalizePhase("finalizeMappingsApplied")
         if (finalizeViaComposing) {
             // Realtime (#128): replace the live-streamed preview with the finished (reworded) result via the
             // minimal diff, then honor auto-enter — instead of committing on top of the preview.
@@ -1109,18 +1125,23 @@ object DictateController {
                 return
             }
         }
+        logFinalizePhase("finalizeOutputCommitted")
         // Re-insert safety net (issue #111) + lifetime stats (issue #142) + history log (issue #140).
         rememberLastDictation(outputText)
+        logFinalizePhase("finalizeLastDictationRemembered")
         if (capture?.isReplay != true) {
             DictateStats.recordDictation(prefs, outputText, recordedSeconds)
             if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
         }
+        logFinalizePhase("finalizeStatsRecorded")
         recordHistory(appContext, outputText, recordedSeconds, capture, reworded = live)
+        logFinalizePhase("finalizeHistoryRecorded")
         discardRetainedAudio()
         _state.value = UiState.Idle
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
             maybePromptForReview()
         }
+        logFinalizePhase("finalizeUiReady")
     }
 
     // --- Real-time streaming (issue #128) -------------------------------------------------------
