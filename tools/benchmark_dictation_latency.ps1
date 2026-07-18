@@ -59,48 +59,12 @@ function Invoke-DictationRun {
     & $Adb shell input tap 1015 1625 | Out-Null
     Start-Sleep -Milliseconds 500
 
-    # injectAudio is a client-streaming RPC. Let its request iterator finish, then stop AudioRecord while
-    # the injector continues waiting for the emulator's real completion status. This avoids making the
-    # microphone lifetime depend on an acknowledgement that some emulator states only send after stop.
-    $runKind = if ($Warmup) { 'warmup' } else { 'measurement' }
-    $sentMarker = Join-Path $env:TEMP "dictate-audio-sent-$PID-$runKind-$Index"
-    Remove-Item -LiteralPath $sentMarker -Force -ErrorAction SilentlyContinue
-    $injectArgs = @(
-        $injector, $AudioFile,
-        '--stubs', $GrpcStubs,
-        '--target', $GrpcTarget,
-        '--packet-ms', '300',
-        '--sent-marker', $sentMarker
-    )
-    $injectProcess = Start-Process -FilePath $InjectorPython -ArgumentList $injectArgs -PassThru -NoNewWindow
-    try {
-        $streamDeadline = (Get-Date).AddSeconds(30)
-        while (-not (Test-Path -LiteralPath $sentMarker)) {
-            if ($injectProcess.HasExited) {
-                $injectProcess.WaitForExit()
-                throw "Audio injection exited before streaming completed (exit code $($injectProcess.ExitCode))"
-            }
-            if ((Get-Date) -gt $streamDeadline) {
-                throw 'Audio injection did not finish streaming within 30 seconds'
-            }
-            Start-Sleep -Milliseconds 100
-        }
-
-        & $Adb shell input tap 1015 1625 | Out-Null
-        if (-not $injectProcess.WaitForExit(10000)) {
-            throw 'Audio injection did not receive an emulator completion status after recording stopped'
-        }
-        if ($injectProcess.ExitCode -ne 0) {
-            throw "Audio injection failed with exit code $($injectProcess.ExitCode)"
-        }
-    } finally {
-        if (-not $injectProcess.HasExited) {
-            Stop-Process -Id $injectProcess.Id -Force
-            $injectProcess.WaitForExit()
-        }
-        Remove-Item -LiteralPath $sentMarker -Force -ErrorAction SilentlyContinue
+    & $InjectorPython $injector $AudioFile --stubs $GrpcStubs --target $GrpcTarget --packet-ms 300
+    if ($LASTEXITCODE -ne 0) {
+        throw "Audio injection failed with exit code $LASTEXITCODE"
     }
 
+    & $Adb shell input tap 1015 1625 | Out-Null
     $deadline = (Get-Date).AddSeconds($TerminalTimeoutSeconds)
     do {
         Start-Sleep -Milliseconds 250
