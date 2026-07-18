@@ -59,12 +59,50 @@ function Invoke-DictationRun {
     & $Adb shell input tap 1015 1625 | Out-Null
     Start-Sleep -Milliseconds 500
 
-    & $InjectorPython $injector $AudioFile --stubs $GrpcStubs --target $GrpcTarget --packet-ms 300
-    if ($LASTEXITCODE -ne 0) {
-        throw "Audio injection failed with exit code $LASTEXITCODE"
+    # injectAudio is a client-streaming RPC. Let its request iterator finish, then stop AudioRecord while
+    # the injector continues waiting for the emulator's real completion status. This avoids making the
+    # microphone lifetime depend on an acknowledgement that some emulator states only send after stop.
+    $runKind = if ($Warmup) { 'warmup' } else { 'measurement' }
+    $markerPrefix = Join-Path $env:TEMP "dictate-audio-$PID-$runKind-$Index"
+    $sentMarker = "$markerPrefix-sent"
+    $completedMarker = "$markerPrefix-completed"
+    Remove-Item -LiteralPath $sentMarker, $completedMarker -Force -ErrorAction SilentlyContinue
+    $injectArgs = @(
+        $injector, $AudioFile,
+        '--stubs', $GrpcStubs,
+        '--target', $GrpcTarget,
+        '--packet-ms', '300',
+        '--sent-marker', $sentMarker,
+        '--completed-marker', $completedMarker
+    )
+    $injectProcess = Start-Process -FilePath $InjectorPython -ArgumentList $injectArgs -PassThru -NoNewWindow
+    try {
+        $streamDeadline = (Get-Date).AddSeconds(30)
+        while (-not (Test-Path -LiteralPath $sentMarker)) {
+            if ($injectProcess.HasExited) {
+                throw 'Audio injection exited before streaming completed'
+            }
+            if ((Get-Date) -gt $streamDeadline) {
+                throw 'Audio injection did not finish streaming within 30 seconds'
+            }
+            Start-Sleep -Milliseconds 100
+        }
+
+        & $Adb shell input tap 1015 1625 | Out-Null
+        if (-not $injectProcess.WaitForExit(10000)) {
+            throw 'Audio injection did not receive an emulator completion status after recording stopped'
+        }
+        if (-not (Test-Path -LiteralPath $completedMarker)) {
+            throw 'Audio injection did not report successful emulator completion'
+        }
+    } finally {
+        if (-not $injectProcess.HasExited) {
+            Stop-Process -Id $injectProcess.Id -Force
+            $injectProcess.WaitForExit()
+        }
+        Remove-Item -LiteralPath $sentMarker, $completedMarker -Force -ErrorAction SilentlyContinue
     }
 
-    & $Adb shell input tap 1015 1625 | Out-Null
     $deadline = (Get-Date).AddSeconds($TerminalTimeoutSeconds)
     do {
         Start-Sleep -Milliseconds 250
