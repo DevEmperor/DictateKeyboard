@@ -83,7 +83,7 @@ function Invoke-DictationRun {
         $logs,
         'connectionAcquiredMs=(\d+) family=([^ ]+) protocol=([^ ]+) reused=([^\r\n]+)'
     )
-    $measurement = [pscustomobject]@{
+    [pscustomobject]@{
         run          = $Index
         warmup       = $Warmup
         total_ms     = [int](Get-RegexValue $logs 'phase=outputCommitted totalMs=(\d+)')
@@ -99,10 +99,6 @@ function Invoke-DictationRun {
         protocol     = if ($connection.Success) { $connection.Groups[3].Value } else { $null }
         reused       = if ($connection.Success) { $connection.Groups[4].Value.Trim() -eq 'true' } else { $null }
     }
-    # InputConnection commits precede Compose semantics-tree updates. Let the focused field settle before
-    # the next run selects and clears it; this delay is outside the already-captured stop-to-commit metric.
-    Start-Sleep -Milliseconds 500
-    $measurement
 }
 
 if (-not (Test-InputMethodShown)) {
