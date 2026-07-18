@@ -16,6 +16,7 @@ def main() -> None:
     parser.add_argument("--stubs", type=Path, required=True)
     parser.add_argument("--target", default="localhost:8554")
     parser.add_argument("--packet-ms", type=int, default=300)
+    parser.add_argument("--sent-marker", type=Path)
     args = parser.parse_args()
 
     sys.path.insert(0, str(args.stubs))
@@ -49,6 +50,8 @@ def main() -> None:
         silence = b"\x00" * (sample_rate * 2 * 300 // 1000)
         yield pb2.AudioPacket(audio=silence)
         time.sleep(0.3)
+        if args.sent_marker is not None:
+            args.sent_marker.write_text("sent\n", encoding="ascii")
 
     channel = grpc.insecure_channel(args.target)
     stub = pb2_grpc.EmulatorControllerStub(channel)
