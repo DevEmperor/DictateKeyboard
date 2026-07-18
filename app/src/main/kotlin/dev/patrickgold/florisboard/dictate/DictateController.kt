@@ -66,7 +66,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Job
@@ -1097,7 +1096,12 @@ object DictateController {
             // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
             // user can recover it via Reinsert, and surface an error instead of "success".
             if (!committed && outputTarget == OutputTarget.OVERLAY && outputText.isNotEmpty()) {
-                persistSuccessfulDictation(appContext, outputText, recordedSeconds, capture, reworded = live)
+                rememberLastDictation(outputText)
+                if (capture?.isReplay != true) {
+                    DictateStats.recordDictation(prefs, outputText, recordedSeconds)
+                    if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
+                }
+                recordHistory(appContext, outputText, recordedSeconds, capture, reworded = live)
                 discardRetainedAudio()
                 _state.value = UiState.Error(
                     message = appContext.getString(R.string.dictate__error_overlay_insert_failed),
@@ -1106,35 +1110,17 @@ object DictateController {
             }
         }
         // Re-insert safety net (issue #111) + lifetime stats (issue #142) + history log (issue #140).
-        persistSuccessfulDictation(appContext, outputText, recordedSeconds, capture, reworded = live)
+        rememberLastDictation(outputText)
+        if (capture?.isReplay != true) {
+            DictateStats.recordDictation(prefs, outputText, recordedSeconds)
+            if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
+        }
+        recordHistory(appContext, outputText, recordedSeconds, capture, reworded = live)
         discardRetainedAudio()
         _state.value = UiState.Idle
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
             maybePromptForReview()
         }
-    }
-
-    /**
-     * Persists independent post-commit metadata concurrently while still awaiting every write before the
-     * capture WAV can be deleted. This preserves the re-insert, stats, milestone and history guarantees,
-     * but avoids serializing JetPref writes behind Room/history I/O on the user-visible completion path.
-     */
-    private suspend fun persistSuccessfulDictation(
-        appContext: Context,
-        text: String,
-        recordedSeconds: Long,
-        capture: HistoryCapture?,
-        reworded: Boolean,
-    ) = coroutineScope {
-        val preferenceWrites = launch {
-            rememberLastDictation(text)
-            if (capture?.isReplay != true) {
-                DictateStats.recordDictation(prefs, text, recordedSeconds)
-                if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
-            }
-        }
-        recordHistory(appContext, text, recordedSeconds, capture, reworded)
-        preferenceWrites.join()
     }
 
     // --- Real-time streaming (issue #128) -------------------------------------------------------
