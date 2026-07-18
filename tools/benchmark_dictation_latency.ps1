@@ -18,6 +18,8 @@ $ErrorActionPreference = 'Stop'
 $env:PYTHONDONTWRITEBYTECODE = '1'
 
 $injector = Join-Path $PSScriptRoot 'inject_emulator_audio.py'
+$deviceXml = "/sdcard/dictate-latency-benchmark-$PID.xml"
+$hostXml = Join-Path $env:TEMP "dictate-latency-benchmark-$PID.xml"
 foreach ($required in @($Adb, $InjectorPython, $AudioFile, $GrpcStubs, $injector)) {
     if (-not (Test-Path -LiteralPath $required)) {
         throw "Required benchmark input does not exist: $required"
@@ -44,6 +46,30 @@ function Test-InputMethodShown {
     $state -match 'mInputShown=true'
 }
 
+function Get-FocusedFieldText {
+    & $Adb shell uiautomator dump $deviceXml | Out-Null
+    & $Adb pull $deviceXml $hostXml | Out-Null
+    $hierarchy = [xml](Get-Content -LiteralPath $hostXml -Raw)
+    $focusedTextFields = @($hierarchy.SelectNodes('//node[@focused="true" and contains(@class,"EditText")]'))
+    if ($focusedTextFields.Count -ne 1) {
+        throw "Expected exactly one focused EditText, found $($focusedTextFields.Count)"
+    }
+    [string]$focusedTextFields[0].text
+}
+
+function Clear-FocusedField {
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        & $Adb shell input tap 500 1350 | Out-Null
+        & $Adb shell input keycombination 113 29 | Out-Null # Ctrl+A
+        & $Adb shell input keyevent 67 | Out-Null           # Delete
+        Start-Sleep -Milliseconds 250
+        if ((Get-FocusedFieldText).Length -eq 0) {
+            return
+        }
+    }
+    throw 'The focused benchmark field did not become empty'
+}
+
 function Invoke-DictationRun {
     param(
         [Parameter(Mandatory)] [int]$Index,
@@ -52,9 +78,7 @@ function Invoke-DictationRun {
 
     # The settings screen's "Try out your setup" field and the Dictate mic button are stable at these
     # coordinates on the repository's Pixel 6 / API 34 benchmark AVD (1080 x 2400).
-    & $Adb shell input tap 500 1350 | Out-Null
-    & $Adb shell input keycombination 113 29 | Out-Null # Ctrl+A
-    & $Adb shell input keyevent 67 | Out-Null           # Delete
+    Clear-FocusedField
     & $Adb logcat -c
     & $Adb shell input tap 1015 1625 | Out-Null
     Start-Sleep -Milliseconds 500
@@ -160,13 +184,7 @@ for ($i = 1; $i -le $Runs; $i++) {
 
 # Validate the actual text committed into the Compose field while the IME remains visible. Closing and
 # immediately reopening the keyboard is unrelated to transcription and destabilizes the API 34 renderer.
-$deviceXml = '/sdcard/dictate-latency-benchmark.xml'
-$hostXml = Join-Path $env:TEMP 'dictate-latency-benchmark.xml'
-& $Adb shell uiautomator dump $deviceXml | Out-Null
-& $Adb pull $deviceXml $hostXml | Out-Null
-$hierarchy = [xml](Get-Content -LiteralPath $hostXml -Raw)
-$focusedTextFields = @($hierarchy.SelectNodes('//node[@focused="true" and contains(@class,"EditText")]'))
-if ($focusedTextFields.Count -ne 1 -or [string]$focusedTextFields[0].text -cne $expectedTranscript) {
+if ((Get-FocusedFieldText) -cne $expectedTranscript) {
     throw 'The committed transcript did not exactly match the expected German sentence'
 }
 
