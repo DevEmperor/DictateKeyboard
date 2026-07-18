@@ -25,6 +25,8 @@ foreach ($required in @($Adb, $InjectorPython, $AudioFile, $GrpcStubs, $injector
 }
 
 $expectedTranscript = 'Dies ist ein simulierter Mikrofontest für DECT. OpenRouter soll diesen deutschen Satz schnell und zuverlässig transkribieren.'
+$script:testFieldTapX = 300
+$script:testFieldTapY = 2260
 
 function Get-RegexValue {
     param(
@@ -44,6 +46,117 @@ function Test-InputMethodShown {
     $state -match 'mInputShown=true'
 }
 
+function Get-TestEditor {
+    $deviceXml = '/sdcard/dictate-latency-editor.xml'
+    $hostXml = Join-Path $env:TEMP 'dictate-latency-editor.xml'
+    & $Adb shell uiautomator dump $deviceXml | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        return $null
+    }
+    & $Adb pull $deviceXml $hostXml | Out-Null
+    [xml]$hierarchy = Get-Content -LiteralPath $hostXml -Raw
+    $editors = @($hierarchy.SelectNodes('//node[@class="android.widget.EditText"]'))
+    if ($editors.Count -ne 1) {
+        return $null
+    }
+    return $editors[0]
+}
+
+function Set-TestFieldTapFromEditor {
+    param([Parameter(Mandatory)] $Editor)
+
+    $bounds = [regex]::Match([string]$Editor.bounds, '^\[(\d+),(\d+)\]\[(\d+),(\d+)\]$')
+    if (-not $bounds.Success) {
+        throw "Unexpected test field bounds: $($Editor.bounds)"
+    }
+    $script:testFieldTapX = [math]::Floor(([int]$bounds.Groups[1].Value + [int]$bounds.Groups[3].Value) / 2)
+    $script:testFieldTapY = [math]::Floor(([int]$bounds.Groups[2].Value + [int]$bounds.Groups[4].Value) / 2)
+}
+
+function Ensure-TestScreen {
+    if (Test-InputMethodShown) {
+        & $Adb shell input keyevent 4 | Out-Null
+        Start-Sleep -Milliseconds 500
+    }
+    & $Adb shell am start -n 'net.devemperor.dictate.debug/dev.patrickgold.florisboard.SettingsLauncherAlias' | Out-Null
+    Start-Sleep -Milliseconds 700
+
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        $editor = Get-TestEditor
+        if ($null -ne $editor) {
+            Set-TestFieldTapFromEditor $editor
+            return
+        }
+        & $Adb shell input keyevent 4 | Out-Null
+        Start-Sleep -Milliseconds 500
+    }
+    throw 'The benchmark could not navigate to the Dictate test screen'
+}
+
+function Test-AudioRecorderActive {
+    $dump = (& $Adb shell dumpsys media.audio_flinger) -join "`n"
+    $inputThreads = [regex]::Matches(
+        $dump,
+        '(?ms)^-? ?Input thread .*?(?=^-? ?Input thread |^Output thread |^Reroute submix|\z)'
+    )
+    foreach ($thread in $inputThreads) {
+        if ($thread.Value -match 'Standby: no' -and
+            $thread.Value -match '\d+ Tracks of which [1-9]\d* are active') {
+            return $true
+        }
+    }
+    return $false
+}
+
+function Wait-AudioRecorderActive {
+    $deadline = (Get-Date).AddSeconds(10)
+    while (-not (Test-AudioRecorderActive) -and (Get-Date) -lt $deadline) {
+        Start-Sleep -Milliseconds 150
+    }
+    if (-not (Test-AudioRecorderActive)) {
+        throw 'Dictate did not activate an Android AudioRecord client before audio injection'
+    }
+}
+
+function Show-DictateKeyboard {
+    if (-not (Test-InputMethodShown)) {
+        & $Adb shell input tap $script:testFieldTapX $script:testFieldTapY | Out-Null
+    }
+    $deadline = (Get-Date).AddSeconds(7)
+    while (-not (Test-InputMethodShown) -and (Get-Date) -lt $deadline) {
+        Start-Sleep -Milliseconds 150
+    }
+    if (-not (Test-InputMethodShown)) {
+        throw 'Dictate Keyboard is not visible on the focused test field'
+    }
+}
+
+function Reset-TestField {
+    Ensure-TestScreen
+    for ($attempt = 1; $attempt -le 3; $attempt++) {
+        Show-DictateKeyboard
+        & $Adb shell input keycombination 113 29 | Out-Null # Ctrl+A
+        Start-Sleep -Milliseconds 150
+        & $Adb shell input keyevent 67 | Out-Null           # Delete
+        Start-Sleep -Milliseconds 300
+
+        # UIAutomator cannot reliably inspect the Compose editor while the IME owns the lower window.
+        # Hide it, verify the editor is actually empty, then restore the same IME before timing starts.
+        & $Adb shell input keyevent 4 | Out-Null
+        Start-Sleep -Milliseconds 500
+        $editor = Get-TestEditor
+        if ($null -ne $editor) {
+            Set-TestFieldTapFromEditor $editor
+        }
+        if ($null -ne $editor -and [string]$editor.text -eq '') {
+            Show-DictateKeyboard
+            Start-Sleep -Milliseconds 300
+            return
+        }
+    }
+    throw 'The benchmark could not reset the Compose test field to an empty value'
+}
+
 function Invoke-DictationRun {
     param(
         [Parameter(Mandatory)] [int]$Index,
@@ -52,12 +165,11 @@ function Invoke-DictationRun {
 
     # The settings screen's "Try out your setup" field and the Dictate mic button are stable at these
     # coordinates on the repository's Pixel 6 / API 34 benchmark AVD (1080 x 2400).
-    & $Adb shell input tap 500 1350 | Out-Null
-    & $Adb shell input keycombination 113 29 | Out-Null # Ctrl+A
-    & $Adb shell input keyevent 67 | Out-Null           # Delete
+    Reset-TestField
     & $Adb logcat -c
     & $Adb shell input tap 1015 1625 | Out-Null
-    Start-Sleep -Milliseconds 500
+    Wait-AudioRecorderActive
+    Start-Sleep -Milliseconds 200
 
     & $InjectorPython $injector $AudioFile --stubs $GrpcStubs --target $GrpcTarget --packet-ms 300
     if ($LASTEXITCODE -ne 0) {
@@ -100,14 +212,6 @@ function Invoke-DictationRun {
     }
 }
 
-if (-not (Test-InputMethodShown)) {
-    & $Adb shell input tap 300 2260 | Out-Null
-    Start-Sleep -Milliseconds 700
-}
-if (-not (Test-InputMethodShown)) {
-    throw 'Dictate Keyboard is not visible on the focused test field'
-}
-
 for ($i = 1; $i -le $WarmupRuns; $i++) {
     Invoke-DictationRun -Index $i -Warmup $true | ConvertTo-Json -Compress
 }
@@ -122,16 +226,12 @@ for ($i = 1; $i -le $Runs; $i++) {
 # Validate the actual text committed into the Compose field, not merely the provider's HTTP response.
 & $Adb shell input keyevent 4 | Out-Null
 Start-Sleep -Milliseconds 700
-$deviceXml = '/sdcard/dictate-latency-benchmark.xml'
-$hostXml = Join-Path $env:TEMP 'dictate-latency-benchmark.xml'
-& $Adb shell uiautomator dump $deviceXml | Out-Null
-& $Adb pull $deviceXml $hostXml | Out-Null
-$hierarchy = Get-Content -LiteralPath $hostXml -Raw
-if (-not $hierarchy.Contains($expectedTranscript)) {
+$editor = Get-TestEditor
+if ($null -eq $editor -or [string]$editor.text -ne $expectedTranscript) {
     throw 'The committed transcript did not exactly match the expected German sentence'
 }
-& $Adb shell input tap 300 2260 | Out-Null
-Start-Sleep -Milliseconds 700
+Set-TestFieldTapFromEditor $editor
+Show-DictateKeyboard
 
 $sorted = @($measurements.total_ms | Sort-Object)
 $middle = [math]::Floor($sorted.Count / 2)
