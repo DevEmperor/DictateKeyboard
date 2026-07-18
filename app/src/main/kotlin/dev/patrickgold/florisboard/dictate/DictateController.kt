@@ -1012,7 +1012,15 @@ object DictateController {
                     replayHistoryId = replayHistoryId,
                 )
                 val finalizeStartedNanos = SystemClock.elapsedRealtimeNanos()
-                finalizeAndCommit(appContext, result.text, recordedSeconds, live, alreadyFormatted = chatAudio, capture = capture)
+                finalizeAndCommit(
+                    appContext,
+                    result.text,
+                    recordedSeconds,
+                    live,
+                    alreadyFormatted = chatAudio,
+                    capture = capture,
+                    latencyTrace = latencyTrace,
+                )
                 logLatency(latencyTrace, "finalizeCompleted", finalizeStartedNanos)
                 outcome = "success"
             } catch (c: CancellationException) {
@@ -1066,6 +1074,7 @@ object DictateController {
         alreadyFormatted: Boolean,
         finalizeViaComposing: Boolean = false,
         capture: HistoryCapture? = null,
+        latencyTrace: BatchLatencyTrace? = null,
     ) {
         val finalText = if (live) {
             // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
@@ -1092,6 +1101,7 @@ object DictateController {
             if (prefs.dictate.autoEnter.get() && outputText.isNotEmpty()) outSink.performEnter()
         } else {
             val committed = commitOutput(appContext, outputText)
+            if (committed) latencyTrace?.let { logLatency(it, "outputCommitted") }
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
             // user can recover it via Reinsert, and surface an error instead of "success".

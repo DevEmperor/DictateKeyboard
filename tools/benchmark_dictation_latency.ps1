@@ -86,7 +86,8 @@ function Invoke-DictationRun {
     [pscustomobject]@{
         run          = $Index
         warmup       = $Warmup
-        total_ms     = [int](Get-RegexValue $logs 'phase=terminal:success totalMs=(\d+)')
+        total_ms     = [int](Get-RegexValue $logs 'phase=outputCommitted totalMs=(\d+)')
+        terminal_ms  = [int](Get-RegexValue $logs 'phase=terminal:success totalMs=(\d+)')
         recorder_ms  = [int](Get-RegexValue $logs 'phase=recorderStopped phaseMs=(\d+)')
         gate_ms      = [int](Get-RegexValue $logs 'phase=speechGateCompleted phaseMs=(\d+)')
         provider_ms  = [int](Get-RegexValue $logs 'phase=providerCompleted phaseMs=(\d+)')
