@@ -1,0 +1,31 @@
+name: Sync main into PR 191
+
+on:
+  push:
+    branches:
+      - codex/smart-turn-v3
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: "!contains(github.event.head_commit.message, 'chore: sync main into PR 191')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: codex/smart-turn-v3
+      - name: Merge upstream main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/DevEmperor/DictateKeyboard.git
+          git fetch upstream main
+          git merge -X ours --no-edit upstream/main
+          git rm .github/workflows/sync-main-pr191.yml
+          git commit -m "chore: remove temporary PR 191 sync workflow"
+          git push origin HEAD:codex/smart-turn-v3
