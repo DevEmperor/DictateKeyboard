@@ -1363,6 +1363,8 @@
     <string name="dictate__floating_button_design_pill_summary" comment="Description of the pill floating-button style">Expands while active to show a timer and a live waveform.</string>
     <string name="dictate__floating_button_design_orb" comment="Floating-button style option: glowing orb">Orb</string>
     <string name="dictate__floating_button_design_orb_summary" comment="Description of the orb floating-button style">A solid orb that glows and pulses with your voice while recording.</string>
+    <string name="dictate__floating_button_design_cloud" comment="Floating-button style option: fluid cloud orb">Cloud</string>
+    <string name="dictate__floating_button_design_cloud_summary" comment="Description of the cloud floating-button style">A fluid cloud orb that flows and responds to your voice while recording.</string>
     <string name="dictate__floating_button_size_title" comment="Title of the floating-button size picker">Button size</string>
     <string name="dictate__floating_button_size_small" comment="Floating-button size option">Small</string>
     <string name="dictate__floating_button_size_medium" comment="Floating-button size option">Medium</string>

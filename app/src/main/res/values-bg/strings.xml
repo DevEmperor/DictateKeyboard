@@ -1128,6 +1128,8 @@
     <string name="dictate__floating_button_color_title">Цвят на бутона</string>
     <string name="dictate__floating_button_design_orb">Сфера</string>
     <string name="dictate__floating_button_design_orb_summary">Плътна сфера, която свети и пулсира с гласа ви по време на запис.</string>
+    <string name="dictate__floating_button_design_cloud">Облак</string>
+    <string name="dictate__floating_button_design_cloud_summary">Плавна облачна сфера, която се движи и реагира на гласа ви по време на запис.</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">Когато е активна, се разширява, за да покаже таймер и форма на вълната на живо.</string>
     <string name="dictate__floating_button_design_ring">Пръстен</string>

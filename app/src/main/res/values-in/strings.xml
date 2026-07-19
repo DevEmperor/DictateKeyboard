@@ -1083,6 +1083,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__floating_button_color_title">Warna tombol</string>
     <string name="dictate__floating_button_design_orb">Bola</string>
     <string name="dictate__floating_button_design_orb_summary">Bola padat yang menyala dan berdenyut mengikuti suara Anda saat merekam.</string>
+    <string name="dictate__floating_button_design_cloud">Awan</string>
+    <string name="dictate__floating_button_design_cloud_summary">Bola awan yang mengalir dan merespons suaramu saat merekam.</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Membesar saat aktif untuk menampilkan pengatur waktu dan gelombang langsung.</string>
     <string name="dictate__floating_button_design_ring">Cincin</string>

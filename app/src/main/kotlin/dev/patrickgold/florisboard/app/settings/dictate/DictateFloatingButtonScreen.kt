@@ -182,6 +182,11 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
                         stringRes(R.string.dictate__floating_button_design_orb),
                         stringRes(R.string.dictate__floating_button_design_orb_summary),
                     )
+                    entry(
+                        DictateFloatingButtonDesign.CLOUD,
+                        stringRes(R.string.dictate__floating_button_design_cloud),
+                        stringRes(R.string.dictate__floating_button_design_cloud_summary),
+                    )
                 },
             )
 

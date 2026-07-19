@@ -1123,6 +1123,8 @@
     <string name="dictate__floating_button_color_title">按钮颜色</string>
     <string name="dictate__floating_button_design_orb">光球</string>
     <string name="dictate__floating_button_design_orb_summary">一个实心光球，录音时随你的声音发光并跳动。</string>
+    <string name="dictate__floating_button_design_cloud">云朵</string>
+    <string name="dictate__floating_button_design_cloud_summary">录音时如云般流动并对你的声音作出反应的球体。</string>
     <string name="dictate__floating_button_design_pill">胶囊</string>
     <string name="dictate__floating_button_design_pill_summary">激活时展开，显示计时器和实时波形。</string>
     <string name="dictate__floating_button_design_ring">圆环</string>

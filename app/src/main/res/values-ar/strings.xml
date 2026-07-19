@@ -986,6 +986,8 @@
     <string name="dictate__floating_button_color_title">لون الزر</string>
     <string name="dictate__floating_button_design_orb">كرة</string>
     <string name="dictate__floating_button_design_orb_summary">كرة مصمتة تتوهج وتنبض مع صوتك أثناء التسجيل.</string>
+    <string name="dictate__floating_button_design_cloud">سحابة</string>
+    <string name="dictate__floating_button_design_cloud_summary">كرة سحابية انسيابية تتدفق وتتفاعل مع صوتك أثناء التسجيل.</string>
     <string name="dictate__floating_button_design_pill">كبسولة</string>
     <string name="dictate__floating_button_design_pill_summary">تتوسّع عند النشاط لإظهار مؤقّت وموجة صوتية حية.</string>
     <string name="dictate__floating_button_design_ring">حلقة</string>

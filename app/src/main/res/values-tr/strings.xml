@@ -1106,6 +1106,8 @@
     <string name="dictate__floating_button_color_title">Düğme rengi</string>
     <string name="dictate__floating_button_design_orb">Küre</string>
     <string name="dictate__floating_button_design_orb_summary">Kayıt sırasında sesinizle parlayıp titreşen dolu bir küre.</string>
+    <string name="dictate__floating_button_design_cloud">Bulut</string>
+    <string name="dictate__floating_button_design_cloud_summary">Kayıt sırasında akan ve sesine tepki veren akışkan bir bulut küresi.</string>
     <string name="dictate__floating_button_design_pill">Hap</string>
     <string name="dictate__floating_button_design_pill_summary">Etkinken genişleyerek bir sayaç ve canlı dalga biçimi gösterir.</string>
     <string name="dictate__floating_button_design_ring">Halka</string>

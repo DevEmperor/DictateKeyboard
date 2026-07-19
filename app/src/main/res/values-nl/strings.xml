@@ -1027,6 +1027,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_color_title">Knopkleur</string>
     <string name="dictate__floating_button_design_orb">Bol</string>
     <string name="dictate__floating_button_design_orb_summary">Een massieve bol die gloeit en pulseert met je stem tijdens het opnemen.</string>
+    <string name="dictate__floating_button_design_cloud">Wolk</string>
+    <string name="dictate__floating_button_design_cloud_summary">Een vloeiende wolkbol die beweegt en op je stem reageert tijdens het opnemen.</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Klapt uit wanneer actief om een timer en een live golfvorm te tonen.</string>
     <string name="dictate__floating_button_design_ring">Ring</string>

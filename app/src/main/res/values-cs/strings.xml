@@ -1142,6 +1142,8 @@
     <string name="dictate__floating_button_color_title">Barva tlačítka</string>
     <string name="dictate__floating_button_design_orb">Koule</string>
     <string name="dictate__floating_button_design_orb_summary">Plná koule, která při nahrávání září a pulzuje s vaším hlasem.</string>
+    <string name="dictate__floating_button_design_cloud">Oblak</string>
+    <string name="dictate__floating_button_design_cloud_summary">Plynulá oblaková koule, která proudí a reaguje na tvůj hlas při nahrávání.</string>
     <string name="dictate__floating_button_design_pill">Pilulka</string>
     <string name="dictate__floating_button_design_pill_summary">Při aktivitě se rozšíří a zobrazí časovač a živý průběh zvuku.</string>
     <string name="dictate__floating_button_design_ring">Prstenec</string>

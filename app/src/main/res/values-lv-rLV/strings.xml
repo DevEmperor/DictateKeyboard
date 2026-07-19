@@ -1071,6 +1071,8 @@
     <string name="dictate__floating_button_color_title">Pogas krāsa</string>
     <string name="dictate__floating_button_design_orb">Lode</string>
     <string name="dictate__floating_button_design_orb_summary">Pildīta lode, kas ieraksta laikā mirdz un pulsē līdzi jūsu balsij.</string>
+    <string name="dictate__floating_button_design_cloud">Mākonis</string>
+    <string name="dictate__floating_button_design_cloud_summary">Plūstoša mākoņa lode, kas plūst un reaģē uz tavu balsi ierakstīšanas laikā.</string>
     <string name="dictate__floating_button_design_pill">Kapsula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktīvā stāvoklī izvēršas, rādot taimeri un tiešraides viļņu formu.</string>
     <string name="dictate__floating_button_design_ring">Gredzens</string>

@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
+import dev.patrickgold.florisboard.dictate.audio.AudioLevelSmoother
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
 import dev.patrickgold.florisboard.dictate.audio.LiveSpeechSplitter
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
@@ -265,6 +266,15 @@ object DictateController {
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
 
+    private val _audioLevel = MutableStateFlow(0f)
+    /**
+     * Shared, noise-gated microphone level for lightweight recording visuals. Sampling once here keeps
+     * the Smartbar and floating overlay from competing for [RecordingController.maxAmplitude]'s
+     * read-and-reset peak. Values are smoothed and normalized to 0..1 at 20 Hz.
+     */
+    val audioLevel: StateFlow<Float> = _audioLevel.asStateFlow()
+    private var audioLevelJob: Job? = null
+
     // While a recording is active we listen for the screen turning off (device locked / display timeout):
     // that is the reliable "the user has left" signal that finalizes and keeps the recording and releases
     // the mic, instead of depending on IME teardown callbacks that are not always delivered (issue #147).
@@ -272,9 +282,6 @@ object DictateController {
     // (alongside the recorder) with the context used to register it, so any stop path can unregister.
     private var screenOffReceiver: BroadcastReceiver? = null
     private var screenOffContext: Context? = null
-
-    /** Peak mic amplitude (0..32767) since the previous call, or 0 when idle. Drives the overlay waveform. */
-    fun currentAmplitude(): Int = recorder?.maxAmplitude() ?: 0
 
     /** The in-flight transcription coroutine, cancellable via the stop button (see [cancelTranscription]). */
     private var transcribeJob: Job? = null
@@ -378,6 +385,9 @@ object DictateController {
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
+
+    /** 20 Hz is responsive for a voice indicator while avoiding a display-rate UI loop. */
+    private const val AUDIO_LEVEL_SAMPLE_MS = 50L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
@@ -702,6 +712,7 @@ object DictateController {
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
+                startAudioLevelSampling()
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
                 _livePromptActive.value = livePromptArmed
                 if (segmented) initSegmented(appContext)
@@ -717,6 +728,24 @@ object DictateController {
                     appContext.getString(R.string.dictate__error_recording_failed, t.message ?: ""),
                 )
             }
+        }
+    }
+
+    /** Samples the recorder once for all UI consumers; the job ends itself with the recording state. */
+    private fun startAudioLevelSampling() {
+        audioLevelJob?.cancel()
+        val smoother = AudioLevelSmoother()
+        audioLevelJob = scope.launch {
+            while (_state.value is UiState.Recording) {
+                val recording = _state.value as UiState.Recording
+                _audioLevel.value = if (recording.paused) {
+                    smoother.reset()
+                } else {
+                    smoother.update(recorder?.maxAmplitude() ?: 0)
+                }
+                delay(AUDIO_LEVEL_SAMPLE_MS)
+            }
+            _audioLevel.value = smoother.reset()
         }
     }
 
