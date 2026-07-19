@@ -1131,6 +1131,8 @@
     <string name="dictate__floating_button_color_title">Цвет кнопки</string>
     <string name="dictate__floating_button_design_orb">Сфера</string>
     <string name="dictate__floating_button_design_orb_summary">Сплошная сфера, которая светится и пульсирует в такт вашему голосу при записи.</string>
+    <string name="dictate__floating_button_design_cloud">Облако</string>
+    <string name="dictate__floating_button_design_cloud_summary">Плавная облачная сфера, которая струится и реагирует на ваш голос во время записи.</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">При активности расширяется, показывая таймер и живую форму волны.</string>
     <string name="dictate__floating_button_design_ring">Кольцо</string>
@@ -1452,6 +1454,9 @@
     <string name="dictate__local_fallback_summary">Без сети транскрибируйте на устройстве скачанной моделью после сбоя провайдера</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Сохранённые промпты переформулирования</string>
     <string name="dictate__floating_button_undo_failed">Не удалось отменить — возможно, текст изменился.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Копировать каждую диктовку в буфер обмена</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Каждая диктовка также копируется в буфер обмена, чтобы вы могли вставить её вручную, если вставка не удалась. На некоторых телефонах может показываться уведомление буфера обмена.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Диктовки только вставляются, но не копируются в буфер обмена.</string>
     <string name="dictate__floating_button_undo_summary_off">Кнопка отмены не показывается.</string>
     <string name="dictate__floating_button_undo_summary_on">После диктовки рядом с кнопкой появляется кнопка отмены, позволяющая удалить вставленный текст одним нажатием.</string>
     <string name="dictate__floating_button_undo_title">Кнопка отмены</string>
@@ -1739,4 +1744,5 @@
     <string name="dictate__legacy_prompt_rows_title">Строки подсказок</string>
     <string name="dictate__legacy_prompt_rows_one">Одна строка</string>
     <string name="dictate__legacy_prompt_rows_two">Две строки</string>
+    <string name="about__website__title">Веб-сайт</string>
 </resources>

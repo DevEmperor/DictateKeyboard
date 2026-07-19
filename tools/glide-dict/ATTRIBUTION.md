@@ -16,7 +16,7 @@ themselves (they are consulted only at build time to decide casing and to filter
 
   | Licence | Languages |
   |---|---|
-  | MIT / BSD-3-Clause / Apache-2.0 | ka, tr, lt, ru, fa |
+  | MIT / BSD-3-Clause / Apache-2.0 | ka, tr, lt, ru, fa, nl |
   | MPL-2.0 / LGPL-2.1 / LGPL-3.0 | fr, sv, et, lv |
   | Multi-licensed incl. LGPL/MPL (permissive option taken) | bg, ca, da, el, es, hr, hu, hy, pl, pt, ro, sk, sl, sr |
   | GPL-2.0 / GPL-3.0 (used under the "word list = factual data" rationale, with attribution) | cs, eo, nb, nn, vi, it, uk |

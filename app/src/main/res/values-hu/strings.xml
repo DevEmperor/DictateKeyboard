@@ -1126,6 +1126,8 @@
     <string name="dictate__floating_button_color_title">Gomb színe</string>
     <string name="dictate__floating_button_design_orb">Gömb</string>
     <string name="dictate__floating_button_design_orb_summary">Tömör gömb, amely felvétel közben világít és pulzál a hangjával.</string>
+    <string name="dictate__floating_button_design_cloud">Felhő</string>
+    <string name="dictate__floating_button_design_cloud_summary">Egy folyékony felhőgömb, amely áramlik és reagál a hangodra felvétel közben.</string>
     <string name="dictate__floating_button_design_pill">Pirula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktív állapotban kibővül, és időzítőt meg élő hullámformát mutat.</string>
     <string name="dictate__floating_button_design_ring">Gyűrű</string>
@@ -1447,6 +1449,9 @@
     <string name="dictate__local_fallback_summary">Offline állapotban a letöltött modellel írd át helyben, miután a szolgáltató hibázott</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Mentett átfogalmazási utasítások</string>
     <string name="dictate__floating_button_undo_failed">A visszavonás nem sikerült — a szöveg időközben megváltozhatott.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Minden diktálás másolása a vágólapra</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Minden diktálás a vágólapra is másolódik, így kézzel beillesztheted, ha a beszúrás sikertelen. Egyes telefonokon vágólap-értesítést jeleníthet meg.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">A diktálások csak beszúrásra kerülnek, a vágólapra nem másolódnak.</string>
     <string name="dictate__floating_button_undo_summary_off">Nem jelenik meg visszavonás gomb.</string>
     <string name="dictate__floating_button_undo_summary_on">Diktálás után a gomb mellett megjelenik egy visszavonás gomb, amellyel egyetlen koppintással eltávolítható a beillesztett szöveg.</string>
     <string name="dictate__floating_button_undo_title">Visszavonás gomb</string>
@@ -1734,4 +1739,5 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt sorok</string>
     <string name="dictate__legacy_prompt_rows_one">Egy sor</string>
     <string name="dictate__legacy_prompt_rows_two">Két sor</string>
+    <string name="about__website__title">Weboldal</string>
 </resources>

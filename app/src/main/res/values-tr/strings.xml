@@ -1106,6 +1106,8 @@
     <string name="dictate__floating_button_color_title">Düğme rengi</string>
     <string name="dictate__floating_button_design_orb">Küre</string>
     <string name="dictate__floating_button_design_orb_summary">Kayıt sırasında sesinizle parlayıp titreşen dolu bir küre.</string>
+    <string name="dictate__floating_button_design_cloud">Bulut</string>
+    <string name="dictate__floating_button_design_cloud_summary">Kayıt sırasında akan ve sesine tepki veren akışkan bir bulut küresi.</string>
     <string name="dictate__floating_button_design_pill">Hap</string>
     <string name="dictate__floating_button_design_pill_summary">Etkinken genişleyerek bir sayaç ve canlı dalga biçimi gösterir.</string>
     <string name="dictate__floating_button_design_ring">Halka</string>
@@ -1427,6 +1429,9 @@
     <string name="dictate__local_fallback_summary">Çevrimdışıyken, sağlayıcı başarısız olduktan sonra indirilen modelle cihazda yazıya dök</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Kaydedilen yeniden ifade istemleri</string>
     <string name="dictate__floating_button_undo_failed">Geri alınamadı — metin değişmiş olabilir.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Her dikteyi panoya kopyala</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Her dikte panoya da kopyalanır; böylece ekleme başarısız olursa metni elle yapıştırabilirsin. Bazı telefonlarda pano bildirimi gösterebilir.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Dikteler yalnızca eklenir, panoya kopyalanmaz.</string>
     <string name="dictate__floating_button_undo_summary_off">Geri alma düğmesi gösterilmiyor.</string>
     <string name="dictate__floating_button_undo_summary_on">Bir dikteden sonra, eklenen metni tek dokunuşla kaldırmak için düğmenin yanında bir geri alma düğmesi belirir.</string>
     <string name="dictate__floating_button_undo_title">Geri alma düğmesi</string>
@@ -1714,4 +1719,5 @@
     <string name="dictate__legacy_prompt_rows_title">İstem satırları</string>
     <string name="dictate__legacy_prompt_rows_one">Tek satır</string>
     <string name="dictate__legacy_prompt_rows_two">İki satır</string>
+    <string name="about__website__title">Web sitesi</string>
 </resources>

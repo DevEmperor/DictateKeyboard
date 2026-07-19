@@ -1027,6 +1027,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_color_title">Knopkleur</string>
     <string name="dictate__floating_button_design_orb">Bol</string>
     <string name="dictate__floating_button_design_orb_summary">Een massieve bol die gloeit en pulseert met je stem tijdens het opnemen.</string>
+    <string name="dictate__floating_button_design_cloud">Wolk</string>
+    <string name="dictate__floating_button_design_cloud_summary">Een vloeiende wolkbol die beweegt en op je stem reageert tijdens het opnemen.</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Klapt uit wanneer actief om een timer en een live golfvorm te tonen.</string>
     <string name="dictate__floating_button_design_ring">Ring</string>
@@ -1348,6 +1350,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__local_fallback_summary">Offline transcriberen op het apparaat met het gedownloade model nadat de provider faalt</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Opgeslagen herformuleerprompts</string>
     <string name="dictate__floating_button_undo_failed">Ongedaan maken mislukt — de tekst is mogelijk gewijzigd.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Elk dictaat naar klembord kopiëren</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Elk dictaat wordt ook naar het klembord gekopieerd, zodat je het handmatig kunt plakken als invoegen mislukt. Kan op sommige telefoons een klembordmelding tonen.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Dictaten worden alleen ingevoegd, niet naar het klembord gekopieerd.</string>
     <string name="dictate__floating_button_undo_summary_off">Geen knop voor ongedaan maken weergegeven.</string>
     <string name="dictate__floating_button_undo_summary_on">Na een dictaat verschijnt er een knop voor ongedaan maken naast de knop om de ingevoegde tekst met één tik te verwijderen.</string>
     <string name="dictate__floating_button_undo_title">Knop voor ongedaan maken</string>
@@ -1635,4 +1640,5 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__legacy_prompt_rows_title">Promptrijen</string>
     <string name="dictate__legacy_prompt_rows_one">Eén rij</string>
     <string name="dictate__legacy_prompt_rows_two">Twee rijen</string>
+    <string name="about__website__title">Website</string>
 </resources>

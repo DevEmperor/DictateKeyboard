@@ -1123,6 +1123,8 @@
     <string name="dictate__floating_button_color_title">按钮颜色</string>
     <string name="dictate__floating_button_design_orb">光球</string>
     <string name="dictate__floating_button_design_orb_summary">一个实心光球，录音时随你的声音发光并跳动。</string>
+    <string name="dictate__floating_button_design_cloud">云朵</string>
+    <string name="dictate__floating_button_design_cloud_summary">录音时如云般流动并对你的声音作出反应的球体。</string>
     <string name="dictate__floating_button_design_pill">胶囊</string>
     <string name="dictate__floating_button_design_pill_summary">激活时展开，显示计时器和实时波形。</string>
     <string name="dictate__floating_button_design_ring">圆环</string>
@@ -1444,6 +1446,9 @@
     <string name="dictate__local_fallback_summary">离线时，提供商失败后用已下载的模型在本地转写</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">已保存的改写提示词</string>
     <string name="dictate__floating_button_undo_failed">无法撤销——文本可能已更改。</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">将每次听写复制到剪贴板</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">每次听写也会复制到剪贴板，这样即使插入失败也能手动粘贴。在某些手机上可能会显示剪贴板提示。</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">听写仅插入，不复制到剪贴板。</string>
     <string name="dictate__floating_button_undo_summary_off">不显示撤销按钮。</string>
     <string name="dictate__floating_button_undo_summary_on">听写完成后，按钮旁会出现撤销按钮，轻点一下即可删除已插入的文本。</string>
     <string name="dictate__floating_button_undo_title">撤销按钮</string>
@@ -1730,4 +1735,5 @@
     <string name="dictate__legacy_prompt_rows_title">提示行</string>
     <string name="dictate__legacy_prompt_rows_one">一行</string>
     <string name="dictate__legacy_prompt_rows_two">两行</string>
+    <string name="about__website__title">网站</string>
 </resources>

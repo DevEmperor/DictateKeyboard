@@ -18,6 +18,13 @@
         "modifier": "org.florisboard.layouts:arabic"
       },
       {
+        "id": "arabic2",
+        "label": "Arabic 2",
+        "authors": [ "DevEmperor" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:arabic"
+      },
+      {
         "id": "armenian_alt_phonetic",
         "label": "Armenian Alt Phonetic",
         "authors": [ "MikayelB" ],

@@ -64,6 +64,7 @@ object GlideDictionaryCatalog {
         GlideDict("lt", "Lithuanian · Lietuvių", "$REL/lt.json", 1254284, "c8c301a321b84e985ad27865248b78b56d76da433a225202e0a8f62d8af2f4d3"),
         GlideDict("lv", "Latvian · Latviešu", "$REL/lv.json", 1209056, "cdde6ba876ee378d67d0efe3edb45663e340d1ec855a8ebb2d6eacfafc6b18e0"),
         GlideDict("nb", "Norwegian Bokmål", "$REL/nb.json", 1078332, "75d658e8322966af0274c1926e1592a95a0b180ae728eed6ae1cb98174208d41"),
+        GlideDict("nl", "Dutch · Nederlands", "$REL/nl.json", 1135562, "5b84ea6aeae907c1f11b255064c67f42c4f5cfe7b1e656b8b1e79a67423931ca"),
         GlideDict("nn", "Norwegian Nynorsk", "$REL/nn.json", 625614, "6c598984d37f6ad72508a39d5beec272e62e5782f18f00b1a8ce7009d936baca"),
         GlideDict("pl", "Polish · Polski", "$REL/pl.json", 1401161, "64aa7f4e1ace255c57c3c79a6d282c3511cc4721f7d4b53fc7a9b53916334531"),
         GlideDict("pt", "Portuguese · Português", "$REL/pt.json", 1149100, "42310d6ea7d3f456baa8facda220060892bdbb7c32973a5478e21d05f4e6f991"),

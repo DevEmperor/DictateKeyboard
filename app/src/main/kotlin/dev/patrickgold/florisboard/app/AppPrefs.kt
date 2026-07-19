@@ -435,6 +435,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_undo_enabled",
             default = false,
         )
+        // Safety net (issue #214): unconditionally copy every floating-button dictation to the system
+        // clipboard, so nothing is lost if the accessibility insert is silently swallowed (the known
+        // "green check but no text" failure) — the user can then just paste it manually. Off by default
+        // because it overwrites the clipboard on every dictation (and shows a system clipboard toast on
+        // some OEMs like Samsung).
+        val floatingButtonCopyToClipboard = boolean(
+            key = "dictate__floating_button_copy_to_clipboard",
+            default = false,
+        )
         // Whether the user has opened the floating-button screen at least once (clears the "New" badge).
         val floatingButtonHintSeen = boolean(
             key = "dictate__floating_button_hint_seen",

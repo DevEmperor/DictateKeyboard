@@ -1071,6 +1071,8 @@
     <string name="dictate__floating_button_color_title">Pogas krāsa</string>
     <string name="dictate__floating_button_design_orb">Lode</string>
     <string name="dictate__floating_button_design_orb_summary">Pildīta lode, kas ieraksta laikā mirdz un pulsē līdzi jūsu balsij.</string>
+    <string name="dictate__floating_button_design_cloud">Mākonis</string>
+    <string name="dictate__floating_button_design_cloud_summary">Plūstoša mākoņa lode, kas plūst un reaģē uz tavu balsi ierakstīšanas laikā.</string>
     <string name="dictate__floating_button_design_pill">Kapsula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktīvā stāvoklī izvēršas, rādot taimeri un tiešraides viļņu formu.</string>
     <string name="dictate__floating_button_design_ring">Gredzens</string>
@@ -1392,6 +1394,9 @@
     <string name="dictate__local_fallback_summary">Bezsaistē transkribē ierīcē ar lejupielādēto modeli pēc nodrošinātāja kļūmes</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Saglabātie pārformulēšanas norādījumi</string>
     <string name="dictate__floating_button_undo_failed">Neizdevās atsaukt — teksts, iespējams, ir mainījies.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Kopēt katru diktātu starpliktuvē</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Katrs diktāts tiek arī kopēts starpliktuvē, lai to varētu ielīmēt manuāli, ja ievietošana neizdodas. Dažos tālruņos var parādīt starpliktuves paziņojumu.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Diktāti tiek tikai ievietoti, nevis kopēti starpliktuvē.</string>
     <string name="dictate__floating_button_undo_summary_off">Atsaukšanas poga netiek rādīta.</string>
     <string name="dictate__floating_button_undo_summary_on">Pēc diktēšanas blakus pogai parādās atsaukšanas poga, kas ar vienu pieskārienu noņem ievietoto tekstu.</string>
     <string name="dictate__floating_button_undo_title">Atsaukšanas poga</string>
@@ -1679,4 +1684,5 @@
     <string name="dictate__legacy_prompt_rows_title">Uzvednes rindas</string>
     <string name="dictate__legacy_prompt_rows_one">Viena rinda</string>
     <string name="dictate__legacy_prompt_rows_two">Divas rindas</string>
+    <string name="about__website__title">Vietne</string>
 </resources>
