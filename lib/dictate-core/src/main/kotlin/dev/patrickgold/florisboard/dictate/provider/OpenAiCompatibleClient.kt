@@ -10,8 +10,6 @@
 
 package dev.patrickgold.florisboard.dictate.provider
 
-import android.util.Base64
-import android.util.Base64OutputStream
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -40,6 +38,9 @@ import kotlin.coroutines.resumeWithException
 import java.net.Proxy
 import java.security.KeyStore
 import java.time.Duration
+import java.util.Base64
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
@@ -61,7 +62,15 @@ class OpenAiCompatibleClient(
 ) : LlmProvider, TranscriptionProvider {
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
-    private val client: OkHttpClient by lazy { buildClient() }
+    private val client: OkHttpClient by lazy {
+        sharedClientFor(
+            HttpClientKey(
+                timeoutSeconds = config.timeoutSeconds,
+                proxy = config.proxy,
+                trustUserCerts = config.trustUserCerts,
+            )
+        ) { buildClient() }
+    }
 
     override suspend fun complete(request: ChatRequest): ChatResult {
         // Skip reasoning_effort up-front for endpoint+model pairs already known to reject it, so we don't
@@ -143,7 +152,7 @@ class OpenAiCompatibleClient(
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult = when (config.transcriptionApi) {
         TranscriptionApi.OPENAI_MULTIPART -> transcribeMultipart(request, onRetry)
-        TranscriptionApi.OPENROUTER_JSON -> transcribeOpenRouterJson(request, onRetry)
+        TranscriptionApi.OPENROUTER_MULTIPART -> transcribeOpenRouterMultipart(request, onRetry)
         TranscriptionApi.SONIOX_ASYNC -> transcribeSonioxAsync(request, onRetry)
         TranscriptionApi.GEMINI_GENERATE_CONTENT -> transcribeGeminiGenerateContent(request, onRetry)
         TranscriptionApi.ELEVENLABS_MULTIPART -> transcribeElevenLabs(request, onRetry)
@@ -162,6 +171,17 @@ class OpenAiCompatibleClient(
         request: TranscriptionRequest,
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult {
+        val httpRequest = buildMultipartTranscriptionRequest(request)
+        val body = executeForBody(httpRequest, onRetry = onRetry)
+        val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
+        return TranscriptionResult(response.text.trim())
+    }
+
+    /** Builds the standard streaming multipart request shared by OpenAI-style STT endpoints. */
+    private fun buildMultipartTranscriptionRequest(
+        request: TranscriptionRequest,
+        temperature: Double? = null,
+    ): Request {
         val fileBody = request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile))
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -172,45 +192,85 @@ class OpenAiCompatibleClient(
                 val lang = request.language
                 if (!lang.isNullOrEmpty() && lang != "detect") addFormDataPart("language", lang)
                 if (!request.prompt.isNullOrEmpty()) addFormDataPart("prompt", request.prompt)
+                if (temperature != null) addFormDataPart("temperature", temperature.toString())
             }
             .build()
-        val httpRequest = Request.Builder()
+        return Request.Builder()
             .url(config.normalizedBaseUrl + "audio/transcriptions")
             .headers(authHeaders())
             .post(multipart)
             .build()
-        val body = executeForBody(httpRequest, onRetry = onRetry)
+    }
+
+    /**
+     * OpenRouter supports both OpenAI-compatible multipart and base64-in-JSON. Multipart is the fast path
+     * because it streams the file directly: no 4/3 expansion, no complete encoded copy in memory, and no
+     * giant JSON string before the request can start. If the server explicitly rejects that wire format,
+     * retry once with the JSON schema.
+     */
+    private suspend fun transcribeOpenRouterMultipart(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult {
+        val label = "OpenRouter STT model=${sanitizeForLog(request.model)} " +
+            "audioBytes=${request.audioFile.length()} wire=multipart"
+        val httpRequest = buildMultipartTranscriptionRequest(
+            request,
+            temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
+        )
+            .newBuilder()
+            .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(label))
+            .build()
+        // This is a non-idempotent, billable POST. OkHttp already retries failures that are known to be
+        // safe at the connection layer; replaying after an ambiguous timeout can create duplicate jobs
+        // and charges. Surface the failure so the user can explicitly resend instead.
+        val body = try {
+            executeForBody(
+                request = httpRequest,
+                maxRetries = OPENROUTER_TRANSCRIPTION_MAX_RETRIES,
+                onRetry = onRetry,
+                diagnosticLabel = label,
+            )
+        } catch (e: DictateApiException) {
+            if (!shouldFallbackFromOpenRouterMultipart(e)) throw e
+            DictateHttpLog.warn("$label rejected status=${e.httpStatus}; fallingBack=json")
+            executeForBody(
+                request = buildOpenRouterJsonRequest(request),
+                maxRetries = OPENROUTER_TRANSCRIPTION_MAX_RETRIES,
+                onRetry = onRetry,
+                diagnosticLabel = label.replace("wire=multipart", "wire=json-fallback"),
+            )
+        }
         val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
 
-    /**
-     * OpenRouter's JSON transcription endpoint: the audio is base64-encoded and wrapped in an
-     * `input_audio` object instead of a multipart upload. `prompt` has no equivalent here and is
-     * ignored. See https://openrouter.ai/docs/api/api-reference/transcriptions/create-audio-transcriptions
-     */
-    private suspend fun transcribeOpenRouterJson(
-        request: TranscriptionRequest,
-        onRetry: (attempt: Int) -> Unit,
-    ): TranscriptionResult {
-        val base64 = withContext(Dispatchers.IO) {
-            base64EncodeFile(request.audioFile)
-        }
-        val lang = request.language?.takeIf { it.isNotEmpty() && it != "detect" }
+    /** OpenRouter's published transcription schema, retained as a compatibility fallback. */
+    private suspend fun buildOpenRouterJsonRequest(request: TranscriptionRequest): Request {
+        val base64 = withContext(Dispatchers.IO) { base64EncodeFile(request.audioFile) }
         val dto = TranscriptionJsonRequestDto(
             model = request.model,
             inputAudio = InputAudioDto(data = base64, format = guessAudioFormat(request.audioFile)),
-            language = lang,
+            language = request.language?.takeIf { it.isNotEmpty() && it != "detect" },
+            temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
         )
         val payload = json.encodeToString(TranscriptionJsonRequestDto.serializer(), dto)
-        val httpRequest = Request.Builder()
+        val fallbackLabel = "OpenRouter STT model=${sanitizeForLog(request.model)} " +
+            "audioBytes=${request.audioFile.length()} wire=json-fallback"
+        return Request.Builder()
             .url(config.normalizedBaseUrl + "audio/transcriptions")
             .headers(authHeaders())
             .post(payload.toRequestBody(JSON_MEDIA_TYPE))
+            .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(fallbackLabel))
             .build()
-        val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
-        return TranscriptionResult(response.text.trim())
+    }
+
+    private fun shouldFallbackFromOpenRouterMultipart(error: DictateApiException): Boolean {
+        if (error.httpStatus == 415) return true
+        if (error.httpStatus != 400 && error.httpStatus != 422) return false
+        val detail = error.message.orEmpty().lowercase()
+        return listOf("multipart", "content-type", "content type", "input_audio", "json", "request body")
+            .any(detail::contains)
     }
 
     /**
@@ -637,7 +697,7 @@ class OpenAiCompatibleClient(
         // OpenRouter's /models defaults to output_modalities=text, which hides its DEDICATED speech-to-text
         // models (they output "transcription", e.g. microsoft/mai-transcribe-1.5, Whisper, Parakeet). Ask
         // for all output modalities so the picker can discover them live instead of relying on curation (#157).
-        val modelsPath = if (config.transcriptionApi == TranscriptionApi.OPENROUTER_JSON) {
+        val modelsPath = if (config.transcriptionApi == TranscriptionApi.OPENROUTER_MULTIPART) {
             "models?output_modalities=all"
         } else {
             "models"
@@ -715,15 +775,26 @@ class OpenAiCompatibleClient(
         return builder.build()
     }
 
-    private suspend fun executeForBody(
+    internal suspend fun executeForBody(
         request: Request,
         maxRetries: Int = 3,
         onRetry: (attempt: Int) -> Unit = {},
+        diagnosticLabel: String? = null,
     ): String {
         var attempt = 0
         while (true) {
+            val startedNanos = System.nanoTime()
+            diagnosticLabel?.let {
+                DictateHttpLog.info("$it applicationAttempt=${attempt + 1} started")
+            }
             try {
-                return executeOnce(request)
+                return executeOnce(request).also {
+                    diagnosticLabel?.let { label ->
+                        DictateHttpLog.info(
+                            "$label applicationAttempt=${attempt + 1} completedMs=${elapsedMillis(startedNanos)}",
+                        )
+                    }
+                }
             } catch (e: CancellationException) {
                 // The caller (stop button, issue #192) cancelled: [executeOnce] already aborted the
                 // OkHttp call so no more of the response is downloaded and no tokens are wasted waiting.
@@ -734,6 +805,12 @@ class OpenAiCompatibleClient(
                     is DictateApiException -> e
                     is IOException -> DictateApiException.fromIo(e)
                     else -> DictateApiException(DictateApiException.Kind.UNKNOWN, e.message, e)
+                }
+                diagnosticLabel?.let { label ->
+                    DictateHttpLog.warn(
+                        "$label applicationAttempt=${attempt + 1} failedMs=${elapsedMillis(startedNanos)} " +
+                            "kind=${mapped.kind}",
+                    )
                 }
                 if (mapped.kind.isRetryable && attempt < maxRetries) {
                     attempt++
@@ -764,7 +841,7 @@ class OpenAiCompatibleClient(
             override fun onResponse(call: Call, response: Response) {
                 val outcome = runCatching {
                     response.use { resp ->
-                        val body = resp.body?.string().orEmpty()
+                        val body = resp.body.string()
                         if (!resp.isSuccessful) {
                             val error = parseError(body)
                             throw DictateApiException.fromHttp(
@@ -806,13 +883,18 @@ class OpenAiCompatibleClient(
 
     private fun extractErrorMessage(body: String): String? = parseError(body)?.message
 
-    private fun buildClient(): OkHttpClient {
+    internal fun buildClient(): OkHttpClient {
         val timeout = Duration.ofSeconds(config.timeoutSeconds)
         val builder = OkHttpClient.Builder()
             .callTimeout(timeout)
-            .connectTimeout(timeout)
+            // Connection establishment needs a short budget per route. Uploading a long recording and
+            // waiting for the model keep the full configured call/read/write timeout below.
+            .connectTimeout(NETWORK_CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            // OkHttp 5 Happy Eyeballs races IPv6/IPv4 routes 250 ms apart and keeps the first winner.
+            .fastFallback(true)
             .readTimeout(timeout)
             .writeTimeout(timeout)
+            .eventListenerFactory { call -> HttpCallDiagnostics.listenerFor(call.request()) }
         config.proxy?.let { proxy ->
             builder.proxy(proxy.toJavaProxy())
             if (proxy.type == Proxy.Type.HTTP && proxy.hasCredentials) {
@@ -883,7 +965,7 @@ class OpenAiCompatibleClient(
     private fun base64EncodeFile(file: File): String {
         val out = Base64StringOutput(base64Capacity(file.length()))
         file.inputStream().use { input ->
-            Base64OutputStream(out, Base64.NO_WRAP).use { base64 ->
+            Base64.getEncoder().wrap(out).use { base64 ->
                 input.copyTo(base64)
             }
         }
@@ -951,6 +1033,7 @@ class OpenAiCompatibleClient(
         val model: String,
         @SerialName("input_audio") val inputAudio: InputAudioDto,
         val language: String? = null,
+        val temperature: Double? = null,
     )
 
     @Serializable
@@ -1144,6 +1227,28 @@ class OpenAiCompatibleClient(
     companion object {
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
         private const val RETRY_DELAY_MS = 3000L
+        internal const val OPENROUTER_TRANSCRIPTION_MAX_RETRIES = 0
+        private const val OPENROUTER_TRANSCRIPTION_TEMPERATURE = 0.0
+        internal const val NETWORK_CONNECT_TIMEOUT_SECONDS = 8L
+        private val HTTP_CLIENTS = ConcurrentHashMap<HttpClientKey, OkHttpClient>()
+
+        private data class HttpClientKey(
+            val timeoutSeconds: Long,
+            val proxy: ProxyConfig?,
+            val trustUserCerts: Boolean,
+        )
+
+        private fun sharedClientFor(key: HttpClientKey, build: () -> OkHttpClient): OkHttpClient {
+            HTTP_CLIENTS[key]?.let { return it }
+            val created = build()
+            return HTTP_CLIENTS.putIfAbsent(key, created) ?: created
+        }
+
+        private fun elapsedMillis(startedNanos: Long): Long =
+            TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedNanos)
+
+        private fun sanitizeForLog(value: String): String =
+            value.replace('\r', '_').replace('\n', '_').take(160)
 
         /**
          * Endpoint+model pairs known to reject `reasoning_effort` (#184/#186). Remembered for the process

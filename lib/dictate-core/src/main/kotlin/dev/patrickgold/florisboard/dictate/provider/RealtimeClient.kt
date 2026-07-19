@@ -21,15 +21,12 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
-import okhttp3.Dns
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
-import java.net.Inet4Address
-import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
 /**
@@ -46,21 +43,13 @@ object RealtimeClient {
     private val wsClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(8, TimeUnit.SECONDS)   // fail a dead route fast instead of stalling the session
+            // Race IPv6/IPv4 with OkHttp 5 Happy Eyeballs instead of forcing either address family.
+            .fastFallback(true)
             .readTimeout(0, TimeUnit.SECONDS)   // long-lived stream
             .writeTimeout(20, TimeUnit.SECONDS)
             .callTimeout(0, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
-            // Prefer IPv4: some hosts (e.g. Google's generativelanguage endpoint) return many IPv6
-            // addresses, and on a network with broken/black-holed IPv6 OkHttp would try each one and
-            // hit the connect timeout before falling back to IPv4 — an ~80s stall (issue #128). Trying
-            // IPv4 first connects immediately there while still falling back to IPv6 when needed.
-            .dns(Ipv4FirstDns)
             .build()
-    }
-
-    private object Ipv4FirstDns : Dns {
-        override fun lookup(hostname: String): List<InetAddress> =
-            Dns.SYSTEM.lookup(hostname).sortedBy { if (it is Inet4Address) 0 else 1 }
     }
 
     /** The PCM sample rate a given realtime API expects (OpenAI wants 24 kHz; the rest 16 kHz). */
