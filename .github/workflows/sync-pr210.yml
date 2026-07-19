@@ -1,0 +1,32 @@
+name: Sync PR 210 with upstream main
+
+on:
+  push:
+    branches:
+      - codex/fix-openrouter-transcription-latency
+    paths:
+      - .github/workflows/sync-pr210.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/fix-openrouter-transcription-latency
+          fetch-depth: 0
+      - name: Merge upstream main and clean up
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/DevEmperor/DictateKeyboard.git || true
+          git fetch upstream main
+          git merge upstream/main -X ours --no-edit
+          git rm .github/workflows/sync-pr210.yml
+          git commit -m "chore: remove temporary PR sync workflow"
+          git push origin HEAD:codex/fix-openrouter-transcription-latency
