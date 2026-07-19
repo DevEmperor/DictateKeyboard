@@ -1109,6 +1109,8 @@
     <string name="dictate__floating_button_color_title">Color del botón</string>
     <string name="dictate__floating_button_design_orb">Esfera</string>
     <string name="dictate__floating_button_design_orb_summary">Una esfera sólida que brilla y late con tu voz mientras grabas.</string>
+    <string name="dictate__floating_button_design_cloud">Nube</string>
+    <string name="dictate__floating_button_design_cloud_summary">Una esfera de nube fluida que fluye y responde a tu voz mientras grabas.</string>
     <string name="dictate__floating_button_design_pill">Píldora</string>
     <string name="dictate__floating_button_design_pill_summary">Se expande cuando está activo para mostrar un temporizador y una onda en vivo.</string>
     <string name="dictate__floating_button_design_ring">Anillo</string>
@@ -1430,6 +1432,9 @@
     <string name="dictate__local_fallback_summary">Sin conexión, transcribe en el dispositivo con el modelo descargado tras fallar el proveedor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Indicaciones de reformulación guardadas</string>
     <string name="dictate__floating_button_undo_failed">No se pudo deshacer — es posible que el texto haya cambiado.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Copiar cada dictado al portapapeles</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada dictado también se copia al portapapeles, para que puedas pegarlo manualmente si la inserción falla. Puede mostrar un aviso del portapapeles en algunos teléfonos.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Los dictados solo se insertan, no se copian al portapapeles.</string>
     <string name="dictate__floating_button_undo_summary_off">No se muestra ningún botón para deshacer.</string>
     <string name="dictate__floating_button_undo_summary_on">Tras un dictado, aparece un botón para deshacer junto al botón que permite eliminar el texto insertado con un solo toque.</string>
     <string name="dictate__floating_button_undo_title">Botón para deshacer</string>

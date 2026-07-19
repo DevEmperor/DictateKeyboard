@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.BlurOn
 import androidx.compose.material.icons.filled.ColorLens
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Vibration
@@ -181,6 +182,11 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
                         stringRes(R.string.dictate__floating_button_design_orb),
                         stringRes(R.string.dictate__floating_button_design_orb_summary),
                     )
+                    entry(
+                        DictateFloatingButtonDesign.CLOUD,
+                        stringRes(R.string.dictate__floating_button_design_cloud),
+                        stringRes(R.string.dictate__floating_button_design_cloud_summary),
+                    )
                 },
             )
 
@@ -260,6 +266,15 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
                 title = stringRes(R.string.dictate__floating_button_undo_title),
                 summaryOn = stringRes(R.string.dictate__floating_button_undo_summary_on),
                 summaryOff = stringRes(R.string.dictate__floating_button_undo_summary_off),
+            )
+
+            SwitchPreference(
+                prefs.dictate.floatingButtonCopyToClipboard,
+                icon = Icons.Default.ContentCopy,
+                modifier = Modifier.settingsSearchAnchor("dictate__floating_button_copy_to_clipboard_title"),
+                title = stringRes(R.string.dictate__floating_button_copy_to_clipboard_title),
+                summaryOn = stringRes(R.string.dictate__floating_button_copy_to_clipboard_summary_on),
+                summaryOff = stringRes(R.string.dictate__floating_button_copy_to_clipboard_summary_off),
             )
         }
 

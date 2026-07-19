@@ -986,6 +986,8 @@
     <string name="dictate__floating_button_color_title">لون الزر</string>
     <string name="dictate__floating_button_design_orb">كرة</string>
     <string name="dictate__floating_button_design_orb_summary">كرة مصمتة تتوهج وتنبض مع صوتك أثناء التسجيل.</string>
+    <string name="dictate__floating_button_design_cloud">سحابة</string>
+    <string name="dictate__floating_button_design_cloud_summary">كرة سحابية انسيابية تتدفق وتتفاعل مع صوتك أثناء التسجيل.</string>
     <string name="dictate__floating_button_design_pill">كبسولة</string>
     <string name="dictate__floating_button_design_pill_summary">تتوسّع عند النشاط لإظهار مؤقّت وموجة صوتية حية.</string>
     <string name="dictate__floating_button_design_ring">حلقة</string>
@@ -1307,6 +1309,9 @@
     <string name="dictate__local_fallback_summary">عند عدم الاتصال، فرّغ الصوت محليًا بالنموذج المُنزَّل بعد فشل المزوّد</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">مطالبات إعادة الصياغة المحفوظة</string>
     <string name="dictate__floating_button_undo_failed">تعذّر التراجع — ربما تغيّر النص.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">نسخ كل إملاء إلى الحافظة</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">يُنسخ كل إملاء أيضًا إلى الحافظة، حتى تتمكن من لصقه يدويًا إذا فشل الإدراج. قد يُظهر إشعار الحافظة على بعض الهواتف.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">يتم إدراج الإملاءات فقط، دون نسخها إلى الحافظة.</string>
     <string name="dictate__floating_button_undo_summary_off">لا يظهر زر التراجع.</string>
     <string name="dictate__floating_button_undo_summary_on">بعد الإملاء، يظهر زر تراجع بجانب الزر لإزالة النص المُدرَج بنقرة واحدة.</string>
     <string name="dictate__floating_button_undo_title">زر التراجع</string>

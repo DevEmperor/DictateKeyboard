@@ -98,6 +98,7 @@ private class OpenAiRealtimeSession(
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
     private val partial = StringBuilder()
+    private val audioGate = RealtimeAudioGate()
     @Volatile private var committing = false
     @Volatile private var done = false
 
@@ -118,6 +119,13 @@ private class OpenAiRealtimeSession(
     private val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             webSocket.send(sessionUpdate())
+            // OkHttp accepts send() calls while a socket is still connecting. Without this gate, mic
+            // frames queued during the handshake precede this session.update and therefore arrive before
+            // OpenAI knows the intended PCM format/model. Put the config first, then replay the beginning.
+            audioGate.markReady(
+                send = { pcm16, len -> sendAudioFrame(webSocket, pcm16, len) },
+                finish = { sendCommit(webSocket) },
+            )
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
@@ -167,7 +175,12 @@ private class OpenAiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        val socket = ws ?: return
+        audioGate.sendAudio(pcm16, len) { audio, length ->
+            ws?.let { sendAudioFrame(it, audio, length) }
+        }
+    }
+
+    private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
         val b64 = Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP)
         val msg = buildJsonObject {
             put("type", "input_audio_buffer.append")
@@ -176,14 +189,20 @@ private class OpenAiRealtimeSession(
         runCatching { socket.send(msg) }
     }
 
-    override fun finish() {
-        val socket = ws ?: return finishClosed(null)
-        committing = true
-        // Flush the buffered audio; the server responds with the final `completed`, then we close.
+    private fun sendCommit(socket: WebSocket) {
         runCatching { socket.send("""{"type":"input_audio_buffer.commit"}""") }
     }
 
+    override fun finish() {
+        committing = true
+        // Flush the buffered audio; the server responds with the final `completed`, then we close.
+        audioGate.finish {
+            ws?.let { sendCommit(it) }
+        }
+    }
+
     override fun cancel() {
+        audioGate.close()
         done = true
         runCatching { ws?.close(1000, null) }
         callbacks.onClosed()
@@ -192,6 +211,7 @@ private class OpenAiRealtimeSession(
     private fun emitError(t: Throwable) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { ws?.cancel() }
         callbacks.onError(t)
         callbacks.onClosed()
@@ -200,6 +220,7 @@ private class OpenAiRealtimeSession(
     private fun finishClosed(webSocket: WebSocket?) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
     }
@@ -223,7 +244,7 @@ private class SonioxRealtimeSession(
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
     private val permanent = StringBuilder()
-    @Volatile private var started = false   // config text must be the first frame — gate audio until sent
+    private val audioGate = RealtimeAudioGate()
     @Volatile private var done = false
 
     private companion object { const val URL = "wss://stt-rt.soniox.com/transcribe-websocket" }
@@ -235,7 +256,12 @@ private class SonioxRealtimeSession(
     private val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             webSocket.send(config())
-            started = true
+            // Soniox requires the config text to be the first frame. Replay every microphone frame
+            // captured while the socket connected immediately after it, instead of losing the start.
+            audioGate.markReady(
+                send = { pcm16, len -> runCatching { webSocket.send(pcm16.toByteString(0, len)) } },
+                finish = { runCatching { webSocket.send("") } },
+            )
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
@@ -271,16 +297,19 @@ private class SonioxRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        if (!started) return   // drop audio captured before the config frame was sent
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        audioGate.sendAudio(pcm16, len) { audio, length ->
+            runCatching { ws?.send(audio.toByteString(0, length)) }
+        }
     }
 
     override fun finish() {
-        val socket = ws ?: return finalizeAndClose(null)
-        runCatching { socket.send("") }   // empty frame → flush + finished
+        audioGate.finish {
+            runCatching { ws?.send("") }   // empty frame → flush + finished
+        }
     }
 
     override fun cancel() {
+        audioGate.close()
         done = true
         runCatching { ws?.close(1000, null) }
         callbacks.onClosed()
@@ -289,6 +318,7 @@ private class SonioxRealtimeSession(
     private fun emitError(t: Throwable) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { ws?.cancel() }
         callbacks.onError(t)
         callbacks.onClosed()
@@ -297,6 +327,7 @@ private class SonioxRealtimeSession(
     private fun finalizeAndClose(webSocket: WebSocket?) {
         if (done) return
         done = true
+        audioGate.close()
         if (permanent.isNotEmpty()) callbacks.onFinalSegment(permanent.toString())
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
@@ -402,6 +433,7 @@ private class ElevenLabsRealtimeSession(
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
+    private val audioGate = RealtimeAudioGate()
     @Volatile private var done = false
 
     fun connect() {
@@ -417,6 +449,12 @@ private class ElevenLabsRealtimeSession(
             val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
             val body = obj["text"]?.jsonPrimitive?.content.orEmpty()
             when (obj["message_type"]?.jsonPrimitive?.content) {
+                // The official lifecycle starts media after this acknowledgement. Preserve everything the
+                // mic captured while connecting, then replay it once ElevenLabs confirms the session.
+                "session_started" -> audioGate.markReady(
+                    send = { pcm16, len -> sendAudioFrame(webSocket, pcm16, len) },
+                    finish = { sendCommit(webSocket) },
+                )
                 "partial_transcript" -> if (body.isNotBlank()) callbacks.onPartial(body)
                 "committed_transcript", "committed_transcript_with_timestamps" ->
                     if (body.isNotBlank()) callbacks.onFinalSegment(body)
@@ -431,17 +469,22 @@ private class ElevenLabsRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        audioGate.sendAudio(pcm16, len) { audio, length ->
+            ws?.let { sendAudioFrame(it, audio, length) }
+        }
+    }
+
+    private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
         val msg = buildJsonObject {
             put("message_type", "input_audio_chunk")
             put("audio_base_64", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
             put("commit", false)
             put("sample_rate", 16_000)
         }.toString()
-        runCatching { ws?.send(msg) }
+        runCatching { socket.send(msg) }
     }
 
-    override fun finish() {
-        val socket = ws ?: return finishClosed(null)
+    private fun sendCommit(socket: WebSocket) {
         val msg = buildJsonObject {
             put("message_type", "input_audio_chunk")
             put("audio_base_64", "")
@@ -450,7 +493,14 @@ private class ElevenLabsRealtimeSession(
         runCatching { socket.send(msg) }
     }
 
+    override fun finish() {
+        audioGate.finish {
+            ws?.let { sendCommit(it) }
+        }
+    }
+
     override fun cancel() {
+        audioGate.close()
         done = true
         runCatching { ws?.close(1000, null) }
         callbacks.onClosed()
@@ -459,6 +509,7 @@ private class ElevenLabsRealtimeSession(
     private fun emitError(t: Throwable) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { ws?.cancel() }
         callbacks.onError(t)
         callbacks.onClosed()
@@ -467,6 +518,7 @@ private class ElevenLabsRealtimeSession(
     private fun finishClosed(webSocket: WebSocket?) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
     }
@@ -489,7 +541,7 @@ private class GeminiRealtimeSession(
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
     private val transcript = StringBuilder()
-    @Volatile private var started = false    // gate audio until the server acks setup (setupComplete)
+    private val audioGate = RealtimeAudioGate()
     @Volatile private var finishing = false
     @Volatile private var done = false
 
@@ -516,7 +568,14 @@ private class GeminiRealtimeSession(
 
     private fun handle(webSocket: WebSocket, text: String) {
         val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
-        if (obj.containsKey("setupComplete")) started = true   // now safe to stream audio
+        if (obj.containsKey("setupComplete")) {
+            // Gemini also forbids audio before setupComplete. Preserve and replay the mic startup rather
+            // than dropping it while waiting for the server acknowledgement.
+            audioGate.markReady(
+                send = { pcm16, len -> sendAudioFrame(webSocket, pcm16, len) },
+                finish = { sendAudioEnd(webSocket) },
+            )
+        }
         val server = obj["serverContent"]?.jsonObject
         server?.get("inputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { chunk ->
             if (chunk.isNotEmpty()) {
@@ -540,7 +599,12 @@ private class GeminiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        if (!started) return   // wait for setupComplete before streaming audio (Gemini Live requirement)
+        audioGate.sendAudio(pcm16, len) { audio, length ->
+            ws?.let { sendAudioFrame(it, audio, length) }
+        }
+    }
+
+    private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
         val msg = buildJsonObject {
             putJsonObject("realtimeInput") {
                 putJsonObject("audio") {
@@ -549,16 +613,22 @@ private class GeminiRealtimeSession(
                 }
             }
         }.toString()
-        runCatching { ws?.send(msg) }
+        runCatching { socket.send(msg) }
     }
 
-    override fun finish() {
-        val socket = ws ?: return finalizeAndClose(null)
-        finishing = true
+    private fun sendAudioEnd(socket: WebSocket) {
         runCatching { socket.send("""{"realtimeInput":{"audioStreamEnd":true}}""") }
     }
 
+    override fun finish() {
+        finishing = true
+        audioGate.finish {
+            ws?.let { sendAudioEnd(it) }
+        }
+    }
+
     override fun cancel() {
+        audioGate.close()
         done = true
         runCatching { ws?.close(1000, null) }
         callbacks.onClosed()
@@ -567,6 +637,7 @@ private class GeminiRealtimeSession(
     private fun emitError(t: Throwable) {
         if (done) return
         done = true
+        audioGate.close()
         runCatching { ws?.cancel() }
         callbacks.onError(t)
         callbacks.onClosed()
@@ -575,6 +646,7 @@ private class GeminiRealtimeSession(
     private fun finalizeAndClose(webSocket: WebSocket?) {
         if (done) return
         done = true
+        audioGate.close()
         if (transcript.isNotEmpty()) callbacks.onFinalSegment(transcript.toString())
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()

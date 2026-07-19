@@ -975,6 +975,8 @@
     <string name="dictate__floating_button_color_title">Колір кнопки</string>
     <string name="dictate__floating_button_design_orb">Сфера</string>
     <string name="dictate__floating_button_design_orb_summary">Суцільна сфера, що світиться й пульсує в такт вашому голосу під час запису.</string>
+    <string name="dictate__floating_button_design_cloud">Хмара</string>
+    <string name="dictate__floating_button_design_cloud_summary">Плавна хмарна сфера, що струменіє й реагує на ваш голос під час запису.</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">Коли активна, розгортається, показуючи таймер і живу форму хвилі.</string>
     <string name="dictate__floating_button_design_ring">Кільце</string>
@@ -1296,6 +1298,9 @@
     <string name="dictate__local_fallback_summary">Без мережі транскрибуйте на пристрої завантаженою моделлю після збою провайдера</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Збережені підказки для переформулювання</string>
     <string name="dictate__floating_button_undo_failed">Не вдалося скасувати — текст міг змінитися.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Копіювати кожну диктовку в буфер обміну</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Кожна диктовка також копіюється в буфер обміну, щоб ви могли вставити її вручну, якщо вставлення не вдалося. На деяких телефонах може показуватися сповіщення буфера обміну.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Диктовки лише вставляються, а не копіюються в буфер обміну.</string>
     <string name="dictate__floating_button_undo_summary_off">Кнопку скасування не показано.</string>
     <string name="dictate__floating_button_undo_summary_on">Після диктування поруч із кнопкою з\'являється кнопка скасування, яка одним дотиком видаляє вставлений текст.</string>
     <string name="dictate__floating_button_undo_title">Кнопка скасування</string>

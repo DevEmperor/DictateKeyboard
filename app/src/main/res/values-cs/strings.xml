@@ -1142,6 +1142,8 @@
     <string name="dictate__floating_button_color_title">Barva tlačítka</string>
     <string name="dictate__floating_button_design_orb">Koule</string>
     <string name="dictate__floating_button_design_orb_summary">Plná koule, která při nahrávání září a pulzuje s vaším hlasem.</string>
+    <string name="dictate__floating_button_design_cloud">Oblak</string>
+    <string name="dictate__floating_button_design_cloud_summary">Plynulá oblaková koule, která proudí a reaguje na tvůj hlas při nahrávání.</string>
     <string name="dictate__floating_button_design_pill">Pilulka</string>
     <string name="dictate__floating_button_design_pill_summary">Při aktivitě se rozšíří a zobrazí časovač a živý průběh zvuku.</string>
     <string name="dictate__floating_button_design_ring">Prstenec</string>
@@ -1463,6 +1465,9 @@
     <string name="dictate__local_fallback_summary">Když jste offline, přepište zvuk lokálně staženým modelem poté, co poskytovatel selže</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Uložené prompty pro přeformulování</string>
     <string name="dictate__floating_button_undo_failed">Nelze vrátit zpět — text se možná změnil.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Kopírovat každé diktování do schránky</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Každé diktování se také zkopíruje do schránky, takže je můžeš vložit ručně, pokud vložení selže. Na některých telefonech může zobrazit upozornění schránky.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Diktování se pouze vkládají, nekopírují se do schránky.</string>
     <string name="dictate__floating_button_undo_summary_off">Tlačítko zpět se nezobrazuje.</string>
     <string name="dictate__floating_button_undo_summary_on">Po diktování se vedle tlačítka zobrazí tlačítko zpět, kterým jedním klepnutím odstraníte vložený text.</string>
     <string name="dictate__floating_button_undo_title">Tlačítko zpět</string>

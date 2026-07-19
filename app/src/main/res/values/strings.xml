@@ -1363,6 +1363,8 @@
     <string name="dictate__floating_button_design_pill_summary" comment="Description of the pill floating-button style">Expands while active to show a timer and a live waveform.</string>
     <string name="dictate__floating_button_design_orb" comment="Floating-button style option: glowing orb">Orb</string>
     <string name="dictate__floating_button_design_orb_summary" comment="Description of the orb floating-button style">A solid orb that glows and pulses with your voice while recording.</string>
+    <string name="dictate__floating_button_design_cloud" comment="Floating-button style option: fluid cloud orb">Cloud</string>
+    <string name="dictate__floating_button_design_cloud_summary" comment="Description of the cloud floating-button style">A fluid cloud orb that flows and responds to your voice while recording.</string>
     <string name="dictate__floating_button_size_title" comment="Title of the floating-button size picker">Button size</string>
     <string name="dictate__floating_button_size_small" comment="Floating-button size option">Small</string>
     <string name="dictate__floating_button_size_medium" comment="Floating-button size option">Medium</string>
@@ -1384,6 +1386,9 @@
     <string name="dictate__floating_button_undo_summary_on" comment="Summary when the floating undo button is enabled">After a dictation, an undo button appears next to the button to remove the inserted text in one tap.</string>
     <string name="dictate__floating_button_undo_summary_off" comment="Summary when the floating undo button is disabled">No undo button shown.</string>
     <string name="dictate__floating_button_undo_failed" comment="Toast when the undo button could not remove the last text (field changed)">Couldn\'t undo — the text may have changed.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title" comment="Toggle: copy every floating-button dictation to the clipboard">Copy every dictation to clipboard</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on" comment="Summary when copy-every-dictation is enabled">Each dictation is also copied to the clipboard, so you can paste it manually if inserting ever fails. May show a clipboard notice on some phones.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off" comment="Summary when copy-every-dictation is disabled">Dictations are only inserted, not copied to the clipboard.</string>
     <string name="dictate__floating_button_no_prompts" comment="Toast when long-pressing the floating button but no rewording prompts exist">No rewording prompts yet — add some in Dictate settings.</string>
     <string name="dictate__floating_button_retry_hint" comment="Toast after a failed floating-button dictation whose recording was kept; %1$s is the error message. Tapping the button re-sends the recording.">%1$s — tap to retry</string>
     <string name="dictate__floating_button_badge_new" comment="Small 'New' badge on the floating-button settings entry. Keep very short.">New</string>

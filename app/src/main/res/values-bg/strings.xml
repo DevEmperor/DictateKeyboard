@@ -1128,6 +1128,8 @@
     <string name="dictate__floating_button_color_title">Цвят на бутона</string>
     <string name="dictate__floating_button_design_orb">Сфера</string>
     <string name="dictate__floating_button_design_orb_summary">Плътна сфера, която свети и пулсира с гласа ви по време на запис.</string>
+    <string name="dictate__floating_button_design_cloud">Облак</string>
+    <string name="dictate__floating_button_design_cloud_summary">Плавна облачна сфера, която се движи и реагира на гласа ви по време на запис.</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">Когато е активна, се разширява, за да покаже таймер и форма на вълната на живо.</string>
     <string name="dictate__floating_button_design_ring">Пръстен</string>
@@ -1449,6 +1451,9 @@
     <string name="dictate__local_fallback_summary">Когато сте офлайн, транскрибирайте локално с изтегления модел след неуспех на доставчика</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Запазени промптове за преформулиране</string>
     <string name="dictate__floating_button_undo_failed">Отмяната е невъзможна — текстът може да е променен.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Копиране на всяка диктовка в клипборда</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Всяка диктовка се копира и в клипборда, за да можете да я поставите ръчно, ако вмъкването се провали. На някои телефони може да покаже известие за клипборда.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Диктовките само се вмъкват, но не се копират в клипборда.</string>
     <string name="dictate__floating_button_undo_summary_off">Не се показва бутон за отмяна.</string>
     <string name="dictate__floating_button_undo_summary_on">След диктовка до бутона се появява бутон за отмяна, който премахва вмъкнатия текст с едно докосване.</string>
     <string name="dictate__floating_button_undo_title">Бутон за отмяна</string>

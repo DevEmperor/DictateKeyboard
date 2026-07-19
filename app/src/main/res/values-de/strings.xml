@@ -1030,6 +1030,8 @@
     <string name="dictate__floating_button_design_pill_summary">Klappt im aktiven Zustand auf und zeigt Timer und Live-Wellenform.</string>
     <string name="dictate__floating_button_design_orb">Kugel</string>
     <string name="dictate__floating_button_design_orb_summary">Eine volle Kugel, die beim Aufnehmen mit deiner Stimme leuchtet und pulsiert.</string>
+    <string name="dictate__floating_button_design_cloud">Wolke</string>
+    <string name="dictate__floating_button_design_cloud_summary">Eine fließende Wolken-Kugel, die sich beim Aufnehmen bewegt und auf deine Stimme reagiert.</string>
     <string name="dictate__floating_button_size_title">Buttongröße</string>
     <string name="dictate__floating_button_size_small">Klein</string>
     <string name="dictate__floating_button_size_medium">Mittel</string>
@@ -1323,6 +1325,9 @@
     <string name="dictate__local_fallback_title">Offline-Fallback</string>
     <string name="dictate__local_fallback_summary">Wenn offline, nach dem Fehlschlag des Anbieters lokal mit dem heruntergeladenen Modell transkribieren</string>
     <string name="dictate__floating_button_undo_failed">Rückgängig machen fehlgeschlagen — der Text wurde möglicherweise geändert.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Jedes Diktat in die Zwischenablage kopieren</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Jedes Diktat wird zusätzlich in die Zwischenablage kopiert, sodass du es manuell einfügen kannst, falls das Einfügen fehlschlägt. Zeigt auf manchen Geräten einen Zwischenablage-Hinweis.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Diktate werden nur eingefügt, nicht in die Zwischenablage kopiert.</string>
     <string name="dictate__floating_button_undo_summary_off">Es wird keine Rückgängig-Schaltfläche angezeigt.</string>
     <string name="dictate__floating_button_undo_summary_on">Nach einer Diktateingabe erscheint neben der Schaltfläche eine Rückgängig-Schaltfläche, mit der du den eingefügten Text mit einem Tippen wieder entfernst.</string>
     <string name="dictate__floating_button_undo_title">Rückgängig-Schaltfläche</string>
