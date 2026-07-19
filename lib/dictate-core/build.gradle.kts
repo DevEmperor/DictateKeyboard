@@ -83,4 +83,6 @@ dependencies {
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.okhttp.mockwebserver)
+    // Kept alongside Kotest (both run on the JUnit 5 platform) so kotlin.test-based tests keep compiling.
+    testImplementation(libs.kotlin.test.junit5)
 }
