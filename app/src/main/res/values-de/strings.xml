@@ -1610,4 +1610,5 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt-Reihen</string>
     <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
     <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
+    <string name="about__website__title">Website</string>
 </resources>

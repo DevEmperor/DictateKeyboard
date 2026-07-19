@@ -56,6 +56,7 @@ object BigramCatalog {
         BigramDict("lt", "$REL/lt_bigrams.txt", 1067694, "ae46fb8f69ff1d011c02dca439a153b6d9a29fc5f00acbd002bf285e3de22558"),
         BigramDict("lv", "$REL/lv_bigrams.txt", 1067669, "d4bb1381f98290593c37606082c7b0a2f2cdb4e0d1924ec3990395353ec3c613"),
         BigramDict("nb", "$REL/nb_bigrams.txt", 924745, "810e184a79fb9b54549cdf57dbe6ba4d356e26fce85d35a70175882d22adbed2"),
+        BigramDict("nl", "$REL/nl_bigrams.txt", 921682, "e3daa8421fd4a0fd8b73dabd3cfcd34bf4b65329df1608b556442c8052c3c930"),
         BigramDict("nn", "$REL/nn_bigrams.txt", 884866, "33460825c138eb6ae6279f8f8a5cf4e1cdd1a900fb0451fb62a421ffc5c8e17c"),
         BigramDict("pl", "$REL/pl_bigrams.txt", 1008318, "b31f7bf58f3e23ce269212d54fece5dd7ee7a30de63fd97b028c0e13bd8160c2"),
         BigramDict("pt", "$REL/pt_bigrams.txt", 947388, "4ffc62080866d7651d403201a40b38baec5703736233c4048eeeabb61322838d"),

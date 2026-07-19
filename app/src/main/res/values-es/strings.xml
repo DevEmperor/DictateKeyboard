@@ -1717,4 +1717,5 @@
     <string name="dictate__legacy_prompt_rows_title">Filas de prompts</string>
     <string name="dictate__legacy_prompt_rows_one">Una fila</string>
     <string name="dictate__legacy_prompt_rows_two">Dos filas</string>
+    <string name="about__website__title">Sitio web</string>
 </resources>

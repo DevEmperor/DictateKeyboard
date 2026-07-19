@@ -75,6 +75,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -96,6 +97,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -237,6 +239,18 @@ fun LegacyDictateLayout(
     val accent by prefs.theme.accentColor.collectAsState()
     val rewordingEnabled by prefs.dictate.rewordingEnabled.collectAsState()
     val promptRows by prefs.dictate.legacyPromptRows.collectAsState()
+
+    // Keep the screen awake while recording so the auto-timeout can't cut the recording short. The modern
+    // keyboard does this in DictateSmartbarUi; the classic layout was missing it, so the screen could time
+    // out mid-dictation and the ACTION_SCREEN_OFF stash (#147) would stop the mic. Honours the same
+    // "Keep screen awake" setting and only holds the flag while actually recording.
+    val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
+    val isRecording = dictateState is DictateController.UiState.Recording
+    val view = LocalView.current
+    DisposableEffect(keepScreenAwake, isRecording) {
+        view.keepScreenOn = keepScreenAwake && isRecording
+        onDispose { view.keepScreenOn = false }
+    }
 
     // The Smartbar (which normally loads the prompts) is replaced by this layout, so trigger the load
     // here whenever the panel appears / rewording toggles.

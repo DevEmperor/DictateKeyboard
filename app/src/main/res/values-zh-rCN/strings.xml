@@ -1730,4 +1730,5 @@
     <string name="dictate__legacy_prompt_rows_title">提示行</string>
     <string name="dictate__legacy_prompt_rows_one">一行</string>
     <string name="dictate__legacy_prompt_rows_two">两行</string>
+    <string name="about__website__title">网站</string>
 </resources>

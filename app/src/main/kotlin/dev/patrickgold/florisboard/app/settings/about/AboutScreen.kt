@@ -34,6 +34,7 @@ import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Policy
+import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -159,6 +160,13 @@ fun AboutScreen() = FlorisScreen {
                 },
             )
         }
+        Preference(
+            icon = Icons.Outlined.Public,
+            modifier = Modifier.settingsSearchAnchor("about__website__title"),
+            title = stringRes(R.string.about__website__title),
+            summary = "dictatekeyboard.com",
+            onClick = { context.launchUrl(R.string.florisboard__website_url) },
+        )
         Preference(
             icon = Icons.Default.History,
             modifier = Modifier.settingsSearchAnchor("about__changelog__title"),

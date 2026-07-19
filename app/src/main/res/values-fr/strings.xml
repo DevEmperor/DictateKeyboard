@@ -1611,4 +1611,5 @@
     <string name="dictate__legacy_prompt_rows_title">Lignes de prompt</string>
     <string name="dictate__legacy_prompt_rows_one">Une ligne</string>
     <string name="dictate__legacy_prompt_rows_two">Deux lignes</string>
+    <string name="about__website__title">Site web</string>
 </resources>

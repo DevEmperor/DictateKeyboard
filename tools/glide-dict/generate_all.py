@@ -44,6 +44,7 @@ LANGS = [
     ("lt", "lt", "lt", "Lithuanian · Lietuvių"),
     ("lv", "lv", "lv", "Latvian · Latviešu"),
     ("nb", "no", "nb", "Norwegian Bokmål"),
+    ("nl", "nl", "nl", "Dutch · Nederlands"),
     ("nn", "no", "nn", "Norwegian Nynorsk"),
     ("pl", "pl", "pl", "Polish · Polski"),
     ("pt", "pt", "pt", "Portuguese · Português"),

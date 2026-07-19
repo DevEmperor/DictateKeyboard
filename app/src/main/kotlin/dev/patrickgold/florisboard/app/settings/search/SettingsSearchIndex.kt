@@ -64,6 +64,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.settings__typing__title, R.string.settings__typing__title, Routes.Settings.Typing),
         SettingsSearchEntry(R.string.about__version__title, R.string.about__title, Routes.Settings.About, anchor = "about__version__title"),
         SettingsSearchEntry(R.string.about__whats_new__title, R.string.about__title, Routes.Settings.About, anchor = "about__whats_new__title"),
+        SettingsSearchEntry(R.string.about__website__title, R.string.about__title, Routes.Settings.About, anchor = "about__website__title"),
         SettingsSearchEntry(R.string.about__changelog__title, R.string.about__title, Routes.Settings.About, anchor = "about__changelog__title"),
         SettingsSearchEntry(R.string.about__repository__title, R.string.about__title, Routes.Settings.About, anchor = "about__repository__title"),
         SettingsSearchEntry(R.string.about__based_on_floris__title, R.string.about__title, Routes.Settings.About, anchor = "about__based_on_floris__title"),

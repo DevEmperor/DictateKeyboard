@@ -56,7 +56,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.lowercase
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.uppercase
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
@@ -507,6 +509,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
+        // Gboard-style: when text is selected, Shift cycles the selection's capitalization
+        // (Title case → UPPERCASE → lowercase → …) and keeps it selected, instead of toggling the shift state.
+        if (cycleSelectionCapitalization()) return
         val prefs = prefs.keyboard.capitalizationBehavior
         when (prefs.get()) {
             CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> {
@@ -539,6 +544,57 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             !inputEventDispatcher.isUninterruptedEventSequence(data)) {
             activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
+    }
+
+    /**
+     * Gboard-style Shift-on-selection: if there is a non-empty text selection, cycle its capitalization
+     * (Title case → UPPERCASE → lowercase → …), keep it selected, and report that Shift was consumed. Handy
+     * for fixing a name/word the dictation mis-cased without repositioning the cursor.
+     */
+    private fun cycleSelectionCapitalization(): Boolean {
+        val content = editorInstance.activeContent
+        val selection = content.selection
+        if (selection.isNotValid || !selection.isSelectionMode) return false
+        val selected = content.selectedText
+        if (selected.isEmpty() || selected.none { it.isLetter() }) return false
+        val locale = subtypeManager.activeSubtype.primaryLocale
+        val next = nextCapitalization(selected, locale)
+        if (next != selected) {
+            val start = selection.start
+            editorInstance.commitTextRaw(next)
+            editorInstance.setSelection(start, start + next.length)
+        }
+        return true
+    }
+
+    /** Next state in the Title → UPPER → lower cycle for [text] (falls back to Title for mixed input). */
+    private fun nextCapitalization(text: String, locale: FlorisLocale): String {
+        val lower = text.lowercase(locale)
+        val upper = text.uppercase(locale)
+        val title = titlecaseWords(text, locale)
+        return when {
+            text == upper && upper != lower -> lower
+            text == title && title != upper -> upper
+            text == lower -> title
+            else -> title
+        }
+    }
+
+    /** Capitalizes the first letter of every whitespace-separated word and lowercases the rest. */
+    private fun titlecaseWords(text: String, locale: FlorisLocale): String {
+        val sb = StringBuilder(text.length)
+        var atWordStart = true
+        for (ch in text) {
+            when {
+                ch.isLetter() -> {
+                    sb.append(if (atWordStart) ch.toString().uppercase(locale) else ch.toString().lowercase(locale))
+                    atWordStart = false
+                }
+                ch.isWhitespace() -> { sb.append(ch); atWordStart = true }
+                else -> sb.append(ch)
+            }
+        }
+        return sb.toString()
     }
 
     /**
