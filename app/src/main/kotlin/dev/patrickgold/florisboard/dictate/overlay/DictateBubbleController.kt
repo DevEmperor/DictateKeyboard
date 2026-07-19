@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -72,9 +73,9 @@ import kotlin.math.hypot
  * dragged, and routes the result through [DictateController] with [DictateController.OutputTarget.OVERLAY]
  * so the text is injected into the focused field.
  *
- * The visuals are provided by a [BubbleSkin] — either the compact [RingSkin] or the expanding [PillSkin],
- * selected by the `floatingButtonDesign` preference. While recording, a level ticker polls the mic
- * amplitude and feeds a live waveform.
+ * The visuals are provided by a [BubbleSkin] — [RingSkin], [PillSkin], [OrbSkin], or [CloudSkin] — selected by the
+ * `floatingButtonDesign` preference. While recording, a level ticker feeds the chosen skin the shared
+ * normalized microphone level.
  *
  * Created and owned by [DictateAccessibilityService], which also provides the foreground-microphone
  * promotion the recording needs while the app is in the background.
@@ -543,6 +544,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             DictateFloatingButtonDesign.RING -> RingSkin(context)
             DictateFloatingButtonDesign.PILL -> PillSkin(context)
             DictateFloatingButtonDesign.ORB -> OrbSkin(context)
+            DictateFloatingButtonDesign.CLOUD -> CloudSkin(context)
         }
         skin = newSkin
         val root = newSkin.root
@@ -910,7 +912,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 val level = if (rec?.paused == true) {
                     0f
                 } else {
-                    (DictateController.currentAmplitude() / AMP_FULL).coerceIn(0f, 1f)
+                    DictateController.audioLevel.value
                 }
                 val elapsed = rec?.let { elapsedOf(it) } ?: 0L
                 skin?.onRecordingTick(level, elapsed)
@@ -1557,14 +1559,93 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
     }
 
+    // --- Cloud skin (design 4) -------------------------------------------------------------------
+
+    private inner class CloudSkin(context: Context) : BubbleSkin {
+        private val viewSize = sdp(64)
+        private val coreSize = sdp(44)
+        private val idleInset = sdp(13)
+
+        private val cloud = AudioReactiveCloudOrbView(context)
+        private val icon = ImageView(context).apply {
+            elevation = sdpf(6f)
+        }
+
+        override val fixedHeight: Int? = null
+
+        override val root: View = FrameLayout(context).apply {
+            // The cloud spans the whole button so it has room to grow while recording; a small glyph
+            // overlays it as the idle/terminal affordance (there is no glyph while recording).
+            addView(cloud, FrameLayout.LayoutParams(viewSize, viewSize, Gravity.CENTER))
+            addView(icon, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
+            minimumWidth = viewSize
+            minimumHeight = viewSize
+        }
+
+        override fun applyState(state: DictateController.UiState) {
+            when (state) {
+                is DictateController.UiState.Recording -> {
+                    cloud.setPaused(state.paused)
+                    cloud.setLevel(0f) // the shared level ticker takes over immediately after this state update
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
+                    icon.visibility = View.INVISIBLE // the growing, turbulent cloud alone signals recording
+                }
+                is DictateController.UiState.Transcribing,
+                is DictateController.UiState.Rewording -> {
+                    cloud.setPaused(false)
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.THINKING)
+                    icon.visibility = View.INVISIBLE // the cloud draws its own activity spinner
+                }
+                else -> showIdle()
+            }
+        }
+
+        override fun showFlash(kind: FlashKind) {
+            // Keep the cloud alive and tint the whole field, so the terminal feedback stays part of the
+            // same design instead of swapping in a detached colored circle.
+            cloud.setPaused(false)
+            when (kind) {
+                FlashKind.ERROR -> {
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.ERROR)
+                    showGlyph(R.drawable.ic_dictate_overlay_error, idleInset, Color.WHITE, 0.95f)
+                }
+                FlashKind.SUCCESS -> {
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.SUCCESS)
+                    showGlyph(R.drawable.ic_dictate_overlay_check, idleInset, Color.WHITE, 0.95f)
+                }
+            }
+        }
+
+        override fun onRecordingTick(level: Float, elapsedMs: Long) {
+            cloud.setLevel(level)
+        }
+
+        override fun destroy() {
+            cloud.stop()
+        }
+
+        // Idle: the cloud itself is the button, with a mic hint so it reads as "tap to dictate".
+        private fun showIdle() {
+            cloud.setPaused(false)
+            cloud.setMode(AudioReactiveCloudOrbView.Mode.IDLE)
+            showGlyph(R.drawable.ic_dictate_overlay_mic, idleInset, CLOUD_GLYPH_COLOR, 0.9f)
+        }
+
+        private fun showGlyph(resId: Int, inset: Int, tint: Int, alpha: Float) {
+            icon.visibility = View.VISIBLE
+            icon.setImageResource(resId)
+            icon.setPadding(inset, inset, inset, inset)
+            icon.imageTintList = ColorStateList.valueOf(tint)
+            icon.alpha = alpha
+        }
+    }
+
     private companion object {
         private const val ERROR_HOLD_MS = 1800L
         private const val SUCCESS_HOLD_MS = 1700L
         private const val TICK_MS = 50L
         private const val AUTO_DIM_DELAY_MS = 3500L
         private const val WAVE_BARS = 7
-        // MediaRecorder.getMaxAmplitude tops out at 32767; speech rarely peaks there, so normalize to a
-        // lower full-scale to keep the waveform lively without constantly clipping at the top.
-        private const val AMP_FULL = 16000f
+        private const val CLOUD_GLYPH_COLOR = 0xFF343B8F.toInt()
     }
 }

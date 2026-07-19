@@ -26,7 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
@@ -71,14 +73,18 @@ fun SnyggText(
                 .snyggPadding(style),
             text = text,
             color = style.foreground(),
-            fontSize = style.fontSize(),
+            // A malformed (e.g. third-party) theme can resolve a size to a non-finite value; since the font
+            // scale multiplies every sp size, a NaN/∞ would reach Compose's Text and crash it on measure
+            // ("lineHeight can't be negative (NaN)"). Coerce those to Unspecified so a bad theme can't crash
+            // the keyboard (issue: SnyggText NaN lineHeight).
+            fontSize = style.fontSize().finiteOrUnspecified(),
             fontStyle = style.fontStyle(),
             // Optional override (e.g. bold the autocorrect/auto-commit candidate, issue #150) — falls back
             // to the themed weight when null.
             fontWeight = fontWeight ?: style.fontWeight(),
             fontFamily = style.fontFamily(LocalSnyggPreloadedCustomFontFamilies.current),
-            letterSpacing = style.letterSpacing(),
-            lineHeight = style.lineHeight(),
+            letterSpacing = style.letterSpacing().finiteOrUnspecified(),
+            lineHeight = style.lineHeight().finiteOrUnspecified(),
             textAlign = style.textAlign(),
             textDecoration = style.textDecorationLine(),
             maxLines = maxLines ?: style.textMaxLines(),
@@ -86,6 +92,10 @@ fun SnyggText(
         )
     }
 }
+
+/** Returns [TextUnit.Unspecified] when this size is specified but non-finite (NaN/∞), else the value. */
+private fun TextUnit.finiteOrUnspecified(): TextUnit =
+    if (isSpecified && !value.isFinite()) TextUnit.Unspecified else this
 
 @Preview
 @Composable

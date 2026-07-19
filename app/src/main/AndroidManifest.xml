@@ -21,6 +21,8 @@
          itself to a microphone foreground service while recording so background mic capture is allowed -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+    <!-- On-device model downloads that keep running in the background (issue #207). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
           ship with an IME or Spell Check service. This is used to guide the user
@@ -108,6 +110,13 @@
                     android:pathPrefix="/dictate" />
             </intent-filter>
         </service>
+
+        <!-- Keeps on-device model downloads running when the app is left (issue #207); shows an ongoing
+             progress notification. Not exported: only started internally by LocalModelDownloads. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.provider.ModelDownloadService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false"/>
 
         <!-- Main App Activity -->
         <activity

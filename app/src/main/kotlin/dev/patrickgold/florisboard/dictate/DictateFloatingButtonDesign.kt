@@ -17,11 +17,14 @@ package dev.patrickgold.florisboard.dictate
  *   recording, spinner while transcribing/rewording).
  * - [PILL]: a circular bubble that expands into a pill while active, showing an elapsed timer and a live
  *   waveform during recording and a labelled spinner while transcribing/rewording.
- * - [ORB]: a solid orb with no ring or bars; the orb glows and pulses with the voice amplitude while
- *   recording and breathes gently while transcribing/rewording.
+ * - [ORB]: a solid orb that glows and pulses with the voice amplitude while recording and breathes
+ *   gently while transcribing/rewording.
+ * - [CLOUD]: an orb-ui-inspired fluid cloud surface whose internal flow and scale react to microphone
+ *   input; transcribing/rewording keeps the same calmer surface with a compact activity spinner.
  */
 enum class DictateFloatingButtonDesign {
     RING,
     PILL,
-    ORB;
+    ORB,
+    CLOUD;
 }

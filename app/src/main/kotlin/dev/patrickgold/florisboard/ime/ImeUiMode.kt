@@ -21,7 +21,8 @@ enum class ImeUiMode(val value: Int) {
     MEDIA(1),
     CLIPBOARD(2),
     DICTATE(3),
-    HISTORY(4);
+    HISTORY(4),
+    GIF(5);
 
     companion object {
         fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: TEXT

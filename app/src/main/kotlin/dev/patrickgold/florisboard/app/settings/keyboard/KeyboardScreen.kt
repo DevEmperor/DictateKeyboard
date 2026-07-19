@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
@@ -47,12 +49,14 @@ fun KeyboardScreen() = FlorisScreen {
     content {
         SwitchPreference(
             prefs.keyboard.numberRow,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__number_row__label"),
             title = stringRes(R.string.pref__keyboard__number_row__label),
             summary = stringRes(R.string.pref__keyboard__number_row__summary),
         )
         ListPreference(
             listPref = prefs.keyboard.hintedNumberRowMode,
             switchPref = prefs.keyboard.hintedNumberRowEnabled,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__hinted_number_row_mode__label"),
             title = stringRes(R.string.pref__keyboard__hinted_number_row_mode__label),
             summarySwitchDisabled = stringRes(R.string.state__disabled),
             entries = enumDisplayEntriesOf(KeyHintMode::class),
@@ -61,34 +65,40 @@ fun KeyboardScreen() = FlorisScreen {
         ListPreference(
             listPref = prefs.keyboard.hintedSymbolsMode,
             switchPref = prefs.keyboard.hintedSymbolsEnabled,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__hinted_symbols_mode__label"),
             title = stringRes(R.string.pref__keyboard__hinted_symbols_mode__label),
             summarySwitchDisabled = stringRes(R.string.state__disabled),
             entries = enumDisplayEntriesOf(KeyHintMode::class),
         )
         SwitchPreference(
             prefs.keyboard.utilityKeyEnabled,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__utility_key_enabled__label"),
             title = stringRes(R.string.pref__keyboard__utility_key_enabled__label),
             summary = stringRes(R.string.pref__keyboard__utility_key_enabled__summary),
         )
         ListPreference(
             prefs.keyboard.utilityKeyAction,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__utility_key_action__label"),
             title = stringRes(R.string.pref__keyboard__utility_key_action__label),
             entries = enumDisplayEntriesOf(UtilityKeyAction::class),
             visibleIf = { prefs.keyboard.utilityKeyEnabled isEqualTo true },
         )
         ListPreference(
             prefs.keyboard.spaceBarMode,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__space_bar_mode__label"),
             title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
             entries = enumDisplayEntriesOf(SpaceBarMode::class),
         )
         ListPreference(
             prefs.keyboard.capitalizationBehavior,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__capitalization_behavior__label"),
             title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
             entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
         )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
             secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__font_size_multiplier__label"),
             title = stringRes(R.string.pref__keyboard__font_size_multiplier__label),
             primaryLabel = stringRes(R.string.screen_orientation__portrait),
             secondaryLabel = stringRes(R.string.screen_orientation__landscape),
@@ -99,6 +109,7 @@ fun KeyboardScreen() = FlorisScreen {
         )
         ListPreference(
             listPref = prefs.keyboard.incognitoDisplayMode,
+            modifier = Modifier.settingsSearchAnchor("pref__keyboard__incognito_indicator__label"),
             title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
             entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
         )
@@ -106,12 +117,14 @@ fun KeyboardScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {
             ListPreference(
                 prefs.keyboard.landscapeInputUiMode,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__landscape_input_ui_mode__label"),
                 title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
                 entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
             )
             DialogSliderPreference(
                 primaryPref = prefs.keyboard.keySpacingVertical,
                 secondaryPref = prefs.keyboard.keySpacingHorizontal,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__key_spacing__label"),
                 title = stringRes(R.string.pref__keyboard__key_spacing__label),
                 primaryLabel = stringRes(R.string.screen_orientation__vertical),
                 secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
@@ -124,21 +137,25 @@ fun KeyboardScreen() = FlorisScreen {
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {
             Preference(
+                modifier = Modifier.settingsSearchAnchor("settings__input_feedback__title"),
                 title = stringRes(R.string.settings__input_feedback__title),
                 onClick = { navController.navigate(Routes.Settings.InputFeedback) },
             )
             SwitchPreference(
                 prefs.keyboard.popupEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__popup_enabled__label"),
                 title = stringRes(R.string.pref__keyboard__popup_enabled__label),
                 summary = stringRes(R.string.pref__keyboard__popup_enabled__summary),
             )
             SwitchPreference(
                 prefs.keyboard.mergeHintPopupsEnabled,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__merge_hint_popups_enabled__label"),
                 title = stringRes(R.string.pref__keyboard__merge_hint_popups_enabled__label),
                 summary = stringRes(R.string.pref__keyboard__merge_hint_popups_enabled__summary),
             )
             DialogSliderPreference(
                 prefs.keyboard.longPressDelay,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__long_press_delay__label"),
                 title = stringRes(R.string.pref__keyboard__long_press_delay__label),
                 valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
                 min = 100,
@@ -147,6 +164,7 @@ fun KeyboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.keyboard.spaceBarSwitchesToCharacters,
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__space_bar_switches_to_characters__label"),
                 title = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__label),
                 summary = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__summary),
             )

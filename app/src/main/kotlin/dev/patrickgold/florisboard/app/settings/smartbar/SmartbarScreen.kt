@@ -18,7 +18,9 @@ package dev.patrickgold.florisboard.app.settings.smartbar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
@@ -37,11 +39,13 @@ fun SmartbarScreen() = FlorisScreen {
     content {
         SwitchPreference(
             prefs.smartbar.enabled,
+            modifier = Modifier.settingsSearchAnchor("pref__smartbar__enabled__label"),
             title = stringRes(R.string.pref__smartbar__enabled__label),
             summary = stringRes(R.string.pref__smartbar__enabled__summary),
         )
         ListPreference(
             listPref = prefs.smartbar.layout,
+            modifier = Modifier.settingsSearchAnchor("pref__smartbar__layout__label"),
             title = stringRes(R.string.pref__smartbar__layout__label),
             entries = enumDisplayEntriesOf(SmartbarLayout::class),
             enabledIf = { prefs.smartbar.enabled isEqualTo true },
@@ -50,6 +54,7 @@ fun SmartbarScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_layout_specific__label)) {
             ListPreference(
                 prefs.suggestion.displayMode,
+                modifier = Modifier.settingsSearchAnchor("pref__suggestion__display_mode__label"),
                 title = stringRes(R.string.pref__suggestion__display_mode__label),
                 entries = enumDisplayEntriesOf(CandidatesDisplayMode::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
@@ -57,6 +62,7 @@ fun SmartbarScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.smartbar.flipToggles,
+                modifier = Modifier.settingsSearchAnchor("pref__smartbar__flip_toggles__label"),
                 title = stringRes(R.string.pref__smartbar__flip_toggles__label),
                 summary = stringRes(R.string.pref__smartbar__flip_toggles__summary),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
@@ -72,6 +78,7 @@ fun SmartbarScreen() = FlorisScreen {
             }
             SwitchPreference(
                 prefs.smartbar.sharedActionsAutoExpandCollapse,
+                modifier = Modifier.settingsSearchAnchor("pref__smartbar__shared_actions_auto_expand_collapse__label"),
                 title = stringRes(R.string.pref__smartbar__shared_actions_auto_expand_collapse__label),
                 summary = "[Since v0.4.1] Always enabled due to UX issues",
                 enabledIf = { false },
@@ -79,6 +86,7 @@ fun SmartbarScreen() = FlorisScreen {
             )
             ListPreference(
                 listPref = prefs.smartbar.extendedActionsPlacement,
+                modifier = Modifier.settingsSearchAnchor("pref__smartbar__extended_actions_placement__label"),
                 title = stringRes(R.string.pref__smartbar__extended_actions_placement__label),
                 entries = enumDisplayEntriesOf(ExtendedActionsPlacement::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },

@@ -26,12 +26,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,11 +40,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.LocalModelDownloads
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalModelSpec
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -59,19 +58,26 @@ fun LocalModelSection(
     onActiveModelChange: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
 
-    // Bumped after an install/delete to recompute which models are present on disk.
+    // Downloads run app-scoped (issue #207) so they survive this dialog closing / the app being left; the
+    // installed set is recomputed on a local delete tick and whenever a background download finishes.
     var refreshTick by remember { mutableStateOf(0) }
-    val installed = remember(refreshTick) { LocalModelManager.installedIds(context).toSet() }
-
-    // modelId -> download progress in 0..100 (absent = not downloading). errors: modelId -> message.
-    val progress = remember { mutableStateMapOf<String, Int>() }
-    val errors = remember { mutableStateMapOf<String, String>() }
-    val jobs = remember { mutableMapOf<String, Job>() }
+    val installedTick by LocalModelDownloads.installedTick.collectAsState()
+    val installed = remember(refreshTick, installedTick) { LocalModelManager.installedIds(context).toSet() }
+    val downloads by LocalModelDownloads.state.collectAsState()
     var pendingDelete by remember { mutableStateOf<LocalModelSpec?>(null) }
 
     val downloadFailed = stringRes(R.string.dictate__local_model_download_failed)
+    val backgroundHint = stringRes(R.string.dictate__local_model_download_background)
+
+    // When a background download finishes (tick increments) and nothing usable is active, adopt the freshly
+    // installed model. The initial tick (0) is skipped so merely opening the dialog never changes the pick.
+    LaunchedEffect(installedTick) {
+        if (installedTick > 0) {
+            val ids = LocalModelManager.installedIds(context)
+            if (activeModelId !in ids) ids.firstOrNull()?.let { onActiveModelChange(it) }
+        }
+    }
 
     Column {
         Text(
@@ -82,38 +88,21 @@ fun LocalModelSection(
         )
 
         LocalModelCatalog.all.forEach { spec ->
+            val dl = downloads[spec.id]
             ModelRow(
                 spec = spec,
                 isInstalled = spec.id in installed,
                 isActive = spec.id == activeModelId,
-                downloadPercent = progress[spec.id],
-                error = errors[spec.id],
+                downloadPercent = dl?.takeIf { it.error == null }?.percent,
+                error = if (dl?.error != null) downloadFailed else null,
                 onSelect = { if (spec.id in installed) onActiveModelChange(spec.id) },
                 onInstall = {
-                    errors.remove(spec.id)
-                    progress[spec.id] = 0
-                    jobs[spec.id] = scope.launch {
-                        try {
-                            LocalModelManager.download(context, spec) { done, total ->
-                                val pct = if (total > 0) (done * 100 / total).toInt() else 0
-                                if (progress[spec.id] != pct) progress[spec.id] = pct
-                            }
-                            refreshTick++
-                            // Auto-select the freshly installed model if nothing usable is active yet.
-                            if (activeModelId.isBlank() || activeModelId !in LocalModelManager.installedIds(context)) {
-                                onActiveModelChange(spec.id)
-                            }
-                        } catch (_: CancellationException) {
-                            // user cancelled; staging dir already cleaned up by the manager
-                        } catch (_: Throwable) {
-                            errors[spec.id] = downloadFailed
-                        } finally {
-                            progress.remove(spec.id)
-                            jobs.remove(spec.id)
-                        }
-                    }
+                    LocalModelDownloads.clearError(spec.id)
+                    LocalModelDownloads.start(context, spec)
+                    // Tell the user right away that they can leave — it keeps going in the background.
+                    Toast.makeText(context, backgroundHint, Toast.LENGTH_SHORT).show()
                 },
-                onCancel = { jobs[spec.id]?.cancel() },
+                onCancel = { LocalModelDownloads.cancel(spec.id) },
                 onDelete = { pendingDelete = spec },
             )
         }

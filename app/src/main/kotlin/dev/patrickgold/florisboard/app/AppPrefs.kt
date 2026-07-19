@@ -31,6 +31,8 @@ import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
+import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
+import dev.patrickgold.florisboard.dictate.gif.GifHistory
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
@@ -433,6 +435,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_undo_enabled",
             default = false,
         )
+        // Safety net (issue #214): unconditionally copy every floating-button dictation to the system
+        // clipboard, so nothing is lost if the accessibility insert is silently swallowed (the known
+        // "green check but no text" failure) — the user can then just paste it manually. Off by default
+        // because it overwrites the clipboard on every dictation (and shows a system clipboard toast on
+        // some OEMs like Samsung).
+        val floatingButtonCopyToClipboard = boolean(
+            key = "dictate__floating_button_copy_to_clipboard",
+            default = false,
+        )
         // Whether the user has opened the floating-button screen at least once (clears the "New" badge).
         val floatingButtonHintSeen = boolean(
             key = "dictate__floating_button_hint_seen",
@@ -673,6 +684,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__rewording_reasoning_effort",
             default = DictateReasoningEffort.OFF,
         )
+        // The wire value sent as `reasoning_effort` when the setting is CUSTOM (issue #186), e.g. a value
+        // a specific provider expects. Blank → the field is omitted.
+        val rewordingReasoningEffortCustom = string(
+            key = "dictate__rewording_reasoning_effort_custom",
+            default = "",
+        )
         // How the rewording prompt chips are surfaced: a dedicated panel (PANEL) opened from the
         // Smartbar, or an always-on extra row pinned above the Smartbar (ROW). See DictatePromptsLayout.
         // Defaults to ROW so the prompts are immediately visible; existing users are moved to ROW once via
@@ -687,6 +704,24 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val legacyLayout = enum(
             key = "dictate__legacy_layout",
             default = DictateLegacyLayout.OFF,
+        )
+        // Configurable legacy action row (#183/#194): comma-separated LegacyEditAction names, arranged by
+        // the user via drag-and-drop. Default reproduces the original fixed row.
+        val legacyActionRow = string(
+            key = "dictate__legacy_action_row",
+            default = "SELECT_ALL,UNDO,REDO,CUT,COPY,PASTE,EMOJI,NUMBERS",
+        )
+        // How many rows of prompt/revision buttons the legacy prompt strip shows (1 or 2, issue #194/#8).
+        val legacyPromptRows = int(
+            key = "dictate__legacy_prompt_rows",
+            default = 1,
+        )
+        // Characters offered by the classic layout's Enter-key long-press popup (#196): hold Enter, swipe
+        // left/right to pick one, release to insert. Up to 8 individual characters (whitespace ignored);
+        // empty disables the popup so Enter just inserts a newline as usual.
+        val enterLongPressChars = string(
+            key = "dictate__enter_long_press_chars",
+            default = ".,?!:;-…",
         )
         // Chat (rewording) provider id – any chat-capable ProviderRegistry id ("openai", "groq",
         // "openrouter", … or "custom"). Independent from the transcription provider.
@@ -822,6 +857,34 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val suggestionCandidateMaxCount = int(
             key = "emoji__suggestion_candidate_max_count",
             default = 5,
+        )
+    }
+
+    val gif = Gif()
+    inner class Gif {
+        val enabled = boolean(
+            key = "gif__enabled",
+            default = false,
+        )
+        // Bring-your-own KLIPY API key (see KlipyGifProvider). Empty = GIF search disabled.
+        val klipyApiKey = string(
+            key = "gif__klipy_api_key",
+            default = "",
+        )
+        val contentFilter = enum(
+            key = "gif__content_filter",
+            default = GifContentFilter.HIGH,
+        )
+        // Stable per-install id sent to KLIPY for relevance/localization (generated on first use).
+        val customerId = string(
+            key = "gif__customer_id",
+            default = "",
+        )
+        // Recently searched terms + recently inserted GIFs, for quick re-access.
+        val history = custom(
+            key = "gif__history",
+            default = GifHistory.Empty,
+            serializer = GifHistory.Serializer,
         )
     }
 
@@ -998,6 +1061,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val openFloatingButtonAfterSetup = boolean(
             key = "internal__open_floating_button_after_setup",
             default = false,
+        )
+        // Newline-separated most-recent settings-search queries (newest first), for the search screen's
+        // recent-search chips (issue #187).
+        val settingsSearchHistory = string(
+            key = "internal__settings_search_history",
+            default = "",
         )
         val versionOnInstall = string(
             key = "internal__version_on_install",
@@ -1243,6 +1312,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val autoCorrect = boolean(
             key = "suggestion__auto_correct",
             default = true,
+        )
+        // Multilingual typing (issue #190): accept words from every configured keyboard language, not just
+        // the active one, so a bilingual's second-language words aren't flagged as typos or autocorrected
+        // away. Opt-in; leaves single-language behavior unchanged when off.
+        val multilingualTyping = boolean(
+            key = "suggestion__multilingual_typing",
+            default = false,
         )
         val displayMode = enum(
             key = "suggestion__display_mode",

@@ -9,6 +9,7 @@
 A powerful Whisper AI keyboard for dictation, real-time transcription and typing.
 
 <p>
+  <a href="https://dictatekeyboard.com"><img alt="Website" src="https://img.shields.io/badge/website-dictatekeyboard.com-30B7E6?labelColor=1b1e2b&logo=googlechrome&logoColor=white"></a>
   <a href="https://github.com/DevEmperor/DictateKeyboard/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b&label=release"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Android%206%2B-30B7E6?labelColor=1b1e2b">
@@ -110,9 +111,11 @@ another keyboard is open.
 
 - **Voice dictation with Whisper AI** — highly accurate speech-to-text in dozens of languages, with automatic punctuation. It's so sensitive you can literally *whisper* and still get a clean transcription.
 - **Real-time transcription** — watch your words appear live as you speak, streaming from OpenAI, Deepgram, Soniox, AssemblyAI or ElevenLabs.
-- **On-device transcription** — dictate completely offline with a downloadable on-device model (Whisper or NVIDIA Parakeet): no internet needed and nothing ever leaves your phone.
+- **On-device transcription** — dictate completely offline with a downloadable on-device model (Whisper, NVIDIA Parakeet or a German-specialised Parakeet): no internet needed and nothing ever leaves your phone. Models keep downloading in the background even if you leave the app.
+- **Transcription history** — every dictation is saved to a searchable history you can re-insert, replay, re-transcribe or pin, with full control over how long audio is kept.
+- **Long-form dictation** — speak for as long as you like: long recordings are transcribed in the background in segments, so you get your text sooner and never hit a length limit.
 - **Glide typing, suggestions & autocorrect** — Dictate is now a complete typing keyboard too: swipe across the keys to type whole words, with per-language dictionaries, word suggestions, spell check and autocorrect.
-- **Classic keyboard-free dictation layout** — bring back the pure, voice-first screen from Dictate 3: lock it in, or keep it just a swipe away from the full keyboard.
+- **Classic keyboard-free dictation layout** — bring back the pure, voice-first screen from Dictate 3: lock it in, or keep it just a swipe away from the full keyboard — now with a fully customizable action row (drag & drop), an Enter-key symbol popup and long-form controls.
 - **Wear OS keyboard** — dictate straight from your watch, tethered through your phone or fully standalone.
 - **Floating dictation button** — dictate straight into **any** app, even when another keyboard is active. Pick from three styles (Pill, Ring, Orb), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press to reword.
 - **AI rewording & rewriting** — turn a selection into something more formal, casual, translated, summarised, or anything you define with custom prompts, with adjustable reasoning effort.
@@ -121,7 +124,9 @@ another keyboard is open.
 - **Find & replace rules** — automatically fix recurring words, names or phrases in every transcript.
 - **Single-call multimodal mode** — let one audio-capable AI model transcribe *and* format in a single request, for lower latency and cost.
 - **Custom prompts & snippets** — build your own reword actions; reusable text snippets are inserted instantly without an API call.
-- **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost.
+- **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
+- **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
+- **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
   - Huge variety of keyboard layouts and easy language/subtype switching
   - Full theme customization with day/night presets, automatic switching and a high-contrast E-Reader theme
@@ -140,6 +145,7 @@ another keyboard is open.
   <img alt="Soniox" src="https://img.shields.io/badge/Soniox-2A6DF4">
   <img alt="Mistral" src="https://img.shields.io/badge/Mistral-FA520F">
   <img alt="OpenRouter" src="https://img.shields.io/badge/OpenRouter-6467F2">
+  <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-D97757?logo=anthropic&logoColor=white">
   <img alt="Ollama" src="https://img.shields.io/badge/Ollama-111111?logo=ollama&logoColor=white">
   <img alt="and more" src="https://img.shields.io/badge/%2B%20more-30B7E6">
 </p>
@@ -179,6 +185,7 @@ Dictate Keyboard is released under the terms of the
 - See [`LICENSE`](LICENSE) for the full license text and [`NOTICE`](NOTICE) for required
   attribution notices.
 - Speech recognition is powered by [OpenAI Whisper](https://openai.com/index/whisper/).
+- GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.
 
 <br>
 
@@ -190,10 +197,11 @@ easier, you can support development by
 [sponsoring me on GitHub](https://github.com/sponsors/DevEmperor),
 or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — thank you! 🙏
 
-**Dictate's very first sponsor — thank you!** 🎉
+**Dictate's sponsors — thank you!** 🎉
 
 <!-- SPONSORS:START -->
 <p>
   <a href="https://github.com/cnfatman"><img src="https://github.com/cnfatman.png" width="72" alt="Codename: Fatman" title="Codename: Fatman — Dictate's first sponsor 💖"></a>
+  <a href="https://github.com/george1612"><img src="https://github.com/george1612.png" width="72" alt="george1612" title="george1612"></a>
 </p>
 <!-- SPONSORS:END -->

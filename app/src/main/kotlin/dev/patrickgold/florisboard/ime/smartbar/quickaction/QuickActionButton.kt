@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -176,7 +177,14 @@ fun QuickActionButton(
                                 attributes = attributes,
                                 selector = selector,
                             ) {
-                                SnyggIcon(imageVector = imageVector)
+                                // The Material "GIF" glyph draws small lettering inside a lot of padding;
+                                // scale it up so the "GIF" text is legible at the Smartbar icon size.
+                                val iconModifier = if (action.data.code == KeyCode.IME_UI_MODE_GIF) {
+                                    Modifier.scale(1.45f)
+                                } else {
+                                    Modifier
+                                }
+                                SnyggIcon(imageVector = imageVector, modifier = iconModifier)
                             }
                         } else if (label != null) {
                             SnyggText(

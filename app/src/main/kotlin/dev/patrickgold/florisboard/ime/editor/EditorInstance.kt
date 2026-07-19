@@ -20,6 +20,7 @@ import android.content.ClipDescription
 import android.content.ContentUris
 import android.content.Context
 import android.view.KeyEvent
+import androidx.core.content.FileProvider
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.FlorisImeService
@@ -38,9 +39,11 @@ import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
+import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.showShortToastSync
@@ -355,6 +358,61 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
             }
         }
+    }
+
+    /**
+     * Whether the current editor advertises support for committing rich content of [mimeType]
+     * (e.g. `image/gif`) via the Commit Content API. Raw input editors never support it.
+     */
+    fun supportsMediaCommit(mimeType: String): Boolean {
+        if (activeInfo.isRawInputEditor) return false
+        return activeInfo.contentMimeTypes.any { ClipDescription.compareMimeTypes(mimeType, it) }
+    }
+
+    /**
+     * Inserts an already-downloaded media [file] (e.g. a GIF) of the given [mimeType] into the
+     * current editor. When the editor supports the Commit Content API for [mimeType], the file is
+     * committed inline (the way Gboard inserts GIFs); otherwise it is copied to the clipboard as a
+     * fallback so the user can paste it manually. The file is served via the app's FileProvider, so
+     * it must live under a path declared in `res/xml/file_paths.xml` (e.g. `cacheDir/gif-media/`).
+     *
+     * @return the outcome, so the caller can inform the user (inserted vs. copied vs. failed).
+     */
+    fun commitMedia(file: File, mimeType: String, description: CharSequence): MediaCommitResult {
+        if (!file.exists()) return MediaCommitResult.FAILED
+        val uri = try {
+            FileProvider.getUriForFile(appContext, "${appContext.packageName}.provider.file", file)
+        } catch (e: IllegalArgumentException) {
+            flogError { "Cannot expose media file via FileProvider: ${e.message}" }
+            return MediaCommitResult.FAILED
+        }
+        if (supportsMediaCommit(mimeType)) {
+            val ic = currentInputConnection()
+            if (ic != null) {
+                ic.finishComposingText()
+                val info = InputContentInfoCompat(uri, ClipDescription(description, arrayOf(mimeType)), null)
+                val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+                if (InputConnectionCompat.commitContent(ic, activeInfo.base, info, flags, null)) {
+                    return MediaCommitResult.COMMITTED
+                }
+            }
+        }
+        // Fallback: copy to the clipboard (+ system primary clip) for manual pasting.
+        return if (clipboardManager.copyMediaToClipboard(uri, mimeType)) {
+            MediaCommitResult.COPIED_TO_CLIPBOARD
+        } else {
+            MediaCommitResult.FAILED
+        }
+    }
+
+    /** Outcome of [commitMedia]. */
+    enum class MediaCommitResult {
+        /** Inserted inline into the editor via the Commit Content API. */
+        COMMITTED,
+        /** Editor didn't accept the type; copied to the clipboard for manual pasting instead. */
+        COPIED_TO_CLIPBOARD,
+        /** Nothing could be done (invalid file, no input connection, clipboard failure). */
+        FAILED,
     }
 
     /**

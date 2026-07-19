@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
+import dev.patrickgold.florisboard.app.settings.search.SettingsSearchScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.DataAttributionsScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -68,6 +69,7 @@ import dev.patrickgold.florisboard.app.settings.dictate.DictatePromptLibraryScre
 import dev.patrickgold.florisboard.app.settings.dictate.DictatePromptsScreen
 import dev.patrickgold.florisboard.app.settings.dictate.DictateFloatingButtonScreen
 import dev.patrickgold.florisboard.app.settings.dictate.DictateFormattingScreen
+import dev.patrickgold.florisboard.app.settings.dictate.DictateLayoutScreen
 import dev.patrickgold.florisboard.app.settings.dictate.DictateOutputScreen
 import dev.patrickgold.florisboard.app.settings.dictate.DictateRecordingScreen
 import dev.patrickgold.florisboard.app.settings.dictate.DictateRewordingScreen
@@ -125,6 +127,10 @@ object Routes {
         object Home
 
         @Serializable
+        @Deeplink("settings/search")
+        object Search
+
+        @Serializable
         @Deeplink("settings/dictate")
         object Dictate
 
@@ -175,6 +181,10 @@ object Routes {
         @Serializable
         @Deeplink("settings/dictate/output")
         object DictateOutput
+
+        @Serializable
+        @Deeplink("settings/dictate/layout")
+        object DictateLayout
 
         @Serializable
         @Deeplink("settings/dictate/prompts")
@@ -356,6 +366,7 @@ object Routes {
             composable<Setup.Screen> { SetupScreen() }
 
             composableWithDeepLink(Settings.Home::class) { HomeScreen() }
+            composableWithDeepLink(Settings.Search::class) { SettingsSearchScreen() }
 
             composableWithDeepLink(Settings.Dictate::class) { DictateScreen() }
             composableWithDeepLink(Settings.DictateLanguages::class) { DictateLanguagesScreen() }
@@ -367,6 +378,7 @@ object Routes {
             composableWithDeepLink(Settings.DictateFormatting::class) { DictateFormattingScreen() }
             composableWithDeepLink(Settings.DictateRecording::class) { DictateRecordingScreen() }
             composableWithDeepLink(Settings.DictateOutput::class) { DictateOutputScreen() }
+            composableWithDeepLink(Settings.DictateLayout::class) { DictateLayoutScreen() }
             composableWithDeepLink(Settings.DictateStats::class) { DictateStatsScreen() }
             composableWithDeepLink(Settings.DictateHistory::class) { DictateHistoryScreen() }
             composableWithDeepLink(Settings.DictateFloatingButton::class) { DictateFloatingButtonScreen() }

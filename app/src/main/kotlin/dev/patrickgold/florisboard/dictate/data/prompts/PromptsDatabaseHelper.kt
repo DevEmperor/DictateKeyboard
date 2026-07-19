@@ -42,7 +42,8 @@ class PromptsDatabaseHelper private constructor(
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "CREATE TABLE PROMPTS (ID INTEGER PRIMARY KEY, POS INTEGER, NAME TEXT, PROMPT TEXT, " +
-                "REQUIRES_SELECTION BOOLEAN, AUTO_APPLY BOOLEAN DEFAULT 0, REASONING_EFFORT TEXT)"
+                "REQUIRES_SELECTION BOOLEAN, AUTO_APPLY BOOLEAN DEFAULT 0, REASONING_EFFORT TEXT, " +
+                "REASONING_EFFORT_CUSTOM TEXT)"
         )
         // Seed the example prompts for fresh installs only (existing users skip onCreate). These are
         // the same defaults the legacy Dictate app shipped, resolved from string resources so they are
@@ -67,6 +68,10 @@ class PromptsDatabaseHelper private constructor(
             // Per-prompt reasoning-effort override (issue #155). Nullable TEXT holding the enum name;
             // NULL = fall back to the global reasoning setting.
             db.execSQL("ALTER TABLE PROMPTS ADD COLUMN REASONING_EFFORT TEXT")
+        }
+        if (oldVersion < 4) {
+            // Custom wire value used when REASONING_EFFORT is CUSTOM (issue #186).
+            db.execSQL("ALTER TABLE PROMPTS ADD COLUMN REASONING_EFFORT_CUSTOM TEXT")
         }
     }
 
@@ -168,6 +173,7 @@ class PromptsDatabaseHelper private constructor(
         put("REQUIRES_SELECTION", if (requiresSelection) 1 else 0)
         put("AUTO_APPLY", if (autoApply) 1 else 0)
         put("REASONING_EFFORT", reasoningEffort?.name)
+        put("REASONING_EFFORT_CUSTOM", reasoningEffortCustom?.takeIf { it.isNotBlank() })
     }
 
     private fun android.database.Cursor.toPromptModel(): PromptModel {
@@ -176,6 +182,8 @@ class PromptsDatabaseHelper private constructor(
         val reasoning = if (reasoningIdx >= 0 && !isNull(reasoningIdx)) {
             runCatching { DictateReasoningEffort.valueOf(getString(reasoningIdx)) }.getOrNull()
         } else null
+        val customIdx = getColumnIndex("REASONING_EFFORT_CUSTOM")
+        val reasoningCustom = if (customIdx >= 0 && !isNull(customIdx)) getString(customIdx) else null
         return PromptModel(
             id = getInt(getColumnIndexOrThrow("ID")),
             pos = getInt(getColumnIndexOrThrow("POS")),
@@ -184,6 +192,7 @@ class PromptsDatabaseHelper private constructor(
             requiresSelection = getInt(getColumnIndexOrThrow("REQUIRES_SELECTION")) == 1,
             autoApply = getInt(getColumnIndexOrThrow("AUTO_APPLY")) == 1,
             reasoningEffort = reasoning,
+            reasoningEffortCustom = reasoningCustom,
         )
     }
 
@@ -191,7 +200,7 @@ class PromptsDatabaseHelper private constructor(
 
     companion object {
         const val DATABASE_NAME = "prompts.db"
-        const val DATABASE_VERSION = 3
+        const val DATABASE_VERSION = 4
 
         @Volatile
         private var instance: PromptsDatabaseHelper? = null

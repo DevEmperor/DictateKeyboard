@@ -11,6 +11,8 @@
 package dev.patrickgold.florisboard.dictate
 
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.IntentFilter
@@ -31,6 +33,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
+import dev.patrickgold.florisboard.dictate.audio.AudioLevelSmoother
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
 import dev.patrickgold.florisboard.dictate.audio.LiveSpeechSplitter
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
@@ -263,6 +266,15 @@ object DictateController {
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
 
+    private val _audioLevel = MutableStateFlow(0f)
+    /**
+     * Shared, noise-gated microphone level for lightweight recording visuals. Sampling once here keeps
+     * the Smartbar and floating overlay from competing for [RecordingController.maxAmplitude]'s
+     * read-and-reset peak. Values are smoothed and normalized to 0..1 at 20 Hz.
+     */
+    val audioLevel: StateFlow<Float> = _audioLevel.asStateFlow()
+    private var audioLevelJob: Job? = null
+
     // While a recording is active we listen for the screen turning off (device locked / display timeout):
     // that is the reliable "the user has left" signal that finalizes and keeps the recording and releases
     // the mic, instead of depending on IME teardown callbacks that are not always delivered (issue #147).
@@ -271,11 +283,13 @@ object DictateController {
     private var screenOffReceiver: BroadcastReceiver? = null
     private var screenOffContext: Context? = null
 
-    /** Peak mic amplitude (0..32767) since the previous call, or 0 when idle. Drives the overlay waveform. */
-    fun currentAmplitude(): Int = recorder?.maxAmplitude() ?: 0
-
     /** The in-flight transcription coroutine, cancellable via the stop button (see [cancelTranscription]). */
     private var transcribeJob: Job? = null
+
+    // The in-flight manual rewording coroutine (a prompt chip / "Send"), so the stop button can abort it
+    // mid-generation (issue #192). The post-transcription rewording chain instead runs inside
+    // [transcribeJob]; [cancelRewording] cancels whichever is active.
+    private var rewordJob: Job? = null
 
     private var audioManager: AudioManager? = null
     private var focusRequest: AudioFocusRequest? = null
@@ -372,6 +386,9 @@ object DictateController {
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
 
+    /** 20 Hz is responsive for a voice indicator while avoiding a display-rate UI loop. */
+    private const val AUDIO_LEVEL_SAMPLE_MS = 50L
+
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
     private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
@@ -385,10 +402,10 @@ object DictateController {
     fun onMicClick(context: Context, target: OutputTarget = OutputTarget.IME) {
         when (_state.value) {
             is UiState.Recording -> stopAndTranscribe(context)
-            // Tapping the mic while transcribing aborts it (the button shows a stop icon, see the
-            // ComputingEvaluator). Rewording stays a no-op.
+            // Tapping the mic while transcribing or rewording aborts it (the button shows a stop icon,
+            // see the ComputingEvaluator) — e.g. after accidentally sending a prompt (issue #192).
             is UiState.Transcribing -> cancelTranscription()
-            is UiState.Rewording -> Unit
+            is UiState.Rewording -> cancelRewording()
             else -> {
                 outputTarget = target
                 startRecording(context)
@@ -637,6 +654,23 @@ object DictateController {
     }
 
     /**
+     * Aborts an in-flight rewording (the stop button shown on the mic while rewording, issue #192).
+     * Covers both a manually applied prompt ([rewordJob]) and the post-transcription / live-prompt
+     * rewording chain that runs inside [transcribeJob]. Cancelling before the model answer is committed
+     * leaves the field untouched — for a "reword the selection" prompt the original text stays selected
+     * and intact. No-op outside the rewording state.
+     */
+    fun cancelRewording() {
+        if (_state.value !is UiState.Rewording) return
+        rewordJob?.cancel()
+        rewordJob = null
+        transcribeJob?.cancel()
+        transcribeJob = null
+        _pendingPrompts.value = emptyList()
+        _state.value = UiState.Idle
+    }
+
+    /**
      * Starts a recording. [seedAccumulatedMs] pre-fills the elapsed timer (and the credited length) with
      * already-captured audio when continuing an interrupted recording, so the bar shows the running
      * total; it is 0 for a normal recording.
@@ -679,6 +713,7 @@ object DictateController {
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
+                startAudioLevelSampling()
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
                 _livePromptActive.value = livePromptArmed
                 if (segmented) initSegmented(appContext)
@@ -694,6 +729,24 @@ object DictateController {
                     appContext.getString(R.string.dictate__error_recording_failed, t.message ?: ""),
                 )
             }
+        }
+    }
+
+    /** Samples the recorder once for all UI consumers; the job ends itself with the recording state. */
+    private fun startAudioLevelSampling() {
+        audioLevelJob?.cancel()
+        val smoother = AudioLevelSmoother()
+        audioLevelJob = scope.launch {
+            while (_state.value is UiState.Recording) {
+                val recording = _state.value as UiState.Recording
+                _audioLevel.value = if (recording.paused) {
+                    smoother.reset()
+                } else {
+                    smoother.update(recorder?.maxAmplitude() ?: 0)
+                }
+                delay(AUDIO_LEVEL_SAMPLE_MS)
+            }
+            _audioLevel.value = smoother.reset()
         }
     }
 
@@ -1015,6 +1068,16 @@ object DictateController {
             realtimeShown.setLength(0)
             if (prefs.dictate.autoEnter.get() && outputText.isNotEmpty()) outSink.performEnter()
         } else {
+            // Safety net (#214): for the floating button, optionally copy every dictation to the system
+            // clipboard so nothing is lost if the accessibility insert is silently swallowed (the known
+            // "green check but no text" case). Done BEFORE the commit on purpose: the paste-fallback captures
+            // the current clipboard as "previous" and restores it 400 ms later, so with our text already on
+            // the clipboard that restore becomes a no-op instead of wiping the copy.
+            if (outputTarget == OutputTarget.OVERLAY && outputText.isNotEmpty() &&
+                prefs.dictate.floatingButtonCopyToClipboard.get()
+            ) {
+                copyToSystemClipboard(appContext, outputText)
+            }
             val committed = commitOutput(appContext, outputText)
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
@@ -1045,6 +1108,12 @@ object DictateController {
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
             maybePromptForReview()
         }
+    }
+
+    /** Copies [text] to the system clipboard — the floating-button always-copy safety net (issue #214). */
+    private fun copyToSystemClipboard(context: Context, text: String) {
+        val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
+        runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
     }
 
     // --- Real-time streaming (issue #128) -------------------------------------------------------
@@ -1290,11 +1359,30 @@ object DictateController {
     }
 
     /**
+     * Cancel-button behaviour: in long-form mode, tapping the trash button ends the recording but keeps
+     * everything transcribed so far — the already-committed segments are finalized and saved to history as
+     * usual; only the current, not-yet-cut chunk is thrown away instead of being transcribed (#183).
+     * Outside long-form it aborts the whole recording ([cancelRecording]). Used by both the Smartbar and
+     * the legacy layout so the trash button behaves consistently.
+     */
+    fun cancelOrDiscardSegment(context: Context) {
+        if (segmentedActive && _state.value is UiState.Recording) {
+            stopSegmentedAndFinalize(context, discardFinal = true)
+        } else {
+            cancelRecording()
+        }
+    }
+
+    /**
      * Stops a segmented recording: cuts the final open segment, then finishes once every queued segment
      * has transcribed and been committed in order — at which point the whole assembled transcript runs
      * through the normal post-processing once (auto-format + prompts + mappings) and replaces the preview.
+     *
+     * [discardFinal] (the cancel button, #183) throws the final open chunk away instead of transcribing it,
+     * so the session still finalizes + saves to history with everything captured up to the last cut, but
+     * the current unfinished utterance is dropped.
      */
-    private fun stopSegmentedAndFinalize(context: Context) {
+    private fun stopSegmentedAndFinalize(context: Context, discardFinal: Boolean = false) {
         val appContext = context.applicationContext
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
@@ -1308,14 +1396,19 @@ object DictateController {
                 recorder = null
                 val w = withContext(Dispatchers.IO) { activeRecorder?.stop() }
                 cleanupAudioRouting()
-                if (segmentKeepAudio && w != null && w.exists() && w.length() > 0L) segmentAudioFiles[i] = w
+                if (discardFinal) {
+                    // Deleted chunk: drop its audio so it lands in neither the transcript nor the history WAV.
+                    withContext(Dispatchers.IO) { runCatching { w?.delete() } }
+                } else if (segmentKeepAudio && w != null && w.exists() && w.length() > 0L) {
+                    segmentAudioFiles[i] = w
+                }
                 segmentStopped = true
                 segmentInFlightCount++
                 _segmentsInFlight.value = segmentInFlightCount
                 i to w
             }
             val (idx, wav) = assigned
-            if (wav != null && wav.exists() && wav.length() > 0L) {
+            if (!discardFinal && wav != null && wav.exists() && wav.length() > 0L) {
                 launchSegmentTranscription(appContext, idx, wav)
             } else {
                 onSegmentResult(appContext, idx, "")
@@ -2185,12 +2278,15 @@ object DictateController {
         }
 
         _state.value = UiState.Rewording(prompt.name ?: appContext.getString(R.string.dictate__status_rewording))
-        scope.launch {
+        // Store the job so the stop button can abort this reword mid-generation (issue #192).
+        rewordJob = scope.launch {
             try {
-                val text = requestReword(raw, input, prompt.reasoningEffort)
+                val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 sink.commitText(text)
                 _state.value = UiState.Idle
+            } catch (e: CancellationException) {
+                throw e // stop button pressed: cancelRewording already reset the state, leave the field as-is
             } catch (e: DictateApiException) {
                 _state.value = apiError(e, appContext, canResend = false)
             } catch (t: Throwable) {
@@ -2199,6 +2295,8 @@ object DictateController {
                     kind = DictateApiException.Kind.UNKNOWN,
                     detail = t.message?.takeIf { it.isNotBlank() },
                 )
+            } finally {
+                rewordJob = null
             }
         }
     }
@@ -2259,7 +2357,7 @@ object DictateController {
             if (instruction.isBlank()) continue
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             text = runCatching {
-                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort)
+                requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(text)
         }
         return text
@@ -2288,7 +2386,7 @@ object DictateController {
             }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             result = runCatching {
-                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort)
+                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
             }.getOrDefault(result)
         }
         return result
@@ -2303,6 +2401,7 @@ object DictateController {
         instruction: String,
         input: String?,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val sys = systemPrompt()
         val content = buildString {
@@ -2310,7 +2409,7 @@ object DictateController {
             if (sys.isNotBlank()) append("\n\n").append(sys)
             if (!input.isNullOrBlank()) append("\n\n").append(input)
         }
-        return requestRewordRaw(content, reasoning)
+        return requestRewordRaw(content, reasoning, reasoningCustom)
     }
 
     /**
@@ -2320,6 +2419,7 @@ object DictateController {
     private suspend fun requestRewordRaw(
         userContent: String,
         reasoning: DictateReasoningEffort? = null,
+        reasoningCustom: String? = null,
     ): String {
         val account = rewordingAccount()
         // Blank rewording key falls back to the transcription account's key (legacy "reuse" behavior).
@@ -2335,13 +2435,22 @@ object DictateController {
             proxy = prefs.dictate.dictateProxyConfig(),
             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
         )
+        // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
+        // setting (#155). OFF → null → field omitted. CUSTOM (#186) uses a user-entered wire value —
+        // the per-prompt one when the override itself is CUSTOM, else the global custom value.
+        val effort = reasoning ?: prefs.dictate.rewordingReasoningEffort.get()
+        val reasoningWire = if (effort == DictateReasoningEffort.CUSTOM) {
+            val custom = if (reasoning == DictateReasoningEffort.CUSTOM) {
+                reasoningCustom
+            } else {
+                prefs.dictate.rewordingReasoningEffortCustom.get()
+            }
+            custom?.trim()?.ifBlank { null }
+        } else {
+            effort.wire
+        }
         val result = client.complete(
-            ChatRequest.ofUser(
-                model, userContent,
-                // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the
-                // global setting (#155). OFF → null → field omitted.
-                reasoningEffort = (reasoning ?: prefs.dictate.rewordingReasoningEffort.get()).wire,
-            ),
+            ChatRequest.ofUser(model, userContent, reasoningEffort = reasoningWire),
         ).text.trim()
         // Lifetime statistics (issue #142): every rewording/prompt pass funnels through here.
         DictateStats.recordRewording(prefs)

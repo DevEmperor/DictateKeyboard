@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">نقل لوحة المفاتيح إلى اليسار.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">نقل لوحة المفاتيح إلى اليمين.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">الرموز التعبيرية</string>
+    <string name="settings__media__title">الرموز التعبيرية وGIFs</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">الرموز التعبيرية</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">وجوه تعبيرية</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">كاوموجي</string>
@@ -112,12 +112,18 @@
     <string name="settings__home__title" comment="Title of the Home screen">مرحبا بكم في {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">لم يتم تمكين {app_name} في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">لم يتم تعيين {app_name} كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
+    <string name="settings__search__title" comment="Title of the settings search screen">البحث في الإعدادات</string>
+    <string name="settings__search__placeholder" comment="Placeholder in the settings search field">البحث في الإعدادات…</string>
+    <string name="settings__search__recent" comment="Header above recently used search terms">عمليات البحث الأخيرة</string>
+    <string name="settings__search__clear_recent" comment="Button to clear the recent searches">مسح عمليات البحث الأخيرة</string>
+    <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">شائعة</string>
+    <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">لم يتم العثور على إعدادات</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">أدارة حزم اللغات المثبتة</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">تجريبي: إدارة الإضافات التي تضيف دعمًا للغات معينة (الإدخال الصيني المستند إلى الشكل في الوقت الحالي)</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">تجريبي: إضافات تضيف لغات معينة (الصينية القائمة على الشكل حاليًا).</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل النوع الفرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة الأساسية</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">تخصيص المنبثقة</string>
@@ -157,6 +163,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق نهاري</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">لون التمييز (Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">أدارة السمات المثبتة</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق {app_name}</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">الذاكرة الداخلية</string>
@@ -311,8 +318,8 @@
     <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">تشمل اللكنات النوافذ المنبثقة للرموز</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">يضيف الرموز المنبثقة إلى لهجات التخطيط الافتراضي</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">مفتاح المسافة يبدل إلى الأحرف</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">يعود تلقائيًا إلى الأحرف عندما تكون في الرموز أو الأرقام</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">شريط المسافة يعود إلى الأحرف</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">في تخطيط الرموز/الأرقام، يعيدك شريط المسافة إلى لوحة الأحرف.</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">علامة وضع التخفي</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
@@ -395,7 +402,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">الضغط على حذف ثم يمينا بعد الانزلاق يحذف الكلمة بأكملها</string>
     <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات العامة</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">إيماءات شريط المسافة</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى / حدود الإيماءات</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">السحب للأعلى</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">السحب للأسفل</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
@@ -461,6 +468,7 @@
     <string name="setup__finish_up__description_p2">إذا واجهت أي مشاكل أو أخطاء أو أعطال أو اذا كنت ترغب فقط في تقديم اقتراح ، تحقق من مستودع المشروع من شاشة \"حول التطبيق\"!</string>
     <string name="setup__finish_up__finish_btn">أبدأ بالتخصيص</string>
     <!-- Physical keyboard -->
+    <string name="physical_keyboard__system_settings__title">إعدادات لوحة المفاتيح الفيزيائية</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">النسخ الإحتياطي و الإستعادة</string>
     <string name="backup_and_restore__back_up__title">النسخ الاحتياطي للبيانات</string>
@@ -550,6 +558,7 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">التنظيف التلقائي للأصناف الحساسة بعد</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">مسح المقطع يؤثر على السجل</string>
     <string name="send_to_clipboard__unknown_error">حدث خطأ غير معروف. حاول مرة اخرى!</string>
     <string name="send_to_clipboard__type_not_supported_error">هذا النوع من الوسائط غير مدعوم.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">نسخ الصورة أدناه إلى الحافظة.</string>
@@ -917,7 +926,7 @@
     <string name="quick_action__dictate_prompts">مطالبات الذكاء الاصطناعي</string>
     <string name="quick_action__dictate_prompts__tooltip">افتح مطالبات إعادة الصياغة بالذكاء الاصطناعي</string>
     <string name="about__based_on_floris__title">مبني على FlorisBoard</string>
-    <string name="about__based_on_floris__summary">نسخة معدّلة من FlorisBoard من إعداد Patrick Goldinger والمساهمين، مرخّصة بموجب Apache 2.0. انقر لفتح المشروع الأصلي.</string>
+    <string name="about__based_on_floris__summary">نسخة معدّلة من FlorisBoard من إعداد Patrick Goldinger والمساهمين، برخصة Apache 2.0. انقر لفتحه.</string>
     <string name="about__made_by">صُنع بـ ❤️ بواسطة DevEmperor\nSoli deo gloria ✝️</string>
     <string name="about__feedback__title">الملاحظات والدعم</string>
     <string name="about__feedback__summary">أرسل بريدًا إلكترونيًا بأسئلة أو أخطاء أو أفكار</string>
@@ -977,6 +986,8 @@
     <string name="dictate__floating_button_color_title">لون الزر</string>
     <string name="dictate__floating_button_design_orb">كرة</string>
     <string name="dictate__floating_button_design_orb_summary">كرة مصمتة تتوهج وتنبض مع صوتك أثناء التسجيل.</string>
+    <string name="dictate__floating_button_design_cloud">سحابة</string>
+    <string name="dictate__floating_button_design_cloud_summary">كرة سحابية انسيابية تتدفق وتتفاعل مع صوتك أثناء التسجيل.</string>
     <string name="dictate__floating_button_design_pill">كبسولة</string>
     <string name="dictate__floating_button_design_pill_summary">تتوسّع عند النشاط لإظهار مؤقّت وموجة صوتية حية.</string>
     <string name="dictate__floating_button_design_ring">حلقة</string>
@@ -998,7 +1009,7 @@
     <string name="dictate__floating_button_snap_title">الالتصاق بالحافة</string>
     <string name="dictate__interrupted_recording">تمت المقاطعة ({time})</string>
     <string name="dictate__providers_summary_both">النسخ: {transcription} · إعادة الصياغة: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">يحتفظ بآخر إملاء ناجح لك حتى تتمكن من إدراجه مجددًا بزر «إعادة الإدراج» في Smartbar — شبكة أمان إذا تم مسح حقل النص بسبب تدوير الشاشة أو تبديل التطبيق. أضف الزر عبر محرّر Smartbar. يُخزَّن على هذا الجهاز فقط حتى الإملاء التالي.</string>
+    <string name="dictate__remember_last_dictation_summary">يحتفظ بآخر إملاء لك لتتمكن من إعادة إدراجه عبر زر «إعادة الإدراج» في Smartbar.</string>
     <string name="dictate__remember_last_dictation_title">تذكّر آخر إملاء</string>
     <string name="changelog__v4_2_0">• جديد: زر إملاء عائم — أملِ مباشرةً في أي تطبيق، حتى عندما تكون لوحة مفاتيح أخرى نشطة. اختر من بين ثلاثة أنماط (كبسولة، حلقة، كرة)، وشاهد موجة صوتية حية أثناء التحدث، واسحبه إلى أي مكان مع الالتصاق بالحواف، واضبط لونه وحجمه، واضغط مطولاً لإعادة الصياغة. فعّله من الإعدادات ▸ Dictate ▸ الزر العائم.\n• جديد: Google Gemini — استخدم مفتاح API الخاص بك من AI Studio للنسخ وإعادة الصياغة.\n• تظهر المطالبات الآن افتراضيًا في صف ثابت فوق المفاتيح.\n• إدراج نص أكثر موثوقية عبر التطبيقات، بما في ذلك المتصفحات ولوحات المفاتيح الأخرى.</string>
     <string name="dictate__promo_floating_button_message">جديد: أملِ في أي تطبيق</string>
@@ -1128,7 +1139,7 @@
     <string name="dictate__realtime_title">النسخ الفوري</string>
     <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه</string>
     <string name="dictate__longform_title">الإملاء الطويل</string>
-    <string name="dictate__longform_summary">يفرّغ الإملاءات الطويلة نصيًّا في الخلفية، جزءًا تلو الآخر بينما تواصل التحدث — اضغط على «المقطع التالي» أثناء التسجيل لإرسال الجزء الحالي، حتى لا يكون هناك انتظار طويل في النهاية.</string>
+    <string name="dictate__longform_summary">يفرّغ الكلام نصيًّا في الخلفية بينما تواصل التحدث — اضغط «التالي» لإرسال كل جزء.</string>
     <string name="dictate__longform_autosplit_title">التقسيم التلقائي عند التوقّف</string>
     <string name="dictate__longform_autosplit_summary">يقطع مقطعًا تلقائيًّا أيضًا بعد توقّف طويل بما يكفي، وليس فقط بزر «المقطع التالي».</string>
     <string name="dictate__longform_autosplit_threshold_title">مدة التوقّف</string>
@@ -1157,6 +1168,8 @@
     <string name="dictate__formatting_menu_summary">موجّه الأسلوب، كلمات مخصّصة، استبدالات</string>
     <string name="dictate__recording_menu_summary">الوقت الفعلي، مصدر الصوت، التسجيل الفوري</string>
     <string name="dictate__output_menu_summary">إدخال تلقائي، سرعة الكتابة، إعادة الإرسال</string>
+    <string name="dictate__layout_title">تخطيط الإملاء</string>
+    <string name="dictate__layout_menu_summary">التخطيط الكلاسيكي ومظهر لوحة المفاتيح</string>
     <string name="dictate__languages_group">اللغات</string>
     <string name="dictate__languages_title">لغات التفريغ النصي</string>
     <string name="dictate__languages_summary">اختر اللغات التي تُملي بها. بدّل بينها بسرعة من شريط التسجيل.</string>
@@ -1285,6 +1298,10 @@
     <string name="dictate__local_model_action_cancel">إلغاء</string>
     <string name="dictate__local_model_downloading">جارٍ التنزيل… {percent}%</string>
     <string name="dictate__local_model_download_failed">فشل التنزيل — يرجى المحاولة مرة أخرى</string>
+    <string name="dictate__local_model_download_background">يجري التنزيل في الخلفية — يمكنك مغادرة التطبيق.</string>
+    <string name="dictate__local_model_notif_channel_name">تنزيلات النماذج</string>
+    <string name="dictate__local_model_notif_title">جارٍ تنزيل {model}</string>
+    <string name="dictate__local_model_notif_title_multi">جارٍ تنزيل {count} نماذج</string>
     <string name="dictate__local_model_none_selected">لم يتم تنزيل أي نموذج بعد</string>
     <string name="dictate__local_model_delete_confirm">حذف ”{model}“؟ يمكنك تنزيله مرة أخرى لاحقًا.</string>
     <string name="dictate__local_model_not_installed_error">لا يوجد نموذج محلي مُنزَّل</string>
@@ -1292,12 +1309,15 @@
     <string name="dictate__local_fallback_summary">عند عدم الاتصال، فرّغ الصوت محليًا بالنموذج المُنزَّل بعد فشل المزوّد</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">مطالبات إعادة الصياغة المحفوظة</string>
     <string name="dictate__floating_button_undo_failed">تعذّر التراجع — ربما تغيّر النص.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">نسخ كل إملاء إلى الحافظة</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">يُنسخ كل إملاء أيضًا إلى الحافظة، حتى تتمكن من لصقه يدويًا إذا فشل الإدراج. قد يُظهر إشعار الحافظة على بعض الهواتف.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">يتم إدراج الإملاءات فقط، دون نسخها إلى الحافظة.</string>
     <string name="dictate__floating_button_undo_summary_off">لا يظهر زر التراجع.</string>
     <string name="dictate__floating_button_undo_summary_on">بعد الإملاء، يظهر زر تراجع بجانب الزر لإزالة النص المُدرَج بنقرة واحدة.</string>
     <string name="dictate__floating_button_undo_title">زر التراجع</string>
     <string name="dictate__mappings_add">إضافة تعيين</string>
     <string name="dictate__mappings_editor_title">التعيين</string>
-    <string name="dictate__mappings_empty_summary">أضف قاعدة لاستبدال الكلمات أو العبارات تلقائيًا في كل نص منسوخ — بدقة ودون استهلاك رموز الذكاء الاصطناعي.</string>
+    <string name="dictate__mappings_empty_summary">أضف قاعدة لاستبدال الكلمات أو العبارات تلقائيًا في كل نص — بدقة ودون رموز ذكاء اصطناعي.</string>
     <string name="dictate__mappings_empty_title">لا توجد تعيينات بعد</string>
     <string name="dictate__mappings_entry_summary">قواعد البحث والاستبدال المطبَّقة على النص المنسوخ</string>
     <string name="dictate__mappings_field_from">استبدال</string>
@@ -1331,7 +1351,7 @@
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">خيارات الإملاء من ساعة مقترنة</string>
     <string name="dictate__wear_install_title">تثبيت Dictate على ساعتك</string>
-    <string name="dictate__wear_install_summary">يفتح Play Store. على ساعة مقترنة (Wear OS 3 أو أحدث)، اختر ساعتك كوجهة للتثبيت.</string>
+    <string name="dictate__wear_install_summary">يفتح Play Store — على ساعة Wear OS 3+ مقترنة، اختر ساعتك كوجهة.</string>
     <string name="dictate__wear_auto_rewording_title">إعادة صياغة إملاءات الساعة تلقائيًا</string>
     <string name="dictate__wear_auto_rewording_summary">أعد صياغة الإملاءات من الساعة، كما في الهاتف.</string>
     <string name="quick_action__system_prev_input_method">تبديل لوحة المفاتيح</string>
@@ -1347,13 +1367,14 @@
     <string name="dictate__audio_source_unprocessed">غير معالَج (خام)</string>
     <string name="dictate__audio_source_unprocessed_summary">بدون أي معالجة؛ يعود إلى التعرف على الكلام إذا كان هاتفك لا يدعمه</string>
     <string name="dictate__security_group">الأمان</string>
-    <string name="dictate__trust_user_certs_title">الوثوق بالشهادات المثبَّتة من المستخدم</string>
+    <string name="dictate__trust_user_certs_title">الوثوق بشهادات المستخدم</string>
     <string name="dictate__trust_user_certs_summary">الوثوق بشهادات CA التي ثبَّتها بنفسك، للنقاط المستضافة ذاتيًا خلف هيئة شهادات خاصة.</string>
     <string name="dictate__stats_title">الإحصاءات</string>
     <string name="dictate__stats_menu_summary">الكلمات والوقت الموفَّر والتتابع والمزيد</string>
     <string name="dictate__history_title">السجل</string>
     <string name="dictate__history_menu_summary">إعادة تشغيل الإملاءات السابقة وإعادة إدراجها وإدارتها</string>
     <string name="dictate__history_empty">لا توجد إملاءات بعد — ستظهر إملاءاتك الأخيرة هنا.</string>
+    <string name="dictate__history_loading">جارٍ التحميل…</string>
     <string name="dictate__history_enable_title">الاحتفاظ بسجل</string>
     <string name="dictate__history_enable_summary">سجّل الإملاءات لإعادة إدراجها أو مراجعتها لاحقًا.</string>
     <string name="dictate__history_audio_title">الاحتفاظ بالصوت</string>
@@ -1415,6 +1436,7 @@
     <string name="dictate__reasoning_effort_medium_summary">توازن بين التفكير والسرعة</string>
     <string name="dictate__reasoning_effort_high">مرتفع</string>
     <string name="dictate__reasoning_effort_high_summary">أكثر تفكيرًا، أبطأ</string>
+    <string name="dictate__reasoning_effort_custom">مخصص</string>
     <string name="dictate__action_save_audio">حفظ الصوت</string>
     <string name="dictate__audio_saved">تم حفظ الصوت في Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">تعذّر حفظ الصوت</string>
@@ -1428,6 +1450,8 @@
     <string name="settings__localization__subtype_status_context">السياق</string>
     <string name="pref__suggestion__auto_correct__label">التصحيح التلقائي</string>
     <string name="pref__suggestion__auto_correct__summary">تصحيح الأخطاء المطبعية تلقائيًا عند كتابة مسافة</string>
+    <string name="pref__suggestion__multilingual_typing__label">الكتابة متعددة اللغات</string>
+    <string name="pref__suggestion__multilingual_typing__summary">قبول الكلمات من جميع لغات لوحة المفاتيح لديك</string>
     <string name="dictate__legacy_record">تسجيل</string>
     <string name="dictate__legacy_stop">إيقاف</string>
     <string name="dictate__legacy_switch_keyboard">تبديل لوحة المفاتيح</string>
@@ -1446,10 +1470,11 @@
     <string name="dictate__legacy_select_all">تحديد الكل</string>
     <string name="dictate__floating_button_retry_hint">%1$s — انقر لإعادة المحاولة</string>
     <string name="dictate__haptic_feedback_title">ملاحظات لمسية</string>
-    <string name="dictate__haptic_feedback_summary">يهتز عند بدء/إيقاف التسجيل، وعند جاهزية النسخ، وعند تطبيق إعادة الصياغة</string>
+    <string name="dictate__haptic_feedback_summary">يهتز عند بدء/إيقاف التسجيل، وعند جاهزية النسخ، وعند إعادة الصياغة.</string>
     <string name="dictate__audio_source_voice_communication">اتصال صوتي</string>
-    <string name="dictate__audio_source_voice_communication_summary">أعلى أولوية — يستمر في العمل عندما يستخدم تطبيق آخر (مسجل صوت، كاميرا) الميكروفون، لكن معالجة نمط المكالمات قد تقلل الدقة</string>
-    <string name="about__whats_new__title">الجديد في 5.0</string>
+    <string name="dictate__audio_source_voice_communication_summary">أعلى أولوية للميكروفون — يعمل حتى عندما يستخدمه تطبيق آخر، لكنه قد يقلل الدقة.</string>
+    <string name="about__whats_new__title">ما الجديد</string>
+    <string name="about__whats_new__versioned">الجديد في {version}</string>
     <string name="about__whats_new__summary">إعادة جولة الميزات</string>
     <string name="apptour__skip">تخطٍ</string>
     <string name="apptour__next">التالي</string>
@@ -1494,5 +1519,85 @@
     <string name="apptour__outro_eyebrow">والمزيد</string>
     <string name="apptour__outro_title">صقل في كل مكان</string>
     <string name="apptour__outro_body">المزيد وراء الكواليس: زر عائم أكثر ثباتاً، وتحكّم في مقدار التفكير لإعادة الصياغة، وردود لمسية، وسمة E-Reader جديدة، وعشرات الإصلاحات.</string>
+    <string name="apptour51__cta_try">جرّبها</string>
+    <string name="apptour51__continue_to">المتابعة إلى {version}</string>
+    <string name="apptour51__intro_eyebrow">Version 5.1</string>
+    <string name="apptour51__intro_title">الجديد في 5.1</string>
+    <string name="apptour51__intro_body">نما Dictate كثيراً منذ 5.0. إليك أبرز ميزات 5.1 — اضغط على «جرّبها» في أي صفحة للانتقال مباشرةً إلى تلك الميزة.</string>
+    <string name="apptour51__history_eyebrow">النسخ</string>
+    <string name="apptour51__history_title">سجل النسخ</string>
+    <string name="apptour51__history_body">يُحفظ الآن كل إملاء في سجل قابل للبحث. أعِد إدراج أي نص سابق بضغطة، أو أعِد تشغيل الصوت الأصلي، أو أعِد نسخه، أو ثبّت ما تستخدمه أكثر. تتيح لك شاشة مخصصة إدارة كل شيء، بما في ذلك مدة الاحتفاظ بالتسجيلات الصوتية.</string>
+    <string name="apptour51__longform_eyebrow">النسخ</string>
+    <string name="apptour51__longform_title">الإملاء الطويل</string>
+    <string name="apptour51__longform_body">تحدّث بالمدة التي تريدها. تُقسَّم التسجيلات الطويلة تلقائياً إلى مقاطع وتُنسخ في الخلفية بينما تتابع، فتحصل على نصك أسرع ولا تصطدم أبداً بحد للمدة. اقطع مقطعاً بنفسك، أو دع Dictate يكتشف الوقفات الطبيعية.</string>
+    <string name="apptour51__gif_eyebrow">لوحة المفاتيح</string>
+    <string name="apptour51__gif_title">البحث عن GIF</string>
+    <string name="apptour51__gif_body">اعثر على صور GIF وأرسلها دون مغادرة Dictate. افتح لوحة GIF، وابحث عن أي شيء، وأدرجه مباشرةً في محادثتك — منتقٍ سريع بأسلوب Gboard مدمج بالكامل.</string>
+    <string name="apptour51__classic_eyebrow">التخطيط الكلاسيكي</string>
+    <string name="apptour51__classic_title">التخطيط الكلاسيكي، مُعاد تصميمه</string>
+    <string name="apptour51__classic_body">حصلت شاشة الإملاء الخالية من لوحة المفاتيح على تحديث كبير: صف إجراءات قابل للترتيب بحرية تبنيه بالسحب والإفلات، وأدوات تحكم بالتسجيل الطويل، وصف أو صفَّي موجّهات، وزر مسافة للخلف متاح دائماً، ونافذة أحرف منبثقة على مفتاح Enter، وزر «تبديل لوحة المفاتيح» ثانٍ اختياري لتسهيل الاستخدام بيد واحدة.</string>
+    <string name="apptour51__search_eyebrow">الإعدادات</string>
+    <string name="apptour51__search_title">ابحث في الإعدادات</string>
+    <string name="apptour51__search_body">لا تتذكر مكان أحد الخيارات؟ ابحث عنه فحسب. يعثر بحث الإعدادات الجديد على أي إعداد بالاسم، وينتقل إليه مباشرةً ويميّز صفه لوهلة — لا مزيد من التنقيب في القوائم.</string>
+    <string name="apptour51__models_eyebrow">النماذج والمزوّدون</string>
+    <string name="apptour51__models_title">نموذج ألماني دون اتصال وClaude</string>
+    <string name="apptour51__models_body">إضافتان لكيفية معالجة كلامك: نموذج على الجهاز متخصص بالألمانية (Parakeet German من primeline) ينسخ بالكامل دون اتصال على هاتفك، وينضم Claude من Anthropic كمزوّد جديد لإعادة صياغة إملاءاتك وتنسيقها.</string>
+    <string name="apptour51__more_eyebrow">والمزيد</string>
+    <string name="apptour51__more_title">تحسينات أخرى كثيرة</string>
+    <string name="apptour51__more_body">الكثير من التحسينات الأصغر أيضاً: اختر لغة النسخ النشطة في الإعدادات، وزر الإيقاف يلغي الآن فعلاً أي طلب جارٍ، ومفتاح إظهار/إخفاء لمفاتيح API، والكتابة متعددة اللغات دون تصحيح تلقائي عبر اللغات — إضافةً إلى إصلاحات كثيرة في التخطيط الكلاسيكي ولوحة الأرقام وغيرها.</string>
+    <string name="apptour51__outro_eyebrow">هذه هي 5.1</string>
+    <string name="apptour51__outro_title">استمتع بالتحديث</string>
+    <string name="apptour51__outro_body">شكراً لاستخدامك Dictate! إن كان يساعدك كل يوم، فإن تبرعاً صغيراً يُبقي المشروع مستمراً. يمكنك إعادة مشاهدة أي من هذه الجولات في أي وقت من الإعدادات › حول.</string>
     <string name="changelog__v5_0_0">• جديد: الكتابة بالسحب — اسحب عبر المفاتيح لكتابة كلمات كاملة، مع قواميس لكل لغة تُنزَّل عند الطلب. 👆\n• جديد: اقتراحات الكلمات والتصحيح التلقائي — تُصحَّح الأخطاء المطبعية تلقائيًا وتبقى الكلمة التي كتبتها على بُعد نقرة واحدة. ✨\n• جديد: النسخ الفوري — شاهد كلماتك تظهر أثناء حديثك، مع OpenAI وDeepgram وSoniox وAssemblyAI وElevenLabs. ⚡\n• جديد: ثلاثة مزوّدي نسخ إضافيين — ElevenLabs Scribe وDeepgram وAssemblyAI. ☁️\n• جديد: تخطيط الإملاء الكلاسيكي — عادت شاشة الصوت بلا لوحة مفاتيح من Dictate 3، مثبتة أو على بُعد سحبة واحدة. 🎙️\n• جديد: مكتبة موجّهات المجتمع — تصفح موجّهات إعادة الصياغة وشاركها. 📚\n• جديد: إحصاءات الإملاء مع محطات إنجاز. 📊\n• جديد: نموذج NVIDIA Parakeet دون اتصال، إضافة إلى مرشّح صمت يتخطى التسجيلات الفارغة. 📴\n• المزيد: زر عائم أكثر ثباتًا، والتحكم في جهد الاستدلال، وردود لمسية، وسمة E-Reader جديدة، وعشرات الإصلاحات. 🛠️</string>
+    <string name="media__tab__gifs">GIFs</string>
+    <string name="prefs__media__gif__title">GIFs</string>
+    <string name="prefs__media__gif_enabled">تفعيل البحث عن GIF</string>
+    <string name="prefs__media__gif_enabled__summary">ابحث عن GIFs وأدرجها، بدعم من KLIPY</string>
+    <string name="prefs__media__gif_setup__title">إعداد البحث عن GIF</string>
+    <string name="prefs__media__gif_setup__summary_set">تم حفظ مفتاح KLIPY API</string>
+    <string name="prefs__media__gif_setup__summary_unset">انقر لإضافة مفتاح KLIPY API المجاني الخاص بك</string>
+    <string name="prefs__media__gif_setup__intro">توفَّر GIFs عبر KLIPY، وهي خدمة مجانية. كل ما تحتاجه هو مفتاحك المجاني الخاص — لا يستغرق سوى دقيقة:</string>
+    <string name="prefs__media__gif_setup__step1">افتح KLIPY Partner Panel — سيُطلب منك إنشاء حساب مجاني إن لم يكن لديك حساب.</string>
+    <string name="prefs__media__gif_setup__step2">في صفحة API Keys، أنشئ مفتاح API.</string>
+    <string name="prefs__media__gif_setup__step3">انسخ مفتاحك والصقه في الحقل أدناه.</string>
+    <string name="prefs__media__gif_setup__open_klipy">افتح KLIPY Partner Panel</string>
+    <string name="prefs__media__gif_setup__key_label">مفتاح KLIPY API</string>
+    <string name="prefs__media__gif_setup__privacy_note">تُرسَل عبارات البحث إلى KLIPY فقط أثناء فتح لوحة GIF — ولا تُرسَل أبدًا أثناء الإملاء.</string>
+    <string name="gif__search_placeholder">ابحث في KLIPY</string>
+    <string name="gif__powered_by">مدعوم من KLIPY</string>
+    <string name="gif__no_results">لم يُعثر على GIFs</string>
+    <string name="gif__error">تعذّر تحميل GIFs. تحقّق من اتصالك ومفتاح API.</string>
+    <string name="gif__setup_needed">أضِف مفتاح KLIPY API مجاني في الإعدادات للبحث عن GIFs</string>
+    <string name="gif__setup_needed_action">إعداد البحث عن GIF</string>
+    <string name="gif__copied_to_clipboard">تم نسخ GIF إلى الحافظة — اضغط مطولًا للصق</string>
+    <string name="gif__insert_failed">تعذّر إدراج GIF</string>
+    <string name="quick_action__ime_ui_mode_gif">GIF</string>
+    <string name="quick_action__ime_ui_mode_gif__tooltip">ابحث عن GIFs</string>
+    <string name="dictate__legacy_action_select_all">تحديد الكل</string>
+    <string name="dictate__legacy_action_undo">تراجع</string>
+    <string name="dictate__legacy_action_redo">إرجاع</string>
+    <string name="dictate__legacy_action_cut">قص</string>
+    <string name="dictate__legacy_action_copy">نسخ</string>
+    <string name="dictate__legacy_action_paste">لصق</string>
+    <string name="dictate__legacy_action_emoji">إيموجي</string>
+    <string name="dictate__legacy_action_numbers">أرقام</string>
+    <string name="dictate__legacy_action_language">اللغة</string>
+    <string name="dictate__legacy_action_history">السجل</string>
+    <string name="dictate__legacy_action_reinsert">إعادة الإدراج</string>
+    <string name="dictate__legacy_action_gif">GIF</string>
+    <string name="dictate__legacy_action_switch">تبديل لوحة المفاتيح</string>
+    <string name="dictate__legacy_enter_chars_title">أحرف مفتاح الإدخال</string>
+    <string name="dictate__legacy_enter_chars_summary">اضغط مطوّلًا على مفتاح الإدخال، ثم اسحب يسارًا أو يمينًا لاختيار أحد هذه الأحرف ثم حرّره لإدراجه.</string>
+    <string name="dictate__legacy_enter_chars_label">الأحرف (حتى 8)</string>
+    <string name="dictate__legacy_action_row_title">أزرار شريط الإجراءات</string>
+    <string name="dictate__legacy_action_row_summary">اسحب لترتيب الأزرار في شريط الإجراءات للتخطيط الكلاسيكي</string>
+    <string name="dictate__legacy_action_row_add">إضافة زر</string>
+    <string name="dictate__legacy_action_row_full">أزل زرًا أولاً لإضافة هذا الزر</string>
+    <string name="dictate__legacy_action_row_remove">إزالة</string>
+    <string name="dictate__legacy_action_row_drag">اسحب لإعادة الترتيب</string>
+    <string name="dictate__legacy_action_row_reset">إعادة التعيين إلى الافتراضي</string>
+    <string name="dictate__legacy_prompt_rows_title">صفوف المطالبات</string>
+    <string name="dictate__legacy_prompt_rows_one">صف واحد</string>
+    <string name="dictate__legacy_prompt_rows_two">صفان</string>
+    <string name="about__website__title">الموقع الإلكتروني</string>
 </resources>

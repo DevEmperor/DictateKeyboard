@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Tastatur nach links verschieben.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Tastatur nach rechts verschieben.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis</string>
+    <string name="settings__media__title">Emojis &amp; GIFs</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -111,12 +111,18 @@
     <string name="settings__home__title" comment="Title of the Home screen">Willkommen bei {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">{app_name} ist in deinem System nicht aktiviert und kann daher nicht als Eingabemethode ausgewählt werden. Hier klicken, um dieses Problem zu lösen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">{app_name} ist nicht als Standard-Eingabemethode ausgewählt. Hier klicken, um dieses Problem zu lösen.</string>
+    <string name="settings__search__title" comment="Title of the settings search screen">Einstellungen durchsuchen</string>
+    <string name="settings__search__placeholder" comment="Placeholder in the settings search field">Einstellungen durchsuchen…</string>
+    <string name="settings__search__recent" comment="Header above recently used search terms">Letzte Suchen</string>
+    <string name="settings__search__clear_recent" comment="Button to clear the recent searches">Letzte Suchen löschen</string>
+    <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Beliebt</string>
+    <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Keine Einstellungen gefunden</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Sprachen &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Sprachnamen anzeigen in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Untertypen</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Stil hinzufügen</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Installierte Sprachpakete verwalten</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentell: Verwaltung von Erweiterungen, die Unterstützung für bestimmte Sprachen hinzufügen (vorerst formgebundene chinesische Eingabe)</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentell: Erweiterungen, die bestimmte Sprachen hinzufügen (vorerst formbasiertes Chinesisch).</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primäre Sprache</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pop-up-Anordnung</string>
@@ -156,7 +162,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Dunkles Design</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Akzentfarbe (Material You Designs)</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Akzentfarbe (Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Installierte Designs verwalten</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">{app_name} App Ressourcen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interner Speicher</string>
@@ -336,8 +342,8 @@
     <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Akzente in Popups</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Fügt Akzente zu Symbol-Popups des Standart Layout hinzu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zu Buchstaben zurück</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste kehrt zu Buchstaben zurück</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Im Symbol- oder Zahlenlayout kehrt die Leertaste zur Buchstabentastatur zurück.</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognito-Indikator</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
@@ -420,7 +426,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">Löschtaste löscht ganzes Wort nach Glide-Typing-Eingabe</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Allgemeine Gesten</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten / Gesten Schwellenwerte</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Nach oben wischen</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Nach unten wischen</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links wischen</string>
@@ -458,7 +464,7 @@
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Quellcode, Diskussionen, Probleme und Info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Basiert auf FlorisBoard</string>
-    <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">Ein Fork von FlorisBoard von Patrick Goldinger und Mitwirkenden, lizenziert unter Apache 2.0. Zum Öffnen des Originalprojekts tippen.</string>
+    <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">Ein Fork von FlorisBoard von Patrick Goldinger und Mitwirkenden, Apache 2.0. Zum Öffnen tippen.</string>
     <string name="about__privacy_policy__title" comment="Preference title">Datenschutzrichtlinie</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Datenschutzrichtlinie für dieses Projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projekt-Lizenz</string>
@@ -485,6 +491,7 @@
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
     <string name="setup__finish_up__description_p2">Falls dir irgendwelche Probleme, Bugs oder Abstürze begegnen, oder du einfach einen Vorschlag machen möchtest, besuche einfach die GitHub Seite des Projekts (zu finden im About \"Über die App\" Screen)!</string>
     <string name="setup__finish_up__finish_btn">Anpassung beginnen</string>
+    <string name="physical_keyboard__system_settings__title">Einstellungen für physische Tastatur</string>
     <string name="setup__floating_button__btn">Floating Button einrichten</string>
     <string name="setup__nav_back">Zurück</string>
     <string name="setup__nav_next">Weiter</string>
@@ -584,6 +591,7 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Lösche Zwischenablageinhalte automatisch nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Clip löschen betrifft Verlauf</string>
     <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Nachfolgendes Bild wurde in die Zwischenablage kopiert.</string>
@@ -1022,6 +1030,8 @@
     <string name="dictate__floating_button_design_pill_summary">Klappt im aktiven Zustand auf und zeigt Timer und Live-Wellenform.</string>
     <string name="dictate__floating_button_design_orb">Kugel</string>
     <string name="dictate__floating_button_design_orb_summary">Eine volle Kugel, die beim Aufnehmen mit deiner Stimme leuchtet und pulsiert.</string>
+    <string name="dictate__floating_button_design_cloud">Wolke</string>
+    <string name="dictate__floating_button_design_cloud_summary">Eine fließende Wolken-Kugel, die sich beim Aufnehmen bewegt und auf deine Stimme reagiert.</string>
     <string name="dictate__floating_button_size_title">Buttongröße</string>
     <string name="dictate__floating_button_size_small">Klein</string>
     <string name="dictate__floating_button_size_medium">Mittel</string>
@@ -1043,7 +1053,7 @@
     <string name="dictate__floating_button_badge_new">Neu</string>
 
     <string name="dictate__providers_summary_both">Transkription: {transcription} · Umformulieren: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Behält dein letztes erfolgreiches Diktat, damit du es mit dem „Erneut einfügen“-Button der Smartbar erneut einfügen kannst — ein Sicherheitsnetz, falls das Textfeld durch eine Bildschirmdrehung oder einen App-Wechsel geleert wird. Füge den Button über den Smartbar-Editor hinzu. Wird nur auf diesem Gerät bis zu deinem nächsten Diktat gespeichert.</string>
+    <string name="dictate__remember_last_dictation_summary">Behält dein letztes Diktat, damit du es über den „Erneut einfügen“-Button der Smartbar wieder einfügen kannst.</string>
     <string name="dictate__remember_last_dictation_title">Letztes Diktat merken</string>
     <string name="dictate__panel_title">KI-Prompts</string>
     <string name="dictate__panel_no_prompts">Noch keine Prompts. Füge welche in den Dictate-Einstellungen unter „Umformulieren\" hinzu.</string>
@@ -1194,6 +1204,8 @@
     <string name="dictate__formatting_menu_summary">Stil-Prompt, eigene Wörter, Ersetzungen</string>
     <string name="dictate__recording_menu_summary">Echtzeit, Audioquelle, Sofortaufnahme</string>
     <string name="dictate__output_menu_summary">Auto-Enter, Tippgeschwindigkeit, erneut senden</string>
+    <string name="dictate__layout_title">Diktat-Layout</string>
+    <string name="dictate__layout_menu_summary">Klassisches Layout und Tastatur-Aussehen</string>
     <string name="dictate__languages_group">Sprachen</string>
     <string name="dictate__languages_title">Transkriptionssprachen</string>
     <string name="dictate__languages_summary">Wähle die Sprachen, in denen du diktierst. Wechsle über die Aufnahmeleiste schnell zwischen ihnen.</string>
@@ -1303,18 +1315,25 @@
     <string name="dictate__local_model_action_cancel">Abbrechen</string>
     <string name="dictate__local_model_downloading">Wird heruntergeladen… {percent}%</string>
     <string name="dictate__local_model_download_failed">Download fehlgeschlagen — bitte erneut versuchen</string>
+    <string name="dictate__local_model_download_background">Lädt im Hintergrund herunter – du kannst die App verlassen.</string>
+    <string name="dictate__local_model_notif_channel_name">Modell-Downloads</string>
+    <string name="dictate__local_model_notif_title">Lädt {model} herunter</string>
+    <string name="dictate__local_model_notif_title_multi">Lädt {count} Modelle herunter</string>
     <string name="dictate__local_model_none_selected">Noch kein Modell heruntergeladen</string>
     <string name="dictate__local_model_delete_confirm">„{model}“ löschen? Du kannst es später erneut herunterladen.</string>
     <string name="dictate__local_model_not_installed_error">Kein lokales Modell heruntergeladen</string>
     <string name="dictate__local_fallback_title">Offline-Fallback</string>
     <string name="dictate__local_fallback_summary">Wenn offline, nach dem Fehlschlag des Anbieters lokal mit dem heruntergeladenen Modell transkribieren</string>
     <string name="dictate__floating_button_undo_failed">Rückgängig machen fehlgeschlagen — der Text wurde möglicherweise geändert.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_title">Jedes Diktat in die Zwischenablage kopieren</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_on">Jedes Diktat wird zusätzlich in die Zwischenablage kopiert, sodass du es manuell einfügen kannst, falls das Einfügen fehlschlägt. Zeigt auf manchen Geräten einen Zwischenablage-Hinweis.</string>
+    <string name="dictate__floating_button_copy_to_clipboard_summary_off">Diktate werden nur eingefügt, nicht in die Zwischenablage kopiert.</string>
     <string name="dictate__floating_button_undo_summary_off">Es wird keine Rückgängig-Schaltfläche angezeigt.</string>
     <string name="dictate__floating_button_undo_summary_on">Nach einer Diktateingabe erscheint neben der Schaltfläche eine Rückgängig-Schaltfläche, mit der du den eingefügten Text mit einem Tippen wieder entfernst.</string>
     <string name="dictate__floating_button_undo_title">Rückgängig-Schaltfläche</string>
     <string name="dictate__mappings_add">Zuordnung hinzufügen</string>
     <string name="dictate__mappings_editor_title">Zuordnung</string>
-    <string name="dictate__mappings_empty_summary">Füge eine Regel hinzu, um Wörter oder Wortgruppen in jedem Transkript automatisch zu ersetzen — exakt und ohne KI-Tokens zu verbrauchen.</string>
+    <string name="dictate__mappings_empty_summary">Füge eine Regel hinzu, um Wörter oder Wortgruppen in jedem Transkript automatisch zu ersetzen — exakt, ohne KI-Tokens.</string>
     <string name="dictate__mappings_empty_title">Noch keine Zuordnungen</string>
     <string name="dictate__mappings_entry_summary">Suchen-und-Ersetzen-Regeln, die auf das Transkript angewendet werden</string>
     <string name="dictate__mappings_field_from">Ersetzen</string>
@@ -1348,7 +1367,7 @@
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Optionen fürs Diktieren von einer gekoppelten Uhr</string>
     <string name="dictate__wear_install_title">Dictate auf deiner Uhr installieren</string>
-    <string name="dictate__wear_install_summary">Öffnet den Play Store. Wähle auf einer gekoppelten Uhr (Wear OS 3 oder neuer) deine Uhr als Installationsziel aus.</string>
+    <string name="dictate__wear_install_summary">Öffnet den Play Store — wähle auf einer gekoppelten Wear OS 3+ Uhr deine Uhr als Ziel aus.</string>
     <string name="dictate__wear_auto_rewording_title">Watch-Diktate automatisch umformulieren</string>
     <string name="dictate__wear_auto_rewording_summary">Watch-Diktate umformulieren, wie am Handy.</string>
     <string name="quick_action__system_prev_input_method">Tastatur wechseln</string>
@@ -1364,13 +1383,14 @@
     <string name="dictate__audio_source_unprocessed">Unverarbeitet (roh)</string>
     <string name="dictate__audio_source_unprocessed_summary">Gar keine Verarbeitung; fällt auf Spracherkennung zurück, falls dein Handy es nicht unterstützt</string>
     <string name="dictate__security_group">Sicherheit</string>
-    <string name="dictate__trust_user_certs_title">Nutzer-Zertifikate vertrauen</string>
-    <string name="dictate__trust_user_certs_summary">Vertraut selbst installierten CA-Zertifikaten – für self-hosted Endpunkte hinter einer privaten CA.</string>
+    <string name="dictate__trust_user_certs_title">Nutzer-Zertifikaten vertrauen</string>
+    <string name="dictate__trust_user_certs_summary">Vertraut CA-Zertifikaten, die du installiert hast — für selbst gehostete Endpunkte hinter einer privaten CA.</string>
     <string name="dictate__stats_title">Statistik</string>
     <string name="dictate__stats_menu_summary">Wörter, gesparte Zeit, Streak und mehr</string>
     <string name="dictate__history_title">Verlauf</string>
     <string name="dictate__history_menu_summary">Frühere Diktate abspielen, erneut einfügen und verwalten</string>
     <string name="dictate__history_empty">Noch keine Diktate — deine letzten Diktate erscheinen hier.</string>
+    <string name="dictate__history_loading">Wird geladen…</string>
     <string name="dictate__history_enable_title">Verlauf speichern</string>
     <string name="dictate__history_enable_summary">Diktate protokollieren, um sie später erneut einzufügen oder anzusehen.</string>
     <string name="dictate__history_audio_title">Audio speichern</string>
@@ -1432,6 +1452,7 @@
     <string name="dictate__reasoning_effort_medium_summary">Ausgewogen zwischen Nachdenken und Tempo</string>
     <string name="dictate__reasoning_effort_high">Hoch</string>
     <string name="dictate__reasoning_effort_high_summary">Am meisten Nachdenken, langsamer</string>
+    <string name="dictate__reasoning_effort_custom">Benutzerdefiniert</string>
     <string name="dictate__action_save_audio">Audio speichern</string>
     <string name="dictate__audio_saved">Audio in Downloads/Dictate gespeichert: %s</string>
     <string name="dictate__audio_save_failed">Audio konnte nicht gespeichert werden</string>
@@ -1445,6 +1466,8 @@
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Autokorrektur</string>
     <string name="pref__suggestion__auto_correct__summary">Tippfehler beim Leerzeichen automatisch korrigieren</string>
+    <string name="pref__suggestion__multilingual_typing__label">Mehrsprachiges Tippen</string>
+    <string name="pref__suggestion__multilingual_typing__summary">Wörter aus allen deinen Tastatursprachen akzeptieren</string>
     <string name="dictate__legacy_record">Aufnehmen</string>
     <string name="dictate__legacy_stop">Stopp</string>
     <string name="dictate__legacy_switch_keyboard">Tastatur wechseln</string>
@@ -1463,10 +1486,11 @@
     <string name="dictate__legacy_select_all">Alles auswählen</string>
     <string name="dictate__floating_button_retry_hint">%1$s — zum Wiederholen tippen</string>
     <string name="dictate__haptic_feedback_title">Haptisches Feedback</string>
-    <string name="dictate__haptic_feedback_summary">Vibriert beim Aufnahmestart/-stopp, wenn die Transkription fertig ist und wenn eine Überarbeitung angewendet wurde</string>
+    <string name="dictate__haptic_feedback_summary">Vibriert beim Aufnahmestart/-stopp, wenn eine Transkription fertig ist und beim Umformulieren.</string>
     <string name="dictate__audio_source_voice_communication">Sprachkommunikation</string>
-    <string name="dictate__audio_source_voice_communication_summary">Höchste Priorität — funktioniert weiter, wenn eine andere App (Diktiergerät, Kamera) das Mikrofon nutzt, aber die Anruf-Verarbeitung kann die Genauigkeit verringern</string>
-    <string name="about__whats_new__title">Neu in 5.0</string>
+    <string name="dictate__audio_source_voice_communication_summary">Höchste Mikrofon-Priorität — funktioniert, wenn eine andere App das Mikrofon nutzt, kann aber die Genauigkeit verringern.</string>
+    <string name="about__whats_new__title">Was ist neu</string>
+    <string name="about__whats_new__versioned">Was ist neu in {version}</string>
     <string name="about__whats_new__summary">Die Funktionstour erneut ansehen</string>
     <string name="apptour__skip">Überspringen</string>
     <string name="apptour__next">Weiter</string>
@@ -1511,5 +1535,85 @@
     <string name="apptour__outro_eyebrow">Und mehr</string>
     <string name="apptour__outro_title">Feinschliff überall</string>
     <string name="apptour__outro_body">Mehr unter der Haube: ein stabilerer schwebender Knopf, eine Einstellung für den Denkaufwand beim Umformulieren, haptisches Feedback, ein neues E-Reader-Design und Dutzende Fehlerbehebungen.</string>
+    <string name="apptour51__cta_try">Ausprobieren</string>
+    <string name="apptour51__continue_to">Weiter zu {version}</string>
+    <string name="apptour51__intro_eyebrow">Version 5.1</string>
+    <string name="apptour51__intro_title">Was ist neu in 5.1</string>
+    <string name="apptour51__intro_body">Dictate ist seit 5.0 stark gewachsen. Hier sind die Highlights von 5.1 — tippe auf jeder Seite auf „Ausprobieren“, um direkt zur jeweiligen Funktion zu springen.</string>
+    <string name="apptour51__history_eyebrow">Transkription</string>
+    <string name="apptour51__history_title">Transkriptionsverlauf</string>
+    <string name="apptour51__history_body">Jedes Diktat wird jetzt in einem durchsuchbaren Verlauf gespeichert. Füge jede frühere Transkription mit einem Tipp erneut ein, spiele das Originalaudio ab, transkribiere es neu oder hefte die an, die du am häufigsten wiederverwendest. Ein eigener Bildschirm verwaltet alles, auch wie lange Audioaufnahmen aufbewahrt werden.</string>
+    <string name="apptour51__longform_eyebrow">Transkription</string>
+    <string name="apptour51__longform_title">Langform-Diktat</string>
+    <string name="apptour51__longform_body">Sprich so lange du magst. Lange Aufnahmen werden automatisch in Segmente aufgeteilt und im Hintergrund transkribiert, während du weiterredest — so bekommst du deinen Text früher und stößt nie an ein Längenlimit. Schneide ein Segment selbst, oder lass Dictate natürliche Pausen erkennen.</string>
+    <string name="apptour51__gif_eyebrow">Tastatur</string>
+    <string name="apptour51__gif_title">GIF-Suche</string>
+    <string name="apptour51__gif_body">Finde und sende GIFs, ohne Dictate je zu verlassen. Öffne das GIF-Panel, suche nach allem und lege es direkt in deinen Chat — eine schnelle Auswahl im Gboard-Stil, direkt eingebaut.</string>
+    <string name="apptour51__classic_eyebrow">Klassisches Layout</string>
+    <string name="apptour51__classic_title">Klassisches Layout, überarbeitet</string>
+    <string name="apptour51__classic_body">Der tastaturfreie Diktier-Bildschirm hat ein großes Upgrade bekommen: eine frei anordenbare Aktionszeile, die du per Ziehen &amp; Ablegen zusammenstellst, Bedienelemente für Langform-Aufnahmen, ein oder zwei Prompt-Zeilen, eine stets verfügbare Rücktaste, ein Zeichen-Popup auf der Eingabetaste und ein optionaler zweiter „Tastatur wechseln“-Knopf für einfachere einhändige Bedienung.</string>
+    <string name="apptour51__search_eyebrow">Einstellungen</string>
+    <string name="apptour51__search_title">Einstellungen durchsuchen</string>
+    <string name="apptour51__search_body">Du weißt nicht mehr, wo eine Option steckt? Such einfach danach. Die neue Einstellungssuche findet jede Einstellung über den Namen, springt direkt dorthin und hebt die Zeile kurz hervor — kein Wühlen mehr durch Menüs.</string>
+    <string name="apptour51__models_eyebrow">Modelle &amp; Anbieter</string>
+    <string name="apptour51__models_title">Deutsches Offline-Modell &amp; Claude</string>
+    <string name="apptour51__models_body">Zwei Neuerungen dafür, wie deine Sprache verarbeitet wird: ein auf Deutsch spezialisiertes On-Device-Modell (Parakeet German von primeline), das komplett offline auf deinem Handy transkribiert, und Anthropics Claude kommt als neuer Anbieter zum Umformulieren und Formatieren deiner Diktate hinzu.</string>
+    <string name="apptour51__more_eyebrow">Und mehr</string>
+    <string name="apptour51__more_title">Viele weitere Verbesserungen</string>
+    <string name="apptour51__more_body">Auch viele kleinere Upgrades: wähle die aktive Transkriptionssprache in den Einstellungen, der Stopp-Knopf bricht eine laufende Anfrage jetzt wirklich ab, ein Ein-/Ausblenden-Schalter für API-Schlüssel und mehrsprachiges Tippen ohne sprachübergreifende Autokorrektur — dazu viele Fehlerbehebungen im klassischen Layout, im Ziffernblock und darüber hinaus.</string>
+    <string name="apptour51__outro_eyebrow">Das ist 5.1</string>
+    <string name="apptour51__outro_title">Viel Freude mit dem Update</string>
+    <string name="apptour51__outro_body">Danke, dass du Dictate nutzt! Wenn es dir jeden Tag hilft, hält eine kleine Spende das Projekt am Laufen. Du kannst jede dieser Touren jederzeit unter Einstellungen › Über besuchen.</string>
     <string name="changelog__v5_0_0">• NEU: Wischtippen — streiche über die Tasten, um ganze Wörter zu schreiben, mit Wörterbüchern pro Sprache, die bei Bedarf geladen werden. 👆\n• NEU: Wortvorschläge &amp; Autokorrektur — Tippfehler werden automatisch korrigiert und dein getipptes Wort bleibt einen Fingertipp entfernt. ✨\n• NEU: Echtzeit-Transkription — sieh deine Worte erscheinen, während du sprichst, mit OpenAI, Deepgram, Soniox, AssemblyAI und ElevenLabs. ⚡\n• NEU: Drei weitere Transkriptionsanbieter — ElevenLabs Scribe, Deepgram und AssemblyAI. ☁️\n• NEU: Klassisches Diktier-Layout — der tastaturfreie Sprachbildschirm aus Dictate 3 ist zurück, fest oder nur ein Wischen entfernt. 🎙️\n• NEU: Community-Prompt-Bibliothek — Umformulierungs-Prompts durchstöbern und teilen. 📚\n• NEU: Diktier-Statistik mit Meilensteinen. 📊\n• NEU: Offline-Modell NVIDIA Parakeet, plus ein Stillefilter, der leere Aufnahmen überspringt. 📴\n• Mehr: ein stabilerer schwebender Button, Reasoning-Aufwand, haptisches Feedback, ein neues E-Reader-Design und Dutzende Fehlerbehebungen. 🛠️</string>
+    <string name="media__tab__gifs">GIFs</string>
+    <string name="prefs__media__gif__title">GIFs</string>
+    <string name="prefs__media__gif_enabled">GIF-Suche aktivieren</string>
+    <string name="prefs__media__gif_enabled__summary">GIFs suchen und einfügen, ermöglicht durch KLIPY</string>
+    <string name="prefs__media__gif_setup__title">GIF-Suche einrichten</string>
+    <string name="prefs__media__gif_setup__summary_set">KLIPY-API-Schlüssel gespeichert</string>
+    <string name="prefs__media__gif_setup__summary_unset">Tippen, um deinen kostenlosen KLIPY-API-Schlüssel hinzuzufügen</string>
+    <string name="prefs__media__gif_setup__intro">GIFs werden von KLIPY bereitgestellt, einem kostenlosen Dienst. Du brauchst nur deinen eigenen kostenlosen Schlüssel — das dauert nur eine Minute:</string>
+    <string name="prefs__media__gif_setup__step1">Öffne das KLIPY Partner Panel — falls du noch kein Konto hast, wirst du aufgefordert, ein kostenloses zu erstellen.</string>
+    <string name="prefs__media__gif_setup__step2">Erstelle auf der Seite API Keys einen API-Schlüssel.</string>
+    <string name="prefs__media__gif_setup__step3">Kopiere deinen Schlüssel und füge ihn in das Feld unten ein.</string>
+    <string name="prefs__media__gif_setup__open_klipy">KLIPY Partner Panel öffnen</string>
+    <string name="prefs__media__gif_setup__key_label">KLIPY-API-Schlüssel</string>
+    <string name="prefs__media__gif_setup__privacy_note">Deine Suchbegriffe werden nur an KLIPY gesendet, solange das GIF-Panel geöffnet ist — niemals während des Diktierens.</string>
+    <string name="gif__search_placeholder">KLIPY durchsuchen</string>
+    <string name="gif__powered_by">Ermöglicht durch KLIPY</string>
+    <string name="gif__no_results">Keine GIFs gefunden</string>
+    <string name="gif__error">GIFs konnten nicht geladen werden. Prüfe deine Verbindung und den API-Schlüssel.</string>
+    <string name="gif__setup_needed">Füge in den Einstellungen einen kostenlosen KLIPY-API-Schlüssel hinzu, um GIFs zu suchen</string>
+    <string name="gif__setup_needed_action">GIF-Suche einrichten</string>
+    <string name="gif__copied_to_clipboard">GIF in die Zwischenablage kopiert — zum Einfügen lange drücken</string>
+    <string name="gif__insert_failed">GIF konnte nicht eingefügt werden</string>
+    <string name="quick_action__ime_ui_mode_gif">GIF</string>
+    <string name="quick_action__ime_ui_mode_gif__tooltip">GIFs suchen</string>
+    <string name="dictate__legacy_action_select_all">Alles auswählen</string>
+    <string name="dictate__legacy_action_undo">Rückgängig</string>
+    <string name="dictate__legacy_action_redo">Wiederholen</string>
+    <string name="dictate__legacy_action_cut">Ausschneiden</string>
+    <string name="dictate__legacy_action_copy">Kopieren</string>
+    <string name="dictate__legacy_action_paste">Einfügen</string>
+    <string name="dictate__legacy_action_emoji">Emoji</string>
+    <string name="dictate__legacy_action_numbers">Zahlen</string>
+    <string name="dictate__legacy_action_language">Sprache</string>
+    <string name="dictate__legacy_action_history">Verlauf</string>
+    <string name="dictate__legacy_action_reinsert">Erneut einfügen</string>
+    <string name="dictate__legacy_action_gif">GIF</string>
+    <string name="dictate__legacy_action_switch">Tastatur wechseln</string>
+    <string name="dictate__legacy_enter_chars_title">Zeichen der Eingabetaste</string>
+    <string name="dictate__legacy_enter_chars_summary">Halte die Eingabetaste gedrückt, wische dann nach links oder rechts, um eines dieser Zeichen auszuwählen, und lasse los, um es einzufügen.</string>
+    <string name="dictate__legacy_enter_chars_label">Zeichen (bis zu 8)</string>
+    <string name="dictate__legacy_action_row_title">Aktionsleisten-Schaltflächen</string>
+    <string name="dictate__legacy_action_row_summary">Ziehen, um die Schaltflächen in der Aktionsleiste des klassischen Layouts anzuordnen</string>
+    <string name="dictate__legacy_action_row_add">Schaltfläche hinzufügen</string>
+    <string name="dictate__legacy_action_row_full">Zum Hinzufügen zuerst eine Schaltfläche entfernen</string>
+    <string name="dictate__legacy_action_row_remove">Entfernen</string>
+    <string name="dictate__legacy_action_row_drag">Zum Neuordnen ziehen</string>
+    <string name="dictate__legacy_action_row_reset">Auf Standard zurücksetzen</string>
+    <string name="dictate__legacy_prompt_rows_title">Prompt-Reihen</string>
+    <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
+    <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
+    <string name="about__website__title">Website</string>
 </resources>

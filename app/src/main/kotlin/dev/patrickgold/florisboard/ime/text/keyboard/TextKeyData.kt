@@ -133,6 +133,7 @@ data class TextKeyData(
                 IME_UI_MODE_TEXT,
                 IME_UI_MODE_MEDIA,
                 IME_UI_MODE_CLIPBOARD,
+                IME_UI_MODE_GIF,
                 IME_UI_MODE_DICTATE,
                 DICTATE_LIVE_PROMPT,
                 DICTATE_PROMPTS,
@@ -425,6 +426,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.IME_UI_MODE_CLIPBOARD,
             label = "ime_ui_mode_clipboard",
+        )
+        /** Predefined key data for [KeyCode.IME_UI_MODE_GIF] (opens the KLIPY GIF search panel) */
+        val IME_UI_MODE_GIF = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.IME_UI_MODE_GIF,
+            label = "ime_ui_mode_gif",
         )
         /** Predefined key data for [KeyCode.IME_UI_MODE_DICTATE] (Dictate AI voice panel) */
         val IME_UI_MODE_DICTATE = TextKeyData(

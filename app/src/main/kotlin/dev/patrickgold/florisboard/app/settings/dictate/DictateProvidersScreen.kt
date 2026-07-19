@@ -33,6 +33,8 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SmartToy
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Watch
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -66,6 +68,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -178,6 +181,7 @@ fun DictateProvidersScreen() = FlorisScreen {
 
             Preference(
                 icon = Icons.Default.Add,
+                modifier = Modifier.settingsSearchAnchor("dictate__providers_add_custom"),
                 title = stringRes(R.string.dictate__providers_add_custom),
                 summary = stringRes(R.string.dictate__providers_add_custom_summary),
                 onClick = { editingId = ProviderAccount.newCustomId() },
@@ -191,6 +195,7 @@ fun DictateProvidersScreen() = FlorisScreen {
             val proxyOff = stringRes(R.string.dictate__proxy_summary_off)
             Preference(
                 icon = Icons.Default.Lan,
+                modifier = Modifier.settingsSearchAnchor("dictate__proxy_title"),
                 title = stringRes(R.string.dictate__proxy_title),
                 summary = if (proxyEnabled && proxyHost.isNotBlank()) {
                     "$proxyHost:$proxyPort"
@@ -258,6 +263,7 @@ private fun RewordingProviderPreference(entries: List<Pair<String, String>>, sho
 
     Preference(
         icon = Icons.Default.SmartToy,
+        modifier = Modifier.settingsSearchAnchor("dictate__providers_active_rewording"),
         title = stringRes(R.string.dictate__providers_active_rewording),
         summary = entries.firstOrNull { it.first == selectedId }?.second ?: selectedId,
         // Trailing info "i" (only while single-call is active), mirroring the Punctuation/Style prompt.
@@ -340,6 +346,7 @@ private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>)
 
     Preference(
         icon = Icons.Default.Mic,
+        modifier = Modifier.settingsSearchAnchor("dictate__providers_active_transcription"),
         title = stringRes(R.string.dictate__providers_active_transcription),
         summary = entries.firstOrNull { it.first == selectedId }?.second ?: selectedId,
         onClick = { open = true },
@@ -744,6 +751,8 @@ private fun EditorField(
     keyboardType: KeyboardType = KeyboardType.Text,
     onBrowse: (() -> Unit)? = null,
 ) {
+    // Secret fields (API keys) start masked but can be revealed with the eye toggle (issue #195).
+    var reveal by remember { mutableStateOf(false) }
     OutlinedTextField(
         modifier = Modifier.padding(top = 8.dp),
         value = value,
@@ -751,19 +760,32 @@ private fun EditorField(
         singleLine = true,
         label = { Text(label) },
         placeholder = { if (placeholder.isNotEmpty()) Text(placeholder) },
-        visualTransformation = if (isSecret) PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation = if (isSecret && !reveal) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (isSecret) KeyboardType.Password else keyboardType,
         ),
-        trailingIcon = onBrowse?.let {
-            {
-                IconButton(onClick = it) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = stringRes(R.string.dictate__model_picker_title),
-                    )
+        trailingIcon = when {
+            isSecret -> {
+                {
+                    IconButton(onClick = { reveal = !reveal }) {
+                        Icon(
+                            imageVector = if (reveal) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                            contentDescription = null,
+                        )
+                    }
                 }
             }
+            onBrowse != null -> {
+                {
+                    IconButton(onClick = onBrowse) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringRes(R.string.dictate__model_picker_title),
+                        )
+                    }
+                }
+            }
+            else -> null
         },
     )
 }

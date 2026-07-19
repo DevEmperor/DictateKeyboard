@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
@@ -103,14 +104,17 @@ fun LocalizationScreen() = FlorisScreen {
     content {
         ListPreference(
             prefs.localization.displayLanguageNamesIn,
+            modifier = Modifier.settingsSearchAnchor("settings__localization__display_language_names_in__label"),
             title = stringRes(R.string.settings__localization__display_language_names_in__label),
             entries = enumDisplayEntriesOf(DisplayLanguageNamesIn::class),
         )
         SwitchPreference(
             prefs.localization.displayKeyboardLabelsInSubtypeLanguage,
+            modifier = Modifier.settingsSearchAnchor("settings__localization__display_keyboard_labels_in_subtype_language"),
             title = stringRes(R.string.settings__localization__display_keyboard_labels_in_subtype_language),
         )
         Preference(
+            modifier = Modifier.settingsSearchAnchor("settings__localization__language_pack_title"),
             title = stringRes(R.string.settings__localization__language_pack_title),
             summary = stringRes(R.string.settings__localization__language_pack_summary),
             onClick = {

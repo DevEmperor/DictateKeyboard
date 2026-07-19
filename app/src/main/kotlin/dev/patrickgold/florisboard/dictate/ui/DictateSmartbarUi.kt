@@ -11,7 +11,6 @@
 package dev.patrickgold.florisboard.dictate.ui
 
 import android.os.SystemClock
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -113,7 +112,7 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * sticky mic button) while [DictateController] is recording or transcribing, so the keyboard itself
  * stays fully visible instead of being replaced by a separate panel.
  *
- * - Recording: a cancel button, a pulsing red dot + an elapsed `m:ss` timer, and a pause/resume
+ * - Recording: a cancel button, an audio-reactive cloud orb + an elapsed `m:ss` timer, and a pause/resume
  *   button. The sticky mic (rendered by the Smartbar) stops the recording and starts transcribing.
  * - Transcribing: a spinning icon + label, or a retry indicator while a transient failure is retried.
  * - Error: the error message, auto-cleared after a few seconds.
@@ -176,10 +175,11 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         onDispose { view.keepScreenOn = false }
     }
 
-    // Cancel button (far left) – discards the recording.
+    // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
+    // segment and keeps recording, so you can scrap the last utterance without losing the transcript (#183).
     SnyggIconButton(
         elementName = FlorisImeUi.SmartbarActionKey.elementName,
-        onClick = { DictateController.cancelRecording() },
+        onClick = { DictateController.cancelOrDiscardSegment(context) },
         modifier = Modifier.fillMaxHeight().aspectRatio(1f),
     ) {
         SnyggIcon(
@@ -188,7 +188,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         )
     }
 
-    // Center: pulsing dot + elapsed timer.
+    // Center: audio-reactive dot + elapsed timer.
     Row(verticalAlignment = Alignment.CenterVertically) {
         var elapsedMs by remember { mutableLongStateOf(state.accumulatedMs) }
         LaunchedEffect(state.startedAtMs, state.accumulatedMs, state.paused) {
@@ -201,21 +201,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
                 }
             }
         }
-        val transition = rememberInfiniteTransition(label = "recording")
-        val pulse by transition.animateFloat(
-            initialValue = 0.65f,
-            targetValue = 1.15f,
-            animationSpec = infiniteRepeatable(tween(650), RepeatMode.Reverse),
-            label = "pulse",
-        )
-        Spacer(
-            modifier = Modifier
-                .size(12.dp)
-                .scale(if (state.paused) 1f else pulse)
-                .alpha(if (state.paused) 0.4f else 1f)
-                .clip(CircleShape)
-                .background(Color(0xFFE53935)),
-        )
+        RecordingAudioDot(paused = state.paused)
         Spacer(modifier = Modifier.width(10.dp))
         SnyggText(text = formatElapsed(elapsedMs))
         // Segmented mode: how many cut segments are transcribing in the background right now.
@@ -262,6 +248,25 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
             }
         }
     }
+}
+
+/**
+ * Small recording indicator for the Smartbar: a red dot whose size and opacity follow the shared 20 Hz
+ * microphone level, so the normal keyboard shows the mic is actually hearing you — without the heavier
+ * cloud-orb surface, which stays an opt-in floating-button skin.
+ */
+@Composable
+private fun RecordingAudioDot(paused: Boolean) {
+    val level by DictateController.audioLevel.collectFlowAsState()
+    val reactive = if (paused) 0f else level
+    Spacer(
+        modifier = Modifier
+            .size(12.dp)
+            .scale(if (paused) 1f else 0.85f + 0.5f * reactive)
+            .alpha(if (paused) 0.4f else 0.55f + 0.45f * reactive)
+            .clip(CircleShape)
+            .background(Color(0xFFE53935)),
+    )
 }
 
 /**
