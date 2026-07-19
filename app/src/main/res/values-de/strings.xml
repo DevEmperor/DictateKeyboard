@@ -1030,6 +1030,8 @@
     <string name="dictate__floating_button_design_pill_summary">Klappt im aktiven Zustand auf und zeigt Timer und Live-Wellenform.</string>
     <string name="dictate__floating_button_design_orb">Kugel</string>
     <string name="dictate__floating_button_design_orb_summary">Eine volle Kugel, die beim Aufnehmen mit deiner Stimme leuchtet und pulsiert.</string>
+    <string name="dictate__floating_button_design_cloud">Wolke</string>
+    <string name="dictate__floating_button_design_cloud_summary">Eine fließende Wolken-Kugel, die sich beim Aufnehmen bewegt und auf deine Stimme reagiert.</string>
     <string name="dictate__floating_button_size_title">Buttongröße</string>
     <string name="dictate__floating_button_size_small">Klein</string>
     <string name="dictate__floating_button_size_medium">Mittel</string>

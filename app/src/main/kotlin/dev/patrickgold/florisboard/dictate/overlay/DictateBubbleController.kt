@@ -17,7 +17,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PixelFormat
+import android.graphics.RadialGradient
 import android.graphics.RectF
+import android.graphics.Shader
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.SystemClock
@@ -71,7 +73,7 @@ import kotlin.math.hypot
  * dragged, and routes the result through [DictateController] with [DictateController.OutputTarget.OVERLAY]
  * so the text is injected into the focused field.
  *
- * The visuals are provided by a [BubbleSkin] — [RingSkin], [PillSkin], or [OrbSkin] — selected by the
+ * The visuals are provided by a [BubbleSkin] — [RingSkin], [PillSkin], [OrbSkin], or [CloudSkin] — selected by the
  * `floatingButtonDesign` preference. While recording, a level ticker feeds the chosen skin the shared
  * normalized microphone level.
  *
@@ -542,6 +544,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             DictateFloatingButtonDesign.RING -> RingSkin(context)
             DictateFloatingButtonDesign.PILL -> PillSkin(context)
             DictateFloatingButtonDesign.ORB -> OrbSkin(context)
+            DictateFloatingButtonDesign.CLOUD -> CloudSkin(context)
         }
         skin = newSkin
         val root = newSkin.root
@@ -1413,9 +1416,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val viewSize = sdp(64)
         private val coreSize = sdp(44)
         private val iconInset = sdp(11)
-        private val activeIconInset = sdp(16)
+        private val coreRadiusPx = coreSize / 2f
+        private val minGlowPx = sdpf(2f)
+        private val maxGlowPx = sdpf(8f)
 
-        private val cloud = AudioReactiveCloudOrbView(context)
+        private val glow = GlowView(context)
         private val core = View(context).apply {
             background = circle(R.color.dictate_overlay_accent)
             elevation = sdpf(6f)
@@ -1426,39 +1431,48 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             elevation = sdpf(6f)
             imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
+        private var breatheAnim: ValueAnimator? = null
+        private var smoothed = 0f
 
         override val fixedHeight: Int? = null
 
         override val root: View = FrameLayout(context).apply {
-            addView(cloud, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
+            addView(glow, FrameLayout.LayoutParams(viewSize, viewSize))
             addView(core, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
             addView(icon, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
-            minimumWidth = viewSize
-            minimumHeight = viewSize
         }
 
         override fun applyState(state: DictateController.UiState) {
+            stopBreathe()
             when (state) {
                 is DictateController.UiState.Recording -> {
-                    showCloud(AudioReactiveCloudOrbView.Mode.LISTENING, showStop = true)
-                    cloud.setPaused(state.paused)
-                    cloud.setLevel(0f) // the shared level ticker takes over immediately after this state update
+                    setCore(R.color.dictate_overlay_recording)
+                    setGlyph(R.drawable.ic_dictate_overlay_stop)
+                    glow.glowColor = color(R.color.dictate_overlay_recording)
+                    smoothed = 0f
+                    setGlow(0f) // the ticker drives it from the live amplitude
                 }
                 is DictateController.UiState.Transcribing -> {
-                    showCloud(AudioReactiveCloudOrbView.Mode.THINKING, showStop = false)
+                    setCore(R.color.dictate_overlay_accent)
+                    setGlyph(R.drawable.ic_dictate_overlay_mic)
+                    startBreathe(R.color.dictate_overlay_accent)
                 }
                 is DictateController.UiState.Rewording -> {
-                    showCloud(AudioReactiveCloudOrbView.Mode.THINKING, showStop = false)
+                    setCore(R.color.dictate_overlay_accent)
+                    setGlyph(R.drawable.ic_dictate_overlay_mic)
+                    startBreathe(R.color.dictate_overlay_rewording)
                 }
-                else -> showIdle()
+                else -> {
+                    setCore(R.color.dictate_overlay_accent)
+                    setGlyph(R.drawable.ic_dictate_overlay_mic)
+                    setGlow(0f)
+                }
             }
         }
 
         override fun showFlash(kind: FlashKind) {
-            cloud.stop()
-            core.visibility = View.VISIBLE
-            icon.visibility = View.VISIBLE
-            icon.setPadding(iconInset, iconInset, iconInset, iconInset)
+            stopBreathe()
+            setGlow(0f)
             when (kind) {
                 FlashKind.ERROR -> {
                     setCore(R.color.dictate_overlay_recording)
@@ -1472,11 +1486,12 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
 
         override fun onRecordingTick(level: Float, elapsedMs: Long) {
-            cloud.setLevel(level)
+            smoothed += (level - smoothed) * 0.35f
+            setGlow(smoothed)
         }
 
         override fun destroy() {
-            cloud.stop()
+            stopBreathe()
         }
 
         private fun setCore(colorRes: Int) {
@@ -1489,26 +1504,139 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             icon.alpha = 1f
         }
 
-        private fun showCloud(mode: AudioReactiveCloudOrbView.Mode, showStop: Boolean) {
-            core.visibility = View.INVISIBLE
-            cloud.setPaused(false)
-            cloud.setLevel(0f)
-            cloud.setMode(mode)
-            icon.visibility = if (showStop) View.VISIBLE else View.INVISIBLE
-            if (showStop) {
-                setGlyph(R.drawable.ic_dictate_overlay_stop)
-                icon.setPadding(activeIconInset, activeIconInset, activeIconInset, activeIconInset)
-                icon.imageTintList = ColorStateList.valueOf(CLOUD_GLYPH_COLOR)
+        /** Drives the glow radius/alpha and a subtle orb scale from a 0..1 level. */
+        private fun setGlow(level: Float) {
+            val l = level.coerceIn(0f, 1f)
+            glow.level = l
+            glow.invalidate()
+            val s = 1f + l * 0.08f
+            core.scaleX = s
+            core.scaleY = s
+            icon.scaleX = s
+            icon.scaleY = s
+        }
+
+        private fun startBreathe(colorRes: Int) {
+            glow.glowColor = color(colorRes)
+            breatheAnim?.cancel()
+            breatheAnim = ValueAnimator.ofFloat(0f, 1f).apply {
+                duration = 1100
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.REVERSE
+                addUpdateListener { setGlow(0.2f + 0.5f * (it.animatedValue as Float)) }
+                start()
             }
         }
 
-        private fun showIdle() {
+        private fun stopBreathe() {
+            breatheAnim?.cancel()
+            breatheAnim = null
+        }
+
+        private inner class GlowView(context: Context) : View(context) {
+            var glowColor: Int = color(R.color.dictate_overlay_accent)
+            var level: Float = 0f
+            private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+            override fun onDraw(canvas: Canvas) {
+                if (level <= 0.01f || width == 0) return
+                val cx = width / 2f
+                val cy = height / 2f
+                val glowR = coreRadiusPx + minGlowPx + level * maxGlowPx
+                if (glowR <= coreRadiusPx) return
+                val inner = (coreRadiusPx / glowR).coerceIn(0f, 0.95f)
+                val a = (50 + level * 150f).toInt().coerceIn(0, 255)
+                val rgb = glowColor and 0x00FFFFFF
+                val cIn = rgb or (a shl 24)
+                paint.shader = RadialGradient(
+                    cx, cy, glowR,
+                    intArrayOf(cIn, cIn, rgb),
+                    floatArrayOf(0f, inner, 1f),
+                    Shader.TileMode.CLAMP,
+                )
+                canvas.drawCircle(cx, cy, glowR, paint)
+            }
+        }
+    }
+
+    // --- Cloud skin (design 4) -------------------------------------------------------------------
+
+    private inner class CloudSkin(context: Context) : BubbleSkin {
+        private val viewSize = sdp(64)
+        private val coreSize = sdp(44)
+        private val idleInset = sdp(13)
+
+        private val cloud = AudioReactiveCloudOrbView(context)
+        private val icon = ImageView(context).apply {
+            elevation = sdpf(6f)
+        }
+
+        override val fixedHeight: Int? = null
+
+        override val root: View = FrameLayout(context).apply {
+            // The cloud spans the whole button so it has room to grow while recording; a small glyph
+            // overlays it as the idle/terminal affordance (there is no glyph while recording).
+            addView(cloud, FrameLayout.LayoutParams(viewSize, viewSize, Gravity.CENTER))
+            addView(icon, FrameLayout.LayoutParams(coreSize, coreSize, Gravity.CENTER))
+            minimumWidth = viewSize
+            minimumHeight = viewSize
+        }
+
+        override fun applyState(state: DictateController.UiState) {
+            when (state) {
+                is DictateController.UiState.Recording -> {
+                    cloud.setPaused(state.paused)
+                    cloud.setLevel(0f) // the shared level ticker takes over immediately after this state update
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
+                    icon.visibility = View.INVISIBLE // the growing, turbulent cloud alone signals recording
+                }
+                is DictateController.UiState.Transcribing,
+                is DictateController.UiState.Rewording -> {
+                    cloud.setPaused(false)
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.THINKING)
+                    icon.visibility = View.INVISIBLE // the cloud draws its own activity spinner
+                }
+                else -> showIdle()
+            }
+        }
+
+        override fun showFlash(kind: FlashKind) {
+            // Keep the cloud alive and tint the whole field, so the terminal feedback stays part of the
+            // same design instead of swapping in a detached colored circle.
+            cloud.setPaused(false)
+            when (kind) {
+                FlashKind.ERROR -> {
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.ERROR)
+                    showGlyph(R.drawable.ic_dictate_overlay_error, idleInset, Color.WHITE, 0.95f)
+                }
+                FlashKind.SUCCESS -> {
+                    cloud.setMode(AudioReactiveCloudOrbView.Mode.SUCCESS)
+                    showGlyph(R.drawable.ic_dictate_overlay_check, idleInset, Color.WHITE, 0.95f)
+                }
+            }
+        }
+
+        override fun onRecordingTick(level: Float, elapsedMs: Long) {
+            cloud.setLevel(level)
+        }
+
+        override fun destroy() {
             cloud.stop()
-            core.visibility = View.VISIBLE
+        }
+
+        // Idle: the cloud itself is the button, with a mic hint so it reads as "tap to dictate".
+        private fun showIdle() {
+            cloud.setPaused(false)
+            cloud.setMode(AudioReactiveCloudOrbView.Mode.IDLE)
+            showGlyph(R.drawable.ic_dictate_overlay_mic, idleInset, CLOUD_GLYPH_COLOR, 0.9f)
+        }
+
+        private fun showGlyph(resId: Int, inset: Int, tint: Int, alpha: Float) {
             icon.visibility = View.VISIBLE
-            icon.setPadding(iconInset, iconInset, iconInset, iconInset)
-            setCore(R.color.dictate_overlay_accent)
-            setGlyph(R.drawable.ic_dictate_overlay_mic)
+            icon.setImageResource(resId)
+            icon.setPadding(inset, inset, inset, inset)
+            icon.imageTintList = ColorStateList.valueOf(tint)
+            icon.alpha = alpha
         }
     }
 

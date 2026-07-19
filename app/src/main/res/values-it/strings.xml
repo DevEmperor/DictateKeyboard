@@ -911,6 +911,8 @@
     <string name="dictate__floating_button_color_title">Colore del pulsante</string>
     <string name="dictate__floating_button_design_orb">Sfera</string>
     <string name="dictate__floating_button_design_orb_summary">Una sfera piena che si illumina e pulsa con la tua voce durante la registrazione.</string>
+    <string name="dictate__floating_button_design_cloud">Nuvola</string>
+    <string name="dictate__floating_button_design_cloud_summary">Una sfera di nuvola fluida che si muove e risponde alla tua voce durante la registrazione.</string>
     <string name="dictate__floating_button_design_pill">Pillola</string>
     <string name="dictate__floating_button_design_pill_summary">Si espande quando attivo per mostrare un timer e una forma d’onda in tempo reale.</string>
     <string name="dictate__floating_button_design_ring">Anello</string>

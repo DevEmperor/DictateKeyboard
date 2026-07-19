@@ -1060,6 +1060,8 @@
     <string name="dictate__floating_button_color_title">ボタンの色</string>
     <string name="dictate__floating_button_design_orb">オーブ</string>
     <string name="dictate__floating_button_design_orb_summary">録音中に声に合わせて光り脈動する中実の球。</string>
+    <string name="dictate__floating_button_design_cloud">クラウド</string>
+    <string name="dictate__floating_button_design_cloud_summary">録音中に流れるように動き、あなたの声に反応する雲のオーブ。</string>
     <string name="dictate__floating_button_design_pill">ピル</string>
     <string name="dictate__floating_button_design_pill_summary">アクティブ時に展開し、タイマーとライブ波形を表示します。</string>
     <string name="dictate__floating_button_design_ring">リング</string>

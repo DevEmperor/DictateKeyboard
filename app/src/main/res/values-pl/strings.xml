@@ -1143,6 +1143,8 @@
     <string name="dictate__floating_button_color_title">Kolor przycisku</string>
     <string name="dictate__floating_button_design_orb">Kula</string>
     <string name="dictate__floating_button_design_orb_summary">Pełna kula, która podczas nagrywania świeci i pulsuje w rytm Twojego głosu.</string>
+    <string name="dictate__floating_button_design_cloud">Chmura</string>
+    <string name="dictate__floating_button_design_cloud_summary">Płynna chmurowa kula, która faluje i reaguje na Twój głos podczas nagrywania.</string>
     <string name="dictate__floating_button_design_pill">Pigułka</string>
     <string name="dictate__floating_button_design_pill_summary">Po uaktywnieniu rozszerza się, pokazując licznik czasu i wykres dźwięku na żywo.</string>
     <string name="dictate__floating_button_design_ring">Pierścień</string>

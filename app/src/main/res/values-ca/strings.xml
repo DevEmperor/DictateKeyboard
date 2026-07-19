@@ -1003,6 +1003,8 @@
     <string name="dictate__floating_button_color_title">Color del botó</string>
     <string name="dictate__floating_button_design_orb">Esfera</string>
     <string name="dictate__floating_button_design_orb_summary">Una esfera sòlida que brilla i batega amb la teva veu mentre graves.</string>
+    <string name="dictate__floating_button_design_cloud">Núvol</string>
+    <string name="dictate__floating_button_design_cloud_summary">Una esfera de núvol fluida que flueix i respon a la teva veu mentre graves.</string>
     <string name="dictate__floating_button_design_pill">Píndola</string>
     <string name="dictate__floating_button_design_pill_summary">S’amplia quan està actiu per mostrar un temporitzador i una forma d’ona en directe.</string>
     <string name="dictate__floating_button_design_ring">Anella</string>

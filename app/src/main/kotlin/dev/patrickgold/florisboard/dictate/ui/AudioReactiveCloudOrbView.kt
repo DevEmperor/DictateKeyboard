@@ -33,24 +33,36 @@ import kotlin.math.min
 import kotlin.math.sin
 
 /**
- * Native Android port of orb-ui's current default Cloud theme.
+ * Native Android port of orb-ui's current default Cloud theme, extended so the same surface carries every
+ * dictation stage in one cohesive look:
  *
- * Android 13+ renders the original procedural cloud field as an AGSL [RuntimeShader]. Older Android
- * versions keep the same palette and audio motion with cached Canvas gradients. Both paths animate only
- * while the orb is visible in an active state; the microphone level itself still arrives at 20 Hz.
+ * - [Mode.IDLE]: a calm, static cloud used as the tappable button symbol before recording.
+ * - [Mode.LISTENING]: the cloud reacts to the microphone level — it pulls inward, its flow speeds up and
+ *   its field turbulence/brightness rise with the voice, so the reaction is clearly visible.
+ * - [Mode.THINKING]: a calmer flow with a small activity spinner while transcribing/rewording.
+ * - [Mode.SUCCESS] / [Mode.ERROR]: the whole cloud field tints green / red so the terminal feedback still
+ *   looks like the same cloud instead of a detached colored circle.
+ *
+ * Android 13+ renders the procedural cloud field as an AGSL [RuntimeShader]; older versions keep the same
+ * palette and audio motion with cached Canvas gradients. Both paths animate only while the orb is visible
+ * in an animating state; the microphone level itself still arrives at 20 Hz.
  */
 internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    enum class Mode { HIDDEN, LISTENING, THINKING }
+    enum class Mode { HIDDEN, IDLE, LISTENING, THINKING, SUCCESS, ERROR }
 
     private var mode = Mode.HIDDEN
     private var targetLevel = 0f
     private var currentLevel = 0f
-    private var currentScale = 1f
+    private var currentScale = IDLE_SCALE
     private var flowTime = 0f
+    private var currentTint = 0f
+    private var tintR = SUCCESS_TINT[0]
+    private var tintG = SUCCESS_TINT[1]
+    private var tintB = SUCCESS_TINT[2]
     private var lastFrameNanos = 0L
     private var paused = false
 
@@ -62,6 +74,7 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
 
     private val fallbackBasePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val fallbackMistPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val fallbackTintPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val spinnerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.rgb(0x71, 0x78, 0xF5)
         style = Paint.Style.STROKE
@@ -76,6 +89,12 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         if (mode == value) return
         mode = value
         lastFrameNanos = 0L
+        when (value) {
+            Mode.SUCCESS -> setTintColor(SUCCESS_TINT)
+            Mode.ERROR -> setTintColor(ERROR_TINT)
+            Mode.IDLE -> currentLevel = 0f
+            else -> Unit
+        }
         visibility = if (value == Mode.HIDDEN) INVISIBLE else VISIBLE
         invalidate()
     }
@@ -99,9 +118,14 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         mode = Mode.HIDDEN
         targetLevel = 0f
         currentLevel = 0f
-        currentScale = 1f
+        currentScale = IDLE_SCALE
+        currentTint = 0f
         lastFrameNanos = 0L
         visibility = INVISIBLE
+    }
+
+    private fun setTintColor(rgb: FloatArray) {
+        tintR = rgb[0]; tintG = rgb[1]; tintB = rgb[2]
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -145,16 +169,22 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         canvas.save()
         canvas.scale(currentScale, currentScale, cx, cy)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && cloudRenderer != null) {
-            cloudRenderer.draw(canvas, width, height, flowTime, activity())
+            cloudRenderer.draw(canvas, width, height, flowTime, activity(), tintR, tintG, tintB, currentTint)
         } else {
             drawFallback(canvas, cx, cy)
+            if (currentTint > 0.01f) drawFallbackTint(canvas, cx, cy)
         }
         canvas.restore()
 
         if (mode == Mode.THINKING) drawSpinner(canvas, cx, cy, motionEnabled)
-        if (motionEnabled) {
-            // Keep the exact display-rate flow on the GPU path; spare older devices from a 60 Hz
-            // software paint loop while retaining smooth-enough movement in the fallback.
+
+        // IDLE draws a single static frame (a still cloud symbol) to spare the battery while the button
+        // just sits there; every other state — or a tint still fading out — keeps animating.
+        val animating = motionEnabled &&
+            (mode == Mode.LISTENING || mode == Mode.THINKING || mode == Mode.SUCCESS ||
+                mode == Mode.ERROR || currentTint > 0.01f ||
+                (mode == Mode.IDLE && abs(currentScale - IDLE_SCALE) > 0.004f))
+        if (animating) {
             if (cloudRenderer != null) postInvalidateOnAnimation()
             else postInvalidateDelayed(FALLBACK_FRAME_MS)
         }
@@ -166,42 +196,52 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
     }
 
     private fun updateMotion(deltaSeconds: Float, motionEnabled: Boolean) {
+        val tintTarget = if (mode == Mode.SUCCESS || mode == Mode.ERROR) 1f else 0f
         if (!motionEnabled) {
             currentLevel = 0f
-            currentScale = 1f
+            currentScale = scaleTargetFor()
+            currentTint = tintTarget // reduced-motion / paused: still show the terminal tint, just static
             return
         }
 
         val levelRate = if (targetLevel > currentLevel) LEVEL_ATTACK_RATE else LEVEL_RELEASE_RATE
         currentLevel = damp(currentLevel, targetLevel, levelRate, deltaSeconds)
+        currentTint = damp(currentTint, tintTarget, TINT_RATE, deltaSeconds)
 
-        val scaleTarget = if (mode == Mode.LISTENING) {
-            // CloudTheme communicates microphone input by pulling inward as the voice gets louder.
-            1f - currentLevel * LISTEN_SHRINK
-        } else {
-            1f
-        }
-        val scaleRate = if (abs(scaleTarget - 1f) > abs(currentScale - 1f)) {
-            SCALE_ATTACK_RATE
-        } else {
-            SCALE_RELEASE_RATE
-        }
+        // Recording grows the whole cloud and keeps it grown through transcribing; it shrinks back to the
+        // idle size only when we return to idle / a terminal flash. The voice shows mainly through the
+        // field turbulence, with only a small extra grow — no strong inward oscillation.
+        val scaleTarget = scaleTargetFor()
+        val scaleRate = if (scaleTarget > currentScale) SCALE_ATTACK_RATE else SCALE_RELEASE_RATE
         currentScale = damp(currentScale, scaleTarget, scaleRate, deltaSeconds)
         flowTime += deltaSeconds * flowSpeed()
+    }
+
+    private fun scaleTargetFor(): Float = when (mode) {
+        Mode.LISTENING -> RECORD_SCALE + currentLevel * LISTEN_VOICE_GROW
+        Mode.THINKING -> THINK_SCALE
+        else -> IDLE_SCALE
     }
 
     private fun shouldAnimate(): Boolean =
         mode != Mode.HIDDEN && !paused && isShown && ValueAnimator.areAnimatorsEnabled()
 
     private fun flowSpeed(): Float = when (mode) {
-        Mode.LISTENING -> 0.72f + currentLevel * 0.78f
+        // Speed up strongly with the voice so the churn is obvious.
+        Mode.LISTENING -> 0.85f + currentLevel * 2.60f
         Mode.THINKING -> 0.24f
+        Mode.SUCCESS, Mode.ERROR -> 0.30f
+        Mode.IDLE -> 0f
         Mode.HIDDEN -> 0f
     }
 
     private fun activity(): Float = when (mode) {
-        Mode.LISTENING -> 0.28f + currentLevel * 0.32f
+        // Higher activity = more field turbulence + more milky highlights in the shader, so the cloud
+        // visibly churns and brightens as the voice gets louder.
+        Mode.LISTENING -> 0.35f + currentLevel * 1.05f
         Mode.THINKING -> 0.10f
+        Mode.SUCCESS, Mode.ERROR -> 0.14f
+        Mode.IDLE -> 0.12f
         Mode.HIDDEN -> 0f
     }
 
@@ -212,6 +252,18 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         canvas.drawCircle(cx, cy, radius, fallbackBasePaint)
         canvas.drawCircle(cx, cy, radius, fallbackMistPaint)
         canvas.restore()
+    }
+
+    private fun drawFallbackTint(canvas: Canvas, cx: Float, cy: Float) {
+        val radius = min(width, height) / 2f
+        val a = (currentTint * 210f).toInt().coerceIn(0, 255)
+        fallbackTintPaint.color = Color.argb(
+            a,
+            (tintR * 255f).toInt().coerceIn(0, 255),
+            (tintG * 255f).toInt().coerceIn(0, 255),
+            (tintB * 255f).toInt().coerceIn(0, 255),
+        )
+        canvas.drawCircle(cx, cy, radius, fallbackTintPaint)
     }
 
     private fun drawSpinner(canvas: Canvas, cx: Float, cy: Float, motionEnabled: Boolean) {
@@ -237,35 +289,59 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         private val shader = RuntimeShader(CLOUD_SHADER)
         private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { shader = this@RuntimeCloudRenderer.shader }
 
-        fun draw(canvas: Canvas, width: Int, height: Int, time: Float, activity: Float) {
+        fun draw(
+            canvas: Canvas,
+            width: Int,
+            height: Int,
+            time: Float,
+            activity: Float,
+            tintR: Float,
+            tintG: Float,
+            tintB: Float,
+            tintStrength: Float,
+        ) {
             shader.setFloatUniform("u_resolution", width.toFloat(), height.toFloat())
             shader.setFloatUniform("u_time", time)
             shader.setFloatUniform("u_activity", activity)
+            shader.setFloatUniform("u_tint", tintR, tintG, tintB)
+            shader.setFloatUniform("u_tintStrength", tintStrength)
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         }
     }
 
     private companion object {
-        // Exact CloudTheme listening response and damping constants.
-        private const val LISTEN_SHRINK = 0.204f
-        private const val LEVEL_ATTACK_RATE = 11f
+        // Idle vs. active sizing (as a fraction of the 64dp button): the cloud is small at idle and grows
+        // clearly while recording, stays grown through transcribing, and shrinks back only on return to
+        // idle / a terminal flash. Recording is shown mainly by turbulence, with a small extra grow from
+        // the voice rather than inward oscillation.
+        private const val IDLE_SCALE = 0.70f
+        private const val RECORD_SCALE = 0.85f
+        private const val THINK_SCALE = 0.88f
+        private const val LISTEN_VOICE_GROW = 0.14f
+        private const val LEVEL_ATTACK_RATE = 13f
         private const val LEVEL_RELEASE_RATE = 6f
-        private const val SCALE_ATTACK_RATE = 12f
+        private const val SCALE_ATTACK_RATE = 13f
         private const val SCALE_RELEASE_RATE = 6f
+        private const val TINT_RATE = 7f
         private const val MAX_DELTA_SECONDS = 0.05f
         private const val PAUSED_ALPHA = 0.45f
         private const val FALLBACK_FRAME_MS = 33L
+
+        private val SUCCESS_TINT = floatArrayOf(0.24f, 0.80f, 0.46f)
+        private val ERROR_TINT = floatArrayOf(0.94f, 0.30f, 0.28f)
 
         private const val DEEP_PERIWINKLE = 0xFF5C63FB.toInt()
         private const val UPPER_PERIWINKLE = 0xFF7A8FFB.toInt()
         private const val LOWER_LAVENDER = 0xFFB8C7F9.toInt()
         private const val MILK = 0xFFE3EBFE.toInt()
 
-        /** AGSL port of orb-ui's MIT-licensed CloudTheme fragment shader. */
+        /** AGSL port of orb-ui's MIT-licensed CloudTheme fragment shader, plus a tint pass. */
         private const val CLOUD_SHADER = """
             uniform float2 u_resolution;
             uniform float u_time;
             uniform float u_activity;
+            uniform float3 u_tint;
+            uniform float u_tintStrength;
 
             float hash(float2 p) {
                 p = fract(p * float2(123.34, 456.21));
@@ -315,11 +391,11 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
                 );
                 float2 warped =
                     p +
-                    (warp - 0.5) * (1.18 + u_activity * 0.38) +
-                    curl * (0.035 + u_activity * 0.07);
+                    (warp - 0.5) * (1.10 + u_activity * 0.75) +
+                    curl * (0.035 + u_activity * 0.18);
                 float broad = fbm(warped * 0.92 + float2(t * 0.14, -t * 0.18));
                 float folded = fbm(warped * 1.66 + float2(-t * 0.23, t * 0.19) + 5.2);
-                float field = mix(broad, folded, 0.3 + u_activity * 0.14);
+                float field = mix(broad, folded, 0.3 + u_activity * 0.30);
 
                 float horizon =
                     0.46 +
@@ -337,12 +413,18 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
                 float3 color = mix(lowerLavender, upperPeriwinkle, upper);
                 float upperDepth = upper * (0.14 + smoothstep(0.42, 0.78, folded) * 0.5);
                 color = mix(color, deepPeriwinkle, upperDepth);
-                float milkAmount = clamp(band * (0.42 + cloud * 0.62), 0.0, 0.88);
+                // Milk comes only from the horizon band now (no voice-driven brightening) so the churning
+                // field structure stays readable while speaking instead of washing out.
+                float milkAmount = clamp(band * (0.38 + cloud * 0.55), 0.0, 0.82);
                 color = mix(color, milk, milkAmount);
                 float lowerMist = (1.0 - upper) * smoothstep(0.58, 0.9, broad) * 0.18;
                 color = mix(color, milk, lowerMist);
                 float grain = (noise(fragCoord * 0.64) - 0.5) / 255.0;
                 color += grain;
+
+                // Terminal feedback: tint the whole field toward green (success) / red (error) so it still
+                // reads as the same cloud instead of a detached colored circle.
+                color = mix(color, u_tint, clamp(u_tintStrength, 0.0, 1.0) * 0.62);
 
                 return half4(color * edge, edge);
             }

@@ -975,6 +975,8 @@
     <string name="dictate__floating_button_color_title">Колір кнопки</string>
     <string name="dictate__floating_button_design_orb">Сфера</string>
     <string name="dictate__floating_button_design_orb_summary">Суцільна сфера, що світиться й пульсує в такт вашому голосу під час запису.</string>
+    <string name="dictate__floating_button_design_cloud">Хмара</string>
+    <string name="dictate__floating_button_design_cloud_summary">Плавна хмарна сфера, що струменіє й реагує на ваш голос під час запису.</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">Коли активна, розгортається, показуючи таймер і живу форму хвилі.</string>
     <string name="dictate__floating_button_design_ring">Кільце</string>

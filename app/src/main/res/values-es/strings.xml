@@ -1109,6 +1109,8 @@
     <string name="dictate__floating_button_color_title">Color del botón</string>
     <string name="dictate__floating_button_design_orb">Esfera</string>
     <string name="dictate__floating_button_design_orb_summary">Una esfera sólida que brilla y late con tu voz mientras grabas.</string>
+    <string name="dictate__floating_button_design_cloud">Nube</string>
+    <string name="dictate__floating_button_design_cloud_summary">Una esfera de nube fluida que fluye y responde a tu voz mientras grabas.</string>
     <string name="dictate__floating_button_design_pill">Píldora</string>
     <string name="dictate__floating_button_design_pill_summary">Se expande cuando está activo para mostrar un temporizador y una onda en vivo.</string>
     <string name="dictate__floating_button_design_ring">Anillo</string>

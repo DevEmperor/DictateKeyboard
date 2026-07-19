@@ -1005,6 +1005,8 @@
     <string name="dictate__floating_button_color_title">Couleur du bouton</string>
     <string name="dictate__floating_button_design_orb">Sphère</string>
     <string name="dictate__floating_button_design_orb_summary">Une sphère pleine qui brille et pulse avec votre voix pendant l’enregistrement.</string>
+    <string name="dictate__floating_button_design_cloud">Nuage</string>
+    <string name="dictate__floating_button_design_cloud_summary">Une sphère nuageuse fluide qui ondule et réagit à votre voix pendant l\'enregistrement.</string>
     <string name="dictate__floating_button_design_pill">Pilule</string>
     <string name="dictate__floating_button_design_pill_summary">S’agrandit lorsqu’il est actif pour afficher un minuteur et une forme d’onde en direct.</string>
     <string name="dictate__floating_button_design_ring">Anneau</string>

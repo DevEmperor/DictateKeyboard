@@ -1126,6 +1126,8 @@
     <string name="dictate__floating_button_color_title">Gomb színe</string>
     <string name="dictate__floating_button_design_orb">Gömb</string>
     <string name="dictate__floating_button_design_orb_summary">Tömör gömb, amely felvétel közben világít és pulzál a hangjával.</string>
+    <string name="dictate__floating_button_design_cloud">Felhő</string>
+    <string name="dictate__floating_button_design_cloud_summary">Egy folyékony felhőgömb, amely áramlik és reagál a hangodra felvétel közben.</string>
     <string name="dictate__floating_button_design_pill">Pirula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktív állapotban kibővül, és időzítőt meg élő hullámformát mutat.</string>
     <string name="dictate__floating_button_design_ring">Gyűrű</string>

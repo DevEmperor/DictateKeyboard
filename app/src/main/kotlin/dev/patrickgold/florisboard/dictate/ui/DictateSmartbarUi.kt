@@ -88,7 +88,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -189,7 +188,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         )
     }
 
-    // Center: audio-reactive orb + elapsed timer.
+    // Center: audio-reactive dot + elapsed timer.
     Row(verticalAlignment = Alignment.CenterVertically) {
         var elapsedMs by remember { mutableLongStateOf(state.accumulatedMs) }
         LaunchedEffect(state.startedAtMs, state.accumulatedMs, state.paused) {
@@ -202,7 +201,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
                 }
             }
         }
-        RecordingAudioOrb(paused = state.paused)
+        RecordingAudioDot(paused = state.paused)
         Spacer(modifier = Modifier.width(10.dp))
         SnyggText(text = formatElapsed(elapsedMs))
         // Segmented mode: how many cut segments are transcribing in the background right now.
@@ -252,23 +251,21 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
 }
 
 /**
- * Native port of orb-ui's current Cloud theme. The procedural surface stays isolated in a tiny Android
- * view while the shared 20 Hz microphone level drives the same inward listening response as the source.
+ * Small recording indicator for the Smartbar: a red dot whose size and opacity follow the shared 20 Hz
+ * microphone level, so the normal keyboard shows the mic is actually hearing you — without the heavier
+ * cloud-orb surface, which stays an opt-in floating-button skin.
  */
 @Composable
-private fun RecordingAudioOrb(paused: Boolean) {
+private fun RecordingAudioDot(paused: Boolean) {
     val level by DictateController.audioLevel.collectFlowAsState()
-    AndroidView(
-        factory = { context ->
-            AudioReactiveCloudOrbView(context).apply {
-                setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
-            }
-        },
-        update = { orb ->
-            orb.setPaused(paused)
-            orb.setLevel(if (paused) 0f else level)
-        },
-        modifier = Modifier.size(28.dp),
+    val reactive = if (paused) 0f else level
+    Spacer(
+        modifier = Modifier
+            .size(12.dp)
+            .scale(if (paused) 1f else 0.85f + 0.5f * reactive)
+            .alpha(if (paused) 0.4f else 0.55f + 0.45f * reactive)
+            .clip(CircleShape)
+            .background(Color(0xFFE53935)),
     )
 }
 
