@@ -74,6 +74,7 @@ private/
 # Dictate: vendored sherpa-onnx native libs for on-device STT (issue #104). Reproducible build
 # artifacts fetched from the pinned GitHub release — run scripts/fetch-sherpa-onnx.sh to populate.
 /app/libs/sherpa-onnx-*.jar
+/app/libs/onnxruntime-android-*.jar
 /app/src/main/jniLibs/
 
 # glide dictionary build artifacts

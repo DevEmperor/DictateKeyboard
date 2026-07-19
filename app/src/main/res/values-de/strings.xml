@@ -1175,10 +1175,10 @@
     <string name="dictate__realtime_title">Echtzeit-Transkription</string>
     <string name="dictate__realtime_summary">Zeigt Text live beim Sprechen an, für Anbieter, die das unterstützen</string>
     <string name="dictate__longform_title">Langform-Diktat</string>
-    <string name="dictate__longform_summary">Transkribiert im Hintergrund, während du weitersprichst — tippe auf „Weiter“, um jeden Teil zu senden.</string>
-    <string name="dictate__longform_autosplit_title">Automatisch bei Pausen teilen</string>
-    <string name="dictate__longform_autosplit_summary">Schneidet einen Abschnitt auch automatisch nach einer ausreichend langen Pause, nicht nur über „Nächster Abschnitt“.</string>
-    <string name="dictate__longform_autosplit_threshold_title">Pausenlänge</string>
+    <string name="dictate__longform_summary">Transkribiert lange Diktate im Hintergrund, Teil für Teil, während du weitersprichst — tippe während der Aufnahme auf „Nächster Abschnitt“, um den aktuellen Teil zu senden, damit am Ende keine lange Wartezeit entsteht.</string>
+    <string name="dictate__longform_autosplit_title">Intelligent automatisch teilen</string>
+    <string name="dictate__longform_autosplit_summary">Silero erkennt Pausen, danach prüft Smart Turn, ob dein Gedanke abgeschlossen ist. Bei anhaltender Stille greift die maximale Pause als Absicherung.</string>
+    <string name="dictate__longform_autosplit_threshold_title">Maximale Pause</string>
     <string name="dictate__longform_autosplit_value">{seconds} s</string>
     <string name="dictate__longform_mode_off">Aus</string>
     <string name="dictate__longform_mode_off_summary">Am Ende einmal transkribieren (Standard).</string>

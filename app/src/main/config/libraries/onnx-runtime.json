@@ -1,0 +1,14 @@
+{
+  "uniqueId": "onnx-runtime",
+  "name": "ONNX Runtime",
+  "developers": [
+    {
+      "name": "Microsoft Corporation",
+      "organisationUrl": "https://github.com/microsoft"
+    }
+  ],
+  "website": "https://github.com/microsoft/onnxruntime",
+  "licenses": [
+    "onnx-runtime-mit"
+  ]
+}
