@@ -109,6 +109,24 @@ object ProviderRegistry {
         ),
     )
 
+    /**
+     * Cerebras Inference is chat-only here. Its OpenAI-compatible API is a strong fit for
+     * low-latency cleanup prompts after dictation; Gemma 4 31B is the fast default suggested for
+     * punctuation, filler-word removal and light grammar correction.
+     */
+    val CEREBRAS = ProviderPreset(
+        id = "cerebras",
+        displayName = "Cerebras",
+        baseUrl = "https://api.cerebras.ai/v1/",
+        capabilities = CHAT_ONLY,
+        supportsDynamicModels = true,
+        apiKeyUrl = "https://cloud.cerebras.ai/",
+        defaultChatModel = "gemma-4-31b",
+        curatedChatModels = listOf(
+            "gemma-4-31b", "gpt-oss-120b", "zai-glm-4.7",
+        ),
+    )
+
     val OPENROUTER = ProviderPreset(
         id = "openrouter",
         displayName = "OpenRouter",
@@ -376,7 +394,7 @@ object ProviderRegistry {
 
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
-        OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
+        OPENAI, GROQ, CEREBRAS, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
         ELEVENLABS, DEEPGRAM, ASSEMBLYAI, XAI, DEEPSEEK, OLLAMA, LOCAL,
     )
 
