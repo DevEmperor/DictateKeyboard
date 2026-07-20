@@ -22,7 +22,7 @@ kotlinx-serialization-json = "1.11.0"
 ksp = "2.3.5"
 material-kolor = "4.1.1"
 mikepenz-aboutlibraries = "14.0.1"
-okhttp = "4.12.0"
+okhttp = "5.3.0"
 patrickgold-compose-tooltip = "0.2.0-rc02"
 patrickgold-jetpref = "0.3.0"
 play-services-wearable = "19.0.0"
@@ -92,6 +92,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 

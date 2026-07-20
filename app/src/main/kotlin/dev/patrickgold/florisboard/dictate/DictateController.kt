@@ -19,6 +19,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import android.content.Intent
 import android.net.Uri
@@ -81,6 +82,8 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.NumberFormat
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Orchestrates the dictation flow that fuses the recording, the provider layer and the editor: tap
@@ -101,6 +104,30 @@ import java.text.NumberFormat
  * Not yet ported from the legacy service (later refinement): usage tracking.
  */
 object DictateController {
+
+    private const val LATENCY_LOG_TAG = "DictateLatency"
+    private val latencyFlowIds = AtomicLong()
+
+    /** Correlates privacy-safe phase timings for one batch transcription without logging its contents. */
+    private data class BatchLatencyTrace(
+        val id: Long = latencyFlowIds.incrementAndGet(),
+        val startedNanos: Long = SystemClock.elapsedRealtimeNanos(),
+    )
+
+    private fun logLatency(trace: BatchLatencyTrace, phase: String, phaseStartedNanos: Long? = null) {
+        val now = SystemClock.elapsedRealtimeNanos()
+        val phaseMs = phaseStartedNanos?.let { TimeUnit.NANOSECONDS.toMillis(now - it) }
+        Log.i(
+            LATENCY_LOG_TAG,
+            buildString {
+                append("flow=").append(trace.id)
+                append(" phase=").append(phase)
+                phaseMs?.let { append(" phaseMs=").append(it) }
+                append(" totalMs=")
+                    .append(TimeUnit.NANOSECONDS.toMillis(now - trace.startedNanos))
+            },
+        )
+    }
 
     sealed interface UiState {
         data object Idle : UiState
@@ -731,6 +758,10 @@ object DictateController {
                     else -> null
                 }
                 recorder = RecordingController(appContext).also { it.start(audioSource, pcmSink) }
+                if (prefs.dictate.skipSilentRecordings.get()) {
+                    // Hide the one-time native VAD/session setup behind the user's recording time.
+                    scope.launch { SpeechGate.prewarm(appContext) }
+                }
                 _state.value = UiState.Recording(SystemClock.elapsedRealtime(), accumulatedMs = seedAccumulatedMs)
                 startAudioLevelSampling()
                 // Highlight the live-prompt chip for the duration of a live-prompt recording.
@@ -780,6 +811,8 @@ object DictateController {
             stopRealtimeAndFinalize(context)
             return
         }
+        val latencyTrace = BatchLatencyTrace()
+        logLatency(latencyTrace, "stopTapped")
         val activeRecorder = recorder
         recorder = null
         _livePromptActive.value = false
@@ -787,8 +820,12 @@ object DictateController {
         // Capture the recorded length before leaving the Recording state, to credit the usage counter
         // that gates the rate/donate nudges (roadmap 9.7/9.8). Includes any carried-over seconds.
         val recordedSeconds = recordedSecondsOf(_state.value)
+        val recorderStopStartedNanos = SystemClock.elapsedRealtimeNanos()
         val audioFile = activeRecorder?.stop()
+        logLatency(latencyTrace, "recorderStopped", recorderStopStartedNanos)
+        val routingCleanupStartedNanos = SystemClock.elapsedRealtimeNanos()
         cleanupAudioRouting()
+        logLatency(latencyTrace, "audioRoutingCleaned", routingCleanupStartedNanos)
         val carry = carryOverAudio
         carryOverAudio = null
         if (audioFile == null || !audioFile.exists() || audioFile.length() == 0L) {
@@ -796,7 +833,7 @@ object DictateController {
             // transcribing the carried-over segment alone rather than losing it.
             if (carry != null && carry.exists() && carry.length() > 0L) {
                 scope.launch { clearInterruptedAudioPref() }
-                transcribe(context, carry, carryOverSeconds)
+                transcribe(context, carry, carryOverSeconds, latencyTrace = latencyTrace)
             } else {
                 carry?.delete()
                 _state.value = UiState.Error(context.getString(R.string.dictate__error_no_audio))
@@ -804,7 +841,7 @@ object DictateController {
             return
         }
         if (carry == null) {
-            transcribe(context, audioFile, recordedSeconds)
+            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
             return
         }
         // Continuation: stitch the carried-over segment and the new one into a single audio so the whole
@@ -815,11 +852,11 @@ object DictateController {
         carry.delete()
         if (ok && merged.exists() && merged.length() > 0L) {
             audioFile.delete()
-            transcribe(context, merged, recordedSeconds)
+            transcribe(context, merged, recordedSeconds, latencyTrace = latencyTrace)
         } else {
             // Merge failed (rare): transcribe at least the newly recorded segment.
             merged.delete()
-            transcribe(context, audioFile, recordedSeconds)
+            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
         }
     }
 
@@ -890,7 +927,9 @@ object DictateController {
         isReplay: Boolean = false,
         source: String = DictateHistorySource.KEYBOARD,
         replayHistoryId: Long? = null,
+        latencyTrace: BatchLatencyTrace = BatchLatencyTrace(),
     ) {
+        logLatency(latencyTrace, "transcribeEntered")
         val account = transcriptionAccount()
         val apiKey = account.apiKey
         val preset = presetFor(account)
@@ -944,23 +983,30 @@ object DictateController {
         // Live prompt is consumed by this transcription only (the next recording is normal again).
         val live = livePromptArmed
         livePromptArmed = false
+        val coroutineScheduledNanos = SystemClock.elapsedRealtimeNanos()
         transcribeJob = scope.launch {
             var keepAudio = false
+            var outcome = "failed"
             try {
+                logLatency(latencyTrace, "coroutineStarted", coroutineScheduledNanos)
                 reconcileActiveLanguage() // correct a stale active language before it's read for the request
                 // Silence gate (issue #93): before spending an upload, run a local Silero VAD; if the
                 // recording contains no speech, skip transcription so silent clips can't produce "ghost
                 // text" hallucinations. Fails open (treats as speech) if the check can't run. Not applied
                 // to picked files or resends of already-captured audio (see callers).
-                if (gate && prefs.dictate.skipSilentRecordings.get() &&
-                    !SpeechGate.hasSpeech(appContext, audioFile)
-                ) {
-                    _state.value = UiState.Error(
-                        message = appContext.getString(R.string.dictate__no_speech_detected),
-                        action = ErrorAction.NONE,
-                        neutral = true, // informational, not a failure → white/themed, not red
-                    )
-                    return@launch // audio is dropped by the finally block
+                if (gate && prefs.dictate.skipSilentRecordings.get()) {
+                    val gateStartedNanos = SystemClock.elapsedRealtimeNanos()
+                    val hasSpeech = SpeechGate.hasSpeech(appContext, audioFile)
+                    logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
+                    if (!hasSpeech) {
+                        outcome = "noSpeech"
+                        _state.value = UiState.Error(
+                            message = appContext.getString(R.string.dictate__no_speech_detected),
+                            action = ErrorAction.NONE,
+                            neutral = true, // informational, not a failure → white/themed, not red
+                        )
+                        return@launch // audio is dropped by the finally block
+                    }
                 }
                 // Single-call multimodal (issue #130): one chat/completions+input_audio request transcribes
                 // and formats together (cloud chat models only, never the on-device engine).
@@ -977,6 +1023,7 @@ object DictateController {
                     // Chat-audio: the full instruction (language + style + all auto-formatting) in one go.
                     prompt = if (chatAudio) buildChatAudioInstruction(appContext) else transcriptionStylePrompt(),
                 )
+                val providerStartedNanos = SystemClock.elapsedRealtimeNanos()
                 val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
                     // On-device (issue #104): no HTTP client, no key; transcribe locally via sherpa-onnx.
                     LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model))
@@ -1002,6 +1049,7 @@ object DictateController {
                         fallback.transcribe(request)
                     }
                 }
+                logLatency(latencyTrace, "providerCompleted", providerStartedNanos)
                 // Shared finalize: rewording/formatting + mappings + commit + stats. Reused by the
                 // realtime path (issue #128), which supplies its own already-streamed transcript.
                 val capture = HistoryCapture(
@@ -1014,12 +1062,25 @@ object DictateController {
                     isReplay = isReplay,
                     replayHistoryId = replayHistoryId,
                 )
-                finalizeAndCommit(appContext, result.text, recordedSeconds, live, alreadyFormatted = chatAudio, capture = capture)
+                val finalizeStartedNanos = SystemClock.elapsedRealtimeNanos()
+                finalizeAndCommit(
+                    appContext,
+                    result.text,
+                    recordedSeconds,
+                    live,
+                    alreadyFormatted = chatAudio,
+                    capture = capture,
+                    latencyTrace = latencyTrace,
+                )
+                logLatency(latencyTrace, "finalizeCompleted", finalizeStartedNanos)
+                outcome = "success"
             } catch (c: CancellationException) {
                 // User aborted via the stop button: discard quietly (state set by cancelTranscription),
                 // never show an error. The audio is dropped in the finally block.
+                outcome = "cancelled"
                 throw c
             } catch (e: DictateApiException) {
+                outcome = "apiError"
                 _pendingPrompts.value = emptyList()
                 // Exportable failures (too large / bad format) keep the audio regardless of the resend
                 // pref, so it can be saved instead of lost (issue #144).
@@ -1031,6 +1092,7 @@ object DictateController {
                 }
                 _state.value = apiError(e, appContext, canResend = keepAudio)
             } catch (t: Throwable) {
+                outcome = "unexpectedError"
                 _pendingPrompts.value = emptyList()
                 keepAudio = retainFailedAudio(audioFile, live, recordedSeconds)
                 if (replayHistoryId == null) {
@@ -1044,6 +1106,7 @@ object DictateController {
                 )
             } finally {
                 if (!keepAudio) audioFile.delete()
+                logLatency(latencyTrace, "terminal:$outcome")
             }
         }
     }
@@ -1062,6 +1125,7 @@ object DictateController {
         alreadyFormatted: Boolean,
         finalizeViaComposing: Boolean = false,
         capture: HistoryCapture? = null,
+        latencyTrace: BatchLatencyTrace? = null,
     ) {
         val finalText = if (live) {
             // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
@@ -1098,6 +1162,7 @@ object DictateController {
                 copyToSystemClipboard(appContext, outputText)
             }
             val committed = commitOutput(appContext, outputText)
+            if (committed) latencyTrace?.let { logLatency(it, "outputCommitted") }
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
             // user can recover it via Reinsert, and surface an error instead of "success".

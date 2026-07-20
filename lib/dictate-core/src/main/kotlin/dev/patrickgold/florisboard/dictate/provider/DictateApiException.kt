@@ -20,6 +20,7 @@ class DictateApiException(
     val kind: Kind,
     message: String? = null,
     cause: Throwable? = null,
+    val httpStatus: Int? = null,
 ) : Exception(message, cause) {
 
     enum class Kind {
@@ -69,7 +70,7 @@ class DictateApiException(
                 status in 500..599 -> Kind.SERVER_ERROR
                 else -> Kind.UNKNOWN
             }
-            return DictateApiException(kind, message ?: "HTTP $status", null)
+            return DictateApiException(kind, message ?: "HTTP $status", null, status)
         }
 
         /** Classifies a transport-level exception (timeouts, no connection, …). */
