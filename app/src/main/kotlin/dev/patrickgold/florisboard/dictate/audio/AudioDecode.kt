@@ -76,6 +76,56 @@ object AudioDecode {
     }
 
     /**
+     * Streams recorder-native WAV audio (PCM16, mono, 16 kHz) in reusable float windows.
+     *
+     * Returns false when [file] is not exactly this shape, so callers can fall back to [decodeToMono16k].
+     * [onWindow] returns false to stop reading early. Full-size windows reuse the same FloatArray.
+     */
+    internal fun streamPcm16Mono16kWav(
+        file: File,
+        windowSize: Int,
+        onWindow: (FloatArray) -> Boolean,
+    ): Boolean {
+        require(windowSize > 0) { "windowSize must be positive" }
+
+        RandomAccessFile(file, "r").use { input ->
+            val wav = parseWav(input) ?: return false
+            if (
+                wav.audioFormat != 1 ||
+                wav.bitsPerSample != 16 ||
+                wav.channels != 1 ||
+                wav.sampleRate != TARGET_SAMPLE_RATE
+            ) {
+                return false
+            }
+
+            var remainingSamples = wav.dataLength / 2L
+            if (remainingSamples <= 0L) return true
+            input.seek(wav.dataOffset)
+
+            val bytes = ByteArray(windowSize * 2)
+            val floats = FloatArray(windowSize)
+            while (remainingSamples > 0L) {
+                val count = minOf(windowSize.toLong(), remainingSamples).toInt()
+                input.readFully(bytes, 0, count * 2)
+                var byteIndex = 0
+                var sampleIndex = 0
+                while (sampleIndex < count) {
+                    val sample = (bytes[byteIndex].toInt() and 0xff) or
+                        (bytes[byteIndex + 1].toInt() shl 8)
+                    floats[sampleIndex] = sample / 32768.0f
+                    byteIndex += 2
+                    sampleIndex++
+                }
+                val chunk = if (count == windowSize) floats else floats.copyOf(count)
+                if (!onWindow(chunk)) return true
+                remainingSamples -= count
+            }
+            return true
+        }
+    }
+
+    /**
      * Parses a PCM WAV [file] directly into mono float samples at [TARGET_SAMPLE_RATE], or returns null
      * if it is not a (PCM) WAV — then the caller falls back to the MediaCodec path. Handles arbitrary
      * channel counts / sample rates / 16-bit (and 8-bit) PCM, down-mixing and resampling as needed.
@@ -147,7 +197,7 @@ object AudioDecode {
                 chunkHeader.hasTag(0, "data") -> {
                     if (!hasFormat) return null
                     val len = size.coerceAtMost(input.length() - body)
-                    if (len <= 0L) return null
+                    if (len < 0L) return null
                     return WavInfo(audioFormat, channels, sampleRate, bitsPerSample, body, len)
                 }
             }

@@ -61,7 +61,10 @@ data class RealtimeRequest(
  * waiting for a final result. All methods are safe to call from the audio/capture thread.
  */
 interface RealtimeSession {
-    /** Push [len] bytes of mono 16-bit LE PCM (at [RealtimeRequest.sampleRate]) to the provider. */
+    /**
+     * Push [len] bytes of mono 16-bit LE PCM (at [RealtimeRequest.sampleRate]) to the provider.
+     * Implementations must consume or copy the buffer before returning; callers may reuse it.
+     */
     fun sendAudio(pcm16: ByteArray, len: Int)
 
     /** Signal that speaking has ended: flush buffered audio and request the final transcript, then close. */

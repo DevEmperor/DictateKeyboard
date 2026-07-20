@@ -66,6 +66,12 @@ object DictatePromptDefaults {
             "6) Input: Mention italicize needs review before sending -> Output: Mention _needs review_ before sending.\n" +
             "7) Input: Just checking in with you today -> Output: Just checking in with you today."
 
+    private val AUTO_FORMATTING_ECHO_MARKERS = arrayOf(
+        "attentive, adaptive formatting assistant",
+        "Follow these rules:",
+        "Language hint:",
+    )
+
     /**
      * Assembles the full auto-formatting request: the [AUTO_FORMATTING_PROMPT] rules, a *language hint*,
      * and the [transcript] to clean up. Extracted (and unit-tested) so the wording stays stable across
@@ -84,12 +90,7 @@ object DictatePromptDefaults {
      * contains.
      */
     fun looksLikeAutoFormattingPrompt(text: String): Boolean {
-        val markers = listOf(
-            "attentive, adaptive formatting assistant",
-            "Follow these rules:",
-            "Language hint:",
-        )
-        return markers.any { text.contains(it, ignoreCase = true) }
+        return AUTO_FORMATTING_ECHO_MARKERS.any { text.contains(it, ignoreCase = true) }
     }
 
     /**
@@ -103,14 +104,35 @@ object DictatePromptDefaults {
      * [base] is null/blank, or `"<base> <words>"` otherwise. Returns null only when both are empty.
      */
     fun appendCustomWords(base: String?, rawWords: String?): String? {
-        val words = rawWords.orEmpty()
-            .split(',', '\n')
-            .map { it.trim() }
-            .filter { it.isNotEmpty() }
         val baseClean = base?.trim()?.takeIf { it.isNotEmpty() }
-        if (words.isEmpty()) return baseClean
-        val glossary = words.joinToString(", ")
+        val glossary = rawWords?.let { buildGlossary(it) } ?: return baseClean
         return if (baseClean == null) glossary else "$baseClean $glossary"
+    }
+
+    private fun buildGlossary(rawWords: String): String? {
+        var out: StringBuilder? = null
+        var start = 0
+        while (start <= rawWords.length) {
+            val end = nextWordSeparator(rawWords, start)
+            var wordStart = start
+            var wordEnd = end
+            while (wordStart < wordEnd && rawWords[wordStart].isWhitespace()) wordStart++
+            while (wordEnd > wordStart && rawWords[wordEnd - 1].isWhitespace()) wordEnd--
+            if (wordStart < wordEnd) {
+                val builder = out ?: StringBuilder(rawWords.length).also { out = it }
+                if (builder.isNotEmpty()) builder.append(", ")
+                builder.append(rawWords, wordStart, wordEnd)
+            }
+            if (end == rawWords.length) break
+            start = end + 1
+        }
+        return out?.toString()
+    }
+
+    private fun nextWordSeparator(rawWords: String, start: Int): Int {
+        var i = start
+        while (i < rawWords.length && rawWords[i] != ',' && rawWords[i] != '\n') i++
+        return i
     }
 
     /**

@@ -16,9 +16,11 @@ import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import java.io.File
+import java.io.IOException
 import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Records microphone audio into a 16 kHz mono PCM16 **WAV** file in the app cache.
@@ -45,7 +47,8 @@ class RecordingController(private val context: Context) {
     @Volatile private var paused = false
     @Volatile private var pcmBytes = 0L
     /** Peak |sample| (0..32767) seen since the last [maxAmplitude] call; drives the waveform. */
-    @Volatile private var peak = 0
+    private val peak = AtomicInteger(0)
+    @Volatile private var recordingError: Throwable? = null
 
     /** The file the current/last recording was written to, or null if nothing was recorded yet. */
     var outputFile: File? = null
@@ -94,25 +97,47 @@ class RecordingController(private val context: Context) {
         record = rec
         raf = out
         outputFile = file
-        pcmBytes = 0
-        peak = 0
+        pcmBytes = 0L
+        peak.set(0)
+        recordingError = null
         paused = false
+        try {
+            rec.startRecording()
+        } catch (t: Throwable) {
+            record = null
+            raf = null
+            outputFile = null
+            runCatching { out.close() }
+            file.delete()
+            runCatching { rec.release() }
+            throw t
+        }
         recording = true
-        rec.startRecording()
         thread = Thread {
-            val buf = ByteArray(bufferSize)
+            val readSize = if (pcmSink != null) minOf(bufferSize, REALTIME_READ_BYTES) else bufferSize
+            val buf = ByteArray(readSize)
             while (recording) {
                 val n = rec.read(buf, 0, buf.size)
+                if (!recording) break
                 // Keep reading while paused (so the mic buffer never overflows) but drop the samples.
-                if (n > 0 && !paused) {
-                    // Write under the lock so a concurrent rotate() sees a consistent raf/pcmBytes and the
-                    // frame lands in the correct segment file (never split across a rotation).
-                    synchronized(fileLock) {
-                        runCatching { raf?.write(buf, 0, n) }
-                        pcmBytes += n
+                if (n < 0) {
+                    recordingError = IOException("AudioRecord.read failed: $n")
+                    recording = false
+                } else if (n > 0 && !paused) {
+                    try {
+                        // Keep the file and byte count consistent with rotate()/stop(). Do not hide write
+                        // failures: a WAV whose header claims bytes that were never written is unusable.
+                        synchronized(fileLock) {
+                            val currentOut = raf ?: throw IOException("Recording output is unavailable")
+                            currentOut.write(buf, 0, n)
+                            pcmBytes += n
+                        }
+                        updatePeak(buf, n)
+                        if (pcmSink != null) runCatching { pcmSink(buf, n) }
+                    } catch (t: Throwable) {
+                        recordingError = t
+                        recording = false
                     }
-                    updatePeak(buf, n)
-                    if (pcmSink != null) runCatching { pcmSink(buf, n) }
                 }
             }
         }.also { it.start() }
@@ -134,12 +159,18 @@ class RecordingController(private val context: Context) {
             old.write(wavHeader(bytes))
             old.close()
             if (bytes > 0 && base != null) {
-                val seg = File(context.cacheDir, "dictate_seg_${segmentSeq++}.wav")
-                seg.delete()
-                if (base.renameTo(seg)) seg else null
+                // Controllers are recreated between recordings while earlier segments may still be
+                // transcribing. Include a monotonic component so a new controller cannot delete one.
+                val seg = File(context.cacheDir, "dictate_seg_${System.nanoTime()}_${segmentSeq++}.wav")
+                check(base.renameTo(seg)) { "Could not preserve completed recording segment" }
+                seg
             } else null
-        } catch (_: Throwable) {
-            null
+        } catch (t: Throwable) {
+            runCatching { old.close() }
+            raf = null
+            recordingError = t
+            recording = false
+            return@synchronized null
         }
         // Reopen a fresh WAV (the base name is now free after the rename) for the continuing recording.
         val file = File(context.cacheDir, AUDIO_FILE_NAME)
@@ -148,11 +179,13 @@ class RecordingController(private val context: Context) {
                 setLength(0)
                 write(ByteArray(WAV_HEADER_SIZE))
             }
-        } catch (_: Throwable) {
+        } catch (t: Throwable) {
+            recordingError = t
+            recording = false
             null
         }
         outputFile = file
-        pcmBytes = 0
+        pcmBytes = 0L
         segment
     }
 
@@ -161,12 +194,12 @@ class RecordingController(private val context: Context) {
      * recorder is always released.
      */
     fun stop(): File? {
-        if (!recording) return null
+        val rec = record
+        if (!recording && rec == null && thread == null && raf == null) return null
         recording = false
         // AudioRecord.read(byte[], …) is blocking. Stop the native recorder first so a read waiting for
         // microphone frames returns before we join the capture thread. On the normal path, release only
         // after the reader exits; if stop fails, release early so the microphone still cannot leak.
-        val rec = record
         record = null
         val stopped = rec != null && runCatching { rec.stop() }.isSuccess
         if (!stopped) runCatching { rec?.release() }
@@ -174,10 +207,20 @@ class RecordingController(private val context: Context) {
         thread = null
         if (stopped) runCatching { rec?.release() }
         return synchronized(fileLock) {
-            val out = raf ?: return@synchronized null
+            val out = raf
             raf = null
             val bytes = pcmBytes
             val file = outputFile
+            val failure = recordingError
+            recordingError = null
+            pcmBytes = 0L
+            peak.set(0)
+            if (out == null || failure != null) {
+                runCatching { out?.close() }
+                file?.delete()
+                outputFile = null
+                return@synchronized null
+            }
             try {
                 out.seek(0)
                 out.write(wavHeader(bytes))
@@ -186,17 +229,14 @@ class RecordingController(private val context: Context) {
             } catch (_: Throwable) {
                 runCatching { out.close() }
                 file?.delete()
+                outputFile = null
                 null
             }
         }
     }
 
     /** The peak microphone amplitude (0..32767) since the previous call, or 0 when not recording. */
-    fun maxAmplitude(): Int {
-        val p = peak
-        peak = 0
-        return p
-    }
+    fun maxAmplitude(): Int = peak.getAndSet(0)
 
     /** Pauses the in-progress recording (samples are dropped until [resume]). No-op if not recording. */
     fun pause() {
@@ -210,12 +250,26 @@ class RecordingController(private val context: Context) {
 
     /** Stops and discards the current recording without returning it. */
     fun cancel() {
-        stop()
-        outputFile?.delete()
+        recording = false
+        val rec = record
+        runCatching { rec?.stop() }
+        runCatching { thread?.join() }
+        thread = null
+        runCatching { rec?.release() }
+        record = null
+        synchronized(fileLock) {
+            recordingError = null
+            runCatching { raf?.close() }
+            raf = null
+            outputFile?.delete()
+            outputFile = null
+            pcmBytes = 0L
+            peak.set(0)
+        }
     }
 
     private fun updatePeak(buf: ByteArray, length: Int) {
-        var max = peak
+        var max = 0
         var i = 0
         while (i + 1 < length) {
             val sample = (buf[i].toInt() and 0xff) or (buf[i + 1].toInt() shl 8) // little-endian PCM16
@@ -223,7 +277,12 @@ class RecordingController(private val context: Context) {
             if (abs > max) max = abs
             i += 2
         }
-        peak = max.coerceAtMost(32767)
+        val capped = max.coerceAtMost(32767)
+        while (true) {
+            val current = peak.get()
+            val next = if (capped > current) capped else current
+            if (peak.compareAndSet(current, next)) return
+        }
     }
 
     private fun wavHeader(dataLen: Long): ByteArray {
@@ -252,6 +311,10 @@ class RecordingController(private val context: Context) {
         private const val ENCODING = AudioFormat.ENCODING_PCM_16BIT
         private const val CHANNELS = 1
         private const val BITS_PER_SAMPLE = 16
+        private const val BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8
+        private const val REALTIME_READ_CHUNK_MS = 40
+        private const val REALTIME_READ_BYTES =
+            SAMPLE_RATE * CHANNELS * BYTES_PER_SAMPLE * REALTIME_READ_CHUNK_MS / 1000
         private const val WAV_HEADER_SIZE = 44
     }
 }

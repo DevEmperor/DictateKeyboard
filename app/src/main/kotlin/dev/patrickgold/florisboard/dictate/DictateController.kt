@@ -250,17 +250,21 @@ object DictateController {
     private val _interimText = MutableStateFlow("")
     /**
      * Live transcript while a real-time recording runs: finalized segments plus the current partial. The
-     * Smartbar shows this as a live caption; the field only receives the finished (reworded) text on stop.
-     * Empty outside a realtime recording.
+     * Smartbar shows this as a live caption; IME fields receive a coalesced preview which final commit
+     * replaces with the finished (reworded) text on stop. Empty outside a realtime recording.
      */
     val interimText: StateFlow<String> = _interimText.asStateFlow()
 
     private var realtimeSession: RealtimeSession? = null
+    private val realtimeTextLock = Any()
     private val realtimeFinal = StringBuilder()      // accumulated finalized segments
     @Volatile private var realtimeFailed = false     // stream errored → fall back to batch on stop
     private var realtimeClosed: CompletableDeferred<Unit>? = null
     private var realtimeContext: Context? = null     // app context to edit the field's provisional text
     private val realtimeShown = StringBuilder()       // text currently committed to the field this session
+    private var realtimePreviewJob: Job? = null
+    @Volatile private var realtimePreviewLatest = ""  // newest transcript received, even if not flushed yet
+    private var realtimePreviewLastFlushMs = 0L
     @Volatile private var realtimeCancelled = false   // block late stream callbacks from re-adding text
 
     // --- Long-form segmented dictation (issue #170) ---------------------------------------------
@@ -409,12 +413,27 @@ object DictateController {
 
     /** Cache file name for the merged audio when a continued interrupted recording is stitched together. */
     private const val MERGED_AUDIO_NAME = "dictate_merged.wav"
+    // Realtime (#128): cap IME preview writes to about one editor update per display frame.
+    private const val REALTIME_PREVIEW_FRAME_MS = 66L
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
 
     /** 20 Hz is responsive for a voice indicator while avoiding a display-rate UI loop. */
     private const val AUDIO_LEVEL_SAMPLE_MS = 50L
+
+    private fun cancelRealtimePreviewJob() {
+        realtimePreviewJob?.cancel()
+        realtimePreviewJob = null
+    }
+
+    private fun resetRealtimePreviewScheduler() {
+        cancelRealtimePreviewJob()
+        synchronized(realtimeTextLock) {
+            realtimePreviewLatest = ""
+        }
+        realtimePreviewLastFlushMs = 0L
+    }
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
@@ -606,6 +625,7 @@ object DictateController {
         // Tear down any realtime stream (#128) and remove the live provisional text from the field. Set the
         // cancelled flag first so any stream callback still queued on the main thread can't re-add the text.
         realtimeCancelled = true
+        resetRealtimePreviewScheduler()
         realtimeSession?.cancel()
         realtimeSession = null
         realtimeClosed = null
@@ -1208,37 +1228,87 @@ object DictateController {
         val preset = presetFor(account)
         val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
-        realtimeFinal.setLength(0)
+        synchronized(realtimeTextLock) {
+            realtimeFinal.setLength(0)
+            realtimePreviewLatest = ""
+        }
         realtimeFailed = false
         realtimeCancelled = false
         _interimText.value = ""
         realtimeContext = appContext
         realtimeShown.setLength(0)
+        resetRealtimePreviewScheduler()
         val closed = CompletableDeferred<Unit>()
         realtimeClosed = closed
-        // Type the growing transcript live into the field, applying only the minimal diff each time (#128).
-        fun showLive(full: String) {
-            if (realtimeCancelled) return   // a late callback must not re-add text after a cancel
-            _interimText.value = full
-            runCatching { sink(appContext).setDictationPreview(full, realtimeShown.toString()) }
+        val previewSink = sink(appContext)
+        val coalescePreview = outputTarget == OutputTarget.IME
+
+        fun flushPreview() {
+            if (realtimeCancelled) return
+            val full = realtimePreviewLatest
+            val prev = realtimeShown.toString()
+            if (full == prev) return
+            runCatching { previewSink.setDictationPreview(full, prev) }
             realtimeShown.setLength(0)
             realtimeShown.append(full)
+            realtimePreviewLastFlushMs = SystemClock.elapsedRealtime()
+        }
+
+        fun publishLive(full: String, force: Boolean = false) {
+            if (realtimeCancelled) return
+            if (full == _interimText.value && !force) return
+            _interimText.value = full
+
+            if (!coalescePreview || force) {
+                cancelRealtimePreviewJob()
+                flushPreview()
+                return
+            }
+
+            if (realtimePreviewJob?.isActive == true) return
+            val elapsed = SystemClock.elapsedRealtime() - realtimePreviewLastFlushMs
+            val waitMs = (REALTIME_PREVIEW_FRAME_MS - elapsed).coerceAtLeast(0L)
+            if (waitMs == 0L) {
+                flushPreview()
+                return
+            }
+            realtimePreviewJob = scope.launch {
+                delay(waitMs)
+                flushPreview()
+                realtimePreviewJob = null
+            }
+        }
+        fun recordPartial(text: String): String? = synchronized(realtimeTextLock) {
+            if (realtimeCancelled) {
+                null
+            } else {
+                val head = realtimeFinal.toString()
+                (if (head.isEmpty()) text else "$head $text").trim().also { realtimePreviewLatest = it }
+            }
+        }
+        fun recordFinalSegment(text: String): String? = synchronized(realtimeTextLock) {
+            if (realtimeCancelled) {
+                null
+            } else {
+                val t = text.trim()
+                if (t.isNotEmpty()) {
+                    if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
+                    realtimeFinal.append(t)
+                }
+                realtimeFinal.toString().also { realtimePreviewLatest = it }
+            }
         }
         val callbacks = object : RealtimeCallbacks {
             override fun onPartial(text: String) {
+                val full = recordPartial(text) ?: return
                 scope.launch {
-                    val head = realtimeFinal.toString()
-                    showLive((if (head.isEmpty()) text else "$head $text").trim())
+                    publishLive(full)
                 }
             }
             override fun onFinalSegment(text: String) {
+                val full = recordFinalSegment(text) ?: return
                 scope.launch {
-                    val t = text.trim()
-                    if (t.isNotEmpty()) {
-                        if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
-                        realtimeFinal.append(t)
-                    }
-                    showLive(realtimeFinal.toString())
+                    publishLive(full, force = true)
                 }
             }
             override fun onError(t: Throwable) { realtimeFailed = true }
@@ -1253,9 +1323,20 @@ object DictateController {
                 runCatching { session.sendAudio(pcm, len) }
             }
         }
+        var resampleBuffer = ByteArray(0)
         return { pcm, len ->
-            val out = Pcm16Resampler.resample(pcm, len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
-            runCatching { session.sendAudio(out, out.size) }
+            val outLen = Pcm16Resampler.outputLengthBytes(len, AudioDecode.TARGET_SAMPLE_RATE, targetRate)
+            if (outLen > 0) {
+                if (resampleBuffer.size < outLen) resampleBuffer = ByteArray(outLen)
+                val written = Pcm16Resampler.resampleInto(
+                    pcm = pcm,
+                    len = len,
+                    srcRate = AudioDecode.TARGET_SAMPLE_RATE,
+                    dstRate = targetRate,
+                    out = resampleBuffer,
+                )
+                runCatching { session.sendAudio(resampleBuffer, written) }
+            }
         }
     }
 
@@ -1289,14 +1370,20 @@ object DictateController {
                 // stalls us until the timeout and later trips a ping/pong failure.
                 withTimeoutOrNull(REALTIME_FINALIZE_TIMEOUT_MS) { closed?.await() }
                 runCatching { session?.cancel() }
-                // The transcript is what we already streamed into the field (finals + last partial); fall
-                // back to the finalized-segments buffer only if nothing was shown.
-                val transcript = realtimeShown.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
+                realtimeCancelled = true
+                cancelRealtimePreviewJob()
+                // Prefer the newest received transcript; it may be newer than the coalesced field preview.
+                val transcript = synchronized(realtimeTextLock) {
+                    realtimePreviewLatest.trim()
+                        .ifEmpty { realtimeShown.toString().trim() }
+                        .ifEmpty { realtimeFinal.toString().trim() }
+                }
                 _interimText.value = ""
                 if (realtimeFailed || transcript.isEmpty()) {
                     // Drop the live provisional text; the batch path commits fresh from the WAV.
                     runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
                     realtimeShown.setLength(0)
+                    resetRealtimePreviewScheduler()
                     if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
                         livePromptArmed = live
                         transcribe(context, wavFile, recordedSeconds, gate = false)
@@ -1320,13 +1407,23 @@ object DictateController {
                     source = DictateHistorySource.REALTIME,
                 )
                 finalizeAndCommit(appContext, transcript, recordedSeconds, live, alreadyFormatted = false, finalizeViaComposing = true, capture = rtCapture)
+                resetRealtimePreviewScheduler()
                 wavFile?.delete()
             } catch (c: CancellationException) {
+                realtimeCancelled = true
+                cancelRealtimePreviewJob()
+                _interimText.value = ""
+                runCatching { session?.cancel() }
+                runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
+                realtimeShown.setLength(0)
+                resetRealtimePreviewScheduler()
+                wavFile?.delete()
                 throw c
             } catch (t: Throwable) {
                 _interimText.value = ""
                 runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
                 realtimeShown.setLength(0)
+                resetRealtimePreviewScheduler()
                 if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
                     livePromptArmed = live
                     transcribe(context, wavFile, recordedSeconds, gate = false)
@@ -1819,6 +1916,7 @@ object DictateController {
         _livePromptActive.value = false
         // Realtime (#128): drop the stream; the WAV is stashed below and recoverable via batch as usual.
         realtimeCancelled = true
+        resetRealtimePreviewScheduler()
         realtimeSession?.cancel()
         realtimeSession = null
         realtimeClosed = null
