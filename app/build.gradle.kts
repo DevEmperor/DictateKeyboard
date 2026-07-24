@@ -255,6 +255,10 @@ dependencies {
     // the Kotlin/JNI API as a jar here; the matching native .so live in src/main/jniLibs/<abi>/.
     // Not on Maven Central, so consumed as a local file (see private/docs/research/sherpa-onnx-feasibility.md).
     implementation(files("libs/sherpa-onnx-1.13.3.jar"))
+    // Generic ONNX Runtime Java/JNI bridge for Smart Turn v3. The matching 1.24.3 runtime is already
+    // shipped by sherpa-onnx; tools/fetch-sherpa-onnx.sh extracts only the API jar + tiny JNI bridge,
+    // avoiding a second ~20–27 MB copy of libonnxruntime per ABI.
+    implementation(files("libs/onnxruntime-android-1.24.3.jar"))
 
     implementation(projects.lib.android)
     implementation(projects.lib.color)
@@ -286,8 +290,10 @@ val verifySherpaOnnxLibs by tasks.registering {
     val projectDir = layout.projectDirectory
     val required = buildList {
         add(projectDir.file("libs/sherpa-onnx-1.13.3.jar").asFile)
+        add(projectDir.file("libs/onnxruntime-android-1.24.3.jar").asFile)
         for (abi in listOf("arm64-v8a", "armeabi-v7a")) {
             add(projectDir.file("src/main/jniLibs/$abi/libonnxruntime.so").asFile)
+            add(projectDir.file("src/main/jniLibs/$abi/libonnxruntime4j_jni.so").asFile)
             add(projectDir.file("src/main/jniLibs/$abi/libsherpa-onnx-jni.so").asFile)
         }
     }

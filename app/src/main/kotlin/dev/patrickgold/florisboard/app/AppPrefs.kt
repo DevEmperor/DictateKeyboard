@@ -475,16 +475,24 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // --- Long-form segmented dictation (issue #170) ------------------------------------------
         // Transcribe long dictations segment-by-segment in the background while you keep talking, so you
         // don't wait for one big upload at the end. OFF by default; MANUAL shows the "Next" button, AUTO
-        // additionally cuts at speech pauses. Keyboard-only, not for realtime / live-prompt / multimodal.
+        // additionally uses Silero VAD + Smart Turn v3 at speech pauses. Keyboard-only, not for realtime /
+        // live-prompt / multimodal.
         val longformMode = enum(
             key = "dictate__longform_mode",
             default = DictateLongformMode.OFF,
         )
-        // Pause length (whole seconds) that triggers an auto-cut in AUTO mode; deliberately long so it
-        // fires on thought-breaks, not breathing pauses.
+        // Maximum silence (Pipecat Smart Turn stop_secs fallback) before AUTO mode cuts even when the
+        // semantic classifier says the current thought may be incomplete.
         val longformAutoSplitSeconds = int(
             key = "dictate__longform_auto_split_seconds",
             default = 3,
+        )
+        // Opt-in semantic auto-segmentation: when on (and the model is downloaded), AUTO mode uses the
+        // on-device Smart Turn v3 classifier to cut at completed thoughts instead of only on silence.
+        // Off by default; the ~8 MB model is downloaded on demand, not bundled.
+        val smartTurnEnabled = boolean(
+            key = "dictate__smart_turn_enabled",
+            default = false,
         )
         // Speed of the typewriter animation when instantOutput is off (1 = slow … 10 = fast).
         val outputSpeed = int(

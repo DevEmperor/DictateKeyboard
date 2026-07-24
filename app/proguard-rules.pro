@@ -32,3 +32,11 @@
 # invokes their methods via JNI by name (e.g. GetFieldID "blankPenalty"). R8 shrinking otherwise
 # drops the "unused" fields, causing NoSuchFieldError at runtime — keep the whole package intact.
 -keep class com.k2fsa.sherpa.onnx.** { *; }
+
+# ONNX Runtime Java API for Smart Turn v3 (issue #191): the native JNI bridge (libonnxruntime4j_jni.so)
+# looks up these classes, constructors and fields BY NAME via FindClass/GetMethodID/NewObject. If R8
+# renames or removes them the lookup returns a null methodID and the run() call aborts the process with
+# "JNI DETECTED ERROR: mid == null". Keep the whole ai.onnxruntime package (and don't warn on its
+# optional providers) so release builds behave like debug.
+-keep class ai.onnxruntime.** { *; }
+-dontwarn ai.onnxruntime.**

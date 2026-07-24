@@ -177,6 +177,27 @@ object LocalModelCatalog {
         ),
     )
 
+    /** Install-dir id of the on-device Smart Turn v3 classifier (issue #191). */
+    const val SMART_TURN_ID = "smart-turn-v3"
+
+    /**
+     * The Smart Turn v3.2 semantic turn-completion model for long-form auto-split (issue #191). Kept out
+     * of [all] because it is not an STT model (it never appears in the transcription-model picker); it is
+     * downloaded on demand from the Smart Turn checkbox in the long-form settings. Single derived model
+     * file (Pipecat classifier + Whisper feature graph), verified after download.
+     */
+    val SMART_TURN = LocalModelSpec(
+        id = SMART_TURN_ID,
+        displayName = "Smart Turn v3",
+        description = "On-device thought-completion model for long-form auto-split.",
+        files = listOf(
+            LocalModelFile(
+                "$REL/smart-turn-v3.2-cpu.onnx", "smart-turn.onnx", 8_840_701,
+                "7e7bfa1924cf89bd12ca9ba8f6d9165e3154884c377944911926ed9fda2f6bab",
+            ),
+        ),
+    )
+
     /** All catalog models in display order: Parakeet first (best overall), then the German-specialized
      * Parakeet, then Whisper multilingual and the English-only variants. */
     val all: List<LocalModelSpec> = listOf(
