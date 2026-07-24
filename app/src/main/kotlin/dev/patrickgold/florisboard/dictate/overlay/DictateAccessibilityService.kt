@@ -55,16 +55,27 @@ class DictateAccessibilityService : AccessibilityService() {
     private var isForeground = false
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    // Coalesce focus re-checks. Selection-changed (and any residual) events can arrive on every
-    // keystroke, but the expensive part of updateEditableFocus() — fetching the focused node's full
-    // AccessibilityNodeInfo over IPC — only needs to run once a burst settles: the editable-focus state
-    // does not change while typing in the same field. Debouncing here removes the per-keystroke IPC
-    // flood that caused typing jank (issue #88 fallout).
+    // Coalesce selection re-checks. Selection-changed events can arrive on every keystroke, but the
+    // expensive part of updateEditableFocus() — fetching the focused node's full AccessibilityNodeInfo
+    // over IPC — only needs to run once a burst settles: the editable-focus state does not change while
+    // typing in the same field. Debouncing only this noisy event removes the per-keystroke IPC flood
+    // without delaying the bubble after a real focus or window change (#222).
     private val focusUpdateRunnable = Runnable { updateEditableFocus() }
 
     private fun scheduleFocusUpdate() {
         mainHandler.removeCallbacks(focusUpdateRunnable)
         mainHandler.postDelayed(focusUpdateRunnable, FOCUS_UPDATE_DEBOUNCE_MS)
+    }
+
+    /**
+     * Runs a focus check as soon as Android tells us that the input target or window changed. Any pending
+     * selection debounce is stale at that point, so cancel it rather than letting an old callback delay or
+     * overwrite this state. These event types are not emitted for every typed character, unlike selection
+     * changes, so the immediate IPC is both safe and necessary for a responsive overlay.
+     */
+    private fun updateEditableFocusImmediately() {
+        mainHandler.removeCallbacks(focusUpdateRunnable)
+        updateEditableFocus()
     }
 
     override fun onServiceConnected() {
@@ -97,12 +108,17 @@ class DictateAccessibilityService : AccessibilityService() {
             // service config): it fires on every keystroke and made updateEditableFocus() re-fetch the
             // whole focused AccessibilityNodeInfo per character — a per-keystroke IPC flood that caused
             // typing jank. Focus/editability only change on the events below, so we lose nothing.
+            // A focus/click or window transition is exactly when the bubble should appear or disappear.
+            // Do not route these through the typing-oriented debounce: it used to add 150 ms to every
+            // transition on top of the accessibility framework's notification timeout (#222).
             AccessibilityEvent.TYPE_VIEW_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_CLICKED,
-            AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED,
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED,
             AccessibilityEvent.TYPE_WINDOWS_CHANGED,
-            -> scheduleFocusUpdate()
+            -> updateEditableFocusImmediately()
+            // This is the only subscribed event which can arrive for every keystroke. Keep it coalesced
+            // so caret moves and text selection do not cause a focused-node IPC round trip per character.
+            AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED -> scheduleFocusUpdate()
         }
     }
 

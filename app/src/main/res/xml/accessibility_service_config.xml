@@ -8,6 +8,8 @@
   is deliberately NOT subscribed: it fires on every character typed, and each one made the service
   re-fetch the focused node's full AccessibilityNodeInfo (text + spans) — a per-keystroke IPC flood that
   caused visible typing jank. Focus never moves on a content change, so nothing is lost by ignoring it.
+  notificationTimeout stays at zero: the service itself coalesces the only high-frequency event
+  (typeViewTextSelectionChanged), while focus and window changes must reach the bubble immediately.
   The description is shown verbatim in the system Accessibility settings as the user-facing disclosure.
 -->
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,6 +17,6 @@
     android:accessibilityFeedbackType="feedbackGeneric"
     android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows|flagReportViewIds|flagInputMethodEditor"
     android:canRetrieveWindowContent="true"
-    android:notificationTimeout="100"
+    android:notificationTimeout="0"
     android:description="@string/dictate__accessibility_service_description"
     android:summary="@string/dictate__accessibility_service_summary" />
