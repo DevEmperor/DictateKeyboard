@@ -145,10 +145,11 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 object LegacyLayoutState {
     val suppressGlide = MutableStateFlow(false)
 
-    // True while a finger is down whose initial key is space or backspace on the modern keyboard. The
-    // SWIPE-mode swipe-toggle checks this and steps aside so those keys keep their own cursor-move /
-    // delete swipe gestures instead of flipping back to the dictation UI (issue #188).
-    val spaceOrDeleteTouch = MutableStateFlow(false)
+    // True while the current finger-down owns a horizontal swipe that must NOT flip keyboards: space or
+    // backspace (their cursor-move / delete gestures, issue #188), or a key whose long-press popup is open
+    // so the user can swipe to pick an accent/umlaut (e.g. o → ö, issue #221). The SWIPE-mode swipe-toggle
+    // checks this and steps aside instead of flipping back to the dictation UI.
+    val keyOwnsSwipe = MutableStateFlow(false)
 }
 
 /** Which full-panel overlay (if any) replaces the legacy layout. Emoji uses the app's own MEDIA panel. */
@@ -202,9 +203,10 @@ fun Modifier.legacySwipeToggle(
             val change = event.changes.firstOrNull() ?: break
             if (!change.pressed) break
             if (!intercept && change.isConsumed) break
-            // On the modern keyboard, let space/backspace keep their own swipe gestures (issue #188): if
-            // the finger came down on one of those keys, step aside instead of flipping keyboards.
-            if (intercept && LegacyLayoutState.spaceOrDeleteTouch.value) break
+            // On the modern keyboard, let a key that owns its swipe keep it — space/backspace cursor+delete
+            // gestures (#188), or an open long-press popup for picking an accent/umlaut (#221): step aside
+            // instead of flipping keyboards.
+            if (intercept && LegacyLayoutState.keyOwnsSwipe.value) break
             totalDx += change.position.x - change.previousPosition.x
             totalDy += change.position.y - change.previousPosition.y
             if (abs(totalDx) > thresholdPx && abs(totalDx) > abs(totalDy) * 1.5f) {
