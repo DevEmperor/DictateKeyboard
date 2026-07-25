@@ -1273,6 +1273,8 @@
     <string name="dictate__keep_screen_awake_summary">录音时防止屏幕关闭</string>
     <string name="dictate__skip_silent_title">跳过静音录音</string>
     <string name="dictate__skip_silent_summary">避免静音录音产生幻觉文本和浪费 API 调用</string>
+    <string name="dictate__trim_silent_gaps_title">裁剪长停顿</string>
+    <string name="dictate__trim_silent_gaps_summary">发送前剪掉长停顿 — 上传更快、花费更少</string>
     <string name="dictate__realtime_title">实时转录</string>
     <string name="dictate__realtime_summary">在您说话时实时显示文本，适用于支持此功能的提供商</string>
     <string name="dictate__longform_title">长篇听写</string>

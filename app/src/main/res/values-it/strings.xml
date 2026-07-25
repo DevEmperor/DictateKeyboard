@@ -1061,6 +1061,8 @@
     <string name="dictate__keep_screen_awake_summary">Impedisci che lo schermo si spenga durante la registrazione</string>
     <string name="dictate__skip_silent_title">Salta le registrazioni silenziose</string>
     <string name="dictate__skip_silent_summary">Evita testo allucinato e chiamate API inutili con audio silenzioso</string>
+    <string name="dictate__trim_silent_gaps_title">Taglia le pause lunghe</string>
+    <string name="dictate__trim_silent_gaps_summary">Taglia le pause lunghe prima dell\'invio: invio più rapido, costo minore</string>
     <string name="dictate__realtime_title">Trascrizione in tempo reale</string>
     <string name="dictate__realtime_summary">Mostra il testo in diretta mentre parli, per i provider che lo supportano</string>
     <string name="dictate__longform_title">Dettatura lunga</string>

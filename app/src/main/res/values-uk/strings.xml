@@ -1125,6 +1125,8 @@
     <string name="dictate__keep_screen_awake_summary">Не давати екрану вимикатися під час запису</string>
     <string name="dictate__skip_silent_title">Пропускати тихі записи</string>
     <string name="dictate__skip_silent_summary">Уникайте вигаданого тексту й зайвих викликів API при тихому записі</string>
+    <string name="dictate__trim_silent_gaps_title">Обрізати довгі паузи</string>
+    <string name="dictate__trim_silent_gaps_summary">Вирізає довгі паузи перед надсиланням — швидше завантаження, менші витрати</string>
     <string name="dictate__realtime_title">Транскрипція в реальному часі</string>
     <string name="dictate__realtime_summary">Показує текст наживо під час мовлення для провайдерів, які це підтримують</string>
     <string name="dictate__longform_title">Довга диктовка</string>

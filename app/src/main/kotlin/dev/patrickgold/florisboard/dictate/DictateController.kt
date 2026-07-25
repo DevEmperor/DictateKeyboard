@@ -410,6 +410,12 @@ object DictateController {
 
     /** Cache file name for the merged audio when a continued interrupted recording is stitched together. */
     private const val MERGED_AUDIO_NAME = "dictate_merged.wav"
+    // Silence trimming (issue #232): cache file for the trimmed upload, plus the gap thresholds — a silence
+    // gap longer than TRIM_MAX_SILENCE_MS is collapsed down to TRIM_KEEP_SILENCE_MS (a short pad on each
+    // side of the cut); shorter, natural pauses are left untouched.
+    private const val TRIMMED_AUDIO_NAME = "dictate_trimmed.wav"
+    private const val TRIM_MAX_SILENCE_MS = 2_000
+    private const val TRIM_KEEP_SILENCE_MS = 400
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
@@ -971,25 +977,58 @@ object DictateController {
         transcribeJob = scope.launch {
             var keepAudio = false
             var outcome = "failed"
+            // The file actually uploaded. Normally the original recording; the silence trimmer (#232) may
+            // swap in a shorter copy, while history/retention/cleanup keep referencing the original audioFile.
+            var uploadFile = audioFile
             try {
                 logLatency(latencyTrace, "coroutineStarted", coroutineScheduledNanos)
                 reconcileActiveLanguage() // correct a stale active language before it's read for the request
-                // Silence gate (issue #93): before spending an upload, run a local Silero VAD; if the
-                // recording contains no speech, skip transcription so silent clips can't produce "ghost
-                // text" hallucinations. Fails open (treats as speech) if the check can't run. Not applied
-                // to picked files or resends of already-captured audio (see callers).
-                if (gate && prefs.dictate.skipSilentRecordings.get()) {
+                // Local Silero VAD pass before spending an upload. Two purposes, both skipped for picked
+                // files / resends (gate=false) and while long-form dictation runs its own segment-cutting:
+                //   • Silence gate (#93): a recording with no speech is dropped so silent clips can't produce
+                //     "ghost text" hallucinations or waste API credits.
+                //   • Silence trimming (#232): long internal pauses are cut out so a gappy dictation uploads
+                //     less audio (less cost/latency) without losing a word.
+                // Both fail open (treated as speech, left untrimmed) if the check can't run.
+                val skipSilent = prefs.dictate.skipSilentRecordings.get()
+                val trimGaps = prefs.dictate.trimSilentGaps.get()
+                val longform = prefs.dictate.longformMode.get().isEnabled
+                if (gate && !longform && (skipSilent || trimGaps)) {
                     val gateStartedNanos = SystemClock.elapsedRealtimeNanos()
-                    val hasSpeech = SpeechGate.hasSpeech(appContext, audioFile)
-                    logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
-                    if (!hasSpeech) {
-                        outcome = "noSpeech"
-                        _state.value = UiState.Error(
-                            message = appContext.getString(R.string.dictate__no_speech_detected),
-                            action = ErrorAction.NONE,
-                            neutral = true, // informational, not a failure → white/themed, not red
-                        )
-                        return@launch // audio is dropped by the finally block
+                    if (trimGaps) {
+                        // One VAD pass yields both the speech decision and the segment map for trimming.
+                        val analysis = SpeechGate.analyze(appContext, audioFile)
+                        logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
+                        if (skipSilent && analysis != null && !analysis.hasSpeech) {
+                            outcome = "noSpeech"
+                            _state.value = UiState.Error(
+                                message = appContext.getString(R.string.dictate__no_speech_detected),
+                                action = ErrorAction.NONE,
+                                neutral = true, // informational, not a failure → white/themed, not red
+                            )
+                            return@launch // audio is dropped by the finally block
+                        }
+                        if (analysis != null && analysis.hasSpeech) {
+                            SpeechGate.writeTrimmedWav(
+                                analysis,
+                                File(appContext.cacheDir, TRIMMED_AUDIO_NAME),
+                                TRIM_MAX_SILENCE_MS,
+                                TRIM_KEEP_SILENCE_MS,
+                            )?.let { uploadFile = it }
+                        }
+                    } else {
+                        // Gate only: the cheaper early-exit check (returns as soon as the first speech closes).
+                        val hasSpeech = SpeechGate.hasSpeech(appContext, audioFile)
+                        logLatency(latencyTrace, "speechGateCompleted", gateStartedNanos)
+                        if (!hasSpeech) {
+                            outcome = "noSpeech"
+                            _state.value = UiState.Error(
+                                message = appContext.getString(R.string.dictate__no_speech_detected),
+                                action = ErrorAction.NONE,
+                                neutral = true, // informational, not a failure → white/themed, not red
+                            )
+                            return@launch // audio is dropped by the finally block
+                        }
                     }
                 }
                 // Single-call multimodal (issue #130): one chat/completions+input_audio request transcribes
@@ -997,7 +1036,7 @@ object DictateController {
                 val chatAudio = account.transcriptionViaChat &&
                     preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE
                 val request = TranscriptionRequest(
-                    audioFile = audioFile,
+                    audioFile = uploadFile,
                     model = model,
                     // Null for "detect" so the provider auto-detects; otherwise the chosen code. For the
                     // chat-audio path the language goes into the instruction (readable name) instead.
@@ -1090,6 +1129,8 @@ object DictateController {
                 )
             } finally {
                 if (!keepAudio) audioFile.delete()
+                // Drop the trimmed upload copy (#232); the original audioFile is the one history keeps.
+                if (uploadFile !== audioFile) runCatching { uploadFile.delete() }
                 logLatency(latencyTrace, "terminal:$outcome")
             }
         }

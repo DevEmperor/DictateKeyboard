@@ -164,6 +164,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__audio_source_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__audio_source_title"),
         SettingsSearchEntry(R.string.dictate__keep_screen_awake_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__keep_screen_awake_title"),
         SettingsSearchEntry(R.string.dictate__skip_silent_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__skip_silent_title"),
+        SettingsSearchEntry(R.string.dictate__trim_silent_gaps_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__trim_silent_gaps_title"),
         SettingsSearchEntry(R.string.dictate__instant_recording_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__instant_recording_title"),
         SettingsSearchEntry(R.string.dictate__instant_recording_skip_numeric_title, R.string.dictate__recording_group, Routes.Settings.DictateRecording, parentRes = R.string.dictate__title, anchor = "dictate__instant_recording_skip_numeric_title"),
         SettingsSearchEntry(R.string.dictate__auto_enter_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__auto_enter_title"),

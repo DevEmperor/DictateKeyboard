@@ -1276,6 +1276,8 @@
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
     <string name="dictate__skip_silent_title">Néma felvételek kihagyása</string>
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
+    <string name="dictate__trim_silent_gaps_title">Hosszú szünetek levágása</string>
+    <string name="dictate__trim_silent_gaps_summary">Küldés előtt levágja a hosszú szüneteket – gyorsabb feltöltés, kevesebb költség</string>
     <string name="dictate__realtime_title">Valós idejű átírás</string>
     <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál</string>
     <string name="dictate__longform_title">Hosszú diktálás</string>

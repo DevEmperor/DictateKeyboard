@@ -32,11 +32,16 @@ import java.util.concurrent.TimeUnit
  *
  * This reuses the sherpa-onnx runtime and the Silero VAD already bundled for on-device STT (issue #104);
  * the only addition is the ~640 KB `silero_vad.onnx` shipped in the APK assets so the gate works for
- * every provider even when no on-device model is installed. It is a *gate only* — the full original audio
- * is still what gets transcribed, so nothing is ever clipped.
+ * every provider even when no on-device model is installed. As a *gate* ([hasSpeech]) it never clips the
+ * audio. As an optional *trimmer* ([analyze] + [writeTrimmedWav], issue #232) it can additionally cut long
+ * internal pauses out of the recording before upload — keeping every speech segment plus a short pad, and
+ * only collapsing silences longer than the threshold — so a dictation with big gaps uploads (and costs)
+ * less without losing a word. Trimming is opt-in and only used outside long-form mode (which has its own
+ * segment-cutting).
  *
- * Fails open on purpose: if the model can't be prepared or the VAD errors, [hasSpeech] returns true so a
- * genuine recording is never silently dropped by a gate malfunction.
+ * Fails open on purpose: if the model can't be prepared or the VAD errors, [hasSpeech] returns true (and
+ * [analyze] returns null → no trim) so a genuine recording is never silently dropped or mangled by a
+ * gate malfunction.
  */
 object SpeechGate {
 
@@ -122,6 +127,184 @@ object SpeechGate {
             }
         }
     }
+
+    /**
+     * The result of a full VAD pass over a recording (issue #232): the decoded 16 kHz mono [samples] and
+     * the sample ranges that contain speech ([segments], each `start until endExclusive`). Unlike
+     * [hasSpeech] this does not early-exit — it collects every segment so the caller can both decide
+     * "is there speech?" ([hasSpeech]) and reconstruct a silence-trimmed clip ([writeTrimmedWav]).
+     */
+    internal class SpeechAnalysis(
+        val samples: FloatArray,
+        val sampleRate: Int,
+        val segments: List<IntRange>,
+    ) {
+        val hasSpeech: Boolean get() = segments.isNotEmpty()
+    }
+
+    /**
+     * Runs the local VAD over [audioFile] and returns its speech segments (issue #232), or null if the
+     * check could not run (model unavailable, decode failure, or a native fault) — in which case the
+     * caller should treat the audio as speech and leave it untrimmed. A successfully-analysed but
+     * speechless clip returns an [SpeechAnalysis] with no segments. Runs on [Dispatchers.Default].
+     */
+    internal suspend fun analyze(context: Context, audioFile: File): SpeechAnalysis? = withContext(Dispatchers.Default) {
+        val totalStartedNanos = System.nanoTime()
+        val model = ensureVadModel(context.applicationContext) ?: return@withContext null
+        val samples = runCatching { AudioDecode.decodeToMono16k(audioFile) }.getOrNull()
+            ?: return@withContext null
+        if (samples.isEmpty()) {
+            return@withContext SpeechAnalysis(samples, AudioDecode.TARGET_SAMPLE_RATE, emptyList())
+        }
+        vadMutex.withLock {
+            val vad = cachedVad ?: createVad(model)?.also { cachedVad = it } ?: return@withLock null
+            try {
+                vad.reset()
+                val segments = ArrayList<IntRange>()
+                val window = FloatArray(WINDOW)
+                var i = 0
+                while (i < samples.size) {
+                    val end = minOf(i + WINDOW, samples.size)
+                    val chunk = if (end - i == WINDOW) {
+                        samples.copyInto(window, destinationOffset = 0, startIndex = i, endIndex = end)
+                        window
+                    } else {
+                        samples.copyOfRange(i, end)
+                    }
+                    vad.acceptWaveform(chunk)
+                    i = end
+                    drainSegments(vad, segments)
+                }
+                // Speech that ran up to the very end hasn't closed a segment yet: flush, then collect it.
+                vad.flush()
+                drainSegments(vad, segments)
+                Log.i(
+                    LOG_TAG,
+                    "speechGate analyze segments=${segments.size} totalMs=${elapsedMillis(totalStartedNanos)}",
+                )
+                SpeechAnalysis(samples, AudioDecode.TARGET_SAMPLE_RATE, segments)
+            } catch (_: Throwable) {
+                // A native session that faulted is not reused. Fail open (null → caller leaves audio as is).
+                cachedVad = null
+                runCatching { vad.release() }
+                null
+            }
+        }
+    }
+
+    /** Pulls every closed segment out of the VAD queue as `start until endExclusive` sample ranges. */
+    private fun drainSegments(vad: Vad, out: MutableList<IntRange>) {
+        while (!vad.empty()) {
+            val seg = vad.front()
+            val len = seg.samples.size
+            if (len > 0 && seg.start >= 0) out.add(seg.start until (seg.start + len))
+            vad.pop()
+        }
+    }
+
+    /**
+     * Writes a silence-trimmed copy of the analysed audio to [outFile] and returns it (issue #232), or null
+     * if there was nothing worth trimming (in which case the caller keeps the untouched original, so a clip
+     * without long pauses is never needlessly re-encoded down to 16 kHz). Every speech segment is kept in
+     * full; a silence gap longer than [maxSilenceMs] is collapsed to [keepSilenceMs] (split as a short pad
+     * on each side of the cut), while shorter, natural pauses are left intact. Output is 16 kHz mono PCM16.
+     */
+    internal suspend fun writeTrimmedWav(
+        analysis: SpeechAnalysis,
+        outFile: File,
+        maxSilenceMs: Int,
+        keepSilenceMs: Int,
+    ): File? = withContext(Dispatchers.Default) {
+        val samples = analysis.samples
+        val total = samples.size
+        val sr = analysis.sampleRate
+        if (analysis.segments.isEmpty() || total == 0 || sr <= 0) return@withContext null
+        val maxSilence = (maxSilenceMs.toLong() * sr / 1000L).toInt()
+        val keepSilence = (keepSilenceMs.toLong() * sr / 1000L).toInt()
+        val pad = keepSilence / 2
+        // Kept ranges as [startInclusive, endExclusive]; contiguous entries are fine (written back to back).
+        val kept = ArrayList<IntArray>()
+        fun keep(startIncl: Int, endExcl: Int) {
+            val s = startIncl.coerceIn(0, total)
+            val e = endExcl.coerceIn(0, total)
+            if (e > s) kept.add(intArrayOf(s, e))
+        }
+        var cursor = 0
+        for (seg in analysis.segments) {
+            val segStart = seg.first
+            val segEnd = seg.last + 1 // range is inclusive; convert back to exclusive end
+            val gap = segStart - cursor
+            if (gap > maxSilence) {
+                keep(cursor, cursor + pad)         // short tail after the previous speech
+                keep(segStart - pad, segStart)     // short lead-in before the next speech
+            } else {
+                keep(cursor, segStart)             // natural pause: keep it
+            }
+            keep(segStart, segEnd)                 // the speech itself, always in full
+            cursor = maxOf(cursor, segEnd)
+        }
+        val trailing = total - cursor
+        if (trailing > maxSilence) keep(cursor, cursor + pad) else keep(cursor, total)
+
+        val keptCount = kept.sumOf { it[1] - it[0] }
+        val removed = total - keptCount
+        // Not worth re-encoding (and downsampling to 16 kHz) if we'd barely shave anything off.
+        if (removed < (MIN_TRIM_MS.toLong() * sr / 1000L).toInt()) return@withContext null
+
+        runCatching {
+            outFile.outputStream().buffered().use { os ->
+                os.write(wavHeader(sr, channels = 1, bitsPerSample = 16, dataLen = keptCount.toLong() * 2))
+                val buf = ByteArray(8192) // even size: two bytes per sample
+                var bi = 0
+                for (r in kept) {
+                    var i = r[0]
+                    val e = r[1]
+                    while (i < e) {
+                        val v = (samples[i].coerceIn(-1f, 1f) * 32767f).toInt()
+                        buf[bi++] = (v and 0xff).toByte()
+                        buf[bi++] = ((v shr 8) and 0xff).toByte()
+                        if (bi == buf.size) {
+                            os.write(buf, 0, bi)
+                            bi = 0
+                        }
+                        i++
+                    }
+                }
+                if (bi > 0) os.write(buf, 0, bi)
+            }
+            Log.i(
+                LOG_TAG,
+                "speechGate trim removedMs=${removed * 1000L / sr} keptMs=${keptCount * 1000L / sr}",
+            )
+            outFile
+        }.getOrElse {
+            runCatching { outFile.delete() }
+            null
+        }
+    }
+
+    /** Minimal 44-byte PCM WAV header (little-endian). */
+    private fun wavHeader(sampleRate: Int, channels: Int, bitsPerSample: Int, dataLen: Long): ByteArray {
+        val byteRate = sampleRate * channels * bitsPerSample / 8
+        return java.nio.ByteBuffer.allocate(44).order(java.nio.ByteOrder.LITTLE_ENDIAN).apply {
+            put("RIFF".toByteArray(Charsets.US_ASCII))
+            putInt((36 + dataLen).toInt())
+            put("WAVE".toByteArray(Charsets.US_ASCII))
+            put("fmt ".toByteArray(Charsets.US_ASCII))
+            putInt(16)              // PCM subchunk size
+            putShort(1)             // audio format = PCM
+            putShort(channels.toShort())
+            putInt(sampleRate)
+            putInt(byteRate)
+            putShort((channels * bitsPerSample / 8).toShort()) // block align
+            putShort(bitsPerSample.toShort())
+            put("data".toByteArray(Charsets.US_ASCII))
+            putInt(dataLen.toInt())
+        }.array()
+    }
+
+    /** Below this much removed silence, trimming isn't worth the re-encode (issue #232). */
+    private const val MIN_TRIM_MS = 500
 
     private fun createVad(model: File): Vad? = runCatching {
         Vad(

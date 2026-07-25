@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dialpad
 import androidx.compose.material.icons.filled.BrightnessHigh
+import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
@@ -394,6 +395,13 @@ fun DictateRecordingScreen() = FlorisScreen {
             modifier = Modifier.settingsSearchAnchor("dictate__skip_silent_title"),
             title = stringRes(R.string.dictate__skip_silent_title),
             summary = stringRes(R.string.dictate__skip_silent_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.trimSilentGaps,
+            icon = Icons.Default.ContentCut,
+            modifier = Modifier.settingsSearchAnchor("dictate__trim_silent_gaps_title"),
+            title = stringRes(R.string.dictate__trim_silent_gaps_title),
+            summary = stringRes(R.string.dictate__trim_silent_gaps_summary),
         )
         SwitchPreference(
             prefs.dictate.instantRecording,

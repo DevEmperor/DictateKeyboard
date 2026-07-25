@@ -1136,6 +1136,8 @@
     <string name="dictate__keep_screen_awake_summary">منع إيقاف تشغيل الشاشة أثناء التسجيل</string>
     <string name="dictate__skip_silent_title">تخطّي التسجيلات الصامتة</string>
     <string name="dictate__skip_silent_summary">تجنّب النصوص المُختلَقة واستدعاءات API المهدورة في الصوت الصامت</string>
+    <string name="dictate__trim_silent_gaps_title">اقتصاص فترات التوقف الطويلة</string>
+    <string name="dictate__trim_silent_gaps_summary">قص فترات التوقف الطويلة قبل الإرسال — رفع أسرع وتكلفة أقل</string>
     <string name="dictate__realtime_title">النسخ الفوري</string>
     <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه</string>
     <string name="dictate__longform_title">الإملاء الطويل</string>

@@ -356,6 +356,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__skip_silent_recordings",
             default = true,
         )
+        // Trim long internal pauses (> ~2 s of silence) out of a recording before it's uploaded, using the
+        // same local Silero VAD as the silence gate (issue #232). Every spoken segment is kept in full;
+        // only the dead time between them is collapsed, so a dictation with big gaps sends less audio (less
+        // cost/latency) without losing a word. Default on. Ignored while long-form dictation is active — it
+        // does its own segment-cutting.
+        val trimSilentGaps = boolean(
+            key = "dictate__trim_silent_gaps",
+            default = true,
+        )
         // Haptic feedback on dictation state changes (issue #166): a short buzz on record start/stop, a
         // double on transcription done, a longer one when a rewording/LLM prompt finished — so the user
         // knows blindly when to look back at the screen. Off by default. Amplitude honours the system
