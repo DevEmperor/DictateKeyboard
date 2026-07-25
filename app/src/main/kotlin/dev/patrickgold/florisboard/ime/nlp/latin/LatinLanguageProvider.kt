@@ -55,6 +55,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // automatically, so uncommon-but-intentional words (names, jargon) aren't mangled.
         private const val AUTOCORRECT_MIN_FREQ = 170
 
+        // Spelling-fix suggestions (issue #212 / distance-2 fallback): how many edit-distance corrections
+        // to surface, how many strip slots to reserve for them so prefix completions of a typo don't crowd
+        // them out, and the max word length for the (more expensive) distance-2 fallback.
+        private const val CORRECTION_MAX = 3
+        private const val CORRECTION_RESERVE = 3
+        private const val MAX_DISTANCE2_LEN = 12
+
         // Keyboard-proximity noisy-channel model (Tier 1). Distances are in key-width² units.
         private const val PROX_SIGMA2 = 1.0         // touch variance (~1 key-width std): near mis-taps cost little
         private const val NEUTRAL_SUB_SQDIST = 2.0  // fallback substitution distance² when key geometry is unknown
@@ -64,6 +71,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Bigram context model (Tier 2): weight on ln(bigram-count+1) added to a candidate that commonly
         // follows the previous word, so context ("of the" over "of teh") re-ranks the correction.
         private const val CONTEXT_WEIGHT = 0.3
+
+        // German umlaut/ß restoration (issue #219): bound the variant generation so a long word with many
+        // a/o/u doesn't explode combinatorially (2^sites). Words needing more than this are left alone.
+        private const val MAX_UMLAUT_SITES = 6
+        private const val MAX_GERMAN_VARIANTS = 128
 
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
@@ -253,6 +265,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     }
                     for (ch in lower) if (ch.isLetter()) alphabet.add(ch)
                 }
+                // Include the apostrophe so a missing-apostrophe typo of an unknown word can be corrected;
+                // dictionary words like "what's"/"don't" carry it but isLetter() drops it above. (The
+                // common case — the apostrophe-less form is itself a known word, e.g. "whats" — is handled
+                // by the contraction-restoration block in suggest(), issue #212.)
+                alphabet.add('\'')
                 LowerIndex(freq, canonical, alphabet).also { cache[lang] = it }
             }
         }
@@ -357,6 +374,68 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return true
     }
 
+    // --- German umlaut / ß restoration (issue #219) -------------------------------------------------
+
+    /** True when [subtype] types German, so the umlaut/ß restoration below applies. */
+    private fun isGermanSubtype(subtype: Subtype): Boolean =
+        subtype.primaryLocale.language.equals("de", ignoreCase = true)
+
+    /**
+     * ASCII / umlaut-less spellings of [word] a German typist might have meant: single vowels a/o/u →
+     * ä/ö/ü, the spelled-out digraphs ae/oe/ue → ä/ö/ü, and (when [allowSharpS]) ss → ß. Bounded so a long
+     * word doesn't explode combinatorially. Only the caller's dictionary decides which of these are real.
+     */
+    private fun germanSpellingVariants(word: String, allowSharpS: Boolean): List<String> {
+        val out = LinkedHashSet<String>()
+        // First read ae/oe/ue as the umlaut the user spelled out (all occurrences at once), then run the
+        // single-vowel + ß expansion on both that collapsed form and the raw one.
+        val digraph = word
+            .replace("ae", "ä").replace("Ae", "Ä").replace("AE", "Ä")
+            .replace("oe", "ö").replace("Oe", "Ö").replace("OE", "Ö")
+            .replace("ue", "ü").replace("Ue", "Ü").replace("UE", "Ü")
+        // The collapsed digraph form itself is a candidate (ueber → über); the expansion below only adds
+        // further single-vowel / ß substitutions on top of it.
+        if (digraph != word) out.add(digraph)
+        for (base in linkedSetOf(word, digraph)) expandGermanVariants(base, allowSharpS, out)
+        out.remove(word)
+        return out.toList()
+    }
+
+    /** Adds every umlaut / ß substitution combination of [base] (bounded) to [out]. */
+    private fun expandGermanVariants(base: String, allowSharpS: Boolean, out: MutableSet<String>) {
+        // Each site: (index, replacement, consumed length). ss consumes two chars, an umlaut vowel one.
+        val sites = ArrayList<Triple<Int, String, Int>>()
+        var i = 0
+        while (i < base.length) {
+            if (allowSharpS && i + 1 < base.length && base[i] == 's' && base[i + 1] == 's') {
+                sites.add(Triple(i, "ß", 2)); i += 2; continue
+            }
+            when (base[i]) {
+                'a' -> sites.add(Triple(i, "ä", 1))
+                'o' -> sites.add(Triple(i, "ö", 1))
+                'u' -> sites.add(Triple(i, "ü", 1))
+                'A' -> sites.add(Triple(i, "Ä", 1))
+                'O' -> sites.add(Triple(i, "Ö", 1))
+                'U' -> sites.add(Triple(i, "Ü", 1))
+            }
+            i++
+        }
+        if (sites.isEmpty() || sites.size > MAX_UMLAUT_SITES) return
+        val n = sites.size
+        for (mask in 1 until (1 shl n)) {
+            if (out.size >= MAX_GERMAN_VARIANTS) return
+            val sb = StringBuilder(base)
+            // Apply the highest-index sites first so earlier indices stay valid when ss (2) becomes ß (1).
+            for (b in n - 1 downTo 0) {
+                if ((mask shr b) and 1 == 1) {
+                    val (idx, repl, len) = sites[b]
+                    sb.replace(idx, idx + len, repl)
+                }
+            }
+            out.add(sb.toString())
+        }
+    }
+
     private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
         val dm = DictionaryManager.default()
         dm.loadUserDictionariesIfNecessary()
@@ -448,9 +527,85 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 dictWord
             }
 
-        // Dedup by lowercase key, preserving order: the user's personal dictionary first, then the main
-        // dictionary ranked by frequency.
+        // Dedup by lowercase key, preserving order: German umlaut/ß restoration first (so it leads the
+        // strip), then the user's personal dictionary, then the main dictionary ranked by frequency.
         val out = LinkedHashMap<String, SuggestionCandidate>()
+        val index = lowerIndexFor(subtype)
+
+        // German umlaut/ß restoration (issue #219) runs FIRST, so the correct spelling leads the strip and a
+        // non-word is auto-committed even when the ASCII form prefixes real words (fur→für). Because this
+        // fills [out], the generic edit-distance autocorrect below stands aside for these words, so a plain
+        // substitution never wins over the umlaut form (Madchen→Mädchen, not Machen). Dictionary-driven, so
+        // only real words are produced; a validly-typed word is never swapped, only offered (schon→schön).
+        // ß-restoration is off for Swiss German (de-CH), which has no ß.
+        if (prefs.suggestion.autoCorrect.get() && isGermanSubtype(subtype) && word.length >= 3) {
+            val allowSharpS = !subtype.primaryLocale.country.equals("CH", ignoreCase = true)
+            val variants = germanSpellingVariants(word, allowSharpS).mapNotNull { v ->
+                index.freq[v.lowercase()]?.let { f -> Triple(v, f, index.canonical[v.lowercase()] ?: v) }
+            }
+            if (variants.isNotEmpty()) {
+                val prevWord = previousWordOf(content)
+                val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+                val ctx = bigramContextScore(prevWord, bigrams)
+                val ranked = variants.sortedByDescending { (v, f, _) -> ln((f + 1).toDouble()) + ctx(v.lowercase()) }
+                val typedIsWord = index.freq.containsKey(word.lowercase())
+                // Keep the typed word tappable, left-most, to bypass the restoration (issue #150).
+                out[word.lowercase()] = WordSuggestionCandidate(
+                    text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
+                )
+                ranked.forEachIndexed { i, (_, f, canonical) ->
+                    val text = cased(canonical)
+                    out.putIfAbsent(
+                        text.lowercase(),
+                        WordSuggestionCandidate(
+                            text = text,
+                            confidence = f / 255.0,
+                            // Auto-swap only the top variant of a NON-word; a validly typed word stays the
+                            // user's choice and the variant is merely offered.
+                            isEligibleForAutoCommit = i == 0 && !typedIsWord && f >= AUTOCORRECT_MIN_FREQ,
+                            sourceProvider = this,
+                        ),
+                    )
+                }
+            }
+        }
+
+        // Apostrophe/contraction restoration (issue #212): "whats"→"what's", "cant"→"can't", "dont"→"don't",
+        // "im"→"I'm". The apostrophe-less form is often itself a dictionary word (so the generic correction
+        // path below skips it), yet the apostrophe form is usually what was meant and more common. Offered at
+        // the front of the strip as a tap suggestion — not auto-committed, so a genuine "ill"/"well" is never
+        // silently turned into "i'll"/"we'll".
+        if (prefs.suggestion.autoCorrect.get() && word.length >= 3 && !word.contains('\'')) {
+            val typedFreq = index.freq[word.lowercase()] ?: 0
+            (1 until word.length)
+                .map { word.substring(0, it) + "'" + word.substring(it) }
+                .mapNotNull { v -> index.freq[v.lowercase()]?.let { f -> f to (index.canonical[v.lowercase()] ?: v) } }
+                .filter { it.first > typedFreq }
+                .sortedByDescending { it.first }
+                .forEach { (freq, canonical) ->
+                    // English "I" contractions are stored lowercase in the dictionary; show them capitalised.
+                    val display = if (canonical.startsWith("i'")) "I" + canonical.substring(1) else cased(canonical)
+                    out.putIfAbsent(
+                        display.lowercase(),
+                        WordSuggestionCandidate(
+                            text = display, confidence = freq / 255.0,
+                            isEligibleForAutoCommit = false, sourceProvider = this,
+                        ),
+                    )
+                }
+        }
+
+        // Whether the composed word is valid in any of the user's keyboard languages (multilingual, #190);
+        // computed up front because it also decides whether to reserve strip slots for spelling fixes.
+        val isKnown = isKnownWord(word, subtype)
+        val autoCorrectOn = prefs.suggestion.autoCorrect.get()
+        // Reserve a few slots for edit-distance corrections so a typo's fix isn't crowded out by prefix
+        // completions of that typo (issue #212). Only when we'd actually correct (unknown word, length >= 3).
+        val completionCap = if (autoCorrectOn && !isKnown && word.length >= 3) {
+            (maxCandidateCount - CORRECTION_RESERVE).coerceAtLeast(1)
+        } else {
+            maxCandidateCount
+        }
 
         runCatching {
             val dm = DictionaryManager.default()
@@ -465,7 +620,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         val data = wordDataFor(subtype)
         for (dictWord in rankedWordsFor(subtype)) {
-            if (out.size >= maxCandidateCount) break
+            if (out.size >= completionCap) break
             if (!dictWord.startsWith(word, ignoreCase = true)) continue
             val text = cased(dictWord)
             out.putIfAbsent(
@@ -478,30 +633,30 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             )
         }
 
-        // Autocorrect: when the composed word isn't a known word and nothing completes it (so it looks
-        // like a finished typo rather than a word in progress), offer the closest dictionary words and mark
-        // the top one for auto-commit — the editor swaps it in on the next space/punctuation. Kept
-        // conservative (edit distance 1, length >= 3) to avoid mangling intentional input.
-        val index = lowerIndexFor(subtype)
-        // Don't autocorrect a word that's valid in any of the user's keyboard languages (multilingual, #190).
-        val isKnown = isKnownWord(word, subtype)
-        if (prefs.suggestion.autoCorrect.get() && out.isEmpty() && !isKnown && word.length >= 3) {
+        // Spelling fixes for an unknown word — now surfaced even when there are prefix completions of the
+        // typo (issue #212), so a missing apostrophe/hyphen or other slip is offered (whats → what's)
+        // instead of only word extensions. Auto-commit stays conservative: only the top distance-1 fix and
+        // only when nothing else already filled the strip, so intentional input and words-in-progress aren't
+        // swapped. Distance 2 is a suggestions-only fallback when distance 1 finds nothing (too uncertain to
+        // swap in silently). #190: never correct a word valid in any configured language.
+        if (autoCorrectOn && !isKnown && word.length >= 3) {
+            val hadCandidatesBefore = out.isNotEmpty() // German restoration and/or prefix completions
             val prevWord = previousWordOf(content)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
-            val corrections = correctionsFor(
-                word, index, maxCandidateCount, allowDistance2 = false,
-                bigramContextScore(prevWord, bigrams),
-            )
-            // Keep the user's exact typed word in the strip (left-most) so they can tap it to bypass the
-            // autocorrection and keep their spelling — never auto-committed itself (issue #150).
-            if (corrections.isNotEmpty()) {
+            val ctx = bigramContextScore(prevWord, bigrams)
+            var corrections = correctionsFor(word, index, CORRECTION_MAX, allowDistance2 = false, ctx)
+            val distance1Empty = corrections.isEmpty()
+            if (distance1Empty && word.length <= MAX_DISTANCE2_LEN) {
+                corrections = correctionsFor(word, index, CORRECTION_MAX, allowDistance2 = true, ctx)
+            }
+            // Only a confident distance-1 fix, with nothing else surfaced, is auto-committed.
+            val allowAutoCommit = !hadCandidatesBefore && !distance1Empty
+            if (corrections.isNotEmpty() && allowAutoCommit) {
+                // Keep the exact typed word tappable, left-most, to bypass the auto-correction (issue #150).
                 out.putIfAbsent(
                     word.lowercase(),
                     WordSuggestionCandidate(
-                        text = word,
-                        confidence = 1.0,
-                        isEligibleForAutoCommit = false,
-                        sourceProvider = this,
+                        text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
                     ),
                 )
             }
@@ -513,7 +668,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     WordSuggestionCandidate(
                         text = text,
                         confidence = freq / 255.0,
-                        isEligibleForAutoCommit = i == 0 && freq >= AUTOCORRECT_MIN_FREQ,
+                        isEligibleForAutoCommit = allowAutoCommit && i == 0 && freq >= AUTOCORRECT_MIN_FREQ,
                         sourceProvider = this,
                     ),
                 )
