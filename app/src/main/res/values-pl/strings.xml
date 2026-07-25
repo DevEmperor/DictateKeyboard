@@ -1460,6 +1460,8 @@
     <string name="dictate__local_models_header">Działa na Twoim urządzeniu — żaden dźwięk nie jest wysyłany. Pobierz model, aby zacząć.</string>
     <string name="dictate__local_longpress_send_title">Przytrzymaj wyślij dla modelu lokalnego</string>
     <string name="dictate__local_longpress_send_summary">Podczas nagrywania przytrzymaj wyślij, aby użyć tego modelu zamiast chmury.</string>
+    <string name="dictate__local_unload_after">Zwolnij bezczynny model po {n} min</string>
+    <string name="dictate__local_unload_pressure">Zwolnij bezczynny model tylko przy braku pamięci</string>
     <string name="dictate__local_model_status_active">Aktywny</string>
     <string name="dictate__local_model_status_installed">Zainstalowano · dotknij, aby użyć</string>
     <string name="dictate__local_model_action_install">Pobierz</string>

@@ -130,6 +130,8 @@ fun DictateProvidersScreen() = FlorisScreen {
                 entries = buildList {
                     ProviderRegistry.presets
                         .filter { it.capabilities.transcription }
+                        // On-device (offline) first in the picker, above the cloud providers (issue #228).
+                        .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
                         .forEach { add(it.id to it.displayName) }
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },

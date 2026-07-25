@@ -1400,6 +1400,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__local_models_header">Berjalan di perangkat Anda — tidak ada audio yang dikirim. Unduh model untuk memulai.</string>
     <string name="dictate__local_longpress_send_title">Tahan kirim untuk model lokal</string>
     <string name="dictate__local_longpress_send_summary">Saat merekam, tahan kirim untuk memakai model ini alih-alih cloud.</string>
+    <string name="dictate__local_unload_after">Bongkar model menganggur setelah {n} mnt</string>
+    <string name="dictate__local_unload_pressure">Bongkar model menganggur hanya saat memori menipis</string>
     <string name="dictate__local_model_status_active">Aktif</string>
     <string name="dictate__local_model_status_installed">Terpasang · ketuk untuk memakai</string>
     <string name="dictate__local_model_action_install">Unduh</string>

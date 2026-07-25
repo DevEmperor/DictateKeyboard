@@ -1448,6 +1448,8 @@
     <string name="dictate__local_models_header">Работает на вашем устройстве — аудио не отправляется. Скачайте модель, чтобы начать.</string>
     <string name="dictate__local_longpress_send_title">Удержание отправки для локальной модели</string>
     <string name="dictate__local_longpress_send_summary">Во время записи удерживайте отправку, чтобы использовать эту модель вместо облака.</string>
+    <string name="dictate__local_unload_after">Выгружать простаивающую модель через {n} мин</string>
+    <string name="dictate__local_unload_pressure">Выгружать простаивающую модель только при нехватке памяти</string>
     <string name="dictate__local_model_status_active">Активна</string>
     <string name="dictate__local_model_status_installed">Установлена · нажмите, чтобы использовать</string>
     <string name="dictate__local_model_action_install">Скачать</string>

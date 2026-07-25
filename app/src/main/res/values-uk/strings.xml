@@ -1292,6 +1292,8 @@
     <string name="dictate__local_models_header">Працює на вашому пристрої — аудіо не надсилається. Завантажте модель, щоб почати.</string>
     <string name="dictate__local_longpress_send_title">Утримання надсилання для локальної моделі</string>
     <string name="dictate__local_longpress_send_summary">Під час запису утримуйте надсилання, щоб використати цю модель замість хмари.</string>
+    <string name="dictate__local_unload_after">Вивантажувати неактивну модель через {n} хв</string>
+    <string name="dictate__local_unload_pressure">Вивантажувати неактивну модель лише за браку пам\'яті</string>
     <string name="dictate__local_model_status_active">Активна</string>
     <string name="dictate__local_model_status_installed">Встановлено · торкніться, щоб використати</string>
     <string name="dictate__local_model_action_install">Завантажити</string>

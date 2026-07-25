@@ -1303,6 +1303,8 @@
     <string name="dictate__local_models_header">يعمل على جهازك — لا يتم إرسال أي صوت. نزّل نموذجًا للبدء.</string>
     <string name="dictate__local_longpress_send_title">الضغط المطوّل على الإرسال للنموذج المحلي</string>
     <string name="dictate__local_longpress_send_summary">أثناء التسجيل، اضغط مطولاً على زر الإرسال لاستخدام هذا النموذج بدلاً من السحابة.</string>
+    <string name="dictate__local_unload_after">تفريغ النموذج الخامل بعد {n} دقيقة</string>
+    <string name="dictate__local_unload_pressure">تفريغ النموذج الخامل فقط عند انخفاض الذاكرة</string>
     <string name="dictate__local_model_status_active">نشط</string>
     <string name="dictate__local_model_status_installed">مثبَّت · اضغط للاستخدام</string>
     <string name="dictate__local_model_action_install">تنزيل</string>

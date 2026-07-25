@@ -1440,6 +1440,8 @@
     <string name="dictate__local_models_header">在您的设备上运行 — 不会发送任何音频。下载模型即可开始。</string>
     <string name="dictate__local_longpress_send_title">长按发送使用本地模型</string>
     <string name="dictate__local_longpress_send_summary">录音时长按发送，即用此模型而非云端。</string>
+    <string name="dictate__local_unload_after">闲置 {n} 分钟后卸载模型</string>
+    <string name="dictate__local_unload_pressure">仅在内存不足时卸载模型</string>
     <string name="dictate__local_model_status_active">使用中</string>
     <string name="dictate__local_model_status_installed">已安装 · 点按以使用</string>
     <string name="dictate__local_model_action_install">下载</string>

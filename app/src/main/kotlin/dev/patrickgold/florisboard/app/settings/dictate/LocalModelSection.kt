@@ -21,11 +21,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import android.widget.Toast
@@ -48,6 +50,7 @@ import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
 import dev.patrickgold.florisboard.dictate.provider.LocalModelDownloads
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalModelSpec
+import kotlin.math.roundToInt
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -122,6 +125,31 @@ fun LocalModelSection(
                 modifier = Modifier.padding(start = 8.dp).weight(1f),
             )
         }
+
+        // Idle-unload timeout: after how long an idle on-device model is freed from RAM. The model is
+        // always also freed on an Android memory-pressure signal; this only covers the "app alive but not
+        // dictating" window. 0 = only on memory pressure.
+        var unloadMin by remember { mutableStateOf(prefs.dictate.localModelUnloadMinutes.get()) }
+        Text(
+            text = if (unloadMin <= 0) {
+                stringRes(R.string.dictate__local_unload_pressure)
+            } else {
+                stringRes(R.string.dictate__local_unload_after, "n" to unloadMin)
+            },
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(top = 4.dp),
+        )
+        Slider(
+            value = unloadMin.toFloat(),
+            onValueChange = { unloadMin = it.roundToInt() },
+            onValueChangeFinished = {
+                scope.launch { prefs.dictate.localModelUnloadMinutes.set(unloadMin) }
+            },
+            valueRange = 0f..30f,
+            steps = 5,
+        )
+        HorizontalDivider(modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
 
         LocalModelCatalog.all.forEach { spec ->
             val dl = downloads[spec.id]

@@ -1344,6 +1344,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__local_models_header">Draait op je apparaat — er wordt geen audio verzonden. Download een model om te beginnen.</string>
     <string name="dictate__local_longpress_send_title">Verzenden ingedrukt houden voor lokaal model</string>
     <string name="dictate__local_longpress_send_summary">Houd tijdens opnemen verzenden ingedrukt om dit model te gebruiken i.p.v. de cloud.</string>
+    <string name="dictate__local_unload_after">Inactief model na {n} min ontladen</string>
+    <string name="dictate__local_unload_pressure">Inactief model alleen bij geheugendruk ontladen</string>
     <string name="dictate__local_model_status_active">Actief</string>
     <string name="dictate__local_model_status_installed">Geïnstalleerd · tik om te gebruiken</string>
     <string name="dictate__local_model_action_install">Downloaden</string>

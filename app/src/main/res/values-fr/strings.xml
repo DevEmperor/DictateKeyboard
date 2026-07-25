@@ -1322,6 +1322,8 @@
     <string name="dictate__local_models_header">Fonctionne sur votre appareil — aucun audio n’est envoyé. Téléchargez un modèle pour commencer.</string>
     <string name="dictate__local_longpress_send_title">Appui long sur envoyer pour le modèle local</string>
     <string name="dictate__local_longpress_send_summary">Pendant l\'enregistrement, maintiens envoyer pour utiliser ce modèle au lieu du cloud.</string>
+    <string name="dictate__local_unload_after">Décharger le modèle inactif après {n} min</string>
+    <string name="dictate__local_unload_pressure">Décharger le modèle inactif seulement en cas de mémoire faible</string>
     <string name="dictate__local_model_status_active">Actif</string>
     <string name="dictate__local_model_status_installed">Installé · appuyez pour l’utiliser</string>
     <string name="dictate__local_model_action_install">Télécharger</string>

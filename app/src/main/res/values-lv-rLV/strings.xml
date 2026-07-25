@@ -1388,6 +1388,8 @@
     <string name="dictate__local_models_header">Darbojas jūsu ierīcē — audio netiek sūtīts. Lejupielādējiet modeli, lai sāktu.</string>
     <string name="dictate__local_longpress_send_title">Turēt sūtīšanu vietējam modelim</string>
     <string name="dictate__local_longpress_send_summary">Ierakstīšanas laikā turi sūtīšanu, lai lietotu šo modeli mākoņa vietā.</string>
+    <string name="dictate__local_unload_after">Izlādēt dīkstāves modeli pēc {n} min</string>
+    <string name="dictate__local_unload_pressure">Izlādēt dīkstāves modeli tikai pie zemas atmiņas</string>
     <string name="dictate__local_model_status_active">Aktīvs</string>
     <string name="dictate__local_model_status_installed">Instalēts · pieskarieties, lai lietotu</string>
     <string name="dictate__local_model_action_install">Lejupielādēt</string>

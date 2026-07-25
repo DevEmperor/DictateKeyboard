@@ -1377,6 +1377,8 @@
     <string name="dictate__local_models_header">端末上で動作します — 音声は送信されません。開始するにはモデルをダウンロードしてください。</string>
     <string name="dictate__local_longpress_send_title">送信長押しでローカルモデル</string>
     <string name="dictate__local_longpress_send_summary">録音中に送信を長押しで、クラウドではなくこのモデルを使用。</string>
+    <string name="dictate__local_unload_after">アイドル時、{n}分後にモデルを解放</string>
+    <string name="dictate__local_unload_pressure">メモリ逼迫時のみモデルを解放</string>
     <string name="dictate__local_model_status_active">使用中</string>
     <string name="dictate__local_model_status_installed">インストール済み · タップして使用</string>
     <string name="dictate__local_model_action_install">ダウンロード</string>

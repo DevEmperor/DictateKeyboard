@@ -1253,6 +1253,8 @@
     <string name="dictate__local_models_header">Funciona no seu dispositivo — nenhum áudio é enviado. Baixe um modelo para começar.</string>
     <string name="dictate__local_longpress_send_title">Segurar enviar para o modelo local</string>
     <string name="dictate__local_longpress_send_summary">Durante a gravação, segure enviar para usar este modelo em vez da nuvem.</string>
+    <string name="dictate__local_unload_after">Descarregar modelo inativo após {n} min</string>
+    <string name="dictate__local_unload_pressure">Descarregar modelo inativo só com pouca memória</string>
     <string name="dictate__local_model_status_active">Ativo</string>
     <string name="dictate__local_model_status_installed">Instalado · toque para usar</string>
     <string name="dictate__local_model_action_install">Baixar</string>

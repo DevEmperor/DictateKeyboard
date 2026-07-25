@@ -1320,6 +1320,8 @@
     <string name="dictate__local_models_header">S’executa al teu dispositiu — no s’envia cap àudio. Baixa un model per començar.</string>
     <string name="dictate__local_longpress_send_title">Mantén premut enviar per al model local</string>
     <string name="dictate__local_longpress_send_summary">Durant la gravació, mantén premut enviar per usar aquest model en lloc del núvol.</string>
+    <string name="dictate__local_unload_after">Descarrega el model inactiu després de {n} min</string>
+    <string name="dictate__local_unload_pressure">Descarrega el model inactiu només amb poca memòria</string>
     <string name="dictate__local_model_status_active">Actiu</string>
     <string name="dictate__local_model_status_installed">Instal·lat · toca per usar-lo</string>
     <string name="dictate__local_model_action_install">Baixa</string>

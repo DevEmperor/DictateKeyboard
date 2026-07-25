@@ -1071,6 +1071,10 @@ object DictateController {
                 val providerStartedNanos = SystemClock.elapsedRealtimeNanos()
                 val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
                     // On-device (issue #104): no HTTP client, no key; transcribe locally via sherpa-onnx.
+                    // Tell the recognizer cache how long it may stay resident once idle (RAM unload).
+                    LocalTranscriptionProvider.setIdleUnloadMillis(
+                        prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
+                    )
                     LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model))
                         .transcribe(request)
                 } else {
@@ -1091,6 +1095,9 @@ object DictateController {
                         // retries) — transcribe on-device with the downloaded model instead of erroring.
                         val fallback = localFallbackProvider(appContext, preset, e) ?: throw e
                         _state.value = UiState.Transcribing()
+                        LocalTranscriptionProvider.setIdleUnloadMillis(
+                            prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
+                        )
                         fallback.transcribe(request)
                     }
                 }

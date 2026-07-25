@@ -381,6 +381,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__long_press_send_local_model",
             default = false,
         )
+        // Minutes the on-device model may sit idle before it is unloaded from RAM to free memory (models
+        // are ~100 MB up to ~700 MB). It is always also freed immediately on an Android memory-pressure
+        // signal; this timer additionally covers the "keyboard alive but not dictating" window. 0 = only
+        // on memory pressure (no idle timer). Default 5 minutes.
+        val localModelUnloadMinutes = int(
+            key = "dictate__local_model_unload_minutes",
+            default = 5,
+        )
         // Haptic feedback on dictation state changes (issue #166): a short buzz on record start/stop, a
         // double on transcription done, a longer one when a rewording/LLM prompt finished — so the user
         // knows blindly when to look back at the screen. Off by default. Amplitude honours the system
