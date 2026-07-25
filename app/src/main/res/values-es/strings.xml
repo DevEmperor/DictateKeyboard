@@ -1421,6 +1421,7 @@
     <string name="changelog__v4_1_1">• Corrección: el color de acento podía verse verde en algunos dispositivos; las teclas y los botones vuelven al azul de Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Funciona en tu dispositivo — no se envía ningún audio. Descarga un modelo para empezar.</string>
+    <string name="dictate__local_longpress_send_title">Mantener pulsado enviar para el modelo local</string>
     <string name="dictate__local_longpress_send_summary">Durante la grabación, mantén pulsado enviar para usar este modelo en vez de la nube.</string>
     <string name="dictate__local_model_status_active">Activo</string>
     <string name="dictate__local_model_status_installed">Instalado · toca para usarlo</string>

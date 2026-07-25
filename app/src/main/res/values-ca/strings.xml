@@ -1315,6 +1315,7 @@
     <string name="changelog__v4_1_1">• Correcció: el color d\'accent podia aparèixer verd en alguns dispositius; les tecles i els botons tornen a ser del blau de Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">S’executa al teu dispositiu — no s’envia cap àudio. Baixa un model per començar.</string>
+    <string name="dictate__local_longpress_send_title">Mantén premut enviar per al model local</string>
     <string name="dictate__local_longpress_send_summary">Durant la gravació, mantén premut enviar per usar aquest model en lloc del núvol.</string>
     <string name="dictate__local_model_status_active">Actiu</string>
     <string name="dictate__local_model_status_installed">Instal·lat · toca per usar-lo</string>

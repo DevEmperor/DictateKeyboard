@@ -1438,6 +1438,7 @@
     <string name="changelog__v4_1_1">• Javítás: a kiemelőszín egyes eszközökön zöldnek tűnhetett; a billentyűk és gombok ismét a Dictate kék színében jelennek meg.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Az eszközödön fut — nem küldünk hangot. Tölts le egy modellt a kezdéshez.</string>
+    <string name="dictate__local_longpress_send_title">Küldés lenyomva tartása helyi modellhez</string>
     <string name="dictate__local_longpress_send_summary">Felvétel közben tartsd nyomva a küldést, hogy ezt a modellt használd a felhő helyett.</string>
     <string name="dictate__local_model_status_active">Aktív</string>
     <string name="dictate__local_model_status_installed">Telepítve · koppints a használathoz</string>

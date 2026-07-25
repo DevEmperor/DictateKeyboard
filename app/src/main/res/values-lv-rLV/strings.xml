@@ -1383,6 +1383,7 @@
     <string name="changelog__v4_1_1">• Labojums: akcenta krāsa dažās ierīcēs varēja izskatīties zaļa; taustiņi un pogas atkal ir Dictate zilā krāsā.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Darbojas jūsu ierīcē — audio netiek sūtīts. Lejupielādējiet modeli, lai sāktu.</string>
+    <string name="dictate__local_longpress_send_title">Turēt sūtīšanu vietējam modelim</string>
     <string name="dictate__local_longpress_send_summary">Ierakstīšanas laikā turi sūtīšanu, lai lietotu šo modeli mākoņa vietā.</string>
     <string name="dictate__local_model_status_active">Aktīvs</string>
     <string name="dictate__local_model_status_installed">Instalēts · pieskarieties, lai lietotu</string>

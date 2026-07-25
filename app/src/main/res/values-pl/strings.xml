@@ -1455,6 +1455,7 @@
     <string name="changelog__v4_1_1">• Poprawka: kolor akcentu mógł wyglądać na zielony na niektórych urządzeniach; klawisze i przyciski znów mają niebieski kolor Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Działa na Twoim urządzeniu — żaden dźwięk nie jest wysyłany. Pobierz model, aby zacząć.</string>
+    <string name="dictate__local_longpress_send_title">Przytrzymaj wyślij dla modelu lokalnego</string>
     <string name="dictate__local_longpress_send_summary">Podczas nagrywania przytrzymaj wyślij, aby użyć tego modelu zamiast chmury.</string>
     <string name="dictate__local_model_status_active">Aktywny</string>
     <string name="dictate__local_model_status_installed">Zainstalowano · dotknij, aby użyć</string>

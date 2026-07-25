@@ -1372,6 +1372,7 @@
     <string name="changelog__v4_1_1">• 修正: 一部の端末でアクセントカラーが緑色に表示されることがありました。キーやボタンが本来のDictateブルーに戻りました。</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">端末上で動作します — 音声は送信されません。開始するにはモデルをダウンロードしてください。</string>
+    <string name="dictate__local_longpress_send_title">送信長押しでローカルモデル</string>
     <string name="dictate__local_longpress_send_summary">録音中に送信を長押しで、クラウドではなくこのモデルを使用。</string>
     <string name="dictate__local_model_status_active">使用中</string>
     <string name="dictate__local_model_status_installed">インストール済み · タップして使用</string>

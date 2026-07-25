@@ -1317,6 +1317,7 @@
     <string name="changelog__v4_1_1">• Correction : la couleur d\'accent pouvait apparaître en vert sur certains appareils ; les touches et boutons reviennent au bleu de Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Fonctionne sur votre appareil — aucun audio n’est envoyé. Téléchargez un modèle pour commencer.</string>
+    <string name="dictate__local_longpress_send_title">Appui long sur envoyer pour le modèle local</string>
     <string name="dictate__local_longpress_send_summary">Pendant l\'enregistrement, maintiens envoyer pour utiliser ce modèle au lieu du cloud.</string>
     <string name="dictate__local_model_status_active">Actif</string>
     <string name="dictate__local_model_status_installed">Installé · appuyez pour l’utiliser</string>

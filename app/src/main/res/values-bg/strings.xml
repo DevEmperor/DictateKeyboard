@@ -1440,6 +1440,7 @@
     <string name="changelog__v4_1_1">• Корекция: акцентният цвят можеше да изглежда зелен на някои устройства; клавишите и бутоните отново са в синьото на Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Работи на вашето устройство — не се изпраща аудио. Изтеглете модел, за да започнете.</string>
+    <string name="dictate__local_longpress_send_title">Задържане на изпращане за локален модел</string>
     <string name="dictate__local_longpress_send_summary">По време на запис задръжте бутона за изпращане, за да ползвате този модел вместо облака.</string>
     <string name="dictate__local_model_status_active">Активен</string>
     <string name="dictate__local_model_status_installed">Инсталиран · докоснете за употреба</string>

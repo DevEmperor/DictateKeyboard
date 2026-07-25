@@ -1590,6 +1590,7 @@
 
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header" comment="Intro text above the on-device model list in the provider editor">Runs on your device — no audio is sent. Download a model to start.</string>
+    <string name="dictate__local_longpress_send_title" comment="Search-index label for the on-device long-press-send checkbox (issue #228)">Long-press send for local model</string>
     <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: long-pressing the send button transcribes with the local model (issue #228)">Hold send while recording to use this model instead of the cloud.</string>
     <string name="dictate__local_model_status_active" comment="Badge on the on-device model that is currently selected for use">Active</string>
     <string name="dictate__local_model_status_installed" comment="Status for an on-device model that is downloaded but not selected">Installed · tap to use</string>
