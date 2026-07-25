@@ -223,6 +223,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 applyState(state)
                 manageForeground(state)
                 manageTicker(state)
+                manageKeepScreenOn(state)
                 manageCancel(state, show)
                 // Track when a dictation just finished so the undo button is offered only in that
                 // window (until the next recording), not perpetually from a stale cached result.
@@ -902,6 +903,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
     private fun manageTicker(state: DictateController.UiState) {
         if (!holding && state is DictateController.UiState.Recording) startTicker() else stopTicker()
+    }
+
+    /**
+     * Keep the screen awake while dictating from the floating button (issue #231): without physical touch,
+     * Android's screen timeout would otherwise fire and tear down the recording. Honors the same
+     * "keep screen awake" preference the keyboard/legacy recording views use, and only while actually
+     * recording, so the bubble doesn't hold the screen on once dictation finishes.
+     */
+    private fun manageKeepScreenOn(state: DictateController.UiState) {
+        rootView?.keepScreenOn =
+            state is DictateController.UiState.Recording && prefs.dictate.keepScreenAwake.get()
     }
 
     private fun startTicker() {
