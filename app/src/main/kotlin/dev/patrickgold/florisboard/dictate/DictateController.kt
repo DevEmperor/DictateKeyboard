@@ -2436,7 +2436,7 @@ object DictateController {
      * Starts (or stops) a *live prompt* recording: the spoken transcript is sent to the rewording
      * model as an instruction instead of being inserted verbatim. Toggles like the mic button.
      */
-    fun startLivePrompt(context: Context) {
+    fun startLivePrompt(context: Context, target: OutputTarget = OutputTarget.IME) {
         when (_state.value) {
             is UiState.Recording -> {
                 livePromptArmed = true
@@ -2444,6 +2444,9 @@ object DictateController {
             }
             is UiState.Transcribing, is UiState.Rewording -> Unit
             else -> {
+                // Latch where the reworded result goes — the keyboard editor, or the accessibility-injected
+                // field for the floating button's freeform voice command (issue #230). Same as onMicClick.
+                outputTarget = target
                 livePromptArmed = true
                 startRecording(context)
             }

@@ -20,6 +20,7 @@ import android.graphics.PixelFormat
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.SystemClock
@@ -444,10 +445,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 runCatching { PromptsDatabaseHelper.getInstance(context).getAll() }.getOrDefault(emptyList())
             }.filter { !it.name.isNullOrBlank() }
             if (menuAdded) return@launch
-            if (prompts.isEmpty()) {
-                Toast.makeText(context, context.getString(R.string.dictate__floating_button_no_prompts), Toast.LENGTH_SHORT).show()
-                return@launch
-            }
+            // Always show the menu — the Live Prompt entry (freeform voice command, #230) is always
+            // available even with no saved rewording prompts.
             addPromptMenu(prompts)
         }
     }
@@ -461,25 +460,43 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             isClickable = true // swallow taps so they don't dismiss via the scrim
             elevation = dpf(8f)
         }
+        fun menuItem(label: String, bold: Boolean, onClick: () -> Unit): TextView = TextView(context).apply {
+            text = label
+            setTextColor(color(R.color.dictate_overlay_icon))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            if (bold) setTypeface(typeface, Typeface.BOLD)
+            val hz = dp(20)
+            val vt = dp(12)
+            setPadding(hz, vt, hz, vt)
+            setOnClickListener { onClick() }
+        }
+        val wrapParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+        )
+        // Live Prompt on top (freeform voice command, #230): records a spoken instruction via the floating
+        // button, then rewords it — with the selected text as context, or generating from scratch — and
+        // injects the result. Mirrors the live-prompt chip on the keyboard's prompt bar.
+        card.addView(
+            menuItem(context.getString(R.string.quick_action__dictate_live_prompt), bold = true) {
+                hidePromptMenu()
+                DictateController.startLivePrompt(context, DictateController.OutputTarget.OVERLAY)
+            },
+            wrapParams,
+        )
         prompts.forEach { prompt ->
-            val item = TextView(context).apply {
-                text = prompt.name
-                setTextColor(color(R.color.dictate_overlay_icon))
-                setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-                val hz = dp(20)
-                val vt = dp(12)
-                setPadding(hz, vt, hz, vt)
-                setOnClickListener {
+            card.addView(
+                menuItem(prompt.name.orEmpty(), bold = false) {
                     hidePromptMenu()
                     DictateController.applyPrompt(
                         context, prompt, target = DictateController.OutputTarget.OVERLAY,
                     )
-                }
-            }
-            card.addView(item, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-            ))
+                },
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ),
+            )
         }
         val scroll = ScrollView(context).apply {
             addView(card)
@@ -488,7 +505,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             clipToPadding = false
         }
         val scrim = FrameLayout(context).apply {
-            setBackgroundColor(0x66000000.toInt())
+            // Transparent, not a dark full-screen dim: the menu floats over the app without covering the
+            // whole screen; the invisible full-screen layer only catches an outside tap to dismiss.
+            setBackgroundColor(Color.TRANSPARENT)
             setOnClickListener { hidePromptMenu() }
             addView(scroll, FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
