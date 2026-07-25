@@ -1088,6 +1088,9 @@
     <string name="dictate__skip_silent_summary">Evita texto alucinado e chamadas de API desnecessárias em áudio silencioso</string>
     <string name="dictate__trim_silent_gaps_title">Cortar pausas longas</string>
     <string name="dictate__trim_silent_gaps_summary">Corta as pausas longas antes de enviar — envio mais rápido, menor custo</string>
+    <string name="dictate__paragraph_split_title">Dividir em parágrafos</string>
+    <string name="dictate__paragraph_split_off">Desligado</string>
+    <string name="dictate__paragraph_split_value">Após {n} palavras</string>
     <string name="dictate__realtime_title">Transcrição em tempo real</string>
     <string name="dictate__realtime_summary">Mostra o texto ao vivo enquanto você fala, para provedores compatíveis</string>
     <string name="dictate__longform_title">Ditado longo</string>

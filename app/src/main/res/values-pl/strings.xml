@@ -1295,6 +1295,9 @@
     <string name="dictate__skip_silent_summary">Unikaj zmyślonego tekstu i zbędnych wywołań API przy cichym nagraniu</string>
     <string name="dictate__trim_silent_gaps_title">Przycinaj długie pauzy</string>
     <string name="dictate__trim_silent_gaps_summary">Wycina długie pauzy przed wysłaniem — szybsze przesyłanie, niższy koszt</string>
+    <string name="dictate__paragraph_split_title">Dziel na akapity</string>
+    <string name="dictate__paragraph_split_off">Wył.</string>
+    <string name="dictate__paragraph_split_value">Po {n} słowach</string>
     <string name="dictate__realtime_title">Transkrypcja w czasie rzeczywistym</string>
     <string name="dictate__realtime_summary">Pokazuje tekst na żywo podczas mówienia u dostawców, którzy to obsługują</string>
     <string name="dictate__longform_title">Długie dyktowanie</string>

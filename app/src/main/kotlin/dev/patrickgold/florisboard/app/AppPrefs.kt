@@ -365,6 +365,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__trim_silent_gaps",
             default = true,
         )
+        // Break long *plain* transcripts into paragraphs (issue #225): once at least this many words have
+        // accumulated, the next sentence end starts a new paragraph. 0 = off (default). Deterministic and
+        // only applied to a pure transcript — never to reworded / auto-formatted output, which already
+        // carries its own paragraphing.
+        val paragraphSplitWords = int(
+            key = "dictate__paragraph_split_words",
+            default = 0,
+        )
         // Long-press the send (mic) button while recording to transcribe with the on-device model instead
         // of the configured cloud provider (issue #228), for a quick offline one-off without digging
         // through the provider settings. Toggled from the on-device model dialog. Off by default. Only

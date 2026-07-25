@@ -1188,8 +1188,19 @@ object DictateController {
             val processed = if (alreadyFormatted) rawText else postProcessTranscript(appContext, rawText)
             applyPendingPrompts(appContext, processed)
         }
+        // Paragraph splitting (issue #225): break a long *pure* transcript into paragraphs at sentence
+        // boundaries. Only when nothing reworded/auto-formatted the text (a live prompt, single-call
+        // multimodal, or an auto-format/prompt pass that actually changed it) — that output already carries
+        // its own paragraphing and must not be second-guessed.
+        val splitWords = prefs.dictate.paragraphSplitWords.get()
+        val isPureTranscript = !live && !alreadyFormatted && finalText == rawText
+        val paragraphed = if (isPureTranscript && splitWords > 0) {
+            TranscriptParagraphs.split(finalText, splitWords)
+        } else {
+            finalText
+        }
         // Deterministic find-and-replace dictionary (issue #129), applied right before insert.
-        val outputText = prefs.dictate.customMappings.get().apply(finalText)
+        val outputText = prefs.dictate.customMappings.get().apply(paragraphed)
         if (finalizeViaComposing) {
             // Realtime (#128): replace the live-streamed preview with the finished (reworded) result via the
             // minimal diff, then honor auto-enter — instead of committing on top of the preview.

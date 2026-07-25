@@ -1280,6 +1280,9 @@
     <string name="dictate__skip_silent_summary">Избягвайте измислен текст и излишни API заявки при тих запис</string>
     <string name="dictate__trim_silent_gaps_title">Изрязване на дългите паузи</string>
     <string name="dictate__trim_silent_gaps_summary">Изрязва дългите паузи преди изпращане — по-бързо качване, по-ниска цена</string>
+    <string name="dictate__paragraph_split_title">Разделяне на абзаци</string>
+    <string name="dictate__paragraph_split_off">Изкл.</string>
+    <string name="dictate__paragraph_split_value">След {n} думи</string>
     <string name="dictate__realtime_title">Транскрипция в реално време</string>
     <string name="dictate__realtime_summary">Показва текста на живо, докато говорите, за доставчици, които го поддържат</string>
     <string name="dictate__longform_title">Дълга диктовка</string>

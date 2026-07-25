@@ -1258,6 +1258,9 @@
     <string name="dictate__skip_silent_summary">Sessiz seste uydurma metni ve gereksiz API çağrılarını önler</string>
     <string name="dictate__trim_silent_gaps_title">Uzun duraklamaları kırp</string>
     <string name="dictate__trim_silent_gaps_summary">Göndermeden önce uzun duraklamaları keser — daha hızlı yükleme, daha az maliyet</string>
+    <string name="dictate__paragraph_split_title">Paragraflara böl</string>
+    <string name="dictate__paragraph_split_off">Kapalı</string>
+    <string name="dictate__paragraph_split_value">{n} kelimeden sonra</string>
     <string name="dictate__realtime_title">Gerçek zamanlı transkripsiyon</string>
     <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda konuşurken metni canlı gösterir</string>
     <string name="dictate__longform_title">Uzun dikte</string>

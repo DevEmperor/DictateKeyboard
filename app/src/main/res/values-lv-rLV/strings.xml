@@ -1223,6 +1223,9 @@
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
     <string name="dictate__trim_silent_gaps_title">Apgriezt garās pauzes</string>
     <string name="dictate__trim_silent_gaps_summary">Pirms nosūtīšanas izgriež garās pauzes — ātrāka augšupielāde, mazākas izmaksas</string>
+    <string name="dictate__paragraph_split_title">Sadalīt rindkopās</string>
+    <string name="dictate__paragraph_split_off">Izslēgts</string>
+    <string name="dictate__paragraph_split_value">Pēc {n} vārdiem</string>
     <string name="dictate__realtime_title">Reāllaika transkripcija</string>
     <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta</string>
     <string name="dictate__longform_title">Gara diktēšana</string>

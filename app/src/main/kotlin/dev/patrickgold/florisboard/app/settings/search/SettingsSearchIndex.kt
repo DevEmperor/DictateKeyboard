@@ -174,6 +174,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__auto_enter_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__auto_enter_title"),
         SettingsSearchEntry(R.string.dictate__instant_output_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__instant_output_title"),
         SettingsSearchEntry(R.string.dictate__output_speed_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__output_speed_title"),
+        SettingsSearchEntry(R.string.dictate__paragraph_split_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__paragraph_split_title"),
         SettingsSearchEntry(R.string.dictate__resend_button_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__resend_button_title"),
         SettingsSearchEntry(R.string.dictate__haptic_feedback_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__haptic_feedback_title"),
         SettingsSearchEntry(R.string.dictate__remember_last_dictation_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__remember_last_dictation_title"),

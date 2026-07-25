@@ -482,6 +482,19 @@ fun DictateOutputScreen() = FlorisScreen {
             stepIncrement = 1,
             enabledIf = { prefs.dictate.instantOutput isEqualTo false },
         )
+        DialogSliderPreference(
+            prefs.dictate.paragraphSplitWords,
+            icon = Icons.Default.Segment,
+            modifier = Modifier.settingsSearchAnchor("dictate__paragraph_split_title"),
+            title = stringRes(R.string.dictate__paragraph_split_title),
+            valueLabel = {
+                if (it <= 0) stringRes(R.string.dictate__paragraph_split_off)
+                else stringRes(R.string.dictate__paragraph_split_value, "n" to it)
+            },
+            min = 0,
+            max = 100,
+            stepIncrement = 5,
+        )
         SwitchPreference(
             prefs.dictate.resendButton,
             icon = Icons.Default.Replay,

@@ -1294,6 +1294,9 @@
     <string name="dictate__skip_silent_summary">Zabraňte vymyšlenému textu a zbytečným voláním API u tichého záznamu</string>
     <string name="dictate__trim_silent_gaps_title">Oříznout dlouhé pauzy</string>
     <string name="dictate__trim_silent_gaps_summary">Před odesláním ořízne dlouhé pauzy — rychlejší nahrání, nižší náklady</string>
+    <string name="dictate__paragraph_split_title">Rozdělit na odstavce</string>
+    <string name="dictate__paragraph_split_off">Vypnuto</string>
+    <string name="dictate__paragraph_split_value">Po {n} slovech</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
     <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují</string>
     <string name="dictate__longform_title">Dlouhé diktování</string>

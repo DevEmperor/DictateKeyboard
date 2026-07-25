@@ -1212,6 +1212,9 @@
     <string name="dictate__skip_silent_summary">無音の録音での幻覚テキストや無駄なAPI呼び出しを回避します</string>
     <string name="dictate__trim_silent_gaps_title">長い無音を除去</string>
     <string name="dictate__trim_silent_gaps_summary">送信前に長い無音をカット — 高速アップロード、低コスト</string>
+    <string name="dictate__paragraph_split_title">段落に分割</string>
+    <string name="dictate__paragraph_split_off">オフ</string>
+    <string name="dictate__paragraph_split_value">{n}語以降</string>
     <string name="dictate__realtime_title">リアルタイム文字起こし</string>
     <string name="dictate__realtime_summary">対応するプロバイダーで、話しながらテキストをリアルタイム表示します。</string>
     <string name="dictate__longform_title">長文ディクテーション</string>

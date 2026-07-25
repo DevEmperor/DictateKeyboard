@@ -1155,6 +1155,9 @@
     <string name="dictate__skip_silent_summary">Evita el text al·lucinat i les crides a l\'API inútils en àudio silenciós</string>
     <string name="dictate__trim_silent_gaps_title">Retalla les pauses llargues</string>
     <string name="dictate__trim_silent_gaps_summary">Retalla les pauses llargues abans d\'enviar: pujada més ràpida i menys cost</string>
+    <string name="dictate__paragraph_split_title">Divideix en paràgrafs</string>
+    <string name="dictate__paragraph_split_off">Desactivat</string>
+    <string name="dictate__paragraph_split_value">Després de {n} paraules</string>
     <string name="dictate__realtime_title">Transcripció en temps real</string>
     <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten</string>
     <string name="dictate__longform_title">Dictat llarg</string>

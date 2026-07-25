@@ -1283,6 +1283,9 @@
     <string name="dictate__skip_silent_summary">Избегайте выдуманного текста и лишних вызовов API при тихой записи</string>
     <string name="dictate__trim_silent_gaps_title">Обрезать длинные паузы</string>
     <string name="dictate__trim_silent_gaps_summary">Вырезает длинные паузы перед отправкой — быстрее загрузка, меньше затрат</string>
+    <string name="dictate__paragraph_split_title">Разбивать на абзацы</string>
+    <string name="dictate__paragraph_split_off">Выкл.</string>
+    <string name="dictate__paragraph_split_value">После {n} слов</string>
     <string name="dictate__realtime_title">Транскрипция в реальном времени</string>
     <string name="dictate__realtime_summary">Показывает текст вживую во время речи для поддерживающих это провайдеров</string>
     <string name="dictate__longform_title">Длинная диктовка</string>

@@ -1235,6 +1235,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__skip_silent_summary">Hindari teks halusinasi dan panggilan API sia-sia pada audio senyap</string>
     <string name="dictate__trim_silent_gaps_title">Pangkas jeda panjang</string>
     <string name="dictate__trim_silent_gaps_summary">Memotong jeda panjang sebelum dikirim — unggah lebih cepat, biaya lebih murah</string>
+    <string name="dictate__paragraph_split_title">Bagi menjadi paragraf</string>
+    <string name="dictate__paragraph_split_off">Nonaktif</string>
+    <string name="dictate__paragraph_split_value">Setelah {n} kata</string>
     <string name="dictate__realtime_title">Transkripsi waktu nyata</string>
     <string name="dictate__realtime_summary">Menampilkan teks secara langsung saat Anda berbicara, untuk penyedia yang mendukungnya</string>
     <string name="dictate__longform_title">Dikte panjang</string>
