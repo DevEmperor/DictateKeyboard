@@ -152,7 +152,11 @@ fun DictateProvidersScreen() = FlorisScreen {
             val keySet = stringRes(R.string.dictate__providers_status_key_set)
             val noKey = stringRes(R.string.dictate__providers_status_no_key)
 
-            ProviderRegistry.presets.forEach { preset ->
+            // On-device (offline) provider first, above the cloud providers like OpenAI (issue #228);
+            // the rest keep their registry display order (sortedByDescending is stable).
+            val orderedPresets = ProviderRegistry.presets
+                .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
+            orderedPresets.forEach { preset ->
                 val account = accounts[preset.id]
                 Preference(
                     icon = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {

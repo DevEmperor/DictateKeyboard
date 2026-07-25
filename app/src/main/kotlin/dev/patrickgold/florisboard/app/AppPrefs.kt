@@ -365,6 +365,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__trim_silent_gaps",
             default = true,
         )
+        // Long-press the send (mic) button while recording to transcribe with the on-device model instead
+        // of the configured cloud provider (issue #228), for a quick offline one-off without digging
+        // through the provider settings. Toggled from the on-device model dialog. Off by default. Only
+        // applies to a plain recording — in long-form / streaming there is no plain send button to hold.
+        val longPressSendLocalModel = boolean(
+            key = "dictate__long_press_send_local_model",
+            default = false,
+        )
         // Haptic feedback on dictation state changes (issue #166): a short buzz on record start/stop, a
         // double on transcription done, a longer one when a rewording/LLM prompt finished — so the user
         // knows blindly when to look back at the screen. Off by default. Amplitude honours the system

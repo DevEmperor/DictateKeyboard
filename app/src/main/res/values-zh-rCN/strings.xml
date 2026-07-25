@@ -1435,6 +1435,7 @@
     <string name="changelog__v4_1_1">• 修复：在某些设备上强调色可能显示为绿色；按键和按钮已恢复为 Dictate 蓝色。</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">在您的设备上运行 — 不会发送任何音频。下载模型即可开始。</string>
+    <string name="dictate__local_longpress_send_summary">录音时长按发送，即用此模型而非云端。</string>
     <string name="dictate__local_model_status_active">使用中</string>
     <string name="dictate__local_model_status_installed">已安装 · 点按以使用</string>
     <string name="dictate__local_model_action_install">下载</string>

@@ -1298,6 +1298,7 @@
     <string name="changelog__v4_1_1">• إصلاح: قد يظهر لون التمييز باللون الأخضر على بعض الأجهزة؛ عادت المفاتيح والأزرار إلى الأزرق الخاص بـ Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">يعمل على جهازك — لا يتم إرسال أي صوت. نزّل نموذجًا للبدء.</string>
+    <string name="dictate__local_longpress_send_summary">أثناء التسجيل، اضغط مطولاً على زر الإرسال لاستخدام هذا النموذج بدلاً من السحابة.</string>
     <string name="dictate__local_model_status_active">نشط</string>
     <string name="dictate__local_model_status_installed">مثبَّت · اضغط للاستخدام</string>
     <string name="dictate__local_model_action_install">تنزيل</string>

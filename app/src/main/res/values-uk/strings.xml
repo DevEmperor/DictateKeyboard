@@ -1287,6 +1287,7 @@
     <string name="changelog__v4_1_1">• Виправлення: на деяких пристроях акцентний колір міг відображатися зеленим — клавіші та кнопки знову сині, як у Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Працює на вашому пристрої — аудіо не надсилається. Завантажте модель, щоб почати.</string>
+    <string name="dictate__local_longpress_send_summary">Під час запису утримуйте надсилання, щоб використати цю модель замість хмари.</string>
     <string name="dictate__local_model_status_active">Активна</string>
     <string name="dictate__local_model_status_installed">Встановлено · торкніться, щоб використати</string>
     <string name="dictate__local_model_action_install">Завантажити</string>

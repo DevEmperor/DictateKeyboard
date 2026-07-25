@@ -790,7 +790,26 @@ object DictateController {
         }
     }
 
-    private fun stopAndTranscribe(context: Context) {
+    /**
+     * Long-press "send with the local model" (#228): stop the current plain recording and transcribe it
+     * on-device instead of the configured cloud provider. No-op unless a plain recording is active — in
+     * long-form / realtime there is no plain send button to hold, so the shortcut doesn't apply.
+     */
+    fun stopAndTranscribeLocal(context: Context) {
+        if (!canLongPressSendLocal()) return
+        stopAndTranscribe(context, forceLocal = true)
+    }
+
+    /**
+     * True while a plain (non-segmented, non-realtime) recording is in progress — the state where the mic
+     * doubles as a "send" button, so its long-press can force a local-model transcription (#228). If no
+     * on-device model is downloaded yet, the shortcut still fires and [transcribe] surfaces the "model not
+     * installed → open settings" feedback (it never crashes), which is friendlier than silently ignoring.
+     */
+    fun canLongPressSendLocal(): Boolean =
+        _state.value is UiState.Recording && !segmentedActive && realtimeSession == null
+
+    private fun stopAndTranscribe(context: Context, forceLocal: Boolean = false) {
         // Long-form segmented (#170): finish the segment queue instead of uploading one big file.
         if (segmentedActive) {
             stopSegmentedAndFinalize(context)
@@ -823,7 +842,7 @@ object DictateController {
             // transcribing the carried-over segment alone rather than losing it.
             if (carry != null && carry.exists() && carry.length() > 0L) {
                 scope.launch { clearInterruptedAudioPref() }
-                transcribe(context, carry, carryOverSeconds, latencyTrace = latencyTrace)
+                transcribe(context, carry, carryOverSeconds, forceLocal = forceLocal, latencyTrace = latencyTrace)
             } else {
                 carry?.delete()
                 _state.value = UiState.Error(context.getString(R.string.dictate__error_no_audio))
@@ -831,7 +850,7 @@ object DictateController {
             return
         }
         if (carry == null) {
-            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
+            transcribe(context, audioFile, recordedSeconds, forceLocal = forceLocal, latencyTrace = latencyTrace)
             return
         }
         // Continuation: stitch the carried-over segment and the new one into a single audio so the whole
@@ -842,11 +861,11 @@ object DictateController {
         carry.delete()
         if (ok && merged.exists() && merged.length() > 0L) {
             audioFile.delete()
-            transcribe(context, merged, recordedSeconds, latencyTrace = latencyTrace)
+            transcribe(context, merged, recordedSeconds, forceLocal = forceLocal, latencyTrace = latencyTrace)
         } else {
             // Merge failed (rare): transcribe at least the newly recorded segment.
             merged.delete()
-            transcribe(context, audioFile, recordedSeconds, latencyTrace = latencyTrace)
+            transcribe(context, audioFile, recordedSeconds, forceLocal = forceLocal, latencyTrace = latencyTrace)
         }
     }
 
@@ -912,6 +931,9 @@ object DictateController {
         audioFile: File,
         recordedSeconds: Long = 0L,
         gate: Boolean = true,
+        // Long-press "send with local model" (#228): force this one transcription onto the on-device
+        // provider regardless of the configured active provider.
+        forceLocal: Boolean = false,
         // History (issue #140): [isReplay] re-transcribes already-counted audio (skip stats),
         // [replayHistoryId] updates that stored entry's text in place, [source] tags the origin.
         isReplay: Boolean = false,
@@ -920,7 +942,7 @@ object DictateController {
         latencyTrace: BatchLatencyTrace = BatchLatencyTrace(),
     ) {
         logLatency(latencyTrace, "transcribeEntered")
-        val account = transcriptionAccount()
+        val account = if (forceLocal) localTranscriptionAccount() else transcriptionAccount()
         val apiKey = account.apiKey
         val preset = presetFor(account)
         val model = account.transcriptionModel.takeIf { it.isNotBlank() }
@@ -2624,6 +2646,13 @@ object DictateController {
         val id = prefs.dictate.transcriptionProviderId.get()
         return prefs.dictate.providerAccounts.get().getOrEmpty(id)
     }
+
+    /**
+     * The on-device provider's stored account (issue #228): the selected local model lives in its
+     * [ProviderAccount.transcriptionModel]. Used by the long-press "send with local model" shortcut.
+     */
+    private fun localTranscriptionAccount(): ProviderAccount =
+        prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.LOCAL.id)
 
     /** The active rewording provider's stored credentials (keyring). */
     private fun rewordingAccount(): ProviderAccount {

@@ -100,7 +100,21 @@ fun QuickActionButton(
         }
     }
 
-    PlainTooltip(action.computeTooltip(evaluator), enabled = type == QuickActionBarType.INTERACTIVE_BUTTON) {
+    // The Dictate action has a dynamic icon (mic → send → hourglass) that depends on the recording state;
+    // observed here so the icon recomputes on state changes (for all other actions it's a cheap, stable
+    // subscription). Also drives tooltip suppression below.
+    val dictateState by DictateController.state.collectAsState()
+    // Suppress the tooltip while a long-press shortcut is armed on the Dictate mic, so holding it to run
+    // the shortcut (pick a file when idle, or send-with-local-model while recording, #228) doesn't also
+    // pop the tooltip text.
+    val dictateLongPressArmed = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && (
+        dictateState is DictateController.UiState.Idle ||
+            (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressSendLocal())
+    )
+    PlainTooltip(
+        action.computeTooltip(evaluator),
+        enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
+    ) {
         SnyggBox(
             elementName = elementName,
             attributes = attributes,
@@ -119,21 +133,31 @@ fun QuickActionButton(
                             interactionSource.tryEmit(press)
                             action.onPointerDown(context)
 
-                            // The idle Dictate mic supports a long-press shortcut: hold it to pick an
-                            // existing audio/video file for transcription instead of recording.
-                            val dictateIdle = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE &&
+                            // The Dictate mic supports two long-press shortcuts:
+                            //  • idle: hold to pick an existing audio/video file to transcribe (#88).
+                            //  • recording (opt-in, #228): hold the send button to transcribe this
+                            //    recording with the on-device model instead of the cloud provider.
+                            val isDictate = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE
+                            val dictateIdle = isDictate &&
                                 DictateController.state.value is DictateController.UiState.Idle
-                            if (dictateIdle) {
+                            val dictateSendLocal = isDictate && !dictateIdle &&
+                                prefs.dictate.longPressSendLocalModel.get() &&
+                                DictateController.canLongPressSendLocal()
+                            if (dictateIdle || dictateSendLocal) {
                                 val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
                                 try {
                                     val up = withTimeout(longPressDelay) { waitForUpOrCancellation() }
                                     handleUpOrCancel(up, press, interactionSource, action, context)
                                 } catch (_: PointerEventTimeoutCancellationException) {
-                                    // Held long enough: open the file picker and swallow the rest of
-                                    // the gesture so the normal tap (start recording) does not run.
+                                    // Held long enough: run the shortcut and swallow the rest of the
+                                    // gesture so the normal tap (start recording / send) does not run.
                                     interactionSource.tryEmit(PressInteraction.Cancel(press))
                                     action.onPointerCancel(context)
-                                    DictateController.startFileTranscription(context)
+                                    if (dictateIdle) {
+                                        DictateController.startFileTranscription(context)
+                                    } else {
+                                        DictateController.stopAndTranscribeLocal(context)
+                                    }
                                     waitForUpOrCancellation()?.consume()
                                 }
                             } else {
@@ -150,10 +174,7 @@ fun QuickActionButton(
                 // Render foreground
                 when (action) {
                     is QuickAction.InsertKey -> {
-                        // The Dictate action has a dynamic icon (mic → send → hourglass) that depends
-                        // on the recording state. Observe it so the icon recomputes on state changes;
-                        // for all other actions this is a cheap, stable subscription.
-                        val dictateState by DictateController.state.collectAsState()
+                        // Uses the hoisted [dictateState] above (dynamic mic → send → hourglass icon).
                         // Select-all is a toggle (issue #152): reflect the field's selection live so the
                         // icon shows "deselect" when text is selected. distinctUntilChanged keeps this
                         // cheap for every action button — it only recomposes when selection presence flips.
