@@ -1332,7 +1332,7 @@
     <string name="dictate__prompt_selection_custom">Персонализиран</string>
     <string name="dictate__style_prompt_title">Пунктуация и стил</string>
     <string name="dictate__style_prompt_custom_title">Персонализирана подкана за стил</string>
-    <string name="dictate__style_prompt_custom_placeholder">напр. Това изречение има главни букви и пунктуация.</string>
+    <string name="dictate__style_prompt_custom_placeholder">напр. Здравейте. Много благодаря.</string>
     <string name="dictate__style_prompt_info_title">Виж примера по подразбиране</string>
     <string name="dictate__style_prompt_info_description">Това примерно изречение се изпраща с всяко транскрибиране, за да насочи модела към правилни главни букви и пунктуация. То се адаптира автоматично към езика, на който диктувате.</string>
     <string name="dictate__custom_words_title">Персонализирани думи</string>

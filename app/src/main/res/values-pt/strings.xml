@@ -1311,7 +1311,7 @@
     <string name="dictate__prompt_selection_custom">Personalizado</string>
     <string name="dictate__style_prompt_title">Pontuação e estilo</string>
     <string name="dictate__style_prompt_custom_title">Prompt de estilo personalizado</string>
-    <string name="dictate__style_prompt_custom_placeholder">p. ex. Esta frase tem maiúsculas e pontuação.</string>
+    <string name="dictate__style_prompt_custom_placeholder">ex.: Olá. Muito obrigado.</string>
     <string name="dictate__style_prompt_info_title">Ver exemplo predefinido</string>
     <string name="dictate__style_prompt_info_description">Esta frase de exemplo é enviada com cada transcrição para orientar o modelo para o uso correto de maiúsculas e pontuação. Adapta-se automaticamente ao idioma em que dita.</string>
     <string name="dictate__custom_words_title">Palavras personalizadas</string>

@@ -1226,7 +1226,7 @@
     <string name="dictate__prompt_selection_custom">Benutzerdefiniert</string>
     <string name="dictate__style_prompt_title">Zeichensetzung &amp; Stil</string>
     <string name="dictate__style_prompt_custom_title">Benutzerdefinierter Stil-Prompt</string>
-    <string name="dictate__style_prompt_custom_placeholder">z. B. Dieser Satz hat Groß- und Kleinschreibung und Zeichensetzung.</string>
+    <string name="dictate__style_prompt_custom_placeholder">z. B. Hallo. Vielen Dank.</string>
     <string name="dictate__style_prompt_info_title">Standardbeispiel ansehen</string>
     <string name="dictate__style_prompt_info_description">Dieser Beispielsatz wird mit jeder Transkription gesendet, um das Modell zu korrekter Groß- und Kleinschreibung sowie Zeichensetzung zu bewegen. Er passt sich automatisch an die Sprache an, in der du diktierst.</string>
     <string name="dictate__custom_words_title">Eigene Wörter</string>

@@ -1190,7 +1190,7 @@
     <string name="dictate__prompt_selection_custom">مخصّص</string>
     <string name="dictate__style_prompt_title">علامات الترقيم والنمط</string>
     <string name="dictate__style_prompt_custom_title">مطالبة نمط مخصّصة</string>
-    <string name="dictate__style_prompt_custom_placeholder">مثال: تحتوي هذه الجملة على أحرف كبيرة وعلامات ترقيم.</string>
+    <string name="dictate__style_prompt_custom_placeholder">مثلاً: مرحباً. شكراً جزيلاً.</string>
     <string name="dictate__style_prompt_info_title">عرض المثال الافتراضي</string>
     <string name="dictate__style_prompt_info_description">تُرسَل هذه الجملة النموذجية مع كل عملية تفريغ نصي لتوجيه النموذج نحو الأحرف الكبيرة وعلامات الترقيم الصحيحة. وتتكيّف تلقائيًا مع اللغة التي تُملي بها.</string>
     <string name="dictate__custom_words_title">كلمات مخصّصة</string>

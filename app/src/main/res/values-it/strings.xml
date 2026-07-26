@@ -1115,7 +1115,7 @@
     <string name="dictate__prompt_selection_custom">Personalizzato</string>
     <string name="dictate__style_prompt_title">Punteggiatura e stile</string>
     <string name="dictate__style_prompt_custom_title">Prompt di stile personalizzato</string>
-    <string name="dictate__style_prompt_custom_placeholder">es. Questa frase ha maiuscole e punteggiatura.</string>
+    <string name="dictate__style_prompt_custom_placeholder">es. Ciao. Grazie mille.</string>
     <string name="dictate__style_prompt_info_title">Vedi esempio predefinito</string>
     <string name="dictate__style_prompt_info_description">Questa frase di esempio viene inviata con ogni trascrizione per orientare il modello verso un uso corretto di maiuscole e punteggiatura. Si adatta automaticamente alla lingua in cui detti.</string>
     <string name="dictate__custom_words_title">Parole personalizzate</string>

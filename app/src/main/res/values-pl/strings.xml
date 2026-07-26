@@ -1347,7 +1347,7 @@
     <string name="dictate__prompt_selection_custom">Niestandardowy</string>
     <string name="dictate__style_prompt_title">Interpunkcja i styl</string>
     <string name="dictate__style_prompt_custom_title">Niestandardowy prompt stylu</string>
-    <string name="dictate__style_prompt_custom_placeholder">np. To zdanie zawiera wielkie litery i interpunkcję.</string>
+    <string name="dictate__style_prompt_custom_placeholder">np. Dzień dobry. Bardzo dziękuję.</string>
     <string name="dictate__style_prompt_info_title">Zobacz domyślny przykład</string>
     <string name="dictate__style_prompt_info_description">To przykładowe zdanie jest wysyłane z każdą transkrypcją, aby skierować model ku poprawnej pisowni wielkich liter i interpunkcji. Dostosowuje się automatycznie do języka, w którym dyktujesz.</string>
     <string name="dictate__custom_words_title">Słowa niestandardowe</string>

@@ -1287,7 +1287,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_selection_custom">Kustom</string>
     <string name="dictate__style_prompt_title">Tanda baca &amp; gaya</string>
     <string name="dictate__style_prompt_custom_title">Perintah gaya kustom</string>
-    <string name="dictate__style_prompt_custom_placeholder">mis. Kalimat ini memiliki huruf kapital dan tanda baca.</string>
+    <string name="dictate__style_prompt_custom_placeholder">mis. Halo. Terima kasih banyak.</string>
     <string name="dictate__style_prompt_info_title">Lihat contoh bawaan</string>
     <string name="dictate__style_prompt_info_description">Contoh kalimat ini dikirim bersama setiap transkripsi untuk mengarahkan model ke huruf kapital dan tanda baca yang benar. Ini menyesuaikan secara otomatis dengan bahasa yang Anda gunakan untuk mendikte.</string>
     <string name="dictate__custom_words_title">Kata kustom</string>

@@ -1264,7 +1264,7 @@
     <string name="dictate__prompt_selection_custom">カスタム</string>
     <string name="dictate__style_prompt_title">句読点とスタイル</string>
     <string name="dictate__style_prompt_custom_title">カスタムスタイルプロンプト</string>
-    <string name="dictate__style_prompt_custom_placeholder">例: この文には大文字と句読点があります。</string>
+    <string name="dictate__style_prompt_custom_placeholder">例：こんにちは。どうもありがとうございます。</string>
     <string name="dictate__style_prompt_info_title">既定の例を表示</string>
     <string name="dictate__style_prompt_info_description">この例文は、正しい大文字使用と句読点へモデルを導くために、文字起こしごとに送信されます。音声入力する言語に自動的に適応します。</string>
     <string name="dictate__custom_words_title">カスタム単語</string>

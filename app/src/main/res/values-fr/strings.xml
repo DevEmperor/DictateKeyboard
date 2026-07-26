@@ -1209,7 +1209,7 @@
     <string name="dictate__prompt_selection_custom">Personnalisé</string>
     <string name="dictate__style_prompt_title">Ponctuation et style</string>
     <string name="dictate__style_prompt_custom_title">Prompt de style personnalisé</string>
-    <string name="dictate__style_prompt_custom_placeholder">ex. : Cette phrase a des majuscules et de la ponctuation.</string>
+    <string name="dictate__style_prompt_custom_placeholder">p. ex. Bonjour. Merci beaucoup.</string>
     <string name="dictate__style_prompt_info_title">Voir l\'exemple par défaut</string>
     <string name="dictate__style_prompt_info_description">Cette phrase d\'exemple est envoyée avec chaque transcription pour orienter le modèle vers une majuscule et une ponctuation correctes. Elle s\'adapte automatiquement à la langue dans laquelle vous dictez.</string>
     <string name="dictate__custom_words_title">Mots personnalisés</string>

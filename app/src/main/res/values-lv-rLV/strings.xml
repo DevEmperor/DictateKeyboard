@@ -1275,7 +1275,7 @@
     <string name="dictate__prompt_selection_custom">Pielāgots</string>
     <string name="dictate__style_prompt_title">Pieturzīmes un stils</string>
     <string name="dictate__style_prompt_custom_title">Pielāgota stila uzvedne</string>
-    <string name="dictate__style_prompt_custom_placeholder">piem. Šajā teikumā ir lielie burti un pieturzīmes.</string>
+    <string name="dictate__style_prompt_custom_placeholder">piem. Sveiki. Liels paldies.</string>
     <string name="dictate__style_prompt_info_title">Skatīt noklusējuma piemēru</string>
     <string name="dictate__style_prompt_info_description">Šis teikuma piemērs tiek nosūtīts ar katru transkripciju, lai pamudinātu modeli pareizi lietot lielos burtus un pieturzīmes. Tas automātiski pielāgojas valodai, kurā diktējat.</string>
     <string name="dictate__custom_words_title">Pielāgoti vārdi</string>

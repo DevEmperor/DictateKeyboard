@@ -1102,6 +1102,20 @@ object DictateController {
                     }
                 }
                 logLatency(latencyTrace, "providerCompleted", providerStartedNanos)
+                // Prompt-echo guard (issue #77): on silent/unclear audio, Whisper-style models echo the
+                // transcription style prompt back verbatim (the old default was infamously returned as
+                // "This sentence has capitalization and punctuation."). If the result is just that prompt
+                // echoed, treat it as no speech and drop it instead of dumping the prompt into the field.
+                // Skipped for the chat-audio path, whose prompt is an instruction, not a Whisper style hint.
+                if (!chatAudio && DictatePromptDefaults.looksLikeStylePromptEcho(result.text, transcriptionStyleBasePrompt())) {
+                    outcome = "promptEcho"
+                    _state.value = UiState.Error(
+                        message = appContext.getString(R.string.dictate__no_speech_detected),
+                        action = ErrorAction.NONE,
+                        neutral = true,
+                    )
+                    return@launch // audio is dropped by the finally block
+                }
                 // Shared finalize: rewording/formatting + mappings + commit + stats. Reused by the
                 // realtime path (issue #128), which supplies its own already-streamed transcript.
                 val capture = HistoryCapture(
@@ -2620,15 +2634,21 @@ object DictateController {
      * user's custom words (roadmap 11.12) are appended on top of whichever style prompt is active, so
      * names/jargon are spelled correctly even with the predefined punctuation prompt or with none.
      */
-    private fun transcriptionStylePrompt(): String? {
-        val base = when (prefs.dictate.stylePromptSelection.get()) {
-            DictatePromptDefaults.SELECTION_PREDEFINED ->
-                DictatePromptDefaults.punctuationPromptFor(prefs.dictate.activeInputLanguage.get())
-            DictatePromptDefaults.SELECTION_CUSTOM ->
-                prefs.dictate.stylePromptCustom.get().takeIf { it.isNotBlank() }
-            else -> null
-        }
-        return DictatePromptDefaults.appendCustomWords(base, prefs.dictate.customWords.get())
+    private fun transcriptionStylePrompt(): String? =
+        DictatePromptDefaults.appendCustomWords(transcriptionStyleBasePrompt(), prefs.dictate.customWords.get())
+
+    /**
+     * The style prompt WITHOUT the appended custom-words glossary — the predefined per-language sentence or
+     * the user's custom style prompt. This is the part a Whisper-style model echoes on silence, so the
+     * prompt-echo guard (#77) compares against it rather than the full prompt (whose trailing glossary
+     * would otherwise throw off the overlap check).
+     */
+    private fun transcriptionStyleBasePrompt(): String? = when (prefs.dictate.stylePromptSelection.get()) {
+        DictatePromptDefaults.SELECTION_PREDEFINED ->
+            DictatePromptDefaults.punctuationPromptFor(prefs.dictate.activeInputLanguage.get())
+        DictatePromptDefaults.SELECTION_CUSTOM ->
+            prefs.dictate.stylePromptCustom.get().takeIf { it.isNotBlank() }
+        else -> null
     }
 
     /**

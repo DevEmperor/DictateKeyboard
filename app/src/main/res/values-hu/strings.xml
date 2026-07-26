@@ -1330,7 +1330,7 @@
     <string name="dictate__prompt_selection_custom">Egyéni</string>
     <string name="dictate__style_prompt_title">Központozás és stílus</string>
     <string name="dictate__style_prompt_custom_title">Egyéni stílusutasítás</string>
-    <string name="dictate__style_prompt_custom_placeholder">pl. Ez a mondat nagybetűket és írásjeleket tartalmaz.</string>
+    <string name="dictate__style_prompt_custom_placeholder">pl. Jó napot. Nagyon köszönöm.</string>
     <string name="dictate__style_prompt_info_title">Alapértelmezett példa megtekintése</string>
     <string name="dictate__style_prompt_info_description">Ezt a példamondatot minden átírással elküldjük, hogy a modellt a helyes nagybetűk és írásjelek felé terelje. Automatikusan alkalmazkodik ahhoz a nyelvhez, amelyen diktál.</string>
     <string name="dictate__custom_words_title">Egyéni szavak</string>

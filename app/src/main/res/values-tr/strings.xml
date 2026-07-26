@@ -1310,7 +1310,7 @@
     <string name="dictate__prompt_selection_custom">Özel</string>
     <string name="dictate__style_prompt_title">Noktalama ve stil</string>
     <string name="dictate__style_prompt_custom_title">Özel stil komutu</string>
-    <string name="dictate__style_prompt_custom_placeholder">örn. Bu cümlede büyük harf ve noktalama var.</string>
+    <string name="dictate__style_prompt_custom_placeholder">örn. Merhaba. Çok teşekkür ederim.</string>
     <string name="dictate__style_prompt_info_title">Varsayılan örneği görüntüle</string>
     <string name="dictate__style_prompt_info_description">Bu örnek cümle, modeli doğru büyük harf ve noktalamaya yönlendirmek için her yazıya dökme ile birlikte gönderilir. Dikte ettiğiniz dile otomatik olarak uyum sağlar.</string>
     <string name="dictate__custom_words_title">Özel sözcükler</string>

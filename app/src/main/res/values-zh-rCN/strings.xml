@@ -1327,7 +1327,7 @@
     <string name="dictate__prompt_selection_custom">自定义</string>
     <string name="dictate__style_prompt_title">标点与风格</string>
     <string name="dictate__style_prompt_custom_title">自定义风格提示词</string>
-    <string name="dictate__style_prompt_custom_placeholder">例如：这个句子有大小写和标点。</string>
+    <string name="dictate__style_prompt_custom_placeholder">例如：你好。非常感谢。</string>
     <string name="dictate__style_prompt_info_title">查看默认示例</string>
     <string name="dictate__style_prompt_info_description">该示例句会随每次转录一起发送，以引导模型使用正确的大小写和标点。它会自动适应您听写所用的语言。</string>
     <string name="dictate__custom_words_title">自定义词汇</string>

@@ -1231,7 +1231,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__prompt_selection_custom">Aangepast</string>
     <string name="dictate__style_prompt_title">Interpunctie en stijl</string>
     <string name="dictate__style_prompt_custom_title">Aangepaste stijlprompt</string>
-    <string name="dictate__style_prompt_custom_placeholder">bv. Deze zin heeft hoofdletters en interpunctie.</string>
+    <string name="dictate__style_prompt_custom_placeholder">bijv. Hallo. Hartelijk dank.</string>
     <string name="dictate__style_prompt_info_title">Standaardvoorbeeld bekijken</string>
     <string name="dictate__style_prompt_info_description">Deze voorbeeldzin wordt met elke transcriptie meegestuurd om het model richting correct hoofdlettergebruik en interpunctie te sturen. Hij past zich automatisch aan de taal aan waarin je dicteert.</string>
     <string name="dictate__custom_words_title">Aangepaste woorden</string>

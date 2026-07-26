@@ -1313,7 +1313,7 @@
     <string name="dictate__prompt_selection_custom">Personalizado</string>
     <string name="dictate__style_prompt_title">Puntuación y estilo</string>
     <string name="dictate__style_prompt_custom_title">Prompt de estilo personalizado</string>
-    <string name="dictate__style_prompt_custom_placeholder">p. ej. Esta frase tiene mayúsculas y puntuación.</string>
+    <string name="dictate__style_prompt_custom_placeholder">p. ej. Hola. Muchas gracias.</string>
     <string name="dictate__style_prompt_info_title">Ver ejemplo predeterminado</string>
     <string name="dictate__style_prompt_info_description">Esta frase de ejemplo se envía con cada transcripción para guiar al modelo hacia el uso correcto de mayúsculas y puntuación. Se adapta automáticamente al idioma en el que dictas.</string>
     <string name="dictate__custom_words_title">Palabras personalizadas</string>

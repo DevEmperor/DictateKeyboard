@@ -1697,7 +1697,7 @@
     <!-- Dictate style prompt (biases the transcription towards proper punctuation/casing) -->
     <string name="dictate__style_prompt_title" comment="Setting: punctuation/style prompt for transcription">Punctuation &amp; style</string>
     <string name="dictate__style_prompt_custom_title" comment="Label for the custom style prompt field">Custom style prompt</string>
-    <string name="dictate__style_prompt_custom_placeholder" comment="Placeholder for the custom style prompt field">e.g. This sentence has capitalization and punctuation.</string>
+    <string name="dictate__style_prompt_custom_placeholder" comment="Placeholder for the custom style prompt field">e.g. Hello. Thank you very much.</string>
     <string name="dictate__style_prompt_info_title" comment="Row that reveals the built-in default style prompt">View default example</string>
     <string name="dictate__style_prompt_info_description" comment="Explanation shown above the default style prompt example">This example sentence is sent with each transcription to nudge the model towards correct capitalization and punctuation. It adapts automatically to the language you dictate in.</string>
 

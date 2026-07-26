@@ -1335,7 +1335,7 @@
     <string name="dictate__prompt_selection_custom">Пользовательский</string>
     <string name="dictate__style_prompt_title">Пунктуация и стиль</string>
     <string name="dictate__style_prompt_custom_title">Пользовательский промпт стиля</string>
-    <string name="dictate__style_prompt_custom_placeholder">напр. В этом предложении есть заглавные буквы и пунктуация.</string>
+    <string name="dictate__style_prompt_custom_placeholder">напр. Здравствуйте. Большое спасибо.</string>
     <string name="dictate__style_prompt_info_title">Показать пример по умолчанию</string>
     <string name="dictate__style_prompt_info_description">Это образцовое предложение отправляется с каждой транскрипцией, чтобы направить модель к правильному использованию заглавных букв и пунктуации. Оно автоматически подстраивается под язык, на котором вы диктуете.</string>
     <string name="dictate__custom_words_title">Пользовательские слова</string>

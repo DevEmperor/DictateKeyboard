@@ -1207,7 +1207,7 @@
     <string name="dictate__prompt_selection_custom">Personalitzat</string>
     <string name="dictate__style_prompt_title">Puntuació i estil</string>
     <string name="dictate__style_prompt_custom_title">Prompt d\'estil personalitzat</string>
-    <string name="dictate__style_prompt_custom_placeholder">p. ex. Aquesta frase té majúscules i puntuació.</string>
+    <string name="dictate__style_prompt_custom_placeholder">p. ex. Hola. Moltes gràcies.</string>
     <string name="dictate__style_prompt_info_title">Mostra l\'exemple per defecte</string>
     <string name="dictate__style_prompt_info_description">Aquesta frase d\'exemple s\'envia amb cada transcripció per orientar el model cap a un ús correcte de majúscules i puntuació. S\'adapta automàticament a l\'idioma en què dictes.</string>
     <string name="dictate__custom_words_title">Paraules personalitzades</string>

@@ -1179,7 +1179,7 @@
     <string name="dictate__prompt_selection_custom">Власний</string>
     <string name="dictate__style_prompt_title">Пунктуація та стиль</string>
     <string name="dictate__style_prompt_custom_title">Власний промпт стилю</string>
-    <string name="dictate__style_prompt_custom_placeholder">напр. У цьому реченні є великі літери та пунктуація.</string>
+    <string name="dictate__style_prompt_custom_placeholder">напр. Вітаю. Щиро дякую.</string>
     <string name="dictate__style_prompt_info_title">Показати приклад за замовчуванням</string>
     <string name="dictate__style_prompt_info_description">Це зразкове речення надсилається з кожною транскрипцією, щоб спрямувати модель до правильного вживання великих літер і пунктуації. Воно автоматично підлаштовується під мову, якою ви диктуєте.</string>
     <string name="dictate__custom_words_title">Власні слова</string>
