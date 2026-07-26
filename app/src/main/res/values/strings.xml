@@ -1455,6 +1455,11 @@
     <string name="dictate__error_recording_failed" comment="Error when audio recording could not be started. %s is the system error detail.">Recording failed – grant the microphone permission. (%s)</string>
     <string name="dictate__error_no_audio" comment="Error when no audio was captured">No recording detected – please speak a little longer.</string>
     <string name="dictate__no_speech_detected" comment="Shown when the on-device VAD found no speech in the recording (issue #93)">No speech detected</string>
+    <string name="dictate__voice_input_listening" comment="Status in the system voice-input popup while recording (issue #67)">Listening…</string>
+    <string name="dictate__voice_input_transcribing" comment="Status in the system voice-input popup while transcribing (issue #67)">Transcribing…</string>
+    <string name="dictate__voice_input_stop" comment="Button in the system voice-input popup to stop recording and transcribe now (issue #67)">Done</string>
+    <string name="dictate__voice_input_hint" comment="Subtle hint under the orb in the voice-input UI (issue #67)">Tap to send</string>
+    <string name="dictate__voice_ime_label" comment="Name of the Dictate voice input method shown in system keyboard settings (issue #67)">Dictate voice input</string>
     <string name="dictate__error_no_api_key" comment="Error when no API key is configured">No API key set – configure it in the Dictate settings.</string>
     <string name="dictate__error_transcription_failed" comment="Generic transcription failure">Transcription failed.</string>
     <string name="dictate__error_unknown" comment="Unknown transcription error">Unknown error during transcription.</string>

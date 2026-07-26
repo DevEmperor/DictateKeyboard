@@ -49,6 +49,7 @@ import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
+import dev.patrickgold.florisboard.dictate.recognition.RecognitionBridge
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
@@ -194,7 +195,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             ) { enabled, showWithKeyboard, focused, dictateKeyboard, state ->
                 Inputs(enabled, showWithKeyboard, focused, dictateKeyboard, state)
             }
-            combine(
+            val emissions = combine(
                 base,
                 prefs.dictate.floatingButtonDesign.asFlow(),
                 prefs.dictate.floatingButtonSize.asFlow(),
@@ -202,7 +203,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 prefs.dictate.floatingButtonColor.asFlow(),
             ) { inputs, design, size, imeVisible, color ->
                 Emission(inputs, design, size, imeVisible, color.toArgb())
-            }.collect { (inputs, design, size, imeVisible, accent) ->
+            }
+            combine(emissions, RecognitionBridge.active) { emission, recogActive ->
+                emission to recogActive
+            }.collect { (emission, recogActive) ->
+                val (inputs, design, size, imeVisible, accent) = emission
                 val (enabled, showWithKeyboard, focused, dictateKeyboard, state) = inputs
                 if (design != currentDesign || size.scale != sizeScale || accent != accentColor) {
                     currentDesign = design
@@ -218,7 +223,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // still keeps it shown.
                 val dictateKeyboardShown = dictateKeyboard && imeVisible
                 val hiddenByOwnKeyboard = dictateKeyboardShown && !showWithKeyboard
-                val show = enabled && (focused || active) && !hiddenByOwnKeyboard
+                // Hide the bubble entirely while another keyboard/app drives a system voice-input session
+                // (#67) — its own overlay/panel is showing, and the recording isn't the bubble's (RECOGNITION
+                // target), so a floating mic on top would be confusing.
+                val show = enabled && (focused || active) && !hiddenByOwnKeyboard && !recogActive
                 if (show) ensureShown() else hide()
                 recordingState = state as? DictateController.UiState.Recording
                 applyState(state)

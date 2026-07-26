@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Metadata for the system RecognitionService (issue #67). settingsActivity opens Dictate's settings
+     so the user can configure the transcription provider/model used for system voice input. -->
+<recognition-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="dev.patrickgold.florisboard.app.FlorisAppActivity" />

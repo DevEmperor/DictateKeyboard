@@ -1179,6 +1179,11 @@
     <string name="dictate__error_recording_failed">Записването е неуспешно – дайте разрешение за микрофона. (%s)</string>
     <string name="dictate__error_no_audio">Не е открит запис – моля, говорете малко по-дълго.</string>
     <string name="dictate__no_speech_detected">Не е разпозната реч</string>
+    <string name="dictate__voice_input_listening">Слушам…</string>
+    <string name="dictate__voice_input_transcribing">Транскрибиране…</string>
+    <string name="dictate__voice_input_stop">Готово</string>
+    <string name="dictate__voice_input_hint">Докосни за изпращане</string>
+    <string name="dictate__voice_ime_label">Гласов вход на Dictate</string>
     <string name="dictate__error_no_api_key">Няма зададен API ключ – конфигурирайте го в настройките на Dictate.</string>
     <string name="dictate__error_transcription_failed">Транскрибирането е неуспешно.</string>
     <string name="dictate__error_unknown">Неизвестна грешка при транскрибиране.</string>

@@ -1111,6 +1111,11 @@
     <string name="dictate__error_recording_failed">録音に失敗しました – マイクの権限を許可してください。(%s)</string>
     <string name="dictate__error_no_audio">録音が検出されませんでした – もう少し長く話してください。</string>
     <string name="dictate__no_speech_detected">音声が検出されませんでした</string>
+    <string name="dictate__voice_input_listening">聞き取り中…</string>
+    <string name="dictate__voice_input_transcribing">文字起こし中…</string>
+    <string name="dictate__voice_input_stop">完了</string>
+    <string name="dictate__voice_input_hint">タップで送信</string>
+    <string name="dictate__voice_ime_label">Dictate 音声入力</string>
     <string name="dictate__error_no_api_key">APIキーが設定されていません – Dictate設定で構成してください。</string>
     <string name="dictate__error_transcription_failed">文字起こしに失敗しました。</string>
     <string name="dictate__error_unknown">文字起こし中に不明なエラーが発生しました。</string>

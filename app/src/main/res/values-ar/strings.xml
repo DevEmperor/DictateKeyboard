@@ -1037,6 +1037,11 @@
     <string name="dictate__error_recording_failed">فشل التسجيل – امنح إذن الميكروفون. (%s)</string>
     <string name="dictate__error_no_audio">لم يُكتشف أي تسجيل – من فضلك تحدّث لفترة أطول قليلًا.</string>
     <string name="dictate__no_speech_detected">لم يُكتشف أي كلام</string>
+    <string name="dictate__voice_input_listening">جارٍ الاستماع…</string>
+    <string name="dictate__voice_input_transcribing">جارٍ التفريغ…</string>
+    <string name="dictate__voice_input_stop">تم</string>
+    <string name="dictate__voice_input_hint">انقر للإرسال</string>
+    <string name="dictate__voice_ime_label">إدخال Dictate الصوتي</string>
     <string name="dictate__error_no_api_key">لم يُضبط مفتاح API – اضبطه في إعدادات Dictate.</string>
     <string name="dictate__error_transcription_failed">فشل التفريغ النصي.</string>
     <string name="dictate__error_unknown">خطأ غير معروف أثناء التفريغ النصي.</string>

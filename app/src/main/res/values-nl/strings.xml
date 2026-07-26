@@ -1078,6 +1078,11 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_recording_failed">Opname mislukt – verleen de microfoontoestemming. (%s)</string>
     <string name="dictate__error_no_audio">Geen opname gedetecteerd – spreek wat langer.</string>
     <string name="dictate__no_speech_detected">Geen spraak gedetecteerd</string>
+    <string name="dictate__voice_input_listening">Aan het luisteren…</string>
+    <string name="dictate__voice_input_transcribing">Transcriberen…</string>
+    <string name="dictate__voice_input_stop">Klaar</string>
+    <string name="dictate__voice_input_hint">Tik om te verzenden</string>
+    <string name="dictate__voice_ime_label">Dictate spraakinvoer</string>
     <string name="dictate__error_no_api_key">Geen API-sleutel ingesteld – stel deze in via de Dictate-instellingen.</string>
     <string name="dictate__error_transcription_failed">Transcriptie mislukt.</string>
     <string name="dictate__error_unknown">Onbekende fout tijdens de transcriptie.</string>

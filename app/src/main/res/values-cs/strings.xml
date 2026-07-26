@@ -1193,6 +1193,11 @@
     <string name="dictate__error_recording_failed">Nahrávání selhalo – udělte oprávnění k mikrofonu. (%s)</string>
     <string name="dictate__error_no_audio">Nebylo zjištěno žádné nahrávání – mluvte o něco déle.</string>
     <string name="dictate__no_speech_detected">Nebyla rozpoznána žádná řeč</string>
+    <string name="dictate__voice_input_listening">Poslouchám…</string>
+    <string name="dictate__voice_input_transcribing">Přepis…</string>
+    <string name="dictate__voice_input_stop">Hotovo</string>
+    <string name="dictate__voice_input_hint">Klepnutím odešlete</string>
+    <string name="dictate__voice_ime_label">Hlasový vstup Dictate</string>
     <string name="dictate__error_no_api_key">Není nastaven klíč API – nastavte jej v nastavení Dictate.</string>
     <string name="dictate__error_transcription_failed">Přepis selhal.</string>
     <string name="dictate__error_unknown">Neznámá chyba při přepisu.</string>

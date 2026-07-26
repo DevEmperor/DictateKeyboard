@@ -1174,6 +1174,11 @@
     <string name="dictate__error_recording_failed">录音失败——请授予麦克风权限。(%s)</string>
     <string name="dictate__error_no_audio">未检测到录音——请说久一点。</string>
     <string name="dictate__no_speech_detected">未检测到语音</string>
+    <string name="dictate__voice_input_listening">正在聆听…</string>
+    <string name="dictate__voice_input_transcribing">正在转写…</string>
+    <string name="dictate__voice_input_stop">完成</string>
+    <string name="dictate__voice_input_hint">点按发送</string>
+    <string name="dictate__voice_ime_label">Dictate 语音输入</string>
     <string name="dictate__error_no_api_key">未设置 API 密钥——请在 Dictate 设置中配置。</string>
     <string name="dictate__error_transcription_failed">转录失败。</string>
     <string name="dictate__error_unknown">转录时发生未知错误。</string>

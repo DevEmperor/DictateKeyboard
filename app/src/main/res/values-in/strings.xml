@@ -1134,6 +1134,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_recording_failed">Perekaman gagal – berikan izin mikrofon. (%s)</string>
     <string name="dictate__error_no_audio">Tidak ada rekaman terdeteksi – mohon bicara sedikit lebih lama.</string>
     <string name="dictate__no_speech_detected">Tidak ada ucapan terdeteksi</string>
+    <string name="dictate__voice_input_listening">Mendengarkan…</string>
+    <string name="dictate__voice_input_transcribing">Mentranskripsi…</string>
+    <string name="dictate__voice_input_stop">Selesai</string>
+    <string name="dictate__voice_input_hint">Ketuk untuk kirim</string>
+    <string name="dictate__voice_ime_label">Input suara Dictate</string>
     <string name="dictate__error_no_api_key">Kunci API belum diatur – konfigurasikan di pengaturan Dictate.</string>
     <string name="dictate__error_transcription_failed">Transkripsi gagal.</string>
     <string name="dictate__error_unknown">Kesalahan tidak diketahui saat transkripsi.</string>

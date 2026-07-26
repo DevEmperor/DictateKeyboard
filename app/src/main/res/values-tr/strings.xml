@@ -1157,6 +1157,11 @@
     <string name="dictate__error_recording_failed">Kayıt başarısız oldu – mikrofon iznini verin. (%s)</string>
     <string name="dictate__error_no_audio">Kayıt algılanmadı – lütfen biraz daha uzun konuşun.</string>
     <string name="dictate__no_speech_detected">Konuşma algılanmadı</string>
+    <string name="dictate__voice_input_listening">Dinleniyor…</string>
+    <string name="dictate__voice_input_transcribing">Yazıya dökülüyor…</string>
+    <string name="dictate__voice_input_stop">Bitti</string>
+    <string name="dictate__voice_input_hint">Göndermek için dokun</string>
+    <string name="dictate__voice_ime_label">Dictate sesli giriş</string>
     <string name="dictate__error_no_api_key">API anahtarı ayarlanmadı – Dictate ayarlarından yapılandırın.</string>
     <string name="dictate__error_transcription_failed">Yazıya dökme başarısız oldu.</string>
     <string name="dictate__error_unknown">Yazıya dökme sırasında bilinmeyen hata.</string>

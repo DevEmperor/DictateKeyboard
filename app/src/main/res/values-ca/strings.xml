@@ -1054,6 +1054,11 @@
     <string name="dictate__error_recording_failed">Ha fallat la gravació – concedeix el permís del micròfon. (%s)</string>
     <string name="dictate__error_no_audio">No s\'ha detectat cap gravació – parla una mica més.</string>
     <string name="dictate__no_speech_detected">No s\'ha detectat cap veu</string>
+    <string name="dictate__voice_input_listening">Escoltant…</string>
+    <string name="dictate__voice_input_transcribing">Transcrivint…</string>
+    <string name="dictate__voice_input_stop">Fet</string>
+    <string name="dictate__voice_input_hint">Toca per enviar</string>
+    <string name="dictate__voice_ime_label">Entrada de veu de Dictate</string>
     <string name="dictate__error_no_api_key">No hi ha cap clau d\'API – configura-la a la configuració del Dictate.</string>
     <string name="dictate__error_transcription_failed">Ha fallat la transcripció.</string>
     <string name="dictate__error_unknown">Error desconegut durant la transcripció.</string>

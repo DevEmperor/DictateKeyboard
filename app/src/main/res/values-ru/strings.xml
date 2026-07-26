@@ -1182,6 +1182,11 @@
     <string name="dictate__error_recording_failed">Не удалось записать — предоставьте разрешение на доступ к микрофону. (%s)</string>
     <string name="dictate__error_no_audio">Запись не обнаружена — говорите немного дольше.</string>
     <string name="dictate__no_speech_detected">Речь не обнаружена</string>
+    <string name="dictate__voice_input_listening">Слушаю…</string>
+    <string name="dictate__voice_input_transcribing">Расшифровка…</string>
+    <string name="dictate__voice_input_stop">Готово</string>
+    <string name="dictate__voice_input_hint">Нажмите для отправки</string>
+    <string name="dictate__voice_ime_label">Голосовой ввод Dictate</string>
     <string name="dictate__error_no_api_key">Ключ API не задан — настройте его в настройках Dictate.</string>
     <string name="dictate__error_transcription_failed">Не удалось выполнить транскрибирование.</string>
     <string name="dictate__error_unknown">Неизвестная ошибка при транскрибировании.</string>

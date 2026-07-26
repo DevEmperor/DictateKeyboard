@@ -1056,6 +1056,11 @@
     <string name="dictate__error_recording_failed">Échec de l\'enregistrement – accordez l\'autorisation du microphone. (%s)</string>
     <string name="dictate__error_no_audio">Aucun enregistrement détecté – parlez un peu plus longtemps.</string>
     <string name="dictate__no_speech_detected">Aucune parole détectée</string>
+    <string name="dictate__voice_input_listening">Écoute…</string>
+    <string name="dictate__voice_input_transcribing">Transcription…</string>
+    <string name="dictate__voice_input_stop">Terminé</string>
+    <string name="dictate__voice_input_hint">Appuyez pour envoyer</string>
+    <string name="dictate__voice_ime_label">Saisie vocale Dictate</string>
     <string name="dictate__error_no_api_key">Aucune clé d\'API définie – configurez-la dans les paramètres de Dictate.</string>
     <string name="dictate__error_transcription_failed">Échec de la transcription.</string>
     <string name="dictate__error_unknown">Erreur inconnue lors de la transcription.</string>

@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.overlay.AccessibilitySink
+import dev.patrickgold.florisboard.dictate.recognition.RecognitionSink
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
@@ -208,7 +209,7 @@ object DictateController {
      * accessibility-injected field of the floating button ([OutputTarget.OVERLAY], issue #88). Set when a
      * dictation starts (the mic-tap entry points carry their source); the two never drive concurrently.
      */
-    enum class OutputTarget { IME, OVERLAY }
+    enum class OutputTarget { IME, OVERLAY, RECOGNITION_SERVICE }
 
     /**
      * Temporary debug switch to preview the "Dictate was updated" Smartbar nudge. When true, the nudge
@@ -594,6 +595,32 @@ object DictateController {
         if (_state.value is UiState.Error || _state.value is UiState.Interrupted) {
             _state.value = UiState.Idle
         }
+    }
+
+    /**
+     * System voice input entry points (issue #67), driven by [DictateRecognitionService]. They record via
+     * the normal pipeline but latch [OutputTarget.RECOGNITION_SERVICE], so the finished text is handed back
+     * to the calling app through the recognition callback instead of being written into a field. Always
+     * plain batch (no realtime/segmented) — see [openRealtimeSession] / [isSegmentedMode].
+     */
+    fun startRecognition(context: Context) {
+        // Busy with another dictation → ignore; the service will time out and report an error.
+        if (_state.value is UiState.Recording ||
+            _state.value is UiState.Transcribing ||
+            _state.value is UiState.Rewording
+        ) return
+        outputTarget = OutputTarget.RECOGNITION_SERVICE
+        startRecording(context)
+    }
+
+    /** Stops the recognition recording and transcribes it; the result flows to the recognition callback. */
+    fun stopRecognition(context: Context) {
+        if (_state.value is UiState.Recording) stopAndTranscribe(context)
+    }
+
+    /** Aborts a recognition recording without transcribing (the caller cancelled). */
+    fun cancelRecognition() {
+        cancelRecording()
     }
 
     /** Aborts an in-progress recording and returns to idle (cancel button / leaving the keyboard). */
@@ -1174,6 +1201,12 @@ object DictateController {
                 if (!keepAudio) audioFile.delete()
                 // Drop the trimmed upload copy (#232); the original audioFile is the one history keeps.
                 if (uploadFile !== audioFile) runCatching { uploadFile.delete() }
+                // System voice input (#67): hand the terminal outcome back to the RecognitionService so it
+                // delivers results / an error to the calling app. One hook covers every path (success,
+                // no-speech, prompt-echo, API/unexpected error) since `outcome` is set before each return.
+                if (outputTarget == OutputTarget.RECOGNITION_SERVICE) {
+                    dev.patrickgold.florisboard.dictate.recognition.RecognitionBridge.completeOutcome(outcome)
+                }
                 logLatency(latencyTrace, "terminal:$outcome")
             }
         }
@@ -1302,6 +1335,9 @@ object DictateController {
      * apply or the session can't be created — the caller then records normally (batch).
      */
     private fun openRealtimeSession(appContext: Context): ((ByteArray, Int) -> Unit)? {
+        // System voice input (#67) always records in plain batch mode — the RecognitionService callback
+        // returns one final result, so there's no realtime streaming/composing to wire up here.
+        if (outputTarget == OutputTarget.RECOGNITION_SERVICE) return null
         val api = realtimeApiForActiveAccount() ?: return null
         val account = transcriptionAccount()
         val preset = presetFor(account)
@@ -1724,6 +1760,9 @@ object DictateController {
     private fun sink(context: Context): DictationSink = when (outputTarget) {
         OutputTarget.IME -> ImeDictationSink(context)
         OutputTarget.OVERLAY -> AccessibilitySink()
+        // System voice input (#67): the finished text is handed back to the OS via the RecognitionService
+        // callback (the calling app/keyboard inserts it), not written into a field ourselves.
+        OutputTarget.RECOGNITION_SERVICE -> RecognitionSink()
     }
 
     /**
@@ -1737,7 +1776,9 @@ object DictateController {
         if (text.isEmpty()) return true
         val sink = sink(context)
         var committed: Boolean
-        if (prefs.dictate.instantOutput.get()) {
+        // System voice input (#67) returns the whole result at once — no typewriter animation, which only
+        // makes sense when we're the one typing into a visible field.
+        if (prefs.dictate.instantOutput.get() || outputTarget == OutputTarget.RECOGNITION_SERVICE) {
             committed = sink.commitText(text)
         } else {
             val perChar = perCharDelayMs(prefs.dictate.outputSpeed.get())

@@ -1177,6 +1177,11 @@
     <string name="dictate__error_recording_failed">A felvétel sikertelen – engedélyezze a mikrofont. (%s)</string>
     <string name="dictate__error_no_audio">Nem érzékelhető felvétel – kérjük, beszéljen egy kicsit tovább.</string>
     <string name="dictate__no_speech_detected">Nem érzékelhető beszéd</string>
+    <string name="dictate__voice_input_listening">Hallgatom…</string>
+    <string name="dictate__voice_input_transcribing">Átírás…</string>
+    <string name="dictate__voice_input_stop">Kész</string>
+    <string name="dictate__voice_input_hint">Koppints a küldéshez</string>
+    <string name="dictate__voice_ime_label">Dictate hangbevitel</string>
     <string name="dictate__error_no_api_key">Nincs beállítva API-kulcs – állítsa be a Dictate beállításaiban.</string>
     <string name="dictate__error_transcription_failed">Az átírás sikertelen.</string>
     <string name="dictate__error_unknown">Ismeretlen hiba az átírás során.</string>

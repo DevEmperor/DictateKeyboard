@@ -1194,6 +1194,11 @@
     <string name="dictate__error_recording_failed">Nagrywanie nie powiodło się – przyznaj uprawnienie do mikrofonu. (%s)</string>
     <string name="dictate__error_no_audio">Nie wykryto nagrania – mów trochę dłużej.</string>
     <string name="dictate__no_speech_detected">Nie wykryto mowy</string>
+    <string name="dictate__voice_input_listening">Słucham…</string>
+    <string name="dictate__voice_input_transcribing">Transkrypcja…</string>
+    <string name="dictate__voice_input_stop">Gotowe</string>
+    <string name="dictate__voice_input_hint">Dotknij, aby wysłać</string>
+    <string name="dictate__voice_ime_label">Wprowadzanie głosowe Dictate</string>
     <string name="dictate__error_no_api_key">Nie ustawiono klucza API – skonfiguruj go w ustawieniach Dictate.</string>
     <string name="dictate__error_transcription_failed">Transkrypcja nie powiodła się.</string>
     <string name="dictate__error_unknown">Nieznany błąd podczas transkrypcji.</string>

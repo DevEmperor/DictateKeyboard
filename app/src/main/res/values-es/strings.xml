@@ -1160,6 +1160,11 @@
     <string name="dictate__error_recording_failed">Error al grabar: concede el permiso de micrófono. (%s)</string>
     <string name="dictate__error_no_audio">No se detectó grabación: habla un poco más.</string>
     <string name="dictate__no_speech_detected">No se detectó voz</string>
+    <string name="dictate__voice_input_listening">Escuchando…</string>
+    <string name="dictate__voice_input_transcribing">Transcribiendo…</string>
+    <string name="dictate__voice_input_stop">Listo</string>
+    <string name="dictate__voice_input_hint">Toca para enviar</string>
+    <string name="dictate__voice_ime_label">Entrada de voz de Dictate</string>
     <string name="dictate__error_no_api_key">No hay clave de API: configúrala en los ajustes de Dictate.</string>
     <string name="dictate__error_transcription_failed">Error en la transcripción.</string>
     <string name="dictate__error_unknown">Error desconocido durante la transcripción.</string>

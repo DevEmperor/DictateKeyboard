@@ -1069,6 +1069,11 @@
     <string name="dictate__error_recording_failed">Aufnahme fehlgeschlagen – erteile die Mikrofonberechtigung. (%s)</string>
     <string name="dictate__error_no_audio">Keine Aufnahme erkannt – bitte sprich etwas länger.</string>
     <string name="dictate__no_speech_detected">Keine Sprache erkannt</string>
+    <string name="dictate__voice_input_listening">Höre zu …</string>
+    <string name="dictate__voice_input_transcribing">Transkribiere …</string>
+    <string name="dictate__voice_input_stop">Fertig</string>
+    <string name="dictate__voice_input_hint">Zum Senden tippen</string>
+    <string name="dictate__voice_ime_label">Dictate Spracheingabe</string>
     <string name="dictate__error_no_api_key">Kein API-Schlüssel gesetzt – richte ihn in den Dictate-Einstellungen ein.</string>
     <string name="dictate__error_transcription_failed">Transkription fehlgeschlagen.</string>
     <string name="dictate__error_unknown">Unbekannter Fehler bei der Transkription.</string>
