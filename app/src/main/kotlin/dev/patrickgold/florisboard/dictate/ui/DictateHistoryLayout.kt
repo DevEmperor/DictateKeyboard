@@ -17,16 +17,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,6 +49,10 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -76,8 +81,13 @@ fun DictateHistoryLayout(
     val prefs by FlorisPreferenceStore
     val accent by prefs.theme.accentColor.collectPrefAsState() // follows the user's keyboard accent.
     // null = not loaded yet (show a spinner), empty list = genuinely no history (#205).
-    val entries by remember(context) { DictateHistoryStore.flow(context) }.collectAsState(initial = null)
-    val scrollState = rememberScrollState()
+    // Built AND collected on IO so opening the Room database never runs on the composition's main-thread
+    // context. (The loading spinner freezing was caused by eagerly composing every row — see the list below.)
+    val entries by remember(context) {
+        flow { emitAll(DictateHistoryStore.flow(context)) }.flowOn(Dispatchers.IO)
+    }.collectAsState(initial = null)
+
+    val listState = rememberLazyListState()
 
     SnyggColumn(
         elementName = FlorisImeUi.Media.elementName,
@@ -132,14 +142,9 @@ fun DictateHistoryLayout(
                     .padding(horizontal = 24.dp),
             ) {
                 if (loadedEntries == null) {
-                    // Still loading from disk — a simple centered accent label (#205). The in-keyboard panel
-                    // doesn't drive continuous animation frames, so an animated spinner just freezes; a
-                    // static label is the reliable choice here.
-                    Text(
-                        text = stringRes(R.string.dictate__history_loading),
-                        color = accent,
-                        fontWeight = FontWeight.SemiBold,
-                    )
+                    // Still loading from disk — the same centered accent spinner as the GIF panel. It
+                    // animates properly now that opening the panel no longer blocks the UI thread.
+                    CircularProgressIndicator(color = accent)
                 } else {
                     SnyggText(
                         elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
@@ -148,14 +153,17 @@ fun DictateHistoryLayout(
                 }
             }
         } else {
-            Column(
+            // Lazy on purpose: a full history is up to several hundred entries, and composing them all
+            // eagerly blocked the UI thread for well over a second — which is what froze the loading
+            // spinner (and everything else) while the panel opened. Only visible rows are composed now.
+            LazyColumn(
+                state = listState,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .verticalScroll(scrollState)
-                    .dictatePanelScrollbar(scrollState, accent),
+                    .dictateLazyPanelScrollbar(listState, accent),
             ) {
-                loadedEntries.forEach { entry ->
+                items(loadedEntries, key = { it.id }) { entry ->
                     HistoryPanelRow(
                         entry = entry,
                         accent = accent,
