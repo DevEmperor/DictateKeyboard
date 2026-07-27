@@ -151,7 +151,6 @@ fun DictateSmartbarUi(state: DictateController.UiState, modifier: Modifier = Mod
 private fun RecordingContent(state: DictateController.UiState.Recording) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
     // Long-form segmented dictation (#170): whether the "Next segment" button is active and how many cut
     // segments are transcribing in the background.
     val segmented by DictateController.segmentedRecording.collectFlowAsState()
@@ -166,13 +165,6 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
             nextFlash.snapTo(1f)
             nextFlash.animateTo(0f, tween(550))
         }
-    }
-
-    // Keep the screen on while the recording indicator is visible, if the user enabled it.
-    val view = LocalView.current
-    DisposableEffect(keepScreenAwake) {
-        if (keepScreenAwake) view.keepScreenOn = true
-        onDispose { view.keepScreenOn = false }
     }
 
     // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)

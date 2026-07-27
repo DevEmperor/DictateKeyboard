@@ -243,16 +243,6 @@ fun LegacyDictateLayout(
     val promptRows by prefs.dictate.legacyPromptRows.collectAsState()
 
     // Keep the screen awake while recording so the auto-timeout can't cut the recording short. The modern
-    // keyboard does this in DictateSmartbarUi; the classic layout was missing it, so the screen could time
-    // out mid-dictation and the ACTION_SCREEN_OFF stash (#147) would stop the mic. Honours the same
-    // "Keep screen awake" setting and only holds the flag while actually recording.
-    val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
-    val isRecording = dictateState is DictateController.UiState.Recording
-    val view = LocalView.current
-    DisposableEffect(keepScreenAwake, isRecording) {
-        view.keepScreenOn = keepScreenAwake && isRecording
-        onDispose { view.keepScreenOn = false }
-    }
 
     // The Smartbar (which normally loads the prompts) is replaced by this layout, so trigger the load
     // here whenever the panel appears / rewording toggles.
