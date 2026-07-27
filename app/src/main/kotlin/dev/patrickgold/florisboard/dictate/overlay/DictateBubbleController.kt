@@ -587,7 +587,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // vertically centered). Independent of snap-to-edge so the margin is always there.
                 needsInitialPlacement = false
                 applyInitialPlacement()
-            } else if (right - left != oldRight - oldLeft) {
+            } else if (kotlin.math.abs((right - left) - (oldRight - oldLeft)) > dp(2)) {
+                // Only react to real size changes. The pill's running timer nudges the width by a fraction
+                // of a pixel every second, and repositioning the window on each of those made the whole
+                // bubble visibly flicker (reported on #231).
                 repositionForSize()
                 if (cancelAdded) positionCancel() // keep the cancel button beside the (resized) pill
                 if (undoAdded) positionUndo()
@@ -1267,6 +1270,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val timer = TextView(context).apply {
             setTextColor(color(R.color.dictate_overlay_icon))
             setTextSize(TypedValue.COMPLEX_UNIT_PX, sdpf(14f))
+            // Tabular figures + a reserved width so ticking from "0:09" to "0:10" can't change the pill's
+            // width at all — the second half of the flicker fix (#231).
+            fontFeatureSettings = "tnum"
+            minimumWidth = sdp(40)
+            gravity = Gravity.CENTER
         }
         // Thinner bars: more bars across a similar width than the ring's waveform.
         private val wave = WaveformView(context, barCount = 13)
