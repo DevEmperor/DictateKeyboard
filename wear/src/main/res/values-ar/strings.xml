@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">امنح الميكروفون في تطبيق Dictate</string>
     <string name="wear_err_mic_unavailable">الميكروفون غير متاح</string>
     <string name="wear_err_transcribe_failed">فشل النسخ</string>
+    <string name="wear_err_tap_to_retry">%1$s · انقر لإعادة المحاولة</string>
     <string name="wear_err_empty">فارغ — تحقق من مفتاح الهاتف</string>
     <string name="wear_err_unknown">خطأ غير معروف</string>
     <string name="wear_err_no_transport">لا هاتف؛ زامن المفتاح في التطبيق</string>

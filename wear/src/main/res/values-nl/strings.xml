@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Geef microfoon in Dictate</string>
     <string name="wear_err_mic_unavailable">Microfoon niet beschikbaar</string>
     <string name="wear_err_transcribe_failed">Transcriptie mislukt</string>
+    <string name="wear_err_tap_to_retry">%1$s · Tik om opnieuw te proberen</string>
     <string name="wear_err_empty">Leeg — check telefoonsleutel</string>
     <string name="wear_err_unknown">Onbekende fout</string>
     <string name="wear_err_no_transport">Geen telefoon; sync sleutel</string>

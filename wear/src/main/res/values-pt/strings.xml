@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Dê microfone na app Dictate</string>
     <string name="wear_err_mic_unavailable">Microfone indisponível</string>
     <string name="wear_err_transcribe_failed">Falha na transcrição</string>
+    <string name="wear_err_tap_to_retry">%1$s · Toca para tentar de novo</string>
     <string name="wear_err_empty">Vazio — verifique a chave</string>
     <string name="wear_err_unknown">Erro desconhecido</string>
     <string name="wear_err_no_transport">Sem telemóvel; sincr. chave</string>

@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Дозвольте мікрофон у Dictate</string>
     <string name="wear_err_mic_unavailable">Мікрофон недоступний</string>
     <string name="wear_err_transcribe_failed">Помилка транскрипції</string>
+    <string name="wear_err_tap_to_retry">%1$s · Торкніться, щоб повторити</string>
     <string name="wear_err_empty">Порожньо — перевірте ключ</string>
     <string name="wear_err_unknown">Невідома помилка</string>
     <string name="wear_err_no_transport">Немає телефону; синхр. ключ</string>

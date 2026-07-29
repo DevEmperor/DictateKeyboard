@@ -37,6 +37,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import net.devemperor.dictate.wear.R
 import net.devemperor.dictate.wear.audio.WearAudioRecorder
 import net.devemperor.dictate.wear.sync.WearSettingsStore
@@ -71,6 +72,8 @@ class WearImeService :
     // Short, human-readable reason shown on the voice page when a dictation fails, so problems are
     // diagnosable on the wrist without a logcat round-trip.
     private val errorMessage = mutableStateOf<String?>(null)
+    /** Audio of a failed dictation, kept so the user can re-send it instead of losing it (#218). */
+    private var retainedAudio: File? = null
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val recorder by lazy { WearAudioRecorder(applicationContext) }
@@ -136,6 +139,7 @@ class WearImeService :
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
         store.clear()
         if (recorder.isRecording) recorder.cancel()
+        discardRetainedAudio()
         scope.cancel()
     }
 
@@ -160,6 +164,8 @@ class WearImeService :
             WearDictationState.RECORDING -> stopAndTranscribe()
             // Ignore taps while transcription/rewording is in flight.
             WearDictationState.TRANSCRIBING, WearDictationState.REWORDING -> Unit
+            // A failure with kept audio: the button re-sends that recording rather than discarding it.
+            WearDictationState.ERROR if retainedAudio != null -> retryTranscription()
             else -> startRecording()
         }
     }
@@ -174,6 +180,7 @@ class WearImeService :
         }
         val result = runCatching { recorder.start() }
         if (result.isSuccess) {
+            discardRetainedAudio() // a new recording supersedes the kept one
             errorMessage.value = null
             recordingInfo.value = WearRecordingInfo(startedAtMs = SystemClock.elapsedRealtime())
             dictationState.value = WearDictationState.RECORDING
@@ -200,35 +207,49 @@ class WearImeService :
     /** Discard an in-progress recording without transcribing. */
     private fun cancelDictation() {
         if (recorder.isRecording) recorder.cancel()
+        discardRetainedAudio()
         recordingInfo.value = WearRecordingInfo()
         dictationState.value = WearDictationState.IDLE
     }
 
     private fun stopAndTranscribe() {
-        // Show the spinner immediately; do the WAV encode (recorder.stop) AND the network call off the
-        // main thread so the IME never blocks long enough to trigger an ANR ("Dictate isn't responding").
-        dictationState.value = WearDictationState.TRANSCRIBING
         WearHaptics.short(this) // recording stopped (#166)
         scope.launch {
+            val audio = withContext(Dispatchers.IO) { recorder.stop() }
+            transcribeAudio(audio)
+        }
+    }
+
+    /**
+     * Re-sends the audio of a dictation whose transcription failed (#218). The recording is kept on the
+     * watch after a failure, so a dropped Bluetooth connection or a phone-side hiccup costs a tap instead
+     * of everything the user just said.
+     */
+    private fun retryTranscription() {
+        val audio = retainedAudio ?: return
+        retainedAudio = null
+        scope.launch { transcribeAudio(audio) }
+    }
+
+    private suspend fun transcribeAudio(audio: File) {
+        // Show the spinner immediately; keep the network call off the main thread so the IME never blocks
+        // long enough to trigger an ANR ("Dictate isn't responding").
+        dictationState.value = WearDictationState.TRANSCRIBING
+        run {
             val outcome = runCatching {
                 withContext(Dispatchers.IO) {
-                    val audio = recorder.stop()
-                    try {
-                        WearTranscription.transcribe(
-                            applicationContext,
-                            audio,
-                            // Fired when the watch starts standalone rewording → show "Rewording…". The
-                            // transcript is ready at this point, so buzz "transcription done" (#166).
-                            onRewording = {
-                                scope.launch {
-                                    dictationState.value = WearDictationState.REWORDING
-                                    WearHaptics.double(applicationContext)
-                                }
-                            },
-                        )
-                    } finally {
-                        audio.delete()
-                    }
+                    WearTranscription.transcribe(
+                        applicationContext,
+                        audio,
+                        // Fired when the watch starts standalone rewording → show "Rewording…". The
+                        // transcript is ready at this point, so buzz "transcription done" (#166).
+                        onRewording = {
+                            scope.launch {
+                                dictationState.value = WearDictationState.REWORDING
+                                WearHaptics.double(applicationContext)
+                            }
+                        },
+                    )
                 }
             }
             val text = outcome.getOrNull()
@@ -236,10 +257,17 @@ class WearImeService :
                 outcome.isFailure -> {
                     val e = outcome.exceptionOrNull()
                     Log.e(TAG, "Dictation failed", e)
-                    fail(e?.shortReason() ?: getString(R.string.wear_err_transcribe_failed))
+                    // Keep the audio so the user can re-send it with a tap instead of losing the dictation.
+                    retainedAudio = audio
+                    val reason = e?.shortReason() ?: getString(R.string.wear_err_transcribe_failed)
+                    fail(getString(R.string.wear_err_tap_to_retry, reason))
                 }
-                text.isNullOrBlank() -> fail(getString(R.string.wear_err_no_speech))
+                text.isNullOrBlank() -> {
+                    audio.delete()
+                    fail(getString(R.string.wear_err_no_speech))
+                }
                 else -> {
+                    audio.delete()
                     // Final buzz (#166): a longer one if a rewording just finished, else the double for a
                     // plain transcription (the double for the rewording case already fired at its start).
                     if (dictationState.value == WearDictationState.REWORDING) {
@@ -256,6 +284,12 @@ class WearImeService :
                 }
             }
         }
+    }
+
+    /** Drops any kept failed-dictation audio. */
+    private fun discardRetainedAudio() {
+        retainedAudio?.let { runCatching { it.delete() } }
+        retainedAudio = null
     }
 
     private fun fail(reason: String) {
