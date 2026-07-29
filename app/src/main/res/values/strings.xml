@@ -722,6 +722,35 @@
     <string name="apptour51__outro_eyebrow">That’s 5.1</string>
     <string name="apptour51__outro_title">Enjoy the update</string>
     <string name="apptour51__outro_body">Thanks for using Dictate! If it helps you every day, a small donation keeps the project going. You can revisit any of these tours anytime under Settings › About.</string>
+    <!-- What's new tour 5.2 -->
+    <string name="apptour52__cta_try" comment="Button on a 5.2 tour page to jump straight to that feature">Try it</string>
+    <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
+    <string name="apptour52__intro_title">Dictate everywhere</string>
+    <string name="apptour52__intro_body">This release takes Dictate beyond its own keyboard: use it as your phone\'s voice input, run a spoken command from anywhere, and let it clean up long dictations for you. Here\'s what\'s new.</string>
+    <string name="apptour52__voiceinput_eyebrow">System-wide voice input</string>
+    <string name="apptour52__voiceinput_title">Use Dictate from any keyboard</string>
+    <string name="apptour52__voiceinput_body">Dictate now registers as a system voice input, so the mic key in other keyboards and apps can transcribe through Dictate — with your provider, your prompts and your on-device models. Enable “Dictate voice input” in your keyboard list and pick it as your voice input method. (Gboard keeps its mic tied to Google, so use a keyboard that honours the system setting.)</string>
+    <string name="apptour52__liveprompt_eyebrow">Freeform voice command</string>
+    <string name="apptour52__liveprompt_title">Tell the AI what to do — anywhere</string>
+    <string name="apptour52__liveprompt_body">Press and hold the floating button to open its menu, then tap “Live prompt” and just say what you want: “write a polite decline for tomorrow\'s meeting”, “translate the text above to Spanish”. Selected text is used as context; with nothing selected the AI writes from scratch.</string>
+    <string name="apptour52__ondevice_eyebrow">Offline on demand</string>
+    <string name="apptour52__ondevice_title">Hold send for the on-device model</string>
+    <string name="apptour52__ondevice_body">Need one dictation to stay on your device? Hold the send button while recording and it is transcribed by your downloaded model instead of the cloud — no switching providers. Turn it on in the on-device model dialog, which now sits at the top of the provider list.</string>
+    <string name="apptour52__trim_eyebrow">Faster, cheaper uploads</string>
+    <string name="apptour52__trim_title">Long pauses get trimmed</string>
+    <string name="apptour52__trim_body">Thinking mid-sentence? Silences longer than a couple of seconds are now cut out before the audio is sent — every spoken word is kept, but the dead air is gone. Shorter uploads mean less waiting and lower cost.</string>
+    <string name="apptour52__paragraphs_eyebrow">Readable long dictations</string>
+    <string name="apptour52__paragraphs_title">Automatic paragraphs</string>
+    <string name="apptour52__paragraphs_body">Long dictations no longer arrive as one wall of text. Set a word count and Dictate starts a new paragraph at the next sentence end — deterministic, and only for plain transcripts, so AI-formatted text is never second-guessed.</string>
+    <string name="apptour52__smartturn_eyebrow">Smarter long-form</string>
+    <string name="apptour52__smartturn_title">Cuts at finished thoughts</string>
+    <string name="apptour52__smartturn_body">Long-form dictation can now use the on-device Smart Turn v3 model to decide when you have actually finished a thought, instead of cutting at every pause. Optional and downloaded on demand.</string>
+    <string name="apptour52__orb_eyebrow">New look</string>
+    <string name="apptour52__orb_title">The cloud orb</string>
+    <string name="apptour52__orb_body">A fourth skin for the floating button: a soft cloud that grows and swirls with your voice, and shows every stage — listening, thinking, done. Pick it under the floating button settings.</string>
+    <string name="apptour52__outro_eyebrow">That\'s 5.2</string>
+    <string name="apptour52__outro_title">Happy dictating</string>
+    <string name="apptour52__outro_body">Plus plenty under the hood: the screen stays awake through a whole dictation, on-device models free their memory when idle, watch dictations survive dropouts, and German autocorrect learned umlauts. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
