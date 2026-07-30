@@ -17,7 +17,7 @@ export function SpeedStat() {
       <div className="speed-grid">
         <Reveal className="speed-copy">
           <span className="eyebrow">WHY VOICE</span>
-          <h2>Roughly <span>3× faster</span><br />than typing.</h2>
+          <h2>Roughly <span>4× faster</span><br />than typing.</h2>
           <p>Most people speak around 150 words a minute but thumb-type closer to 40. Say the sentence and let Dictate Keyboard write it — the draft is done before you’d have finished the first line.</p>
         </Reveal>
 

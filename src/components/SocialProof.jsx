@@ -9,8 +9,8 @@ const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 // pushes — Play figures drift over time.
 const stats = [
   { icon: Star, value: "4.8", label: "Google Play rating", href: PLAY_URL, note: "603 ratings" },
-  { icon: GithubLogo, value: "240", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
-  { icon: DownloadSimple, value: "1K+", label: "installs", href: PLAY_URL, note: "on Google Play" },
+  { icon: GithubLogo, value: "254", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
+  { icon: DownloadSimple, value: "3K+", label: "installs", href: PLAY_URL, note: "on Google Play" },
   { icon: Lock, value: "€0", label: "subscription", href: `${GITHUB_URL}/blob/main/LICENSE`, note: "Apache 2.0" },
 ];
 
