@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -303,6 +304,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         scope.launch {
             candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
         }
+        // The composing word is being replaced wholesale, so its tap evidence no longer describes what is
+        // in the editor (issue #242).
+        TouchTrace.reset()
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
             else -> editorInstance.commitCompletion(candidate)
@@ -310,6 +314,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun commitGesture(word: String) {
+        // A glide produces a whole word at once, so there are no per-character taps to reason about (#242).
+        TouchTrace.reset()
         editorInstance.commitGesture(fixCase(word))
     }
 
@@ -441,6 +447,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeEnd = false
         }
         revertPreviouslyAcceptedCandidate()
+        // Keep the tap evidence aligned with the word: a single-character backspace drops the last tap,
+        // anything coarser (a whole word) invalidates the trace entirely (issue #242).
+        if (unit == OperationUnit.CHARACTERS) TouchTrace.pop() else TouchTrace.reset()
         editorInstance.deleteBackwards(unit)
     }
 
@@ -461,6 +470,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
+        TouchTrace.reset() // word boundary (issue #242)
         val info = editorInstance.activeInfo
         val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)
         if (editorInstance.tryPerformEnterCommitRaw()) {
@@ -633,6 +643,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun handleSpace(data: KeyData) {
         val candidate = nlpManager.getAutoCommitCandidate()
         candidate?.let { commitCandidate(it) }
+        TouchTrace.reset() // word boundary (issue #242)
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -997,6 +1008,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                             val text = data.asString(isForDisplay = false)
                             if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
                                 nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                                // Punctuation ends the word — drop the tap evidence for it (issue #242).
+                                TouchTrace.reset()
+                            } else {
+                                TouchTrace.commit(text)
                             }
                             editorInstance.commitChar(text)
                         }

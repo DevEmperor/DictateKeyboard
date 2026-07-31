@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.nlp.latin.KeyProximityInfo
+import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
@@ -582,6 +583,12 @@ private class TextKeyboardLayoutController(
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
             key.computedDataOnDown = key.computedData
+            // Remember where the finger actually landed, not just which key won (issue #242). The autocorrect
+            // decodes from these coordinates, so a tap halfway between two keys stays distinguishable from a
+            // dead-centre one. Consumed when the resulting character reaches the editor.
+            if (key.computedData.type == KeyType.CHARACTER) {
+                TouchTrace.pendingTap(event.getX(pointer.index), event.getY(pointer.index))
+            }
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
                 onLongPress = onLongPress@ {
@@ -704,6 +711,10 @@ private class TextKeyboardLayoutController(
                         }
                     } else {
                         inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                        // Picked from the long-press popup (an accent, a variant): a deliberate choice, not a
+                        // tap that might have missed. Recorded as certain so autocorrect never second-guesses
+                        // it against neighbouring keys (issue #242).
+                        TouchTrace.markPendingExact()
                         inputEventDispatcher.sendDownUp(retData)
                     }
                 } else {
