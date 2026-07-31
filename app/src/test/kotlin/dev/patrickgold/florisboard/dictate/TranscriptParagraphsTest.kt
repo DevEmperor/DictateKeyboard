@@ -69,6 +69,57 @@ class TranscriptParagraphsTest : FunSpec({
         TranscriptParagraphs.split(text, 3) shouldBe "a b c.\n\nd e f.\n\ng h i."
     }
 
+    // --- issue #239: a dot that only looks like a sentence end ------------------------------------
+
+    test("does not break after a German abbreviation") {
+        TranscriptParagraphs.split("wir kaufen Obst und Gemüse usw. Danach fahren wir heim.", 5) shouldBe
+            "wir kaufen Obst und Gemüse usw. Danach fahren wir heim."
+        TranscriptParagraphs.split("nimm bitte etwas mit wie z.B. Brot und Butter dazu.", 5) shouldBe
+            "nimm bitte etwas mit wie z.B. Brot und Butter dazu."
+    }
+
+    test("does not break after an English abbreviation") {
+        TranscriptParagraphs.split("this has plenty of words in it, e.g. bread and butter here.", 5) shouldBe
+            "this has plenty of words in it, e.g. bread and butter here."
+        TranscriptParagraphs.split("I had a conversation with Dr. Smith yesterday evening.", 5) shouldBe
+            "I had a conversation with Dr. Smith yesterday evening."
+    }
+
+    test("abbreviations are matched case-insensitively and through leading punctuation") {
+        TranscriptParagraphs.split("das gilt für alle Fälle (usw. und so weiter dann).", 5) shouldBe
+            "das gilt für alle Fälle (usw. und so weiter dann)."
+        TranscriptParagraphs.split("nimm etwas mit wie Z.B. Brot und Butter dazu.", 5) shouldBe
+            "nimm etwas mit wie Z.B. Brot und Butter dazu."
+    }
+
+    test("does not break after an ordinal or a date") {
+        TranscriptParagraphs.split("das Treffen ist am 29. Juli 2026 im großen Saal.", 5) shouldBe
+            "das Treffen ist am 29. Juli 2026 im großen Saal."
+        TranscriptParagraphs.split("er kam auf dem 3. Platz ins Ziel gestern.", 5) shouldBe
+            "er kam auf dem 3. Platz ins Ziel gestern."
+    }
+
+    test("does not break between initials") {
+        TranscriptParagraphs.split("we all read the famous author J. R. R. Tolkien last year.", 5) shouldBe
+            "we all read the famous author J. R. R. Tolkien last year."
+    }
+
+    test("a lower-case single letter still ends a sentence") {
+        // Guards the fixture style used above: only capitals are treated as initials.
+        TranscriptParagraphs.split("a b c. d e f. g h i.", 3) shouldBe "a b c.\n\nd e f.\n\ng h i."
+    }
+
+    test("still breaks after a normal word that happens to follow an abbreviation") {
+        TranscriptParagraphs.split("wir kaufen Obst usw. Danach fahren wir heim. Und dann schlafen wir.", 5) shouldBe
+            "wir kaufen Obst usw. Danach fahren wir heim.\n\nUnd dann schlafen wir."
+    }
+
+    test("an ellipsis after an abbreviation is still a sentence end") {
+        // Only a lone dot can be an abbreviation; a run of enders always breaks.
+        TranscriptParagraphs.split("wir kaufen Obst und Gemüse usw... Danach fahren wir heim.", 5) shouldBe
+            "wir kaufen Obst und Gemüse usw...\n\nDanach fahren wir heim."
+    }
+
     test("blank or tiny input is returned unchanged") {
         TranscriptParagraphs.split("", 3) shouldBe ""
         TranscriptParagraphs.split(".", 3) shouldBe "."
