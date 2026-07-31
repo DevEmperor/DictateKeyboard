@@ -99,6 +99,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // a correctly typed name needs a full key jump (expensive).
         private const val AUTO_COMMIT_MAX_TOUCH_COST = 0.8f
 
+        // Candidates are de-duplicated by their case-folded text. The typed spelling kept alongside a noun
+        // capitalisation folds to the very same key as the capitalised form, so it is stored under this
+        // prefix, a NUL character that no dictionary word can contain.
+        private const val TYPED_WORD_KEY = "\u0000"
+
         // German umlaut/ß restoration (issue #219): bound the variant generation so a long word with many
         // a/o/u doesn't explode combinatorially (2^sites). Words needing more than this are left alone.
         private const val MAX_UMLAUT_SITES = 6
@@ -328,6 +333,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val langs = LinkedHashSet<String>().apply { add(active) }
         runCatching { subtypeManager.subtypes.forEach { langs.add(dictLangFor(it)) } }
         return langs.toList()
+    }
+
+    /**
+     * True if [lower] is an ordinary lowercase word in one of the user's *other* keyboard languages, so the
+     * active language's noun capitalisation must stand aside (issue #190): an English "hand" typed with the
+     * German subtype active should not become "Hand".
+     */
+    private suspend fun isLowercaseWordInAnotherLanguage(lower: String, subtype: Subtype): Boolean {
+        val active = dictLangFor(subtype)
+        for (lang in acceptedDictLangs(subtype)) {
+            if (lang == active) continue
+            if (lowerIndexForLang(lang).canonical[lower]?.first()?.isLowerCase() == true) return true
+        }
+        return false
     }
 
     /** True if [word] is a known dictionary word in any accepted language, or in the user dictionary. */
@@ -707,10 +726,47 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 }
         }
 
+        val autoCorrectOn = prefs.suggestion.autoCorrect.get()
+
+        // Noun capitalisation (issue #242 follow-up). German capitalises every noun, but typing one
+        // lowercase produced no correction at all: the case-folded index reports "haus" as a known word, so
+        // the whole correction path below is skipped and "Haus" only ever appeared as an ordinary prefix
+        // completion, which is never auto-committed. Roughly 31 % of typed German words are affected.
+        //
+        // The dictionary itself says which words these are: tools/glide-dict/generate.py stores a word
+        // capitalised exactly when the case oracle rejects its lowercase spelling, i.e. for genuine nouns.
+        // Words that are valid lowercase ("essen", "laufen", "recht", "sie") are stored lowercase and are
+        // therefore left alone here, which is what keeps this from mangling ordinary text.
+        //
+        // Deliberately hangs off the existing "Auto-capitalization" preference rather than adding its own:
+        // anyone who types in all-lowercase on purpose has already turned that off, since it would otherwise
+        // capitalise every sentence start too.
+        if (autoCorrectOn && prefs.correction.autoCapitalization.get() &&
+            word.length >= 2 && word.none { it.isUpperCase() }
+        ) {
+            val lower = word.lowercase()
+            val canonical = index.canonical[lower]
+            if (canonical != null && canonical.first().isUpperCase() && canonical != word &&
+                !isLowercaseWordInAnotherLanguage(lower, subtype)
+            ) {
+                // Keep the typed spelling tappable and left-most so the capitalisation can be bypassed
+                // (issue #150). It shares its case-folded key with the capitalised form, so it goes in under
+                // a key that no dictionary word can produce.
+                out[TYPED_WORD_KEY + lower] = WordSuggestionCandidate(
+                    text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
+                )
+                out[lower] = WordSuggestionCandidate(
+                    text = canonical,
+                    confidence = (index.freq[lower] ?: 0) / 255.0,
+                    isEligibleForAutoCommit = true,
+                    sourceProvider = this,
+                )
+            }
+        }
+
         // Whether the composed word is valid in any of the user's keyboard languages (multilingual, #190);
         // computed up front because it also decides whether to reserve strip slots for spelling fixes.
         val isKnown = isKnownWord(word, subtype)
-        val autoCorrectOn = prefs.suggestion.autoCorrect.get()
         // Reserve a few slots for edit-distance corrections so a typo's fix isn't crowded out by prefix
         // completions of that typo (issue #212). Only when we'd actually correct (unknown word, length >= 3).
         val completionCap = if (autoCorrectOn && !isKnown && word.length >= 3) {
