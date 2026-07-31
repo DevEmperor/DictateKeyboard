@@ -51,6 +51,17 @@ data class RealtimeRequest(
     val model: String,
     /** ISO language code, or null/"detect" for auto-detect. */
     val language: String? = null,
+    /**
+     * Expected input languages for models that support multilingual hints. OpenAI's
+     * `gpt-live-transcribe` and `gpt-transcribe` use this plural field instead of [language].
+     */
+    val languages: List<String> = emptyList(),
+    /** Free-form context about the recording or setting, when supported by the provider/model. */
+    val prompt: String? = null,
+    /** Literal names, acronyms and jargon that may occur in the audio. */
+    val keywords: List<String> = emptyList(),
+    /** Optional provider-specific latency/accuracy preset (for example `low` or `medium`). */
+    val delay: String? = null,
     /** Sample rate (Hz) of the mono 16-bit little-endian PCM the caller will send. */
     val sampleRate: Int = 16_000,
 )

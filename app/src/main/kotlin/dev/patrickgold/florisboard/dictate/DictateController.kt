@@ -56,6 +56,7 @@ import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.RealtimeApi
 import dev.patrickgold.florisboard.dictate.provider.RealtimeCallbacks
 import dev.patrickgold.florisboard.dictate.provider.RealtimeClient
+import dev.patrickgold.florisboard.dictate.provider.RealtimeRequest
 import dev.patrickgold.florisboard.dictate.provider.RealtimeSession
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
@@ -1343,6 +1344,20 @@ object DictateController {
         val preset = presetFor(account)
         val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
+        val expectedLanguages = if (language != null) {
+            listOf(language)
+        } else {
+            DictateLanguages.parseSelection(prefs.dictate.inputLanguages.get())
+                .map { it.code }
+                .filter { it != DictateLanguages.DETECT }
+        }
+        val request = RealtimeRequest(
+            model = model,
+            language = language,
+            languages = expectedLanguages,
+            prompt = transcriptionStyleBasePrompt(),
+            keywords = transcriptionKeywords(),
+        )
         realtimeFinal.setLength(0)
         realtimeFailed = false
         realtimeCancelled = false
@@ -1379,7 +1394,7 @@ object DictateController {
             override fun onError(t: Throwable) { realtimeFailed = true }
             override fun onClosed() { closed.complete(Unit) }
         }
-        val session = runCatching { RealtimeClient.open(api, account.apiKey, model, language, callbacks) }
+        val session = runCatching { RealtimeClient.open(api, account.apiKey, request, callbacks) }
             .getOrElse { realtimeFailed = true; null } ?: return null
         realtimeSession = session
         val targetRate = RealtimeClient.sampleRateFor(api)
@@ -2677,6 +2692,14 @@ object DictateController {
      */
     private fun transcriptionStylePrompt(): String? =
         DictatePromptDefaults.appendCustomWords(transcriptionStyleBasePrompt(), prefs.dictate.customWords.get())
+
+    /** Custom vocabulary as literal realtime keyword hints; wire-level validation happens in the client. */
+    private fun transcriptionKeywords(): List<String> =
+        prefs.dictate.customWords.get()
+            .split(',', '\n')
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .distinct()
 
     /**
      * The style prompt WITHOUT the appended custom-words glossary — the predefined per-language sentence or

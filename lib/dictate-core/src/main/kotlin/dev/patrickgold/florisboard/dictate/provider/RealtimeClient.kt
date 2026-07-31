@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonArray
@@ -59,24 +60,96 @@ object RealtimeClient {
     }
 
     /**
-     * Opens a session for [api] and starts connecting. [apiKey]/[model]/[language] identify the provider
-     * call; [callbacks] deliver interim/final text (on background threads). The returned [RealtimeSession]
-     * is fed PCM at [sampleRateFor] and finished/cancelled by the caller.
+     * Opens a session for [api] and starts connecting. [apiKey]/[request] identify the provider call;
+     * [callbacks] deliver interim/final text (on background threads). The returned [RealtimeSession] is
+     * fed PCM at [sampleRateFor] and finished/cancelled by the caller.
      */
     fun open(
         api: RealtimeApi,
         apiKey: String,
-        model: String,
-        language: String?,
+        request: RealtimeRequest,
         callbacks: RealtimeCallbacks,
     ): RealtimeSession = when (api) {
-        RealtimeApi.OPENAI -> OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.SONIOX -> SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.ASSEMBLYAI -> AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.ELEVENLABS -> ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.GEMINI -> GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.MISTRAL_VOXTRAL -> MistralRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.OPENAI ->
+            OpenAiRealtimeSession(wsClient, apiKey, request, callbacks).also { it.connect() }
+        RealtimeApi.DEEPGRAM ->
+            DeepgramRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+        RealtimeApi.SONIOX ->
+            SonioxRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+        RealtimeApi.ASSEMBLYAI ->
+            AssemblyAiRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+        RealtimeApi.ELEVENLABS ->
+            ElevenLabsRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+        RealtimeApi.GEMINI ->
+            GeminiRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+        RealtimeApi.MISTRAL_VOXTRAL ->
+            MistralRealtimeSession(wsClient, apiKey, request.model, request.language, callbacks).also { it.connect() }
+    }
+}
+
+/**
+ * Builds OpenAI's GA transcription-session update. The current GPT Transcribe family accepts
+ * multilingual [RealtimeRequest.languages] plus prompt/keyword context, while older realtime models
+ * still use the singular [RealtimeRequest.language] hint. The two shapes must not be mixed.
+ *
+ * Turn detection is disabled because Dictate explicitly commits once when the user stops recording.
+ */
+internal fun buildOpenAiRealtimeSessionUpdate(request: RealtimeRequest): String {
+    val modernTranscribe = request.model == "gpt-live-transcribe" ||
+        request.model.startsWith("gpt-live-transcribe-") ||
+        request.model == "gpt-transcribe" ||
+        request.model.startsWith("gpt-transcribe-")
+    val expectedLanguages = (request.languages + listOfNotNull(request.language))
+        .mapNotNull(::normalizeOpenAiRealtimeLanguage)
+        .distinct()
+    val safeKeywords = request.keywords
+        .map { it.trim() }
+        .filter {
+            it.isNotEmpty() && '<' !in it && '>' !in it && '\r' !in it && '\n' !in it
+        }
+        .distinct()
+    val delay = request.delay?.trim()?.lowercase()
+        ?.takeIf { it in setOf("minimal", "low", "medium", "high", "xhigh") }
+
+    return buildJsonObject {
+        put("type", "session.update")
+        put("session", buildJsonObject {
+            put("type", "transcription")
+            put("audio", buildJsonObject {
+                put("input", buildJsonObject {
+                    put("format", buildJsonObject {
+                        put("type", "audio/pcm")
+                        put("rate", 24_000)
+                    })
+                    put("transcription", buildJsonObject {
+                        put("model", request.model)
+                        if (modernTranscribe) {
+                            request.prompt?.trim()?.takeIf { it.isNotEmpty() }?.let { put("prompt", it) }
+                            if (safeKeywords.isNotEmpty()) {
+                                put("keywords", buildJsonArray { safeKeywords.forEach(::add) })
+                            }
+                            if (expectedLanguages.isNotEmpty()) {
+                                put("languages", buildJsonArray { expectedLanguages.forEach(::add) })
+                            }
+                            delay?.let { put("delay", it) }
+                        } else {
+                            request.language?.takeIf { it.isNotBlank() && it != "detect" }
+                                ?.let { put("language", it) }
+                        }
+                    })
+                    put("turn_detection", JsonNull)
+                })
+            })
+        })
+    }.toString()
+}
+
+private fun normalizeOpenAiRealtimeLanguage(raw: String): String? {
+    val language = raw.trim().lowercase().takeIf { it.isNotEmpty() && it != "detect" } ?: return null
+    return when {
+        language == "yue" || language.startsWith("yue-") -> "yue"
+        language.startsWith("zh-") -> language
+        else -> language.substringBefore('-')
     }
 }
 
@@ -84,14 +157,13 @@ object RealtimeClient {
  * OpenAI realtime transcription over `wss://api.openai.com/v1/realtime?intent=transcription`. Sends a
  * `session.update` transcription config on open, streams 24 kHz mono PCM16 as base64
  * `input_audio_buffer.append`, and turns `...input_audio_transcription.delta`/`.completed` events into
- * [RealtimeCallbacks.onPartial]/[onFinalSegment]. Model `gpt-realtime-whisper` streams deltas; the
- * `-transcribe` models only emit the final.
+ * [RealtimeCallbacks.onPartial]/[onFinalSegment]. `gpt-live-transcribe` streams low-latency deltas;
+ * `gpt-transcribe` starts after a committed turn and can also return detected languages.
  */
 private class OpenAiRealtimeSession(
     private val client: OkHttpClient,
     private val apiKey: String,
-    private val model: String,
-    private val language: String?,
+    private val request: RealtimeRequest,
     private val callbacks: RealtimeCallbacks,
 ) : RealtimeSession {
 
@@ -118,7 +190,7 @@ private class OpenAiRealtimeSession(
 
     private val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
-            webSocket.send(sessionUpdate())
+            webSocket.send(buildOpenAiRealtimeSessionUpdate(request))
             // OkHttp accepts send() calls while a socket is still connecting. Without this gate, mic
             // frames queued during the handshake precede this session.update and therefore arrive before
             // OpenAI knows the intended PCM format/model. Put the config first, then replay the beginning.
@@ -154,25 +226,6 @@ private class OpenAiRealtimeSession(
         }
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) = finishClosed(webSocket)
     }
-
-    private fun sessionUpdate(): String = buildJsonObject {
-        put("type", "session.update")
-        put("session", buildJsonObject {
-            put("type", "transcription")
-            put("audio", buildJsonObject {
-                put("input", buildJsonObject {
-                    put("format", buildJsonObject {
-                        put("type", "audio/pcm")
-                        put("rate", 24_000)
-                    })
-                    put("transcription", buildJsonObject {
-                        put("model", model)
-                        if (!language.isNullOrBlank() && language != "detect") put("language", language)
-                    })
-                })
-            })
-        })
-    }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
         audioGate.sendAudio(pcm16, len) { audio, length ->

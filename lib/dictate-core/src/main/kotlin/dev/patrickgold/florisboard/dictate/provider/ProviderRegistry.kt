@@ -80,15 +80,17 @@ object ProviderRegistry {
             "gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1", "gpt-4.1-nano",
         ),
         curatedTranscriptionModels = listOf(
-            "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
+            "gpt-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
         ),
-        // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-realtime-whisper is the natively
-        // streaming model (emits deltas); the -transcribe models are more accurate but final-only.
+        // Realtime (#128): wss /v1/realtime?intent=transcription. GPT Live Transcribe is OpenAI's
+        // recommended continuously streaming model; keep the previous models available for accounts
+        // that explicitly selected them.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.OPENAI,
-        defaultRealtimeModel = "gpt-realtime-whisper",
+        defaultRealtimeModel = "gpt-live-transcribe",
         curatedRealtimeModels = listOf(
-            "gpt-realtime-whisper", "gpt-4o-transcribe", "gpt-4o-mini-transcribe",
+            "gpt-live-transcribe", "gpt-transcribe", "gpt-realtime-whisper",
+            "gpt-4o-transcribe", "gpt-4o-mini-transcribe",
         ),
     )
 
