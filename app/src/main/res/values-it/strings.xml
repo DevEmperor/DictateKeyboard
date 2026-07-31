@@ -1323,6 +1323,9 @@
     <string name="dictate__stats_title">Statistiche</string>
     <string name="dictate__stats_menu_summary">Parole, tempo risparmiato, serie e altro</string>
     <string name="dictate__history_title">Cronologia</string>
+    <string name="dictate__history_original">Originale</string>
+    <string name="dictate__history_result">Risultato</string>
+    <string name="dictate__history_hold_for_original">tieni premuto per l\'originale</string>
     <string name="dictate__history_menu_summary">Riproduci, reinserisci e gestisci le dettature passate</string>
     <string name="dictate__history_empty">Ancora nessuna dettatura — le tue dettature recenti appariranno qui.</string>
     <string name="dictate__history_enable_title">Mantieni una cronologia</string>

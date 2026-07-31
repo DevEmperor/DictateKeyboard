@@ -1534,6 +1534,9 @@
     <string name="dictate__stats_title">统计</string>
     <string name="dictate__stats_menu_summary">字数、节省时间、连续天数等</string>
     <string name="dictate__history_title">历史</string>
+    <string name="dictate__history_original">原文</string>
+    <string name="dictate__history_result">结果</string>
+    <string name="dictate__history_hold_for_original">长按查看原文</string>
     <string name="dictate__history_menu_summary">重放、重新插入和管理过往的听写</string>
     <string name="dictate__history_empty">暂无听写 — 你最近的听写将显示在这里。</string>
     <string name="dictate__history_enable_title">保留历史记录</string>

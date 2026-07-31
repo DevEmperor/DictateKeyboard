@@ -1414,6 +1414,9 @@
     <string name="dictate__stats_title">Statistik</string>
     <string name="dictate__stats_menu_summary">Wörter, gesparte Zeit, Streak und mehr</string>
     <string name="dictate__history_title">Verlauf</string>
+    <string name="dictate__history_original">Original</string>
+    <string name="dictate__history_result">Ergebnis</string>
+    <string name="dictate__history_hold_for_original">gedrückt halten für Original</string>
     <string name="dictate__history_menu_summary">Frühere Diktate abspielen, erneut einfügen und verwalten</string>
     <string name="dictate__history_empty">Noch keine Diktate — deine letzten Diktate erscheinen hier.</string>
     <string name="dictate__history_enable_title">Verlauf speichern</string>

@@ -1398,6 +1398,9 @@
     <string name="dictate__stats_title">الإحصاءات</string>
     <string name="dictate__stats_menu_summary">الكلمات والوقت الموفَّر والتتابع والمزيد</string>
     <string name="dictate__history_title">السجل</string>
+    <string name="dictate__history_original">الأصل</string>
+    <string name="dictate__history_result">النتيجة</string>
+    <string name="dictate__history_hold_for_original">اضغط مطولاً للأصل</string>
     <string name="dictate__history_menu_summary">إعادة تشغيل الإملاءات السابقة وإعادة إدراجها وإدارتها</string>
     <string name="dictate__history_empty">لا توجد إملاءات بعد — ستظهر إملاءاتك الأخيرة هنا.</string>
     <string name="dictate__history_enable_title">الاحتفاظ بسجل</string>

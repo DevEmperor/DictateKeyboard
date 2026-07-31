@@ -11,7 +11,7 @@
 package dev.patrickgold.florisboard.dictate.ui
 
 import android.text.format.DateUtils
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -171,6 +171,12 @@ fun DictateHistoryLayout(
                             DictateController.insertHistoryText(context, entry.text)
                             keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
                         },
+                        // Long-press inserts the raw transcript instead, for entries a prompt rewrote
+                        // (issue #240). The row is marked so this isn't a hidden gesture.
+                        onInsertOriginal = {
+                            DictateController.insertHistoryText(context, entry.originalText)
+                            keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+                        },
                         onRetranscribe = {
                             DictateController.retranscribeHistoryEntry(context, entry)
                             keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
@@ -187,8 +193,11 @@ private fun HistoryPanelRow(
     entry: DictateHistoryEntry,
     accent: Color,
     onInsert: () -> Unit,
+    onInsertOriginal: () -> Unit,
     onRetranscribe: () -> Unit,
 ) {
+    // Both versions exist only when a prompt actually rewrote the dictation (issue #240).
+    val hasOriginal = entry.originalText.isNotEmpty() && entry.originalText != entry.text
     // Compact text, large tap targets: the transcript uses the candidate-word text size and the meta line
     // the (much smaller) secondary-candidate size, so the metadata clearly reads as a subordinate line;
     // the insert / re-transcribe buttons are generous and easy to hit.
@@ -200,7 +209,11 @@ private fun HistoryPanelRow(
             .fillMaxWidth()
             .padding(vertical = 1.dp),
         // A failed entry has no committed text yet — inserting is disabled until it's re-transcribed.
-        clickAndSemanticsModifier = Modifier.clickable(enabled = !entry.failed) { onInsert() },
+        clickAndSemanticsModifier = Modifier.combinedClickable(
+            enabled = !entry.failed,
+            onClick = { onInsert() },
+            onLongClick = if (hasOriginal) onInsertOriginal else null,
+        ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (entry.pinned) {
@@ -227,7 +240,13 @@ private fun HistoryPanelRow(
             )
             SnyggText(
                 elementName = FlorisImeUi.KeyHint.elementName,
-                text = historyMetaLine(entry),
+                // The hint makes the long-press discoverable; without it the second version would exist
+                // but nobody would know to reach for it (issue #240).
+                text = if (hasOriginal) {
+                    historyMetaLine(entry) + " · " + stringRes(R.string.dictate__history_hold_for_original)
+                } else {
+                    historyMetaLine(entry)
+                },
             )
         }
         if (entry.audioPath != null) {

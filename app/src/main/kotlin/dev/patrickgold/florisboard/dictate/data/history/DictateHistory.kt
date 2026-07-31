@@ -21,6 +21,8 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
@@ -50,6 +52,16 @@ data class DictateHistoryEntry(
     val id: Long = 0,
     /** The final committed transcript (post rewording/formatting/mappings), exactly what the user got. */
     val text: String,
+    /**
+     * The transcript as the speech model returned it, before any prompt ran (issue #240) — kept so a
+     * rewrite that changed more than intended can still be undone, without paying for another request.
+     *
+     * Empty unless the prompt chain (auto-formatting, auto-apply prompts, a live prompt) actually changed
+     * the text, so a plain dictation stores no duplicate. Deliberately not populated for the deterministic
+     * steps that run afterwards — paragraph splitting and custom mappings — since a near-identical second
+     * copy differing only in line breaks would be noise rather than a recovery path.
+     */
+    val originalText: String = "",
     /** Wall-clock creation time in epoch millis. */
     val createdAt: Long,
     /** Provider id of the transcription account (e.g. "openai"); for grouping/debugging. */
@@ -92,9 +104,14 @@ interface DictateHistoryDao {
     @Insert
     suspend fun insert(entry: DictateHistoryEntry): Long
 
-    // A successful re-transcribe also clears the failed flag (the recovery succeeded).
-    @Query("UPDATE $DICTATE_HISTORY_TABLE SET text = :text, failed = 0 WHERE ${BaseColumns._ID} = :id")
-    suspend fun updateText(id: Long, text: String)
+    // A successful re-transcribe also clears the failed flag (the recovery succeeded). [originalText] is
+    // rewritten in the same statement on purpose: the new run produced its own raw transcript, and leaving
+    // the previous one behind would pair a result with an "original" it never came from (issue #240).
+    @Query(
+        "UPDATE $DICTATE_HISTORY_TABLE SET text = :text, originalText = :originalText, failed = 0 " +
+            "WHERE ${BaseColumns._ID} = :id"
+    )
+    suspend fun updateText(id: Long, text: String, originalText: String)
 
     @Query("UPDATE $DICTATE_HISTORY_TABLE SET pinned = :pinned WHERE ${BaseColumns._ID} = :id")
     suspend fun setPinned(id: Long, pinned: Boolean)
@@ -112,7 +129,18 @@ interface DictateHistoryDao {
     suspend fun deleteAll()
 }
 
-@Database(entities = [DictateHistoryEntry::class], version = 2, exportSchema = false)
+/**
+ * Adds the raw transcript column (issue #240). Written by hand rather than as an auto-migration because
+ * schemas were not exported before version 3, so Room has nothing to diff against for this step. Later
+ * changes can use auto-migrations now that `exportSchema` is on.
+ */
+internal val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE $DICTATE_HISTORY_TABLE ADD COLUMN originalText TEXT NOT NULL DEFAULT ''")
+    }
+}
+
+@Database(entities = [DictateHistoryEntry::class], version = 3, exportSchema = true)
 abstract class DictateHistoryDatabase : RoomDatabase() {
     abstract fun dao(): DictateHistoryDao
 
@@ -120,6 +148,10 @@ abstract class DictateHistoryDatabase : RoomDatabase() {
         fun new(context: Context): DictateHistoryDatabase {
             return Room
                 .databaseBuilder(context, DictateHistoryDatabase::class.java, DICTATE_HISTORY_TABLE)
+                .addMigrations(MIGRATION_2_3)
+                // Only reachable if no migration path exists at all. Kept as a last resort: losing the log
+                // is bad, but an input method that crash-loops on every open is worse, and the user could
+                // not even switch keyboards to fix it.
                 .fallbackToDestructiveMigration()
                 .build()
         }
@@ -163,6 +195,8 @@ object DictateHistoryStore {
         context: Context,
         prefs: FlorisPreferenceModel,
         text: String,
+        // The raw transcript, when the prompt chain changed the text; empty otherwise (issue #240).
+        originalText: String = "",
         providerId: String,
         providerName: String,
         model: String,
@@ -182,6 +216,7 @@ object DictateHistoryStore {
         val id = dao.insert(
             DictateHistoryEntry(
                 text = text,
+                originalText = originalText,
                 createdAt = nowMs,
                 providerId = providerId,
                 providerName = providerName.ifBlank { providerId },
@@ -207,9 +242,9 @@ object DictateHistoryStore {
     }
 
     /** Overwrites an existing entry's transcript in place (used when re-transcribing its audio). */
-    suspend fun updateText(context: Context, id: Long, text: String) {
+    suspend fun updateText(context: Context, id: Long, text: String, originalText: String = "") {
         if (text.isBlank()) return
-        db(context).dao().updateText(id, text)
+        db(context).dao().updateText(id, text, originalText)
     }
 
     /** Pins or unpins an entry; pinned entries survive pruning and are marked in the UI. */

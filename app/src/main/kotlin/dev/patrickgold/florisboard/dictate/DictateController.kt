@@ -1248,6 +1248,11 @@ object DictateController {
         // its own paragraphing and must not be second-guessed.
         val splitWords = prefs.dictate.paragraphSplitWords.get()
         val isPureTranscript = !live && !alreadyFormatted && finalText == rawText
+        // Keep the raw transcript for the history when a prompt actually rewrote it (issue #240), so the
+        // original wording stays recoverable without re-running (and paying for) the transcription. Only
+        // the prompt chain counts: the deterministic steps below (paragraph splitting, custom mappings)
+        // would otherwise store a near-identical copy differing in little more than line breaks.
+        val originalForHistory = if (finalText != rawText) rawText else ""
         val paragraphed = if (isPureTranscript && splitWords > 0) {
             TranscriptParagraphs.split(finalText, splitWords)
         } else {
@@ -1284,7 +1289,7 @@ object DictateController {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
                     if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
                 }
-                recordHistory(appContext, outputText, recordedSeconds, capture, reworded = live)
+                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
                 discardRetainedAudio()
                 _state.value = UiState.Error(
                     message = appContext.getString(R.string.dictate__error_overlay_insert_failed),
@@ -1298,7 +1303,7 @@ object DictateController {
             DictateStats.recordDictation(prefs, outputText, recordedSeconds)
             if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
         }
-        recordHistory(appContext, outputText, recordedSeconds, capture, reworded = live)
+        recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
         discardRetainedAudio()
         _state.value = UiState.Idle
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
@@ -2150,6 +2155,7 @@ object DictateController {
     private suspend fun recordHistory(
         appContext: Context,
         text: String,
+        originalText: String,
         recordedSeconds: Long,
         capture: HistoryCapture?,
         reworded: Boolean,
@@ -2158,13 +2164,14 @@ object DictateController {
         if (!prefs.dictate.historyEnabled.get()) return
         if (isSensitiveDictationField(appContext)) return
         capture.replayHistoryId?.let { id ->
-            DictateHistoryStore.updateText(appContext, id, text)
+            DictateHistoryStore.updateText(appContext, id, text, originalText)
             return
         }
         DictateHistoryStore.record(
             context = appContext,
             prefs = prefs,
             text = text,
+            originalText = originalText,
             providerId = capture.providerId,
             providerName = capture.providerName,
             model = capture.model,

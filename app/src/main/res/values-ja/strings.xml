@@ -1472,6 +1472,9 @@
     <string name="dictate__stats_title">統計</string>
     <string name="dictate__stats_menu_summary">単語数・節約時間・連続日数など</string>
     <string name="dictate__history_title">履歴</string>
+    <string name="dictate__history_original">元の文</string>
+    <string name="dictate__history_result">結果</string>
+    <string name="dictate__history_hold_for_original">長押しで元の文</string>
     <string name="dictate__history_menu_summary">過去の音声入力を再生・再挿入・管理します</string>
     <string name="dictate__history_empty">まだ音声入力がありません — 最近の音声入力がここに表示されます。</string>
     <string name="dictate__history_enable_title">履歴を保存する</string>

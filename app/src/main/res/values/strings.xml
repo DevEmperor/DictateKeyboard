@@ -1791,6 +1791,9 @@
     <string name="dictate__stats_menu_summary" comment="Summary for the statistics entry in Dictate settings">Words, time saved, streak and more</string>
     <!-- Transcription history / activity log (issue #140) -->
     <string name="dictate__history_title" comment="Title of the transcription history screen and in-keyboard panel">History</string>
+    <string name="dictate__history_original" comment="Label above the raw transcript, shown when a prompt rewrote it">Original</string>
+    <string name="dictate__history_result" comment="Label above the text produced by a prompt">Result</string>
+    <string name="dictate__history_hold_for_original" comment="Hint in the history panel: long-press a row to insert the raw transcript">hold for original</string>
     <string name="dictate__history_menu_summary" comment="Summary for the history entry in Dictate settings">Replay, re-insert and manage past dictations</string>
     <string name="dictate__history_empty" comment="Shown when no dictations have been recorded yet">No dictations yet — your recent dictations will appear here.</string>
     <string name="dictate__history_enable_title" comment="Toggle: capture finished dictations into the history">Keep a history</string>

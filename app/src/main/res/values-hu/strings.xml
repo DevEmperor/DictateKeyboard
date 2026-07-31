@@ -1538,6 +1538,9 @@
     <string name="dictate__stats_title">Statisztika</string>
     <string name="dictate__stats_menu_summary">Szavak, megspórolt idő, sorozat és több</string>
     <string name="dictate__history_title">Előzmények</string>
+    <string name="dictate__history_original">Eredeti</string>
+    <string name="dictate__history_result">Eredmény</string>
+    <string name="dictate__history_hold_for_original">tartsa nyomva az eredetiért</string>
     <string name="dictate__history_menu_summary">Korábbi diktálások lejátszása, újbóli beillesztése és kezelése</string>
     <string name="dictate__history_empty">Még nincs diktálás — a legutóbbi diktálásai itt fognak megjelenni.</string>
     <string name="dictate__history_enable_title">Előzmények megtartása</string>

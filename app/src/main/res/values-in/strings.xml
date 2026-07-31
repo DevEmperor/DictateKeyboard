@@ -1495,6 +1495,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__stats_title">Statistik</string>
     <string name="dictate__stats_menu_summary">Kata, waktu hemat, streak, dan lainnya</string>
     <string name="dictate__history_title">Riwayat</string>
+    <string name="dictate__history_original">Asli</string>
+    <string name="dictate__history_result">Hasil</string>
+    <string name="dictate__history_hold_for_original">tahan untuk versi asli</string>
     <string name="dictate__history_menu_summary">Putar ulang, sisipkan ulang, dan kelola dikte sebelumnya</string>
     <string name="dictate__history_empty">Belum ada dikte — dikte terbaru Anda akan muncul di sini.</string>
     <string name="dictate__history_enable_title">Simpan riwayat</string>

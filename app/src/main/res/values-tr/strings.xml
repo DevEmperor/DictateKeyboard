@@ -1518,6 +1518,9 @@
     <string name="dictate__stats_title">İstatistikler</string>
     <string name="dictate__stats_menu_summary">Kelimeler, kazanılan zaman, seri ve daha fazlası</string>
     <string name="dictate__history_title">Geçmiş</string>
+    <string name="dictate__history_original">Orijinal</string>
+    <string name="dictate__history_result">Sonuç</string>
+    <string name="dictate__history_hold_for_original">orijinal için basılı tutun</string>
     <string name="dictate__history_menu_summary">Geçmiş dikteleri yeniden oynatın, tekrar ekleyin ve yönetin</string>
     <string name="dictate__history_empty">Henüz dikte yok — son dikteleriniz burada görünecek.</string>
     <string name="dictate__history_enable_title">Geçmişi tut</string>

@@ -1483,6 +1483,9 @@
     <string name="dictate__stats_title">Statistika</string>
     <string name="dictate__stats_menu_summary">Vārdi, ietaupītais laiks, sērija un vairāk</string>
     <string name="dictate__history_title">Vēsture</string>
+    <string name="dictate__history_original">Oriģināls</string>
+    <string name="dictate__history_result">Rezultāts</string>
+    <string name="dictate__history_hold_for_original">turiet, lai iegūtu oriģinālu</string>
     <string name="dictate__history_menu_summary">Atskaņot, ievietot atkārtoti un pārvaldīt iepriekšējos diktējumus</string>
     <string name="dictate__history_empty">Vēl nav diktējumu — jūsu nesenie diktējumi parādīsies šeit.</string>
     <string name="dictate__history_enable_title">Saglabāt vēsturi</string>

@@ -1415,6 +1415,9 @@
     <string name="dictate__stats_title">Statistiques</string>
     <string name="dictate__stats_menu_summary">Mots, temps gagné, série et plus</string>
     <string name="dictate__history_title">Historique</string>
+    <string name="dictate__history_original">Original</string>
+    <string name="dictate__history_result">Résultat</string>
+    <string name="dictate__history_hold_for_original">maintenez pour l\'original</string>
     <string name="dictate__history_menu_summary">Rejouer, réinsérer et gérer les dictées passées</string>
     <string name="dictate__history_empty">Aucune dictée pour le moment — vos dictées récentes apparaîtront ici.</string>
     <string name="dictate__history_enable_title">Conserver un historique</string>

@@ -1540,6 +1540,9 @@
     <string name="dictate__stats_title">Статистика</string>
     <string name="dictate__stats_menu_summary">Думи, спестено време, серия и още</string>
     <string name="dictate__history_title">История</string>
+    <string name="dictate__history_original">Оригинал</string>
+    <string name="dictate__history_result">Резултат</string>
+    <string name="dictate__history_hold_for_original">задръжте за оригинала</string>
     <string name="dictate__history_menu_summary">Възпроизвеждане, повторно вмъкване и управление на минали диктовки</string>
     <string name="dictate__history_empty">Все още няма диктовки — последните ви диктовки ще се показват тук.</string>
     <string name="dictate__history_enable_title">Пазене на история</string>

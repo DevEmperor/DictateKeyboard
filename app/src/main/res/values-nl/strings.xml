@@ -1439,6 +1439,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__stats_title">Statistieken</string>
     <string name="dictate__stats_menu_summary">Woorden, bespaarde tijd, reeks en meer</string>
     <string name="dictate__history_title">Geschiedenis</string>
+    <string name="dictate__history_original">Origineel</string>
+    <string name="dictate__history_result">Resultaat</string>
+    <string name="dictate__history_hold_for_original">houd ingedrukt voor origineel</string>
     <string name="dictate__history_menu_summary">Vorige dictaten afspelen, opnieuw invoegen en beheren</string>
     <string name="dictate__history_empty">Nog geen dictaten — je recente dictaten verschijnen hier.</string>
     <string name="dictate__history_enable_title">Geschiedenis bijhouden</string>

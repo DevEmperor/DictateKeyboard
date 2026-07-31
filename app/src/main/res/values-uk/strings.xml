@@ -1387,6 +1387,9 @@
     <string name="dictate__stats_title">Статистика</string>
     <string name="dictate__stats_menu_summary">Слова, заощаджений час, серія та більше</string>
     <string name="dictate__history_title">Історія</string>
+    <string name="dictate__history_original">Оригінал</string>
+    <string name="dictate__history_result">Результат</string>
+    <string name="dictate__history_hold_for_original">утримуйте для оригіналу</string>
     <string name="dictate__history_menu_summary">Відтворення, повторна вставка та керування минулими диктуваннями</string>
     <string name="dictate__history_empty">Ще немає диктувань — тут з\'являться ваші нещодавні диктування.</string>
     <string name="dictate__history_enable_title">Вести історію</string>

@@ -1555,6 +1555,9 @@
     <string name="dictate__stats_title">Statystyki</string>
     <string name="dictate__stats_menu_summary">Słowa, zaoszczędzony czas, seria i więcej</string>
     <string name="dictate__history_title">Historia</string>
+    <string name="dictate__history_original">Oryginał</string>
+    <string name="dictate__history_result">Wynik</string>
+    <string name="dictate__history_hold_for_original">przytrzymaj, aby uzyskać oryginał</string>
     <string name="dictate__history_menu_summary">Odtwarzaj, wstawiaj ponownie i zarządzaj poprzednimi dyktowaniami</string>
     <string name="dictate__history_empty">Brak dyktowań — Twoje ostatnie dyktowania pojawią się tutaj.</string>
     <string name="dictate__history_enable_title">Zachowuj historię</string>

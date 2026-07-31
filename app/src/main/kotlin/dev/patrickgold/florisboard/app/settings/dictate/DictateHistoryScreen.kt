@@ -128,11 +128,22 @@ fun DictateHistoryScreen() = FlorisScreen {
     var showLimits by remember { mutableStateOf(false) }
     var searching by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
-    var detailEntry by remember { mutableStateOf<DictateHistoryEntry?>(null) }
+    // Only the id is kept, never the entry itself: the row is an immutable snapshot, so holding it would
+    // freeze the dialog at the state it had when opened — pinning from inside it did not light up the icon
+    // until the dialog was closed and reopened. Resolved against the live list on every recomposition.
+    var detailEntryId by remember { mutableStateOf<Long?>(null) }
 
     val filtered = remember(entries, query) {
         val q = query.trim()
-        if (q.isEmpty()) entries else entries.filter { it.text.contains(q, ignoreCase = true) }
+        // Searches the raw transcript too (issue #240): after a rewrite, what you remember saying is often
+        // exactly the wording that only survives in the original.
+        if (q.isEmpty()) {
+            entries
+        } else {
+            entries.filter {
+                it.text.contains(q, ignoreCase = true) || it.originalText.contains(q, ignoreCase = true)
+            }
+        }
     }
 
     // When searching, the app-bar title is replaced by a full-width search field (so it takes no extra
@@ -227,7 +238,7 @@ fun DictateHistoryScreen() = FlorisScreen {
                         Column(modifier = Modifier.animateItem()) {
                             HistoryRow(
                                 entry = entry,
-                                onOpen = { detailEntry = entry },
+                                onOpen = { detailEntryId = entry.id },
                                 onShare = { shareText(context, entry.text) },
                                 onCopy = {
                                     copyToClipboard(context, entry.text)
@@ -242,13 +253,16 @@ fun DictateHistoryScreen() = FlorisScreen {
             }
         }
 
+        // Deliberately resolved from `entries` rather than the filtered list, so an active search query
+        // cannot pull the dialog out from under the user. A deleted entry resolves to null and closes it.
+        val detailEntry = detailEntryId?.let { id -> entries.firstOrNull { it.id == id } }
         detailEntry?.let { entry ->
             DetailDialog(
                 entry = entry,
                 onShare = { shareText(context, entry.text) },
                 onExport = { DictateController.exportHistoryAudio(context, entry) },
                 onTogglePin = { scope.launch { DictateHistoryStore.setPinned(context, entry.id, !entry.pinned) } },
-                onDismiss = { detailEntry = null },
+                onDismiss = { detailEntryId = null },
             )
         }
 
@@ -477,18 +491,39 @@ private fun DetailDialog(
         onDismiss = { stop(); onDismiss() },
     ) {
         Column {
+            // When a prompt rewrote the dictation, both versions are shown (issue #240): the raw transcript
+            // is otherwise unrecoverable, since re-transcribing runs the whole prompt chain again. Driven by
+            // originalText rather than entry.reworded, which is only set for live prompts and would miss
+            // auto-formatting and auto-apply prompts.
+            val hasOriginal = entry.originalText.isNotEmpty() && entry.originalText != entry.text
             SelectionContainer {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = 260.dp)
+                        .heightIn(max = if (hasOriginal) 320.dp else 260.dp)
                         .verticalScroll(rememberScrollState()),
                 ) {
-                    Text(
-                        text = entry.text,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (entry.failed) MaterialTheme.colorScheme.error else Color.Unspecified,
-                    )
+                    if (hasOriginal) {
+                        Column {
+                            TranscriptSection(
+                                label = stringRes(R.string.dictate__history_original),
+                                text = entry.originalText,
+                                onCopy = { copyToClipboard(context, entry.originalText) },
+                            )
+                            Spacer(Modifier.height(12.dp))
+                            TranscriptSection(
+                                label = stringRes(R.string.dictate__history_result),
+                                text = entry.text,
+                                onCopy = { copyToClipboard(context, entry.text) },
+                            )
+                        }
+                    } else {
+                        Text(
+                            text = entry.text,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (entry.failed) MaterialTheme.colorScheme.error else Color.Unspecified,
+                        )
+                    }
                 }
             }
             val meta = historyRowMeta(entry)
@@ -549,6 +584,40 @@ private fun DetailDialog(
                 }
             }
         }
+    }
+}
+
+/**
+ * One labelled block of the detail dialog when a dictation exists in two versions (issue #240): a small
+ * caption, its own copy button, and the text itself. Kept inside the dialog's single scroll container so
+ * the two versions scroll together and stay comparable.
+ */
+@Composable
+private fun TranscriptSection(
+    label: String,
+    text: String,
+    onCopy: () -> Unit,
+) {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Spacer(Modifier.weight(1f))
+            // Outside the SelectionContainer's text flow, so copying a whole version stays one tap even
+            // though the text itself is also selectable by hand.
+            IconButton(onClick = onCopy, modifier = Modifier.size(32.dp)) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = stringRes(R.string.dictate__legacy_action_copy),
+                    modifier = Modifier.size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        Text(text = text, style = MaterialTheme.typography.bodyMedium)
     }
 }
 

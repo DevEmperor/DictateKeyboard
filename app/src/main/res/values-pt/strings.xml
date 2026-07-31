@@ -1519,6 +1519,9 @@
     <string name="dictate__stats_title">Estatísticas</string>
     <string name="dictate__stats_menu_summary">Palavras, tempo poupado, sequência e mais</string>
     <string name="dictate__history_title">Histórico</string>
+    <string name="dictate__history_original">Original</string>
+    <string name="dictate__history_result">Resultado</string>
+    <string name="dictate__history_hold_for_original">mantenha premido para o original</string>
     <string name="dictate__history_menu_summary">Reproduzir, reinserir e gerir ditados anteriores</string>
     <string name="dictate__history_empty">Ainda não há ditados — os seus ditados recentes aparecerão aqui.</string>
     <string name="dictate__history_enable_title">Manter um histórico</string>
