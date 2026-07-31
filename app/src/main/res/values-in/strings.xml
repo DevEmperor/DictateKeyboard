@@ -1567,6 +1567,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__suggestion__auto_correct__summary">Perbaiki salah ketik otomatis saat menekan spasi</string>
     <string name="pref__suggestion__multilingual_typing__label">Pengetikan multibahasa</string>
     <string name="pref__suggestion__multilingual_typing__summary">Terima kata dari semua bahasa keyboard Anda</string>
+    <string name="pref__suggestion__next_word_prediction__label">Saran kata berikutnya</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Menyarankan kemungkinan kata berikutnya setelah Anda menyelesaikan sebuah kata</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" ditambahkan ke kamus Anda</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" sudah ada di kamus Anda</string>
     <string name="dictate__legacy_record">Rekam</string>
     <string name="dictate__legacy_stop">Berhenti</string>
     <string name="dictate__legacy_switch_keyboard">Ganti keyboard</string>

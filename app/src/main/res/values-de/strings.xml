@@ -1486,6 +1486,10 @@
     <string name="pref__suggestion__auto_correct__summary">Tippfehler beim Leerzeichen automatisch korrigieren</string>
     <string name="pref__suggestion__multilingual_typing__label">Mehrsprachiges Tippen</string>
     <string name="pref__suggestion__multilingual_typing__summary">Wörter aus allen deinen Tastatursprachen akzeptieren</string>
+    <string name="pref__suggestion__next_word_prediction__label">Wortvorschläge</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Schlägt wahrscheinliche nächste Wörter vor, sobald ein Wort fertig ist</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" zum Wörterbuch hinzugefügt</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" ist bereits im Wörterbuch</string>
     <string name="dictate__legacy_record">Aufnehmen</string>
     <string name="dictate__legacy_stop">Stopp</string>
     <string name="dictate__legacy_switch_keyboard">Tastatur wechseln</string>

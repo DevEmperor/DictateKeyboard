@@ -1606,6 +1606,10 @@
     <string name="pref__suggestion__auto_correct__summary">按空格时自动修正拼写错误</string>
     <string name="pref__suggestion__multilingual_typing__label">多语言输入</string>
     <string name="pref__suggestion__multilingual_typing__summary">接受来自所有键盘语言的单词</string>
+    <string name="pref__suggestion__next_word_prediction__label">下一个词建议</string>
+    <string name="pref__suggestion__next_word_prediction__summary">输入完一个词后建议可能的下一个词</string>
+    <string name="suggestion__added_to_dictionary">已将“{word}”添加到词典</string>
+    <string name="suggestion__already_in_dictionary">“{word}”已在词典中</string>
     <string name="dictate__legacy_record">录音</string>
     <string name="dictate__legacy_stop">停止</string>
     <string name="dictate__legacy_switch_keyboard">切换键盘</string>

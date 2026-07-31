@@ -1555,6 +1555,10 @@
     <string name="pref__suggestion__auto_correct__summary">Automātiski labot drukas kļūdas, nospiežot atstarpi</string>
     <string name="pref__suggestion__multilingual_typing__label">Daudzvalodu rakstīšana</string>
     <string name="pref__suggestion__multilingual_typing__summary">Pieņemt vārdus no visām tastatūras valodām</string>
+    <string name="pref__suggestion__next_word_prediction__label">Nākamā vārda ieteikumi</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Iesaka iespējamos nākamos vārdus, kad vārds ir pabeigts</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" pievienots jūsu vārdnīcai</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" jau ir jūsu vārdnīcā</string>
     <string name="dictate__legacy_record">Ierakstīt</string>
     <string name="dictate__legacy_stop">Apturēt</string>
     <string name="dictate__legacy_switch_keyboard">Mainīt tastatūru</string>

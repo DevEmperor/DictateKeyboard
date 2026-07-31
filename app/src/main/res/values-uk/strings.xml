@@ -1459,6 +1459,10 @@
     <string name="pref__suggestion__auto_correct__summary">Автоматично виправляти помилки при пробілі</string>
     <string name="pref__suggestion__multilingual_typing__label">Багатомовне введення</string>
     <string name="pref__suggestion__multilingual_typing__summary">Приймати слова з усіх мов клавіатури</string>
+    <string name="pref__suggestion__next_word_prediction__label">Підказки наступного слова</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Пропонує ймовірні наступні слова після завершення слова</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" додано до вашого словника</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" вже є у вашому словнику</string>
     <string name="dictate__legacy_record">Запис</string>
     <string name="dictate__legacy_stop">Стоп</string>
     <string name="dictate__legacy_switch_keyboard">Змінити клавіатуру</string>

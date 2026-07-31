@@ -1612,6 +1612,10 @@
     <string name="pref__suggestion__auto_correct__summary">Автоматично поправяне на печатни грешки при интервал</string>
     <string name="pref__suggestion__multilingual_typing__label">Многоезично писане</string>
     <string name="pref__suggestion__multilingual_typing__summary">Приемане на думи от всички езици на клавиатурата ви</string>
+    <string name="pref__suggestion__next_word_prediction__label">Предложения за следваща дума</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Предлага вероятни следващи думи, след като завършите дума</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" е добавена в речника ви</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" вече е в речника ви</string>
     <string name="dictate__legacy_record">Запис</string>
     <string name="dictate__legacy_stop">Спри</string>
     <string name="dictate__legacy_switch_keyboard">Смяна на клавиатурата</string>

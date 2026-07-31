@@ -1487,6 +1487,10 @@
     <string name="pref__suggestion__auto_correct__summary">Corregeix errades automàticament en prémer espai</string>
     <string name="pref__suggestion__multilingual_typing__label">Escriptura multilingüe</string>
     <string name="pref__suggestion__multilingual_typing__summary">Accepta paraules de tots els idiomes del teclat</string>
+    <string name="pref__suggestion__next_word_prediction__label">Suggeriments de paraula següent</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Suggereix paraules probables quan hàgiu acabat una paraula</string>
+    <string name="suggestion__added_to_dictionary">S\'ha afegit \"{word}\" al vostre diccionari</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" ja és al vostre diccionari</string>
     <string name="dictate__legacy_record">Grava</string>
     <string name="dictate__legacy_stop">Atura</string>
     <string name="dictate__legacy_switch_keyboard">Canvia el teclat</string>

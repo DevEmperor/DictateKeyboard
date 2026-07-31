@@ -1615,6 +1615,10 @@
     <string name="pref__suggestion__auto_correct__summary">Автоматически исправлять опечатки при пробеле</string>
     <string name="pref__suggestion__multilingual_typing__label">Многоязычный ввод</string>
     <string name="pref__suggestion__multilingual_typing__summary">Принимать слова из всех языков клавиатуры</string>
+    <string name="pref__suggestion__next_word_prediction__label">Подсказки следующего слова</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Предлагает вероятные следующие слова после завершения слова</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" добавлено в ваш словарь</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" уже есть в вашем словаре</string>
     <string name="dictate__legacy_record">Запись</string>
     <string name="dictate__legacy_stop">Стоп</string>
     <string name="dictate__legacy_switch_keyboard">Сменить клавиатуру</string>

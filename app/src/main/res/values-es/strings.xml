@@ -1593,6 +1593,10 @@
     <string name="pref__suggestion__auto_correct__summary">Corregir erratas automáticamente al pulsar espacio</string>
     <string name="pref__suggestion__multilingual_typing__label">Escritura multilingüe</string>
     <string name="pref__suggestion__multilingual_typing__summary">Acepta palabras de todos los idiomas del teclado</string>
+    <string name="pref__suggestion__next_word_prediction__label">Sugerencias de palabra siguiente</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Sugiere palabras probables cuando terminas una palabra</string>
+    <string name="suggestion__added_to_dictionary">Se añadió \"{word}\" a tu diccionario</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" ya está en tu diccionario</string>
     <string name="dictate__legacy_record">Grabar</string>
     <string name="dictate__legacy_stop">Detener</string>
     <string name="dictate__legacy_switch_keyboard">Cambiar teclado</string>

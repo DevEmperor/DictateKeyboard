@@ -1420,6 +1420,10 @@
     <string name="pref__suggestion__auto_correct__summary">Corrigir erros de digitação automaticamente ao dar espaço</string>
     <string name="pref__suggestion__multilingual_typing__label">Digitação multilíngue</string>
     <string name="pref__suggestion__multilingual_typing__summary">Aceitar palavras de todos os idiomas do teclado</string>
+    <string name="pref__suggestion__next_word_prediction__label">Sugestões da próxima palavra</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Sugere palavras prováveis depois que você termina uma palavra</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" adicionada ao seu dicionário</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" já está no seu dicionário</string>
     <string name="dictate__legacy_record">Gravar</string>
     <string name="dictate__legacy_stop">Parar</string>
     <string name="dictate__legacy_switch_keyboard">Trocar de teclado</string>

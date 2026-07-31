@@ -1511,6 +1511,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="pref__suggestion__auto_correct__summary">Typefouten automatisch corrigeren bij een spatie</string>
     <string name="pref__suggestion__multilingual_typing__label">Meertalig typen</string>
     <string name="pref__suggestion__multilingual_typing__summary">Woorden uit al je toetsenbordtalen accepteren</string>
+    <string name="pref__suggestion__next_word_prediction__label">Suggesties voor volgend woord</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Stelt waarschijnlijke volgende woorden voor zodra een woord af is</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" toegevoegd aan je woordenboek</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" staat al in je woordenboek</string>
     <string name="dictate__legacy_record">Opnemen</string>
     <string name="dictate__legacy_stop">Stoppen</string>
     <string name="dictate__legacy_switch_keyboard">Toetsenbord wisselen</string>

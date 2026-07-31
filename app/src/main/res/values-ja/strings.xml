@@ -1544,6 +1544,10 @@
     <string name="pref__suggestion__auto_correct__summary">スペース入力時にタイプミスを自動修正</string>
     <string name="pref__suggestion__multilingual_typing__label">多言語入力</string>
     <string name="pref__suggestion__multilingual_typing__summary">すべてのキーボード言語の単語を受け入れます</string>
+    <string name="pref__suggestion__next_word_prediction__label">次の単語の候補</string>
+    <string name="pref__suggestion__next_word_prediction__summary">単語を入力し終えると、次に来そうな単語を提案します</string>
+    <string name="suggestion__added_to_dictionary">「{word}」を辞書に追加しました</string>
+    <string name="suggestion__already_in_dictionary">「{word}」はすでに辞書にあります</string>
     <string name="dictate__legacy_record">録音</string>
     <string name="dictate__legacy_stop">停止</string>
     <string name="dictate__legacy_switch_keyboard">キーボードを切り替え</string>

@@ -1627,6 +1627,10 @@
     <string name="pref__suggestion__auto_correct__summary">Automatyczne poprawianie literówek po spacji</string>
     <string name="pref__suggestion__multilingual_typing__label">Pisanie wielojęzyczne</string>
     <string name="pref__suggestion__multilingual_typing__summary">Akceptuj słowa ze wszystkich języków klawiatury</string>
+    <string name="pref__suggestion__next_word_prediction__label">Podpowiedzi następnego słowa</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Proponuje prawdopodobne następne słowa po zakończeniu słowa</string>
+    <string name="suggestion__added_to_dictionary">Dodano \"{word}\" do słownika</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" jest już w słowniku</string>
     <string name="dictate__legacy_record">Nagrywaj</string>
     <string name="dictate__legacy_stop">Zatrzymaj</string>
     <string name="dictate__legacy_switch_keyboard">Zmień klawiaturę</string>

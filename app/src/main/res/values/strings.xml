@@ -535,6 +535,10 @@
     <string name="pref__suggestion__auto_correct__summary" comment="Preference summary">Automatically fix typos when you type a space</string>
     <string name="pref__suggestion__multilingual_typing__label" comment="Preference title">Multilingual typing</string>
     <string name="pref__suggestion__multilingual_typing__summary" comment="Preference summary">Accept words from all your keyboard languages</string>
+    <string name="pref__suggestion__next_word_prediction__label" comment="Preference title">Next-word suggestions</string>
+    <string name="pref__suggestion__next_word_prediction__summary" comment="Preference summary">Suggest likely next words once you have finished a word</string>
+    <string name="suggestion__added_to_dictionary" comment="Toast shown after long-pressing a suggestion to learn it">Added \"{word}\" to your dictionary</string>
+    <string name="suggestion__already_in_dictionary" comment="Toast shown when the long-pressed word is already learned">\"{word}\" is already in your dictionary</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>

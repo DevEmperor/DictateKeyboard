@@ -163,11 +163,18 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
-    /** Ensures the glide dictionary for [subtype]'s language downloads on first use (issue #127). */
+    /**
+     * Ensures the glide dictionary for [subtype]'s language downloads on first use (issue #127), and its
+     * bigram file with it.
+     *
+     * A bundled language must not be skipped outright: only English ships bigrams as an asset, so German —
+     * whose word list is bundled — used to return here and never fetch `de_bigrams.txt` at all. The context
+     * model was silently missing for it, and next-word prediction (#245) had nothing to work with.
+     */
     private fun maybeDownloadDict(subtype: Subtype) {
         val lang = normalizeLang(subtype.primaryLocale.language)
-        if (lang.isBlank() || lang in bundledDictLangs) return
-        GlideDictionaryManager.ensureDownloaded(appContext, lang)
+        if (lang.isBlank()) return
+        GlideDictionaryManager.ensureDownloaded(appContext, lang, dictBundled = lang in bundledDictLangs)
     }
 
     /** Raw JSON for [lang]: a downloaded dictionary takes precedence over the bundled asset. */
@@ -435,6 +442,55 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return true
     }
 
+    // --- Next-word prediction (issue #245) ----------------------------------------------------------
+
+    /**
+     * Likely continuations of the word before the cursor, for the moment when nothing is being composed —
+     * the one case where the strip used to be empty even though the bigram tables were already in memory.
+     *
+     * Deliberately returns nothing when there is no previous word to condition on. The Smartbar swaps
+     * between candidates and the quick actions purely on whether candidates exist, so predicting on an empty
+     * field would permanently hide the clipboard/GIF/history row; requiring a previous word keeps that row
+     * as it is today whenever the keyboard is opened fresh.
+     *
+     * Never eligible for auto-commit: these are offers about a word the user has not started typing, so
+     * nothing may be inserted without a tap.
+     */
+    private suspend fun nextWordPredictions(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+    ): List<SuggestionCandidate> {
+        if (!prefs.suggestion.nextWordPrediction.get()) return emptyList()
+        // Only directly after a completed word: a trailing space means the previous word is finished, while
+        // a cursor sitting mid-word or right after punctuation gives nothing meaningful to continue from.
+        if (!content.textBeforeSelection.endsWith(" ")) return emptyList()
+        val prevWord = previousWordOf(content) ?: return emptyList()
+        val bigrams = bigramsFor(subtype)
+        if (bigrams.isEmpty()) return emptyList()
+
+        val index = lowerIndexFor(subtype)
+        val prefix = "$prevWord "
+        // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
+        // ("the", "and", "of") that carries no information about what the user is writing.
+        return bigrams.asSequence()
+            .filter { it.key.startsWith(prefix) }
+            .sortedByDescending { it.value }
+            .take(maxCandidateCount)
+            .mapNotNull { entry ->
+                val candidate = entry.key.substring(prefix.length)
+                if (candidate.isBlank()) return@mapNotNull null
+                val text = index.canonical[candidate] ?: candidate
+                WordSuggestionCandidate(
+                    text = text,
+                    confidence = (index.freq[candidate] ?: 0) / 255.0,
+                    isEligibleForAutoCommit = false,
+                    sourceProvider = this,
+                )
+            }
+            .toList()
+    }
+
     // --- Touch-decoded corrections (issue #242) -----------------------------------------------------
 
     /**
@@ -645,10 +701,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
         // Word completion: prefix-match the word being composed against the dictionary, most frequent
-        // first (issue #127 follow-up). No composing word → nothing to complete (next-word prediction
-        // would need n-grams, which the unigram dictionaries don't carry).
+        // first (issue #127 follow-up).
         val word = content.composingText
-        if (word.isEmpty()) return emptyList()
+        // Nothing being composed: offer likely continuations of the previous word instead (issue #245).
+        if (word.isEmpty()) return nextWordPredictions(subtype, content, maxCandidateCount)
 
         val wantCapitalized = word.first().isUpperCase()
         fun cased(dictWord: String): String =
@@ -835,8 +891,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 touchCorrections != null -> !hadCandidatesBefore
                 else -> !hadCandidatesBefore && !distance1Empty
             }
-            if (corrections.isNotEmpty() && allowAutoCommit) {
-                // Keep the exact typed word tappable, left-most, to bypass the auto-correction (issue #150).
+            // Keep the exact typed word tappable, left-most, to bypass the auto-correction (issue #150) —
+            // and also when nothing will be auto-committed but the word is clearly finished rather than
+            // half-typed (no dictionary word extends it). Otherwise a word like "Dads", which is left alone
+            // precisely because it looks deliberate, never appears in the strip at all, so there is nothing
+            // to long-press to teach it (issue #241).
+            if (corrections.isNotEmpty() && (allowAutoCommit || !hadCandidatesBefore)) {
                 out.putIfAbsent(
                     word.lowercase(),
                     WordSuggestionCandidate(

@@ -1360,6 +1360,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "suggestion__multilingual_typing",
             default = false,
         )
+        // Next-word prediction from the bigram tables (issue #245). Only ever offers words once a previous
+        // word exists — never on an empty field, so opening the keyboard still shows the quick actions.
+        val nextWordPrediction = boolean(
+            key = "suggestion__next_word_prediction",
+            default = true,
+        )
         val displayMode = enum(
             key = "suggestion__display_mode",
             default = CandidatesDisplayMode.DYNAMIC_SCROLLABLE,

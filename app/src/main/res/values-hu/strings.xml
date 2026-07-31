@@ -1610,6 +1610,10 @@
     <string name="pref__suggestion__auto_correct__summary">Elgépelések automatikus javítása szóköznél</string>
     <string name="pref__suggestion__multilingual_typing__label">Többnyelvű gépelés</string>
     <string name="pref__suggestion__multilingual_typing__summary">Szavak elfogadása az összes billentyűzetnyelvedből</string>
+    <string name="pref__suggestion__next_word_prediction__label">Következő szó javaslatok</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Valószínű következő szavakat javasol, ha befejezett egy szót</string>
+    <string name="suggestion__added_to_dictionary">A(z) \"{word}\" hozzáadva a szótárhoz</string>
+    <string name="suggestion__already_in_dictionary">A(z) \"{word}\" már a szótárban van</string>
     <string name="dictate__legacy_record">Felvétel</string>
     <string name="dictate__legacy_stop">Leállítás</string>
     <string name="dictate__legacy_switch_keyboard">Billentyűzet váltása</string>

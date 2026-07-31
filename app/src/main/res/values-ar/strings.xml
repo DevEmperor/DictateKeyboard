@@ -1470,6 +1470,10 @@
     <string name="pref__suggestion__auto_correct__summary">تصحيح الأخطاء المطبعية تلقائيًا عند كتابة مسافة</string>
     <string name="pref__suggestion__multilingual_typing__label">الكتابة متعددة اللغات</string>
     <string name="pref__suggestion__multilingual_typing__summary">قبول الكلمات من جميع لغات لوحة المفاتيح لديك</string>
+    <string name="pref__suggestion__next_word_prediction__label">اقتراحات الكلمة التالية</string>
+    <string name="pref__suggestion__next_word_prediction__summary">اقتراح الكلمات المحتملة بعد إنهاء كلمة</string>
+    <string name="suggestion__added_to_dictionary">تمت إضافة \"{word}\" إلى قاموسك</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" موجود بالفعل في قاموسك</string>
     <string name="dictate__legacy_record">تسجيل</string>
     <string name="dictate__legacy_stop">إيقاف</string>
     <string name="dictate__legacy_switch_keyboard">تبديل لوحة المفاتيح</string>

@@ -1626,6 +1626,10 @@
     <string name="pref__suggestion__auto_correct__summary">Automaticky opravit překlepy při stisku mezerníku</string>
     <string name="pref__suggestion__multilingual_typing__label">Vícejazyčné psaní</string>
     <string name="pref__suggestion__multilingual_typing__summary">Přijímat slova ze všech jazyků klávesnice</string>
+    <string name="pref__suggestion__next_word_prediction__label">Návrhy dalšího slova</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Navrhuje pravděpodobná další slova po dokončení slova</string>
+    <string name="suggestion__added_to_dictionary">Slovo \"{word}\" bylo přidáno do slovníku</string>
+    <string name="suggestion__already_in_dictionary">Slovo \"{word}\" je již ve slovníku</string>
     <string name="dictate__legacy_record">Nahrát</string>
     <string name="dictate__legacy_stop">Zastavit</string>
     <string name="dictate__legacy_switch_keyboard">Přepnout klávesnici</string>

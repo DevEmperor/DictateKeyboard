@@ -1395,6 +1395,10 @@
     <string name="pref__suggestion__auto_correct__summary">Correggi i refusi automaticamente premendo spazio</string>
     <string name="pref__suggestion__multilingual_typing__label">Digitazione multilingue</string>
     <string name="pref__suggestion__multilingual_typing__summary">Accetta parole da tutte le lingue della tastiera</string>
+    <string name="pref__suggestion__next_word_prediction__label">Suggerimenti parola successiva</string>
+    <string name="pref__suggestion__next_word_prediction__summary">Suggerisce le parole probabili dopo aver completato una parola</string>
+    <string name="suggestion__added_to_dictionary">\"{word}\" aggiunto al tuo dizionario</string>
+    <string name="suggestion__already_in_dictionary">\"{word}\" è già nel tuo dizionario</string>
     <string name="dictate__legacy_record">Registra</string>
     <string name="dictate__legacy_stop">Ferma</string>
     <string name="dictate__legacy_switch_keyboard">Cambia tastiera</string>

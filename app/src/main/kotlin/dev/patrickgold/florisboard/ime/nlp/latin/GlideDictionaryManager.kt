@@ -62,12 +62,15 @@ object GlideDictionaryManager {
      * Starts a background download of the glide dictionary for [lang] if it has a catalog entry and isn't
      * already installed or downloading (issue #127). Progress is published on [progress]; [installedVersion]
      * bumps on success. Best effort — failures leave the language uninstalled for a later retry.
+     *
+     * Set [dictBundled] for a language whose word list ships inside the APK: its dictionary must not be
+     * downloaded a second time, but its bigram file still has to be fetched.
      */
-    fun ensureDownloaded(context: Context, lang: String) {
+    fun ensureDownloaded(context: Context, lang: String, dictBundled: Boolean = false) {
         val code = LatinLanguageProvider.normalizeLang(lang)
         val dictSpec = GlideDictionaryCatalog.forLang(code)
         val bigramSpec = BigramCatalog.forLang(code)
-        val needDict = dictSpec != null && !isInstalled(context, code)
+        val needDict = !dictBundled && dictSpec != null && !isInstalled(context, code)
         // The bigram file (autocorrect context, Tier 2) is fetched together with the glide dictionary when
         // an input language is added; also downloads on its own if the dict is already present from before.
         val needBigram = bigramSpec != null && !bigramInstalled(context, code)

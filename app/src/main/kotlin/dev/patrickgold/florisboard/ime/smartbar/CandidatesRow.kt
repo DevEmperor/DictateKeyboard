@@ -39,9 +39,15 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.rememberCoroutineScope
+import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
@@ -68,6 +74,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val nlpManager by context.nlpManager()
     val subtypeManager by context.subtypeManager()
 
+    val scope = rememberCoroutineScope()
     val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     // Read once per composition instead of a synchronous pref get() per candidate on every keystroke
@@ -127,10 +134,38 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     onLongPress = {
                         // Can't use candidate directly
                         val candidateItem = candidates[n]
-                        if (candidateItem.isEligibleForUserRemoval) {
-                            nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
-                        } else {
-                            false
+                        when {
+                            // Clipboard suggestions keep their existing "long-press to forget" behaviour.
+                            candidateItem is ClipboardSuggestionCandidate -> {
+                                nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                            }
+                            // For words the gesture teaches the personal dictionary instead (issue #241).
+                            // It used to call removeSuggestion(), which every word provider answers with
+                            // false, so long-pressing a word did nothing at all.
+                            else -> {
+                                val subtype = subtypeManager.activeSubtype
+                                val result = nlpManager.addToUserDictionary(subtype, candidateItem)
+                                val message = when (result) {
+                                    NlpManager.AddToDictionaryResult.ADDED ->
+                                        R.string.suggestion__added_to_dictionary
+                                    NlpManager.AddToDictionaryResult.ALREADY_PRESENT ->
+                                        R.string.suggestion__already_in_dictionary
+                                    NlpManager.AddToDictionaryResult.UNAVAILABLE -> null
+                                }
+                                if (message != null) {
+                                    // Haptic as well as the toast: Android suppresses toasts entirely when
+                                    // the user has turned notifications off for the app, and a silent
+                                    // long-press would look broken.
+                                    FlorisImeService.inputFeedbackController()?.keyLongPress()
+                                    scope.launch {
+                                        context.showShortToast(
+                                            message,
+                                            "word" to candidateItem.text.toString(),
+                                        )
+                                    }
+                                }
+                                result != NlpManager.AddToDictionaryResult.UNAVAILABLE
+                            }
                         }
                     },
                     longPressDelay = longPressDelay.toLong(),
