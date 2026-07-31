@@ -82,3 +82,6 @@ private/
 
 # glide dictionary build artifacts
 tools/glide-dict/dist/
+
+# Demo recording for the README/store listings — kept locally, too large to version
+/img/dictate_demo.mp4
