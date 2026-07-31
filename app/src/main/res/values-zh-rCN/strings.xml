@@ -1276,6 +1276,13 @@
     <string name="dictate__bluetooth_mic_summary">可用时通过已连接的蓝牙耳机录音</string>
     <string name="dictate__keep_screen_awake_title">保持屏幕常亮</string>
     <string name="dictate__keep_screen_awake_summary">录音时防止屏幕关闭</string>
+    <string name="dictate__recording_animation_title">录音指示器</string>
+    <string name="dictate__recording_animation_static_label">无动画</string>
+    <string name="dictate__recording_animation_static_description">录音时保持为一个纯红色圆点</string>
+    <string name="dictate__recording_animation_pulse_label">脉动</string>
+    <string name="dictate__recording_animation_pulse_description">以固定节奏跳动</string>
+    <string name="dictate__recording_animation_level_label">跟随你的声音</string>
+    <string name="dictate__recording_animation_level_description">根据麦克风音量变化，表明麦克风正在拾音</string>
     <string name="dictate__skip_silent_title">跳过静音录音</string>
     <string name="dictate__skip_silent_summary">避免静音录音产生幻觉文本和浪费 API 调用</string>
     <string name="dictate__trim_silent_gaps_title">裁剪长停顿</string>

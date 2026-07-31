@@ -1175,6 +1175,13 @@
     <string name="dictate__bluetooth_mic_summary">Wenn verfügbar über ein verbundenes Bluetooth-Headset aufnehmen</string>
     <string name="dictate__keep_screen_awake_title">Bildschirm anlassen</string>
     <string name="dictate__keep_screen_awake_summary">Verhindern, dass sich der Bildschirm während der Aufnahme ausschaltet</string>
+    <string name="dictate__recording_animation_title">Aufnahme-Anzeige</string>
+    <string name="dictate__recording_animation_static_label">Keine Animation</string>
+    <string name="dictate__recording_animation_static_description">Bleibt während der Aufnahme ein durchgehend roter Punkt</string>
+    <string name="dictate__recording_animation_pulse_label">Pulsierend</string>
+    <string name="dictate__recording_animation_pulse_description">Pulsiert in gleichmäßigem Takt</string>
+    <string name="dictate__recording_animation_level_label">Folgt deiner Stimme</string>
+    <string name="dictate__recording_animation_level_description">Reagiert auf den Mikrofonpegel und zeigt so, dass dich das Mikrofon hört</string>
     <string name="dictate__skip_silent_title">Stille Aufnahmen überspringen</string>
     <string name="dictate__skip_silent_summary">Vermeidet Geistertext und unnötige API-Aufrufe bei stiller Aufnahme</string>
     <string name="dictate__trim_silent_gaps_title">Lange Pausen kürzen</string>

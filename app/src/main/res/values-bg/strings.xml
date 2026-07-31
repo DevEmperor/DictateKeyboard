@@ -1281,6 +1281,13 @@
     <string name="dictate__bluetooth_mic_summary">Записвай чрез свързани Bluetooth слушалки, когато са налични</string>
     <string name="dictate__keep_screen_awake_title">Поддържай екрана активен</string>
     <string name="dictate__keep_screen_awake_summary">Предотврати изключването на екрана по време на запис</string>
+    <string name="dictate__recording_animation_title">Индикатор за запис</string>
+    <string name="dictate__recording_animation_static_label">Без анимация</string>
+    <string name="dictate__recording_animation_static_description">Остава плътна червена точка по време на записа</string>
+    <string name="dictate__recording_animation_pulse_label">Пулсиращ</string>
+    <string name="dictate__recording_animation_pulse_description">Пулсира с постоянна честота</string>
+    <string name="dictate__recording_animation_level_label">Следва гласа ви</string>
+    <string name="dictate__recording_animation_level_description">Реагира на нивото на микрофона и показва, че ви улавя</string>
     <string name="dictate__skip_silent_title">Прескачане на тихите записи</string>
     <string name="dictate__skip_silent_summary">Избягвайте измислен текст и излишни API заявки при тих запис</string>
     <string name="dictate__trim_silent_gaps_title">Изрязване на дългите паузи</string>

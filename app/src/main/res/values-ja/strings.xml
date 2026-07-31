@@ -1213,6 +1213,13 @@
     <string name="dictate__bluetooth_mic_summary">利用可能な場合、接続済みのBluetoothヘッドセットで録音します</string>
     <string name="dictate__keep_screen_awake_title">画面をオンのままにする</string>
     <string name="dictate__keep_screen_awake_summary">録音中に画面が消えないようにします</string>
+    <string name="dictate__recording_animation_title">録音インジケーター</string>
+    <string name="dictate__recording_animation_static_label">アニメーションなし</string>
+    <string name="dictate__recording_animation_static_description">録音中は赤い点のまま変化しません</string>
+    <string name="dictate__recording_animation_pulse_label">点滅</string>
+    <string name="dictate__recording_animation_pulse_description">一定のリズムで脈打ちます</string>
+    <string name="dictate__recording_animation_level_label">声に反応</string>
+    <string name="dictate__recording_animation_level_description">マイクの音量に反応し、音を拾っていることを示します</string>
     <string name="dictate__skip_silent_title">無音の録音をスキップ</string>
     <string name="dictate__skip_silent_summary">無音の録音での幻覚テキストや無駄なAPI呼び出しを回避します</string>
     <string name="dictate__trim_silent_gaps_title">長い無音を除去</string>

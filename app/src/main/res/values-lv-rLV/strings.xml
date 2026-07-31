@@ -1224,6 +1224,13 @@
     <string name="dictate__bluetooth_mic_summary">Ierakstīt, izmantojot pievienotās Bluetooth austiņas, kad tās ir pieejamas</string>
     <string name="dictate__keep_screen_awake_title">Neļaut ekrānam izslēgties</string>
     <string name="dictate__keep_screen_awake_summary">Neļaut ekrānam izslēgties ierakstīšanas laikā</string>
+    <string name="dictate__recording_animation_title">Ierakstīšanas indikators</string>
+    <string name="dictate__recording_animation_static_label">Bez animācijas</string>
+    <string name="dictate__recording_animation_static_description">Ierakstīšanas laikā paliek vienlaidu sarkans punkts</string>
+    <string name="dictate__recording_animation_pulse_label">Pulsējošs</string>
+    <string name="dictate__recording_animation_pulse_description">Pulsē vienmērīgā ritmā</string>
+    <string name="dictate__recording_animation_level_label">Seko jūsu balsij</string>
+    <string name="dictate__recording_animation_level_description">Reaģē uz mikrofona līmeni, parādot, ka tas jūs uztver</string>
     <string name="dictate__skip_silent_title">Izlaist klusos ierakstus</string>
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
     <string name="dictate__trim_silent_gaps_title">Apgriezt garās pauzes</string>

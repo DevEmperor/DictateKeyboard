@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
 import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
@@ -349,6 +350,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val keepScreenAwake = boolean(
             key = "dictate__keep_screen_awake",
             default = true,
+        )
+        // How the recording indicator moves while dictating — the Smartbar's red dot and the classic
+        // layout's record button (issue #238). Defaults to LEVEL (mic-reactive), which doubles as
+        // feedback that the microphone is hearing something; PULSE restores the pre-rewrite look and
+        // STATIC removes the movement entirely for anyone who finds it distracting while speaking.
+        val recordingAnimation = enum(
+            key = "dictate__recording_animation",
+            default = DictateRecordingAnimation.LEVEL,
         )
         // Skip transcription when a local Silero VAD finds no speech in the recording, so silent clips
         // don't produce "ghost text" hallucinations or waste API credits (issue #93). Default on.

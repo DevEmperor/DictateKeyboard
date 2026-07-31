@@ -88,6 +88,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
 import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
@@ -388,6 +389,29 @@ fun DictateRecordingScreen() = FlorisScreen {
             modifier = Modifier.settingsSearchAnchor("dictate__keep_screen_awake_title"),
             title = stringRes(R.string.dictate__keep_screen_awake_title),
             summary = stringRes(R.string.dictate__keep_screen_awake_summary),
+        )
+        ListPreference(
+            prefs.dictate.recordingAnimation,
+            icon = Icons.Default.GraphicEq,
+            modifier = Modifier.settingsSearchAnchor("dictate__recording_animation_title"),
+            title = stringRes(R.string.dictate__recording_animation_title),
+            entries = listPrefEntries {
+                entry(
+                    key = DictateRecordingAnimation.STATIC,
+                    label = stringRes(R.string.dictate__recording_animation_static_label),
+                    description = stringRes(R.string.dictate__recording_animation_static_description),
+                )
+                entry(
+                    key = DictateRecordingAnimation.PULSE,
+                    label = stringRes(R.string.dictate__recording_animation_pulse_label),
+                    description = stringRes(R.string.dictate__recording_animation_pulse_description),
+                )
+                entry(
+                    key = DictateRecordingAnimation.LEVEL,
+                    label = stringRes(R.string.dictate__recording_animation_level_label),
+                    description = stringRes(R.string.dictate__recording_animation_level_description),
+                )
+            },
         )
         SwitchPreference(
             prefs.dictate.skipSilentRecordings,

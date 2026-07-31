@@ -1279,6 +1279,13 @@
     <string name="dictate__bluetooth_mic_summary">Felvétel csatlakoztatott Bluetooth headseten keresztül, ha elérhető</string>
     <string name="dictate__keep_screen_awake_title">Képernyő ébren tartása</string>
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
+    <string name="dictate__recording_animation_title">Felvételjelző</string>
+    <string name="dictate__recording_animation_static_label">Nincs animáció</string>
+    <string name="dictate__recording_animation_static_description">Felvétel közben egyszínű piros pont marad</string>
+    <string name="dictate__recording_animation_pulse_label">Lüktető</string>
+    <string name="dictate__recording_animation_pulse_description">Egyenletes ütemben lüktet</string>
+    <string name="dictate__recording_animation_level_label">Követi a hangját</string>
+    <string name="dictate__recording_animation_level_description">Reagál a mikrofon szintjére, így látszik, hogy hallja Önt</string>
     <string name="dictate__skip_silent_title">Néma felvételek kihagyása</string>
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
     <string name="dictate__trim_silent_gaps_title">Hosszú szünetek levágása</string>

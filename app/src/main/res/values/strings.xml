@@ -1666,6 +1666,13 @@
     <string name="dictate__audio_source_voice_communication_summary" comment="Summary for the voice communication audio source">Highest mic priority — works when another app uses the mic, but may lower accuracy.</string>
     <string name="dictate__keep_screen_awake_title" comment="Setting: keep the screen on while recording">Keep screen awake</string>
     <string name="dictate__keep_screen_awake_summary" comment="Summary for the keep-screen-awake setting">Prevent the screen from turning off while recording</string>
+    <string name="dictate__recording_animation_title" comment="Setting: how the recording indicator moves">Recording indicator</string>
+    <string name="dictate__recording_animation_static_label" comment="Option: no animation">No animation</string>
+    <string name="dictate__recording_animation_static_description" comment="Option description">Stays a solid red dot while recording</string>
+    <string name="dictate__recording_animation_pulse_label" comment="Option: steady pulse">Pulsing</string>
+    <string name="dictate__recording_animation_pulse_description" comment="Option description">Pulses at a steady rate</string>
+    <string name="dictate__recording_animation_level_label" comment="Option: reacts to microphone level">Follows your voice</string>
+    <string name="dictate__recording_animation_level_description" comment="Option description">Reacts to the microphone level, showing that the mic is picking you up</string>
     <string name="dictate__skip_silent_title" comment="Setting: skip transcribing recordings that contain no speech">Skip silent recordings</string>
     <string name="dictate__skip_silent_summary" comment="Summary for the skip-silent-recordings setting">Avoid ghost text and wasted API calls on silent audio</string>
     <string name="dictate__trim_silent_gaps_title" comment="Setting: cut long pauses out of a recording before uploading it (issue #232)">Trim long pauses</string>

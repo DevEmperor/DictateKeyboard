@@ -1064,6 +1064,13 @@
     <string name="dictate__bluetooth_mic_summary">Registra tramite un auricolare Bluetooth collegato, quando disponibile</string>
     <string name="dictate__keep_screen_awake_title">Mantieni lo schermo acceso</string>
     <string name="dictate__keep_screen_awake_summary">Impedisci che lo schermo si spenga durante la registrazione</string>
+    <string name="dictate__recording_animation_title">Indicatore di registrazione</string>
+    <string name="dictate__recording_animation_static_label">Nessuna animazione</string>
+    <string name="dictate__recording_animation_static_description">Resta un punto rosso fisso durante la registrazione</string>
+    <string name="dictate__recording_animation_pulse_label">Pulsante</string>
+    <string name="dictate__recording_animation_pulse_description">Pulsa a ritmo costante</string>
+    <string name="dictate__recording_animation_level_label">Segue la tua voce</string>
+    <string name="dictate__recording_animation_level_description">Reagisce al livello del microfono, mostrando che ti sta captando</string>
     <string name="dictate__skip_silent_title">Salta le registrazioni silenziose</string>
     <string name="dictate__skip_silent_summary">Evita testo allucinato e chiamate API inutili con audio silenzioso</string>
     <string name="dictate__trim_silent_gaps_title">Taglia le pause lunghe</string>

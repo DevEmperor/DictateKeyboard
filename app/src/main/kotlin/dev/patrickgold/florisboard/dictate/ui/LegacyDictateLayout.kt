@@ -112,6 +112,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -532,6 +533,7 @@ private fun LegacyRecordRow(
     dictateState: DictateController.UiState,
     accent: Color,
 ) {
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val recording = dictateState as? DictateController.UiState.Recording
     val rewording = dictateState as? DictateController.UiState.Rewording
@@ -581,12 +583,23 @@ private fun LegacyRecordRow(
         }
 
         // Center: the big Record button – the one deliberate accent element (like the Smartbar mic).
+        // Its movement follows the same user choice as the Smartbar dot (issue #238): a steady pulse,
+        // the live mic level, or nothing at all. Kept subtle either way — this key is the size of a
+        // thumb, so the same factors that read well on a 12 dp dot would be jarring here.
+        val animation by prefs.dictate.recordingAnimation.collectAsState()
+        val isRecording = recording != null && !recording.paused
+        val level = if (animation == DictateRecordingAnimation.LEVEL && isRecording) {
+            DictateController.audioLevel.collectAsState().value
+        } else {
+            0f
+        }
         val pulse by rememberInfiniteTransition(label = "legacyRecord").animateFloat(
             initialValue = 1f,
-            targetValue = if (recording != null && !recording.paused) 1.03f else 1f,
+            targetValue = if (animation == DictateRecordingAnimation.PULSE && isRecording) 1.03f else 1f,
             animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
             label = "recordPulse",
         )
+        val recordScale = if (animation == DictateRecordingAnimation.LEVEL) 1f + 0.03f * level else pulse
         val interaction = remember { MutableInteractionSource() }
         val feedback = LocalInputFeedbackController.current
         Box(
@@ -594,7 +607,7 @@ private fun LegacyRecordRow(
                 .weight(1f)
                 .fillMaxHeight()
                 .padding(horizontal = KeyMarginH, vertical = KeyMarginV)
-                .scale(pulse)
+                .scale(recordScale)
                 .clip(LegacyKeyShape)
                 .background(accent)
                 .then(

@@ -1284,6 +1284,13 @@
     <string name="dictate__bluetooth_mic_summary">Записывать через подключённую Bluetooth-гарнитуру, когда она доступна</string>
     <string name="dictate__keep_screen_awake_title">Не гасить экран</string>
     <string name="dictate__keep_screen_awake_summary">Не давать экрану выключаться во время записи</string>
+    <string name="dictate__recording_animation_title">Индикатор записи</string>
+    <string name="dictate__recording_animation_static_label">Без анимации</string>
+    <string name="dictate__recording_animation_static_description">Во время записи остаётся сплошной красной точкой</string>
+    <string name="dictate__recording_animation_pulse_label">Пульсирующий</string>
+    <string name="dictate__recording_animation_pulse_description">Пульсирует в постоянном ритме</string>
+    <string name="dictate__recording_animation_level_label">Следует за голосом</string>
+    <string name="dictate__recording_animation_level_description">Реагирует на уровень микрофона, показывая, что он вас слышит</string>
     <string name="dictate__skip_silent_title">Пропускать тихие записи</string>
     <string name="dictate__skip_silent_summary">Избегайте выдуманного текста и лишних вызовов API при тихой записи</string>
     <string name="dictate__trim_silent_gaps_title">Обрезать длинные паузы</string>

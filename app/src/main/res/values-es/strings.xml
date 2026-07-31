@@ -1262,6 +1262,13 @@
     <string name="dictate__bluetooth_mic_summary">Grabar con unos auriculares Bluetooth conectados cuando estén disponibles</string>
     <string name="dictate__keep_screen_awake_title">Mantener la pantalla encendida</string>
     <string name="dictate__keep_screen_awake_summary">Evitar que la pantalla se apague durante la grabación</string>
+    <string name="dictate__recording_animation_title">Indicador de grabación</string>
+    <string name="dictate__recording_animation_static_label">Sin animación</string>
+    <string name="dictate__recording_animation_static_description">Permanece como un punto rojo fijo mientras grabas</string>
+    <string name="dictate__recording_animation_pulse_label">Pulsante</string>
+    <string name="dictate__recording_animation_pulse_description">Late a un ritmo constante</string>
+    <string name="dictate__recording_animation_level_label">Sigue tu voz</string>
+    <string name="dictate__recording_animation_level_description">Reacciona al nivel del micrófono y muestra que te está captando</string>
     <string name="dictate__skip_silent_title">Omitir grabaciones silenciosas</string>
     <string name="dictate__skip_silent_summary">Evita texto alucinado y llamadas a la API inútiles en audio silencioso</string>
     <string name="dictate__trim_silent_gaps_title">Recortar pausas largas</string>

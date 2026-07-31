@@ -1295,6 +1295,13 @@
     <string name="dictate__bluetooth_mic_summary">Nahrávat přes připojená sluchátka Bluetooth, jsou-li dostupná</string>
     <string name="dictate__keep_screen_awake_title">Ponechat obrazovku zapnutou</string>
     <string name="dictate__keep_screen_awake_summary">Zabránit vypnutí obrazovky během nahrávání</string>
+    <string name="dictate__recording_animation_title">Indikátor nahrávání</string>
+    <string name="dictate__recording_animation_static_label">Bez animace</string>
+    <string name="dictate__recording_animation_static_description">Během nahrávání zůstane plnou červenou tečkou</string>
+    <string name="dictate__recording_animation_pulse_label">Pulzující</string>
+    <string name="dictate__recording_animation_pulse_description">Pulzuje stálým tempem</string>
+    <string name="dictate__recording_animation_level_label">Sleduje váš hlas</string>
+    <string name="dictate__recording_animation_level_description">Reaguje na úroveň mikrofonu a ukazuje, že vás zachycuje</string>
     <string name="dictate__skip_silent_title">Přeskočit tichá nahrávání</string>
     <string name="dictate__skip_silent_summary">Zabraňte vymyšlenému textu a zbytečným voláním API u tichého záznamu</string>
     <string name="dictate__trim_silent_gaps_title">Oříznout dlouhé pauzy</string>
