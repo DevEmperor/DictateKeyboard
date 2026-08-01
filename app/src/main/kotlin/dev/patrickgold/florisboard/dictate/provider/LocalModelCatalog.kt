@@ -74,7 +74,7 @@ object LocalModelCatalog {
     val WHISPER_TINY = LocalModelSpec(
         id = "whisper-tiny",
         displayName = "Whisper Tiny",
-        description = "Multilingual · fastest · ~99 MB",
+        description = "Multilingual · ~99 MB",
         files = listOf(
             LocalModelFile("$REL/tiny-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 12_937_772, "d24fb083ae3b1041fc24e97971d60e280c9342201fbb67b0ab428a8b4a51a434"),
             LocalModelFile("$REL/tiny-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 89_855_401, "d2fece8dd42771f1df975c6c0445770d0c292bf7547c2cae04a6c0cc57540925"),
@@ -87,7 +87,7 @@ object LocalModelCatalog {
     val WHISPER_BASE = LocalModelSpec(
         id = "whisper-base",
         displayName = "Whisper Base",
-        description = "Multilingual · recommended · ~153 MB",
+        description = "Multilingual · ~153 MB",
         files = listOf(
             LocalModelFile("$REL/base-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 29_120_534, "0b8fb1304b6109976038efff5ace81720e00386f3ff6b54ee8c75291ca0a1e11"),
             LocalModelFile("$REL/base-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 130_672_026, "9759d217388a01b3a4c7c15533201067b48ae819c4daafc8624e64b9409dc02d"),
@@ -100,7 +100,7 @@ object LocalModelCatalog {
     val WHISPER_SMALL = LocalModelSpec(
         id = "whisper-small",
         displayName = "Whisper Small",
-        description = "Multilingual · most accurate, large · ~358 MB (Base recommended)",
+        description = "Multilingual · ~358 MB",
         files = listOf(
             LocalModelFile("$REL/small-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 112_442_483, "4cbe7b22fa9026b843b60a68640c747de05bafb1a11b57edc0e66c232d9f33a9"),
             LocalModelFile("$REL/small-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 262_226_114, "acad50b5c782696e91b55914cc5ab4f756f1532f76e22aa6fc615f39fb69a8ee"),
@@ -113,7 +113,7 @@ object LocalModelCatalog {
     val WHISPER_TINY_EN = LocalModelSpec(
         id = "whisper-tiny.en",
         displayName = "Whisper Tiny (English)",
-        description = "English only · fastest · ~99 MB",
+        description = "English · ~99 MB",
         files = listOf(
             LocalModelFile("$REL/tiny.en-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 12_937_772, "0ce578b827c94a961aacb8fa14b02f096504b337e5c94be37c36238cbe3e8bc6"),
             LocalModelFile("$REL/tiny.en-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 89_853_865, "06c0e6ff6348d427e51839219d1c886c18cfdf411e629e33f5e1679bff9c1527"),
@@ -126,7 +126,7 @@ object LocalModelCatalog {
     val WHISPER_BASE_EN = LocalModelSpec(
         id = "whisper-base.en",
         displayName = "Whisper Base (English)",
-        description = "English only · recommended for English · ~153 MB",
+        description = "English · ~153 MB",
         files = listOf(
             LocalModelFile("$REL/base.en-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 29_120_534, "ef6b936f4c9b1d90a3b68634b60c4ed8576b26172b33c2535ec0e933c9edb823"),
             LocalModelFile("$REL/base.en-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 130_669_978, "f7162ad6db2dbef16cfaeaa7f945b9d7dd9c1b8d472f6aca82f2273d185e4d41"),
@@ -139,7 +139,7 @@ object LocalModelCatalog {
     val WHISPER_SMALL_EN = LocalModelSpec(
         id = "whisper-small.en",
         displayName = "Whisper Small (English)",
-        description = "English only · most accurate · ~358 MB",
+        description = "English · ~358 MB",
         files = listOf(
             LocalModelFile("$REL/small.en-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 112_442_483, "8bdac288f369aa94ee2194059238c465ed82ea9d47ee8fa4a8c0a891873e462f"),
             LocalModelFile("$REL/small.en-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 262_223_042, "710ccf890e10f3faa15f51ec346081a2723c9f3adb6e4da81c6573a5a6f877fb"),
@@ -157,7 +157,7 @@ object LocalModelCatalog {
     val PARAKEET_TDT_V3 = LocalModelSpec(
         id = "parakeet-tdt-0.6b-v3",
         displayName = "Parakeet TDT 0.6B v3",
-        description = "25 European languages · fast, accurate · ~670 MB",
+        description = "25 European languages · ~670 MB",
         files = listOf(
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_184_281, "acfc2b4456377e15d04f0243af540b7fe7c992f8d898d751cf134c3a55fd2247"),
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_275, "179e50c43d1a9de79c8a24149a2f9bac6eb5981823f2a2ed88d655b24248db4e"),
@@ -177,7 +177,7 @@ object LocalModelCatalog {
     val PARAKEET_PRIMELINE_DE = LocalModelSpec(
         id = "parakeet-primeline-de",
         displayName = "Parakeet German (primeline)",
-        description = "German · higher accuracy · ~670 MB",
+        description = "German · ~670 MB",
         files = listOf(
             LocalModelFile("$REL/parakeet-primeline-de-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_282_409, "4ce2447d5d996f1ea369c68cd8c1a8372c5e2b4c5784c9dc9c706b5e42ddc85e"),
             LocalModelFile("$REL/parakeet-primeline-de-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_274, "ebcae1f7cf869507c1c77932e607df5f8d650b67897b41fbdcb3aea09fc39c4d"),
@@ -195,6 +195,12 @@ object LocalModelCatalog {
      * to sherpa-onnx ONNX by the sherpa-onnx project (Apache-2.0). ShareAlike governs adaptations of the
      * model — these files are mirrored verbatim — and both licenses permit redistribution with
      * attribution. See NOTICE.
+     *
+     * **Provenance.** German, English and French use sherpa-onnx's own published conversion, which is a
+     * leaner re-export (~70 MB encoder) and measurably better than the upstream build. Every other
+     * language only exists upstream, so those files are extracted from Banafo's `.data` containers —
+     * a plain `u32 length | blob` archive holding exactly encoder/decoder/joiner/tokens — and carry the
+     * ~155 MB encoder. That size difference is real: the large build decodes roughly 1.5–2x slower.
      *
      * Unlike Whisper these need **no** VAD companion file: the recognizer detects speech pauses itself
      * (endpointing), which is also what settles a segment during live dictation.
@@ -215,7 +221,7 @@ object LocalModelCatalog {
         return LocalModelSpec(
             id = "kroko-$lang",
             displayName = displayName,
-            description = "$languageLabel · live · ~$approxMb MB",
+            description = "$languageLabel · ~$approxMb MB",
             isStreaming = true,
             files = listOf(
                 LocalModelFile("$REL/kroko-$lang-encoder.onnx", LocalTranscriptionProvider.ENCODER, encoderBytes, encoderSha),
@@ -265,6 +271,60 @@ object LocalModelCatalog {
         6_385, "1be5e0a58e05d06d327df4c6b7b5e4f8aba01da6981eb016fcaceafc6a56680f",
     )
 
+    /** ~156 MB. Italian live model. */
+    val KROKO_IT = kroko(
+        "it", "Kroko Italian", "Italian",
+        154_878_660, "81c436e4f1cc381276859c858e3e881e382d0e0ca77a21bea1fde74c1275f6b2",
+        617_488, "f9c8093a12cb93b14e82f9205f1c4f57cb19143e0cca0079c6770c717611961c",
+        "3056ae55986ba4fb6203599baaeebb5f7eeb776798c3146df3bf76a198d172a9",
+        6_107, "6c1ce19563e9fa59cc05ad921ccc31106497c1e2895346e2aa3fa936a103ed39",
+    )
+
+    /** ~156 MB. Dutch live model. */
+    val KROKO_NL = kroko(
+        "nl", "Kroko Dutch", "Dutch",
+        154_878_660, "200616faee86985fee53f16073f8aa2b745988ef7a1dc7825271c464193d0266",
+        617_488, "e5f8003008d4f00b52f0f16fb76544218957115e2b12a6397a89ec6bfe0e21f9",
+        "4813be19995e1188b4b144e69ecb23d2e26e47f7d21b263443e647d8d7edc156",
+        6_241, "157f0d8363aa1d179eebbe5948db07d19f56711328ba0561376e87d5cb68ee9e",
+    )
+
+    /** ~156 MB. Portuguese live model. */
+    val KROKO_PT = kroko(
+        "pt", "Kroko Portuguese", "Portuguese",
+        154_878_660, "336b9a62fd37d8b94855fcbe0414000aa5f1bd75d4cb907e112bd6b7ef97c52e",
+        617_488, "2380832dbb1867779a550aea3948776d6a53ffa1cccd075bb7592ebaf21b7638",
+        "de7afbc23e7e55af7fed85780690b8f883c62b881fe14d546d9677151581962f",
+        6_235, "e9b9b588c138558388c9a53385007082f58130a0ceddce8df6a4aed032162b3f",
+    )
+
+    /** ~156 MB. Swedish live model. */
+    val KROKO_SV = kroko(
+        "sv", "Kroko Swedish", "Swedish",
+        154_877_618, "60c367201c16f6a8f3fbd7edcf86c2bf59e71455a841fdaacbaf5ea6767273b0",
+        617_488, "3424e0908f578d0fd6a1911e73e0d6fc4ef430b8892389d1c49768b5ee75ead1",
+        "194e38c970ca06743439b101b7dcb4b45b4e215d7b6dbc9419f4a1c557286413",
+        5_706, "d6b161d3547eaae1927ddba4af83c117f27ae3efff685850c0c50b538b5a5781",
+    )
+
+    /** ~156 MB. Turkish live model. */
+    val KROKO_TR = kroko(
+        "tr", "Kroko Turkish", "Turkish",
+        154_878_660, "d36d8abbcbd9d87c5446f296b59a9fce26ccd87c7edb278f61631ef3d02803a2",
+        617_489, "08f317129a6ffed14f8755e61d50b1df6ac1cc5af3bdd832b7ea93961199217e",
+        "aa49f0e96e4ef5ea408cb09f4b2ef5785995513b21fd8f04675d2f5f0ffcd1f3",
+        5_423, "c7e93bbc0f57852154df4e52005ae163d653f3daf0d1dbeb4f75a3ffa4b25c57",
+    )
+
+    /** ~156 MB. Hebrew live model. */
+    val KROKO_HE = kroko(
+        "he", "Kroko Hebrew", "Hebrew",
+        154_878_660, "6b4a447c2bbb829ec6b58677befd136220d7b1e090fbb66247d150c5066143d7",
+        617_488, "8cb83589aa39bb898a2a52dc2fe87155deb9abf9a0e5d86f8c6acece1164330e",
+        "77d8566a35eae6f9d45dce1095d2c60b381515470b0755159b23fe6f636fbd32",
+        6_331, "be979c5715abf12e88a88318e60b33e744fffd83f47b562e5d9964539d46ada1",
+    )
+
     /** Install-dir id of the on-device Smart Turn v3 classifier (issue #191). */
     const val SMART_TURN_ID = "smart-turn-v3"
 
@@ -298,6 +358,7 @@ object LocalModelCatalog {
         WHISPER_TINY, WHISPER_BASE, WHISPER_SMALL,
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
         KROKO_EN, KROKO_DE, KROKO_ES, KROKO_FR,
+        KROKO_IT, KROKO_NL, KROKO_PT, KROKO_SV, KROKO_TR, KROKO_HE,
     )
 
     fun byId(id: String): LocalModelSpec? = all.firstOrNull { it.id == id }
