@@ -88,6 +88,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import org.florisboard.lib.compose.FlorisButtonBar
 import org.florisboard.lib.compose.FlorisDropdownLikeButton
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 
@@ -567,6 +568,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
         errorDialogStrId?.let { strId ->
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.error__title),
                 confirmLabel = stringRes(android.R.string.ok),
                 onConfirm = {

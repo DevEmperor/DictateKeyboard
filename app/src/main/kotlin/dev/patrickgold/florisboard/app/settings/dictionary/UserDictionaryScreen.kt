@@ -69,6 +69,7 @@ import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 private val AllLanguagesLocale = FlorisLocale.from(language = "zz")
@@ -314,6 +315,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             val localeValidation = rememberValidationResult(UserDictionaryValidation.Locale, locale)
 
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(if (isAddWord) {
                     R.string.settings__udm__dialog__title_add
                 } else {

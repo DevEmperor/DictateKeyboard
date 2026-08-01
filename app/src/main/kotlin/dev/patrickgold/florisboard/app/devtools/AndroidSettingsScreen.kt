@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 @Composable
@@ -67,6 +68,7 @@ fun AndroidSettingsScreen(name: String?) = FlorisScreen {
 
         if (dialogKey != null) {
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = dialogKey!!,
                 onDismiss = { dialogKey = null },
             ) {

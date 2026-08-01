@@ -89,6 +89,7 @@ import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.FlorisInfoCard
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
@@ -398,6 +399,7 @@ private fun EditScreen(
 
         if (showInvalidMetadataDialog) {
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.ext__editor__metadata__title_invalid),
                 confirmLabel = stringRes(R.string.action__ok),
                 onConfirm = {

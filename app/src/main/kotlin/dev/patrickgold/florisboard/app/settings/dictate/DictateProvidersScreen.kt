@@ -88,6 +88,8 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
+import org.florisboard.lib.compose.florisDialogScroll
+import org.florisboard.lib.compose.persistentVerticalScrollbar
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -236,28 +238,6 @@ fun DictateProvidersScreen() = FlorisScreen {
     }
 }
 
-/**
- * Draws a thin, rounded scrollbar thumb on the trailing edge of a [verticalScroll]ed container so the
- * user can tell there is more content below (Compose has no built-in scrollbar). Nothing is drawn when
- * the content already fits.
- */
-private fun Modifier.verticalScrollbar(state: ScrollState, color: Color, width: Dp = 3.dp): Modifier =
-    drawWithContent {
-        drawContent()
-        val max = state.maxValue
-        if (max > 0 && max != Int.MAX_VALUE) {
-            val viewport = size.height
-            val thumbHeight = viewport * (viewport / (viewport + max))
-            val top = (viewport - thumbHeight) * (state.value.toFloat() / max)
-            val w = width.toPx()
-            drawRoundRect(
-                color = color,
-                topLeft = Offset(size.width - w, top),
-                size = Size(w, thumbHeight),
-                cornerRadius = CornerRadius(w / 2, w / 2),
-            )
-        }
-    }
 
 @Composable
 private fun RewordingProviderPreference(entries: List<Pair<String, String>>, showInfo: Boolean) {
@@ -305,7 +285,7 @@ private fun RewordingProviderPreference(entries: List<Pair<String, String>>, sho
             Column(
                 modifier = Modifier
                     .heightIn(max = 320.dp)
-                    .verticalScrollbar(scrollState, scrollbarColor)
+                    .persistentVerticalScrollbar(scrollState, scrollbarColor)
                     .verticalScroll(scrollState)
                     .padding(end = 6.dp),
             ) {
@@ -326,6 +306,7 @@ private fun RewordingProviderPreference(entries: List<Pair<String, String>>, sho
 
     if (infoOpen) {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = stringRes(R.string.dictate__providers_active_rewording),
             confirmLabel = stringRes(R.string.action__ok),
             onConfirm = { infoOpen = false },
@@ -382,7 +363,7 @@ private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>)
                 Column(
                     modifier = Modifier
                         .heightIn(max = 320.dp)
-                        .verticalScrollbar(scrollState, scrollbarColor)
+                        .persistentVerticalScrollbar(scrollState, scrollbarColor)
                         .verticalScroll(scrollState)
                         .padding(end = 6.dp),
                 ) {
@@ -563,6 +544,9 @@ private fun ProviderEditorDialog(
 
     JetPrefAlertDialog(
         title = preset?.displayName ?: stringRes(R.string.dictate__providers_custom_title),
+        // The whole body scrolls as one — the on-device model list makes this dialog the tallest in the
+        // app, and pinning the intro/checkbox/slider while only the list moved read as two panes.
+        scrollModifier = florisDialogScroll(),
         confirmLabel = stringRes(R.string.action__ok),
         dismissLabel = stringRes(R.string.action__cancel),
         neutralLabel = if (onDelete != null) stringRes(R.string.action__delete) else null,
@@ -768,6 +752,7 @@ private fun RealtimeModelPickerDialog(
     onDismiss: () -> Unit,
 ) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__providers_field_realtime_model),
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,

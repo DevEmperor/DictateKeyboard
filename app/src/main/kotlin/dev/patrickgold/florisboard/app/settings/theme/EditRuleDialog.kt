@@ -97,6 +97,7 @@ import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
@@ -166,6 +167,7 @@ internal fun EditRuleDialog(
     }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(
             if (isAddRuleDialog) {
                 R.string.settings__theme_editor__add_rule
@@ -453,6 +455,7 @@ private fun EditCodeValueDialog(
     }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(
             if (codeValue == KeyCode.UNSPECIFIED.toString()) {
                 R.string.settings__theme_editor__add_code
@@ -717,6 +720,7 @@ private fun <V : Any> EnumLikeAttributeBox(
 
     if (showAddDialog) {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = stringRes(R.string.action__add),
             dismissLabel = stringRes(R.string.action__cancel),
             onDismiss = { showAddDialog = false },

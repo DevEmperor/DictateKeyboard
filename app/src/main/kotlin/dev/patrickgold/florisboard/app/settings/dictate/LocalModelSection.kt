@@ -14,7 +14,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -52,7 +51,6 @@ import dev.patrickgold.florisboard.dictate.provider.LocalModelDownloads
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalModelSpec
 import kotlin.math.roundToInt
-import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -169,15 +167,6 @@ fun LocalModelSection(
         )
         HorizontalDivider(modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
 
-        // The list is longer than the dialog and the "Live" group sits at the bottom, so without a visible
-        // scrollbar there is nothing to suggest it exists. Same scrollbar the rest of the app uses, on a
-        // bounded-height list of its own, so the thumb reflects the models instead of the whole dialog.
-        Column(
-            modifier = Modifier
-                .heightIn(max = 340.dp)
-                .florisVerticalScroll()
-                .padding(end = 10.dp), // keeps the rows clear of the thumb
-        ) {
         // Streaming models (#233) behave differently enough to deserve their own group: they type while
         // you speak, but only if real-time transcription is switched on. The catalog already orders the
         // one-shot models first, so the header simply goes in front of the first streaming entry.
@@ -219,7 +208,6 @@ fun LocalModelSection(
                 onCancel = { LocalModelDownloads.cancel(spec.id) },
                 onDelete = { pendingDelete = spec },
             )
-        }
         }
     }
 

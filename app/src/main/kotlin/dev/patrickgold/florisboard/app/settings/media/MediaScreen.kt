@@ -70,6 +70,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.pluralsRes
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
@@ -275,6 +276,7 @@ private fun GifSetupDialog(
     var key by remember { mutableStateOf(initialKey) }
     var reveal by remember { mutableStateOf(false) }
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.prefs__media__gif_setup__title),
         confirmLabel = stringRes(R.string.action__save),
         dismissLabel = stringRes(R.string.action__cancel),
@@ -360,6 +362,7 @@ fun DeleteEmojiHistoryConfirmDialog(
 ) {
     shouldDelete?.let {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = stringRes(R.string.action__reset_confirm_title),
             confirmLabel = stringRes(R.string.action__yes),
             dismissLabel = stringRes(R.string.action__no),

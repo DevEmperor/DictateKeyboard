@@ -45,6 +45,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -139,6 +140,7 @@ fun DictateLanguagesScreen() = FlorisScreen {
 
         if (showActivePicker) {
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.dictate__languages_active_title),
                 dismissLabel = stringRes(android.R.string.cancel),
                 onDismiss = { showActivePicker = false },

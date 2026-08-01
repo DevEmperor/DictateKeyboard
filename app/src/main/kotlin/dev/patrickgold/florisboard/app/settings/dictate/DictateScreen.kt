@@ -97,6 +97,7 @@ import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -651,6 +652,7 @@ private fun LongformDialog(
     val installedTick by LocalModelDownloads.installedTick.collectAsState()
     val smartTurnActive = smartTurnEnabled && remember(installedTick) { SmartTurnModel.isModelAvailable(context) }
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__longform_title),
         dismissLabel = stringRes(android.R.string.ok),
         onDismiss = onDismiss,

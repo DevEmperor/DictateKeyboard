@@ -59,6 +59,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
@@ -210,6 +211,7 @@ fun DeleteSubtypeConfirmationDialog(
 )   {
     subtypeToDelete?.let {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = stringRes(R.string.settings__localization__subtype_delete_confirmation_title),
             confirmLabel = stringRes(R.string.action__yes),
             dismissLabel = stringRes(R.string.action__no),

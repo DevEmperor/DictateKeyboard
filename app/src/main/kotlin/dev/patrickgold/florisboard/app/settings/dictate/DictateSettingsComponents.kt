@@ -54,6 +54,7 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import kotlinx.coroutines.launch
 
@@ -125,6 +126,7 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
     if (selectionDialogOpen) {
         var tmpValue by remember(value) { mutableStateOf(value) }
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = title,
             confirmLabel = stringRes(R.string.action__ok),
             onConfirm = {
@@ -161,6 +163,7 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
 
     if (infoDialogOpen) {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = infoTitle,
             confirmLabel = stringRes(R.string.action__ok),
             onConfirm = { infoDialogOpen = false },
@@ -208,6 +211,7 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
     if (dialogOpen) {
         var text by remember(value) { mutableStateOf(value) }
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = title,
             confirmLabel = stringRes(R.string.action__ok),
             dismissLabel = stringRes(R.string.action__cancel),
@@ -265,6 +269,7 @@ internal fun ReasoningEffortDialog(
         add(DictateReasoningEffort.CUSTOM)
     }
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__reasoning_effort_title),
         confirmLabel = stringRes(R.string.action__apply),
         dismissLabel = stringRes(R.string.action__cancel),

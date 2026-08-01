@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 @Composable
@@ -31,6 +32,7 @@ fun FlorisConfirmDeleteDialog(
     what: String,
 ) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         modifier = modifier,
         title = stringRes(R.string.action__delete_confirm_title),
         confirmLabel = stringRes(R.string.action__delete),
@@ -50,6 +52,7 @@ fun FlorisUnsavedChangesDialog(
     onDismiss: () -> Unit,
 ) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         modifier = modifier,
         title = stringRes(R.string.action__discard_confirm_title),
         confirmLabel = stringRes(R.string.action__save),

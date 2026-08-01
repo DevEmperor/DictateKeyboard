@@ -95,6 +95,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -285,6 +286,7 @@ fun DictateHistoryScreen() = FlorisScreen {
 
         if (confirmClear) {
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.dictate__history_clear_title),
                 confirmLabel = stringRes(R.string.dictate__history_clear_confirm),
                 onConfirm = {
@@ -484,6 +486,7 @@ private fun DetailDialog(
     }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = DateUtils.getRelativeDateTimeString(
             context, entry.createdAt, DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0,
         ).toString(),
@@ -636,6 +639,7 @@ private fun RetentionDialog(
     val dayUnit = stringRes(R.string.dictate__history_age_days, "days" to "").trim()
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__history_retention_title),
         confirmLabel = stringRes(android.R.string.ok),
         onConfirm = {

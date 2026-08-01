@@ -94,6 +94,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.json.JSONArray
 import org.json.JSONObject
@@ -441,6 +442,7 @@ private fun ShareConfirmDialog(
     var description by remember { mutableStateOf("") }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__prompt_share_title),
         confirmLabel = stringRes(R.string.dictate__prompt_share_continue),
         onConfirm = { onConfirm(category, description.trim().ifBlank { null }) },
@@ -545,6 +547,7 @@ private fun ImportModeDialog(
     onAdd: () -> Unit,
 ) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__prompts_import_mode_title),
         confirmLabel = stringRes(R.string.dictate__prompts_import_mode_replace),
         onConfirm = onReplace,
@@ -577,6 +580,7 @@ private fun PromptEditorDialog(
     var showError by remember { mutableStateOf(false) }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(
             if (initial.id < 0) R.string.dictate__prompt_add else R.string.dictate__prompt_edit,
         ),

@@ -61,6 +61,7 @@ import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
@@ -181,6 +182,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
             dialogFile?.let { file ->
                 var fileNameInput by rememberSaveable { mutableStateOf(file.name) }
                 JetPrefAlertDialog(
+                    scrollModifier = florisDialogScroll(),
                     title = stringRes(R.string.general__properties),
                     confirmLabel = stringRes(R.string.action__apply),
                     dismissLabel = stringRes(R.string.action__cancel),
@@ -251,6 +253,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         if (dest != null && result != null) {
             var fileNameInput by rememberSaveable { mutableStateOf(result.second) }
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.action__import_file),
                 confirmLabel = stringRes(R.string.action__add),
                 onConfirm = {
