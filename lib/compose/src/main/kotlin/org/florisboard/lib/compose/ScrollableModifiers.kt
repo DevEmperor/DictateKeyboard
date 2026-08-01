@@ -22,6 +22,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -49,6 +51,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 private val DefaultScrollbarSize = 4.dp
+
+/** How tall dialog content may grow before it scrolls instead of stretching the dialog. */
+private val DialogContentMaxHeight = 420.dp
+
+/** Clearance between dialog content and its scrollbar, so rows never butt against the bar. */
+private val DialogScrollbarGap = 12.dp
 // IgnoreInVeryFastOut (basically)
 private val ScrollbarAnimationEasing = CubicBezierEasing(1f, 0f, 0.82f, -0.13f)
 
@@ -87,12 +95,17 @@ fun Modifier.florisHorizontalScroll(
  * once the content actually overflows.
  */
 @Composable
-fun florisDialogScroll(): Modifier {
+fun florisDialogScroll(maxHeight: Dp = DialogContentMaxHeight): Modifier {
     val state = rememberScrollState()
     val color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
     return Modifier
+        // Cap first, so a long list scrolls inside a reasonably sized dialog instead of stretching one
+        // to the full height of the screen.
+        .heightIn(max = maxHeight)
         .persistentVerticalScrollbar(state, color)
         .verticalScroll(state)
+        // Inside the bar: keeps rows and trailing icons off it. The bar itself stays at the outer edge.
+        .padding(end = DialogScrollbarGap)
 }
 
 /**
