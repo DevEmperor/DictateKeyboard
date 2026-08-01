@@ -488,6 +488,8 @@ private fun ProviderEditorDialog(
     }
     var transcriptionModel by remember { mutableStateOf(account.transcriptionModel) }
     var chatModel by remember { mutableStateOf(account.chatModel) }
+    var realtimeModel by remember { mutableStateOf(account.realtimeModel) }
+    var showRealtimePicker by remember { mutableStateOf(false) }
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
     var cachedModels by remember { mutableStateOf(account.cachedModels) }
     var cachedAudioModels by remember { mutableStateOf(account.cachedAudioModels) }
@@ -539,6 +541,7 @@ private fun ProviderEditorDialog(
                     customBaseUrl = baseUrl.trim(),
                     transcriptionModel = transcriptionModel.trim(),
                     chatModel = chatModel.trim(),
+                    realtimeModel = realtimeModel.trim(),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
                     cachedTranscriptionModels = cachedTranscriptionModels,
@@ -602,8 +605,21 @@ private fun ProviderEditorDialog(
                         ?: stringRes(R.string.dictate__model_placeholder),
                     onBrowse = { pickerKind = ModelKind.TRANSCRIPTION },
                 )
-                // Real-time streaming model (issue #128) is intentionally not exposed: every provider has
-                // effectively one usable streaming model, so the engine always uses the preset default.
+                // Streaming runs over a different endpoint and protocol than batch STT, so it gets its own
+                // field rather than being folded into the picker above (#248, based on #243). It used to be
+                // hidden on the assumption that each provider has exactly one usable streaming model, which
+                // stopped being true once OpenAI shipped a second generation of them — and until now the
+                // stored realtimeModel had no way of ever being set.
+                if (preset?.supportsRealtime == true && preset.curatedRealtimeModels.isNotEmpty()) {
+                    EditorField(
+                        label = stringRes(R.string.dictate__providers_field_realtime_model),
+                        value = realtimeModel,
+                        onValueChange = { realtimeModel = it },
+                        placeholder = preset.defaultRealtimeModel
+                            ?: stringRes(R.string.dictate__model_placeholder),
+                        onBrowse = { showRealtimePicker = true },
+                    )
+                }
             }
             // Rewording model is unused while single-call multimodal is on (one model does both, #130).
             if (showChat && !transcriptionViaChat) {
@@ -674,6 +690,68 @@ private fun ProviderEditorDialog(
             },
             onDismiss = { pickerKind = null },
         )
+    }
+
+    if (showRealtimePicker && preset != null) {
+        RealtimeModelPickerDialog(
+            models = preset.curatedRealtimeModels,
+            default = preset.defaultRealtimeModel,
+            current = realtimeModel,
+            onPick = { realtimeModel = it },
+            onDismiss = { showRealtimePicker = false },
+        )
+    }
+}
+
+/**
+ * Picker for a provider's curated realtime models — a short radio list rather than the searchable
+ * catalogue used for batch models, because streaming models are few and never appear in `/models`.
+ *
+ * Choosing the default stores an **empty** string rather than the id. The account then keeps following
+ * the preset, so a later update can move it to a better model; only a deliberate choice of a non-default
+ * model is pinned. Same rule as the batch model field.
+ */
+@Composable
+private fun RealtimeModelPickerDialog(
+    models: List<String>,
+    default: String?,
+    current: String,
+    onPick: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    JetPrefAlertDialog(
+        title = stringRes(R.string.dictate__providers_field_realtime_model),
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            models.forEach { model ->
+                val isDefault = model == default
+                val pick = { onPick(if (isDefault) "" else model); onDismiss() }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = pick)
+                        .padding(vertical = 12.dp, horizontal = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(
+                        selected = current == model || (current.isBlank() && isDefault),
+                        onClick = pick,
+                    )
+                    Column(modifier = Modifier.padding(start = 8.dp)) {
+                        Text(model, style = MaterialTheme.typography.bodyLarge)
+                        if (isDefault) {
+                            Text(
+                                stringRes(R.string.dictate__providers_realtime_model_default),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

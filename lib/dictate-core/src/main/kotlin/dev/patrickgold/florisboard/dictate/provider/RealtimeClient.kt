@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.booleanOrNull
@@ -180,6 +181,10 @@ private class OpenAiRealtimeSession(
                             }
                         }
                     })
+                    // No server-side turn detection: Dictate decides when a dictation ends and commits the
+                    // buffer itself, so letting the server also cut turns would segment the same audio a
+                    // second time on its own schedule (from #243).
+                    put("turn_detection", JsonNull)
                 })
             })
         })
