@@ -1628,6 +1628,8 @@
 
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header" comment="Intro text above the on-device model list in the provider editor">Runs on your device — no audio is sent. Download a model to start.</string>
+    <string name="dictate__local_models_live_header" comment="Group heading above the on-device models that transcribe while you speak (issue #233)">Live (streaming)</string>
+    <string name="dictate__local_models_live_summary" comment="Explainer under the live model group heading: these models need the real-time switch under Recording (issue #233)">These type while you speak. Turn on “Real-time transcription” under Recording to use them.</string>
     <string name="dictate__local_longpress_send_title" comment="Search-index label for the on-device long-press-send checkbox (issue #228)">Long-press send for local model</string>
     <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: long-pressing the send button transcribes with the local model (issue #228)">Hold send while recording to use this model instead of the cloud.</string>
     <string name="dictate__local_unload_after" comment="Slider label: free the on-device model from RAM after {n} minutes idle">Unload idle model after {n} min</string>

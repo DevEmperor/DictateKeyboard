@@ -187,6 +187,9 @@ Dictate Keyboard is released under the terms of the
 - See [`LICENSE`](LICENSE) for the full license text and [`NOTICE`](NOTICE) for required
   attribution notices.
 - Speech recognition is powered by [OpenAI Whisper](https://openai.com/index/whisper/).
+- On-device live transcription uses the [Kroko ASR](https://huggingface.co/Banafo/Kroko-ASR)
+  community models by Banafo (CC-BY-SA), exported to ONNX by
+  [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx).
 - GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.
 
 <br>

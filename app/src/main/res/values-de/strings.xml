@@ -1330,6 +1330,8 @@
     <string name="changelog__v4_1_1">• Fix: Die Akzentfarbe konnte auf manchen Geräten grün erscheinen – Tasten und Buttons sind wieder im Dictate-Blau.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Läuft auf deinem Gerät — es wird kein Audio gesendet. Lade ein Modell, um zu starten.</string>
+    <string name="dictate__local_models_live_header">Live (Streaming)</string>
+    <string name="dictate__local_models_live_summary">Sie tippen mit, während du sprichst. Aktiviere „Echtzeit-Transkription“ unter Aufnahme, um sie zu nutzen.</string>
     <string name="dictate__local_longpress_send_title">Senden gedrückt halten für lokales Modell</string>
     <string name="dictate__local_longpress_send_summary">Beim Aufnehmen Senden gedrückt halten, um dieses Modell statt der Cloud zu nutzen.</string>
     <string name="dictate__local_unload_after">Inaktives Modell nach {n} Min entladen</string>

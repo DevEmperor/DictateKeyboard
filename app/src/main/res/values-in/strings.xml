@@ -1410,6 +1410,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="changelog__v4_1_1">• Perbaikan: warna aksen bisa tampak hijau di beberapa perangkat; tombol dan tuts kembali ke biru Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Berjalan di perangkat Anda — tidak ada audio yang dikirim. Unduh model untuk memulai.</string>
+    <string name="dictate__local_models_live_header">Langsung (streaming)</string>
+    <string name="dictate__local_models_live_summary">Mengetik saat kamu berbicara. Aktifkan “Transkripsi waktu nyata” di Perekaman untuk memakainya.</string>
     <string name="dictate__local_longpress_send_title">Tahan kirim untuk model lokal</string>
     <string name="dictate__local_longpress_send_summary">Saat merekam, tahan kirim untuk memakai model ini alih-alih cloud.</string>
     <string name="dictate__local_unload_after">Bongkar model menganggur setelah {n} mnt</string>

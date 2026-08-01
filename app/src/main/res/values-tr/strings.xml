@@ -1433,6 +1433,8 @@
     <string name="changelog__v4_1_1">• Düzeltme: vurgu rengi bazı cihazlarda yeşil görünebiliyordu; tuşlar ve düğmeler yeniden Dictate mavisinde.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Cihazınızda çalışır — ses gönderilmez. Başlamak için bir model indirin.</string>
+    <string name="dictate__local_models_live_header">Canlı (akış)</string>
+    <string name="dictate__local_models_live_summary">Siz konuşurken yazarlar. Bunları kullanmak için Kayıt altındaki “Gerçek zamanlı transkripsiyon” seçeneğini açın.</string>
     <string name="dictate__local_longpress_send_title">Yerel model için gönder\'e basılı tut</string>
     <string name="dictate__local_longpress_send_summary">Kayıt sırasında gönder\'e basılı tut, bulut yerine bu modeli kullan.</string>
     <string name="dictate__local_unload_after">Boştaki modeli {n} dk sonra bellekten kaldır</string>

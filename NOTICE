@@ -26,3 +26,21 @@ specific language governing permissions and limitations under the License.
 
 The full license text is available in the LICENSE file accompanying this
 distribution.
+
+================================================================================
+On-device speech recognition models
+================================================================================
+
+The on-device models are downloaded on demand and are not part of this source
+distribution. They are mirrored unmodified on the project's GitHub releases.
+
+    Kroko ASR community models (streaming, issue #233)
+    Copyright Banafo — https://huggingface.co/Banafo/Kroko-ASR
+    Licensed under CC-BY-SA. ONNX export by the sherpa-onnx project (Apache-2.0).
+
+    OpenAI Whisper — https://openai.com/index/whisper/ (MIT)
+    NVIDIA Parakeet TDT 0.6B v3 and the primeline German fine-tune (CC-BY-4.0)
+    Silero VAD — https://github.com/snakers4/silero-vad (MIT)
+
+    All of the above are exported to ONNX by the sherpa-onnx project
+    (https://github.com/k2-fsa/sherpa-onnx), licensed under Apache-2.0.

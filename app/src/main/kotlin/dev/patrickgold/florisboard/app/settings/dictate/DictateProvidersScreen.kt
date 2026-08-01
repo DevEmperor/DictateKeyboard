@@ -437,13 +437,22 @@ private fun providerSummary(
     noKey: String,
 ): String {
     if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
-        // On-device provider: surface the active downloaded model instead of an API-key state.
+        // On-device provider: surface the active downloaded models instead of an API-key state. There can
+        // be two — a one-shot and a live/streaming one (#233) — and both are worth showing, otherwise the
+        // row claims only half of what is set up.
         val context = LocalContext.current
-        val spec = account?.transcriptionModel?.takeIf { it.isNotBlank() }?.let { LocalModelCatalog.byId(it) }
-        return if (spec != null && LocalModelManager.isInstalled(context, spec.id)) {
-            spec.displayName
-        } else {
+        fun installedName(id: String?): String? = id?.takeIf { it.isNotBlank() }
+            ?.let { LocalModelCatalog.byId(it) }
+            ?.takeIf { LocalModelManager.isInstalled(context, it.id) }
+            ?.displayName
+        val names = listOfNotNull(
+            installedName(account?.transcriptionModel),
+            installedName(account?.realtimeModel),
+        ).distinct() // a pre-split setup can have the same streaming model in both slots
+        return if (names.isEmpty()) {
             stringRes(R.string.dictate__local_model_none_selected)
+        } else {
+            names.joinToString(" · ")
         }
     }
     val caps = buildList {
@@ -491,14 +500,27 @@ private fun ProviderEditorDialog(
     // [modelToStore] turns a value that still equals the default back into an empty string on confirm, so
     // the account goes on following the preset and a later update can move it. Only a deliberate choice of
     // something else is pinned.
+    // On-device: a streaming model stored in the one-shot slot predates the two-slot split (#233) — move
+    // it across on open so the dialog shows it under "Live" where it belongs, instead of as the one-shot
+    // pick it was never meant to be.
+    val legacyStreamingPick = preset?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE &&
+        LocalModelCatalog.isStreaming(account.transcriptionModel)
     var transcriptionModel by remember {
-        mutableStateOf(account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() })
+        mutableStateOf(
+            if (legacyStreamingPick) "" else {
+                account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() }
+            },
+        )
     }
     var chatModel by remember {
         mutableStateOf(account.chatModel.ifBlank { preset?.defaultChatModel.orEmpty() })
     }
     var realtimeModel by remember {
-        mutableStateOf(account.realtimeModel.ifBlank { preset?.defaultRealtimeModel.orEmpty() })
+        mutableStateOf(
+            if (legacyStreamingPick) account.transcriptionModel else {
+                account.realtimeModel.ifBlank { preset?.defaultRealtimeModel.orEmpty() }
+            },
+        )
     }
     var showRealtimePicker by remember { mutableStateOf(false) }
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
@@ -570,9 +592,14 @@ private fun ProviderEditorDialog(
     ) {
         if (preset?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
             // On-device provider: no key/remote model — manage downloadable models instead (#104).
+            // Two independent picks (#233): the one-shot model lives in `transcriptionModel`, the live
+            // streaming one in `realtimeModel` — which is otherwise unused for this provider and means
+            // exactly that. Both stay selected at once, so choosing a live model never drops the one-shot.
             LocalModelSection(
                 activeModelId = transcriptionModel,
+                activeStreamingModelId = realtimeModel,
                 onActiveModelChange = { transcriptionModel = it },
+                onActiveStreamingModelChange = { realtimeModel = it },
             )
         } else {
         Column {

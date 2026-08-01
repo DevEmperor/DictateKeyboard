@@ -50,7 +50,9 @@ import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.stats.DictateStats
 import dev.patrickgold.florisboard.dictate.provider.ChatRequest
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
+import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
+import dev.patrickgold.florisboard.dictate.provider.LocalRealtimeSession
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.RealtimeApi
@@ -756,7 +758,7 @@ object DictateController {
                 val audioSource = setupBluetoothIfEnabled(appContext)
                 // Long-form segmented dictation (#170): transcribe cut segments in the background while
                 // recording continues. Off for realtime / live-prompt / overlay / multimodal (see the gate).
-                val segmented = isSegmentedMode()
+                val segmented = isSegmentedMode(appContext)
                 // Auto-split: Silero VAD finds candidate pauses, then Smart Turn v3 decides whether the
                 // thought is complete; the configured pause remains the Pipecat-style safety fallback.
                 segmentVad?.release()
@@ -972,10 +974,8 @@ object DictateController {
         val account = if (forceLocal) localTranscriptionAccount() else transcriptionAccount()
         val apiKey = account.apiKey
         val preset = presetFor(account)
-        val model = account.transcriptionModel.takeIf { it.isNotBlank() }
-            ?: preset.defaultTranscriptionModel
-            ?: "gpt-4o-mini-transcribe"
         val appContext = context.applicationContext
+        val model = transcriptionModelFor(appContext, account, preset, "gpt-4o-mini-transcribe")
         // History metadata (issue #140), resolved once so the success (capture) and EVERY failure path —
         // including the early returns below (no key / model not downloaded) — log the same info.
         val historyProviderName = account.displayName.ifBlank { preset.displayName }
@@ -1328,8 +1328,34 @@ object DictateController {
         return if (preset.supportsRealtime) preset.realtimeApi else null
     }
 
-    /** True if the next recording should stream in real time (global toggle on + provider supports it). */
-    fun isRealtimeActive(): Boolean = realtimeApiForActiveAccount() != null
+    /**
+     * The installed on-device **streaming** model to run live (issue #233), or null if local live
+     * transcription doesn't apply. Checked before [realtimeApiForActiveAccount] because that one bails
+     * out on a blank API key, which the on-device provider always has.
+     */
+    private fun localStreamingModelDir(context: Context): File? {
+        if (!prefs.dictate.realtimeTranscription.get()) return null
+        val account = transcriptionAccount()
+        if (presetFor(account).transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return null
+        // The live model has its own slot on the local account (#233) — `realtimeModel`, which for this
+        // provider means the streaming model rather than a remote model id. The one-shot slot is also
+        // accepted as a source: before the two slots existed a streaming model could only be picked
+        // there, and such a setup should keep working instead of silently dropping back to batch.
+        val modelId = account.realtimeModel.takeIf { LocalModelCatalog.isStreaming(it) }
+            ?: account.transcriptionModel.takeIf { LocalModelCatalog.isStreaming(it) }
+            ?: return null
+        if (!LocalModelManager.isInstalled(context, modelId)) return null
+        return LocalTranscriptionProvider.modelDir(context, modelId)
+    }
+
+    /**
+     * True if the next recording should stream in real time: the global toggle is on and either the cloud
+     * provider supports realtime or (with [context]) an on-device streaming model is installed. Without a
+     * context only the cloud case can be answered, since the local check has to look at the filesystem.
+     */
+    fun isRealtimeActive(context: Context? = null): Boolean =
+        realtimeApiForActiveAccount() != null ||
+            (context != null && localStreamingModelDir(context.applicationContext) != null)
 
     /** True while a real-time streaming recording is actually in progress (a session is open). */
     fun isRealtimeRecording(): Boolean = realtimeSession != null
@@ -1343,10 +1369,17 @@ object DictateController {
         // System voice input (#67) always records in plain batch mode — the RecognitionService callback
         // returns one final result, so there's no realtime streaming/composing to wire up here.
         if (outputTarget == OutputTarget.RECOGNITION_SERVICE) return null
-        val api = realtimeApiForActiveAccount() ?: return null
+        // On-device live model (#233) wins over the cloud lookup: the local provider has no API key, so
+        // realtimeApiForActiveAccount() would reject it before ever getting here.
+        val localModelDir = localStreamingModelDir(appContext)
+        val api = if (localModelDir != null) null else realtimeApiForActiveAccount() ?: return null
         val account = transcriptionAccount()
         val preset = presetFor(account)
-        val model = account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
+        val model = if (localModelDir != null) {
+            localModelDir.name
+        } else {
+            account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
+        }
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
         realtimeFinal.setLength(0)
         realtimeFailed = false
@@ -1384,10 +1417,21 @@ object DictateController {
             override fun onError(t: Throwable) { realtimeFailed = true }
             override fun onClosed() { closed.complete(Unit) }
         }
-        val session = runCatching { RealtimeClient.open(api, account.apiKey, model, language, callbacks) }
-            .getOrElse { realtimeFailed = true; null } ?: return null
+        val session = runCatching {
+            if (localModelDir != null) {
+                // Same idle-unload budget the batch path uses, so a live model doesn't sit in RAM either.
+                LocalTranscriptionProvider.setIdleUnloadMillis(
+                    prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
+                )
+                // The model is language-specific, so the input-language pref is irrelevant here.
+                LocalRealtimeSession(localModelDir, callbacks)
+            } else {
+                RealtimeClient.open(api!!, account.apiKey, model, language, callbacks)
+            }
+        }.getOrElse { realtimeFailed = true; null } ?: return null
         realtimeSession = session
-        val targetRate = RealtimeClient.sampleRateFor(api)
+        // On-device runs at the recorder's native rate, so no resampling step is needed.
+        val targetRate = if (api == null) AudioDecode.TARGET_SAMPLE_RATE else RealtimeClient.sampleRateFor(api)
         if (targetRate == AudioDecode.TARGET_SAMPLE_RATE) {
             return { pcm, len ->
                 runCatching { session.sendAudio(pcm, len) }
@@ -1484,11 +1528,11 @@ object DictateController {
      * keyboard (not the accessibility overlay), it's not a live-prompt recording, realtime streaming is
      * not active, and the provider isn't in single-call multimodal mode (which would format per segment).
      */
-    private fun isSegmentedMode(): Boolean =
+    private fun isSegmentedMode(context: Context): Boolean =
         prefs.dictate.longformMode.get().isEnabled &&
             outputTarget == OutputTarget.IME &&
             !livePromptArmed &&
-            !isRealtimeActive() &&
+            !isRealtimeActive(context) &&
             !transcriptionAccount().transcriptionViaChat
 
     private fun initSegmented(appContext: Context) {
@@ -1668,8 +1712,7 @@ object DictateController {
     private suspend fun finalizeSegmentedEnd(appContext: Context) {
         val account = transcriptionAccount()
         val preset = presetFor(account)
-        val model = account.transcriptionModel.takeIf { it.isNotBlank() }
-            ?: preset.defaultTranscriptionModel ?: ""
+        val model = transcriptionModelFor(appContext, account, preset)
         val assembled = realtimeShown.toString().trim()
         val recordedSeconds = segmentRecordedSeconds
         // Snapshot the kept segment files (in cut order) before resetting; merge them into one WAV so the
@@ -1718,8 +1761,7 @@ object DictateController {
         val account = transcriptionAccount()
         val apiKey = account.apiKey
         val preset = presetFor(account)
-        val model = account.transcriptionModel.takeIf { it.isNotBlank() }
-            ?: preset.defaultTranscriptionModel ?: "gpt-4o-mini-transcribe"
+        val model = transcriptionModelFor(appContext, account, preset, "gpt-4o-mini-transcribe")
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
         val style = transcriptionStylePrompt()
         val prompt = continuity.takeLast(200).trim().let { if (it.isEmpty()) style else "$it $style".trim() }
@@ -2743,6 +2785,28 @@ object DictateController {
     private fun localTranscriptionAccount(): ProviderAccount =
         prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.LOCAL.id)
 
+    /**
+     * The transcription model to run for [account], resolving the on-device special case: the local
+     * provider holds two picks (#233), and if the user only installed a streaming model, batch paths —
+     * real-time off, long-form, the floating button — must use that one instead of failing with
+     * "no model downloaded".
+     */
+    private fun transcriptionModelFor(
+        context: Context,
+        account: ProviderAccount,
+        preset: ProviderPreset,
+        fallback: String = "",
+    ): String {
+        val chosen = account.transcriptionModel.takeIf { it.isNotBlank() }
+            ?: preset.defaultTranscriptionModel
+            ?: fallback
+        if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return chosen
+        if (chosen.isNotBlank() && LocalModelManager.isInstalled(context, chosen)) return chosen
+        return account.realtimeModel.takeIf {
+            it.isNotBlank() && LocalModelManager.isInstalled(context, it)
+        } ?: chosen
+    }
+
     /** The active rewording provider's stored credentials (keyring). */
     private fun rewordingAccount(): ProviderAccount {
         val id = prefs.dictate.rewordingProviderId.get()
@@ -2834,10 +2898,9 @@ object DictateController {
         if (error.kind != DictateApiException.Kind.NETWORK &&
             error.kind != DictateApiException.Kind.TIMEOUT
         ) return null
-        val localModel = prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.LOCAL.id)
-            .transcriptionModel.takeIf { it.isNotBlank() }
-            ?: ProviderRegistry.LOCAL.defaultTranscriptionModel
-            ?: return null
+        val localAccount = prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.LOCAL.id)
+        val localModel = transcriptionModelFor(context, localAccount, ProviderRegistry.LOCAL)
+            .takeIf { it.isNotBlank() } ?: return null
         if (!LocalModelManager.isInstalled(context, localModel)) return null
         return LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(context, localModel))
     }

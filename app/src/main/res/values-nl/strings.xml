@@ -1354,6 +1354,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="changelog__v4_1_1">• Oplossing: de accentkleur kon op sommige apparaten groen lijken; toetsen en knoppen zijn weer Dictate-blauw.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Draait op je apparaat — er wordt geen audio verzonden. Download een model om te beginnen.</string>
+    <string name="dictate__local_models_live_header">Live (streaming)</string>
+    <string name="dictate__local_models_live_summary">Ze typen terwijl je praat. Zet “Realtime-transcriptie” aan onder Opname om ze te gebruiken.</string>
     <string name="dictate__local_longpress_send_title">Verzenden ingedrukt houden voor lokaal model</string>
     <string name="dictate__local_longpress_send_summary">Houd tijdens opnemen verzenden ingedrukt om dit model te gebruiken i.p.v. de cloud.</string>
     <string name="dictate__local_unload_after">Inactief model na {n} min ontladen</string>

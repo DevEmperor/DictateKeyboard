@@ -60,6 +60,10 @@ class LocalTranscriptionProvider(
                     "On-device model '${modelDir.name}' is not installed",
                 )
             }
+            // A streaming model (#233) is normally driven live by [LocalRealtimeSession], but it must
+            // also work in plain batch mode — real-time turned off, long-form, the floating button, the
+            // offline fallback. Otherwise picking one would silently break every non-live path.
+            val streaming = LocalModelCatalog.isStreaming(modelDir.name)
 
             val samples = try {
                 AudioDecode.decodeToMono16k(request.audioFile)
@@ -74,6 +78,10 @@ class LocalTranscriptionProvider(
             // Honor the user's chosen input language like the cloud providers do; null/blank → Whisper
             // auto-detect. Whisper expects the base ISO code (e.g. "de"), so drop any region suffix.
             val language = request.language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
+
+            if (streaming) {
+                return@withContext TranscriptionResult(transcribeStreaming(samples).trim())
+            }
 
             val text = try {
                 val recognizer = RecognizerCache.acquire(modelDir, numThreads, language)
@@ -103,6 +111,51 @@ class LocalTranscriptionProvider(
 
             TranscriptionResult(text.trim())
         }
+
+    /**
+     * Batch decode with a *streaming* model (#233): the whole recording is pushed through the online
+     * recognizer in chunks, and every speech pause it reports settles one piece of text. There is no
+     * 30 s window to work around here, so this needs neither the VAD nor a length cap — the recognizer
+     * consumes audio incrementally by construction.
+     */
+    private fun transcribeStreaming(samples: FloatArray): String {
+        val recognizer = OnlineRecognizerCache.acquire(modelDir, numThreads)
+        try {
+            val stream = recognizer.createStream()
+            val parts = StringBuilder()
+            fun collect() {
+                val text = recognizer.getResult(stream).text.trim()
+                if (text.isNotEmpty()) {
+                    if (parts.isNotEmpty()) parts.append(' ')
+                    parts.append(text)
+                }
+            }
+            try {
+                var offset = 0
+                while (offset < samples.size) {
+                    val end = minOf(offset + STREAM_CHUNK, samples.size)
+                    stream.acceptWaveform(samples.copyOfRange(offset, end), AudioDecode.TARGET_SAMPLE_RATE)
+                    offset = end
+                    while (recognizer.isReady(stream)) recognizer.decode(stream)
+                    if (recognizer.isEndpoint(stream)) {
+                        collect()
+                        recognizer.reset(stream)
+                    }
+                }
+                // Same tail padding as the live session: without it the encoder never releases the last
+                // word, so every batch transcription would lose its ending.
+                stream.acceptWaveform(FloatArray(TAIL_PAD_SAMPLES), AudioDecode.TARGET_SAMPLE_RATE)
+                stream.inputFinished()
+                while (recognizer.isReady(stream)) recognizer.decode(stream)
+                collect()
+            } finally {
+                stream.release()
+            }
+            return parts.toString()
+        } finally {
+            OnlineRecognizerCache.endUse()
+        }
+    }
 
     /** Single whole-buffer Whisper pass (fine for clips up to ~30 s). */
     private fun decodeOnce(recognizer: OfflineRecognizer, samples: FloatArray): String {
@@ -198,6 +251,12 @@ class LocalTranscriptionProvider(
         /** Hard ceiling per Whisper pass (~29 s) — above VAD's 28 s cut so normal segments pass whole. */
         private const val MAX_SEGMENT_SAMPLES = 29 * AudioDecode.TARGET_SAMPLE_RATE
 
+        /** Feed size for the streaming batch path (~100 ms), matching what the live session sees. */
+        private const val STREAM_CHUNK = AudioDecode.TARGET_SAMPLE_RATE / 10
+
+        /** ~0.4 s of silence flushed at the end so the encoder emits the final word. */
+        private const val TAIL_PAD_SAMPLES = (0.4 * AudioDecode.TARGET_SAMPLE_RATE).toInt()
+
 
         const val MODELS_SUBDIR = "dictate-models"
         const val ENCODER = "encoder.onnx"
@@ -222,7 +281,12 @@ class LocalTranscriptionProvider(
         /** True if [modelId] has all required files present on disk. */
         fun isInstalled(context: Context, modelId: String): Boolean {
             val dir = modelDir(context, modelId)
-            return File(dir, ENCODER).exists() && File(dir, DECODER).exists() && File(dir, TOKENS).exists()
+            if (!File(dir, ENCODER).exists() || !File(dir, DECODER).exists() ||
+                !File(dir, TOKENS).exists()
+            ) return false
+            // Streaming models (#233) are transducers, so a missing joiner means a broken install rather
+            // than a Whisper-style model — reporting it as installed would fail natively at load time.
+            return !LocalModelCatalog.isStreaming(modelId) || File(dir, JOINER).exists()
         }
 
         /**
@@ -231,7 +295,10 @@ class LocalTranscriptionProvider(
          * signals (`onTrimMemory`). Safe anytime: if a transcription is in flight it frees right after it
          * finishes, never mid-decode. The next on-device transcription rebuilds the recognizer (~1 s).
          */
-        fun unloadCachedModel() = RecognizerCache.unload()
+        fun unloadCachedModel() {
+            RecognizerCache.unload()
+            OnlineRecognizerCache.unload() // the live streaming model (#233) is just as big
+        }
 
         /**
          * How long the recognizer may sit idle before it is unloaded from RAM; 0 disables the idle timer
@@ -239,6 +306,7 @@ class LocalTranscriptionProvider(
          */
         fun setIdleUnloadMillis(millis: Long) {
             RecognizerCache.idleUnloadMillis = millis
+            OnlineRecognizerCache.idleUnloadMillis = millis
         }
     }
 }

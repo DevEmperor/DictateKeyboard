@@ -1263,6 +1263,8 @@
     <string name="changelog__v4_1_1">• Correção: a cor de destaque podia aparecer verde em alguns dispositivos; as teclas e botões voltam ao azul do Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Funciona no seu dispositivo — nenhum áudio é enviado. Baixe um modelo para começar.</string>
+    <string name="dictate__local_models_live_header">Ao vivo (streaming)</string>
+    <string name="dictate__local_models_live_summary">Escrevem enquanto você fala. Ative “Transcrição em tempo real” em Gravação para usá-los.</string>
     <string name="dictate__local_longpress_send_title">Segurar enviar para o modelo local</string>
     <string name="dictate__local_longpress_send_summary">Durante a gravação, segure enviar para usar este modelo em vez da nuvem.</string>
     <string name="dictate__local_unload_after">Descarregar modelo inativo após {n} min</string>

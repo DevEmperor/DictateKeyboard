@@ -32,18 +32,28 @@ data class LocalModelSpec(
     /** Short note for the picker, e.g. languages / accuracy/speed trade-off. */
     val description: String,
     val files: List<LocalModelFile>,
+    /**
+     * True for a *streaming* model (issue #233): it transcribes while the user is still speaking, so it
+     * can drive the live/real-time path via [LocalRealtimeSession]. Offline models (Whisper, Parakeet)
+     * only produce text once the whole utterance is in.
+     *
+     * This flag — not the presence of `joiner.onnx` — is what tells the two runtimes apart, because a
+     * streaming transducer and an offline NeMo transducer both ship a joiner.
+     */
+    val isStreaming: Boolean = false,
 ) {
     val totalBytes: Long get() = files.sumOf { it.sizeBytes }
 }
 
 /**
- * The fixed catalog of on-device Whisper models offered for download. int8-quantised sherpa-onnx
- * builds; sizes/checksums verified 2026-06-22.
+ * The fixed catalog of on-device models offered for download: one-shot recognizers (Whisper, NeMo
+ * Parakeet) plus the streaming ones that transcribe live (Kroko, issue #233). All int8-quantised
+ * sherpa-onnx builds.
  *
- * **Attribution / licensing:** these are OpenAI Whisper models (MIT) exported to ONNX by the sherpa-onnx
- * project (Apache-2.0). Both licenses permit redistribution, so the files are mirrored on the project's
- * own GitHub release ([REL]) for a stable, project-controlled source instead of depending on a third
- * party at runtime. To re-point hosting, change [REL] only. The runtime never fetches this list — it is
+ * **Attribution / licensing:** every model here comes from an upstream project under a license that
+ * permits redistribution (see each entry, and NOTICE). The files are mirrored on the project's own
+ * GitHub release ([REL]) for a stable, project-controlled source instead of depending on a third party
+ * at runtime. To re-point hosting, change [REL] only. The runtime never fetches this list — it is
  * shipped in the app.
  */
 object LocalModelCatalog {
@@ -177,6 +187,84 @@ object LocalModelCatalog {
         ),
     )
 
+    /**
+     * Builds a Kroko streaming entry. All of them have the same four-file transducer shape and differ
+     * only in language and encoder size, so the repetition lives here instead of in six literals.
+     *
+     * **Attribution / licensing:** Kroko ASR community models by Banafo, licensed **CC-BY-SA**; exported
+     * to sherpa-onnx ONNX by the sherpa-onnx project (Apache-2.0). ShareAlike governs adaptations of the
+     * model — these files are mirrored verbatim — and both licenses permit redistribution with
+     * attribution. See NOTICE.
+     *
+     * Unlike Whisper these need **no** VAD companion file: the recognizer detects speech pauses itself
+     * (endpointing), which is also what settles a segment during live dictation.
+     */
+    private fun kroko(
+        lang: String,
+        displayName: String,
+        languageLabel: String,
+        encoderBytes: Long,
+        encoderSha: String,
+        decoderBytes: Long,
+        decoderSha: String,
+        joinerSha: String,
+        tokensBytes: Long,
+        tokensSha: String,
+    ): LocalModelSpec {
+        val approxMb = (encoderBytes + decoderBytes + JOINER_BYTES + tokensBytes) / 1_000_000
+        return LocalModelSpec(
+            id = "kroko-$lang",
+            displayName = displayName,
+            description = "$languageLabel · live · ~$approxMb MB",
+            isStreaming = true,
+            files = listOf(
+                LocalModelFile("$REL/kroko-$lang-encoder.onnx", LocalTranscriptionProvider.ENCODER, encoderBytes, encoderSha),
+                LocalModelFile("$REL/kroko-$lang-decoder.onnx", LocalTranscriptionProvider.DECODER, decoderBytes, decoderSha),
+                LocalModelFile("$REL/kroko-$lang-joiner.onnx", LocalTranscriptionProvider.JOINER, JOINER_BYTES, joinerSha),
+                LocalModelFile("$REL/kroko-$lang-tokens.txt", LocalTranscriptionProvider.TOKENS, tokensBytes, tokensSha),
+            ),
+        )
+    }
+
+    /** The joiner is architecture-only and byte-identical in size across every Kroko language. */
+    private const val JOINER_BYTES = 336_817L
+
+    /** ~71 MB. German live model — measurably more accurate on German than Whisper Base, and far faster. */
+    val KROKO_DE = kroko(
+        "de", "Kroko German", "German",
+        70_091_557, "6e83993d6967ec7a3498b055b7e85ace85b5d64d1b1e8773cb29a43a11f5edb5",
+        617_489, "94a29592b403c53fa2231b478637da1ab4abcef7f5e46e432098416a4a3ed562",
+        "28356bff070aea51ab1d725a3278e81d19f9300f860d3248a7014292264df15a",
+        5_606, "86e8370994ff2c01149ba8c4f8709aa93cdc18914b27a717e291e96faf39a6eb",
+    )
+
+    /** ~71 MB. English live model. */
+    val KROKO_EN = kroko(
+        "en", "Kroko English", "English",
+        70_092_599, "d4881c57449d581e0770fd53fa66c2fdc6cd167d92ece7c715e603defc96d9d4",
+        617_488, "455ba38466fce8d5a57e7db68a323b684079ca4d9e1dd93a740d9b2429aae3b1",
+        "d406f616736350e2a7df3e39398b78eb2fc1a2ca6973a19d3853fa3227e25b52",
+        6_310, "396dbeb5f4858875690716084f54e90d339679d0ba3e6b5b584f3d7589254d2d",
+    )
+
+    /** ~71 MB. French live model. */
+    val KROKO_FR = kroko(
+        "fr", "Kroko French", "French",
+        70_092_599, "e02facae1daf6f1f13da67ea3ace7c722516d0868d1768d78c0580bc22cc0c5b",
+        617_488, "6aed547570e3ab5afc05429a017cedd3a056c16df3baa5703f02461cefa25bac",
+        "a51eec759bcdcaae2614686fa2a8b57417b2d420dd55a5a5558b388d35a9b2b6",
+        5_415, "fedfb9c844bfb2bf14171f8184863e3d617b815a8667bdd9fc9a3149fde73298",
+    )
+
+    /** ~156 MB. Spanish live model — upstream only publishes the larger encoder for Spanish. */
+    val KROKO_ES = kroko(
+        "es", "Kroko Spanish", "Spanish",
+        154_878_102, "2d9f5ef87d1a5257f8a6687e21501c56f3aa2fcbfcfab9364dcc4ce4e06ae81b",
+        617_488, "d4ce176b94b25f7acc88717bc3f704fcf5d6e131aaac2e0cabab3885541181ee",
+        "dae35df88d676e320fcdb99217328e66dcf722bf11b0f2459e14ddb5b982ded5",
+        6_385, "1be5e0a58e05d06d327df4c6b7b5e4f8aba01da6981eb016fcaceafc6a56680f",
+    )
+
     /** Install-dir id of the on-device Smart Turn v3 classifier (issue #191). */
     const val SMART_TURN_ID = "smart-turn-v3"
 
@@ -198,14 +286,28 @@ object LocalModelCatalog {
         ),
     )
 
-    /** All catalog models in display order: Parakeet first (best overall), then the German-specialized
-     * Parakeet, then Whisper multilingual and the English-only variants. */
+    /**
+     * All catalog models in display order: Parakeet first (best overall), then the German-specialized
+     * Parakeet, then Whisper multilingual and the English-only variants — and finally the streaming
+     * models, which the picker renders under their own "Live" heading. Keep the streaming entries last:
+     * [LocalModelSection] relies on this order to know where that heading goes.
+     */
     val all: List<LocalModelSpec> = listOf(
         PARAKEET_TDT_V3,
         PARAKEET_PRIMELINE_DE,
         WHISPER_TINY, WHISPER_BASE, WHISPER_SMALL,
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
+        KROKO_EN, KROKO_DE, KROKO_ES, KROKO_FR,
     )
 
     fun byId(id: String): LocalModelSpec? = all.firstOrNull { it.id == id }
+
+    /** The streaming models, in display order — the "Live" group of the on-device picker (#233). */
+    val streaming: List<LocalModelSpec> get() = all.filter { it.isStreaming }
+
+    /** The classic one-shot models — everything that is not [streaming]. */
+    val batchOnly: List<LocalModelSpec> get() = all.filter { !it.isStreaming }
+
+    /** True if [id] names a streaming model. Unknown ids (e.g. a leftover pref) count as non-streaming. */
+    fun isStreaming(id: String): Boolean = byId(id)?.isStreaming == true
 }

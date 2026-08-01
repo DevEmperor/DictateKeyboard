@@ -1469,6 +1469,8 @@
     <string name="changelog__v4_1_1">• Oprava: zvýrazňovací barva se na některých zařízeních mohla zobrazovat zeleně; klávesy a tlačítka jsou opět v modré barvě Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Běží ve vašem zařízení — žádný zvuk se neodesílá. Stáhněte model a začněte.</string>
+    <string name="dictate__local_models_live_header">Živě (streamování)</string>
+    <string name="dictate__local_models_live_summary">Píší, zatímco mluvíte. Zapněte „Přepis v reálném čase“ v Nahrávání, abyste je mohli použít.</string>
     <string name="dictate__local_longpress_send_title">Podržení odeslat pro místní model</string>
     <string name="dictate__local_longpress_send_summary">Během nahrávání podrž tlačítko odeslat, aby se použil tento model místo cloudu.</string>
     <string name="dictate__local_unload_after">Uvolnit nečinný model po {n} min</string>
