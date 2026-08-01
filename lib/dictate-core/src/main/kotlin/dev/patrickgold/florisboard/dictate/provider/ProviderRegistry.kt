@@ -75,20 +75,27 @@ object ProviderRegistry {
         supportsDynamicModels = true,
         apiKeyUrl = "https://platform.openai.com/api-keys",
         defaultChatModel = "gpt-4o-mini",
-        defaultTranscriptionModel = "gpt-4o-mini-transcribe",
+        // gpt-transcribe (2026-07) is both cheaper than gpt-4o-transcribe ($0.0045 vs $0.006 per minute)
+        // and markedly more accurate, so it is the default. This applies to everyone who never chose a
+        // model — the account stores an empty string in that case and resolves through here on every
+        // call, so existing installs move to it too. An explicit choice is stored verbatim and untouched.
+        defaultTranscriptionModel = "gpt-transcribe",
         curatedChatModels = listOf(
             "gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1", "gpt-4.1-nano",
         ),
         curatedTranscriptionModels = listOf(
-            "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
+            "gpt-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
         ),
-        // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-realtime-whisper is the natively
-        // streaming model (emits deltas); the -transcribe models are more accurate but final-only.
+        // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-live-transcribe is the streaming
+        // model of the gpt-transcribe generation and emits deltas like gpt-realtime-whisper did, at the
+        // same $0.017/min but a lower word error rate (11.65% -> 9.60%), so it is the default. The
+        // "-transcribe" models are more accurate still but final-only, with no interim text.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.OPENAI,
-        defaultRealtimeModel = "gpt-realtime-whisper",
+        defaultRealtimeModel = "gpt-live-transcribe",
         curatedRealtimeModels = listOf(
-            "gpt-realtime-whisper", "gpt-4o-transcribe", "gpt-4o-mini-transcribe",
+            "gpt-live-transcribe", "gpt-realtime-whisper", "gpt-transcribe",
+            "gpt-4o-transcribe", "gpt-4o-mini-transcribe",
         ),
     )
 

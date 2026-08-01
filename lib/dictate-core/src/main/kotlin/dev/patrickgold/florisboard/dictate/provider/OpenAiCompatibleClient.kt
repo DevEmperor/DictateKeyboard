@@ -190,7 +190,12 @@ class OpenAiCompatibleClient(
             .addFormDataPart("response_format", "json")
             .apply {
                 val lang = request.language
-                if (!lang.isNullOrEmpty() && lang != "detect") addFormDataPart("language", lang)
+                if (!lang.isNullOrEmpty() && lang != "detect") {
+                    // gpt-transcribe replaced the singular `language` with `languages`, which also accepts
+                    // several codes for code-switching audio. Sending the old field to it would silently
+                    // drop the user's language choice, so pick the name the model actually reads.
+                    addFormDataPart(if (usesLanguagesField(request.model)) "languages" else "language", lang)
+                }
                 if (!request.prompt.isNullOrEmpty()) addFormDataPart("prompt", request.prompt)
                 if (temperature != null) addFormDataPart("temperature", temperature.toString())
             }

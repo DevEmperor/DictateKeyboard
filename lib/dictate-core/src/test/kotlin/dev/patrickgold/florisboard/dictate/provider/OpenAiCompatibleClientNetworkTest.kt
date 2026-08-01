@@ -87,6 +87,35 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Issue #248: gpt-transcribe renamed the singular `language` field to `languages`. Sending the wrong
+    // one silently drops the user's language choice instead of failing, so both directions are asserted.
+    test("gpt-transcribe receives the language as `languages`, older models as `language`") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(baseUrl = server.url("/").toString(), apiKey = "test"),
+                )
+
+                client.transcribe(TranscriptionRequest(audio, "gpt-transcribe", language = "de"))
+                val newModel = server.takeRequest().body.readUtf8()
+                newModel shouldContain "name=\"languages\""
+                newModel shouldNotContain "name=\"language\"\r\n"
+
+                client.transcribe(TranscriptionRequest(audio, "gpt-4o-mini-transcribe", language = "de"))
+                val oldModel = server.takeRequest().body.readUtf8()
+                oldModel shouldContain "name=\"language\""
+                oldModel shouldNotContain "name=\"languages\""
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
     test("separate provider instances reuse the same HTTP connection") {
         val audio = createTempFile(suffix = ".wav").toFile().apply {
             writeBytes("RIFF-test-audio".encodeToByteArray())

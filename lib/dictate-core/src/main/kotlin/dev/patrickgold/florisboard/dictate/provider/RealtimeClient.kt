@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.util.Base64
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonArray
@@ -167,7 +168,17 @@ private class OpenAiRealtimeSession(
                     })
                     put("transcription", buildJsonObject {
                         put("model", model)
-                        if (!language.isNullOrBlank() && language != "detect") put("language", language)
+                        if (!language.isNullOrBlank() && language != "detect") {
+                            // The gpt-transcribe generation takes `languages` as an array (it can hint
+                            // several for code-switching audio); the older models take a single
+                            // `language` string. Sending the wrong one is not an error, it is simply
+                            // ignored — the user's language choice would quietly stop applying (#248).
+                            if (usesLanguagesField(model)) {
+                                put("languages", buildJsonArray { add(JsonPrimitive(language)) })
+                            } else {
+                                put("language", language)
+                            }
+                        }
                     })
                 })
             })
@@ -828,4 +839,14 @@ private class DeepgramRealtimeSession(
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
     }
+}
+
+/**
+ * True for OpenAI's gpt-transcribe generation, which renamed the singular `language` field to a
+ * `languages` array. Matched on the id prefix so later snapshots and variants are covered, while
+ * gpt-realtime-whisper and the gpt-4o-*-transcribe models keep the old field (issue #248).
+ */
+internal fun usesLanguagesField(model: String): Boolean {
+    val id = model.lowercase()
+    return id.startsWith("gpt-transcribe") || id.startsWith("gpt-live-transcribe")
 }
