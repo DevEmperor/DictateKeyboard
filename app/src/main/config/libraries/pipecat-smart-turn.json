@@ -1,0 +1,14 @@
+{
+  "uniqueId": "pipecat-smart-turn",
+  "name": "Pipecat Smart Turn v3",
+  "developers": [
+    {
+      "name": "Daily",
+      "organisationUrl": "https://www.daily.co"
+    }
+  ],
+  "website": "https://github.com/pipecat-ai/smart-turn",
+  "licenses": [
+    "smart-turn-bsd-2"
+  ]
+}

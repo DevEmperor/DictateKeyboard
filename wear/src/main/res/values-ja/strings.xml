@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Dictateアプリでマイクを許可</string>
     <string name="wear_err_mic_unavailable">マイクを使えません</string>
     <string name="wear_err_transcribe_failed">文字起こしに失敗</string>
+    <string name="wear_err_tap_to_retry">%1$s · タップで再試行</string>
     <string name="wear_err_empty">空 — 携帯のキーを確認</string>
     <string name="wear_err_unknown">不明なエラー</string>
     <string name="wear_err_no_transport">携帯なし。アプリでキー同期</string>

@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.nlp.latin.KeyProximityInfo
+import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
@@ -582,6 +583,12 @@ private class TextKeyboardLayoutController(
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
             key.computedDataOnDown = key.computedData
+            // Remember where the finger actually landed, not just which key won (issue #242). The autocorrect
+            // decodes from these coordinates, so a tap halfway between two keys stays distinguishable from a
+            // dead-centre one. Consumed when the resulting character reaches the editor.
+            if (key.computedData.type == KeyType.CHARACTER) {
+                TouchTrace.pendingTap(event.getX(pointer.index), event.getY(pointer.index))
+            }
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
                 onLongPress = onLongPress@ {
@@ -617,6 +624,10 @@ private class TextKeyboardLayoutController(
                             ) {
                                 popupUiController.extend(key, size)
                                 inputFeedbackController?.keyLongPress(key.computedData)
+                                // The long-press popup now owns the horizontal swipe (pick an accent/umlaut,
+                                // e.g. o → ö), so the legacy SWIPE-mode toggle must not hijack it back to
+                                // the dictation UI (issue #221).
+                                LegacyLayoutState.keyOwnsSwipe.value = true
                                 true
                             } else {
                                 false
@@ -638,9 +649,9 @@ private class TextKeyboardLayoutController(
             initSelectionEnd = editorInstance.activeContent.selection.end
             // Space/backspace own a horizontal swipe (cursor move / delete). Flag it (and clear it for any
             // other key, so it never gets stuck) so the legacy SWIPE-mode toggle doesn't hijack that swipe
-            // on the modern keyboard (issue #188).
+            // on the modern keyboard (issue #188). A long-press accent popup raises the same flag later (#221).
             val downCode = key.computedData.code
-            LegacyLayoutState.spaceOrDeleteTouch.value =
+            LegacyLayoutState.keyOwnsSwipe.value =
                 downCode == KeyCode.SPACE || downCode == KeyCode.CJK_SPACE || downCode == KeyCode.DELETE
         } else {
             pointer.activeKey = null
@@ -675,7 +686,7 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchUpInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
-        LegacyLayoutState.spaceOrDeleteTouch.value = false // clear the #188 space/backspace-swipe guard
+        LegacyLayoutState.keyOwnsSwipe.value = false // clear the legacy-swipe guard (#188 / #221)
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
 
@@ -700,6 +711,10 @@ private class TextKeyboardLayoutController(
                         }
                     } else {
                         inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                        // Picked from the long-press popup (an accent, a variant): a deliberate choice, not a
+                        // tap that might have missed. Recorded as certain so autocorrect never second-guesses
+                        // it against neighbouring keys (issue #242).
+                        TouchTrace.markPendingExact()
                         inputEventDispatcher.sendDownUp(retData)
                     }
                 } else {
@@ -725,7 +740,7 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
-        LegacyLayoutState.spaceOrDeleteTouch.value = false // clear the #188 space/backspace-swipe guard
+        LegacyLayoutState.keyOwnsSwipe.value = false // clear the legacy-swipe guard (#188 / #221)
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
 

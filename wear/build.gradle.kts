@@ -36,7 +36,7 @@ val wearMinSdk = 30
 // a burned versionCode. Bump this for a Wear-only re-release WITHOUT touching the phone's
 // projectVersionCode: it adds to the +100000 Wear band and tags the versionName as "-wN". 0 = in
 // lockstep with the phone base (no suffix). See versionCode/versionName in defaultConfig.
-val wearRevision = 2
+val wearRevision = 3
 
 kotlin {
     compilerOptions {

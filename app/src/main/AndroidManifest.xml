@@ -118,6 +118,51 @@
             android:foregroundServiceType="dataSync"
             android:exported="false"/>
 
+        <!-- System-wide voice input via the standard RecognitionService API (issue #67), like FUTO Voice
+             Input. Bound only by the OS via BIND_RECOGNITION_SERVICE. Select Dictate as the device's
+             recognition service to dictate through it from any app/keyboard that honours it. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.recognition.DictateRecognitionService"
+            android:exported="true"
+            android:permission="android.permission.BIND_RECOGNITION_SERVICE">
+            <intent-filter>
+                <action android:name="android.speech.RecognitionService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.speech"
+                android:resource="@xml/recognition_service" />
+        </service>
+
+        <!-- Classic voice-input popup (issue #67): most keyboards/apps launch ACTION_RECOGNIZE_SPEECH for
+             their mic button rather than binding the RecognitionService, so this covers the broad case. -->
+        <activity
+            android:name="dev.patrickgold.florisboard.dictate.recognition.RecognitionActivity"
+            android:exported="true"
+            android:label="@string/dictate__title"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.speech.action.RECOGNIZE_SPEECH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Dictate voice input IME (issue #67): AOSP-lineage keyboards (HeliBoard, OpenBoard, …) switch to
+             the selected voice input method for their mic key. Enable + select this to route them to Dictate. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.recognition.DictateVoiceInputMethodService"
+            android:exported="true"
+            android:label="@string/dictate__voice_ime_label"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/dictate_voice_ime" />
+        </service>
+
         <!-- Main App Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.app.FlorisAppActivity"

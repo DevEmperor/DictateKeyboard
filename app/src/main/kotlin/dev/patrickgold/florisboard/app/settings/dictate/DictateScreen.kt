@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import kotlin.math.roundToInt
@@ -36,6 +38,7 @@ import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dialpad
 import androidx.compose.material.icons.filled.BrightnessHigh
+import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
@@ -62,6 +65,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -84,7 +88,11 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
+import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
+import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.LocalModelDownloads
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
@@ -382,12 +390,42 @@ fun DictateRecordingScreen() = FlorisScreen {
             title = stringRes(R.string.dictate__keep_screen_awake_title),
             summary = stringRes(R.string.dictate__keep_screen_awake_summary),
         )
+        ListPreference(
+            prefs.dictate.recordingAnimation,
+            icon = Icons.Default.GraphicEq,
+            modifier = Modifier.settingsSearchAnchor("dictate__recording_animation_title"),
+            title = stringRes(R.string.dictate__recording_animation_title),
+            entries = listPrefEntries {
+                entry(
+                    key = DictateRecordingAnimation.STATIC,
+                    label = stringRes(R.string.dictate__recording_animation_static_label),
+                    description = stringRes(R.string.dictate__recording_animation_static_description),
+                )
+                entry(
+                    key = DictateRecordingAnimation.PULSE,
+                    label = stringRes(R.string.dictate__recording_animation_pulse_label),
+                    description = stringRes(R.string.dictate__recording_animation_pulse_description),
+                )
+                entry(
+                    key = DictateRecordingAnimation.LEVEL,
+                    label = stringRes(R.string.dictate__recording_animation_level_label),
+                    description = stringRes(R.string.dictate__recording_animation_level_description),
+                )
+            },
+        )
         SwitchPreference(
             prefs.dictate.skipSilentRecordings,
             icon = Icons.Default.VolumeOff,
             modifier = Modifier.settingsSearchAnchor("dictate__skip_silent_title"),
             title = stringRes(R.string.dictate__skip_silent_title),
             summary = stringRes(R.string.dictate__skip_silent_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.trimSilentGaps,
+            icon = Icons.Default.ContentCut,
+            modifier = Modifier.settingsSearchAnchor("dictate__trim_silent_gaps_title"),
+            title = stringRes(R.string.dictate__trim_silent_gaps_title),
+            summary = stringRes(R.string.dictate__trim_silent_gaps_summary),
         )
         SwitchPreference(
             prefs.dictate.instantRecording,
@@ -467,6 +505,19 @@ fun DictateOutputScreen() = FlorisScreen {
             max = 10,
             stepIncrement = 1,
             enabledIf = { prefs.dictate.instantOutput isEqualTo false },
+        )
+        DialogSliderPreference(
+            prefs.dictate.paragraphSplitWords,
+            icon = Icons.Default.Segment,
+            modifier = Modifier.settingsSearchAnchor("dictate__paragraph_split_title"),
+            title = stringRes(R.string.dictate__paragraph_split_title),
+            valueLabel = {
+                if (it <= 0) stringRes(R.string.dictate__paragraph_split_off)
+                else stringRes(R.string.dictate__paragraph_split_value, "n" to it)
+            },
+            min = 0,
+            max = 100,
+            stepIncrement = 5,
         )
         SwitchPreference(
             prefs.dictate.resendButton,
@@ -593,6 +644,12 @@ private fun LongformDialog(
 ) {
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    // Whether Smart Turn is actually active (enabled AND downloaded). It changes what the slider means:
+    // off → the silence after which a segment is cut; on → the maximum-pause fallback.
+    val smartTurnEnabled by prefs.dictate.smartTurnEnabled.collectAsState()
+    val installedTick by LocalModelDownloads.installedTick.collectAsState()
+    val smartTurnActive = smartTurnEnabled && remember(installedTick) { SmartTurnModel.isModelAvailable(context) }
     JetPrefAlertDialog(
         title = stringRes(R.string.dictate__longform_title),
         dismissLabel = stringRes(android.R.string.ok),
@@ -618,7 +675,13 @@ private fun LongformDialog(
                 var sliderValue by remember(seconds) { mutableStateOf(seconds.toFloat()) }
                 Text(
                     modifier = Modifier.padding(top = 12.dp, start = 8.dp),
-                    text = stringRes(R.string.dictate__longform_autosplit_threshold_title) + ": " +
+                    text = stringRes(
+                        if (smartTurnActive) {
+                            R.string.dictate__longform_autosplit_threshold_title
+                        } else {
+                            R.string.dictate__longform_pause_length_title
+                        },
+                    ) + ": " +
                         stringRes(R.string.dictate__longform_autosplit_value, "seconds" to "${sliderValue.roundToInt()}"),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -632,7 +695,98 @@ private fun LongformDialog(
                     valueRange = 2f..8f,
                     steps = 5,
                 )
+                SmartTurnRow()
             }
+        }
+    }
+}
+
+/**
+ * Opt-in Smart Turn v3 toggle shown under the pause slider in AUTO mode. Checking it downloads the ~8 MB
+ * on-device model (round progress bar); the checkbox only turns on once the download has fully succeeded.
+ * When off, auto-split falls back to the pure Silero silence timer.
+ */
+@Composable
+private fun SmartTurnRow() {
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val downloads by LocalModelDownloads.state.collectAsState()
+    val installedTick by LocalModelDownloads.installedTick.collectAsState()
+    val enabledPref by prefs.dictate.smartTurnEnabled.collectAsState()
+
+    val modelPresent = remember(installedTick) { SmartTurnModel.isModelAvailable(context) }
+    val dl = downloads[LocalModelCatalog.SMART_TURN_ID]
+    val downloading = dl != null && dl.error == null
+    val failed = dl?.error != null
+    val percent = dl?.percent ?: 0
+    val checked = enabledPref && modelPresent
+    var pendingEnable by remember { mutableStateOf(false) }
+
+    // Only flip the pref on once the model has actually finished downloading; and if the file is ever gone
+    // while the pref is on, turn it back off so activation and the checkbox never disagree.
+    LaunchedEffect(modelPresent, pendingEnable, enabledPref) {
+        if (modelPresent && pendingEnable) {
+            prefs.dictate.smartTurnEnabled.set(true)
+            pendingEnable = false
+        }
+        if (enabledPref && !modelPresent && !downloading && !pendingEnable) {
+            prefs.dictate.smartTurnEnabled.set(false)
+        }
+    }
+
+    fun onToggle() {
+        when {
+            downloading -> LocalModelDownloads.cancel(LocalModelCatalog.SMART_TURN_ID)
+            checked -> scope.launch { prefs.dictate.smartTurnEnabled.set(false) }
+            modelPresent -> scope.launch { prefs.dictate.smartTurnEnabled.set(true) }
+            else -> {
+                if (failed) LocalModelDownloads.clearError(LocalModelCatalog.SMART_TURN_ID)
+                pendingEnable = true
+                LocalModelDownloads.start(context, LocalModelCatalog.SMART_TURN)
+            }
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onToggle() }
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (downloading) {
+            Box(
+                modifier = Modifier.size(48.dp).padding(12.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(
+                    progress = { percent / 100f },
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp,
+                )
+            }
+        } else {
+            Checkbox(checked = checked, onCheckedChange = { onToggle() })
+        }
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(
+                text = stringRes(R.string.dictate__smart_turn_title),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Text(
+                text = when {
+                    downloading -> stringRes(R.string.dictate__smart_turn_downloading, "percent" to "$percent")
+                    failed -> stringRes(R.string.dictate__smart_turn_download_failed)
+                    else -> stringRes(R.string.dictate__smart_turn_summary)
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = if (failed) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            )
         }
     }
 }

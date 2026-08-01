@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Разрешите микрофон в Dictate</string>
     <string name="wear_err_mic_unavailable">Микрофон недоступен</string>
     <string name="wear_err_transcribe_failed">Ошибка расшифровки</string>
+    <string name="wear_err_tap_to_retry">%1$s · Нажмите, чтобы повторить</string>
     <string name="wear_err_empty">Пусто — проверьте ключ</string>
     <string name="wear_err_unknown">Неизвестная ошибка</string>
     <string name="wear_err_no_transport">Нет телефона; синхр. ключ</string>

@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Povol mikrofon v Dictate</string>
     <string name="wear_err_mic_unavailable">Mikrofon nedostupný</string>
     <string name="wear_err_transcribe_failed">Přepis selhal</string>
+    <string name="wear_err_tap_to_retry">%1$s · Klepnutím zkusit znovu</string>
     <string name="wear_err_empty">Prázdné — zkontroluj klíč</string>
     <string name="wear_err_unknown">Neznámá chyba</string>
     <string name="wear_err_no_transport">Bez telefonu; synch. klíč</string>

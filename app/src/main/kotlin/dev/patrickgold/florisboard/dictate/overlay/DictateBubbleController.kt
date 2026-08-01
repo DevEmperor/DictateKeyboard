@@ -20,6 +20,7 @@ import android.graphics.PixelFormat
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.SystemClock
@@ -48,6 +49,7 @@ import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
+import dev.patrickgold.florisboard.dictate.recognition.RecognitionBridge
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
@@ -193,7 +195,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             ) { enabled, showWithKeyboard, focused, dictateKeyboard, state ->
                 Inputs(enabled, showWithKeyboard, focused, dictateKeyboard, state)
             }
-            combine(
+            val emissions = combine(
                 base,
                 prefs.dictate.floatingButtonDesign.asFlow(),
                 prefs.dictate.floatingButtonSize.asFlow(),
@@ -201,7 +203,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 prefs.dictate.floatingButtonColor.asFlow(),
             ) { inputs, design, size, imeVisible, color ->
                 Emission(inputs, design, size, imeVisible, color.toArgb())
-            }.collect { (inputs, design, size, imeVisible, accent) ->
+            }
+            combine(emissions, RecognitionBridge.active) { emission, recogActive ->
+                emission to recogActive
+            }.collect { (emission, recogActive) ->
+                val (inputs, design, size, imeVisible, accent) = emission
                 val (enabled, showWithKeyboard, focused, dictateKeyboard, state) = inputs
                 if (design != currentDesign || size.scale != sizeScale || accent != accentColor) {
                     currentDesign = design
@@ -217,12 +223,16 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // still keeps it shown.
                 val dictateKeyboardShown = dictateKeyboard && imeVisible
                 val hiddenByOwnKeyboard = dictateKeyboardShown && !showWithKeyboard
-                val show = enabled && (focused || active) && !hiddenByOwnKeyboard
+                // Hide the bubble entirely while another keyboard/app drives a system voice-input session
+                // (#67) — its own overlay/panel is showing, and the recording isn't the bubble's (RECOGNITION
+                // target), so a floating mic on top would be confusing.
+                val show = enabled && (focused || active) && !hiddenByOwnKeyboard && !recogActive
                 if (show) ensureShown() else hide()
                 recordingState = state as? DictateController.UiState.Recording
                 applyState(state)
                 manageForeground(state)
                 manageTicker(state)
+                manageKeepScreenOn(state)
                 manageCancel(state, show)
                 // Track when a dictation just finished so the undo button is offered only in that
                 // window (until the next recording), not perpetually from a stale cached result.
@@ -443,10 +453,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 runCatching { PromptsDatabaseHelper.getInstance(context).getAll() }.getOrDefault(emptyList())
             }.filter { !it.name.isNullOrBlank() }
             if (menuAdded) return@launch
-            if (prompts.isEmpty()) {
-                Toast.makeText(context, context.getString(R.string.dictate__floating_button_no_prompts), Toast.LENGTH_SHORT).show()
-                return@launch
-            }
+            // Always show the menu — the Live Prompt entry (freeform voice command, #230) is always
+            // available even with no saved rewording prompts.
             addPromptMenu(prompts)
         }
     }
@@ -460,25 +468,43 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             isClickable = true // swallow taps so they don't dismiss via the scrim
             elevation = dpf(8f)
         }
+        fun menuItem(label: String, bold: Boolean, onClick: () -> Unit): TextView = TextView(context).apply {
+            text = label
+            setTextColor(color(R.color.dictate_overlay_icon))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            if (bold) setTypeface(typeface, Typeface.BOLD)
+            val hz = dp(20)
+            val vt = dp(12)
+            setPadding(hz, vt, hz, vt)
+            setOnClickListener { onClick() }
+        }
+        val wrapParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+        )
+        // Live Prompt on top (freeform voice command, #230): records a spoken instruction via the floating
+        // button, then rewords it — with the selected text as context, or generating from scratch — and
+        // injects the result. Mirrors the live-prompt chip on the keyboard's prompt bar.
+        card.addView(
+            menuItem(context.getString(R.string.quick_action__dictate_live_prompt), bold = true) {
+                hidePromptMenu()
+                DictateController.startLivePrompt(context, DictateController.OutputTarget.OVERLAY)
+            },
+            wrapParams,
+        )
         prompts.forEach { prompt ->
-            val item = TextView(context).apply {
-                text = prompt.name
-                setTextColor(color(R.color.dictate_overlay_icon))
-                setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-                val hz = dp(20)
-                val vt = dp(12)
-                setPadding(hz, vt, hz, vt)
-                setOnClickListener {
+            card.addView(
+                menuItem(prompt.name.orEmpty(), bold = false) {
                     hidePromptMenu()
                     DictateController.applyPrompt(
                         context, prompt, target = DictateController.OutputTarget.OVERLAY,
                     )
-                }
-            }
-            card.addView(item, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-            ))
+                },
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ),
+            )
         }
         val scroll = ScrollView(context).apply {
             addView(card)
@@ -487,7 +513,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             clipToPadding = false
         }
         val scrim = FrameLayout(context).apply {
-            setBackgroundColor(0x66000000.toInt())
+            // Transparent, not a dark full-screen dim: the menu floats over the app without covering the
+            // whole screen; the invisible full-screen layer only catches an outside tap to dismiss.
+            setBackgroundColor(Color.TRANSPARENT)
             setOnClickListener { hidePromptMenu() }
             addView(scroll, FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -559,7 +587,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // vertically centered). Independent of snap-to-edge so the margin is always there.
                 needsInitialPlacement = false
                 applyInitialPlacement()
-            } else if (right - left != oldRight - oldLeft) {
+            } else if (kotlin.math.abs((right - left) - (oldRight - oldLeft)) > dp(2)) {
+                // Only react to real size changes. The pill's running timer nudges the width by a fraction
+                // of a pixel every second, and repositioning the window on each of those made the whole
+                // bubble visibly flicker (reported on #231).
                 repositionForSize()
                 if (cancelAdded) positionCancel() // keep the cancel button beside the (resized) pill
                 if (undoAdded) positionUndo()
@@ -904,6 +935,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         if (!holding && state is DictateController.UiState.Recording) startTicker() else stopTicker()
     }
 
+    /**
+     * Keep the screen awake while dictating from the floating button (issue #231): without physical touch,
+     * Android's screen timeout would otherwise fire and tear down the recording. Honors the same
+     * "keep screen awake" preference the keyboard/legacy recording views use, and only while actually
+     * recording, so the bubble doesn't hold the screen on once dictation finishes.
+     */
+    private fun manageKeepScreenOn(state: DictateController.UiState) {
+        rootView?.keepScreenOn =
+            state is DictateController.UiState.Recording && prefs.dictate.keepScreenAwake.get()
+    }
+
     private fun startTicker() {
         if (tickerJob?.isActive == true) return
         tickerJob = scope.launch {
@@ -1228,6 +1270,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val timer = TextView(context).apply {
             setTextColor(color(R.color.dictate_overlay_icon))
             setTextSize(TypedValue.COMPLEX_UNIT_PX, sdpf(14f))
+            // Tabular figures + a reserved width so ticking from "0:09" to "0:10" can't change the pill's
+            // width at all — the second half of the flicker fix (#231).
+            fontFeatureSettings = "tnum"
+            minimumWidth = sdp(40)
+            gravity = Gravity.CENTER
         }
         // Thinner bars: more bars across a similar width than the ring's waveform.
         private val wave = WaveformView(context, barCount = 13)

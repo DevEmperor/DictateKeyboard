@@ -27,6 +27,8 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
@@ -49,6 +51,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.Delegates
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
+
+// Frequency stored for a word learned from the suggestion strip (issue #241) — the maximum, matching what
+// the user dictionary settings screen assigns to a hand-added word.
+private const val USER_DICTIONARY_FREQ = 255
 
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
@@ -260,6 +266,42 @@ class NlpManager(context: Context) {
 
     fun getAutoCommitCandidate(): SuggestionCandidate? {
         return activeCandidates.firstOrNull { it.isEligibleForAutoCommit }
+    }
+
+    /** Outcome of [addToUserDictionary], so the caller knows what (if anything) to tell the user. */
+    enum class AddToDictionaryResult { ADDED, ALREADY_PRESENT, UNAVAILABLE }
+
+    /**
+     * Adds [candidate]'s word to the personal dictionary for [subtype]'s language (issue #241) and re-runs
+     * the suggestions so it is treated as known from the very next keystroke — which is the point of the
+     * feature: [LatinLanguageProvider] consults the user dictionary in `isKnownWord`, so a learned word is
+     * never autocorrected again.
+     *
+     * Stored at the maximum frequency, matching what the settings screen uses when a word is added by hand.
+     */
+    fun addToUserDictionary(subtype: Subtype, candidate: SuggestionCandidate): AddToDictionaryResult {
+        val word = candidate.text.toString().trim()
+        if (word.isEmpty()) return AddToDictionaryResult.UNAVAILABLE
+        val dao = DictionaryManager.default().florisUserDictionaryDao()
+            ?: return AddToDictionaryResult.UNAVAILABLE // the personal dictionary is switched off
+        val locale = subtype.primaryLocale
+        return runCatching {
+            if (dao.queryExactFuzzyLocale(word, locale).isNotEmpty()) {
+                AddToDictionaryResult.ALREADY_PRESENT
+            } else {
+                dao.insert(
+                    UserDictionaryEntry(
+                        id = 0,
+                        word = word,
+                        freq = USER_DICTIONARY_FREQ,
+                        locale = locale.localeTag(),
+                        shortcut = null,
+                    )
+                )
+                scope.launch { suggest(subtypeManager.activeSubtype, editorInstance.activeContent) }
+                AddToDictionaryResult.ADDED
+            }
+        }.getOrDefault(AddToDictionaryResult.UNAVAILABLE)
     }
 
     fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {

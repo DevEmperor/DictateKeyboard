@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.ui
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -186,6 +187,43 @@ fun DictateInputLayout(
  * `MaterialTheme.colorScheme.onSurface` (MaterialTheme is not provided inside the keyboard IME, so that
  * tint renders invisible against the Snygg-themed panel).
  */
+/**
+ * Same accent scrollbar as [dictatePanelScrollbar], for a [LazyListState]-backed list (the history panel,
+ * which must stay lazy so a large history never blocks the UI thread). A lazy list has no total pixel
+ * height, so the thumb is derived from the item counts — an approximation that is accurate enough for the
+ * roughly uniform panel rows.
+ */
+internal fun Modifier.dictateLazyPanelScrollbar(
+    state: LazyListState,
+    accent: Color,
+    width: Dp = 5.dp,
+): Modifier = drawWithContent {
+    drawContent()
+    val info = state.layoutInfo
+    val total = info.totalItemsCount
+    val visible = info.visibleItemsInfo.size
+    if (total == 0 || visible == 0 || visible >= total) return@drawWithContent
+    val barWidth = width.toPx()
+    val viewport = size.height
+    val thumbHeight = (viewport * visible / total).coerceAtLeast(barWidth * 5f)
+    val maxIndex = (total - visible).toFloat()
+    val progress = (state.firstVisibleItemIndex / maxIndex).coerceIn(0f, 1f)
+    val x = size.width - barWidth
+    val radius = CornerRadius(barWidth / 2f, barWidth / 2f)
+    drawRoundRect(
+        color = accent.copy(alpha = 0.12f),
+        topLeft = Offset(x, 0f),
+        size = Size(barWidth, viewport),
+        cornerRadius = radius,
+    )
+    drawRoundRect(
+        color = accent.copy(alpha = 0.85f),
+        topLeft = Offset(x, (viewport - thumbHeight) * progress),
+        size = Size(barWidth, thumbHeight),
+        cornerRadius = radius,
+    )
+}
+
 internal fun Modifier.dictatePanelScrollbar(
     state: ScrollState,
     accent: Color,

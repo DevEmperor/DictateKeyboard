@@ -130,6 +130,8 @@ fun DictateProvidersScreen() = FlorisScreen {
                 entries = buildList {
                     ProviderRegistry.presets
                         .filter { it.capabilities.transcription }
+                        // On-device (offline) first in the picker, above the cloud providers (issue #228).
+                        .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
                         .forEach { add(it.id to it.displayName) }
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
@@ -152,7 +154,11 @@ fun DictateProvidersScreen() = FlorisScreen {
             val keySet = stringRes(R.string.dictate__providers_status_key_set)
             val noKey = stringRes(R.string.dictate__providers_status_no_key)
 
-            ProviderRegistry.presets.forEach { preset ->
+            // On-device (offline) provider first, above the cloud providers like OpenAI (issue #228);
+            // the rest keep their registry display order (sortedByDescending is stable).
+            val orderedPresets = ProviderRegistry.presets
+                .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
+            orderedPresets.forEach { preset ->
                 val account = accounts[preset.id]
                 Preference(
                     icon = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
@@ -480,8 +486,21 @@ private fun ProviderEditorDialog(
             account.customBaseUrl.ifBlank { if (preset?.allowsCustomBaseUrl == true) preset.baseUrl else "" },
         )
     }
-    var transcriptionModel by remember { mutableStateOf(account.transcriptionModel) }
-    var chatModel by remember { mutableStateOf(account.chatModel) }
+    // Model fields show the *effective* model, filling in the preset default when nothing was chosen —
+    // an empty box tells the user nothing about what is actually running. Storage keeps the old meaning:
+    // [modelToStore] turns a value that still equals the default back into an empty string on confirm, so
+    // the account goes on following the preset and a later update can move it. Only a deliberate choice of
+    // something else is pinned.
+    var transcriptionModel by remember {
+        mutableStateOf(account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() })
+    }
+    var chatModel by remember {
+        mutableStateOf(account.chatModel.ifBlank { preset?.defaultChatModel.orEmpty() })
+    }
+    var realtimeModel by remember {
+        mutableStateOf(account.realtimeModel.ifBlank { preset?.defaultRealtimeModel.orEmpty() })
+    }
+    var showRealtimePicker by remember { mutableStateOf(false) }
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
     var cachedModels by remember { mutableStateOf(account.cachedModels) }
     var cachedAudioModels by remember { mutableStateOf(account.cachedAudioModels) }
@@ -531,8 +550,9 @@ private fun ProviderEditorDialog(
                     displayName = displayName.trim(),
                     apiKey = apiKey.trim(),
                     customBaseUrl = baseUrl.trim(),
-                    transcriptionModel = transcriptionModel.trim(),
-                    chatModel = chatModel.trim(),
+                    transcriptionModel = modelToStore(transcriptionModel, preset?.defaultTranscriptionModel),
+                    chatModel = modelToStore(chatModel, preset?.defaultChatModel),
+                    realtimeModel = modelToStore(realtimeModel, preset?.defaultRealtimeModel),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
                     cachedTranscriptionModels = cachedTranscriptionModels,
@@ -596,8 +616,21 @@ private fun ProviderEditorDialog(
                         ?: stringRes(R.string.dictate__model_placeholder),
                     onBrowse = { pickerKind = ModelKind.TRANSCRIPTION },
                 )
-                // Real-time streaming model (issue #128) is intentionally not exposed: every provider has
-                // effectively one usable streaming model, so the engine always uses the preset default.
+                // Streaming runs over a different endpoint and protocol than batch STT, so it gets its own
+                // field rather than being folded into the picker above (#248, based on #243). It used to be
+                // hidden on the assumption that each provider has exactly one usable streaming model, which
+                // stopped being true once OpenAI shipped a second generation of them — and until now the
+                // stored realtimeModel had no way of ever being set.
+                if (preset?.supportsRealtime == true && preset.curatedRealtimeModels.isNotEmpty()) {
+                    EditorField(
+                        label = stringRes(R.string.dictate__providers_field_realtime_model),
+                        value = realtimeModel,
+                        onValueChange = { realtimeModel = it },
+                        placeholder = preset.defaultRealtimeModel
+                            ?: stringRes(R.string.dictate__model_placeholder),
+                        onBrowse = { showRealtimePicker = true },
+                    )
+                }
             }
             // Rewording model is unused while single-call multimodal is on (one model does both, #130).
             if (showChat && !transcriptionViaChat) {
@@ -668,6 +701,78 @@ private fun ProviderEditorDialog(
             },
             onDismiss = { pickerKind = null },
         )
+    }
+
+    if (showRealtimePicker && preset != null) {
+        RealtimeModelPickerDialog(
+            models = preset.curatedRealtimeModels,
+            default = preset.defaultRealtimeModel,
+            current = realtimeModel,
+            onPick = { realtimeModel = it },
+            onDismiss = { showRealtimePicker = false },
+        )
+    }
+}
+
+/**
+ * What actually gets written for a model field: an empty string when the value still equals the preset
+ * default, so the account keeps following it, and the trimmed value otherwise. The editor itself shows the
+ * default filled in, which is why this cannot simply store what is on screen.
+ */
+private fun modelToStore(value: String, default: String?): String {
+    val trimmed = value.trim()
+    return if (default != null && trimmed == default) "" else trimmed
+}
+
+/**
+ * Picker for a provider's curated realtime models — a short radio list rather than the searchable
+ * catalogue used for batch models, because streaming models are few and never appear in `/models`.
+ *
+ * Always writes the chosen id into the field, including for the default, so the box never sits empty
+ * while a model is in fact running. Turning that back into an empty stored value is [modelToStore]'s job
+ * on confirm.
+ */
+@Composable
+private fun RealtimeModelPickerDialog(
+    models: List<String>,
+    default: String?,
+    current: String,
+    onPick: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    JetPrefAlertDialog(
+        title = stringRes(R.string.dictate__providers_field_realtime_model),
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            models.forEach { model ->
+                val isDefault = model == default
+                val pick = { onPick(model); onDismiss() }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = pick)
+                        .padding(vertical = 12.dp, horizontal = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(
+                        selected = current == model || (current.isBlank() && isDefault),
+                        onClick = pick,
+                    )
+                    Column(modifier = Modifier.padding(start = 8.dp)) {
+                        Text(model, style = MaterialTheme.typography.bodyLarge)
+                        if (isDefault) {
+                            Text(
+                                stringRes(R.string.dictate__providers_realtime_model_default),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

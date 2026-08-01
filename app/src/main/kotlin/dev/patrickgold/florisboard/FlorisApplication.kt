@@ -103,6 +103,15 @@ class FlorisApplication : Application() {
         }
     }
 
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        // Under memory pressure, free the on-device STT model from RAM (it can be ~100 MB up to ~700 MB).
+        // Safe mid-transcription (deferred until it finishes); the next on-device dictation rebuilds it.
+        if (level >= android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) {
+            dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider.unloadCachedModel()
+        }
+    }
+
     fun init() {
         cacheDir?.deleteContentsRecursively()
         scope.launch {

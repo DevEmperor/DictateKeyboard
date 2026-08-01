@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Beri mikrofon di app Dictate</string>
     <string name="wear_err_mic_unavailable">Mikrofon tak tersedia</string>
     <string name="wear_err_transcribe_failed">Transkripsi gagal</string>
+    <string name="wear_err_tap_to_retry">%1$s · Ketuk untuk coba lagi</string>
     <string name="wear_err_empty">Kosong — cek kunci ponsel</string>
     <string name="wear_err_unknown">Error tak dikenal</string>
     <string name="wear_err_no_transport">Tanpa ponsel; sinkr. kunci</string>

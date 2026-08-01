@@ -11,22 +11,23 @@
 package dev.patrickgold.florisboard.dictate.ui
 
 import android.text.format.DateUtils
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,6 +49,10 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -76,8 +81,13 @@ fun DictateHistoryLayout(
     val prefs by FlorisPreferenceStore
     val accent by prefs.theme.accentColor.collectPrefAsState() // follows the user's keyboard accent.
     // null = not loaded yet (show a spinner), empty list = genuinely no history (#205).
-    val entries by remember(context) { DictateHistoryStore.flow(context) }.collectAsState(initial = null)
-    val scrollState = rememberScrollState()
+    // Built AND collected on IO so opening the Room database never runs on the composition's main-thread
+    // context. (The loading spinner freezing was caused by eagerly composing every row — see the list below.)
+    val entries by remember(context) {
+        flow { emitAll(DictateHistoryStore.flow(context)) }.flowOn(Dispatchers.IO)
+    }.collectAsState(initial = null)
+
+    val listState = rememberLazyListState()
 
     SnyggColumn(
         elementName = FlorisImeUi.Media.elementName,
@@ -132,14 +142,9 @@ fun DictateHistoryLayout(
                     .padding(horizontal = 24.dp),
             ) {
                 if (loadedEntries == null) {
-                    // Still loading from disk — a simple centered accent label (#205). The in-keyboard panel
-                    // doesn't drive continuous animation frames, so an animated spinner just freezes; a
-                    // static label is the reliable choice here.
-                    Text(
-                        text = stringRes(R.string.dictate__history_loading),
-                        color = accent,
-                        fontWeight = FontWeight.SemiBold,
-                    )
+                    // Still loading from disk — the same centered accent spinner as the GIF panel. It
+                    // animates properly now that opening the panel no longer blocks the UI thread.
+                    CircularProgressIndicator(color = accent)
                 } else {
                     SnyggText(
                         elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
@@ -148,19 +153,28 @@ fun DictateHistoryLayout(
                 }
             }
         } else {
-            Column(
+            // Lazy on purpose: a full history is up to several hundred entries, and composing them all
+            // eagerly blocked the UI thread for well over a second — which is what froze the loading
+            // spinner (and everything else) while the panel opened. Only visible rows are composed now.
+            LazyColumn(
+                state = listState,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .verticalScroll(scrollState)
-                    .dictatePanelScrollbar(scrollState, accent),
+                    .dictateLazyPanelScrollbar(listState, accent),
             ) {
-                loadedEntries.forEach { entry ->
+                items(loadedEntries, key = { it.id }) { entry ->
                     HistoryPanelRow(
                         entry = entry,
                         accent = accent,
                         onInsert = {
                             DictateController.insertHistoryText(context, entry.text)
+                            keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+                        },
+                        // Long-press inserts the raw transcript instead, for entries a prompt rewrote
+                        // (issue #240). The row is marked so this isn't a hidden gesture.
+                        onInsertOriginal = {
+                            DictateController.insertHistoryText(context, entry.originalText)
                             keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
                         },
                         onRetranscribe = {
@@ -179,8 +193,11 @@ private fun HistoryPanelRow(
     entry: DictateHistoryEntry,
     accent: Color,
     onInsert: () -> Unit,
+    onInsertOriginal: () -> Unit,
     onRetranscribe: () -> Unit,
 ) {
+    // Both versions exist only when a prompt actually rewrote the dictation (issue #240).
+    val hasOriginal = entry.originalText.isNotEmpty() && entry.originalText != entry.text
     // Compact text, large tap targets: the transcript uses the candidate-word text size and the meta line
     // the (much smaller) secondary-candidate size, so the metadata clearly reads as a subordinate line;
     // the insert / re-transcribe buttons are generous and easy to hit.
@@ -192,7 +209,11 @@ private fun HistoryPanelRow(
             .fillMaxWidth()
             .padding(vertical = 1.dp),
         // A failed entry has no committed text yet — inserting is disabled until it's re-transcribed.
-        clickAndSemanticsModifier = Modifier.clickable(enabled = !entry.failed) { onInsert() },
+        clickAndSemanticsModifier = Modifier.combinedClickable(
+            enabled = !entry.failed,
+            onClick = { onInsert() },
+            onLongClick = if (hasOriginal) onInsertOriginal else null,
+        ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (entry.pinned) {
@@ -219,7 +240,13 @@ private fun HistoryPanelRow(
             )
             SnyggText(
                 elementName = FlorisImeUi.KeyHint.elementName,
-                text = historyMetaLine(entry),
+                // The hint makes the long-press discoverable; without it the second version would exist
+                // but nobody would know to reach for it (issue #240).
+                text = if (hasOriginal) {
+                    historyMetaLine(entry) + " · " + stringRes(R.string.dictate__history_hold_for_original)
+                } else {
+                    historyMetaLine(entry)
+                },
             )
         }
         if (entry.audioPath != null) {

@@ -82,6 +82,13 @@ fun TypingScreen() = FlorisScreen {
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
             )
             SwitchPreference(
+                prefs.suggestion.nextWordPrediction,
+                modifier = Modifier.settingsSearchAnchor("pref__suggestion__next_word_prediction__label"),
+                title = stringRes(R.string.pref__suggestion__next_word_prediction__label),
+                summary = stringRes(R.string.pref__suggestion__next_word_prediction__summary),
+                enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            SwitchPreference(
                 prefs.suggestion.api30InlineSuggestionsEnabled,
                 modifier = Modifier.settingsSearchAnchor("pref__suggestion__api30_inline_suggestions_enabled__label"),
                 title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),

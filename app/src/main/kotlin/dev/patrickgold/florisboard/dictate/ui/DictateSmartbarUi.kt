@@ -14,6 +14,7 @@ import android.os.SystemClock
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -96,6 +97,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -151,7 +153,6 @@ fun DictateSmartbarUi(state: DictateController.UiState, modifier: Modifier = Mod
 private fun RecordingContent(state: DictateController.UiState.Recording) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
     // Long-form segmented dictation (#170): whether the "Next segment" button is active and how many cut
     // segments are transcribing in the background.
     val segmented by DictateController.segmentedRecording.collectFlowAsState()
@@ -166,13 +167,6 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
             nextFlash.snapTo(1f)
             nextFlash.animateTo(0f, tween(550))
         }
-    }
-
-    // Keep the screen on while the recording indicator is visible, if the user enabled it.
-    val view = LocalView.current
-    DisposableEffect(keepScreenAwake) {
-        if (keepScreenAwake) view.keepScreenOn = true
-        onDispose { view.keepScreenOn = false }
     }
 
     // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
@@ -251,19 +245,45 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
 }
 
 /**
- * Small recording indicator for the Smartbar: a red dot whose size and opacity follow the shared 20 Hz
- * microphone level, so the normal keyboard shows the mic is actually hearing you — without the heavier
- * cloud-orb surface, which stays an opt-in floating-button skin.
+ * Small recording indicator for the Smartbar: a red dot that, depending on the user's choice
+ * ([DictateRecordingAnimation], issue #238), follows the shared 20 Hz microphone level, pulses at a
+ * fixed rate like the pre-rewrite app, or simply sits still. The level mode is the default because it
+ * doubles as proof that the mic is actually hearing you — without the heavier cloud-orb surface, which
+ * stays an opt-in floating-button skin.
+ *
+ * While paused the dot is always still and dimmed, whatever the mode: there is nothing to react to.
  */
 @Composable
 private fun RecordingAudioDot(paused: Boolean) {
-    val level by DictateController.audioLevel.collectFlowAsState()
-    val reactive = if (paused) 0f else level
+    val prefs by FlorisPreferenceStore
+    val animation by prefs.dictate.recordingAnimation.collectAsState()
+    // Only collected in LEVEL mode, so the other modes don't recompose at 20 Hz for nothing.
+    val level = if (animation == DictateRecordingAnimation.LEVEL && !paused) {
+        DictateController.audioLevel.collectFlowAsState().value
+    } else {
+        0f
+    }
+    val pulse by rememberInfiniteTransition(label = "recordingDot").animateFloat(
+        initialValue = 1f,
+        targetValue = if (animation == DictateRecordingAnimation.PULSE && !paused) 1.25f else 1f,
+        animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
+        label = "recordingDotPulse",
+    )
+    val scale = when {
+        paused -> 1f
+        animation == DictateRecordingAnimation.LEVEL -> 0.85f + 0.5f * level
+        else -> pulse // PULSE animates, STATIC stays at 1f because its target never leaves 1f
+    }
+    val alpha = when {
+        paused -> 0.4f
+        animation == DictateRecordingAnimation.LEVEL -> 0.55f + 0.45f * level
+        else -> 1f
+    }
     Spacer(
         modifier = Modifier
             .size(12.dp)
-            .scale(if (paused) 1f else 0.85f + 0.5f * reactive)
-            .alpha(if (paused) 0.4f else 0.55f + 0.45f * reactive)
+            .scale(scale)
+            .alpha(alpha)
             .clip(CircleShape)
             .background(Color(0xFFE53935)),
     )

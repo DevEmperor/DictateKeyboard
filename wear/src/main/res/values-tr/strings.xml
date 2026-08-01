@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Dictate\'te mikrofona izin ver</string>
     <string name="wear_err_mic_unavailable">Mikrofon kullanılamıyor</string>
     <string name="wear_err_transcribe_failed">Yazıya dökme başarısız</string>
+    <string name="wear_err_tap_to_retry">%1$s · Yeniden denemek için dokun</string>
     <string name="wear_err_empty">Boş — telefon anahtarını denetle</string>
     <string name="wear_err_unknown">Bilinmeyen hata</string>
     <string name="wear_err_no_transport">Telefon yok; anahtarı eşitle</string>

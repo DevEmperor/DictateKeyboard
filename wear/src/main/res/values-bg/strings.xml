@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">Дайте микрофон в Dictate</string>
     <string name="wear_err_mic_unavailable">Микрофонът е недостъпен</string>
     <string name="wear_err_transcribe_failed">Транскрипцията пропадна</string>
+    <string name="wear_err_tap_to_retry">%1$s · Докоснете за нов опит</string>
     <string name="wear_err_empty">Празно — проверете ключа</string>
     <string name="wear_err_unknown">Неизвестна грешка</string>
     <string name="wear_err_no_transport">Няма телефон; синхр. ключ</string>

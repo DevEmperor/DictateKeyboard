@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
 import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
@@ -350,11 +351,52 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__keep_screen_awake",
             default = true,
         )
+        // How the recording indicator moves while dictating — the Smartbar's red dot and the classic
+        // layout's record button (issue #238). Defaults to LEVEL (mic-reactive), which doubles as
+        // feedback that the microphone is hearing something; PULSE restores the pre-rewrite look and
+        // STATIC removes the movement entirely for anyone who finds it distracting while speaking.
+        val recordingAnimation = enum(
+            key = "dictate__recording_animation",
+            default = DictateRecordingAnimation.LEVEL,
+        )
         // Skip transcription when a local Silero VAD finds no speech in the recording, so silent clips
         // don't produce "ghost text" hallucinations or waste API credits (issue #93). Default on.
         val skipSilentRecordings = boolean(
             key = "dictate__skip_silent_recordings",
             default = true,
+        )
+        // Trim long internal pauses (> ~2 s of silence) out of a recording before it's uploaded, using the
+        // same local Silero VAD as the silence gate (issue #232). Every spoken segment is kept in full;
+        // only the dead time between them is collapsed, so a dictation with big gaps sends less audio (less
+        // cost/latency) without losing a word. Default on. Ignored while long-form dictation is active — it
+        // does its own segment-cutting.
+        val trimSilentGaps = boolean(
+            key = "dictate__trim_silent_gaps",
+            default = true,
+        )
+        // Break long *plain* transcripts into paragraphs (issue #225): once at least this many words have
+        // accumulated, the next sentence end starts a new paragraph. 0 = off (default). Deterministic and
+        // only applied to a pure transcript — never to reworded / auto-formatted output, which already
+        // carries its own paragraphing.
+        val paragraphSplitWords = int(
+            key = "dictate__paragraph_split_words",
+            default = 0,
+        )
+        // Long-press the send (mic) button while recording to transcribe with the on-device model instead
+        // of the configured cloud provider (issue #228), for a quick offline one-off without digging
+        // through the provider settings. Toggled from the on-device model dialog. Off by default. Only
+        // applies to a plain recording — in long-form / streaming there is no plain send button to hold.
+        val longPressSendLocalModel = boolean(
+            key = "dictate__long_press_send_local_model",
+            default = false,
+        )
+        // Minutes the on-device model may sit idle before it is unloaded from RAM to free memory (models
+        // are ~100 MB up to ~700 MB). It is always also freed immediately on an Android memory-pressure
+        // signal; this timer additionally covers the "keyboard alive but not dictating" window. 0 = only
+        // on memory pressure (no idle timer). Default 5 minutes.
+        val localModelUnloadMinutes = int(
+            key = "dictate__local_model_unload_minutes",
+            default = 5,
         )
         // Haptic feedback on dictation state changes (issue #166): a short buzz on record start/stop, a
         // double on transcription done, a longer one when a rewording/LLM prompt finished — so the user
@@ -475,16 +517,24 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // --- Long-form segmented dictation (issue #170) ------------------------------------------
         // Transcribe long dictations segment-by-segment in the background while you keep talking, so you
         // don't wait for one big upload at the end. OFF by default; MANUAL shows the "Next" button, AUTO
-        // additionally cuts at speech pauses. Keyboard-only, not for realtime / live-prompt / multimodal.
+        // additionally uses Silero VAD + Smart Turn v3 at speech pauses. Keyboard-only, not for realtime /
+        // live-prompt / multimodal.
         val longformMode = enum(
             key = "dictate__longform_mode",
             default = DictateLongformMode.OFF,
         )
-        // Pause length (whole seconds) that triggers an auto-cut in AUTO mode; deliberately long so it
-        // fires on thought-breaks, not breathing pauses.
+        // Maximum silence (Pipecat Smart Turn stop_secs fallback) before AUTO mode cuts even when the
+        // semantic classifier says the current thought may be incomplete.
         val longformAutoSplitSeconds = int(
             key = "dictate__longform_auto_split_seconds",
             default = 3,
+        )
+        // Opt-in semantic auto-segmentation: when on (and the model is downloaded), AUTO mode uses the
+        // on-device Smart Turn v3 classifier to cut at completed thoughts instead of only on silence.
+        // Off by default; the ~8 MB model is downloaded on demand, not bundled.
+        val smartTurnEnabled = boolean(
+            key = "dictate__smart_turn_enabled",
+            default = false,
         )
         // Speed of the typewriter animation when instantOutput is off (1 = slow … 10 = fast).
         val outputSpeed = int(
@@ -1318,6 +1368,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val multilingualTyping = boolean(
             key = "suggestion__multilingual_typing",
             default = false,
+        )
+        // Next-word prediction from the bigram tables (issue #245). Only ever offers words once a previous
+        // word exists — never on an empty field, so opening the keyboard still shows the quick actions.
+        val nextWordPrediction = boolean(
+            key = "suggestion__next_word_prediction",
+            default = true,
         )
         val displayMode = enum(
             key = "suggestion__display_mode",

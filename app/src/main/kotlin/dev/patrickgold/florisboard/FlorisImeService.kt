@@ -41,7 +41,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
+import android.view.WindowManager
 import androidx.lifecycle.lifecycleScope
+import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -277,6 +279,30 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
+        }
+
+        // Keep the screen on for the whole dictation (issue #231), applied to the IME window itself.
+        // This used to live in the Smartbar's recording UI, but that composable is not composed while a
+        // panel (prompts / history / GIF) is open — so the flag silently dropped mid-dictation, and with
+        // no recent touch input the screen then turned off almost immediately, killing the recording.
+        // Driving it from the controller state at window level makes it independent of what UI is shown.
+        // Also held through transcribing/rewording so the finished text can't be lost to a sleeping screen.
+        combine(
+            DictateController.state,
+            prefs.dictate.keepScreenAwake.asFlow(),
+        ) { state, keepAwake ->
+            keepAwake && (
+                state is DictateController.UiState.Recording ||
+                    state is DictateController.UiState.Transcribing ||
+                    state is DictateController.UiState.Rewording
+                )
+        }.collectIn(lifecycleScope) { keepOn ->
+            val imeWindow = window?.window ?: return@collectIn
+            if (keepOn) {
+                imeWindow.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            } else {
+                imeWindow.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            }
         }
 
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes

@@ -24,6 +24,9 @@ import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 /**
  * On-device speech-to-text (issue #104), powered by a bundled Whisper model running through sherpa-onnx.
@@ -74,13 +77,19 @@ class LocalTranscriptionProvider(
 
             val text = try {
                 val recognizer = RecognizerCache.acquire(modelDir, numThreads, language)
-                val vadFile = File(modelDir, VAD)
-                // Whisper handles ~30 s per pass; segment longer audio at speech pauses (VAD) so the
-                // tail isn't dropped. Short clips take the simple single-pass path (no VAD overhead).
-                if (vadFile.exists() && samples.size > VAD_MIN_SAMPLES) {
-                    transcribeSegmented(recognizer, vadFile, samples)
-                } else {
-                    decodeOnce(recognizer, samples)
+                // Return the recognizer to the cache when done so a memory-pressure / idle unload can free
+                // it safely (never mid-decode) — see [RecognizerCache].
+                try {
+                    val vadFile = File(modelDir, VAD)
+                    // Whisper handles ~30 s per pass; segment longer audio at speech pauses (VAD) so the
+                    // tail isn't dropped. Short clips take the simple single-pass path (no VAD overhead).
+                    if (vadFile.exists() && samples.size > VAD_MIN_SAMPLES) {
+                        transcribeSegmented(recognizer, vadFile, samples)
+                    } else {
+                        decodeOnce(recognizer, samples)
+                    }
+                } finally {
+                    RecognizerCache.endUse()
                 }
             } catch (e: DictateApiException) {
                 throw e
@@ -215,6 +224,22 @@ class LocalTranscriptionProvider(
             val dir = modelDir(context, modelId)
             return File(dir, ENCODER).exists() && File(dir, DECODER).exists() && File(dir, TOKENS).exists()
         }
+
+        /**
+         * Frees the cached on-device recognizer from RAM now (models range from ~100 MB up to ~700 MB, so
+         * keeping one loaded while the user isn't dictating is wasteful). Called on Android memory-pressure
+         * signals (`onTrimMemory`). Safe anytime: if a transcription is in flight it frees right after it
+         * finishes, never mid-decode. The next on-device transcription rebuilds the recognizer (~1 s).
+         */
+        fun unloadCachedModel() = RecognizerCache.unload()
+
+        /**
+         * How long the recognizer may sit idle before it is unloaded from RAM; 0 disables the idle timer
+         * (it is then freed only on memory pressure). Applied after the current/next transcription.
+         */
+        fun setIdleUnloadMillis(millis: Long) {
+            RecognizerCache.idleUnloadMillis = millis
+        }
     }
 }
 
@@ -227,8 +252,25 @@ private object RecognizerCache {
     private var key: String? = null
     private var recognizer: OfflineRecognizer? = null
 
+    // A borrowed recognizer must never be freed mid-decode: [acquire]/[endUse] track active users, and an
+    // [unload] request while in use is deferred until the last user returns.
+    private var activeUsers = 0
+    private var releasePending = false
+
+    /** Idle-unload timeout (ms); 0 disables the timer (freed only via [unload] on memory pressure). */
+    @Volatile
+    var idleUnloadMillis: Long = 0L
+    private val scheduler = Executors.newSingleThreadScheduledExecutor { r ->
+        Thread(r, "stt-idle-unload").apply { isDaemon = true }
+    }
+    private var idleFuture: ScheduledFuture<*>? = null
+
     @Synchronized
     fun acquire(modelDir: File, numThreads: Int, language: String): OfflineRecognizer {
+        // In use again → cancel any pending idle unload.
+        idleFuture?.cancel(false)
+        idleFuture = null
+
         val encoder = File(modelDir, LocalTranscriptionProvider.ENCODER)
         val decoder = File(modelDir, LocalTranscriptionProvider.DECODER)
         val tokens = File(modelDir, LocalTranscriptionProvider.TOKENS)
@@ -240,9 +282,70 @@ private object RecognizerCache {
         // as-is and ignores the language, so it stays out of the key for those.
         val cacheKey = modelDir.absolutePath + "|" + numThreads + "|" + (if (isTransducer) "" else language)
         val existing = recognizer
-        if (existing != null && cacheKey == key) return existing
+        val rec = if (existing != null && cacheKey == key) {
+            existing
+        } else {
+            existing?.release()
+            recognizer = null
+            key = null
+            buildRecognizer(encoder, decoder, tokens, joiner, isTransducer, numThreads, language).also {
+                recognizer = it
+                key = cacheKey
+            }
+        }
+        // A fresh use cancels any pending unload for the now-current model and marks it in use.
+        releasePending = false
+        activeUsers++
+        return rec
+    }
 
-        existing?.release()
+    /** Returns a recognizer borrowed via [acquire]; frees now if an unload was requested while in use,
+     *  otherwise (re)arms the idle-unload timer. */
+    @Synchronized
+    fun endUse() {
+        if (activeUsers > 0) activeUsers--
+        if (activeUsers == 0) {
+            if (releasePending) freeNow() else armIdle()
+        }
+    }
+
+    /** Requests freeing the model from RAM. Deferred until the last active user returns if one is in flight. */
+    @Synchronized
+    fun unload() {
+        if (activeUsers > 0) {
+            releasePending = true
+            return
+        }
+        freeNow()
+    }
+
+    private fun freeNow() {
+        idleFuture?.cancel(false)
+        idleFuture = null
+        recognizer?.release()
+        recognizer = null
+        key = null
+        releasePending = false
+    }
+
+    private fun armIdle() {
+        idleFuture?.cancel(false)
+        idleFuture = null
+        val delay = idleUnloadMillis
+        if (delay > 0 && recognizer != null) {
+            idleFuture = scheduler.schedule({ unload() }, delay, TimeUnit.MILLISECONDS)
+        }
+    }
+
+    private fun buildRecognizer(
+        encoder: File,
+        decoder: File,
+        tokens: File,
+        joiner: File,
+        isTransducer: Boolean,
+        numThreads: Int,
+        language: String,
+    ): OfflineRecognizer {
         val modelConfig = if (isTransducer) {
             // NeMo Parakeet TDT (issue #154): encoder/decoder/joiner transducer, model-type per sherpa-onnx.
             OfflineModelConfig(
@@ -274,9 +377,6 @@ private object RecognizerCache {
             modelConfig = modelConfig,
         )
         // assetManager defaults to null → the model is read from the absolute file paths above.
-        return OfflineRecognizer(config = config).also {
-            recognizer = it
-            key = cacheKey
-        }
+        return OfflineRecognizer(config = config)
     }
 }

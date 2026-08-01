@@ -535,6 +535,10 @@
     <string name="pref__suggestion__auto_correct__summary" comment="Preference summary">Automatically fix typos when you type a space</string>
     <string name="pref__suggestion__multilingual_typing__label" comment="Preference title">Multilingual typing</string>
     <string name="pref__suggestion__multilingual_typing__summary" comment="Preference summary">Accept words from all your keyboard languages</string>
+    <string name="pref__suggestion__next_word_prediction__label" comment="Preference title">Next-word suggestions</string>
+    <string name="pref__suggestion__next_word_prediction__summary" comment="Preference summary">Suggest likely next words once you have finished a word</string>
+    <string name="suggestion__added_to_dictionary" comment="Toast shown after long-pressing a suggestion to learn it">Added \"{word}\" to your dictionary</string>
+    <string name="suggestion__already_in_dictionary" comment="Toast shown when the long-pressed word is already learned">\"{word}\" is already in your dictionary</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
@@ -722,6 +726,35 @@
     <string name="apptour51__outro_eyebrow">That’s 5.1</string>
     <string name="apptour51__outro_title">Enjoy the update</string>
     <string name="apptour51__outro_body">Thanks for using Dictate! If it helps you every day, a small donation keeps the project going. You can revisit any of these tours anytime under Settings › About.</string>
+    <!-- What's new tour 5.2 -->
+    <string name="apptour52__cta_try" comment="Button on a 5.2 tour page to jump straight to that feature">Try it</string>
+    <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
+    <string name="apptour52__intro_title">Dictate everywhere</string>
+    <string name="apptour52__intro_body">This release takes Dictate beyond its own keyboard: use it as your phone\'s voice input, run a spoken command from anywhere, and let it clean up long dictations for you. Here\'s what\'s new.</string>
+    <string name="apptour52__voiceinput_eyebrow">System-wide voice input</string>
+    <string name="apptour52__voiceinput_title">Use Dictate from any keyboard</string>
+    <string name="apptour52__voiceinput_body">Dictate now registers as a system voice input, so the mic key in other keyboards and apps can transcribe through Dictate — with your provider, your prompts and your on-device models. Enable “Dictate voice input” in your keyboard list and pick it as your voice input method. (Gboard keeps its mic tied to Google, so use a keyboard that honours the system setting.)</string>
+    <string name="apptour52__liveprompt_eyebrow">Freeform voice command</string>
+    <string name="apptour52__liveprompt_title">Tell the AI what to do — anywhere</string>
+    <string name="apptour52__liveprompt_body">Press and hold the floating button to open its menu, then tap “Live prompt” and just say what you want: “write a polite decline for tomorrow\'s meeting”, “translate the text above to Spanish”. Selected text is used as context; with nothing selected the AI writes from scratch.</string>
+    <string name="apptour52__ondevice_eyebrow">Offline on demand</string>
+    <string name="apptour52__ondevice_title">Hold send for the on-device model</string>
+    <string name="apptour52__ondevice_body">Need one dictation to stay on your device? Hold the send button while recording and it is transcribed by your downloaded model instead of the cloud — no switching providers. Turn it on in the on-device model dialog, which now sits at the top of the provider list.</string>
+    <string name="apptour52__trim_eyebrow">Faster, cheaper uploads</string>
+    <string name="apptour52__trim_title">Long pauses get trimmed</string>
+    <string name="apptour52__trim_body">Thinking mid-sentence? Silences longer than a couple of seconds are now cut out before the audio is sent — every spoken word is kept, but the dead air is gone. Shorter uploads mean less waiting and lower cost.</string>
+    <string name="apptour52__paragraphs_eyebrow">Readable long dictations</string>
+    <string name="apptour52__paragraphs_title">Automatic paragraphs</string>
+    <string name="apptour52__paragraphs_body">Long dictations no longer arrive as one wall of text. Set a word count and Dictate starts a new paragraph at the next sentence end — deterministic, and only for plain transcripts, so AI-formatted text is never second-guessed.</string>
+    <string name="apptour52__smartturn_eyebrow">Smarter long-form</string>
+    <string name="apptour52__smartturn_title">Cuts at finished thoughts</string>
+    <string name="apptour52__smartturn_body">Long-form dictation can now use the on-device Smart Turn v3 model to decide when you have actually finished a thought, instead of cutting at every pause. Optional and downloaded on demand.</string>
+    <string name="apptour52__orb_eyebrow">New look</string>
+    <string name="apptour52__orb_title">The cloud orb</string>
+    <string name="apptour52__orb_body">A fourth skin for the floating button: a soft cloud that grows and swirls with your voice, and shows every stage — listening, thinking, done. Pick it under the floating button settings.</string>
+    <string name="apptour52__outro_eyebrow">That\'s 5.2</string>
+    <string name="apptour52__outro_title">Happy dictating</string>
+    <string name="apptour52__outro_body">Plus plenty under the hood: the screen stays awake through a whole dictation, on-device models free their memory when idle, watch dictations survive dropouts, and German autocorrect learned umlauts. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
@@ -1455,6 +1488,11 @@
     <string name="dictate__error_recording_failed" comment="Error when audio recording could not be started. %s is the system error detail.">Recording failed – grant the microphone permission. (%s)</string>
     <string name="dictate__error_no_audio" comment="Error when no audio was captured">No recording detected – please speak a little longer.</string>
     <string name="dictate__no_speech_detected" comment="Shown when the on-device VAD found no speech in the recording (issue #93)">No speech detected</string>
+    <string name="dictate__voice_input_listening" comment="Status in the system voice-input popup while recording (issue #67)">Listening…</string>
+    <string name="dictate__voice_input_transcribing" comment="Status in the system voice-input popup while transcribing (issue #67)">Transcribing…</string>
+    <string name="dictate__voice_input_stop" comment="Button in the system voice-input popup to stop recording and transcribe now (issue #67)">Done</string>
+    <string name="dictate__voice_input_hint" comment="Subtle hint under the orb in the voice-input UI (issue #67)">Tap to send</string>
+    <string name="dictate__voice_ime_label" comment="Name of the Dictate voice input method shown in system keyboard settings (issue #67)">Dictate voice input</string>
     <string name="dictate__error_no_api_key" comment="Error when no API key is configured">No API key set – configure it in the Dictate settings.</string>
     <string name="dictate__error_transcription_failed" comment="Generic transcription failure">Transcription failed.</string>
     <string name="dictate__error_unknown" comment="Unknown transcription error">Unknown error during transcription.</string>
@@ -1590,6 +1628,10 @@
 
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header" comment="Intro text above the on-device model list in the provider editor">Runs on your device — no audio is sent. Download a model to start.</string>
+    <string name="dictate__local_longpress_send_title" comment="Search-index label for the on-device long-press-send checkbox (issue #228)">Long-press send for local model</string>
+    <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: long-pressing the send button transcribes with the local model (issue #228)">Hold send while recording to use this model instead of the cloud.</string>
+    <string name="dictate__local_unload_after" comment="Slider label: free the on-device model from RAM after {n} minutes idle">Unload idle model after {n} min</string>
+    <string name="dictate__local_unload_pressure" comment="Slider label at 0: free the on-device model only when the system is low on memory">Unload idle model only under memory pressure</string>
     <string name="dictate__local_model_status_active" comment="Badge on the on-device model that is currently selected for use">Active</string>
     <string name="dictate__local_model_status_installed" comment="Status for an on-device model that is downloaded but not selected">Installed · tap to use</string>
     <string name="dictate__local_model_action_install" comment="Button that downloads an on-device model">Download</string>
@@ -1624,16 +1666,36 @@
     <string name="dictate__audio_source_voice_communication_summary" comment="Summary for the voice communication audio source">Highest mic priority — works when another app uses the mic, but may lower accuracy.</string>
     <string name="dictate__keep_screen_awake_title" comment="Setting: keep the screen on while recording">Keep screen awake</string>
     <string name="dictate__keep_screen_awake_summary" comment="Summary for the keep-screen-awake setting">Prevent the screen from turning off while recording</string>
+    <string name="dictate__recording_animation_title" comment="Setting: how the recording indicator moves">Recording indicator</string>
+    <string name="dictate__recording_animation_static_label" comment="Option: no animation">No animation</string>
+    <string name="dictate__recording_animation_static_description" comment="Option description">Stays a solid red dot while recording</string>
+    <string name="dictate__recording_animation_pulse_label" comment="Option: steady pulse">Pulsing</string>
+    <string name="dictate__recording_animation_pulse_description" comment="Option description">Pulses at a steady rate</string>
+    <string name="dictate__recording_animation_level_label" comment="Option: reacts to microphone level">Follows your voice</string>
+    <string name="dictate__recording_animation_level_description" comment="Option description">Reacts to the microphone level, showing that the mic is picking you up</string>
     <string name="dictate__skip_silent_title" comment="Setting: skip transcribing recordings that contain no speech">Skip silent recordings</string>
     <string name="dictate__skip_silent_summary" comment="Summary for the skip-silent-recordings setting">Avoid ghost text and wasted API calls on silent audio</string>
+    <string name="dictate__trim_silent_gaps_title" comment="Setting: cut long pauses out of a recording before uploading it (issue #232)">Trim long pauses</string>
+    <string name="dictate__trim_silent_gaps_summary" comment="Summary for the trim-long-pauses setting">Cut long pauses out before sending — faster upload, lower cost</string>
+    <string name="dictate__paragraph_split_title" comment="Setting: break long plain transcripts into paragraphs at sentence boundaries (issue #225)">Break into paragraphs</string>
+    <string name="dictate__paragraph_split_off" comment="Slider value label when paragraph splitting is off (0)">Off</string>
+    <string name="dictate__paragraph_split_value" comment="Slider value label: after how many words a paragraph break may start. {n} is the word count">After {n} words</string>
+
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
     <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
+    <string name="dictate__providers_field_realtime_model" comment="Label for the real-time streaming model picker">Real-time model</string>
+    <string name="dictate__providers_realtime_model_default" comment="Marks the provider's default real-time model in the picker">Default</string>
     <string name="dictate__longform_title" comment="Setting: long-form segmented dictation">Long-form dictation</string>
-    <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe in the background while you keep talking — tap Next to send each part.</string>
-    <string name="dictate__longform_autosplit_title" comment="Setting: auto-cut a long-form segment at speech pauses">Auto-split at pauses</string>
-    <string name="dictate__longform_autosplit_summary" comment="Summary for the auto-split setting">Also cut a segment automatically after a long enough pause, not only with the Next button.</string>
-    <string name="dictate__longform_autosplit_threshold_title" comment="Setting: how long a pause must last to trigger an auto-cut">Pause length</string>
+    <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe long dictations in the background, part by part while you keep talking — tap Next during recording to send the current part, so there is no long wait at the end.</string>
+    <string name="dictate__longform_autosplit_title" comment="Setting: use Silero VAD and Smart Turn to auto-cut a long-form segment">Smart auto-split</string>
+    <string name="dictate__longform_autosplit_summary" comment="Summary for Smart Turn auto-split">Silero detects pauses, then Smart Turn checks whether your thought is complete. Continued silence uses the maximum pause as a fallback.</string>
+    <string name="dictate__longform_autosplit_threshold_title" comment="Setting: maximum silence before an incomplete Smart Turn prediction is overridden">Maximum pause</string>
+    <string name="dictate__longform_pause_length_title" comment="Slider label when Smart Turn is off: the silence after which a segment is cut">Pause length</string>
     <string name="dictate__longform_autosplit_value" comment="Slider value for the pause length. {seconds} is a number like 2.0">{seconds} s</string>
+    <string name="dictate__smart_turn_title" comment="Checkbox: enable on-device Smart Turn semantic segmentation">Smart Turn segmentation</string>
+    <string name="dictate__smart_turn_summary" comment="Summary for the Smart Turn checkbox; ~8 MB model downloaded on demand">Cut at completed thoughts with an on-device model, not just at pauses. Downloads about 8 MB.</string>
+    <string name="dictate__smart_turn_downloading" comment="Shown while the Smart Turn model downloads. {percent} is 0-100">Downloading model… {percent}%</string>
+    <string name="dictate__smart_turn_download_failed" comment="Shown when the Smart Turn model download failed">Download failed — tap to retry.</string>
     <string name="dictate__longform_mode_off" comment="Long-form mode: disabled">Off</string>
     <string name="dictate__longform_mode_off_summary" comment="Summary for the off long-form mode">Transcribe once at the end (default).</string>
     <string name="dictate__longform_mode_manual" comment="Long-form mode: manual Next button only">Next button</string>
@@ -1682,7 +1744,7 @@
     <!-- Dictate style prompt (biases the transcription towards proper punctuation/casing) -->
     <string name="dictate__style_prompt_title" comment="Setting: punctuation/style prompt for transcription">Punctuation &amp; style</string>
     <string name="dictate__style_prompt_custom_title" comment="Label for the custom style prompt field">Custom style prompt</string>
-    <string name="dictate__style_prompt_custom_placeholder" comment="Placeholder for the custom style prompt field">e.g. This sentence has capitalization and punctuation.</string>
+    <string name="dictate__style_prompt_custom_placeholder" comment="Placeholder for the custom style prompt field">e.g. Hello. Thank you very much.</string>
     <string name="dictate__style_prompt_info_title" comment="Row that reveals the built-in default style prompt">View default example</string>
     <string name="dictate__style_prompt_info_description" comment="Explanation shown above the default style prompt example">This example sentence is sent with each transcription to nudge the model towards correct capitalization and punctuation. It adapts automatically to the language you dictate in.</string>
 
@@ -1731,9 +1793,11 @@
     <string name="dictate__stats_menu_summary" comment="Summary for the statistics entry in Dictate settings">Words, time saved, streak and more</string>
     <!-- Transcription history / activity log (issue #140) -->
     <string name="dictate__history_title" comment="Title of the transcription history screen and in-keyboard panel">History</string>
+    <string name="dictate__history_original" comment="Label above the raw transcript, shown when a prompt rewrote it">Original</string>
+    <string name="dictate__history_result" comment="Label above the text produced by a prompt">Result</string>
+    <string name="dictate__history_hold_for_original" comment="Hint in the history panel: long-press a row to insert the raw transcript">hold for original</string>
     <string name="dictate__history_menu_summary" comment="Summary for the history entry in Dictate settings">Replay, re-insert and manage past dictations</string>
     <string name="dictate__history_empty" comment="Shown when no dictations have been recorded yet">No dictations yet — your recent dictations will appear here.</string>
-    <string name="dictate__history_loading" comment="Shown centered while the history panel is still loading">Loading…</string>
     <string name="dictate__history_enable_title" comment="Toggle: capture finished dictations into the history">Keep a history</string>
     <string name="dictate__history_enable_summary" comment="Short summary for the keep-a-history toggle">Log dictations to re-insert or review later.</string>
     <string name="dictate__history_audio_title" comment="Toggle: also keep the source audio of each dictation">Keep audio</string>

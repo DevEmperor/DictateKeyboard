@@ -13,6 +13,8 @@ package dev.patrickgold.florisboard.app
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.ui.viewinterop.AndroidView
+import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -41,7 +43,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Segment
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.Dialpad
@@ -51,6 +55,9 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Spellcheck
@@ -133,6 +140,8 @@ internal data class WhatsNewPage(
     val route: Any?,
     val highlight: Boolean = false,
     val kind: PageKind = PageKind.FEATURE,
+    /** Render the live audio-reactive cloud orb instead of a static icon (the 5.2 orb-skin page). */
+    val showOrb: Boolean = false,
 )
 
 private val WhatsNewPages50: List<WhatsNewPage> = listOf(
@@ -307,6 +316,88 @@ private val WhatsNewPages51: List<WhatsNewPage> = listOf(
     ),
 )
 
+
+private val WhatsNewPages52: List<WhatsNewPage> = listOf(
+    WhatsNewPage(
+        icon = Icons.Filled.AutoAwesome,
+        eyebrow = R.string.apptour52__intro_eyebrow,
+        title = R.string.apptour52__intro_title,
+        body = R.string.apptour52__intro_body,
+        cta = R.string.apptour__start,
+        route = null,
+        kind = PageKind.INTRO,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.RecordVoiceOver,
+        eyebrow = R.string.apptour52__voiceinput_eyebrow,
+        title = R.string.apptour52__voiceinput_title,
+        body = R.string.apptour52__voiceinput_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.Dictate,
+        highlight = true,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Bolt,
+        eyebrow = R.string.apptour52__liveprompt_eyebrow,
+        title = R.string.apptour52__liveprompt_title,
+        body = R.string.apptour52__liveprompt_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateFloatingButton,
+        highlight = true,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.PhoneAndroid,
+        eyebrow = R.string.apptour52__ondevice_eyebrow,
+        title = R.string.apptour52__ondevice_title,
+        body = R.string.apptour52__ondevice_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateProviders,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.ContentCut,
+        eyebrow = R.string.apptour52__trim_eyebrow,
+        title = R.string.apptour52__trim_title,
+        body = R.string.apptour52__trim_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateRecording,
+    ),
+    WhatsNewPage(
+        icon = Icons.AutoMirrored.Filled.Segment,
+        eyebrow = R.string.apptour52__paragraphs_eyebrow,
+        title = R.string.apptour52__paragraphs_title,
+        body = R.string.apptour52__paragraphs_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateOutput,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Psychology,
+        eyebrow = R.string.apptour52__smartturn_eyebrow,
+        title = R.string.apptour52__smartturn_title,
+        body = R.string.apptour52__smartturn_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateRecording,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Cloud,
+        eyebrow = R.string.apptour52__orb_eyebrow,
+        title = R.string.apptour52__orb_title,
+        body = R.string.apptour52__orb_body,
+        cta = R.string.apptour52__cta_try,
+        route = Routes.Settings.DictateFloatingButton,
+        highlight = true,
+        showOrb = true,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Celebration,
+        eyebrow = R.string.apptour52__outro_eyebrow,
+        title = R.string.apptour52__outro_title,
+        body = R.string.apptour52__outro_body,
+        cta = R.string.apptour__done,
+        route = null,
+        kind = PageKind.OUTRO,
+    ),
+)
+
 /**
  * The ordered registry of all "What's new" tours (ascending by version). The auto-show logic queues every
  * tour a user hasn't seen yet; Settings › About lists them all for re-viewing. Append the next release's
@@ -315,6 +406,7 @@ private val WhatsNewPages51: List<WhatsNewPage> = listOf(
 internal val WHATS_NEW_TOURS: List<WhatsNewTourDef> = listOf(
     WhatsNewTourDef(VersionName(5, 0, 0), WhatsNewPages50),
     WhatsNewTourDef(VersionName(5, 1, 0), WhatsNewPages51),
+    WhatsNewTourDef(VersionName(5, 2, 0), WhatsNewPages52),
 )
 
 /**
@@ -532,6 +624,32 @@ fun WhatsNewTour(autoQueue: List<VersionName>) {
     }
 }
 
+/**
+ * A live preview of the cloud orb skin (issue #231 follow-up / 5.2 tour). Drives a slow synthetic level
+ * so the orb visibly pulses the way it does while dictating, instead of sitting still.
+ */
+@Composable
+private fun TourCloudOrb() {
+    val transition = rememberInfiniteTransition(label = "orb-preview")
+    val level by transition.animateFloat(
+        initialValue = 0.15f,
+        targetValue = 0.85f,
+        animationSpec = infiniteRepeatable(tween(1400), RepeatMode.Reverse),
+        label = "orb-level",
+    )
+    Box(modifier = Modifier.size(132.dp), contentAlignment = Alignment.Center) {
+        AndroidView(
+            factory = { ctx ->
+                AudioReactiveCloudOrbView(ctx).apply {
+                    setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
+                }
+            },
+            update = { it.setLevel(level) },
+            modifier = Modifier.size(132.dp),
+        )
+    }
+}
+
 @Composable
 private fun PageContent(page: WhatsNewPage) {
     Column(
@@ -557,19 +675,25 @@ private fun PageContent(page: WhatsNewPage) {
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(RoundedCornerShape(22.dp))
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = page.icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(36.dp),
-            )
+        if (page.showOrb) {
+            // Show the real thing instead of an icon: the audio-reactive cloud orb, gently "breathing"
+            // so the user can see the new skin right here in the tour.
+            TourCloudOrb()
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(72.dp)
+                    .clip(RoundedCornerShape(22.dp))
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = page.icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(36.dp),
+                )
+            }
         }
         Spacer(modifier = Modifier.height(18.dp))
         Text(

@@ -112,6 +112,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
+import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -145,10 +146,11 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 object LegacyLayoutState {
     val suppressGlide = MutableStateFlow(false)
 
-    // True while a finger is down whose initial key is space or backspace on the modern keyboard. The
-    // SWIPE-mode swipe-toggle checks this and steps aside so those keys keep their own cursor-move /
-    // delete swipe gestures instead of flipping back to the dictation UI (issue #188).
-    val spaceOrDeleteTouch = MutableStateFlow(false)
+    // True while the current finger-down owns a horizontal swipe that must NOT flip keyboards: space or
+    // backspace (their cursor-move / delete gestures, issue #188), or a key whose long-press popup is open
+    // so the user can swipe to pick an accent/umlaut (e.g. o → ö, issue #221). The SWIPE-mode swipe-toggle
+    // checks this and steps aside instead of flipping back to the dictation UI.
+    val keyOwnsSwipe = MutableStateFlow(false)
 }
 
 /** Which full-panel overlay (if any) replaces the legacy layout. Emoji uses the app's own MEDIA panel. */
@@ -202,9 +204,10 @@ fun Modifier.legacySwipeToggle(
             val change = event.changes.firstOrNull() ?: break
             if (!change.pressed) break
             if (!intercept && change.isConsumed) break
-            // On the modern keyboard, let space/backspace keep their own swipe gestures (issue #188): if
-            // the finger came down on one of those keys, step aside instead of flipping keyboards.
-            if (intercept && LegacyLayoutState.spaceOrDeleteTouch.value) break
+            // On the modern keyboard, let a key that owns its swipe keep it — space/backspace cursor+delete
+            // gestures (#188), or an open long-press popup for picking an accent/umlaut (#221): step aside
+            // instead of flipping keyboards.
+            if (intercept && LegacyLayoutState.keyOwnsSwipe.value) break
             totalDx += change.position.x - change.previousPosition.x
             totalDy += change.position.y - change.previousPosition.y
             if (abs(totalDx) > thresholdPx && abs(totalDx) > abs(totalDy) * 1.5f) {
@@ -241,16 +244,6 @@ fun LegacyDictateLayout(
     val promptRows by prefs.dictate.legacyPromptRows.collectAsState()
 
     // Keep the screen awake while recording so the auto-timeout can't cut the recording short. The modern
-    // keyboard does this in DictateSmartbarUi; the classic layout was missing it, so the screen could time
-    // out mid-dictation and the ACTION_SCREEN_OFF stash (#147) would stop the mic. Honours the same
-    // "Keep screen awake" setting and only holds the flag while actually recording.
-    val keepScreenAwake by prefs.dictate.keepScreenAwake.collectAsState()
-    val isRecording = dictateState is DictateController.UiState.Recording
-    val view = LocalView.current
-    DisposableEffect(keepScreenAwake, isRecording) {
-        view.keepScreenOn = keepScreenAwake && isRecording
-        onDispose { view.keepScreenOn = false }
-    }
 
     // The Smartbar (which normally loads the prompts) is replaced by this layout, so trigger the load
     // here whenever the panel appears / rewording toggles.
@@ -540,6 +533,7 @@ private fun LegacyRecordRow(
     dictateState: DictateController.UiState,
     accent: Color,
 ) {
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val recording = dictateState as? DictateController.UiState.Recording
     val rewording = dictateState as? DictateController.UiState.Rewording
@@ -589,12 +583,23 @@ private fun LegacyRecordRow(
         }
 
         // Center: the big Record button – the one deliberate accent element (like the Smartbar mic).
+        // Its movement follows the same user choice as the Smartbar dot (issue #238): a steady pulse,
+        // the live mic level, or nothing at all. Kept subtle either way — this key is the size of a
+        // thumb, so the same factors that read well on a 12 dp dot would be jarring here.
+        val animation by prefs.dictate.recordingAnimation.collectAsState()
+        val isRecording = recording != null && !recording.paused
+        val level = if (animation == DictateRecordingAnimation.LEVEL && isRecording) {
+            DictateController.audioLevel.collectAsState().value
+        } else {
+            0f
+        }
         val pulse by rememberInfiniteTransition(label = "legacyRecord").animateFloat(
             initialValue = 1f,
-            targetValue = if (recording != null && !recording.paused) 1.03f else 1f,
+            targetValue = if (animation == DictateRecordingAnimation.PULSE && isRecording) 1.03f else 1f,
             animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
             label = "recordPulse",
         )
+        val recordScale = if (animation == DictateRecordingAnimation.LEVEL) 1f + 0.03f * level else pulse
         val interaction = remember { MutableInteractionSource() }
         val feedback = LocalInputFeedbackController.current
         Box(
@@ -602,7 +607,7 @@ private fun LegacyRecordRow(
                 .weight(1f)
                 .fillMaxHeight()
                 .padding(horizontal = KeyMarginH, vertical = KeyMarginV)
-                .scale(pulse)
+                .scale(recordScale)
                 .clip(LegacyKeyShape)
                 .background(accent)
                 .then(

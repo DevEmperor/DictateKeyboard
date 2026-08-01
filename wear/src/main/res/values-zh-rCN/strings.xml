@@ -16,6 +16,7 @@
     <string name="wear_err_mic_grant">在 Dictate 应用中授予麦克风</string>
     <string name="wear_err_mic_unavailable">麦克风不可用</string>
     <string name="wear_err_transcribe_failed">转录失败</string>
+    <string name="wear_err_tap_to_retry">%1$s · 点按重试</string>
     <string name="wear_err_empty">为空 — 检查手机密钥</string>
     <string name="wear_err_unknown">未知错误</string>
     <string name="wear_err_no_transport">无手机；在应用中同步密钥</string>

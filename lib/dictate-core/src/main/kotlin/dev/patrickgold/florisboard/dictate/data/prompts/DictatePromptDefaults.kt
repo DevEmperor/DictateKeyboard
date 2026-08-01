@@ -30,7 +30,11 @@ object DictatePromptDefaults {
     const val SELECTION_PREDEFINED = 1
     const val SELECTION_CUSTOM = 2
 
-    const val PUNCTUATION_CAPITALIZATION = "This sentence has capitalization and punctuation."
+    // A short, natural example (not a self-referential meta sentence) that still demonstrates
+    // capitalization + sentence punctuation. The old "This sentence has capitalization and punctuation."
+    // was echoed verbatim by Whisper on silent/unclear audio (#77); a plain greeting is far less
+    // conspicuous, and [looksLikeStylePromptEcho] now discards any echo regardless of the wording.
+    const val PUNCTUATION_CAPITALIZATION = "Hello. Thank you very much."
 
     const val REWORDING_BE_PRECISE =
         "Be accurate with your output. Only output exactly what the user has asked for above. Do not " +
@@ -94,6 +98,34 @@ object DictatePromptDefaults {
     }
 
     /**
+     * Whether [transcript] is just the transcription **style prompt echoed back** (issue #77). Whisper-style
+     * models emit their `prompt` verbatim on silent/unclear audio, so a recording that "transcribes" to the
+     * style sentence isn't real speech and must be dropped instead of inserted. Language-agnostic: it
+     * compares against the exact [sentPrompt] that was sent (any language, predefined or custom, with or
+     * without an appended vocabulary), so it works everywhere without per-language markers.
+     *
+     * Matches an exact echo, or a near-total overlap either way (the prompt may carry a trailing glossary
+     * that isn't echoed, or the echo may repeat the sentence) — but only when the shorter side is a large
+     * fraction of the longer, so a genuine transcript that merely shares a few words is never dropped.
+     */
+    fun looksLikeStylePromptEcho(transcript: String, sentPrompt: String?): Boolean {
+        val p = normalizeForEcho(sentPrompt.orEmpty())
+        val t = normalizeForEcho(transcript)
+        if (p.isEmpty() || t.isEmpty()) return false
+        if (t == p) return true
+        val (short, long) = if (t.length <= p.length) t to p else p to t
+        return long.contains(short) && short.length >= long.length * 6 / 10
+    }
+
+    /** Lowercased, letters/digits/space only, whitespace collapsed — for robust echo comparison. */
+    private fun normalizeForEcho(s: String): String =
+        s.lowercase(Locale.ROOT)
+            .map { if (it.isLetterOrDigit()) it else ' ' }
+            .joinToString("")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+
+    /**
      * Appends a user-defined vocabulary list to the transcription [base] style prompt so the speech
      * model is primed to spell names and jargon correctly (roadmap 11.12). Whisper-style models treat
      * the transcription `prompt` as preceding context, so simply letting the words appear — spelled
@@ -151,63 +183,66 @@ object DictatePromptDefaults {
         return PUNCTUATION_CAPITALIZATION
     }
 
+    // Per-language equivalents of [PUNCTUATION_CAPITALIZATION] — a plain greeting + thanks, demonstrating
+    // capitalization and sentence punctuation in each script (see the #77 note above). English uses the
+    // constant so the two stay in sync.
     private val PUNCTUATION_BY_LANGUAGE: Map<String, String> = mapOf(
-        "af" to "Hierdie sin het hoofletters en punktuasie.",
-        "sq" to "Kjo fjali ka shkronja të mëdha dhe pikësim.",
-        "ar" to "هذه الجملة تحتوي على أحرف كبيرة وعلامات ترقيم.",
-        "hy" to "Այս նախադասությունը ունի մեծատառեր և կետադրություն։",
-        "az" to "Bu cümlədə böyük hərflər və durğu işarələri var.",
-        "eu" to "Esaldi honek letra larriak eta puntuazioa ditu.",
-        "be" to "Гэты сказ мае вялікія літары і знакі прыпынку.",
-        "bn" to "এই বাক্যে বড় হাতের অক্ষর এবং যতিচিহ্ন রয়েছে।",
-        "bg" to "Това изречение има главни букви и пунктуация.",
-        "yue-cn" to "呢句句子有大寫字母同標點符號。",
-        "yue-hk" to "呢句句子有大寫字母同標點符號。",
-        "ca" to "Aquesta frase té majúscules i puntuació.",
-        "cs" to "Tato věta má velká písmena a interpunkci.",
-        "da" to "Denne sætning har store bogstaver og tegnsætning.",
-        "nl" to "Deze zin heeft hoofdletters en interpunctie.",
+        "af" to "Hallo. Baie dankie.",
+        "sq" to "Përshëndetje. Shumë faleminderit.",
+        "ar" to "مرحباً. شكراً جزيلاً.",
+        "hy" to "Բարեւ։ Շատ շնորհակալ եմ։",
+        "az" to "Salam. Çox sağ olun.",
+        "eu" to "Kaixo. Eskerrik asko.",
+        "be" to "Прывітанне. Вялікі дзякуй.",
+        "bn" to "নমস্কার। অসংখ্য ধন্যবাদ।",
+        "bg" to "Здравейте. Много благодаря.",
+        "yue-cn" to "你好。多謝晒。",
+        "yue-hk" to "你好。多謝晒。",
+        "ca" to "Hola. Moltes gràcies.",
+        "cs" to "Dobrý den. Mnohokrát děkuji.",
+        "da" to "Hej. Mange tak.",
+        "nl" to "Hallo. Hartelijk dank.",
         "en" to PUNCTUATION_CAPITALIZATION,
-        "et" to "Selles lauses on suurtähed ja kirjavahemärgid.",
-        "fi" to "Tässä lauseessa on isot kirjaimet ja välimerkit.",
-        "fr" to "Cette phrase contient des majuscules et de la ponctuation.",
-        "gl" to "Esta frase ten maiúsculas e puntuación.",
-        "de" to "Dieser Satz hat Großbuchstaben und Zeichensetzung.",
-        "el" to "Αυτή η πρόταση έχει κεφαλαία γράμματα και στίξη.",
-        "he" to "במשפט הזה יש אותיות גדולות וסימני פיסוק.",
-        "hi" to "इस वाक्य में बड़े अक्षर और विराम चिह्न हैं।",
-        "hu" to "Ez a mondat nagybetűket és írásjeleket tartalmaz.",
-        "id" to "Kalimat ini memiliki huruf kapital dan tanda baca.",
-        "it" to "Questa frase ha lettere maiuscole e punteggiatura.",
-        "ja" to "この文には大文字と句読点があります。",
-        "kk" to "Бұл сөйлемде бас әріптер мен тыныс белгілері бар.",
-        "ko" to "이 문장에는 대문자와 구두점이 있습니다.",
-        "lv" to "Šim teikumam ir lielie burti un pieturzīmes.",
-        "lt" to "Šiame sakinyje yra didžiosios raidės ir skyrybos ženklai.",
-        "mk" to "Оваа реченица има големи букви и интерпункција.",
-        "zh-cn" to "这句话有大写字母和标点符号。",
-        "zh-tw" to "這句話有大寫字母和標點符號。",
-        "mr" to "या वाक्यात मोठी अक्षरे आणि विरामचिन्हे आहेत.",
-        "ne" to "यो वाक्यमा ठूला अक्षर र विराम चिन्हहरू छन्।",
-        "nn" to "Denne setninga har store bokstavar og teiknsetting.",
-        "fa" to "این جمله دارای حروف بزرگ و علائم نگارشی است.",
-        "pl" to "To zdanie ma wielkie litery i znaki interpunkcyjne.",
-        "pt" to "Esta frase tem letras maiúsculas e pontuação.",
-        "pa" to "ਇਸ ਵਾਕ ਵਿੱਚ ਵੱਡੇ ਅੱਖਰ ਅਤੇ ਵਿਸ਼ਰਾਮ ਚਿੰਨ੍ਹ ਹਨ।",
-        "ro" to "Această propoziție are litere mari și punctuație.",
-        "ru" to "В этом предложении есть заглавные буквы и знаки препинания.",
-        "sr" to "Ова реченица има велика слова и интерпункцију.",
-        "sk" to "Táto veta má veľké písmená a interpunkciu.",
-        "sl" to "Ta poved ima velike črke in ločila.",
-        "es" to "Esta frase tiene mayúsculas y puntuación.",
-        "sw" to "Sentensi hii ina herufi kubwa na alama za uakifishaji.",
-        "sv" to "Denna mening har stora bokstäver och skiljetecken.",
-        "ta" to "இந்த வாக்கியத்தில் பெரிய எழுத்துக்கள் மற்றும் குறியீடுகள் உள்ளன.",
-        "th" to "ประโยคนี้มีตัวพิมพ์ใหญ่และเครื่องหมายวรรคตอน.",
-        "tr" to "Bu cümlede büyük harfler ve noktalama işaretleri var.",
-        "uk" to "У цьому реченні є великі літери та розділові знаки.",
-        "ur" to "اس جملے میں بڑے حروف اور اوقاف موجود ہیں۔",
-        "vi" to "Câu này có chữ hoa và dấu câu.",
-        "cy" to "Mae gan y frawddeg hon lythrennau mawr ac atalnodi.",
+        "et" to "Tere. Suur tänu.",
+        "fi" to "Hei. Kiitos oikein paljon.",
+        "fr" to "Bonjour. Merci beaucoup.",
+        "gl" to "Ola. Moitas grazas.",
+        "de" to "Hallo. Vielen Dank.",
+        "el" to "Γεια σας. Ευχαριστώ πολύ.",
+        "he" to "שלום. תודה רבה.",
+        "hi" to "नमस्ते। बहुत-बहुत धन्यवाद।",
+        "hu" to "Jó napot. Nagyon köszönöm.",
+        "id" to "Halo. Terima kasih banyak.",
+        "it" to "Ciao. Grazie mille.",
+        "ja" to "こんにちは。どうもありがとうございます。",
+        "kk" to "Сәлеметсіз бе. Көп рахмет.",
+        "ko" to "안녕하세요. 정말 감사합니다.",
+        "lv" to "Sveiki. Liels paldies.",
+        "lt" to "Sveiki. Labai ačiū.",
+        "mk" to "Здраво. Многу благодарам.",
+        "zh-cn" to "你好。非常感谢。",
+        "zh-tw" to "你好。非常感謝。",
+        "mr" to "नमस्कार. खूप खूप धन्यवाद.",
+        "ne" to "नमस्ते। धेरै धेरै धन्यवाद।",
+        "nn" to "Hei. Tusen takk.",
+        "fa" to "سلام. خیلی ممنون.",
+        "pl" to "Dzień dobry. Bardzo dziękuję.",
+        "pt" to "Olá. Muito obrigado.",
+        "pa" to "ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਬਹੁਤ ਬਹੁਤ ਧੰਨਵਾਦ।",
+        "ro" to "Bună ziua. Mulțumesc foarte mult.",
+        "ru" to "Здравствуйте. Большое спасибо.",
+        "sr" to "Здраво. Хвала пуно.",
+        "sk" to "Dobrý deň. Ďakujem veľmi pekne.",
+        "sl" to "Pozdravljeni. Najlepša hvala.",
+        "es" to "Hola. Muchas gracias.",
+        "sw" to "Habari. Asante sana.",
+        "sv" to "Hej. Tack så mycket.",
+        "ta" to "வணக்கம். மிக்க நன்றி.",
+        "th" to "สวัสดี. ขอบคุณมาก.",
+        "tr" to "Merhaba. Çok teşekkür ederim.",
+        "uk" to "Вітаю. Щиро дякую.",
+        "ur" to "السلام علیکم۔ بہت بہت شکریہ۔",
+        "vi" to "Xin chào. Cảm ơn rất nhiều.",
+        "cy" to "Helô. Diolch yn fawr iawn.",
     )
 }
