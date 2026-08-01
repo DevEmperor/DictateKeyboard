@@ -486,9 +486,20 @@ private fun ProviderEditorDialog(
             account.customBaseUrl.ifBlank { if (preset?.allowsCustomBaseUrl == true) preset.baseUrl else "" },
         )
     }
-    var transcriptionModel by remember { mutableStateOf(account.transcriptionModel) }
-    var chatModel by remember { mutableStateOf(account.chatModel) }
-    var realtimeModel by remember { mutableStateOf(account.realtimeModel) }
+    // Model fields show the *effective* model, filling in the preset default when nothing was chosen —
+    // an empty box tells the user nothing about what is actually running. Storage keeps the old meaning:
+    // [modelToStore] turns a value that still equals the default back into an empty string on confirm, so
+    // the account goes on following the preset and a later update can move it. Only a deliberate choice of
+    // something else is pinned.
+    var transcriptionModel by remember {
+        mutableStateOf(account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() })
+    }
+    var chatModel by remember {
+        mutableStateOf(account.chatModel.ifBlank { preset?.defaultChatModel.orEmpty() })
+    }
+    var realtimeModel by remember {
+        mutableStateOf(account.realtimeModel.ifBlank { preset?.defaultRealtimeModel.orEmpty() })
+    }
     var showRealtimePicker by remember { mutableStateOf(false) }
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
     var cachedModels by remember { mutableStateOf(account.cachedModels) }
@@ -539,9 +550,9 @@ private fun ProviderEditorDialog(
                     displayName = displayName.trim(),
                     apiKey = apiKey.trim(),
                     customBaseUrl = baseUrl.trim(),
-                    transcriptionModel = transcriptionModel.trim(),
-                    chatModel = chatModel.trim(),
-                    realtimeModel = realtimeModel.trim(),
+                    transcriptionModel = modelToStore(transcriptionModel, preset?.defaultTranscriptionModel),
+                    chatModel = modelToStore(chatModel, preset?.defaultChatModel),
+                    realtimeModel = modelToStore(realtimeModel, preset?.defaultRealtimeModel),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
                     cachedTranscriptionModels = cachedTranscriptionModels,
@@ -704,12 +715,22 @@ private fun ProviderEditorDialog(
 }
 
 /**
+ * What actually gets written for a model field: an empty string when the value still equals the preset
+ * default, so the account keeps following it, and the trimmed value otherwise. The editor itself shows the
+ * default filled in, which is why this cannot simply store what is on screen.
+ */
+private fun modelToStore(value: String, default: String?): String {
+    val trimmed = value.trim()
+    return if (default != null && trimmed == default) "" else trimmed
+}
+
+/**
  * Picker for a provider's curated realtime models — a short radio list rather than the searchable
  * catalogue used for batch models, because streaming models are few and never appear in `/models`.
  *
- * Choosing the default stores an **empty** string rather than the id. The account then keeps following
- * the preset, so a later update can move it to a better model; only a deliberate choice of a non-default
- * model is pinned. Same rule as the batch model field.
+ * Always writes the chosen id into the field, including for the default, so the box never sits empty
+ * while a model is in fact running. Turning that back into an empty stored value is [modelToStore]'s job
+ * on confirm.
  */
 @Composable
 private fun RealtimeModelPickerDialog(
@@ -727,7 +748,7 @@ private fun RealtimeModelPickerDialog(
         Column {
             models.forEach { model ->
                 val isDefault = model == default
-                val pick = { onPick(if (isDefault) "" else model); onDismiss() }
+                val pick = { onPick(model); onDismiss() }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
