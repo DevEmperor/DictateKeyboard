@@ -596,7 +596,8 @@ private fun LegacyRecordRow(
         val pulse by rememberInfiniteTransition(label = "legacyRecord").animateFloat(
             initialValue = 1f,
             targetValue = if (animation == DictateRecordingAnimation.PULSE && isRecording) 1.03f else 1f,
-            animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
+            // Same beat as the Smartbar dot, deliberately not the same amplitude (see above).
+            animationSpec = infiniteRepeatable(tween(PULSE_DURATION_MS), RepeatMode.Reverse),
             label = "recordPulse",
         )
         val recordScale = if (animation == DictateRecordingAnimation.LEVEL) 1f + 0.03f * level else pulse

@@ -253,6 +253,11 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
  *
  * While paused the dot is always still and dimmed, whatever the mode: there is nothing to react to.
  */
+/** The 4.0 pulse, kept as named constants so the classic layout can beat in time with the dot. */
+internal const val PULSE_MIN_SCALE = 0.65f
+internal const val PULSE_MAX_SCALE = 1.15f
+internal const val PULSE_DURATION_MS = 650
+
 @Composable
 private fun RecordingAudioDot(paused: Boolean) {
     val prefs by FlorisPreferenceStore
@@ -263,10 +268,14 @@ private fun RecordingAudioDot(paused: Boolean) {
     } else {
         0f
     }
+    // The original 4.0 heartbeat, restored: the dot drops well *below* its resting size and swells past
+    // it, which reads as a beat. Growing from full size instead only throbs, and that turned out to be
+    // the whole difference in feel. Both ends collapse to 1f when nothing should move.
+    val pulsing = animation == DictateRecordingAnimation.PULSE && !paused
     val pulse by rememberInfiniteTransition(label = "recordingDot").animateFloat(
-        initialValue = 1f,
-        targetValue = if (animation == DictateRecordingAnimation.PULSE && !paused) 1.25f else 1f,
-        animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
+        initialValue = if (pulsing) PULSE_MIN_SCALE else 1f,
+        targetValue = if (pulsing) PULSE_MAX_SCALE else 1f,
+        animationSpec = infiniteRepeatable(tween(PULSE_DURATION_MS), RepeatMode.Reverse),
         label = "recordingDotPulse",
     )
     val scale = when {
