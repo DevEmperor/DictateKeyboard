@@ -1282,10 +1282,8 @@
     <string name="dictate__keep_screen_awake_title">Képernyő ébren tartása</string>
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
     <string name="dictate__push_to_talk_title">Tartsd nyomva a felvételhez</string>
-    <string name="dictate__push_to_talk_summary">Tartsd nyomva a mikrofont, beszélj, majd engedd el a küldéshez. Húzd balra az elvetéshez, felfelé a kihangosított felvételhez.</string>
-    <string name="dictate__push_to_talk_too_short">Tartsd nyomva a felvételhez</string>
+    <string name="dictate__push_to_talk_summary">Tartsd nyomva a mikrofont, engedd el a küldéshez</string>
     <string name="dictate__push_to_talk_slide_cancel">Húzd a megszakításhoz</string>
-    <string name="dictate__push_to_talk_release_cancel">Engedd el a megszakításhoz</string>
     <string name="dictate__recording_animation_title">Felvételjelző</string>
     <string name="dictate__recording_animation_static_label">Nincs animáció</string>
     <string name="dictate__recording_animation_static_description">Felvétel közben egyszínű piros pont marad</string>

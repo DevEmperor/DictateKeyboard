@@ -1092,10 +1092,8 @@
     <string name="dictate__keep_screen_awake_title">Manter a tela ligada</string>
     <string name="dictate__keep_screen_awake_summary">Impedir que a tela se desligue durante a gravação</string>
     <string name="dictate__push_to_talk_title">Segurar para gravar</string>
-    <string name="dictate__push_to_talk_summary">Segure o microfone, fale e solte para enviar. Deslize para a esquerda para descartar, para cima para gravar sem as mãos.</string>
-    <string name="dictate__push_to_talk_too_short">Segure para gravar</string>
+    <string name="dictate__push_to_talk_summary">Segure o microfone, solte para enviar</string>
     <string name="dictate__push_to_talk_slide_cancel">Deslize para cancelar</string>
-    <string name="dictate__push_to_talk_release_cancel">Solte para cancelar</string>
     <string name="dictate__recording_animation_title">Indicador de gravação</string>
     <string name="dictate__recording_animation_static_label">Sem animação</string>
     <string name="dictate__recording_animation_static_description">Permanece um ponto vermelho fixo durante a gravação</string>

@@ -306,6 +306,14 @@ object DictateController {
      */
     val pushToTalkPhase: StateFlow<PushToTalkPhase> = _pushToTalkPhase.asStateFlow()
 
+    private val _cancelSlideProgress = MutableStateFlow(0f)
+    /** How far the finger has slid towards discarding, 0..1 — the bar slides its content with it. */
+    val cancelSlideProgress: StateFlow<Float> = _cancelSlideProgress.asStateFlow()
+
+    private val _lockSlideProgress = MutableStateFlow(0f)
+    /** How far the finger has slid towards latching, 0..1 — the lock affordance fills with it. */
+    val lockSlideProgress: StateFlow<Float> = _lockSlideProgress.asStateFlow()
+
     /** When the finger went down — the hold is measured from here, not from when the mic opened. */
     private var pttDownAtMs = 0L
 
@@ -471,6 +479,11 @@ object DictateController {
      * excluded by the caller: holding a finger down for a ten-minute dictation defeats the point.
      */
     fun onPushToTalkDown(context: Context, target: OutputTarget = OutputTarget.IME) {
+        // Idempotent: the gesture layer can be torn down and restarted mid-press (a recomposition with a
+        // new pointerInput key), and re-entering here would otherwise restart the clock — making a long
+        // hold look like a tap — and start a second recording. The window is widest with real-time on,
+        // where opening the socket keeps the state Idle for longer.
+        if (_pushToTalkPhase.value != PushToTalkPhase.NONE) return
         if (_state.value !is UiState.Idle) return
         pttDownAtMs = SystemClock.elapsedRealtime()
         pttStopPending = false
@@ -479,14 +492,26 @@ object DictateController {
         startRecording(context)
     }
 
-    /** Reports whether the finger has slid far enough towards the cancel target to arm it. */
-    fun onPushToTalkSlide(cancelArmed: Boolean) {
-        when (_pushToTalkPhase.value) {
-            PushToTalkPhase.HOLDING, PushToTalkPhase.CANCEL_ARMED ->
-                _pushToTalkPhase.value =
-                    if (cancelArmed) PushToTalkPhase.CANCEL_ARMED else PushToTalkPhase.HOLDING
-            else -> Unit // NONE or already locked: nothing to arm
+    /**
+     * Reports how far the finger has slid towards the cancel target: [progress] 0..1, where 1 means it
+     * reached it. Crossing it discards the recording immediately rather than waiting for the release —
+     * that is what voice-message UIs do, and waiting would leave the user holding a recording they have
+     * already thrown away. Returns true once the gesture is over so the caller can stop tracking.
+     */
+    fun onPushToTalkSlide(progress: Float): Boolean {
+        if (!_pushToTalkPhase.value.isHolding) return _pushToTalkPhase.value != PushToTalkPhase.LOCKED
+        _cancelSlideProgress.value = progress.coerceIn(0f, 1f)
+        if (progress >= 1f) {
+            _pushToTalkPhase.value = PushToTalkPhase.CANCEL_ARMED
+            cancelRecording()
+            return true
         }
+        return false
+    }
+
+    /** Slide-up progress towards latching, 0..1 — drives how the lock affordance fills. */
+    fun onPushToTalkLockSlide(progress: Float) {
+        if (_pushToTalkPhase.value.isHolding) _lockSlideProgress.value = progress.coerceIn(0f, 1f)
     }
 
     /** Aborts a held recording outright — the gesture was taken over (bubble drag) or the system cancelled it. */
@@ -502,19 +527,22 @@ object DictateController {
         }
     }
 
-    /** Finger lifted: send, discard, or — if the press was a mis-tap — show the "hold to record" hint. */
+    /** Finger lifted: send, or silently drop a press too short to be speech. */
     fun onPushToTalkUp(context: Context) {
         val phase = _pushToTalkPhase.value
         // Locked: the recording carries on and is ended by the stop button, exactly like tap-toggle.
         if (phase == PushToTalkPhase.LOCKED || phase == PushToTalkPhase.NONE) return
         _pushToTalkPhase.value = PushToTalkPhase.NONE
+        _cancelSlideProgress.value = 0f
+        _lockSlideProgress.value = 0f
         if (phase == PushToTalkPhase.CANCEL_ARMED) {
             cancelRecording()
             return
         }
+        // A tap in hold-to-record mode does nothing at all — no request, and no message either, since
+        // "that did nothing" is already obvious from the bar never appearing.
         if (SystemClock.elapsedRealtime() - pttDownAtMs < MIN_PUSH_TO_TALK_HOLD_MS) {
             cancelRecording()
-            _state.value = UiState.Error(context.getString(R.string.dictate__push_to_talk_too_short))
             return
         }
         if (_state.value is UiState.Recording) {
@@ -725,6 +753,8 @@ object DictateController {
     fun cancelRecording() {
         pttStopPending = false
         _pushToTalkPhase.value = PushToTalkPhase.NONE
+        _cancelSlideProgress.value = 0f
+        _lockSlideProgress.value = 0f
         startJob?.cancel()
         startJob = null
         recorder?.cancel()

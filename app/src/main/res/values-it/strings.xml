@@ -1067,10 +1067,8 @@
     <string name="dictate__keep_screen_awake_title">Mantieni lo schermo acceso</string>
     <string name="dictate__keep_screen_awake_summary">Impedisci che lo schermo si spenga durante la registrazione</string>
     <string name="dictate__push_to_talk_title">Tieni premuto per registrare</string>
-    <string name="dictate__push_to_talk_summary">Tieni premuto il microfono, parla e rilascia per inviare. Scorri a sinistra per annullare, in alto per registrare a mani libere.</string>
-    <string name="dictate__push_to_talk_too_short">Tieni premuto per registrare</string>
+    <string name="dictate__push_to_talk_summary">Tieni premuto il microfono, rilascia per inviare</string>
     <string name="dictate__push_to_talk_slide_cancel">Scorri per annullare</string>
-    <string name="dictate__push_to_talk_release_cancel">Rilascia per annullare</string>
     <string name="dictate__recording_animation_title">Indicatore di registrazione</string>
     <string name="dictate__recording_animation_static_label">Nessuna animazione</string>
     <string name="dictate__recording_animation_static_description">Resta un punto rosso fisso durante la registrazione</string>

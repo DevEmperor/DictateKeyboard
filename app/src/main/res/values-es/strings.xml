@@ -1265,10 +1265,8 @@
     <string name="dictate__keep_screen_awake_title">Mantener la pantalla encendida</string>
     <string name="dictate__keep_screen_awake_summary">Evitar que la pantalla se apague durante la grabación</string>
     <string name="dictate__push_to_talk_title">Mantén pulsado para grabar</string>
-    <string name="dictate__push_to_talk_summary">Mantén pulsado el micrófono, habla y suelta para enviar. Desliza a la izquierda para descartar, arriba para grabar sin manos.</string>
-    <string name="dictate__push_to_talk_too_short">Mantén pulsado para grabar</string>
+    <string name="dictate__push_to_talk_summary">Mantén pulsado el micrófono, suelta para enviar</string>
     <string name="dictate__push_to_talk_slide_cancel">Desliza para cancelar</string>
-    <string name="dictate__push_to_talk_release_cancel">Suelta para cancelar</string>
     <string name="dictate__recording_animation_title">Indicador de grabación</string>
     <string name="dictate__recording_animation_static_label">Sin animación</string>
     <string name="dictate__recording_animation_static_description">Permanece como un punto rojo fijo mientras grabas</string>

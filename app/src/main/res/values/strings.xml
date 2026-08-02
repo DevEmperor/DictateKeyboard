@@ -1669,10 +1669,8 @@
     <string name="dictate__keep_screen_awake_title" comment="Setting: keep the screen on while recording">Keep screen awake</string>
     <string name="dictate__keep_screen_awake_summary" comment="Summary for the keep-screen-awake setting">Prevent the screen from turning off while recording</string>
     <string name="dictate__push_to_talk_title" comment="Setting: hold the mic to record instead of tapping twice (issue #235)">Hold to record</string>
-    <string name="dictate__push_to_talk_summary" comment="Summary for the hold-to-record setting">Press and hold the mic, speak, release to send. Slide left to discard, up to keep recording hands-free.</string>
-    <string name="dictate__push_to_talk_too_short" comment="Shown when the mic was tapped instead of held in hold-to-record mode">Hold to record</string>
+    <string name="dictate__push_to_talk_summary" comment="Summary for the hold-to-record setting">Press and hold the mic, release to send</string>
     <string name="dictate__push_to_talk_slide_cancel" comment="Hint on the recording bar while holding the mic: slide towards it to discard">Slide to cancel</string>
-    <string name="dictate__push_to_talk_release_cancel" comment="Hint on the recording bar once the slide-to-cancel gesture is armed">Release to cancel</string>
     <string name="dictate__recording_animation_title" comment="Setting: how the recording indicator moves">Recording indicator</string>
     <string name="dictate__recording_animation_static_label" comment="Option: no animation">No animation</string>
     <string name="dictate__recording_animation_static_description" comment="Option description">Stays a solid red dot while recording</string>

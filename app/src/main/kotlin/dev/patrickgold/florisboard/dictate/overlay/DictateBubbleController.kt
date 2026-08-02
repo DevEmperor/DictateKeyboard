@@ -698,7 +698,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                             DictateController.lockPushToTalk()
                             pushToTalk = false
                         } else {
-                            DictateController.onPushToTalkSlide(-dx > cancelSlide)
+                            DictateController.onPushToTalkLockSlide(-dy / lockSlide)
+                            // Past the cancel threshold the recording is dropped right away.
+                            if (DictateController.onPushToTalkSlide(-dx / cancelSlide)) pushToTalk = false
                         }
                         return@setOnTouchListener true
                     }

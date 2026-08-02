@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import android.content.Context
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -118,6 +121,16 @@ fun QuickActionButton(
         dictateState is DictateController.UiState.Idle ||
             (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressSendLocal())
     )
+    // Push-to-talk (#235): the mic swells while it is being held, the way a voice-message button does —
+    // the one piece of feedback that survives the finger covering the button itself.
+    val pushToTalkPhase by DictateController.pushToTalkPhase.collectAsState()
+    val micScale by animateFloatAsState(
+        targetValue = if (
+            action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && pushToTalkPhase.isHolding
+        ) 1.4f else 1f,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+        label = "pushToTalkMicScale",
+    )
     PlainTooltip(
         action.computeTooltip(evaluator),
         enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
@@ -126,7 +139,7 @@ fun QuickActionButton(
             elementName = elementName,
             attributes = attributes,
             selector = selector,
-            modifier = modifier,
+            modifier = modifier.scale(micScale),
             clickAndSemanticsModifier = Modifier
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
@@ -158,7 +171,7 @@ fun QuickActionButton(
                                 DictateController.onPushToTalkDown(context)
                                 val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx()
                                 val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx()
-                                var latched = false
+                                var ended = false
                                 while (true) {
                                     val change = awaitPointerEvent().changes
                                         .firstOrNull { it.id == down.id } ?: break
@@ -169,13 +182,19 @@ fun QuickActionButton(
                                     if (dy < -lockSlide) {
                                         DictateController.lockPushToTalk()
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                        latched = true
+                                        ended = true
                                         break
                                     }
-                                    DictateController.onPushToTalkSlide(dx < -cancelSlide)
+                                    DictateController.onPushToTalkLockSlide((-dy / lockSlide))
+                                    // Crossing the cancel threshold discards there and then.
+                                    if (DictateController.onPushToTalkSlide(-dx / cancelSlide)) {
+                                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                        ended = true
+                                        break
+                                    }
                                 }
-                                if (latched) {
-                                    // Latched: the finger is free, the stop button ends the recording.
+                                if (ended) {
+                                    // Latched or discarded: the rest of the gesture is not ours any more.
                                     waitForUpOrCancellation()?.consume()
                                 } else {
                                     DictateController.onPushToTalkUp(context)

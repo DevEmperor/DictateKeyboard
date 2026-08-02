@@ -1131,10 +1131,8 @@
     <string name="dictate__keep_screen_awake_title">Не гасити екран</string>
     <string name="dictate__keep_screen_awake_summary">Не давати екрану вимикатися під час запису</string>
     <string name="dictate__push_to_talk_title">Утримуйте для запису</string>
-    <string name="dictate__push_to_talk_summary">Утримуйте мікрофон, говоріть і відпустіть, щоб надіслати. Проведіть ліворуч, щоб скасувати, угору — щоб записувати без утримання.</string>
-    <string name="dictate__push_to_talk_too_short">Утримуйте для запису</string>
+    <string name="dictate__push_to_talk_summary">Утримуйте мікрофон, відпустіть, щоб надіслати</string>
     <string name="dictate__push_to_talk_slide_cancel">Проведіть, щоб скасувати</string>
-    <string name="dictate__push_to_talk_release_cancel">Відпустіть, щоб скасувати</string>
     <string name="dictate__recording_animation_title">Індикатор запису</string>
     <string name="dictate__recording_animation_static_label">Без анімації</string>
     <string name="dictate__recording_animation_static_description">Під час запису залишається суцільною червоною крапкою</string>

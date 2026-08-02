@@ -1279,10 +1279,8 @@
     <string name="dictate__keep_screen_awake_title">保持屏幕常亮</string>
     <string name="dictate__keep_screen_awake_summary">录音时防止屏幕关闭</string>
     <string name="dictate__push_to_talk_title">按住录音</string>
-    <string name="dictate__push_to_talk_summary">按住麦克风说话，松开即发送。向左滑动放弃，向上滑动可免持继续录音。</string>
-    <string name="dictate__push_to_talk_too_short">按住录音</string>
+    <string name="dictate__push_to_talk_summary">按住麦克风说话，松开发送</string>
     <string name="dictate__push_to_talk_slide_cancel">滑动取消</string>
-    <string name="dictate__push_to_talk_release_cancel">松开取消</string>
     <string name="dictate__recording_animation_title">录音指示器</string>
     <string name="dictate__recording_animation_static_label">无动画</string>
     <string name="dictate__recording_animation_static_description">录音时保持为一个纯红色圆点</string>

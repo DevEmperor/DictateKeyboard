@@ -1287,10 +1287,8 @@
     <string name="dictate__keep_screen_awake_title">Не гасить экран</string>
     <string name="dictate__keep_screen_awake_summary">Не давать экрану выключаться во время записи</string>
     <string name="dictate__push_to_talk_title">Удерживать для записи</string>
-    <string name="dictate__push_to_talk_summary">Удерживайте микрофон, говорите и отпустите, чтобы отправить. Смахните влево, чтобы отменить, вверх — чтобы записывать без удержания.</string>
-    <string name="dictate__push_to_talk_too_short">Удерживайте для записи</string>
+    <string name="dictate__push_to_talk_summary">Удерживайте микрофон, отпустите для отправки</string>
     <string name="dictate__push_to_talk_slide_cancel">Смахните для отмены</string>
-    <string name="dictate__push_to_talk_release_cancel">Отпустите для отмены</string>
     <string name="dictate__recording_animation_title">Индикатор записи</string>
     <string name="dictate__recording_animation_static_label">Без анимации</string>
     <string name="dictate__recording_animation_static_description">Во время записи остаётся сплошной красной точкой</string>

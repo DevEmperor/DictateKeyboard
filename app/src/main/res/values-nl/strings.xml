@@ -1183,10 +1183,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__keep_screen_awake_title">Scherm aan houden</string>
     <string name="dictate__keep_screen_awake_summary">Voorkomen dat het scherm uitgaat tijdens het opnemen</string>
     <string name="dictate__push_to_talk_title">Ingedrukt houden om op te nemen</string>
-    <string name="dictate__push_to_talk_summary">Houd de microfoon ingedrukt, spreek en laat los om te verzenden. Veeg naar links om te annuleren, omhoog om handsfree door te gaan.</string>
-    <string name="dictate__push_to_talk_too_short">Houd ingedrukt om op te nemen</string>
+    <string name="dictate__push_to_talk_summary">Houd de microfoon ingedrukt, laat los om te verzenden</string>
     <string name="dictate__push_to_talk_slide_cancel">Veeg om te annuleren</string>
-    <string name="dictate__push_to_talk_release_cancel">Laat los om te annuleren</string>
     <string name="dictate__recording_animation_title">Opname-indicator</string>
     <string name="dictate__recording_animation_static_label">Geen animatie</string>
     <string name="dictate__recording_animation_static_description">Blijft tijdens het opnemen een effen rode stip</string>

@@ -637,7 +637,7 @@ private fun LegacyRecordRow(
                                 down.consume()
                                 feedback.keyPress()
                                 DictateController.onPushToTalkDown(context)
-                                var latched = false
+                                var ended = false
                                 while (true) {
                                     val change = awaitPointerEvent().changes
                                         .firstOrNull { it.id == down.id } ?: break
@@ -648,12 +648,17 @@ private fun LegacyRecordRow(
                                     if (dy < -lockSlide) {
                                         DictateController.lockPushToTalk()
                                         feedback.keyPress()
-                                        latched = true
+                                        ended = true
                                         break
                                     }
-                                    DictateController.onPushToTalkSlide(dx < -cancelSlide)
+                                    DictateController.onPushToTalkLockSlide(-dy / lockSlide)
+                                    if (DictateController.onPushToTalkSlide(-dx / cancelSlide)) {
+                                        feedback.keyPress()
+                                        ended = true
+                                        break
+                                    }
                                 }
-                                if (latched) {
+                                if (ended) {
                                     waitForUpOrCancellation()?.consume()
                                 } else {
                                     DictateController.onPushToTalkUp(context)

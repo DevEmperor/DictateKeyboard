@@ -1227,10 +1227,8 @@
     <string name="dictate__keep_screen_awake_title">Neļaut ekrānam izslēgties</string>
     <string name="dictate__keep_screen_awake_summary">Neļaut ekrānam izslēgties ierakstīšanas laikā</string>
     <string name="dictate__push_to_talk_title">Turi, lai ierakstītu</string>
-    <string name="dictate__push_to_talk_summary">Turi mikrofonu, runā un atlaid, lai nosūtītu. Velc pa kreisi, lai atmestu, uz augšu, lai ierakstītu bez turēšanas.</string>
-    <string name="dictate__push_to_talk_too_short">Turi, lai ierakstītu</string>
+    <string name="dictate__push_to_talk_summary">Turi mikrofonu, atlaid, lai nosūtītu</string>
     <string name="dictate__push_to_talk_slide_cancel">Velc, lai atceltu</string>
-    <string name="dictate__push_to_talk_release_cancel">Atlaid, lai atceltu</string>
     <string name="dictate__recording_animation_title">Ierakstīšanas indikators</string>
     <string name="dictate__recording_animation_static_label">Bez animācijas</string>
     <string name="dictate__recording_animation_static_description">Ierakstīšanas laikā paliek vienlaidu sarkans punkts</string>

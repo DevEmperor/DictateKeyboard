@@ -47,6 +47,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.animation.core.Animatable
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.material.icons.filled.Favorite
@@ -178,22 +182,25 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
     // in place of the controls the finger cannot reach anyway.
     val pushToTalk by DictateController.pushToTalkPhase.collectFlowAsState()
     val holding = pushToTalk.isHolding
-    val cancelArmed = pushToTalk == PushToTalkPhase.CANCEL_ARMED
+    val cancelProgress by DictateController.cancelSlideProgress.collectFlowAsState()
 
     // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
     // segment and keeps recording, so you can scrap the last utterance without losing the transcript (#183).
+    // While holding it is the discard target: it reddens as the finger approaches, and reaching it drops
+    // the recording immediately (see DictateController.onPushToTalkSlide) rather than on release.
     SnyggIconButton(
         elementName = FlorisImeUi.SmartbarActionKey.elementName,
         onClick = { DictateController.cancelOrDiscardSegment(context) },
-        modifier = Modifier
-            .fillMaxHeight()
-            .aspectRatio(1f)
-            .scale(if (cancelArmed) 1.3f else 1f),
+        modifier = Modifier.fillMaxHeight().aspectRatio(1f),
     ) {
         Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = stringRes(R.string.dictate__action_cancel),
-            tint = if (cancelArmed) RecordingRed else LocalContentColor.current,
+            tint = if (holding) {
+                lerp(LocalContentColor.current, RecordingRed, cancelProgress)
+            } else {
+                LocalContentColor.current
+            },
         )
     }
 
@@ -229,13 +236,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         if (holding) {
             // Neither the chip nor pause can be reached with the finger still on the mic, so the space
             // says what the gesture will do instead of showing controls that cannot be used.
-            SnyggText(
-                text = stringRes(
-                    if (cancelArmed) R.string.dictate__push_to_talk_release_cancel
-                    else R.string.dictate__push_to_talk_slide_cancel,
-                ),
-                modifier = Modifier.padding(end = 8.dp),
-            )
+            PushToTalkAffordance(cancelProgress)
             return@Row
         }
         LanguageChip()
@@ -269,6 +270,66 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
             }
         }
     }
+}
+
+/**
+ * What the bar shows while a finger is holding the mic (#235): a lock that fills as the finger slides
+ * up, and the slide-to-cancel hint with the sweeping highlight voice-message UIs use to say "this is a
+ * gesture, not a label". Both fade out as the finger nears the discard target, so the two affordances
+ * never compete for attention.
+ */
+@Composable
+private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
+    val lockProgress by DictateController.lockSlideProgress.collectFlowAsState()
+    val hintAlpha = (1f - cancelProgress).coerceIn(0f, 1f)
+    val muted = LocalContentColor.current.copy(alpha = 0.55f * hintAlpha)
+
+    // Lock: nudges upward and grows towards latching, so the direction of the gesture is legible before
+    // the user has completed it.
+    val bob by rememberInfiniteTransition(label = "pttLock").animateFloat(
+        initialValue = 0f,
+        targetValue = -3f,
+        animationSpec = infiniteRepeatable(tween(700), RepeatMode.Reverse),
+        label = "pttLockBob",
+    )
+    Icon(
+        imageVector = if (lockProgress >= 1f) Icons.Default.Lock else Icons.Default.LockOpen,
+        contentDescription = null,
+        tint = LocalContentColor.current.copy(alpha = (0.45f + 0.55f * lockProgress) * hintAlpha),
+        modifier = Modifier
+            .size(16.dp)
+            .graphicsLayer {
+                translationY = (bob - 6f * lockProgress) * density
+                scaleX = 1f + 0.25f * lockProgress
+                scaleY = 1f + 0.25f * lockProgress
+            },
+    )
+    Spacer(modifier = Modifier.width(6.dp))
+
+    // The hint text, swept by a moving highlight rather than animated as a whole — the sweep is what
+    // reads as "keep going in this direction".
+    val sweep by rememberInfiniteTransition(label = "pttSweep").animateFloat(
+        initialValue = 1f,
+        targetValue = -1f,
+        animationSpec = infiniteRepeatable(tween(1600), RepeatMode.Restart),
+        label = "pttSweepX",
+    )
+    val highlight = LocalContentColor.current.copy(alpha = hintAlpha)
+    Text(
+        text = stringRes(R.string.dictate__push_to_talk_slide_cancel),
+        fontSize = 11.sp,
+        style = LocalTextStyle.current.copy(
+            brush = Brush.horizontalGradient(
+                0f to muted,
+                (sweep - 0.18f).coerceIn(0f, 1f) to muted,
+                sweep.coerceIn(0f, 1f) to highlight,
+                (sweep + 0.18f).coerceIn(0f, 1f) to muted,
+                1f to muted,
+            ),
+        ),
+        maxLines = 1,
+        modifier = Modifier.padding(end = 8.dp),
+    )
 }
 
 /**
