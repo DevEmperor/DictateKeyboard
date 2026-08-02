@@ -98,34 +98,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     private var cancelView: View? = null
     private var cancelParams: WindowManager.LayoutParams? = null
     private var cancelAdded = false
-    private var cancelIcon: ImageView? = null
     private val cancelSize get() = sdp(34)
-
-    /** Reddens and grows the discard target as a held recording is dragged towards it (#235). */
-    private fun tintCancel(progress: Float) {
-        val icon = cancelIcon ?: return
-        icon.background = circle(
-            if (progress >= 1f) R.color.dictate_overlay_recording else R.color.dictate_overlay_cancel,
-        )
-        icon.alpha = 0.7f + 0.3f * progress
-        icon.scaleX = 1f + 0.35f * progress
-        icon.scaleY = 1f + 0.35f * progress
-    }
-
-    /**
-     * Lock target shown above the bubble while it is held for push-to-talk (issue #235) — the voice
-     * message affordance: drag the button up into it and the recording keeps running hands-free.
-     */
-    private var lockView: View? = null
-    private var lockParams: WindowManager.LayoutParams? = null
-    private var lockAdded = false
-    private var lockIcon: ImageView? = null
-    private var lockChevron: ImageView? = null
-    private val lockSize get() = sdp(40)
-
-    /** The bubble's resting position, restored when a held gesture ends without repositioning it. */
-    private var holdOriginX = 0
-    private var holdOriginY = 0
 
     /** Optional undo button shown beside the bubble right after a dictation (issue #133). */
     private var undoView: View? = null
@@ -360,7 +333,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             setPadding(pad, pad, pad, pad)
             background = circle(R.color.dictate_overlay_cancel)
             elevation = sdpf(6f)
-        }.also { cancelIcon = it }
+        }
         return FrameLayout(context).apply {
             addView(icon, FrameLayout.LayoutParams(size, size))
             setOnClickListener {
@@ -368,87 +341,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 DictateController.cancelRecording()
             }
         }
-    }
-
-    /** Puts the bubble back where the hold started — the travel towards a target is never a reposition. */
-    private fun restoreHeldBubble(v: View, lp: WindowManager.LayoutParams) {
-        tintCancel(0f)
-        lp.x = holdOriginX
-        lp.y = holdOriginY
-        runCatching { windowManager.updateViewLayout(v, lp) }
-        if (cancelAdded) positionCancel()
-        if (undoAdded) positionUndo()
-    }
-
-    // --- Lock target (shown above the bubble while it is held, issue #235) -----------------------
-
-    private fun showLock() {
-        if (lockAdded) return
-        val v = lockView ?: createLockView().also { lockView = it }
-        val lp = lockParams ?: createCancelParams().also { lockParams = it }
-        runCatching {
-            windowManager.addView(v, lp)
-            lockAdded = true
-            positionLock(0f)
-        }
-    }
-
-    private fun hideLock() {
-        val v = lockView
-        if (lockAdded && v != null) runCatching { windowManager.removeView(v) }
-        lockAdded = false
-    }
-
-    /**
-     * A rounded pill holding a padlock over a chevron, the way voice-message UIs mark the lock target.
-     * [progress] 0..1 is how far the finger has travelled towards it: the chevron fades out as the lock
-     * fades in, so the pill answers "how much further?" without any text.
-     */
-    private fun createLockView(): View {
-        val size = lockSize
-        val pad = sdp(9)
-        val lock = ImageView(context).apply {
-            setImageResource(R.drawable.ic_dictate_overlay_lock)
-            setPadding(pad, pad, pad, pad)
-            alpha = 0.55f
-        }.also { lockIcon = it }
-        val chevron = ImageView(context).apply {
-            setImageResource(R.drawable.ic_dictate_overlay_chevron_up)
-            setPadding(pad, sdp(2), pad, sdp(2))
-            alpha = 0.55f
-        }.also { lockChevron = it }
-        return LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER_HORIZONTAL
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = size / 2f
-                setColor(ContextCompat.getColor(context, R.color.dictate_overlay_cancel))
-            }
-            elevation = sdpf(6f)
-            addView(lock, LinearLayout.LayoutParams(size, size))
-            addView(chevron, LinearLayout.LayoutParams(size, sdp(20)))
-        }
-    }
-
-    /** Keeps the lock pill centred above the bubble and reflects how close the finger is to it. */
-    private fun positionLock(progress: Float) {
-        val llp = lockParams ?: return
-        val v = lockView ?: return
-        val blp = params ?: return
-        val bubble = rootView ?: return
-        val width = if (v.width > 0) v.width else lockSize
-        val height = if (v.height > 0) v.height else lockSize * 2
-        llp.x = (blp.x + (bubble.width - width) / 2)
-            .coerceIn(0, (screenWidth() - width).coerceAtLeast(0))
-        // Sits a fixed distance above the bubble's resting spot, so it does not run away from the finger
-        // as the bubble is dragged up towards it.
-        llp.y = (holdOriginY - height - sdp(12)).coerceAtLeast(0)
-        lockIcon?.alpha = 0.5f + 0.5f * progress
-        lockChevron?.alpha = (0.6f * (1f - progress)).coerceAtLeast(0f)
-        v.scaleX = 1f + 0.12f * progress
-        v.scaleY = 1f + 0.12f * progress
-        if (lockAdded) runCatching { windowManager.updateViewLayout(v, llp) }
     }
 
     private fun createCancelParams(): WindowManager.LayoutParams {
@@ -497,7 +389,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             setPadding(pad, pad, pad, pad)
             background = circle(R.color.dictate_overlay_cancel)
             elevation = sdpf(6f)
-        }.also { cancelIcon = it }
+        }
         return FrameLayout(context).apply {
             addView(icon, FrameLayout.LayoutParams(size, size))
             setOnClickListener {
@@ -749,24 +641,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         var startY = 0
         var moved = false
         var longPressFired = false
-        // Push-to-talk (#235): the press itself is the recording, so this gesture cannot also be a
-        // long-press menu. Dragging keeps both meanings, split by direction — left/up are the cancel and
-        // lock targets, anything else is still a reposition (which discards the recording just started).
-        var pushToTalk = false
-        var pushToTalkArmed = false
-        var repositioning = false
-        val pushToTalkArm = Runnable {
-            if (!moved) {
-                pushToTalkArmed = true
-                holdOriginX = params?.x ?: 0
-                holdOriginY = params?.y ?: 0
-                DictateController.onPushToTalkDown(context, DictateController.OutputTarget.OVERLAY)
-                showLock()
-                if (prefs.dictate.floatingButtonHaptic.get()) vibrateTap()
-            }
-        }
-        val cancelSlide = 72f * context.resources.displayMetrics.density
-        val lockSlide = 56f * context.resources.displayMetrics.density
         val longPress = Runnable {
             if (!moved) {
                 longPressFired = true
@@ -786,16 +660,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     snapAnim?.cancel()
                     cancelDim()
                     applyDim(false) // wake the bubble on touch
-                    repositioning = false
-                    pushToTalk = DictateController.state.value is DictateController.UiState.Idle &&
-                        DictateController.isPushToTalkActive(context)
-                    // Push-to-talk arms on the long-press timer rather than on touch-down, so a plain tap
-                    // still starts an ordinary recording and only holding switches to the gesture.
-                    if (pushToTalk) {
-                        v.postDelayed(pushToTalkArm, longPressTimeout)
-                    } else {
-                        v.postDelayed(longPress, longPressTimeout)
-                    }
+                    v.postDelayed(longPress, longPressTimeout)
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -804,49 +669,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     if (!moved && hypot(dx, dy) > slop) {
                         moved = true
                         v.removeCallbacks(longPress) // a drag cancels the pending long-press
-                        // First real movement decides what this drag is: left or up drives the recording
-                        // gesture, anything else is the user wanting the button somewhere else.
-                        v.removeCallbacks(pushToTalkArm) // a drag is never a hold
-                        if (pushToTalk && pushToTalkArmed) {
-                            repositioning = dx > 0 && dy > 0
-                            if (repositioning) {
-                                DictateController.cancelPushToTalk()
-                                pushToTalk = false
-                            }
-                        } else if (pushToTalk) {
-                            pushToTalk = false // never armed: treat as a plain drag
-                        }
-                    }
-                    if (pushToTalk && pushToTalkArmed) {
-                        if (-dy > lockSlide) {
-                            DictateController.lockPushToTalk()
-                            restoreHeldBubble(v, lp)
-                            hideLock()
-                            if (prefs.dictate.floatingButtonHaptic.get()) vibrateTap()
-                            pushToTalk = false
-                            return@setOnTouchListener true
-                        }
-                        // The button travels with the finger towards either target, so the drag reads as
-                        // moving the button into the lock rather than as an invisible threshold.
-                        val upProgress = (-dy / lockSlide).coerceIn(0f, 1f)
-                        val leftProgress = (-dx / cancelSlide).coerceIn(0f, 1f)
-                        lp.x = (holdOriginX - (leftProgress * cancelSlide).toInt())
-                            .coerceIn(0, (screenWidth() - v.width).coerceAtLeast(0))
-                        lp.y = (holdOriginY - (upProgress * lockSlide).toInt())
-                            .coerceIn(0, (screenHeight() - v.height).coerceAtLeast(0))
-                        runCatching { windowManager.updateViewLayout(v, lp) }
-                        positionLock(upProgress)
-                        tintCancel(leftProgress)
-                        if (cancelAdded) positionCancel()
-                        DictateController.onPushToTalkLockSlide(upProgress)
-                        // Past the cancel threshold the recording is dropped right away.
-                        if (DictateController.onPushToTalkSlide(leftProgress)) {
-                            restoreHeldBubble(v, lp)
-                            hideLock()
-                            if (prefs.dictate.floatingButtonHaptic.get()) vibrateTap()
-                            pushToTalk = false
-                        }
-                        return@setOnTouchListener true
                     }
                     if (moved) {
                         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
@@ -861,14 +683,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 MotionEvent.ACTION_UP -> {
                     v.removeCallbacks(longPress)
-                    v.removeCallbacks(pushToTalkArm)
                     when {
-                        // Held long enough to arm: release sends or discards.
-                        pushToTalk && pushToTalkArmed -> {
-                            DictateController.onPushToTalkUp(context)
-                            restoreHeldBubble(v, lp)
-                            hideLock()
-                        }
                         longPressFired -> Unit // handled by the long-press (prompt menu)
                         !moved -> onTap()
                         // When snapping is off the bubble stays where it was dropped (already clamped within
@@ -881,13 +696,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     v.removeCallbacks(longPress)
-                    v.removeCallbacks(pushToTalkArm)
-                    if (pushToTalk && pushToTalkArmed) {
-                        DictateController.cancelPushToTalk()
-                        restoreHeldBubble(v, lp)
-                        hideLock()
-                        pushToTalk = false
-                    }
                     true
                 }
                 else -> false

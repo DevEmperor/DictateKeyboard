@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.smartbar.quickaction
 import android.content.Context
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -38,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
@@ -63,6 +65,12 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.ui.SnyggText
+
+/** How much the mic key swells while held, so a covered button still reads as pressed (#235). */
+private const val PUSH_TO_TALK_SCALE = 1.9f
+
+/** How long the mic must be held before it becomes push-to-talk rather than a tap (#235). */
+private const val PUSH_TO_TALK_HOLD_MS = 160L
 
 /** Slide-left distance that arms discarding a held recording (#235). */
 private val PUSH_TO_TALK_CANCEL_SLIDE = 72.dp
@@ -125,11 +133,13 @@ fun QuickActionButton(
     // Push-to-talk (#235): the mic swells while it is being held, the way a voice-message button does —
     // the one piece of feedback that survives the finger covering the button itself.
     val pushToTalkPhase by DictateController.pushToTalkPhase.collectAsState()
+    val holdingMic = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && pushToTalkPhase.isHolding
+    // Snap rather than animate: the scale sits on the node that owns the pointer input, and Compose maps
+    // pointer positions through it. A *gradual* transform would drag the reported finger position along
+    // with it; a single step changes the coordinate space once, which the gesture re-baselines for below.
     val micScale by animateFloatAsState(
-        targetValue = if (
-            action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && pushToTalkPhase.isHolding
-        ) 1.4f else 1f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+        targetValue = if (holdingMic) PUSH_TO_TALK_SCALE else 1f,
+        animationSpec = snap(),
         label = "pushToTalkMicScale",
     )
     PlainTooltip(
@@ -140,11 +150,9 @@ fun QuickActionButton(
             elementName = elementName,
             attributes = attributes,
             selector = selector,
-            // NB: the scale must not sit on this element. It owns the pointer input, and Compose maps
-            // pointer positions through the layer transform — a growing button therefore moves the
-            // reported finger position while the finger is still, which read as a slide and discarded
-            // the recording instantly. The swell is drawn on the content instead.
-            modifier = modifier,
+            // The whole key swells, background included — it is the only feedback left once a finger
+            // covers it. See micScale for why this must not animate gradually.
+            modifier = modifier.scale(micScale).zIndex(if (holdingMic) 1f else 0f),
             clickAndSemanticsModifier = Modifier
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
@@ -176,7 +184,7 @@ fun QuickActionButton(
                                 // the ordinary start/stop toggle, holding past the long-press delay
                                 // switches to push-to-talk. Waiting for that delay first is also what
                                 // makes a mis-tap impossible to turn into a recording.
-                                val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
+                                val longPressDelay = PUSH_TO_TALK_HOLD_MS
                                 var heldPastDelay = false
                                 var tapUp: PointerInputChange? = null
                                 try {
@@ -189,16 +197,26 @@ fun QuickActionButton(
                                 } else {
                                 interactionSource.tryEmit(PressInteraction.Release(press))
                                 DictateController.onPushToTalkDown(context)
-                                val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx()
-                                val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx()
+                                // Local coordinates shrank by the scale factor the instant the key grew,
+                                // so both the origin and the thresholds are taken in that new space.
+                                val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx() / PUSH_TO_TALK_SCALE
+                                val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx() / PUSH_TO_TALK_SCALE
+                                var originX = Float.NaN
+                                var originY = 0f
                                 var ended = false
                                 while (true) {
                                     val change = awaitPointerEvent().changes
                                         .firstOrNull { it.id == down.id } ?: break
                                     change.consume()
                                     if (!change.pressed) break
-                                    val dx = change.position.x - down.position.x
-                                    val dy = change.position.y - down.position.y
+                                    if (originX.isNaN()) {
+                                        // First event after the key grew: this is the real starting point.
+                                        originX = change.position.x
+                                        originY = change.position.y
+                                        continue
+                                    }
+                                    val dx = change.position.x - originX
+                                    val dy = change.position.y - originY
                                     if (dy < -lockSlide) {
                                         DictateController.lockPushToTalk()
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
@@ -247,10 +265,7 @@ fun QuickActionButton(
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.scale(micScale),
-            ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Render foreground
                 when (action) {
                     is QuickAction.InsertKey -> {
