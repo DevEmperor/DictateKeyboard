@@ -432,6 +432,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
+    <string name="about__data_attributions__title">تراخيص البيانات والنماذج</string>
+    <string name="about__data_attributions__summary">تراخيص النماذج المحلية والقواميس وبيانات اللغة</string>
     <string name="about__version__title" comment="Preference title">الإصدار</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">تم نسخ الإصدار إلى الحافظة</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">لقد حدث خطأ ما: {error_message}</string>

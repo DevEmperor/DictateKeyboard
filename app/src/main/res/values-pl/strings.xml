@@ -547,6 +547,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Polityka prywatności</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kod źródłowy</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licencje Open Source</string>
+    <string name="about__data_attributions__title">Licencje danych i modeli</string>
+    <string name="about__data_attributions__summary">Licencje modeli na urządzeniu, słowników i danych językowych</string>
     <string name="about__version__title" comment="Preference title">Wersja</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Wersję skopiowano do schowka</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Coś poszło nie tak: {error_message}</string>

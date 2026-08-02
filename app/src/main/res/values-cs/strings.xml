@@ -546,6 +546,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
+    <string name="about__data_attributions__title">Licence dat a modelů</string>
+    <string name="about__data_attributions__summary">Licence modelů v zařízení, slovníků a jazykových dat</string>
     <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Něco se pokazilo: {error_message}</string>

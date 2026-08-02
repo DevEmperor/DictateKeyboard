@@ -433,6 +433,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Політика конфіденційності</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Вихідний код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Ліцензії ПЗ з відкритим кодом</string>
+    <string name="about__data_attributions__title">Ліцензії даних і моделей</string>
+    <string name="about__data_attributions__summary">Ліцензії локальних моделей, словників і мовних даних</string>
     <string name="about__version__title" comment="Preference title">Версія</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Версію скопійовано до буфера обміну</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Щось пішло не так: {error_message}</string>

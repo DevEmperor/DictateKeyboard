@@ -545,6 +545,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Adatvédelmi irányelvek</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
+    <string name="about__data_attributions__title">Adat- és modelllicencek</string>
+    <string name="about__data_attributions__summary">Az eszközön futó modellek, szótárak és nyelvi adatok licencei</string>
     <string name="about__version__title" comment="Preference title">Verzió</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzió a vágólapra másolva</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Valami rosszul sült el: {error_message}</string>

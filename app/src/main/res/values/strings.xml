@@ -773,8 +773,8 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Asset manager reference is null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
-    <string name="about__data_attributions__title" comment="Preference title for the language-data attributions screen">Language data attributions</string>
-    <string name="about__data_attributions__summary" comment="Preference summary">Attributions for the word and bigram language data (OPUS, Leipzig Corpora)</string>
+    <string name="about__data_attributions__title" comment="Preference title for the screen listing licenses of bundled/downloaded data and on-device models">Data &amp; model attributions</string>
+    <string name="about__data_attributions__summary" comment="Preference summary listing what the attributions screen covers">Licenses for the on-device models, dictionaries and language data</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>

@@ -540,6 +540,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Конфиденциальность</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Исходный код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого ПО</string>
+    <string name="about__data_attributions__title">Лицензии данных и моделей</string>
+    <string name="about__data_attributions__summary">Лицензии локальных моделей, словарей и языковых данных</string>
     <string name="about__version__title" comment="Preference title">Версия</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номер версии скопирован в буфер обмена</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Произошла ошибка: {error_message}</string>

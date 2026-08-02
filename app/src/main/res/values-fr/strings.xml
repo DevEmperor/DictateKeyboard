@@ -474,6 +474,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Politique de confidentialité</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Code source</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licences Open-source</string>
+    <string name="about__data_attributions__title">Licences des données et modèles</string>
+    <string name="about__data_attributions__summary">Licences des modèles sur l’appareil, des dictionnaires et des données linguistiques</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copiée vers le presse-papier</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Quelque chose s\'est mal passé : {error_message}</string>

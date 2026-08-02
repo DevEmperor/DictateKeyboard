@@ -41,6 +41,7 @@ distribution. They are mirrored unmodified on the project's GitHub releases.
     OpenAI Whisper — https://openai.com/index/whisper/ (MIT)
     NVIDIA Parakeet TDT 0.6B v3 and the primeline German fine-tune (CC-BY-4.0)
     Silero VAD — https://github.com/snakers4/silero-vad (MIT)
+    Smart Turn v3 — https://github.com/pipecat-ai/smart-turn (BSD-2-Clause)
 
     All of the above are exported to ONNX by the sherpa-onnx project
     (https://github.com/k2-fsa/sherpa-onnx), licensed under Apache-2.0.

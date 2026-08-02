@@ -537,6 +537,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
+    <string name="about__data_attributions__title">Veri ve model lisansları</string>
+    <string name="about__data_attributions__summary">Cihazdaki modellerin, sözlüklerin ve dil verilerinin lisansları</string>
     <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Bir şeyler ters gitti: {error_message}</string>

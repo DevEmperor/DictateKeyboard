@@ -546,6 +546,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика за поверителност</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Изходен код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензи с отворен код</string>
+    <string name="about__data_attributions__title">Лицензи на данни и модели</string>
+    <string name="about__data_attributions__summary">Лицензи за моделите на устройството, речниците и езиковите данни</string>
     <string name="about__version__title" comment="Preference title">Издание</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номера на изданието е копирано в междинната памет</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Нещо се обърка: {error_message}</string>

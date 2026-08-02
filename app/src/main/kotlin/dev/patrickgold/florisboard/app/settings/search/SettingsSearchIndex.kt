@@ -71,6 +71,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.about__feedback__title, R.string.about__title, Routes.Settings.About, anchor = "about__feedback__title"),
         SettingsSearchEntry(R.string.about__privacy_policy__title, R.string.about__title, Routes.Settings.About, anchor = "about__privacy_policy__title"),
         SettingsSearchEntry(R.string.about__project_license__title, R.string.about__title, Routes.Settings.About, anchor = "about__project_license__title"),
+        SettingsSearchEntry(R.string.about__data_attributions__title, R.string.about__title, Routes.Settings.About, anchor = "about__data_attributions__title"),
         SettingsSearchEntry(R.string.pref__other__settings_theme__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__settings_theme__label"),
         SettingsSearchEntry(R.string.pref__other__settings_accent_color__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__settings_accent_color__label"),
         SettingsSearchEntry(R.string.pref__other__settings_language__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__settings_language__label"),

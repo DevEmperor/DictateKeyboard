@@ -456,6 +456,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Datenschutzrichtlinien</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Quellcode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open Source-Lizenzen</string>
+    <string name="about__data_attributions__title">Daten- und Modell-Lizenzen</string>
+    <string name="about__data_attributions__summary">Lizenzen der lokalen Modelle, Wörterbücher und Sprachdaten</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version in die Zwischenablage kopiert</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Etwas ist schief gelaufen: {error_message}</string>

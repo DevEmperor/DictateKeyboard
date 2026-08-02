@@ -446,6 +446,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Norme sulla privacy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codice sorgente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
+    <string name="about__data_attributions__title">Licenze di dati e modelli</string>
+    <string name="about__data_attributions__summary">Licenze dei modelli sul dispositivo, dei dizionari e dei dati linguistici</string>
     <string name="about__version__title" comment="Preference title">Versione</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versione copiata negli appunti</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Qualcosa è andato storto: {error_message}</string>

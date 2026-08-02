@@ -545,6 +545,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">隐私政策</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">源代码</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">开源协议</string>
+    <string name="about__data_attributions__title">数据与模型许可</string>
+    <string name="about__data_attributions__summary">设备端模型、词典和语言数据的许可信息</string>
     <string name="about__version__title" comment="Preference title">版本</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">版本号已复制到剪贴板</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">出错了：{error_message}</string>

@@ -517,6 +517,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">プライバシーポリシー</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">ソースコード</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">オープンソースライセンス</string>
+    <string name="about__data_attributions__title">データとモデルのライセンス</string>
+    <string name="about__data_attributions__summary">端末内モデル・辞書・言語データのライセンス</string>
     <string name="about__version__title" comment="Preference title">バージョン</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">バージョンをクリップボードにコピーしました</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">問題が発生しました: {error_message}</string>

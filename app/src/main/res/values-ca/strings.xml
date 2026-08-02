@@ -449,6 +449,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicències de codi obert</string>
+    <string name="about__data_attributions__title">Llicències de dades i models</string>
+    <string name="about__data_attributions__summary">Llicències dels models al dispositiu, els diccionaris i les dades lingüístiques</string>
     <string name="about__version__title" comment="Preference title">Versió</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versió copiada al porta-retalls</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Alguna cosa ha anat malament: {error_message}</string>

@@ -468,6 +468,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacybeleid</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Broncode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source-licenties</string>
+    <string name="about__data_attributions__title">Licenties van gegevens en modellen</string>
+    <string name="about__data_attributions__summary">Licenties van de modellen op het apparaat, woordenboeken en taalgegevens</string>
     <string name="about__version__title" comment="Preference title">Versie</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Appversie gekopieerd naar klembord</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Er is iets misgegaan: {error_message}</string>
