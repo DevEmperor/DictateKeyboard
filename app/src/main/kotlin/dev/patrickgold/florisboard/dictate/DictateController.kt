@@ -455,10 +455,10 @@ object DictateController {
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
     /**
-     * Shortest hold that counts as a dictation (issue #235). Below this the press reads as a mis-tap —
-     * hold-to-record invites 200 ms blips, and each one would otherwise cost a real API request.
+     * A release this soon after the hold armed is treated as a touch the system took away rather than a
+     * finger that lifted, and latches the recording instead of ending it.
      */
-    private const val MIN_PUSH_TO_TALK_HOLD_MS = 400L
+    private const val PUSH_TO_TALK_SPURIOUS_RELEASE_MS = 400L
 
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
     private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
@@ -539,10 +539,13 @@ object DictateController {
             cancelRecording()
             return
         }
-        // A tap in hold-to-record mode does nothing at all — no request, and no message either, since
-        // "that did nothing" is already obvious from the bar never appearing.
-        if (SystemClock.elapsedRealtime() - pttDownAtMs < MIN_PUSH_TO_TALK_HOLD_MS) {
-            cancelRecording()
+        // A pointer stream that ends within a moment of arming is almost never a deliberate release —
+        // arming alone already took [PUSH_TO_TALK_ARM_MS]. Android ends touches in an IME window for its
+        // own reasons: with real-time streaming a genuine Release arrives about 100 ms into a hold that
+        // the finger is still making. Latch instead of stopping, so the recording survives and the stop
+        // button takes over. Losing what someone just said is the one outcome worth engineering against.
+        if (SystemClock.elapsedRealtime() - pttDownAtMs < PUSH_TO_TALK_SPURIOUS_RELEASE_MS) {
+            _pushToTalkPhase.value = PushToTalkPhase.LOCKED
             return
         }
         if (_state.value is UiState.Recording) {
@@ -900,7 +903,10 @@ object DictateController {
                 } else null
                 // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
                 val pcmSink: ((ByteArray, Int) -> Unit)? = when {
-                    !segmented -> openRealtimeSession(appContext)
+                    // Off the main thread: opening the stream builds an HTTP client and a WebSocket, and
+                    // doing that inline stalled the UI thread long enough for Android to cancel the
+                    // in-flight touch — which killed push-to-talk ~90 ms into a hold (#235).
+                    !segmented -> withContext(Dispatchers.IO) { openRealtimeSession(appContext) }
                     segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
                     else -> null
                 }

@@ -95,7 +95,7 @@ private val PUSH_TO_TALK_CANCEL_SLIDE = 72.dp
 private val PUSH_TO_TALK_LOCK_SLIDE = 56.dp
 
 /** Diameter of the swollen mic drawn while it is held, relative to the key it grows out of (#235). */
-private const val HELD_MIC_DIAMETER = 2.1f
+private const val HELD_MIC_DIAMETER = 1.4f
 
 /**
  * The swollen mic shown while the key is held for push-to-talk (#235).

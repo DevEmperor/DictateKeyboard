@@ -103,6 +103,7 @@ import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.PushToTalkPhase
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.delay
@@ -279,6 +280,9 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
  */
 @Composable
 private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
+    // The swollen mic grows leftwards out of the key, so the hint is pushed clear of it — otherwise the
+    // words sit underneath the bubble and cannot be read at the moment they matter.
+    val clearance = FlorisImeSizing.smartbarHeight * 0.55f
     val hintAlpha = (1f - cancelProgress).coerceIn(0f, 1f)
     val muted = LocalContentColor.current.copy(alpha = 0.55f * hintAlpha)
 
@@ -321,7 +325,7 @@ private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
             ),
         ),
         maxLines = 1,
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = clearance),
     )
 }
 
