@@ -645,7 +645,14 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         // long-press menu. Dragging keeps both meanings, split by direction — left/up are the cancel and
         // lock targets, anything else is still a reposition (which discards the recording just started).
         var pushToTalk = false
+        var pushToTalkArmed = false
         var repositioning = false
+        val pushToTalkArm = Runnable {
+            if (!moved) {
+                pushToTalkArmed = true
+                DictateController.onPushToTalkDown(context, DictateController.OutputTarget.OVERLAY)
+            }
+        }
         val cancelSlide = 72f * context.resources.displayMetrics.density
         val lockSlide = 56f * context.resources.displayMetrics.density
         val longPress = Runnable {
@@ -670,8 +677,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     repositioning = false
                     pushToTalk = DictateController.state.value is DictateController.UiState.Idle &&
                         DictateController.isPushToTalkActive(context)
+                    // Push-to-talk arms on the long-press timer rather than on touch-down, so a plain tap
+                    // still starts an ordinary recording and only holding switches to the gesture.
                     if (pushToTalk) {
-                        DictateController.onPushToTalkDown(context, DictateController.OutputTarget.OVERLAY)
+                        v.postDelayed(pushToTalkArm, longPressTimeout)
                     } else {
                         v.postDelayed(longPress, longPressTimeout)
                     }
@@ -685,15 +694,18 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                         v.removeCallbacks(longPress) // a drag cancels the pending long-press
                         // First real movement decides what this drag is: left or up drives the recording
                         // gesture, anything else is the user wanting the button somewhere else.
-                        if (pushToTalk) {
+                        v.removeCallbacks(pushToTalkArm) // a drag is never a hold
+                        if (pushToTalk && pushToTalkArmed) {
                             repositioning = dx > 0 && dy > 0
                             if (repositioning) {
                                 DictateController.cancelPushToTalk()
                                 pushToTalk = false
                             }
+                        } else if (pushToTalk) {
+                            pushToTalk = false // never armed: treat as a plain drag
                         }
                     }
-                    if (pushToTalk) {
+                    if (pushToTalk && pushToTalkArmed) {
                         if (-dy > lockSlide) {
                             DictateController.lockPushToTalk()
                             pushToTalk = false
@@ -717,9 +729,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 MotionEvent.ACTION_UP -> {
                     v.removeCallbacks(longPress)
+                    v.removeCallbacks(pushToTalkArm)
                     when {
-                        // Still holding for push-to-talk: release sends, discards, or reports a mis-tap.
-                        pushToTalk -> DictateController.onPushToTalkUp(context)
+                        // Held long enough to arm: release sends or discards.
+                        pushToTalk && pushToTalkArmed -> DictateController.onPushToTalkUp(context)
                         longPressFired -> Unit // handled by the long-press (prompt menu)
                         !moved -> onTap()
                         // When snapping is off the bubble stays where it was dropped (already clamped within
@@ -732,7 +745,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     v.removeCallbacks(longPress)
-                    if (pushToTalk) {
+                    v.removeCallbacks(pushToTalkArm)
+                    if (pushToTalk && pushToTalkArmed) {
                         DictateController.cancelPushToTalk()
                         pushToTalk = false
                     }

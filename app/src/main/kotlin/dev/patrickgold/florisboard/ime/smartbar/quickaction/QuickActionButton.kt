@@ -51,6 +51,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Deselect
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
@@ -139,7 +140,11 @@ fun QuickActionButton(
             elementName = elementName,
             attributes = attributes,
             selector = selector,
-            modifier = modifier.scale(micScale),
+            // NB: the scale must not sit on this element. It owns the pointer input, and Compose maps
+            // pointer positions through the layer transform — a growing button therefore moves the
+            // reported finger position while the finger is still, which read as a slide and discarded
+            // the recording instantly. The swell is drawn on the content instead.
+            modifier = modifier,
             clickAndSemanticsModifier = Modifier
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
@@ -167,6 +172,21 @@ fun QuickActionButton(
                             // discard, slide up to latch. It replaces the long-press shortcuts below,
                             // which is why it is opt-in.
                             if (dictateIdle && DictateController.isPushToTalkActive(context)) {
+                                // Tap and hold both work, as on a voice-message button: a quick tap is
+                                // the ordinary start/stop toggle, holding past the long-press delay
+                                // switches to push-to-talk. Waiting for that delay first is also what
+                                // makes a mis-tap impossible to turn into a recording.
+                                val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
+                                var heldPastDelay = false
+                                var tapUp: PointerInputChange? = null
+                                try {
+                                    tapUp = withTimeout(longPressDelay) { waitForUpOrCancellation() }
+                                } catch (_: PointerEventTimeoutCancellationException) {
+                                    heldPastDelay = true
+                                }
+                                if (!heldPastDelay) {
+                                    handleUpOrCancel(tapUp, press, interactionSource, action, context)
+                                } else {
                                 interactionSource.tryEmit(PressInteraction.Release(press))
                                 DictateController.onPushToTalkDown(context)
                                 val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx()
@@ -199,6 +219,7 @@ fun QuickActionButton(
                                 } else {
                                     DictateController.onPushToTalkUp(context)
                                 }
+                                }
                             } else if (dictateIdle || dictateSendLocal) {
                                 val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
                                 try {
@@ -226,7 +247,10 @@ fun QuickActionButton(
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.scale(micScale),
+            ) {
                 // Render foreground
                 when (action) {
                     is QuickAction.InsertKey -> {

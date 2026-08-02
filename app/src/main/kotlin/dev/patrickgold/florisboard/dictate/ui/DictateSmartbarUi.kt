@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Close
@@ -47,8 +48,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.animation.core.Animatable
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.FastForward
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.material3.LocalContentColor
@@ -280,31 +279,25 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
  */
 @Composable
 private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
-    val lockProgress by DictateController.lockSlideProgress.collectFlowAsState()
     val hintAlpha = (1f - cancelProgress).coerceIn(0f, 1f)
     val muted = LocalContentColor.current.copy(alpha = 0.55f * hintAlpha)
 
-    // Lock: nudges upward and grows towards latching, so the direction of the gesture is legible before
-    // the user has completed it.
-    val bob by rememberInfiniteTransition(label = "pttLock").animateFloat(
+    // A chevron pointing the way, nudging left in time with the sweep below it.
+    val bob by rememberInfiniteTransition(label = "pttArrow").animateFloat(
         initialValue = 0f,
         targetValue = -3f,
         animationSpec = infiniteRepeatable(tween(700), RepeatMode.Reverse),
-        label = "pttLockBob",
+        label = "pttArrowBob",
     )
     Icon(
-        imageVector = if (lockProgress >= 1f) Icons.Default.Lock else Icons.Default.LockOpen,
+        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
         contentDescription = null,
-        tint = LocalContentColor.current.copy(alpha = (0.45f + 0.55f * lockProgress) * hintAlpha),
+        tint = muted,
         modifier = Modifier
             .size(16.dp)
-            .graphicsLayer {
-                translationY = (bob - 6f * lockProgress) * density
-                scaleX = 1f + 0.25f * lockProgress
-                scaleY = 1f + 0.25f * lockProgress
-            },
+            .graphicsLayer { translationX = bob * density },
     )
-    Spacer(modifier = Modifier.width(6.dp))
+    Spacer(modifier = Modifier.width(2.dp))
 
     // The hint text, swept by a moving highlight rather than animated as a whole — the sweep is what
     // reads as "keep going in this direction".

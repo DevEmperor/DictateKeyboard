@@ -144,6 +144,9 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * is shown via the SWIPE mode so glide typing is disabled there – otherwise a horizontal glide would
  * swallow the swipe-back gesture and the user could never return to the dictation UI.
  */
+/** How long the record key must be held before it becomes push-to-talk rather than a tap (#235). */
+private const val LONG_PRESS_HOLD_MS = 300L
+
 /** Slide-left distance that arms discarding a held recording on the classic layout (#235). */
 private val LEGACY_CANCEL_SLIDE = 72.dp
 
@@ -636,6 +639,16 @@ private fun LegacyRecordRow(
                                 val down = awaitFirstDown()
                                 down.consume()
                                 feedback.keyPress()
+                                // A quick tap is still the ordinary start/stop toggle; only holding past
+                                // the long-press delay switches to push-to-talk.
+                                val tapUp = withTimeoutOrNull(LONG_PRESS_HOLD_MS) {
+                                    waitForUpOrCancellation()
+                                }
+                                if (tapUp != null) {
+                                    tapUp.consume()
+                                    DictateController.onMicClick(context)
+                                    return@awaitEachGesture
+                                }
                                 DictateController.onPushToTalkDown(context)
                                 var ended = false
                                 while (true) {
