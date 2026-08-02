@@ -65,7 +65,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.cos
 import kotlin.math.hypot
+import kotlin.math.sin
 
 /**
  * Owns the floating dictation button (issue #88): a small draggable bubble shown over other apps via a
@@ -588,9 +590,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 needsInitialPlacement = false
                 applyInitialPlacement()
             } else if (kotlin.math.abs((right - left) - (oldRight - oldLeft)) > dp(2)) {
-                // Only react to real size changes. The pill's running timer nudges the width by a fraction
-                // of a pixel every second, and repositioning the window on each of those made the whole
-                // bubble visibly flicker (reported on #231).
+                // Only react to real size changes such as the pill opening or closing. Its expanded width
+                // stays pinned while the timer runs, so ticks never move the overlay along the screen edge.
                 repositionForSize()
                 if (cancelAdded) positionCancel() // keep the cancel button beside the (resized) pill
                 if (undoAdded) positionUndo()
@@ -1067,6 +1068,97 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
     }
 
+    /** Compact dotted-orbit activity indicator for the pill's transcription and rewording states. */
+    private inner class ThinkingOrbView(context: Context) : View(context) {
+        private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+        private var animator: ValueAnimator? = null
+        private var phase = 0f
+        private var dotColor = Color.WHITE
+        private var requested = false
+
+        fun start(color: Int) {
+            requested = true
+            dotColor = color
+            visibility = View.VISIBLE
+            startAnimatorIfNeeded()
+        }
+
+        private fun startAnimatorIfNeeded() {
+            if (!requested || !isAttachedToWindow) return
+            if (animator != null) {
+                invalidate()
+                return
+            }
+            // Android's global animator scale is an accessibility/user preference. Keep a representative
+            // dotted orb visible when motion is disabled instead of substituting another spinner.
+            if (!ValueAnimator.areAnimatorsEnabled()) {
+                phase = STATIC_ORB_PHASE
+                invalidate()
+                return
+            }
+            animator = ValueAnimator.ofFloat(0f, FULL_TURN).apply {
+                duration = 1800
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.RESTART
+                interpolator = LinearInterpolator()
+                addUpdateListener {
+                    phase = it.animatedValue as Float
+                    invalidate()
+                }
+                start()
+            }
+        }
+
+        fun stop() {
+            requested = false
+            cancelAnimator()
+            phase = 0f
+            visibility = View.GONE
+        }
+
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            startAnimatorIfNeeded()
+        }
+
+        override fun onDetachedFromWindow() {
+            cancelAnimator()
+            super.onDetachedFromWindow()
+        }
+
+        private fun cancelAnimator() {
+            animator?.cancel()
+            animator = null
+        }
+
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
+            val diameter = minOf(width, height).toFloat()
+            if (diameter <= 0f) return
+
+            val cx = width / 2f
+            val cy = height / 2f
+            val orbitRadius = diameter * 0.35f
+            val dotRadius = diameter * 0.052f
+            paint.color = dotColor
+
+            for (orbit in ORB_ROTATIONS.indices) {
+                canvas.save()
+                canvas.rotate(ORB_ROTATIONS[orbit], cx, cy)
+                for (dot in 0 until ORB_DOTS_PER_RING) {
+                    val angle = FULL_TURN * dot / ORB_DOTS_PER_RING + phase * ORB_SPEEDS[orbit]
+                    val depth = ((sin(angle) + 1f) / 2f).coerceIn(0f, 1f)
+                    val x = cx + cos(angle) * orbitRadius
+                    val y = cy + sin(angle) * orbitRadius * 0.38f
+                    paint.alpha = (70f + depth * 185f).toInt()
+                    canvas.drawCircle(x, y, dotRadius * (0.72f + depth * 0.28f), paint)
+                }
+                canvas.restore()
+            }
+            paint.alpha = 255
+        }
+    }
+
     // --- Ring skin (design 1) --------------------------------------------------------------------
 
     private enum class RingMode { SOLID, SPIN, PULSE }
@@ -1257,6 +1349,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val pillHeight = sdp(48)
         private val iconSize = sdp(24)
         private val pad = sdp(12)
+        private val timerWidth = sdp(48)
+        private val expandedContentWidth = sdp(8) + timerWidth + sdp(8) + sdp(48) + sdp(2)
 
         private val bg = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -1267,13 +1361,21 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             setImageResource(R.drawable.ic_dictate_overlay_mic)
             imageTintList = ColorStateList.valueOf(contrastForeground(accentColor))
         }
+        private val thinkingOrb = ThinkingOrbView(context).apply {
+            visibility = View.GONE
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }
+        private val leading = FrameLayout(context).apply {
+            addView(icon, FrameLayout.LayoutParams(iconSize, iconSize))
+            addView(thinkingOrb, FrameLayout.LayoutParams(iconSize, iconSize))
+        }
         private val timer = TextView(context).apply {
             setTextColor(color(R.color.dictate_overlay_icon))
             setTextSize(TypedValue.COMPLEX_UNIT_PX, sdpf(14f))
-            // Tabular figures + a reserved width so ticking from "0:09" to "0:10" can't change the pill's
-            // width at all — the second half of the flicker fix (#231).
+            // Tabular figures plus an exact width keep every ordinary elapsed-time value on the same
+            // footprint. The parent is pinned too, so even unusually long values cannot resize the pill.
             fontFeatureSettings = "tnum"
-            minimumWidth = sdp(40)
+            isSingleLine = true
             gravity = Gravity.CENTER
         }
         // Thinner bars: more bars across a similar width than the ring's waveform.
@@ -1287,7 +1389,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             clipChildren = false
             visibility = View.GONE
             addView(timer, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                timerWidth,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
             ).apply { marginStart = sdp(8) })
             addView(wave, LinearLayout.LayoutParams(sdp(48), sdp(20)).apply {
@@ -1296,8 +1398,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             })
         }
 
-        private var spinAnim: ValueAnimator? = null
         private var expandAnim: ValueAnimator? = null
+        private var displayedSecond = -1L
 
         override val fixedHeight: Int = pillHeight
 
@@ -1309,104 +1411,109 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             minimumHeight = pillHeight
             minimumWidth = pillHeight
             setPadding(pad, 0, pad, 0)
-            addView(icon, LinearLayout.LayoutParams(iconSize, iconSize))
+            addView(leading, LinearLayout.LayoutParams(iconSize, iconSize))
             addView(expand, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT))
         }
 
         override fun applyState(state: DictateController.UiState) {
-            stopSpin()
+            stopThinking()
             when (state) {
                 is DictateController.UiState.Recording -> {
                     setColor(R.color.dictate_overlay_recording)
-                    icon.alpha = 1f
-                    icon.rotation = 0f
-                    icon.setImageResource(R.drawable.ic_dictate_overlay_stop)
+                    showIcon(R.drawable.ic_dictate_overlay_stop)
                     wave.reset()
-                    timer.text = formatElapsed(0)
+                    val elapsedMs = elapsedOf(state)
+                    timer.text = formatElapsed(elapsedMs)
+                    displayedSecond = elapsedMs / 1000L
                     setExpanded(true)
                 }
-                is DictateController.UiState.Transcribing -> busySpinner(R.color.dictate_overlay_accent)
-                is DictateController.UiState.Rewording -> busySpinner(R.color.dictate_overlay_rewording)
+                is DictateController.UiState.Transcribing -> showThinking(R.color.dictate_overlay_accent)
+                is DictateController.UiState.Rewording -> showThinking(R.color.dictate_overlay_rewording)
                 else -> {
                     setColor(R.color.dictate_overlay_accent)
-                    icon.alpha = 1f
-                    icon.rotation = 0f
-                    icon.setImageResource(R.drawable.ic_dictate_overlay_mic)
+                    showIcon(R.drawable.ic_dictate_overlay_mic)
                     setExpanded(false)
                 }
             }
         }
 
         override fun showFlash(kind: FlashKind) {
-            stopSpin()
-            icon.alpha = 1f
-            icon.rotation = 0f
+            stopThinking()
             setExpanded(false)
             when (kind) {
                 FlashKind.ERROR -> {
                     setColor(R.color.dictate_overlay_recording)
-                    icon.setImageResource(R.drawable.ic_dictate_overlay_error)
+                    showIcon(R.drawable.ic_dictate_overlay_error)
                 }
                 FlashKind.SUCCESS -> {
                     setColor(R.color.dictate_overlay_success)
-                    icon.setImageResource(R.drawable.ic_dictate_overlay_check)
+                    showIcon(R.drawable.ic_dictate_overlay_check)
                 }
             }
         }
 
         override fun onRecordingTick(level: Float, elapsedMs: Long) {
             wave.push(level)
-            timer.text = formatElapsed(elapsedMs)
+            val elapsedSecond = elapsedMs / 1000L
+            if (elapsedSecond != displayedSecond) {
+                displayedSecond = elapsedSecond
+                timer.text = formatElapsed(elapsedMs)
+            }
         }
 
         override fun destroy() {
-            stopSpin()
-            expandAnim?.cancel()
+            stopThinking()
+            cancelExpandAnimation()
         }
 
-        private fun busySpinner(colorRes: Int) {
+        private fun showThinking(colorRes: Int) {
             setColor(colorRes)
             setExpanded(false)
+            icon.visibility = View.GONE
+            thinkingOrb.start(contrastForeground(color(colorRes)))
+        }
+
+        private fun showIcon(resId: Int) {
+            thinkingOrb.stop()
+            icon.visibility = View.VISIBLE
             icon.alpha = 1f
-            icon.setImageResource(R.drawable.ic_dictate_overlay_spinner)
-            spinAnim?.cancel()
-            spinAnim = ValueAnimator.ofFloat(0f, 360f).apply {
-                duration = 900
-                repeatCount = ValueAnimator.INFINITE
-                repeatMode = ValueAnimator.RESTART
-                interpolator = LinearInterpolator()
-                addUpdateListener { icon.rotation = it.animatedValue as Float }
-                start()
-            }
+            icon.rotation = 0f
+            icon.setImageResource(resId)
         }
 
         /** Animates the expand container open (pill) or closed (circle). */
         private fun setExpanded(expanded: Boolean) {
-            expandAnim?.cancel()
+            cancelExpandAnimation()
             if (expanded) {
                 expand.visibility = View.VISIBLE
-                expand.measure(
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                )
-                val target = expand.measuredWidth
-                expandAnim = ValueAnimator.ofInt(expand.width, target).apply {
-                    duration = 240
-                    interpolator = DecelerateInterpolator()
-                    addUpdateListener {
-                        val w = it.animatedValue as Int
+                val target = expandedContentWidth
+                if (expand.width == target) {
+                    setExpandWidth(target)
+                    expand.alpha = 1f
+                    return
+                }
+                val animation = ValueAnimator.ofInt(expand.width, target)
+                animation.duration = 240
+                animation.interpolator = DecelerateInterpolator()
+                animation.addUpdateListener {
+                    if (expandAnim === animation) {
+                        val w = animation.animatedValue as Int
                         setExpandWidth(w)
                         expand.alpha = if (target > 0) (w.toFloat() / target).coerceIn(0f, 1f) else 1f
                     }
-                    addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            // Let the timer text changes resize the pill naturally once fully open.
-                            setExpandWidth(LinearLayout.LayoutParams.WRAP_CONTENT)
-                            expand.alpha = 1f
-                        }
-                    })
-                    start()
                 }
+                animation.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (expandAnim !== animation) return
+                        // Keep the content width exact after opening: timer ticks must never resize the
+                        // WindowManager overlay or shift an edge-anchored pill.
+                        setExpandWidth(target)
+                        expand.alpha = 1f
+                        expandAnim = null
+                    }
+                })
+                expandAnim = animation
+                animation.start()
             } else {
                 val start = if (expand.width > 0) expand.width else 0
                 if (start == 0 || expand.visibility != View.VISIBLE) {
@@ -1414,22 +1521,33 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     expand.visibility = View.GONE
                     return
                 }
-                expandAnim = ValueAnimator.ofInt(start, 0).apply {
-                    duration = 200
-                    interpolator = DecelerateInterpolator()
-                    addUpdateListener {
-                        val w = it.animatedValue as Int
+                val animation = ValueAnimator.ofInt(start, 0)
+                animation.duration = 200
+                animation.interpolator = DecelerateInterpolator()
+                animation.addUpdateListener {
+                    if (expandAnim === animation) {
+                        val w = animation.animatedValue as Int
                         setExpandWidth(w)
                         expand.alpha = (w.toFloat() / start).coerceIn(0f, 1f)
                     }
-                    addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            expand.visibility = View.GONE
-                        }
-                    })
-                    start()
                 }
+                animation.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (expandAnim !== animation) return
+                        setExpandWidth(0)
+                        expand.visibility = View.GONE
+                        expandAnim = null
+                    }
+                })
+                expandAnim = animation
+                animation.start()
             }
+        }
+
+        private fun cancelExpandAnimation() {
+            val current = expandAnim
+            expandAnim = null
+            current?.cancel()
         }
 
         private fun setExpandWidth(w: Int) {
@@ -1438,10 +1556,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             expand.layoutParams = lp
         }
 
-        private fun stopSpin() {
-            spinAnim?.cancel()
-            spinAnim = null
-            icon.rotation = 0f
+        private fun stopThinking() {
+            thinkingOrb.stop()
         }
 
         private fun setColor(colorRes: Int) {
@@ -1694,5 +1810,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private const val AUTO_DIM_DELAY_MS = 3500L
         private const val WAVE_BARS = 7
         private const val CLOUD_GLYPH_COLOR = 0xFF343B8F.toInt()
+        private const val FULL_TURN = 6.2831855f
+        private const val STATIC_ORB_PHASE = FULL_TURN * 0.18f
+        private const val ORB_DOTS_PER_RING = 6
+        private val ORB_ROTATIONS = floatArrayOf(-58f, 0f, 58f)
+        private val ORB_SPEEDS = floatArrayOf(1f, -1f, 2f)
     }
 }
