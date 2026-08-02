@@ -1141,6 +1141,11 @@
     <string name="dictate__bluetooth_mic_summary">التسجيل عبر سماعة بلوتوث متصلة عند توفّرها</string>
     <string name="dictate__keep_screen_awake_title">إبقاء الشاشة قيد التشغيل</string>
     <string name="dictate__keep_screen_awake_summary">منع إيقاف تشغيل الشاشة أثناء التسجيل</string>
+    <string name="dictate__push_to_talk_title">اضغط مطولاً للتسجيل</string>
+    <string name="dictate__push_to_talk_summary">اضغط مع الاستمرار على الميكروفون، تحدث، ثم ارفع إصبعك للإرسال. اسحب لليسار للإلغاء، وللأعلى لمتابعة التسجيل بدون إمساك.</string>
+    <string name="dictate__push_to_talk_too_short">اضغط مطولاً للتسجيل</string>
+    <string name="dictate__push_to_talk_slide_cancel">اسحب للإلغاء</string>
+    <string name="dictate__push_to_talk_release_cancel">ارفع إصبعك للإلغاء</string>
     <string name="dictate__recording_animation_title">مؤشر التسجيل</string>
     <string name="dictate__recording_animation_static_label">بدون حركة</string>
     <string name="dictate__recording_animation_static_description">يبقى نقطة حمراء ثابتة أثناء التسجيل</string>

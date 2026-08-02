@@ -49,6 +49,7 @@ import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.ModelTraining
 import androidx.compose.material.icons.filled.Replay
@@ -317,6 +318,13 @@ fun DictateRecordingScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
 
     content {
+        SwitchPreference(
+            prefs.dictate.pushToTalk,
+            icon = Icons.Default.TouchApp,
+            modifier = Modifier.settingsSearchAnchor("dictate__push_to_talk_title"),
+            title = stringRes(R.string.dictate__push_to_talk_title),
+            summary = stringRes(R.string.dictate__push_to_talk_summary),
+        )
         SwitchPreference(
             prefs.dictate.realtimeTranscription,
             icon = Icons.Default.GraphicEq,

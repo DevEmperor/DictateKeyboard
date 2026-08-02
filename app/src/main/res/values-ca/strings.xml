@@ -1158,6 +1158,11 @@
     <string name="dictate__bluetooth_mic_summary">Grava a través d\'uns auriculars Bluetooth connectats quan estiguin disponibles</string>
     <string name="dictate__keep_screen_awake_title">Mantén la pantalla encesa</string>
     <string name="dictate__keep_screen_awake_summary">Evita que la pantalla s\'apagui durant la gravació</string>
+    <string name="dictate__push_to_talk_title">Mantén premut per gravar</string>
+    <string name="dictate__push_to_talk_summary">Mantén premut el micròfon, parla i deixa anar per enviar. Llisca a l’esquerra per descartar, amunt per gravar sense mans.</string>
+    <string name="dictate__push_to_talk_too_short">Mantén premut per gravar</string>
+    <string name="dictate__push_to_talk_slide_cancel">Llisca per cancel·lar</string>
+    <string name="dictate__push_to_talk_release_cancel">Deixa anar per cancel·lar</string>
     <string name="dictate__recording_animation_title">Indicador de gravació</string>
     <string name="dictate__recording_animation_static_label">Sense animació</string>
     <string name="dictate__recording_animation_static_description">Es manté un punt vermell fix mentre graveu</string>

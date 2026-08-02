@@ -297,6 +297,25 @@ object DictateController {
     private var recorder: RecordingController? = null
     private var startJob: Job? = null
 
+    // --- Push-to-talk (issue #235) ---------------------------------------------------------------
+
+    private val _pushToTalkPhase = MutableStateFlow(PushToTalkPhase.NONE)
+    /**
+     * Where a hold-to-record gesture currently stands, so the recording bar can show the matching
+     * affordance ("slide to cancel", the armed-cancel state, or the ordinary bar once locked).
+     */
+    val pushToTalkPhase: StateFlow<PushToTalkPhase> = _pushToTalkPhase.asStateFlow()
+
+    /** When the finger went down — the hold is measured from here, not from when the mic opened. */
+    private var pttDownAtMs = 0L
+
+    /**
+     * Set when the finger is lifted before [startRecording]'s job has produced a recorder. Starting is
+     * asynchronous (audio focus, and Bluetooth SCO can take seconds), so a short press-and-release
+     * regularly outruns it; the job honours this once there is actually something to stop.
+     */
+    @Volatile private var pttStopPending = false
+
     private val _audioLevel = MutableStateFlow(0f)
     /**
      * Shared, noise-gated microphone level for lightweight recording visuals. Sampling once here keeps
@@ -427,6 +446,12 @@ object DictateController {
     private const val AUDIO_LEVEL_SAMPLE_MS = 50L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
+    /**
+     * Shortest hold that counts as a dictation (issue #235). Below this the press reads as a mis-tap —
+     * hold-to-record invites 200 ms blips, and each one would otherwise cost a real API request.
+     */
+    private const val MIN_PUSH_TO_TALK_HOLD_MS = 400L
+
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
     private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
 
@@ -436,6 +461,77 @@ object DictateController {
      * the accessibility-injected field for the floating button (issue #88). It is latched when a fresh
      * recording starts, so the stop tap from the same source uses the same destination.
      */
+    /**
+     * Hold-to-record (issue #235), the walkie-talkie alternative to the tap-toggle [onMicClick]. The
+     * gesture layer calls [onPushToTalkDown] on press, [onPushToTalkSlide] as the finger moves,
+     * [lockPushToTalk] when it is slid far enough up, and [onPushToTalkUp] on release.
+     *
+     * Works for plain and real-time recordings alike — both are a start/stop pair, and real-time even
+     * suits it better because text appears while the finger is still down. Long-form segmented is
+     * excluded by the caller: holding a finger down for a ten-minute dictation defeats the point.
+     */
+    fun onPushToTalkDown(context: Context, target: OutputTarget = OutputTarget.IME) {
+        if (_state.value !is UiState.Idle) return
+        pttDownAtMs = SystemClock.elapsedRealtime()
+        pttStopPending = false
+        _pushToTalkPhase.value = PushToTalkPhase.HOLDING
+        outputTarget = target
+        startRecording(context)
+    }
+
+    /** Reports whether the finger has slid far enough towards the cancel target to arm it. */
+    fun onPushToTalkSlide(cancelArmed: Boolean) {
+        when (_pushToTalkPhase.value) {
+            PushToTalkPhase.HOLDING, PushToTalkPhase.CANCEL_ARMED ->
+                _pushToTalkPhase.value =
+                    if (cancelArmed) PushToTalkPhase.CANCEL_ARMED else PushToTalkPhase.HOLDING
+            else -> Unit // NONE or already locked: nothing to arm
+        }
+    }
+
+    /** Aborts a held recording outright — the gesture was taken over (bubble drag) or the system cancelled it. */
+    fun cancelPushToTalk() {
+        if (_pushToTalkPhase.value == PushToTalkPhase.NONE) return
+        cancelRecording()
+    }
+
+    /** Latches the recording so it keeps running after the finger lifts (slide up, WhatsApp-style). */
+    fun lockPushToTalk() {
+        if (_pushToTalkPhase.value == PushToTalkPhase.HOLDING) {
+            _pushToTalkPhase.value = PushToTalkPhase.LOCKED
+        }
+    }
+
+    /** Finger lifted: send, discard, or — if the press was a mis-tap — show the "hold to record" hint. */
+    fun onPushToTalkUp(context: Context) {
+        val phase = _pushToTalkPhase.value
+        // Locked: the recording carries on and is ended by the stop button, exactly like tap-toggle.
+        if (phase == PushToTalkPhase.LOCKED || phase == PushToTalkPhase.NONE) return
+        _pushToTalkPhase.value = PushToTalkPhase.NONE
+        if (phase == PushToTalkPhase.CANCEL_ARMED) {
+            cancelRecording()
+            return
+        }
+        if (SystemClock.elapsedRealtime() - pttDownAtMs < MIN_PUSH_TO_TALK_HOLD_MS) {
+            cancelRecording()
+            _state.value = UiState.Error(context.getString(R.string.dictate__push_to_talk_too_short))
+            return
+        }
+        if (_state.value is UiState.Recording) {
+            stopAndTranscribe(context)
+            return
+        }
+        // Still starting up — let the start job stop it the moment the recorder exists.
+        if (startJob?.isActive == true) pttStopPending = true else cancelRecording()
+    }
+
+    /**
+     * True when the mic should behave as hold-to-record: the user enabled it and the upcoming recording
+     * is not long-form segmented, which cannot sensibly be held down for its whole duration.
+     */
+    fun isPushToTalkActive(context: Context): Boolean =
+        prefs.dictate.pushToTalk.get() && !isSegmentedMode(context.applicationContext)
+
     fun onMicClick(context: Context, target: OutputTarget = OutputTarget.IME) {
         when (_state.value) {
             is UiState.Recording -> stopAndTranscribe(context)
@@ -627,6 +723,8 @@ object DictateController {
 
     /** Aborts an in-progress recording and returns to idle (cancel button / leaving the keyboard). */
     fun cancelRecording() {
+        pttStopPending = false
+        _pushToTalkPhase.value = PushToTalkPhase.NONE
         startJob?.cancel()
         startJob = null
         recorder?.cancel()
@@ -787,6 +885,12 @@ object DictateController {
                 _livePromptActive.value = livePromptArmed
                 if (segmented) initSegmented(appContext)
                 registerScreenOffReceiver(appContext)
+                // Push-to-talk (#235): the finger came back up while this job was still acquiring audio
+                // focus / Bluetooth SCO. Now that a recorder exists, honour that release.
+                if (pttStopPending) {
+                    pttStopPending = false
+                    stopAndTranscribe(appContext)
+                }
             } catch (t: Throwable) {
                 recorder = null
                 segmentVad?.release()
@@ -839,6 +943,7 @@ object DictateController {
         _state.value is UiState.Recording && !segmentedActive && realtimeSession == null
 
     private fun stopAndTranscribe(context: Context, forceLocal: Boolean = false) {
+        _pushToTalkPhase.value = PushToTalkPhase.NONE
         // Long-form segmented (#170): finish the segment queue instead of uploading one big file.
         if (segmentedActive) {
             stopSegmentedAndFinalize(context)

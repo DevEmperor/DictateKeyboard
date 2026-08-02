@@ -1262,6 +1262,11 @@
     <string name="dictate__bluetooth_mic_summary">Gravar através de auscultadores Bluetooth ligados, quando disponíveis</string>
     <string name="dictate__keep_screen_awake_title">Manter o ecrã ligado</string>
     <string name="dictate__keep_screen_awake_summary">Impedir que o ecrã se desligue durante a gravação</string>
+    <string name="dictate__push_to_talk_title">Manter premido para gravar</string>
+    <string name="dictate__push_to_talk_summary">Mantenha o microfone premido, fale e solte para enviar. Deslize para a esquerda para descartar, para cima para gravar sem as mãos.</string>
+    <string name="dictate__push_to_talk_too_short">Manter premido para gravar</string>
+    <string name="dictate__push_to_talk_slide_cancel">Deslize para cancelar</string>
+    <string name="dictate__push_to_talk_release_cancel">Solte para cancelar</string>
     <string name="dictate__recording_animation_title">Indicador de gravação</string>
     <string name="dictate__recording_animation_static_label">Sem animação</string>
     <string name="dictate__recording_animation_static_description">Mantém-se um ponto vermelho fixo durante a gravação</string>

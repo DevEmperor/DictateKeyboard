@@ -1283,6 +1283,11 @@
     <string name="dictate__bluetooth_mic_summary">Записвай чрез свързани Bluetooth слушалки, когато са налични</string>
     <string name="dictate__keep_screen_awake_title">Поддържай екрана активен</string>
     <string name="dictate__keep_screen_awake_summary">Предотврати изключването на екрана по време на запис</string>
+    <string name="dictate__push_to_talk_title">Задържане за запис</string>
+    <string name="dictate__push_to_talk_summary">Задръжте микрофона, говорете и пуснете, за да изпратите. Плъзнете наляво за отказ, нагоре за запис без задържане.</string>
+    <string name="dictate__push_to_talk_too_short">Задръжте за запис</string>
+    <string name="dictate__push_to_talk_slide_cancel">Плъзнете за отказ</string>
+    <string name="dictate__push_to_talk_release_cancel">Пуснете за отказ</string>
     <string name="dictate__recording_animation_title">Индикатор за запис</string>
     <string name="dictate__recording_animation_static_label">Без анимация</string>
     <string name="dictate__recording_animation_static_description">Остава плътна червена точка по време на записа</string>

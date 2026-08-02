@@ -1177,6 +1177,11 @@
     <string name="dictate__bluetooth_mic_summary">Wenn verfügbar über ein verbundenes Bluetooth-Headset aufnehmen</string>
     <string name="dictate__keep_screen_awake_title">Bildschirm anlassen</string>
     <string name="dictate__keep_screen_awake_summary">Verhindern, dass sich der Bildschirm während der Aufnahme ausschaltet</string>
+    <string name="dictate__push_to_talk_title">Zum Aufnehmen halten</string>
+    <string name="dictate__push_to_talk_summary">Mikrofon gedrückt halten, sprechen, zum Senden loslassen. Nach links wischen verwirft, nach oben nimmt freihändig weiter auf.</string>
+    <string name="dictate__push_to_talk_too_short">Zum Aufnehmen halten</string>
+    <string name="dictate__push_to_talk_slide_cancel">Zum Abbrechen wischen</string>
+    <string name="dictate__push_to_talk_release_cancel">Zum Abbrechen loslassen</string>
     <string name="dictate__recording_animation_title">Aufnahme-Anzeige</string>
     <string name="dictate__recording_animation_static_label">Keine Animation</string>
     <string name="dictate__recording_animation_static_description">Bleibt während der Aufnahme ein durchgehend roter Punkt</string>

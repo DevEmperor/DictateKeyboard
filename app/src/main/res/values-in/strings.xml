@@ -1238,6 +1238,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__bluetooth_mic_summary">Rekam melalui headset Bluetooth yang terhubung jika tersedia</string>
     <string name="dictate__keep_screen_awake_title">Jaga layar tetap menyala</string>
     <string name="dictate__keep_screen_awake_summary">Cegah layar mati saat merekam</string>
+    <string name="dictate__push_to_talk_title">Tahan untuk merekam</string>
+    <string name="dictate__push_to_talk_summary">Tahan mikrofon, bicara, lepaskan untuk mengirim. Geser ke kiri untuk membuang, ke atas untuk merekam bebas genggam.</string>
+    <string name="dictate__push_to_talk_too_short">Tahan untuk merekam</string>
+    <string name="dictate__push_to_talk_slide_cancel">Geser untuk membatalkan</string>
+    <string name="dictate__push_to_talk_release_cancel">Lepaskan untuk membatalkan</string>
     <string name="dictate__recording_animation_title">Indikator perekaman</string>
     <string name="dictate__recording_animation_static_label">Tanpa animasi</string>
     <string name="dictate__recording_animation_static_description">Tetap berupa titik merah solid saat merekam</string>

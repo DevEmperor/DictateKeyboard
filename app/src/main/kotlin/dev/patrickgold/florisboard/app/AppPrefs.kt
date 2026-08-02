@@ -390,6 +390,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__long_press_send_local_model",
             default = false,
         )
+        // Hold-to-record instead of tap-to-start/tap-to-stop (issue #235): press and hold the mic, speak,
+        // release to send — slide left to discard, slide up to latch. Off by default because it replaces
+        // the mic's long-press shortcuts (file transcription, send-with-local-model) with the hold
+        // itself. Long-form segmented ignores it: a ten-minute dictation cannot be held down.
+        val pushToTalk = boolean(
+            key = "dictate__push_to_talk",
+            default = false,
+        )
         // Minutes the on-device model may sit idle before it is unloaded from RAM to free memory (models
         // are ~100 MB up to ~700 MB). It is always also freed immediately on an Android memory-pressure
         // signal; this timer additionally covers the "keyboard alive but not dictating" window. 0 = only

@@ -641,6 +641,13 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         var startY = 0
         var moved = false
         var longPressFired = false
+        // Push-to-talk (#235): the press itself is the recording, so this gesture cannot also be a
+        // long-press menu. Dragging keeps both meanings, split by direction — left/up are the cancel and
+        // lock targets, anything else is still a reposition (which discards the recording just started).
+        var pushToTalk = false
+        var repositioning = false
+        val cancelSlide = 72f * context.resources.displayMetrics.density
+        val lockSlide = 56f * context.resources.displayMetrics.density
         val longPress = Runnable {
             if (!moved) {
                 longPressFired = true
@@ -660,7 +667,14 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     snapAnim?.cancel()
                     cancelDim()
                     applyDim(false) // wake the bubble on touch
-                    v.postDelayed(longPress, longPressTimeout)
+                    repositioning = false
+                    pushToTalk = DictateController.state.value is DictateController.UiState.Idle &&
+                        DictateController.isPushToTalkActive(context)
+                    if (pushToTalk) {
+                        DictateController.onPushToTalkDown(context, DictateController.OutputTarget.OVERLAY)
+                    } else {
+                        v.postDelayed(longPress, longPressTimeout)
+                    }
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -669,6 +683,24 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     if (!moved && hypot(dx, dy) > slop) {
                         moved = true
                         v.removeCallbacks(longPress) // a drag cancels the pending long-press
+                        // First real movement decides what this drag is: left or up drives the recording
+                        // gesture, anything else is the user wanting the button somewhere else.
+                        if (pushToTalk) {
+                            repositioning = dx > 0 && dy > 0
+                            if (repositioning) {
+                                DictateController.cancelPushToTalk()
+                                pushToTalk = false
+                            }
+                        }
+                    }
+                    if (pushToTalk) {
+                        if (-dy > lockSlide) {
+                            DictateController.lockPushToTalk()
+                            pushToTalk = false
+                        } else {
+                            DictateController.onPushToTalkSlide(-dx > cancelSlide)
+                        }
+                        return@setOnTouchListener true
                     }
                     if (moved) {
                         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
@@ -684,6 +716,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 MotionEvent.ACTION_UP -> {
                     v.removeCallbacks(longPress)
                     when {
+                        // Still holding for push-to-talk: release sends, discards, or reports a mis-tap.
+                        pushToTalk -> DictateController.onPushToTalkUp(context)
                         longPressFired -> Unit // handled by the long-press (prompt menu)
                         !moved -> onTap()
                         // When snapping is off the bubble stays where it was dropped (already clamped within
@@ -696,6 +730,10 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     v.removeCallbacks(longPress)
+                    if (pushToTalk) {
+                        DictateController.cancelPushToTalk()
+                        pushToTalk = false
+                    }
                     true
                 }
                 else -> false

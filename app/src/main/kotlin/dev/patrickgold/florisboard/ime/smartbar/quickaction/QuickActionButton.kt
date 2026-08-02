@@ -57,7 +57,14 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.ui.SnyggText
+
+/** Slide-left distance that arms discarding a held recording (#235). */
+private val PUSH_TO_TALK_CANCEL_SLIDE = 72.dp
+
+/** Slide-up distance that latches a held recording so the finger can leave (#235). */
+private val PUSH_TO_TALK_LOCK_SLIDE = 56.dp
 
 enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
@@ -143,7 +150,37 @@ fun QuickActionButton(
                             val dictateSendLocal = isDictate && !dictateIdle &&
                                 prefs.dictate.longPressSendLocalModel.get() &&
                                 DictateController.canLongPressSendLocal()
-                            if (dictateIdle || dictateSendLocal) {
+                            // Push-to-talk (#235) takes the whole gesture: hold to record, slide left to
+                            // discard, slide up to latch. It replaces the long-press shortcuts below,
+                            // which is why it is opt-in.
+                            if (dictateIdle && DictateController.isPushToTalkActive(context)) {
+                                interactionSource.tryEmit(PressInteraction.Release(press))
+                                DictateController.onPushToTalkDown(context)
+                                val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx()
+                                val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx()
+                                var latched = false
+                                while (true) {
+                                    val change = awaitPointerEvent().changes
+                                        .firstOrNull { it.id == down.id } ?: break
+                                    change.consume()
+                                    if (!change.pressed) break
+                                    val dx = change.position.x - down.position.x
+                                    val dy = change.position.y - down.position.y
+                                    if (dy < -lockSlide) {
+                                        DictateController.lockPushToTalk()
+                                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                        latched = true
+                                        break
+                                    }
+                                    DictateController.onPushToTalkSlide(dx < -cancelSlide)
+                                }
+                                if (latched) {
+                                    // Latched: the finger is free, the stop button ends the recording.
+                                    waitForUpOrCancellation()?.consume()
+                                } else {
+                                    DictateController.onPushToTalkUp(context)
+                                }
+                            } else if (dictateIdle || dictateSendLocal) {
                                 val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
                                 try {
                                     val up = withTimeout(longPressDelay) { waitForUpOrCancellation() }

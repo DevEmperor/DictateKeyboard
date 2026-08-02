@@ -98,6 +98,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
+import dev.patrickgold.florisboard.dictate.PushToTalkPhase
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -108,6 +109,9 @@ import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+
+/** Recording red, shared by the indicator dot and the armed slide-to-cancel bin (#235). */
+private val RecordingRed = Color(0xFFE53935)
 
 /**
  * Gboard-style in-Smartbar dictation indicator. Rendered in the Smartbar's center area (left of the
@@ -169,16 +173,27 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         }
     }
 
+    // Push-to-talk (#235): while the finger is still down nothing on this bar can be tapped, so the
+    // buttons give way to the slide affordance — a bin that arms as you slide towards it, and the hint
+    // in place of the controls the finger cannot reach anyway.
+    val pushToTalk by DictateController.pushToTalkPhase.collectFlowAsState()
+    val holding = pushToTalk.isHolding
+    val cancelArmed = pushToTalk == PushToTalkPhase.CANCEL_ARMED
+
     // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
     // segment and keeps recording, so you can scrap the last utterance without losing the transcript (#183).
     SnyggIconButton(
         elementName = FlorisImeUi.SmartbarActionKey.elementName,
         onClick = { DictateController.cancelOrDiscardSegment(context) },
-        modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+        modifier = Modifier
+            .fillMaxHeight()
+            .aspectRatio(1f)
+            .scale(if (cancelArmed) 1.3f else 1f),
     ) {
-        SnyggIcon(
+        Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = stringRes(R.string.dictate__action_cancel),
+            tint = if (cancelArmed) RecordingRed else LocalContentColor.current,
         )
     }
 
@@ -211,6 +226,18 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
     // pause/resume button — left of the sticky mic. Long-form replaces pause with Next: pausing is
     // redundant there (the Next button / auto-split already handle thought-breaks).
     Row(verticalAlignment = Alignment.CenterVertically) {
+        if (holding) {
+            // Neither the chip nor pause can be reached with the finger still on the mic, so the space
+            // says what the gesture will do instead of showing controls that cannot be used.
+            SnyggText(
+                text = stringRes(
+                    if (cancelArmed) R.string.dictate__push_to_talk_release_cancel
+                    else R.string.dictate__push_to_talk_slide_cancel,
+                ),
+                modifier = Modifier.padding(end = 8.dp),
+            )
+            return@Row
+        }
         LanguageChip()
         if (segmented) {
             SnyggIconButton(
@@ -294,7 +321,7 @@ private fun RecordingAudioDot(paused: Boolean) {
             .scale(scale)
             .alpha(alpha)
             .clip(CircleShape)
-            .background(Color(0xFFE53935)),
+            .background(RecordingRed),
     )
 }
 

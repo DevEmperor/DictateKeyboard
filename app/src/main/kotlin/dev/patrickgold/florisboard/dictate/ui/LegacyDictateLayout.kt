@@ -104,6 +104,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -143,6 +144,12 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * is shown via the SWIPE mode so glide typing is disabled there – otherwise a horizontal glide would
  * swallow the swipe-back gesture and the user could never return to the dictation UI.
  */
+/** Slide-left distance that arms discarding a held recording on the classic layout (#235). */
+private val LEGACY_CANCEL_SLIDE = 72.dp
+
+/** Slide-up distance that latches it so the finger can leave (#235). */
+private val LEGACY_LOCK_SLIDE = 56.dp
+
 object LegacyLayoutState {
     val suppressGlide = MutableStateFlow(false)
 
@@ -619,6 +626,40 @@ private fun LegacyRecordRow(
                             interactionSource = interaction,
                             indication = ripple(),
                         ) { feedback.keyPress(); DictateController.onMicClick(context) }
+                    } else if (recording == null && DictateController.isPushToTalkActive(context)) {
+                        // Push-to-talk (#235): the press is the recording, so it replaces both the tap
+                        // and the file-transcription long-press for as long as the mode is on.
+                        Modifier.pointerInput(Unit) {
+                            val cancelSlide = LEGACY_CANCEL_SLIDE.toPx()
+                            val lockSlide = LEGACY_LOCK_SLIDE.toPx()
+                            awaitEachGesture {
+                                val down = awaitFirstDown()
+                                down.consume()
+                                feedback.keyPress()
+                                DictateController.onPushToTalkDown(context)
+                                var latched = false
+                                while (true) {
+                                    val change = awaitPointerEvent().changes
+                                        .firstOrNull { it.id == down.id } ?: break
+                                    change.consume()
+                                    if (!change.pressed) break
+                                    val dx = change.position.x - down.position.x
+                                    val dy = change.position.y - down.position.y
+                                    if (dy < -lockSlide) {
+                                        DictateController.lockPushToTalk()
+                                        feedback.keyPress()
+                                        latched = true
+                                        break
+                                    }
+                                    DictateController.onPushToTalkSlide(dx < -cancelSlide)
+                                }
+                                if (latched) {
+                                    waitForUpOrCancellation()?.consume()
+                                } else {
+                                    DictateController.onPushToTalkUp(context)
+                                }
+                            }
+                        }
                     } else {
                         Modifier.combinedClickable(
                             interactionSource = interaction,
