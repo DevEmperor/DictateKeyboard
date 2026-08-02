@@ -17,10 +17,12 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import android.content.Context
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -30,13 +32,21 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.zIndex
@@ -48,8 +58,10 @@ import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Deselect
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
@@ -63,11 +75,15 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
+import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.ui.SnyggText
-
-/** How much the mic key swells while held, so a covered button still reads as pressed (#235). */
-private const val PUSH_TO_TALK_SCALE = 1.9f
 
 /** How long the mic must be held before it becomes push-to-talk rather than a tap (#235). */
 private const val PUSH_TO_TALK_HOLD_MS = 160L
@@ -77,6 +93,73 @@ private val PUSH_TO_TALK_CANCEL_SLIDE = 72.dp
 
 /** Slide-up distance that latches a held recording so the finger can leave (#235). */
 private val PUSH_TO_TALK_LOCK_SLIDE = 56.dp
+
+/** Diameter of the swollen mic drawn while it is held, relative to the key it grows out of (#235). */
+private const val HELD_MIC_DIAMETER = 2.1f
+
+/**
+ * The swollen mic shown while the key is held for push-to-talk (#235).
+ *
+ * Deliberately a popup rather than a scaled key. Scaling the key transforms the very node that owns the
+ * pointer input, and Compose maps finger positions through that transform — which silently moved the
+ * reported position far enough to register as a slide-to-cancel. A popup is a separate window: it can
+ * animate freely, is not clipped by the Smartbar, and cannot perturb the gesture.
+ *
+ * It grows **down and left** only, keeping its top-right corner on the key, so it appears below and
+ * beside the fingertip instead of underneath it — where it would be invisible — and never needs room
+ * above the Smartbar, which belongs to the app behind the keyboard.
+ */
+@Composable
+private fun HeldMicBubble() {
+    val prefs by FlorisPreferenceStore
+    // Read once: this composable only lives for the duration of a hold, and the jetpref collectAsState
+    // would clash by name with the runtime one already imported here.
+    val accent = remember { prefs.theme.accentColor.get() }
+    val grow = remember { Animatable(0.5f) }
+    LaunchedEffect(Unit) {
+        grow.animateTo(1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))
+    }
+    Popup(
+        properties = PopupProperties(focusable = false, clippingEnabled = false),
+        popupPositionProvider = remember {
+            object : PopupPositionProvider {
+                override fun calculatePosition(
+                    anchorBounds: IntRect,
+                    windowSize: IntSize,
+                    layoutDirection: LayoutDirection,
+                    popupContentSize: IntSize,
+                ) = IntOffset(
+                    // Top-right pinned to the key: all the growth goes down and to the left.
+                    x = anchorBounds.right - popupContentSize.width,
+                    y = anchorBounds.top,
+                )
+            }
+        },
+    ) {
+        Box(
+            modifier = Modifier
+                .size(FlorisImeSizing.smartbarHeight * HELD_MIC_DIAMETER)
+                .graphicsLayer {
+                    scaleX = grow.value
+                    scaleY = grow.value
+                    // Grow out of the top-right corner, where the finger is.
+                    transformOrigin = TransformOrigin(1f, 0f)
+                    shadowElevation = 12f
+                    shape = CircleShape
+                    clip = true
+                }
+                .background(accent, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Default.Mic,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
+            )
+        }
+    }
+}
 
 enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
@@ -134,14 +217,7 @@ fun QuickActionButton(
     // the one piece of feedback that survives the finger covering the button itself.
     val pushToTalkPhase by DictateController.pushToTalkPhase.collectAsState()
     val holdingMic = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && pushToTalkPhase.isHolding
-    // Snap rather than animate: the scale sits on the node that owns the pointer input, and Compose maps
-    // pointer positions through it. A *gradual* transform would drag the reported finger position along
-    // with it; a single step changes the coordinate space once, which the gesture re-baselines for below.
-    val micScale by animateFloatAsState(
-        targetValue = if (holdingMic) PUSH_TO_TALK_SCALE else 1f,
-        animationSpec = snap(),
-        label = "pushToTalkMicScale",
-    )
+    if (holdingMic) HeldMicBubble()
     PlainTooltip(
         action.computeTooltip(evaluator),
         enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
@@ -150,9 +226,11 @@ fun QuickActionButton(
             elementName = elementName,
             attributes = attributes,
             selector = selector,
-            // The whole key swells, background included — it is the only feedback left once a finger
-            // covers it. See micScale for why this must not animate gradually.
-            modifier = modifier.scale(micScale).zIndex(if (holdingMic) 1f else 0f),
+            // Never transformed. Compose maps pointer positions through a layer transform, so scaling
+            // this node moved the reported finger position by the very amount that reads as a
+            // slide-to-cancel — measured at progress 1.009 every single time. The held-state swell is a
+            // separate popup instead (see HeldMicBubble), which cannot touch the gesture.
+            modifier = modifier,
             clickAndSemanticsModifier = Modifier
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
@@ -197,26 +275,16 @@ fun QuickActionButton(
                                 } else {
                                 interactionSource.tryEmit(PressInteraction.Release(press))
                                 DictateController.onPushToTalkDown(context)
-                                // Local coordinates shrank by the scale factor the instant the key grew,
-                                // so both the origin and the thresholds are taken in that new space.
-                                val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx() / PUSH_TO_TALK_SCALE
-                                val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx() / PUSH_TO_TALK_SCALE
-                                var originX = Float.NaN
-                                var originY = 0f
+                                val cancelSlide = PUSH_TO_TALK_CANCEL_SLIDE.toPx()
+                                val lockSlide = PUSH_TO_TALK_LOCK_SLIDE.toPx()
                                 var ended = false
                                 while (true) {
                                     val change = awaitPointerEvent().changes
                                         .firstOrNull { it.id == down.id } ?: break
                                     change.consume()
                                     if (!change.pressed) break
-                                    if (originX.isNaN()) {
-                                        // First event after the key grew: this is the real starting point.
-                                        originX = change.position.x
-                                        originY = change.position.y
-                                        continue
-                                    }
-                                    val dx = change.position.x - originX
-                                    val dy = change.position.y - originY
+                                    val dx = change.position.x - down.position.x
+                                    val dy = change.position.y - down.position.y
                                     if (dy < -lockSlide) {
                                         DictateController.lockPushToTalk()
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
