@@ -66,6 +66,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
@@ -156,7 +157,7 @@ private const val HELD_MIC_DIAMETER = 1.9f
  * rather than pressed, so nothing grows at all.
  */
 @Composable
-private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
+private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, visible: Boolean) {
     val prefs by FlorisPreferenceStore
     val accent = remember { prefs.theme.accentColor.get() }
     val cancelProgress by DictateController.cancelSlideProgress.collectAsState()
@@ -166,12 +167,24 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
     val density = LocalDensity.current
     val diameterPx = with(density) { diameter.roundToPx() }
     val headroomPx = with(density) { BUBBLE_HEADROOM_TOP.roundToPx() }
-    // The bin reports where it is (DictateHoldTargets); the throw aims at that, and the window is made
-    // exactly wide enough to reach it. Falling back to a fixed span keeps this sane if the bar is gone.
+    // The window's own geometry is fixed. It used to be sized from the bin's position, and the bin only
+    // reports itself once the recording bar exists — so the window was rebuilt a frame or two into the
+    // gesture, which is one of the jumps. The bin now only steers the throw, not the layout.
     val bin by DictateHoldTargets.binBounds.collectAsState()
-    val flightSpanPx = bin?.let { (keyBounds.center.x - it.center.x).coerceAtLeast(0) }
-        ?: with(density) { 320.dp.roundToPx() }
-    val flightSpan = with(density) { flightSpanPx.toDp() }
+    // The window spans from the screen's left edge to the right edge of the mic, and never wider. A window
+    // wider than the screen has its *content* clamped to the screen while its position is still computed
+    // from the width that was asked for — and that difference is exactly how far the mic sat left of the
+    // key it was supposed to be growing out of.
+    val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.roundToPx() }
+    val micRightPx = keyBounds.center.x + diameterPx / 2
+    val windowRightPx = micRightPx.coerceAtMost(screenWidthPx)
+    // Only ever non-zero for a key so close to the edge that the swollen mic cannot fit beside it; the mic
+    // then starts on the key and slides in as it grows, rather than being placed off-centre from frame one.
+    val overhangPx = (micRightPx - windowRightPx).toFloat()
+    val flightSpanPx = (windowRightPx - diameterPx).coerceAtLeast(0)
+    // Distance to the bin, capped at the runway the window actually provides.
+    val binReachPx = bin?.let { (keyBounds.center.x - it.center.x).coerceIn(0, flightSpanPx) }
+        ?: flightSpanPx
     // Starts at exactly the size of the key it covers, so the hold looks like that very button growing
     // rather than a second one appearing over it.
     val startScale = if (diameterPx > 0) keyBounds.height.toFloat() / diameterPx else 1f
@@ -186,7 +199,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
 
     Popup(
         properties = PopupProperties(focusable = false, clippingEnabled = false),
-        popupPositionProvider = remember(keyBounds, diameterPx, headroomPx, flightSpanPx) {
+        popupPositionProvider = remember(keyBounds, diameterPx, headroomPx) {
             object : PopupPositionProvider {
                 override fun calculatePosition(
                     anchorBounds: IntRect,
@@ -196,8 +209,9 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                 ) = IntOffset(
                     // Computed from known sizes, never from popupContentSize: that is zero on the first
                     // measure, so the window was placed wrong for one frame and the mic visibly twitched
-                    // left before settling.
-                    x = keyBounds.center.x + diameterPx / 2 - (flightSpanPx + diameterPx),
+                    // left before settling. Flush against the left edge, which is where a window that
+                    // reaches to the mic's right edge starts.
+                    x = 0,
                     y = keyBounds.center.y - headroomPx - diameterPx / 2,
                 )
             }
@@ -207,7 +221,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
         // the full drag to the lock, so the mic is never cut off at its own window edge mid-gesture.
         Box(
             modifier = Modifier.size(
-                width = flightSpan + diameter,
+                width = with(density) { windowRightPx.toDp() },
                 height = diameter + BUBBLE_HEADROOM_TOP + PUSH_TO_TALK_LOCK_SLIDE + BUBBLE_HEADROOM_BOTTOM,
             ),
             contentAlignment = Alignment.TopEnd,
@@ -226,13 +240,17 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                         // since that is what triggered the throw — and lands on the bin's measured
                         // centre rather than in its general direction.
                         val fromX = -PUSH_TO_TALK_TRAVEL.toPx()
-                        val toX = -flightSpan.toPx()
+                        val toX = -binReachPx.toFloat()
                         val fromY = 0f
                         val toY = binDropY
                         // Keyed on `flying`, not on the animation having started: for one frame after
                         // the discard the animation is still at zero while the slide progress is already
                         // cleared, and reading the slide there snapped the mic back to the key.
-                        translationX = if (flying) fromX + f * (toX - fromX) else slideX
+                        // The overhang term keeps the mic on the key it is growing out of even when the
+                        // key is too close to the screen edge for the full circle to fit beside it: it
+                        // starts centred on the key and slides in over the same 180 ms it grows in.
+                        translationX =
+                            (if (flying) fromX + f * (toX - fromX) else slideX) + overhangPx * (1f - appear)
                         // Tossed up on the way, so it arcs into the bin instead of sliding along to it.
                         translationY =
                             if (flying) fromY + f * (toY - fromY) - (4f * f * (1f - f)) * rowHeight.toPx()
@@ -246,7 +264,15 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                         // Slips out of sight as it reaches the bin. A popup is its own window and always
                         // draws above the keyboard, so it cannot actually pass *behind* the bin icon —
                         // fading over the last stretch is as close as this can get.
-                        if (flying) alpha = ((1f - f) / 0.18f).coerceIn(0f, 1f)
+                        // Invisible while the window is only being warmed up: it is put on screen the
+                        // moment the finger goes down, long before the hold is anything, because adding a
+                        // window costs several frames — frames in which the key had already switched to
+                        // its recording icon and the overlay was simply not there yet.
+                        alpha = when {
+                            !visible -> 0f
+                            flying -> ((1f - f) / 0.18f).coerceIn(0f, 1f)
+                            else -> 1f
+                        }
                         shadowElevation = 12f
                         shape = CircleShape
                         clip = true
@@ -268,9 +294,15 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
     // and a target that is simply visible from the start explains the gesture better than one that has
     // to be guessed at.
     if (!flying) {
+        val lockWidth = rowHeight * 0.9f
+        val lockHeight = rowHeight * 1.25f
+        val lockWidthPx = with(density) { lockWidth.roundToPx() }
+        val lockHeightPx = with(density) { lockHeight.roundToPx() }
         Popup(
             properties = PopupProperties(focusable = false, clippingEnabled = false),
-            popupPositionProvider = remember(keyBounds) {
+            popupPositionProvider = remember(keyBounds, lockWidthPx, lockHeightPx) {
+                // Same as the mic above: from known sizes, never from popupContentSize, which is zero on
+                // the first measure and put the target somewhere else for that frame.
                 object : PopupPositionProvider {
                     override fun calculatePosition(
                         anchorBounds: IntRect,
@@ -278,8 +310,8 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                         layoutDirection: LayoutDirection,
                         popupContentSize: IntSize,
                     ) = IntOffset(
-                        x = keyBounds.center.x - popupContentSize.width / 2,
-                        y = keyBounds.bottom + popupContentSize.height * 3 / 4,
+                        x = keyBounds.center.x - lockWidthPx / 2,
+                        y = keyBounds.bottom + lockHeightPx * 3 / 4,
                     )
                 }
             },
@@ -296,13 +328,13 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
             }
             Box(
                 modifier = Modifier
-                    .size(width = rowHeight * 0.9f, height = rowHeight * 1.25f)
+                    .size(width = lockWidth, height = lockHeight)
                     .graphicsLayer {
                         // Emerges from behind the growing mic and slides down into place, rather than
                         // appearing fully formed at the bottom — it should read as coming *out of* the
                         // button the finger is on.
                         translationY = -(1f - appear) * (rowHeight.toPx() * 0.6f + size.height * 0.75f)
-                        alpha = appear * (1f - cancelProgress).coerceIn(0f, 1f)
+                        alpha = if (visible) appear * (1f - cancelProgress).coerceIn(0f, 1f) else 0f
                         val lift = appear + 0.15f * lockProgress + 0.45f * catchPop.value
                         scaleX = lift
                         scaleY = lift
@@ -401,6 +433,8 @@ fun QuickActionButton(
     // placeholder, which sits wherever the parent puts a zero-size child.
     var micKeyBounds by remember { mutableStateOf<IntRect?>(null) }
     var micHiddenByBubble by remember { mutableStateOf(false) }
+    /** True from the finger landing on the mic until it leaves, whether or not it becomes a hold. */
+    var pushToTalkArmed by remember { mutableStateOf(false) }
     // Only with the rewording row above the Smartbar is there room to grow upwards; without it the
     // circle would only be able to expand down and left, which reads as lopsided rather than pressed.
     val hasRoomAbove = remember {
@@ -435,13 +469,21 @@ fun QuickActionButton(
     }
     val appear = appearAnim.value
 
-    val bounds = micKeyBounds
-    val bubbleShown = (holdingMic || flying) && hasRoomAbove && bounds != null
-    // Hidden only once the overlay has finished growing over it, so there is never a moment with
-    // neither on screen — and stays hidden for the whole throw, since the record button reappearing
-    // while its double is still in the air would show both at once and give the trick away.
-    micHiddenByBubble = bubbleShown && (appear > 0.95f || flying)
-    if (bubbleShown && bounds != null) HeldMicBubble(bounds, flying, appear)
+    val gestureActive = holdingMic || flying
+    // On screen from the moment the finger lands, still invisible, purely so the window exists before it
+    // is needed: adding one takes several frames, and those were the frames where the key had already
+    // turned into a recording button with nothing growing out of it yet.
+    val bubbleArmed = pushToTalkArmed || gestureActive
+    // Frozen for the whole gesture, captured during composition rather than in an effect so it is right
+    // from the first frame. The key genuinely moves once recording starts — the Smartbar swaps its
+    // action row for the recording bar — and following that live dragged the overlay with it.
+    val bounds = remember(bubbleArmed) { if (bubbleArmed) micKeyBounds else null }
+    val bubbleShown = bubbleArmed && hasRoomAbove && bounds != null
+    // Hidden for the whole gesture. The overlay starts at exactly this key's size and position, so the
+    // hand-off is invisible; waiting for it to finish growing instead left both on screen side by side,
+    // which is what made two circles appear at the start of a hold.
+    micHiddenByBubble = bubbleShown && gestureActive
+    if (bubbleShown && bounds != null) HeldMicBubble(bounds, flying, appear, visible = gestureActive)
     PlainTooltip(
         action.computeTooltip(evaluator),
         enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
@@ -490,6 +532,11 @@ fun QuickActionButton(
                             // discard, slide up to latch. It replaces the long-press shortcuts below,
                             // which is why it is opt-in.
                             if (dictateIdle && DictateController.isPushToTalkActive(context)) {
+                                // Puts the (still invisible) overlay window on screen now, so it has the
+                                // whole hold delay to be created instead of costing visible frames at the
+                                // one moment everything else changes at once.
+                                pushToTalkArmed = true
+                                try {
                                 // Tap and hold both work, as on a voice-message button: a quick tap is
                                 // the ordinary start/stop toggle, holding past the long-press delay
                                 // switches to push-to-talk. Waiting for that delay first is also what
@@ -563,6 +610,11 @@ fun QuickActionButton(
                                 } else {
                                     DictateController.onPushToTalkUp(context)
                                 }
+                                }
+                                } finally {
+                                    // Also on cancellation: the gesture layer can be torn down mid-press,
+                                    // and an overlay window left behind would swallow the next key press.
+                                    pushToTalkArmed = false
                                 }
                             } else if (dictateIdle || dictateSendLocal) {
                                 val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
