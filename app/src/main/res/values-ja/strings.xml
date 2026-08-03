@@ -1217,6 +1217,7 @@
     <string name="dictate__keep_screen_awake_summary">録音中に画面が消えないようにします</string>
     <string name="dictate__push_to_talk_title">押している間だけ録音</string>
     <string name="dictate__push_to_talk_summary">マイクを押したまま話し、離すと送信</string>
+    <string name="dictate__push_to_talk_summary_off">オフ — マイク長押しで音声ファイルを文字起こしします</string>
     <string name="dictate__push_to_talk_slide_cancel">スワイプで取り消し</string>
     <string name="dictate__recording_animation_title">録音インジケーター</string>
     <string name="dictate__recording_animation_static_label">アニメーションなし</string>

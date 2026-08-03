@@ -299,6 +299,15 @@ object DictateController {
 
     // --- Push-to-talk (issue #235) ---------------------------------------------------------------
 
+    private fun setPushToTalk(
+        phase: PushToTalkPhase = _pushToTalkVisuals.value.phase,
+        lockFlash: Boolean = _pushToTalkVisuals.value.lockFlash,
+        discarding: Boolean = _pushToTalkVisuals.value.discarding,
+    ) {
+        _pushToTalkVisuals.value = PushToTalkVisuals(phase, lockFlash, discarding)
+        _pushToTalkPhase.value = phase
+    }
+
     private val _pushToTalkPhase = MutableStateFlow(PushToTalkPhase.NONE)
     /**
      * Where a hold-to-record gesture currently stands, so the recording bar can show the matching
@@ -309,14 +318,6 @@ object DictateController {
     private val _cancelSlideProgress = MutableStateFlow(0f)
     /** How far the finger has slid towards discarding, 0..1 — the bar slides its content with it. */
     val cancelSlideProgress: StateFlow<Float> = _cancelSlideProgress.asStateFlow()
-
-    private val _pushToTalkDiscards = MutableStateFlow(0)
-    /**
-     * Bumped every time a held recording is thrown away. A counter rather than a flag because the phase
-     * returns to NONE in the same breath, so a collector would never see the discard itself — and the
-     * UI needs the moment, not the state, to play the mic flying into the bin.
-     */
-    val pushToTalkDiscards: StateFlow<Int> = _pushToTalkDiscards.asStateFlow()
 
     private val _lockSlideProgress = MutableStateFlow(0f)
     /** How far the finger has slid towards the lock, 0..1 — the lock target fills with it. */
@@ -468,6 +469,12 @@ object DictateController {
      */
     private const val PUSH_TO_TALK_SPURIOUS_RELEASE_MS = 400L
 
+    /** How long the discarded mic takes to reach the bin; the bar outlives the recording by this much. */
+    const val PUSH_TO_TALK_FLIGHT_MS = 950L
+
+    /** How long the key shows a lock after latching, before dissolving into its ordinary icon. */
+    const val PUSH_TO_TALK_LOCK_FLASH_MS = 600L
+
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
     private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
 
@@ -492,10 +499,10 @@ object DictateController {
         // hold look like a tap — and start a second recording. The window is widest with real-time on,
         // where opening the socket keeps the state Idle for longer.
         if (_pushToTalkPhase.value != PushToTalkPhase.NONE) return
-        if (_state.value !is UiState.Idle) return
+        if (!canStartRecording()) return
         pttDownAtMs = SystemClock.elapsedRealtime()
         pttStopPending = false
-        _pushToTalkPhase.value = PushToTalkPhase.HOLDING
+        setPushToTalk(phase = PushToTalkPhase.HOLDING)
         outputTarget = target
         startRecording(context)
     }
@@ -510,9 +517,8 @@ object DictateController {
         if (!_pushToTalkPhase.value.isHolding) return _pushToTalkPhase.value != PushToTalkPhase.LOCKED
         _cancelSlideProgress.value = progress.coerceIn(0f, 1f)
         if (progress >= 1f) {
-            _pushToTalkPhase.value = PushToTalkPhase.CANCEL_ARMED
-            _pushToTalkDiscards.value++
-            cancelRecording()
+                        setPushToTalk(phase = PushToTalkPhase.CANCEL_ARMED, discarding = true)
+            cancelRecording(keepBarForMs = PUSH_TO_TALK_FLIGHT_MS + 120L)
             return true
         }
         return false
@@ -532,30 +538,42 @@ object DictateController {
     /** Latches the recording so it keeps running after the finger lifts (slide down into the lock). */
     fun lockPushToTalk() {
         if (_pushToTalkPhase.value == PushToTalkPhase.HOLDING) {
-            _pushToTalkPhase.value = PushToTalkPhase.LOCKED
+            // Latched *and* flashing in the same emission: as two flows the key was drawn once with
+            // its ordinary icon in between, which is exactly the frame this replaces.
+            setPushToTalk(phase = PushToTalkPhase.LOCKED, lockFlash = true)
+            scope.launch {
+                delay(PUSH_TO_TALK_LOCK_FLASH_MS)
+                setPushToTalk(lockFlash = false)
+            }
         }
     }
+
+    private val _pushToTalkVisuals = MutableStateFlow(PushToTalkVisuals())
+    /** Phase, lock confirmation and discard flight as one value — see [PushToTalkVisuals]. */
+    val pushToTalkVisuals: StateFlow<PushToTalkVisuals> = _pushToTalkVisuals.asStateFlow()
 
     /** Finger lifted: send, or silently drop a press too short to be speech. */
     fun onPushToTalkUp(context: Context) {
         val phase = _pushToTalkPhase.value
         // Locked: the recording carries on and is ended by the stop button, exactly like tap-toggle.
         if (phase == PushToTalkPhase.LOCKED || phase == PushToTalkPhase.NONE) return
-        _pushToTalkPhase.value = PushToTalkPhase.NONE
-        _cancelSlideProgress.value = 0f
-        _lockSlideProgress.value = 0f
+        // Released on the discard target: go straight there without passing through NONE, which would be
+        // one emission in which the mic is neither held nor flying — and therefore not on screen.
         if (phase == PushToTalkPhase.CANCEL_ARMED) {
-            _pushToTalkDiscards.value++
-            cancelRecording()
+            setPushToTalk(phase = PushToTalkPhase.CANCEL_ARMED, discarding = true)
+            cancelRecording(keepBarForMs = PUSH_TO_TALK_FLIGHT_MS + 120L)
             return
         }
+        setPushToTalk(phase = PushToTalkPhase.NONE)
+        _cancelSlideProgress.value = 0f
+        _lockSlideProgress.value = 0f
         // A pointer stream that ends within a moment of arming is almost never a deliberate release —
         // arming alone already took [PUSH_TO_TALK_ARM_MS]. Android ends touches in an IME window for its
         // own reasons: with real-time streaming a genuine Release arrives about 100 ms into a hold that
         // the finger is still making. Latch instead of stopping, so the recording survives and the stop
         // button takes over. Losing what someone just said is the one outcome worth engineering against.
         if (SystemClock.elapsedRealtime() - pttDownAtMs < PUSH_TO_TALK_SPURIOUS_RELEASE_MS) {
-            _pushToTalkPhase.value = PushToTalkPhase.LOCKED
+            setPushToTalk(phase = PushToTalkPhase.LOCKED)
             return
         }
         if (_state.value is UiState.Recording) {
@@ -573,7 +591,31 @@ object DictateController {
     fun isPushToTalkActive(context: Context): Boolean =
         prefs.dictate.pushToTalk.get() && !isSegmentedMode(context.applicationContext)
 
+    /**
+     * True when a tap on the mic would start a fresh recording — everything except a recording already
+     * running or a request in flight. Notably that includes the interrupted-recording chip (issue #111):
+     * it is a resting state with an offer on it, so holding the mic there has to work exactly as it does
+     * on a plain idle keyboard, which it did not while this was an `is UiState.Idle` check.
+     */
+    fun canStartRecording(): Boolean = when {
+        discardingBar -> false
+        else -> when (_state.value) {
+            is UiState.Recording, is UiState.Transcribing, is UiState.Rewording -> false
+            else -> true
+        }
+    }
+
+    /**
+     * True while the recording bar is only still on screen so a discarded mic has somewhere to land.
+     * Nothing is being captured any more, so every entry point has to step aside rather than act on a
+     * state that looks like a live recording but is not one.
+     */
+    @Volatile private var discardingBar = false
+
     fun onMicClick(context: Context, target: OutputTarget = OutputTarget.IME) {
+        // The bar is a leftover from a discard that is still animating — acting on it would stop a
+        // recording that no longer exists.
+        if (discardingBar) return
         when (_state.value) {
             is UiState.Recording -> stopAndTranscribe(context)
             // Tapping the mic while transcribing or rewording aborts it (the button shows a stop icon,
@@ -763,9 +805,14 @@ object DictateController {
     }
 
     /** Aborts an in-progress recording and returns to idle (cancel button / leaving the keyboard). */
-    fun cancelRecording() {
+    fun cancelRecording(keepBarForMs: Long = 0L) {
         pttStopPending = false
-        _pushToTalkPhase.value = PushToTalkPhase.NONE
+        // A discard in flight keeps its flag; any other teardown clears everything.
+        setPushToTalk(
+            phase = PushToTalkPhase.NONE,
+            lockFlash = false,
+            discarding = keepBarForMs > 0L,
+        )
         _cancelSlideProgress.value = 0f
         _lockSlideProgress.value = 0f
         startJob?.cancel()
@@ -798,7 +845,21 @@ object DictateController {
         // Cancelling a continued recording also throws away the carried-over interrupted segment.
         discardCarryOver()
         if (_state.value is UiState.Recording) {
-            _state.value = UiState.Idle
+            if (keepBarForMs > 0L) {
+                // Capture has already stopped; only the bar stays, so the mic being thrown has a bin to
+                // land in. Dropping straight to Idle made the target vanish mid-flight.
+                discardingBar = true
+                scope.launch {
+                    delay(keepBarForMs)
+                    discardingBar = false
+                    setPushToTalk(discarding = false)
+                    if (_state.value is UiState.Recording) _state.value = UiState.Idle
+                }
+            } else {
+                discardingBar = false
+                setPushToTalk(discarding = false)
+                _state.value = UiState.Idle
+            }
         }
     }
 
@@ -989,7 +1050,7 @@ object DictateController {
         _state.value is UiState.Recording && !segmentedActive && realtimeSession == null
 
     private fun stopAndTranscribe(context: Context, forceLocal: Boolean = false) {
-        _pushToTalkPhase.value = PushToTalkPhase.NONE
+        setPushToTalk(phase = PushToTalkPhase.NONE)
         // Long-form segmented (#170): finish the segment queue instead of uploading one big file.
         if (segmentedActive) {
             stopSegmentedAndFinalize(context)

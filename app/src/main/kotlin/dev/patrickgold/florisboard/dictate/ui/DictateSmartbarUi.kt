@@ -90,10 +90,13 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
@@ -181,9 +184,12 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
     // Push-to-talk (#235): while the finger is still down nothing on this bar can be tapped, so the
     // buttons give way to the slide affordance — a bin that arms as you slide towards it, and the hint
     // in place of the controls the finger cannot reach anyway.
-    val pushToTalk by DictateController.pushToTalkPhase.collectFlowAsState()
-    val holding = pushToTalk.isHolding
-    val cancelProgress by DictateController.cancelSlideProgress.collectFlowAsState()
+    val ptt by DictateController.pushToTalkVisuals.collectFlowAsState()
+    // The bar must not change back while the discarded mic is still flying towards the bin — the target
+    // it is aiming at is on this bar, and the controls returning underneath it broke the illusion.
+    val holding = ptt.micShown
+    val rawCancelProgress by DictateController.cancelSlideProgress.collectFlowAsState()
+    val cancelProgress = if (ptt.discarding) 1f else rawCancelProgress
 
     // Cancel button (far left) – discards the recording. In long-form it drops only the current (uncut)
     // segment and keeps recording, so you can scrap the last utterance without losing the transcript (#183).
@@ -192,15 +198,29 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
     SnyggIconButton(
         elementName = FlorisImeUi.SmartbarActionKey.elementName,
         onClick = { DictateController.cancelOrDiscardSegment(context) },
-        modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+        modifier = Modifier
+            .fillMaxHeight()
+            .aspectRatio(1f)
+            // The swollen mic is drawn by the mic key and has to be thrown *here*; it can only aim at a
+            // position someone measured.
+            .onGloballyPositioned { DictateHoldTargets.reportBinBounds(it.boundsInWindow().roundToIntRect()) },
     ) {
-        // SnyggIcon, not Icon: the themed one is sized by the keyboard theme, while Material's is a fixed
-        // 24 dp — swapping it to apply a tint quietly shrank this button. The discard feedback is the
-        // swollen mic flying into here instead.
-        SnyggIcon(
-            imageVector = Icons.Default.Delete,
-            contentDescription = stringRes(R.string.dictate__action_cancel),
-        )
+        // The red goes behind the icon rather than into it. SnyggIcon takes both its size and its colour
+        // from the keyboard theme, and swapping it for Material's Icon to gain a tint is exactly what
+        // shrank this button before — that one is a fixed 24 dp.
+        Box(contentAlignment = Alignment.Center) {
+            if (holding && cancelProgress > 0f) {
+                Box(
+                    modifier = Modifier
+                        .size(FlorisImeSizing.smartbarHeight * 0.8f)
+                        .background(RecordingRed.copy(alpha = 0.85f * cancelProgress), CircleShape),
+                )
+            }
+            SnyggIcon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringRes(R.string.dictate__action_cancel),
+            )
+        }
     }
 
     // Center: audio-reactive dot + elapsed timer.

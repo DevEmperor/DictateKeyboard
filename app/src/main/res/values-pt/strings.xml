@@ -1264,6 +1264,7 @@
     <string name="dictate__keep_screen_awake_summary">Impedir que o ecrã se desligue durante a gravação</string>
     <string name="dictate__push_to_talk_title">Manter premido para gravar</string>
     <string name="dictate__push_to_talk_summary">Mantenha o microfone premido, solte para enviar</string>
+    <string name="dictate__push_to_talk_summary_off">Desativado — manter o microfone premido transcreve antes um ficheiro de áudio</string>
     <string name="dictate__push_to_talk_slide_cancel">Deslize para cancelar</string>
     <string name="dictate__recording_animation_title">Indicador de gravação</string>
     <string name="dictate__recording_animation_static_label">Sem animação</string>

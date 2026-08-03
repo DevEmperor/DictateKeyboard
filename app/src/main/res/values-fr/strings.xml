@@ -1162,6 +1162,7 @@
     <string name="dictate__keep_screen_awake_summary">Empêcher l\'écran de s\'éteindre pendant l\'enregistrement</string>
     <string name="dictate__push_to_talk_title">Maintenir pour enregistrer</string>
     <string name="dictate__push_to_talk_summary">Maintenez le micro, relâchez pour envoyer</string>
+    <string name="dictate__push_to_talk_summary_off">Désactivé — maintenir le micro transcrit un fichier audio à la place</string>
     <string name="dictate__push_to_talk_slide_cancel">Glisser pour annuler</string>
     <string name="dictate__recording_animation_title">Indicateur d\'enregistrement</string>
     <string name="dictate__recording_animation_static_label">Aucune animation</string>

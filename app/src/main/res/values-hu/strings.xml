@@ -1283,6 +1283,7 @@
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
     <string name="dictate__push_to_talk_title">Tartsd nyomva a felvételhez</string>
     <string name="dictate__push_to_talk_summary">Tartsd nyomva a mikrofont, engedd el a küldéshez</string>
+    <string name="dictate__push_to_talk_summary_off">Ki — a mikrofon nyomva tartása helyette egy hangfájlt ír át</string>
     <string name="dictate__push_to_talk_slide_cancel">Húzd a megszakításhoz</string>
     <string name="dictate__recording_animation_title">Felvételjelző</string>
     <string name="dictate__recording_animation_static_label">Nincs animáció</string>

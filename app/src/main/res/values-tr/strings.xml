@@ -1263,6 +1263,7 @@
     <string name="dictate__keep_screen_awake_summary">Kayıt sırasında ekranın kapanmasını engelle</string>
     <string name="dictate__push_to_talk_title">Kaydetmek için basılı tut</string>
     <string name="dictate__push_to_talk_summary">Mikrofonu basılı tutun, göndermek için bırakın</string>
+    <string name="dictate__push_to_talk_summary_off">Kapalı — mikrofonu basılı tutmak bunun yerine bir ses dosyasını yazıya döker</string>
     <string name="dictate__push_to_talk_slide_cancel">İptal için kaydırın</string>
     <string name="dictate__recording_animation_title">Kayıt göstergesi</string>
     <string name="dictate__recording_animation_static_label">Animasyon yok</string>

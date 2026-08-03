@@ -1280,6 +1280,7 @@
     <string name="dictate__keep_screen_awake_summary">录音时防止屏幕关闭</string>
     <string name="dictate__push_to_talk_title">按住录音</string>
     <string name="dictate__push_to_talk_summary">按住麦克风说话，松开发送</string>
+    <string name="dictate__push_to_talk_summary_off">已关闭 — 长按麦克风改为转写音频文件</string>
     <string name="dictate__push_to_talk_slide_cancel">滑动取消</string>
     <string name="dictate__recording_animation_title">录音指示器</string>
     <string name="dictate__recording_animation_static_label">无动画</string>

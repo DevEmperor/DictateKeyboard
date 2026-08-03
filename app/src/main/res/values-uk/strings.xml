@@ -1132,6 +1132,7 @@
     <string name="dictate__keep_screen_awake_summary">Не давати екрану вимикатися під час запису</string>
     <string name="dictate__push_to_talk_title">Утримуйте для запису</string>
     <string name="dictate__push_to_talk_summary">Утримуйте мікрофон, відпустіть, щоб надіслати</string>
+    <string name="dictate__push_to_talk_summary_off">Вимкнено — утримання мікрофона натомість транскрибує аудіофайл</string>
     <string name="dictate__push_to_talk_slide_cancel">Проведіть, щоб скасувати</string>
     <string name="dictate__recording_animation_title">Індикатор запису</string>
     <string name="dictate__recording_animation_static_label">Без анімації</string>

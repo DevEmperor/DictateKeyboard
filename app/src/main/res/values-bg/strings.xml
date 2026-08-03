@@ -1285,6 +1285,7 @@
     <string name="dictate__keep_screen_awake_summary">Предотврати изключването на екрана по време на запис</string>
     <string name="dictate__push_to_talk_title">Задържане за запис</string>
     <string name="dictate__push_to_talk_summary">Задръжте микрофона, пуснете за изпращане</string>
+    <string name="dictate__push_to_talk_summary_off">Изключено — задържането на микрофона вместо това транскрибира аудиофайл</string>
     <string name="dictate__push_to_talk_slide_cancel">Плъзнете за отказ</string>
     <string name="dictate__recording_animation_title">Индикатор за запис</string>
     <string name="dictate__recording_animation_static_label">Без анимация</string>

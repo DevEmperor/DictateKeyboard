@@ -1240,6 +1240,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__keep_screen_awake_summary">Cegah layar mati saat merekam</string>
     <string name="dictate__push_to_talk_title">Tahan untuk merekam</string>
     <string name="dictate__push_to_talk_summary">Tahan mikrofon, lepaskan untuk mengirim</string>
+    <string name="dictate__push_to_talk_summary_off">Mati — menahan mikrofon justru mentranskripsi berkas audio</string>
     <string name="dictate__push_to_talk_slide_cancel">Geser untuk membatalkan</string>
     <string name="dictate__recording_animation_title">Indikator perekaman</string>
     <string name="dictate__recording_animation_static_label">Tanpa animasi</string>

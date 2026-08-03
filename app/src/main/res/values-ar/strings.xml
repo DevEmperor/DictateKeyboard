@@ -1143,6 +1143,7 @@
     <string name="dictate__keep_screen_awake_summary">منع إيقاف تشغيل الشاشة أثناء التسجيل</string>
     <string name="dictate__push_to_talk_title">اضغط مطولاً للتسجيل</string>
     <string name="dictate__push_to_talk_summary">اضغط مع الاستمرار على الميكروفون، وارفع إصبعك للإرسال</string>
+    <string name="dictate__push_to_talk_summary_off">متوقف — الضغط المطوّل على الميكروفون ينسخ ملفًا صوتيًا بدلاً من ذلك</string>
     <string name="dictate__push_to_talk_slide_cancel">اسحب للإلغاء</string>
     <string name="dictate__recording_animation_title">مؤشر التسجيل</string>
     <string name="dictate__recording_animation_static_label">بدون حركة</string>

@@ -323,7 +323,10 @@ fun DictateRecordingScreen() = FlorisScreen {
             icon = Icons.Default.TouchApp,
             modifier = Modifier.settingsSearchAnchor("dictate__push_to_talk_title"),
             title = stringRes(R.string.dictate__push_to_talk_title),
-            summary = stringRes(R.string.dictate__push_to_talk_summary),
+            // Off, the row says what holding the mic does *instead* — otherwise the shortcut this
+            // setting would take away is nowhere to be found.
+            summaryOn = stringRes(R.string.dictate__push_to_talk_summary),
+            summaryOff = stringRes(R.string.dictate__push_to_talk_summary_off),
         )
         SwitchPreference(
             prefs.dictate.realtimeTranscription,

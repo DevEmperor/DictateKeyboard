@@ -1300,6 +1300,7 @@
     <string name="dictate__keep_screen_awake_summary">Zapobiegaj wyłączaniu ekranu podczas nagrywania</string>
     <string name="dictate__push_to_talk_title">Przytrzymaj, aby nagrać</string>
     <string name="dictate__push_to_talk_summary">Przytrzymaj mikrofon, puść, aby wysłać</string>
+    <string name="dictate__push_to_talk_summary_off">Wyłączone — przytrzymanie mikrofonu zamiast tego transkrybuje plik audio</string>
     <string name="dictate__push_to_talk_slide_cancel">Przesuń, aby anulować</string>
     <string name="dictate__recording_animation_title">Wskaźnik nagrywania</string>
     <string name="dictate__recording_animation_static_label">Bez animacji</string>

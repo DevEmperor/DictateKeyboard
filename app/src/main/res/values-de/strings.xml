@@ -1179,6 +1179,7 @@
     <string name="dictate__keep_screen_awake_summary">Verhindern, dass sich der Bildschirm während der Aufnahme ausschaltet</string>
     <string name="dictate__push_to_talk_title">Zum Aufnehmen halten</string>
     <string name="dictate__push_to_talk_summary">Mikrofon halten, zum Senden loslassen</string>
+    <string name="dictate__push_to_talk_summary_off">Aus — Mikrofon halten transkribiert stattdessen eine Audiodatei</string>
     <string name="dictate__push_to_talk_slide_cancel">Zum Abbrechen wischen</string>
     <string name="dictate__recording_animation_title">Aufnahme-Anzeige</string>
     <string name="dictate__recording_animation_static_label">Keine Animation</string>
