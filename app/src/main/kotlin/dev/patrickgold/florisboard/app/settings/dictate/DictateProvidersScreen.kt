@@ -25,12 +25,10 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.filled.Lan
 import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SmartToy
 import androidx.compose.material.icons.filled.Visibility
@@ -163,11 +161,7 @@ fun DictateProvidersScreen() = FlorisScreen {
             orderedPresets.forEach { preset ->
                 val account = accounts[preset.id]
                 Preference(
-                    icon = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
-                        Icons.Default.PhoneAndroid
-                    } else {
-                        Icons.Default.Cloud
-                    },
+                    icon = providerIcon(preset.id),
                     title = preset.displayName,
                     summary = providerSummary(preset, account, keySet, noKey),
                     onClick = { editingId = preset.id },

@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.RadioButton
 import androidx.compose.ui.semantics.Role
@@ -280,6 +281,10 @@ private fun ModelRow(
                 selected = isActive,
                 enabled = isInstalled && !downloading,
                 onClick = null,
+                // Handing the click to the row costs the radio the touch-target padding Material puts
+                // around a clickable one, which is what set the spacing to the text and the height of the
+                // row. Asked for explicitly, both stay exactly as they were.
+                modifier = Modifier.minimumInteractiveComponentSize(),
             )
             Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                 Text(text = spec.displayName, style = MaterialTheme.typography.titleSmall)

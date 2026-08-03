@@ -71,3 +71,20 @@ Inference runs through ONNX Runtime, © Microsoft, MIT License. https://onnxrunt
 
 All of the above permit redistribution; the files are mirrored on the project's own GitHub release
 for a stable, project-controlled source.
+
+6. Provider logos
+------------------
+
+The settings list marks each AI provider with its own logo, so a row can be found by its mark rather
+than read. The marks are used only to identify the service the row configures; every trademark
+remains the property of its owner, and their use here implies no affiliation or endorsement.
+
+The monochrome outlines come from two collections, both freely licensed:
+
+  - Simple Icons, CC0-1.0 — OpenAI, OpenRouter, Google Gemini, Anthropic, Mistral AI, ElevenLabs,
+    Deepgram, DeepSeek, Ollama. https://github.com/simple-icons/simple-icons
+  - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI.
+    https://github.com/lobehub/lobe-icons
+
+Soniox publish no vector mark, so theirs was traced from their own app icon and fitted to the same
+size as the rest.
