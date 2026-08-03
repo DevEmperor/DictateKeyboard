@@ -104,7 +104,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -138,15 +137,6 @@ import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
-
-/** How long the record key must be held before it becomes push-to-talk rather than a tap (#235). */
-private const val LONG_PRESS_HOLD_MS = 160L
-
-/** Slide-left distance that arms discarding a held recording on the classic layout (#235). */
-private val LEGACY_CANCEL_SLIDE = 105.dp
-
-/** Slide-down distance to the lock target that latches it (#235). */
-private val LEGACY_LOCK_SLIDE = 70.dp
 
 /**
  * Cross-composable state for the legacy layout. [suppressGlide] is set while the modern typing keyboard
@@ -629,65 +619,10 @@ private fun LegacyRecordRow(
                             interactionSource = interaction,
                             indication = ripple(),
                         ) { feedback.keyPress(); DictateController.onMicClick(context) }
-                    } else if (recording == null && DictateController.isPushToTalkActive(context)) {
-                        // Push-to-talk (#235): the press is the recording, so it replaces both the tap
-                        // and the file-transcription long-press for as long as the mode is on.
-                        Modifier.pointerInput(Unit) {
-                            val cancelSlide = LEGACY_CANCEL_SLIDE.toPx()
-                            val lockSlide = LEGACY_LOCK_SLIDE.toPx()
-                            awaitEachGesture {
-                                val down = awaitFirstDown()
-                                down.consume()
-                                feedback.keyPress()
-                                // A quick tap is still the ordinary start/stop toggle; only holding past
-                                // the long-press delay switches to push-to-talk.
-                                val tapUp = withTimeoutOrNull(LONG_PRESS_HOLD_MS) {
-                                    waitForUpOrCancellation()
-                                }
-                                if (tapUp != null) {
-                                    tapUp.consume()
-                                    DictateController.onMicClick(context)
-                                    return@awaitEachGesture
-                                }
-                                DictateController.onPushToTalkDown(context)
-                                var ended = false
-                                while (true) {
-                                    val change = awaitPointerEvent().changes
-                                        .firstOrNull { it.id == down.id } ?: break
-                                    change.consume()
-                                    if (!change.pressed) break
-                                    val dx = change.position.x - down.position.x
-                                    val dy = change.position.y - down.position.y
-                                    // One axis at a time, as on the Smartbar key.
-                                    val left = (-dx).coerceAtLeast(0f)
-                                    val downward = dy.coerceAtLeast(0f)
-                                    val goingDown = downward > left
-                                    if (goingDown && downward > lockSlide) {
-                                        DictateController.lockPushToTalk()
-                                        feedback.keyPress()
-                                        ended = true
-                                        break
-                                    }
-                                    DictateController.onPushToTalkLockSlide(
-                                        if (goingDown) downward / lockSlide else 0f,
-                                    )
-                                    if (DictateController.onPushToTalkSlide(
-                                            if (goingDown) 0f else left / cancelSlide,
-                                        )
-                                    ) {
-                                        feedback.keyPress()
-                                        ended = true
-                                        break
-                                    }
-                                }
-                                if (ended) {
-                                    waitForUpOrCancellation()?.consume()
-                                } else {
-                                    DictateController.onPushToTalkUp(context)
-                                }
-                            }
-                        }
                     } else {
+                        // Push-to-talk (#235) deliberately does not reach this button. It is the classic
+                        // layout's one big key: a tap records, a long press picks a file to transcribe, and
+                        // that stays true whether or not hold-to-record is on for the Smartbar mic.
                         Modifier.combinedClickable(
                             interactionSource = interaction,
                             indication = ripple(),
