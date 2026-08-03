@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.window
 
 import android.annotation.SuppressLint
+import android.view.MotionEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -24,6 +25,7 @@ import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.dictate.ui.DictateHoldTouch
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import org.florisboard.lib.compose.ProvideLocalizedResources
@@ -53,6 +55,19 @@ class ImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
             /* width = */ LayoutParams.MATCH_PARENT,
             /* height = */ LayoutParams.MATCH_PARENT,
         )
+    }
+
+    /**
+     * Every touch this window receives, handed to the push-to-talk tracker before anything else looks at
+     * it (#235). Observation only — the event is passed on untouched.
+     *
+     * A held recording cannot be driven from Compose's pointer stream: that stream ends by itself part way
+     * into a real-time hold, with no MotionEvent behind it, while the window here goes on receiving the
+     * finger perfectly well until the genuine release. See [DictateHoldTouch].
+     */
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        DictateHoldTouch.dispatch(event)
+        return super.dispatchTouchEvent(event)
     }
 
     @Composable

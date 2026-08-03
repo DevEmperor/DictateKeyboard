@@ -567,6 +567,13 @@ object DictateController {
         setPushToTalk(phase = PushToTalkPhase.NONE)
         _cancelSlideProgress.value = 0f
         _lockSlideProgress.value = 0f
+        val heldMs = SystemClock.elapsedRealtime() - pttDownAtMs
+        Log.i(
+            "DictatePTT",
+            "onPushToTalkUp held=${heldMs}ms state=${_state.value::class.java.simpleName} " +
+                "realtime=${realtimeSession != null} startJobActive=${startJob?.isActive} " +
+                "spurious=${heldMs < PUSH_TO_TALK_SPURIOUS_RELEASE_MS}",
+        )
         // A pointer stream that ends within a moment of arming is almost never a deliberate release —
         // arming alone already took [PUSH_TO_TALK_ARM_MS]. Android ends touches in an IME window for its
         // own reasons: with real-time streaming a genuine Release arrives about 100 ms into a hold that
@@ -977,7 +984,17 @@ object DictateController {
                     // Off the main thread: opening the stream builds an HTTP client and a WebSocket, and
                     // doing that inline stalled the UI thread long enough for Android to cancel the
                     // in-flight touch — which killed push-to-talk ~90 ms into a hold (#235).
-                    !segmented -> withContext(Dispatchers.IO) { openRealtimeSession(appContext) }
+                    !segmented -> withContext(Dispatchers.IO) {
+                        val opened = SystemClock.elapsedRealtime()
+                        openRealtimeSession(appContext).also {
+                            if (it != null) {
+                                Log.i(
+                                    "DictatePTT",
+                                    "realtime session opened in ${SystemClock.elapsedRealtime() - opened}ms",
+                                )
+                            }
+                        }
+                    }
                     segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
                     else -> null
                 }
@@ -1604,6 +1621,9 @@ object DictateController {
         // Type the growing transcript live into the field, applying only the minimal diff each time (#128).
         fun showLive(full: String) {
             if (realtimeCancelled) return   // a late callback must not re-add text after a cancel
+            // Diagnostics (#235): editing the field is the one thing real-time does early that batch does
+            // not, so its timing is what a lost hold has to be lined up against.
+            Log.i("DictatePTT", "realtime showLive chars=${full.length} phase=${_pushToTalkPhase.value}")
             _interimText.value = full
             runCatching { sink(appContext).setDictationPreview(full, realtimeShown.toString()) }
             realtimeShown.setLength(0)
