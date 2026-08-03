@@ -35,6 +35,7 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -171,17 +172,16 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
     // reports itself once the recording bar exists — so the window was rebuilt a frame or two into the
     // gesture, which is one of the jumps. The bin now only steers the throw, not the layout.
     val bin by DictateHoldTargets.binBounds.collectAsState()
-    // The window spans from the screen's left edge to the right edge of the mic, and never wider. A window
-    // wider than the screen has its *content* clamped to the screen while its position is still computed
-    // from the width that was asked for — and that difference is exactly how far the mic sat left of the
-    // key it was supposed to be growing out of.
+    // The window is the screen, and the mic is placed inside it by its distance from the *left* edge. Both
+    // halves of that matter: a window wider than the screen has its content clamped to the screen while its
+    // position is still computed from the width that was asked for, and anything measured from the right
+    // edge inherits that error — which is exactly how far the mic used to sit left of the key. Measured
+    // from the left, nothing can move it, and the mic keeps the key's centre for the whole gesture. It is
+    // wider than the space left of the screen edge, and sticking out over that edge is what it should do.
     val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.roundToPx() }
-    val micRightPx = keyBounds.center.x + diameterPx / 2
-    val windowRightPx = micRightPx.coerceAtMost(screenWidthPx)
-    // Only ever non-zero for a key so close to the edge that the swollen mic cannot fit beside it; the mic
-    // then starts on the key and slides in as it grows, rather than being placed off-centre from frame one.
-    val overhangPx = (micRightPx - windowRightPx).toFloat()
-    val flightSpanPx = (windowRightPx - diameterPx).coerceAtLeast(0)
+    val micLeftPx = keyBounds.center.x - diameterPx / 2
+    // How far left it can travel before it would leave its own window.
+    val flightSpanPx = micLeftPx.coerceAtLeast(0)
     // Distance to the bin, capped at the runway the window actually provides.
     val binReachPx = bin?.let { (keyBounds.center.x - it.center.x).coerceIn(0, flightSpanPx) }
         ?: flightSpanPx
@@ -209,25 +209,25 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                 ) = IntOffset(
                     // Computed from known sizes, never from popupContentSize: that is zero on the first
                     // measure, so the window was placed wrong for one frame and the mic visibly twitched
-                    // left before settling. Flush against the left edge, which is where a window that
-                    // reaches to the mic's right edge starts.
+                    // left before settling.
                     x = 0,
                     y = keyBounds.center.y - headroomPx - diameterPx / 2,
                 )
             }
         },
     ) {
-        // The window is deliberately oversized: headroom above for the throw's arc, and room below for
-        // the full drag to the lock, so the mic is never cut off at its own window edge mid-gesture.
+        // Tall enough for headroom above the throw's arc and for the full drag down to the lock, so the mic
+        // is never cut off at its own window edge mid-gesture.
         Box(
             modifier = Modifier.size(
-                width = with(density) { windowRightPx.toDp() },
+                width = with(density) { screenWidthPx.toDp() },
                 height = diameter + BUBBLE_HEADROOM_TOP + PUSH_TO_TALK_LOCK_SLIDE + BUBBLE_HEADROOM_BOTTOM,
             ),
-            contentAlignment = Alignment.TopEnd,
+            contentAlignment = Alignment.TopStart,
         ) {
             Box(
                 modifier = Modifier
+                    .offset { IntOffset(micLeftPx, 0) }
                     .padding(top = BUBBLE_HEADROOM_TOP)
                     .size(diameter)
                     .graphicsLayer {
@@ -246,11 +246,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                         // Keyed on `flying`, not on the animation having started: for one frame after
                         // the discard the animation is still at zero while the slide progress is already
                         // cleared, and reading the slide there snapped the mic back to the key.
-                        // The overhang term keeps the mic on the key it is growing out of even when the
-                        // key is too close to the screen edge for the full circle to fit beside it: it
-                        // starts centred on the key and slides in over the same 180 ms it grows in.
-                        translationX =
-                            (if (flying) fromX + f * (toX - fromX) else slideX) + overhangPx * (1f - appear)
+                        translationX = if (flying) fromX + f * (toX - fromX) else slideX
                         // Tossed up on the way, so it arcs into the bin instead of sliding along to it.
                         translationY =
                             if (flying) fromY + f * (toY - fromY) - (4f * f * (1f - f)) * rowHeight.toPx()
