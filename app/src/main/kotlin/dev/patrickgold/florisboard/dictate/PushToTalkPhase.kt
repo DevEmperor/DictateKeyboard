@@ -15,13 +15,15 @@ package dev.patrickgold.florisboard.dictate
  * already know from messengers.
  *
  * While the finger is down nothing else on screen can be tapped — not the language chip, not pause,
- * not a prompt. That is what [LOCKED] is for: sliding up latches the recording so the ordinary
- * recording bar takes over and everything becomes reachable again.
+ * not a prompt. That is what [LOCKED] is for: sliding down into the lock target latches the recording
+ * so the ordinary recording bar takes over and everything becomes reachable again. Down rather than up
+ * because above the Smartbar is the app behind the keyboard, where nothing of ours can be drawn.
  *
  *  - [NONE]: no hold in progress (tap-toggle, or nothing recording).
  *  - [HOLDING]: finger down, releasing will send.
  *  - [CANCEL_ARMED]: slid far enough towards the cancel target; releasing now discards the recording.
- *  - [LOCKED]: slid up — the recording continues after release and is ended by the stop button.
+ *  - [LOCKED]: slid down into the lock — the recording continues after release and is ended by the
+ *    stop button.
  */
 enum class PushToTalkPhase {
     NONE,

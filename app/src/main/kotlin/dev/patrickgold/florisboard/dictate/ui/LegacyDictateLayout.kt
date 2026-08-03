@@ -139,20 +139,20 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
+/** How long the record key must be held before it becomes push-to-talk rather than a tap (#235). */
+private const val LONG_PRESS_HOLD_MS = 160L
+
+/** Slide-left distance that arms discarding a held recording on the classic layout (#235). */
+private val LEGACY_CANCEL_SLIDE = 105.dp
+
+/** Slide-down distance to the lock target that latches it (#235). */
+private val LEGACY_LOCK_SLIDE = 70.dp
+
 /**
  * Cross-composable state for the legacy layout. [suppressGlide] is set while the modern typing keyboard
  * is shown via the SWIPE mode so glide typing is disabled there – otherwise a horizontal glide would
  * swallow the swipe-back gesture and the user could never return to the dictation UI.
  */
-/** How long the record key must be held before it becomes push-to-talk rather than a tap (#235). */
-private const val LONG_PRESS_HOLD_MS = 300L
-
-/** Slide-left distance that arms discarding a held recording on the classic layout (#235). */
-private val LEGACY_CANCEL_SLIDE = 72.dp
-
-/** Slide-up distance that latches it so the finger can leave (#235). */
-private val LEGACY_LOCK_SLIDE = 56.dp
-
 object LegacyLayoutState {
     val suppressGlide = MutableStateFlow(false)
 
@@ -658,14 +658,23 @@ private fun LegacyRecordRow(
                                     if (!change.pressed) break
                                     val dx = change.position.x - down.position.x
                                     val dy = change.position.y - down.position.y
-                                    if (dy < -lockSlide) {
+                                    // One axis at a time, as on the Smartbar key.
+                                    val left = (-dx).coerceAtLeast(0f)
+                                    val downward = dy.coerceAtLeast(0f)
+                                    val goingDown = downward > left
+                                    if (goingDown && downward > lockSlide) {
                                         DictateController.lockPushToTalk()
                                         feedback.keyPress()
                                         ended = true
                                         break
                                     }
-                                    DictateController.onPushToTalkLockSlide(-dy / lockSlide)
-                                    if (DictateController.onPushToTalkSlide(-dx / cancelSlide)) {
+                                    DictateController.onPushToTalkLockSlide(
+                                        if (goingDown) downward / lockSlide else 0f,
+                                    )
+                                    if (DictateController.onPushToTalkSlide(
+                                            if (goingDown) 0f else left / cancelSlide,
+                                        )
+                                    ) {
                                         feedback.keyPress()
                                         ended = true
                                         break

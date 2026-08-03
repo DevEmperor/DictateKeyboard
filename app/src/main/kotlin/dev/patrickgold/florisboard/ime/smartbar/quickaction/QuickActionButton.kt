@@ -18,9 +18,11 @@ package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import android.content.Context
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.LocalIndication
@@ -33,7 +35,9 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -42,29 +46,41 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.zIndex
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Deselect
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -82,46 +98,82 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.ui.SnyggText
 
 /** How long the mic must be held before it becomes push-to-talk rather than a tap (#235). */
 private const val PUSH_TO_TALK_HOLD_MS = 160L
 
-/** Slide-left distance that arms discarding a held recording (#235). */
-private val PUSH_TO_TALK_CANCEL_SLIDE = 72.dp
+/** How far the swollen mic travels left, and how far the finger must slide, to discard (#235). */
+private val PUSH_TO_TALK_TRAVEL = 105.dp
 
-/** Slide-up distance that latches a held recording so the finger can leave (#235). */
-private val PUSH_TO_TALK_LOCK_SLIDE = 56.dp
+/** Slide-left distance that arms discarding a held recording — same as the visual travel (#235). */
+private val PUSH_TO_TALK_CANCEL_SLIDE = PUSH_TO_TALK_TRAVEL
 
-/** Diameter of the swollen mic drawn while it is held, relative to the key it grows out of (#235). */
-private const val HELD_MIC_DIAMETER = 1.4f
+/** Slide-down distance to the lock target that latches a held recording (#235). */
+private val PUSH_TO_TALK_LOCK_SLIDE = 70.dp
+
+/** Room reserved to the left of the key so the discarded mic can fly all the way to the bin (#235). */
+private val PUSH_TO_TALK_FLIGHT_SPAN = 340.dp
+
+/** How long the discarded mic takes to reach the bin — slow enough to read as a throw (#235). */
+private const val PUSH_TO_TALK_FLIGHT_MS = 750
+
+/** Space kept above the mic inside its window, so the throw's arc is not clipped (#235). */
+private val BUBBLE_HEADROOM_TOP = 44.dp
+
+/** Space kept below it, so dragging to the lock never cuts the mic off at the window edge (#235). */
+private val BUBBLE_HEADROOM_BOTTOM = 24.dp
+
+/** Diameter of the swollen mic, relative to the row it grows out of (#235). */
+private const val HELD_MIC_DIAMETER = 1.7f
 
 /**
- * The swollen mic shown while the key is held for push-to-talk (#235).
+ * The swollen mic shown while the key is held for push-to-talk (#235), plus the lock target below it.
  *
- * Deliberately a popup rather than a scaled key. Scaling the key transforms the very node that owns the
- * pointer input, and Compose maps finger positions through that transform — which silently moved the
- * reported position far enough to register as a slide-to-cancel. A popup is a separate window: it can
- * animate freely, is not clipped by the Smartbar, and cannot perturb the gesture.
+ * Deliberately popups rather than a scaled key: scaling the key transforms the node that owns the
+ * pointer input, and Compose maps finger positions through that transform, which silently registered as
+ * a slide-to-cancel. Popups are separate windows — they animate freely, are not clipped by the Smartbar,
+ * and cannot perturb the gesture.
  *
- * It grows **down and left** only, keeping its top-right corner on the key, so it appears below and
- * beside the fingertip instead of underneath it — where it would be invisible — and never needs room
- * above the Smartbar, which belongs to the app behind the keyboard.
+ * Positioned from [keyBounds] rather than from the popup's own anchor: this is composed outside the key,
+ * so its layout placeholder sits wherever the parent puts a zero-size child — which is not the key.
+ *
+ * It only appears when the rewording row is on. That row sits above the Smartbar and is the only thing
+ * that gives us room upwards; without it the circle could only grow down and left, which looks lopsided
+ * rather than pressed, so nothing grows at all.
  */
 @Composable
-private fun HeldMicBubble() {
+private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean) {
     val prefs by FlorisPreferenceStore
-    // Read once: this composable only lives for the duration of a hold, and the jetpref collectAsState
-    // would clash by name with the runtime one already imported here.
     val accent = remember { prefs.theme.accentColor.get() }
-    val grow = remember { Animatable(0.5f) }
+    val cancelProgress by DictateController.cancelSlideProgress.collectAsState()
+    val lockProgress by DictateController.lockSlideProgress.collectAsState()
+    val rowHeight = FlorisImeSizing.smartbarHeight
+    val diameter = rowHeight * HELD_MIC_DIAMETER
+    val density = LocalDensity.current
+    val diameterPx = with(density) { diameter.roundToPx() }
+    val headroomPx = with(density) { BUBBLE_HEADROOM_TOP.roundToPx() }
+
+    val grow = remember { Animatable(0.35f) }
     LaunchedEffect(Unit) {
         grow.animateTo(1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))
     }
+    // Where the mic stood when the throw began. The slide progress is already reset by then, so without
+    // remembering it the mic would snap back to the key and set off from there instead of from the hand.
+    var thrownFrom by remember { mutableStateOf(0f) }
+    LaunchedEffect(cancelProgress) { if (cancelProgress > 0f) thrownFrom = cancelProgress }
+    // The throw: one shot, unhurried, and a real arc rather than a fade — the mic is a thing being
+    // thrown away, so it should travel and land rather than dissolve where it stands.
+    val flight = remember { Animatable(0f) }
+    LaunchedEffect(flying) {
+        if (flying) flight.animateTo(1f, tween(PUSH_TO_TALK_FLIGHT_MS, easing = FastOutSlowInEasing))
+    }
+
     Popup(
         properties = PopupProperties(focusable = false, clippingEnabled = false),
-        popupPositionProvider = remember {
+        popupPositionProvider = remember(keyBounds, diameterPx, headroomPx) {
             object : PopupPositionProvider {
                 override fun calculatePosition(
                     anchorBounds: IntRect,
@@ -129,34 +181,117 @@ private fun HeldMicBubble() {
                     layoutDirection: LayoutDirection,
                     popupContentSize: IntSize,
                 ) = IntOffset(
-                    // Top-right pinned to the key: all the growth goes down and to the left.
-                    x = anchorBounds.right - popupContentSize.width,
-                    y = anchorBounds.top,
+                    // Right edge of the box holds the circle exactly over the key; everything to the
+                    // left of it is runway for the slide and the throw, and the headroom above it is
+                    // why the y is offset rather than simply centred.
+                    x = keyBounds.center.x + diameterPx / 2 - popupContentSize.width,
+                    y = keyBounds.center.y - headroomPx - diameterPx / 2,
                 )
             }
         },
     ) {
+        // The window is deliberately oversized: headroom above for the throw's arc, and room below for
+        // the full drag to the lock, so the mic is never cut off at its own window edge mid-gesture.
         Box(
-            modifier = Modifier
-                .size(FlorisImeSizing.smartbarHeight * HELD_MIC_DIAMETER)
-                .graphicsLayer {
-                    scaleX = grow.value
-                    scaleY = grow.value
-                    // Grow out of the top-right corner, where the finger is.
-                    transformOrigin = TransformOrigin(1f, 0f)
-                    shadowElevation = 12f
-                    shape = CircleShape
-                    clip = true
-                }
-                .background(accent, CircleShape),
-            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(
+                width = PUSH_TO_TALK_FLIGHT_SPAN + diameter,
+                height = diameter + BUBBLE_HEADROOM_TOP + PUSH_TO_TALK_LOCK_SLIDE + BUBBLE_HEADROOM_BOTTOM,
+            ),
+            contentAlignment = Alignment.TopEnd,
         ) {
-            Icon(
-                imageVector = Icons.Default.Mic,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
-            )
+            Box(
+                modifier = Modifier
+                    .padding(top = BUBBLE_HEADROOM_TOP)
+                    .size(diameter)
+                    .graphicsLayer {
+                        val f = flight.value
+                        // Rides the finger along whichever axis it committed to (the gesture feeds only
+                        // one of these at a time), so it never drifts off diagonally.
+                        val slideX = -cancelProgress * PUSH_TO_TALK_TRAVEL.toPx()
+                        val slideY = lockProgress * PUSH_TO_TALK_LOCK_SLIDE.toPx()
+                        // Sets off from wherever the hand let go, not from the key.
+                        val fromX = -thrownFrom * PUSH_TO_TALK_TRAVEL.toPx()
+                        val toX = -PUSH_TO_TALK_FLIGHT_SPAN.toPx()
+                        translationX = if (f > 0f) fromX + f * (toX - fromX) else slideX
+                        // Tossed up first, then down into the bin — a straight line reads as sliding.
+                        translationY = slideY - (4f * f * (1f - f)) * rowHeight.toPx()
+                        rotationZ = -f * 90f
+                        val thrown = 1f - 0.9f * f
+                        scaleX = grow.value * thrown
+                        scaleY = grow.value * thrown
+                        alpha = 1f - f * f
+                        shadowElevation = 12f
+                        shape = CircleShape
+                        clip = true
+                    }
+                    .background(accent, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Mic,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(rowHeight * 0.6f),
+                )
+            }
+        }
+    }
+
+    // Lock target under the mic. Below the Smartbar are our own keys, so unlike above there is room —
+    // and a target that is simply visible from the start explains the gesture better than one that has
+    // to be guessed at.
+    if (!flying) {
+        Popup(
+            properties = PopupProperties(focusable = false, clippingEnabled = false),
+            popupPositionProvider = remember(keyBounds) {
+                object : PopupPositionProvider {
+                    override fun calculatePosition(
+                        anchorBounds: IntRect,
+                        windowSize: IntSize,
+                        layoutDirection: LayoutDirection,
+                        popupContentSize: IntSize,
+                    ) = IntOffset(
+                        x = keyBounds.center.x - popupContentSize.width / 2,
+                        y = keyBounds.bottom + popupContentSize.height * 3 / 4,
+                    )
+                }
+            },
+        ) {
+            val locked = lockProgress >= 1f
+            Box(
+                modifier = Modifier
+                    .size(width = rowHeight * 0.9f, height = rowHeight * 1.25f)
+                    .graphicsLayer {
+                        alpha = (1f - cancelProgress).coerceIn(0f, 1f)
+                        val lift = 1f + 0.15f * lockProgress
+                        scaleX = lift
+                        scaleY = lift
+                    }
+                    .background(
+                        // Fills with the accent the closer the finger gets, so "how much further" needs
+                        // no text.
+                        lerp(Color.Black.copy(alpha = 0.55f), accent, lockProgress),
+                        RoundedCornerShape(percent = 45),
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(
+                        imageVector = if (locked) Icons.Default.Lock else Icons.Default.LockOpen,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(rowHeight * 0.38f),
+                    )
+                    if (!locked) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowDown,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.7f),
+                            modifier = Modifier.size(rowHeight * 0.3f),
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -217,7 +352,30 @@ fun QuickActionButton(
     // the one piece of feedback that survives the finger covering the button itself.
     val pushToTalkPhase by DictateController.pushToTalkPhase.collectAsState()
     val holdingMic = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && pushToTalkPhase.isHolding
-    if (holdingMic) HeldMicBubble()
+    // Where the key actually is on screen — the popups are anchored to this rather than to their own
+    // placeholder, which sits wherever the parent puts a zero-size child.
+    var micKeyBounds by remember { mutableStateOf<IntRect?>(null) }
+    var micHiddenByBubble by remember { mutableStateOf(false) }
+    // Only with the rewording row above the Smartbar is there room to grow upwards; without it the
+    // circle would only be able to expand down and left, which reads as lopsided rather than pressed.
+    val hasRoomAbove = remember {
+        prefs.dictate.rewordingEnabled.get() &&
+            prefs.dictate.promptsLayout.get() == DictatePromptsLayout.ROW
+    }
+    // The throw outlives the hold: the phase is already back to NONE by the time the mic starts moving.
+    val discards by DictateController.pushToTalkDiscards.collectAsState()
+    var flying by remember { mutableStateOf(false) }
+    LaunchedEffect(discards) {
+        if (discards > 0) {
+            flying = true
+            delay((PUSH_TO_TALK_FLIGHT_MS + 60).toLong())
+            flying = false
+        }
+    }
+    val bounds = micKeyBounds
+    val bubbleShown = (holdingMic || flying) && hasRoomAbove && bounds != null
+    micHiddenByBubble = holdingMic && hasRoomAbove && bounds != null
+    if (bubbleShown && bounds != null) HeldMicBubble(bounds, flying)
     PlainTooltip(
         action.computeTooltip(evaluator),
         enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
@@ -230,7 +388,14 @@ fun QuickActionButton(
             // this node moved the reported finger position by the very amount that reads as a
             // slide-to-cancel — measured at progress 1.009 every single time. The held-state swell is a
             // separate popup instead (see HeldMicBubble), which cannot touch the gesture.
-            modifier = modifier,
+            // Hidden while the overlay stands in for it — seeing the small key peek out from under the
+            // big one gives away that they are two different things. Alpha only: a transform here would
+            // move the reported finger position and be read as a slide.
+            modifier = modifier.alpha(if (micHiddenByBubble) 0f else 1f).onGloballyPositioned {
+                if (action.keyData().code == KeyCode.IME_UI_MODE_DICTATE) {
+                    micKeyBounds = it.boundsInWindow().roundToIntRect()
+                }
+            },
             clickAndSemanticsModifier = Modifier
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
@@ -285,15 +450,26 @@ fun QuickActionButton(
                                     if (!change.pressed) break
                                     val dx = change.position.x - down.position.x
                                     val dy = change.position.y - down.position.y
-                                    if (dy < -lockSlide) {
+                                    // Commit to one axis: whichever the finger has travelled furthest
+                                    // along wins, and the other is held at zero. Feeding both let the
+                                    // mic wander off diagonally to places neither target lives.
+                                    val left = (-dx).coerceAtLeast(0f)
+                                    val downward = dy.coerceAtLeast(0f)
+                                    val goingDown = downward > left
+                                    if (goingDown && downward > lockSlide) {
                                         DictateController.lockPushToTalk()
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                         ended = true
                                         break
                                     }
-                                    DictateController.onPushToTalkLockSlide((-dy / lockSlide))
+                                    DictateController.onPushToTalkLockSlide(
+                                        if (goingDown) downward / lockSlide else 0f,
+                                    )
                                     // Crossing the cancel threshold discards there and then.
-                                    if (DictateController.onPushToTalkSlide(-dx / cancelSlide)) {
+                                    if (DictateController.onPushToTalkSlide(
+                                            if (goingDown) 0f else left / cancelSlide,
+                                        )
+                                    ) {
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                         ended = true
                                         break

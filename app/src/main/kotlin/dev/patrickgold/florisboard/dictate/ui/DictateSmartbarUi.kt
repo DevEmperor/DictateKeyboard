@@ -100,6 +100,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
+import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.PushToTalkPhase
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
@@ -193,14 +194,12 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
         onClick = { DictateController.cancelOrDiscardSegment(context) },
         modifier = Modifier.fillMaxHeight().aspectRatio(1f),
     ) {
-        Icon(
+        // SnyggIcon, not Icon: the themed one is sized by the keyboard theme, while Material's is a fixed
+        // 24 dp — swapping it to apply a tint quietly shrank this button. The discard feedback is the
+        // swollen mic flying into here instead.
+        SnyggIcon(
             imageVector = Icons.Default.Delete,
             contentDescription = stringRes(R.string.dictate__action_cancel),
-            tint = if (holding) {
-                lerp(LocalContentColor.current, RecordingRed, cancelProgress)
-            } else {
-                LocalContentColor.current
-            },
         )
     }
 
@@ -280,9 +279,15 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
  */
 @Composable
 private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
-    // The swollen mic grows leftwards out of the key, so the hint is pushed clear of it — otherwise the
-    // words sit underneath the bubble and cannot be read at the moment they matter.
-    val clearance = FlorisImeSizing.smartbarHeight * 0.55f
+    // The swollen mic reaches leftwards out of the key, so the hint is pushed clear of it — otherwise the
+    // words sit underneath the bubble and cannot be read at the moment they matter. Only needed when
+    // that bubble exists at all, which is the same condition QuickActionButton uses.
+    val prefs by FlorisPreferenceStore
+    val hasBubble = remember {
+        prefs.dictate.rewordingEnabled.get() &&
+            prefs.dictate.promptsLayout.get() == DictatePromptsLayout.ROW
+    }
+    val clearance = if (hasBubble) FlorisImeSizing.smartbarHeight * 0.6f else 8.dp
     val hintAlpha = (1f - cancelProgress).coerceIn(0f, 1f)
     val muted = LocalContentColor.current.copy(alpha = 0.55f * hintAlpha)
 

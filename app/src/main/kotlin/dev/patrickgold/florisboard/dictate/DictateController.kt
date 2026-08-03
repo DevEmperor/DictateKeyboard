@@ -310,8 +310,16 @@ object DictateController {
     /** How far the finger has slid towards discarding, 0..1 — the bar slides its content with it. */
     val cancelSlideProgress: StateFlow<Float> = _cancelSlideProgress.asStateFlow()
 
+    private val _pushToTalkDiscards = MutableStateFlow(0)
+    /**
+     * Bumped every time a held recording is thrown away. A counter rather than a flag because the phase
+     * returns to NONE in the same breath, so a collector would never see the discard itself — and the
+     * UI needs the moment, not the state, to play the mic flying into the bin.
+     */
+    val pushToTalkDiscards: StateFlow<Int> = _pushToTalkDiscards.asStateFlow()
+
     private val _lockSlideProgress = MutableStateFlow(0f)
-    /** How far the finger has slid towards latching, 0..1 — the lock affordance fills with it. */
+    /** How far the finger has slid towards the lock, 0..1 — the lock target fills with it. */
     val lockSlideProgress: StateFlow<Float> = _lockSlideProgress.asStateFlow()
 
     /** When the finger went down — the hold is measured from here, not from when the mic opened. */
@@ -503,13 +511,14 @@ object DictateController {
         _cancelSlideProgress.value = progress.coerceIn(0f, 1f)
         if (progress >= 1f) {
             _pushToTalkPhase.value = PushToTalkPhase.CANCEL_ARMED
+            _pushToTalkDiscards.value++
             cancelRecording()
             return true
         }
         return false
     }
 
-    /** Slide-up progress towards latching, 0..1 — drives how the lock affordance fills. */
+    /** Slide-down progress towards the lock, 0..1 — drives how far the lock target fills. */
     fun onPushToTalkLockSlide(progress: Float) {
         if (_pushToTalkPhase.value.isHolding) _lockSlideProgress.value = progress.coerceIn(0f, 1f)
     }
@@ -520,7 +529,7 @@ object DictateController {
         cancelRecording()
     }
 
-    /** Latches the recording so it keeps running after the finger lifts (slide up, WhatsApp-style). */
+    /** Latches the recording so it keeps running after the finger lifts (slide down into the lock). */
     fun lockPushToTalk() {
         if (_pushToTalkPhase.value == PushToTalkPhase.HOLDING) {
             _pushToTalkPhase.value = PushToTalkPhase.LOCKED
@@ -536,6 +545,7 @@ object DictateController {
         _cancelSlideProgress.value = 0f
         _lockSlideProgress.value = 0f
         if (phase == PushToTalkPhase.CANCEL_ARMED) {
+            _pushToTalkDiscards.value++
             cancelRecording()
             return
         }
