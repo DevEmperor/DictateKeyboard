@@ -323,8 +323,6 @@ object DictateController {
     /** How far the finger has slid towards the lock, 0..1 — the lock target fills with it. */
     val lockSlideProgress: StateFlow<Float> = _lockSlideProgress.asStateFlow()
 
-    /** When the finger went down — the hold is measured from here, not from when the mic opened. */
-    private var pttDownAtMs = 0L
 
     /**
      * Set when the finger is lifted before [startRecording]'s job has produced a recorder. Starting is
@@ -463,11 +461,6 @@ object DictateController {
     private const val AUDIO_LEVEL_SAMPLE_MS = 50L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
-    /**
-     * A release this soon after the hold armed is treated as a touch the system took away rather than a
-     * finger that lifted, and latches the recording instead of ending it.
-     */
-    private const val PUSH_TO_TALK_SPURIOUS_RELEASE_MS = 400L
 
     /** How long the discarded mic takes to reach the bin; the bar outlives the recording by this much. */
     const val PUSH_TO_TALK_FLIGHT_MS = 950L
@@ -500,8 +493,12 @@ object DictateController {
         // where opening the socket keeps the state Idle for longer.
         if (_pushToTalkPhase.value != PushToTalkPhase.NONE) return
         if (!canStartRecording()) return
-        pttDownAtMs = SystemClock.elapsedRealtime()
         pttStopPending = false
+        // A new hold always starts where the key is. Latching ends the gesture through lockPushToTalk,
+        // which never cleared these, so the next mic was drawn at the height the last one was let go at
+        // until the first movement corrected it.
+        _cancelSlideProgress.value = 0f
+        _lockSlideProgress.value = 0f
         setPushToTalk(phase = PushToTalkPhase.HOLDING)
         outputTarget = target
         startRecording(context)
@@ -567,22 +564,10 @@ object DictateController {
         setPushToTalk(phase = PushToTalkPhase.NONE)
         _cancelSlideProgress.value = 0f
         _lockSlideProgress.value = 0f
-        val heldMs = SystemClock.elapsedRealtime() - pttDownAtMs
-        Log.i(
-            "DictatePTT",
-            "onPushToTalkUp held=${heldMs}ms state=${_state.value::class.java.simpleName} " +
-                "realtime=${realtimeSession != null} startJobActive=${startJob?.isActive} " +
-                "spurious=${heldMs < PUSH_TO_TALK_SPURIOUS_RELEASE_MS}",
-        )
-        // A pointer stream that ends within a moment of arming is almost never a deliberate release —
-        // arming alone already took [PUSH_TO_TALK_ARM_MS]. Android ends touches in an IME window for its
-        // own reasons: with real-time streaming a genuine Release arrives about 100 ms into a hold that
-        // the finger is still making. Latch instead of stopping, so the recording survives and the stop
-        // button takes over. Losing what someone just said is the one outcome worth engineering against.
-        if (SystemClock.elapsedRealtime() - pttDownAtMs < PUSH_TO_TALK_SPURIOUS_RELEASE_MS) {
-            setPushToTalk(phase = PushToTalkPhase.LOCKED)
-            return
-        }
+        // Releases arrive from the window's own touch stream now (see DictateHoldTouch), so a short one is
+        // a short one. This used to latch anything under 400 ms, because real-time holds were being ended
+        // by a release nobody made about 100 ms in — which also meant a deliberately brief hold latched
+        // instead of sending.
         if (_state.value is UiState.Recording) {
             stopAndTranscribe(context)
             return
@@ -984,17 +969,7 @@ object DictateController {
                     // Off the main thread: opening the stream builds an HTTP client and a WebSocket, and
                     // doing that inline stalled the UI thread long enough for Android to cancel the
                     // in-flight touch — which killed push-to-talk ~90 ms into a hold (#235).
-                    !segmented -> withContext(Dispatchers.IO) {
-                        val opened = SystemClock.elapsedRealtime()
-                        openRealtimeSession(appContext).also {
-                            if (it != null) {
-                                Log.i(
-                                    "DictatePTT",
-                                    "realtime session opened in ${SystemClock.elapsedRealtime() - opened}ms",
-                                )
-                            }
-                        }
-                    }
+                    !segmented -> withContext(Dispatchers.IO) { openRealtimeSession(appContext) }
                     segmentVad != null -> { val v = segmentVad!!; { pcm, len -> v.feed(pcm, len) } }
                     else -> null
                 }
@@ -1621,9 +1596,6 @@ object DictateController {
         // Type the growing transcript live into the field, applying only the minimal diff each time (#128).
         fun showLive(full: String) {
             if (realtimeCancelled) return   // a late callback must not re-add text after a cancel
-            // Diagnostics (#235): editing the field is the one thing real-time does early that batch does
-            // not, so its timing is what a lost hold has to be lined up against.
-            Log.i("DictatePTT", "realtime showLive chars=${full.length} phase=${_pushToTalkPhase.value}")
             _interimText.value = full
             runCatching { sink(appContext).setDictationPreview(full, realtimeShown.toString()) }
             realtimeShown.setLength(0)

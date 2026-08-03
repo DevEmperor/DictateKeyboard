@@ -17,8 +17,6 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import android.content.Context
-import android.os.SystemClock
-import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -107,21 +105,6 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.ui.SnyggText
-
-/**
- * Temporary diagnostics for the hold gesture (#235). Push-to-talk works in batch mode but the pointer
- * stream ends by itself a moment into a real-time hold, and guessing at which of the possible causes it is
- * has already cost a build cycle once. Every entry is stamped with the time since the finger landed.
- *
- * `adb logcat -s DictatePTT`
- */
-private const val PTT_LOG_TAG = "DictatePTT"
-private var pttLogDownAtMs = 0L
-
-private fun pttLog(message: String) {
-    val dt = if (pttLogDownAtMs == 0L) 0 else SystemClock.elapsedRealtime() - pttLogDownAtMs
-    Log.i(PTT_LOG_TAG, "+${dt}ms $message")
-}
 
 /** How long the mic must be held before it becomes push-to-talk rather than a tap (#235). */
 private const val PUSH_TO_TALK_HOLD_MS = 110L
@@ -419,11 +402,7 @@ fun QuickActionButton(
     // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
     // being stuck in the pressed state
     DisposableEffect(action, isEnabled) {
-        // Diagnostics (#235): a gesture is bound to this very node, so the key being torn down and rebuilt
-        // mid-hold is one of the candidates for the pointer stream ending by itself under real-time.
-        if (action.keyData().code == KeyCode.IME_UI_MODE_DICTATE) pttLog("mic key entered composition")
         onDispose {
-            if (action.keyData().code == KeyCode.IME_UI_MODE_DICTATE) pttLog("mic key left composition")
             if (action is QuickAction.InsertKey) {
                 action.onPointerCancel(context)
             }
@@ -445,24 +424,12 @@ fun QuickActionButton(
     // the one piece of feedback that survives the finger covering the button itself.
     val ptt by DictateController.pushToTalkVisuals.collectAsState()
     val isDictateKey = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE
-    // Diagnostics (#235): which of the two pointerInput keys moves, and when.
-    if (isDictateKey) {
-        val enabledNow = isEnabled
-        val actionId = System.identityHashCode(action)
-        val last = remember { intArrayOf(-1, -1) }
-        val enabledInt = if (enabledNow) 1 else 0
-        if (last[0] != enabledInt || last[1] != actionId) {
-            if (last[0] != -1) pttLog("KEY CHANGED enabled=$enabledNow action=$actionId (was ${last[1]})")
-            last[0] = enabledInt
-            last[1] = actionId
-        }
-    }
     val holdingMic = isDictateKey && ptt.phase.isHolding
     // Where the key actually is on screen — the popups are anchored to this rather than to their own
     // placeholder, which sits wherever the parent puts a zero-size child.
     var micKeyBounds by remember { mutableStateOf<IntRect?>(null) }
     /** True from the finger landing on the mic until it leaves, whether or not it becomes a hold. */
-    var pushToTalkArmed by remember { mutableStateOf(false) }
+    val pushToTalkArmed by DictateHoldTouch.pressed.collectAsState()
     // The throw outlives the hold: the phase is already back to NONE by the time the mic starts moving.
     // A lock on the key for a moment after latching, dissolving into whatever it shows next. Appears
     // instantly and only the fade is animated, so the ordinary icon is never drawn first.
@@ -529,15 +496,6 @@ fun QuickActionButton(
                 .aspectRatio(1f)
                 .indication(interactionSource, LocalIndication.current)
                 .pointerInput(action, isEnabled) {
-                    // Diagnostics (#235): this block runs once per key change, and a key change is what
-                    // resets the handler — which cancels a hold in progress without the key ever leaving
-                    // composition. If this line appears in the middle of a hold, that is the whole fault.
-                    if (action.keyData().code == KeyCode.IME_UI_MODE_DICTATE) {
-                        pttLog(
-                            "pointer handler started enabled=$isEnabled " +
-                                "action=${System.identityHashCode(action)} (${action.keyData().code})",
-                        )
-                    }
                     awaitEachGesture {
                         val down = awaitFirstDown()
                         down.consume()
@@ -562,57 +520,24 @@ fun QuickActionButton(
                             // discard, slide up to latch. It replaces the long-press shortcuts below,
                             // which is why it is opt-in.
                             if (dictateIdle && DictateController.isPushToTalkActive(context)) {
-                                // Puts the (still invisible) overlay window on screen now, so it has the
-                                // whole hold delay to be created instead of costing visible frames at the
-                                // one moment everything else changes at once.
-                                pushToTalkArmed = true
-                                pttLogDownAtMs = SystemClock.elapsedRealtime()
-                                pttLog("finger down")
-                                try {
-                                // Tap and hold both work, as on a voice-message button: a quick tap is
-                                // the ordinary start/stop toggle, holding past the long-press delay
-                                // switches to push-to-talk. Waiting for that delay first is also what
-                                // makes a mis-tap impossible to turn into a recording.
-                                val longPressDelay = PUSH_TO_TALK_HOLD_MS
-                                var heldPastDelay = false
-                                var tapUp: PointerInputChange? = null
-                                try {
-                                    tapUp = withTimeout(longPressDelay) { waitForUpOrCancellation() }
-                                } catch (_: PointerEventTimeoutCancellationException) {
-                                    heldPastDelay = true
-                                }
-                                if (!heldPastDelay) {
-                                    handleUpOrCancel(tapUp, press, interactionSource, action, context)
-                                } else {
+                                // The press is reported and then let go of entirely. Everything that
+                                // follows — the delay that tells a tap from a hold, sliding, latching,
+                                // releasing — is decided in DictateHoldTouch from the window's own touch
+                                // stream, because this coroutine cannot be relied on to still be alive:
+                                // Compose ends it of its own accord part way into a press, sometimes by
+                                // cancelling it outright, and every attempt to handle that from in here
+                                // died along with it.
                                 interactionSource.tryEmit(PressInteraction.Release(press))
-                                DictateController.onPushToTalkDown(context)
-                                // The one moment worth feeling: the press has become a recording. The tick
-                                // on touch-down is the ordinary key one and fires for a tap that records
-                                // nothing, so on its own it says the button was touched, not that anything
-                                // started. This is a long press, so it follows that feedback setting.
-                                inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
-                                // From here the finger belongs to DictateHoldTouch, fed from the IME root
-                                // view. Compose's pointer stream ends by itself part way into a real-time
-                                // hold — one synthetic release, finger unmoved and still pressed, no
-                                // MotionEvent behind it — while the window goes on receiving the real
-                                // touch for as long as it lasts. Sliding, latching and releasing are all
-                                // decided over there; this coroutine may be cancelled at any moment and it
-                                // no longer matters.
-                                DictateHoldTouch.begin(
+                                DictateHoldTouch.arm(
                                     context = context,
+                                    action = action,
                                     feedback = inputFeedbackController,
+                                    holdDelayMs = PUSH_TO_TALK_HOLD_MS,
                                     cancelSlidePx = PUSH_TO_TALK_CANCEL_SLIDE.toPx(),
                                     lockSlidePx = PUSH_TO_TALK_LOCK_SLIDE.toPx(),
                                     commitPx = PUSH_TO_TALK_AXIS_COMMIT.toPx(),
                                     releasePx = PUSH_TO_TALK_AXIS_RELEASE.toPx(),
                                 )
-                                }
-                                } finally {
-                                    // The overlay window is only warmed up for as long as the gesture layer
-                                    // is still holding the press; once the tracker has the finger, the hold
-                                    // itself keeps it on screen.
-                                    pushToTalkArmed = false
-                                }
                             } else if (dictateIdle || dictateSendLocal) {
                                 val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
                                 try {
