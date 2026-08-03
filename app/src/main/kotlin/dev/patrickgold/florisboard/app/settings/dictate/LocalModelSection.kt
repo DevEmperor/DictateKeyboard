@@ -26,7 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.RadioButton
+import androidx.compose.ui.semantics.Role
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -260,31 +262,46 @@ private fun ModelRow(
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RadioButton(
-            selected = isActive,
-            enabled = isInstalled && !downloading,
-            onClick = onSelect,
-        )
-        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
-            Text(text = spec.displayName, style = MaterialTheme.typography.titleSmall)
-            val status = when {
-                downloading -> stringRes(R.string.dictate__local_model_downloading)
-                    .replace("{percent}", downloadPercent.toString())
-                isActive -> stringRes(R.string.dictate__local_model_status_active)
-                isInstalled -> stringRes(R.string.dictate__local_model_status_installed)
-                else -> spec.description
-            }
-            Text(
-                text = error ?: status,
-                style = MaterialTheme.typography.bodySmall,
-                color = if (error != null) MaterialTheme.colorScheme.error
-                else MaterialTheme.colorScheme.onSurfaceVariant,
+        // The name is the obvious thing to aim at, so the whole of it selects the model — the radio is a
+        // small target to have to hit. It reports the click to the row rather than handling its own, which
+        // is what keeps this one control to a screen reader instead of two.
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .selectable(
+                    selected = isActive,
+                    enabled = isInstalled && !downloading,
+                    role = Role.RadioButton,
+                    onClick = onSelect,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RadioButton(
+                selected = isActive,
+                enabled = isInstalled && !downloading,
+                onClick = null,
             )
-            if (downloading) {
-                LinearProgressIndicator(
-                    progress = { (downloadPercent ?: 0) / 100f },
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+            Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                Text(text = spec.displayName, style = MaterialTheme.typography.titleSmall)
+                val status = when {
+                    downloading -> stringRes(R.string.dictate__local_model_downloading)
+                        .replace("{percent}", downloadPercent.toString())
+                    isActive -> stringRes(R.string.dictate__local_model_status_active)
+                    isInstalled -> stringRes(R.string.dictate__local_model_status_installed)
+                    else -> spec.description
+                }
+                Text(
+                    text = error ?: status,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (error != null) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                if (downloading) {
+                    LinearProgressIndicator(
+                        progress = { (downloadPercent ?: 0) / 100f },
+                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                    )
+                }
             }
         }
         // Icon-only actions (keep the row compact); labels live on as the accessibility descriptions.
