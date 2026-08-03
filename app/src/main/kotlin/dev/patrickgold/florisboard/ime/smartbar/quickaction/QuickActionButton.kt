@@ -70,7 +70,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.ui.DictateHoldTargets
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
@@ -79,7 +78,7 @@ import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Deselect
 import dev.patrickgold.florisboard.editorInstance
@@ -115,11 +114,11 @@ private val PUSH_TO_TALK_TRAVEL = 105.dp
 /** Slide-left distance that arms discarding a held recording — same as the visual travel (#235). */
 private val PUSH_TO_TALK_CANCEL_SLIDE = PUSH_TO_TALK_TRAVEL
 
-/** Slide-down distance to the lock target that latches a held recording (#235). */
+/** Slide-up distance to the lock target that latches a held recording (#235). */
 private val PUSH_TO_TALK_LOCK_SLIDE = 70.dp
 
 /** Which way a held mic has committed to travel (#235). */
-private enum class PushToTalkAxis { NONE, LEFT, DOWN }
+private enum class PushToTalkAxis { NONE, LEFT, UP }
 
 /** How far the finger must move before it commits to an axis (#235). */
 private val PUSH_TO_TALK_AXIS_COMMIT = 16.dp
@@ -133,10 +132,11 @@ private val PUSH_TO_TALK_FLIGHT_MS = DictateController.PUSH_TO_TALK_FLIGHT_MS.to
 /** How small the mic ends up — just small enough to sit in the bin, not gone. */
 private const val PUSH_TO_TALK_LANDED_SCALE = 0.28f
 
-/** Space kept above the mic inside its window, so the throw's arc is not clipped (#235). */
-private val BUBBLE_HEADROOM_TOP = 44.dp
+/** Space kept above the mic inside its window, so neither the throw's arc nor the drag up to the lock is
+ * cut off at the window edge (#235). */
+private val BUBBLE_HEADROOM_TOP = 44.dp + PUSH_TO_TALK_LOCK_SLIDE
 
-/** Space kept below it, so dragging to the lock never cuts the mic off at the window edge (#235). */
+/** Space kept below it, so the shadow is not clipped either (#235). */
 private val BUBBLE_HEADROOM_BOTTOM = 24.dp
 
 /** Diameter of the swollen mic, relative to the row it grows out of (#235). */
@@ -216,12 +216,12 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
             }
         },
     ) {
-        // Tall enough for headroom above the throw's arc and for the full drag down to the lock, so the mic
-        // is never cut off at its own window edge mid-gesture.
+        // Tall enough for the throw's arc and the full drag up to the lock, so the mic is never cut off at
+        // its own window edge mid-gesture.
         Box(
             modifier = Modifier.size(
                 width = with(density) { screenWidthPx.toDp() },
-                height = diameter + BUBBLE_HEADROOM_TOP + PUSH_TO_TALK_LOCK_SLIDE + BUBBLE_HEADROOM_BOTTOM,
+                height = diameter + BUBBLE_HEADROOM_TOP + BUBBLE_HEADROOM_BOTTOM,
             ),
             contentAlignment = Alignment.TopStart,
         ) {
@@ -235,7 +235,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                         // Rides the finger along whichever axis it committed to (the gesture feeds only
                         // one of these at a time), so it never drifts off diagonally.
                         val slideX = -cancelProgress * PUSH_TO_TALK_TRAVEL.toPx()
-                        val slideY = lockProgress * PUSH_TO_TALK_LOCK_SLIDE.toPx()
+                        val slideY = -lockProgress * PUSH_TO_TALK_LOCK_SLIDE.toPx()
                         // Sets off from exactly where the hand let go — which is always the threshold,
                         // since that is what triggered the throw — and lands on the bin's measured
                         // centre rather than in its general direction.
@@ -286,9 +286,10 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
         }
     }
 
-    // Lock target under the mic. Below the Smartbar are our own keys, so unlike above there is room —
-    // and a target that is simply visible from the start explains the gesture better than one that has
-    // to be guessed at.
+    // Lock target above the mic, and the drag to it goes up, the way voice-message buttons everywhere do.
+    // Its own window draws over the app above the keyboard, so there is as much room up there as it needs.
+    // A target that is simply visible from the start explains the gesture better than one that has to be
+    // guessed at.
     if (!flying) {
         val lockWidth = rowHeight * 0.9f
         val lockHeight = rowHeight * 1.25f
@@ -307,7 +308,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                         popupContentSize: IntSize,
                     ) = IntOffset(
                         x = keyBounds.center.x - lockWidthPx / 2,
-                        y = keyBounds.bottom + lockHeightPx * 3 / 4,
+                        y = keyBounds.top - lockHeightPx * 7 / 4,
                     )
                 }
             },
@@ -326,10 +327,10 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                 modifier = Modifier
                     .size(width = lockWidth, height = lockHeight)
                     .graphicsLayer {
-                        // Emerges from behind the growing mic and slides down into place, rather than
-                        // appearing fully formed at the bottom — it should read as coming *out of* the
-                        // button the finger is on.
-                        translationY = -(1f - appear) * (rowHeight.toPx() * 0.6f + size.height * 0.75f)
+                        // Emerges from behind the growing mic and slides up into place, rather than
+                        // appearing fully formed above it — it should read as coming *out of* the button
+                        // the finger is on.
+                        translationY = (1f - appear) * (rowHeight.toPx() * 0.6f + size.height * 0.75f)
                         alpha = if (visible) appear * (1f - cancelProgress).coerceIn(0f, 1f) else 0f
                         val lift = appear + 0.15f * lockProgress + 0.45f * catchPop.value
                         scaleX = lift
@@ -355,8 +356,9 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float, vi
                         modifier = Modifier.size(rowHeight * 0.38f),
                     )
                     if (!locked) {
+                        // Under the padlock and pointing at it: the finger comes from below.
                         Icon(
-                            imageVector = Icons.Default.KeyboardArrowDown,
+                            imageVector = Icons.Default.KeyboardArrowUp,
                             contentDescription = null,
                             tint = Color.White.copy(alpha = 0.7f),
                             modifier = Modifier.size(rowHeight * 0.3f),
@@ -428,15 +430,8 @@ fun QuickActionButton(
     // Where the key actually is on screen — the popups are anchored to this rather than to their own
     // placeholder, which sits wherever the parent puts a zero-size child.
     var micKeyBounds by remember { mutableStateOf<IntRect?>(null) }
-    var micHiddenByBubble by remember { mutableStateOf(false) }
     /** True from the finger landing on the mic until it leaves, whether or not it becomes a hold. */
     var pushToTalkArmed by remember { mutableStateOf(false) }
-    // Only with the rewording row above the Smartbar is there room to grow upwards; without it the
-    // circle would only be able to expand down and left, which reads as lopsided rather than pressed.
-    val hasRoomAbove = remember {
-        prefs.dictate.rewordingEnabled.get() &&
-            prefs.dictate.promptsLayout.get() == DictatePromptsLayout.ROW
-    }
     // The throw outlives the hold: the phase is already back to NONE by the time the mic starts moving.
     // A lock on the key for a moment after latching, dissolving into whatever it shows next. Appears
     // instantly and only the fade is animated, so the ordinary icon is never drawn first.
@@ -474,12 +469,11 @@ fun QuickActionButton(
     // from the first frame. The key genuinely moves once recording starts — the Smartbar swaps its
     // action row for the recording bar — and following that live dragged the overlay with it.
     val bounds = remember(bubbleArmed) { if (bubbleArmed) micKeyBounds else null }
-    val bubbleShown = bubbleArmed && hasRoomAbove && bounds != null
     // Hidden for the whole gesture. The overlay starts at exactly this key's size and position, so the
     // hand-off is invisible; waiting for it to finish growing instead left both on screen side by side,
     // which is what made two circles appear at the start of a hold.
-    micHiddenByBubble = bubbleShown && gestureActive
-    if (bubbleShown && bounds != null) HeldMicBubble(bounds, flying, appear, visible = gestureActive)
+    val micHiddenByBubble = bounds != null && gestureActive
+    if (bubbleArmed && bounds != null) HeldMicBubble(bounds, flying, appear, visible = gestureActive)
     PlainTooltip(
         action.computeTooltip(evaluator),
         enabled = type == QuickActionBarType.INTERACTIVE_BUTTON && !dictateLongPressArmed,
@@ -567,28 +561,28 @@ fun QuickActionButton(
                                     val dx = change.position.x - down.position.x
                                     val dy = change.position.y - down.position.y
                                     val left = (-dx).coerceAtLeast(0f)
-                                    val downward = dy.coerceAtLeast(0f)
+                                    val upward = (-dy).coerceAtLeast(0f)
                                     axis = when (axis) {
                                         PushToTalkAxis.NONE -> when {
-                                            left < commitPx && downward < commitPx -> PushToTalkAxis.NONE
-                                            left >= downward -> PushToTalkAxis.LEFT
-                                            else -> PushToTalkAxis.DOWN
+                                            left < commitPx && upward < commitPx -> PushToTalkAxis.NONE
+                                            left >= upward -> PushToTalkAxis.LEFT
+                                            else -> PushToTalkAxis.UP
                                         }
                                         // Committed: only coming back frees it to pick the other way.
                                         PushToTalkAxis.LEFT ->
                                             if (left < releasePx) PushToTalkAxis.NONE else PushToTalkAxis.LEFT
-                                        PushToTalkAxis.DOWN ->
-                                            if (downward < releasePx) PushToTalkAxis.NONE else PushToTalkAxis.DOWN
+                                        PushToTalkAxis.UP ->
+                                            if (upward < releasePx) PushToTalkAxis.NONE else PushToTalkAxis.UP
                                     }
-                                    val goingDown = axis == PushToTalkAxis.DOWN
-                                    if (goingDown && downward > lockSlide) {
+                                    val goingUp = axis == PushToTalkAxis.UP
+                                    if (goingUp && upward > lockSlide) {
                                         DictateController.lockPushToTalk()
                                         inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                         ended = true
                                         break
                                     }
                                     DictateController.onPushToTalkLockSlide(
-                                        if (goingDown) downward / lockSlide else 0f,
+                                        if (goingUp) upward / lockSlide else 0f,
                                     )
                                     // Crossing the cancel threshold discards there and then.
                                     if (DictateController.onPushToTalkSlide(

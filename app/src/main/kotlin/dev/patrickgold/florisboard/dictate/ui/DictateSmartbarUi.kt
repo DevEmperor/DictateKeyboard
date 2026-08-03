@@ -103,7 +103,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
-import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
 import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.PushToTalkPhase
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
@@ -294,22 +293,16 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
 }
 
 /**
- * What the bar shows while a finger is holding the mic (#235): a lock that fills as the finger slides
- * up, and the slide-to-cancel hint with the sweeping highlight voice-message UIs use to say "this is a
- * gesture, not a label". Both fade out as the finger nears the discard target, so the two affordances
- * never compete for attention.
+ * What the bar shows while a finger is holding the mic (#235): the slide-to-cancel hint, with a chevron
+ * and the sweeping highlight voice-message UIs use to say "this is a gesture, not a label". It fades out
+ * as the finger nears the discard target, so it never competes with the bin for attention. The lock is
+ * not here — it is a target above the mic that the finger drags into (see QuickActionButton).
  */
 @Composable
 private fun RowScope.PushToTalkAffordance(cancelProgress: Float) {
     // The swollen mic reaches leftwards out of the key, so the hint is pushed clear of it — otherwise the
-    // words sit underneath the bubble and cannot be read at the moment they matter. Only needed when
-    // that bubble exists at all, which is the same condition QuickActionButton uses.
-    val prefs by FlorisPreferenceStore
-    val hasBubble = remember {
-        prefs.dictate.rewordingEnabled.get() &&
-            prefs.dictate.promptsLayout.get() == DictatePromptsLayout.ROW
-    }
-    val clearance = if (hasBubble) FlorisImeSizing.smartbarHeight * 0.6f else 8.dp
+    // words sit underneath the bubble and cannot be read at the moment they matter.
+    val clearance = FlorisImeSizing.smartbarHeight * 0.6f
     val hintAlpha = (1f - cancelProgress).coerceIn(0f, 1f)
     val muted = LocalContentColor.current.copy(alpha = 0.55f * hintAlpha)
 
