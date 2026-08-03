@@ -226,9 +226,11 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
     // Center: audio-reactive dot + elapsed timer.
     Row(verticalAlignment = Alignment.CenterVertically) {
         var elapsedMs by remember { mutableLongStateOf(state.accumulatedMs) }
-        LaunchedEffect(state.startedAtMs, state.accumulatedMs, state.paused) {
-            if (state.paused) {
-                elapsedMs = state.accumulatedMs
+        // Frozen once the recording has been thrown away: nothing is being captured any more, so a timer
+        // still counting up and a dot still pulsing would be showing something that is not happening.
+        LaunchedEffect(state.startedAtMs, state.accumulatedMs, state.paused, ptt.discarding) {
+            if (state.paused || ptt.discarding) {
+                if (state.paused) elapsedMs = state.accumulatedMs
             } else {
                 while (true) {
                     elapsedMs = state.accumulatedMs + (SystemClock.elapsedRealtime() - state.startedAtMs)
@@ -236,7 +238,7 @@ private fun RecordingContent(state: DictateController.UiState.Recording) {
                 }
             }
         }
-        RecordingAudioDot(paused = state.paused)
+        RecordingAudioDot(paused = state.paused, frozen = ptt.discarding)
         Spacer(modifier = Modifier.width(10.dp))
         SnyggText(text = formatElapsed(elapsedMs))
         // Segmented mode: how many cut segments are transcribing in the background right now.
@@ -369,11 +371,15 @@ internal const val PULSE_MAX_SCALE = 1.15f
 internal const val PULSE_DURATION_MS = 650
 
 @Composable
-private fun RecordingAudioDot(paused: Boolean) {
+private fun RecordingAudioDot(paused: Boolean, frozen: Boolean = false) {
     val prefs by FlorisPreferenceStore
     val animation by prefs.dictate.recordingAnimation.collectAsState()
+    // Frozen differs from paused: it stops every motion but keeps the dot at full strength, because the
+    // bar is only still on screen for the discard animation and dimming it would be a second change on
+    // top of the one being shown.
+    val still = paused || frozen
     // Only collected in LEVEL mode, so the other modes don't recompose at 20 Hz for nothing.
-    val level = if (animation == DictateRecordingAnimation.LEVEL && !paused) {
+    val level = if (animation == DictateRecordingAnimation.LEVEL && !still) {
         DictateController.audioLevel.collectFlowAsState().value
     } else {
         0f
@@ -381,7 +387,7 @@ private fun RecordingAudioDot(paused: Boolean) {
     // The original 4.0 heartbeat, restored: the dot drops well *below* its resting size and swells past
     // it, which reads as a beat. Growing from full size instead only throbs, and that turned out to be
     // the whole difference in feel. Both ends collapse to 1f when nothing should move.
-    val pulsing = animation == DictateRecordingAnimation.PULSE && !paused
+    val pulsing = animation == DictateRecordingAnimation.PULSE && !still
     val pulse by rememberInfiniteTransition(label = "recordingDot").animateFloat(
         initialValue = if (pulsing) PULSE_MIN_SCALE else 1f,
         targetValue = if (pulsing) PULSE_MAX_SCALE else 1f,
@@ -389,12 +395,13 @@ private fun RecordingAudioDot(paused: Boolean) {
         label = "recordingDotPulse",
     )
     val scale = when {
-        paused -> 1f
+        still -> 1f
         animation == DictateRecordingAnimation.LEVEL -> 0.85f + 0.5f * level
         else -> pulse // PULSE animates, STATIC stays at 1f because its target never leaves 1f
     }
     val alpha = when {
         paused -> 0.4f
+        frozen -> 1f
         animation == DictateRecordingAnimation.LEVEL -> 0.55f + 0.45f * level
         else -> 1f
     }

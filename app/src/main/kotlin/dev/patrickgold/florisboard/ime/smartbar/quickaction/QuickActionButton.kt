@@ -169,8 +169,12 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
     // The bin reports where it is (DictateHoldTargets); the throw aims at that, and the window is made
     // exactly wide enough to reach it. Falling back to a fixed span keeps this sane if the bar is gone.
     val bin by DictateHoldTargets.binBounds.collectAsState()
-    val flightSpan = bin?.let { with(density) { (keyBounds.center.x - it.center.x).coerceAtLeast(0).toDp() } }
-        ?: 320.dp
+    val flightSpanPx = bin?.let { (keyBounds.center.x - it.center.x).coerceAtLeast(0) }
+        ?: with(density) { 320.dp.roundToPx() }
+    val flightSpan = with(density) { flightSpanPx.toDp() }
+    // Starts at exactly the size of the key it covers, so the hold looks like that very button growing
+    // rather than a second one appearing over it.
+    val startScale = if (diameterPx > 0) keyBounds.height.toFloat() / diameterPx else 1f
     val binDropY = bin?.let { (it.center.y - keyBounds.center.y).toFloat() } ?: 0f
 
     // The throw: one shot, unhurried, and a real arc — the mic is a thing being thrown away, so it
@@ -182,7 +186,7 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
 
     Popup(
         properties = PopupProperties(focusable = false, clippingEnabled = false),
-        popupPositionProvider = remember(keyBounds, diameterPx, headroomPx) {
+        popupPositionProvider = remember(keyBounds, diameterPx, headroomPx, flightSpanPx) {
             object : PopupPositionProvider {
                 override fun calculatePosition(
                     anchorBounds: IntRect,
@@ -190,10 +194,10 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                     layoutDirection: LayoutDirection,
                     popupContentSize: IntSize,
                 ) = IntOffset(
-                    // Right edge of the box holds the circle exactly over the key; everything to the
-                    // left of it is runway for the slide and the throw, and the headroom above it is
-                    // why the y is offset rather than simply centred.
-                    x = keyBounds.center.x + diameterPx / 2 - popupContentSize.width,
+                    // Computed from known sizes, never from popupContentSize: that is zero on the first
+                    // measure, so the window was placed wrong for one frame and the mic visibly twitched
+                    // left before settling.
+                    x = keyBounds.center.x + diameterPx / 2 - (flightSpanPx + diameterPx),
                     y = keyBounds.center.y - headroomPx - diameterPx / 2,
                 )
             }
@@ -236,8 +240,13 @@ private fun HeldMicBubble(keyBounds: IntRect, flying: Boolean, appear: Float) {
                         // Shrinks on the way, but only until it is small enough to sit in the bin —
                         // shrinking to nothing looks like it evaporated rather than landed.
                         val thrown = if (flying) 1f - (1f - PUSH_TO_TALK_LANDED_SCALE) * f else 1f
-                        scaleX = appear * thrown
-                        scaleY = appear * thrown
+                        val swell = startScale + (1f - startScale) * appear
+                        scaleX = swell * thrown
+                        scaleY = swell * thrown
+                        // Slips out of sight as it reaches the bin. A popup is its own window and always
+                        // draws above the keyboard, so it cannot actually pass *behind* the bin icon —
+                        // fading over the last stretch is as close as this can get.
+                        if (flying) alpha = ((1f - f) / 0.18f).coerceIn(0f, 1f)
                         shadowElevation = 12f
                         shape = CircleShape
                         clip = true
@@ -401,12 +410,18 @@ fun QuickActionButton(
     // The throw outlives the hold: the phase is already back to NONE by the time the mic starts moving.
     // A lock on the key for a moment after latching, dissolving into whatever it shows next. Appears
     // instantly and only the fade is animated, so the ordinary icon is never drawn first.
-    val lockFlashRaw by animateFloatAsState(
-        targetValue = if (ptt.lockFlash) 1f else 0f,
-        animationSpec = if (ptt.lockFlash) snap() else tween(400),
-        label = "pushToTalkLockFlash",
-    )
-    val lockFlash = if (isDictateKey) lockFlashRaw else 0f
+    // Read straight from the state while it is on, so the lock is already drawn in the very frame the
+    // key becomes visible again. Even a snap() animation needs a frame to apply, and that frame was the
+    // send icon everyone kept seeing.
+    val lockFade = remember { Animatable(0f) }
+    LaunchedEffect(ptt.lockFlash) {
+        if (ptt.lockFlash) lockFade.snapTo(1f) else lockFade.animateTo(0f, tween(400))
+    }
+    val lockFlash = when {
+        !isDictateKey -> 0f
+        ptt.lockFlash -> 1f
+        else -> lockFade.value
+    }
     val flying = isDictateKey && ptt.discarding
     // Grows out of the key's own centre and then stays put. No bounce: the overshoot read as the
     // button being pressed twice.
