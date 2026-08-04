@@ -1690,6 +1690,8 @@
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
     <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
     <string name="dictate__providers_field_realtime_model" comment="Label for the real-time streaming model picker">Real-time model</string>
+    <string name="dictate__providers_custom_realtime" comment="Switch label: a self-hosted server that supports realtime streaming (#249)">Real-time streaming</string>
+    <string name="dictate__providers_custom_realtime_summary" comment="Explains what the server must support for realtime streaming">This server speaks the OpenAI realtime protocol at /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default" comment="Marks the provider's default real-time model in the picker">Default</string>
     <string name="dictate__longform_title" comment="Setting: long-form segmented dictation">Long-form dictation</string>
     <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe long dictations in the background, part by part while you keep talking — tap Next during recording to send the current part, so there is no long wait at the end.</string>

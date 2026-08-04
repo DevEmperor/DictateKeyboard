@@ -64,6 +64,12 @@ data class ProviderAccount(
      * rewording call. Additive field, defaults off for older stored accounts.
      */
     val transcriptionViaChat: Boolean = false,
+    /**
+     * Self-hosted streaming (issue #249): this endpoint speaks the OpenAI realtime protocol under
+     * `/v1/realtime`, so live transcription can run against it instead of a cloud provider. Nothing in an
+     * HTTP catalog says whether a server does, so the user tells us. Additive field, defaults off.
+     */
+    val customRealtime: Boolean = false,
 ) {
     /** True once the user has supplied a usable key (or this is a keyless endpoint like Ollama). */
     val hasKey: Boolean

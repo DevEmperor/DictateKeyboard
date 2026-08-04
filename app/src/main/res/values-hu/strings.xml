@@ -1317,6 +1317,8 @@
     <string name="dictate__longform_mode_manual">Következő szegmens</string>
     <string name="dictate__longform_mode_manual_summary">Felvétel közben küldj el minden részt a „Következő szegmens” gombbal.</string>
     <string name="dictate__providers_field_realtime_model">Valós idejű modell</string>
+    <string name="dictate__providers_custom_realtime">Valós idejű streamelés</string>
+    <string name="dictate__providers_custom_realtime_summary">Ez a kiszolgáló az OpenAI realtime protokollt használja a /v1/realtime végponton</string>
     <string name="dictate__providers_realtime_model_default">Alapértelmezett</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>
     <string name="dictate__instant_recording_summary">A felvétel automatikus indítása a billentyűzet megnyitásakor</string>

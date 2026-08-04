@@ -1177,6 +1177,8 @@
     <string name="dictate__longform_mode_manual">المقطع التالي</string>
     <string name="dictate__longform_mode_manual_summary">أرسل كل جزء بزر «المقطع التالي» أثناء التسجيل.</string>
     <string name="dictate__providers_field_realtime_model">النموذج الفوري</string>
+    <string name="dictate__providers_custom_realtime">البث في الوقت الفعلي</string>
+    <string name="dictate__providers_custom_realtime_summary">يدعم هذا الخادم بروتوكول OpenAI الفوري على ‎/v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">افتراضي</string>
     <string name="dictate__instant_recording_title">تسجيل فوري</string>
     <string name="dictate__instant_recording_summary">بدء التسجيل تلقائيًا عند فتح لوحة المفاتيح</string>

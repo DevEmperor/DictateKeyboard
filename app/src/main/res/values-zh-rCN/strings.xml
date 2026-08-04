@@ -1314,6 +1314,8 @@
     <string name="dictate__longform_mode_manual">下一段</string>
     <string name="dictate__longform_mode_manual_summary">录音时用“下一段”按钮发送每个部分。</string>
     <string name="dictate__providers_field_realtime_model">实时模型</string>
+    <string name="dictate__providers_custom_realtime">实时流式传输</string>
+    <string name="dictate__providers_custom_realtime_summary">此服务器在 /v1/realtime 上支持 OpenAI 实时协议</string>
     <string name="dictate__providers_realtime_model_default">默认</string>
     <string name="dictate__instant_recording_title">即时录音</string>
     <string name="dictate__instant_recording_summary">打开键盘时自动开始录音</string>

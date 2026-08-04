@@ -1102,6 +1102,8 @@
     <string name="dictate__longform_mode_manual">Segmento successivo</string>
     <string name="dictate__longform_mode_manual_summary">Invia ogni parte con «Segmento successivo» durante la registrazione.</string>
     <string name="dictate__providers_field_realtime_model">Modello in tempo reale</string>
+    <string name="dictate__providers_custom_realtime">Streaming in tempo reale</string>
+    <string name="dictate__providers_custom_realtime_summary">Questo server usa il protocollo realtime di OpenAI su /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">Predefinito</string>
     <string name="dictate__instant_recording_title">Registrazione istantanea</string>
     <string name="dictate__instant_recording_summary">Avvia la registrazione automaticamente all\'apertura della tastiera</string>

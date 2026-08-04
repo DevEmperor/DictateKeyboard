@@ -1334,6 +1334,8 @@
     <string name="dictate__longform_mode_manual">Następny segment</string>
     <string name="dictate__longform_mode_manual_summary">Wysyłaj każdą część przyciskiem „Następny segment” podczas nagrywania.</string>
     <string name="dictate__providers_field_realtime_model">Model czasu rzeczywistego</string>
+    <string name="dictate__providers_custom_realtime">Strumieniowanie w czasie rzeczywistym</string>
+    <string name="dictate__providers_custom_realtime_summary">Ten serwer obsługuje protokół OpenAI realtime pod /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">Domyślny</string>
     <string name="dictate__instant_recording_title">Natychmiastowe nagrywanie</string>
     <string name="dictate__instant_recording_summary">Automatycznie rozpoczynaj nagrywanie po otwarciu klawiatury</string>

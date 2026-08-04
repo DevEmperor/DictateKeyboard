@@ -1527,8 +1527,10 @@ object DictateController {
     private fun realtimeApiForActiveAccount(): RealtimeApi? {
         if (!prefs.dictate.realtimeTranscription.get()) return null
         val account = transcriptionAccount()
-        if (account.apiKey.isBlank()) return null
         val preset = presetFor(account)
+        // A server of the user's own usually has no key at all (#249), so requiring one here would switch
+        // streaming off for exactly the case it was asked for. Cloud providers still need theirs.
+        if (account.apiKey.isBlank() && !preset.isCustom) return null
         return if (preset.supportsRealtime) preset.realtimeApi else null
     }
 
@@ -1582,7 +1584,11 @@ object DictateController {
         val model = if (localModelDir != null) {
             localModelDir.name
         } else {
-            account.realtimeModel.takeIf { it.isNotBlank() } ?: preset.defaultRealtimeModel ?: return null
+            // A self-hosted server (#249) has no catalog to default from and usually serves whatever model
+            // it was started with, so an empty name is allowed to mean exactly that.
+            account.realtimeModel.takeIf { it.isNotBlank() }
+                ?: preset.defaultRealtimeModel
+                ?: if (preset.isCustom) "" else return null
         }
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
         realtimeFinal.setLength(0)
@@ -1630,7 +1636,12 @@ object DictateController {
                 // The model is language-specific, so the input-language pref is irrelevant here.
                 LocalRealtimeSession(localModelDir, callbacks)
             } else {
-                RealtimeClient.open(api!!, account.apiKey, model, language, callbacks)
+                // Self-hosted streaming (#249): a custom endpoint's own base URL decides where the socket
+                // goes; for the cloud providers this is null and each keeps its fixed address.
+                RealtimeClient.open(
+                    api!!, account.apiKey, model, language, callbacks,
+                    baseUrl = baseUrlOverrideFor(account).takeIf { presetFor(account).isCustom },
+                )
             }
         }.getOrElse { realtimeFailed = true; null } ?: return null
         realtimeSession = session
@@ -3068,7 +3079,7 @@ object DictateController {
 
     /** Resolves the registry preset (base URL, defaults, headers) backing [account]. */
     private fun presetFor(account: ProviderAccount): ProviderPreset = when {
-        account.isCustom -> ProviderRegistry.custom(account.customBaseUrl)
+        account.isCustom -> ProviderRegistry.custom(account.customBaseUrl, realtime = account.customRealtime)
         else -> ProviderRegistry.byId(account.providerId) ?: ProviderRegistry.OPENAI
     }
 

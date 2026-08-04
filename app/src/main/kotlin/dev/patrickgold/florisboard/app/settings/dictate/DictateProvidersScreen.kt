@@ -503,12 +503,15 @@ private fun ProviderEditorDialog(
     var cachedAudioModels by remember { mutableStateOf(account.cachedAudioModels) }
     var cachedTranscriptionModels by remember { mutableStateOf(account.cachedTranscriptionModels) }
     var transcriptionViaChat by remember { mutableStateOf(account.transcriptionViaChat) }
+    // Self-hosted streaming (#249): whether this endpoint speaks the OpenAI realtime protocol. Nothing in
+    // a catalog reveals that, so the user says so.
+    var customRealtime by remember { mutableStateOf(account.customRealtime) }
     var pickerKind by remember { mutableStateOf<ModelKind?>(null) }
 
     // Effective preset to drive the model picker / connection test. Custom endpoints get a base-URL-only
     // preset; a base-URL-editable built-in (Ollama, #136) uses the edited URL over its localhost default.
     val effectivePreset = when {
-        preset == null -> ProviderRegistry.custom(baseUrl)
+        preset == null -> ProviderRegistry.custom(baseUrl, realtime = customRealtime)
         preset.allowsCustomBaseUrl -> preset.copy(baseUrl = baseUrl.ifBlank { preset.baseUrl })
         else -> preset
     }
@@ -550,6 +553,7 @@ private fun ProviderEditorDialog(
                     displayName = displayName.trim(),
                     apiKey = apiKey.trim(),
                     customBaseUrl = baseUrl.trim(),
+                    customRealtime = customRealtime,
                     transcriptionModel = modelToStore(transcriptionModel, preset?.defaultTranscriptionModel),
                     chatModel = modelToStore(chatModel, preset?.defaultChatModel),
                     realtimeModel = modelToStore(realtimeModel, preset?.defaultRealtimeModel),
@@ -635,6 +639,41 @@ private fun ProviderEditorDialog(
                             ?: stringRes(R.string.dictate__model_placeholder),
                         onBrowse = { showRealtimePicker = true },
                     )
+                }
+                // A server of the user's own can stream too (#249), if it speaks the OpenAI realtime
+                // protocol under /v1/realtime — which several self-hosted transcription servers do. There
+                // is no way to tell without connecting, so this is a switch rather than a guess.
+                if (isCustom) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { customRealtime = !customRealtime }
+                            .padding(top = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                            Text(
+                                text = stringRes(R.string.dictate__providers_custom_realtime),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                            Text(
+                                text = stringRes(R.string.dictate__providers_custom_realtime_summary),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(checked = customRealtime, onCheckedChange = { customRealtime = it })
+                    }
+                    // Optional: many self-hosted servers serve whatever model they were started with, so a
+                    // blank box means "whatever you have".
+                    if (customRealtime) {
+                        EditorField(
+                            label = stringRes(R.string.dictate__providers_field_realtime_model),
+                            value = realtimeModel,
+                            onValueChange = { realtimeModel = it },
+                            placeholder = stringRes(R.string.dictate__model_placeholder),
+                        )
+                    }
                 }
             }
             // Rewording model is unused while single-call multimodal is on (one model does both, #130).

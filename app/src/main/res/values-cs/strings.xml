@@ -1333,6 +1333,8 @@
     <string name="dictate__longform_mode_manual">Další segment</string>
     <string name="dictate__longform_mode_manual_summary">Během nahrávání odesílejte každou část tlačítkem „Další segment“.</string>
     <string name="dictate__providers_field_realtime_model">Model v reálném čase</string>
+    <string name="dictate__providers_custom_realtime">Streamování v reálném čase</string>
+    <string name="dictate__providers_custom_realtime_summary">Tento server používá protokol OpenAI realtime na /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">Výchozí</string>
     <string name="dictate__instant_recording_title">Okamžité nahrávání</string>
     <string name="dictate__instant_recording_summary">Automaticky spustit nahrávání při otevření klávesnice</string>

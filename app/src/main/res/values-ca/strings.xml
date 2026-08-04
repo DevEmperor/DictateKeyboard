@@ -1194,6 +1194,8 @@
     <string name="dictate__longform_mode_manual">Segment següent</string>
     <string name="dictate__longform_mode_manual_summary">Envia cada part amb «Segment següent» durant la gravació.</string>
     <string name="dictate__providers_field_realtime_model">Model en temps real</string>
+    <string name="dictate__providers_custom_realtime">Transmissió en temps real</string>
+    <string name="dictate__providers_custom_realtime_summary">Aquest servidor parla el protocol realtime d\'OpenAI a /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">Predeterminat</string>
     <string name="dictate__instant_recording_title">Gravació instantània</string>
     <string name="dictate__instant_recording_summary">Comença a gravar automàticament en obrir el teclat</string>

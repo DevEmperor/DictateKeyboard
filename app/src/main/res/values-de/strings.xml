@@ -1213,6 +1213,8 @@
     <string name="dictate__longform_mode_manual">Nächster Abschnitt</string>
     <string name="dictate__longform_mode_manual_summary">Sende jeden Teil während der Aufnahme mit „Nächster Abschnitt“.</string>
     <string name="dictate__providers_field_realtime_model">Echtzeit-Modell</string>
+    <string name="dictate__providers_custom_realtime">Echtzeit-Streaming</string>
+    <string name="dictate__providers_custom_realtime_summary">Dieser Server spricht das OpenAI-Realtime-Protokoll unter /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">Standard</string>
     <string name="dictate__instant_recording_title">Sofortaufnahme</string>
     <string name="dictate__instant_recording_summary">Aufnahme automatisch starten, wenn die Tastatur geöffnet wird</string>

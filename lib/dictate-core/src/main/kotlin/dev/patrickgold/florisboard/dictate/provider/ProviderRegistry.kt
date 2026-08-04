@@ -392,10 +392,16 @@ object ProviderRegistry {
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
 
     /** Builds a preset for a user-defined OpenAI-compatible endpoint. */
+    /**
+     * [realtime] marks a server the user has told us speaks the OpenAI realtime protocol under
+     * `/v1/realtime` (#249). Several self-hosted transcription servers do; there is no way to detect it
+     * without connecting, so it is a switch in the editor rather than a guess.
+     */
     fun custom(
         baseUrl: String,
         displayName: String = "Custom server",
         capabilities: ProviderCapabilities = CHAT_AND_STT,
+        realtime: Boolean = false,
     ): ProviderPreset = ProviderPreset(
         id = "custom",
         displayName = displayName,
@@ -403,5 +409,7 @@ object ProviderRegistry {
         capabilities = capabilities,
         supportsDynamicModels = true,
         isCustom = true,
+        supportsRealtime = realtime,
+        realtimeApi = if (realtime) RealtimeApi.OPENAI else null,
     )
 }

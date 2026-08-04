@@ -1166,6 +1166,8 @@
     <string name="dictate__longform_mode_manual">Наступний сегмент</string>
     <string name="dictate__longform_mode_manual_summary">Надсилайте кожну частину кнопкою «Наступний сегмент» під час запису.</string>
     <string name="dictate__providers_field_realtime_model">Модель у реальному часі</string>
+    <string name="dictate__providers_custom_realtime">Потокова передача в реальному часі</string>
+    <string name="dictate__providers_custom_realtime_summary">Цей сервер підтримує протокол OpenAI realtime за адресою /v1/realtime</string>
     <string name="dictate__providers_realtime_model_default">За замовчуванням</string>
     <string name="dictate__instant_recording_title">Миттєвий запис</string>
     <string name="dictate__instant_recording_summary">Автоматично починати запис під час відкриття клавіатури</string>
