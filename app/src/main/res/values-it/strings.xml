@@ -917,6 +917,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Una sfera di nuvola fluida che si muove e risponde alla tua voce durante la registrazione.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Luce dentro una sfera: si muove durante la registrazione, vortica durante l\'elaborazione</string>
+    <string name="dictate__floating_button_design_lattice">Reticolo</string>
+    <string name="dictate__floating_button_design_lattice_summary">Una sfera di punti: si collega da ferma, ondeggia con la tua voce e ruota durante l\'elaborazione</string>
     <string name="dictate__floating_button_design_pill">Pillola</string>
     <string name="dictate__floating_button_design_pill_summary">Si espande quando attivo per mostrare un timer e una forma d’onda in tempo reale.</string>
     <string name="dictate__floating_button_design_ring">Anello</string>

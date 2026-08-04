@@ -57,6 +57,7 @@ import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
+import dev.patrickgold.florisboard.dictate.ui.DictateLatticeSphereView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -595,6 +596,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             DictateFloatingButtonDesign.ORB -> OrbSkin(context)
             DictateFloatingButtonDesign.CLOUD -> CloudSkin(context)
             DictateFloatingButtonDesign.AURORA -> AuroraSkin(context)
+            DictateFloatingButtonDesign.LATTICE -> LatticeSkin(context)
         }
         skin = newSkin
         val root = newSkin.root
@@ -2006,6 +2008,106 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
     }
 
+    // --- Lattice skin (design 6) -----------------------------------------------------------------
+
+    /**
+     * A dot orb (#253): a constellation wiring itself while it waits and the same one racing, red and
+     * riding the voice, while recording — then a wave rolling through it while the transcript comes back,
+     * and a sphere twisting itself apart and back together while that text is reworded.
+     *
+     * It carries no mic or stop glyph at all: every state already has its own unmistakable motion, and a
+     * badge on top only fought the dots for the middle of the button. Only the terminal error/success marks
+     * remain, because those say something the motion does not.
+     */
+    private inner class LatticeSkin(context: Context) : BubbleSkin {
+        private val viewSize = sdp(64)
+        private val coreSize = sdp(48)
+        private val iconInset = (viewSize - sdp(22)) / 2
+
+        override val visualInset: Int = (viewSize - coreSize) / 2
+
+        private val sphere = DictateLatticeSphereView(context, sizeScale = sizeScale)
+            .apply { bodyDiameter = coreSize.toFloat() }
+        private val icon = ImageView(context).apply {
+            setPadding(iconInset, iconInset, iconInset, iconInset)
+            imageTintList = ColorStateList.valueOf(Color.WHITE)
+            alpha = 0f
+        }
+
+        override val fixedHeight: Int? = null
+
+        override val root: View = FrameLayout(context).apply {
+            addView(sphere, FrameLayout.LayoutParams(viewSize, viewSize))
+            addView(icon, FrameLayout.LayoutParams(viewSize, viewSize))
+        }
+
+        /**
+         * The same tinted dark substrate the dots sit on — opaque here, unlike the orb itself: the sphere
+         * can afford to be translucent because it is covered in dots, while a lone glyph on a see-through
+         * disc would lose its contrast over a light app.
+         */
+        override fun sideButtonBackground(): GradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(ColorUtils.blendARGB(accentColor, Color.BLACK, 0.58f))
+        }
+
+        override fun applyState(state: DictateController.UiState) {
+            icon.alpha = 0f
+            when (state) {
+                is DictateController.UiState.Recording -> {
+                    sphere.setPaused(state.paused)
+                    // The same constellation as at rest, turned red and run at the tempo the library
+                    // actually ships it at — six times the idle one. Because the mode does not change, the
+                    // motion carries straight on from wherever it was instead of restarting.
+                    sphere.setMode(
+                        DictateLatticeSphereView.Mode.WEB,
+                        color(R.color.dictate_overlay_recording),
+                        speedScale = RECORDING_SPEED_UP,
+                    )
+                }
+                is DictateController.UiState.Transcribing -> {
+                    sphere.setPaused(false)
+                    sphere.setMode(DictateLatticeSphereView.Mode.WAVE, color(R.color.dictate_overlay_accent))
+                }
+                is DictateController.UiState.Rewording -> {
+                    sphere.setPaused(false)
+                    sphere.setMode(DictateLatticeSphereView.Mode.RUBIK, color(R.color.dictate_overlay_rewording))
+                }
+                else -> {
+                    sphere.setPaused(false)
+                    sphere.setMode(DictateLatticeSphereView.Mode.WEB, accentColor)
+                }
+            }
+        }
+
+        /**
+         * The terminal marks stay on the *idle* motion, only recoloured: a flash is the button on its way
+         * back to rest, so putting a different mode on screen for a second read as yet another state.
+         */
+        override fun showFlash(kind: FlashKind) {
+            sphere.setPaused(false)
+            when (kind) {
+                FlashKind.ERROR -> {
+                    showGlyph(R.drawable.ic_dictate_overlay_error)
+                    sphere.setMode(DictateLatticeSphereView.Mode.WEB, color(R.color.dictate_overlay_recording))
+                }
+                FlashKind.SUCCESS -> {
+                    showGlyph(R.drawable.ic_dictate_overlay_check)
+                    sphere.setMode(DictateLatticeSphereView.Mode.WEB, color(R.color.dictate_overlay_success))
+                }
+            }
+        }
+
+        override fun onRecordingTick(level: Float, elapsedMs: Long) = sphere.pushLevel(level)
+
+        override fun destroy() = sphere.stop()
+
+        private fun showGlyph(resId: Int) {
+            icon.alpha = 1f
+            icon.setImageResource(resId)
+        }
+    }
+
     private companion object {
         private const val ERROR_HOLD_MS = 1800L
         private const val SUCCESS_HOLD_MS = 1700L
@@ -2019,5 +2121,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private val BLOB_TINTS = floatArrayOf(0.45f, 0.18f, 0.68f)
         private const val WAVE_BARS = 7
         private const val CLOUD_GLYPH_COLOR = 0xFF343B8F.toInt()
+
+        /** Lattice (#253): recording runs its idle constellation at the tempo the library ships it at. */
+        private const val RECORDING_SPEED_UP = 6f
     }
 }

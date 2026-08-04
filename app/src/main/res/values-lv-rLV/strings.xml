@@ -1077,6 +1077,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Plūstoša mākoņa lode, kas plūst un reaģē uz tavu balsi ierakstīšanas laikā.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Gaisma lodes iekšpusē: ierakstot viļņojas, apstrādājot virpuļo</string>
+    <string name="dictate__floating_button_design_lattice">Režģis</string>
+    <string name="dictate__floating_button_design_lattice_summary">Lode no punktiem: gaidot savienojas, viļņojas līdzi tavai balsij un apstrādājot griežas</string>
     <string name="dictate__floating_button_design_pill">Kapsula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktīvā stāvoklī izvēršas, rādot taimeri un tiešraides viļņu formu.</string>
     <string name="dictate__floating_button_design_ring">Gredzens</string>

@@ -1033,6 +1033,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_design_cloud_summary">Een vloeiende wolkbol die beweegt en op je stem reageert tijdens het opnemen.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Licht in een bol: het beweegt tijdens opnemen en kolkt tijdens verwerken</string>
+    <string name="dictate__floating_button_design_lattice">Raster</string>
+    <string name="dictate__floating_button_design_lattice_summary">Een bol van punten: verbindt zich in rust, golft met je stem en draait tijdens verwerken</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Klapt uit wanneer actief om een timer en een live golfvorm te tonen.</string>
     <string name="dictate__floating_button_design_ring">Ring</string>

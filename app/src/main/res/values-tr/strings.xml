@@ -1112,6 +1112,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Kayıt sırasında akan ve sesine tepki veren akışkan bir bulut küresi.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Kürenin içinde ışık: kayıtta dalgalanır, işlenirken çalkalanır</string>
+    <string name="dictate__floating_button_design_lattice">Kafes</string>
+    <string name="dictate__floating_button_design_lattice_summary">Noktalardan bir küre: beklerken birbirine bağlanır, sesinle dalgalanır, işlenirken döner</string>
     <string name="dictate__floating_button_design_pill">Hap</string>
     <string name="dictate__floating_button_design_pill_summary">Etkinken genişleyerek bir sayaç ve canlı dalga biçimi gösterir.</string>
     <string name="dictate__floating_button_design_ring">Halka</string>

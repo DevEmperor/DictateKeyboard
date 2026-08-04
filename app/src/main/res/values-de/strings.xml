@@ -1036,6 +1036,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Eine fließende Wolken-Kugel, die sich beim Aufnehmen bewegt und auf deine Stimme reagiert.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Licht in einer Kugel: bewegt sich beim Aufnehmen, wirbelt beim Verarbeiten</string>
+    <string name="dictate__floating_button_design_lattice">Gitter</string>
+    <string name="dictate__floating_button_design_lattice_summary">Eine Kugel aus Punkten: verknüpft sich im Leerlauf, wellt sich mit deiner Stimme, dreht sich beim Verarbeiten</string>
     <string name="dictate__floating_button_size_title">Buttongröße</string>
     <string name="dictate__floating_button_size_small">Klein</string>
     <string name="dictate__floating_button_size_medium">Mittel</string>

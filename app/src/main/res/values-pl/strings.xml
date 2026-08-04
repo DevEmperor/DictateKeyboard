@@ -1149,6 +1149,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Płynna chmurowa kula, która faluje i reaguje na Twój głos podczas nagrywania.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Światło wewnątrz kuli: faluje przy nagrywaniu, wiruje przy przetwarzaniu</string>
+    <string name="dictate__floating_button_design_lattice">Siatka</string>
+    <string name="dictate__floating_button_design_lattice_summary">Kula z punktów: łączy się w spoczynku, faluje z twoim głosem i obraca się przy przetwarzaniu</string>
     <string name="dictate__floating_button_design_pill">Pigułka</string>
     <string name="dictate__floating_button_design_pill_summary">Po uaktywnieniu rozszerza się, pokazując licznik czasu i wykres dźwięku na żywo.</string>
     <string name="dictate__floating_button_design_ring">Pierścień</string>

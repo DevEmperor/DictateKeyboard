@@ -1089,6 +1089,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__floating_button_design_cloud_summary">Bola awan yang mengalir dan merespons suaramu saat merekam.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Cahaya di dalam bola: bergerak saat merekam, berputar saat memproses</string>
+    <string name="dictate__floating_button_design_lattice">Kisi</string>
+    <string name="dictate__floating_button_design_lattice_summary">Bola dari titik-titik: saling terhubung saat diam, beriak mengikuti suaramu, berputar saat memproses</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Membesar saat aktif untuk menampilkan pengatur waktu dan gelombang langsung.</string>
     <string name="dictate__floating_button_design_ring">Cincin</string>

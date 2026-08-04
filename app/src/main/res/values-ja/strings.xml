@@ -1066,6 +1066,8 @@
     <string name="dictate__floating_button_design_cloud_summary">録音中に流れるように動き、あなたの声に反応する雲のオーブ。</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">球体の中で動く光。録音中は揺らぎ、処理中は渦を巻きます</string>
+    <string name="dictate__floating_button_design_lattice">ラティス</string>
+    <string name="dictate__floating_button_design_lattice_summary">点でできた球体。待機中はつながり合い、声に合わせて波打ち、処理中はねじれます</string>
     <string name="dictate__floating_button_design_pill">ピル</string>
     <string name="dictate__floating_button_design_pill_summary">アクティブ時に展開し、タイマーとライブ波形を表示します。</string>
     <string name="dictate__floating_button_design_ring">リング</string>

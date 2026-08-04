@@ -29,5 +29,8 @@ enum class DictateFloatingButtonDesign {
     CLOUD,
 
     /** A thinking orb: light moving inside a sphere, its temperament set by what the app is doing (#253). */
-    AURORA;
+    AURORA,
+
+    /** A sphere of dots that wires itself while idle, ripples with the voice, and twists while working (#253). */
+    LATTICE;
 }

@@ -1129,6 +1129,8 @@
     <string name="dictate__floating_button_design_cloud_summary">录音时如云般流动并对你的声音作出反应的球体。</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">球体内流动的光：录音时轻晃，处理时翻涌</string>
+    <string name="dictate__floating_button_design_lattice">点阵</string>
+    <string name="dictate__floating_button_design_lattice_summary">由点构成的球体：闲置时相互连线，随声音起伏，处理时翻转</string>
     <string name="dictate__floating_button_design_pill">胶囊</string>
     <string name="dictate__floating_button_design_pill_summary">激活时展开，显示计时器和实时波形。</string>
     <string name="dictate__floating_button_design_ring">圆环</string>

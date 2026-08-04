@@ -1148,6 +1148,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Plynulá oblaková koule, která proudí a reaguje na tvůj hlas při nahrávání.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Světlo uvnitř koule: při nahrávání se vlní, při zpracování víří</string>
+    <string name="dictate__floating_button_design_lattice">Mřížka</string>
+    <string name="dictate__floating_button_design_lattice_summary">Koule z bodů: v klidu se propojuje, vlní se s tvým hlasem a při zpracování se otáčí</string>
     <string name="dictate__floating_button_design_pill">Pilulka</string>
     <string name="dictate__floating_button_design_pill_summary">Při aktivitě se rozšíří a zobrazí časovač a živý průběh zvuku.</string>
     <string name="dictate__floating_button_design_ring">Prstenec</string>

@@ -942,6 +942,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Uma esfera de nuvem fluida que flui e responde à sua voz enquanto você grava.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Luz dentro de uma esfera: se agita ao gravar e gira ao processar</string>
+    <string name="dictate__floating_button_design_lattice">Retícula</string>
+    <string name="dictate__floating_button_design_lattice_summary">Uma esfera de pontos: se conecta em repouso, ondula com a sua voz e gira ao processar</string>
     <string name="dictate__floating_button_design_pill">Cápsula</string>
     <string name="dictate__floating_button_design_pill_summary">Expande quando ativo para mostrar um cronômetro e uma forma de onda ao vivo.</string>
     <string name="dictate__floating_button_design_ring">Anel</string>

@@ -1137,6 +1137,8 @@
     <string name="dictate__floating_button_design_cloud_summary">Плавная облачная сфера, которая струится и реагирует на ваш голос во время записи.</string>
     <string name="dictate__floating_button_design_aurora">Aurora</string>
     <string name="dictate__floating_button_design_aurora_summary">Свет внутри сферы: колышется при записи и бурлит при обработке</string>
+    <string name="dictate__floating_button_design_lattice">Решётка</string>
+    <string name="dictate__floating_button_design_lattice_summary">Сфера из точек: сплетается в покое, колышется в такт голосу и вращается при обработке</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">При активности расширяется, показывая таймер и живую форму волны.</string>
     <string name="dictate__floating_button_design_ring">Кольцо</string>
