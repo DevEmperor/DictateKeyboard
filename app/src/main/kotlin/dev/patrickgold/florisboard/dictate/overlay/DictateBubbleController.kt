@@ -740,13 +740,24 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         }
     }
 
+    /**
+     * Gap between the screen edge and the shape the user actually sees when the bubble is parked at a side.
+     *
+     * Every caller has to go through here. There used to be two spellings of it — one subtracting the
+     * skin's [BubbleSkin.visualInset] and one not — so the same button sat at two different distances
+     * depending on how it got there: dragged and snapped, or laid out afresh after a design, size or colour
+     * change. It is measured to the visible shape, so the glow designs' empty halo does not count as part
+     * of the gap.
+     */
+    private fun edgeMargin(maxX: Int): Int =
+        (dp(EDGE_MARGIN_DP) - (skin?.visualInset ?: 0)).coerceAtLeast(0).coerceAtMost(maxX / 2)
+
     /** Animates the bubble to whichever side edge is nearer, clamping the vertical position on screen. */
     private fun snapToEdge() {
         val lp = params ?: return
         val v = rootView ?: return
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
-        // Measured to the visible shape, not the window: the glow designs carry empty space around theirs.
-        val margin = (dp(8) - (skin?.visualInset ?: 0)).coerceAtLeast(0).coerceAtMost(maxX / 2)
+        val margin = edgeMargin(maxX)
         anchoredToRight = lp.x + v.width / 2 >= screenWidth() / 2
         val targetX = if (anchoredToRight) maxX - margin else margin
         lp.y = lp.y.coerceIn(0, (screenHeight() - v.height).coerceAtLeast(0))
@@ -781,7 +792,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         if (!added) return
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
         val maxY = (screenHeight() - v.height).coerceAtLeast(0)
-        val margin = dp(8).coerceAtMost(maxX / 2)
+        val margin = edgeMargin(maxX)
         val nx = when {
             !prefs.dictate.floatingButtonSnapToEdge.get() -> lp.x.coerceIn(0, maxX)
             anchoredToRight -> maxX - margin
@@ -802,7 +813,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         val v = rootView ?: return
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
         val maxY = (screenHeight() - v.height).coerceAtLeast(0)
-        val margin = (dp(8) - (skin?.visualInset ?: 0)).coerceAtLeast(0).coerceAtMost(maxX / 2)
+        val margin = edgeMargin(maxX)
         anchoredToRight = true
         lp.x = (maxX - margin).coerceAtLeast(0)
         // Vertically center the bubble at ~60% up from the bottom edge (≈40% down from the top).
@@ -2113,6 +2124,13 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         private const val SUCCESS_HOLD_MS = 1700L
         private const val TICK_MS = 50L
         private const val AUTO_DIM_DELAY_MS = 3500L
+
+        /**
+         * How far the bubble's visible shape parks from the screen edge, in dp. The wider of the two gaps
+         * the code used to produce by accident: pressed right up against the edge it read as something the
+         * system had shoved aside rather than something placed there.
+         */
+        private const val EDGE_MARGIN_DP = 16
 
         /** Aurora orb (#253): three blobs, started apart and orbiting at rates that never quite repeat. */
         private const val FULL_TURN = 6.2831855f
