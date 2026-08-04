@@ -131,7 +131,7 @@ class WearSettingsActivity : ComponentActivity() {
                     onRequestMic = { requestMic.launch(Manifest.permission.RECORD_AUDIO) },
                     onTryDictation = { onTryDictation() },
                     onEnableKeyboard = { openInputMethodSettings() },
-                    onChooseKeyboard = { showKeyboardPicker() },
+                    onChooseKeyboard = { openInputMethodSettings() },
                     onResync = {
                         syncFromPhone()
                         lifecycleScope.launch {
@@ -197,6 +197,17 @@ class WearSettingsActivity : ComponentActivity() {
         imeSelected = default?.contains(packageName) == true
     }
 
+    /**
+     * The system's own input-method settings — the only system surface this app sends a watch to.
+     *
+     * The keyboard chips used to offer `InputMethodManager.showInputMethodPicker()` as well, and Play
+     * rejected the Wear release over it: that switcher is AOSP's rectangular list, and on a round display
+     * its text runs off the edges, which fails the Wear visual-quality requirement. Whose dialog it is
+     * does not enter into it — what is on screen during review is what counts, and an appeal explaining
+     * the distinction was turned down. So the app no longer opens it. Selecting a keyboard on a watch
+     * happens when a text field is focused anyway, where the system raises its own switcher and answers
+     * for how it looks.
+     */
     private fun openInputMethodSettings() {
         runCatching {
             startActivity(
@@ -204,10 +215,6 @@ class WearSettingsActivity : ComponentActivity() {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             )
         }
-    }
-
-    private fun showKeyboardPicker() {
-        runCatching { getSystemService(InputMethodManager::class.java)?.showInputMethodPicker() }
     }
 
     // --- In-app "Try dictation" demo ---------------------------------------------------------------
