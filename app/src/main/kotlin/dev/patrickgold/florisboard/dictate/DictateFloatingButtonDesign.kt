@@ -26,5 +26,8 @@ enum class DictateFloatingButtonDesign {
     RING,
     PILL,
     ORB,
-    CLOUD;
+    CLOUD,
+
+    /** A thinking orb: light moving inside a sphere, its temperament set by what the app is doing (#253). */
+    AURORA;
 }
