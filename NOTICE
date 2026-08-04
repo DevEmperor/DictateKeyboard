@@ -40,6 +40,9 @@ distribution. They are mirrored unmodified on the project's GitHub releases.
 
     OpenAI Whisper — https://openai.com/index/whisper/ (MIT)
     NVIDIA Parakeet TDT 0.6B v3 and the primeline German fine-tune (CC-BY-4.0)
+    NVIDIA Canary 180M Flash — https://huggingface.co/nvidia/canary-180m-flash
+    (CC-BY-4.0)
+    GigaAM v2 Russian — https://github.com/salute-developers/GigaAM (MIT)
     Silero VAD — https://github.com/snakers4/silero-vad (MIT)
     Smart Turn v3 — https://github.com/pipecat-ai/smart-turn (BSD-2-Clause)
 

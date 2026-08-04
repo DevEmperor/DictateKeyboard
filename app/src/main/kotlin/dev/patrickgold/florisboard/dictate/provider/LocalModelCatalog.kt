@@ -23,6 +23,22 @@ data class LocalModelFile(
 )
 
 /**
+ * Which recognizer a model needs. Every entry names its own instead of the runtime guessing from the
+ * files on disk: that worked while a joiner meant "transducer" and its absence meant "Whisper", but
+ * Canary (#255) has the same encoder/decoder/tokens shape as Whisper and a completely different config.
+ */
+enum class LocalModelKind {
+    /** Whisper encoder/decoder. Auto-detects the language when none is given. */
+    WHISPER,
+
+    /** NeMo transducer (encoder/decoder/joiner) — Parakeet, GigaAM. Language-agnostic at decode time. */
+    NEMO_TRANSDUCER,
+
+    /** NVIDIA Canary: an attention encoder/decoder that is *told* its language rather than detecting it. */
+    CANARY,
+}
+
+/**
  * A selectable on-device model (issue #104). [id] doubles as the install directory name and the value
  * stored in [ProviderAccount.transcriptionModel] for the local provider.
  */
@@ -32,6 +48,8 @@ data class LocalModelSpec(
     /** Short note for the picker, e.g. languages / accuracy/speed trade-off. */
     val description: String,
     val files: List<LocalModelFile>,
+    /** Which recognizer to build for it; see [LocalModelKind]. */
+    val kind: LocalModelKind = LocalModelKind.WHISPER,
     /**
      * True for a *streaming* model (issue #233): it transcribes while the user is still speaking, so it
      * can drive the live/real-time path via [LocalRealtimeSession]. Offline models (Whisper, Parakeet)
@@ -158,6 +176,7 @@ object LocalModelCatalog {
         id = "parakeet-tdt-0.6b-v3",
         displayName = "Parakeet TDT 0.6B v3",
         description = "25 European languages · ~670 MB",
+        kind = LocalModelKind.NEMO_TRANSDUCER,
         files = listOf(
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_184_281, "acfc2b4456377e15d04f0243af540b7fe7c992f8d898d751cf134c3a55fd2247"),
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_275, "179e50c43d1a9de79c8a24149a2f9bac6eb5981823f2a2ed88d655b24248db4e"),
@@ -178,11 +197,60 @@ object LocalModelCatalog {
         id = "parakeet-primeline-de",
         displayName = "Parakeet German (primeline)",
         description = "German · ~670 MB",
+        kind = LocalModelKind.NEMO_TRANSDUCER,
         files = listOf(
             LocalModelFile("$REL/parakeet-primeline-de-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_282_409, "4ce2447d5d996f1ea369c68cd8c1a8372c5e2b4c5784c9dc9c706b5e42ddc85e"),
             LocalModelFile("$REL/parakeet-primeline-de-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_274, "ebcae1f7cf869507c1c77932e607df5f8d650b67897b41fbdcb3aea09fc39c4d"),
             LocalModelFile("$REL/parakeet-primeline-de-joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 6_355_277, "8220c0d117d81bdd0d8c770881932ac340f1ce4b36932941d561d11ad1aaffce"),
             LocalModelFile("$REL/parakeet-primeline-de-tokens.txt", LocalTranscriptionProvider.TOKENS, 93_939, "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~207 MB. NVIDIA Canary 180M Flash (issue #255) — English, German, French and Spanish in a third of
+     * Parakeet's footprint, at comparable accuracy (MLS WER 4.75 French / 4.81 German), with punctuation
+     * and capitalisation of its own. For the western European languages this is the model to pick unless
+     * the phone has room to spare; Parakeet still wins on breadth with its other 21 languages.
+     *
+     * Unlike the transducers it is an attention encoder/decoder, so it is *told* which language it is
+     * hearing rather than working it out — see [LocalTranscriptionProvider] for what happens when the
+     * input language is set to something it does not speak.
+     *
+     * Licensing: Canary weights are CC-BY-4.0 (NVIDIA) and cleared for commercial use; the ONNX int8
+     * export is the sherpa-onnx project's own (Apache-2.0). Both allow redistribution with attribution.
+     */
+    val CANARY_180M_FLASH = LocalModelSpec(
+        id = "canary-180m-flash",
+        displayName = "Canary 180M Flash",
+        description = "English, German, French, Spanish · ~207 MB",
+        kind = LocalModelKind.CANARY,
+        files = listOf(
+            LocalModelFile("$REL/canary-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 132_678_643, "7a75b4e2a5857a6dcc0819503bbe3fad66943db4a3ccf21d3f27c633667d303f"),
+            LocalModelFile("$REL/canary-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 74_437_848, "e41a2ab9c0c2fe81a1e8ade5a45fb02a74bc4db7d1f91b89a54a25e2cf79cba2"),
+            LocalModelFile("$REL/canary-tokens.txt", LocalTranscriptionProvider.TOKENS, 53_555, "2dae6fc7815f9640645e0c765522b278ee0cef49b482d91f6913e334628d3e77"),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~241 MB. GigaAM v2 Russian (issue #255) — a Russian-specialized NeMo transducer from Salute Devices,
+     * where Parakeet only covers Russian as one of 25. Same architecture as the Parakeet entries, so it
+     * needs no runtime of its own.
+     *
+     * Licensing: GigaAM v2 is MIT (the earlier 2024 v1 was non-commercial — that one is deliberately not
+     * here); the ONNX export is sherpa-onnx's (Apache-2.0).
+     */
+    val GIGAAM_V2_RU = LocalModelSpec(
+        id = "gigaam-v2-ru",
+        displayName = "GigaAM v2 Russian",
+        description = "Russian · ~241 MB",
+        kind = LocalModelKind.NEMO_TRANSDUCER,
+        files = listOf(
+            LocalModelFile("$REL/gigaam-v2-ru-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 236_314_144, "b51efc61e3c0037ad1cb804079975468de3d175324fe8323aef5be4f5c6a38a1"),
+            LocalModelFile("$REL/gigaam-v2-ru-decoder.onnx", LocalTranscriptionProvider.DECODER, 3_331_651, "208e24cc150fb0ebca3fab169502796daa12e0255dcf7b4acf65015c436e9f76"),
+            LocalModelFile("$REL/gigaam-v2-ru-joiner.onnx", LocalTranscriptionProvider.JOINER, 1_440_448, "4b02eced18e033fc5173e6c47b6ab166b5efea8d35c3f33a6755ff0d622fb5b0"),
+            LocalModelFile("$REL/gigaam-v2-ru-tokens.txt", LocalTranscriptionProvider.TOKENS, 196, "17cc514451bcceac9c280068c71502f8448f99e9fb1456b8d0761651fd0392f2"),
             VAD_FILE,
         ),
     )
@@ -222,6 +290,7 @@ object LocalModelCatalog {
             id = "kroko-$lang",
             displayName = displayName,
             description = "$languageLabel · ~$approxMb MB",
+            kind = LocalModelKind.NEMO_TRANSDUCER,
             isStreaming = true,
             files = listOf(
                 LocalModelFile("$REL/kroko-$lang-encoder.onnx", LocalTranscriptionProvider.ENCODER, encoderBytes, encoderSha),
@@ -347,19 +416,25 @@ object LocalModelCatalog {
     )
 
     /**
-     * All catalog models in display order: Parakeet first (best overall), then the German-specialized
-     * Parakeet, then Whisper multilingual and the English-only variants — and finally the streaming
-     * models, which the picker renders under their own "Live" heading. Keep the streaming entries last:
-     * [LocalModelSection] relies on this order to know where that heading goes.
+     * All catalog models in display order: Parakeet first (broadest), then Canary — which beats it on
+     * size for the four languages it does speak — then the language-specialized ones, then Whisper
+     * multilingual and its English-only variants. Finally the streaming models, which the picker renders
+     * under their own "Live" heading. Keep the streaming entries last: [LocalModelSection] relies on this
+     * order to know where that heading goes.
      */
     val all: List<LocalModelSpec> = listOf(
         PARAKEET_TDT_V3,
+        CANARY_180M_FLASH,
         PARAKEET_PRIMELINE_DE,
+        GIGAAM_V2_RU,
         WHISPER_TINY, WHISPER_BASE, WHISPER_SMALL,
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
         KROKO_EN, KROKO_DE, KROKO_ES, KROKO_FR,
         KROKO_IT, KROKO_NL, KROKO_PT, KROKO_SV, KROKO_TR, KROKO_HE,
     )
+
+    /** Which recognizer [id] needs; unknown ids (a leftover pref) fall back to the Whisper shape. */
+    fun kindOf(id: String): LocalModelKind = byId(id)?.kind ?: LocalModelKind.WHISPER
 
     fun byId(id: String): LocalModelSpec? = all.firstOrNull { it.id == id }
 

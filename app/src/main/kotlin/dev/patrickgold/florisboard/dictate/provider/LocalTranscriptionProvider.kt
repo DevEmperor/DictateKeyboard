@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.content.Context
 import com.k2fsa.sherpa.onnx.FeatureConfig
+import com.k2fsa.sherpa.onnx.OfflineCanaryModelConfig
 import com.k2fsa.sherpa.onnx.OfflineModelConfig
 import com.k2fsa.sherpa.onnx.OfflineRecognizer
 import com.k2fsa.sherpa.onnx.OfflineRecognizerConfig
@@ -343,12 +344,15 @@ private object RecognizerCache {
         val decoder = File(modelDir, LocalTranscriptionProvider.DECODER)
         val tokens = File(modelDir, LocalTranscriptionProvider.TOKENS)
         val joiner = File(modelDir, LocalTranscriptionProvider.JOINER)
-        val isTransducer = joiner.exists()
+        // The model says which recognizer it needs (#255). A joiner used to be the tell, but Canary has
+        // Whisper's file shape and neither config; the directory name is the model id.
+        val kind = LocalModelCatalog.kindOf(modelDir.name)
 
-        // Language is baked into the Whisper config at build time, so it is part of the cache key
-        // (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
+        // Language is baked into the Whisper and Canary configs at build time, so it is part of the cache
+        // key (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
         // as-is and ignores the language, so it stays out of the key for those.
-        val cacheKey = modelDir.absolutePath + "|" + (if (isTransducer) "" else language)
+        val cacheKey = modelDir.absolutePath + "|" +
+            (if (kind == LocalModelKind.NEMO_TRANSDUCER) "" else language)
         val existing = recognizer
         val rec = if (existing != null && cacheKey == key) {
             existing
@@ -356,7 +360,7 @@ private object RecognizerCache {
             existing?.release()
             recognizer = null
             key = null
-            buildRecognizer(encoder, decoder, tokens, joiner, isTransducer, numThreads, language).also {
+            buildRecognizer(encoder, decoder, tokens, joiner, kind, numThreads, language).also {
                 recognizer = it
                 key = cacheKey
             }
@@ -410,13 +414,13 @@ private object RecognizerCache {
         decoder: File,
         tokens: File,
         joiner: File,
-        isTransducer: Boolean,
+        kind: LocalModelKind,
         numThreads: Int,
         language: String,
     ): OfflineRecognizer {
-        val modelConfig = if (isTransducer) {
-            // NeMo Parakeet TDT (issue #154): encoder/decoder/joiner transducer, model-type per sherpa-onnx.
-            OfflineModelConfig(
+        val modelConfig = when (kind) {
+            // NeMo Parakeet TDT (issue #154) and GigaAM (#255): encoder/decoder/joiner transducer.
+            LocalModelKind.NEMO_TRANSDUCER -> OfflineModelConfig(
                 transducer = OfflineTransducerModelConfig(
                     encoder = encoder.absolutePath,
                     decoder = decoder.absolutePath,
@@ -426,8 +430,28 @@ private object RecognizerCache {
                 numThreads = numThreads,
                 modelType = "nemo_transducer",
             )
-        } else {
-            OfflineModelConfig(
+            // Canary (issue #255) is an attention encoder/decoder: it does not sniff the language, it is
+            // handed one, and it will happily transcribe French as though it were the language it was
+            // told. So an unset or unsupported input language falls back to English rather than passing
+            // through something the model has never seen — see [canaryLanguage].
+            LocalModelKind.CANARY -> {
+                val lang = canaryLanguage(language)
+                OfflineModelConfig(
+                    canary = OfflineCanaryModelConfig(
+                        encoder = encoder.absolutePath,
+                        decoder = decoder.absolutePath,
+                        srcLang = lang,
+                        // Same language in and out: translating is a thing this model can do, and not a
+                        // thing a dictation keyboard should do behind the user's back.
+                        tgtLang = lang,
+                        usePnc = true,
+                    ),
+                    tokens = tokens.absolutePath,
+                    numThreads = numThreads,
+                    modelType = "canary",
+                )
+            }
+            LocalModelKind.WHISPER -> OfflineModelConfig(
                 whisper = OfflineWhisperModelConfig(
                     encoder = encoder.absolutePath,
                     decoder = decoder.absolutePath,
@@ -447,4 +471,14 @@ private object RecognizerCache {
         // assetManager defaults to null → the model is read from the absolute file paths above.
         return OfflineRecognizer(config = config)
     }
+
+    /**
+     * The language tag to hand Canary. It speaks four, and anything else — including the app's
+     * auto-detect, which has no tag at all — becomes English: a wrong-but-known language degrades to
+     * poor transcription, while an unknown tag is a native failure at load time.
+     */
+    private fun canaryLanguage(language: String): String =
+        language.lowercase().takeIf { it in CANARY_LANGUAGES } ?: "en"
+
+    private val CANARY_LANGUAGES = setOf("en", "de", "fr", "es")
 }
