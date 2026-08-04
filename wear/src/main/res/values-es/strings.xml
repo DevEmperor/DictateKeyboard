@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Teclado activado ✓</string>
     <string name="wear_kb_enable_on">Escribe en cualquier app</string>
     <string name="wear_kb_enable_off">Actívalo en ajustes</string>
-    <string name="wear_kb_choose">Elegir teclado</string>
-    <string name="wear_kb_chosen">Teclado elegido ✓</string>
-    <string name="wear_kb_choose_sub">Elige Dictate en un campo</string>
     <string name="wear_key">Clave en el reloj</string>
     <string name="wear_key_on">Dicta solo</string>
     <string name="wear_key_off">Solo con móvil</string>

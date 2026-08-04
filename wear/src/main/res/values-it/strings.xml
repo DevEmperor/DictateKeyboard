@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Tastiera attiva ✓</string>
     <string name="wear_kb_enable_on">Scrive in ogni app</string>
     <string name="wear_kb_enable_off">Attiva nelle impostazioni</string>
-    <string name="wear_kb_choose">Scegli la tastiera</string>
-    <string name="wear_kb_chosen">Tastiera scelta ✓</string>
-    <string name="wear_kb_choose_sub">Scegli Dictate nel campo</string>
     <string name="wear_key">Chiave sull\'orologio</string>
     <string name="wear_key_on">Detta da sola</string>
     <string name="wear_key_off">Solo col telefono</string>

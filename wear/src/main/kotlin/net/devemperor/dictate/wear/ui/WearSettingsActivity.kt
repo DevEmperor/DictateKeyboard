@@ -79,7 +79,6 @@ class WearSettingsActivity : ComponentActivity() {
 
     private var micGranted by mutableStateOf(false)
     private var imeEnabled by mutableStateOf(false)
-    private var imeSelected by mutableStateOf(false)
 
     // In-app "Try dictation" demo state (independent of the IME).
     private var demoState by mutableStateOf(DemoState.IDLE)
@@ -120,7 +119,6 @@ class WearSettingsActivity : ComponentActivity() {
                 SettingsScreen(
                     micGranted = micGranted,
                     imeEnabled = imeEnabled,
-                    imeSelected = imeSelected,
                     demoState = demoState,
                     demoResult = demoResult,
                     demoError = demoError,
@@ -131,7 +129,6 @@ class WearSettingsActivity : ComponentActivity() {
                     onRequestMic = { requestMic.launch(Manifest.permission.RECORD_AUDIO) },
                     onTryDictation = { onTryDictation() },
                     onEnableKeyboard = { openInputMethodSettings() },
-                    onChooseKeyboard = { openInputMethodSettings() },
                     onResync = {
                         syncFromPhone()
                         lifecycleScope.launch {
@@ -187,14 +184,10 @@ class WearSettingsActivity : ComponentActivity() {
             PackageManager.PERMISSION_GRANTED
     }
 
-    /** Reflect whether the Dictate keyboard is enabled in the system and currently selected as default. */
+    /** Reflect whether the Dictate keyboard is enabled in the system. */
     private fun refreshImeState() {
         val imm = getSystemService(InputMethodManager::class.java)
         imeEnabled = imm?.enabledInputMethodList?.any { it.packageName == packageName } == true
-        val default = runCatching {
-            Settings.Secure.getString(contentResolver, Settings.Secure.DEFAULT_INPUT_METHOD)
-        }.getOrNull()
-        imeSelected = default?.contains(packageName) == true
     }
 
     /**
@@ -281,7 +274,6 @@ private enum class DemoState { IDLE, RECORDING, TRANSCRIBING }
 private fun SettingsScreen(
     micGranted: Boolean,
     imeEnabled: Boolean,
-    imeSelected: Boolean,
     demoState: DemoState,
     demoResult: String?,
     demoError: String?,
@@ -292,7 +284,6 @@ private fun SettingsScreen(
     onRequestMic: () -> Unit,
     onTryDictation: () -> Unit,
     onEnableKeyboard: () -> Unit,
-    onChooseKeyboard: () -> Unit,
     onResync: () -> Unit,
     onSetStandalone: (Boolean) -> Unit,
     onSetAutoRewording: (Boolean) -> Unit,
@@ -389,15 +380,6 @@ private fun SettingsScreen(
                     secondaryLabel = {
                         Text(if (imeEnabled) stringResource(R.string.wear_kb_enable_on) else stringResource(R.string.wear_kb_enable_off))
                     },
-                )
-            }
-            item {
-                Chip(
-                    onClick = onChooseKeyboard,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ChipDefaults.secondaryChipColors(),
-                    label = { Text(if (imeSelected) stringResource(R.string.wear_kb_chosen) else stringResource(R.string.wear_kb_choose)) },
-                    secondaryLabel = { Text(stringResource(R.string.wear_kb_choose_sub)) },
                 )
             }
 

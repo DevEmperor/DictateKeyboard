@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Toetsenbord aan ✓</string>
     <string name="wear_kb_enable_on">Typt in elke app</string>
     <string name="wear_kb_enable_off">Aanzetten in instellingen</string>
-    <string name="wear_kb_choose">Toetsenbord kiezen</string>
-    <string name="wear_kb_chosen">Toetsenbord gekozen ✓</string>
-    <string name="wear_kb_choose_sub">Kies Dictate in een veld</string>
     <string name="wear_key">Sleutel op horloge</string>
     <string name="wear_key_on">Dicteert solo</string>
     <string name="wear_key_off">Alleen met telefoon</string>

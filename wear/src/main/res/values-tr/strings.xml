@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Klavye etkin ✓</string>
     <string name="wear_kb_enable_on">Her uygulamada yazar</string>
     <string name="wear_kb_enable_off">Ayarlardan aç</string>
-    <string name="wear_kb_choose">Klavye seç</string>
-    <string name="wear_kb_chosen">Klavye seçildi ✓</string>
-    <string name="wear_kb_choose_sub">Alanda Dictate\'i seç</string>
     <string name="wear_key">Anahtar saatte</string>
     <string name="wear_key_on">Tek başına dikte</string>
     <string name="wear_key_off">Yalnızca telefonla</string>

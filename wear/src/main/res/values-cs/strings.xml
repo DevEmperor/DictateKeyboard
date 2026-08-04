@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Klávesnice zapnuta ✓</string>
     <string name="wear_kb_enable_on">Píše v každé aplikaci</string>
     <string name="wear_kb_enable_off">Zapni v nastavení</string>
-    <string name="wear_kb_choose">Vybrat klávesnici</string>
-    <string name="wear_kb_chosen">Klávesnice vybrána ✓</string>
-    <string name="wear_kb_choose_sub">Vyber Dictate v poli</string>
     <string name="wear_key">Klíč v hodinkách</string>
     <string name="wear_key_on">Diktuje samostatně</string>
     <string name="wear_key_off">Jen s telefonem</string>

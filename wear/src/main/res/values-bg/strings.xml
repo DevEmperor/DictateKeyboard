@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Клавиатурата е вкл. ✓</string>
     <string name="wear_kb_enable_on">Пише във всяко прил.</string>
     <string name="wear_kb_enable_off">Включете в настройки</string>
-    <string name="wear_kb_choose">Изберете клавиатура</string>
-    <string name="wear_kb_chosen">Клавиатурата избрана ✓</string>
-    <string name="wear_kb_choose_sub">Изберете Dictate в поле</string>
     <string name="wear_key">Ключ на часовника</string>
     <string name="wear_key_on">Диктова самостоятелно</string>
     <string name="wear_key_off">Само с телефон</string>

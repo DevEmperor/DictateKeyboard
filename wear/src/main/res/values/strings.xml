@@ -57,9 +57,6 @@
     <string name="wear_kb_enabled">Keyboard enabled ✓</string>
     <string name="wear_kb_enable_on">Types in any app</string>
     <string name="wear_kb_enable_off">Turn on in settings</string>
-    <string name="wear_kb_choose">Choose keyboard</string>
-    <string name="wear_kb_chosen">Keyboard selected ✓</string>
-    <string name="wear_kb_choose_sub">Pick Dictate in a field</string>
 
     <!-- Advanced -->
     <string name="wear_key">Key on watch</string>

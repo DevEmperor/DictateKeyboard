@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Clavier activé ✓</string>
     <string name="wear_kb_enable_on">Écrit dans toute appli</string>
     <string name="wear_kb_enable_off">Activer dans réglages</string>
-    <string name="wear_kb_choose">Choisir le clavier</string>
-    <string name="wear_kb_chosen">Clavier choisi ✓</string>
-    <string name="wear_kb_choose_sub">Choisir Dictate au champ</string>
     <string name="wear_key">Clé sur la montre</string>
     <string name="wear_key_on">Dicte en solo</string>
     <string name="wear_key_off">Avec le tél. seulement</string>
