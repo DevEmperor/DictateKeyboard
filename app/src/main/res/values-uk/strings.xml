@@ -1172,6 +1172,8 @@
     <string name="dictate__providers_field_realtime_model">Модель у реальному часі</string>
     <string name="dictate__providers_custom_realtime">Потокова передача в реальному часі</string>
     <string name="dictate__providers_custom_realtime_summary">Цей сервер підтримує протокол OpenAI realtime за адресою /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Будити перед переформулюванням</string>
+    <string name="dictate__providers_custom_warm_up_summary">Завчасно звертається до сервера, щоб приспана машина встигла запуститися</string>
     <string name="dictate__providers_realtime_model_default">За замовчуванням</string>
     <string name="dictate__instant_recording_title">Миттєвий запис</string>
     <string name="dictate__instant_recording_summary">Автоматично починати запис під час відкриття клавіатури</string>

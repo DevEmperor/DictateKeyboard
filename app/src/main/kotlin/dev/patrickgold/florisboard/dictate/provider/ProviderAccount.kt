@@ -70,6 +70,16 @@ data class ProviderAccount(
      * HTTP catalog says whether a server does, so the user tells us. Additive field, defaults off.
      */
     val customRealtime: Boolean = false,
+    /**
+     * Wake-on-demand support (issue #189): send a throwaway `/models` request as soon as a rewording is
+     * known to be coming, so a machine that only wakes on network traffic has the dictation's length as a
+     * head start instead of the user waiting out its boot.
+     *
+     * A common self-hosting shape is a small always-on box in front of a GPU machine that sleeps between
+     * jobs. Only ever useful for an endpoint of the user's own, and nothing about a server says whether it
+     * sleeps, so this is theirs to state. Additive field, defaults off.
+     */
+    val customWarmUp: Boolean = false,
 ) {
     /** True once the user has supplied a usable key (or this is a keyless endpoint like Ollama). */
     val hasKey: Boolean

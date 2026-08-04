@@ -1257,6 +1257,8 @@
     <string name="dictate__providers_field_realtime_model">リアルタイムモデル</string>
     <string name="dictate__providers_custom_realtime">リアルタイム ストリーミング</string>
     <string name="dictate__providers_custom_realtime_summary">このサーバーは /v1/realtime で OpenAI のリアルタイム プロトコルに対応しています</string>
+    <string name="dictate__providers_custom_warm_up">推敲の前に起こす</string>
+    <string name="dictate__providers_custom_warm_up_summary">早めにサーバーへ接続し、休止中のマシンが起動する時間を稼ぎます</string>
     <string name="dictate__providers_realtime_model_default">デフォルト</string>
     <string name="dictate__instant_recording_title">即時録音</string>
     <string name="dictate__instant_recording_summary">キーボードを開いたときに自動的に録音を開始します</string>

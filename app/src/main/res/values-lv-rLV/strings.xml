@@ -1268,6 +1268,8 @@
     <string name="dictate__providers_field_realtime_model">Reāllaika modelis</string>
     <string name="dictate__providers_custom_realtime">Straumēšana reāllaikā</string>
     <string name="dictate__providers_custom_realtime_summary">Šis serveris izmanto OpenAI realtime protokolu vietnē /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Pamodināt pirms pārfrāzēšanas</string>
+    <string name="dictate__providers_custom_warm_up_summary">Sazinās ar serveri laikus, lai snaudošai mašīnai pietiktu laika ieslēgties</string>
     <string name="dictate__providers_realtime_model_default">Noklusējuma</string>
     <string name="dictate__instant_recording_title">Tūlītēja ierakstīšana</string>
     <string name="dictate__instant_recording_summary">Sākt ierakstīšanu automātiski, kad tiek atvērta tastatūra</string>

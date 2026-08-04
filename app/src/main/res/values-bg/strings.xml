@@ -1325,6 +1325,8 @@
     <string name="dictate__providers_field_realtime_model">Модел в реално време</string>
     <string name="dictate__providers_custom_realtime">Стрийминг в реално време</string>
     <string name="dictate__providers_custom_realtime_summary">Този сървър поддържа протокола OpenAI realtime на /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Събуждане преди преформулиране</string>
+    <string name="dictate__providers_custom_warm_up_summary">Свързва се със сървъра рано, за да има спяща машина време да стартира</string>
     <string name="dictate__providers_realtime_model_default">По подразбиране</string>
     <string name="dictate__instant_recording_title">Незабавен запис</string>
     <string name="dictate__instant_recording_summary">Започвай записа автоматично при отваряне на клавиатурата</string>

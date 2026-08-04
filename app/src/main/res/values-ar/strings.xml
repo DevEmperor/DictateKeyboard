@@ -1183,6 +1183,8 @@
     <string name="dictate__providers_field_realtime_model">النموذج الفوري</string>
     <string name="dictate__providers_custom_realtime">البث في الوقت الفعلي</string>
     <string name="dictate__providers_custom_realtime_summary">يدعم هذا الخادم بروتوكول OpenAI الفوري على ‎/v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">التنبيه قبل إعادة الصياغة</string>
+    <string name="dictate__providers_custom_warm_up_summary">يتصل بالخادم مبكرًا ليتاح لجهاز نائم وقت للإقلاع</string>
     <string name="dictate__providers_realtime_model_default">افتراضي</string>
     <string name="dictate__instant_recording_title">تسجيل فوري</string>
     <string name="dictate__instant_recording_summary">بدء التسجيل تلقائيًا عند فتح لوحة المفاتيح</string>

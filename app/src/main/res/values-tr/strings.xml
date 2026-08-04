@@ -1303,6 +1303,8 @@
     <string name="dictate__providers_field_realtime_model">Gerçek zamanlı model</string>
     <string name="dictate__providers_custom_realtime">Gerçek zamanlı akış</string>
     <string name="dictate__providers_custom_realtime_summary">Bu sunucu /v1/realtime adresinde OpenAI realtime protokolünü kullanır</string>
+    <string name="dictate__providers_custom_warm_up">Yeniden yazmadan önce uyandır</string>
+    <string name="dictate__providers_custom_warm_up_summary">Sunucuya erkenden dokunur, böylece uyuyan makine açılmaya vakit bulur</string>
     <string name="dictate__providers_realtime_model_default">Varsayılan</string>
     <string name="dictate__instant_recording_title">Anında kayıt</string>
     <string name="dictate__instant_recording_summary">Klavye açıldığında kaydı otomatik olarak başlat</string>

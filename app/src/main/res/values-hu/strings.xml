@@ -1323,6 +1323,8 @@
     <string name="dictate__providers_field_realtime_model">Valós idejű modell</string>
     <string name="dictate__providers_custom_realtime">Valós idejű streamelés</string>
     <string name="dictate__providers_custom_realtime_summary">Ez a kiszolgáló az OpenAI realtime protokollt használja a /v1/realtime végponton</string>
+    <string name="dictate__providers_custom_warm_up">Ébresztés újrafogalmazás előtt</string>
+    <string name="dictate__providers_custom_warm_up_summary">Korán megszólítja a kiszolgálót, hogy az alvó gépnek legyen ideje elindulni</string>
     <string name="dictate__providers_realtime_model_default">Alapértelmezett</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>
     <string name="dictate__instant_recording_summary">A felvétel automatikus indítása a billentyűzet megnyitásakor</string>

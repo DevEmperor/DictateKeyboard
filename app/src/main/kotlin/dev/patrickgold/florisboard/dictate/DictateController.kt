@@ -234,6 +234,9 @@ object DictateController {
     /** The user's saved prompts (shared `prompts.db`), refreshed via [refreshPrompts]; drives the Smartbar prompt chips. */
     val prompts: StateFlow<List<PromptModel>> = _prompts.asStateFlow()
 
+    /** When a sleeping rewording server was last poked awake (#189); see [warmUpRewordingServer]. */
+    private var lastWarmUpAtMs = 0L
+
     private val _pendingPrompts = MutableStateFlow<List<PromptModel>>(emptyList())
     /**
      * Prompts queued by tapping the always-on prompt row while recording (ROW layout). They are applied
@@ -459,6 +462,9 @@ object DictateController {
 
     /** 20 Hz is responsive for a voice indicator while avoiding a display-rate UI loop. */
     private const val AUDIO_LEVEL_SAMPLE_MS = 50L
+
+    /** Shortest gap between two wake-up pokes at a sleeping rewording server (#189). */
+    private const val WARM_UP_THROTTLE_MS = 60_000L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
 
@@ -943,6 +949,8 @@ object DictateController {
         }
         val appContext = context.applicationContext
         ensureHapticObserver(appContext)
+        // A rewording server that has to be woken (#189) gets the length of this dictation to do it in.
+        if (rewordingWillFollow()) warmUpRewordingServer()
         startJob = scope.launch {
             try {
                 // Correct any stale active language (e.g. leftover "detect" after auto-detect was
@@ -2704,6 +2712,10 @@ object DictateController {
         target: OutputTarget? = null,
     ) {
         if (_state.value !is UiState.Idle && _state.value !is UiState.Error) return
+        // Tapping a prompt is the other moment a rewording is certain (#189). The head start is only the
+        // selection read and the request build, but if the server was asleep it means the retry lands on a
+        // machine that is already coming up instead of one that has not been told yet.
+        warmUpRewordingServer()
         // The floating overlay passes OVERLAY so the result is injected into the focused field via the
         // accessibility sink rather than the keyboard's editor.
         if (target != null) outputTarget = target
@@ -2868,6 +2880,54 @@ object DictateController {
      * (exactly as the legacy app did – the be-precise prompt is tuned for this position) and returns
      * the trimmed model output.
      */
+    /**
+     * Wake-on-demand for a self-hosted rewording backend (issue #189).
+     *
+     * The self-hosting shape this exists for: a small always-on box in front of a GPU machine that sleeps
+     * between jobs and is woken by the first packet that reaches it. Waking takes tens of seconds, and
+     * since the app only ever spoke to the server when it had something to send, that wait landed on the
+     * request the user was already waiting for — or timed out.
+     *
+     * So the moment a rewording is *known to be coming*, an empty `/models` goes out: free, side-effect
+     * free, and every OpenAI-compatible server answers it. From there the machine has the whole dictation
+     * to boot in. It is fire-and-forget by design — a failure is exactly the case this is for, and nothing
+     * about it may reach the user or hold up a recording.
+     *
+     * Deliberately not fired for transcriptions: the reporter runs a cloud STT in front of a local GPU,
+     * and waking that GPU for every dictation would defeat the point of letting it sleep.
+     */
+    private fun warmUpRewordingServer() {
+        val account = rewordingAccount()
+        if (!account.customWarmUp) return
+        val now = SystemClock.elapsedRealtime()
+        // Once a minute is plenty: the machine is either coming up already or it is up.
+        if (now - lastWarmUpAtMs in 0 until WARM_UP_THROTTLE_MS) return
+        lastWarmUpAtMs = now
+        val preset = presetFor(account)
+        val apiKey = account.apiKey.ifBlank { transcriptionAccount().apiKey }
+        val baseUrl = baseUrlOverrideFor(account)
+        scope.launch(Dispatchers.IO) {
+            runCatching {
+                OpenAiCompatibleClient.from(
+                    preset, apiKey,
+                    baseUrlOverride = baseUrl,
+                    proxy = prefs.dictate.dictateProxyConfig(),
+                    trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                ).listModels()
+            }
+        }
+    }
+
+    /**
+     * Whether this dictation is bound to end in a rewording, which is what makes waking the server at the
+     * start of the recording worthwhile rather than presumptuous: auto-formatting or an auto-apply prompt
+     * means the chain runs on its own once the transcript lands. Read from the cached prompt list, so this
+     * costs nothing on the recording path.
+     */
+    private fun rewordingWillFollow(): Boolean =
+        prefs.dictate.rewordingEnabled.get() &&
+            (prefs.dictate.autoFormattingEnabled.get() || _prompts.value.any { it.autoApply })
+
     private suspend fun requestReword(
         instruction: String,
         input: String?,

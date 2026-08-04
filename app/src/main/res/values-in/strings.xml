@@ -1280,6 +1280,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_field_realtime_model">Model waktu nyata</string>
     <string name="dictate__providers_custom_realtime">Streaming waktu nyata</string>
     <string name="dictate__providers_custom_realtime_summary">Server ini menggunakan protokol realtime OpenAI di /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Bangunkan sebelum penulisan ulang</string>
+    <string name="dictate__providers_custom_warm_up_summary">Menghubungi server lebih awal agar mesin yang tidur sempat menyala</string>
     <string name="dictate__providers_realtime_model_default">Bawaan</string>
     <string name="dictate__instant_recording_title">Perekaman instan</string>
     <string name="dictate__instant_recording_summary">Mulai merekam secara otomatis saat papan ketik terbuka</string>

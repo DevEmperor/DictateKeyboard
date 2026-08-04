@@ -1224,6 +1224,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_field_realtime_model">Realtimemodel</string>
     <string name="dictate__providers_custom_realtime">Realtime streamen</string>
     <string name="dictate__providers_custom_realtime_summary">Deze server spreekt het OpenAI-realtimeprotocol op /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Wekken vóór herformuleren</string>
+    <string name="dictate__providers_custom_warm_up_summary">Benadert de server vroeg, zodat een slapende machine kan opstarten</string>
     <string name="dictate__providers_realtime_model_default">Standaard</string>
     <string name="dictate__instant_recording_title">Direct opnemen</string>
     <string name="dictate__instant_recording_summary">Automatisch beginnen met opnemen wanneer het toetsenbord wordt geopend</string>

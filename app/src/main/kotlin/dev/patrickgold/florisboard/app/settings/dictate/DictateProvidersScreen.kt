@@ -506,6 +506,8 @@ private fun ProviderEditorDialog(
     // Self-hosted streaming (#249): whether this endpoint speaks the OpenAI realtime protocol. Nothing in
     // a catalog reveals that, so the user says so.
     var customRealtime by remember { mutableStateOf(account.customRealtime) }
+    // Wake-on-demand (#189): whether this endpoint sits in front of a machine that sleeps between jobs.
+    var customWarmUp by remember { mutableStateOf(account.customWarmUp) }
     var pickerKind by remember { mutableStateOf<ModelKind?>(null) }
 
     // Effective preset to drive the model picker / connection test. Custom endpoints get a base-URL-only
@@ -554,6 +556,7 @@ private fun ProviderEditorDialog(
                     apiKey = apiKey.trim(),
                     customBaseUrl = baseUrl.trim(),
                     customRealtime = customRealtime,
+                    customWarmUp = customWarmUp,
                     transcriptionModel = modelToStore(transcriptionModel, preset?.defaultTranscriptionModel),
                     chatModel = modelToStore(chatModel, preset?.defaultChatModel),
                     realtimeModel = modelToStore(realtimeModel, preset?.defaultRealtimeModel),
@@ -654,7 +657,7 @@ private fun ProviderEditorDialog(
                         Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                             Text(
                                 text = stringRes(R.string.dictate__providers_custom_realtime),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                             )
                             Text(
                                 text = stringRes(R.string.dictate__providers_custom_realtime_summary),
@@ -686,6 +689,31 @@ private fun ProviderEditorDialog(
                         ?: stringRes(R.string.dictate__model_placeholder),
                     onBrowse = { pickerKind = ModelKind.CHAT },
                 )
+                // Wake-on-demand (#189): a GPU box that sleeps between jobs only starts waking when
+                // something reaches it, so the first rewording otherwise pays for the whole boot. Offered
+                // only for endpoints of the user's own — nowhere else is there a machine to wake.
+                if (isCustom) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { customWarmUp = !customWarmUp }
+                            .padding(top = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                            Text(
+                                text = stringRes(R.string.dictate__providers_custom_warm_up),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
+                                text = stringRes(R.string.dictate__providers_custom_warm_up_summary),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(checked = customWarmUp, onCheckedChange = { customWarmUp = it })
+                    }
+                }
             }
             // Single-call multimodal (issue #130): kept at the bottom; when on, this one model transcribes
             // and formats in a single request (the rewording model above is hidden). Offered for any

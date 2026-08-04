@@ -1202,6 +1202,8 @@
     <string name="dictate__providers_field_realtime_model">Modèle en temps réel</string>
     <string name="dictate__providers_custom_realtime">Diffusion en temps réel</string>
     <string name="dictate__providers_custom_realtime_summary">Ce serveur utilise le protocole realtime d\'OpenAI sur /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Réveiller avant la reformulation</string>
+    <string name="dictate__providers_custom_warm_up_summary">Sollicite ce serveur tôt pour qu\'une machine en veille ait le temps de démarrer</string>
     <string name="dictate__providers_realtime_model_default">Par défaut</string>
     <string name="dictate__instant_recording_title">Enregistrement instantané</string>
     <string name="dictate__instant_recording_summary">Démarrer l\'enregistrement automatiquement à l\'ouverture du clavier</string>
