@@ -98,27 +98,29 @@ extremely accurate results for
 complete with punctuation — plus custom AI rewording powered by leading models from OpenAI,
 Google Gemini and many other providers.
 
-Instead of pecking at keys, just tap the microphone, speak, and watch your words appear —
-now in real time — as clean, formatted text in any app. Prefer to type? Dictate is a
-complete keyboard too, with glide typing, word suggestions and autocorrect. Need the text
-more formal, translated, summarised, or fixed-up? Hand it to a rewording prompt and let the
-model do the work. With the floating button you can even dictate straight into apps while
-another keyboard is open.
+Instead of pecking at keys, just tap the microphone — or hold it like a voice message and
+let go to send — and watch your words appear in real time as clean, formatted text in any
+app, online or entirely offline. Prefer to type? Dictate is a complete keyboard too, with
+glide typing, next-word prediction and an autocorrect that reads your fingers rather than
+your typos. Need the text more formal, translated, summarised, or fixed-up? Hand it to a
+rewording prompt and let the model do the work. With the floating button you can even
+dictate straight into apps while another keyboard is open.
 
 <br>
 
 ## 🎤 Features
 
-- **Voice dictation with Whisper AI** — highly accurate speech-to-text in dozens of languages, with automatic punctuation. It's so sensitive you can literally *whisper* and still get a clean transcription.
+- **Voice dictation with Whisper AI** — highly accurate speech-to-text in over a hundred languages, with automatic punctuation. It's so sensitive you can literally *whisper* and still get a clean transcription.
+- **Push to talk** — hold the mic key and speak, let go and it's sent, like a voice message. Slide left to throw the recording away, drag up to lock it hands-free. A quick tap still works the way it always did.
 - **Use Dictate from any keyboard** — Dictate registers as a system-wide voice input, so the mic key in other keyboards and apps can transcribe through Dictate, with your provider, prompts and on-device models. No accessibility permission needed, so it also works in apps that block it.
 - **Real-time transcription** — watch your words appear live as you speak, streaming from OpenAI, Deepgram, Soniox, AssemblyAI or ElevenLabs.
-- **On-device transcription** — dictate completely offline with a downloadable on-device model (Whisper, NVIDIA Parakeet or a German-specialised Parakeet): no internet needed and nothing ever leaves your phone. Hold the send button to run just one dictation locally without switching providers, and models free their memory again when idle. Models keep downloading in the background even if you leave the app.
+- **On-device transcription — now live, too** — dictate completely offline with a downloadable model: no internet needed and nothing ever leaves your phone. Streaming models write as you speak in ten languages, and for one-shot accuracy there is Whisper, NVIDIA Parakeet (25 European languages), Canary (English, German, French and Spanish in a third of the space) and models specialised in German or Russian. Hold the send button to run just one dictation locally without switching providers, and models free their memory again when idle. Models keep downloading in the background even if you leave the app.
 - **Transcription history** — every dictation is saved to a searchable history you can re-insert, replay, re-transcribe or pin, with full control over how long audio is kept.
 - **Long-form dictation** — speak for as long as you like: long recordings are transcribed in the background in segments, so you get your text sooner and never hit a length limit. An optional on-device Smart Turn model cuts at finished thoughts instead of at every pause.
-- **Glide typing, suggestions & autocorrect** — Dictate is now a complete typing keyboard too: swipe across the keys to type whole words, with per-language dictionaries, word suggestions, spell check and autocorrect.
+- **Glide typing, suggestions & autocorrect** — Dictate is a complete typing keyboard too: swipe across the keys to type whole words, with per-language dictionaries, spell check and an autocorrect that decides from where your fingers actually landed rather than from the finished word. It offers the next word before you type it, and any word can be added to your dictionary with a long press.
 - **Classic keyboard-free dictation layout** — bring back the pure, voice-first screen from Dictate 3: lock it in, or keep it just a swipe away from the full keyboard — now with a fully customizable action row (drag & drop), an Enter-key symbol popup and long-form controls.
 - **Wear OS keyboard** — dictate straight from your watch, tethered through your phone or fully standalone.
-- **Floating dictation button** — dictate straight into **any** app, even when another keyboard is active. Pick from four styles (Pill, Ring, Orb and the new audio-reactive Cloud), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press for rewording — or for a **freeform voice command**: just say what you want and the AI does it, using any selected text as context.
+- **Floating dictation button** — dictate straight into **any** app, even when another keyboard is active. Pick from six styles (Pill, Ring, Orb, the audio-reactive Cloud and the new Aurora and Lattice orbs), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press for rewording — or for a **freeform voice command**: just say what you want and the AI does it, using any selected text as context.
 - **AI rewording & rewriting** — turn a selection into something more formal, casual, translated, summarised, or anything you define with custom prompts, with adjustable reasoning effort.
 - **Community prompt library** — browse rewording prompts shared by others and install them in a tap, or publish your own.
 - **Dictation statistics** — track how much you've dictated and typed, with milestones and a home-screen overview.
@@ -129,6 +131,7 @@ another keyboard is open.
 - **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
 - **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost.
+- **Self-hosting friendly** — point Dictate at a server of your own for transcription, rewording and even live streaming, and let it wake a sleeping GPU machine before the first request arrives.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
   - Huge variety of keyboard layouts and easy language/subtype switching
   - Full theme customization with day/night presets, automatic switching and a high-contrast E-Reader theme
@@ -187,9 +190,15 @@ Dictate Keyboard is released under the terms of the
 - See [`LICENSE`](LICENSE) for the full license text and [`NOTICE`](NOTICE) for required
   attribution notices.
 - Speech recognition is powered by [OpenAI Whisper](https://openai.com/index/whisper/).
-- On-device live transcription uses the [Kroko ASR](https://huggingface.co/Banafo/Kroko-ASR)
-  community models by Banafo (CC-BY-SA), exported to ONNX by
+- On-device transcription uses [OpenAI Whisper](https://openai.com/index/whisper/) (MIT),
+  NVIDIA's [Parakeet](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) and
+  [Canary](https://huggingface.co/nvidia/canary-180m-flash) models and the primeline German
+  fine-tune (CC-BY-4.0), [GigaAM](https://github.com/salute-developers/GigaAM) for Russian (MIT),
+  and — for live transcription — the [Kroko ASR](https://huggingface.co/Banafo/Kroko-ASR)
+  community models by Banafo (CC-BY-SA). All of them are exported to ONNX by
   [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx).
+- The Lattice button design is ported from
+  [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs) by Jakub Antalik (MIT).
 - GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.
 
 <br>
