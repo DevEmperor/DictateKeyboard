@@ -755,6 +755,34 @@
     <string name="apptour52__outro_eyebrow">That\'s 5.2</string>
     <string name="apptour52__outro_title">Happy dictating</string>
     <string name="apptour52__outro_body">Plus plenty under the hood: the screen stays awake through a whole dictation, on-device models free their memory when idle, watch dictations survive dropouts, and German autocorrect learned umlauts. You can revisit any tour under Settings › About.</string>
+    <string name="apptour53__cta_try" comment="Button on a 5.3 tour page to jump straight to that feature">Try it</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Hold, speak, done</string>
+    <string name="apptour53__intro_body">This release is about the two things you do most: talking to your phone and typing on it. Both got faster, and both got better at staying out of your way.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Push to talk</string>
+    <string name="apptour53__pushtotalk_title">Hold the mic, release to send</string>
+    <string name="apptour53__pushtotalk_body">Like a voice message: hold the mic key and talk, let go and it is sent. Slide left to throw the recording away, or drag up to lock it hands-free. A quick tap still works the way it always did. Turn it on in the Dictate settings.</string>
+    <string name="apptour53__autocorrect_eyebrow">Autocorrect, rebuilt</string>
+    <string name="apptour53__autocorrect_title">It reads your fingers, not your typos</string>
+    <string name="apptour53__autocorrect_body">Corrections are now decided from where you actually touched the keys, searching the likely words as you go, instead of guessing from the finished word. On our test set it went from 88% correct to 98% — the difference shows up most on fast, sloppy typing.</string>
+    <string name="apptour53__offline_eyebrow">Offline, live</string>
+    <string name="apptour53__offline_title">Words appear while you speak — with no connection</string>
+    <string name="apptour53__offline_body">On-device models can now transcribe as you talk, not just when you finish, in ten languages. And two new models joined: Canary covers English, German, French and Spanish in a third of the space, and GigaAM is specialised in Russian.</string>
+    <string name="apptour53__languages_eyebrow">45 more languages</string>
+    <string name="apptour53__languages_title">Croatian, Bengali, Swahili and 42 more</string>
+    <string name="apptour53__languages_body">The language list had gaps that had nothing to do with what the providers actually support. It is now built from what they can really do — so if your language was missing, look again.</string>
+    <string name="apptour53__designs_eyebrow">Two new looks</string>
+    <string name="apptour53__designs_title">Aurora and Lattice</string>
+    <string name="apptour53__designs_body">Two new designs for the floating button, both alive rather than illustrated: light moving inside a sphere, and a sphere built from dots that wires itself together, ripples with your voice and twists while it works. Both follow your accent colour.</string>
+    <string name="apptour53__prediction_eyebrow">Fewer keystrokes</string>
+    <string name="apptour53__prediction_title">The next word, before you type it</string>
+    <string name="apptour53__prediction_body">The suggestion strip now offers what usually comes next, learned from how you write. And any word you long-press can be added to your dictionary, so your names and jargon stop being corrected.</string>
+    <string name="apptour53__ownserver_eyebrow">Your own server</string>
+    <string name="apptour53__ownserver_title">Self-hosted, now with live transcription</string>
+    <string name="apptour53__ownserver_body">A server of your own can drive live transcription too, if it speaks the OpenAI realtime protocol. And if it sits in front of a machine that sleeps, Dictate can wake it early so the first request is not stuck waiting for it to boot.</string>
+    <string name="apptour53__outro_eyebrow">That\'s 5.3</string>
+    <string name="apptour53__outro_title">Happy dictating</string>
+    <string name="apptour53__outro_body">Plus plenty of smaller things: every provider now carries its own logo, the recording indicator can be still, pulsing or voice-reactive, prompt output can keep the original transcript beside it, and paragraphs stop breaking after abbreviations. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>

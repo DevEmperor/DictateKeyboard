@@ -14,10 +14,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.PixelFormat
 import android.graphics.RadialGradient
 import android.graphics.RectF
@@ -57,6 +55,7 @@ import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
+import dev.patrickgold.florisboard.dictate.ui.DictateAuroraOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateLatticeSphereView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,9 +67,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.cos
 import kotlin.math.hypot
-import kotlin.math.sin
 
 /**
  * Owns the floating dictation button (issue #88): a small draggable bubble shown over other apps via a
@@ -1721,19 +1718,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     // --- Aurora skin (design 5) ------------------------------------------------------------------
 
     /**
-     * How lively the aurora orb is, which is the only thing its states change (#253). Declared out here
-     * because Kotlin does not allow an enum inside an inner class.
-     */
-    private enum class AuroraMood(val speed: Float, val churn: Float) {
-        /** Barely moving — the button is only waiting to be pressed. */
-        IDLE(0.25f, 0.10f),
-        /** Rides the voice; the mic level adds the rest. */
-        RECORDING(0.8f, 0.35f),
-        /** Visibly working, which is the whole point of it standing in for a spinner. */
-        THINKING(1.6f, 0.55f),
-    }
-
-    /**
      * A thinking orb (#253): coloured light moving inside a sphere, in the visual language AI interfaces
      * have converged on. Every state is the same orb at a different temperament rather than a different
      * widget — it drifts when idle, swells with the voice while recording, and churns while the transcript
@@ -1753,7 +1737,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
         override val visualInset: Int = (viewSize - coreSize) / 2
 
-        private val orb = AuroraView(context).apply { bodyRadius = coreSize / 2f }
+        private val orb = DictateAuroraOrbView(context).apply { bodyRadius = coreSize / 2f }
         // No mic or stop glyph: the orb's temperament already says which state it is in, and a badge on top
         // only fought the light inside it. Only the terminal marks below still get one.
         private val icon = ImageView(context).apply {
@@ -1782,17 +1766,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             icon.alpha = 0f
             when (state) {
                 is DictateController.UiState.Recording ->
-                    orb.setMood(AuroraMood.RECORDING, color(R.color.dictate_overlay_recording))
+                    orb.setMood(DictateAuroraOrbView.Mood.RECORDING, color(R.color.dictate_overlay_recording))
                 is DictateController.UiState.Transcribing ->
                     thinking(R.color.dictate_overlay_accent)
                 is DictateController.UiState.Rewording ->
                     thinking(R.color.dictate_overlay_rewording)
-                else -> orb.setMood(AuroraMood.IDLE, accentColor)
+                else -> orb.setMood(DictateAuroraOrbView.Mood.IDLE, accentColor)
             }
         }
 
         private fun thinking(colorRes: Int) {
-            orb.setMood(AuroraMood.THINKING, color(colorRes))
+            orb.setMood(DictateAuroraOrbView.Mood.THINKING, color(colorRes))
         }
 
         override fun showFlash(kind: FlashKind) {
@@ -1800,11 +1784,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             when (kind) {
                 FlashKind.ERROR -> {
                     icon.setImageResource(R.drawable.ic_dictate_overlay_error)
-                    orb.setMood(AuroraMood.IDLE, color(R.color.dictate_overlay_recording))
+                    orb.setMood(DictateAuroraOrbView.Mood.IDLE, color(R.color.dictate_overlay_recording))
                 }
                 FlashKind.SUCCESS -> {
                     icon.setImageResource(R.drawable.ic_dictate_overlay_check)
-                    orb.setMood(AuroraMood.IDLE, color(R.color.dictate_overlay_success))
+                    orb.setMood(DictateAuroraOrbView.Mood.IDLE, color(R.color.dictate_overlay_success))
                 }
             }
         }
@@ -1812,120 +1796,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         override fun onRecordingTick(level: Float, elapsedMs: Long) = orb.pushLevel(level)
 
         override fun destroy() = orb.stop()
-    }
-
-    /** The orb itself: blurred blobs orbiting inside a circle, at a speed set by [AuroraMood]. */
-    private inner class AuroraView(context: Context) : View(context) {
-
-        private val blobPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-        private val basePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-        private val clip = Path()
-
-        /** Radius of the sphere itself, which is smaller than the view: the margin is its breathing room. */
-        var bodyRadius = 0f
-
-        private var mood = AuroraMood.IDLE
-        private var tint = accentColor
-        private var phase = 0f
-        private var level = 0f
-        private var animator: ValueAnimator? = null
-
-        init {
-            // BlurMaskFilter is not supported by the hardware pipeline.
-            setLayerType(LAYER_TYPE_SOFTWARE, null)
-        }
-
-        fun setMood(mood: AuroraMood, color: Int) {
-            this.mood = mood
-            this.tint = color
-            if (mood != AuroraMood.RECORDING) level = 0f
-            basePaint.color = darken(color, 0.55f)
-            start()
-        }
-
-        /** Mic level, smoothed so the orb swells with the voice instead of twitching per frame. */
-        fun pushLevel(value: Float) {
-            level += (value.coerceIn(0f, 1f) - level) * 0.35f
-        }
-
-        private fun start() {
-            if (animator != null) return
-            // Motion turned off system-wide is a preference, not a suggestion: hold a still orb instead.
-            if (!ValueAnimator.areAnimatorsEnabled()) {
-                phase = 0.35f
-                invalidate()
-                return
-            }
-            animator = ValueAnimator.ofFloat(0f, 1f).apply {
-                duration = 6000
-                repeatCount = ValueAnimator.INFINITE
-                interpolator = LinearInterpolator()
-                addUpdateListener {
-                    // Its own clock rather than the animator's fraction, which restarts every cycle and
-                    // would jerk the orbits back whenever the mood changed their speed.
-                    phase = (phase + mood.speed / 60f) % 1_000f
-                    invalidate()
-                }
-                start()
-            }
-        }
-
-        fun stop() {
-            animator?.cancel()
-            animator = null
-        }
-
-        override fun onDetachedFromWindow() {
-            stop()
-            super.onDetachedFromWindow()
-        }
-
-        override fun onAttachedToWindow() {
-            super.onAttachedToWindow()
-            start()
-        }
-
-        override fun onDraw(canvas: Canvas) {
-            super.onDraw(canvas)
-            val size = minOf(width, height).toFloat()
-            if (size <= 0f) return
-            val cx = width / 2f
-            val cy = height / 2f
-            // The voice swells the sphere itself a little, so a loud moment is visible even before the
-            // light inside it moves.
-            val radius = (bodyRadius.takeIf { it > 0f } ?: (size / 2f)) * (1f + 0.06f * level)
-
-            clip.reset()
-            clip.addCircle(cx, cy, radius, Path.Direction.CW)
-            canvas.save()
-            canvas.clipPath(clip)
-            canvas.drawCircle(cx, cy, radius, basePaint)
-
-            // Three blobs on slow, differently-paced orbits. The voice pushes them outwards, so a loud
-            // moment reads as the light pressing against the inside of the sphere.
-            val spread = radius * (0.30f + 0.22f * level + mood.churn * 0.25f)
-            val blobRadius = radius * (0.62f + 0.10f * level)
-            blobPaint.maskFilter = BlurMaskFilter(radius * 0.45f, BlurMaskFilter.Blur.NORMAL)
-            for (i in BLOB_ANGLES.indices) {
-                val angle = BLOB_ANGLES[i] + phase * BLOB_RATES[i] * FULL_TURN
-                blobPaint.color = lighten(tint, BLOB_TINTS[i])
-                blobPaint.alpha = 210
-                canvas.drawCircle(
-                    cx + cos(angle) * spread,
-                    cy + sin(angle) * spread,
-                    blobRadius,
-                    blobPaint,
-                )
-            }
-            blobPaint.maskFilter = null
-
-            // A highlight near the top edge, which is what makes it read as a sphere rather than a disc.
-            blobPaint.color = lighten(tint, 0.55f)
-            blobPaint.alpha = 90
-            canvas.drawCircle(cx - radius * 0.28f, cy - radius * 0.34f, radius * 0.42f, blobPaint)
-            blobPaint.alpha = 255
-            canvas.restore()
-        }
     }
 
     // --- Cloud skin (design 4) -------------------------------------------------------------------
