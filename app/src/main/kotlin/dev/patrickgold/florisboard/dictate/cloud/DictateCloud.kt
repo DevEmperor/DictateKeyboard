@@ -77,12 +77,78 @@ object DictateCloud {
         data class Failed(val code: Int, val message: String) : PurchaseResult
     }
 
+    /** One pack as Play offers it here — localised name and price, ready to show. */
+    data class Offer(
+        val pack: DictateCloudPack,
+        val title: String,
+        val description: String,
+        /** Already in the buyer's own currency and formatting, straight from Play. */
+        val formattedPrice: String,
+    )
+
+    sealed interface Shop {
+        data class Ready(val offers: List<Offer>) : Shop
+
+        /**
+         * Billing cannot be used here. Nearly always benign and worth saying plainly: the app was
+         * installed as an APK rather than from Play, or there is no store account on the device.
+         */
+        data class Unavailable(val code: Int) : Shop
+    }
+
     /** This device's credit account, or an empty record when there is none yet. */
     fun account(): ProviderAccount =
         prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.CLOUD.id)
 
     /** True once credit can actually be spent from this device. */
     fun isActive(): Boolean = account().hasWallet
+
+    /** True when Dictate Cloud is the provider dictation and rewording currently run through. */
+    fun isSelected(): Boolean =
+        prefs.dictate.transcriptionProviderId.get() == ProviderRegistry.CLOUD.id
+
+    /**
+     * Makes Dictate Cloud the active provider for both dictation and rewording.
+     *
+     * Never done as a side effect of a purchase. Someone may buy credit while happily using their
+     * own key — for a spare, or for the phone where the key is not set up — and silently
+     * redirecting their dictation would be a decision made on their behalf.
+     */
+    suspend fun activate() {
+        prefs.dictate.transcriptionProviderId.set(ProviderRegistry.CLOUD.id)
+        prefs.dictate.rewordingProviderId.set(ProviderRegistry.CLOUD.id)
+    }
+
+    /** What Play has on offer, with local prices. */
+    suspend fun shop(context: Context): Shop {
+        val billing = DictateCloudBilling(context)
+        try {
+            val connection = billing.connect()
+            if (connection != BillingResponseCode.OK) return Shop.Unavailable(connection)
+            val products = billing.products()
+            if (products.details.isEmpty()) return Shop.Unavailable(products.code)
+            // Ordered by the pack list, not by what Play happened to return, so the shop reads
+            // cheapest-first even if a product is momentarily missing from the answer.
+            val offers = DictateCloudPack.ordered.mapNotNull { pack ->
+                val details = products.find(pack) ?: return@mapNotNull null
+                // A pack with no purchase option cannot be bought at all, so it is left out
+                // rather than shown as a button that would fail.
+                val offer = details.oneTimePurchaseOfferDetailsList?.firstOrNull()
+                    ?: return@mapNotNull null
+                Offer(
+                    pack = pack,
+                    // `name` is the bare product name; `title` appends the app name in brackets,
+                    // which reads oddly inside the app it names.
+                    title = details.name.ifBlank { details.title },
+                    description = details.description,
+                    formattedPrice = offer.formattedPrice,
+                )
+            }
+            return if (offers.isEmpty()) Shop.Unavailable(products.code) else Shop.Ready(offers)
+        } finally {
+            billing.close()
+        }
+    }
 
     /**
      * Buys [pack]: opens Play's sheet, waits for the answer and settles whatever comes back.

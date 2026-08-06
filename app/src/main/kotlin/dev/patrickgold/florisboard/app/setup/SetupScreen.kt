@@ -26,14 +26,17 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -50,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -166,6 +170,9 @@ private fun maskKey(key: String): String =
 /** True once the active transcription provider has a saved key, or is a keyless endpoint (Ollama). */
 private fun isProviderConfigured(accounts: ProviderAccounts, providerId: String): Boolean {
     if (accounts.getOrEmpty(providerId).hasKey) return true
+    // Dictate Cloud has no key page either, but it is not a keyless endpoint: without credit
+    // there is nothing to dictate with, so it must not pass as set up the way Ollama does.
+    if (providerId == ProviderRegistry.CLOUD.id) return false
     val preset = ProviderRegistry.byId(providerId)
     return preset != null && preset.apiKeyUrl == null
 }
@@ -352,6 +359,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             ProviderSetupStep(
                 onSaveKey = ::saveKey,
                 onSkip = onSkipProvider,
+                onOpenCloud = { navController.navigate(Routes.Settings.DictateCloud) },
             )
         },
         FlorisStep(
@@ -425,6 +433,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
 private fun FlorisStepLayoutScope.ProviderSetupStep(
     onSaveKey: (providerId: String, key: String) -> Unit,
     onSkip: () -> Unit,
+    onOpenCloud: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -434,9 +443,29 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     var showManualEntry by rememberSaveable { mutableStateOf(false) }
     var pasteHint by remember { mutableStateOf<String?>(null) }
     var providerMenuExpanded by remember { mutableStateOf(false) }
+    // Which of the two ways the user has picked. Starts undecided on purpose: presenting the
+    // API-key flow first and mentioning credit afterwards would be a recommendation dressed up
+    // as an order, and both ways are meant to be equal here.
+    var choseOwnKey by rememberSaveable { mutableStateOf(false) }
 
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
+
+    if (!choseOwnKey) {
+        ProviderChoice(
+            onChooseCloud = onOpenCloud,
+            onChooseOwnKey = { choseOwnKey = true },
+            onSkip = onSkip,
+        )
+        return
+    }
+
+    TextButton(
+        modifier = Modifier.align(Alignment.CenterHorizontally),
+        onClick = { choseOwnKey = false },
+    ) {
+        Text(stringRes(R.string.setup__provider__back_to_choice))
+    }
 
     StepText(stringRes(R.string.setup__provider__intro))
     Spacer(modifier = Modifier.height(8.dp))
@@ -560,6 +589,71 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
             text = stringRes(R.string.setup__provider__skip_btn),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * The fork in the road, shown before anything else in the provider step.
+ *
+ * Both ways get the same space, the same shape and the same tone — including the sentence that
+ * credit costs more than going to a provider directly. Someone who finds that out after paying
+ * has been steered, and the whole point of Dictate Cloud is that it is a convenience, not a
+ * funnel. "Set up later" stays available underneath, as it always was.
+ */
+@Composable
+private fun FlorisStepLayoutScope.ProviderChoice(
+    onChooseCloud: () -> Unit,
+    onChooseOwnKey: () -> Unit,
+    onSkip: () -> Unit,
+) {
+    StepText(stringRes(R.string.setup__provider__choose_intro))
+    Spacer(modifier = Modifier.height(16.dp))
+
+    ChoiceCard(
+        title = stringRes(R.string.setup__provider__choice_cloud_title),
+        body = stringRes(R.string.setup__provider__choice_cloud_body),
+        buttonLabel = stringRes(R.string.setup__provider__choice_cloud_btn),
+        onClick = onChooseCloud,
+    )
+    Spacer(modifier = Modifier.height(12.dp))
+    ChoiceCard(
+        title = stringRes(R.string.setup__provider__choice_own_title),
+        body = stringRes(R.string.setup__provider__choice_own_body),
+        buttonLabel = stringRes(R.string.setup__provider__choice_own_btn),
+        onClick = onChooseOwnKey,
+    )
+
+    TextButton(
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        onClick = onSkip,
+    ) {
+        Text(
+            text = stringRes(R.string.setup__provider__skip_btn),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun ChoiceCard(title: String, body: String, buttonLabel: String, onClick: () -> Unit) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            FilledTonalButton(onClick = onClick) { Text(buttonLabel) }
+        }
     }
 }
 
