@@ -81,11 +81,16 @@ object DictateCloudApi {
      *
      * [walletId] tops up an existing account; leaving it null has the server create one and return
      * its token and recovery code, once and only once.
+     *
+     * [label] names the buying device in the ledger. Worth sending even on the very first purchase:
+     * that device is the one most likely to turn up in a support request later, and a name that was
+     * not recorded then cannot be filled in afterwards.
      */
     suspend fun redeem(
         purchaseToken: String,
         productId: String,
         walletId: String? = null,
+        label: String? = null,
     ): DictateCloudRedeem = post(
         path = "/wallet/redeem",
         body = json.encodeToString(
@@ -93,9 +98,23 @@ object DictateCloudApi {
                 purchaseToken = purchaseToken,
                 productId = productId,
                 walletId = walletId?.takeIf { it.isNotBlank() },
+                label = label,
             ),
         ),
     )
+
+    /**
+     * How this device names itself in the ledger, e.g. `SM-A556B · Android 15 · 5.4.0`.
+     *
+     * Deliberately a description, not an identifier: model, OS and app version are what makes a
+     * support message answerable, and none of it says who anybody is. The server truncates to 60
+     * characters.
+     */
+    fun deviceLabel(): String = listOf(
+        android.os.Build.MODEL,
+        "Android ${android.os.Build.VERSION.RELEASE}",
+        dev.patrickgold.florisboard.BuildConfig.VERSION_NAME,
+    ).filter { it.isNotBlank() }.joinToString(" · ")
 
     /** Current balance for [token]. */
     suspend fun balance(token: String): DictateCloudBalance {
@@ -203,6 +222,7 @@ object DictateCloudApi {
         val purchaseToken: String,
         val productId: String,
         val walletId: String? = null,
+        val label: String? = null,
     )
 
     @Serializable

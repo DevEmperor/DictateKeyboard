@@ -196,7 +196,7 @@ object DictateCloud {
      * both look identical to a user staring at a spinner, and they need different advice.
      */
     suspend fun restore(code: String): DictateCloudRestore {
-        val restored = DictateCloudApi.restore(code, label = android.os.Build.MODEL)
+        val restored = DictateCloudApi.restore(code, label = DictateCloudApi.deviceLabel())
         edit {
             it.copy(
                 walletId = restored.walletId,
@@ -231,6 +231,7 @@ object DictateCloud {
                 purchaseToken = purchase.purchaseToken,
                 productId = productId,
                 walletId = account().walletId.takeIf { it.isNotBlank() },
+                label = DictateCloudApi.deviceLabel(),
             )
         } catch (e: DictateCloudException) {
             return Settlement.Failed(e)
