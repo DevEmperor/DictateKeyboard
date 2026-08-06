@@ -1703,4 +1703,6 @@
     <string name="dictate__cloud_privacy_body">Suas gravações e textos são repassados e nunca gravados em disco. Só ficam números: qual conta, quando, por quanto tempo e se deu certo. Por trás de uma conta de crédito não há nome, nem e-mail, nem conta do Google — apenas um identificador aleatório.</string>
     <string name="dictate__cloud_other_way_title">Seu próprio provedor continua disponível</string>
     <string name="dictate__cloud_other_way_body">Você pode trocar para sua própria chave de API a qualquer momento, e voltar. Seu crédito fica onde está.</string>
+    <string name="dictate__error_out_of_credit">Crédito esgotado</string>
+    <string name="dictate__action_top_up">Recarregar crédito</string>
 </resources>

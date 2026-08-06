@@ -1889,4 +1889,6 @@
     <string name="dictate__cloud_privacy_body">你的录音和文本只是被转发，绝不会写入磁盘。保存的只有数字：哪个账户、何时、多长时间、是否成功。额度账户背后没有姓名、没有邮箱、也没有 Google 账号——只有一个随机标识。</string>
     <string name="dictate__cloud_other_way_title">你自己的服务商依然可用</string>
     <string name="dictate__cloud_other_way_body">你随时可以切换到自己的 API 密钥，也可以再切回来。你的额度会原样保留。</string>
+    <string name="dictate__error_out_of_credit">额度已用完</string>
+    <string name="dictate__action_top_up">充值额度</string>
 </resources>

@@ -1770,4 +1770,6 @@
     <string name="dictate__cloud_privacy_body">Els teus enregistraments i textos només es reenvien i mai no s\'escriuen al disc. Només es desen xifres: quin compte, quan, quanta estona i si ha funcionat. Darrere d\'un compte de saldo no hi ha cap nom, cap adreça electrònica ni cap compte de Google, només un identificador aleatori.</string>
     <string name="dictate__cloud_other_way_title">El teu proveïdor continua disponible</string>
     <string name="dictate__cloud_other_way_body">Pots passar a la teva pròpia clau API quan vulguis, i tornar enrere. El teu saldo es queda on és.</string>
+    <string name="dictate__error_out_of_credit">Saldo esgotat</string>
+    <string name="dictate__action_top_up">Recarrega el saldo</string>
 </resources>

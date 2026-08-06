@@ -1742,4 +1742,6 @@
     <string name="dictate__cloud_privacy_body">Ваші записи й тексти передаються наскрізь і ніколи не записуються на диск. Зберігаються лише числа: який рахунок, коли, як довго і чи вдалося. За рахунком немає ні імені, ні адреси пошти, ні облікового запису Google — тільки випадковий ідентифікатор.</string>
     <string name="dictate__cloud_other_way_title">Власний постачальник лишається доступним</string>
     <string name="dictate__cloud_other_way_body">Ви будь-коли можете перейти на власний ключ API і назад. Ваш баланс залишиться на місці.</string>
+    <string name="dictate__error_out_of_credit">Баланс вичерпано</string>
+    <string name="dictate__action_top_up">Поповнити баланс</string>
 </resources>

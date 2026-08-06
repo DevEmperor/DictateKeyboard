@@ -1827,4 +1827,6 @@
     <string name="dictate__cloud_privacy_body">録音とテキストはそのまま中継され、ディスクに書き込まれることはありません。保存されるのは数値だけです。どのアカウントか、いつ、どれくらいの長さか、成功したかどうか。クレジットアカウントの背後に名前もメールアドレスも Google アカウントもありません。あるのはランダムな識別子だけです。</string>
     <string name="dictate__cloud_other_way_title">自分のプロバイダーも引き続き使えます</string>
     <string name="dictate__cloud_other_way_body">いつでもご自身の API キーに切り替えられますし、戻すこともできます。クレジットはそのまま残ります。</string>
+    <string name="dictate__error_out_of_credit">クレジットを使い切りました</string>
+    <string name="dictate__action_top_up">クレジットをチャージ</string>
 </resources>

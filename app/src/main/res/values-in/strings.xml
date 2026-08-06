@@ -1850,4 +1850,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_privacy_body">Rekaman dan teksmu hanya diteruskan dan tidak pernah ditulis ke disk. Yang disimpan hanya angka: akun mana, kapan, berapa lama, dan apakah berhasil. Di balik akun saldo tidak ada nama, alamat email, maupun akun Google — hanya sebuah pengenal acak.</string>
     <string name="dictate__cloud_other_way_title">Penyedia sendiri tetap tersedia</string>
     <string name="dictate__cloud_other_way_body">Kamu bisa beralih ke kunci API milikmu kapan saja, dan kembali lagi. Saldomu tetap di tempatnya.</string>
+    <string name="dictate__error_out_of_credit">Saldo habis</string>
+    <string name="dictate__action_top_up">Isi ulang saldo</string>
 </resources>

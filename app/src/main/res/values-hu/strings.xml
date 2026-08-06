@@ -1893,4 +1893,6 @@
     <string name="dictate__cloud_privacy_body">A felvételei és szövegei csak áthaladnak, és soha nem íródnak lemezre. Csak számok maradnak meg: melyik fiók, mikor, mennyi ideig, és hogy sikerült-e. Egy egyenlegfiók mögött nincs név, nincs e-mail-cím és nincs Google-fiók — csak egy véletlenszerű azonosító.</string>
     <string name="dictate__cloud_other_way_title">A saját szolgáltató továbbra is elérhető</string>
     <string name="dictate__cloud_other_way_body">Bármikor átválthat a saját API-kulcsára, és vissza is. Az egyenlege ott marad, ahol van.</string>
+    <string name="dictate__error_out_of_credit">Az egyenleg elfogyott</string>
+    <string name="dictate__action_top_up">Egyenleg feltöltése</string>
 </resources>

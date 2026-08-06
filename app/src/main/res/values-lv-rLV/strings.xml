@@ -1838,4 +1838,6 @@
     <string name="dictate__cloud_privacy_body">Jūsu ieraksti un teksti tiek tikai pārsūtīti un nekad netiek rakstīti diskā. Tiek glabāti vienīgi skaitļi: kurš konts, kad, cik ilgi un vai izdevās. Aiz kredīta konta nav ne vārda, ne e-pasta adreses, ne Google konta — tikai nejaušs identifikators.</string>
     <string name="dictate__cloud_other_way_title">Jūsu pakalpojuma sniedzējs paliek pieejams</string>
     <string name="dictate__cloud_other_way_body">Jebkurā brīdī varat pāriet uz savu API atslēgu un atgriezties atpakaļ. Jūsu kredīts paliek turpat.</string>
+    <string name="dictate__error_out_of_credit">Kredīts iztērēts</string>
+    <string name="dictate__action_top_up">Papildināt kredītu</string>
 </resources>

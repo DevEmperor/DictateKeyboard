@@ -1910,4 +1910,6 @@
     <string name="dictate__cloud_privacy_body">Twoje nagrania i teksty są przekazywane dalej i nigdy nie trafiają na dysk. Zapisywane są tylko liczby: które konto, kiedy, jak długo i czy się udało. Za kontem środków nie stoi żadne imię, żaden adres e-mail ani żadne konto Google — tylko losowy identyfikator.</string>
     <string name="dictate__cloud_other_way_title">Własny dostawca pozostaje możliwy</string>
     <string name="dictate__cloud_other_way_body">W każdej chwili możesz przejść na własny klucz API i wrócić z powrotem. Twoje środki zostają tam, gdzie są.</string>
+    <string name="dictate__error_out_of_credit">Środki wyczerpane</string>
+    <string name="dictate__action_top_up">Doładuj środki</string>
 </resources>

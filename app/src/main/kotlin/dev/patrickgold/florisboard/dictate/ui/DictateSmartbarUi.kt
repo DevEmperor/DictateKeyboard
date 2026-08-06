@@ -61,6 +61,7 @@ import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.AddCard
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Settings
@@ -582,6 +583,19 @@ private fun RowScope.ErrorContent(state: DictateController.UiState.Error) {
             }
             DismissButton()
         }
+        DictateController.ErrorAction.TOP_UP -> {
+            SnyggIconButton(
+                elementName = FlorisImeUi.SmartbarActionKey.elementName,
+                onClick = { DictateController.openCloudSettings(context) },
+                modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.Default.AddCard,
+                    contentDescription = stringRes(R.string.dictate__action_top_up),
+                )
+            }
+            DismissButton()
+        }
         DictateController.ErrorAction.SAVE_AUDIO -> {
             SnyggIconButton(
                 elementName = FlorisImeUi.SmartbarActionKey.elementName,
@@ -712,6 +726,7 @@ private fun ErrorDetailPopup(detail: String, onDismiss: () -> Unit) {
 
 /** Kind-specific icon for the error chip; the open-settings action gets a key icon regardless of kind. */
 private fun errorIcon(kind: DictateApiException.Kind?, action: DictateController.ErrorAction): ImageVector = when {
+    action == DictateController.ErrorAction.TOP_UP -> Icons.Default.AddCard
     action == DictateController.ErrorAction.OPEN_SETTINGS -> Icons.Default.VpnKey
     kind == DictateApiException.Kind.QUOTA_EXCEEDED -> Icons.Default.DataUsage
     kind == DictateApiException.Kind.CONTENT_SIZE_LIMIT -> Icons.Default.WarningAmber

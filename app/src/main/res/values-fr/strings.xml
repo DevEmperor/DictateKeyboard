@@ -1770,4 +1770,6 @@
     <string name="dictate__cloud_privacy_body">Vos enregistrements et vos textes sont transmis tels quels et ne sont jamais écrits sur disque. Seuls des chiffres sont conservés : quel compte, quand, combien de temps et si cela a fonctionné. Derrière un compte de crédit, il n\'y a ni nom, ni adresse e-mail, ni compte Google — seulement un identifiant aléatoire.</string>
     <string name="dictate__cloud_other_way_title">Votre propre fournisseur reste possible</string>
     <string name="dictate__cloud_other_way_body">Vous pouvez passer à votre propre clé API à tout moment, et revenir en arrière. Votre crédit reste où il est.</string>
+    <string name="dictate__error_out_of_credit">Crédit épuisé</string>
+    <string name="dictate__action_top_up">Recharger le crédit</string>
 </resources>

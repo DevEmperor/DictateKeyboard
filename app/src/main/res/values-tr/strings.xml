@@ -1873,4 +1873,6 @@
     <string name="dictate__cloud_privacy_body">Kayıtlarınız ve metinleriniz doğrudan iletilir, hiçbir zaman diske yazılmaz. Yalnızca sayılar saklanır: hangi hesap, ne zaman, ne kadar süre ve işe yarayıp yaramadığı. Bir kontör hesabının arkasında ad, e-posta veya Google hesabı yoktur — yalnızca rastgele bir kimlik.</string>
     <string name="dictate__cloud_other_way_title">Kendi sağlayıcınız açık kalır</string>
     <string name="dictate__cloud_other_way_body">İstediğiniz zaman kendi API anahtarınıza geçebilir, sonra geri dönebilirsiniz. Kontörünüz olduğu yerde kalır.</string>
+    <string name="dictate__error_out_of_credit">Kontör bitti</string>
+    <string name="dictate__action_top_up">Kontör yükle</string>
 </resources>

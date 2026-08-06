@@ -41,6 +41,7 @@ import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
@@ -197,6 +198,12 @@ object DictateController {
          * reason that resending can't fix (too large / unsupported format) so a long recording isn't lost.
          */
         SAVE_AUDIO,
+
+        /**
+         * Open the Dictate Cloud screen to buy more credit. Offered only when the server said the
+         * balance is spent — the one out-of-quota case this app can actually resolve.
+         */
+        TOP_UP,
     }
 
     /**
@@ -727,6 +734,21 @@ object DictateController {
         clearError()
     }
 
+    /**
+     * Opens the Dictate Cloud screen from the keyboard so credit can be topped up without losing the
+     * place in whatever was being written. Same new-task launch as [openProviderSettings].
+     */
+    fun openCloudSettings(context: Context) {
+        runCatching {
+            context.startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("ui://florisboard/settings/dictate/cloud"))
+                    .addCategory(Intent.CATEGORY_BROWSABLE)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            )
+        }
+        clearError()
+    }
+
     /** Localized one-line headline for an API error [kind] (roadmap 1.12 specific error messages). */
     private fun errorMessageRes(kind: DictateApiException.Kind): Int = when (kind) {
         DictateApiException.Kind.INVALID_API_KEY -> R.string.dictate__error_invalid_api_key
@@ -751,14 +773,23 @@ object DictateController {
     )
 
     private fun apiError(e: DictateApiException, context: Context, canResend: Boolean): UiState.Error {
+        // Dictate Cloud running out of credit is checked first, and before the resend branches: it is
+        // classified as QUOTA_EXCEEDED like every other provider's rate limit, but unlike those it is
+        // neither worth retrying nor something to go and fix at a provider. Buying more is a button.
+        val outOfCredit = e.code == DictateCloudApi.ErrorCode.INSUFFICIENT_CREDITS
         val action = when {
+            outOfCredit -> ErrorAction.TOP_UP
             canResend && e.kind in EXPORTABLE_ERROR_KINDS -> ErrorAction.SAVE_AUDIO
             canResend && e.kind.isRetryable -> ErrorAction.RESEND
             e.kind == DictateApiException.Kind.INVALID_API_KEY -> ErrorAction.OPEN_SETTINGS
             else -> ErrorAction.NONE
         }
         return UiState.Error(
-            message = context.getString(errorMessageRes(e.kind)),
+            message = if (outOfCredit) {
+                context.getString(R.string.dictate__error_out_of_credit)
+            } else {
+                context.getString(errorMessageRes(e.kind))
+            },
             kind = e.kind,
             action = action,
             detail = e.message?.takeIf { it.isNotBlank() },

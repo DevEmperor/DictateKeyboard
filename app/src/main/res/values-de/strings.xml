@@ -1770,4 +1770,6 @@
     <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
     <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
     <string name="about__website__title">Website</string>
+    <string name="dictate__error_out_of_credit">Guthaben aufgebraucht</string>
+    <string name="dictate__action_top_up">Guthaben aufladen</string>
 </resources>

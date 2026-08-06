@@ -1678,4 +1678,6 @@
     <string name="dictate__cloud_privacy_body">Le tue registrazioni e i tuoi testi vengono inoltrati e mai scritti su disco. Si conservano solo numeri: quale conto, quando, quanto a lungo e se ha funzionato. Dietro un conto di credito non c\'è alcun nome, alcuna email né alcun account Google — solo un identificativo casuale.</string>
     <string name="dictate__cloud_other_way_title">Il tuo fornitore resta possibile</string>
     <string name="dictate__cloud_other_way_body">Puoi passare in qualsiasi momento alla tua chiave API e tornare indietro. Il tuo credito resta dov\'è.</string>
+    <string name="dictate__error_out_of_credit">Credito esaurito</string>
+    <string name="dictate__action_top_up">Ricarica il credito</string>
 </resources>

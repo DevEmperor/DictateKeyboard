@@ -58,6 +58,13 @@ object DictateCloudApi {
         const val WALLET_NOT_FOUND = "wallet_not_found"
         /** The stored token is not (or no longer) valid. */
         const val INVALID_TOKEN = "invalid_token"
+
+        /**
+         * Out of credit. Sent on dictation and rewording alike, and the one error whose remedy is a
+         * button in this app rather than something to sort out at a provider — which is why it is
+         * matched on exactly instead of on the flattened "quota" bucket every provider lands in.
+         */
+        const val INSUFFICIENT_CREDITS = "insufficient_credits"
     }
 
     private val base = ProviderRegistry.CLOUD.baseUrl.trimEnd('/')

@@ -21,6 +21,15 @@ class DictateApiException(
     message: String? = null,
     cause: Throwable? = null,
     val httpStatus: Int? = null,
+    /**
+     * The provider's machine-readable `error.code`, kept verbatim.
+     *
+     * [kind] deliberately flattens many causes into one bucket — "out of credit" and "rate limited"
+     * are both [Kind.QUOTA_EXCEEDED], because for most providers the remedy is the same: wait or top
+     * up somewhere else. Dictate Cloud is the exception, since the remedy is a button in this app, so
+     * that one case has to be told apart from the rest by something more precise than a keyword.
+     */
+    val code: String? = null,
 ) : Exception(message, cause) {
 
     enum class Kind {
@@ -70,7 +79,7 @@ class DictateApiException(
                 status in 500..599 -> Kind.SERVER_ERROR
                 else -> Kind.UNKNOWN
             }
-            return DictateApiException(kind, message ?: "HTTP $status", null, status)
+            return DictateApiException(kind, message ?: "HTTP $status", null, status, code)
         }
 
         /** Classifies a transport-level exception (timeouts, no connection, …). */

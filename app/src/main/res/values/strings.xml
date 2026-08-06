@@ -1565,6 +1565,8 @@
     <string name="dictate__action_resume" comment="Content description for the button that resumes the recording">Resume recording</string>
     <string name="dictate__action_resend" comment="Content description for the button that retries the last failed audio">Try again</string>
     <string name="dictate__action_save_audio" comment="Content description for the button that saves a failed recording to Downloads">Save audio</string>
+    <string name="dictate__error_out_of_credit" comment="Short error: the Dictate Cloud credit is used up; shown instead of the generic quota error">Credit used up</string>
+    <string name="dictate__action_top_up" comment="Content description for the button that opens Dictate Cloud to buy more credit">Top up credit</string>
     <string name="dictate__audio_saved" comment="Toast after saving a failed recording; %s is the file name">Audio saved to Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed" comment="Toast when saving a failed recording did not work">Couldn\'t save the audio</string>
     <string name="dictate__action_dismiss" comment="Content description for the button that dismisses the resend error">Dismiss</string>

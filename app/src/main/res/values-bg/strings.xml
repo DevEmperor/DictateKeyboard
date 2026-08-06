@@ -1895,4 +1895,6 @@
     <string name="dictate__cloud_privacy_body">Записите и текстовете ви се препращат и никога не се записват на диск. Пазят се само числа: кой акаунт, кога, колко дълго и дали е сработило. Зад кредитния акаунт няма име, няма имейл и няма Google акаунт — само случаен идентификатор.</string>
     <string name="dictate__cloud_other_way_title">Собственият ви доставчик остава възможен</string>
     <string name="dictate__cloud_other_way_body">По всяко време можете да преминете към собствения си API ключ и обратно. Кредитът ви остава там, където е.</string>
+    <string name="dictate__error_out_of_credit">Кредитът е изчерпан</string>
+    <string name="dictate__action_top_up">Захрани кредита</string>
 </resources>

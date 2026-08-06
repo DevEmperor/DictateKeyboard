@@ -1874,4 +1874,6 @@
     <string name="dictate__cloud_privacy_body">As tuas gravações e textos são encaminhados e nunca escritos em disco. Só se guardam números: que conta, quando, quanto tempo e se resultou. Por trás de uma conta de saldo não há nome, nem email, nem conta Google — apenas um identificador aleatório.</string>
     <string name="dictate__cloud_other_way_title">O teu fornecedor continua disponível</string>
     <string name="dictate__cloud_other_way_body">Podes mudar para a tua própria chave API a qualquer momento, e voltar atrás. O teu saldo fica onde está.</string>
+    <string name="dictate__error_out_of_credit">Saldo esgotado</string>
+    <string name="dictate__action_top_up">Carregar saldo</string>
 </resources>

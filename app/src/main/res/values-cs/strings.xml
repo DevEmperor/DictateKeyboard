@@ -1909,4 +1909,6 @@
     <string name="dictate__cloud_privacy_body">Vaše nahrávky a texty se pouze předávají dál a nikdy se nezapisují na disk. Ukládají se jen čísla: který účet, kdy, jak dlouho a jestli to vyšlo. Za kreditním účtem není žádné jméno, žádný e-mail ani žádný účet Google — jen náhodný identifikátor.</string>
     <string name="dictate__cloud_other_way_title">Vlastní poskytovatel zůstává možný</string>
     <string name="dictate__cloud_other_way_body">Kdykoli můžete přejít na vlastní klíč API a zase zpátky. Váš kredit zůstane, kde je.</string>
+    <string name="dictate__error_out_of_credit">Kredit vyčerpán</string>
+    <string name="dictate__action_top_up">Dobít kredit</string>
 </resources>

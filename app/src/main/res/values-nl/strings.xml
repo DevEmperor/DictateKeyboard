@@ -1794,4 +1794,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_privacy_body">Je opnamen en teksten worden doorgegeven en nooit naar schijf geschreven. Alleen getallen worden bewaard: welk account, wanneer, hoe lang en of het lukte. Achter een tegoedaccount zit geen naam, geen e-mailadres en geen Google-account — alleen een willekeurige aanduiding.</string>
     <string name="dictate__cloud_other_way_title">Je eigen aanbieder blijft mogelijk</string>
     <string name="dictate__cloud_other_way_body">Je kunt altijd overstappen op je eigen API-sleutel, en weer terug. Je tegoed blijft waar het is.</string>
+    <string name="dictate__error_out_of_credit">Tegoed op</string>
+    <string name="dictate__action_top_up">Tegoed opwaarderen</string>
 </resources>

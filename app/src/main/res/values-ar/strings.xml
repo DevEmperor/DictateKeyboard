@@ -1753,4 +1753,6 @@
     <string name="dictate__cloud_privacy_body">تُمرَّر تسجيلاتك ونصوصك مباشرة ولا تُكتب على القرص أبدًا. لا يُحفظ سوى أرقام: أي حساب، ومتى، وكم المدة، وهل نجحت العملية. لا يقف خلف حساب الرصيد اسم ولا بريد إلكتروني ولا حساب Google — بل معرّف عشوائي فقط.</string>
     <string name="dictate__cloud_other_way_title">مزوّدك الخاص يظلّ متاحًا</string>
     <string name="dictate__cloud_other_way_body">يمكنك التبديل إلى مفتاح API الخاص بك في أي وقت، والعودة كذلك. يبقى رصيدك كما هو.</string>
+    <string name="dictate__error_out_of_credit">نفد الرصيد</string>
+    <string name="dictate__action_top_up">شحن الرصيد</string>
 </resources>
