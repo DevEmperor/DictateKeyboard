@@ -1840,7 +1840,6 @@
     <string name="dictate__cloud_other_way_body">Jebkurā brīdī varat pāriet uz savu API atslēgu un atgriezties atpakaļ. Jūsu kredīts paliek turpat.</string>
     <string name="dictate__error_out_of_credit">Kredīts iztērēts</string>
     <string name="dictate__action_top_up">Papildināt kredītu</string>
-    <string name="dictate__promo_low_credit_message">Jūsu Dictate Cloud kredīts gandrīz beidzies.</string>
+    <string name="dictate__promo_low_credit_message">Kredīts gandrīz beidzies.</string>
     <string name="dictate__promo_low_credit_action">Papildināt</string>
-    <string name="dictate__realtime_summary_cloud">Ar Dictate Cloud kredītu nav pieejams — minūte maksā apmēram četras reizes vairāk. Ierīcē esošais dzinējs to paveic bezsaistē un bez maksas.</string>
 </resources>

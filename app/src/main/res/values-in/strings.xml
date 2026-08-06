@@ -1852,7 +1852,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_other_way_body">Kamu bisa beralih ke kunci API milikmu kapan saja, dan kembali lagi. Saldomu tetap di tempatnya.</string>
     <string name="dictate__error_out_of_credit">Saldo habis</string>
     <string name="dictate__action_top_up">Isi ulang saldo</string>
-    <string name="dictate__promo_low_credit_message">Saldo Dictate Cloud-mu hampir habis.</string>
+    <string name="dictate__promo_low_credit_message">Saldo hampir habis.</string>
     <string name="dictate__promo_low_credit_action">Isi ulang</string>
-    <string name="dictate__realtime_summary_cloud">Tidak tersedia dengan saldo Dictate Cloud — biayanya sekitar empat kali lipat per menit. Mesin di perangkat melakukannya luring dan gratis.</string>
 </resources>

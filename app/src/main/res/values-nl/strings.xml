@@ -1796,7 +1796,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_other_way_body">Je kunt altijd overstappen op je eigen API-sleutel, en weer terug. Je tegoed blijft waar het is.</string>
     <string name="dictate__error_out_of_credit">Tegoed op</string>
     <string name="dictate__action_top_up">Tegoed opwaarderen</string>
-    <string name="dictate__promo_low_credit_message">Je Dictate Cloud-tegoed is bijna op.</string>
+    <string name="dictate__promo_low_credit_message">Tegoed bijna op.</string>
     <string name="dictate__promo_low_credit_action">Opwaarderen</string>
-    <string name="dictate__realtime_summary_cloud">Niet beschikbaar met Dictate Cloud-tegoed — het kost per minuut ongeveer vier keer zoveel. De motor op het apparaat doet het offline en gratis.</string>
 </resources>

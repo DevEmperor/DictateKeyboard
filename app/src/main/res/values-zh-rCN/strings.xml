@@ -1891,7 +1891,6 @@
     <string name="dictate__cloud_other_way_body">你随时可以切换到自己的 API 密钥，也可以再切回来。你的额度会原样保留。</string>
     <string name="dictate__error_out_of_credit">额度已用完</string>
     <string name="dictate__action_top_up">充值额度</string>
-    <string name="dictate__promo_low_credit_message">你的 Dictate Cloud 额度快用完了。</string>
+    <string name="dictate__promo_low_credit_message">额度快用完了。</string>
     <string name="dictate__promo_low_credit_action">充值</string>
-    <string name="dictate__realtime_summary_cloud">使用额度时不可用——每分钟费用约为四倍。设备端引擎可以离线且免费地完成。</string>
 </resources>

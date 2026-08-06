@@ -566,6 +566,9 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
             ) {
                 ProviderRegistry.presets
                     .filter { it.capabilities.transcription }
+                    // Dictate Cloud is the *other* branch of this step, not an entry in the list of
+                    // providers to bring a key for — it has no key page and nothing to paste.
+                    .filter { it.id != ProviderRegistry.CLOUD.id }
                     .forEach { preset ->
                         DropdownMenuItem(
                             text = { Text(preset.displayName) },

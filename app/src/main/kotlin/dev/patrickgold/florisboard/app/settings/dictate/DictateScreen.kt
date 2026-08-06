@@ -328,21 +328,12 @@ fun DictateRecordingScreen() = FlorisScreen {
             summaryOn = stringRes(R.string.dictate__push_to_talk_summary),
             summaryOff = stringRes(R.string.dictate__push_to_talk_summary_off),
         )
-        // Dictate Cloud has no streaming (it costs about four times a dictated minute, and the
-        // on-device engine does it for nothing), so the switch quietly falls back to batch there.
-        // Quietly is the problem: without a word here, turning it on and seeing no change reads as
-        // a bug rather than a decision.
-        val activeProviderId by prefs.dictate.transcriptionProviderId.collectAsState()
         SwitchPreference(
             prefs.dictate.realtimeTranscription,
             icon = Icons.Default.GraphicEq,
             modifier = Modifier.settingsSearchAnchor("dictate__realtime_title"),
             title = stringRes(R.string.dictate__realtime_title),
-            summary = if (activeProviderId == ProviderRegistry.CLOUD.id) {
-                stringRes(R.string.dictate__realtime_summary_cloud)
-            } else {
-                stringRes(R.string.dictate__realtime_summary)
-            },
+            summary = stringRes(R.string.dictate__realtime_summary),
         )
         // All long-form settings live behind one entry that opens a single dialog (#170).
         val longformMode by prefs.dictate.longformMode.collectAsState()

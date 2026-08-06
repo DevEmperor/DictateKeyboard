@@ -1772,7 +1772,6 @@
     <string name="dictate__cloud_other_way_body">Vous pouvez passer à votre propre clé API à tout moment, et revenir en arrière. Votre crédit reste où il est.</string>
     <string name="dictate__error_out_of_credit">Crédit épuisé</string>
     <string name="dictate__action_top_up">Recharger le crédit</string>
-    <string name="dictate__promo_low_credit_message">Votre crédit Dictate Cloud est presque épuisé.</string>
+    <string name="dictate__promo_low_credit_message">Crédit presque épuisé.</string>
     <string name="dictate__promo_low_credit_action">Recharger</string>
-    <string name="dictate__realtime_summary_cloud">Indisponible avec le crédit Dictate Cloud — cela coûte environ quatre fois plus par minute. Le moteur embarqué le fait hors ligne et gratuitement.</string>
 </resources>

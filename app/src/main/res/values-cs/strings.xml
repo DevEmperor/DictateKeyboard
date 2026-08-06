@@ -1911,7 +1911,6 @@
     <string name="dictate__cloud_other_way_body">Kdykoli můžete přejít na vlastní klíč API a zase zpátky. Váš kredit zůstane, kde je.</string>
     <string name="dictate__error_out_of_credit">Kredit vyčerpán</string>
     <string name="dictate__action_top_up">Dobít kredit</string>
-    <string name="dictate__promo_low_credit_message">Kredit Dictate Cloud je téměř vyčerpaný.</string>
+    <string name="dictate__promo_low_credit_message">Kredit skoro došel.</string>
     <string name="dictate__promo_low_credit_action">Dobít</string>
-    <string name="dictate__realtime_summary_cloud">S kreditem Dictate Cloud není k dispozici — stojí zhruba čtyřikrát víc za minutu. Engine v zařízení to zvládne offline a zdarma.</string>
 </resources>

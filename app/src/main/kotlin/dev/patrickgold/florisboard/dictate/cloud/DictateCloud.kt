@@ -287,6 +287,7 @@ object DictateCloud {
             it.copy(
                 walletId = restored.walletId,
                 apiKey = restored.token,
+                // Same treatment as a purchase — see below.
                 // The code the user just typed is the one that works — worth keeping so the settings
                 // can show it again rather than asking them to have kept the paper.
                 walletRecoveryCode = code.trim(),
@@ -295,6 +296,11 @@ object DictateCloud {
                 balanceCheckedAt = System.currentTimeMillis(),
             )
         }
+        // Recovering credit is the same event as buying it, from the app's point of view: someone
+        // now has minutes and nothing else set up. Whoever types their code during setup expects to
+        // carry on from there, not to go back a screen and skip the step they just completed.
+        prefs.dictate.cloudLowCreditNudged.set(false)
+        activateIfNothingElseConfigured()
         return restored
     }
 

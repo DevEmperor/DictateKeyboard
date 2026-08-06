@@ -1755,7 +1755,6 @@
     <string name="dictate__cloud_other_way_body">يمكنك التبديل إلى مفتاح API الخاص بك في أي وقت، والعودة كذلك. يبقى رصيدك كما هو.</string>
     <string name="dictate__error_out_of_credit">نفد الرصيد</string>
     <string name="dictate__action_top_up">شحن الرصيد</string>
-    <string name="dictate__promo_low_credit_message">رصيدك في Dictate Cloud شارف على النفاد.</string>
+    <string name="dictate__promo_low_credit_message">الرصيد شارف على النفاد.</string>
     <string name="dictate__promo_low_credit_action">شحن</string>
-    <string name="dictate__realtime_summary_cloud">غير متاح مع رصيد Dictate Cloud — تكلفته للدقيقة نحو أربعة أضعاف. ومحرّك الجهاز يؤدّيه دون اتصال ومجانًا.</string>
 </resources>

@@ -198,6 +198,7 @@ fun DictateCloudScreen() = FlorisScreen {
                         title = offer.title,
                         price = offer.formattedPrice,
                         minutes = offer.pack.minutes,
+                        rewords = offer.pack.rewords,
                         busy = buying == offer.pack.productId,
                         anyBusy = buying != null,
                         onBuy = { buy(offer.pack) },
@@ -441,6 +442,7 @@ private fun PackCard(
     title: String,
     price: String,
     minutes: Int,
+    rewords: Int,
     busy: Boolean,
     anyBusy: Boolean,
     onBuy: () -> Unit,
@@ -460,6 +462,14 @@ private fun PackCard(
                     text = stringRes(
                         R.string.dictate__cloud_pack_minutes,
                         "minutes" to minutes.toString(),
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    text = stringRes(
+                        R.string.dictate__cloud_balance_rewords,
+                        "count" to rewords.toString(),
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

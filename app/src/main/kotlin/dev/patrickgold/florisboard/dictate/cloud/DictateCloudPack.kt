@@ -28,7 +28,17 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
     WRITER("credits_writer", 1000),
     PRO("credits_pro", 2200);
 
+    /** Rewordings the pack includes. Mirrors `REWORDS_PER_MINUTE` on the server. */
+    val rewords: Int get() = minutes * REWORDS_PER_MINUTE
+
     companion object {
+        /**
+         * How many rewordings come with each purchased minute — the server's figure, repeated here
+         * only to state it in the shop. What is actually granted is decided there; a wrong number
+         * here shows a wrong promise, never a wrong balance.
+         */
+        const val REWORDS_PER_MINUTE = 5
+
         /** Display order in the shop — cheapest first, as in the Play Console. */
         val ordered: List<DictateCloudPack> = listOf(NOTES, DAILY, WRITER, PRO)
 

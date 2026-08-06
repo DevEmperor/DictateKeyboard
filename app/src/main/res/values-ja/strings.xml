@@ -1829,7 +1829,6 @@
     <string name="dictate__cloud_other_way_body">いつでもご自身の API キーに切り替えられますし、戻すこともできます。クレジットはそのまま残ります。</string>
     <string name="dictate__error_out_of_credit">クレジットを使い切りました</string>
     <string name="dictate__action_top_up">クレジットをチャージ</string>
-    <string name="dictate__promo_low_credit_message">Dictate Cloud のクレジットが残りわずかです。</string>
+    <string name="dictate__promo_low_credit_message">クレジット残りわずか。</string>
     <string name="dictate__promo_low_credit_action">チャージ</string>
-    <string name="dictate__realtime_summary_cloud">Dictate Cloud のクレジットでは利用できません。1分あたり約4倍の費用がかかるためです。端末内エンジンならオフラインで無料で行えます。</string>
 </resources>
