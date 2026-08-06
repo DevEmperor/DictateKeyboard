@@ -26,8 +26,14 @@ ORT_URL="https://repo1.maven.org/maven2/com/microsoft/onnxruntime/onnxruntime-an
 # Native libs the Kotlin/JNI path actually needs. c-api/cxx-api are for native C/C++ consumers and
 # are intentionally omitted (saves ~4.6 MB; verified working without them in the Phase 0 spike).
 SO_FILES=("libonnxruntime.so" "libsherpa-onnx-jni.so")
-# ABIs we ship: arm64 (modern phones) + armeabi-v7a (older 32-bit devices).
-ABIS=("arm64-v8a" "armeabi-v7a")
+# ABIs we ship: arm64 (modern phones), armeabi-v7a (older 32-bit devices) and x86_64.
+#
+# x86_64 is not for phones — there are effectively none — but for emulators, which is where a Play
+# purchase can be rehearsed on a throwaway account without touching a real device. It costs users
+# nothing: Play splits the bundle per architecture, so nobody downloads a library their CPU cannot
+# run. 32-bit x86 is deliberately left out; Play has required 64-bit for years and the emulator
+# images that need it are long obsolete.
+ABIS=("arm64-v8a" "armeabi-v7a" "x86_64")
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 JAR_DST="$REPO_ROOT/app/libs/sherpa-onnx-${VERSION}.jar"

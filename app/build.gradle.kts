@@ -77,9 +77,14 @@ configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // sherpa-onnx on-device STT (issue #104): ship the ABIs the vendored native libs cover —
-        // arm64-v8a (modern phones) and armeabi-v7a (older 32-bit devices).
+        // arm64-v8a (modern phones), armeabi-v7a (older 32-bit devices) and x86_64.
+        //
+        // x86_64 exists for emulators rather than for hardware: without it Play reports the app as
+        // incompatible on every emulator image, which rules out rehearsing a purchase on a throwaway
+        // account. Real users pay nothing for it — the bundle is split per architecture, so a phone
+        // only ever downloads the libraries it can run. See tools/fetch-sherpa-onnx.sh.
         ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
         }
 
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash().get()}\"")
@@ -294,7 +299,10 @@ val verifySherpaOnnxLibs by tasks.registering {
     val required = buildList {
         add(projectDir.file("libs/sherpa-onnx-1.13.3.jar").asFile)
         add(projectDir.file("libs/onnxruntime-android-1.24.3.jar").asFile)
-        for (abi in listOf("arm64-v8a", "armeabi-v7a")) {
+        // Must match the abiFilters above. A missing ABI here would not fail the build — it would
+        // produce a split for that architecture carrying no sherpa-onnx at all, which installs
+        // happily and then dies the first time on-device transcription or the VAD is touched.
+        for (abi in listOf("arm64-v8a", "armeabi-v7a", "x86_64")) {
             add(projectDir.file("src/main/jniLibs/$abi/libonnxruntime.so").asFile)
             add(projectDir.file("src/main/jniLibs/$abi/libonnxruntime4j_jni.so").asFile)
             add(projectDir.file("src/main/jniLibs/$abi/libsherpa-onnx-jni.so").asFile)
