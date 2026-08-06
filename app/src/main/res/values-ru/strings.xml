@@ -1900,4 +1900,7 @@
     <string name="dictate__cloud_other_way_body">Вы в любой момент можете перейти на свой ключ API и обратно. Баланс останется на месте.</string>
     <string name="dictate__error_out_of_credit">Баланс исчерпан</string>
     <string name="dictate__action_top_up">Пополнить баланс</string>
+    <string name="dictate__promo_low_credit_message">Баланс Dictate Cloud почти исчерпан.</string>
+    <string name="dictate__promo_low_credit_action">Пополнить</string>
+    <string name="dictate__realtime_summary_cloud">Недоступно с балансом Dictate Cloud — это примерно вчетверо дороже за минуту. Движок на устройстве делает это офлайн и бесплатно.</string>
 </resources>

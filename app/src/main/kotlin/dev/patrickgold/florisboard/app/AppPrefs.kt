@@ -661,6 +661,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__has_donated",
             default = false,
         )
+        // Set once the "credit is running low" nudge has been shown, so it appears once per
+        // depletion rather than on every keyboard open. Cleared again the moment a purchase credits
+        // the wallet (see DictateCloud.store), which makes one nudge per refill cycle.
+        val cloudLowCreditNudged = boolean(
+            key = "dictate__cloud_low_credit_nudged",
+            default = false,
+        )
         // The app version whose "Dictate was updated" changelog nudge has already been shown on the
         // keyboard (Smartbar). Set when the user taps or dismisses that nudge, so it appears only once
         // per update. Empty until the first post-update nudge. Independent of the in-app dialog's

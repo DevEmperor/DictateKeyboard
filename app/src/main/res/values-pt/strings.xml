@@ -1876,4 +1876,7 @@
     <string name="dictate__cloud_other_way_body">Podes mudar para a tua própria chave API a qualquer momento, e voltar atrás. O teu saldo fica onde está.</string>
     <string name="dictate__error_out_of_credit">Saldo esgotado</string>
     <string name="dictate__action_top_up">Carregar saldo</string>
+    <string name="dictate__promo_low_credit_message">O teu saldo Dictate Cloud está quase esgotado.</string>
+    <string name="dictate__promo_low_credit_action">Carregar</string>
+    <string name="dictate__realtime_summary_cloud">Indisponível com saldo Dictate Cloud — custa cerca de quatro vezes mais por minuto. O motor no dispositivo faz isso offline e de graça.</string>
 </resources>

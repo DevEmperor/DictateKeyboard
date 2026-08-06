@@ -41,6 +41,7 @@ import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
@@ -211,7 +212,7 @@ object DictateController {
      * CHANGELOG is shown right after an app update (see [maybePromptChangelog]) and opens the in-app
      * "What's new" dialog instead of a web page.
      */
-    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE }
+    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE, LOW_CREDIT }
 
     /**
      * Where the active dictation's output goes: the keyboard editor ([OutputTarget.IME]) or the
@@ -2598,6 +2599,9 @@ object DictateController {
      */
     fun maybePromptForReview() {
         if (_state.value !is UiState.Idle) return
+        // Credit running out comes first: it is the only nudge that is about to stop the app working,
+        // and asking someone to rate Dictate minutes before it refuses to transcribe is poor timing.
+        if (maybeWarnLowCredit()) return
         val total = prefs.dictate.totalAudioSeconds.get()
         val kind = when {
             total > DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasDonated.get() -> PromoKind.DONATE
@@ -2605,6 +2609,44 @@ object DictateController {
             else -> return
         }
         _state.value = UiState.Promo(kind)
+    }
+
+    /** Below this much Dictate Cloud credit the Smartbar says so, once per depletion. */
+    private const val LOW_CREDIT_MINUTES = 10
+
+    /** How often the balance may be re-fetched in the background. */
+    private const val BALANCE_REFRESH_INTERVAL_MS = 15 * 60 * 1000L
+
+    private var lastBalanceRefreshAt = 0L
+
+    /**
+     * Warns that Dictate Cloud credit is nearly gone, and returns true if it did.
+     *
+     * The balance is read from the cached copy rather than fetched here, because this runs on every
+     * keyboard open and a network round trip on that path would be felt. A throttled refresh is
+     * kicked off alongside instead, so the cache is at most [BALANCE_REFRESH_INTERVAL_MS] stale — the
+     * warning may therefore arrive one keyboard open late, which is a fair price for not making the
+     * keyboard wait on the network. Running out entirely is caught anyway, by the 402 that follows.
+     */
+    private fun maybeWarnLowCredit(): Boolean {
+        if (prefs.dictate.transcriptionProviderId.get() != ProviderRegistry.CLOUD.id) return false
+        val account = prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.CLOUD.id)
+        if (!account.hasWallet) return false
+
+        val now = SystemClock.elapsedRealtime()
+        if (now - lastBalanceRefreshAt > BALANCE_REFRESH_INTERVAL_MS) {
+            lastBalanceRefreshAt = now
+            scope.launch { DictateCloud.refreshBalance() }
+        }
+
+        if (prefs.dictate.cloudLowCreditNudged.get()) return false
+        // -1 means never fetched; saying "0 minutes left" then would be a lie about a full wallet.
+        val minutesLeft = account.balanceSeconds.takeIf { it >= 0 }?.div(60) ?: return false
+        if (minutesLeft > LOW_CREDIT_MINUTES) return false
+
+        scope.launch { prefs.dictate.cloudLowCreditNudged.set(true) }
+        _state.value = UiState.Promo(PromoKind.LOW_CREDIT)
+        return true
     }
 
     /**
@@ -2684,6 +2726,12 @@ object DictateController {
                     context,
                     FlorisAppActivity::class.java,
                 ).addCategory(Intent.CATEGORY_BROWSABLE)
+                PromoKind.LOW_CREDIT -> Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("ui://florisboard/settings/dictate/cloud"),
+                    context,
+                    FlorisAppActivity::class.java,
+                ).addCategory(Intent.CATEGORY_BROWSABLE)
             }
             context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
@@ -2714,6 +2762,9 @@ object DictateController {
                 PromoKind.FLOATING_BUTTON -> prefs.dictate.floatingButtonSpotlightVersion.set(BuildConfig.VERSION_NAME)
                 // The milestone was already consumed when shown; nothing further to persist.
                 PromoKind.MILESTONE -> Unit
+                // The flag was already set when shown, so the nudge cannot come back on the next
+                // keyboard open whether it was acted on or waved away. A purchase clears it again.
+                PromoKind.LOW_CREDIT -> Unit
             }
         }
     }

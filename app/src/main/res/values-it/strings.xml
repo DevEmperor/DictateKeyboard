@@ -1680,4 +1680,7 @@
     <string name="dictate__cloud_other_way_body">Puoi passare in qualsiasi momento alla tua chiave API e tornare indietro. Il tuo credito resta dov\'è.</string>
     <string name="dictate__error_out_of_credit">Credito esaurito</string>
     <string name="dictate__action_top_up">Ricarica il credito</string>
+    <string name="dictate__promo_low_credit_message">Il tuo credito Dictate Cloud è quasi esaurito.</string>
+    <string name="dictate__promo_low_credit_action">Ricarica</string>
+    <string name="dictate__realtime_summary_cloud">Non disponibile con il credito Dictate Cloud: costa circa quattro volte tanto al minuto. Il motore sul dispositivo lo fa offline e gratis.</string>
 </resources>

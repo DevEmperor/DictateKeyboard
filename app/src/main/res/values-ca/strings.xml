@@ -1772,4 +1772,7 @@
     <string name="dictate__cloud_other_way_body">Pots passar a la teva pròpia clau API quan vulguis, i tornar enrere. El teu saldo es queda on és.</string>
     <string name="dictate__error_out_of_credit">Saldo esgotat</string>
     <string name="dictate__action_top_up">Recarrega el saldo</string>
+    <string name="dictate__promo_low_credit_message">El teu saldo de Dictate Cloud està gairebé esgotat.</string>
+    <string name="dictate__promo_low_credit_action">Recarrega</string>
+    <string name="dictate__realtime_summary_cloud">No disponible amb saldo de Dictate Cloud: costa unes quatre vegades més per minut. El motor del dispositiu ho fa fora de línia i de franc.</string>
 </resources>

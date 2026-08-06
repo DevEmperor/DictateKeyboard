@@ -119,6 +119,26 @@ object DictateCloud {
         prefs.dictate.rewordingProviderId.set(ProviderRegistry.CLOUD.id)
     }
 
+    /**
+     * Switches over after a purchase, but only when nothing else was set up.
+     *
+     * The rule above — never activate as a side effect — protects someone who already has a working
+     * key. It must not be applied to someone who has none: they chose the credit path during setup,
+     * paid, and would otherwise be left holding a balance in front of a keyboard that refuses to use
+     * it. Nobody buys minutes in order to keep dictating through an unconfigured provider.
+     *
+     * A keyless endpoint (Ollama, on-device) counts as set up and is left alone — same judgement the
+     * onboarding makes when deciding whether the provider step is done.
+     */
+    private suspend fun activateIfNothingElseConfigured() {
+        val currentId = prefs.dictate.transcriptionProviderId.get()
+        if (currentId == ProviderRegistry.CLOUD.id) return
+        if (prefs.dictate.providerAccounts.get().getOrEmpty(currentId).hasKey) return
+        val preset = ProviderRegistry.byId(currentId)
+        if (preset != null && preset.apiKeyUrl == null) return
+        activate()
+    }
+
     /** What Play has on offer, with local prices. */
     suspend fun shop(context: Context): Shop {
         val billing = DictateCloudBilling(context)
@@ -304,6 +324,7 @@ object DictateCloud {
         }
 
         if (!store(redeemed)) return Settlement.NeedsRecovery
+        activateIfNothingElseConfigured()
 
         val consumed = billing.consume(purchase.purchaseToken)
         if (consumed != BillingResponseCode.OK) {
@@ -326,6 +347,8 @@ object DictateCloud {
     private suspend fun store(redeemed: DictateCloudRedeem): Boolean {
         val token = redeemed.token?.takeIf { it.isNotBlank() } ?: account().apiKey
         if (token.isBlank()) return false
+        // Credit just arrived, so the low-balance nudge is owed again next time it runs out.
+        prefs.dictate.cloudLowCreditNudged.set(false)
         edit {
             it.copy(
                 walletId = redeemed.walletId,

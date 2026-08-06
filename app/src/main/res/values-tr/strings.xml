@@ -1875,4 +1875,7 @@
     <string name="dictate__cloud_other_way_body">İstediğiniz zaman kendi API anahtarınıza geçebilir, sonra geri dönebilirsiniz. Kontörünüz olduğu yerde kalır.</string>
     <string name="dictate__error_out_of_credit">Kontör bitti</string>
     <string name="dictate__action_top_up">Kontör yükle</string>
+    <string name="dictate__promo_low_credit_message">Dictate Cloud kontörün neredeyse bitti.</string>
+    <string name="dictate__promo_low_credit_action">Yükle</string>
+    <string name="dictate__realtime_summary_cloud">Dictate Cloud kontörüyle kullanılamaz — dakika başına yaklaşık dört katı tutar. Cihaz üzerindeki motor bunu çevrimdışı ve ücretsiz yapar.</string>
 </resources>

@@ -1897,4 +1897,7 @@
     <string name="dictate__cloud_other_way_body">По всяко време можете да преминете към собствения си API ключ и обратно. Кредитът ви остава там, където е.</string>
     <string name="dictate__error_out_of_credit">Кредитът е изчерпан</string>
     <string name="dictate__action_top_up">Захрани кредита</string>
+    <string name="dictate__promo_low_credit_message">Кредитът ти в Dictate Cloud е почти изчерпан.</string>
+    <string name="dictate__promo_low_credit_action">Захрани</string>
+    <string name="dictate__realtime_summary_cloud">Не е достъпно с кредит от Dictate Cloud — струва около четири пъти повече на минута. Машината в устройството го прави офлайн и безплатно.</string>
 </resources>

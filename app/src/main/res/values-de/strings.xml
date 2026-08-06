@@ -1772,4 +1772,7 @@
     <string name="about__website__title">Website</string>
     <string name="dictate__error_out_of_credit">Guthaben aufgebraucht</string>
     <string name="dictate__action_top_up">Guthaben aufladen</string>
+    <string name="dictate__promo_low_credit_message">Dein Dictate-Cloud-Guthaben ist fast aufgebraucht.</string>
+    <string name="dictate__promo_low_credit_action">Aufladen</string>
+    <string name="dictate__realtime_summary_cloud">Mit Dictate-Cloud-Guthaben nicht verfügbar — es kostet je Minute etwa das Vierfache. Die Erkennung auf dem Gerät macht das offline und kostenlos.</string>
 </resources>
