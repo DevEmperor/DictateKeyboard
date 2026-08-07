@@ -24,6 +24,9 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +37,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Adjust
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.CloudQueue
+import androidx.compose.material.icons.filled.Keyboard
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
@@ -54,6 +67,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontStyle
@@ -324,6 +340,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             id = Steps.EnableIme.id,
             title = stringRes(R.string.setup__enable_ime__title),
         ) {
+            StepArt(Icons.Default.Keyboard)
             StepText(stringRes(R.string.setup__enable_ime__description))
             StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
                 InputMethodUtils.showImeEnablerActivity(context)
@@ -333,6 +350,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             id = Steps.SelectIme.id,
             title = stringRes(R.string.setup__select_ime__title),
         ) {
+            StepArt(Icons.Default.SwapHoriz)
             StepText(stringRes(R.string.setup__select_ime__description))
             StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
                 InputMethodUtils.showImePicker(context)
@@ -342,6 +360,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             id = Steps.GrantMicPermission.id,
             title = stringRes(R.string.setup__grant_mic_permission__title),
         ) {
+            StepArt(Icons.Default.Mic)
             StepText(stringRes(R.string.setup__grant_mic_permission__description))
             StepButton(stringRes(R.string.setup__grant_mic_permission__btn)) {
                 requestMic.launch(Manifest.permission.RECORD_AUDIO)
@@ -352,6 +371,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
                 id = Steps.SelectNotification.id,
                 title = stringRes(R.string.setup__grant_notification_permission__title),
             ) {
+                StepArt(Icons.Default.NotificationsActive)
                 StepText(stringRes(R.string.setup__grant_notification_permission__description))
                 StepButton(stringRes(R.string.setup__grant_notification_permission__btn)) {
                     requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -375,6 +395,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             id = Steps.FloatingButton.id,
             title = stringRes(R.string.setup__floating_button__title),
         ) {
+            StepArt(Icons.Default.Adjust)
             StepText(stringRes(R.string.setup__floating_button__intro))
             Spacer(modifier = Modifier.height(8.dp))
             StepText(stringRes(R.string.setup__floating_button__accessibility_note))
@@ -410,6 +431,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             id = Steps.FinishUp.id,
             title = stringRes(R.string.setup__finish_up__title),
         ) {
+            StepArt(Icons.Default.Celebration)
             StepText(stringRes(R.string.setup__finish_up__description_p1))
             StepText(stringRes(R.string.setup__finish_up__description_p2))
             if (!isProviderConfigured) {
@@ -469,6 +491,10 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
 
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
+
+    // The provider step's own plate: two marks side by side, because this is the one step that is a
+    // choice rather than an instruction, and the picture should say so before the words do.
+    StepArt(if (choseOwnKey) Icons.Default.VpnKey else Icons.Default.CloudQueue)
 
     if (!choseOwnKey) {
         ProviderChoice(
@@ -673,6 +699,55 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
             text = stringRes(R.string.setup__provider__skip_btn),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * The tinted icon plate each step opens with.
+ *
+ * Borrowed deliberately from the "What's new" tour rather than invented: the two are the same kind
+ * of screen — a sequence a user is walked through — and a setup that looks like a different app
+ * than the tour makes the first five minutes feel like two products.
+ *
+ * The entrance is a fade and a slight rise, once, on appearing. Enough to mark that the step
+ * changed; not enough to be waited on. Anything looping would still be moving while someone reads.
+ */
+@Composable
+private fun StepArt(icon: ImageVector) {
+    var shown by remember { mutableStateOf(false) }
+    LaunchedEffect(icon) { shown = true }
+    val appear by animateFloatAsState(
+        targetValue = if (shown) 1f else 0f,
+        animationSpec = tween(durationMillis = 320),
+        label = "setupArt",
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Box(
+            modifier = Modifier
+                .graphicsLayer {
+                    alpha = appear
+                    translationY = (1f - appear) * 14f
+                    scaleX = 0.92f + 0.08f * appear
+                    scaleY = 0.92f + 0.08f * appear
+                }
+                .size(72.dp)
+                .clip(RoundedCornerShape(22.dp))
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(36.dp),
+            )
+        }
     }
 }
 
