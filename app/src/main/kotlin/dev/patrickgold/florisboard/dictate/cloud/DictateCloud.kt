@@ -20,6 +20,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 
 /**
@@ -40,6 +41,22 @@ import kotlinx.coroutines.withContext
 object DictateCloud {
 
     private val prefs by FlorisPreferenceStore
+
+    /**
+     * True while the credit screen was opened from the setup flow rather than from settings.
+     *
+     * The screen offers a way back to "use my own provider", and where that leads has to differ:
+     * during setup it belongs to the step the user is standing in, afterwards it is the provider
+     * settings. A flag rather than a route argument because the route is also a deep link, and a
+     * deep link carrying an onboarding flag would be a way to reach a half-state from outside.
+     */
+    var openedFromSetup: Boolean = false
+
+    /**
+     * Raised when that way back is taken, so the setup step can switch to its own-key branch as the
+     * screen pops. Consumed by the reader.
+     */
+    val ownKeyRequested = MutableStateFlow(false)
 
     /** What settling a single purchase turned into. */
     sealed interface Settlement {

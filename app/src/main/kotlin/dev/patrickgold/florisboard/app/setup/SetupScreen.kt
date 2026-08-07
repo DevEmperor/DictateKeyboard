@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
@@ -39,10 +40,12 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +65,8 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
+import dev.patrickgold.florisboard.app.settings.dictate.providerIcon
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
@@ -359,7 +364,10 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             ProviderSetupStep(
                 onSaveKey = ::saveKey,
                 onSkip = onSkipProvider,
-                onOpenCloud = { navController.navigate(Routes.Settings.DictateCloud) },
+                onOpenCloud = {
+                    DictateCloud.openedFromSetup = true
+                    navController.navigate(Routes.Settings.DictateCloud)
+                },
             )
         },
         FlorisStep(
@@ -447,6 +455,16 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     // API-key flow first and mentioning credit afterwards would be a recommendation dressed up
     // as an order, and both ways are meant to be equal here.
     var choseOwnKey by rememberSaveable { mutableStateOf(false) }
+
+    // Coming back from the credit screen via "use my own provider" lands here, and must land on the
+    // key flow rather than on the fork the user has already answered.
+    val ownKeyRequested by DictateCloud.ownKeyRequested.collectAsState()
+    LaunchedEffect(ownKeyRequested) {
+        if (ownKeyRequested) {
+            choseOwnKey = true
+            DictateCloud.ownKeyRequested.value = false
+        }
+    }
 
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
@@ -617,6 +635,8 @@ private fun FlorisStepLayoutScope.ProviderChoice(
         body = stringRes(R.string.setup__provider__choice_cloud_body),
         buttonLabel = stringRes(R.string.setup__provider__choice_cloud_btn),
         onClick = onChooseCloud,
+        // One mark, because this is one service.
+        marks = listOf(ProviderRegistry.CLOUD.id),
     )
     Spacer(modifier = Modifier.height(12.dp))
     ChoiceCard(
@@ -624,6 +644,9 @@ private fun FlorisStepLayoutScope.ProviderChoice(
         body = stringRes(R.string.setup__provider__choice_own_body),
         buttonLabel = stringRes(R.string.setup__provider__choice_own_btn),
         onClick = onChooseOwnKey,
+        // A row of provider marks, because "many to choose from" is the whole point of this option
+        // and a sentence saying so is weaker than seeing the logos.
+        marks = listOf("groq", "openai", "gemini", "anthropic", "mistral", "deepgram", "elevenlabs"),
     )
 
     TextButton(
@@ -639,10 +662,43 @@ private fun FlorisStepLayoutScope.ProviderChoice(
     }
 }
 
+/**
+ * One of the two ways in, with the marks of what it actually connects to.
+ *
+ * The marks are the app's existing monochrome provider glyphs rather than the brands' colours. In a
+ * row whose message is "a set of options", uniform marks read as a set; seven brand colours read as
+ * a jumble, and each would need its own contrast check against both themes.
+ */
 @Composable
-private fun ChoiceCard(title: String, body: String, buttonLabel: String, onClick: () -> Unit) {
+private fun ChoiceCard(
+    title: String,
+    body: String,
+    buttonLabel: String,
+    onClick: () -> Unit,
+    marks: List<String> = emptyList(),
+) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
+            if (marks.isNotEmpty()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 10.dp),
+                ) {
+                    marks.forEach { id ->
+                        Icon(
+                            imageVector = providerIcon(id),
+                            contentDescription = null,
+                            modifier = Modifier.size(if (marks.size == 1) 30.dp else 21.dp),
+                            tint = if (marks.size == 1) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
+                        )
+                    }
+                }
+            }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,

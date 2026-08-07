@@ -95,6 +95,19 @@ fun DictateCloudScreen() = FlorisScreen {
         val navController = LocalNavController.current
         val scope = rememberCoroutineScope()
 
+        // Where "use my own provider" leads depends on how this screen was reached: back into the
+        // setup step it was opened from, or into the provider settings. Sending someone mid-setup to
+        // a settings screen strands them — they then have to find their own way back and skip the
+        // step they were in the middle of.
+        val backToOwnProvider: () -> Unit = if (DictateCloud.openedFromSetup) {
+            {
+                DictateCloud.ownKeyRequested.value = true
+                navController.popBackStack()
+            }
+        } else {
+            { navController.navigate(Routes.Settings.DictateProviders) }
+        }
+
         val accounts by prefs.dictate.providerAccounts.collectAsState()
         val activeProviderId by prefs.dictate.transcriptionProviderId.collectAsState()
         val account = accounts.getOrEmpty(ProviderRegistry.CLOUD.id)
@@ -164,7 +177,7 @@ fun DictateCloudScreen() = FlorisScreen {
                     Spacer(Modifier.height(12.dp))
                 }
             } else {
-                IntroCard(onOwnProvider = { navController.navigate(Routes.Settings.DictateProviders) })
+                IntroCard(onOwnProvider = backToOwnProvider)
                 Spacer(Modifier.height(12.dp))
             }
 
@@ -235,7 +248,7 @@ fun DictateCloudScreen() = FlorisScreen {
             BodyText(stringRes(R.string.dictate__cloud_privacy_body))
 
             Spacer(Modifier.height(16.dp))
-            OtherWayCard(onOwnProvider = { navController.navigate(Routes.Settings.DictateProviders) })
+            OtherWayCard(onOwnProvider = backToOwnProvider)
             Spacer(Modifier.height(24.dp))
         }
 
