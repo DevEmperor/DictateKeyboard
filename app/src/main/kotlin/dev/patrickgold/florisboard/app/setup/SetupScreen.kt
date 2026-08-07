@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -485,117 +486,179 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
         Text(stringRes(R.string.setup__provider__back_to_choice))
     }
 
-    StepText(stringRes(R.string.setup__provider__intro))
-    Spacer(modifier = Modifier.height(8.dp))
-    StepText(stringRes(R.string.setup__provider__what_is_key))
-
-    if (isRecommended) {
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(stringRes(R.string.setup__provider__recommended))
-    }
-
-    Spacer(modifier = Modifier.height(12.dp))
-    StepText(
-        text = if (isRecommended) {
-            stringRes(R.string.setup__provider__steps_groq)
-        } else {
-            stringRes(R.string.setup__provider__steps_generic, "provider" to selectedPreset.displayName)
-        },
-    )
-
-    StepButton(
-        label = stringRes(R.string.setup__provider__open_btn, "provider" to selectedPreset.displayName),
-    ) {
-        selectedPreset.apiKeyUrl?.let { context.launchUrl(it) }
-    }
-
-    // Paste-first: the user just copied the key on the provider page, so the common path needs no
-    // on-screen keyboard (which otherwise covers this cramped step). Manual entry stays as a fallback.
-    val clipboardEmptyMsg = stringRes(R.string.setup__provider__clipboard_empty)
-    StepButton(label = stringRes(R.string.setup__provider__paste_btn)) {
-        val pasted = readClipboardText(context)?.trim()
-        if (pasted.isNullOrBlank()) {
-            pasteHint = clipboardEmptyMsg
-        } else {
-            apiKey = pasted
-            pasteHint = null
-        }
-    }
-
-    if (apiKey.isNotBlank()) {
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringRes(R.string.setup__provider__key_detected, "key" to maskKey(apiKey)),
-        )
-    }
-    pasteHint?.let { hint ->
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(text = hint, fontStyle = FontStyle.Italic)
-    }
-
-    TextButton(
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
-        onClick = { showManualEntry = !showManualEntry },
-    ) {
-        Text(stringRes(R.string.setup__provider__enter_manually))
-    }
-    if (showManualEntry) {
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            value = apiKey,
-            onValueChange = { apiKey = it },
-            singleLine = true,
-            label = { Text(stringRes(R.string.setup__provider__key_field)) },
-        )
-    }
-
-    if (apiKey.isNotBlank()) {
-        StepButton(label = stringRes(R.string.setup__provider__save_btn)) {
-            onSaveKey(selectedProviderId, apiKey)
-        }
-    }
-
-    // Advanced: let users pick a different transcription-capable provider than the recommended one.
-    TextButton(
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
-        onClick = { showAdvanced = !showAdvanced },
-    ) {
-        Text(stringRes(R.string.setup__provider__other_provider))
-    }
-    if (showAdvanced) {
-        StepText(
-            text = stringRes(R.string.setup__provider__other_provider_hint),
-            fontStyle = FontStyle.Italic,
-        )
-        Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            TextButton(onClick = { providerMenuExpanded = true }) {
-                Text("${selectedPreset.displayName}  ▾")
+    // The whole key flow in one card, so this branch looks like the fork it came from rather than a
+    // stack of loose buttons. The provider's own mark sits at the top: it is what the user is about
+    // to open in a browser, and recognising the logo there is half of not getting lost.
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = providerIcon(selectedProviderId),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = selectedPreset.displayName,
+                    modifier = Modifier.padding(start = 12.dp),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
             }
-            DropdownMenu(
-                expanded = providerMenuExpanded,
-                onDismissRequest = { providerMenuExpanded = false },
+
+            if (isRecommended) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringRes(R.string.setup__provider__recommended),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = stringRes(R.string.setup__provider__what_is_key),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = if (isRecommended) {
+                    stringRes(R.string.setup__provider__steps_groq)
+                } else {
+                    stringRes(R.string.setup__provider__steps_generic, "provider" to selectedPreset.displayName)
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { selectedPreset.apiKeyUrl?.let { context.launchUrl(it) } },
             ) {
-                ProviderRegistry.presets
-                    .filter { it.capabilities.transcription }
-                    // Dictate Cloud is the *other* branch of this step, not an entry in the list of
-                    // providers to bring a key for — it has no key page and nothing to paste.
-                    .filter { it.id != ProviderRegistry.CLOUD.id }
-                    .forEach { preset ->
-                        DropdownMenuItem(
-                            text = { Text(preset.displayName) },
-                            onClick = {
-                                selectedProviderId = preset.id
-                                providerMenuExpanded = false
-                            },
-                        )
+                Text(stringRes(R.string.setup__provider__open_btn, "provider" to selectedPreset.displayName))
+            }
+
+            // Paste-first: the user has just copied the key on the provider page, so the common path
+            // needs no on-screen keyboard — which would otherwise cover this cramped step. Typing
+            // stays available underneath.
+            val clipboardEmptyMsg = stringRes(R.string.setup__provider__clipboard_empty)
+            Spacer(modifier = Modifier.height(8.dp))
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    val pasted = readClipboardText(context)?.trim()
+                    if (pasted.isNullOrBlank()) {
+                        pasteHint = clipboardEmptyMsg
+                    } else {
+                        apiKey = pasted
+                        pasteHint = null
                     }
+                },
+            ) {
+                Text(stringRes(R.string.setup__provider__paste_btn))
+            }
+
+            if (apiKey.isNotBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringRes(R.string.setup__provider__key_detected, "key" to maskKey(apiKey)),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+            pasteHint?.let { hint ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = hint,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+
+            TextButton(onClick = { showManualEntry = !showManualEntry }) {
+                Text(stringRes(R.string.setup__provider__enter_manually))
+            }
+            if (showManualEntry) {
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = apiKey,
+                    onValueChange = { apiKey = it },
+                    singleLine = true,
+                    label = { Text(stringRes(R.string.setup__provider__key_field)) },
+                )
+            }
+
+            if (apiKey.isNotBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                // A plain Button rather than the layout's StepButton: that one is an extension on
+                // FlorisStepLayoutScope, and inside this Card the receiver is out of reach.
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { onSaveKey(selectedProviderId, apiKey) },
+                ) {
+                    Text(stringRes(R.string.setup__provider__save_btn))
+                }
+            }
+        }
+    }
+
+    // Changing provider is its own card rather than a disclosure triangle: it is a decision, not a
+    // detail, and the marks make the choice legible before the menu is even opened.
+    Spacer(modifier = Modifier.height(12.dp))
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = stringRes(R.string.setup__provider__other_provider),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = stringRes(R.string.setup__provider__other_provider_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Box {
+                FilledTonalButton(onClick = { providerMenuExpanded = true }) {
+                    Icon(
+                        imageVector = providerIcon(selectedProviderId),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Spacer(modifier = Modifier.padding(start = 8.dp))
+                    Text("${selectedPreset.displayName}  ▾")
+                }
+                DropdownMenu(
+                    expanded = providerMenuExpanded,
+                    onDismissRequest = { providerMenuExpanded = false },
+                ) {
+                    ProviderRegistry.presets
+                        .filter { it.capabilities.transcription }
+                        // Dictate Cloud is the *other* branch of this step, not an entry in the list
+                        // of providers to bring a key for — it has no key page and nothing to paste.
+                        .filter { it.id != ProviderRegistry.CLOUD.id }
+                        .forEach { preset ->
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = providerIcon(preset.id),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                },
+                                text = { Text(preset.displayName) },
+                                onClick = {
+                                    selectedProviderId = preset.id
+                                    providerMenuExpanded = false
+                                },
+                            )
+                        }
+                }
             }
         }
     }
@@ -603,7 +666,7 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     TextButton(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
+            .padding(top = 6.dp),
         onClick = onSkip,
     ) {
         Text(
