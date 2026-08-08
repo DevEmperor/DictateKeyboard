@@ -243,56 +243,66 @@ fun FlorisStepLayout(
             val isFirst = indexOfId(stepId) == 0
             val index = indexOfId(stepId)
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .florisVerticalScroll(),
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                // Centred while the page fits, top-anchored once it has to scroll. A short step
-                // otherwise clings to the top and leaves the lower half empty.
-                verticalArrangement = Arrangement.Center,
             ) {
-                // The counter travels with the page rather than sitting above the animation, so it
-                // slides along with the step it counts.
-                // Digits rather than a worded "step n of m": it needs no translation and reads the
+                // Outside the scrolling area on purpose. Inside it, the counter sat wherever the
+                // page happened to start — centred on a short step, jammed against the progress bar
+                // on a tall one — so it appeared to jump as you moved through the wizard. It still
+                // slides with the page, because the whole block is what animates.
+                //
+                // Digits rather than a worded "step n of m": no translation needed and read the
                 // same in every language this app ships in.
+                Spacer(modifier = Modifier.height(14.dp))
                 Text(
                     text = "${index + 1} / ${steps.size}",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     letterSpacing = 1.4.sp,
                 )
-                Spacer(modifier = Modifier.height(18.dp))
-
-                if (step.art != null) {
-                    step.art.invoke()
-                } else if (step.icon != null) {
-                    StepIconPlate(step.icon)
-                }
-                if (step.art != null || step.icon != null) {
-                    Spacer(modifier = Modifier.height(20.dp))
-                }
-
-                Text(
-                    text = step.title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Column(
-                    // A measure the eye can follow. Centred text past roughly 45 characters a line
-                    // stops being scannable and starts being a wall.
-                    modifier = Modifier.widthIn(max = 360.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .florisVerticalScroll(),
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    // Centred while the page fits, top-anchored once it has to scroll. A short step
+                    // otherwise clings to the top and leaves the lower half empty.
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    val scope = FlorisStepLayoutScope(this, primaryColor)
-                    if (isFirst) {
-                        header(scope)
+                    if (step.art != null) {
+                        step.art.invoke()
+                    } else if (step.icon != null) {
+                        StepIconPlate(step.icon)
                     }
-                    step.content(scope)
+                    if (step.art != null || step.icon != null) {
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+
+                    Text(
+                        text = step.title,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Column(
+                        // A measure the eye can follow. Centred text past roughly 45 characters a
+                        // line stops being scannable and starts being a wall.
+                        modifier = Modifier.widthIn(max = 360.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        val scope = FlorisStepLayoutScope(this, primaryColor)
+                        if (isFirst) {
+                            header(scope)
+                        }
+                        step.content(scope)
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
 
