@@ -91,6 +91,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalContext
@@ -755,7 +756,9 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.CHANGELOG -> Icons.Default.NewReleases
         DictateController.PromoKind.FLOATING_BUTTON -> Icons.Default.Adjust
         DictateController.PromoKind.MILESTONE -> Icons.Default.EmojiEvents
-        DictateController.PromoKind.LOW_CREDIT -> Icons.Default.AddCard
+        // The mark of what is running low, not of the action — the accent pill beside it already
+        // says "top up".
+        DictateController.PromoKind.LOW_CREDIT -> ImageVector.vectorResource(R.drawable.ic_dictate_cloud)
     }
     // Milestone text is dynamic (which milestone), so it arrives via [message]; the rest map to a res.
     val messageRes = when (kind) {

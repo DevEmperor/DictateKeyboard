@@ -369,7 +369,7 @@ private fun IntroCard(onOwnProvider: () -> Unit) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    Icons.Default.CloudDone,
+                    imageVector = providerIcon(ProviderRegistry.CLOUD.id),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )

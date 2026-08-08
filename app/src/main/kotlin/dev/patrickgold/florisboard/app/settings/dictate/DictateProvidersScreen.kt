@@ -171,7 +171,9 @@ fun DictateProvidersScreen() = FlorisScreen {
                 // code — so its row opens its own screen instead of the credential editor.
                 if (preset.id == ProviderRegistry.CLOUD.id) {
                     Preference(
-                        icon = Icons.Default.CloudDone,
+                        // The service's own mark, like every other provider in this list — a
+                        // generic cloud here is what the app uses for "an endpoint with no logo".
+                        icon = providerIcon(preset.id),
                         modifier = Modifier.settingsSearchAnchor("dictate__cloud_title"),
                         title = preset.displayName,
                         summary = if (cloudAccount.hasWallet) cloudBalance else cloudNoCredit,

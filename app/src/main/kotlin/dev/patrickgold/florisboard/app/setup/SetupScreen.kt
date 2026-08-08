@@ -24,9 +24,11 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +43,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.Celebration
-import androidx.compose.material.icons.filled.CloudQueue
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.NotificationsActive
@@ -71,6 +72,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -83,6 +85,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
+import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import dev.patrickgold.florisboard.app.settings.dictate.providerIcon
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
@@ -339,8 +342,11 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.EnableIme.id,
             title = stringRes(R.string.setup__enable_ime__title),
+            // The app greets with its own orb rather than a keyboard glyph — the same live view the
+            // "What's new" tour uses, so nothing new is drawn and the welcome is in Dictate's own
+            // visual language from the first second.
+            art = { SetupWelcomeOrb() },
         ) {
-            StepArt(Icons.Default.Keyboard)
             StepText(stringRes(R.string.setup__enable_ime__description))
             StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
                 InputMethodUtils.showImeEnablerActivity(context)
@@ -349,8 +355,8 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.SelectIme.id,
             title = stringRes(R.string.setup__select_ime__title),
+            icon = Icons.Default.SwapHoriz,
         ) {
-            StepArt(Icons.Default.SwapHoriz)
             StepText(stringRes(R.string.setup__select_ime__description))
             StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
                 InputMethodUtils.showImePicker(context)
@@ -359,8 +365,8 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.GrantMicPermission.id,
             title = stringRes(R.string.setup__grant_mic_permission__title),
+            icon = Icons.Default.Mic,
         ) {
-            StepArt(Icons.Default.Mic)
             StepText(stringRes(R.string.setup__grant_mic_permission__description))
             StepButton(stringRes(R.string.setup__grant_mic_permission__btn)) {
                 requestMic.launch(Manifest.permission.RECORD_AUDIO)
@@ -370,8 +376,8 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             FlorisStep(
                 id = Steps.SelectNotification.id,
                 title = stringRes(R.string.setup__grant_notification_permission__title),
+                icon = Icons.Default.NotificationsActive,
             ) {
-                StepArt(Icons.Default.NotificationsActive)
                 StepText(stringRes(R.string.setup__grant_notification_permission__description))
                 StepButton(stringRes(R.string.setup__grant_notification_permission__btn)) {
                     requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -394,8 +400,8 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.FloatingButton.id,
             title = stringRes(R.string.setup__floating_button__title),
+            icon = Icons.Default.Adjust,
         ) {
-            StepArt(Icons.Default.Adjust)
             StepText(stringRes(R.string.setup__floating_button__intro))
             Spacer(modifier = Modifier.height(8.dp))
             StepText(stringRes(R.string.setup__floating_button__accessibility_note))
@@ -430,8 +436,8 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.FinishUp.id,
             title = stringRes(R.string.setup__finish_up__title),
+            icon = Icons.Default.Celebration,
         ) {
-            StepArt(Icons.Default.Celebration)
             StepText(stringRes(R.string.setup__finish_up__description_p1))
             StepText(stringRes(R.string.setup__finish_up__description_p2))
             if (!isProviderConfigured) {
@@ -492,10 +498,8 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
 
-    // The provider step's own plate: two marks side by side, because this is the one step that is a
-    // choice rather than an instruction, and the picture should say so before the words do.
-    StepArt(if (choseOwnKey) Icons.Default.VpnKey else Icons.Default.CloudQueue)
-
+    // No plate on this step, deliberately. Its content is two cards that each already carry a mark;
+    // a third illustration above them competes rather than orients.
     if (!choseOwnKey) {
         ProviderChoice(
             onChooseCloud = onOpenCloud,
@@ -703,52 +707,33 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
 }
 
 /**
- * The tinted icon plate each step opens with.
+ * The welcome: Dictate's own orb, breathing.
  *
- * Borrowed deliberately from the "What's new" tour rather than invented: the two are the same kind
- * of screen — a sequence a user is walked through — and a setup that looks like a different app
- * than the tour makes the first five minutes feel like two products.
+ * The same shipping view the floating button and the "What's new" tour use, in its listening mode
+ * with a slowly swelling level. Nothing is drawn for this — the first thing a new user sees is the
+ * thing they will be looking at every time they dictate.
  *
- * The entrance is a fade and a slight rise, once, on appearing. Enough to mark that the step
- * changed; not enough to be waited on. Anything looping would still be moving while someone reads.
+ * This one does loop, unlike the plates on the other steps: it is the page's subject rather than its
+ * decoration, and a still orb would look broken.
  */
 @Composable
-private fun StepArt(icon: ImageVector) {
-    var shown by remember { mutableStateOf(false) }
-    LaunchedEffect(icon) { shown = true }
-    val appear by animateFloatAsState(
-        targetValue = if (shown) 1f else 0f,
-        animationSpec = tween(durationMillis = 320),
-        label = "setupArt",
+private fun SetupWelcomeOrb() {
+    val transition = rememberInfiniteTransition(label = "setup-orb")
+    val level by transition.animateFloat(
+        initialValue = 0.18f,
+        targetValue = 0.8f,
+        animationSpec = infiniteRepeatable(tween(1600), RepeatMode.Reverse),
+        label = "setup-orb-level",
     )
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Box(
-            modifier = Modifier
-                .graphicsLayer {
-                    alpha = appear
-                    translationY = (1f - appear) * 14f
-                    scaleX = 0.92f + 0.08f * appear
-                    scaleY = 0.92f + 0.08f * appear
-                }
-                .size(72.dp)
-                .clip(RoundedCornerShape(22.dp))
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(36.dp),
-            )
-        }
-    }
+    AndroidView(
+        factory = { ctx ->
+            AudioReactiveCloudOrbView(ctx).apply {
+                setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
+            }
+        },
+        update = { it.setLevel(level) },
+        modifier = Modifier.size(128.dp),
+    )
 }
 
 /**
@@ -823,16 +808,15 @@ private fun ChoiceCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 10.dp),
                 ) {
+                    // Same size, same tint on both cards. Making the single mark bigger and the
+                    // accent colour was meant to give it weight and instead made it look like it
+                    // belonged to a different set than its neighbour.
                     marks.forEach { id ->
                         Icon(
                             imageVector = providerIcon(id),
                             contentDescription = null,
-                            modifier = Modifier.size(if (marks.size == 1) 30.dp else 21.dp),
-                            tint = if (marks.size == 1) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            },
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
