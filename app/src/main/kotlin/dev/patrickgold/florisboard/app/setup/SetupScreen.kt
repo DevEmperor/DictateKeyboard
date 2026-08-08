@@ -24,11 +24,6 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -72,7 +67,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -85,7 +79,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
-import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
+import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
 import dev.patrickgold.florisboard.app.settings.dictate.providerIcon
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
@@ -342,10 +336,9 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.EnableIme.id,
             title = stringRes(R.string.setup__enable_ime__title),
-            // The app greets with its own orb rather than a keyboard glyph — the same live view the
-            // "What's new" tour uses, so nothing new is drawn and the welcome is in Dictate's own
-            // visual language from the first second.
-            art = { SetupWelcomeOrb() },
+            // The app greets with its waveform rather than a keyboard glyph — the same animation the
+            // "What's new" tour opens with, so the two screens rhyme from the first second.
+            art = { SetupWelcomeWave() },
         ) {
             StepText(stringRes(R.string.setup__enable_ime__description))
             StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
@@ -707,32 +700,23 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
 }
 
 /**
- * The welcome: Dictate's own orb, breathing.
+ * The welcome: Dictate's waveform, the same one the "What's new" tour opens with.
  *
- * The same shipping view the floating button and the "What's new" tour use, in its listening mode
- * with a slowly swelling level. Nothing is drawn for this — the first thing a new user sees is the
- * thing they will be looking at every time they dictate.
+ * Chosen over the cloud orb deliberately. The orb is one of several floating-button skins and only
+ * some users ever see it, so as a first impression it promises a look the app may not have. The
+ * waveform is Dictate's general picture of itself — it says "this listens" without committing to a
+ * skin, and it follows the user's own accent colour.
  *
- * This one does loop, unlike the plates on the other steps: it is the page's subject rather than its
- * decoration, and a still orb would look broken.
+ * This one loops, unlike the plates on the other steps: it is the page's subject rather than its
+ * decoration, and a frozen equaliser would look broken.
  */
 @Composable
-private fun SetupWelcomeOrb() {
-    val transition = rememberInfiniteTransition(label = "setup-orb")
-    val level by transition.animateFloat(
-        initialValue = 0.18f,
-        targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(tween(1600), RepeatMode.Reverse),
-        label = "setup-orb-level",
-    )
-    AndroidView(
-        factory = { ctx ->
-            AudioReactiveCloudOrbView(ctx).apply {
-                setMode(AudioReactiveCloudOrbView.Mode.LISTENING)
-            }
-        },
-        update = { it.setLevel(level) },
-        modifier = Modifier.size(128.dp),
+private fun SetupWelcomeWave() {
+    DictateWaveform(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .height(96.dp),
     )
 }
 
