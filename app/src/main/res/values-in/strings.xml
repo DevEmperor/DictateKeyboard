@@ -1833,6 +1833,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_notice_not_redeemed">Pembayaran berhasil, tetapi saldo belum bisa diambil. Tidak ada yang hilang — buka lagi layar ini dan saldo akan ditambahkan.</string>
     <string name="dictate__cloud_notice_needs_recovery">Pembelian ini milik akun saldo lain. Gunakan kode pemulihannya untuk memindahkan saldo ke perangkat ini.</string>
     <string name="dictate__cloud_notice_failed">Pembelian tidak dapat diselesaikan.</string>
+    <string name="dictate__cloud_notice_deleted">Akun kredit Anda telah dihapus.</string>
+    <string name="dictate__cloud_delete_title">Hapus akun kredit</string>
+    <string name="dictate__cloud_delete_explain">Menghapus akun kredit Anda dan semua yang tersimpan tentangnya. Sisa kredit hangus dan tidak dikembalikan. Jika aplikasi sudah tidak ada, ini juga bisa lewat api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Hapus akun</string>
+    <string name="dictate__cloud_delete_dialog_title">Hapus akun Anda?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Anda masih punya {minutes} menit kredit. Menghapus akan menghilangkan akun, kode pemulihan, dan semua perangkat yang masuk.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Kredit ini hangus dan tidak bisa dipulihkan — bahkan oleh kami.</string>
+    <string name="dictate__cloud_delete_dialog_records">Bukti pembelian Anda disimpan sepuluh tahun sesuai ketentuan pajak. Isinya nomor pesanan dan jumlah, tidak ada yang mengarah ke Anda.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Hapus permanen</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Pertahankan akun</string>
     <string name="dictate__cloud_notice_dismiss">Oke</string>
     <string name="dictate__cloud_recovery_title">Kode pemulihan</string>
     <string name="dictate__cloud_recovery_explain">Catat kode ini. Google tidak memulihkan saldo yang sudah terpakai setelah pemasangan ulang, jadi kode ini satu-satunya cara membawa sisa menitmu ke ponsel baru. Kode ini juga memungkinkanmu memakai saldo yang sama di perangkat kedua.</string>

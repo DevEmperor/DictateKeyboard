@@ -1893,6 +1893,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Płatność przeszła, ale nie udało się pobrać środków. Nic nie przepadło — otwórz ten ekran ponownie, a zostaną dopisane.</string>
     <string name="dictate__cloud_notice_needs_recovery">Ten zakup należy do innego konta środków. Użyj jego kodu odzyskiwania, aby przenieść środki na to urządzenie.</string>
     <string name="dictate__cloud_notice_failed">Nie udało się dokończyć zakupu.</string>
+    <string name="dictate__cloud_notice_deleted">Twoje konto z kredytem zostało usunięte.</string>
+    <string name="dictate__cloud_delete_title">Usuń konto z kredytem</string>
+    <string name="dictate__cloud_delete_explain">Usuwa Twoje konto z kredytem i wszystko, co o nim zapisano. Pozostały kredyt przepada i nie jest zwracany. Jeśli nie masz już aplikacji, możesz to zrobić na api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Usuń konto</string>
+    <string name="dictate__cloud_delete_dialog_title">Na pewno usunąć konto?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Masz jeszcze {minutes} minut kredytu. Usunięcie kasuje konto, kod odzyskiwania i wszystkie zalogowane urządzenia.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Ten kredyt przepada i nie da się go odzyskać — także przez nas.</string>
+    <string name="dictate__cloud_delete_dialog_records">Dowody zakupu pozostają dziesięć lat, jak wymaga prawo podatkowe. Zawierają numer zamówienia i kwotę, nic, co prowadziłoby do Ciebie.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Usuń trwale</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Zachowaj konto</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Kod odzyskiwania</string>
     <string name="dictate__cloud_recovery_explain">Zapisz sobie ten kod. Google nie przywraca zużytych środków po ponownej instalacji, więc ten kod to jedyny sposób, by przenieść pozostałe minuty na nowy telefon. Pozwala też korzystać z tych samych środków na drugim urządzeniu.</string>

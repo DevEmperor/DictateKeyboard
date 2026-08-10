@@ -386,6 +386,50 @@ object DictateCloud {
         return true
     }
 
+    /**
+     * Asks the server what deleting this account would cost, without deleting anything.
+     *
+     * Deliberately not answered from the locally cached balance: that copy can be minutes old, and
+     * the one number the confirmation dialog must get right is how much is about to be destroyed.
+     */
+    suspend fun previewDeletion(): DictateCloudDeletion? {
+        val current = account()
+        if (!current.hasWallet) return null
+        return DictateCloudApi.previewDeletion(current.apiKey)
+    }
+
+    /**
+     * Deletes the credit account on the server and wipes every trace of it from this device.
+     *
+     * The order matters. The server goes first: if it refuses — no connection, token already gone —
+     * the exception propagates and the local account stays, so the user is not left holding a
+     * phone that has forgotten an account which still exists. Only once the server confirms is the
+     * local copy cleared, and then completely: token, wallet id, recovery code and cached balance.
+     * Leaving the recovery code behind would be the worst of both, since it looks like a way back
+     * to something that no longer exists.
+     *
+     * The credit is forfeited. That is stated in the dialog before this ever runs.
+     */
+    suspend fun deleteAccount(): DictateCloudDeletion {
+        val current = account()
+        val result = DictateCloudApi.deleteAccount(current.apiKey)
+
+        edit {
+            it.copy(
+                walletId = "",
+                apiKey = "",
+                walletRecoveryCode = "",
+                balanceSeconds = 0,
+                balanceRewords = 0,
+                balanceCheckedAt = 0L,
+            )
+        }
+        // The low-credit nudge is keyed to an account that no longer exists; leaving it armed would
+        // mean the next account inherits a warning it never earned.
+        prefs.dictate.cloudLowCreditNudged.set(false)
+        return result
+    }
+
     private suspend fun edit(block: (ProviderAccount) -> ProviderAccount) {
         val accounts = prefs.dictate.providerAccounts.get()
         prefs.dictate.providerAccounts.set(accounts.edit(ProviderRegistry.CLOUD.id, block))

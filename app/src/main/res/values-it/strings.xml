@@ -1661,6 +1661,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Il pagamento è andato a buon fine, ma non è stato possibile recuperare il credito. Non è perso nulla: riapri questa schermata e verrà accreditato.</string>
     <string name="dictate__cloud_notice_needs_recovery">Questo acquisto appartiene a un altro conto di credito. Usa il suo codice di recupero per portare il credito su questo dispositivo.</string>
     <string name="dictate__cloud_notice_failed">Non è stato possibile completare l\'acquisto.</string>
+    <string name="dictate__cloud_notice_deleted">Il tuo account di credito è stato eliminato.</string>
+    <string name="dictate__cloud_delete_title">Elimina account di credito</string>
+    <string name="dictate__cloud_delete_explain">Elimina il tuo account di credito e tutto ciò che vi è memorizzato. Il credito residuo decade e non viene rimborsato. Se non hai più l\'app, puoi farlo anche su api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Elimina account</string>
+    <string name="dictate__cloud_delete_dialog_title">Eliminare il tuo account?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Hai ancora {minutes} minuti di credito. L\'eliminazione rimuove account, codice di recupero e tutti i dispositivi collegati.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Questo credito decade e non può essere ripristinato, nemmeno da noi.</string>
+    <string name="dictate__cloud_delete_dialog_records">Le ricevute d\'acquisto restano dieci anni, come richiede la normativa fiscale. Contengono numero d\'ordine e importo, nulla che riconduca a te.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Elimina definitivamente</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Mantieni account</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Codice di recupero</string>
     <string name="dictate__cloud_recovery_explain">Annota questo codice. Google non ripristina il credito consumato dopo una reinstallazione: questo codice è l\'unico modo per portare i minuti rimasti su un telefono nuovo. Ti permette anche di usare lo stesso credito su un secondo dispositivo.</string>

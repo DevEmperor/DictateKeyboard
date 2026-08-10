@@ -1753,6 +1753,16 @@
     <string name="dictate__cloud_notice_not_redeemed">El pagament ha passat, però no s\'ha pogut obtenir el saldo. No s\'ha perdut res: torna a obrir aquesta pantalla i s\'hi afegirà.</string>
     <string name="dictate__cloud_notice_needs_recovery">Aquesta compra pertany a un altre compte de saldo. Fes servir el seu codi de recuperació per portar el saldo a aquest dispositiu.</string>
     <string name="dictate__cloud_notice_failed">No s\'ha pogut completar la compra.</string>
+    <string name="dictate__cloud_notice_deleted">S\'ha eliminat el teu compte de crèdit.</string>
+    <string name="dictate__cloud_delete_title">Elimina el compte de crèdit</string>
+    <string name="dictate__cloud_delete_explain">Elimina el teu compte de crèdit i tot el que s\'hi ha desat. El crèdit restant es perd i no es reemborsa. Si ja no tens l\'aplicació, també ho pots fer a api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Elimina el compte</string>
+    <string name="dictate__cloud_delete_dialog_title">Vols eliminar el compte?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Encara tens {minutes} minuts de crèdit. En eliminar-lo desapareixen el compte, el codi de recuperació i tots els dispositius connectats.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Aquest crèdit es perd i no es pot recuperar, ni tan sols per nosaltres.</string>
+    <string name="dictate__cloud_delete_dialog_records">Els comprovants de compra es conserven deu anys, tal com exigeix la llei fiscal. Contenen número de comanda i import, res que porti fins a tu.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Elimina definitivament</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Conserva el compte</string>
     <string name="dictate__cloud_notice_dismiss">D\'acord</string>
     <string name="dictate__cloud_recovery_title">Codi de recuperació</string>
     <string name="dictate__cloud_recovery_explain">Apunta\'t aquest codi. Google no restaura el saldo ja gastat després d\'una reinstal·lació, així que aquest codi és l\'única manera de portar els minuts que et queden a un telèfon nou. També et permet fer servir el mateix saldo en un segon dispositiu.</string>

@@ -1736,6 +1736,16 @@
     <string name="dictate__cloud_notice_not_redeemed">تمّت عملية الدفع، لكن تعذّر جلب الرصيد. لم يضِع شيء — افتح هذه الشاشة مرة أخرى وسيُضاف.</string>
     <string name="dictate__cloud_notice_needs_recovery">هذه العملية تخصّ حساب رصيد آخر. استخدم رمز الاسترداد الخاص به لنقل الرصيد إلى هذا الجهاز.</string>
     <string name="dictate__cloud_notice_failed">تعذّر إتمام عملية الشراء.</string>
+    <string name="dictate__cloud_notice_deleted">تم حذف حساب رصيدك.</string>
+    <string name="dictate__cloud_delete_title">حذف حساب الرصيد</string>
+    <string name="dictate__cloud_delete_explain">يحذف حساب رصيدك وكل ما هو مخزَّن عنه. الرصيد المتبقي يسقط ولا يُسترد. إن لم يعد التطبيق لديك، يمكنك ذلك أيضاً عبر api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">حذف الحساب</string>
+    <string name="dictate__cloud_delete_dialog_title">هل تريد حذف حسابك؟</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">لا يزال لديك {minutes} دقيقة رصيد. الحذف يزيل حسابك ورمز الاسترداد وكل الأجهزة المسجَّلة.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">هذا الرصيد يسقط ولا يمكن استعادته — ولا حتى من جانبنا.</string>
+    <string name="dictate__cloud_delete_dialog_records">تبقى إيصالات شرائك عشر سنوات كما يقتضي القانون الضريبي. تحتوي على رقم الطلب والمبلغ فقط، ولا شيء يقود إليك.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">حذف نهائي</string>
+    <string name="dictate__cloud_delete_dialog_cancel">الاحتفاظ بالحساب</string>
     <string name="dictate__cloud_notice_dismiss">حسنًا</string>
     <string name="dictate__cloud_recovery_title">رمز الاسترداد</string>
     <string name="dictate__cloud_recovery_explain">دوِّن هذا الرمز. لا يستعيد Google الرصيد المستهلك بعد إعادة التثبيت، فهذا الرمز هو السبيل الوحيد لنقل دقائقك المتبقية إلى هاتف جديد. كما يتيح لك استخدام الرصيد نفسه على جهاز ثانٍ.</string>

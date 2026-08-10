@@ -1658,6 +1658,16 @@
     <string name="dictate__cloud_notice_not_redeemed">The payment went through, but the credit couldn\'t be fetched. Nothing is lost — open this screen again and it will be added.</string>
     <string name="dictate__cloud_notice_needs_recovery">This purchase belongs to another credit account. Use its recovery code to bring the credit to this device.</string>
     <string name="dictate__cloud_notice_failed">The purchase couldn\'t be completed.</string>
+    <string name="dictate__cloud_notice_deleted">Your credit account was deleted.</string>
+    <string name="dictate__cloud_delete_title">Delete credit account</string>
+    <string name="dictate__cloud_delete_explain">Deletes your credit account and everything stored about it. Any remaining credit is forfeited — it isn\'t refunded. You can also do this at api.dictatekeyboard.com/delete if you no longer have the app.</string>
+    <string name="dictate__cloud_delete_btn">Delete account</string>
+    <string name="dictate__cloud_delete_dialog_title">Delete your account?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">You still have {minutes} minutes of credit. Deleting removes your account, your recovery code and every signed-in device.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">This credit is forfeited and cannot be restored — not even by us.</string>
+    <string name="dictate__cloud_delete_dialog_records">Your purchase records stay for ten years, as tax law requires. They hold an order number and an amount, nothing that leads back to you.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Delete permanently</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Keep my account</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Recovery code</string>
     <string name="dictate__cloud_recovery_explain">Write this code down. Google doesn\'t restore used-up credit after a reinstall, so this code is the only way to get your remaining minutes onto a new phone. It also lets you use the same credit on a second device.</string>

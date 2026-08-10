@@ -1872,6 +1872,16 @@
     <string name="dictate__cloud_notice_not_redeemed">付款已完成，但额度未能取回。什么都没丢——重新打开此页面就会入账。</string>
     <string name="dictate__cloud_notice_needs_recovery">这笔购买属于另一个额度账户。请用它的恢复码把额度取到本设备。</string>
     <string name="dictate__cloud_notice_failed">购买未能完成。</string>
+    <string name="dictate__cloud_notice_deleted">你的余额账户已删除。</string>
+    <string name="dictate__cloud_delete_title">删除余额账户</string>
+    <string name="dictate__cloud_delete_explain">删除你的余额账户及其所有存储信息。剩余余额将作废，不予退款。如果你已卸载应用，也可以在 api.dictatekeyboard.com/delete 操作。</string>
+    <string name="dictate__cloud_delete_btn">删除账户</string>
+    <string name="dictate__cloud_delete_dialog_title">确定删除账户？</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">你还有 {minutes} 分钟余额。删除后账户、恢复码和所有已登录设备都会消失。</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">该余额将作废且无法恢复，我们也无法恢复。</string>
+    <string name="dictate__cloud_delete_dialog_records">根据税法要求，你的购买凭证将保留十年。其中仅含订单号和金额，没有能追溯到你的信息。</string>
+    <string name="dictate__cloud_delete_dialog_confirm">永久删除</string>
+    <string name="dictate__cloud_delete_dialog_cancel">保留账户</string>
     <string name="dictate__cloud_notice_dismiss">好</string>
     <string name="dictate__cloud_recovery_title">恢复码</string>
     <string name="dictate__cloud_recovery_explain">请把这个码记下来。重装后 Google 不会恢复已消耗的额度，因此这个码是把剩余分钟数带到新手机上的唯一办法。它也让你在第二台设备上使用同一份额度。</string>

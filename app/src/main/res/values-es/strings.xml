@@ -1859,6 +1859,16 @@
     <string name="dictate__cloud_notice_not_redeemed">El pago se realizó, pero no se pudo obtener el saldo. No se ha perdido nada: vuelve a abrir esta pantalla y se añadirá.</string>
     <string name="dictate__cloud_notice_needs_recovery">Esta compra pertenece a otra cuenta de saldo. Usa su código de recuperación para traer el saldo a este dispositivo.</string>
     <string name="dictate__cloud_notice_failed">No se pudo completar la compra.</string>
+    <string name="dictate__cloud_notice_deleted">Tu cuenta de crédito se ha eliminado.</string>
+    <string name="dictate__cloud_delete_title">Eliminar cuenta de crédito</string>
+    <string name="dictate__cloud_delete_explain">Elimina tu cuenta de crédito y todo lo guardado sobre ella. El crédito restante se pierde y no se reembolsa. Si ya no tienes la app, también puedes hacerlo en api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Eliminar cuenta</string>
+    <string name="dictate__cloud_delete_dialog_title">¿Eliminar tu cuenta?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Aún tienes {minutes} minutos de crédito. Al eliminar desaparecen tu cuenta, tu código de recuperación y todos los dispositivos conectados.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Este crédito se pierde y no se puede recuperar, ni siquiera por nosotros.</string>
+    <string name="dictate__cloud_delete_dialog_records">Tus comprobantes de compra se conservan diez años, como exige la ley fiscal. Contienen número de pedido e importe, nada que lleve hasta ti.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Eliminar definitivamente</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Conservar cuenta</string>
     <string name="dictate__cloud_notice_dismiss">Aceptar</string>
     <string name="dictate__cloud_recovery_title">Código de recuperación</string>
     <string name="dictate__cloud_recovery_explain">Apunta este código. Google no restaura el saldo consumido tras una reinstalación, así que este código es la única manera de llevar tus minutos restantes a un teléfono nuevo. También te permite usar el mismo saldo en un segundo dispositivo.</string>

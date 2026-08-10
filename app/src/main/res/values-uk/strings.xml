@@ -1725,6 +1725,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Платіж пройшов, але баланс отримати не вдалося. Нічого не втрачено — відкрийте цей екран знову, і його буде нараховано.</string>
     <string name="dictate__cloud_notice_needs_recovery">Ця покупка належить іншому рахунку. Скористайтеся його кодом відновлення, щоб перенести баланс на цей пристрій.</string>
     <string name="dictate__cloud_notice_failed">Не вдалося завершити покупку.</string>
+    <string name="dictate__cloud_notice_deleted">Ваш рахунок із балансом видалено.</string>
+    <string name="dictate__cloud_delete_title">Видалити рахунок із балансом</string>
+    <string name="dictate__cloud_delete_explain">Видаляє ваш рахунок і все, що про нього збережено. Залишок згорає й не повертається. Якщо застосунку вже немає, це можна зробити на api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Видалити рахунок</string>
+    <string name="dictate__cloud_delete_dialog_title">Видалити ваш рахунок?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">У вас ще {minutes} хвилин балансу. Видалення прибере рахунок, код відновлення та всі підключені пристрої.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Цей залишок згорає й не підлягає відновленню — навіть нами.</string>
+    <string name="dictate__cloud_delete_dialog_records">Документи про покупки зберігаються десять років, як вимагає податкове право. У них номер замовлення й сума — нічого, що веде до вас.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Видалити назавжди</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Залишити рахунок</string>
     <string name="dictate__cloud_notice_dismiss">Гаразд</string>
     <string name="dictate__cloud_recovery_title">Код відновлення</string>
     <string name="dictate__cloud_recovery_explain">Запишіть цей код. Google не повертає витрачений баланс після перевстановлення, тож цей код — єдиний спосіб перенести решту хвилин на новий телефон. Він також дозволяє користуватися тим самим балансом на другому пристрої.</string>

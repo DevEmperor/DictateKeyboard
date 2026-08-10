@@ -1892,6 +1892,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Platba prošla, ale kredit se nepodařilo načíst. Nic není ztraceno — otevřete tuto obrazovku znovu a kredit se připíše.</string>
     <string name="dictate__cloud_notice_needs_recovery">Tento nákup patří k jinému kreditnímu účtu. Použijte jeho obnovovací kód, abyste kredit přenesli na toto zařízení.</string>
     <string name="dictate__cloud_notice_failed">Nákup se nepodařilo dokončit.</string>
+    <string name="dictate__cloud_notice_deleted">Tvůj kreditní účet byl smazán.</string>
+    <string name="dictate__cloud_delete_title">Smazat kreditní účet</string>
+    <string name="dictate__cloud_delete_explain">Smaže tvůj kreditní účet a vše, co je o něm uloženo. Zbývající kredit propadá a nevrací se. Pokud aplikaci už nemáš, jde to i na api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Smazat účet</string>
+    <string name="dictate__cloud_delete_dialog_title">Opravdu smazat účet?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Máš ještě {minutes} minut kreditu. Smazáním zmizí účet, obnovovací kód i všechna přihlášená zařízení.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Tento kredit propadá a nelze jej obnovit — ani námi.</string>
+    <string name="dictate__cloud_delete_dialog_records">Doklady o nákupech zůstávají deset let, jak vyžaduje daňový zákon. Obsahují číslo objednávky a částku, nic, co by vedlo k tobě.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Nenávratně smazat</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Ponechat účet</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Obnovovací kód</string>
     <string name="dictate__cloud_recovery_explain">Tento kód si zapište. Google po přeinstalaci spotřebovaný kredit neobnovuje, takže tento kód je jediná cesta, jak dostat zbývající minuty do nového telefonu. Umožní vám také používat stejný kredit na druhém zařízení.</string>

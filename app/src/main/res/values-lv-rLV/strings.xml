@@ -1821,6 +1821,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Maksājums izdevās, taču kredītu neizdevās saņemt. Nekas nav zudis — atveriet šo ekrānu vēlreiz, un tas tiks pievienots.</string>
     <string name="dictate__cloud_notice_needs_recovery">Šis pirkums pieder citam kredīta kontam. Izmantojiet tā atkopšanas kodu, lai pārnestu kredītu uz šo ierīci.</string>
     <string name="dictate__cloud_notice_failed">Pirkumu neizdevās pabeigt.</string>
+    <string name="dictate__cloud_notice_deleted">Tavs kredīta konts ir izdzēsts.</string>
+    <string name="dictate__cloud_delete_title">Dzēst kredīta kontu</string>
+    <string name="dictate__cloud_delete_explain">Dzēš tavu kredīta kontu un visu, kas par to saglabāts. Atlikušais kredīts zūd un netiek atmaksāts. Ja lietotnes vairs nav, to var izdarīt arī vietnē api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Dzēst kontu</string>
+    <string name="dictate__cloud_delete_dialog_title">Tiešām dzēst kontu?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Tev vēl ir {minutes} minūtes kredīta. Dzēšot pazūd konts, atkopšanas kods un visas pieteiktās ierīces.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Šis kredīts zūd, un to nevar atjaunot — arī mēs ne.</string>
+    <string name="dictate__cloud_delete_dialog_records">Pirkumu apliecinājumi saglabājas desmit gadus, kā prasa nodokļu likums. Tajos ir pasūtījuma numurs un summa, nekas, kas norādītu uz tevi.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Dzēst neatgriezeniski</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Paturēt kontu</string>
     <string name="dictate__cloud_notice_dismiss">Labi</string>
     <string name="dictate__cloud_recovery_title">Atkopšanas kods</string>
     <string name="dictate__cloud_recovery_explain">Pierakstiet šo kodu. Pēc pārinstalēšanas Google neatjauno iztērēto kredītu, tāpēc šis kods ir vienīgais veids, kā pārnest atlikušās minūtes uz jaunu tālruni. Tas arī ļauj izmantot to pašu kredītu otrā ierīcē.</string>

@@ -1777,6 +1777,16 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_notice_not_redeemed">De betaling is gelukt, maar het tegoed kon niet worden opgehaald. Er is niets verloren — open dit scherm opnieuw en het wordt bijgeschreven.</string>
     <string name="dictate__cloud_notice_needs_recovery">Deze aankoop hoort bij een ander tegoedaccount. Gebruik de herstelcode daarvan om het tegoed naar dit apparaat te halen.</string>
     <string name="dictate__cloud_notice_failed">De aankoop kon niet worden afgerond.</string>
+    <string name="dictate__cloud_notice_deleted">Je tegoedaccount is verwijderd.</string>
+    <string name="dictate__cloud_delete_title">Tegoedaccount verwijderen</string>
+    <string name="dictate__cloud_delete_explain">Verwijdert je tegoedaccount en alles wat erover is opgeslagen. Resterend tegoed vervalt en wordt niet terugbetaald. Heb je de app niet meer, dan kan het ook via api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Account verwijderen</string>
+    <string name="dictate__cloud_delete_dialog_title">Je account verwijderen?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Je hebt nog {minutes} minuten tegoed. Verwijderen wist je account, je herstelcode en alle aangemelde apparaten.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Dit tegoed vervalt en kan niet worden hersteld — ook niet door ons.</string>
+    <string name="dictate__cloud_delete_dialog_records">Je aankoopbewijzen blijven tien jaar bewaard, zoals de belastingwet vereist. Ze bevatten een ordernummer en een bedrag, niets dat naar jou leidt.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Definitief verwijderen</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Account behouden</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Herstelcode</string>
     <string name="dictate__cloud_recovery_explain">Schrijf deze code op. Google zet verbruikt tegoed na een herinstallatie niet terug, dus deze code is de enige manier om je resterende minuten op een nieuwe telefoon te krijgen. Je kunt er ook hetzelfde tegoed op een tweede apparaat mee gebruiken.</string>

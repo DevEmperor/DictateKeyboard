@@ -1753,6 +1753,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Le paiement a été effectué, mais le crédit n\'a pas pu être récupéré. Rien n\'est perdu — rouvrez cet écran et il sera ajouté.</string>
     <string name="dictate__cloud_notice_needs_recovery">Cet achat appartient à un autre compte de crédit. Utilisez son code de récupération pour amener le crédit sur cet appareil.</string>
     <string name="dictate__cloud_notice_failed">L\'achat n\'a pas pu être finalisé.</string>
+    <string name="dictate__cloud_notice_deleted">Votre compte de crédit a été supprimé.</string>
+    <string name="dictate__cloud_delete_title">Supprimer le compte de crédit</string>
+    <string name="dictate__cloud_delete_explain">Supprime votre compte de crédit et tout ce qui y est enregistré. Le crédit restant est perdu et n\'est pas remboursé. Si vous n\'avez plus l\'application, c\'est aussi possible sur api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Supprimer le compte</string>
+    <string name="dictate__cloud_delete_dialog_title">Supprimer votre compte ?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Il vous reste {minutes} minutes de crédit. La suppression efface votre compte, votre code de récupération et tous les appareils connectés.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Ce crédit est perdu et ne peut pas être restauré, même pas par nous.</string>
+    <string name="dictate__cloud_delete_dialog_records">Vos justificatifs d\'achat sont conservés dix ans, comme l\'exige la loi fiscale. Ils contiennent un numéro de commande et un montant, rien qui remonte à vous.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Supprimer définitivement</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Conserver le compte</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Code de récupération</string>
     <string name="dictate__cloud_recovery_explain">Notez ce code. Google ne restaure pas le crédit consommé après une réinstallation : ce code est le seul moyen de récupérer vos minutes restantes sur un nouveau téléphone. Il vous permet aussi d\'utiliser le même crédit sur un deuxième appareil.</string>

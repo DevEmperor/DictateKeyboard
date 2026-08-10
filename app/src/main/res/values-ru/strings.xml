@@ -1881,6 +1881,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Платёж прошёл, но баланс получить не удалось. Ничего не потеряно — откройте этот экран снова, и он будет начислен.</string>
     <string name="dictate__cloud_notice_needs_recovery">Эта покупка принадлежит другому счёту. Используйте его код восстановления, чтобы перенести баланс на это устройство.</string>
     <string name="dictate__cloud_notice_failed">Не удалось завершить покупку.</string>
+    <string name="dictate__cloud_notice_deleted">Ваш счёт с балансом удалён.</string>
+    <string name="dictate__cloud_delete_title">Удалить счёт с балансом</string>
+    <string name="dictate__cloud_delete_explain">Удаляет ваш счёт и все связанные с ним записи. Остаток сгорает и не возвращается. Если приложения уже нет, это можно сделать на api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Удалить счёт</string>
+    <string name="dictate__cloud_delete_dialog_title">Удалить ваш счёт?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">У вас ещё {minutes} минут баланса. Удаление уберёт счёт, код восстановления и все подключённые устройства.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Этот остаток сгорает и не подлежит восстановлению — даже нами.</string>
+    <string name="dictate__cloud_delete_dialog_records">Документы о покупках хранятся десять лет, как требует налоговое право. В них номер заказа и сумма — ничего, что ведёт к вам.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Удалить навсегда</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Оставить счёт</string>
     <string name="dictate__cloud_notice_dismiss">ОК</string>
     <string name="dictate__cloud_recovery_title">Код восстановления</string>
     <string name="dictate__cloud_recovery_explain">Запишите этот код. Google не возвращает израсходованный баланс после переустановки, поэтому этот код — единственный способ перенести оставшиеся минуты на новый телефон. Он же позволяет пользоваться тем же балансом на втором устройстве.</string>

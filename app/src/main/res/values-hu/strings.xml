@@ -1876,6 +1876,16 @@
     <string name="dictate__cloud_notice_not_redeemed">A fizetés sikerült, de az egyenleget nem sikerült lekérni. Semmi nem veszett el — nyissa meg újra ezt a képernyőt, és jóváíródik.</string>
     <string name="dictate__cloud_notice_needs_recovery">Ez a vásárlás egy másik egyenlegfiókhoz tartozik. Használja annak helyreállítási kódját, hogy az egyenleg erre az eszközre kerüljön.</string>
     <string name="dictate__cloud_notice_failed">A vásárlást nem sikerült befejezni.</string>
+    <string name="dictate__cloud_notice_deleted">A kreditfiókod törölve lett.</string>
+    <string name="dictate__cloud_delete_title">Kreditfiók törlése</string>
+    <string name="dictate__cloud_delete_explain">Törli a kreditfiókodat és mindent, ami hozzá tárolva van. A maradék kredit elvész, nem térítjük vissza. Ha már nincs meg az alkalmazás, ezt az api.dictatekeyboard.com/delete címen is megteheted.</string>
+    <string name="dictate__cloud_delete_btn">Fiók törlése</string>
+    <string name="dictate__cloud_delete_dialog_title">Tényleg törlöd a fiókot?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Még {minutes} perc kredited van. A törléssel eltűnik a fiókod, a helyreállítási kódod és minden bejelentkezett eszköz.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Ez a kredit elvész, és nem állítható vissza — még általunk sem.</string>
+    <string name="dictate__cloud_delete_dialog_records">A vásárlási bizonylatok tíz évig megmaradnak, ahogy az adójog előírja. Rendelésszámot és összeget tartalmaznak, semmit, ami hozzád vezetne.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Végleges törlés</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Fiók megtartása</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Helyreállítási kód</string>
     <string name="dictate__cloud_recovery_explain">Írja fel ezt a kódot. A Google újratelepítés után nem állítja vissza az elhasznált egyenleget, így ez a kód az egyetlen mód arra, hogy a maradék perceket új telefonra vigye. Ezzel használhatja ugyanazt az egyenleget egy második eszközön is.</string>

@@ -1184,6 +1184,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Die Zahlung ging durch, aber das Guthaben konnte nicht abgeholt werden. Nichts ist verloren — öffne diesen Bildschirm einfach noch einmal, dann wird es gutgeschrieben.</string>
     <string name="dictate__cloud_notice_needs_recovery">Dieser Kauf gehört zu einem anderen Guthabenkonto. Nutze dessen Wiederherstellungscode, um das Guthaben auf dieses Gerät zu holen.</string>
     <string name="dictate__cloud_notice_failed">Der Kauf konnte nicht abgeschlossen werden.</string>
+    <string name="dictate__cloud_notice_deleted">Dein Guthabenkonto wurde gelöscht.</string>
+    <string name="dictate__cloud_delete_title">Guthabenkonto löschen</string>
+    <string name="dictate__cloud_delete_explain">Löscht dein Guthabenkonto und alles, was dazu gespeichert ist. Restguthaben verfällt — es wird nicht erstattet. Falls du die App nicht mehr hast, geht das auch auf api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Konto löschen</string>
+    <string name="dictate__cloud_delete_dialog_title">Konto wirklich löschen?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Du hast noch {minutes} Minuten Guthaben. Beim Löschen verschwinden dein Konto, dein Wiederherstellungscode und alle angemeldeten Geräte.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Dieses Guthaben verfällt und lässt sich nicht wiederherstellen — auch nicht von uns.</string>
+    <string name="dictate__cloud_delete_dialog_records">Deine Kaufbelege bleiben zehn Jahre erhalten, wie es das Steuerrecht verlangt. Sie enthalten Bestellnummer und Betrag, nichts, was zu dir zurückführt.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Endgültig löschen</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Konto behalten</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">Wiederherstellungscode</string>
     <string name="dictate__cloud_recovery_explain">Schreib dir diesen Code auf. Google stellt verbrauchtes Guthaben nach einer Neuinstallation nicht wieder her — dieser Code ist der einzige Weg, deine restlichen Minuten auf ein neues Handy zu holen. Er erlaubt dir außerdem, dasselbe Guthaben auf einem zweiten Gerät zu nutzen.</string>

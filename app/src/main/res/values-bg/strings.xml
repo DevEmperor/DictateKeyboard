@@ -1878,6 +1878,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Плащането мина, но кредитът не можа да бъде изтеглен. Нищо не е загубено — отворете този екран отново и той ще бъде начислен.</string>
     <string name="dictate__cloud_notice_needs_recovery">Тази покупка принадлежи на друг кредитен акаунт. Използвайте неговия код за възстановяване, за да прехвърлите кредита на това устройство.</string>
     <string name="dictate__cloud_notice_failed">Покупката не можа да бъде завършена.</string>
+    <string name="dictate__cloud_notice_deleted">Профилът ти с кредит беше изтрит.</string>
+    <string name="dictate__cloud_delete_title">Изтриване на профила с кредит</string>
+    <string name="dictate__cloud_delete_explain">Изтрива профила ти с кредит и всичко записано за него. Останалият кредит пропада и не се възстановява. Ако вече нямаш приложението, това става и на api.dictatekeyboard.com/delete.</string>
+    <string name="dictate__cloud_delete_btn">Изтриване на профила</string>
+    <string name="dictate__cloud_delete_dialog_title">Наистина ли да изтрием профила?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Все още имаш {minutes} минути кредит. Изтриването премахва профила, кода за възстановяване и всички вписани устройства.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Този кредит пропада и не може да бъде възстановен — дори от нас.</string>
+    <string name="dictate__cloud_delete_dialog_records">Документите за покупките ти се пазят десет години, както изисква данъчното законодателство. Съдържат номер на поръчка и сума, нищо, което води до теб.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Изтрий окончателно</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Запази профила</string>
     <string name="dictate__cloud_notice_dismiss">Добре</string>
     <string name="dictate__cloud_recovery_title">Код за възстановяване</string>
     <string name="dictate__cloud_recovery_explain">Запишете си този код. Google не възстановява изразходван кредит след преинсталиране, така че този код е единственият начин да пренесете оставащите си минути на нов телефон. Той ви позволява и да ползвате същия кредит на второ устройство.</string>

@@ -1810,6 +1810,16 @@
     <string name="dictate__cloud_notice_not_redeemed">支払いは完了しましたが、クレジットを取得できませんでした。失われてはいません。この画面をもう一度開けば加算されます。</string>
     <string name="dictate__cloud_notice_needs_recovery">この購入は別のクレジットアカウントのものです。その復元コードを使って、この端末にクレジットを移してください。</string>
     <string name="dictate__cloud_notice_failed">購入を完了できませんでした。</string>
+    <string name="dictate__cloud_notice_deleted">クレジットアカウントを削除しました。</string>
+    <string name="dictate__cloud_delete_title">クレジットアカウントを削除</string>
+    <string name="dictate__cloud_delete_explain">クレジットアカウントと、それに関して保存されているすべてを削除します。残高は失効し、返金されません。アプリがもう手元にない場合は api.dictatekeyboard.com/delete でも行えます。</string>
+    <string name="dictate__cloud_delete_btn">アカウントを削除</string>
+    <string name="dictate__cloud_delete_dialog_title">アカウントを削除しますか？</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">まだ {minutes} 分の残高があります。削除するとアカウント、復元コード、ログイン済みのすべての端末が消えます。</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">この残高は失効し、復元できません。私たちにもできません。</string>
+    <string name="dictate__cloud_delete_dialog_records">購入の記録は税法上の義務により10年間保持されます。注文番号と金額のみで、あなたに結びつくものは含まれません。</string>
+    <string name="dictate__cloud_delete_dialog_confirm">完全に削除</string>
+    <string name="dictate__cloud_delete_dialog_cancel">アカウントを残す</string>
     <string name="dictate__cloud_notice_dismiss">OK</string>
     <string name="dictate__cloud_recovery_title">復元コード</string>
     <string name="dictate__cloud_recovery_explain">このコードを控えておいてください。Google は再インストール後に使用済みクレジットを復元しないため、このコードだけが残りの分数を新しい端末へ移す手段です。同じクレジットを2台目の端末で使うこともできます。</string>

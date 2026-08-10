@@ -27,12 +27,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -64,6 +66,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDeletion
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudException
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -118,12 +121,16 @@ fun DictateCloudScreen() = FlorisScreen {
         var refreshing by remember { mutableStateOf(false) }
         var notice by remember { mutableStateOf<String?>(null) }
         var showRestore by remember { mutableStateOf(false) }
+        var showDelete by remember { mutableStateOf(false) }
+        var deleting by remember { mutableStateOf(false) }
+        var deletePreview by remember { mutableStateOf<DictateCloudDeletion?>(null) }
 
         val noticePurchased = stringRes(R.string.dictate__cloud_notice_purchased)
         val noticePending = stringRes(R.string.dictate__cloud_notice_pending)
         val noticeNotRedeemed = stringRes(R.string.dictate__cloud_notice_not_redeemed)
         val noticeNeedsRecovery = stringRes(R.string.dictate__cloud_notice_needs_recovery)
         val noticeFailed = stringRes(R.string.dictate__cloud_notice_failed)
+        val noticeDeleted = stringRes(R.string.dictate__cloud_notice_deleted)
 
         // Settling outstanding purchases first is the important part of entering this screen: if a
         // payment went through but the credit never arrived, this is where it is put right, before
@@ -247,6 +254,36 @@ fun DictateCloudScreen() = FlorisScreen {
             Spacer(Modifier.height(4.dp))
             BodyText(stringRes(R.string.dictate__cloud_privacy_body))
 
+            // Deleting sits below everything else on purpose: it is the one action here that cannot
+            // be undone, and it should not share a resting place with buying credit.
+            if (account.hasWallet) {
+                Spacer(Modifier.height(20.dp))
+                SectionTitle(stringRes(R.string.dictate__cloud_delete_title))
+                Spacer(Modifier.height(4.dp))
+                BodyText(stringRes(R.string.dictate__cloud_delete_explain))
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = {
+                        deleting = true
+                        scope.launch {
+                            deletePreview = runCatching { DictateCloud.previewDeletion() }.getOrNull()
+                            deleting = false
+                            // No preview means the server could not be reached. Opening a dialog
+                            // that says "you will lose ? minutes" would be worse than saying so.
+                            if (deletePreview != null) showDelete = true else notice = noticeFailed
+                        }
+                    },
+                    enabled = !deleting,
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                ) {
+                    Icon(Icons.Default.DeleteForever, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.size(8.dp))
+                    Text(stringRes(R.string.dictate__cloud_delete_btn))
+                }
+            }
+
             Spacer(Modifier.height(16.dp))
             OtherWayCard(onOwnProvider = backToOwnProvider)
             Spacer(Modifier.height(24.dp))
@@ -270,7 +307,98 @@ fun DictateCloudScreen() = FlorisScreen {
                 },
             )
         }
+
+        deletePreview?.let { preview ->
+            if (showDelete) {
+                DeleteAccountDialog(
+                    preview = preview,
+                    busy = deleting,
+                    onDismiss = { if (!deleting) { showDelete = false; deletePreview = null } },
+                    onConfirm = {
+                        deleting = true
+                        scope.launch {
+                            val result = runCatching { DictateCloud.deleteAccount() }
+                            deleting = false
+                            showDelete = false
+                            deletePreview = null
+                            notice = if (result.isSuccess) noticeDeleted else noticeFailed
+                        }
+                    },
+                )
+            }
+        }
     }
+}
+
+/**
+ * The confirmation before an account is destroyed.
+ *
+ * It names the **exact** number of minutes about to be forfeited, fetched from the server a moment
+ * earlier rather than read from the cached balance. A warning that says "your credit will be lost"
+ * is easy to click past; one that says "your 340 minutes will be lost" is not, and that difference
+ * is the entire point of asking.
+ *
+ * Two things the wording has to carry, because both surprise people afterwards: the credit is not
+ * refunded, and the purchase records stay for tax reasons. Saying the second one here is cheaper
+ * than explaining it to someone who later reads the privacy policy and feels misled.
+ */
+@Composable
+private fun DeleteAccountDialog(
+    preview: DictateCloudDeletion,
+    busy: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                Icons.Default.DeleteForever,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.error,
+            )
+        },
+        title = { Text(stringRes(R.string.dictate__cloud_delete_dialog_title)) },
+        text = {
+            Column {
+                Text(
+                    text = stringRes(
+                        R.string.dictate__cloud_delete_dialog_body,
+                        "minutes" to preview.minutesLeft.toString(),
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    text = stringRes(R.string.dictate__cloud_delete_dialog_forfeit),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.error,
+                )
+                if (preview.purchases > 0) {
+                    Spacer(Modifier.height(10.dp))
+                    Text(
+                        text = stringRes(R.string.dictate__cloud_delete_dialog_records),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onConfirm, enabled = !busy) {
+                Text(
+                    text = stringRes(R.string.dictate__cloud_delete_dialog_confirm),
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss, enabled = !busy) {
+                Text(stringRes(R.string.dictate__cloud_delete_dialog_cancel))
+            }
+        },
+    )
 }
 
 @Composable

@@ -145,6 +145,39 @@ object DictateCloudApi {
         body = json.encodeToString(RestoreRequest(code = code, label = label)),
     )
 
+    /**
+     * Asks what deleting this account would destroy, without destroying it.
+     *
+     * Two calls rather than one, on purpose: the confirmation dialog names the exact number of
+     * minutes about to be forfeited, and a figure the user can read beats a warning they have to
+     * believe. Nothing changes on the server until [deleteAccount] is called with the confirmation.
+     */
+    suspend fun previewDeletion(token: String): DictateCloudDeletion = postAuthed(
+        path = "/wallet/delete",
+        token = token,
+        body = json.encodeToString(DeleteRequest(confirm = false)),
+    )
+
+    /**
+     * Deletes the account for good. The credit is forfeited, not refunded — see the server's
+     * `routes/delete.ts` for why that is the only defensible choice, and the dialog for how it is
+     * said to the user.
+     */
+    suspend fun deleteAccount(token: String): DictateCloudDeletion = postAuthed(
+        path = "/wallet/delete",
+        token = token,
+        body = json.encodeToString(DeleteRequest(confirm = true)),
+    )
+
+    private suspend inline fun <reified T> postAuthed(path: String, token: String, body: String): T {
+        val request = Request.Builder()
+            .url("$base$path")
+            .header("authorization", "Bearer $token")
+            .post(body.toRequestBody(jsonMedia))
+            .build()
+        return call(request)
+    }
+
     private suspend inline fun <reified T> post(path: String, body: String): T {
         val request = Request.Builder()
             .url("$base$path")
@@ -239,6 +272,9 @@ object DictateCloudApi {
     )
 
     @Serializable
+    private data class DeleteRequest(val confirm: Boolean)
+
+    @Serializable
     private data class ErrorEnvelope(val error: ErrorBody? = null)
 
     @Serializable
@@ -281,6 +317,24 @@ data class DictateCloudBalance(
     @SerialName("seconds_bought") val secondsBought: Int = 0,
     @SerialName("seconds_used") val secondsUsed: Int = 0,
     val status: String = "active",
+)
+
+/**
+ * Reply to both steps of deleting an account.
+ *
+ * Before confirming, [minutesLeft] and [purchases] describe what would be lost; afterwards,
+ * [forfeitedMinutes] and [purchasesRetained] describe what was. One shape for both so the caller
+ * does not have to branch on which call it made.
+ */
+@Serializable
+data class DictateCloudDeletion(
+    val confirmed: Boolean = false,
+    val deleted: Boolean = false,
+    @SerialName("minutes_left") val minutesLeft: Int = 0,
+    @SerialName("rewords_left") val rewordsLeft: Int = 0,
+    val purchases: Int = 0,
+    @SerialName("forfeited_minutes") val forfeitedMinutes: Int = 0,
+    @SerialName("purchases_retained") val purchasesRetained: Int = 0,
 )
 
 @Serializable

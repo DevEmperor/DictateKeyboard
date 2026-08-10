@@ -1856,6 +1856,16 @@
     <string name="dictate__cloud_notice_not_redeemed">Ödeme geçti ama kontör alınamadı. Hiçbir şey kaybolmadı — bu ekranı yeniden açın, eklenecek.</string>
     <string name="dictate__cloud_notice_needs_recovery">Bu satın alma başka bir kontör hesabına ait. Kontörü bu cihaza getirmek için onun kurtarma kodunu kullanın.</string>
     <string name="dictate__cloud_notice_failed">Satın alma tamamlanamadı.</string>
+    <string name="dictate__cloud_notice_deleted">Kredi hesabınız silindi.</string>
+    <string name="dictate__cloud_delete_title">Kredi hesabını sil</string>
+    <string name="dictate__cloud_delete_explain">Kredi hesabınızı ve onunla ilgili kayıtlı her şeyi siler. Kalan kredi yanar ve iade edilmez. Uygulama artık sizde değilse bunu api.dictatekeyboard.com/delete adresinden de yapabilirsiniz.</string>
+    <string name="dictate__cloud_delete_btn">Hesabı sil</string>
+    <string name="dictate__cloud_delete_dialog_title">Hesabınız silinsin mi?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Hâlâ {minutes} dakika krediniz var. Silme işlemi hesabınızı, kurtarma kodunuzu ve giriş yapılmış tüm cihazları kaldırır.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">Bu kredi yanar ve geri getirilemez — bizim tarafımızdan bile.</string>
+    <string name="dictate__cloud_delete_dialog_records">Satın alma kayıtlarınız vergi mevzuatı gereği on yıl saklanır. İçinde sipariş numarası ve tutar vardır, size ulaştıracak bir şey yoktur.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Kalıcı olarak sil</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Hesabı koru</string>
     <string name="dictate__cloud_notice_dismiss">Tamam</string>
     <string name="dictate__cloud_recovery_title">Kurtarma kodu</string>
     <string name="dictate__cloud_recovery_explain">Bu kodu bir yere yazın. Google, yeniden kurulumdan sonra harcanmış kontörü geri getirmez; kalan dakikalarınızı yeni bir telefona taşımanın tek yolu bu koddur. Aynı kontörü ikinci bir cihazda kullanmanızı da sağlar.</string>
