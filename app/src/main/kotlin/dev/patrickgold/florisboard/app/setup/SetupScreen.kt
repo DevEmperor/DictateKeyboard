@@ -488,6 +488,11 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
         }
     }
 
+    // Both sides of the fork are long enough to scroll, and to the layout this is one step
+    // throughout — so without this, answering the fork from halfway down the page lands the key
+    // flow halfway down as well, past its own heading.
+    ScrollToTopOn(choseOwnKey)
+
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
 

@@ -28,6 +28,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -97,7 +99,22 @@ data class FlorisStep(
 class FlorisStepLayoutScope(
     columnScope: ColumnScope,
     private val primaryColor: Color,
+    private val scrollState: ScrollState? = null,
 ) : ColumnScope by columnScope {
+
+    /**
+     * Sends the page back to the top whenever [key] changes.
+     *
+     * A step that swaps its content in place — a fork the user has just answered, a branch that
+     * opens — is still the same step to the layout, so it keeps the scroll position it had and the
+     * new content arrives already scrolled past its own heading. The scroll state belongs to the
+     * layout, which is why a step cannot reach it without this.
+     */
+    @Composable
+    fun ScrollToTopOn(key: Any?) {
+        val state = scrollState ?: return
+        LaunchedEffect(key) { state.scrollTo(0) }
+    }
 
     /**
      * Body text of a step.
@@ -242,6 +259,9 @@ fun FlorisStepLayout(
             val step = steps.firstOrNull { it.id == stepId } ?: return@AnimatedContent
             val isFirst = indexOfId(stepId) == 0
             val index = indexOfId(stepId)
+            // Hoisted rather than left inside the modifier, so a step can send its own page back to
+            // the top when it replaces its content without the layout ever changing step.
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -266,7 +286,7 @@ fun FlorisStepLayout(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .florisVerticalScroll(),
+                        .florisVerticalScroll(scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     // Centred while the page fits, top-anchored once it has to scroll. A short step
                     // otherwise clings to the top and leaves the lower half empty.
@@ -295,7 +315,7 @@ fun FlorisStepLayout(
                         modifier = Modifier.widthIn(max = 360.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        val scope = FlorisStepLayoutScope(this, primaryColor)
+                        val scope = FlorisStepLayoutScope(this, primaryColor, scrollState)
                         if (isFirst) {
                             header(scope)
                         }
