@@ -1,6 +1,6 @@
 # Privacy Policy for Dictate Keyboard
 
-**Effective date:** TO BE SET — the day Dictate Cloud goes on sale
+**Effective date:** 10 August 2026
 **Last updated:** 10 August 2026
 
 This Privacy Policy explains how **Dictate Keyboard** (the "App", application ID
