@@ -24,8 +24,6 @@ export interface Env {
    * OpenAI actually charged rather than what we calculated. Without it that panel says so.
    */
   OPENAI_ADMIN_KEY?: string;
-  /** Secret. Step 1 only, to hand-create a test wallet. Removed once billing works. */
-  BOOTSTRAP_TOKEN?: string;
   /** Secret. The full JSON key file of the Play service account. */
   GOOGLE_SERVICE_ACCOUNT: string;
   /** Secret. Guards the notification endpoint Google calls from outside. */

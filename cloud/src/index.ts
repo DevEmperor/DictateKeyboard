@@ -6,7 +6,6 @@ import { evaluateRules } from './notify/rules';
 import { handleChat } from './routes/chat';
 import { handleDelete, handleDeleteByCode } from './routes/delete';
 import { DELETE_PAGE_HTML } from './routes/delete-page';
-import { handleDiagnose } from './routes/diagnose';
 import { handleModels } from './routes/models';
 import { handleRedeem } from './routes/redeem';
 import { handleRtdn } from './routes/rtdn';
@@ -85,10 +84,6 @@ export default {
     if (request.method === 'POST' && path === '/v1/rtdn') {
       return handleRtdn(request, env, ctx);
     }
-    if (request.method === 'GET' && path === '/v1/diagnose') {
-      return handleDiagnose(request, env);
-    }
-
     return apiError(404, `Unknown endpoint: ${path}`, 'not_found', 'invalid_request_error');
   },
 

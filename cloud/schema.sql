@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS wallets (
   -- licence tester's order carries the nominal price with zero tax and zero revenue: counted in,
   -- it inflates the order count and drags every average down.
   --
-  -- Set automatically where it can be known (Google reports purchaseType 0 for a licence tester,
-  -- the bootstrap route creates its own) and by hand for anything else.
+  -- Set automatically where it can be known (Google reports purchaseType 0 for a licence tester)
+  -- and by hand for anything else. `bootstrap` is history: it marks the accounts a setup route
+  -- created before billing worked, and that route is gone.
   is_test            INTEGER NOT NULL DEFAULT 0,
   test_reason        TEXT,                       -- license_tester | bootstrap | manual
 
