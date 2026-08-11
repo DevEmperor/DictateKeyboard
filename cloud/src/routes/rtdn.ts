@@ -173,9 +173,14 @@ async function reportLoss(
 ): Promise<void> {
   const usedPercent = seconds > 0 && usedSeconds !== null ? (usedSeconds / seconds) * 100 : 0;
 
-  // How often this *person* has done it, not this wallet. A reinstall makes a new wallet, so
-  // counting per wallet would reset the history exactly when it starts to matter. The link is
-  // Google's own per-app pseudonym, stored only as a hash.
+  // How often it has happened across the accounts that are demonstrably linked, not just on this
+  // one. A reinstall makes a new wallet, so counting per wallet would reset the history exactly
+  // when it starts to matter.
+  //
+  // The link is `play_account_hash` — the wallet id the app attached to the purchase, hashed. It is
+  // **not** a Google identifier, so it only exists where a purchase topped up an account that was
+  // already there. Where someone deleted before buying again, this count legitimately reads 1 and
+  // says nothing about whether it is the first time.
   const repeat = await env.DB.prepare(
     `SELECT COALESCE(SUM(void_count), 0) AS n FROM wallets
       WHERE play_account_hash IS NOT NULL
@@ -198,7 +203,7 @@ async function reportLoss(
       walletId,
       value: 0,
       title: times > 1
-        ? `${times}. Erstattung derselben Person, Konto gelöscht`
+        ? `${times}. Erstattung aus dieser Kette, Konto gelöscht`
         : 'Erstattung nach gelöschtem Konto',
       detail:
         `Ein Kauf über ${Math.round(seconds / 60)} Minuten wurde storniert, obwohl das zugehörige Konto ` +
@@ -206,14 +211,15 @@ async function reportLoss(
         `Wie viel davon vorher diktiert wurde, lässt sich nicht mehr sagen: das Nutzungsprotokoll ist mit ` +
         `dem Konto entfernt worden.` +
         (revenue !== null ? ` Vom Erlös gehen ${revenue.toFixed(2)} ${home} wieder ab.` : '') +
+        ` Löschen und danach erstatten ist genau die Reihenfolge, in der jemand keine Spuren ` +
+        `hinterlassen würde` +
         (times > 1
-          ? ` Von diesem Play-Konto ist es bereits die ${times}. Erstattung — die Löschung hat die Spur ` +
-            `nicht gekappt, weil der Play-Prüfwert sie überdauert. Das ist kein Zufall mehr: Beim nächsten ` +
-            `Kauf dieser Person meldet sich der Dienst von selbst, und dann gehört das Konto gesperrt, ` +
-            `bevor die Minuten verbraucht sind.`
-          : ` Löschen und danach erstatten ist genau die Reihenfolge, in der jemand keine Spuren ` +
-            `hinterlassen würde. Der Play-Prüfwert überdauert die Löschung, also wird eine Wiederholung ` +
-            `erkannt — bei diesem einzelnen Fall ist es noch harmlos.`),
+          ? `, und es ist bereits die ${times}. Erstattung aus dieser Kette von Konten.`
+          : `.`) +
+        ` Erwarte hier keine Warnung beim nächsten Kauf: Die Wiedererkennung hängt an der Kennung, ` +
+        `die die App beim Kauf anhängt, und nach einer Löschung hängt sie keine an. Ein neuer Kauf ` +
+        `von hier sieht aus wie ein Erstkauf. Wenn dir das zu oft begegnet, ist das der Punkt, an ` +
+        `dem sich die Lücke zu schließen lohnt.`,
       dedupeKey: `refund_loss:${purchaseToken}`,
     }, ctx);
     return;
@@ -229,7 +235,7 @@ async function reportLoss(
     walletId,
     value: lossHome,
     title: times > 1
-      ? `${times}. Erstattung von derselben Person`
+      ? `${times}. Erstattung aus dieser Kette von Konten`
       : `Erstattung nach ${Math.round(spent / 60)} verbrauchten Minuten`,
     detail:
       `Ein Kauf über ${Math.round(seconds / 60)} Minuten wurde storniert, nachdem davon ` +
@@ -239,8 +245,8 @@ async function reportLoss(
       `${lossHome.toFixed(2)} ${home}` +
       (revenue !== null ? `, während ${revenue.toFixed(2)} ${home} Erlös wieder abgezogen werden` : '') +
       (times > 1
-        ? `. Von diesem Play-Konto ist das bereits die ${times}. Erstattung — auch über neu angelegte ` +
-          `Guthabenkonten hinweg. Ein Muster, kein Zufall: Sperren ist hier angebracht.`
+        ? `. Es ist bereits die ${times}. Erstattung aus dieser Kette von Konten — die Aufladungen hängen ` +
+          `nachweislich zusammen. Ein Muster, kein Zufall: Sperren ist hier angebracht.`
         : `. Wiederholt sich das mit demselben Konto, ist Sperren angebracht — dann ist es kein Zufall mehr.`),
     // Per purchase. Google can send the same notification more than once, and the same customer
     // refunding a second pack is genuinely new.
