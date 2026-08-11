@@ -253,7 +253,16 @@ number and an amount, and once the account is gone there is nothing in them that
 leads back to you. Because those records refer to the account, the account's own
 entry is emptied rather than dropped: what is left is the random identifier, the
 dates it was created and deleted, and the minute totals. No recovery code, no
-device, no Google pseudonym, nothing that can be signed in to or traced to you.
+device, nothing that can be signed in to.
+
+**One exception, and we would rather name it than bury it.** The one-way hash of
+Google's app-specific pseudonym for the buying account (section 4.2) is kept for
+**24 months** after deletion, and then erased. It exists solely to recognise
+repeated refunds by the same buyer: without it, deleting the account would reset
+that count and make deletion the last step of a refund cycle rather than an end
+to the relationship. It cannot be turned back into a Google account, an email
+address or a name — it answers "the same buyer as before" and nothing else. The
+basis is Art. 6(1)(f) GDPR, our legitimate interest in preventing payment abuse.
 
 ### 4.6 Identifying you
 
