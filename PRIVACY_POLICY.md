@@ -1,7 +1,7 @@
 # Privacy Policy for Dictate Keyboard
 
 **Effective date:** 10 August 2026
-**Last updated:** 10 August 2026
+**Last updated:** 12 August 2026
 
 This Privacy Policy explains how **Dictate Keyboard** (the "App", application ID
 `net.devemperor.dictate`) handles your information. The App is developed and
@@ -54,6 +54,8 @@ existed: we have no server in your path and no data about you.
 - As a keyboard, the App **does not log your keystrokes or collect what you type**
   in other apps. It only processes audio that you explicitly record by pressing
   the dictation button.
+- **All of this can be checked.** The App and the Dictate Cloud server are open
+  source and readable in full — see section 8.
 
 ---
 
@@ -317,7 +319,35 @@ entirely.
 
 ---
 
-## 8. Data security
+## 8. You do not have to take our word for any of this
+
+The App is open source, and so is the server behind Dictate Cloud. Both live in
+the same public repository:
+
+**<https://github.com/DevEmperor/DictateKeyboard>** — the App under `app/` and
+`lib/`, the Dictate Cloud server under `cloud/`.
+
+You can read every line, including the parts this policy describes: what is sent
+to a provider and when, that recordings are streamed through the server without
+ever being written to a disk, how a credit account is deleted, and what is kept
+afterwards. The App is licensed under the Apache License 2.0; you are free to
+build it yourself rather than install ours.
+
+Two honest limits, because a promise of transparency that overstates itself is
+worth less than none:
+
+- **Published source is not proof of what runs.** Reading `cloud/` tells you what
+  the server is built from, not that the deployment matches it byte for byte.
+  Nobody can verify that from outside — here or anywhere else.
+- **Two things are deliberately not in the repository.** Credentials, which live
+  in Cloudflare's secret store and are never committed, and one configuration
+  file holding an alert address and the thresholds our abuse detection trips on.
+  Publishing those would mean publishing exactly what someone would tune against.
+  No behaviour described in this policy depends on them.
+
+---
+
+## 9. Data security
 
 Data sent to AI providers, and to Dictate Cloud, is transmitted over encrypted
 HTTPS connections. Your credentials and settings are kept in the App's private,
@@ -328,7 +358,7 @@ of transmission or storage is 100% secure.
 
 ---
 
-## 9. Children's privacy
+## 10. Children's privacy
 
 The App is not directed at children under the age of 13 (or the equivalent
 minimum age in your jurisdiction), and we do not knowingly process data from
@@ -337,7 +367,7 @@ requirements.
 
 ---
 
-## 10. International data transfers
+## 11. International data transfers
 
 The AI providers you choose may operate servers in other countries (for example
 the United States). When you send audio or text to a provider, that data may be
@@ -348,7 +378,7 @@ For Dictate Cloud, the transfer arrangements are set out in section 4.3.
 
 ---
 
-## 11. Your choices and rights
+## 12. Your choices and rights
 
 - You decide whether to use any AI provider and which one — or none, using
   on-device recognition.
@@ -366,7 +396,7 @@ For Dictate Cloud, the transfer arrangements are set out in section 4.3.
 
 ---
 
-## 12. Changes to this policy
+## 13. Changes to this policy
 
 We may update this Privacy Policy from time to time. Material changes will be
 reflected by updating the "Last updated" date above and publishing the new version
@@ -375,7 +405,7 @@ of the revised policy.
 
 ---
 
-## 13. Contact
+## 14. Contact
 
 If you have questions or requests regarding this Privacy Policy, contact:
 
