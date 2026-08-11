@@ -86,3 +86,15 @@ tools/glide-dict/dist/
 
 # Demo recording for the README/store listings — kept locally, too large to version
 /img/dictate_demo.mp4
+
+# Dictate Cloud (cloud/) — der Guthaben-Server. Der Quelltext ist bewusst veröffentlichbar
+# geschrieben, die Konfiguration ist es nicht: in wrangler.jsonc stehen die private
+# Empfängeradresse für die Warnungen, die Datenbank-ID und sämtliche Schwellenwerte des
+# Wachhunds. Die Datei liegt hier als Symlink auf private/dictate-cloud/wrangler.jsonc,
+# damit wrangler sie an der erwarteten Stelle findet, ohne dass sie je veröffentlicht wird.
+# Als Vorlage dient wrangler.example.jsonc.
+cloud/wrangler.jsonc
+cloud/node_modules/
+cloud/.wrangler/
+cloud/.dev.vars
+cloud/dist/
