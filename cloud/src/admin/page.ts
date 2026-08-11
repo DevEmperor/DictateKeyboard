@@ -1718,23 +1718,21 @@ var GRAPH = ${GRAPH_JSON};
         '<text class="t" x="' + (n.x + 16) + '" y="' + (n.y + 27) + '">' + esc(n.label) + '</text>' +
         '<text class="s" x="' + (n.x + 16) + '" y="' + (n.y + 46) + '">' + esc(n.sub) + '</text>' +
         '<g class="gask" data-ask="' + esc(n.id) + '"><circle cx="' + (n.x + n.w - 17) + '" cy="' + (n.y + 17) + '" r="9"/>' +
-        '<text x="' + (n.x + n.w - 17) + '" y="' + (n.y + 21) + '" text-anchor="middle">?</text></g></g>');
+        '<text x="' + (n.x + n.w - 17) + '" y="' + (n.y + 21) + '" text-anchor="middle">?</text>' +
+        // A finger is wider than nine pixels. The invisible square is the target; the ring is only
+        // what it looks like.
+        '<rect class="hit" x="' + (n.x + n.w - 34) + '" y="' + (n.y) + '" width="34" height="34" fill="transparent"/>' +
+        '</g></g>');
     });
 
     $('gcam').innerHTML = parts.join('') + labels.join('');
     placeLabels();
 
-    Array.prototype.forEach.call($('gcam').querySelectorAll('.gnode'), function (g) {
-      g.addEventListener('click', function (ev) {
-        ev.stopPropagation();
-        var ask = ev.target.closest && ev.target.closest('.gask');
-        if (ask) { explainNode(ask.getAttribute('data-ask')); return; }
-        selectNode(g.getAttribute('data-n'));
-      });
-    });
+    // Taps are handled once, on the canvas — see the handler in initGraph. Wiring every shape
+    // individually meant re-wiring all of them on every redraw, and it broke the moment a pointer
+    // was captured, because a captured click never reaches the shape it was aimed at.
     Array.prototype.forEach.call($('gcam').querySelectorAll('.gedge, .glabel'), function (g) {
       var i = g.getAttribute('data-e');
-      g.addEventListener('click', function (ev) { ev.stopPropagation(); selectEdge(Number(i)); });
       g.addEventListener('mouseenter', function () { hot(i, true); });
       g.addEventListener('mouseleave', function () { hot(i, false); });
     });
@@ -1987,16 +1985,30 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   function initGraph() {
-    var svg = $('gsvg'), pts = {}, last = null, pinch = null, moved = 0;
+    var svg = $('gsvg'), pts = {}, last = null, pinch = null, moved = 0, held = {};
+    /**
+     * Capture only once a drag is really under way.
+     *
+     * setPointerCapture on pointerdown looks like the tidy way to keep a drag alive past the edge
+     * of the canvas, and it quietly costs every tap: with the pointer captured, the click that
+     * follows is delivered to the element that holds the capture — the canvas — and never reaches
+     * the box or the "?" that was actually pressed. So the capture waits for movement, which is the
+     * only moment it is needed for anything.
+     */
+    function grab(id) {
+      if (held[id]) return;
+      try { svg.setPointerCapture(id); held[id] = 1; } catch (err) { /* nothing to hold on to */ }
+    }
     svg.addEventListener('pointerdown', function (e) {
-      svg.setPointerCapture(e.pointerId); pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-      if (Object.keys(pts).length === 1) { last = { x: e.clientX, y: e.clientY }; moved = 0; svg.classList.add('dragging'); }
+      pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (Object.keys(pts).length === 1) { last = { x: e.clientX, y: e.clientY }; moved = 0; }
     });
     svg.addEventListener('pointermove', function (e) {
       if (!pts[e.pointerId]) return;
       pts[e.pointerId] = { x: e.clientX, y: e.clientY };
       var ids = Object.keys(pts);
       if (ids.length >= 2) {
+        ids.forEach(grab);
         var a = pts[ids[0]], b = pts[ids[1]];
         var dist = Math.hypot(a.x - b.x, a.y - b.y);
         var box = svg.getBoundingClientRect();
@@ -2006,19 +2018,43 @@ var GRAPH = ${GRAPH_JSON};
       }
       if (last) {
         moved += Math.abs(e.clientX - last.x) + Math.abs(e.clientY - last.y);
+        if (moved > 4) { grab(e.pointerId); svg.classList.add('dragging'); }
         cam.x += e.clientX - last.x; cam.y += e.clientY - last.y;
         last = { x: e.clientX, y: e.clientY }; applyCam();
       }
     });
-    function up(e) { delete pts[e.pointerId]; if (!Object.keys(pts).length) { last = null; pinch = null; svg.classList.remove('dragging'); } }
+    function up(e) {
+      delete pts[e.pointerId]; delete held[e.pointerId];
+      if (!Object.keys(pts).length) { last = null; pinch = null; svg.classList.remove('dragging'); }
+    }
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
     svg.addEventListener('wheel', function (e) {
       e.preventDefault();
       var box = svg.getBoundingClientRect();
       zoomAt(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX - box.left, e.clientY - box.top);
     }, { passive: false });
-    // A drag that ends on empty canvas must not count as a tap, or panning clears the selection.
-    svg.addEventListener('click', function () { if (moved < 6) clearSelection(); });
+    /**
+     * Every tap on the canvas, in one place.
+     *
+     * Delegated rather than bound per shape: the drawing is rebuilt on each redraw, and one
+     * listener that outlives all of it beats a hundred that do not. The lookup by point is the
+     * safety net — if a pointer was captured after all, the click arrives at the canvas with no
+     * memory of what was under it, and this asks the document instead of giving up.
+     */
+    svg.addEventListener('click', function (ev) {
+      if (moved >= 6) return;
+      var t = ev.target;
+      if (!t.closest || t === svg || t.id === 'gcam') {
+        t = document.elementFromPoint(ev.clientX, ev.clientY) || t;
+      }
+      var ask = t.closest && t.closest('.gask');
+      if (ask) { explainNode(ask.getAttribute('data-ask')); return; }
+      var node = t.closest && t.closest('.gnode');
+      if (node) { selectNode(node.getAttribute('data-n')); return; }
+      var line = t.closest && t.closest('.gedge, .glabel');
+      if (line) { selectEdge(Number(line.getAttribute('data-e'))); return; }
+      clearSelection();
+    });
 
     $('gIn').onclick = function () { var b = svg.getBoundingClientRect(); zoomAt(1.25, b.width / 2, b.height / 2); };
     $('gOut').onclick = function () { var b = svg.getBoundingClientRect(); zoomAt(1 / 1.25, b.width / 2, b.height / 2); };
