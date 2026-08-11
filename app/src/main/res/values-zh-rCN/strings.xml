@@ -1201,6 +1201,7 @@
     <string name="dictate__error_invalid_api_key">请检查您的 API 密钥</string>
     <string name="dictate__error_quota_exceeded">已达到配额或限额</string>
     <string name="dictate__error_content_size_limit">录音过长或过大</string>
+    <string name="dictate__error_text_size_limit">文本太长，无法改写</string>
     <string name="dictate__error_format_not_supported">不支持该音频格式</string>
     <string name="dictate__error_timeout">请求超时</string>
     <string name="dictate__error_network">无网络连接</string>

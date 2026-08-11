@@ -1204,6 +1204,7 @@
     <string name="dictate__error_invalid_api_key">Ellenőrizze az API-kulcsát</string>
     <string name="dictate__error_quota_exceeded">Kvóta vagy korlát elérve</string>
     <string name="dictate__error_content_size_limit">A felvétel túl hosszú vagy túl nagy</string>
+    <string name="dictate__error_text_size_limit">A szöveg túl hosszú az átfogalmazáshoz</string>
     <string name="dictate__error_format_not_supported">A hangformátum nem támogatott</string>
     <string name="dictate__error_timeout">A kérés időtúllépést okozott</string>
     <string name="dictate__error_network">Nincs internetkapcsolat</string>

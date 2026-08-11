@@ -1220,6 +1220,7 @@
     <string name="dictate__error_invalid_api_key">Zkontrolujte svůj klíč API</string>
     <string name="dictate__error_quota_exceeded">Dosažen limit nebo kvóta</string>
     <string name="dictate__error_content_size_limit">Nahrávka je příliš dlouhá nebo velká</string>
+    <string name="dictate__error_text_size_limit">Text je příliš dlouhý na přeformulování</string>
     <string name="dictate__error_format_not_supported">Nepodporovaný formát zvuku</string>
     <string name="dictate__error_timeout">Vypršel časový limit požadavku</string>
     <string name="dictate__error_network">Žádné připojení k internetu</string>

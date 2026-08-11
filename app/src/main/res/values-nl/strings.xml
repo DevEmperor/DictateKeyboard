@@ -1105,6 +1105,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_invalid_api_key">Controleer je API-sleutel</string>
     <string name="dictate__error_quota_exceeded">Quotum of limiet bereikt</string>
     <string name="dictate__error_content_size_limit">Opname te lang of te groot</string>
+    <string name="dictate__error_text_size_limit">Tekst te lang om te herformuleren</string>
     <string name="dictate__error_format_not_supported">Audioformaat niet ondersteund</string>
     <string name="dictate__error_timeout">Time-out van verzoek</string>
     <string name="dictate__error_network">Geen internetverbinding</string>

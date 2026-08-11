@@ -1081,6 +1081,7 @@
     <string name="dictate__error_invalid_api_key">Comprova la teva clau d\'API</string>
     <string name="dictate__error_quota_exceeded">Quota o límit assolit</string>
     <string name="dictate__error_content_size_limit">Gravació massa llarga o massa gran</string>
+    <string name="dictate__error_text_size_limit">Text massa llarg per reformular</string>
     <string name="dictate__error_format_not_supported">Format d\'àudio no compatible</string>
     <string name="dictate__error_timeout">La sol·licitud ha excedit el temps d\'espera</string>
     <string name="dictate__error_network">Sense connexió a internet</string>

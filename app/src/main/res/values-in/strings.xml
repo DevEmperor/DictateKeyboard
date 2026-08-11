@@ -1161,6 +1161,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_invalid_api_key">Periksa kunci API Anda</string>
     <string name="dictate__error_quota_exceeded">Kuota atau batas tercapai</string>
     <string name="dictate__error_content_size_limit">Rekaman terlalu panjang atau terlalu besar</string>
+    <string name="dictate__error_text_size_limit">Teks terlalu panjang untuk ditulis ulang</string>
     <string name="dictate__error_format_not_supported">Format audio tidak didukung</string>
     <string name="dictate__error_timeout">Waktu permintaan habis</string>
     <string name="dictate__error_network">Tidak ada koneksi internet</string>

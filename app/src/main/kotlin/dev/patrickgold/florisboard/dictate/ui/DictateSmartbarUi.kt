@@ -731,6 +731,7 @@ private fun errorIcon(kind: DictateApiException.Kind?, action: DictateController
     action == DictateController.ErrorAction.OPEN_SETTINGS -> Icons.Default.VpnKey
     kind == DictateApiException.Kind.QUOTA_EXCEEDED -> Icons.Default.DataUsage
     kind == DictateApiException.Kind.CONTENT_SIZE_LIMIT -> Icons.Default.WarningAmber
+    kind == DictateApiException.Kind.TEXT_SIZE_LIMIT -> Icons.Default.WarningAmber
     kind == DictateApiException.Kind.FORMAT_NOT_SUPPORTED -> Icons.Default.GraphicEq
     kind == DictateApiException.Kind.TIMEOUT -> Icons.Default.Schedule
     kind == DictateApiException.Kind.NETWORK -> Icons.Default.CloudOff

@@ -128,6 +128,25 @@ export async function handleChat(
     return apiError(502, 'The rewording failed.', 'upstream_rejected', 'server_error');
   }
 
+  // An answer that ran out of room is not an answer. The budget covers the visible reply *and*
+  // whatever the model spends on reasoning, so a request can come back with a perfectly valid
+  // 200, a `length` finish and nothing usable in it — the app then quietly keeps the original and
+  // the user is left wondering why their text did not change, having paid for it.
+  //
+  // Refused and refunded instead. A truncated rewrite is not the lesser evil either: it would
+  // replace the text with a version that stops mid-sentence.
+  if (wasTruncated(body)) {
+    await wallet.refund(reservedSeconds);
+    settleBudget(env, -worstCaseNano, ctx);
+    logRefusal(env, session, 'reword', 413, started, ctx);
+    return apiError(
+      413,
+      'The rewording did not fit in the allowed answer length.',
+      'reword_truncated',
+      'invalid_request_error',
+    );
+  }
+
   // What it really cost, from OpenAI's own count rather than our estimate of it. The reservation
   // is settled against that, so the account is charged to the second — usually a good deal less
   // than was held, because the full permitted answer is rarely used.
@@ -184,6 +203,27 @@ function textOf(content: unknown): string {
       .join(' ');
   }
   return '';
+}
+
+/**
+ * Whether the model stopped because it ran out of room rather than because it was finished.
+ *
+ * Belt and braces: `finish_reason: "length"` is the statement, and an empty message is the
+ * symptom — a reasoning model that spends its whole budget thinking returns the second without
+ * always setting the first.
+ */
+function wasTruncated(body: string): boolean {
+  try {
+    const parsed = JSON.parse(body) as {
+      choices?: Array<{ finish_reason?: string; message?: { content?: string | null } }>;
+    };
+    const choice = parsed.choices?.[0];
+    if (!choice) return false;
+    if (choice.finish_reason === 'length') return true;
+    return !choice.message?.content?.trim();
+  } catch {
+    return false;
+  }
 }
 
 function parseUsage(body: string): { in: number; out: number } {

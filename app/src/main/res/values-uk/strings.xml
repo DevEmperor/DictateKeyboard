@@ -1053,6 +1053,7 @@
     <string name="dictate__error_invalid_api_key">Перевірте свій ключ API</string>
     <string name="dictate__error_quota_exceeded">Досягнуто квоту або ліміт</string>
     <string name="dictate__error_content_size_limit">Запис занадто довгий або великий</string>
+    <string name="dictate__error_text_size_limit">Текст задовгий для перефразування</string>
     <string name="dictate__error_format_not_supported">Аудіоформат не підтримується</string>
     <string name="dictate__error_timeout">Час очікування запиту вичерпано</string>
     <string name="dictate__error_network">Немає підключення до інтернету</string>

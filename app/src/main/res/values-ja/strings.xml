@@ -1138,6 +1138,7 @@
     <string name="dictate__error_invalid_api_key">APIキーを確認してください</string>
     <string name="dictate__error_quota_exceeded">クォータまたは上限に達しました</string>
     <string name="dictate__error_content_size_limit">録音が長すぎるか大きすぎます</string>
+    <string name="dictate__error_text_size_limit">テキストが長すぎて言い換えできません</string>
     <string name="dictate__error_format_not_supported">音声形式がサポートされていません</string>
     <string name="dictate__error_timeout">リクエストがタイムアウトしました</string>
     <string name="dictate__error_network">インターネット接続がありません</string>

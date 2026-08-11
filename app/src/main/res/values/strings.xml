@@ -1545,6 +1545,7 @@
     <string name="dictate__error_invalid_api_key" comment="Short error: the API key is missing, wrong or rejected">Check your API key</string>
     <string name="dictate__error_quota_exceeded" comment="Short error: the provider quota, rate limit or billing is exhausted">Quota or limit reached</string>
     <string name="dictate__error_content_size_limit" comment="Short error: the audio/request is too large or too long for the provider">Recording too long or too large</string>
+    <string name="dictate__error_text_size_limit" comment="Short error: a text was too long to reword — distinct from an over-long audio recording">Text too long to reword</string>
     <string name="dictate__error_format_not_supported" comment="Short error: the provider rejected the audio format">Audio format not supported</string>
     <string name="dictate__error_timeout" comment="Short error: the request timed out">Request timed out</string>
     <string name="dictate__error_network" comment="Short error: no network connection reached the provider">No internet connection</string>

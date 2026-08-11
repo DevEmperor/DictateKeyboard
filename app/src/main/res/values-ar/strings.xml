@@ -1064,6 +1064,7 @@
     <string name="dictate__error_invalid_api_key">تحقّق من مفتاح API الخاص بك</string>
     <string name="dictate__error_quota_exceeded">تم بلوغ الحصة أو الحد</string>
     <string name="dictate__error_content_size_limit">التسجيل طويل جدًا أو كبير جدًا</string>
+    <string name="dictate__error_text_size_limit">النص أطول من أن يُعاد صياغته</string>
     <string name="dictate__error_format_not_supported">تنسيق الصوت غير مدعوم</string>
     <string name="dictate__error_timeout">انتهت مهلة الطلب</string>
     <string name="dictate__error_network">لا يوجد اتصال بالإنترنت</string>

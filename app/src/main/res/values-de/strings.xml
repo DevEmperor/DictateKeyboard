@@ -1096,6 +1096,7 @@
     <string name="dictate__error_invalid_api_key">Überprüfe deinen API-Schlüssel</string>
     <string name="dictate__error_quota_exceeded">Kontingent oder Limit erreicht</string>
     <string name="dictate__error_content_size_limit">Aufnahme zu lang oder zu groß</string>
+    <string name="dictate__error_text_size_limit">Text zu lang zum Umformulieren</string>
     <string name="dictate__error_format_not_supported">Audioformat nicht unterstützt</string>
     <string name="dictate__error_timeout">Zeitüberschreitung der Anfrage</string>
     <string name="dictate__error_network">Keine Internetverbindung</string>

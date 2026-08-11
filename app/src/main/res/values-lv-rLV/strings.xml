@@ -1149,6 +1149,7 @@
     <string name="dictate__error_invalid_api_key">Pārbaudiet savu API atslēgu</string>
     <string name="dictate__error_quota_exceeded">Sasniegta kvota vai ierobežojums</string>
     <string name="dictate__error_content_size_limit">Ieraksts ir pārāk garš vai liels</string>
+    <string name="dictate__error_text_size_limit">Teksts pārāk garš pārformulēšanai</string>
     <string name="dictate__error_format_not_supported">Audio formāts netiek atbalstīts</string>
     <string name="dictate__error_timeout">Pieprasījuma noildze</string>
     <string name="dictate__error_network">Nav interneta savienojuma</string>

@@ -1083,6 +1083,7 @@
     <string name="dictate__error_invalid_api_key">Vérifiez votre clé d\'API</string>
     <string name="dictate__error_quota_exceeded">Quota ou limite atteint</string>
     <string name="dictate__error_content_size_limit">Enregistrement trop long ou trop volumineux</string>
+    <string name="dictate__error_text_size_limit">Texte trop long pour être reformulé</string>
     <string name="dictate__error_format_not_supported">Format audio non pris en charge</string>
     <string name="dictate__error_timeout">Délai d\'attente dépassé</string>
     <string name="dictate__error_network">Pas de connexion internet</string>

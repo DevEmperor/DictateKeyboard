@@ -989,6 +989,7 @@
     <string name="dictate__error_invalid_api_key">Controlla la tua chiave API</string>
     <string name="dictate__error_quota_exceeded">Quota o limite raggiunto</string>
     <string name="dictate__error_content_size_limit">Registrazione troppo lunga o troppo grande</string>
+    <string name="dictate__error_text_size_limit">Testo troppo lungo da riformulare</string>
     <string name="dictate__error_format_not_supported">Formato audio non supportato</string>
     <string name="dictate__error_timeout">Richiesta scaduta</string>
     <string name="dictate__error_network">Nessuna connessione a internet</string>

@@ -1184,6 +1184,7 @@
     <string name="dictate__error_invalid_api_key">API anahtarınızı kontrol edin</string>
     <string name="dictate__error_quota_exceeded">Kota veya sınıra ulaşıldı</string>
     <string name="dictate__error_content_size_limit">Kayıt çok uzun veya çok büyük</string>
+    <string name="dictate__error_text_size_limit">Metin yeniden ifade edilemeyecek kadar uzun</string>
     <string name="dictate__error_format_not_supported">Ses formatı desteklenmiyor</string>
     <string name="dictate__error_timeout">İstek zaman aşımına uğradı</string>
     <string name="dictate__error_network">İnternet bağlantısı yok</string>

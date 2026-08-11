@@ -1209,6 +1209,7 @@
     <string name="dictate__error_invalid_api_key">Проверьте свой ключ API</string>
     <string name="dictate__error_quota_exceeded">Достигнута квота или лимит</string>
     <string name="dictate__error_content_size_limit">Запись слишком длинная или большая</string>
+    <string name="dictate__error_text_size_limit">Текст слишком длинный для переформулировки</string>
     <string name="dictate__error_format_not_supported">Аудиоформат не поддерживается</string>
     <string name="dictate__error_timeout">Истекло время ожидания запроса</string>
     <string name="dictate__error_network">Нет подключения к интернету</string>

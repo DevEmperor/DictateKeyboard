@@ -1221,6 +1221,7 @@
     <string name="dictate__error_invalid_api_key">Sprawdź swój klucz API</string>
     <string name="dictate__error_quota_exceeded">Osiągnięto limit lub przydział</string>
     <string name="dictate__error_content_size_limit">Nagranie zbyt długie lub zbyt duże</string>
+    <string name="dictate__error_text_size_limit">Tekst za długi do przeformułowania</string>
     <string name="dictate__error_format_not_supported">Nieobsługiwany format audio</string>
     <string name="dictate__error_timeout">Przekroczono limit czasu żądania</string>
     <string name="dictate__error_network">Brak połączenia z internetem</string>
