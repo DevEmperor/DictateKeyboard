@@ -1,5 +1,5 @@
 import { raise } from '../alerts';
-import { estimateSeconds, shortestPossibleSeconds, wavDuration } from '../audio';
+import { estimateSeconds, probeDuration, shortestPossibleSeconds } from '../audio';
 import { authenticate, touch } from '../auth';
 import { OPENAI_BASE, transcribeCostNano, type Env, type Limits } from '../config';
 import { budgetAllows, logUsage, settleBudget, walletStub } from '../meter';
@@ -44,8 +44,10 @@ export async function handleTranscription(
     return apiError(400, 'Field "file" is missing.', 'missing_file', 'invalid_request_error');
   }
 
-  const head = new Uint8Array(await file.slice(0, 4096).arrayBuffer());
-  const duration = wavDuration(head, file.size) ?? estimateSeconds(file.size);
+  // Read from the file itself where the format says so — WAV, MP3, MP4/M4A, Ogg/Opus, FLAC all
+  // state it in a header and none of them needs decoding. Only an unrecognised container falls back
+  // to the estimate, and then only to decide how much credit to hold.
+  const duration = (await probeDuration(file)) ?? estimateSeconds(file.size);
 
   // Refused only when the file cannot be within the limit however it is encoded — for a WAV that is
   // the header's own figure, for anything else the shortest length its size allows. Using the
