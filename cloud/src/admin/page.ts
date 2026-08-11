@@ -67,6 +67,7 @@ export const DASHBOARD_HTML = `<!doctype html>
     --z-cf: #F5A24A;
     --z-google: #5EC87C;
     --z-openai: #A99AF0;
+    --z-ext: #8FA0B4;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -1607,7 +1608,7 @@ var GRAPH = ${GRAPH_JSON};
 
   /* --------------------------------------------------------------- Netzwerk */
 
-  var TONE = { client: 'var(--z-client)', cloudflare: 'var(--z-cf)', google: 'var(--z-google)', openai: 'var(--z-openai)' };
+  var TONE = { client: 'var(--z-client)', cloudflare: 'var(--z-cf)', google: 'var(--z-google)', openai: 'var(--z-openai)', ext: 'var(--z-ext)' };
   var EKIND = { data: 'var(--accent)', auth: 'var(--z-google)', store: 'var(--muted)', notify: 'var(--z-cf)' };
   var NW = 240, NH = 66;
   var cam = { s: 1, x: 0, y: 0 }, filter = 'all', selected = null;
@@ -1760,10 +1761,20 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   function applyCam() { $('gcam').setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.s + ')'); }
+  // Measured from the zones themselves, plus the margin they already sit in. A hard-coded extent
+  // silently crops the day someone adds a zone at the bottom, and it crops on the phone first.
+  var EXTENT = (function () {
+    var w = 0, h = 0;
+    GRAPH.zones.forEach(function (z) {
+      if (z.x + z.w > w) w = z.x + z.w;
+      if (z.y + z.h > h) h = z.y + z.h;
+    });
+    return { w: w + 24, h: h + 60 };
+  })();
   function fit() {
     var box = $('gsvg').getBoundingClientRect();
-    var s = Math.min(box.width / 1560, box.height / 1120);
-    cam.s = s; cam.x = (box.width - 1560 * s) / 2; cam.y = (box.height - 1120 * s) / 2;
+    var s = Math.min(box.width / EXTENT.w, box.height / EXTENT.h);
+    cam.s = s; cam.x = (box.width - EXTENT.w * s) / 2; cam.y = (box.height - EXTENT.h * s) / 2;
     applyCam();
   }
   function zoomAt(factor, cx, cy) {
