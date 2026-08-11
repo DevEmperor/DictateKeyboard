@@ -1,4 +1,4 @@
-import { EDGES, NODES, ZONES } from './graph';
+import { layoutGraph } from './graph-layout';
 
 /**
  * The dashboard, as one self-contained page.
@@ -18,9 +18,10 @@ import { EDGES, NODES, ZONES } from './graph';
  * The page script avoids template literals so the whole document can live in one here.
  */
 
-// `<` is escaped so a stray `</script>` inside any description can never end the block early.
-const GRAPH_JSON = JSON.stringify({ zones: ZONES, nodes: NODES, edges: EDGES })
-  .replace(/</g, '\\u003c');
+// Rectangles, routed paths and label positions are worked out in `graph-layout.ts` before the page
+// is ever assembled, so the browser only draws. `<` is escaped so a stray `</script>` inside any
+// description can never end the block early.
+const GRAPH_JSON = JSON.stringify(layoutGraph()).replace(/</g, '\\u003c');
 
 export const DASHBOARD_HTML = `<!doctype html>
 <html lang="de">
@@ -242,6 +243,45 @@ export const DASHBOARD_HTML = `<!doctype html>
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .swatch { width: 22px; height: 3px; border-radius: 2px; }
   .ndetail { padding: var(--pad); border-top: 1px solid var(--line); }
+  .gmode { display: flex; gap: 6px; }
+  .gmode button { background: var(--surface); border: 1px solid var(--line); color: var(--muted); border-radius: 10px; padding: 8px 15px; font-size: 13.5px; font-weight: 620; cursor: pointer; }
+  .gmode button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  /* The "?" on a box. Drawn as SVG rather than an HTML overlay so it pans and zooms with the
+     diagram instead of drifting away from the box it belongs to. */
+  .gask circle { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
+  .gask text { font: 700 11px ui-sans-serif, system-ui, sans-serif; fill: var(--muted); }
+  .gnode:hover .gask circle, .gnode.sel .gask circle { stroke: var(--accent); }
+  .gnode:hover .gask text, .gnode.sel .gask text { fill: var(--accent); }
+  .gedge path { cursor: pointer; }
+  .gedge.sel path { opacity: 1; stroke-width: 3.4; }
+  .glabel { cursor: pointer; }
+  .glabel.sel rect.lbl { stroke: var(--accent); stroke-width: 1.8; }
+  /* Zoomed far out, every chip at once is a grey haze rather than information. They step aside and
+     only the selected or hovered line still says what it carries. */
+  .hush .glabel { opacity: 0; pointer-events: none; }
+  .hush .glabel.sel, .hush .glabel.hot { opacity: 1; pointer-events: auto; }
+  /* The list, which is what a phone gets first: the same graph, read top to bottom. */
+  .zgroup { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+  .zgroup > header { display: flex; align-items: center; gap: 10px; padding: 13px var(--pad); border-bottom: 1px solid var(--line); }
+  .zgroup > header .bar-i { width: 4px; height: 22px; border-radius: 2px; }
+  .zgroup > header h3 { margin: 0; font-size: 15px; }
+  .zgroup > header .sub { margin: 0; }
+  .ncard { padding: 13px var(--pad); border-top: 1px solid var(--line); display: grid; gap: 8px; }
+  .ncard:first-of-type { border-top: 0; }
+  .ncard .row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .ncard h4 { margin: 0; font-size: 14.5px; }
+  .ncard .links { display: grid; gap: 4px; }
+  .ncard .links button { display: flex; gap: 8px; align-items: baseline; width: 100%; text-align: left; background: var(--surface-2); border: 1px solid transparent; border-radius: 9px; padding: 7px 10px; color: var(--text); font: inherit; font-size: 12.5px; cursor: pointer; }
+  .ncard .links button:hover { border-color: var(--accent); }
+  .ncard .links .dir { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .ncard .links .what { color: var(--muted); }
+  .btn.tiny { padding: 4px 10px; font-size: 12px; border-radius: 8px; }
+  #explain { max-width: min(680px, 94vw); }
+  #explain .dlg-body { display: block; font-size: 14.5px; line-height: 1.62; }
+  #explain .dlg-body p { margin: 0 0 12px; }
+  #explain .dlg-body p:last-child { margin-bottom: 0; }
+  #explain .dlg-body code { background: var(--surface-2); border-radius: 5px; padding: 1px 5px; font-size: .92em; }
+  #explain .xmeta { display: grid; gap: 8px; margin: 0 0 16px; padding: 0 0 14px; border-bottom: 1px solid var(--line); }
   .taglist { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
   .tag { font-size: 11.5px; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
   .tag.key { background: var(--accent-soft); color: var(--accent); }
@@ -324,6 +364,10 @@ export const DASHBOARD_HTML = `<!doctype html>
        that fills the screen reads as a page rather than a question. */
     #detail { max-width: 100vw; width: 100vw; max-height: 100dvh; height: 100dvh; border: 0; border-radius: 0; margin: 0; }
     #detail .dlg-body { max-height: calc(100dvh - 58px); padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+    /* Same reasoning as the account view: a long read in a small box on a large backdrop is worse
+       than no dialog at all. #modal stays small — a confirmation is not a text. */
+    #explain { max-width: 100vw; width: 100vw; max-height: 100dvh; height: 100dvh; border-radius: 0; border: 0; }
+    #explain .dlg-body { max-height: calc(100dvh - 58px); padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
     .dlg-head { padding: 11px 14px; }
 
     /* Two buttons and an input in one row is a scrap heap at this width. */
@@ -535,8 +579,12 @@ export const DASHBOARD_HTML = `<!doctype html>
   </section>
 
   <section id="view-network" class="stack" hidden>
-    <div class="gwrap">
-      <div class="gtools">
+    <div class="gmode">
+      <button id="gModeList" aria-pressed="false">Liste</button>
+      <button id="gModeMap" aria-pressed="true">Diagramm</button>
+    </div>
+    <div class="gwrap" id="gmap">
+      <div class="gtools" id="gtools">
         <button id="gAll" aria-pressed="true">Alles</button>
         <button id="gTok" aria-pressed="false">Schlüssel</button>
         <button id="gSec" aria-pressed="false">Absicherung</button>
@@ -546,11 +594,16 @@ export const DASHBOARD_HTML = `<!doctype html>
       <div class="legend" id="glegend"></div>
       <div class="ndetail" id="ndetail"></div>
     </div>
+    <div id="glist" class="stack" hidden></div>
   </section>
 
   <section id="view-ops" class="stack" hidden></section>
 </main>
 
+<dialog id="explain">
+  <div class="dlg-head"><strong id="xTitle"></strong><button class="btn ghost" id="xClose">Schließen</button></div>
+  <div class="dlg-body" id="xBody"></div>
+</dialog>
 <dialog id="detail">
   <div class="dlg-head">
     <strong id="dTitle" class="mono" style="font-size:13px"></strong>
@@ -1606,49 +1659,35 @@ var GRAPH = ${GRAPH_JSON};
       'abweichen. Fixkosten stehen nirgends darin: Cloudflare, Domain und deine Zeit fehlen.</p>';
   }
 
+
   /* --------------------------------------------------------------- Netzwerk */
 
   var TONE = { client: 'var(--z-client)', cloudflare: 'var(--z-cf)', google: 'var(--z-google)', openai: 'var(--z-openai)', ext: 'var(--z-ext)' };
   var EKIND = { data: 'var(--accent)', auth: 'var(--z-google)', store: 'var(--muted)', notify: 'var(--z-cf)' };
-  var NW = 240, NH = 66;
-  var cam = { s: 1, x: 0, y: 0 }, filter = 'all', selected = null;
+  var cam = { s: 1, x: 0, y: 0 }, filter = 'all', selected = null, graphMode = 'map';
   var byId = {};
   GRAPH.nodes.forEach(function (n) { byId[n.id] = n; });
+  var zoneById = {};
+  GRAPH.zones.forEach(function (z) { zoneById[z.id] = z; });
 
-  function anchor(n, side) {
-    var w = n.w || NW, h = n.h || NH;
-    if (side === 'l') return [n.x, n.y + h / 2];
-    if (side === 'r') return [n.x + w, n.y + h / 2];
-    if (side === 't') return [n.x + w / 2, n.y];
-    return [n.x + w / 2, n.y + h];
+  /**
+   * Everything a label must not land on.
+   *
+   * The old pass only pushed labels away from each other, which is why a chip could sit squarely on
+   * a heading: boxes were never obstacles at all. They are now, and so are the zone titles, which
+   * are text without a box and therefore the easiest thing in the picture to bury.
+   */
+  function obstacles() {
+    var list = GRAPH.nodes.map(function (n) { return { x: n.x, y: n.y, w: n.w, h: n.h }; });
+    GRAPH.zones.forEach(function (z) { list.push({ x: z.x + 10, y: z.y + 6, w: 260, h: 46 }); });
+    return list;
   }
-  function route(a, sa, b, sb, bend) {
-    var p = anchor(a, sa), q = anchor(b, sb), d = bend || 0;
-    var x1 = p[0], y1 = p[1], x2 = q[0], y2 = q[1];
-    var h1 = sa === 'l' || sa === 'r', h2 = sb === 'l' || sb === 'r';
-    if (h1 && h2) {
-      if (sa === sb) {
-        var ox = sa === 'r' ? Math.max(x1, x2) + 58 + d : Math.min(x1, x2) - 58 - d;
-        return { d: 'M' + x1 + ' ' + y1 + ' H' + ox + ' V' + y2 + ' H' + x2, lx: ox, ly: (y1 + y2) / 2 };
-      }
-      var mx = (x1 + x2) / 2 + d;
-      return { d: 'M' + x1 + ' ' + y1 + ' H' + mx + ' V' + y2 + ' H' + x2, lx: mx, ly: (y1 + y2) / 2 };
-    }
-    if (!h1 && !h2) {
-      if (sa === sb) {
-        var oy = sa === 'b' ? Math.max(y1, y2) + 48 + d : Math.min(y1, y2) - 48 - d;
-        return { d: 'M' + x1 + ' ' + y1 + ' V' + oy + ' H' + x2 + ' V' + y2, lx: (x1 + x2) / 2, ly: oy };
-      }
-      var my = (y1 + y2) / 2 + d;
-      return { d: 'M' + x1 + ' ' + y1 + ' V' + my + ' H' + x2 + ' V' + y2, lx: (x1 + x2) / 2, ly: my };
-    }
-    if (h1) return { d: 'M' + x1 + ' ' + y1 + ' H' + x2 + ' V' + y2, lx: (x1 + x2) / 2, ly: y1 };
-    return { d: 'M' + x1 + ' ' + y1 + ' V' + y2 + ' H' + x2, lx: x1, ly: (y1 + y2) / 2 };
+  function hits(a, b) {
+    return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
   }
 
   function drawGraph() {
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var parts = [];
+    var parts = [], labels = [];
     parts.push('<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>');
 
     GRAPH.zones.forEach(function (z) {
@@ -1658,123 +1697,286 @@ var GRAPH = ${GRAPH_JSON};
       parts.push('<text class="zone-sub" x="' + (z.x + 16) + '" y="' + (z.y + 46) + '">' + esc(z.sub) + '</text>');
     });
 
-    // Paths first, then nodes, then labels — labels last so they are never buried under a box, and
-    // in their own layer so the sizing pass below can find them.
-    var labels = [];
+    // Paths first, then boxes, then labels — so a box covers a line that passes behind it, and a
+    // label is never buried by either.
     GRAPH.edges.forEach(function (e, i) {
-      var a = byId[e.from], b = byId[e.to];
-      if (!a || !b) return;
-      var r = route(a, e.fromSide, b, e.toSide, e.bend);
       var dim = (filter === 'token' && !e.token) || (filter === 'guard' && !e.guard);
+      var on = selected && selected.type === 'edge' && selected.i === i;
       var label = filter === 'guard' && e.guard ? e.guard : (filter === 'token' && e.token ? e.token : e.label);
-      parts.push('<g class="gedge' + (dim ? ' dim' : '') + '" data-e="' + i + '">' +
-        '<path d="' + r.d + '" stroke="' + EKIND[e.kind] + '" marker-end="url(#arw)"/></g>');
-      labels.push('<g class="glabel' + (dim ? ' dim' : '') + '" data-e="' + i + '" data-x="' + r.lx + '" data-y="' + r.ly + '">' +
+      parts.push('<g class="gedge' + (dim ? ' dim' : '') + (on ? ' sel' : '') + '" data-e="' + i + '">' +
+        '<path d="' + e.d + '" stroke="' + EKIND[e.kind] + '" marker-end="url(#arw)"/></g>');
+      labels.push('<g class="glabel' + (dim ? ' dim' : '') + (on ? ' sel' : '') + '" data-e="' + i + '">' +
         '<rect class="lbl"/><text text-anchor="middle">' + esc(label) + '</text></g>');
     });
 
     GRAPH.nodes.forEach(function (n) {
-      var w = n.w || NW, h = n.h || NH;
-      var zone = GRAPH.zones.filter(function (z) { return z.id === n.zone; })[0];
-      parts.push('<g class="gnode' + (selected === n.id ? ' sel' : '') + '" data-n="' + esc(n.id) + '">' +
-        '<rect x="' + n.x + '" y="' + n.y + '" width="' + w + '" height="' + h + '"/>' +
-        '<rect x="' + n.x + '" y="' + n.y + '" width="4" height="' + h + '" fill="' + TONE[zone ? zone.tone : 'client'] + '" rx="2"/>' +
+      var zone = zoneById[n.zone];
+      var on = selected && selected.type === 'node' && selected.id === n.id;
+      parts.push('<g class="gnode' + (on ? ' sel' : '') + '" data-n="' + esc(n.id) + '">' +
+        '<rect x="' + n.x + '" y="' + n.y + '" width="' + n.w + '" height="' + n.h + '"/>' +
+        '<rect x="' + n.x + '" y="' + n.y + '" width="4" height="' + n.h + '" fill="' + TONE[zone ? zone.tone : 'client'] + '" rx="2"/>' +
         '<text class="t" x="' + (n.x + 16) + '" y="' + (n.y + 27) + '">' + esc(n.label) + '</text>' +
-        '<text class="s" x="' + (n.x + 16) + '" y="' + (n.y + 46) + '">' + esc(n.sub) + '</text></g>');
+        '<text class="s" x="' + (n.x + 16) + '" y="' + (n.y + 46) + '">' + esc(n.sub) + '</text>' +
+        '<g class="gask" data-ask="' + esc(n.id) + '"><circle cx="' + (n.x + n.w - 17) + '" cy="' + (n.y + 17) + '" r="9"/>' +
+        '<text x="' + (n.x + n.w - 17) + '" y="' + (n.y + 21) + '" text-anchor="middle">?</text></g></g>');
     });
 
     $('gcam').innerHTML = parts.join('') + labels.join('');
-    layoutLabels();
+    placeLabels();
+
     Array.prototype.forEach.call($('gcam').querySelectorAll('.gnode'), function (g) {
-      g.addEventListener('click', function (ev) { ev.stopPropagation(); selectNode(g.getAttribute('data-n')); });
+      g.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var ask = ev.target.closest && ev.target.closest('.gask');
+        if (ask) { explainNode(ask.getAttribute('data-ask')); return; }
+        selectNode(g.getAttribute('data-n'));
+      });
     });
-    Array.prototype.forEach.call($('gcam').querySelectorAll('.gedge'), function (g) {
-      var mate = $('gcam').querySelector('.glabel[data-e="' + g.getAttribute('data-e') + '"]');
-      g.addEventListener('mouseenter', function () { g.classList.add('hot'); if (mate) mate.classList.add('hot'); });
-      g.addEventListener('mouseleave', function () { g.classList.remove('hot'); if (mate) mate.classList.remove('hot'); });
+    Array.prototype.forEach.call($('gcam').querySelectorAll('.gedge, .glabel'), function (g) {
+      var i = g.getAttribute('data-e');
+      g.addEventListener('click', function (ev) { ev.stopPropagation(); selectEdge(Number(i)); });
+      g.addEventListener('mouseenter', function () { hot(i, true); });
+      g.addEventListener('mouseleave', function () { hot(i, false); });
+    });
+  }
+
+  function hot(i, on) {
+    Array.prototype.forEach.call($('gcam').querySelectorAll('[data-e="' + i + '"]'), function (g) {
+      g.classList[on ? 'add' : 'remove']('hot');
     });
   }
 
   /**
-   * Sizes each label chip to the text it actually contains, then pushes overlapping ones apart.
+   * Where each label goes.
    *
-   * The width used to be guessed from the character count, which is wrong for every string that is
-   * not average — long labels spilled out of their chip and short ones floated in whitespace. SVG
-   * can be asked instead, and a measured box is also what makes the collision pass below possible.
+   * The layout offers several places along the route, best first; the browser is the only side that
+   * knows how wide the text turns out, so it measures and then takes the first place that lands on
+   * nothing. Only if every offered place is occupied does it fall back to nudging the chip aside —
+   * which used to be the only strategy, and is why chips ended up on top of boxes.
    */
-  function layoutLabels() {
-    var els = Array.prototype.slice.call($('gcam').querySelectorAll('.glabel'));
-    var boxes = els.map(function (g) {
+  function placeLabels() {
+    var blockers = obstacles();
+    var placed = [];
+    Array.prototype.forEach.call($('gcam').querySelectorAll('.glabel'), function (g) {
+      var e = GRAPH.edges[Number(g.getAttribute('data-e'))];
       var text = g.querySelector('text'), rect = g.querySelector('rect');
-      var x = Number(g.getAttribute('data-x')), y = Number(g.getAttribute('data-y'));
-      var w = 0;
-      try { w = text.getComputedTextLength(); } catch (err) { w = text.textContent.length * 5.6; }
-      return { g: g, text: text, rect: rect, x: x, y: y, w: w + 12, h: 17 };
-    });
-
-    // Nudge downwards until nothing overlaps. Two passes are plenty at this density and keep the
-    // arrangement stable — a full force layout would move labels around on every redraw.
-    for (var pass = 0; pass < 2; pass++) {
-      for (var i = 0; i < boxes.length; i++) {
-        for (var j = i + 1; j < boxes.length; j++) {
-          var a = boxes[i], b = boxes[j];
-          if (Math.abs(a.x - b.x) < (a.w + b.w) / 2 && Math.abs(a.y - b.y) < a.h + 2) {
-            var shift = (a.h + 3) - Math.abs(a.y - b.y);
-            if (a.y <= b.y) { b.y += shift; } else { a.y += shift; }
+      var tw = 0;
+      try { tw = text.getComputedTextLength(); } catch (err) { tw = text.textContent.length * 5.6; }
+      var w = tw + 12, h = 17;
+      var best = null, fallback = null;
+      for (var k = 0; k < e.spots.length; k++) {
+        var spot = e.spots[k];
+        var box = { x: spot.x - w / 2, y: spot.y - h / 2, w: w, h: h };
+        if (!fallback) fallback = { spot: spot, box: box };
+        var clash = false, j;
+        for (j = 0; j < blockers.length && !clash; j++) if (hits(box, blockers[j])) clash = true;
+        for (j = 0; j < placed.length && !clash; j++) if (hits(box, placed[j])) clash = true;
+        if (!clash) { best = { spot: spot, box: box }; break; }
+      }
+      if (!best) {
+        // Nothing was free: shove the chip off its line, along the axis that moves it away fastest,
+        // until it stops touching things. Bounded, because a label that has wandered half a screen
+        // from its line is no longer that line's label.
+        best = fallback;
+        for (var step = 1; step <= 6; step++) {
+          for (var dir = -1; dir <= 1; dir += 2) {
+            var off = dir * step * 19;
+            var probe = best.spot.along === 'h'
+              ? { x: best.box.x, y: fallback.box.y + off, w: w, h: h }
+              : { x: fallback.box.x + off, y: best.box.y, w: w, h: h };
+            var bad = false, m;
+            for (m = 0; m < blockers.length && !bad; m++) if (hits(probe, blockers[m])) bad = true;
+            for (m = 0; m < placed.length && !bad; m++) if (hits(probe, placed[m])) bad = true;
+            if (!bad) { best = { spot: best.spot, box: probe }; step = 99; break; }
           }
         }
       }
-    }
-
-    boxes.forEach(function (bx) {
-      bx.rect.setAttribute('x', bx.x - bx.w / 2);
-      bx.rect.setAttribute('y', bx.y - bx.h / 2);
-      bx.rect.setAttribute('width', bx.w);
-      bx.rect.setAttribute('height', bx.h);
-      bx.text.setAttribute('x', bx.x);
-      bx.text.setAttribute('y', bx.y + 4);
+      placed.push(best.box);
+      rect.setAttribute('x', best.box.x); rect.setAttribute('y', best.box.y);
+      rect.setAttribute('width', w); rect.setAttribute('height', h);
+      text.setAttribute('x', best.box.x + w / 2); text.setAttribute('y', best.box.y + h / 2 + 4);
     });
+  }
+
+  /* ------------------------------------------------------------ Detailleiste */
+
+  /**
+   * One connection, as a row.
+   *
+   * In the panel it selects the line on the map — the map is right there and highlighting it is the
+   * more useful answer. In the list there is no map, so the same row opens the explanation instead.
+   */
+  function linkRow(e, i, self, opens) {
+    var other = e.from === self ? byId[e.to] : byId[e.from];
+    var dir = e.from === self ? '→' : '←';
+    return '<button data-' + (opens === 'explain' ? 'edge' : 'edge-select') + '="' + i + '">' +
+      '<span class="dir">' + dir + '</span>' +
+      '<span><strong>' + esc(other ? other.label : '?') + '</strong> ' +
+      '<span class="what">' + esc(e.label) + '</span></span></button>';
   }
 
   function selectNode(id) {
-    selected = id;
+    selected = { type: 'node', id: id };
     var n = byId[id];
     drawGraph();
     if (!n) { $('ndetail').innerHTML = ''; return; }
-    var links = GRAPH.edges.filter(function (e) { return e.from === id || e.to === id; });
-    var html = '<h3>' + esc(n.label) + ' <span class="muted" style="font-weight:400">' + esc(n.sub) + '</span></h3>' +
-      '<p class="sub" style="font-size:13.5px;margin:0 0 8px">' + n.detail + '</p>';
+    var links = [];
+    GRAPH.edges.forEach(function (e, i) { if (e.from === id || e.to === id) links.push(linkRow(e, i, id, 'select')); });
+    var html = '<div class="row" style="justify-content:space-between;align-items:baseline;gap:10px">' +
+      '<h3 style="margin:0">' + esc(n.label) + ' <span class="muted" style="font-weight:400">' + esc(n.sub) + '</span></h3>' +
+      '<button class="btn ghost tiny" data-explain-node="' + esc(n.id) + '">Ausführlich</button></div>' +
+      '<p class="sub" style="font-size:13.5px;margin:8px 0 8px">' + n.detail + '</p>';
     if (n.holds && n.holds.length) html += '<div class="label">Hält</div><div class="taglist">' + n.holds.map(function (t) { return '<span class="tag key">' + esc(t) + '</span>'; }).join('') + '</div>';
     if (n.guards && n.guards.length) html += '<div class="label" style="margin-top:10px">Absicherung</div><div class="taglist">' + n.guards.map(function (t) { return '<span class="tag guard">' + esc(t) + '</span>'; }).join('') + '</div>';
-    if (links.length) {
-      html += '<div class="label" style="margin-top:10px">Verbindungen</div><div class="scroll"><table style="margin-top:6px"><tbody>' +
-        links.map(function (e) {
-          var other = e.from === id ? byId[e.to] : byId[e.from];
-          var dir = e.from === id ? '→' : '←';
-          return '<tr><td>' + dir + ' <strong>' + esc(other ? other.label : '?') + '</strong></td><td class="wrap muted">' + esc(e.label) +
-            (e.token ? ' · <span class="tag key">' + esc(e.token) + '</span>' : '') +
-            (e.guard ? ' · <span class="tag guard">' + esc(e.guard) + '</span>' : '') + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
-    }
+    if (links.length) html += '<div class="label" style="margin-top:10px">Verbindungen</div><div class="links" style="margin-top:6px">' + links.join('') + '</div>';
     if (n.source) html += '<p class="sub" style="margin-top:10px">Quelle: <code>' + esc(n.source) + '</code></p>';
     $('ndetail').innerHTML = html;
+    wireDetail($('ndetail'));
   }
 
-  function applyCam() { $('gcam').setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.s + ')'); }
-  // Measured from the zones themselves, plus the margin they already sit in. A hard-coded extent
-  // silently crops the day someone adds a zone at the bottom, and it crops on the phone first.
-  var EXTENT = (function () {
-    var w = 0, h = 0;
-    GRAPH.zones.forEach(function (z) {
-      if (z.x + z.w > w) w = z.x + z.w;
-      if (z.y + z.h > h) h = z.y + z.h;
+  function selectEdge(i) {
+    selected = { type: 'edge', i: i };
+    var e = GRAPH.edges[i];
+    drawGraph();
+    if (!e) return;
+    var a = byId[e.from], b = byId[e.to];
+    var html = '<div class="row" style="justify-content:space-between;align-items:baseline;gap:10px">' +
+      '<h3 style="margin:0">' + esc(a ? a.label : e.from) + ' <span class="muted">→</span> ' + esc(b ? b.label : e.to) + '</h3>' +
+      '<button class="btn ghost tiny" data-explain-edge="' + i + '">Ausführlich</button></div>' +
+      '<p class="sub" style="font-size:13.5px;margin:8px 0 0">' + esc(e.label) + '</p>';
+    if (e.token) html += '<div class="label" style="margin-top:10px">Trägt</div><div class="taglist"><span class="tag key">' + esc(e.token) + '</span></div>';
+    if (e.guard) html += '<div class="label" style="margin-top:10px">Absicherung</div><div class="taglist"><span class="tag guard">' + esc(e.guard) + '</span></div>';
+    $('ndetail').innerHTML = html;
+    wireDetail($('ndetail'));
+  }
+
+  function clearSelection() {
+    selected = null;
+    drawGraph();
+    $('ndetail').innerHTML = '<p class="sub" style="margin:0">Auf eine Kachel oder einen Weg tippen. Das <strong>?</strong> an jeder Kachel öffnet die ausführliche Erklärung.</p>';
+  }
+
+  /* ------------------------------------------------------------ Erklärungen */
+
+  function openExplain(title, meta, body) {
+    $('xTitle').textContent = title;
+    $('xBody').innerHTML = (meta ? '<div class="xmeta">' + meta + '</div>' : '') + body;
+    $('explain').showModal();
+  }
+  function explainNode(id) {
+    var n = byId[id];
+    if (!n) return;
+    var z = zoneById[n.zone];
+    var meta = '<div class="sub">' + esc(n.sub) + (z ? ' · ' + esc(z.label) : '') + '</div>';
+    if (n.holds && n.holds.length) meta += '<div class="taglist">' + n.holds.map(function (t) { return '<span class="tag key">' + esc(t) + '</span>'; }).join('') + '</div>';
+    if (n.guards && n.guards.length) meta += '<div class="taglist">' + n.guards.map(function (t) { return '<span class="tag guard">' + esc(t) + '</span>'; }).join('') + '</div>';
+    if (n.source) meta += '<div class="sub">Quelle: <code>' + esc(n.source) + '</code></div>';
+    openExplain(n.label, meta, n.long);
+  }
+  function explainEdge(i) {
+    var e = GRAPH.edges[i];
+    if (!e) return;
+    var a = byId[e.from], b = byId[e.to];
+    var meta = '<div class="sub">' + esc(a ? a.label : e.from) + ' → ' + esc(b ? b.label : e.to) + ' · ' + esc(e.label) + '</div>';
+    var tags = '';
+    if (e.token) tags += '<span class="tag key">' + esc(e.token) + '</span>';
+    if (e.guard) tags += '<span class="tag guard">' + esc(e.guard) + '</span>';
+    if (tags) meta += '<div class="taglist">' + tags + '</div>';
+    openExplain((a ? a.label : e.from) + ' → ' + (b ? b.label : e.to), meta, e.long);
+  }
+  function explainZone(id) {
+    var z = zoneById[id];
+    if (z) openExplain(z.label, '<div class="sub">' + esc(z.sub) + '</div>', z.long);
+  }
+
+  /** One wiring routine for both the panel and the list — the same buttons appear in both. */
+  function wireDetail(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('[data-explain-node]'), function (b) {
+      b.onclick = function (ev) { ev.stopPropagation(); explainNode(b.getAttribute('data-explain-node')); };
     });
-    return { w: w + 24, h: h + 60 };
-  })();
+    Array.prototype.forEach.call(root.querySelectorAll('[data-explain-edge]'), function (b) {
+      b.onclick = function (ev) { ev.stopPropagation(); explainEdge(Number(b.getAttribute('data-explain-edge'))); };
+    });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-explain-zone]'), function (b) {
+      b.onclick = function (ev) { ev.stopPropagation(); explainZone(b.getAttribute('data-explain-zone')); };
+    });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-edge]'), function (b) {
+      b.onclick = function (ev) { ev.stopPropagation(); explainEdge(Number(b.getAttribute('data-edge'))); };
+    });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-edge-select]'), function (b) {
+      b.onclick = function (ev) { ev.stopPropagation(); selectEdge(Number(b.getAttribute('data-edge-select'))); };
+    });
+  }
+
+  /* ------------------------------------------------------------------ Liste */
+
+  /**
+   * The same graph, read top to bottom.
+   *
+   * A phone gets this first. Fitting a 1500-pixel drawing onto a 390-pixel screen leaves labels at
+   * three pixels; panning and pinching to read an architecture is not reading it. Same object, same
+   * texts, no second place to keep up to date.
+   */
+  function renderList() {
+    var html = GRAPH.zones.map(function (z) {
+      var members = GRAPH.nodes.filter(function (n) { return n.zone === z.id; });
+      var cards = members.map(function (n) {
+        var links = [];
+        GRAPH.edges.forEach(function (e, i) { if (e.from === n.id || e.to === n.id) links.push(linkRow(e, i, n.id, 'explain')); });
+        var tags = (n.holds || []).map(function (t) { return '<span class="tag key">' + esc(t) + '</span>'; })
+          .concat((n.guards || []).map(function (t) { return '<span class="tag guard">' + esc(t) + '</span>'; })).join('');
+        return '<div class="ncard">' +
+          '<div class="row" style="justify-content:space-between">' +
+            '<h4>' + esc(n.label) + ' <span class="muted" style="font-weight:400">' + esc(n.sub) + '</span></h4>' +
+            '<button class="btn ghost tiny" data-explain-node="' + esc(n.id) + '">Ausführlich</button>' +
+          '</div>' +
+          '<p class="sub" style="margin:0;font-size:13px">' + n.detail + '</p>' +
+          (tags ? '<div class="taglist">' + tags + '</div>' : '') +
+          (links.length ? '<div class="links">' + links.join('') + '</div>' : '') +
+          (n.source ? '<p class="sub" style="margin:0">Quelle: <code>' + esc(n.source) + '</code></p>' : '') +
+        '</div>';
+      }).join('');
+      return '<section class="zgroup">' +
+        '<header><i class="bar-i" style="background:' + TONE[z.tone] + '"></i>' +
+          '<div style="flex:1;min-width:0"><h3>' + esc(z.label) + '</h3><p class="sub">' + esc(z.sub) + '</p></div>' +
+          '<button class="btn ghost tiny" data-explain-zone="' + esc(z.id) + '">Ausführlich</button>' +
+        '</header>' + cards + '</section>';
+    }).join('');
+    $('glist').innerHTML = html;
+    wireDetail($('glist'));
+  }
+
+  function setGraphMode(mode) {
+    graphMode = mode;
+    $('gModeList').setAttribute('aria-pressed', String(mode === 'list'));
+    $('gModeMap').setAttribute('aria-pressed', String(mode === 'map'));
+    $('glist').hidden = mode !== 'list';
+    $('gmap').hidden = mode !== 'map';
+    // Redrawn on the way back, not just re-fitted: label widths are measured, and a measurement
+    // taken while the canvas was hidden is a guess with a number attached to it.
+    if (mode === 'list') renderList();
+    else setTimeout(function () { drawGraph(); fit(); }, 0);
+  }
+
+  /* ----------------------------------------------------------- Kamera */
+
+  function applyCam() {
+    $('gcam').setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.s + ')');
+    // Twenty-eight chips at a quarter of full size are a grey haze, not information. Below that
+    // they step aside and only the selected or hovered line still says what it carries.
+    $('gcam').classList[cam.s < 0.42 ? 'add' : 'remove']('hush');
+  }
   function fit() {
     var box = $('gsvg').getBoundingClientRect();
-    var s = Math.min(box.width / EXTENT.w, box.height / EXTENT.h);
-    cam.s = s; cam.x = (box.width - EXTENT.w * s) / 2; cam.y = (box.height - EXTENT.h * s) / 2;
+    if (!box.width) return;
+    // The toolbar floats over the canvas and wraps to two rows on a phone, so its height is
+    // measured rather than guessed. Without this the top-right box sits under the buttons.
+    var tools = $('gtools').getBoundingClientRect();
+    var inset = Math.min(box.height / 3, tools.height + 18);
+    var s = Math.min(box.width / GRAPH.extent.w, (box.height - inset) / GRAPH.extent.h);
+    cam.s = s;
+    cam.x = (box.width - GRAPH.extent.w * s) / 2;
+    cam.y = inset + (box.height - inset - GRAPH.extent.h * s) / 2;
     applyCam();
   }
   function zoomAt(factor, cx, cy) {
@@ -1785,10 +1987,10 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   function initGraph() {
-    var svg = $('gsvg'), pts = {}, last = null, pinch = null;
+    var svg = $('gsvg'), pts = {}, last = null, pinch = null, moved = 0;
     svg.addEventListener('pointerdown', function (e) {
       svg.setPointerCapture(e.pointerId); pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-      if (Object.keys(pts).length === 1) { last = { x: e.clientX, y: e.clientY }; svg.classList.add('dragging'); }
+      if (Object.keys(pts).length === 1) { last = { x: e.clientX, y: e.clientY }; moved = 0; svg.classList.add('dragging'); }
     });
     svg.addEventListener('pointermove', function (e) {
       if (!pts[e.pointerId]) return;
@@ -1802,7 +2004,11 @@ var GRAPH = ${GRAPH_JSON};
         if (pinch) zoomAt(dist / pinch, mid.x, mid.y);
         pinch = dist; last = null; return;
       }
-      if (last) { cam.x += e.clientX - last.x; cam.y += e.clientY - last.y; last = { x: e.clientX, y: e.clientY }; applyCam(); }
+      if (last) {
+        moved += Math.abs(e.clientX - last.x) + Math.abs(e.clientY - last.y);
+        cam.x += e.clientX - last.x; cam.y += e.clientY - last.y;
+        last = { x: e.clientX, y: e.clientY }; applyCam();
+      }
     });
     function up(e) { delete pts[e.pointerId]; if (!Object.keys(pts).length) { last = null; pinch = null; svg.classList.remove('dragging'); } }
     svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
@@ -1811,7 +2017,8 @@ var GRAPH = ${GRAPH_JSON};
       var box = svg.getBoundingClientRect();
       zoomAt(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX - box.left, e.clientY - box.top);
     }, { passive: false });
-    svg.addEventListener('click', function () { selected = null; drawGraph(); $('ndetail').innerHTML = '<p class="sub" style="margin:0">Auf einen Knoten tippen, um Schlüssel, Absicherung und Verbindungen zu sehen.</p>'; });
+    // A drag that ends on empty canvas must not count as a tap, or panning clears the selection.
+    svg.addEventListener('click', function () { if (moved < 6) clearSelection(); });
 
     $('gIn').onclick = function () { var b = svg.getBoundingClientRect(); zoomAt(1.25, b.width / 2, b.height / 2); };
     $('gOut').onclick = function () { var b = svg.getBoundingClientRect(); zoomAt(1 / 1.25, b.width / 2, b.height / 2); };
@@ -1826,16 +2033,18 @@ var GRAPH = ${GRAPH_JSON};
     $('gAll').onclick = function () { setFilter('all'); };
     $('gTok').onclick = function () { setFilter('token'); };
     $('gSec').onclick = function () { setFilter('guard'); };
+    $('gModeList').onclick = function () { setGraphMode('list'); };
+    $('gModeMap').onclick = function () { setGraphMode('map'); };
+    $('xClose').onclick = function () { $('explain').close(); };
 
     $('glegend').innerHTML =
       '<span><i class="swatch" style="background:var(--accent)"></i>Nutzdaten</span>' +
       '<span><i class="swatch" style="background:var(--z-google)"></i>Authentifizierung</span>' +
       '<span><i class="swatch" style="background:var(--muted)"></i>Speicher</span>' +
       '<span><i class="swatch" style="background:var(--z-cf)"></i>Benachrichtigung</span>' +
-      '<span class="muted">Ziehen zum Verschieben · Rad oder zwei Finger zum Zoomen · Knoten antippen für Details</span>';
-    $('ndetail').innerHTML = '<p class="sub" style="margin:0">Auf einen Knoten tippen, um Schlüssel, Absicherung und Verbindungen zu sehen.</p>';
-    drawGraph();
-    setTimeout(fit, 0);
+      '<span class="muted">Ziehen · Rad oder zwei Finger zum Zoomen · Kachel oder Weg antippen · <strong>?</strong> erklärt ausführlich</span>';
+    clearSelection();
+    setGraphMode(innerWidth <= 620 ? 'list' : 'map');
   }
 
   /* ------------------------------------------------------------------ Start */
