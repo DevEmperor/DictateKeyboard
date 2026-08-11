@@ -1680,6 +1680,7 @@
     <string name="dictate__cloud_recovery_field">Recovery code</string>
     <string name="dictate__cloud_recovery_confirm">Restore</string>
     <string name="dictate__cloud_recovery_not_found">No credit found for this code.</string>
+    <string name="dictate__error_cloud_no_account" comment="Smartbar error when Dictate Cloud is the active provider but this device holds no credit account any more">No credit account on this device. Buy credit, restore one, or switch provider.</string>
     <string name="dictate__cloud_devices_full_title">Too many devices</string>
     <string name="dictate__cloud_devices_full_body" comment="{count} is the number of devices already signed in">Your credit is already in use on {count} devices, which is the most allowed at once. Sign one out to use it here — the credit itself is untouched.</string>
     <string name="dictate__cloud_devices_sign_out">Sign out</string>

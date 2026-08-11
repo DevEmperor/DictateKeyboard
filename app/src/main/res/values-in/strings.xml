@@ -1855,6 +1855,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_recovery_field">Kode pemulihan</string>
     <string name="dictate__cloud_recovery_confirm">Pulihkan</string>
     <string name="dictate__cloud_recovery_not_found">Tidak ditemukan saldo untuk kode ini.</string>
+    <string name="dictate__error_cloud_no_account">Tidak ada akun kredit di perangkat ini. Beli saldo, pulihkan akun, atau ganti penyedia.</string>
     <string name="dictate__cloud_devices_full_title">Terlalu banyak perangkat</string>
     <string name="dictate__cloud_devices_full_body">Saldo Anda sudah dipakai di {count} perangkat, dan itu batas maksimalnya. Keluarkan salah satu untuk memakainya di sini — saldonya sendiri tidak berubah.</string>
     <string name="dictate__cloud_devices_sign_out">Keluarkan</string>

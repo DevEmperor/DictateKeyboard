@@ -1683,6 +1683,7 @@
     <string name="dictate__cloud_recovery_field">Codice di recupero</string>
     <string name="dictate__cloud_recovery_confirm">Ripristina</string>
     <string name="dictate__cloud_recovery_not_found">Nessun credito trovato per questo codice.</string>
+    <string name="dictate__error_cloud_no_account">Nessun account di credito su questo dispositivo. Acquista credito, ripristina un account o cambia fornitore.</string>
     <string name="dictate__cloud_devices_full_title">Troppi dispositivi</string>
     <string name="dictate__cloud_devices_full_body">Il tuo credito è già in uso su {count} dispositivi, il massimo consentito insieme. Disconnettine uno per usarlo qui: il credito resta intatto.</string>
     <string name="dictate__cloud_devices_sign_out">Disconnetti</string>

@@ -1799,6 +1799,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_recovery_field">Herstelcode</string>
     <string name="dictate__cloud_recovery_confirm">Herstellen</string>
     <string name="dictate__cloud_recovery_not_found">Geen tegoed gevonden voor deze code.</string>
+    <string name="dictate__error_cloud_no_account">Geen tegoedaccount op dit apparaat. Koop tegoed, herstel een account of kies een andere aanbieder.</string>
     <string name="dictate__cloud_devices_full_title">Te veel apparaten</string>
     <string name="dictate__cloud_devices_full_body">Je tegoed wordt al op {count} apparaten gebruikt, en meer kan niet tegelijk. Meld er één af om het hier te gebruiken — het tegoed zelf blijft ongemoeid.</string>
     <string name="dictate__cloud_devices_sign_out">Afmelden</string>

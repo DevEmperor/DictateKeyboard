@@ -1206,6 +1206,7 @@
     <string name="dictate__cloud_recovery_field">Wiederherstellungscode</string>
     <string name="dictate__cloud_recovery_confirm">Wiederherstellen</string>
     <string name="dictate__cloud_recovery_not_found">Zu diesem Code wurde kein Guthaben gefunden.</string>
+    <string name="dictate__error_cloud_no_account">Kein Guthabenkonto auf diesem Gerät. Kauf Guthaben, stell ein Konto wieder her oder wechsle den Anbieter.</string>
     <string name="dictate__cloud_devices_full_title">Zu viele Geräte</string>
     <string name="dictate__cloud_devices_full_body">Dein Guthaben wird bereits auf {count} Geräten genutzt — mehr gehen nicht gleichzeitig. Melde eines ab, um es hier zu nutzen; das Guthaben selbst bleibt unberührt.</string>
     <string name="dictate__cloud_devices_sign_out">Abmelden</string>

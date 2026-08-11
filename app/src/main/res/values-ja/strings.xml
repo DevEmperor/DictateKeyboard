@@ -1832,6 +1832,7 @@
     <string name="dictate__cloud_recovery_field">復元コード</string>
     <string name="dictate__cloud_recovery_confirm">復元</string>
     <string name="dictate__cloud_recovery_not_found">このコードに対応するクレジットが見つかりません。</string>
+    <string name="dictate__error_cloud_no_account">この端末にクレジットアカウントがありません。購入するか、復元するか、プロバイダーを変更してください。</string>
     <string name="dictate__cloud_devices_full_title">端末が多すぎます</string>
     <string name="dictate__cloud_devices_full_body">クレジットはすでに {count} 台で使われています。同時に使えるのはここまでです。ここで使うには 1 台をサインアウトしてください。残高はそのままです。</string>
     <string name="dictate__cloud_devices_sign_out">サインアウト</string>

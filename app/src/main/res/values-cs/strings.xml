@@ -1914,6 +1914,7 @@
     <string name="dictate__cloud_recovery_field">Obnovovací kód</string>
     <string name="dictate__cloud_recovery_confirm">Obnovit</string>
     <string name="dictate__cloud_recovery_not_found">K tomuto kódu nebyl nalezen žádný kredit.</string>
+    <string name="dictate__error_cloud_no_account">Na tomto zařízení není žádný kreditní účet. Kup kredit, obnov účet nebo změň poskytovatele.</string>
     <string name="dictate__cloud_devices_full_title">Příliš mnoho zařízení</string>
     <string name="dictate__cloud_devices_full_body">Tvůj kredit se už používá na {count} zařízeních, což je nejvíc najednou. Odhlas jedno, abys ho mohl použít tady — kredit sám zůstane nedotčený.</string>
     <string name="dictate__cloud_devices_sign_out">Odhlásit</string>

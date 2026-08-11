@@ -1843,6 +1843,7 @@
     <string name="dictate__cloud_recovery_field">Atkopšanas kods</string>
     <string name="dictate__cloud_recovery_confirm">Atjaunot</string>
     <string name="dictate__cloud_recovery_not_found">Šim kodam kredīts netika atrasts.</string>
+    <string name="dictate__error_cloud_no_account">Šajā ierīcē nav kredīta konta. Nopērc kredītu, atjauno kontu vai nomaini pakalpojuma sniedzēju.</string>
     <string name="dictate__cloud_devices_full_title">Pārāk daudz ierīču</string>
     <string name="dictate__cloud_devices_full_body">Tavs kredīts jau tiek lietots {count} ierīcēs — vairāk vienlaikus nevar. Izraksti vienu, lai lietotu to šeit; pats kredīts paliek neskarts.</string>
     <string name="dictate__cloud_devices_sign_out">Izrakstīties</string>

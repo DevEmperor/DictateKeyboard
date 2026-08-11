@@ -1878,6 +1878,7 @@
     <string name="dictate__cloud_recovery_field">Kurtarma kodu</string>
     <string name="dictate__cloud_recovery_confirm">Geri yükle</string>
     <string name="dictate__cloud_recovery_not_found">Bu koda ait kontör bulunamadı.</string>
+    <string name="dictate__error_cloud_no_account">Bu cihazda kredi hesabı yok. Kredi satın alın, bir hesabı geri yükleyin ya da sağlayıcı değiştirin.</string>
     <string name="dictate__cloud_devices_full_title">Çok fazla cihaz</string>
     <string name="dictate__cloud_devices_full_body">Kontörünüz zaten {count} cihazda kullanılıyor; aynı anda daha fazlası olamaz. Burada kullanmak için birinin oturumunu kapatın — kontörün kendisi etkilenmez.</string>
     <string name="dictate__cloud_devices_sign_out">Oturumu kapat</string>

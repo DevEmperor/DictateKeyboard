@@ -1775,6 +1775,7 @@
     <string name="dictate__cloud_recovery_field">Codi de recuperació</string>
     <string name="dictate__cloud_recovery_confirm">Restaura</string>
     <string name="dictate__cloud_recovery_not_found">No s\'ha trobat cap saldo per a aquest codi.</string>
+    <string name="dictate__error_cloud_no_account">Cap compte de crèdit en aquest dispositiu. Compra saldo, restaura\'n un o canvia de proveïdor.</string>
     <string name="dictate__cloud_devices_full_title">Massa dispositius</string>
     <string name="dictate__cloud_devices_full_body">El teu saldo ja s\'utilitza en {count} dispositius, el màxim permès alhora. Tanca la sessió d\'un per fer-lo servir aquí: el saldo no es toca.</string>
     <string name="dictate__cloud_devices_sign_out">Tanca la sessió</string>

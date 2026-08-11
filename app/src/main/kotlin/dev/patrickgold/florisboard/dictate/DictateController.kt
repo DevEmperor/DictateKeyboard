@@ -972,6 +972,7 @@ object DictateController {
      */
     private fun startRecording(context: Context, seedAccumulatedMs: Long = 0L) {
         if (_state.value is UiState.Recording) return
+        if (refuseIfNoCredential(context)) return
         // Starting a fresh recording supersedes any kept audio (a failed retry or an interrupted
         // recording the user chose not to send), so drop it instead of leaving a stale offer behind.
         // A continuation keeps its carry-over (seeded above), so only drop it for a normal start.
@@ -1239,11 +1240,7 @@ object DictateController {
         }
 
         if (apiKey.isBlank() && requiresKey(account)) {
-            _state.value = UiState.Error(
-                message = context.getString(R.string.dictate__error_no_api_key),
-                kind = DictateApiException.Kind.INVALID_API_KEY,
-                action = ErrorAction.OPEN_SETTINGS,
-            )
+            _state.value = missingCredentialError(context, account)
             logFailureAndDrop()
             return
         }
@@ -3236,9 +3233,60 @@ object DictateController {
             null
         }
 
-    /** Whether [account] needs an API key: built-in cloud providers do; custom/local servers may not. */
+    /**
+     * Says no before the microphone opens, when the active provider has no credential to use.
+     *
+     * The check existed already, but it sat after the recording, just before the upload — so
+     * someone whose credit account had been deleted spoke a whole dictation, waited for it to
+     * upload, and only then learned it could never have worked. The audio was thrown away.
+     *
+     * Not a substitute for the later check, which still guards the paths that do not come through
+     * here; this only moves the moment of truth to before anyone has said anything.
+     */
+    private fun refuseIfNoCredential(context: Context): Boolean {
+        val account = prefs.dictate.providerAccounts.get()
+            .getOrEmpty(prefs.dictate.transcriptionProviderId.get())
+        if (account.apiKey.isNotBlank() || !requiresKey(account)) return false
+        _state.value = missingCredentialError(context, account)
+        return true
+    }
+
+    /**
+     * What to say when there is no credential, and where to send the user.
+     *
+     * Dictate Cloud gets its own wording and its own destination. "Check your API key" is wrong
+     * twice over for it — there is no key to check, and the provider list it opens is not where
+     * the answer is. The credit screen is: it already explains what happened, because the app
+     * learns from the server whether the account was deleted or this device was signed out.
+     */
+    private fun missingCredentialError(context: Context, account: ProviderAccount): UiState.Error =
+        if (account.providerId == ProviderRegistry.CLOUD.id) {
+            UiState.Error(
+                message = context.getString(R.string.dictate__error_cloud_no_account),
+                kind = DictateApiException.Kind.INVALID_API_KEY,
+                action = ErrorAction.TOP_UP,
+            )
+        } else {
+            UiState.Error(
+                message = context.getString(R.string.dictate__error_no_api_key),
+                kind = DictateApiException.Kind.INVALID_API_KEY,
+                action = ErrorAction.OPEN_SETTINGS,
+            )
+        }
+
+    /**
+     * Whether [account] needs a credential: built-in cloud providers do; custom/local servers may not.
+     *
+     * Dictate Cloud has to be named separately. It has no key page, so `apiKeyUrl` is null and it
+     * looked exactly like Ollama or the on-device engine — keyless, nothing to check. It is not: its
+     * credential is the wallet token, and without one there is nothing to dictate with. The check
+     * was therefore skipped for the one provider whose credential can vanish while the app is
+     * running, and a deleted account got as far as recording, uploading and a 401 before anyone
+     * said so. `SetupScreen.isProviderConfigured` already draws the same distinction.
+     */
     private fun requiresKey(account: ProviderAccount): Boolean =
-        !account.isCustom && presetFor(account).apiKeyUrl != null
+        !account.isCustom &&
+            (presetFor(account).apiKeyUrl != null || account.providerId == ProviderRegistry.CLOUD.id)
 
     /**
      * The on-device provider to retry [error] on as an offline fallback (#104), or null when it doesn't

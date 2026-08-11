@@ -1900,6 +1900,7 @@
     <string name="dictate__cloud_recovery_field">Код за възстановяване</string>
     <string name="dictate__cloud_recovery_confirm">Възстанови</string>
     <string name="dictate__cloud_recovery_not_found">За този код не е намерен кредит.</string>
+    <string name="dictate__error_cloud_no_account">На това устройство няма профил с кредит. Купи кредит, възстанови профил или смени доставчика.</string>
     <string name="dictate__cloud_devices_full_title">Твърде много устройства</string>
     <string name="dictate__cloud_devices_full_body">Кредитът ти вече се използва на {count} устройства — това е максимумът едновременно. Отпиши едно, за да го ползваш тук; самият кредит остава непокътнат.</string>
     <string name="dictate__cloud_devices_sign_out">Отписване</string>
