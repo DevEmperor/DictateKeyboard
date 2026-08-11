@@ -1925,7 +1925,7 @@
     <string name="dictate__cloud_devices_never_used">Jeszcze nieużywane</string>
     <string name="dictate__cloud_recovery_error">Serwer nieosiągalny. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="dictate__cloud_limits_title">Czego Dictate Cloud nie robi</string>
-    <string name="dictate__cloud_limits_body">Transkrypcji na żywo podczas mówienia nie ma przy środkach — kosztuje na minutę mniej więcej czterokrotnie więcej, a silnik na urządzeniu robi to offline i za darmo. Model AI ustala serwer, więc wybór modelu i własne punkty końcowe pozostają wyłączone. Cała reszta jest bez zmian: prompty, historia, pływający przycisk, długie dyktowanie i zegarek.</string>
+    <string name="dictate__cloud_limits_body">Transkrypcji na żywo podczas mówienia nie ma przy środkach — kosztuje na minutę mniej więcej czterokrotnie więcej, a silnik na urządzeniu robi to offline i za darmo. Model AI i to, jak długo myśli, ustala serwer, więc wybór modelu, poziom rozumowania i własne punkty końcowe pozostają wyłączone. Cała reszta jest bez zmian: prompty, historia, pływający przycisk, długie dyktowanie i zegarek.</string>
     <string name="dictate__cloud_privacy_title">Co jest zapisywane</string>
     <string name="dictate__cloud_privacy_body">Twoje nagrania i teksty są przekazywane dalej i nigdy nie trafiają na dysk. Zapisywane są tylko liczby: które konto, kiedy, jak długo i czy się udało. Za kontem środków nie stoi żadne imię, żaden adres e-mail ani żadne konto Google — tylko losowy identyfikator.</string>
     <string name="dictate__cloud_other_way_title">Własny dostawca pozostaje możliwy</string>

@@ -1924,7 +1924,7 @@
     <string name="dictate__cloud_devices_never_used">Zatím nepoužito</string>
     <string name="dictate__cloud_recovery_error">Server je nedostupný. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="dictate__cloud_limits_title">Co Dictate Cloud neumí</string>
-    <string name="dictate__cloud_limits_body">Živý přepis během mluvení s kreditem není — stojí zhruba čtyřikrát víc za minutu a engine přímo v zařízení to zvládne offline a zdarma. Model AI určuje server, takže volba modelu a vlastní koncové body zůstávají vypnuté. Všechno ostatní je beze změny: prompty, historie, plovoucí tlačítko, dlouhé diktování i hodinky.</string>
+    <string name="dictate__cloud_limits_body">Živý přepis během mluvení s kreditem není — stojí zhruba čtyřikrát víc za minutu a engine přímo v zařízení to zvládne offline a zdarma. Model AI i to, jak dlouho přemýšlí, určuje server, takže volba modelu, míra uvažování a vlastní koncové body zůstávají vypnuté. Všechno ostatní je beze změny: prompty, historie, plovoucí tlačítko, dlouhé diktování i hodinky.</string>
     <string name="dictate__cloud_privacy_title">Co se ukládá</string>
     <string name="dictate__cloud_privacy_body">Vaše nahrávky a texty se pouze předávají dál a nikdy se nezapisují na disk. Ukládají se jen čísla: který účet, kdy, jak dlouho a jestli to vyšlo. Za kreditním účtem není žádné jméno, žádný e-mail ani žádný účet Google — jen náhodný identifikátor.</string>
     <string name="dictate__cloud_other_way_title">Vlastní poskytovatel zůstává možný</string>

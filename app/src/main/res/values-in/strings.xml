@@ -1865,7 +1865,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_devices_never_used">Belum pernah dipakai</string>
     <string name="dictate__cloud_recovery_error">Server tidak dapat dihubungi. Periksa koneksimu dan coba lagi.</string>
     <string name="dictate__cloud_limits_title">Yang tidak dilakukan Dictate Cloud</string>
-    <string name="dictate__cloud_limits_body">Transkripsi langsung sambil berbicara tidak tersedia dengan saldo — biayanya sekitar empat kali lipat per menit, sedangkan mesin di perangkat melakukannya luring dan gratis. Model AI ditentukan oleh server, jadi pemilihan model dan endpoint sendiri tetap nonaktif. Selebihnya tidak berubah: prompt, riwayat, tombol mengambang, pendiktean panjang, dan jam tangan.</string>
+    <string name="dictate__cloud_limits_body">Transkripsi langsung sambil berbicara tidak tersedia dengan saldo — biayanya sekitar empat kali lipat per menit, sedangkan mesin di perangkat melakukannya luring dan gratis. Model AI dan seberapa lama ia berpikir ditentukan oleh server, jadi pemilihan model, tingkat penalaran, dan endpoint sendiri tetap nonaktif. Selebihnya tidak berubah: prompt, riwayat, tombol mengambang, pendiktean panjang, dan jam tangan.</string>
     <string name="dictate__cloud_privacy_title">Yang disimpan</string>
     <string name="dictate__cloud_privacy_body">Rekaman dan teksmu hanya diteruskan dan tidak pernah ditulis ke disk. Yang disimpan hanya angka: akun mana, kapan, berapa lama, dan apakah berhasil. Di balik akun saldo tidak ada nama, alamat email, maupun akun Google — hanya sebuah pengenal acak.</string>
     <string name="dictate__cloud_other_way_title">Penyedia sendiri tetap tersedia</string>

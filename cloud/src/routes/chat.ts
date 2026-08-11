@@ -80,8 +80,8 @@ export async function handleChat(
     return refusal;
   }
 
-  // The server decides the model and the output length. `reasoning_effort` is passed through:
-  // it is a user setting in the app and changes nothing about the cap.
+  // The server decides the model, the output length and the reasoning effort. Whatever the client
+  // sends for any of the three is discarded — see below.
   const upstream: Record<string, unknown> = {
     model: limits.chatModel,
     messages,
@@ -90,7 +90,17 @@ export async function handleChat(
       limits.maxChatOutputTokens,
     ),
   };
-  if (payload.reasoning_effort) upstream.reasoning_effort = payload.reasoning_effort;
+  // Fixed, and the client does not get a say. Two reasons, and the second is the one that matters.
+  //
+  // Rewriting does not need deliberation. Left unset the model applies its own default — `medium`
+  // for the gpt-5 family — and pays for it out of the same budget as the answer: one request spent
+  // 116 seconds and twelve thousand tokens thinking, then had no room left to write anything.
+  //
+  // And a client-chosen effort would be a dial that multiplies what a request costs *here* without
+  // costing the person turning it anything. The price of a pack is calculated for a rewriting job;
+  // a setting that turns one request into ten is not the buyer's to turn. On their own API key it
+  // is exactly their business, and the app still offers it there.
+  upstream.reasoning_effort = 'minimal';
 
   let response: Response;
   try {
@@ -128,25 +138,6 @@ export async function handleChat(
     return apiError(502, 'The rewording failed.', 'upstream_rejected', 'server_error');
   }
 
-  // An answer that ran out of room is not an answer. The budget covers the visible reply *and*
-  // whatever the model spends on reasoning, so a request can come back with a perfectly valid
-  // 200, a `length` finish and nothing usable in it — the app then quietly keeps the original and
-  // the user is left wondering why their text did not change, having paid for it.
-  //
-  // Refused and refunded instead. A truncated rewrite is not the lesser evil either: it would
-  // replace the text with a version that stops mid-sentence.
-  if (wasTruncated(body)) {
-    await wallet.refund(reservedSeconds);
-    settleBudget(env, -worstCaseNano, ctx);
-    logRefusal(env, session, 'reword', 413, started, ctx);
-    return apiError(
-      413,
-      'The rewording did not fit in the allowed answer length.',
-      'reword_truncated',
-      'invalid_request_error',
-    );
-  }
-
   // What it really cost, from OpenAI's own count rather than our estimate of it. The reservation
   // is settled against that, so the account is charged to the second — usually a good deal less
   // than was held, because the full permitted answer is rarely used.
@@ -158,6 +149,43 @@ export async function handleChat(
   let state = debit.state;
   if (actualSeconds !== reservedSeconds) {
     state = await wallet.adjust(actualSeconds - reservedSeconds);
+  }
+
+  // An answer that ran out of room is not an answer. The budget covers the visible reply *and*
+  // whatever the model spends on reasoning, so a request can come back with a perfectly valid
+  // 200, a `length` finish and nothing usable in it — the app then quietly keeps the original and
+  // the user is left wondering why their text did not change. Refused, so at least it says so. A
+  // truncated rewrite is not the friendlier option: it would replace the text with a version that
+  // stops mid-sentence.
+  //
+  // **Charged all the same**, and that is the deliberate part. The tokens were spent at OpenAI on
+  // this account's behalf; they are gone whatever the answer looked like. Handing the credit back
+  // would mean the operator pays for someone else's request — and with a full refund on a failure
+  // the client can choose, a caller could burn the day's budget for free and take the service down
+  // for everyone. Settled to the *real* cost rather than the reservation, so a failed attempt
+  // costs a couple of seconds rather than the worst case.
+  if (wasTruncated(body)) {
+    logUsage(env, {
+      walletId: session.walletId,
+      tokenHash: session.tokenHash,
+      isTest: session.isTest,
+      kind: 'reword',
+      seconds: actualSeconds,
+      tokensIn: usage.in || inputTokens,
+      tokensOut: usage.out,
+      costNano: actualNano,
+      status: 413,
+      ms: Date.now() - started,
+      secondsLeft: state.secondsLeft,
+      rewordsLeft: state.rewordsLeft,
+      secondsUsedTotal: state.secondsUsed,
+    }, ctx);
+    return apiError(
+      413,
+      'The rewording did not fit in the allowed answer length.',
+      'reword_truncated',
+      'invalid_request_error',
+    );
   }
 
   logUsage(env, {
@@ -191,6 +219,7 @@ interface ChatRequest {
   messages?: Array<{ role: string; content: unknown }>;
   max_tokens?: number;
   max_completion_tokens?: number;
+  /** Accepted from the wire and deliberately ignored — see where the request is built. */
   reasoning_effort?: string;
 }
 

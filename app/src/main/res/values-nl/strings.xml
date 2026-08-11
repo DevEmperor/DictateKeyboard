@@ -1809,7 +1809,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_devices_never_used">Nog niet gebruikt</string>
     <string name="dictate__cloud_recovery_error">Server niet bereikbaar. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="dictate__cloud_limits_title">Wat Dictate Cloud niet kan</string>
-    <string name="dictate__cloud_limits_body">Live transcriptie terwijl je spreekt is er niet met tegoed — het kost per minuut ongeveer vier keer zoveel, en de motor op het apparaat doet het offline en gratis. Het AI-model bepaalt de server, dus modelkeuze en eigen endpoints blijven uit. Al het andere is onveranderd: prompts, geschiedenis, de zwevende knop, lange dictaten en het horloge.</string>
+    <string name="dictate__cloud_limits_body">Live transcriptie terwijl je spreekt is er niet met tegoed — het kost per minuut ongeveer vier keer zoveel, en de motor op het apparaat doet het offline en gratis. Het AI-model en hoe lang het nadenkt bepaalt de server, dus modelkeuze, denkinspanning en eigen endpoints blijven uit. Al het andere is onveranderd: prompts, geschiedenis, de zwevende knop, lange dictaten en het horloge.</string>
     <string name="dictate__cloud_privacy_title">Wat er wordt opgeslagen</string>
     <string name="dictate__cloud_privacy_body">Je opnamen en teksten worden doorgegeven en nooit naar schijf geschreven. Alleen getallen worden bewaard: welk account, wanneer, hoe lang en of het lukte. Achter een tegoedaccount zit geen naam, geen e-mailadres en geen Google-account — alleen een willekeurige aanduiding.</string>
     <string name="dictate__cloud_other_way_title">Je eigen aanbieder blijft mogelijk</string>

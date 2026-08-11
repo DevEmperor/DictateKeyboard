@@ -1693,7 +1693,7 @@
     <string name="dictate__cloud_devices_never_used">Mai usato</string>
     <string name="dictate__cloud_recovery_error">Server non raggiungibile. Controlla la connessione e riprova.</string>
     <string name="dictate__cloud_limits_title">Cosa Dictate Cloud non fa</string>
-    <string name="dictate__cloud_limits_body">La trascrizione dal vivo mentre parli non è disponibile con il credito: costa circa quattro volte tanto al minuto, e il motore sul dispositivo la fa offline e gratis. Il modello di IA lo stabilisce il server, quindi la scelta del modello e gli endpoint personalizzati restano disattivati. Tutto il resto è invariato: prompt, cronologia, pulsante flottante, dettatura lunga e orologio.</string>
+    <string name="dictate__cloud_limits_body">La trascrizione dal vivo mentre parli non è disponibile con il credito: costa circa quattro volte tanto al minuto, e il motore sul dispositivo la fa offline e gratis. Il modello di IA e quanto ragiona li stabilisce il server, quindi la scelta del modello, lo sforzo di ragionamento e gli endpoint personalizzati restano disattivati. Tutto il resto è invariato: prompt, cronologia, pulsante flottante, dettatura lunga e orologio.</string>
     <string name="dictate__cloud_privacy_title">Cosa viene salvato</string>
     <string name="dictate__cloud_privacy_body">Le tue registrazioni e i tuoi testi vengono inoltrati e mai scritti su disco. Si conservano solo numeri: quale conto, quando, quanto a lungo e se ha funzionato. Dietro un conto di credito non c\'è alcun nome, alcuna email né alcun account Google — solo un identificativo casuale.</string>
     <string name="dictate__cloud_other_way_title">Il tuo fornitore resta possibile</string>

@@ -1889,7 +1889,7 @@
     <string name="dictate__cloud_devices_never_used">Ainda não utilizado</string>
     <string name="dictate__cloud_recovery_error">Servidor inacessível. Verifica a ligação e tenta de novo.</string>
     <string name="dictate__cloud_limits_title">O que o Dictate Cloud não faz</string>
-    <string name="dictate__cloud_limits_body">A transcrição em direto enquanto falas não está disponível com saldo — custa cerca de quatro vezes mais por minuto, e o motor no dispositivo faz isso offline e de graça. O modelo de IA é definido pelo servidor, por isso a escolha de modelo e os endpoints próprios ficam desligados. Tudo o resto mantém-se: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>
+    <string name="dictate__cloud_limits_body">A transcrição em direto enquanto falas não está disponível com saldo — custa cerca de quatro vezes mais por minuto, e o motor no dispositivo faz isso offline e de graça. O modelo de IA e quanto pensa são definidos pelo servidor, por isso a escolha de modelo, o esforço de raciocínio e os endpoints próprios ficam desligados. Tudo o resto mantém-se: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>
     <string name="dictate__cloud_privacy_title">O que é guardado</string>
     <string name="dictate__cloud_privacy_body">As tuas gravações e textos são encaminhados e nunca escritos em disco. Só se guardam números: que conta, quando, quanto tempo e se resultou. Por trás de uma conta de saldo não há nome, nem email, nem conta Google — apenas um identificador aleatório.</string>
     <string name="dictate__cloud_other_way_title">O teu fornecedor continua disponível</string>

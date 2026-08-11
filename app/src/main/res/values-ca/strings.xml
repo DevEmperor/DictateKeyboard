@@ -1785,7 +1785,7 @@
     <string name="dictate__cloud_devices_never_used">Encara no s\'ha fet servir</string>
     <string name="dictate__cloud_recovery_error">No s\'ha pogut contactar amb el servidor. Comprova la connexió i torna-ho a provar.</string>
     <string name="dictate__cloud_limits_title">Què no fa el Dictate Cloud</string>
-    <string name="dictate__cloud_limits_body">La transcripció en directe mentre parles no està disponible amb saldo: costa unes quatre vegades més per minut, i el motor del dispositiu ho fa fora de línia i de franc. El model d\'IA el fixa el servidor, així que la tria de model i els extrems propis queden desactivats. Tota la resta és igual: indicacions, historial, botó flotant, dictat llarg i el rellotge.</string>
+    <string name="dictate__cloud_limits_body">La transcripció en directe mentre parles no està disponible amb saldo: costa unes quatre vegades més per minut, i el motor del dispositiu ho fa fora de línia i de franc. El model d\'IA i quant raona els fixa el servidor, així que la tria de model, l\'esforç de raonament i els extrems propis queden desactivats. Tota la resta és igual: indicacions, historial, botó flotant, dictat llarg i el rellotge.</string>
     <string name="dictate__cloud_privacy_title">Què es desa</string>
     <string name="dictate__cloud_privacy_body">Els teus enregistraments i textos només es reenvien i mai no s\'escriuen al disc. Només es desen xifres: quin compte, quan, quanta estona i si ha funcionat. Darrere d\'un compte de saldo no hi ha cap nom, cap adreça electrònica ni cap compte de Google, només un identificador aleatori.</string>
     <string name="dictate__cloud_other_way_title">El teu proveïdor continua disponible</string>

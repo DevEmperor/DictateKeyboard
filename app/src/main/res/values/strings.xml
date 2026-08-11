@@ -1690,7 +1690,7 @@
     <string name="dictate__cloud_devices_never_used">Never used</string>
     <string name="dictate__cloud_recovery_error">Couldn\'t reach the server. Check your connection and try again.</string>
     <string name="dictate__cloud_limits_title">What Dictate Cloud can\'t do</string>
-    <string name="dictate__cloud_limits_body">Live transcription while you speak isn\'t available on credit — it costs about four times as much per minute, and the on-device engine does it offline and for free. The AI model is set by the server, so model choice and custom endpoints stay off. Everything else is unchanged: prompts, history, the floating button, long-form dictation and the watch.</string>
+    <string name="dictate__cloud_limits_body">Live transcription while you speak isn\'t available on credit — it costs about four times as much per minute, and the on-device engine does it offline and for free. The AI model and how hard it thinks are set by the server, so model choice, reasoning effort and custom endpoints stay off. Everything else is unchanged: prompts, history, the floating button, long-form dictation and the watch.</string>
     <string name="dictate__cloud_privacy_title">What gets stored</string>
     <string name="dictate__cloud_privacy_body">Your recordings and texts are passed straight through and never written to disk. Only numbers are kept: which account, when, how long, and whether it worked. There\'s no name, no email address and no Google account behind a credit account — only a random ID.</string>
     <string name="dictate__cloud_other_way_title">Your own provider stays available</string>

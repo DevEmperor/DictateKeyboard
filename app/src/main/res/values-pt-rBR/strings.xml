@@ -1718,7 +1718,7 @@
     <string name="dictate__cloud_devices_never_used">Nunca usado</string>
     <string name="dictate__cloud_recovery_error">Servidor inacessível. Verifique sua conexão e tente de novo.</string>
     <string name="dictate__cloud_limits_title">O que o Dictate Cloud não faz</string>
-    <string name="dictate__cloud_limits_body">Transcrição ao vivo enquanto você fala não existe com crédito — custa cerca de quatro vezes mais por minuto, e o motor no aparelho faz isso offline e de graça. O modelo de IA é definido pelo servidor, então a escolha de modelo e endpoints próprios ficam desligados. Todo o resto continua igual: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>
+    <string name="dictate__cloud_limits_body">Transcrição ao vivo enquanto você fala não existe com crédito — custa cerca de quatro vezes mais por minuto, e o motor no aparelho faz isso offline e de graça. O modelo de IA e quanto ele pensa são definidos pelo servidor, então a escolha de modelo, o esforço de raciocínio e endpoints próprios ficam desligados. Todo o resto continua igual: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>
     <string name="dictate__cloud_privacy_title">O que é armazenado</string>
     <string name="dictate__cloud_privacy_body">Suas gravações e textos são repassados e nunca gravados em disco. Só ficam números: qual conta, quando, por quanto tempo e se deu certo. Por trás de uma conta de crédito não há nome, nem e-mail, nem conta do Google — apenas um identificador aleatório.</string>
     <string name="dictate__cloud_other_way_title">Seu próprio provedor continua disponível</string>

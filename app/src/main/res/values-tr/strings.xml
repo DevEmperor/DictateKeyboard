@@ -1888,7 +1888,7 @@
     <string name="dictate__cloud_devices_never_used">Henüz kullanılmadı</string>
     <string name="dictate__cloud_recovery_error">Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.</string>
     <string name="dictate__cloud_limits_title">Dictate Cloud\'un yapmadıkları</string>
-    <string name="dictate__cloud_limits_body">Siz konuşurken canlı yazıya dökme kontörle yoktur — dakika başına yaklaşık dört katı tutar ve cihaz üzerindeki motor bunu çevrimdışı ve ücretsiz yapar. Yapay zekâ modelini sunucu belirler, bu yüzden model seçimi ve kendi uç noktalarınız kapalı kalır. Geri kalan her şey aynı: istemler, geçmiş, yüzen düğme, uzun dikte ve saat.</string>
+    <string name="dictate__cloud_limits_body">Siz konuşurken canlı yazıya dökme kontörle yoktur — dakika başına yaklaşık dört katı tutar ve cihaz üzerindeki motor bunu çevrimdışı ve ücretsiz yapar. Yapay zekâ modelini ve ne kadar düşüneceğini sunucu belirler, bu yüzden model seçimi, akıl yürütme düzeyi ve kendi uç noktalarınız kapalı kalır. Geri kalan her şey aynı: istemler, geçmiş, yüzen düğme, uzun dikte ve saat.</string>
     <string name="dictate__cloud_privacy_title">Neler saklanıyor</string>
     <string name="dictate__cloud_privacy_body">Kayıtlarınız ve metinleriniz doğrudan iletilir, hiçbir zaman diske yazılmaz. Yalnızca sayılar saklanır: hangi hesap, ne zaman, ne kadar süre ve işe yarayıp yaramadığı. Bir kontör hesabının arkasında ad, e-posta veya Google hesabı yoktur — yalnızca rastgele bir kimlik.</string>
     <string name="dictate__cloud_other_way_title">Kendi sağlayıcınız açık kalır</string>
