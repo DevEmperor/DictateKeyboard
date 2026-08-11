@@ -1914,6 +1914,12 @@
     <string name="dictate__cloud_recovery_field">Obnovovací kód</string>
     <string name="dictate__cloud_recovery_confirm">Obnovit</string>
     <string name="dictate__cloud_recovery_not_found">K tomuto kódu nebyl nalezen žádný kredit.</string>
+    <string name="dictate__cloud_devices_full_title">Příliš mnoho zařízení</string>
+    <string name="dictate__cloud_devices_full_body">Tvůj kredit se už používá na {count} zařízeních, což je nejvíc najednou. Odhlas jedno, abys ho mohl použít tady — kredit sám zůstane nedotčený.</string>
+    <string name="dictate__cloud_devices_sign_out">Odhlásit</string>
+    <string name="dictate__cloud_devices_unnamed">Zařízení bez názvu</string>
+    <string name="dictate__cloud_devices_last_used">Naposledy použito {time}</string>
+    <string name="dictate__cloud_devices_never_used">Zatím nepoužito</string>
     <string name="dictate__cloud_recovery_error">Server je nedostupný. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="dictate__cloud_limits_title">Co Dictate Cloud neumí</string>
     <string name="dictate__cloud_limits_body">Živý přepis během mluvení s kreditem není — stojí zhruba čtyřikrát víc za minutu a engine přímo v zařízení to zvládne offline a zdarma. Model AI určuje server, takže volba modelu a vlastní koncové body zůstávají vypnuté. Všechno ostatní je beze změny: prompty, historie, plovoucí tlačítko, dlouhé diktování i hodinky.</string>

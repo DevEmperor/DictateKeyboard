@@ -1915,6 +1915,12 @@
     <string name="dictate__cloud_recovery_field">Kod odzyskiwania</string>
     <string name="dictate__cloud_recovery_confirm">Przywróć</string>
     <string name="dictate__cloud_recovery_not_found">Nie znaleziono środków dla tego kodu.</string>
+    <string name="dictate__cloud_devices_full_title">Za dużo urządzeń</string>
+    <string name="dictate__cloud_devices_full_body">Twoje środki są już używane na {count} urządzeniach, czyli maksymalnej liczbie naraz. Wyloguj jedno, aby korzystać tutaj — same środki pozostają nietknięte.</string>
+    <string name="dictate__cloud_devices_sign_out">Wyloguj</string>
+    <string name="dictate__cloud_devices_unnamed">Urządzenie bez nazwy</string>
+    <string name="dictate__cloud_devices_last_used">Ostatnio użyte {time}</string>
+    <string name="dictate__cloud_devices_never_used">Jeszcze nieużywane</string>
     <string name="dictate__cloud_recovery_error">Serwer nieosiągalny. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="dictate__cloud_limits_title">Czego Dictate Cloud nie robi</string>
     <string name="dictate__cloud_limits_body">Transkrypcji na żywo podczas mówienia nie ma przy środkach — kosztuje na minutę mniej więcej czterokrotnie więcej, a silnik na urządzeniu robi to offline i za darmo. Model AI ustala serwer, więc wybór modelu i własne punkty końcowe pozostają wyłączone. Cała reszta jest bez zmian: prompty, historia, pływający przycisk, długie dyktowanie i zegarek.</string>

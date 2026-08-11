@@ -1900,6 +1900,12 @@
     <string name="dictate__cloud_recovery_field">Код за възстановяване</string>
     <string name="dictate__cloud_recovery_confirm">Възстанови</string>
     <string name="dictate__cloud_recovery_not_found">За този код не е намерен кредит.</string>
+    <string name="dictate__cloud_devices_full_title">Твърде много устройства</string>
+    <string name="dictate__cloud_devices_full_body">Кредитът ти вече се използва на {count} устройства — това е максимумът едновременно. Отпиши едно, за да го ползваш тук; самият кредит остава непокътнат.</string>
+    <string name="dictate__cloud_devices_sign_out">Отписване</string>
+    <string name="dictate__cloud_devices_unnamed">Устройство без име</string>
+    <string name="dictate__cloud_devices_last_used">Последно ползване {time}</string>
+    <string name="dictate__cloud_devices_never_used">Още не е ползвано</string>
     <string name="dictate__cloud_recovery_error">Сървърът е недостъпен. Проверете връзката си и опитайте отново.</string>
     <string name="dictate__cloud_limits_title">Какво Dictate Cloud не прави</string>
     <string name="dictate__cloud_limits_body">Транскрибиране на живо, докато говорите, няма с кредит — струва около четири пъти повече на минута, а машината в устройството го прави офлайн и безплатно. ИИ моделът се задава от сървъра, затова изборът на модел и собствените адреси остават изключени. Всичко останало е непроменено: подсказки, история, плаващият бутон, дългата диктовка и часовникът.</string>

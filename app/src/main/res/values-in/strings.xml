@@ -1855,6 +1855,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_recovery_field">Kode pemulihan</string>
     <string name="dictate__cloud_recovery_confirm">Pulihkan</string>
     <string name="dictate__cloud_recovery_not_found">Tidak ditemukan saldo untuk kode ini.</string>
+    <string name="dictate__cloud_devices_full_title">Terlalu banyak perangkat</string>
+    <string name="dictate__cloud_devices_full_body">Saldo Anda sudah dipakai di {count} perangkat, dan itu batas maksimalnya. Keluarkan salah satu untuk memakainya di sini — saldonya sendiri tidak berubah.</string>
+    <string name="dictate__cloud_devices_sign_out">Keluarkan</string>
+    <string name="dictate__cloud_devices_unnamed">Perangkat tanpa nama</string>
+    <string name="dictate__cloud_devices_last_used">Terakhir dipakai {time}</string>
+    <string name="dictate__cloud_devices_never_used">Belum pernah dipakai</string>
     <string name="dictate__cloud_recovery_error">Server tidak dapat dihubungi. Periksa koneksimu dan coba lagi.</string>
     <string name="dictate__cloud_limits_title">Yang tidak dilakukan Dictate Cloud</string>
     <string name="dictate__cloud_limits_body">Transkripsi langsung sambil berbicara tidak tersedia dengan saldo — biayanya sekitar empat kali lipat per menit, sedangkan mesin di perangkat melakukannya luring dan gratis. Model AI ditentukan oleh server, jadi pemilihan model dan endpoint sendiri tetap nonaktif. Selebihnya tidak berubah: prompt, riwayat, tombol mengambang, pendiktean panjang, dan jam tangan.</string>

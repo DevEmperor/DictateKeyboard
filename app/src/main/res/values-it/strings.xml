@@ -1683,6 +1683,12 @@
     <string name="dictate__cloud_recovery_field">Codice di recupero</string>
     <string name="dictate__cloud_recovery_confirm">Ripristina</string>
     <string name="dictate__cloud_recovery_not_found">Nessun credito trovato per questo codice.</string>
+    <string name="dictate__cloud_devices_full_title">Troppi dispositivi</string>
+    <string name="dictate__cloud_devices_full_body">Il tuo credito è già in uso su {count} dispositivi, il massimo consentito insieme. Disconnettine uno per usarlo qui: il credito resta intatto.</string>
+    <string name="dictate__cloud_devices_sign_out">Disconnetti</string>
+    <string name="dictate__cloud_devices_unnamed">Dispositivo senza nome</string>
+    <string name="dictate__cloud_devices_last_used">Ultimo uso {time}</string>
+    <string name="dictate__cloud_devices_never_used">Mai usato</string>
     <string name="dictate__cloud_recovery_error">Server non raggiungibile. Controlla la connessione e riprova.</string>
     <string name="dictate__cloud_limits_title">Cosa Dictate Cloud non fa</string>
     <string name="dictate__cloud_limits_body">La trascrizione dal vivo mentre parli non è disponibile con il credito: costa circa quattro volte tanto al minuto, e il motore sul dispositivo la fa offline e gratis. Il modello di IA lo stabilisce il server, quindi la scelta del modello e gli endpoint personalizzati restano disattivati. Tutto il resto è invariato: prompt, cronologia, pulsante flottante, dettatura lunga e orologio.</string>

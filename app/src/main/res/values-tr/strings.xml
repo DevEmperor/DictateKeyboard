@@ -1878,6 +1878,12 @@
     <string name="dictate__cloud_recovery_field">Kurtarma kodu</string>
     <string name="dictate__cloud_recovery_confirm">Geri yükle</string>
     <string name="dictate__cloud_recovery_not_found">Bu koda ait kontör bulunamadı.</string>
+    <string name="dictate__cloud_devices_full_title">Çok fazla cihaz</string>
+    <string name="dictate__cloud_devices_full_body">Kontörünüz zaten {count} cihazda kullanılıyor; aynı anda daha fazlası olamaz. Burada kullanmak için birinin oturumunu kapatın — kontörün kendisi etkilenmez.</string>
+    <string name="dictate__cloud_devices_sign_out">Oturumu kapat</string>
+    <string name="dictate__cloud_devices_unnamed">Adsız cihaz</string>
+    <string name="dictate__cloud_devices_last_used">Son kullanım {time}</string>
+    <string name="dictate__cloud_devices_never_used">Henüz kullanılmadı</string>
     <string name="dictate__cloud_recovery_error">Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.</string>
     <string name="dictate__cloud_limits_title">Dictate Cloud\'un yapmadıkları</string>
     <string name="dictate__cloud_limits_body">Siz konuşurken canlı yazıya dökme kontörle yoktur — dakika başına yaklaşık dört katı tutar ve cihaz üzerindeki motor bunu çevrimdışı ve ücretsiz yapar. Yapay zekâ modelini sunucu belirler, bu yüzden model seçimi ve kendi uç noktalarınız kapalı kalır. Geri kalan her şey aynı: istemler, geçmiş, yüzen düğme, uzun dikte ve saat.</string>

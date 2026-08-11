@@ -1894,6 +1894,12 @@
     <string name="dictate__cloud_recovery_field">恢复码</string>
     <string name="dictate__cloud_recovery_confirm">恢复</string>
     <string name="dictate__cloud_recovery_not_found">未找到与此码对应的额度。</string>
+    <string name="dictate__cloud_devices_full_title">设备太多</string>
+    <string name="dictate__cloud_devices_full_body">你的额度已在 {count} 台设备上使用，这是同时使用的上限。退出其中一台即可在这里使用——额度本身不受影响。</string>
+    <string name="dictate__cloud_devices_sign_out">退出</string>
+    <string name="dictate__cloud_devices_unnamed">未命名设备</string>
+    <string name="dictate__cloud_devices_last_used">最近使用 {time}</string>
+    <string name="dictate__cloud_devices_never_used">尚未使用</string>
     <string name="dictate__cloud_recovery_error">无法连接服务器。请检查网络后重试。</string>
     <string name="dictate__cloud_limits_title">Dictate Cloud 做不到的事</string>
     <string name="dictate__cloud_limits_body">用额度无法边说边实时转写——每分钟费用约为四倍，而设备端引擎可以离线且免费地完成。AI 模型由服务器决定，因此模型选择和自定义端点保持关闭。其余一切照旧：提示词、历史记录、悬浮按钮、长篇听写以及手表。</string>

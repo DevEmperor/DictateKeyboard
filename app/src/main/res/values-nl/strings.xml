@@ -1799,6 +1799,12 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_recovery_field">Herstelcode</string>
     <string name="dictate__cloud_recovery_confirm">Herstellen</string>
     <string name="dictate__cloud_recovery_not_found">Geen tegoed gevonden voor deze code.</string>
+    <string name="dictate__cloud_devices_full_title">Te veel apparaten</string>
+    <string name="dictate__cloud_devices_full_body">Je tegoed wordt al op {count} apparaten gebruikt, en meer kan niet tegelijk. Meld er één af om het hier te gebruiken — het tegoed zelf blijft ongemoeid.</string>
+    <string name="dictate__cloud_devices_sign_out">Afmelden</string>
+    <string name="dictate__cloud_devices_unnamed">Naamloos apparaat</string>
+    <string name="dictate__cloud_devices_last_used">Laatst gebruikt {time}</string>
+    <string name="dictate__cloud_devices_never_used">Nog niet gebruikt</string>
     <string name="dictate__cloud_recovery_error">Server niet bereikbaar. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="dictate__cloud_limits_title">Wat Dictate Cloud niet kan</string>
     <string name="dictate__cloud_limits_body">Live transcriptie terwijl je spreekt is er niet met tegoed — het kost per minuut ongeveer vier keer zoveel, en de motor op het apparaat doet het offline en gratis. Het AI-model bepaalt de server, dus modelkeuze en eigen endpoints blijven uit. Al het andere is onveranderd: prompts, geschiedenis, de zwevende knop, lange dictaten en het horloge.</string>

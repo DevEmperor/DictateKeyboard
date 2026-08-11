@@ -68,6 +68,13 @@ object DictateCloudApi {
         const val DEVICE_REVOKED = "device_revoked"
 
         /**
+         * The account already holds as many signed-in devices as it may. Not a plain failure but a
+         * fork: the reply lists them, and signing one out is the way on — see
+         * [DictateCloudDeviceLimitException].
+         */
+        const val DEVICE_LIMIT = "device_limit"
+
+        /**
          * Out of credit. Sent on dictation and rewording alike, and the one error whose remedy is a
          * button in this app rather than something to sort out at a provider — which is why it is
          * matched on exactly instead of on the flattened "quota" bucket every provider lands in.
@@ -154,6 +161,22 @@ object DictateCloudApi {
     )
 
     /**
+     * Signs one device out of an account, authorised by its recovery code.
+     *
+     * The way past the device limit, and it has to work from *another* device: the one being
+     * removed is typically the one that cannot ask for anything any more — lost, broken, wiped.
+     * It grants nothing new, since whoever holds the code can already spend the balance or delete
+     * the account outright.
+     */
+    suspend fun revokeDevice(code: String, tokenHash: String): Boolean {
+        val reply: DictateCloudRevoke = post(
+            path = "/wallet/devices/revoke",
+            body = json.encodeToString(RevokeDeviceRequest(code = code, tokenHash = tokenHash)),
+        )
+        return reply.revoked
+    }
+
+    /**
      * Asks what deleting this account would destroy, without destroying it.
      *
      * Two calls rather than one, on purpose: the confirmation dialog names the exact number of
@@ -215,11 +238,25 @@ object DictateCloudApi {
      */
     private fun errorFrom(status: Int, body: String): DictateCloudException {
         val parsed = runCatching { json.decodeFromString<ErrorEnvelope>(body).error }.getOrNull()
-        return DictateCloudException(
-            status = status,
-            code = parsed?.code.orEmpty(),
-            message = parsed?.message?.takeIf { it.isNotBlank() } ?: "HTTP $status",
-        )
+        val code = parsed?.code.orEmpty()
+        val message = parsed?.message?.takeIf { it.isNotBlank() } ?: "HTTP $status"
+
+        // The one refusal that carries more than a reason: the device limit sends the devices
+        // holding the slots, because the only useful next step is to pick one and sign it out.
+        // Flattening it into a plain error would leave the user told "no" with nowhere to go.
+        if (code == ErrorCode.DEVICE_LIMIT) {
+            val envelope = runCatching { json.decodeFromString<DeviceLimitEnvelope>(body) }.getOrNull()
+            if (envelope != null) {
+                return DictateCloudDeviceLimitException(
+                    status = status,
+                    code = code,
+                    message = message,
+                    limit = envelope.limit,
+                    devices = envelope.devices,
+                )
+            }
+        }
+        return DictateCloudException(status = status, code = code, message = message)
     }
 
     /**
@@ -283,6 +320,15 @@ object DictateCloudApi {
     private data class DeleteRequest(val confirm: Boolean)
 
     @Serializable
+    private data class RevokeDeviceRequest(val code: String, val tokenHash: String)
+
+    @Serializable
+    private data class DeviceLimitEnvelope(
+        val limit: Int = 0,
+        val devices: List<DictateCloudDevice> = emptyList(),
+    )
+
+    @Serializable
     private data class ErrorEnvelope(val error: ErrorBody? = null)
 
     @Serializable
@@ -297,11 +343,41 @@ object DictateCloudApi {
  * A failed wallet call. [status] is 0 when the server was never reached, [code] the server's own
  * error code (see [DictateCloudApi.ErrorCode]) or empty when it did not send one.
  */
-class DictateCloudException(
+open class DictateCloudException(
     val status: Int,
     val code: String,
     message: String,
 ) : IOException(message)
+
+/**
+ * The account is signed in on as many devices as it may be.
+ *
+ * Carries the devices holding the slots, because "no" on its own would strand the case this rule
+ * exists for: a new phone replacing one that is lost, broken or wiped. That old device cannot sign
+ * itself out, so the choice has to be offered here.
+ */
+class DictateCloudDeviceLimitException(
+    status: Int,
+    code: String,
+    message: String,
+    val limit: Int,
+    val devices: List<DictateCloudDevice>,
+) : DictateCloudException(status, code, message)
+
+/** One signed-in device, as the server names it. [tokenHash] is the handle for signing it out. */
+@Serializable
+data class DictateCloudDevice(
+    @SerialName("token_hash") val tokenHash: String,
+    val label: String? = null,
+    @SerialName("created_at") val createdAt: Long = 0,
+    @SerialName("last_seen_at") val lastSeenAt: Long? = null,
+)
+
+@Serializable
+data class DictateCloudRevoke(
+    val revoked: Boolean = false,
+    @SerialName("devices_left") val devicesLeft: Int = 0,
+)
 
 /** Reply to a redemption. [token] and [recoveryCode] are present only when the account was created. */
 @Serializable

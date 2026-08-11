@@ -1843,6 +1843,12 @@
     <string name="dictate__cloud_recovery_field">Atkopšanas kods</string>
     <string name="dictate__cloud_recovery_confirm">Atjaunot</string>
     <string name="dictate__cloud_recovery_not_found">Šim kodam kredīts netika atrasts.</string>
+    <string name="dictate__cloud_devices_full_title">Pārāk daudz ierīču</string>
+    <string name="dictate__cloud_devices_full_body">Tavs kredīts jau tiek lietots {count} ierīcēs — vairāk vienlaikus nevar. Izraksti vienu, lai lietotu to šeit; pats kredīts paliek neskarts.</string>
+    <string name="dictate__cloud_devices_sign_out">Izrakstīties</string>
+    <string name="dictate__cloud_devices_unnamed">Ierīce bez nosaukuma</string>
+    <string name="dictate__cloud_devices_last_used">Pēdējoreiz lietota {time}</string>
+    <string name="dictate__cloud_devices_never_used">Vēl nav lietota</string>
     <string name="dictate__cloud_recovery_error">Serveris nav sasniedzams. Pārbaudiet savienojumu un mēģiniet vēlreiz.</string>
     <string name="dictate__cloud_limits_title">Ko Dictate Cloud nedara</string>
     <string name="dictate__cloud_limits_body">Tiešā atšifrēšana runas laikā ar kredītu nav pieejama — minūte maksā apmēram četras reizes vairāk, un ierīcē esošais dzinējs to paveic bezsaistē un bez maksas. MI modeli nosaka serveris, tāpēc modeļa izvēle un pašu galapunkti paliek izslēgti. Viss pārējais nemainās: uzvednes, vēsture, peldošā poga, garā diktēšana un pulkstenis.</string>

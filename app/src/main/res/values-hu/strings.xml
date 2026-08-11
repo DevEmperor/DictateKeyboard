@@ -1898,6 +1898,12 @@
     <string name="dictate__cloud_recovery_field">Helyreállítási kód</string>
     <string name="dictate__cloud_recovery_confirm">Visszaállítás</string>
     <string name="dictate__cloud_recovery_not_found">Ehhez a kódhoz nem található egyenleg.</string>
+    <string name="dictate__cloud_devices_full_title">Túl sok eszköz</string>
+    <string name="dictate__cloud_devices_full_body">A kredited már {count} eszközön van használatban, ennyi lehet egyszerre. Jelentkezz ki az egyikről, hogy itt használhasd — maga a kredit érintetlen marad.</string>
+    <string name="dictate__cloud_devices_sign_out">Kijelentkezés</string>
+    <string name="dictate__cloud_devices_unnamed">Névtelen eszköz</string>
+    <string name="dictate__cloud_devices_last_used">Utoljára használva: {time}</string>
+    <string name="dictate__cloud_devices_never_used">Még nem használt</string>
     <string name="dictate__cloud_recovery_error">A kiszolgáló nem érhető el. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
     <string name="dictate__cloud_limits_title">Amit a Dictate Cloud nem tud</string>
     <string name="dictate__cloud_limits_body">Élő átírás beszéd közben egyenleggel nincs — percenként nagyjából négyszer annyiba kerül, az eszközön futó motor pedig offline és ingyen elvégzi. Az MI-modellt a kiszolgáló határozza meg, ezért a modellválasztás és a saját végpontok kikapcsolva maradnak. Minden más változatlan: promptok, előzmények, lebegő gomb, hosszú diktálás és az óra.</string>

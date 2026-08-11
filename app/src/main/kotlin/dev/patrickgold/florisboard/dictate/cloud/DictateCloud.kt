@@ -395,6 +395,15 @@ object DictateCloud {
     }
 
     /**
+     * Signs one device out of an account, using its recovery code as the warrant.
+     *
+     * Only reached from the restore dialog when the device limit refused: the slot has to be freed
+     * from *this* device, because the one being removed is usually the phone that is gone.
+     */
+    suspend fun revokeDevice(code: String, tokenHash: String): Boolean =
+        DictateCloudApi.revokeDevice(code.trim(), tokenHash)
+
+    /**
      * Redeems one purchase and, if that worked, consumes it.
      *
      * The failure branches are the interesting part. A purchase is consumed **only** after credit is

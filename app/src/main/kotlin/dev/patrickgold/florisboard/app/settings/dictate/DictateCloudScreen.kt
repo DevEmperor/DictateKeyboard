@@ -68,6 +68,8 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDeletion
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDevice
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDeviceLimitException
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudException
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -313,13 +315,24 @@ fun DictateCloudScreen() = FlorisScreen {
                     scope.launch {
                         val result = runCatching { DictateCloud.restore(code) }
                         onResult(
-                            result.exceptionOrNull()?.let { error ->
-                                (error as? DictateCloudException)?.code
-                                    ?.takeIf { it == DictateCloudApi.ErrorCode.WALLET_NOT_FOUND }
-                                    ?.let { RestoreOutcome.NotFound }
-                                    ?: RestoreOutcome.Error
-                            } ?: RestoreOutcome.Success,
+                            when (val error = result.exceptionOrNull()) {
+                                null -> RestoreOutcome.Success
+                                is DictateCloudDeviceLimitException ->
+                                    RestoreOutcome.TooManyDevices(error.limit, error.devices)
+                                is DictateCloudException ->
+                                    if (error.code == DictateCloudApi.ErrorCode.WALLET_NOT_FOUND) {
+                                        RestoreOutcome.NotFound
+                                    } else {
+                                        RestoreOutcome.Error
+                                    }
+                                else -> RestoreOutcome.Error
+                            },
                         )
+                    }
+                },
+                onSignOutDevice = { code, tokenHash, onDone ->
+                    scope.launch {
+                        onDone(runCatching { DictateCloud.revokeDevice(code, tokenHash) }.getOrDefault(false))
                     }
                 },
             )
@@ -707,36 +720,140 @@ private fun OtherWayCard(onOwnProvider: () -> Unit) {
     }
 }
 
-private enum class RestoreOutcome { Success, NotFound, Error }
+/**
+ * One signed-in device, with the button that makes room for this one.
+ *
+ * The last-used time is what makes the choice possible: without it every row reads the same, and a
+ * device name alone ("Phone · Android 13") does not say which phone is the one in your hand.
+ */
+@Composable
+private fun DeviceRow(
+    device: DictateCloudDevice,
+    enabled: Boolean,
+    onSignOut: () -> Unit,
+) {
+    val format = remember { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT) }
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = device.label?.takeIf { it.isNotBlank() }
+                    ?: stringRes(R.string.dictate__cloud_devices_unnamed),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+            )
+            Text(
+                text = device.lastSeenAt?.takeIf { it > 0 }?.let {
+                    stringRes(R.string.dictate__cloud_devices_last_used, "time" to format.format(Date(it)))
+                } ?: stringRes(R.string.dictate__cloud_devices_never_used),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        TextButton(enabled = enabled, onClick = onSignOut) {
+            Text(stringRes(R.string.dictate__cloud_devices_sign_out))
+        }
+    }
+}
+
+/**
+ * How a restore ended.
+ *
+ * [TooManyDevices] is not a failure but a fork, which is why it carries the devices: the account
+ * has all the sign-ins it may have, and the way on is to pick one and sign it out. Answering with a
+ * bare error would strand exactly the case the limit has to keep serving — a new phone taking over
+ * from one that is lost, broken or wiped, and therefore cannot sign itself out.
+ */
+private sealed interface RestoreOutcome {
+    data object Success : RestoreOutcome
+    data object NotFound : RestoreOutcome
+    data object Error : RestoreOutcome
+    data class TooManyDevices(val limit: Int, val devices: List<DictateCloudDevice>) : RestoreOutcome
+}
 
 @Composable
 private fun RestoreDialog(
     onDismiss: () -> Unit,
     onRestore: (String, (RestoreOutcome) -> Unit) -> Unit,
+    onSignOutDevice: (String, String, (Boolean) -> Unit) -> Unit,
 ) {
     var code by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
+    // Non-null once the account turned out to be full. The dialog then stops asking for a code —
+    // it has one that works — and asks which device should make room instead.
+    var full by remember { mutableStateOf<RestoreOutcome.TooManyDevices?>(null) }
 
     val notFound = stringRes(R.string.dictate__cloud_recovery_not_found)
     val failed = stringRes(R.string.dictate__cloud_recovery_error)
 
+    fun attempt() {
+        busy = true
+        onRestore(code) { outcome ->
+            busy = false
+            when (outcome) {
+                RestoreOutcome.Success -> onDismiss()
+                RestoreOutcome.NotFound -> error = notFound
+                RestoreOutcome.Error -> error = failed
+                is RestoreOutcome.TooManyDevices -> { full = outcome; error = null }
+            }
+        }
+    }
+
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringRes(R.string.dictate__cloud_recovery_restore_btn)) },
+        title = {
+            Text(
+                stringRes(
+                    if (full != null) R.string.dictate__cloud_devices_full_title
+                    else R.string.dictate__cloud_recovery_restore_btn
+                ),
+            )
+        },
         text = {
+            val limit = full
             Column {
-                BodyText(stringRes(R.string.dictate__cloud_recovery_dialog_body))
-                Spacer(Modifier.height(12.dp))
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = code,
-                    onValueChange = { code = it; error = null },
-                    singleLine = true,
-                    enabled = !busy,
-                    isError = error != null,
-                    label = { Text(stringRes(R.string.dictate__cloud_recovery_field)) },
-                )
+                if (limit == null) {
+                    BodyText(stringRes(R.string.dictate__cloud_recovery_dialog_body))
+                    Spacer(Modifier.height(12.dp))
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = code,
+                        onValueChange = { code = it; error = null },
+                        singleLine = true,
+                        enabled = !busy,
+                        isError = error != null,
+                        label = { Text(stringRes(R.string.dictate__cloud_recovery_field)) },
+                    )
+                } else {
+                    BodyText(
+                        stringRes(
+                            R.string.dictate__cloud_devices_full_body,
+                            "count" to limit.devices.size.toString(),
+                        ),
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    limit.devices.forEach { device ->
+                        DeviceRow(
+                            device = device,
+                            enabled = !busy,
+                            onSignOut = {
+                                busy = true
+                                onSignOutDevice(code, device.tokenHash) { ok ->
+                                    if (ok) {
+                                        full = null
+                                        attempt()
+                                    } else {
+                                        busy = false
+                                        error = failed
+                                    }
+                                }
+                            },
+                        )
+                    }
+                }
                 error?.let {
                     Spacer(Modifier.height(6.dp))
                     Text(
@@ -748,21 +865,15 @@ private fun RestoreDialog(
             }
         },
         confirmButton = {
-            TextButton(
-                enabled = !busy && code.isNotBlank(),
-                onClick = {
-                    busy = true
-                    onRestore(code) { outcome ->
-                        busy = false
-                        when (outcome) {
-                            RestoreOutcome.Success -> onDismiss()
-                            RestoreOutcome.NotFound -> error = notFound
-                            RestoreOutcome.Error -> error = failed
-                        }
-                    }
-                },
-            ) {
-                Text(stringRes(R.string.dictate__cloud_recovery_confirm))
+            // Nothing to confirm once the list is showing: each row is its own action, and a
+            // second "OK" would be a button that does not know which device was meant.
+            if (full == null) {
+                TextButton(
+                    enabled = !busy && code.isNotBlank(),
+                    onClick = { attempt() },
+                ) {
+                    Text(stringRes(R.string.dictate__cloud_recovery_confirm))
+                }
             }
         },
         dismissButton = {

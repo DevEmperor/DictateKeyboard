@@ -1879,6 +1879,12 @@
     <string name="dictate__cloud_recovery_field">Código de recuperação</string>
     <string name="dictate__cloud_recovery_confirm">Restaurar</string>
     <string name="dictate__cloud_recovery_not_found">Não foi encontrado saldo para este código.</string>
+    <string name="dictate__cloud_devices_full_title">Demasiados dispositivos</string>
+    <string name="dictate__cloud_devices_full_body">O teu saldo já está a ser usado em {count} dispositivos, o máximo em simultâneo. Termina a sessão num deles para o usares aqui — o saldo em si não é tocado.</string>
+    <string name="dictate__cloud_devices_sign_out">Terminar sessão</string>
+    <string name="dictate__cloud_devices_unnamed">Dispositivo sem nome</string>
+    <string name="dictate__cloud_devices_last_used">Última utilização {time}</string>
+    <string name="dictate__cloud_devices_never_used">Ainda não utilizado</string>
     <string name="dictate__cloud_recovery_error">Servidor inacessível. Verifica a ligação e tenta de novo.</string>
     <string name="dictate__cloud_limits_title">O que o Dictate Cloud não faz</string>
     <string name="dictate__cloud_limits_body">A transcrição em direto enquanto falas não está disponível com saldo — custa cerca de quatro vezes mais por minuto, e o motor no dispositivo faz isso offline e de graça. O modelo de IA é definido pelo servidor, por isso a escolha de modelo e os endpoints próprios ficam desligados. Tudo o resto mantém-se: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>

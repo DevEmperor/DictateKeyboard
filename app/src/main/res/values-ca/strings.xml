@@ -1775,6 +1775,12 @@
     <string name="dictate__cloud_recovery_field">Codi de recuperació</string>
     <string name="dictate__cloud_recovery_confirm">Restaura</string>
     <string name="dictate__cloud_recovery_not_found">No s\'ha trobat cap saldo per a aquest codi.</string>
+    <string name="dictate__cloud_devices_full_title">Massa dispositius</string>
+    <string name="dictate__cloud_devices_full_body">El teu saldo ja s\'utilitza en {count} dispositius, el màxim permès alhora. Tanca la sessió d\'un per fer-lo servir aquí: el saldo no es toca.</string>
+    <string name="dictate__cloud_devices_sign_out">Tanca la sessió</string>
+    <string name="dictate__cloud_devices_unnamed">Dispositiu sense nom</string>
+    <string name="dictate__cloud_devices_last_used">Últim ús {time}</string>
+    <string name="dictate__cloud_devices_never_used">Encara no s\'ha fet servir</string>
     <string name="dictate__cloud_recovery_error">No s\'ha pogut contactar amb el servidor. Comprova la connexió i torna-ho a provar.</string>
     <string name="dictate__cloud_limits_title">Què no fa el Dictate Cloud</string>
     <string name="dictate__cloud_limits_body">La transcripció en directe mentre parles no està disponible amb saldo: costa unes quatre vegades més per minut, i el motor del dispositiu ho fa fora de línia i de franc. El model d\'IA el fixa el servidor, així que la tria de model i els extrems propis queden desactivats. Tota la resta és igual: indicacions, historial, botó flotant, dictat llarg i el rellotge.</string>

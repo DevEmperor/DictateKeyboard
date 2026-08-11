@@ -1758,6 +1758,12 @@
     <string name="dictate__cloud_recovery_field">رمز الاسترداد</string>
     <string name="dictate__cloud_recovery_confirm">استرداد</string>
     <string name="dictate__cloud_recovery_not_found">لم يُعثر على رصيد لهذا الرمز.</string>
+    <string name="dictate__cloud_devices_full_title">أجهزة كثيرة جدًا</string>
+    <string name="dictate__cloud_devices_full_body">رصيدك مستخدم بالفعل على {count} أجهزة، وهذا أقصى عدد مسموح به في وقت واحد. سجّل خروج أحدها لاستخدامه هنا — الرصيد نفسه لا يتأثر.</string>
+    <string name="dictate__cloud_devices_sign_out">تسجيل الخروج</string>
+    <string name="dictate__cloud_devices_unnamed">جهاز بلا اسم</string>
+    <string name="dictate__cloud_devices_last_used">آخر استخدام {time}</string>
+    <string name="dictate__cloud_devices_never_used">لم يُستخدم بعد</string>
     <string name="dictate__cloud_recovery_error">تعذّر الوصول إلى الخادم. تحقّق من اتصالك وحاول مجددًا.</string>
     <string name="dictate__cloud_limits_title">ما لا يفعله Dictate Cloud</string>
     <string name="dictate__cloud_limits_body">التفريغ المباشر أثناء الكلام غير متاح بالرصيد — فتكلفته للدقيقة نحو أربعة أضعاف، ومحرّك الجهاز يؤدّيه دون اتصال ومجانًا. نموذج الذكاء الاصطناعي يحدّده الخادم، لذا يظلّ اختيار النموذج والعناوين المخصّصة معطَّلين. وكل ما عدا ذلك دون تغيير: التوجيهات، السجل، الزر العائم، الإملاء الطويل، والساعة.</string>

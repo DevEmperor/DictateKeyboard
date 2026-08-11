@@ -1832,6 +1832,12 @@
     <string name="dictate__cloud_recovery_field">復元コード</string>
     <string name="dictate__cloud_recovery_confirm">復元</string>
     <string name="dictate__cloud_recovery_not_found">このコードに対応するクレジットが見つかりません。</string>
+    <string name="dictate__cloud_devices_full_title">端末が多すぎます</string>
+    <string name="dictate__cloud_devices_full_body">クレジットはすでに {count} 台で使われています。同時に使えるのはここまでです。ここで使うには 1 台をサインアウトしてください。残高はそのままです。</string>
+    <string name="dictate__cloud_devices_sign_out">サインアウト</string>
+    <string name="dictate__cloud_devices_unnamed">名前のない端末</string>
+    <string name="dictate__cloud_devices_last_used">最終利用 {time}</string>
+    <string name="dictate__cloud_devices_never_used">未使用</string>
     <string name="dictate__cloud_recovery_error">サーバーに接続できませんでした。接続を確認してもう一度お試しください。</string>
     <string name="dictate__cloud_limits_title">Dictate Cloud でできないこと</string>
     <string name="dictate__cloud_limits_body">話しながらのリアルタイム文字起こしはクレジットでは利用できません。1分あたりの費用が約4倍になるうえ、端末内エンジンならオフラインで無料で行えるためです。AI モデルはサーバー側で決まるため、モデル選択と独自エンドポイントは無効のままです。それ以外はすべてこれまでどおり動きます — プロンプト、履歴、フローティングボタン、長文の音声入力、そして時計。</string>

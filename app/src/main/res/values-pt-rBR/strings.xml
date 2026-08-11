@@ -1708,6 +1708,12 @@
     <string name="dictate__cloud_recovery_field">Código de recuperação</string>
     <string name="dictate__cloud_recovery_confirm">Restaurar</string>
     <string name="dictate__cloud_recovery_not_found">Nenhum crédito encontrado para este código.</string>
+    <string name="dictate__cloud_devices_full_title">Dispositivos demais</string>
+    <string name="dictate__cloud_devices_full_body">Seus créditos já estão em uso em {count} aparelhos, o máximo ao mesmo tempo. Desconecte um para usar aqui — os créditos em si não são afetados.</string>
+    <string name="dictate__cloud_devices_sign_out">Desconectar</string>
+    <string name="dictate__cloud_devices_unnamed">Aparelho sem nome</string>
+    <string name="dictate__cloud_devices_last_used">Último uso {time}</string>
+    <string name="dictate__cloud_devices_never_used">Nunca usado</string>
     <string name="dictate__cloud_recovery_error">Servidor inacessível. Verifique sua conexão e tente de novo.</string>
     <string name="dictate__cloud_limits_title">O que o Dictate Cloud não faz</string>
     <string name="dictate__cloud_limits_body">Transcrição ao vivo enquanto você fala não existe com crédito — custa cerca de quatro vezes mais por minuto, e o motor no aparelho faz isso offline e de graça. O modelo de IA é definido pelo servidor, então a escolha de modelo e endpoints próprios ficam desligados. Todo o resto continua igual: prompts, histórico, botão flutuante, ditado longo e o relógio.</string>

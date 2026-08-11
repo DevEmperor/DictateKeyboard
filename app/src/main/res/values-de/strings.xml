@@ -1206,6 +1206,12 @@
     <string name="dictate__cloud_recovery_field">Wiederherstellungscode</string>
     <string name="dictate__cloud_recovery_confirm">Wiederherstellen</string>
     <string name="dictate__cloud_recovery_not_found">Zu diesem Code wurde kein Guthaben gefunden.</string>
+    <string name="dictate__cloud_devices_full_title">Zu viele Geräte</string>
+    <string name="dictate__cloud_devices_full_body">Dein Guthaben wird bereits auf {count} Geräten genutzt — mehr gehen nicht gleichzeitig. Melde eines ab, um es hier zu nutzen; das Guthaben selbst bleibt unberührt.</string>
+    <string name="dictate__cloud_devices_sign_out">Abmelden</string>
+    <string name="dictate__cloud_devices_unnamed">Gerät ohne Namen</string>
+    <string name="dictate__cloud_devices_last_used">Zuletzt genutzt {time}</string>
+    <string name="dictate__cloud_devices_never_used">Noch nie genutzt</string>
     <string name="dictate__cloud_recovery_error">Der Server war nicht erreichbar. Prüf deine Verbindung und versuch es noch einmal.</string>
     <string name="dictate__cloud_limits_title">Was Dictate Cloud nicht kann</string>
     <string name="dictate__cloud_limits_body">Live-Transkription während des Sprechens gibt es mit Guthaben nicht — sie kostet je Minute etwa das Vierfache, und die Erkennung auf dem Gerät macht das offline und kostenlos. Das KI-Modell gibt der Server vor, deshalb bleiben Modellauswahl und eigene Endpunkte aus. Alles andere ist unverändert: Prompts, Verlauf, der schwebende Knopf, Langform-Diktat und die Uhr.</string>

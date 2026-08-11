@@ -1903,6 +1903,12 @@
     <string name="dictate__cloud_recovery_field">Код восстановления</string>
     <string name="dictate__cloud_recovery_confirm">Восстановить</string>
     <string name="dictate__cloud_recovery_not_found">По этому коду баланс не найден.</string>
+    <string name="dictate__cloud_devices_full_title">Слишком много устройств</string>
+    <string name="dictate__cloud_devices_full_body">Ваш баланс уже используется на {count} устройствах — больше одновременно нельзя. Отключите одно, чтобы пользоваться здесь; сам баланс не изменится.</string>
+    <string name="dictate__cloud_devices_sign_out">Отключить</string>
+    <string name="dictate__cloud_devices_unnamed">Устройство без имени</string>
+    <string name="dictate__cloud_devices_last_used">Последнее использование {time}</string>
+    <string name="dictate__cloud_devices_never_used">Ещё не использовалось</string>
     <string name="dictate__cloud_recovery_error">Сервер недоступен. Проверьте соединение и попробуйте снова.</string>
     <string name="dictate__cloud_limits_title">Чего Dictate Cloud не делает</string>
     <string name="dictate__cloud_limits_body">Живой расшифровки во время речи с балансом нет — она стоит примерно вчетверо дороже за минуту, а движок на устройстве делает это офлайн и бесплатно. Модель ИИ задаёт сервер, поэтому выбор модели и собственные адреса остаются выключенными. Всё остальное без изменений: промпты, история, плавающая кнопка, длинная диктовка и часы.</string>
