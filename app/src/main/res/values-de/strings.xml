@@ -1164,12 +1164,12 @@
     <string name="dictate__cloud_row_summary_none">Diktat-Guthaben kaufen — ohne API-Schlüssel</string>
     <string name="dictate__cloud_row_summary_balance">Noch {minutes} Minuten Guthaben</string>
     <string name="dictate__cloud_intro_title">Diktieren ohne API-Schlüssel</string>
-    <string name="dictate__cloud_intro_body">Kauf dir Diktat-Guthaben direkt hier in der App. Kein Konto bei einem KI-Anbieter, kein API-Schlüssel, kein Abo. Das Guthaben verfällt nicht und wird nur verbraucht, wenn du wirklich diktierst.</string>
+    <string name="dictate__cloud_intro_body">Kauf dir Diktat-Guthaben direkt hier in der App. Kein Konto bei einem KI-Anbieter, kein API-Schlüssel, kein Abo. Das Guthaben verfällt nicht und wird nur verbraucht, wenn du es wirklich nutzt: eine Minute Diktat kostet eine Minute, eine Umformulierung rund zwei Sekunden.</string>
     <string name="dictate__cloud_intro_alternative">Das ist völlig freiwillig. Dictate funktioniert genauso gut mit deinem eigenen Schlüssel bei einem Anbieter deiner Wahl — mehrere sind kostenlos — und dann behältst du dein eigenes Konto und zahlst direkt beim Anbieter zu dessen Preisen.</string>
     <string name="dictate__cloud_use_own_provider_btn">Lieber eigenen Anbieter nutzen</string>
     <string name="dictate__cloud_balance_label">Verbleibendes Guthaben</string>
     <string name="dictate__cloud_balance_minutes">{minutes} Min.</string>
-    <string name="dictate__cloud_balance_rewords">{count} Umformulierungen inklusive</string>
+    <string name="dictate__cloud_balance_rewords">oder rund {count} Umformulierungen</string>
     <string name="dictate__cloud_balance_checked">Stand {time}</string>
     <string name="dictate__cloud_balance_refresh">Guthaben aktualisieren</string>
     <string name="dictate__cloud_packs_title">Guthaben-Pakete</string>

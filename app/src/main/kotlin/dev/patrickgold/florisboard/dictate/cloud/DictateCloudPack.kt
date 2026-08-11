@@ -28,16 +28,24 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
     WRITER("credits_writer", 1000),
     PRO("credits_pro", 2200);
 
-    /** Rewordings the pack includes. Mirrors `REWORDS_PER_MINUTE` on the server. */
-    val rewords: Int get() = minutes * REWORDS_PER_MINUTE
+    /**
+     * Roughly how many rewordings the pack is worth if it is spent on nothing else.
+     *
+     * Not an allowance — there is no second balance any more. Credit is seconds, and every service
+     * is priced into them, which is what makes a pack's price a hard ceiling on what it can cost to
+     * serve. A rewording of ordinary length is worth about two seconds, so this is a division and
+     * says the same thing as the minutes beside it.
+     */
+    val rewords: Int get() = (minutes * 60) / SECONDS_PER_REWORD
 
     companion object {
         /**
-         * How many rewordings come with each purchased minute — the server's figure, repeated here
-         * only to state it in the shop. What is actually granted is decided there; a wrong number
-         * here shows a wrong promise, never a wrong balance.
+         * What a rewording of ordinary length costs, in seconds of credit — the server's figure
+         * (`TYPICAL_REWORD_SECONDS`), repeated here only to say it in the shop before the app has
+         * ever spoken to the service. A wrong number here shows a wrong estimate, never a wrong
+         * balance: what is charged is decided where the money is.
          */
-        const val REWORDS_PER_MINUTE = 5
+        const val SECONDS_PER_REWORD = 2
 
         /** Display order in the shop — cheapest first, as in the Play Console. */
         val ordered: List<DictateCloudPack> = listOf(NOTES, DAILY, WRITER, PRO)

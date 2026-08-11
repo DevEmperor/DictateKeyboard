@@ -1801,12 +1801,12 @@
     <string name="dictate__cloud_row_summary_none">Pirkt diktēšanas kredītu — bez API atslēgas</string>
     <string name="dictate__cloud_row_summary_balance">Atlikušas {minutes} minūtes kredīta</string>
     <string name="dictate__cloud_intro_title">Diktēšana bez API atslēgas</string>
-    <string name="dictate__cloud_intro_body">Nopērciet diktēšanas kredītu tepat lietotnē. Nav vajadzīgs konts pie MI pakalpojuma sniedzēja, nav vajadzīga API atslēga, nav abonementa. Kredīts nezaudē derīgumu un tiek tērēts tikai tad, kad patiešām diktējat.</string>
+    <string name="dictate__cloud_intro_body">Nopērciet diktēšanas kredītu tepat lietotnē. Nav vajadzīgs konts pie MI pakalpojuma sniedzēja, nav vajadzīga API atslēga, nav abonementa. Kredīts nezaudē derīgumu un tiek tērēts tikai tad, kad to patiešām lietojat: minūte diktēšanas maksā minūti, pārformulēšana aptuveni divas sekundes.</string>
     <string name="dictate__cloud_intro_alternative">Tas ir pilnīgi brīvprātīgi. Dictate tikpat labi darbojas ar jūsu paša atslēgu pie izvēlēta pakalpojuma sniedzēja — vairāki ir bez maksas — un tad jūs paturat savu kontu un maksājat tieši sniedzējam pēc viņa cenām.</string>
     <string name="dictate__cloud_use_own_provider_btn">Labāk savs pakalpojuma sniedzējs</string>
     <string name="dictate__cloud_balance_label">Atlikušais kredīts</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">Iekļautas {count} pārformulēšanas</string>
+    <string name="dictate__cloud_balance_rewords">vai aptuveni {count} pārformulēšanas</string>
     <string name="dictate__cloud_balance_checked">Atjaunināts {time}</string>
     <string name="dictate__cloud_balance_refresh">Atjaunināt kredītu</string>
     <string name="dictate__cloud_packs_title">Kredīta paketes</string>

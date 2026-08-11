@@ -1861,12 +1861,12 @@
     <string name="dictate__cloud_row_summary_none">Купить баланс для диктовки — без ключа API</string>
     <string name="dictate__cloud_row_summary_balance">Осталось {minutes} минут</string>
     <string name="dictate__cloud_intro_title">Диктовка без ключа API</string>
-    <string name="dictate__cloud_intro_body">Купите баланс для диктовки прямо здесь, в приложении. Не нужен аккаунт у провайдера ИИ, не нужен ключ API, нет подписки. Баланс не сгорает и расходуется только тогда, когда вы действительно диктуете.</string>
+    <string name="dictate__cloud_intro_body">Купите баланс для диктовки прямо здесь, в приложении. Не нужен аккаунт у провайдера ИИ, не нужен ключ API, нет подписки. Баланс не сгорает и расходуется только тогда, когда вы им действительно пользуетесь: минута диктовки стоит минуту, переформулировка — около двух секунд.</string>
     <string name="dictate__cloud_intro_alternative">Это полностью по желанию. Dictate так же хорошо работает с вашим собственным ключом у провайдера на ваш выбор — некоторые бесплатны — и тогда вы сохраняете свой аккаунт и платите провайдеру напрямую по его ценам.</string>
     <string name="dictate__cloud_use_own_provider_btn">Лучше свой провайдер</string>
     <string name="dictate__cloud_balance_label">Остаток баланса</string>
     <string name="dictate__cloud_balance_minutes">{minutes} мин</string>
-    <string name="dictate__cloud_balance_rewords">{count} переформулировок включено</string>
+    <string name="dictate__cloud_balance_rewords">или около {count} переформулировок</string>
     <string name="dictate__cloud_balance_checked">Обновлено {time}</string>
     <string name="dictate__cloud_balance_refresh">Обновить баланс</string>
     <string name="dictate__cloud_packs_title">Пакеты баланса</string>

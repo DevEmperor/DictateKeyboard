@@ -1852,12 +1852,12 @@
     <string name="dictate__cloud_row_summary_none">购买听写额度——无需 API 密钥</string>
     <string name="dictate__cloud_row_summary_balance">还剩 {minutes} 分钟额度</string>
     <string name="dictate__cloud_intro_title">无需 API 密钥即可听写</string>
-    <string name="dictate__cloud_intro_body">直接在应用内购买听写额度。不用在 AI 服务商处注册账号，不用 API 密钥，也没有订阅。额度不会过期，只在你真正听写时才消耗。</string>
+    <string name="dictate__cloud_intro_body">直接在应用内购买听写额度。不用在 AI 服务商处注册账号，不用 API 密钥，也没有订阅。额度不会过期，只在你真正使用时才消耗：听写一分钟花一分钟，改写约花两秒。</string>
     <string name="dictate__cloud_intro_alternative">这完全是可选的。用你自己在任意服务商处的密钥，Dictate 同样好用——其中好几家是免费的——那样你保留自己的账号，按服务商的价格直接付费。</string>
     <string name="dictate__cloud_use_own_provider_btn">还是用我自己的服务商</string>
     <string name="dictate__cloud_balance_label">剩余额度</string>
     <string name="dictate__cloud_balance_minutes">{minutes} 分钟</string>
-    <string name="dictate__cloud_balance_rewords">含 {count} 次改写</string>
+    <string name="dictate__cloud_balance_rewords">或约 {count} 次改写</string>
     <string name="dictate__cloud_balance_checked">更新于 {time}</string>
     <string name="dictate__cloud_balance_refresh">刷新额度</string>
     <string name="dictate__cloud_packs_title">额度套餐</string>

@@ -1790,12 +1790,12 @@
     <string name="dictate__cloud_row_summary_none">音声入力クレジットを購入 — API キー不要</string>
     <string name="dictate__cloud_row_summary_balance">残り {minutes} 分</string>
     <string name="dictate__cloud_intro_title">API キーなしで音声入力</string>
-    <string name="dictate__cloud_intro_body">音声入力のクレジットをこのアプリ内で購入できます。AI プロバイダーのアカウントも、API キーも、サブスクリプションも不要です。クレジットに有効期限はなく、実際に音声入力したときだけ減ります。</string>
+    <string name="dictate__cloud_intro_body">音声入力のクレジットをこのアプリ内で購入できます。AI プロバイダーのアカウントも、API キーも、サブスクリプションも不要です。クレジットに有効期限はなく、実際に使ったときだけ減ります。音声入力 1 分は 1 分ぶん、言い換えは約 2 秒ぶんです。</string>
     <string name="dictate__cloud_intro_alternative">これは完全に任意です。Dictate はお好きなプロバイダーのご自身のキーでも同じように動きます（無料のものもいくつかあります）。その場合はご自身のアカウントのまま、プロバイダーの料金で直接支払います。</string>
     <string name="dictate__cloud_use_own_provider_btn">自分のプロバイダーを使う</string>
     <string name="dictate__cloud_balance_label">残りのクレジット</string>
     <string name="dictate__cloud_balance_minutes">{minutes} 分</string>
-    <string name="dictate__cloud_balance_rewords">言い換え {count} 回分を含む</string>
+    <string name="dictate__cloud_balance_rewords">または言い換え約 {count} 回分</string>
     <string name="dictate__cloud_balance_checked">{time} 時点</string>
     <string name="dictate__cloud_balance_refresh">クレジットを更新</string>
     <string name="dictate__cloud_packs_title">クレジットパック</string>

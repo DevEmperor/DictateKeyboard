@@ -1872,12 +1872,12 @@
     <string name="dictate__cloud_row_summary_none">Koupit kredit na diktování — bez klíče API</string>
     <string name="dictate__cloud_row_summary_balance">Zbývá {minutes} minut kreditu</string>
     <string name="dictate__cloud_intro_title">Diktování bez klíče API</string>
-    <string name="dictate__cloud_intro_body">Kupte si kredit na diktování přímo tady v aplikaci. Žádný účet u poskytovatele AI, žádný klíč API, žádné předplatné. Kredit nevyprší a spotřebuje se, jen když opravdu diktujete.</string>
+    <string name="dictate__cloud_intro_body">Kupte si kredit na diktování přímo tady v aplikaci. Žádný účet u poskytovatele AI, žádný klíč API, žádné předplatné. Kredit nevyprší a spotřebuje se, jen když ho opravdu použijete: minuta diktování stojí minutu, přeformulování asi dvě sekundy.</string>
     <string name="dictate__cloud_intro_alternative">Je to zcela dobrovolné. Dictate funguje stejně dobře s vaším vlastním klíčem u poskytovatele podle vašeho výběru — několik jich je zdarma — a pak vám zůstává vlastní účet a platíte přímo poskytovateli za jeho ceny.</string>
     <string name="dictate__cloud_use_own_provider_btn">Raději vlastního poskytovatele</string>
     <string name="dictate__cloud_balance_label">Zbývající kredit</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} přeformulování v ceně</string>
+    <string name="dictate__cloud_balance_rewords">nebo asi {count} přeformulování</string>
     <string name="dictate__cloud_balance_checked">Aktualizováno {time}</string>
     <string name="dictate__cloud_balance_refresh">Obnovit kredit</string>
     <string name="dictate__cloud_packs_title">Balíčky kreditu</string>

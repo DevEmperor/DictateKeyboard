@@ -1666,12 +1666,12 @@
     <string name="dictate__cloud_row_summary_none">Comprar créditos de ditado — sem chave de API</string>
     <string name="dictate__cloud_row_summary_balance">Restam {minutes} minutos de crédito</string>
     <string name="dictate__cloud_intro_title">Ditar sem chave de API</string>
-    <string name="dictate__cloud_intro_body">Compre créditos de ditado aqui mesmo, no app. Sem conta em provedor de IA, sem chave de API, sem assinatura. O crédito não expira e só é consumido quando você realmente dita.</string>
+    <string name="dictate__cloud_intro_body">Compre créditos de ditado aqui mesmo, no app. Sem conta em provedor de IA, sem chave de API, sem assinatura. O crédito não expira e só é consumido quando você realmente usa: um minuto de ditado custa um minuto e uma reformulação cerca de dois segundos.</string>
     <string name="dictate__cloud_intro_alternative">Isso é totalmente opcional. O Dictate funciona igualmente bem com sua própria chave no provedor que você escolher — vários são gratuitos — e aí você mantém sua conta e paga direto ao provedor, pelos preços dele.</string>
     <string name="dictate__cloud_use_own_provider_btn">Prefiro meu próprio provedor</string>
     <string name="dictate__cloud_balance_label">Crédito restante</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} reformulações incluídas</string>
+    <string name="dictate__cloud_balance_rewords">ou cerca de {count} reformulações</string>
     <string name="dictate__cloud_balance_checked">Atualizado em {time}</string>
     <string name="dictate__cloud_balance_refresh">Atualizar crédito</string>
     <string name="dictate__cloud_packs_title">Pacotes de créditos</string>

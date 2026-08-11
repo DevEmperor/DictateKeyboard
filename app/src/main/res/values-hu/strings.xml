@@ -1856,12 +1856,12 @@
     <string name="dictate__cloud_row_summary_none">Diktálási egyenleg vásárlása — API-kulcs nélkül</string>
     <string name="dictate__cloud_row_summary_balance">Még {minutes} perc egyenleg</string>
     <string name="dictate__cloud_intro_title">Diktálás API-kulcs nélkül</string>
-    <string name="dictate__cloud_intro_body">Vegyen diktálási egyenleget itt, az alkalmazásban. Nincs fiók MI-szolgáltatónál, nincs API-kulcs, nincs előfizetés. Az egyenleg nem jár le, és csak akkor fogy, ha tényleg diktál.</string>
+    <string name="dictate__cloud_intro_body">Vegyen diktálási egyenleget itt, az alkalmazásban. Nincs fiók MI-szolgáltatónál, nincs API-kulcs, nincs előfizetés. Az egyenleg nem jár le, és csak akkor fogy, ha tényleg használja: egy perc diktálás egy percbe kerül, egy átfogalmazás nagyjából két másodpercbe.</string>
     <string name="dictate__cloud_intro_alternative">Ez teljesen önkéntes. A Dictate ugyanilyen jól működik a saját kulcsával egy tetszőleges szolgáltatónál — több is ingyenes —, és akkor megmarad a saját fiókja, és közvetlenül a szolgáltatónak fizet, az ő árain.</string>
     <string name="dictate__cloud_use_own_provider_btn">Inkább a saját szolgáltatóm</string>
     <string name="dictate__cloud_balance_label">Fennmaradó egyenleg</string>
     <string name="dictate__cloud_balance_minutes">{minutes} perc</string>
-    <string name="dictate__cloud_balance_rewords">{count} átfogalmazás benne van</string>
+    <string name="dictate__cloud_balance_rewords">vagy nagyjából {count} átfogalmazás</string>
     <string name="dictate__cloud_balance_checked">Frissítve: {time}</string>
     <string name="dictate__cloud_balance_refresh">Egyenleg frissítése</string>
     <string name="dictate__cloud_packs_title">Egyenlegcsomagok</string>

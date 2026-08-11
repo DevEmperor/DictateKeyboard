@@ -1757,12 +1757,12 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_row_summary_none">Dicteertegoed kopen — zonder API-sleutel</string>
     <string name="dictate__cloud_row_summary_balance">Nog {minutes} minuten tegoed</string>
     <string name="dictate__cloud_intro_title">Dicteren zonder API-sleutel</string>
-    <string name="dictate__cloud_intro_body">Koop dicteertegoed direct hier in de app. Geen account bij een AI-aanbieder, geen API-sleutel, geen abonnement. Tegoed verloopt niet en wordt alleen verbruikt als je echt dicteert.</string>
+    <string name="dictate__cloud_intro_body">Koop dicteertegoed direct hier in de app. Geen account bij een AI-aanbieder, geen API-sleutel, geen abonnement. Tegoed verloopt niet en wordt alleen verbruikt als je het echt gebruikt: een minuut dicteren kost een minuut, een herformulering ongeveer twee seconden.</string>
     <string name="dictate__cloud_intro_alternative">Dit is volledig optioneel. Dictate werkt net zo goed met je eigen sleutel bij een aanbieder naar keuze — meerdere zijn gratis — en dan houd je je eigen account en betaal je de aanbieder rechtstreeks tegen diens prijzen.</string>
     <string name="dictate__cloud_use_own_provider_btn">Liever mijn eigen aanbieder</string>
     <string name="dictate__cloud_balance_label">Resterend tegoed</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} herformuleringen inbegrepen</string>
+    <string name="dictate__cloud_balance_rewords">of ongeveer {count} herformuleringen</string>
     <string name="dictate__cloud_balance_checked">Bijgewerkt {time}</string>
     <string name="dictate__cloud_balance_refresh">Tegoed vernieuwen</string>
     <string name="dictate__cloud_packs_title">Tegoedpakketten</string>

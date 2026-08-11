@@ -1858,12 +1858,12 @@
     <string name="dictate__cloud_row_summary_none">Купете кредит за диктовка — без API ключ</string>
     <string name="dictate__cloud_row_summary_balance">Остават {minutes} минути кредит</string>
     <string name="dictate__cloud_intro_title">Диктовка без API ключ</string>
-    <string name="dictate__cloud_intro_body">Купете кредит за диктовка направо тук, в приложението. Без акаунт при ИИ доставчик, без API ключ, без абонамент. Кредитът не изтича и се изразходва само когато наистина диктувате.</string>
+    <string name="dictate__cloud_intro_body">Купете кредит за диктовка направо тук, в приложението. Без акаунт при ИИ доставчик, без API ключ, без абонамент. Кредитът не изтича и се изразходва само когато наистина го използвате: минута диктовка струва минута, преформулиране — около две секунди.</string>
     <string name="dictate__cloud_intro_alternative">Това е напълно доброволно. Dictate работи също толкова добре със собствения ви ключ при доставчик по ваш избор — няколко са безплатни — и тогава запазвате акаунта си и плащате директно на доставчика по неговите цени.</string>
     <string name="dictate__cloud_use_own_provider_btn">По-скоро собствен доставчик</string>
     <string name="dictate__cloud_balance_label">Оставащ кредит</string>
     <string name="dictate__cloud_balance_minutes">{minutes} мин</string>
-    <string name="dictate__cloud_balance_rewords">{count} преформулирания включени</string>
+    <string name="dictate__cloud_balance_rewords">или около {count} преформулирания</string>
     <string name="dictate__cloud_balance_checked">Обновено {time}</string>
     <string name="dictate__cloud_balance_refresh">Обнови кредита</string>
     <string name="dictate__cloud_packs_title">Пакети кредит</string>

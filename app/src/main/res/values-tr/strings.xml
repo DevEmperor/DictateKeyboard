@@ -1836,12 +1836,12 @@
     <string name="dictate__cloud_row_summary_none">Dikte kontörü satın alın — API anahtarı gerekmez</string>
     <string name="dictate__cloud_row_summary_balance">{minutes} dakika kontör kaldı</string>
     <string name="dictate__cloud_intro_title">API anahtarı olmadan dikte</string>
-    <string name="dictate__cloud_intro_body">Dikte kontörünü doğrudan burada, uygulamada satın alın. Yapay zekâ sağlayıcısında hesap yok, API anahtarı yok, abonelik yok. Kontörün süresi dolmaz ve yalnızca gerçekten dikte ettiğinizde harcanır.</string>
+    <string name="dictate__cloud_intro_body">Dikte kontörünü doğrudan burada, uygulamada satın alın. Yapay zekâ sağlayıcısında hesap yok, API anahtarı yok, abonelik yok. Kontörün süresi dolmaz ve yalnızca gerçekten kullandığınızda harcanır: bir dakika dikte bir dakikaya, bir yeniden ifade yaklaşık iki saniyeye mal olur.</string>
     <string name="dictate__cloud_intro_alternative">Bu tamamen isteğe bağlı. Dictate, seçtiğiniz bir sağlayıcıdaki kendi anahtarınızla da aynı derecede iyi çalışır — birkaçı ücretsizdir — ve o zaman kendi hesabınızı korur, sağlayıcıya doğrudan kendi fiyatlarından ödersiniz.</string>
     <string name="dictate__cloud_use_own_provider_btn">Kendi sağlayıcımı kullanayım</string>
     <string name="dictate__cloud_balance_label">Kalan kontör</string>
     <string name="dictate__cloud_balance_minutes">{minutes} dk</string>
-    <string name="dictate__cloud_balance_rewords">{count} yeniden ifade dahil</string>
+    <string name="dictate__cloud_balance_rewords">ya da yaklaşık {count} yeniden ifade</string>
     <string name="dictate__cloud_balance_checked">Güncellendi: {time}</string>
     <string name="dictate__cloud_balance_refresh">Kontörü yenile</string>
     <string name="dictate__cloud_packs_title">Kontör paketleri</string>

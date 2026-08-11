@@ -1873,12 +1873,12 @@
     <string name="dictate__cloud_row_summary_none">Kup środki na dyktowanie — bez klucza API</string>
     <string name="dictate__cloud_row_summary_balance">Pozostało {minutes} minut środków</string>
     <string name="dictate__cloud_intro_title">Dyktowanie bez klucza API</string>
-    <string name="dictate__cloud_intro_body">Kup środki na dyktowanie wprost tutaj, w aplikacji. Żadnego konta u dostawcy AI, żadnego klucza API, żadnej subskrypcji. Środki nie tracą ważności i są zużywane tylko wtedy, gdy naprawdę dyktujesz.</string>
+    <string name="dictate__cloud_intro_body">Kup środki na dyktowanie wprost tutaj, w aplikacji. Żadnego konta u dostawcy AI, żadnego klucza API, żadnej subskrypcji. Środki nie tracą ważności i są zużywane tylko wtedy, gdy naprawdę z nich korzystasz: minuta dyktowania kosztuje minutę, a przeformułowanie około dwóch sekund.</string>
     <string name="dictate__cloud_intro_alternative">To całkowicie dobrowolne. Dictate działa równie dobrze z twoim własnym kluczem u wybranego dostawcy — kilku jest bezpłatnych — i wtedy zachowujesz własne konto i płacisz dostawcy bezpośrednio, według jego cen.</string>
     <string name="dictate__cloud_use_own_provider_btn">Wolę własnego dostawcę</string>
     <string name="dictate__cloud_balance_label">Pozostałe środki</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} przeformułowań w pakiecie</string>
+    <string name="dictate__cloud_balance_rewords">albo około {count} przeformułowań</string>
     <string name="dictate__cloud_balance_checked">Stan na {time}</string>
     <string name="dictate__cloud_balance_refresh">Odśwież środki</string>
     <string name="dictate__cloud_packs_title">Pakiety środków</string>

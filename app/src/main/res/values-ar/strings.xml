@@ -1716,12 +1716,12 @@
     <string name="dictate__cloud_row_summary_none">اشترِ رصيد إملاء — دون مفتاح API</string>
     <string name="dictate__cloud_row_summary_balance">بقي {minutes} دقيقة من الرصيد</string>
     <string name="dictate__cloud_intro_title">الإملاء دون مفتاح API</string>
-    <string name="dictate__cloud_intro_body">اشترِ رصيد الإملاء هنا مباشرة داخل التطبيق. لا حساب لدى مزوّد ذكاء اصطناعي، ولا مفتاح API، ولا اشتراك. الرصيد لا تنتهي صلاحيته ولا يُستهلك إلا عندما تُملي فعلًا.</string>
+    <string name="dictate__cloud_intro_body">اشترِ رصيد الإملاء هنا مباشرة داخل التطبيق. لا حساب لدى مزوّد ذكاء اصطناعي، ولا مفتاح API، ولا اشتراك. الرصيد لا تنتهي صلاحيته ولا يُستهلك إلا عند الاستخدام الفعلي: دقيقة إملاء تكلّف دقيقة، وإعادة الصياغة نحو ثانيتين.</string>
     <string name="dictate__cloud_intro_alternative">هذا اختياري تمامًا. يعمل Dictate بالكفاءة نفسها بمفتاحك الخاص لدى مزوّد تختاره — وعدد منها مجاني — وعندئذٍ تحتفظ بحسابك وتدفع للمزوّد مباشرة بأسعاره.</string>
     <string name="dictate__cloud_use_own_provider_btn">أفضّل مزوّدي الخاص</string>
     <string name="dictate__cloud_balance_label">الرصيد المتبقي</string>
     <string name="dictate__cloud_balance_minutes">{minutes} د</string>
-    <string name="dictate__cloud_balance_rewords">{count} إعادة صياغة مشمولة</string>
+    <string name="dictate__cloud_balance_rewords">أو نحو {count} إعادة صياغة</string>
     <string name="dictate__cloud_balance_checked">آخر تحديث {time}</string>
     <string name="dictate__cloud_balance_refresh">تحديث الرصيد</string>
     <string name="dictate__cloud_packs_title">باقات الرصيد</string>

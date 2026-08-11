@@ -1733,12 +1733,12 @@
     <string name="dictate__cloud_row_summary_none">Compra saldo de dictat, sense clau API</string>
     <string name="dictate__cloud_row_summary_balance">Queden {minutes} minuts de saldo</string>
     <string name="dictate__cloud_intro_title">Dictar sense clau API</string>
-    <string name="dictate__cloud_intro_body">Compra saldo de dictat aquí mateix, a l\'aplicació. Cap compte amb un proveïdor d\'IA, cap clau API, cap subscripció. El saldo no caduca i només es gasta quan dictes de debò.</string>
+    <string name="dictate__cloud_intro_body">Compra saldo de dictat aquí mateix, a l\'aplicació. Cap compte amb un proveïdor d\'IA, cap clau API, cap subscripció. El saldo no caduca i només es gasta quan el fas servir de debò: un minut de dictat costa un minut, i una reformulació uns dos segons.</string>
     <string name="dictate__cloud_intro_alternative">És totalment opcional. El Dictate funciona igual de bé amb la teva pròpia clau del proveïdor que vulguis —n\'hi ha uns quants de gratuïts— i així conserves el teu compte i pagues directament al proveïdor als seus preus.</string>
     <string name="dictate__cloud_use_own_provider_btn">Millor el meu propi proveïdor</string>
     <string name="dictate__cloud_balance_label">Saldo restant</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} reformulacions incloses</string>
+    <string name="dictate__cloud_balance_rewords">o unes {count} reformulacions</string>
     <string name="dictate__cloud_balance_checked">Actualitzat {time}</string>
     <string name="dictate__cloud_balance_refresh">Actualitza el saldo</string>
     <string name="dictate__cloud_packs_title">Paquets de saldo</string>

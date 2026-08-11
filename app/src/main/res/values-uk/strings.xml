@@ -1705,12 +1705,12 @@
     <string name="dictate__cloud_row_summary_none">Купити баланс для диктування — без ключа API</string>
     <string name="dictate__cloud_row_summary_balance">Залишилося {minutes} хвилин</string>
     <string name="dictate__cloud_intro_title">Диктування без ключа API</string>
-    <string name="dictate__cloud_intro_body">Купіть баланс для диктування просто тут, у застосунку. Не потрібен обліковий запис у постачальника ШІ, не потрібен ключ API, немає підписки. Баланс не згорає й витрачається лише тоді, коли ви справді диктуєте.</string>
+    <string name="dictate__cloud_intro_body">Купіть баланс для диктування просто тут, у застосунку. Не потрібен обліковий запис у постачальника ШІ, не потрібен ключ API, немає підписки. Баланс не згорає й витрачається лише тоді, коли ви ним справді користуєтеся: хвилина диктування коштує хвилину, перефразування — близько двох секунд.</string>
     <string name="dictate__cloud_intro_alternative">Це цілком за бажанням. Dictate так само добре працює з вашим власним ключем у постачальника на ваш вибір — кілька з них безкоштовні — і тоді ви зберігаєте свій обліковий запис і платите постачальнику напряму за його цінами.</string>
     <string name="dictate__cloud_use_own_provider_btn">Краще власний постачальник</string>
     <string name="dictate__cloud_balance_label">Залишок балансу</string>
     <string name="dictate__cloud_balance_minutes">{minutes} хв</string>
-    <string name="dictate__cloud_balance_rewords">{count} перефразувань включено</string>
+    <string name="dictate__cloud_balance_rewords">або близько {count} перефразувань</string>
     <string name="dictate__cloud_balance_checked">Оновлено {time}</string>
     <string name="dictate__cloud_balance_refresh">Оновити баланс</string>
     <string name="dictate__cloud_packs_title">Пакети балансу</string>

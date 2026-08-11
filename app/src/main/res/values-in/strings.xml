@@ -1813,12 +1813,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_row_summary_none">Beli saldo pendiktean — tanpa kunci API</string>
     <string name="dictate__cloud_row_summary_balance">Sisa {minutes} menit saldo</string>
     <string name="dictate__cloud_intro_title">Mendikte tanpa kunci API</string>
-    <string name="dictate__cloud_intro_body">Beli saldo pendiktean langsung di sini, di dalam aplikasi. Tanpa akun di penyedia AI, tanpa kunci API, tanpa langganan. Saldo tidak kedaluwarsa dan hanya terpakai saat kamu benar-benar mendikte.</string>
+    <string name="dictate__cloud_intro_body">Beli saldo pendiktean langsung di sini, di dalam aplikasi. Tanpa akun di penyedia AI, tanpa kunci API, tanpa langganan. Saldo tidak kedaluwarsa dan hanya terpakai saat benar-benar dipakai: satu menit pendiktean menghabiskan satu menit, satu penulisan ulang sekitar dua detik.</string>
     <string name="dictate__cloud_intro_alternative">Ini sepenuhnya pilihan. Dictate bekerja sama baiknya dengan kuncimu sendiri di penyedia pilihanmu — beberapa di antaranya gratis — dan dengan begitu kamu tetap memegang akunmu dan membayar langsung ke penyedia dengan harganya.</string>
     <string name="dictate__cloud_use_own_provider_btn">Pakai penyedia saya saja</string>
     <string name="dictate__cloud_balance_label">Sisa saldo</string>
     <string name="dictate__cloud_balance_minutes">{minutes} mnt</string>
-    <string name="dictate__cloud_balance_rewords">{count} penulisan ulang termasuk</string>
+    <string name="dictate__cloud_balance_rewords">atau sekitar {count} penulisan ulang</string>
     <string name="dictate__cloud_balance_checked">Diperbarui {time}</string>
     <string name="dictate__cloud_balance_refresh">Segarkan saldo</string>
     <string name="dictate__cloud_packs_title">Paket saldo</string>

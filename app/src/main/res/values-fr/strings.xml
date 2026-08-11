@@ -1733,12 +1733,12 @@
     <string name="dictate__cloud_row_summary_none">Acheter du crédit de dictée — sans clé API</string>
     <string name="dictate__cloud_row_summary_balance">Il reste {minutes} minutes de crédit</string>
     <string name="dictate__cloud_intro_title">Dicter sans clé API</string>
-    <string name="dictate__cloud_intro_body">Achetez du crédit de dictée directement dans l\'application. Aucun compte chez un fournisseur d\'IA, aucune clé API, aucun abonnement. Le crédit n\'expire pas et n\'est consommé que lorsque vous dictez réellement.</string>
+    <string name="dictate__cloud_intro_body">Achetez du crédit de dictée directement dans l\'application. Aucun compte chez un fournisseur d\'IA, aucune clé API, aucun abonnement. Le crédit n\'expire pas et n\'est consommé que lorsque vous vous en servez vraiment : une minute de dictée coûte une minute, une reformulation environ deux secondes.</string>
     <string name="dictate__cloud_intro_alternative">C\'est entièrement facultatif. Dictate fonctionne tout aussi bien avec votre propre clé chez le fournisseur de votre choix — plusieurs sont gratuits — et vous gardez alors votre compte et payez le fournisseur directement, à ses tarifs.</string>
     <string name="dictate__cloud_use_own_provider_btn">Utiliser plutôt mon propre fournisseur</string>
     <string name="dictate__cloud_balance_label">Crédit restant</string>
     <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">{count} reformulations incluses</string>
+    <string name="dictate__cloud_balance_rewords">ou environ {count} reformulations</string>
     <string name="dictate__cloud_balance_checked">Mis à jour {time}</string>
     <string name="dictate__cloud_balance_refresh">Actualiser le crédit</string>
     <string name="dictate__cloud_packs_title">Packs de crédit</string>
