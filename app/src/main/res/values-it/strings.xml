@@ -1662,6 +1662,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Questo acquisto appartiene a un altro conto di credito. Usa il suo codice di recupero per portare il credito su questo dispositivo.</string>
     <string name="dictate__cloud_notice_failed">Non è stato possibile completare l\'acquisto.</string>
     <string name="dictate__cloud_notice_deleted">Il tuo account di credito è stato eliminato.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Il tuo account di credito non esiste più: è stato eliminato dal sito web o da un altro dispositivo. Ora è sparito anche da questo telefono.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Questo dispositivo è stato disconnesso dal tuo account di credito. L\'account e il credito sono intatti: inserisci qui sotto il codice di recupero per accedere di nuovo.</string>
     <string name="dictate__cloud_delete_title">Elimina account di credito</string>
     <string name="dictate__cloud_delete_explain">Elimina il tuo account di credito e tutto ciò che vi è memorizzato. Il credito residuo decade e non viene rimborsato. Se non hai più l\'app, puoi farlo anche su api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Elimina account</string>

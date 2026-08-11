@@ -1754,6 +1754,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Cet achat appartient à un autre compte de crédit. Utilisez son code de récupération pour amener le crédit sur cet appareil.</string>
     <string name="dictate__cloud_notice_failed">L\'achat n\'a pas pu être finalisé.</string>
     <string name="dictate__cloud_notice_deleted">Votre compte de crédit a été supprimé.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Votre compte de crédit n\'existe plus : il a été supprimé sur le site web ou sur un autre appareil. Il vient de disparaître de ce téléphone également.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Cet appareil a été déconnecté de votre compte de crédit. Le compte et son crédit sont intacts : saisissez ci-dessous votre code de récupération pour vous reconnecter.</string>
     <string name="dictate__cloud_delete_title">Supprimer le compte de crédit</string>
     <string name="dictate__cloud_delete_explain">Supprime votre compte de crédit et tout ce qui y est enregistré. Le crédit restant est perdu et n\'est pas remboursé. Si vous n\'avez plus l\'application, c\'est aussi possible sur api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Supprimer le compte</string>

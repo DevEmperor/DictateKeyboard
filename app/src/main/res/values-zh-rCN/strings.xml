@@ -1873,6 +1873,8 @@
     <string name="dictate__cloud_notice_needs_recovery">这笔购买属于另一个额度账户。请用它的恢复码把额度取到本设备。</string>
     <string name="dictate__cloud_notice_failed">购买未能完成。</string>
     <string name="dictate__cloud_notice_deleted">你的余额账户已删除。</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">你的余额账户已不存在——它在网站上或在另一台设备上被删除了。现在它也从这部手机上消失了。</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">此设备已退出你的余额账户。账户和余额没有变化——在下方输入恢复码即可重新登录。</string>
     <string name="dictate__cloud_delete_title">删除余额账户</string>
     <string name="dictate__cloud_delete_explain">删除你的余额账户及其所有存储信息。剩余余额将作废，不予退款。如果你已卸载应用，也可以在 api.dictatekeyboard.com/delete 操作。</string>
     <string name="dictate__cloud_delete_btn">删除账户</string>

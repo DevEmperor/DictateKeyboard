@@ -1894,6 +1894,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Ten zakup należy do innego konta środków. Użyj jego kodu odzyskiwania, aby przenieść środki na to urządzenie.</string>
     <string name="dictate__cloud_notice_failed">Nie udało się dokończyć zakupu.</string>
     <string name="dictate__cloud_notice_deleted">Twoje konto z kredytem zostało usunięte.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Twojego konta z kredytem już nie ma — zostało usunięte na stronie internetowej lub na innym urządzeniu. Teraz zniknęło też z tego telefonu.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">To urządzenie zostało wylogowane z Twojego konta z kredytem. Konto i kredyt pozostają nietknięte — wpisz poniżej kod odzyskiwania, aby zalogować się ponownie.</string>
     <string name="dictate__cloud_delete_title">Usuń konto z kredytem</string>
     <string name="dictate__cloud_delete_explain">Usuwa Twoje konto z kredytem i wszystko, co o nim zapisano. Pozostały kredyt przepada i nie jest zwracany. Jeśli nie masz już aplikacji, możesz to zrobić na api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Usuń konto</string>

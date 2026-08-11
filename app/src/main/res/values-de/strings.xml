@@ -1185,6 +1185,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Dieser Kauf gehört zu einem anderen Guthabenkonto. Nutze dessen Wiederherstellungscode, um das Guthaben auf dieses Gerät zu holen.</string>
     <string name="dictate__cloud_notice_failed">Der Kauf konnte nicht abgeschlossen werden.</string>
     <string name="dictate__cloud_notice_deleted">Dein Guthabenkonto wurde gelöscht.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Dein Guthabenkonto gibt es nicht mehr — es wurde auf der Website oder auf einem anderen Gerät gelöscht. Jetzt ist es auch von diesem Handy verschwunden.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Dieses Gerät wurde von deinem Guthabenkonto abgemeldet. Konto und Guthaben bleiben unberührt — melde dich unten mit deinem Wiederherstellungscode wieder an.</string>
     <string name="dictate__cloud_delete_title">Guthabenkonto löschen</string>
     <string name="dictate__cloud_delete_explain">Löscht dein Guthabenkonto und alles, was dazu gespeichert ist. Restguthaben verfällt — es wird nicht erstattet. Falls du die App nicht mehr hast, geht das auch auf api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Konto löschen</string>

@@ -1754,6 +1754,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Aquesta compra pertany a un altre compte de saldo. Fes servir el seu codi de recuperació per portar el saldo a aquest dispositiu.</string>
     <string name="dictate__cloud_notice_failed">No s\'ha pogut completar la compra.</string>
     <string name="dictate__cloud_notice_deleted">S\'ha eliminat el teu compte de crèdit.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">El teu compte de crèdit ja no existeix: es va eliminar al lloc web o en un altre dispositiu. Ara també s\'ha tret d\'aquest telèfon.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">S\'ha tancat la sessió d\'aquest dispositiu al teu compte de crèdit. El compte i el crèdit no s\'han tocat: introdueix a sota el codi de recuperació per tornar a iniciar la sessió.</string>
     <string name="dictate__cloud_delete_title">Elimina el compte de crèdit</string>
     <string name="dictate__cloud_delete_explain">Elimina el teu compte de crèdit i tot el que s\'hi ha desat. El crèdit restant es perd i no es reemborsa. Si ja no tens l\'aplicació, també ho pots fer a api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Elimina el compte</string>

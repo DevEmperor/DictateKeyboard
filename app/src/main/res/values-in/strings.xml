@@ -1834,6 +1834,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_notice_needs_recovery">Pembelian ini milik akun saldo lain. Gunakan kode pemulihannya untuk memindahkan saldo ke perangkat ini.</string>
     <string name="dictate__cloud_notice_failed">Pembelian tidak dapat diselesaikan.</string>
     <string name="dictate__cloud_notice_deleted">Akun kredit Anda telah dihapus.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Akun kredit Anda sudah tidak ada — akun itu dihapus lewat situs web atau dari perangkat lain. Sekarang akun itu juga hilang dari ponsel ini.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Perangkat ini telah dikeluarkan dari akun kredit Anda. Akun dan kreditnya tidak berubah — masukkan kode pemulihan di bawah untuk masuk lagi.</string>
     <string name="dictate__cloud_delete_title">Hapus akun kredit</string>
     <string name="dictate__cloud_delete_explain">Menghapus akun kredit Anda dan semua yang tersimpan tentangnya. Sisa kredit hangus dan tidak dikembalikan. Jika aplikasi sudah tidak ada, ini juga bisa lewat api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Hapus akun</string>

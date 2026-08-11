@@ -1857,6 +1857,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Bu satın alma başka bir kontör hesabına ait. Kontörü bu cihaza getirmek için onun kurtarma kodunu kullanın.</string>
     <string name="dictate__cloud_notice_failed">Satın alma tamamlanamadı.</string>
     <string name="dictate__cloud_notice_deleted">Kredi hesabınız silindi.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Kredi hesabınız artık yok — web sitesinde ya da başka bir cihazda silinmiş. Şimdi bu telefondan da kayboldu.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Bu cihazın kredi hesabınızdaki oturumu kapatıldı. Hesabınız ve krediniz olduğu gibi duruyor — yeniden giriş yapmak için aşağıya kurtarma kodunuzu girin.</string>
     <string name="dictate__cloud_delete_title">Kredi hesabını sil</string>
     <string name="dictate__cloud_delete_explain">Kredi hesabınızı ve onunla ilgili kayıtlı her şeyi siler. Kalan kredi yanar ve iade edilmez. Uygulama artık sizde değilse bunu api.dictatekeyboard.com/delete adresinden de yapabilirsiniz.</string>
     <string name="dictate__cloud_delete_btn">Hesabı sil</string>

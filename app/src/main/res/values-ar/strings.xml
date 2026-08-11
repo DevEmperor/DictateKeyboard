@@ -1737,6 +1737,8 @@
     <string name="dictate__cloud_notice_needs_recovery">هذه العملية تخصّ حساب رصيد آخر. استخدم رمز الاسترداد الخاص به لنقل الرصيد إلى هذا الجهاز.</string>
     <string name="dictate__cloud_notice_failed">تعذّر إتمام عملية الشراء.</string>
     <string name="dictate__cloud_notice_deleted">تم حذف حساب رصيدك.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">لم يعد حساب رصيدك موجودًا — فقد حُذف من الموقع الإلكتروني أو من جهاز آخر. وقد أُزيل الآن من هذا الهاتف أيضًا.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">تم تسجيل خروج هذا الجهاز من حساب رصيدك. الحساب والرصيد لم يتأثرا — أدخل رمز الاسترداد أدناه لتسجيل الدخول من جديد.</string>
     <string name="dictate__cloud_delete_title">حذف حساب الرصيد</string>
     <string name="dictate__cloud_delete_explain">يحذف حساب رصيدك وكل ما هو مخزَّن عنه. الرصيد المتبقي يسقط ولا يُسترد. إن لم يعد التطبيق لديك، يمكنك ذلك أيضاً عبر api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">حذف الحساب</string>

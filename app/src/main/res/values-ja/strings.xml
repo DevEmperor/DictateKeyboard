@@ -1811,6 +1811,8 @@
     <string name="dictate__cloud_notice_needs_recovery">この購入は別のクレジットアカウントのものです。その復元コードを使って、この端末にクレジットを移してください。</string>
     <string name="dictate__cloud_notice_failed">購入を完了できませんでした。</string>
     <string name="dictate__cloud_notice_deleted">クレジットアカウントを削除しました。</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">クレジットアカウントはもう存在しません。ウェブサイトまたは別の端末で削除されました。この端末からも消えました。</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">この端末はクレジットアカウントからサインアウトされました。アカウントと残高はそのままです。下の復元コードを入力すると、また使えるようになります。</string>
     <string name="dictate__cloud_delete_title">クレジットアカウントを削除</string>
     <string name="dictate__cloud_delete_explain">クレジットアカウントと、それに関して保存されているすべてを削除します。残高は失効し、返金されません。アプリがもう手元にない場合は api.dictatekeyboard.com/delete でも行えます。</string>
     <string name="dictate__cloud_delete_btn">アカウントを削除</string>

@@ -48,6 +48,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -131,6 +132,22 @@ fun DictateCloudScreen() = FlorisScreen {
         val noticeNeedsRecovery = stringRes(R.string.dictate__cloud_notice_needs_recovery)
         val noticeFailed = stringRes(R.string.dictate__cloud_notice_failed)
         val noticeDeleted = stringRes(R.string.dictate__cloud_notice_deleted)
+        val noticeGoneDeleted = stringRes(R.string.dictate__cloud_notice_gone_deleted)
+        val noticeGoneSignedOut = stringRes(R.string.dictate__cloud_notice_gone_signed_out)
+
+        // An account can end somewhere else entirely — deleted from the web page or from a second
+        // phone, this device signed out from the dashboard. The refresh below clears it either way,
+        // and this is what keeps that from happening in silence: a balance that vanishes without a
+        // word looks like the app losing track of paid-for credit.
+        val gone by DictateCloud.gone.collectAsState()
+        LaunchedEffect(gone) {
+            when (gone) {
+                DictateCloud.Gone.DELETED -> notice = noticeGoneDeleted
+                DictateCloud.Gone.SIGNED_OUT -> notice = noticeGoneSignedOut
+                null -> return@LaunchedEffect
+            }
+            DictateCloud.gone.value = null
+        }
 
         // Settling outstanding purchases first is the important part of entering this screen: if a
         // payment went through but the credit never arrived, this is where it is put right, before

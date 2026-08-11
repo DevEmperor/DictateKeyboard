@@ -1778,6 +1778,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_notice_needs_recovery">Deze aankoop hoort bij een ander tegoedaccount. Gebruik de herstelcode daarvan om het tegoed naar dit apparaat te halen.</string>
     <string name="dictate__cloud_notice_failed">De aankoop kon niet worden afgerond.</string>
     <string name="dictate__cloud_notice_deleted">Je tegoedaccount is verwijderd.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Je tegoedaccount bestaat niet meer — het is via de website of op een ander apparaat verwijderd. Nu is het ook van deze telefoon verdwenen.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Dit apparaat is afgemeld bij je tegoedaccount. Het account en het tegoed blijven ongemoeid — voer hieronder je herstelcode in om je weer aan te melden.</string>
     <string name="dictate__cloud_delete_title">Tegoedaccount verwijderen</string>
     <string name="dictate__cloud_delete_explain">Verwijdert je tegoedaccount en alles wat erover is opgeslagen. Resterend tegoed vervalt en wordt niet terugbetaald. Heb je de app niet meer, dan kan het ook via api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Account verwijderen</string>

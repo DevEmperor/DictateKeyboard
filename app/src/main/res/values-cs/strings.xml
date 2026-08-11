@@ -1893,6 +1893,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Tento nákup patří k jinému kreditnímu účtu. Použijte jeho obnovovací kód, abyste kredit přenesli na toto zařízení.</string>
     <string name="dictate__cloud_notice_failed">Nákup se nepodařilo dokončit.</string>
     <string name="dictate__cloud_notice_deleted">Tvůj kreditní účet byl smazán.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Tvůj kreditní účet už neexistuje — byl smazán na webu nebo na jiném zařízení. Teď zmizel i z tohoto telefonu.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Toto zařízení bylo z tvého kreditního účtu odhlášeno. Účet ani kredit se nezměnily — přihlas se znovu obnovovacím kódem níže.</string>
     <string name="dictate__cloud_delete_title">Smazat kreditní účet</string>
     <string name="dictate__cloud_delete_explain">Smaže tvůj kreditní účet a vše, co je o něm uloženo. Zbývající kredit propadá a nevrací se. Pokud aplikaci už nemáš, jde to i na api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Smazat účet</string>

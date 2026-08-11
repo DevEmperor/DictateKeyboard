@@ -56,8 +56,16 @@ object DictateCloudApi {
         const val VERIFY_UNAVAILABLE = "verify_unavailable"
         /** No account for this recovery code (also returned for blocked ones, on purpose). */
         const val WALLET_NOT_FOUND = "wallet_not_found"
-        /** The stored token is not (or no longer) valid. */
+        /** The stored token is not (or no longer) valid — including because the account is gone. */
         const val INVALID_TOKEN = "invalid_token"
+
+        /**
+         * This device was signed out from the dashboard, but the account is still there. Only
+         * `GET /wallet` distinguishes this from [INVALID_TOKEN]; everywhere else the two are one
+         * error, because nothing else can act on the difference. Here it decides whether the
+         * recovery code is thrown away with the token or is the one thing kept.
+         */
+        const val DEVICE_REVOKED = "device_revoked"
 
         /**
          * Out of credit. Sent on dictation and rewording alike, and the one error whose remedy is a

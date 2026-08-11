@@ -1879,6 +1879,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Тази покупка принадлежи на друг кредитен акаунт. Използвайте неговия код за възстановяване, за да прехвърлите кредита на това устройство.</string>
     <string name="dictate__cloud_notice_failed">Покупката не можа да бъде завършена.</string>
     <string name="dictate__cloud_notice_deleted">Профилът ти с кредит беше изтрит.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Профилът ти с кредит вече не съществува — беше изтрит от уебсайта или от друго устройство. Сега е премахнат и от този телефон.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Това устройство беше отписано от профила ти с кредит. Профилът и кредитът остават непокътнати — въведи кода за възстановяване по-долу, за да влезеш отново.</string>
     <string name="dictate__cloud_delete_title">Изтриване на профила с кредит</string>
     <string name="dictate__cloud_delete_explain">Изтрива профила ти с кредит и всичко записано за него. Останалият кредит пропада и не се възстановява. Ако вече нямаш приложението, това става и на api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Изтриване на профила</string>

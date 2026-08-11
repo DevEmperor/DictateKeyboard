@@ -1860,6 +1860,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Esta compra pertenece a otra cuenta de saldo. Usa su código de recuperación para traer el saldo a este dispositivo.</string>
     <string name="dictate__cloud_notice_failed">No se pudo completar la compra.</string>
     <string name="dictate__cloud_notice_deleted">Tu cuenta de crédito se ha eliminado.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Tu cuenta de crédito ya no existe: se eliminó en el sitio web o en otro dispositivo. Ahora también ha desaparecido de este teléfono.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Se ha cerrado la sesión de este dispositivo en tu cuenta de crédito. La cuenta y el crédito siguen intactos: introduce abajo tu código de recuperación para volver a iniciar sesión.</string>
     <string name="dictate__cloud_delete_title">Eliminar cuenta de crédito</string>
     <string name="dictate__cloud_delete_explain">Elimina tu cuenta de crédito y todo lo guardado sobre ella. El crédito restante se pierde y no se reembolsa. Si ya no tienes la app, también puedes hacerlo en api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Eliminar cuenta</string>

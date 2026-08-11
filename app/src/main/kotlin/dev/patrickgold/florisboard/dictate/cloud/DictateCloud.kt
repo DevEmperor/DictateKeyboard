@@ -58,6 +58,28 @@ object DictateCloud {
      */
     val ownKeyRequested = MutableStateFlow(false)
 
+    /** Why a credit account stopped being usable on this device. */
+    enum class Gone {
+        /**
+         * The account itself no longer exists — deleted from the web page, from another device, or
+         * by an administrator. Nothing kept here is worth anything any more, the recovery code
+         * least of all: it would look like a way back to something that is not there.
+         */
+        DELETED,
+
+        /**
+         * Only *this* device was signed out; the account is alive. The recovery code is how the
+         * user gets back in, so it is the one thing that must survive.
+         */
+        SIGNED_OUT,
+    }
+
+    /**
+     * Raised when a refresh found the account gone, so the screen can say what happened rather than
+     * silently losing a balance the user was looking at. Consumed by the reader.
+     */
+    val gone = MutableStateFlow<Gone?>(null)
+
     /** What settling a single purchase turned into. */
     sealed interface Settlement {
         /** Credit granted (or already granted earlier) and the purchase consumed. */
@@ -272,7 +294,18 @@ object DictateCloud {
         }
     }
 
-    /** Fetches the balance from the server and caches it; null when there is no account or no answer. */
+    /**
+     * Fetches the balance from the server and caches it; null when there is no account or no answer.
+     *
+     * Also the moment this device learns that its account has ended. An account can be deleted from
+     * the web page or from a second phone, and a device can be signed out from the dashboard —
+     * neither of which sends anything here. Without this the app would go on showing a balance and a
+     * recovery code for something that no longer exists, and the first sign of trouble would be a
+     * dictation failing. A refused token is therefore acted on rather than merely logged.
+     *
+     * Only an outright 401 counts. A blocked account answers 403, an unreachable server 0: both are
+     * states to wait out, not to erase an account over.
+     */
     suspend fun refreshBalance(): DictateCloudBalance? {
         val current = account()
         if (!current.hasWallet) return null
@@ -287,9 +320,49 @@ object DictateCloud {
             }
             balance
         } catch (e: DictateCloudException) {
-            flogError { "Dictate Cloud: balance unavailable (${e.code}): ${e.message}" }
+            if (e.status == 401) {
+                forget(
+                    reason = if (e.code == DictateCloudApi.ErrorCode.DEVICE_REVOKED) {
+                        Gone.SIGNED_OUT
+                    } else {
+                        Gone.DELETED
+                    },
+                    announce = true,
+                )
+            } else {
+                flogError { "Dictate Cloud: balance unavailable (${e.code}): ${e.message}" }
+            }
             null
         }
+    }
+
+    /**
+     * Clears the credit account from this device.
+     *
+     * [reason] decides what survives. A deleted account leaves nothing behind — keeping the recovery
+     * code would put a way back on screen that leads nowhere. A signed-out device keeps its code,
+     * because the account is still there and that code is the only way onto it; signing a device out
+     * is meant to be reversible, and destroying the user's only copy of the code would make it not.
+     *
+     * [announce] is false when the user did this themselves and has already been told.
+     */
+    private suspend fun forget(reason: Gone, announce: Boolean) {
+        edit {
+            it.copy(
+                walletId = "",
+                apiKey = "",
+                walletRecoveryCode = if (reason == Gone.SIGNED_OUT) it.walletRecoveryCode else "",
+                // -1, not 0: the documented "never fetched" value. A stored 0 would read as an
+                // account that has run out, which is a claim about an account that no longer exists.
+                balanceSeconds = -1,
+                balanceRewords = -1,
+                balanceCheckedAt = 0L,
+            )
+        }
+        // The low-credit nudge is keyed to an account that is no longer here; leaving it armed would
+        // mean the next account inherits a warning it never earned.
+        prefs.dictate.cloudLowCreditNudged.set(false)
+        if (announce) gone.value = reason
     }
 
     /**
@@ -413,20 +486,8 @@ object DictateCloud {
     suspend fun deleteAccount(): DictateCloudDeletion {
         val current = account()
         val result = DictateCloudApi.deleteAccount(current.apiKey)
-
-        edit {
-            it.copy(
-                walletId = "",
-                apiKey = "",
-                walletRecoveryCode = "",
-                balanceSeconds = 0,
-                balanceRewords = 0,
-                balanceCheckedAt = 0L,
-            )
-        }
-        // The low-credit nudge is keyed to an account that no longer exists; leaving it armed would
-        // mean the next account inherits a warning it never earned.
-        prefs.dictate.cloudLowCreditNudged.set(false)
+        // Not announced: the user is standing in front of the dialog that did it.
+        forget(reason = Gone.DELETED, announce = false)
         return result
     }
 

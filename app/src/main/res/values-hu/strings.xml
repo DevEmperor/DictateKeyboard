@@ -1877,6 +1877,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Ez a vásárlás egy másik egyenlegfiókhoz tartozik. Használja annak helyreállítási kódját, hogy az egyenleg erre az eszközre kerüljön.</string>
     <string name="dictate__cloud_notice_failed">A vásárlást nem sikerült befejezni.</string>
     <string name="dictate__cloud_notice_deleted">A kreditfiókod törölve lett.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">A kreditfiókod már nem létezik – a weboldalon vagy egy másik eszközön törölték. Most erről a telefonról is eltűnt.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Ezt az eszközt kijelentkeztették a kreditfiókodból. A fiók és a kredit érintetlen – írd be lent a helyreállítási kódodat, hogy újra bejelentkezz.</string>
     <string name="dictate__cloud_delete_title">Kreditfiók törlése</string>
     <string name="dictate__cloud_delete_explain">Törli a kreditfiókodat és mindent, ami hozzá tárolva van. A maradék kredit elvész, nem térítjük vissza. Ha már nincs meg az alkalmazás, ezt az api.dictatekeyboard.com/delete címen is megteheted.</string>
     <string name="dictate__cloud_delete_btn">Fiók törlése</string>

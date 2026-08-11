@@ -1726,6 +1726,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Ця покупка належить іншому рахунку. Скористайтеся його кодом відновлення, щоб перенести баланс на цей пристрій.</string>
     <string name="dictate__cloud_notice_failed">Не вдалося завершити покупку.</string>
     <string name="dictate__cloud_notice_deleted">Ваш рахунок із балансом видалено.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Вашого рахунку з балансом більше немає — його видалили на сайті або на іншому пристрої. Тепер він зник і з цього телефона.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Цей пристрій відключено від вашого рахунку. Сам рахунок і баланс не змінилися — введіть код відновлення нижче, щоб увійти знову.</string>
     <string name="dictate__cloud_delete_title">Видалити рахунок із балансом</string>
     <string name="dictate__cloud_delete_explain">Видаляє ваш рахунок і все, що про нього збережено. Залишок згорає й не повертається. Якщо застосунку вже немає, це можна зробити на api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Видалити рахунок</string>

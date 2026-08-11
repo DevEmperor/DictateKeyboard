@@ -1822,6 +1822,8 @@
     <string name="dictate__cloud_notice_needs_recovery">Šis pirkums pieder citam kredīta kontam. Izmantojiet tā atkopšanas kodu, lai pārnestu kredītu uz šo ierīci.</string>
     <string name="dictate__cloud_notice_failed">Pirkumu neizdevās pabeigt.</string>
     <string name="dictate__cloud_notice_deleted">Tavs kredīta konts ir izdzēsts.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Tava kredīta konta vairs nav — tas tika izdzēsts vietnē vai citā ierīcē. Tagad tas ir pazudis arī no šī tālruņa.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Šī ierīce tika izrakstīta no tava kredīta konta. Konts un kredīts nav mainījušies — ievadi zemāk atkopšanas kodu, lai pieteiktos no jauna.</string>
     <string name="dictate__cloud_delete_title">Dzēst kredīta kontu</string>
     <string name="dictate__cloud_delete_explain">Dzēš tavu kredīta kontu un visu, kas par to saglabāts. Atlikušais kredīts zūd un netiek atmaksāts. Ja lietotnes vairs nav, to var izdarīt arī vietnē api.dictatekeyboard.com/delete.</string>
     <string name="dictate__cloud_delete_btn">Dzēst kontu</string>
