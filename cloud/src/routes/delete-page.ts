@@ -116,10 +116,10 @@ export const DELETE_PAGE_HTML = `<!doctype html>
         <li><strong>An empty entry where the account was.</strong> Those records refer to it, so it
           cannot be dropped outright. What remains is the random identifier, two dates and the
           minute totals — no recovery code, no device, nothing that can be signed in to.</li>
-        <li><strong>A one-way hash of your Play account, for 24 months.</strong> Only so that
-          repeated refunds by the same buyer can be recognised; otherwise deleting the account
-          would reset that count. It cannot be turned back into a Google account, an email address
-          or a name, and it is erased after the 24 months.</li>
+        <li><strong>A one-way hash of this account's own identifier, for 24 months.</strong> Only
+          so that repeated refunds after full consumption can be recognised. It is a random
+          identifier, not anything of Google's, and says nothing about your Play account, your name
+          or your email address. It is erased after the 24 months.</li>
       </ul>
       <p style="margin:14px 0 0"><strong>What was never stored anyway</strong></p>
       <ul>

@@ -195,11 +195,13 @@ rewording), the seconds billed, token counts, cost, a status code and the
 duration — **numbers only, never content.** These individual rows are deleted
 after **90 days**; what remains are daily totals with no link to any account.
 
-**A hash of your Play account.** When you buy, Google sends us an
-app-specific pseudonym for your Play account. We store only a **SHA-256 hash** of
-it. It cannot be turned back into a Google account and serves solely to recognise
-repeated refunds after full consumption — abuse that would otherwise be invisible
-after a reinstall.
+**A hash of your previous credit account.** When you buy while a credit account
+already exists on your device, the App attaches that account's random identifier
+to the purchase and Google returns it to us with the order. We store only a
+**SHA-256 hash** of it. It is not a Google identifier and says nothing about your
+Play account, your name or your email address; it exists solely to recognise
+repeated refunds after full consumption. A first purchase, or one made after you
+have deleted your credit account, carries nothing at all.
 
 ### 4.2 Legal bases
 
@@ -255,14 +257,14 @@ entry is emptied rather than dropped: what is left is the random identifier, the
 dates it was created and deleted, and the minute totals. No recovery code, no
 device, nothing that can be signed in to.
 
-**One exception, and we would rather name it than bury it.** The one-way hash of
-Google's app-specific pseudonym for the buying account (section 4.2) is kept for
-**24 months** after deletion, and then erased. It exists solely to recognise
-repeated refunds by the same buyer: without it, deleting the account would reset
-that count and make deletion the last step of a refund cycle rather than an end
-to the relationship. It cannot be turned back into a Google account, an email
-address or a name — it answers "the same buyer as before" and nothing else. The
-basis is Art. 6(1)(f) GDPR, our legitimate interest in preventing payment abuse.
+**One exception, and we would rather name it than bury it.** The one-way hash
+described in section 4.1 is kept for **24 months** after deletion, and then
+erased. It exists solely to recognise repeated refunds after full consumption:
+without it, deleting the account would reset that count and make deletion the
+last step of a refund cycle rather than an end to the relationship. It is a
+random identifier of ours, and cannot be turned back into an account, an email
+address or a name. The basis is Art. 6(1)(f) GDPR, our legitimate interest in
+preventing payment abuse.
 
 ### 4.6 Identifying you
 

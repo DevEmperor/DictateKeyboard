@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS wallets (
   -- A deleted account keeps its row rather than losing it, for one blunt reason: `purchases`
   -- references this table and those receipts must survive ten years (§ 147 AO), so the row they
   -- point at cannot go. What goes is everything on it that could lead back to a person — the
-  -- recovery hash, the Play pseudonym, the note — leaving a random id and a set of totals.
+  -- recovery hash, the previous-account hash, the note — leaving a random id and totals.
   -- See routes/delete.ts.
   deleted_at         INTEGER,
   recovery_hash      TEXT NOT NULL,              -- SHA-256 of the recovery code; emptied on deletion
@@ -35,12 +35,16 @@ CREATE TABLE IF NOT EXISTS wallets (
   is_test            INTEGER NOT NULL DEFAULT 0,
   test_reason        TEXT,                       -- license_tester | bootstrap | manual
 
-  -- SHA-256 of Google's per-app pseudonym for the buying account.
+  -- SHA-256 of the wallet id the app attached to the purchase, which Google echoes back as
+  -- `obfuscatedExternalAccountId`.
   --
-  -- Exists so a refund history survives a reinstall: a wiped phone gets a fresh wallet with a
-  -- fresh id, and a tally kept per wallet would reset at exactly the moment it starts to mean
-  -- something. The hash cannot be turned back into a Google account — it answers "the same buyer
-  -- as before" and nothing else.
+  -- **Not a Google identifier**, despite the name of the field it arrives in — it is our own value
+  -- coming back. It exists so a refund history survives a reinstall, where a fresh wallet would
+  -- otherwise reset the tally at exactly the moment it starts to mean something.
+  --
+  -- The limit follows from where it comes from: it is only present when the app *had* an account
+  -- at the moment of purchase. A first purchase carries nothing, and so does one made after the
+  -- account was deleted — which is the gap this does not close.
   play_account_hash  TEXT,
   -- How often a purchase on this wallet was clawed back.
   void_count         INTEGER NOT NULL DEFAULT 0

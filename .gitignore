@@ -96,5 +96,8 @@ tools/glide-dict/dist/
 cloud/wrangler.jsonc
 cloud/node_modules/
 cloud/.wrangler/
+# Auch hier: ein wrangler-Aufruf aus dem falschen Verzeichnis legt seinen Zwischenspeicher
+# samt Konto-ID im Wurzelverzeichnis ab.
+.wrangler/
 cloud/.dev.vars
 cloud/dist/

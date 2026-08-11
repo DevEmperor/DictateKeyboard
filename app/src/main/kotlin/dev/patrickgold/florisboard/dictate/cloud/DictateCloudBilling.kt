@@ -142,9 +142,11 @@ class DictateCloudBilling(context: Context) {
      * Opens Play's purchase sheet. **Must be called on the main thread.** The result does not arrive
      * here but through [awaitOutcome]; this only says whether the sheet could be opened.
      *
-     * [walletId] travels along as Play's `obfuscatedAccountId`. It is not needed for anything in the
-     * normal flow — its purpose is that a purchase can still be traced back to an account by hand
-     * when something has gone wrong, which is the one moment nobody has better information.
+     * [walletId] travels along as Play's `obfuscatedAccountId` and comes back to the server on the
+     * order. It lets a purchase be traced to an account by hand when something has gone wrong, and
+     * the server keeps a hash of it so that a top-up by someone who has already had a refund is
+     * recognisable. Note what that does *not* cover: an empty [walletId] attaches nothing, so a
+     * first purchase — and any purchase made after the account was deleted — carries no history.
      */
     fun launch(
         activity: Activity,

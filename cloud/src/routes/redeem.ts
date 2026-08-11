@@ -94,12 +94,17 @@ export async function handleRedeem(request: Request, env: Env, ctx: ExecutionCon
   // moment the difference is knowable, so it is written down rather than guessed at later.
   const isTest = facts.purchaseType === 0;
 
-  // Google's per-app pseudonym for the buying account, kept only as a hash.
+  // The wallet id the app attached to this purchase, kept only as a hash.
   //
-  // It exists so a refund history survives a reinstall. Wipe the phone and you get a fresh wallet
-  // with a fresh id — count refunds per wallet and the tally resets at exactly the moment it starts
-  // to mean something. The hash cannot be turned back into a Google account and says nothing beyond
-  // "the same buyer as before", which is the whole and only question being asked of it.
+  // **It is not a Google identifier.** It arrives in a field called
+  // `obfuscatedExternalAccountId`, which reads like one, but it is the value *we* sent —
+  // `setObfuscatedAccountId(walletId)` in the billing flow — coming back. Google offers no
+  // identifier for the buyer at all; that is deliberate on their side.
+  //
+  // The consequence is worth stating where it is created rather than leaving it to be discovered:
+  // this is null whenever the app had no account at the moment of purchase. A first purchase, and
+  // every purchase made after a deletion. So it links a *top-up* to the account being topped up,
+  // and it does not link a fresh purchase to a deleted one.
   const playAccountHash = facts.obfuscatedExternalAccountId
     ? await sha256(facts.obfuscatedExternalAccountId)
     : null;
@@ -148,7 +153,7 @@ export async function handleRedeem(request: Request, env: Env, ctx: ExecutionCon
         value: priorVoids,
         title: `Neuer Kauf von jemandem mit ${priorVoids} Erstattung${priorVoids === 1 ? '' : 'en'}`,
         detail:
-          `Dieses Play-Konto hat schon ${priorVoids} Mal Geld zurückgeholt und gerade erneut gekauft ` +
+          `Wer hier gekauft hat, hat schon ${priorVoids} Mal Geld zurückgeholt und gerade erneut gekauft ` +
           `(${pkg.name}, ${pkg.minutes} Minuten). Das Guthaben wurde gutgeschrieben — auf Verdacht abzulehnen ` +
           `hieße, jemanden zahlen zu lassen und nichts zu liefern. Wenn sich das Muster bestätigt, ist das ` +
           `Konto hier zu sperren, bevor die Minuten verbraucht sind.`,
