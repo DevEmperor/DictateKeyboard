@@ -1748,7 +1748,7 @@
     <string name="dictate__cloud_recovery_field">Код відновлення</string>
     <string name="dictate__cloud_recovery_confirm">Відновити</string>
     <string name="dictate__cloud_recovery_not_found">За цим кодом балансу не знайдено.</string>
-    <string name="dictate__error_cloud_no_account">На цьому пристрої немає рахунку з балансом. Купіть баланс, відновіть рахунок або змініть постачальника.</string>
+    <string name="dictate__error_cloud_no_account">На цьому пристрої немає рахунку</string>
     <string name="dictate__cloud_devices_full_title">Забагато пристроїв</string>
     <string name="dictate__cloud_devices_full_body">Ваш баланс уже використовується на {count} пристроях — більше одночасно не можна. Вийдіть на одному, щоб користуватися тут; сам баланс не зміниться.</string>
     <string name="dictate__cloud_devices_sign_out">Вийти</string>

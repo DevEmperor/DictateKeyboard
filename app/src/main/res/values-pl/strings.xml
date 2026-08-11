@@ -1916,7 +1916,7 @@
     <string name="dictate__cloud_recovery_field">Kod odzyskiwania</string>
     <string name="dictate__cloud_recovery_confirm">Przywróć</string>
     <string name="dictate__cloud_recovery_not_found">Nie znaleziono środków dla tego kodu.</string>
-    <string name="dictate__error_cloud_no_account">Brak konta z kredytem na tym urządzeniu. Kup środki, odzyskaj konto albo zmień dostawcę.</string>
+    <string name="dictate__error_cloud_no_account">Brak konta z kredytem na tym urządzeniu</string>
     <string name="dictate__cloud_devices_full_title">Za dużo urządzeń</string>
     <string name="dictate__cloud_devices_full_body">Twoje środki są już używane na {count} urządzeniach, czyli maksymalnej liczbie naraz. Wyloguj jedno, aby korzystać tutaj — same środki pozostają nietknięte.</string>
     <string name="dictate__cloud_devices_sign_out">Wyloguj</string>

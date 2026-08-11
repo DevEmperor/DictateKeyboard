@@ -1899,7 +1899,7 @@
     <string name="dictate__cloud_recovery_field">Helyreállítási kód</string>
     <string name="dictate__cloud_recovery_confirm">Visszaállítás</string>
     <string name="dictate__cloud_recovery_not_found">Ehhez a kódhoz nem található egyenleg.</string>
-    <string name="dictate__error_cloud_no_account">Nincs kreditfiók ezen az eszközön. Vegyél kreditet, állíts vissza egy fiókot, vagy válts szolgáltatót.</string>
+    <string name="dictate__error_cloud_no_account">Nincs kreditfiók ezen az eszközön</string>
     <string name="dictate__cloud_devices_full_title">Túl sok eszköz</string>
     <string name="dictate__cloud_devices_full_body">A kredited már {count} eszközön van használatban, ennyi lehet egyszerre. Jelentkezz ki az egyikről, hogy itt használhasd — maga a kredit érintetlen marad.</string>
     <string name="dictate__cloud_devices_sign_out">Kijelentkezés</string>

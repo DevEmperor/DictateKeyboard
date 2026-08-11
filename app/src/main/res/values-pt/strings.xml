@@ -1880,7 +1880,7 @@
     <string name="dictate__cloud_recovery_field">Código de recuperação</string>
     <string name="dictate__cloud_recovery_confirm">Restaurar</string>
     <string name="dictate__cloud_recovery_not_found">Não foi encontrado saldo para este código.</string>
-    <string name="dictate__error_cloud_no_account">Nenhuma conta de crédito neste dispositivo. Compra saldo, restaura uma conta ou muda de fornecedor.</string>
+    <string name="dictate__error_cloud_no_account">Sem conta de crédito neste dispositivo</string>
     <string name="dictate__cloud_devices_full_title">Demasiados dispositivos</string>
     <string name="dictate__cloud_devices_full_body">O teu saldo já está a ser usado em {count} dispositivos, o máximo em simultâneo. Termina a sessão num deles para o usares aqui — o saldo em si não é tocado.</string>
     <string name="dictate__cloud_devices_sign_out">Terminar sessão</string>

@@ -1904,7 +1904,7 @@
     <string name="dictate__cloud_recovery_field">Код восстановления</string>
     <string name="dictate__cloud_recovery_confirm">Восстановить</string>
     <string name="dictate__cloud_recovery_not_found">По этому коду баланс не найден.</string>
-    <string name="dictate__error_cloud_no_account">На этом устройстве нет счёта с балансом. Купите баланс, восстановите счёт или смените провайдера.</string>
+    <string name="dictate__error_cloud_no_account">На этом устройстве нет счёта</string>
     <string name="dictate__cloud_devices_full_title">Слишком много устройств</string>
     <string name="dictate__cloud_devices_full_body">Ваш баланс уже используется на {count} устройствах — больше одновременно нельзя. Отключите одно, чтобы пользоваться здесь; сам баланс не изменится.</string>
     <string name="dictate__cloud_devices_sign_out">Отключить</string>

@@ -1776,7 +1776,7 @@
     <string name="dictate__cloud_recovery_field">Code de récupération</string>
     <string name="dictate__cloud_recovery_confirm">Restaurer</string>
     <string name="dictate__cloud_recovery_not_found">Aucun crédit trouvé pour ce code.</string>
-    <string name="dictate__error_cloud_no_account">Aucun compte de crédit sur cet appareil. Achetez du crédit, restaurez un compte ou changez de fournisseur.</string>
+    <string name="dictate__error_cloud_no_account">Aucun compte de crédit sur cet appareil</string>
     <string name="dictate__cloud_devices_full_title">Trop d\'appareils</string>
     <string name="dictate__cloud_devices_full_body">Votre crédit est déjà utilisé sur {count} appareils, le maximum simultané. Déconnectez-en un pour l\'utiliser ici — le crédit lui-même reste intact.</string>
     <string name="dictate__cloud_devices_sign_out">Déconnecter</string>

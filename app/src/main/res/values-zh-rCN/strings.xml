@@ -1895,7 +1895,7 @@
     <string name="dictate__cloud_recovery_field">恢复码</string>
     <string name="dictate__cloud_recovery_confirm">恢复</string>
     <string name="dictate__cloud_recovery_not_found">未找到与此码对应的额度。</string>
-    <string name="dictate__error_cloud_no_account">此设备上没有余额账户。购买额度、恢复账户，或改用其他服务商。</string>
+    <string name="dictate__error_cloud_no_account">此设备上没有余额账户</string>
     <string name="dictate__cloud_devices_full_title">设备太多</string>
     <string name="dictate__cloud_devices_full_body">你的额度已在 {count} 台设备上使用，这是同时使用的上限。退出其中一台即可在这里使用——额度本身不受影响。</string>
     <string name="dictate__cloud_devices_sign_out">退出</string>

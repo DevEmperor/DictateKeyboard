@@ -1759,7 +1759,7 @@
     <string name="dictate__cloud_recovery_field">رمز الاسترداد</string>
     <string name="dictate__cloud_recovery_confirm">استرداد</string>
     <string name="dictate__cloud_recovery_not_found">لم يُعثر على رصيد لهذا الرمز.</string>
-    <string name="dictate__error_cloud_no_account">لا يوجد حساب رصيد على هذا الجهاز. اشترِ رصيدًا أو استعِد حسابًا أو غيّر المزوّد.</string>
+    <string name="dictate__error_cloud_no_account">لا يوجد حساب رصيد على هذا الجهاز</string>
     <string name="dictate__cloud_devices_full_title">أجهزة كثيرة جدًا</string>
     <string name="dictate__cloud_devices_full_body">رصيدك مستخدم بالفعل على {count} أجهزة، وهذا أقصى عدد مسموح به في وقت واحد. سجّل خروج أحدها لاستخدامه هنا — الرصيد نفسه لا يتأثر.</string>
     <string name="dictate__cloud_devices_sign_out">تسجيل الخروج</string>
