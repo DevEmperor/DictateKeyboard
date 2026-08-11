@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">キーボード有効 ✓</string>
     <string name="wear_kb_enable_on">どのアプリでも入力</string>
     <string name="wear_kb_enable_off">設定でオンに</string>
-    <string name="wear_kb_choose">キーボードを選択</string>
-    <string name="wear_kb_chosen">キーボード選択済み ✓</string>
-    <string name="wear_kb_choose_sub">入力欄でDictateを選択</string>
     <string name="wear_key">時計にキー</string>
     <string name="wear_key_on">単独で音声入力</string>
     <string name="wear_key_off">携帯のみ</string>

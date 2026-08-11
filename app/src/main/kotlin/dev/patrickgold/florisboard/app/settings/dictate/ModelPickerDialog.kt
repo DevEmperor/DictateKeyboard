@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 /** Whether the picker is choosing a speech-to-text or a chat/rewording model. */
@@ -150,6 +151,7 @@ fun ModelPickerDialog(
     val showFreeText = query.isNotBlank() && candidates.none { it.equals(query.trim(), ignoreCase = true) }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.dictate__model_picker_title),
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,

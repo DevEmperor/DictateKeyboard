@@ -545,6 +545,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Adatvédelmi irányelvek</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
+    <string name="about__data_attributions__title">Adat- és modelllicencek</string>
+    <string name="about__data_attributions__summary">Az eszközön futó modellek, szótárak és nyelvi adatok licencei</string>
     <string name="about__version__title" comment="Preference title">Verzió</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzió a vágólapra másolva</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Valami rosszul sült el: {error_message}</string>
@@ -1128,6 +1130,10 @@
     <string name="dictate__floating_button_design_orb_summary">Tömör gömb, amely felvétel közben világít és pulzál a hangjával.</string>
     <string name="dictate__floating_button_design_cloud">Felhő</string>
     <string name="dictate__floating_button_design_cloud_summary">Egy folyékony felhőgömb, amely áramlik és reagál a hangodra felvétel közben.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Fény egy gömbben: felvételkor kavarog, feldolgozáskor örvénylik</string>
+    <string name="dictate__floating_button_design_lattice">Rács</string>
+    <string name="dictate__floating_button_design_lattice_summary">Pontokból álló gömb: nyugalomban összekapcsolódik, a hangoddal hullámzik, feldolgozáskor forog</string>
     <string name="dictate__floating_button_design_pill">Pirula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktív állapotban kibővül, és időzítőt meg élő hullámformát mutat.</string>
     <string name="dictate__floating_button_design_ring">Gyűrű</string>
@@ -1279,6 +1285,10 @@
     <string name="dictate__bluetooth_mic_summary">Felvétel csatlakoztatott Bluetooth headseten keresztül, ha elérhető</string>
     <string name="dictate__keep_screen_awake_title">Képernyő ébren tartása</string>
     <string name="dictate__keep_screen_awake_summary">A képernyő kikapcsolásának megakadályozása felvétel közben</string>
+    <string name="dictate__push_to_talk_title">Tartsd nyomva a felvételhez</string>
+    <string name="dictate__push_to_talk_summary">Tartsd nyomva a mikrofont, engedd el a küldéshez</string>
+    <string name="dictate__push_to_talk_summary_off">Ki — a mikrofon nyomva tartása helyette egy hangfájlt ír át</string>
+    <string name="dictate__push_to_talk_slide_cancel">Húzd a megszakításhoz</string>
     <string name="dictate__recording_animation_title">Felvételjelző</string>
     <string name="dictate__recording_animation_static_label">Nincs animáció</string>
     <string name="dictate__recording_animation_static_description">Felvétel közben egyszínű piros pont marad</string>
@@ -1311,6 +1321,10 @@
     <string name="dictate__longform_mode_manual">Következő szegmens</string>
     <string name="dictate__longform_mode_manual_summary">Felvétel közben küldj el minden részt a „Következő szegmens” gombbal.</string>
     <string name="dictate__providers_field_realtime_model">Valós idejű modell</string>
+    <string name="dictate__providers_custom_realtime">Valós idejű streamelés</string>
+    <string name="dictate__providers_custom_realtime_summary">Ez a kiszolgáló az OpenAI realtime protokollt használja a /v1/realtime végponton</string>
+    <string name="dictate__providers_custom_warm_up">Ébresztés újrafogalmazás előtt</string>
+    <string name="dictate__providers_custom_warm_up_summary">Korán megszólítja a kiszolgálót, hogy az alvó gépnek legyen ideje elindulni</string>
     <string name="dictate__providers_realtime_model_default">Alapértelmezett</string>
     <string name="dictate__instant_recording_title">Azonnali felvétel</string>
     <string name="dictate__instant_recording_summary">A felvétel automatikus indítása a billentyűzet megnyitásakor</string>
@@ -1453,6 +1467,8 @@
     <string name="changelog__v4_1_1">• Javítás: a kiemelőszín egyes eszközökön zöldnek tűnhetett; a billentyűk és gombok ismét a Dictate kék színében jelennek meg.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Az eszközödön fut — nem küldünk hangot. Tölts le egy modellt a kezdéshez.</string>
+    <string name="dictate__local_models_live_header">Élő (streamelés)</string>
+    <string name="dictate__local_models_live_summary">Gépelnek, miközben beszélsz. Kapcsold be a „Valós idejű átírás” lehetőséget a Felvétel alatt a használatukhoz.</string>
     <string name="dictate__local_longpress_send_title">Küldés lenyomva tartása helyi modellhez</string>
     <string name="dictate__local_longpress_send_summary">Felvétel közben tartsd nyomva a küldést, hogy ezt a modellt használd a felhő helyett.</string>
     <string name="dictate__local_unload_after">Tétlen modell felszabadítása {n} perc után</string>
@@ -1748,6 +1764,34 @@
     <string name="apptour52__outro_eyebrow">Ez az 5.2</string>
     <string name="apptour52__outro_title">Jó diktálást</string>
     <string name="apptour52__outro_body">Ráadásul sok minden a motorháztető alatt: a képernyő végig bekapcsolva marad, a helyi modellek tétlenül felszabadítják a memóriát, az órás diktálások túlélik a kapcsolatszakadást, a német automatikus javítás pedig kezeli az umlautokat. Minden bemutatót újranézhetsz a Beállítások › Névjegy alatt.</string>
+    <string name="apptour53__cta_try">Kipróbálom</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Nyomd, mondd, kész</string>
+    <string name="apptour53__intro_body">Ez a kiadás arról a két dologról szól, amit a legtöbbet csinálsz: beszélsz a telefonodhoz, és gépelsz rajta. Mindkettő gyorsabb lett, és mindkettő jobban félreáll az utadból.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Nyomd és beszélj</string>
+    <string name="apptour53__pushtotalk_title">Tartsd a mikrofont, elengedve elküldi</string>
+    <string name="apptour53__pushtotalk_body">Mint egy hangüzenet: tartsd nyomva a mikrofongombot és beszélj, engedd el, és megy. Balra húzva eldobod a felvételt, felfelé húzva rögzíted, és felszabadul a kezed. A rövid koppintás ugyanúgy működik, mint eddig. A Dictate beállításaiban kapcsolható be.</string>
+    <string name="apptour53__autocorrect_eyebrow">Újraépített javítás</string>
+    <string name="apptour53__autocorrect_title">Az ujjaidat olvassa, nem az elgépeléseidet</string>
+    <string name="apptour53__autocorrect_body">A javítások mostantól abból indulnak ki, hová értél valójában a billentyűkön, és gépelés közben keresik a valószínű szavakat, ahelyett hogy a kész szóból találgatnának. A tesztkészletünkön 88 %-ról 98 %-ra nőtt a találat — a különbség gyors, hanyag gépelésnél a legszembetűnőbb.</string>
+    <string name="apptour53__offline_eyebrow">Offline, élőben</string>
+    <string name="apptour53__offline_title">A szavak beszéd közben jelennek meg — kapcsolat nélkül</string>
+    <string name="apptour53__offline_body">Az eszközön futó modellek már beszéd közben is átírnak, nem csak a végén, tíz nyelven. És két új modell érkezett: a Canary angolt, németet, franciát és spanyolt fed le a hely harmadán, a GigaAM pedig oroszra szakosodott.</string>
+    <string name="apptour53__languages_eyebrow">45 nyelvvel több</string>
+    <string name="apptour53__languages_title">Horvát, bengáli, szuahéli és további 42</string>
+    <string name="apptour53__languages_body">A nyelvlistában olyan hiányok voltak, amelyeknek semmi közük nem volt ahhoz, amit a szolgáltatók valójában tudnak. Mostantól a tényleges képességeikre épül — ha a te nyelved hiányzott, nézd meg újra.</string>
+    <string name="apptour53__designs_eyebrow">Két új megjelenés</string>
+    <string name="apptour53__designs_title">Aurora és Lattice</string>
+    <string name="apptour53__designs_body">Két új megjelenés a lebegő gombhoz, élő, nem rajzolt: gömbben mozgó fény, és egy pontokból álló gömb, amely magától összekapcsolódik, a hangoddal hullámzik, munka közben pedig forog. Mindkettő a kiemelőszínedet követi.</string>
+    <string name="apptour53__prediction_eyebrow">Kevesebb leütés</string>
+    <string name="apptour53__prediction_title">A következő szó, mielőtt leírnád</string>
+    <string name="apptour53__prediction_body">A javaslatsáv mostantól felkínálja, ami általában következik — abból tanulva, ahogyan te írsz. És bármelyik szót hosszan nyomva a szótáradhoz adhatod, hogy a neveidet és a szakszavaidat ne javítsa ki többé.</string>
+    <string name="apptour53__ownserver_eyebrow">A saját szervered</string>
+    <string name="apptour53__ownserver_title">Saját üzemeltetés, most már élőben is</string>
+    <string name="apptour53__ownserver_body">A saját szervered az élő átírást is elvégezheti, ha beszéli az OpenAI realtime protokollját. És ha mögötte alvó gép áll, a Dictate időben felébreszti, hogy az első kérés ne a bootolásra várjon.</string>
+    <string name="apptour53__outro_eyebrow">Ennyi az 5.3</string>
+    <string name="apptour53__outro_title">Jó diktálást</string>
+    <string name="apptour53__outro_body">És rengeteg apróság: minden szolgáltató a saját logóját viseli, a felvételjelző lehet nyugodt, lüktető vagy hangra reagáló, a prompt kimenete megtarthatja mellette az eredeti átiratot, a bekezdések pedig már nem törnek meg rövidítések után. Minden bemutatót újranézhetsz a Beállítások › Névjegy alatt.</string>
     <string name="changelog__v5_0_0">• ÚJ: Húzásos gépelés — húzza az ujját a billentyűkön, hogy egész szavakat írjon, igény szerint letöltődő, nyelvenkénti szótárakkal. 👆\n• ÚJ: Szójavaslatok és automatikus javítás — az elgépelések automatikusan javulnak, és a beírt szó egy koppintásra marad. ✨\n• ÚJ: Valós idejű átírás — nézze, ahogy a szavak megjelennek beszéd közben, OpenAI, Deepgram, Soniox, AssemblyAI és ElevenLabs használatával. ⚡\n• ÚJ: Három további átírási szolgáltató — ElevenLabs Scribe, Deepgram és AssemblyAI. ☁️\n• ÚJ: Klasszikus diktálási elrendezés — a Dictate 3 billentyűzet nélküli hangképernyője visszatért, rögzítve vagy egy húzásnyira. 🎙️\n• ÚJ: Közösségi prompt-könyvtár — böngésszen és osszon meg újrafogalmazási prompteket. 📚\n• ÚJ: Diktálási statisztikák mérföldkövekkel. 📊\n• ÚJ: Offline modell NVIDIA Parakeet, valamint egy csendszűrő, amely kihagyja az üres felvételeket. 📴\n• Továbbá: stabilabb lebegő gomb, gondolkodási erőfeszítés vezérlése, haptikus visszajelzés, új E-Reader téma és több tucat javítás. 🛠️</string>
     <string name="media__tab__gifs">GIF-ek</string>
     <string name="prefs__media__gif__title">GIF-ek</string>

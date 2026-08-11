@@ -74,6 +74,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 /**
@@ -402,6 +403,7 @@ private fun PreviewDialog(
     onAdd: () -> Unit,
 ) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = entry.name,
         confirmLabel = if (added) {
             stringRes(R.string.dictate__prompt_library_added)

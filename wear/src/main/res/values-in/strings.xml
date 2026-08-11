@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Keyboard aktif ✓</string>
     <string name="wear_kb_enable_on">Mengetik di app apa pun</string>
     <string name="wear_kb_enable_off">Aktifkan di setelan</string>
-    <string name="wear_kb_choose">Pilih keyboard</string>
-    <string name="wear_kb_chosen">Keyboard dipilih ✓</string>
-    <string name="wear_kb_choose_sub">Pilih Dictate di kolom</string>
     <string name="wear_key">Kunci di jam</string>
     <string name="wear_key_on">Bisa dikte sendiri</string>
     <string name="wear_key_off">Hanya dengan ponsel</string>

@@ -545,6 +545,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">隐私政策</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">源代码</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">开源协议</string>
+    <string name="about__data_attributions__title">数据与模型许可</string>
+    <string name="about__data_attributions__summary">设备端模型、词典和语言数据的许可信息</string>
     <string name="about__version__title" comment="Preference title">版本</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">版本号已复制到剪贴板</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">出错了：{error_message}</string>
@@ -1125,6 +1127,10 @@
     <string name="dictate__floating_button_design_orb_summary">一个实心光球，录音时随你的声音发光并跳动。</string>
     <string name="dictate__floating_button_design_cloud">云朵</string>
     <string name="dictate__floating_button_design_cloud_summary">录音时如云般流动并对你的声音作出反应的球体。</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">球体内流动的光：录音时轻晃，处理时翻涌</string>
+    <string name="dictate__floating_button_design_lattice">点阵</string>
+    <string name="dictate__floating_button_design_lattice_summary">由点构成的球体：闲置时相互连线，随声音起伏，处理时翻转</string>
     <string name="dictate__floating_button_design_pill">胶囊</string>
     <string name="dictate__floating_button_design_pill_summary">激活时展开，显示计时器和实时波形。</string>
     <string name="dictate__floating_button_design_ring">圆环</string>
@@ -1276,6 +1282,10 @@
     <string name="dictate__bluetooth_mic_summary">可用时通过已连接的蓝牙耳机录音</string>
     <string name="dictate__keep_screen_awake_title">保持屏幕常亮</string>
     <string name="dictate__keep_screen_awake_summary">录音时防止屏幕关闭</string>
+    <string name="dictate__push_to_talk_title">按住录音</string>
+    <string name="dictate__push_to_talk_summary">按住麦克风说话，松开发送</string>
+    <string name="dictate__push_to_talk_summary_off">已关闭 — 长按麦克风改为转写音频文件</string>
+    <string name="dictate__push_to_talk_slide_cancel">滑动取消</string>
     <string name="dictate__recording_animation_title">录音指示器</string>
     <string name="dictate__recording_animation_static_label">无动画</string>
     <string name="dictate__recording_animation_static_description">录音时保持为一个纯红色圆点</string>
@@ -1308,6 +1318,10 @@
     <string name="dictate__longform_mode_manual">下一段</string>
     <string name="dictate__longform_mode_manual_summary">录音时用“下一段”按钮发送每个部分。</string>
     <string name="dictate__providers_field_realtime_model">实时模型</string>
+    <string name="dictate__providers_custom_realtime">实时流式传输</string>
+    <string name="dictate__providers_custom_realtime_summary">此服务器在 /v1/realtime 上支持 OpenAI 实时协议</string>
+    <string name="dictate__providers_custom_warm_up">改写前先唤醒</string>
+    <string name="dictate__providers_custom_warm_up_summary">提前访问服务器，让休眠的机器有时间启动</string>
     <string name="dictate__providers_realtime_model_default">默认</string>
     <string name="dictate__instant_recording_title">即时录音</string>
     <string name="dictate__instant_recording_summary">打开键盘时自动开始录音</string>
@@ -1450,6 +1464,8 @@
     <string name="changelog__v4_1_1">• 修复：在某些设备上强调色可能显示为绿色；按键和按钮已恢复为 Dictate 蓝色。</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">在您的设备上运行 — 不会发送任何音频。下载模型即可开始。</string>
+    <string name="dictate__local_models_live_header">实时（流式）</string>
+    <string name="dictate__local_models_live_summary">说话时即时输入文字。请在“录音”中开启“实时转录”后使用。</string>
     <string name="dictate__local_longpress_send_title">长按发送使用本地模型</string>
     <string name="dictate__local_longpress_send_summary">录音时长按发送，即用此模型而非云端。</string>
     <string name="dictate__local_unload_after">闲置 {n} 分钟后卸载模型</string>
@@ -1744,6 +1760,34 @@
     <string name="apptour52__outro_eyebrow">这就是 5.2</string>
     <string name="apptour52__outro_title">口述愉快</string>
     <string name="apptour52__outro_body">此外还有诸多内部改进：整个口述过程中屏幕保持常亮，设备端模型闲置时释放内存，手表口述可挺过连接中断，德语自动更正也学会了变音符号。你可以在设置 › 关于中重温任意导览。</string>
+    <string name="apptour53__cta_try">试试看</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">按住、说话、完成</string>
+    <string name="apptour53__intro_body">这一版围绕你最常做的两件事：对着手机说话，以及在手机上打字。两者都更快了，也都更懂得让路。</string>
+    <string name="apptour53__pushtotalk_eyebrow">按住说话</string>
+    <string name="apptour53__pushtotalk_title">按住麦克风，松手即发送</string>
+    <string name="apptour53__pushtotalk_body">就像语音消息：按住麦克风键说话，松手就发出去。向左滑丢弃这段录音，向上拖则锁定，腾出你的手。轻点仍和从前一样。可在 Dictate 设置中开启。</string>
+    <string name="apptour53__autocorrect_eyebrow">重写的自动更正</string>
+    <string name="apptour53__autocorrect_title">它读的是你的手指，不是你的错字</string>
+    <string name="apptour53__autocorrect_body">更正现在依据你实际触到键盘的位置，边打边搜索可能的词，而不是从打完的词去猜。在我们的测试集上，准确率从 88 % 升到 98 %——打得越快越潦草，差别越明显。</string>
+    <string name="apptour53__offline_eyebrow">离线，且实时</string>
+    <string name="apptour53__offline_title">话音未落，文字已出——无需联网</string>
+    <string name="apptour53__offline_body">设备端模型现在可以边说边转写，而不只是说完才转，支持十种语言。另有两个新模型加入：Canary 以三分之一的体积覆盖英语、德语、法语和西班牙语，GigaAM 则专攻俄语。</string>
+    <string name="apptour53__languages_eyebrow">新增 45 种语言</string>
+    <string name="apptour53__languages_title">克罗地亚语、孟加拉语、斯瓦希里语等 45 种</string>
+    <string name="apptour53__languages_body">语言列表此前的缺口，与各服务商实际支持的范围并不相干。现在它以它们真正的能力为准——如果你的语言曾经缺席，不妨再看一眼。</string>
+    <string name="apptour53__designs_eyebrow">两种新外观</string>
+    <string name="apptour53__designs_title">Aurora 与 Lattice</string>
+    <string name="apptour53__designs_body">悬浮按钮的两种新设计，是活的而非画的：球体内流动的光，以及由点构成的球体——它自行连线，随你的声音起伏，处理时翻转。两者都跟随你的强调色。</string>
+    <string name="apptour53__prediction_eyebrow">更少的敲击</string>
+    <string name="apptour53__prediction_title">在你打出之前，给出下一个词</string>
+    <string name="apptour53__prediction_body">候选栏现在会给出通常接下来的词，来自它对你写法的学习。任意词长按即可加入词典，你的人名与行话从此不再被改掉。</string>
+    <string name="apptour53__ownserver_eyebrow">你自己的服务器</string>
+    <string name="apptour53__ownserver_title">自建服务器，现在也能实时</string>
+    <string name="apptour53__ownserver_body">只要会说 OpenAI 的 realtime 协议，你自己的服务器也能承担实时转写。若它前面是一台会休眠的机器，Dictate 可以提前把它叫醒，第一次请求就不必干等开机。</string>
+    <string name="apptour53__outro_eyebrow">这就是 5.3</string>
+    <string name="apptour53__outro_title">口述愉快</string>
+    <string name="apptour53__outro_body">另有许多小改进：每个服务商都有自己的标志，录音指示可选静止、脉动或随声音变化，提示词输出可在旁保留原始转写，段落也不再在缩写后断开。你可以在设置 › 关于中重温任意导览。</string>
     <string name="changelog__v5_0_0">• 新增：滑动输入 — 在按键上滑动即可输入整个单词，配有按需下载的分语言词典。 👆\n• 新增：单词建议与自动更正 — 拼写错误会自动更正，你输入的原词只需一按即可取回。 ✨\n• 新增：实时转录 — 说话时即可看到文字出现，支持 OpenAI、Deepgram、Soniox、AssemblyAI 和 ElevenLabs。 ⚡\n• 新增：又添三家转录服务商 — ElevenLabs Scribe、Deepgram 和 AssemblyAI。 ☁️\n• 新增：经典听写布局 — Dictate 3 的无键盘语音界面回归，可锁定或一滑即达。 🎙️\n• 新增：社区提示词库 — 浏览并分享改写提示词。 📚\n• 新增：带里程碑的听写统计。 📊\n• 新增：离线模型 NVIDIA Parakeet，以及跳过空录音的静音过滤器。 📴\n• 更多：更稳定的悬浮按钮、推理强度控制、触觉反馈、全新的 E-Reader 主题以及数十项修复。 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

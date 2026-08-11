@@ -79,7 +79,6 @@ class WearSettingsActivity : ComponentActivity() {
 
     private var micGranted by mutableStateOf(false)
     private var imeEnabled by mutableStateOf(false)
-    private var imeSelected by mutableStateOf(false)
 
     // In-app "Try dictation" demo state (independent of the IME).
     private var demoState by mutableStateOf(DemoState.IDLE)
@@ -120,7 +119,6 @@ class WearSettingsActivity : ComponentActivity() {
                 SettingsScreen(
                     micGranted = micGranted,
                     imeEnabled = imeEnabled,
-                    imeSelected = imeSelected,
                     demoState = demoState,
                     demoResult = demoResult,
                     demoError = demoError,
@@ -131,7 +129,6 @@ class WearSettingsActivity : ComponentActivity() {
                     onRequestMic = { requestMic.launch(Manifest.permission.RECORD_AUDIO) },
                     onTryDictation = { onTryDictation() },
                     onEnableKeyboard = { openInputMethodSettings() },
-                    onChooseKeyboard = { showKeyboardPicker() },
                     onResync = {
                         syncFromPhone()
                         lifecycleScope.launch {
@@ -187,16 +184,23 @@ class WearSettingsActivity : ComponentActivity() {
             PackageManager.PERMISSION_GRANTED
     }
 
-    /** Reflect whether the Dictate keyboard is enabled in the system and currently selected as default. */
+    /** Reflect whether the Dictate keyboard is enabled in the system. */
     private fun refreshImeState() {
         val imm = getSystemService(InputMethodManager::class.java)
         imeEnabled = imm?.enabledInputMethodList?.any { it.packageName == packageName } == true
-        val default = runCatching {
-            Settings.Secure.getString(contentResolver, Settings.Secure.DEFAULT_INPUT_METHOD)
-        }.getOrNull()
-        imeSelected = default?.contains(packageName) == true
     }
 
+    /**
+     * The system's own input-method settings — the only system surface this app sends a watch to.
+     *
+     * The keyboard chips used to offer `InputMethodManager.showInputMethodPicker()` as well, and Play
+     * rejected the Wear release over it: that switcher is AOSP's rectangular list, and on a round display
+     * its text runs off the edges, which fails the Wear visual-quality requirement. Whose dialog it is
+     * does not enter into it — what is on screen during review is what counts, and an appeal explaining
+     * the distinction was turned down. So the app no longer opens it. Selecting a keyboard on a watch
+     * happens when a text field is focused anyway, where the system raises its own switcher and answers
+     * for how it looks.
+     */
     private fun openInputMethodSettings() {
         runCatching {
             startActivity(
@@ -204,10 +208,6 @@ class WearSettingsActivity : ComponentActivity() {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             )
         }
-    }
-
-    private fun showKeyboardPicker() {
-        runCatching { getSystemService(InputMethodManager::class.java)?.showInputMethodPicker() }
     }
 
     // --- In-app "Try dictation" demo ---------------------------------------------------------------
@@ -274,7 +274,6 @@ private enum class DemoState { IDLE, RECORDING, TRANSCRIBING }
 private fun SettingsScreen(
     micGranted: Boolean,
     imeEnabled: Boolean,
-    imeSelected: Boolean,
     demoState: DemoState,
     demoResult: String?,
     demoError: String?,
@@ -285,7 +284,6 @@ private fun SettingsScreen(
     onRequestMic: () -> Unit,
     onTryDictation: () -> Unit,
     onEnableKeyboard: () -> Unit,
-    onChooseKeyboard: () -> Unit,
     onResync: () -> Unit,
     onSetStandalone: (Boolean) -> Unit,
     onSetAutoRewording: (Boolean) -> Unit,
@@ -382,15 +380,6 @@ private fun SettingsScreen(
                     secondaryLabel = {
                         Text(if (imeEnabled) stringResource(R.string.wear_kb_enable_on) else stringResource(R.string.wear_kb_enable_off))
                     },
-                )
-            }
-            item {
-                Chip(
-                    onClick = onChooseKeyboard,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ChipDefaults.secondaryChipColors(),
-                    label = { Text(if (imeSelected) stringResource(R.string.wear_kb_chosen) else stringResource(R.string.wear_kb_choose)) },
-                    secondaryLabel = { Text(stringResource(R.string.wear_kb_choose_sub)) },
                 )
             }
 

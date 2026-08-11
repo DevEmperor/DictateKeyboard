@@ -1,9 +1,10 @@
-DICTATE — THIRD-PARTY DATA ATTRIBUTIONS
-=======================================
+DICTATE — THIRD-PARTY DATA & MODEL ATTRIBUTIONS
+==============================================
 
-Dictate bundles and/or downloads language data derived from the following freely
-licensed corpora. Only aggregate frequency data (word and word-pair counts) is
-redistributed — never the underlying source texts.
+Dictate bundles and/or downloads language data and neural models from the following
+freely licensed sources. Of the language corpora, only aggregate frequency data (word
+and word-pair counts) is redistributed — never the underlying source texts. Every model
+listed here runs on your device; none of them send audio or text anywhere.
 
 
 1. Word-frequency dictionaries (glide typing, autocorrect, spell check)
@@ -36,16 +37,54 @@ Derived from the Leipzig Corpora Collection (Wortschatz), used under CC BY.
 ----------------------------------------------------------
 Downloaded on demand into <filesDir>/dictate-models/<model>/ ; no audio ever leaves the device.
 
+One-shot models — these transcribe after you stop speaking:
+
   - Whisper (tiny/base/small, multilingual and English) — © OpenAI, MIT License.
     https://github.com/openai/whisper
   - Parakeet TDT 0.6B v3 — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
   - Parakeet German (primeline) — a German-specialized fine-tune of NVIDIA Parakeet TDT 0.6B v3,
     © primeline, licensed CC BY 4.0. https://huggingface.co/primeline/parakeet-primeline
-  - ONNX (int8) exports of both, and the on-device runtime, are from the sherpa-onnx / k2-fsa
-    project, Apache-2.0. https://github.com/k2-fsa/sherpa-onnx
-  - The Silero VAD model used to segment long recordings — © Silero Team, MIT License.
-    https://github.com/snakers4/silero-vad
+
+Streaming models — these transcribe live, while you are still speaking:
+
+  - Kroko ASR community models (German, English, Spanish, French, Italian, Dutch, Portuguese,
+    Swedish, Turkish, Hebrew) — © Banafo, licensed CC BY-SA.
+    https://huggingface.co/Banafo/Kroko-ASR
+    Redistributed unmodified. The ShareAlike term governs adaptations of the model itself; the
+    files shipped here are verbatim copies.
+
+4. Supporting on-device models
+-------------------------------
+
+  - Silero VAD — detects speech, used to segment long recordings and to skip silent ones.
+    © Silero Team, MIT License. https://github.com/snakers4/silero-vad
+  - Smart Turn v3 — decides whether a spoken thought is finished, for long-form auto-split.
+    © Pipecat AI, licensed BSD-2-Clause. https://github.com/pipecat-ai/smart-turn
+
+5. Model runtime and conversions
+---------------------------------
+
+The ONNX (int8) exports of every model above, and the on-device inference runtime, come from the
+sherpa-onnx / k2-fsa project, Apache-2.0. https://github.com/k2-fsa/sherpa-onnx
+Inference runs through ONNX Runtime, © Microsoft, MIT License. https://onnxruntime.ai
 
 All of the above permit redistribution; the files are mirrored on the project's own GitHub release
 for a stable, project-controlled source.
+
+6. Provider logos
+------------------
+
+The settings list marks each AI provider with its own logo, so a row can be found by its mark rather
+than read. The marks are used only to identify the service the row configures; every trademark
+remains the property of its owner, and their use here implies no affiliation or endorsement.
+
+The monochrome outlines come from two collections, both freely licensed:
+
+  - Simple Icons, CC0-1.0 — OpenAI, OpenRouter, Google Gemini, Anthropic, Mistral AI, ElevenLabs,
+    Deepgram, DeepSeek, Ollama. https://github.com/simple-icons/simple-icons
+  - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI.
+    https://github.com/lobehub/lobe-icons
+
+Soniox publish no vector mark, so theirs was traced from their own app icon and fitted to the same
+size as the rest.

@@ -755,6 +755,34 @@
     <string name="apptour52__outro_eyebrow">That\'s 5.2</string>
     <string name="apptour52__outro_title">Happy dictating</string>
     <string name="apptour52__outro_body">Plus plenty under the hood: the screen stays awake through a whole dictation, on-device models free their memory when idle, watch dictations survive dropouts, and German autocorrect learned umlauts. You can revisit any tour under Settings › About.</string>
+    <string name="apptour53__cta_try" comment="Button on a 5.3 tour page to jump straight to that feature">Try it</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Hold, speak, done</string>
+    <string name="apptour53__intro_body">This release is about the two things you do most: talking to your phone and typing on it. Both got faster, and both got better at staying out of your way.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Push to talk</string>
+    <string name="apptour53__pushtotalk_title">Hold the mic, release to send</string>
+    <string name="apptour53__pushtotalk_body">Like a voice message: hold the mic key and talk, let go and it is sent. Slide left to throw the recording away, or drag up to lock it hands-free. A quick tap still works the way it always did. Turn it on in the Dictate settings.</string>
+    <string name="apptour53__autocorrect_eyebrow">Autocorrect, rebuilt</string>
+    <string name="apptour53__autocorrect_title">It reads your fingers, not your typos</string>
+    <string name="apptour53__autocorrect_body">Corrections are now decided from where you actually touched the keys, searching the likely words as you go, instead of guessing from the finished word. On our test set it went from 88% correct to 98% — the difference shows up most on fast, sloppy typing.</string>
+    <string name="apptour53__offline_eyebrow">Offline, live</string>
+    <string name="apptour53__offline_title">Words appear while you speak — with no connection</string>
+    <string name="apptour53__offline_body">On-device models can now transcribe as you talk, not just when you finish, in ten languages. And two new models joined: Canary covers English, German, French and Spanish in a third of the space, and GigaAM is specialised in Russian.</string>
+    <string name="apptour53__languages_eyebrow">45 more languages</string>
+    <string name="apptour53__languages_title">Croatian, Bengali, Swahili and 42 more</string>
+    <string name="apptour53__languages_body">The language list had gaps that had nothing to do with what the providers actually support. It is now built from what they can really do — so if your language was missing, look again.</string>
+    <string name="apptour53__designs_eyebrow">Two new looks</string>
+    <string name="apptour53__designs_title">Aurora and Lattice</string>
+    <string name="apptour53__designs_body">Two new designs for the floating button, both alive rather than illustrated: light moving inside a sphere, and a sphere built from dots that wires itself together, ripples with your voice and twists while it works. Both follow your accent colour.</string>
+    <string name="apptour53__prediction_eyebrow">Fewer keystrokes</string>
+    <string name="apptour53__prediction_title">The next word, before you type it</string>
+    <string name="apptour53__prediction_body">The suggestion strip now offers what usually comes next, learned from how you write. And any word you long-press can be added to your dictionary, so your names and jargon stop being corrected.</string>
+    <string name="apptour53__ownserver_eyebrow">Your own server</string>
+    <string name="apptour53__ownserver_title">Self-hosted, now with live transcription</string>
+    <string name="apptour53__ownserver_body">A server of your own can drive live transcription too, if it speaks the OpenAI realtime protocol. And if it sits in front of a machine that sleeps, Dictate can wake it early so the first request is not stuck waiting for it to boot.</string>
+    <string name="apptour53__outro_eyebrow">That\'s 5.3</string>
+    <string name="apptour53__outro_title">Happy dictating</string>
+    <string name="apptour53__outro_body">Plus plenty of smaller things: every provider now carries its own logo, the recording indicator can be still, pulsing or voice-reactive, prompt output can keep the original transcript beside it, and paragraphs stop breaking after abbreviations. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
@@ -773,8 +801,8 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Asset manager reference is null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
-    <string name="about__data_attributions__title" comment="Preference title for the language-data attributions screen">Language data attributions</string>
-    <string name="about__data_attributions__summary" comment="Preference summary">Attributions for the word and bigram language data (OPUS, Leipzig Corpora)</string>
+    <string name="about__data_attributions__title" comment="Preference title for the screen listing licenses of bundled/downloaded data and on-device models">Data &amp; model attributions</string>
+    <string name="about__data_attributions__summary" comment="Preference summary listing what the attributions screen covers">Licenses for the on-device models, dictionaries and language data</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>
@@ -1398,6 +1426,10 @@
     <string name="dictate__floating_button_design_orb_summary" comment="Description of the orb floating-button style">A solid orb that glows and pulses with your voice while recording.</string>
     <string name="dictate__floating_button_design_cloud" comment="Floating-button style option: fluid cloud orb">Cloud</string>
     <string name="dictate__floating_button_design_cloud_summary" comment="Description of the cloud floating-button style">A fluid cloud orb that flows and responds to your voice while recording.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Light moving inside a sphere; it stirs while recording and churns while working</string>
+    <string name="dictate__floating_button_design_lattice" comment="Floating-button style option: a sphere built from dots">Lattice</string>
+    <string name="dictate__floating_button_design_lattice_summary" comment="Description of the lattice floating-button style">A sphere of dots that wires itself while idle, ripples with your voice and twists while working</string>
     <string name="dictate__floating_button_size_title" comment="Title of the floating-button size picker">Button size</string>
     <string name="dictate__floating_button_size_small" comment="Floating-button size option">Small</string>
     <string name="dictate__floating_button_size_medium" comment="Floating-button size option">Medium</string>
@@ -1628,6 +1660,8 @@
 
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header" comment="Intro text above the on-device model list in the provider editor">Runs on your device — no audio is sent. Download a model to start.</string>
+    <string name="dictate__local_models_live_header" comment="Group heading above the on-device models that transcribe while you speak (issue #233)">Live (streaming)</string>
+    <string name="dictate__local_models_live_summary" comment="Explainer under the live model group heading: these models need the real-time switch under Recording (issue #233)">These type while you speak. Turn on “Real-time transcription” under Recording to use them.</string>
     <string name="dictate__local_longpress_send_title" comment="Search-index label for the on-device long-press-send checkbox (issue #228)">Long-press send for local model</string>
     <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: long-pressing the send button transcribes with the local model (issue #228)">Hold send while recording to use this model instead of the cloud.</string>
     <string name="dictate__local_unload_after" comment="Slider label: free the on-device model from RAM after {n} minutes idle">Unload idle model after {n} min</string>
@@ -1666,6 +1700,10 @@
     <string name="dictate__audio_source_voice_communication_summary" comment="Summary for the voice communication audio source">Highest mic priority — works when another app uses the mic, but may lower accuracy.</string>
     <string name="dictate__keep_screen_awake_title" comment="Setting: keep the screen on while recording">Keep screen awake</string>
     <string name="dictate__keep_screen_awake_summary" comment="Summary for the keep-screen-awake setting">Prevent the screen from turning off while recording</string>
+    <string name="dictate__push_to_talk_title" comment="Setting: hold the mic to record instead of tapping twice (issue #235)">Hold to record</string>
+    <string name="dictate__push_to_talk_summary" comment="Summary for the hold-to-record setting while it is on">Press and hold the mic, release to send</string>
+    <string name="dictate__push_to_talk_summary_off" comment="Summary while hold-to-record is off, naming the long-press shortcut it would replace">Off — holding the mic transcribes an audio file instead</string>
+    <string name="dictate__push_to_talk_slide_cancel" comment="Hint on the recording bar while holding the mic: slide towards it to discard">Slide to cancel</string>
     <string name="dictate__recording_animation_title" comment="Setting: how the recording indicator moves">Recording indicator</string>
     <string name="dictate__recording_animation_static_label" comment="Option: no animation">No animation</string>
     <string name="dictate__recording_animation_static_description" comment="Option description">Stays a solid red dot while recording</string>
@@ -1684,6 +1722,10 @@
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
     <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
     <string name="dictate__providers_field_realtime_model" comment="Label for the real-time streaming model picker">Real-time model</string>
+    <string name="dictate__providers_custom_realtime" comment="Switch label: a self-hosted server that supports realtime streaming (#249)">Real-time streaming</string>
+    <string name="dictate__providers_custom_realtime_summary" comment="Explains what the server must support for realtime streaming">This server speaks the OpenAI realtime protocol at /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up" comment="Switch label: ping a sleeping self-hosted server early so it can wake up (#189)">Wake before rewording</string>
+    <string name="dictate__providers_custom_warm_up_summary" comment="Explains the early wake-up request">Pings this server early so a sleeping machine has time to start</string>
     <string name="dictate__providers_realtime_model_default" comment="Marks the provider's default real-time model in the picker">Default</string>
     <string name="dictate__longform_title" comment="Setting: long-form segmented dictation">Long-form dictation</string>
     <string name="dictate__longform_summary" comment="Summary for the long-form dictation setting">Transcribe long dictations in the background, part by part while you keep talking — tap Next during recording to send the current part, so there is no long wait at the end.</string>

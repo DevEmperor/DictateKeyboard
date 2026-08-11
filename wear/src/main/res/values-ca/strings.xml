@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Teclat activat ✓</string>
     <string name="wear_kb_enable_on">Escriu a qualsevol app</string>
     <string name="wear_kb_enable_off">Activa a la configuració</string>
-    <string name="wear_kb_choose">Tria el teclat</string>
-    <string name="wear_kb_chosen">Teclat triat ✓</string>
-    <string name="wear_kb_choose_sub">Tria Dictate en un camp</string>
     <string name="wear_key">Clau al rellotge</string>
     <string name="wear_key_on">Dicta sol</string>
     <string name="wear_key_off">Només amb mòbil</string>

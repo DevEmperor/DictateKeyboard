@@ -1,0 +1,11 @@
+<!-- Brand mark of the provider this row configures, shown so the list can be scanned by logo.
+     Monochrome outline only; the trademark belongs to its owner. See the attributions screen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M4.604 0L4.604 24L9.535 24L9.535 0ZM14.465 0L14.465 24L19.396 24L19.396 0Z" />
+</vector>

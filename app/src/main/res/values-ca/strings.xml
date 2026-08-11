@@ -449,6 +449,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicències de codi obert</string>
+    <string name="about__data_attributions__title">Llicències de dades i models</string>
+    <string name="about__data_attributions__summary">Llicències dels models al dispositiu, els diccionaris i les dades lingüístiques</string>
     <string name="about__version__title" comment="Preference title">Versió</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versió copiada al porta-retalls</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Alguna cosa ha anat malament: {error_message}</string>
@@ -1005,6 +1007,10 @@
     <string name="dictate__floating_button_design_orb_summary">Una esfera sòlida que brilla i batega amb la teva veu mentre graves.</string>
     <string name="dictate__floating_button_design_cloud">Núvol</string>
     <string name="dictate__floating_button_design_cloud_summary">Una esfera de núvol fluida que flueix i respon a la teva veu mentre graves.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Llum que es mou dins una esfera; s\'agita en gravar i bull en processar</string>
+    <string name="dictate__floating_button_design_lattice">Retícula</string>
+    <string name="dictate__floating_button_design_lattice_summary">Una esfera de punts: es connecta en repòs, ondula amb la teva veu i gira en processar</string>
     <string name="dictate__floating_button_design_pill">Píndola</string>
     <string name="dictate__floating_button_design_pill_summary">S’amplia quan està actiu per mostrar un temporitzador i una forma d’ona en directe.</string>
     <string name="dictate__floating_button_design_ring">Anella</string>
@@ -1156,6 +1162,10 @@
     <string name="dictate__bluetooth_mic_summary">Grava a través d\'uns auriculars Bluetooth connectats quan estiguin disponibles</string>
     <string name="dictate__keep_screen_awake_title">Mantén la pantalla encesa</string>
     <string name="dictate__keep_screen_awake_summary">Evita que la pantalla s\'apagui durant la gravació</string>
+    <string name="dictate__push_to_talk_title">Mantén premut per gravar</string>
+    <string name="dictate__push_to_talk_summary">Mantén premut el micròfon, deixa anar per enviar</string>
+    <string name="dictate__push_to_talk_summary_off">Desactivat: mantenir premut el micròfon transcriu un fitxer d’àudio</string>
+    <string name="dictate__push_to_talk_slide_cancel">Llisca per cancel·lar</string>
     <string name="dictate__recording_animation_title">Indicador de gravació</string>
     <string name="dictate__recording_animation_static_label">Sense animació</string>
     <string name="dictate__recording_animation_static_description">Es manté un punt vermell fix mentre graveu</string>
@@ -1188,6 +1198,10 @@
     <string name="dictate__longform_mode_manual">Segment següent</string>
     <string name="dictate__longform_mode_manual_summary">Envia cada part amb «Segment següent» durant la gravació.</string>
     <string name="dictate__providers_field_realtime_model">Model en temps real</string>
+    <string name="dictate__providers_custom_realtime">Transmissió en temps real</string>
+    <string name="dictate__providers_custom_realtime_summary">Aquest servidor parla el protocol realtime d\'OpenAI a /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Desperta abans de reformular</string>
+    <string name="dictate__providers_custom_warm_up_summary">Contacta aviat amb el servidor perquè una màquina adormida pugui arrencar</string>
     <string name="dictate__providers_realtime_model_default">Predeterminat</string>
     <string name="dictate__instant_recording_title">Gravació instantània</string>
     <string name="dictate__instant_recording_summary">Comença a gravar automàticament en obrir el teclat</string>
@@ -1330,6 +1344,8 @@
     <string name="changelog__v4_1_1">• Correcció: el color d\'accent podia aparèixer verd en alguns dispositius; les tecles i els botons tornen a ser del blau de Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">S’executa al teu dispositiu — no s’envia cap àudio. Baixa un model per començar.</string>
+    <string name="dictate__local_models_live_header">En directe (streaming)</string>
+    <string name="dictate__local_models_live_summary">Escriuen mentre parles. Activa «Transcripció en temps real» a Gravació per fer-los servir.</string>
     <string name="dictate__local_longpress_send_title">Mantén premut enviar per al model local</string>
     <string name="dictate__local_longpress_send_summary">Durant la gravació, mantén premut enviar per usar aquest model en lloc del núvol.</string>
     <string name="dictate__local_unload_after">Descarrega el model inactiu després de {n} min</string>
@@ -1625,6 +1641,34 @@
     <string name="apptour52__outro_eyebrow">Això és la 5.2</string>
     <string name="apptour52__outro_title">Bon dictat</string>
     <string name="apptour52__outro_body">A més, molt sota el capó: la pantalla es manté encesa durant tot el dictat, els models locals alliberen memòria quan estan inactius, els dictats al rellotge sobreviuen als talls i l\'autocorrecció alemanya ja domina les dièresis. Pots tornar a veure qualsevol visita a Configuració › Quant a.</string>
+    <string name="apptour53__cta_try">Provar-ho</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Mantén, parla, fet</string>
+    <string name="apptour53__intro_body">Aquesta versió va de les dues coses que fas més: parlar al mòbil i escriure-hi. Totes dues són més ràpides, i totes dues s\'aparten millor del teu camí.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Prem per parlar</string>
+    <string name="apptour53__pushtotalk_title">Mantén el micròfon, deixa\'l anar per enviar</string>
+    <string name="apptour53__pushtotalk_body">Com un missatge de veu: mantén la tecla del micròfon i parla, deixa-la anar i s\'envia. Llisca cap a l\'esquerra per llençar la gravació, o arrossega cap amunt per fixar-la i tenir la mà lliure. Un toc breu funciona com sempre. S\'activa a la configuració de Dictate.</string>
+    <string name="apptour53__autocorrect_eyebrow">Autocorrecció refeta</string>
+    <string name="apptour53__autocorrect_title">Llegeix els teus dits, no les teves errades</string>
+    <string name="apptour53__autocorrect_body">Les correccions ara parteixen d\'on has tocat realment les tecles, explorant les paraules probables mentre escrius, en lloc d\'endevinar a partir de la paraula acabada. Al nostre conjunt de proves ha passat del 88 % al 98 % d\'encerts: la diferència es nota sobretot escrivint ràpid i descuidadament.</string>
+    <string name="apptour53__offline_eyebrow">Fora de línia, en directe</string>
+    <string name="apptour53__offline_title">Les paraules apareixen mentre parles — sense connexió</string>
+    <string name="apptour53__offline_body">Els models del dispositiu ja transcriuen mentre parles, no només en acabar, en deu llengües. I n\'han arribat dos de nous: Canary cobreix anglès, alemany, francès i castellà en un terç de l\'espai, i GigaAM està especialitzat en rus.</string>
+    <string name="apptour53__languages_eyebrow">45 llengües més</string>
+    <string name="apptour53__languages_title">Croat, bengalí, suahili i 42 més</string>
+    <string name="apptour53__languages_body">La llista de llengües tenia buits que no tenien res a veure amb el que els proveïdors admeten de debò. Ara es basa en el que realment poden fer: si hi faltava la teva llengua, torna-hi.</string>
+    <string name="apptour53__designs_eyebrow">Dos aspectes nous</string>
+    <string name="apptour53__designs_title">Aurora i Lattice</string>
+    <string name="apptour53__designs_body">Dos dissenys nous per al botó flotant, vius en lloc de dibuixats: llum que es mou dins d\'una esfera, i una esfera de punts que es connecta, ondula amb la teva veu i gira mentre treballa. Tots dos segueixen el teu color d\'accent.</string>
+    <string name="apptour53__prediction_eyebrow">Menys tecles</string>
+    <string name="apptour53__prediction_title">La paraula següent, abans d\'escriure-la</string>
+    <string name="apptour53__prediction_body">La barra de suggeriments ara ofereix el que sol venir a continuació, après de com escrius. I qualsevol paraula s\'afegeix al teu diccionari amb una pulsació llarga, perquè els teus noms i el teu argot deixin de ser corregits.</string>
+    <string name="apptour53__ownserver_eyebrow">El teu servidor</string>
+    <string name="apptour53__ownserver_title">Autoallotjat, ara també en directe</string>
+    <string name="apptour53__ownserver_body">Un servidor teu també pot fer la transcripció en directe, si parla el protocol realtime d\'OpenAI. I si al davant hi ha una màquina que dorm, Dictate pot despertar-la abans perquè la primera petició no esperi que arrenqui.</string>
+    <string name="apptour53__outro_eyebrow">Això és la 5.3</string>
+    <string name="apptour53__outro_title">Bon dictat</string>
+    <string name="apptour53__outro_body">A més, moltes coses petites: cada proveïdor porta el seu logotip, l\'indicador de gravació pot estar quiet, pulsant o reaccionant a la veu, la sortida dels prompts pot conservar al costat la transcripció original, i els paràgrafs ja no es trenquen després d\'abreviatures. Pots tornar a veure qualsevol visita a Configuració › Quant a.</string>
     <string name="changelog__v5_0_0">• NOU: Escriptura lliscant — llisca per les tecles per escriure paraules senceres, amb diccionaris per idioma que es baixen a demanda. 👆\n• NOU: Suggeriments de paraules i correcció automàtica — els errors es corregeixen sols i la paraula que has escrit queda a un toc. ✨\n• NOU: Transcripció en temps real — mira com les teves paraules apareixen mentre parles, amb OpenAI, Deepgram, Soniox, AssemblyAI i ElevenLabs. ⚡\n• NOU: Tres proveïdors de transcripció més — ElevenLabs Scribe, Deepgram i AssemblyAI. ☁️\n• NOU: Disposició de dictat clàssica — la pantalla de veu sense teclat de Dictate 3 ha tornat, fixada o a un simple lliscament. 🎙️\n• NOU: Biblioteca d’indicacions de la comunitat — explora i comparteix indicacions de reformulació. 📚\n• NOU: Estadístiques de dictat amb fites. 📊\n• NOU: Model sense connexió NVIDIA Parakeet, a més d’un filtre de silenci que omet els enregistraments buits. 📴\n• Més: un botó flotant més estable, control de l’esforç de raonament, resposta hàptica, un nou tema E-Reader i desenes de correccions. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

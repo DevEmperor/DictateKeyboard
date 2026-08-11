@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Клавіатуру ввімкнено ✓</string>
     <string name="wear_kb_enable_on">Друкує в будь-якому додатку</string>
     <string name="wear_kb_enable_off">Увімкніть у налаштуваннях</string>
-    <string name="wear_kb_choose">Вибрати клавіатуру</string>
-    <string name="wear_kb_chosen">Клавіатуру вибрано ✓</string>
-    <string name="wear_kb_choose_sub">Виберіть Dictate у полі</string>
     <string name="wear_key">Ключ на годиннику</string>
     <string name="wear_key_on">Диктує сам</string>
     <string name="wear_key_off">Лише з телефоном</string>

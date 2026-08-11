@@ -309,7 +309,13 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         }
     }
 
-    private companion object {
+    companion object {
+        /**
+         * The cloud's own surface read top to bottom, exposed so a control sitting beside it can be cut
+         * from the same sky instead of guessing at the palette.
+         */
+        val SURFACE_GRADIENT get() = intArrayOf(UPPER_PERIWINKLE, MILK, LOWER_LAVENDER)
+
         // Idle vs. active sizing (as a fraction of the 64dp button): the cloud is small at idle and grows
         // clearly while recording, stays grown through transcribing, and shrinks back only on return to
         // idle / a terminal flash. Recording is shown mainly by turbulence, with a small extra grow from

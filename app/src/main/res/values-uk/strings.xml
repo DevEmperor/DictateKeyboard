@@ -433,6 +433,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Політика конфіденційності</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Вихідний код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Ліцензії ПЗ з відкритим кодом</string>
+    <string name="about__data_attributions__title">Ліцензії даних і моделей</string>
+    <string name="about__data_attributions__summary">Ліцензії локальних моделей, словників і мовних даних</string>
     <string name="about__version__title" comment="Preference title">Версія</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Версію скопійовано до буфера обміну</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Щось пішло не так: {error_message}</string>
@@ -977,6 +979,10 @@
     <string name="dictate__floating_button_design_orb_summary">Суцільна сфера, що світиться й пульсує в такт вашому голосу під час запису.</string>
     <string name="dictate__floating_button_design_cloud">Хмара</string>
     <string name="dictate__floating_button_design_cloud_summary">Плавна хмарна сфера, що струменіє й реагує на ваш голос під час запису.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Світло всередині сфери: коливається під час запису й вирує під час обробки</string>
+    <string name="dictate__floating_button_design_lattice">Ґратка</string>
+    <string name="dictate__floating_button_design_lattice_summary">Сфера з точок: сплітається в спокої, коливається в такт голосу й обертається під час обробки</string>
     <string name="dictate__floating_button_design_pill">Капсула</string>
     <string name="dictate__floating_button_design_pill_summary">Коли активна, розгортається, показуючи таймер і живу форму хвилі.</string>
     <string name="dictate__floating_button_design_ring">Кільце</string>
@@ -1128,6 +1134,10 @@
     <string name="dictate__bluetooth_mic_summary">Записувати через підключену Bluetooth-гарнітуру, коли доступна</string>
     <string name="dictate__keep_screen_awake_title">Не гасити екран</string>
     <string name="dictate__keep_screen_awake_summary">Не давати екрану вимикатися під час запису</string>
+    <string name="dictate__push_to_talk_title">Утримуйте для запису</string>
+    <string name="dictate__push_to_talk_summary">Утримуйте мікрофон, відпустіть, щоб надіслати</string>
+    <string name="dictate__push_to_talk_summary_off">Вимкнено — утримання мікрофона натомість транскрибує аудіофайл</string>
+    <string name="dictate__push_to_talk_slide_cancel">Проведіть, щоб скасувати</string>
     <string name="dictate__recording_animation_title">Індикатор запису</string>
     <string name="dictate__recording_animation_static_label">Без анімації</string>
     <string name="dictate__recording_animation_static_description">Під час запису залишається суцільною червоною крапкою</string>
@@ -1160,6 +1170,10 @@
     <string name="dictate__longform_mode_manual">Наступний сегмент</string>
     <string name="dictate__longform_mode_manual_summary">Надсилайте кожну частину кнопкою «Наступний сегмент» під час запису.</string>
     <string name="dictate__providers_field_realtime_model">Модель у реальному часі</string>
+    <string name="dictate__providers_custom_realtime">Потокова передача в реальному часі</string>
+    <string name="dictate__providers_custom_realtime_summary">Цей сервер підтримує протокол OpenAI realtime за адресою /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Будити перед переформулюванням</string>
+    <string name="dictate__providers_custom_warm_up_summary">Завчасно звертається до сервера, щоб приспана машина встигла запуститися</string>
     <string name="dictate__providers_realtime_model_default">За замовчуванням</string>
     <string name="dictate__instant_recording_title">Миттєвий запис</string>
     <string name="dictate__instant_recording_summary">Автоматично починати запис під час відкриття клавіатури</string>
@@ -1302,6 +1316,8 @@
     <string name="changelog__v4_1_1">• Виправлення: на деяких пристроях акцентний колір міг відображатися зеленим — клавіші та кнопки знову сині, як у Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Працює на вашому пристрої — аудіо не надсилається. Завантажте модель, щоб почати.</string>
+    <string name="dictate__local_models_live_header">У реальному часі (потоково)</string>
+    <string name="dictate__local_models_live_summary">Друкують, поки ви говорите. Увімкніть «Транскрипція в реальному часі» в розділі Запис, щоб їх використовувати.</string>
     <string name="dictate__local_longpress_send_title">Утримання надсилання для локальної моделі</string>
     <string name="dictate__local_longpress_send_summary">Під час запису утримуйте надсилання, щоб використати цю модель замість хмари.</string>
     <string name="dictate__local_unload_after">Вивантажувати неактивну модель через {n} хв</string>
@@ -1597,6 +1613,34 @@
     <string name="apptour52__outro_eyebrow">Це 5.2</string>
     <string name="apptour52__outro_title">Гарного диктування</string>
     <string name="apptour52__outro_body">І багато всередині: екран не гасне протягом усього диктування, локальні моделі звільняють пам\'ять у простої, диктування з годинника переживають обриви зв\'язку, а німецька автозаміна опанувала умляути. Будь-який тур можна переглянути в Налаштуваннях › Про застосунок.</string>
+    <string name="apptour53__cta_try">Спробувати</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Утримуй, говори, готово</string>
+    <string name="apptour53__intro_body">Цей випуск — про дві речі, які ти робиш найчастіше: говориш до телефона і друкуєш на ньому. І те, і те стало швидшим — і краще не заважає.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Натисни й говори</string>
+    <string name="apptour53__pushtotalk_title">Утримуй мікрофон, відпусти — надішлеться</string>
+    <string name="apptour53__pushtotalk_body">Як голосове повідомлення: утримуй клавішу мікрофона й говори, відпусти — і запис пішов. Проведи ліворуч, щоб викинути його, або потягни вгору, щоб зафіксувати й звільнити руку. Короткий дотик працює як і раніше. Вмикається в налаштуваннях Dictate.</string>
+    <string name="apptour53__autocorrect_eyebrow">Автозаміна, зібрана наново</string>
+    <string name="apptour53__autocorrect_title">Вона читає твої пальці, а не твої одруківки</string>
+    <string name="apptour53__autocorrect_body">Виправлення тепер походять із того, куди ти справді влучав по клавішах, із перебором імовірних слів під час набору, замість вгадування за готовим словом. На нашому тестовому наборі точність зросла з 88 % до 98 % — різниця найпомітніша при швидкому недбалому наборі.</string>
+    <string name="apptour53__offline_eyebrow">Офлайн, наживо</string>
+    <string name="apptour53__offline_title">Слова з’являються, поки ти говориш — без зв’язку</string>
+    <string name="apptour53__offline_body">Моделі на пристрої тепер розшифровують уже під час мовлення, а не лише наприкінці — десятьма мовами. І додалися дві нові: Canary охоплює англійську, німецьку, французьку та іспанську втричі компактніше, а GigaAM спеціалізується на російській.</string>
+    <string name="apptour53__languages_eyebrow">Ще 45 мов</string>
+    <string name="apptour53__languages_title">Хорватська, бенгальська, суахілі та ще 42</string>
+    <string name="apptour53__languages_body">У списку мов були прогалини, не пов’язані з тим, що провайдери справді підтримують. Тепер він побудований на їхніх реальних можливостях — якщо твоєї мови бракувало, зазирни ще раз.</string>
+    <string name="apptour53__designs_eyebrow">Два нових вигляди</string>
+    <string name="apptour53__designs_title">Aurora та Lattice</string>
+    <string name="apptour53__designs_body">Два нових оформлення плавної кнопки, живі, а не намальовані: світло, що рухається всередині сфери, і сфера з точок, яка сама сплітається, коливається в такт голосу й обертається під час роботи. Обидва тримаються твого акцентного кольору.</string>
+    <string name="apptour53__prediction_eyebrow">Менше натискань</string>
+    <string name="apptour53__prediction_title">Наступне слово — перш ніж ти його набереш</string>
+    <string name="apptour53__prediction_body">Рядок підказок тепер пропонує те, що зазвичай іде далі, — навчено з того, як пишеш саме ти. А будь-яке слово додається до словника довгим натисканням, щоб імена й фаховий жаргон перестали виправлятися.</string>
+    <string name="apptour53__ownserver_eyebrow">Власний сервер</string>
+    <string name="apptour53__ownserver_title">Самостійний хостинг — тепер і наживо</string>
+    <string name="apptour53__ownserver_body">Твій сервер може вести й живу розшифровку, якщо говорить протоколом realtime від OpenAI. А якщо за ним стоїть машина, яка спить, Dictate розбудить її завчасно, щоб перший запит не чекав на завантаження.</string>
+    <string name="apptour53__outro_eyebrow">Це 5.3</string>
+    <string name="apptour53__outro_title">Приємного диктування</string>
+    <string name="apptour53__outro_body">І багато дрібниць: кожен провайдер має власний логотип, індикатор запису може бути нерухомим, пульсуючим або чутливим до голосу, вивід промпту може зберігати поруч початкову розшифровку, а абзаци більше не рвуться після скорочень. Будь-який тур можна переглянути в Налаштуваннях › Про застосунок.</string>
     <string name="changelog__v5_0_0">• НОВЕ: Друк свайпом — проводьте по клавішах, щоб писати слова цілком, зі словниками для окремих мов, що завантажуються за запитом. 👆\n• НОВЕ: Підказки слів і автовиправлення — помилки виправляються автоматично, а набране слово лишається за один дотик. ✨\n• НОВЕ: Транскрипція в реальному часі — дивіться, як слова з’являються, поки ви говорите, з OpenAI, Deepgram, Soniox, AssemblyAI та ElevenLabs. ⚡\n• НОВЕ: Ще три провайдери транскрипції — ElevenLabs Scribe, Deepgram та AssemblyAI. ☁️\n• НОВЕ: Класичний макет диктування — голосовий екран без клавіатури з Dictate 3 повернувся, зафіксований або за один свайп. 🎙️\n• НОВЕ: Бібліотека промптів спільноти — переглядайте та діліться промптами для переформулювання. 📚\n• НОВЕ: Статистика диктування з віхами. 📊\n• НОВЕ: Офлайн-модель NVIDIA Parakeet, а також фільтр тиші, що пропускає порожні записи. 📴\n• Більше: стабільніша плаваюча кнопка, керування зусиллям міркування, тактильний відгук, нова тема E-Reader і десятки виправлень. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

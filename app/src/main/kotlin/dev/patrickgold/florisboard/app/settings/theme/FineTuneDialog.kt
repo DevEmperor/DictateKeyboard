@@ -26,6 +26,7 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 private val FineTuneContentPadding = PaddingValues(horizontal = 8.dp)
@@ -33,6 +34,7 @@ private val FineTuneContentPadding = PaddingValues(horizontal = 8.dp)
 @Composable
 fun FineTuneDialog(onDismiss: () -> Unit) {
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.settings__theme_editor__fine_tune__title),
         onDismiss = onDismiss,
         contentPadding = FineTuneContentPadding,

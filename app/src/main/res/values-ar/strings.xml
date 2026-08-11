@@ -432,6 +432,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
+    <string name="about__data_attributions__title">تراخيص البيانات والنماذج</string>
+    <string name="about__data_attributions__summary">تراخيص النماذج المحلية والقواميس وبيانات اللغة</string>
     <string name="about__version__title" comment="Preference title">الإصدار</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">تم نسخ الإصدار إلى الحافظة</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">لقد حدث خطأ ما: {error_message}</string>
@@ -988,6 +990,10 @@
     <string name="dictate__floating_button_design_orb_summary">كرة مصمتة تتوهج وتنبض مع صوتك أثناء التسجيل.</string>
     <string name="dictate__floating_button_design_cloud">سحابة</string>
     <string name="dictate__floating_button_design_cloud_summary">كرة سحابية انسيابية تتدفق وتتفاعل مع صوتك أثناء التسجيل.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">ضوء يتحرك داخل كرة؛ يتموّج أثناء التسجيل ويضطرب أثناء المعالجة</string>
+    <string name="dictate__floating_button_design_lattice">شبكة</string>
+    <string name="dictate__floating_button_design_lattice_summary">كرة من النقاط: تتشابك أثناء الانتظار، وتتموّج مع صوتك، وتلتف أثناء المعالجة</string>
     <string name="dictate__floating_button_design_pill">كبسولة</string>
     <string name="dictate__floating_button_design_pill_summary">تتوسّع عند النشاط لإظهار مؤقّت وموجة صوتية حية.</string>
     <string name="dictate__floating_button_design_ring">حلقة</string>
@@ -1139,6 +1145,10 @@
     <string name="dictate__bluetooth_mic_summary">التسجيل عبر سماعة بلوتوث متصلة عند توفّرها</string>
     <string name="dictate__keep_screen_awake_title">إبقاء الشاشة قيد التشغيل</string>
     <string name="dictate__keep_screen_awake_summary">منع إيقاف تشغيل الشاشة أثناء التسجيل</string>
+    <string name="dictate__push_to_talk_title">اضغط مطولاً للتسجيل</string>
+    <string name="dictate__push_to_talk_summary">اضغط مع الاستمرار على الميكروفون، وارفع إصبعك للإرسال</string>
+    <string name="dictate__push_to_talk_summary_off">متوقف — الضغط المطوّل على الميكروفون ينسخ ملفًا صوتيًا بدلاً من ذلك</string>
+    <string name="dictate__push_to_talk_slide_cancel">اسحب للإلغاء</string>
     <string name="dictate__recording_animation_title">مؤشر التسجيل</string>
     <string name="dictate__recording_animation_static_label">بدون حركة</string>
     <string name="dictate__recording_animation_static_description">يبقى نقطة حمراء ثابتة أثناء التسجيل</string>
@@ -1171,6 +1181,10 @@
     <string name="dictate__longform_mode_manual">المقطع التالي</string>
     <string name="dictate__longform_mode_manual_summary">أرسل كل جزء بزر «المقطع التالي» أثناء التسجيل.</string>
     <string name="dictate__providers_field_realtime_model">النموذج الفوري</string>
+    <string name="dictate__providers_custom_realtime">البث في الوقت الفعلي</string>
+    <string name="dictate__providers_custom_realtime_summary">يدعم هذا الخادم بروتوكول OpenAI الفوري على ‎/v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">التنبيه قبل إعادة الصياغة</string>
+    <string name="dictate__providers_custom_warm_up_summary">يتصل بالخادم مبكرًا ليتاح لجهاز نائم وقت للإقلاع</string>
     <string name="dictate__providers_realtime_model_default">افتراضي</string>
     <string name="dictate__instant_recording_title">تسجيل فوري</string>
     <string name="dictate__instant_recording_summary">بدء التسجيل تلقائيًا عند فتح لوحة المفاتيح</string>
@@ -1313,6 +1327,8 @@
     <string name="changelog__v4_1_1">• إصلاح: قد يظهر لون التمييز باللون الأخضر على بعض الأجهزة؛ عادت المفاتيح والأزرار إلى الأزرق الخاص بـ Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">يعمل على جهازك — لا يتم إرسال أي صوت. نزّل نموذجًا للبدء.</string>
+    <string name="dictate__local_models_live_header">مباشر (بث)</string>
+    <string name="dictate__local_models_live_summary">تكتب أثناء تحدثك. فعّل «النسخ الفوري» ضمن التسجيل لاستخدامها.</string>
     <string name="dictate__local_longpress_send_title">الضغط المطوّل على الإرسال للنموذج المحلي</string>
     <string name="dictate__local_longpress_send_summary">أثناء التسجيل، اضغط مطولاً على زر الإرسال لاستخدام هذا النموذج بدلاً من السحابة.</string>
     <string name="dictate__local_unload_after">تفريغ النموذج الخامل بعد {n} دقيقة</string>
@@ -1608,6 +1624,34 @@
     <string name="apptour52__outro_eyebrow">هذا هو 5.2</string>
     <string name="apptour52__outro_title">إملاءً ممتعاً</string>
     <string name="apptour52__outro_body">وأمور كثيرة تحت الغطاء: تبقى الشاشة مضاءة طوال الإملاء، وتحرّر النماذج المحلية ذاكرتها عند الخمول، وتصمد إملاءات الساعة أمام انقطاع الاتصال، وصار التصحيح الألماني يتقن الحركات. يمكنك إعادة مشاهدة أي جولة من الإعدادات › حول.</string>
+    <string name="apptour53__cta_try">جرّبه</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">اضغط، تكلّم، انتهى</string>
+    <string name="apptour53__intro_body">هذا الإصدار يدور حول أكثر أمرين تفعلهما: التحدّث إلى هاتفك والكتابة عليه. صارا أسرع، وصارا أفضل في الابتعاد عن طريقك.</string>
+    <string name="apptour53__pushtotalk_eyebrow">اضغط لتتكلّم</string>
+    <string name="apptour53__pushtotalk_title">أمسك الميكروفون، وأفلته للإرسال</string>
+    <string name="apptour53__pushtotalk_body">مثل الرسالة الصوتية: أمسك مفتاح الميكروفون وتكلّم، ثم أفلته فيُرسل. اسحب يسارًا للتخلّص من التسجيل، أو اسحب لأعلى لتثبيته وتحرير يدك. النقرة القصيرة تعمل كما كانت دائمًا. يُفعَّل من إعدادات Dictate.</string>
+    <string name="apptour53__autocorrect_eyebrow">تصحيح أُعيد بناؤه</string>
+    <string name="apptour53__autocorrect_title">يقرأ أصابعك لا أخطاءك</string>
+    <string name="apptour53__autocorrect_body">صارت التصحيحات تنطلق من موضع لمسك الفعلي للمفاتيح، مع بحث في الكلمات المرجّحة أثناء الكتابة، بدل التخمين من الكلمة المكتملة. في مجموعة اختبارنا ارتفعت الدقة من ٨٨٪ إلى ٩٨٪ — والفرق يظهر أكثر عند الكتابة السريعة وغير المتقنة.</string>
+    <string name="apptour53__offline_eyebrow">دون اتصال، ومباشرة</string>
+    <string name="apptour53__offline_title">تظهر الكلمات وأنت تتكلّم — دون اتصال</string>
+    <string name="apptour53__offline_body">صارت النماذج على الجهاز تفرّغ الكلام أثناء حديثك لا بعد انتهائه، بعشر لغات. وانضم نموذجان جديدان: Canary يغطّي الإنجليزية والألمانية والفرنسية والإسبانية بثلث المساحة، وGigaAM متخصّص في الروسية.</string>
+    <string name="apptour53__languages_eyebrow">٤٥ لغة إضافية</string>
+    <string name="apptour53__languages_title">الكرواتية والبنغالية والسواحيلية و٤٢ غيرها</string>
+    <string name="apptour53__languages_body">كانت في قائمة اللغات ثغرات لا علاقة لها بما يدعمه المزوّدون فعليًا. صارت القائمة مبنيّة على ما يستطيعونه حقًا — فإن كانت لغتك غائبة، فانظر مرة أخرى.</string>
+    <string name="apptour53__designs_eyebrow">مظهران جديدان</string>
+    <string name="apptour53__designs_title">Aurora وLattice</string>
+    <string name="apptour53__designs_body">تصميمان جديدان للزر العائم، حيّان لا مرسومان: ضوء يتحرّك داخل كرة، وكرة من النقاط تتشابك وحدها وتتموّج مع صوتك وتلتف أثناء العمل. وكلاهما يتبع لون التمييز لديك.</string>
+    <string name="apptour53__prediction_eyebrow">ضغطات أقل</string>
+    <string name="apptour53__prediction_title">الكلمة التالية قبل أن تكتبها</string>
+    <string name="apptour53__prediction_body">صار شريط الاقتراحات يعرض ما يأتي عادةً بعد ذلك، متعلّمًا من طريقتك في الكتابة. وأي كلمة تُضاف إلى قاموسك بضغطة مطوّلة، فتتوقّف أسماؤك ومصطلحاتك عن التصحيح.</string>
+    <string name="apptour53__ownserver_eyebrow">خادمك الخاص</string>
+    <string name="apptour53__ownserver_title">استضافة ذاتية، والآن مباشرة أيضًا</string>
+    <string name="apptour53__ownserver_body">يستطيع خادمك أن يتولّى التفريغ المباشر أيضًا، إن كان يتحدّث بروتوكول realtime من OpenAI. وإن كان أمامه جهاز نائم، فبإمكان Dictate إيقاظه مبكرًا حتى لا ينتظر الطلب الأول إقلاعه.</string>
+    <string name="apptour53__outro_eyebrow">هذه هي 5.3</string>
+    <string name="apptour53__outro_title">إملاءً موفّقًا</string>
+    <string name="apptour53__outro_body">إضافة إلى تفاصيل كثيرة: لكل مزوّد شعاره الخاص، ومؤشّر التسجيل يمكن أن يكون ساكنًا أو نابضًا أو متفاعلًا مع الصوت، ومخرجات المطالبة يمكنها الاحتفاظ بالنص الأصلي بجانبها، والفقرات لم تعد تنقطع بعد الاختصارات. يمكنك إعادة مشاهدة أي جولة من الإعدادات › حول.</string>
     <string name="changelog__v5_0_0">• جديد: الكتابة بالسحب — اسحب عبر المفاتيح لكتابة كلمات كاملة، مع قواميس لكل لغة تُنزَّل عند الطلب. 👆\n• جديد: اقتراحات الكلمات والتصحيح التلقائي — تُصحَّح الأخطاء المطبعية تلقائيًا وتبقى الكلمة التي كتبتها على بُعد نقرة واحدة. ✨\n• جديد: النسخ الفوري — شاهد كلماتك تظهر أثناء حديثك، مع OpenAI وDeepgram وSoniox وAssemblyAI وElevenLabs. ⚡\n• جديد: ثلاثة مزوّدي نسخ إضافيين — ElevenLabs Scribe وDeepgram وAssemblyAI. ☁️\n• جديد: تخطيط الإملاء الكلاسيكي — عادت شاشة الصوت بلا لوحة مفاتيح من Dictate 3، مثبتة أو على بُعد سحبة واحدة. 🎙️\n• جديد: مكتبة موجّهات المجتمع — تصفح موجّهات إعادة الصياغة وشاركها. 📚\n• جديد: إحصاءات الإملاء مع محطات إنجاز. 📊\n• جديد: نموذج NVIDIA Parakeet دون اتصال، إضافة إلى مرشّح صمت يتخطى التسجيلات الفارغة. 📴\n• المزيد: زر عائم أكثر ثباتًا، والتحكم في جهد الاستدلال، وردود لمسية، وسمة E-Reader جديدة، وعشرات الإصلاحات. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

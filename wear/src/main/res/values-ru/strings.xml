@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Клавиатура вкл. ✓</string>
     <string name="wear_kb_enable_on">Печатает в любом прил.</string>
     <string name="wear_kb_enable_off">Включите в настройках</string>
-    <string name="wear_kb_choose">Выбрать клавиатуру</string>
-    <string name="wear_kb_chosen">Клавиатура выбрана ✓</string>
-    <string name="wear_kb_choose_sub">Выберите Dictate в поле</string>
     <string name="wear_key">Ключ на часах</string>
     <string name="wear_key_on">Диктует сама</string>
     <string name="wear_key_off">Только с телефоном</string>

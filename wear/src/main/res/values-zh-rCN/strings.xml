@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">键盘已启用 ✓</string>
     <string name="wear_kb_enable_on">在任意应用输入</string>
     <string name="wear_kb_enable_off">在设置中开启</string>
-    <string name="wear_kb_choose">选择键盘</string>
-    <string name="wear_kb_chosen">键盘已选择 ✓</string>
-    <string name="wear_kb_choose_sub">在输入框选 Dictate</string>
     <string name="wear_key">手表上的密钥</string>
     <string name="wear_key_on">可独立听写</string>
     <string name="wear_key_off">仅配合手机</string>

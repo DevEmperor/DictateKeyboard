@@ -65,14 +65,21 @@ object RealtimeClient {
      * call; [callbacks] deliver interim/final text (on background threads). The returned [RealtimeSession]
      * is fed PCM at [sampleRateFor] and finished/cancelled by the caller.
      */
+    /**
+     * [baseUrl] redirects the OpenAI-shaped session at a server of the user's own (#249) — several
+     * self-hosted transcription servers expose exactly this protocol under `/v1/realtime`. Null, and every
+     * session goes to its vendor's fixed address as before.
+     */
     fun open(
         api: RealtimeApi,
         apiKey: String,
         model: String,
         language: String?,
         callbacks: RealtimeCallbacks,
+        baseUrl: String? = null,
     ): RealtimeSession = when (api) {
-        RealtimeApi.OPENAI -> OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.OPENAI ->
+            OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl).also { it.connect() }
         RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.SONIOX -> SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.ASSEMBLYAI -> AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
@@ -98,6 +105,7 @@ private class OpenAiRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    private val baseUrl: String? = null,
 ) : RealtimeSession {
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
@@ -111,14 +119,36 @@ private class OpenAiRealtimeSession(
         const val URL = "wss://api.openai.com/v1/realtime?intent=transcription"
         const val AUDIO_APPEND_PREFIX = "{\"type\":\"input_audio_buffer.append\",\"audio\":\""
         const val AUDIO_APPEND_SUFFIX = "\"}"
+
+        /**
+         * The websocket address of a self-hosted server, derived from the base URL its batch requests
+         * already use (#249) — `http(s)://host/v1/` becomes `ws(s)://host/v1/realtime`. Cleartext is
+         * deliberately allowed through: these live on a LAN, where https is the exception.
+         */
+        fun realtimeUrlFrom(baseUrl: String): String {
+            val trimmed = baseUrl.trim().trimEnd('/')
+            val ws = when {
+                trimmed.startsWith("https://", ignoreCase = true) -> "wss://" + trimmed.removeRange(0, 8)
+                trimmed.startsWith("http://", ignoreCase = true) -> "ws://" + trimmed.removeRange(0, 7)
+                trimmed.startsWith("ws://", ignoreCase = true) ||
+                    trimmed.startsWith("wss://", ignoreCase = true) -> trimmed
+                else -> "ws://$trimmed"
+            }
+            // Already pointed at the endpoint itself (or carrying its own query): take it as given.
+            return if (ws.contains("/realtime")) ws else "$ws/realtime?intent=transcription"
+        }
     }
 
     fun connect() {
         // GA interface (the OpenAI-Beta: realtime=v1 header would force the retired beta shape →
         // "beta_api_shape_disabled"). Session type ("transcription") distinguishes the session in GA.
         val request = Request.Builder()
-            .url(URL)
-            .header("Authorization", "Bearer $apiKey")
+            .url(baseUrl?.takeIf { it.isNotBlank() }?.let { realtimeUrlFrom(it) } ?: URL)
+            .apply {
+                // A server of one's own usually has no key at all, and sending an empty bearer makes some
+                // of them reject the handshake outright.
+                if (apiKey.isNotBlank()) header("Authorization", "Bearer $apiKey")
+            }
             .build()
         ws = client.newWebSocket(request, listener)
     }

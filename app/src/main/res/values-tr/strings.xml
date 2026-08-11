@@ -537,6 +537,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
+    <string name="about__data_attributions__title">Veri ve model lisansları</string>
+    <string name="about__data_attributions__summary">Cihazdaki modellerin, sözlüklerin ve dil verilerinin lisansları</string>
     <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Bir şeyler ters gitti: {error_message}</string>
@@ -1108,6 +1110,10 @@
     <string name="dictate__floating_button_design_orb_summary">Kayıt sırasında sesinizle parlayıp titreşen dolu bir küre.</string>
     <string name="dictate__floating_button_design_cloud">Bulut</string>
     <string name="dictate__floating_button_design_cloud_summary">Kayıt sırasında akan ve sesine tepki veren akışkan bir bulut küresi.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Kürenin içinde ışık: kayıtta dalgalanır, işlenirken çalkalanır</string>
+    <string name="dictate__floating_button_design_lattice">Kafes</string>
+    <string name="dictate__floating_button_design_lattice_summary">Noktalardan bir küre: beklerken birbirine bağlanır, sesinle dalgalanır, işlenirken döner</string>
     <string name="dictate__floating_button_design_pill">Hap</string>
     <string name="dictate__floating_button_design_pill_summary">Etkinken genişleyerek bir sayaç ve canlı dalga biçimi gösterir.</string>
     <string name="dictate__floating_button_design_ring">Halka</string>
@@ -1259,6 +1265,10 @@
     <string name="dictate__bluetooth_mic_summary">Mevcut olduğunda bağlı bir Bluetooth kulaklık üzerinden kaydet</string>
     <string name="dictate__keep_screen_awake_title">Ekranı açık tut</string>
     <string name="dictate__keep_screen_awake_summary">Kayıt sırasında ekranın kapanmasını engelle</string>
+    <string name="dictate__push_to_talk_title">Kaydetmek için basılı tut</string>
+    <string name="dictate__push_to_talk_summary">Mikrofonu basılı tutun, göndermek için bırakın</string>
+    <string name="dictate__push_to_talk_summary_off">Kapalı — mikrofonu basılı tutmak bunun yerine bir ses dosyasını yazıya döker</string>
+    <string name="dictate__push_to_talk_slide_cancel">İptal için kaydırın</string>
     <string name="dictate__recording_animation_title">Kayıt göstergesi</string>
     <string name="dictate__recording_animation_static_label">Animasyon yok</string>
     <string name="dictate__recording_animation_static_description">Kayıt sırasında düz kırmızı bir nokta olarak kalır</string>
@@ -1291,6 +1301,10 @@
     <string name="dictate__longform_mode_manual">Sonraki bölüm</string>
     <string name="dictate__longform_mode_manual_summary">Kayıt sırasında her bölümü “Sonraki bölüm” düğmesiyle gönderin.</string>
     <string name="dictate__providers_field_realtime_model">Gerçek zamanlı model</string>
+    <string name="dictate__providers_custom_realtime">Gerçek zamanlı akış</string>
+    <string name="dictate__providers_custom_realtime_summary">Bu sunucu /v1/realtime adresinde OpenAI realtime protokolünü kullanır</string>
+    <string name="dictate__providers_custom_warm_up">Yeniden yazmadan önce uyandır</string>
+    <string name="dictate__providers_custom_warm_up_summary">Sunucuya erkenden dokunur, böylece uyuyan makine açılmaya vakit bulur</string>
     <string name="dictate__providers_realtime_model_default">Varsayılan</string>
     <string name="dictate__instant_recording_title">Anında kayıt</string>
     <string name="dictate__instant_recording_summary">Klavye açıldığında kaydı otomatik olarak başlat</string>
@@ -1433,6 +1447,8 @@
     <string name="changelog__v4_1_1">• Düzeltme: vurgu rengi bazı cihazlarda yeşil görünebiliyordu; tuşlar ve düğmeler yeniden Dictate mavisinde.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Cihazınızda çalışır — ses gönderilmez. Başlamak için bir model indirin.</string>
+    <string name="dictate__local_models_live_header">Canlı (akış)</string>
+    <string name="dictate__local_models_live_summary">Siz konuşurken yazarlar. Bunları kullanmak için Kayıt altındaki “Gerçek zamanlı transkripsiyon” seçeneğini açın.</string>
     <string name="dictate__local_longpress_send_title">Yerel model için gönder\'e basılı tut</string>
     <string name="dictate__local_longpress_send_summary">Kayıt sırasında gönder\'e basılı tut, bulut yerine bu modeli kullan.</string>
     <string name="dictate__local_unload_after">Boştaki modeli {n} dk sonra bellekten kaldır</string>
@@ -1728,6 +1744,34 @@
     <string name="apptour52__outro_eyebrow">İşte 5.2</string>
     <string name="apptour52__outro_title">İyi dikteler</string>
     <string name="apptour52__outro_body">Ayrıca kapak altında bir sürü şey: ekran dikte boyunca açık kalıyor, yerel modeller boştayken belleği bırakıyor, saatteki dikteler bağlantı kopmalarını atlatıyor ve Almanca otomatik düzeltme artık umlautları biliyor. Tüm turları Ayarlar › Hakkında altında yeniden izleyebilirsin.</string>
+    <string name="apptour53__cta_try">Dene</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Basılı tut, konuş, tamam</string>
+    <string name="apptour53__intro_body">Bu sürüm en çok yaptığın iki şeyle ilgili: telefonunla konuşmak ve onda yazmak. İkisi de hızlandı, ikisi de yolundan daha iyi çekiliyor.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Bas konuş</string>
+    <string name="apptour53__pushtotalk_title">Mikrofonu basılı tut, bırakınca gitsin</string>
+    <string name="apptour53__pushtotalk_body">Sesli mesaj gibi: mikrofon tuşunu basılı tut ve konuş, bırak ve gönderilsin. Kaydı atmak için sola kaydır, elini serbest bırakmak için yukarı sürükleyip kilitle. Kısa dokunuş her zamanki gibi çalışıyor. Dictate ayarlarından açılır.</string>
+    <string name="apptour53__autocorrect_eyebrow">Yeniden yazılan düzeltme</string>
+    <string name="apptour53__autocorrect_title">Yazım hatanı değil, parmağını okuyor</string>
+    <string name="apptour53__autocorrect_body">Düzeltmeler artık bitmiş kelimeden tahmin etmek yerine, tuşlara gerçekte nereye dokunduğundan yola çıkıyor ve olası kelimeleri sen yazarken tarıyor. Test kümemizde başarı %88\'den %98\'e çıktı — fark en çok hızlı ve özensiz yazarken görülüyor.</string>
+    <string name="apptour53__offline_eyebrow">Çevrimdışı, canlı</string>
+    <string name="apptour53__offline_title">Sen konuşurken kelimeler beliriyor — bağlantı olmadan</string>
+    <string name="apptour53__offline_body">Cihaz üstündeki modeller artık yalnızca bitince değil, sen konuşurken de yazıya döküyor; on dilde. Ayrıca iki yeni model geldi: Canary İngilizce, Almanca, Fransızca ve İspanyolca\'yı üçte bir yerde kapsıyor, GigaAM ise Rusça\'da uzmanlaşmış.</string>
+    <string name="apptour53__languages_eyebrow">45 dil daha</string>
+    <string name="apptour53__languages_title">Hırvatça, Bengalce, Svahili ve 42 dil daha</string>
+    <string name="apptour53__languages_body">Dil listesindeki boşlukların, sağlayıcıların gerçekte desteklediğiyle bir ilgisi yoktu. Artık gerçekten yapabildiklerine göre kuruluyor — dilin eksikse bir daha bak.</string>
+    <string name="apptour53__designs_eyebrow">İki yeni görünüm</string>
+    <string name="apptour53__designs_title">Aurora ve Lattice</string>
+    <string name="apptour53__designs_body">Kayan düğme için iki yeni tasarım; çizilmiş değil, canlı: bir kürenin içinde hareket eden ışık ve noktalardan oluşan bir küre — kendi kendine bağlanıyor, sesinle dalgalanıyor, çalışırken dönüyor. İkisi de vurgu rengini izliyor.</string>
+    <string name="apptour53__prediction_eyebrow">Daha az tuş</string>
+    <string name="apptour53__prediction_title">Sen yazmadan önce, sonraki kelime</string>
+    <string name="apptour53__prediction_body">Öneri çubuğu artık genelde sırada ne geldiğini sunuyor — senin yazışından öğrenerek. Ve herhangi bir kelimeyi uzun basarak sözlüğüne ekleyebilirsin; isimlerin ve jargonun artık düzeltilmesin.</string>
+    <string name="apptour53__ownserver_eyebrow">Kendi sunucun</string>
+    <string name="apptour53__ownserver_title">Kendi barındırdığın sunucu, artık canlı da</string>
+    <string name="apptour53__ownserver_body">Kendi sunucun da canlı yazıya dökmeyi üstlenebilir — OpenAI\'ın realtime protokolünü konuşuyorsa. Önünde uyuyan bir makine varsa, Dictate onu erkenden uyandırabilir; böylece ilk istek açılışı beklemez.</string>
+    <string name="apptour53__outro_eyebrow">İşte 5.3</string>
+    <string name="apptour53__outro_title">İyi dikteler</string>
+    <string name="apptour53__outro_body">Ayrıca bir sürü küçük şey: her sağlayıcı kendi logosunu taşıyor, kayıt göstergesi sabit, nabız gibi ya da sese tepkili olabiliyor, komut çıktısı orijinal metni yanında tutabiliyor ve paragraflar kısaltmalardan sonra artık bölünmüyor. Tüm turları Ayarlar › Hakkında altında yeniden izleyebilirsin.</string>
     <string name="changelog__v5_0_0">• YENİ: Kaydırarak yazma — tam kelimeler yazmak için tuşların üzerinde kaydırın, istek üzerine indirilen dile özel sözlüklerle. 👆\n• YENİ: Kelime önerileri ve otomatik düzeltme — yazım hataları otomatik düzeltilir ve yazdığınız kelime bir dokunuş uzağınızda kalır. ✨\n• YENİ: Gerçek zamanlı transkripsiyon — konuşurken kelimelerinizin belirişini izleyin; OpenAI, Deepgram, Soniox, AssemblyAI ve ElevenLabs ile. ⚡\n• YENİ: Üç transkripsiyon sağlayıcısı daha — ElevenLabs Scribe, Deepgram ve AssemblyAI. ☁️\n• YENİ: Klasik dikte düzeni — Dictate 3’ün klavyesiz ses ekranı geri döndü, sabit ya da yalnızca bir kaydırma uzakta. 🎙️\n• YENİ: Topluluk istem kütüphanesi — yeniden ifade istemlerine göz atın ve paylaşın. 📚\n• YENİ: Kilometre taşlarıyla dikte istatistikleri. 📊\n• YENİ: Çevrimdışı model NVIDIA Parakeet, ayrıca boş kayıtları atlayan bir sessizlik filtresi. 📴\n• Dahası: daha kararlı bir kayan düğme, akıl yürütme çabası denetimi, dokunsal geri bildirim, yeni bir E-Reader teması ve onlarca düzeltme. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

@@ -98,7 +98,7 @@ object PhoneWearSettingsResolver {
     }.takeIf { it.isNotBlank() }
 
     private fun presetFor(account: ProviderAccount) = when {
-        account.isCustom -> ProviderRegistry.custom(account.customBaseUrl)
+        account.isCustom -> ProviderRegistry.custom(account.customBaseUrl, realtime = account.customRealtime)
         else -> ProviderRegistry.byId(account.providerId) ?: ProviderRegistry.OPENAI
     }
 

@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import android.content.Context
 import com.k2fsa.sherpa.onnx.FeatureConfig
+import com.k2fsa.sherpa.onnx.OfflineCanaryModelConfig
 import com.k2fsa.sherpa.onnx.OfflineModelConfig
 import com.k2fsa.sherpa.onnx.OfflineRecognizer
 import com.k2fsa.sherpa.onnx.OfflineRecognizerConfig
@@ -60,6 +61,10 @@ class LocalTranscriptionProvider(
                     "On-device model '${modelDir.name}' is not installed",
                 )
             }
+            // A streaming model (#233) is normally driven live by [LocalRealtimeSession], but it must
+            // also work in plain batch mode — real-time turned off, long-form, the floating button, the
+            // offline fallback. Otherwise picking one would silently break every non-live path.
+            val streaming = LocalModelCatalog.isStreaming(modelDir.name)
 
             val samples = try {
                 AudioDecode.decodeToMono16k(request.audioFile)
@@ -74,6 +79,10 @@ class LocalTranscriptionProvider(
             // Honor the user's chosen input language like the cloud providers do; null/blank → Whisper
             // auto-detect. Whisper expects the base ISO code (e.g. "de"), so drop any region suffix.
             val language = request.language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
+
+            if (streaming) {
+                return@withContext TranscriptionResult(transcribeStreaming(samples).trim())
+            }
 
             val text = try {
                 val recognizer = RecognizerCache.acquire(modelDir, numThreads, language)
@@ -103,6 +112,51 @@ class LocalTranscriptionProvider(
 
             TranscriptionResult(text.trim())
         }
+
+    /**
+     * Batch decode with a *streaming* model (#233): the whole recording is pushed through the online
+     * recognizer in chunks, and every speech pause it reports settles one piece of text. There is no
+     * 30 s window to work around here, so this needs neither the VAD nor a length cap — the recognizer
+     * consumes audio incrementally by construction.
+     */
+    private fun transcribeStreaming(samples: FloatArray): String {
+        val recognizer = OnlineRecognizerCache.acquire(modelDir, numThreads)
+        try {
+            val stream = recognizer.createStream()
+            val parts = StringBuilder()
+            fun collect() {
+                val text = recognizer.getResult(stream).text.trim()
+                if (text.isNotEmpty()) {
+                    if (parts.isNotEmpty()) parts.append(' ')
+                    parts.append(text)
+                }
+            }
+            try {
+                var offset = 0
+                while (offset < samples.size) {
+                    val end = minOf(offset + STREAM_CHUNK, samples.size)
+                    stream.acceptWaveform(samples.copyOfRange(offset, end), AudioDecode.TARGET_SAMPLE_RATE)
+                    offset = end
+                    while (recognizer.isReady(stream)) recognizer.decode(stream)
+                    if (recognizer.isEndpoint(stream)) {
+                        collect()
+                        recognizer.reset(stream)
+                    }
+                }
+                // Same tail padding as the live session: without it the encoder never releases the last
+                // word, so every batch transcription would lose its ending.
+                stream.acceptWaveform(FloatArray(TAIL_PAD_SAMPLES), AudioDecode.TARGET_SAMPLE_RATE)
+                stream.inputFinished()
+                while (recognizer.isReady(stream)) recognizer.decode(stream)
+                collect()
+            } finally {
+                stream.release()
+            }
+            return parts.toString()
+        } finally {
+            OnlineRecognizerCache.endUse()
+        }
+    }
 
     /** Single whole-buffer Whisper pass (fine for clips up to ~30 s). */
     private fun decodeOnce(recognizer: OfflineRecognizer, samples: FloatArray): String {
@@ -198,6 +252,12 @@ class LocalTranscriptionProvider(
         /** Hard ceiling per Whisper pass (~29 s) — above VAD's 28 s cut so normal segments pass whole. */
         private const val MAX_SEGMENT_SAMPLES = 29 * AudioDecode.TARGET_SAMPLE_RATE
 
+        /** Feed size for the streaming batch path (~100 ms), matching what the live session sees. */
+        private const val STREAM_CHUNK = AudioDecode.TARGET_SAMPLE_RATE / 10
+
+        /** ~0.4 s of silence flushed at the end so the encoder emits the final word. */
+        private const val TAIL_PAD_SAMPLES = (0.4 * AudioDecode.TARGET_SAMPLE_RATE).toInt()
+
 
         const val MODELS_SUBDIR = "dictate-models"
         const val ENCODER = "encoder.onnx"
@@ -222,7 +282,12 @@ class LocalTranscriptionProvider(
         /** True if [modelId] has all required files present on disk. */
         fun isInstalled(context: Context, modelId: String): Boolean {
             val dir = modelDir(context, modelId)
-            return File(dir, ENCODER).exists() && File(dir, DECODER).exists() && File(dir, TOKENS).exists()
+            if (!File(dir, ENCODER).exists() || !File(dir, DECODER).exists() ||
+                !File(dir, TOKENS).exists()
+            ) return false
+            // Streaming models (#233) are transducers, so a missing joiner means a broken install rather
+            // than a Whisper-style model — reporting it as installed would fail natively at load time.
+            return !LocalModelCatalog.isStreaming(modelId) || File(dir, JOINER).exists()
         }
 
         /**
@@ -231,7 +296,10 @@ class LocalTranscriptionProvider(
          * signals (`onTrimMemory`). Safe anytime: if a transcription is in flight it frees right after it
          * finishes, never mid-decode. The next on-device transcription rebuilds the recognizer (~1 s).
          */
-        fun unloadCachedModel() = RecognizerCache.unload()
+        fun unloadCachedModel() {
+            RecognizerCache.unload()
+            OnlineRecognizerCache.unload() // the live streaming model (#233) is just as big
+        }
 
         /**
          * How long the recognizer may sit idle before it is unloaded from RAM; 0 disables the idle timer
@@ -239,6 +307,7 @@ class LocalTranscriptionProvider(
          */
         fun setIdleUnloadMillis(millis: Long) {
             RecognizerCache.idleUnloadMillis = millis
+            OnlineRecognizerCache.idleUnloadMillis = millis
         }
     }
 }
@@ -275,12 +344,15 @@ private object RecognizerCache {
         val decoder = File(modelDir, LocalTranscriptionProvider.DECODER)
         val tokens = File(modelDir, LocalTranscriptionProvider.TOKENS)
         val joiner = File(modelDir, LocalTranscriptionProvider.JOINER)
-        val isTransducer = joiner.exists()
+        // The model says which recognizer it needs (#255). A joiner used to be the tell, but Canary has
+        // Whisper's file shape and neither config; the directory name is the model id.
+        val kind = LocalModelCatalog.kindOf(modelDir.name)
 
-        // Language is baked into the Whisper config at build time, so it is part of the cache key
-        // (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
+        // Language is baked into the Whisper and Canary configs at build time, so it is part of the cache
+        // key (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
         // as-is and ignores the language, so it stays out of the key for those.
-        val cacheKey = modelDir.absolutePath + "|" + numThreads + "|" + (if (isTransducer) "" else language)
+        val cacheKey = modelDir.absolutePath + "|" + numThreads + "|" +
+            (if (kind == LocalModelKind.NEMO_TRANSDUCER) "" else language)
         val existing = recognizer
         val rec = if (existing != null && cacheKey == key) {
             existing
@@ -288,7 +360,7 @@ private object RecognizerCache {
             existing?.release()
             recognizer = null
             key = null
-            buildRecognizer(encoder, decoder, tokens, joiner, isTransducer, numThreads, language).also {
+            buildRecognizer(encoder, decoder, tokens, joiner, kind, numThreads, language).also {
                 recognizer = it
                 key = cacheKey
             }
@@ -342,13 +414,13 @@ private object RecognizerCache {
         decoder: File,
         tokens: File,
         joiner: File,
-        isTransducer: Boolean,
+        kind: LocalModelKind,
         numThreads: Int,
         language: String,
     ): OfflineRecognizer {
-        val modelConfig = if (isTransducer) {
-            // NeMo Parakeet TDT (issue #154): encoder/decoder/joiner transducer, model-type per sherpa-onnx.
-            OfflineModelConfig(
+        val modelConfig = when (kind) {
+            // NeMo Parakeet TDT (issue #154) and GigaAM (#255): encoder/decoder/joiner transducer.
+            LocalModelKind.NEMO_TRANSDUCER -> OfflineModelConfig(
                 transducer = OfflineTransducerModelConfig(
                     encoder = encoder.absolutePath,
                     decoder = decoder.absolutePath,
@@ -358,8 +430,28 @@ private object RecognizerCache {
                 numThreads = numThreads,
                 modelType = "nemo_transducer",
             )
-        } else {
-            OfflineModelConfig(
+            // Canary (issue #255) is an attention encoder/decoder: it does not sniff the language, it is
+            // handed one, and it will happily transcribe French as though it were the language it was
+            // told. So an unset or unsupported input language falls back to English rather than passing
+            // through something the model has never seen — see [canaryLanguage].
+            LocalModelKind.CANARY -> {
+                val lang = canaryLanguage(language)
+                OfflineModelConfig(
+                    canary = OfflineCanaryModelConfig(
+                        encoder = encoder.absolutePath,
+                        decoder = decoder.absolutePath,
+                        srcLang = lang,
+                        // Same language in and out: translating is a thing this model can do, and not a
+                        // thing a dictation keyboard should do behind the user's back.
+                        tgtLang = lang,
+                        usePnc = true,
+                    ),
+                    tokens = tokens.absolutePath,
+                    numThreads = numThreads,
+                    modelType = "canary",
+                )
+            }
+            LocalModelKind.WHISPER -> OfflineModelConfig(
                 whisper = OfflineWhisperModelConfig(
                     encoder = encoder.absolutePath,
                     decoder = decoder.absolutePath,
@@ -379,4 +471,14 @@ private object RecognizerCache {
         // assetManager defaults to null → the model is read from the absolute file paths above.
         return OfflineRecognizer(config = config)
     }
+
+    /**
+     * The language tag to hand Canary. It speaks four, and anything else — including the app's
+     * auto-detect, which has no tag at all — becomes English: a wrong-but-known language degrades to
+     * poor transcription, while an unknown tag is a native failure at load time.
+     */
+    private fun canaryLanguage(language: String): String =
+        language.lowercase().takeIf { it in CANARY_LANGUAGES } ?: "en"
+
+    private val CANARY_LANGUAGES = setOf("en", "de", "fr", "es")
 }

@@ -446,6 +446,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Norme sulla privacy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codice sorgente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
+    <string name="about__data_attributions__title">Licenze di dati e modelli</string>
+    <string name="about__data_attributions__summary">Licenze dei modelli sul dispositivo, dei dizionari e dei dati linguistici</string>
     <string name="about__version__title" comment="Preference title">Versione</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versione copiata negli appunti</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Qualcosa è andato storto: {error_message}</string>
@@ -913,6 +915,10 @@
     <string name="dictate__floating_button_design_orb_summary">Una sfera piena che si illumina e pulsa con la tua voce durante la registrazione.</string>
     <string name="dictate__floating_button_design_cloud">Nuvola</string>
     <string name="dictate__floating_button_design_cloud_summary">Una sfera di nuvola fluida che si muove e risponde alla tua voce durante la registrazione.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Luce dentro una sfera: si muove durante la registrazione, vortica durante l\'elaborazione</string>
+    <string name="dictate__floating_button_design_lattice">Reticolo</string>
+    <string name="dictate__floating_button_design_lattice_summary">Una sfera di punti: si collega da ferma, ondeggia con la tua voce e ruota durante l\'elaborazione</string>
     <string name="dictate__floating_button_design_pill">Pillola</string>
     <string name="dictate__floating_button_design_pill_summary">Si espande quando attivo per mostrare un timer e una forma d’onda in tempo reale.</string>
     <string name="dictate__floating_button_design_ring">Anello</string>
@@ -1064,6 +1070,10 @@
     <string name="dictate__bluetooth_mic_summary">Registra tramite un auricolare Bluetooth collegato, quando disponibile</string>
     <string name="dictate__keep_screen_awake_title">Mantieni lo schermo acceso</string>
     <string name="dictate__keep_screen_awake_summary">Impedisci che lo schermo si spenga durante la registrazione</string>
+    <string name="dictate__push_to_talk_title">Tieni premuto per registrare</string>
+    <string name="dictate__push_to_talk_summary">Tieni premuto il microfono, rilascia per inviare</string>
+    <string name="dictate__push_to_talk_summary_off">Disattivato: tenere premuto il microfono trascrive invece un file audio</string>
+    <string name="dictate__push_to_talk_slide_cancel">Scorri per annullare</string>
     <string name="dictate__recording_animation_title">Indicatore di registrazione</string>
     <string name="dictate__recording_animation_static_label">Nessuna animazione</string>
     <string name="dictate__recording_animation_static_description">Resta un punto rosso fisso durante la registrazione</string>
@@ -1096,6 +1106,10 @@
     <string name="dictate__longform_mode_manual">Segmento successivo</string>
     <string name="dictate__longform_mode_manual_summary">Invia ogni parte con «Segmento successivo» durante la registrazione.</string>
     <string name="dictate__providers_field_realtime_model">Modello in tempo reale</string>
+    <string name="dictate__providers_custom_realtime">Streaming in tempo reale</string>
+    <string name="dictate__providers_custom_realtime_summary">Questo server usa il protocollo realtime di OpenAI su /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Sveglia prima di riformulare</string>
+    <string name="dictate__providers_custom_warm_up_summary">Contatta il server in anticipo, così una macchina in pausa fa in tempo ad avviarsi</string>
     <string name="dictate__providers_realtime_model_default">Predefinito</string>
     <string name="dictate__instant_recording_title">Registrazione istantanea</string>
     <string name="dictate__instant_recording_summary">Avvia la registrazione automaticamente all\'apertura della tastiera</string>
@@ -1238,6 +1252,8 @@
     <string name="changelog__v4_1_1">• Correzione: il colore d\'accento poteva apparire verde su alcuni dispositivi; tasti e pulsanti tornano al blu di Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Funziona sul tuo dispositivo — nessun audio viene inviato. Scarica un modello per iniziare.</string>
+    <string name="dictate__local_models_live_header">In diretta (streaming)</string>
+    <string name="dictate__local_models_live_summary">Scrivono mentre parli. Attiva “Trascrizione in tempo reale” in Registrazione per usarli.</string>
     <string name="dictate__local_longpress_send_title">Tieni premuto invia per il modello locale</string>
     <string name="dictate__local_longpress_send_summary">Durante la registrazione, tieni premuto invia per usare questo modello invece del cloud.</string>
     <string name="dictate__local_unload_after">Scarica il modello inattivo dopo {n} min</string>
@@ -1533,6 +1549,34 @@
     <string name="apptour52__outro_eyebrow">Questa è la 5.2</string>
     <string name="apptour52__outro_title">Buona dettatura</string>
     <string name="apptour52__outro_body">In più molto sotto il cofano: lo schermo resta acceso per tutta la dettatura, i modelli locali liberano memoria da fermi, le dettature dall\'orologio sopravvivono alle disconnessioni e la correzione tedesca gestisce gli umlaut. Puoi rivedere ogni tour in Impostazioni › Informazioni.</string>
+    <string name="apptour53__cta_try">Prova</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Tieni premuto, parla, fatto</string>
+    <string name="apptour53__intro_body">Questa versione riguarda le due cose che fai più spesso: parlare al telefono e scriverci. Entrambe sono più rapide, ed entrambe stanno meglio fuori dai piedi.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Premi e parla</string>
+    <string name="apptour53__pushtotalk_title">Tieni premuto il microfono, rilascia per inviare</string>
+    <string name="apptour53__pushtotalk_body">Come un messaggio vocale: tieni premuto il tasto del microfono e parla, rilascia e parte. Scorri a sinistra per buttare via la registrazione, o trascina in alto per bloccarla e liberare la mano. Un tocco breve funziona come sempre. Si attiva nelle impostazioni di Dictate.</string>
+    <string name="apptour53__autocorrect_eyebrow">Correzione rifatta</string>
+    <string name="apptour53__autocorrect_title">Legge le tue dita, non i tuoi errori</string>
+    <string name="apptour53__autocorrect_body">Le correzioni ora nascono da dove hai davvero toccato i tasti, esplorando le parole probabili mentre scrivi, invece di indovinare dalla parola finita. Sul nostro insieme di prova si passa dall\'88 % al 98 % di successo: la differenza si vede soprattutto quando scrivi in fretta e male.</string>
+    <string name="apptour53__offline_eyebrow">Offline, dal vivo</string>
+    <string name="apptour53__offline_title">Le parole arrivano mentre parli — senza connessione</string>
+    <string name="apptour53__offline_body">I modelli sul dispositivo ora trascrivono mentre parli, non solo alla fine, in dieci lingue. E ne arrivano due nuovi: Canary copre inglese, tedesco, francese e spagnolo in un terzo dello spazio, e GigaAM è specializzato in russo.</string>
+    <string name="apptour53__languages_eyebrow">45 lingue in più</string>
+    <string name="apptour53__languages_title">Croato, bengalese, swahili e altre 42</string>
+    <string name="apptour53__languages_body">L\'elenco delle lingue aveva buchi che non c\'entravano con ciò che i provider supportano davvero. Ora è costruito su quello che sanno fare: se la tua lingua mancava, guarda di nuovo.</string>
+    <string name="apptour53__designs_eyebrow">Due nuovi look</string>
+    <string name="apptour53__designs_title">Aurora e Lattice</string>
+    <string name="apptour53__designs_body">Due nuovi design per il pulsante flottante, vivi anziché disegnati: luce che si muove dentro una sfera, e una sfera di punti che si collega, ondeggia con la tua voce e ruota mentre lavora. Entrambi seguono il tuo colore d\'accento.</string>
+    <string name="apptour53__prediction_eyebrow">Meno battute</string>
+    <string name="apptour53__prediction_title">La parola dopo, prima che tu la scriva</string>
+    <string name="apptour53__prediction_body">La barra dei suggerimenti propone ora ciò che di solito viene dopo, imparato da come scrivi. E qualsiasi parola si aggiunge al dizionario con una pressione prolungata, così nomi e gergo smettono di essere corretti.</string>
+    <string name="apptour53__ownserver_eyebrow">Il tuo server</string>
+    <string name="apptour53__ownserver_title">Self-hosted, ora anche dal vivo</string>
+    <string name="apptour53__ownserver_body">Un server tuo può occuparsi anche della trascrizione dal vivo, se parla il protocollo realtime di OpenAI. E se davanti c\'è una macchina che dorme, Dictate può svegliarla in anticipo, così la prima richiesta non aspetta l\'avvio.</string>
+    <string name="apptour53__outro_eyebrow">Questa è la 5.3</string>
+    <string name="apptour53__outro_title">Buona dettatura</string>
+    <string name="apptour53__outro_body">In più tante piccole cose: ogni provider porta il proprio logo, l\'indicatore di registrazione può essere fermo, pulsante o reattivo alla voce, l\'output dei prompt può tenere accanto la trascrizione originale, e i paragrafi non si spezzano più dopo un\'abbreviazione. Puoi rivedere ogni tour in Impostazioni › Informazioni.</string>
     <string name="changelog__v5_0_0">• NUOVO: Scrittura a scorrimento — scorri sui tasti per scrivere parole intere, con dizionari per lingua scaricati su richiesta. 👆\n• NUOVO: Suggerimenti di parole e correzione automatica — gli errori vengono corretti da soli e la parola che hai digitato resta a un tocco. ✨\n• NUOVO: Trascrizione in tempo reale — guarda le tue parole apparire mentre parli, con OpenAI, Deepgram, Soniox, AssemblyAI ed ElevenLabs. ⚡\n• NUOVO: Altri tre provider di trascrizione — ElevenLabs Scribe, Deepgram e AssemblyAI. ☁️\n• NUOVO: Layout di dettatura classico — la schermata vocale senza tastiera di Dictate 3 è tornata, fissata o a un semplice scorrimento. 🎙️\n• NUOVO: Libreria di prompt della community — sfoglia e condividi prompt di riformulazione. 📚\n• NUOVO: Statistiche di dettatura con traguardi. 📊\n• NUOVO: Modello offline NVIDIA Parakeet, più un filtro del silenzio che salta le registrazioni vuote. 📴\n• Altro: un pulsante flottante più stabile, il controllo dello sforzo di ragionamento, il feedback aptico, un nuovo tema E-Reader e decine di correzioni. 🛠️</string>
     <string name="media__tab__gifs">GIF</string>
     <string name="prefs__media__gif__title">GIF</string>

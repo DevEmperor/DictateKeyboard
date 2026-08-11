@@ -546,6 +546,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
+    <string name="about__data_attributions__title">Licence dat a modelů</string>
+    <string name="about__data_attributions__summary">Licence modelů v zařízení, slovníků a jazykových dat</string>
     <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Něco se pokazilo: {error_message}</string>
@@ -1144,6 +1146,10 @@
     <string name="dictate__floating_button_design_orb_summary">Plná koule, která při nahrávání září a pulzuje s vaším hlasem.</string>
     <string name="dictate__floating_button_design_cloud">Oblak</string>
     <string name="dictate__floating_button_design_cloud_summary">Plynulá oblaková koule, která proudí a reaguje na tvůj hlas při nahrávání.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Světlo uvnitř koule: při nahrávání se vlní, při zpracování víří</string>
+    <string name="dictate__floating_button_design_lattice">Mřížka</string>
+    <string name="dictate__floating_button_design_lattice_summary">Koule z bodů: v klidu se propojuje, vlní se s tvým hlasem a při zpracování se otáčí</string>
     <string name="dictate__floating_button_design_pill">Pilulka</string>
     <string name="dictate__floating_button_design_pill_summary">Při aktivitě se rozšíří a zobrazí časovač a živý průběh zvuku.</string>
     <string name="dictate__floating_button_design_ring">Prstenec</string>
@@ -1295,6 +1301,10 @@
     <string name="dictate__bluetooth_mic_summary">Nahrávat přes připojená sluchátka Bluetooth, jsou-li dostupná</string>
     <string name="dictate__keep_screen_awake_title">Ponechat obrazovku zapnutou</string>
     <string name="dictate__keep_screen_awake_summary">Zabránit vypnutí obrazovky během nahrávání</string>
+    <string name="dictate__push_to_talk_title">Podržením nahrávat</string>
+    <string name="dictate__push_to_talk_summary">Podržte mikrofon, puštěním odešlete</string>
+    <string name="dictate__push_to_talk_summary_off">Vypnuto — podržení mikrofonu místo toho přepíše zvukový soubor</string>
+    <string name="dictate__push_to_talk_slide_cancel">Přejeďte pro zrušení</string>
     <string name="dictate__recording_animation_title">Indikátor nahrávání</string>
     <string name="dictate__recording_animation_static_label">Bez animace</string>
     <string name="dictate__recording_animation_static_description">Během nahrávání zůstane plnou červenou tečkou</string>
@@ -1327,6 +1337,10 @@
     <string name="dictate__longform_mode_manual">Další segment</string>
     <string name="dictate__longform_mode_manual_summary">Během nahrávání odesílejte každou část tlačítkem „Další segment“.</string>
     <string name="dictate__providers_field_realtime_model">Model v reálném čase</string>
+    <string name="dictate__providers_custom_realtime">Streamování v reálném čase</string>
+    <string name="dictate__providers_custom_realtime_summary">Tento server používá protokol OpenAI realtime na /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Probudit před přeformulováním</string>
+    <string name="dictate__providers_custom_warm_up_summary">Ozve se serveru včas, aby měl spící stroj čas naběhnout</string>
     <string name="dictate__providers_realtime_model_default">Výchozí</string>
     <string name="dictate__instant_recording_title">Okamžité nahrávání</string>
     <string name="dictate__instant_recording_summary">Automaticky spustit nahrávání při otevření klávesnice</string>
@@ -1469,6 +1483,8 @@
     <string name="changelog__v4_1_1">• Oprava: zvýrazňovací barva se na některých zařízeních mohla zobrazovat zeleně; klávesy a tlačítka jsou opět v modré barvě Dictate.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Běží ve vašem zařízení — žádný zvuk se neodesílá. Stáhněte model a začněte.</string>
+    <string name="dictate__local_models_live_header">Živě (streamování)</string>
+    <string name="dictate__local_models_live_summary">Píší, zatímco mluvíte. Zapněte „Přepis v reálném čase“ v Nahrávání, abyste je mohli použít.</string>
     <string name="dictate__local_longpress_send_title">Podržení odeslat pro místní model</string>
     <string name="dictate__local_longpress_send_summary">Během nahrávání podrž tlačítko odeslat, aby se použil tento model místo cloudu.</string>
     <string name="dictate__local_unload_after">Uvolnit nečinný model po {n} min</string>
@@ -1764,6 +1780,34 @@
     <string name="apptour52__outro_eyebrow">To je 5.2</string>
     <string name="apptour52__outro_title">Příjemné diktování</string>
     <string name="apptour52__outro_body">A hodně pod kapotou: obrazovka zůstane během celého diktátu zapnutá, místní modely uvolní paměť při nečinnosti, diktáty z hodinek přežijí výpadky spojení a německá autokorekce zvládá přehlásky. Každou prohlídku si znovu pustíte v Nastavení › O aplikaci.</string>
+    <string name="apptour53__cta_try">Vyzkoušet</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Podržet, mluvit, hotovo</string>
+    <string name="apptour53__intro_body">Tahle verze je o dvou věcech, které děláte nejčastěji: mluvíte na telefon a píšete na něm. Obojí je rychlejší a obojí vám líp uhne z cesty.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Stisknout a mluvit</string>
+    <string name="apptour53__pushtotalk_title">Podržte mikrofon, puštěním odešlete</string>
+    <string name="apptour53__pushtotalk_body">Jako hlasová zpráva: podržte klávesu mikrofonu a mluvte, pusťte a odejde to. Přejetím doleva nahrávku zahodíte, tažením nahoru ji zamknete a uvolníte si ruku. Krátké ťuknutí funguje jako dřív. Zapnete v nastavení Dictate.</string>
+    <string name="apptour53__autocorrect_eyebrow">Přestavěná autokorekce</string>
+    <string name="apptour53__autocorrect_title">Čte vaše prsty, ne vaše překlepy</string>
+    <string name="apptour53__autocorrect_body">Opravy teď vycházejí z toho, kam jste na klávesy skutečně sáhli, a prohledávají pravděpodobná slova průběžně, místo hádání z hotového slova. Na naší testovací sadě to stouplo z 88 % na 98 % — rozdíl je vidět hlavně při rychlém a nedbalém psaní.</string>
+    <string name="apptour53__offline_eyebrow">Offline, živě</string>
+    <string name="apptour53__offline_title">Slova se objevují, zatímco mluvíte — bez připojení</string>
+    <string name="apptour53__offline_body">Modely v telefonu teď přepisují už během řeči, ne až na konci, v deseti jazycích. A přibyly dva nové: Canary pokrývá angličtinu, němčinu, francouzštinu a španělštinu ve třetinovém místě, GigaAM se specializuje na ruštinu.</string>
+    <string name="apptour53__languages_eyebrow">O 45 jazyků víc</string>
+    <string name="apptour53__languages_title">Chorvatština, bengálština, svahilština a dalších 42</string>
+    <string name="apptour53__languages_body">Seznam jazyků měl mezery, které neodpovídaly tomu, co poskytovatelé opravdu umí. Teď stojí na jejich skutečných možnostech — pokud váš jazyk chyběl, podívejte se znovu.</string>
+    <string name="apptour53__designs_eyebrow">Dva nové vzhledy</string>
+    <string name="apptour53__designs_title">Aurora a Lattice</string>
+    <string name="apptour53__designs_body">Dva nové vzhledy plovoucího tlačítka, živé místo nakreslených: světlo pohybující se uvnitř koule a koule z bodů, která se sama propojuje, vlní se s vaším hlasem a při práci se otáčí. Oba se drží vaší zvýrazňovací barvy.</string>
+    <string name="apptour53__prediction_eyebrow">Míň úhozů</string>
+    <string name="apptour53__prediction_title">Další slovo dřív, než ho napíšete</string>
+    <string name="apptour53__prediction_body">Lišta návrhů teď nabízí, co obvykle následuje — naučeno z toho, jak píšete. A jakékoli slovo přidáte do slovníku dlouhým stiskem, aby se vaše jména a žargon přestaly opravovat.</string>
+    <string name="apptour53__ownserver_eyebrow">Váš vlastní server</string>
+    <string name="apptour53__ownserver_title">Vlastní hosting, teď i živě</string>
+    <string name="apptour53__ownserver_body">Váš server může zvládnout i živý přepis, pokud mluví protokolem realtime od OpenAI. A pokud za ním stojí stroj, který spí, Dictate ho probudí včas, aby první požadavek nečekal na start.</string>
+    <string name="apptour53__outro_eyebrow">To je 5.3</string>
+    <string name="apptour53__outro_title">Příjemné diktování</string>
+    <string name="apptour53__outro_body">A spousta drobností: každý poskytovatel má vlastní logo, indikátor nahrávání může být klidný, pulzující nebo reagující na hlas, výstup promptu si vedle sebe může nechat původní přepis a odstavce se už nelámou po zkratkách. Každou prohlídku si znovu pustíte v Nastavení › O aplikaci.</string>
     <string name="changelog__v5_0_0">• NOVÉ: Psaní tahem — přejíždějte po klávesách a pište celá slova, se slovníky pro jednotlivé jazyky staženými na vyžádání. 👆\n• NOVÉ: Návrhy slov a automatické opravy — překlepy se opravují automaticky a napsané slovo zůstává na jedno klepnutí. ✨\n• NOVÉ: Přepis v reálném čase — sledujte, jak se slova objevují, zatímco mluvíte, s OpenAI, Deepgram, Soniox, AssemblyAI a ElevenLabs. ⚡\n• NOVÉ: Tři další poskytovatelé přepisu — ElevenLabs Scribe, Deepgram a AssemblyAI. ☁️\n• NOVÉ: Klasické rozvržení diktování — hlasová obrazovka bez klávesnice z Dictate 3 je zpět, zafixovaná nebo na jedno přejetí. 🎙️\n• NOVÉ: Komunitní knihovna promptů — procházejte a sdílejte prompty pro přeformulování. 📚\n• NOVÉ: Statistiky diktování s milníky. 📊\n• NOVÉ: Offline model NVIDIA Parakeet a filtr ticha, který přeskočí prázdné nahrávky. 📴\n• Více: stabilnější plovoucí tlačítko, ovládání úsilí uvažování, haptická odezva, nový motiv E-Reader a desítky oprav. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

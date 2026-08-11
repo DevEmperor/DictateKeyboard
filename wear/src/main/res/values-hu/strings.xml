@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Billentyűzet be ✓</string>
     <string name="wear_kb_enable_on">Bármely appban ír</string>
     <string name="wear_kb_enable_off">Kapcsold be a beállításban</string>
-    <string name="wear_kb_choose">Billentyűzet választása</string>
-    <string name="wear_kb_chosen">Billentyűzet kiválasztva ✓</string>
-    <string name="wear_kb_choose_sub">Válaszd a Dictate-et</string>
     <string name="wear_key">Kulcs az órán</string>
     <string name="wear_key_on">Egyedül diktál</string>
     <string name="wear_key_off">Csak telefonnal</string>

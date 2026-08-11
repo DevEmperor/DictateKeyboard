@@ -105,6 +105,7 @@ import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
@@ -258,6 +259,7 @@ fun ThemeEditorScreen(
     content {
         stylesheetEditorFailure?.let { failure ->
             JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
                 title = stringRes(R.string.settings__theme_editor__stylesheet_error_title),
                 confirmLabel = stringRes(R.string.action__yes),
                 onConfirm = {

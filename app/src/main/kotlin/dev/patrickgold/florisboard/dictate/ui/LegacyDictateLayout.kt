@@ -188,6 +188,8 @@ private fun keyAttributes(code: Int) = mapOf(
  *   the keys below (used on the modern keyboard – a horizontal swipe anywhere returns to the dictation
  *   UI). When false (legacy side) it runs on the Main pass and bails the moment a child gesture (space
  *   cursor, backspace select, prompt-strip scroll) consumes the event, so those never trigger a switch.
+ *
+ * A live push-to-talk press always wins, whichever pass this runs on – see the check inside.
  */
 fun Modifier.legacySwipeToggle(
     intercept: Boolean = false,
@@ -203,6 +205,11 @@ fun Modifier.legacySwipeToggle(
             val event = awaitPointerEvent(pass)
             val change = event.changes.firstOrNull() ?: break
             if (!change.pressed) break
+            // A push-to-talk press owns the whole gesture (#235): sliding off the mic is how a recording
+            // is discarded or latched, and that is a horizontal swipe by any other measure. It is driven
+            // from the window's own touch stream rather than Compose's, so neither the consumed check
+            // below nor keyOwnsSwipe ever sees it — this has to ask directly.
+            if (DictateHoldTouch.pressed.value) break
             if (!intercept && change.isConsumed) break
             // On the modern keyboard, let a key that owns its swipe keep it — space/backspace cursor+delete
             // gestures (#188), or an open long-press popup for picking an accent/umlaut (#221): step aside
@@ -596,7 +603,8 @@ private fun LegacyRecordRow(
         val pulse by rememberInfiniteTransition(label = "legacyRecord").animateFloat(
             initialValue = 1f,
             targetValue = if (animation == DictateRecordingAnimation.PULSE && isRecording) 1.03f else 1f,
-            animationSpec = infiniteRepeatable(tween(600), RepeatMode.Reverse),
+            // Same beat as the Smartbar dot, deliberately not the same amplitude (see above).
+            animationSpec = infiniteRepeatable(tween(PULSE_DURATION_MS), RepeatMode.Reverse),
             label = "recordPulse",
         )
         val recordScale = if (animation == DictateRecordingAnimation.LEVEL) 1f + 0.03f * level else pulse
@@ -619,6 +627,9 @@ private fun LegacyRecordRow(
                             indication = ripple(),
                         ) { feedback.keyPress(); DictateController.onMicClick(context) }
                     } else {
+                        // Push-to-talk (#235) deliberately does not reach this button. It is the classic
+                        // layout's one big key: a tap records, a long press picks a file to transcribe, and
+                        // that stays true whether or not hold-to-record is on for the Smartbar mic.
                         Modifier.combinedClickable(
                             interactionSource = interaction,
                             indication = ripple(),

@@ -95,6 +95,7 @@ import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.kotlin.io.subDir
@@ -243,6 +244,7 @@ internal fun EditPropertyDialog(
     }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(
             if (isAddPropertyDialog) {
                 R.string.settings__theme_editor__add_property
@@ -894,6 +896,7 @@ private fun PaddingValueEditor(
         }
         val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = dialogForPaddingValue.label(),
             confirmLabel = stringRes(R.string.action__apply),
             onConfirm = {
@@ -1047,6 +1050,7 @@ private fun ShapeValueEditor(
                 }
                 val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
                 JetPrefAlertDialog(
+                    scrollModifier = florisDialogScroll(),
                     title = dialogForCorner.label(),
                     confirmLabel = stringRes(R.string.action__apply),
                     onConfirm = {
@@ -1193,6 +1197,7 @@ private fun ShapeValueEditor(
                 }
                 val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentShapeValue, size)
                 JetPrefAlertDialog(
+                    scrollModifier = florisDialogScroll(),
                     title = dialogForCorner.label(),
                     confirmLabel = stringRes(R.string.action__apply),
                     onConfirm = {

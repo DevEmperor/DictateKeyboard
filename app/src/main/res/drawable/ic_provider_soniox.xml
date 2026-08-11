@@ -1,0 +1,14 @@
+<!-- Brand mark of the provider this row configures, shown so the list can be scanned by logo.
+     Monochrome outline only; the trademark belongs to its owner. See the attributions screen.
+
+     Soniox publish no vector mark, so this is their own icon traced back to curves and fitted to
+     the same optical size as the rest. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M10.35 1.61C6.67 2.19 4.38 4.37 4.11 7.58C3.81 10.95 5.51 12.95 9.75 14.24C10.35 14.42 11.43 14.75 12.15 14.96C14.63 15.72 15.27 16.9 13.49 17.43C12.23 17.8 7.82 16.75 6.76 15.83C5.87 15.05 5.83 15.08 4.49 17.26C3.8 18.38 3.21 19.35 3.17 19.43C3.07 19.72 5.42 20.96 7.21 21.57C13.72 23.79 19.65 21.92 20.63 17.34C21.48 13.3 19.68 11.13 14.01 9.38C10.78 8.38 10.06 7.9 10.52 7.09C11.13 6.02 13.91 6.33 16.93 7.8C17.42 8.03 17.88 8.23 17.93 8.23C18.01 8.23 18.34 7.64 19.81 4.88C20.39 3.78 20.41 3.79 19.19 3.19C16.54 1.88 12.84 1.22 10.35 1.61Z" />
+</vector>

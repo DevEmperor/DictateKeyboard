@@ -468,6 +468,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacybeleid</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Broncode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source-licenties</string>
+    <string name="about__data_attributions__title">Licenties van gegevens en modellen</string>
+    <string name="about__data_attributions__summary">Licenties van de modellen op het apparaat, woordenboeken en taalgegevens</string>
     <string name="about__version__title" comment="Preference title">Versie</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Appversie gekopieerd naar klembord</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Er is iets misgegaan: {error_message}</string>
@@ -1029,6 +1031,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_design_orb_summary">Een massieve bol die gloeit en pulseert met je stem tijdens het opnemen.</string>
     <string name="dictate__floating_button_design_cloud">Wolk</string>
     <string name="dictate__floating_button_design_cloud_summary">Een vloeiende wolkbol die beweegt en op je stem reageert tijdens het opnemen.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Licht in een bol: het beweegt tijdens opnemen en kolkt tijdens verwerken</string>
+    <string name="dictate__floating_button_design_lattice">Raster</string>
+    <string name="dictate__floating_button_design_lattice_summary">Een bol van punten: verbindt zich in rust, golft met je stem en draait tijdens verwerken</string>
     <string name="dictate__floating_button_design_pill">Pil</string>
     <string name="dictate__floating_button_design_pill_summary">Klapt uit wanneer actief om een timer en een live golfvorm te tonen.</string>
     <string name="dictate__floating_button_design_ring">Ring</string>
@@ -1180,6 +1186,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__bluetooth_mic_summary">Opnemen via een verbonden Bluetooth-headset indien beschikbaar</string>
     <string name="dictate__keep_screen_awake_title">Scherm aan houden</string>
     <string name="dictate__keep_screen_awake_summary">Voorkomen dat het scherm uitgaat tijdens het opnemen</string>
+    <string name="dictate__push_to_talk_title">Ingedrukt houden om op te nemen</string>
+    <string name="dictate__push_to_talk_summary">Houd de microfoon ingedrukt, laat los om te verzenden</string>
+    <string name="dictate__push_to_talk_summary_off">Uit — de microfoon ingedrukt houden transcribeert in plaats daarvan een audiobestand</string>
+    <string name="dictate__push_to_talk_slide_cancel">Veeg om te annuleren</string>
     <string name="dictate__recording_animation_title">Opname-indicator</string>
     <string name="dictate__recording_animation_static_label">Geen animatie</string>
     <string name="dictate__recording_animation_static_description">Blijft tijdens het opnemen een effen rode stip</string>
@@ -1212,6 +1222,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__longform_mode_manual">Volgend segment</string>
     <string name="dictate__longform_mode_manual_summary">Verstuur elk deel met “Volgend segment” tijdens het opnemen.</string>
     <string name="dictate__providers_field_realtime_model">Realtimemodel</string>
+    <string name="dictate__providers_custom_realtime">Realtime streamen</string>
+    <string name="dictate__providers_custom_realtime_summary">Deze server spreekt het OpenAI-realtimeprotocol op /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Wekken vóór herformuleren</string>
+    <string name="dictate__providers_custom_warm_up_summary">Benadert de server vroeg, zodat een slapende machine kan opstarten</string>
     <string name="dictate__providers_realtime_model_default">Standaard</string>
     <string name="dictate__instant_recording_title">Direct opnemen</string>
     <string name="dictate__instant_recording_summary">Automatisch beginnen met opnemen wanneer het toetsenbord wordt geopend</string>
@@ -1354,6 +1368,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="changelog__v4_1_1">• Oplossing: de accentkleur kon op sommige apparaten groen lijken; toetsen en knoppen zijn weer Dictate-blauw.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Draait op je apparaat — er wordt geen audio verzonden. Download een model om te beginnen.</string>
+    <string name="dictate__local_models_live_header">Live (streaming)</string>
+    <string name="dictate__local_models_live_summary">Ze typen terwijl je praat. Zet “Realtime-transcriptie” aan onder Opname om ze te gebruiken.</string>
     <string name="dictate__local_longpress_send_title">Verzenden ingedrukt houden voor lokaal model</string>
     <string name="dictate__local_longpress_send_summary">Houd tijdens opnemen verzenden ingedrukt om dit model te gebruiken i.p.v. de cloud.</string>
     <string name="dictate__local_unload_after">Inactief model na {n} min ontladen</string>
@@ -1649,6 +1665,34 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="apptour52__outro_eyebrow">Dat is 5.2</string>
     <string name="apptour52__outro_title">Veel dicteerplezier</string>
     <string name="apptour52__outro_body">En veel onder de motorkap: het scherm blijft het hele dictaat aan, lokale modellen geven hun geheugen vrij bij inactiviteit, horloge-dictaten overleven verbindingsonderbrekingen en de Duitse autocorrectie kent nu umlauten. Elke rondleiding is terug te vinden onder Instellingen › Over.</string>
+    <string name="apptour53__cta_try">Uitproberen</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Vasthouden, praten, klaar</string>
+    <string name="apptour53__intro_body">Deze versie gaat over de twee dingen die je het vaakst doet: tegen je telefoon praten en erop typen. Allebei sneller, en allebei beter in je niet voor de voeten lopen.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Indrukken om te praten</string>
+    <string name="apptour53__pushtotalk_title">Houd de microfoon vast, laat los om te versturen</string>
+    <string name="apptour53__pushtotalk_body">Als een spraakbericht: houd de microfoontoets vast en praat, laat los en het gaat weg. Veeg naar links om de opname weg te gooien, of sleep omhoog om hem vast te zetten en je hand vrij te hebben. Een korte tik werkt nog gewoon zoals altijd. Aan te zetten in de Dictate-instellingen.</string>
+    <string name="apptour53__autocorrect_eyebrow">Autocorrectie opnieuw gebouwd</string>
+    <string name="apptour53__autocorrect_title">Ze leest je vingers, niet je typefouten</string>
+    <string name="apptour53__autocorrect_body">Correcties komen nu voort uit waar je de toetsen echt raakte, met een zoektocht door de waarschijnlijke woorden terwijl je typt, in plaats van te gokken op het afgemaakte woord. Op onze testset ging het van 88 % naar 98 % goed — het verschil merk je vooral bij snel en slordig typen.</string>
+    <string name="apptour53__offline_eyebrow">Offline, live</string>
+    <string name="apptour53__offline_title">Woorden verschijnen terwijl je praat — zonder verbinding</string>
+    <string name="apptour53__offline_body">Modellen op je toestel transcriberen nu al terwijl je praat, niet pas aan het eind, in tien talen. En er kwamen twee modellen bij: Canary dekt Engels, Duits, Frans en Spaans in een derde van de ruimte, en GigaAM is gespecialiseerd in Russisch.</string>
+    <string name="apptour53__languages_eyebrow">45 talen erbij</string>
+    <string name="apptour53__languages_title">Kroatisch, Bengaals, Swahili en 42 andere</string>
+    <string name="apptour53__languages_body">De talenlijst had gaten die niets te maken hadden met wat de aanbieders werkelijk ondersteunen. Ze is nu gebouwd op wat ze echt kunnen — als jouw taal ontbrak, kijk nog eens.</string>
+    <string name="apptour53__designs_eyebrow">Twee nieuwe looks</string>
+    <string name="apptour53__designs_title">Aurora en Lattice</string>
+    <string name="apptour53__designs_body">Twee nieuwe ontwerpen voor de zwevende knop, levend in plaats van getekend: licht dat in een bol beweegt, en een bol van punten die zich verbindt, met je stem golft en draait terwijl hij werkt. Beide volgen je accentkleur.</string>
+    <string name="apptour53__prediction_eyebrow">Minder aanslagen</string>
+    <string name="apptour53__prediction_title">Het volgende woord, voordat je het typt</string>
+    <string name="apptour53__prediction_body">De suggestiebalk biedt nu wat er meestal volgt, geleerd van hoe jij schrijft. En elk woord kun je met een lange druk aan je woordenboek toevoegen, zodat je namen en jargon niet langer worden weggecorrigeerd.</string>
+    <string name="apptour53__ownserver_eyebrow">Je eigen server</string>
+    <string name="apptour53__ownserver_title">Zelfgehost, nu ook live</string>
+    <string name="apptour53__ownserver_body">Een eigen server kan nu ook live transcriberen, als hij het realtimeprotocol van OpenAI spreekt. En staat er een machine achter die slaapt, dan kan Dictate die vroeg wekken zodat het eerste verzoek niet op het opstarten hoeft te wachten.</string>
+    <string name="apptour53__outro_eyebrow">Dat was 5.3</string>
+    <string name="apptour53__outro_title">Veel dicteerplezier</string>
+    <string name="apptour53__outro_body">Plus een hoop kleinere dingen: elke aanbieder draagt zijn eigen logo, de opname-indicator kan stil, pulserend of stemreactief zijn, de promptuitvoer kan de originele transcriptie ernaast houden, en alinea\'s breken niet meer na afkortingen. Elke rondleiding is terug te vinden onder Instellingen › Over.</string>
     <string name="changelog__v5_0_0">• NIEUW: Veegtypen — veeg over de toetsen om hele woorden te typen, met woordenboeken per taal die op aanvraag worden gedownload. 👆\n• NIEUW: Woordsuggesties &amp; autocorrectie — typfouten worden automatisch hersteld en het woord dat je typte blijft één tik verwijderd. ✨\n• NIEUW: Realtime transcriptie — zie je woorden verschijnen terwijl je praat, met OpenAI, Deepgram, Soniox, AssemblyAI en ElevenLabs. ⚡\n• NIEUW: Drie extra transcriptieaanbieders — ElevenLabs Scribe, Deepgram en AssemblyAI. ☁️\n• NIEUW: Klassieke dicteerindeling — het toetsenbordloze spraakscherm uit Dictate 3 is terug, vastgezet of gewoon één veeg weg. 🎙️\n• NIEUW: Community-promptbibliotheek — blader door en deel herformuleringsprompts. 📚\n• NIEUW: Dicteerstatistieken met mijlpalen. 📊\n• NIEUW: Offline-model NVIDIA Parakeet, plus een stiltefilter dat lege opnames overslaat. 📴\n• Meer: een stabielere zwevende knop, instelbare redeneerinspanning, haptische feedback, een nieuw E-Reader-thema en tientallen oplossingen. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>

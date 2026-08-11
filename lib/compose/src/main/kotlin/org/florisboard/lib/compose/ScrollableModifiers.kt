@@ -22,6 +22,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -29,6 +31,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -47,6 +51,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 private val DefaultScrollbarSize = 4.dp
+
+/** How tall dialog content may grow before it scrolls instead of stretching the dialog. */
+private val DialogContentMaxHeight = 420.dp
+
+/** Clearance between dialog content and its scrollbar, so rows never butt against the bar. */
+private val DialogScrollbarGap = 12.dp
 // IgnoreInVeryFastOut (basically)
 private val ScrollbarAnimationEasing = CubicBezierEasing(1f, 0f, 0.82f, -0.13f)
 
@@ -74,6 +84,52 @@ fun Modifier.florisHorizontalScroll(
     } else {
         horizontalScroll(scrollState)
     }
+}
+
+/**
+ * Scroll modifier for dialog content, with a scrollbar that stays visible instead of fading out.
+ *
+ * Dialogs are the one place where a fading scrollbar fails at its job: content below the fold looks
+ * like the end of the dialog, and there is no page-level context to suggest otherwise. Pass this as
+ * `scrollModifier` to a `JetPrefAlertDialog` — it replaces the default scroll, and the bar draws only
+ * once the content actually overflows.
+ */
+@Composable
+fun florisDialogScroll(maxHeight: Dp = DialogContentMaxHeight): Modifier {
+    val state = rememberScrollState()
+    val color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+    return Modifier
+        // Cap first, so a long list scrolls inside a reasonably sized dialog instead of stretching one
+        // to the full height of the screen.
+        .heightIn(max = maxHeight)
+        .persistentVerticalScrollbar(state, color)
+        .verticalScroll(state)
+        // Inside the bar: keeps rows and trailing icons off it. The bar itself stays at the outer edge.
+        .padding(end = DialogScrollbarGap)
+}
+
+/**
+ * Draws a permanent scrollbar down the right edge. Must be applied *before* the scroll modifier, so
+ * `size.height` is the visible viewport rather than the full content height.
+ */
+fun Modifier.persistentVerticalScrollbar(
+    state: ScrollState,
+    color: Color,
+    width: Dp = 3.dp,
+): Modifier = drawWithContent {
+    drawContent()
+    val max = state.maxValue
+    if (max <= 0 || max == Int.MAX_VALUE) return@drawWithContent
+    val viewport = size.height
+    val thumbHeight = viewport * (viewport / (viewport + max))
+    val top = (viewport - thumbHeight) * (state.value.toFloat() / max)
+    val w = width.toPx()
+    drawRoundRect(
+        color = color,
+        topLeft = Offset(size.width - w, top),
+        size = Size(w, thumbHeight),
+        cornerRadius = CornerRadius(w / 2, w / 2),
+    )
 }
 
 fun Modifier.florisScrollbar(

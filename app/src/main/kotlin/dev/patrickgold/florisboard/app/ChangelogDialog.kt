@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 /** PayPal donation link, kept in sync with the in-keyboard donate promo (see DictateController). */
@@ -81,6 +82,7 @@ fun ChangelogDialog() {
     }
 
     JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.changelog__dialog_title),
         confirmLabel = stringRes(R.string.action__ok),
         onConfirm = { markSeenAndClose() },

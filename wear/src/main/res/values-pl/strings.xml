@@ -34,9 +34,6 @@
     <string name="wear_kb_enabled">Klawiatura włączona ✓</string>
     <string name="wear_kb_enable_on">Pisze w każdej apce</string>
     <string name="wear_kb_enable_off">Włącz w ustawieniach</string>
-    <string name="wear_kb_choose">Wybierz klawiaturę</string>
-    <string name="wear_kb_chosen">Klawiatura wybrana ✓</string>
-    <string name="wear_kb_choose_sub">Wybierz Dictate w polu</string>
     <string name="wear_key">Klucz w zegarku</string>
     <string name="wear_key_on">Dyktuje sam</string>
     <string name="wear_key_off">Tylko z telefonem</string>

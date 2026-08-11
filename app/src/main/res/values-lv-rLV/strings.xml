@@ -498,6 +498,8 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privātuma nosacījumi</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Avota kods</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Atvērtā pirmavota licences</string>
+    <string name="about__data_attributions__title">Datu un modeļu licences</string>
+    <string name="about__data_attributions__summary">Ierīcē darbojošos modeļu, vārdnīcu un valodas datu licences</string>
     <string name="about__version__title" comment="Preference title">Laidiens</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Laidiena numurs ir ievietots starpliktuvē</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Kaut kas nogāja greizi: {error_message}</string>
@@ -1073,6 +1075,10 @@
     <string name="dictate__floating_button_design_orb_summary">Pildīta lode, kas ieraksta laikā mirdz un pulsē līdzi jūsu balsij.</string>
     <string name="dictate__floating_button_design_cloud">Mākonis</string>
     <string name="dictate__floating_button_design_cloud_summary">Plūstoša mākoņa lode, kas plūst un reaģē uz tavu balsi ierakstīšanas laikā.</string>
+    <string name="dictate__floating_button_design_aurora">Aurora</string>
+    <string name="dictate__floating_button_design_aurora_summary">Gaisma lodes iekšpusē: ierakstot viļņojas, apstrādājot virpuļo</string>
+    <string name="dictate__floating_button_design_lattice">Režģis</string>
+    <string name="dictate__floating_button_design_lattice_summary">Lode no punktiem: gaidot savienojas, viļņojas līdzi tavai balsij un apstrādājot griežas</string>
     <string name="dictate__floating_button_design_pill">Kapsula</string>
     <string name="dictate__floating_button_design_pill_summary">Aktīvā stāvoklī izvēršas, rādot taimeri un tiešraides viļņu formu.</string>
     <string name="dictate__floating_button_design_ring">Gredzens</string>
@@ -1224,6 +1230,10 @@
     <string name="dictate__bluetooth_mic_summary">Ierakstīt, izmantojot pievienotās Bluetooth austiņas, kad tās ir pieejamas</string>
     <string name="dictate__keep_screen_awake_title">Neļaut ekrānam izslēgties</string>
     <string name="dictate__keep_screen_awake_summary">Neļaut ekrānam izslēgties ierakstīšanas laikā</string>
+    <string name="dictate__push_to_talk_title">Turi, lai ierakstītu</string>
+    <string name="dictate__push_to_talk_summary">Turi mikrofonu, atlaid, lai nosūtītu</string>
+    <string name="dictate__push_to_talk_summary_off">Izslēgts — mikrofona turēšana tā vietā transkribē audio failu</string>
+    <string name="dictate__push_to_talk_slide_cancel">Velc, lai atceltu</string>
     <string name="dictate__recording_animation_title">Ierakstīšanas indikators</string>
     <string name="dictate__recording_animation_static_label">Bez animācijas</string>
     <string name="dictate__recording_animation_static_description">Ierakstīšanas laikā paliek vienlaidu sarkans punkts</string>
@@ -1256,6 +1266,10 @@
     <string name="dictate__longform_mode_manual">Nākamais segments</string>
     <string name="dictate__longform_mode_manual_summary">Sūti katru daļu ar pogu „Nākamais segments“ ierakstīšanas laikā.</string>
     <string name="dictate__providers_field_realtime_model">Reāllaika modelis</string>
+    <string name="dictate__providers_custom_realtime">Straumēšana reāllaikā</string>
+    <string name="dictate__providers_custom_realtime_summary">Šis serveris izmanto OpenAI realtime protokolu vietnē /v1/realtime</string>
+    <string name="dictate__providers_custom_warm_up">Pamodināt pirms pārfrāzēšanas</string>
+    <string name="dictate__providers_custom_warm_up_summary">Sazinās ar serveri laikus, lai snaudošai mašīnai pietiktu laika ieslēgties</string>
     <string name="dictate__providers_realtime_model_default">Noklusējuma</string>
     <string name="dictate__instant_recording_title">Tūlītēja ierakstīšana</string>
     <string name="dictate__instant_recording_summary">Sākt ierakstīšanu automātiski, kad tiek atvērta tastatūra</string>
@@ -1398,6 +1412,8 @@
     <string name="changelog__v4_1_1">• Labojums: akcenta krāsa dažās ierīcēs varēja izskatīties zaļa; taustiņi un pogas atkal ir Dictate zilā krāsā.</string>
     <!-- Dictate on-device (offline) models -->
     <string name="dictate__local_models_header">Darbojas jūsu ierīcē — audio netiek sūtīts. Lejupielādējiet modeli, lai sāktu.</string>
+    <string name="dictate__local_models_live_header">Tiešraidē (straumēšana)</string>
+    <string name="dictate__local_models_live_summary">Tie raksta, kamēr runā. Ieslēdz “Reāllaika transkripcija” sadaļā Ierakstīšana, lai tos izmantotu.</string>
     <string name="dictate__local_longpress_send_title">Turēt sūtīšanu vietējam modelim</string>
     <string name="dictate__local_longpress_send_summary">Ierakstīšanas laikā turi sūtīšanu, lai lietotu šo modeli mākoņa vietā.</string>
     <string name="dictate__local_unload_after">Izlādēt dīkstāves modeli pēc {n} min</string>
@@ -1693,6 +1709,34 @@
     <string name="apptour52__outro_eyebrow">Tā ir 5.2</string>
     <string name="apptour52__outro_title">Veiksmīgu diktēšanu</string>
     <string name="apptour52__outro_body">Turklāt daudz zem pārsega: ekrāns paliek ieslēgts visu diktātu, vietējie modeļi dīkstāvē atbrīvo atmiņu, pulksteņa diktāti pārdzīvo savienojuma pārrāvumus, un vācu automātiskā labošana tagad pārzina umlautus. Katru ekskursiju vari pārskatīt sadaļā Iestatījumi › Par.</string>
+    <string name="apptour53__cta_try">Izmēģināt</string>
+    <string name="apptour53__intro_eyebrow">Dictate 5.3</string>
+    <string name="apptour53__intro_title">Turi, runā, gatavs</string>
+    <string name="apptour53__intro_body">Šis laidiens ir par divām lietām, ko dari visbiežāk: runā ar telefonu un raksti uz tā. Abas kļuvušas ātrākas, un abas labāk paliek nost no ceļa.</string>
+    <string name="apptour53__pushtotalk_eyebrow">Nospied un runā</string>
+    <string name="apptour53__pushtotalk_title">Turi mikrofonu, atlaid, lai nosūtītu</string>
+    <string name="apptour53__pushtotalk_body">Kā balss ziņa: turi mikrofona taustiņu un runā, atlaid — un tas aiziet. Pavelc pa kreisi, lai ierakstu izmestu, vai velc uz augšu, lai to nofiksētu un atbrīvotu roku. Īss pieskāriens darbojas kā līdz šim. Ieslēdzams Dictate iestatījumos.</string>
+    <string name="apptour53__autocorrect_eyebrow">No jauna uzbūvēta labošana</string>
+    <string name="apptour53__autocorrect_title">Tā lasa tavus pirkstus, nevis tavas kļūdas</string>
+    <string name="apptour53__autocorrect_body">Labojumi tagad izriet no tā, kur tu patiesībā skāri taustiņus, rakstīšanas gaitā pārmeklējot ticamos vārdus, nevis minot pēc pabeigta vārda. Mūsu testu kopā precizitāte pieauga no 88 % līdz 98 % — atšķirība visvairāk redzama, rakstot ātri un pavirši.</string>
+    <string name="apptour53__offline_eyebrow">Bezsaistē, tiešraidē</string>
+    <string name="apptour53__offline_title">Vārdi parādās, kamēr runā — bez savienojuma</string>
+    <string name="apptour53__offline_body">Ierīces modeļi tagad atšifrē jau runāšanas laikā, nevis tikai beigās, desmit valodās. Un klāt nākuši divi jauni: Canary aptver angļu, vācu, franču un spāņu valodu trešdaļā vietas, bet GigaAM specializējas krievu valodā.</string>
+    <string name="apptour53__languages_eyebrow">Vēl 45 valodas</string>
+    <string name="apptour53__languages_title">Horvātu, bengāļu, svahili un vēl 42</string>
+    <string name="apptour53__languages_body">Valodu sarakstā bija robi, kam nebija sakara ar to, ko pakalpojumu sniedzēji patiesībā atbalsta. Tagad tas balstās uz viņu īstajām spējām — ja tava valoda trūka, paskaties vēlreiz.</string>
+    <string name="apptour53__designs_eyebrow">Divi jauni izskati</string>
+    <string name="apptour53__designs_title">Aurora un Lattice</string>
+    <string name="apptour53__designs_body">Divi jauni peldošās pogas noformējumi, dzīvi, nevis zīmēti: gaisma, kas kustas lodes iekšpusē, un lode no punktiem, kas pati savienojas, viļņojas līdzi tavai balsij un apstrādes laikā griežas. Abi seko tavai akcenta krāsai.</string>
+    <string name="apptour53__prediction_eyebrow">Mazāk taustiņsitienu</string>
+    <string name="apptour53__prediction_title">Nākamais vārds, pirms tu to uzraksti</string>
+    <string name="apptour53__prediction_body">Ieteikumu josla tagad piedāvā to, kas parasti seko, — mācoties no tā, kā raksti tu. Un jebkuru vārdu var pievienot vārdnīcai ar ilgu pieskārienu, lai tavi vārdi un žargons vairs netiktu laboti.</string>
+    <string name="apptour53__ownserver_eyebrow">Tavs paša serveris</string>
+    <string name="apptour53__ownserver_title">Pašmitināts, tagad arī tiešraidē</string>
+    <string name="apptour53__ownserver_body">Tavs serveris var uzņemties arī tiešraides atšifrēšanu, ja runā OpenAI realtime protokolu. Un ja tam priekšā ir mašīna, kas guļ, Dictate to var pamodināt laikus, lai pirmais pieprasījums negaidītu tās startu.</string>
+    <string name="apptour53__outro_eyebrow">Tā ir 5.3</string>
+    <string name="apptour53__outro_title">Veiksmīgu diktēšanu</string>
+    <string name="apptour53__outro_body">Un vēl daudz sīkumu: katram pakalpojumu sniedzējam ir savs logotips, ieraksta indikators var būt nekustīgs, pulsējošs vai balsij atsaucīgs, uzvednes izvade var blakus paturēt sākotnējo atšifrējumu, un rindkopas vairs nelūzt aiz saīsinājumiem. Katru ekskursiju vari pārskatīt sadaļā Iestatījumi › Par.</string>
     <string name="changelog__v5_0_0">• JAUNS: Vilkšanas rakstīšana — velc pār taustiņiem, lai rakstītu veselus vārdus, ar valodu vārdnīcām, kas tiek lejupielādētas pēc pieprasījuma. 👆\n• JAUNS: Vārdu ieteikumi un automātiskā labošana — drukas kļūdas tiek labotas automātiski, un ierakstītais vārds paliek viena pieskāriena attālumā. ✨\n• JAUNS: Reāllaika transkripcija — vēro, kā vārdi parādās, kamēr runā, ar OpenAI, Deepgram, Soniox, AssemblyAI un ElevenLabs. ⚡\n• JAUNS: Vēl trīs transkripcijas pakalpojumi — ElevenLabs Scribe, Deepgram un AssemblyAI. ☁️\n• JAUNS: Klasiskais diktēšanas izkārtojums — Dictate 3 balss ekrāns bez tastatūras ir atpakaļ, fiksēts vai viena vilkuma attālumā. 🎙️\n• JAUNS: Kopienas uzvednu bibliotēka — pārlūko un kopīgo pārformulēšanas uzvednes. 📚\n• JAUNS: Diktēšanas statistika ar atskaites punktiem. 📊\n• JAUNS: Bezsaistes modelis NVIDIA Parakeet, kā arī klusuma filtrs, kas izlaiž tukšos ierakstus. 📴\n• Vēl: stabilāka peldošā poga, spriešanas piepūles vadība, taktilā atsauce, jauna E-Reader tēma un desmitiem labojumu. 🛠️</string>
     <string name="media__tab__gifs">GIF</string>
     <string name="prefs__media__gif__title">GIF</string>

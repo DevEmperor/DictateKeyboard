@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.compose.FlorisChip
+import org.florisboard.lib.compose.florisDialogScroll
 
 @Composable
 fun ExtensionMaintainerChip(
@@ -62,6 +63,7 @@ fun ExtensionMaintainerChip(
 
     if (showDialog) {
         JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
             title = maintainer.name,
             onDismiss = { showDialog = false },
         ) {
