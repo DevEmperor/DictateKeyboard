@@ -26,20 +26,36 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Adjust
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Keyboard
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material.icons.filled.VpnKey
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,9 +63,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -58,6 +78,9 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
+import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
+import dev.patrickgold.florisboard.app.settings.dictate.providerIcon
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
@@ -166,6 +189,9 @@ private fun maskKey(key: String): String =
 /** True once the active transcription provider has a saved key, or is a keyless endpoint (Ollama). */
 private fun isProviderConfigured(accounts: ProviderAccounts, providerId: String): Boolean {
     if (accounts.getOrEmpty(providerId).hasKey) return true
+    // Dictate Cloud has no key page either, but it is not a keyless endpoint: without credit
+    // there is nothing to dictate with, so it must not pass as set up the way Ollama does.
+    if (providerId == ProviderRegistry.CLOUD.id) return false
     val preset = ProviderRegistry.byId(providerId)
     return preset != null && preset.apiKeyUrl == null
 }
@@ -310,6 +336,9 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.EnableIme.id,
             title = stringRes(R.string.setup__enable_ime__title),
+            // The app greets with its waveform rather than a keyboard glyph — the same animation the
+            // "What's new" tour opens with, so the two screens rhyme from the first second.
+            art = { SetupWelcomeWave() },
         ) {
             StepText(stringRes(R.string.setup__enable_ime__description))
             StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
@@ -319,6 +348,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.SelectIme.id,
             title = stringRes(R.string.setup__select_ime__title),
+            icon = Icons.Default.SwapHoriz,
         ) {
             StepText(stringRes(R.string.setup__select_ime__description))
             StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
@@ -328,6 +358,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.GrantMicPermission.id,
             title = stringRes(R.string.setup__grant_mic_permission__title),
+            icon = Icons.Default.Mic,
         ) {
             StepText(stringRes(R.string.setup__grant_mic_permission__description))
             StepButton(stringRes(R.string.setup__grant_mic_permission__btn)) {
@@ -338,6 +369,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             FlorisStep(
                 id = Steps.SelectNotification.id,
                 title = stringRes(R.string.setup__grant_notification_permission__title),
+                icon = Icons.Default.NotificationsActive,
             ) {
                 StepText(stringRes(R.string.setup__grant_notification_permission__description))
                 StepButton(stringRes(R.string.setup__grant_notification_permission__btn)) {
@@ -352,11 +384,16 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             ProviderSetupStep(
                 onSaveKey = ::saveKey,
                 onSkip = onSkipProvider,
+                onOpenCloud = {
+                    DictateCloud.openedFromSetup = true
+                    navController.navigate(Routes.Settings.DictateCloud)
+                },
             )
         },
         FlorisStep(
             id = Steps.FloatingButton.id,
             title = stringRes(R.string.setup__floating_button__title),
+            icon = Icons.Default.Adjust,
         ) {
             StepText(stringRes(R.string.setup__floating_button__intro))
             Spacer(modifier = Modifier.height(8.dp))
@@ -392,6 +429,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         FlorisStep(
             id = Steps.FinishUp.id,
             title = stringRes(R.string.setup__finish_up__title),
+            icon = Icons.Default.Celebration,
         ) {
             StepText(stringRes(R.string.setup__finish_up__description_p1))
             StepText(stringRes(R.string.setup__finish_up__description_p2))
@@ -425,6 +463,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
 private fun FlorisStepLayoutScope.ProviderSetupStep(
     onSaveKey: (providerId: String, key: String) -> Unit,
     onSkip: () -> Unit,
+    onOpenCloud: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -434,118 +473,220 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     var showManualEntry by rememberSaveable { mutableStateOf(false) }
     var pasteHint by remember { mutableStateOf<String?>(null) }
     var providerMenuExpanded by remember { mutableStateOf(false) }
+    // Which of the two ways the user has picked. Starts undecided on purpose: presenting the
+    // API-key flow first and mentioning credit afterwards would be a recommendation dressed up
+    // as an order, and both ways are meant to be equal here.
+    var choseOwnKey by rememberSaveable { mutableStateOf(false) }
+
+    // Coming back from the credit screen via "use my own provider" lands here, and must land on the
+    // key flow rather than on the fork the user has already answered.
+    val ownKeyRequested by DictateCloud.ownKeyRequested.collectAsState()
+    LaunchedEffect(ownKeyRequested) {
+        if (ownKeyRequested) {
+            choseOwnKey = true
+            DictateCloud.ownKeyRequested.value = false
+        }
+    }
+
+    // Both sides of the fork are long enough to scroll, and to the layout this is one step
+    // throughout — so without this, answering the fork from halfway down the page lands the key
+    // flow halfway down as well, past its own heading.
+    ScrollToTopOn(choseOwnKey)
 
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
 
-    StepText(stringRes(R.string.setup__provider__intro))
-    Spacer(modifier = Modifier.height(8.dp))
-    StepText(stringRes(R.string.setup__provider__what_is_key))
-
-    if (isRecommended) {
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(stringRes(R.string.setup__provider__recommended))
-    }
-
-    Spacer(modifier = Modifier.height(12.dp))
-    StepText(
-        text = if (isRecommended) {
-            stringRes(R.string.setup__provider__steps_groq)
-        } else {
-            stringRes(R.string.setup__provider__steps_generic, "provider" to selectedPreset.displayName)
-        },
-    )
-
-    StepButton(
-        label = stringRes(R.string.setup__provider__open_btn, "provider" to selectedPreset.displayName),
-    ) {
-        selectedPreset.apiKeyUrl?.let { context.launchUrl(it) }
-    }
-
-    // Paste-first: the user just copied the key on the provider page, so the common path needs no
-    // on-screen keyboard (which otherwise covers this cramped step). Manual entry stays as a fallback.
-    val clipboardEmptyMsg = stringRes(R.string.setup__provider__clipboard_empty)
-    StepButton(label = stringRes(R.string.setup__provider__paste_btn)) {
-        val pasted = readClipboardText(context)?.trim()
-        if (pasted.isNullOrBlank()) {
-            pasteHint = clipboardEmptyMsg
-        } else {
-            apiKey = pasted
-            pasteHint = null
-        }
-    }
-
-    if (apiKey.isNotBlank()) {
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringRes(R.string.setup__provider__key_detected, "key" to maskKey(apiKey)),
+    // No plate on this step, deliberately. Its content is two cards that each already carry a mark;
+    // a third illustration above them competes rather than orients.
+    if (!choseOwnKey) {
+        ProviderChoice(
+            onChooseCloud = onOpenCloud,
+            onChooseOwnKey = { choseOwnKey = true },
+            onSkip = onSkip,
         )
-    }
-    pasteHint?.let { hint ->
-        Spacer(modifier = Modifier.height(8.dp))
-        StepText(text = hint, fontStyle = FontStyle.Italic)
+        return
     }
 
     TextButton(
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
-        onClick = { showManualEntry = !showManualEntry },
+        modifier = Modifier.align(Alignment.CenterHorizontally),
+        onClick = { choseOwnKey = false },
     ) {
-        Text(stringRes(R.string.setup__provider__enter_manually))
-    }
-    if (showManualEntry) {
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            value = apiKey,
-            onValueChange = { apiKey = it },
-            singleLine = true,
-            label = { Text(stringRes(R.string.setup__provider__key_field)) },
-        )
+        Text(stringRes(R.string.setup__provider__back_to_choice))
     }
 
-    if (apiKey.isNotBlank()) {
-        StepButton(label = stringRes(R.string.setup__provider__save_btn)) {
-            onSaveKey(selectedProviderId, apiKey)
-        }
-    }
-
-    // Advanced: let users pick a different transcription-capable provider than the recommended one.
-    TextButton(
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
-        onClick = { showAdvanced = !showAdvanced },
-    ) {
-        Text(stringRes(R.string.setup__provider__other_provider))
-    }
-    if (showAdvanced) {
-        StepText(
-            text = stringRes(R.string.setup__provider__other_provider_hint),
-            fontStyle = FontStyle.Italic,
-        )
-        Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            TextButton(onClick = { providerMenuExpanded = true }) {
-                Text("${selectedPreset.displayName}  ▾")
+    // The whole key flow in one card, so this branch looks like the fork it came from rather than a
+    // stack of loose buttons. The provider's own mark sits at the top: it is what the user is about
+    // to open in a browser, and recognising the logo there is half of not getting lost.
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = providerIcon(selectedProviderId),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = selectedPreset.displayName,
+                    modifier = Modifier.padding(start = 12.dp),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
             }
-            DropdownMenu(
-                expanded = providerMenuExpanded,
-                onDismissRequest = { providerMenuExpanded = false },
+
+            if (isRecommended) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringRes(R.string.setup__provider__recommended),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = stringRes(R.string.setup__provider__what_is_key),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = if (isRecommended) {
+                    stringRes(R.string.setup__provider__steps_groq)
+                } else {
+                    stringRes(R.string.setup__provider__steps_generic, "provider" to selectedPreset.displayName)
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { selectedPreset.apiKeyUrl?.let { context.launchUrl(it) } },
             ) {
-                ProviderRegistry.presets
-                    .filter { it.capabilities.transcription }
-                    .forEach { preset ->
-                        DropdownMenuItem(
-                            text = { Text(preset.displayName) },
-                            onClick = {
-                                selectedProviderId = preset.id
-                                providerMenuExpanded = false
-                            },
-                        )
+                Text(stringRes(R.string.setup__provider__open_btn, "provider" to selectedPreset.displayName))
+            }
+
+            // Paste-first: the user has just copied the key on the provider page, so the common path
+            // needs no on-screen keyboard — which would otherwise cover this cramped step. Typing
+            // stays available underneath.
+            val clipboardEmptyMsg = stringRes(R.string.setup__provider__clipboard_empty)
+            Spacer(modifier = Modifier.height(8.dp))
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    val pasted = readClipboardText(context)?.trim()
+                    if (pasted.isNullOrBlank()) {
+                        pasteHint = clipboardEmptyMsg
+                    } else {
+                        apiKey = pasted
+                        pasteHint = null
                     }
+                },
+            ) {
+                Text(stringRes(R.string.setup__provider__paste_btn))
+            }
+
+            if (apiKey.isNotBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringRes(R.string.setup__provider__key_detected, "key" to maskKey(apiKey)),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+            pasteHint?.let { hint ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = hint,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+
+            TextButton(onClick = { showManualEntry = !showManualEntry }) {
+                Text(stringRes(R.string.setup__provider__enter_manually))
+            }
+            if (showManualEntry) {
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = apiKey,
+                    onValueChange = { apiKey = it },
+                    singleLine = true,
+                    label = { Text(stringRes(R.string.setup__provider__key_field)) },
+                )
+            }
+
+            if (apiKey.isNotBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                // A plain Button rather than the layout's StepButton: that one is an extension on
+                // FlorisStepLayoutScope, and inside this Card the receiver is out of reach.
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { onSaveKey(selectedProviderId, apiKey) },
+                ) {
+                    Text(stringRes(R.string.setup__provider__save_btn))
+                }
+            }
+        }
+    }
+
+    // Changing provider is its own card rather than a disclosure triangle: it is a decision, not a
+    // detail, and the marks make the choice legible before the menu is even opened.
+    Spacer(modifier = Modifier.height(12.dp))
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = stringRes(R.string.setup__provider__other_provider),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = stringRes(R.string.setup__provider__other_provider_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Box {
+                FilledTonalButton(onClick = { providerMenuExpanded = true }) {
+                    Icon(
+                        imageVector = providerIcon(selectedProviderId),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Spacer(modifier = Modifier.padding(start = 8.dp))
+                    Text("${selectedPreset.displayName}  ▾")
+                }
+                DropdownMenu(
+                    expanded = providerMenuExpanded,
+                    onDismissRequest = { providerMenuExpanded = false },
+                ) {
+                    ProviderRegistry.presets
+                        .filter { it.capabilities.transcription }
+                        // Dictate Cloud is the *other* branch of this step, not an entry in the list
+                        // of providers to bring a key for — it has no key page and nothing to paste.
+                        .filter { it.id != ProviderRegistry.CLOUD.id }
+                        .forEach { preset ->
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = providerIcon(preset.id),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                },
+                                text = { Text(preset.displayName) },
+                                onClick = {
+                                    selectedProviderId = preset.id
+                                    providerMenuExpanded = false
+                                },
+                            )
+                        }
+                }
             }
         }
     }
@@ -553,13 +694,136 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     TextButton(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
-            .padding(top = 4.dp),
+            .padding(top = 6.dp),
         onClick = onSkip,
     ) {
         Text(
             text = stringRes(R.string.setup__provider__skip_btn),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * The welcome: Dictate's waveform, the same one the "What's new" tour opens with.
+ *
+ * Chosen over the cloud orb deliberately. The orb is one of several floating-button skins and only
+ * some users ever see it, so as a first impression it promises a look the app may not have. The
+ * waveform is Dictate's general picture of itself — it says "this listens" without committing to a
+ * skin, and it follows the user's own accent colour.
+ *
+ * This one loops, unlike the plates on the other steps: it is the page's subject rather than its
+ * decoration, and a frozen equaliser would look broken.
+ */
+@Composable
+private fun SetupWelcomeWave() {
+    DictateWaveform(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .height(96.dp),
+    )
+}
+
+/**
+ * The fork in the road, shown before anything else in the provider step.
+ *
+ * Both ways get the same space, the same shape and the same tone — including the sentence that
+ * credit costs more than going to a provider directly. Someone who finds that out after paying
+ * has been steered, and the whole point of Dictate Cloud is that it is a convenience, not a
+ * funnel. "Set up later" stays available underneath, as it always was.
+ */
+@Composable
+private fun FlorisStepLayoutScope.ProviderChoice(
+    onChooseCloud: () -> Unit,
+    onChooseOwnKey: () -> Unit,
+    onSkip: () -> Unit,
+) {
+    StepText(stringRes(R.string.setup__provider__choose_intro))
+    Spacer(modifier = Modifier.height(16.dp))
+
+    ChoiceCard(
+        title = stringRes(R.string.setup__provider__choice_cloud_title),
+        body = stringRes(R.string.setup__provider__choice_cloud_body),
+        buttonLabel = stringRes(R.string.setup__provider__choice_cloud_btn),
+        onClick = onChooseCloud,
+        // One mark, because this is one service.
+        marks = listOf(ProviderRegistry.CLOUD.id),
+    )
+    Spacer(modifier = Modifier.height(12.dp))
+    ChoiceCard(
+        title = stringRes(R.string.setup__provider__choice_own_title),
+        body = stringRes(R.string.setup__provider__choice_own_body),
+        buttonLabel = stringRes(R.string.setup__provider__choice_own_btn),
+        onClick = onChooseOwnKey,
+        // A row of provider marks, because "many to choose from" is the whole point of this option
+        // and a sentence saying so is weaker than seeing the logos.
+        marks = listOf("groq", "openai", "gemini", "anthropic", "mistral", "deepgram", "elevenlabs"),
+    )
+
+    TextButton(
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 8.dp),
+        onClick = onSkip,
+    ) {
+        Text(
+            text = stringRes(R.string.setup__provider__skip_btn),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/**
+ * One of the two ways in, with the marks of what it actually connects to.
+ *
+ * The marks are the app's existing monochrome provider glyphs rather than the brands' colours. In a
+ * row whose message is "a set of options", uniform marks read as a set; seven brand colours read as
+ * a jumble, and each would need its own contrast check against both themes.
+ */
+@Composable
+private fun ChoiceCard(
+    title: String,
+    body: String,
+    buttonLabel: String,
+    onClick: () -> Unit,
+    marks: List<String> = emptyList(),
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            if (marks.isNotEmpty()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 10.dp),
+                ) {
+                    // Same size, same tint on both cards. Making the single mark bigger and the
+                    // accent colour was meant to give it weight and instead made it look like it
+                    // belonged to a different set than its neighbour.
+                    marks.forEach { id ->
+                        Icon(
+                            imageVector = providerIcon(id),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            }
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            FilledTonalButton(onClick = onClick) { Text(buttonLabel) }
+        }
     }
 }
 

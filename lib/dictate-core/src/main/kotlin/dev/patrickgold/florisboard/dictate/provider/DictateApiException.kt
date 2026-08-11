@@ -21,12 +21,32 @@ class DictateApiException(
     message: String? = null,
     cause: Throwable? = null,
     val httpStatus: Int? = null,
+    /**
+     * The provider's machine-readable `error.code`, kept verbatim.
+     *
+     * [kind] deliberately flattens many causes into one bucket — "out of credit" and "rate limited"
+     * are both [Kind.QUOTA_EXCEEDED], because for most providers the remedy is the same: wait or top
+     * up somewhere else. Dictate Cloud is the exception, since the remedy is a button in this app, so
+     * that one case has to be told apart from the rest by something more precise than a keyword.
+     */
+    val code: String? = null,
 ) : Exception(message, cause) {
 
     enum class Kind {
         INVALID_API_KEY,
         QUOTA_EXCEEDED,
         CONTENT_SIZE_LIMIT,
+
+        /**
+         * A *text* was too long to reword — as opposed to an audio file being too long, which is
+         * what [CONTENT_SIZE_LIMIT] means everywhere it is shown.
+         *
+         * They arrive as the same HTTP 413 and used to be classified as the same thing, so a
+         * rewording that did not fit told the user their "recording" was too long and offered to
+         * save an audio file that had nothing to do with it. Dictate Cloud names the difference in
+         * its error code; this is the app listening to it.
+         */
+        TEXT_SIZE_LIMIT,
         FORMAT_NOT_SUPPORTED,
         TIMEOUT,
         NETWORK,
@@ -62,6 +82,10 @@ class DictateApiException(
                     hay.contains("rate limit") || hay.contains("rate_limit") ||
                     // Soniox 402 billing signals: balance/budget exhausted.
                     hay.contains("exhausted") || hay.contains("balance") || hay.contains("budget") -> Kind.QUOTA_EXCEEDED
+                // Before the generic 413, because it is also a 413 — only about text rather than
+                // audio. `input_too_long` is the pre-check, `reword_truncated` the answer that ran
+                // out of room; both leave the text untouched and neither has audio to offer.
+                hay.contains("input_too_long") || hay.contains("reword_truncated") -> Kind.TEXT_SIZE_LIMIT
                 status == 413 ||
                     hay.contains("audio duration") || hay.contains("content size limit") ||
                     hay.contains("too large") || hay.contains("maximum context length") -> Kind.CONTENT_SIZE_LIMIT
@@ -70,7 +94,7 @@ class DictateApiException(
                 status in 500..599 -> Kind.SERVER_ERROR
                 else -> Kind.UNKNOWN
             }
-            return DictateApiException(kind, message ?: "HTTP $status", null, status)
+            return DictateApiException(kind, message ?: "HTTP $status", null, status, code)
         }
 
         /** Classifies a transport-level exception (timeouts, no connection, …). */

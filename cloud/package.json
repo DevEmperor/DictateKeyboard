@@ -1,0 +1,23 @@
+{
+  "name": "dictate-cloud",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Guthaben-Proxy für Dictate Keyboard: prüft Play-Käufe, rechnet Minuten ab und reicht an OpenAI weiter.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:local": "wrangler d1 execute dictate-cloud --local --file=schema.sql",
+    "db:remote": "wrangler d1 execute dictate-cloud --remote --file=schema.sql",
+    "db:migrate": "wrangler d1 execute dictate-cloud --local --file=migrations/002_alerts_fx_test.sql",
+    "db:migrate:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/002_alerts_fx_test.sql",
+    "db:migrate3": "wrangler d1 execute dictate-cloud --local --file=migrations/003_refund_tracking_settings_expenses.sql",
+    "db:migrate3:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/003_refund_tracking_settings_expenses.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260801.1",
+    "typescript": "^5.6.0",
+    "wrangler": "^4.0.0"
+  }
+}

@@ -16,6 +16,7 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateAuroraOrbView
+import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
 import dev.patrickgold.florisboard.dictate.ui.DictateLatticeSphereView
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
@@ -634,7 +635,7 @@ fun WhatsNewTour(autoQueue: List<VersionName>) {
                     }
                 }
 
-                WaveformHeader(
+                DictateWaveform(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp, vertical = 6.dp)
@@ -888,34 +889,5 @@ private fun Badge(text: String, container: androidx.compose.ui.graphics.Color, c
     }
 }
 
-/** An ambient recording-style equaliser, tinted by the theme accent, echoing Dictate's record UI. */
-@Composable
-private fun WaveformHeader(modifier: Modifier = Modifier) {
-    val accent = MaterialTheme.colorScheme.primary
-    val transition = rememberInfiniteTransition(label = "waveform")
-    val phase by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(1500, easing = LinearEasing), RepeatMode.Restart),
-        label = "phase",
-    )
-    Canvas(modifier = modifier) {
-        val bars = 44
-        val gap = size.width / bars
-        val barWidth = max(2.5f, gap * 0.42f)
-        val midY = size.height / 2f
-        val twoPi = (2.0 * PI).toFloat()
-        for (i in 0 until bars) {
-            val envelope = 0.35f + 0.65f * sin(i / (bars - 1f) * PI.toFloat())
-            val osc = (sin(phase * twoPi + i * 0.55f) * 0.5f + 0.5f)
-            val h = max(3f, envelope * osc * size.height * 0.85f)
-            val x = i * gap + gap / 2f
-            drawRoundRect(
-                color = accent.copy(alpha = 0.45f + 0.45f * envelope),
-                topLeft = Offset(x - barWidth / 2f, midY - h / 2f),
-                size = Size(barWidth, h),
-                cornerRadius = CornerRadius(barWidth / 2f, barWidth / 2f),
-            )
-        }
-    }
-}
+// The waveform moved to dictate/ui/DictateWaveform.kt so the setup wizard can open with the same
+// picture. One definition, because two copies of an animation drift.

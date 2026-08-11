@@ -828,7 +828,17 @@
     <string name="setup__grant_notification_permission__btn">Grant Permission</string>
 
     <!-- Setup: connect an AI provider (Dictate onboarding for non-technical users) -->
-    <string name="setup__provider__title">Connect a free AI service</string>
+    <string name="setup__provider__title">Choose how Dictate transcribes</string>
+    <!-- The two-track choice shown first: buy credit in the app, or bring your own provider key.
+         Both are fully supported and the wording must not push either way. -->
+    <string name="setup__provider__choose_intro">Dictate turns your speech into text with an AI service. There are two ways to set that up, and both are fully supported — take whichever suits you.</string>
+    <string name="setup__provider__choice_cloud_title">Buy credit in the app</string>
+    <string name="setup__provider__choice_cloud_body">Dictate Cloud: no account anywhere, no API key. You buy dictation minutes through Google Play and they never expire. The convenient way — and somewhat more expensive than going to a provider directly.</string>
+    <string name="setup__provider__choice_cloud_btn">Show credit packs</string>
+    <string name="setup__provider__choice_own_title">Use your own AI provider</string>
+    <string name="setup__provider__choice_own_body">Create a key with a provider of your choice — Groq is free for everyday dictation. You keep your own account and pay the provider directly at their prices. Takes about two minutes.</string>
+    <string name="setup__provider__choice_own_btn">Set up my own key</string>
+    <string name="setup__provider__back_to_choice">Back to both options</string>
     <string name="setup__provider__intro">Dictate turns your speech into text with the help of an online AI service. To use it, you need your own personal key for such a service.</string>
     <string name="setup__provider__what_is_key">An API key is like a personal password that lets Dictate use the service for you. Creating one is free and takes about two minutes.</string>
     <string name="setup__provider__recommended">We recommend <b>Groq</b> — it\'s fast and free for everyday dictation.</string>
@@ -1535,6 +1545,7 @@
     <string name="dictate__error_invalid_api_key" comment="Short error: the API key is missing, wrong or rejected">Check your API key</string>
     <string name="dictate__error_quota_exceeded" comment="Short error: the provider quota, rate limit or billing is exhausted">Quota or limit reached</string>
     <string name="dictate__error_content_size_limit" comment="Short error: the audio/request is too large or too long for the provider">Recording too long or too large</string>
+    <string name="dictate__error_text_size_limit" comment="Short error: a text was too long to reword — distinct from an over-long audio recording">Text too long to reword</string>
     <string name="dictate__error_format_not_supported" comment="Short error: the provider rejected the audio format">Audio format not supported</string>
     <string name="dictate__error_timeout" comment="Short error: the request timed out">Request timed out</string>
     <string name="dictate__error_network" comment="Short error: no network connection reached the provider">No internet connection</string>
@@ -1555,6 +1566,8 @@
     <string name="dictate__action_resume" comment="Content description for the button that resumes the recording">Resume recording</string>
     <string name="dictate__action_resend" comment="Content description for the button that retries the last failed audio">Try again</string>
     <string name="dictate__action_save_audio" comment="Content description for the button that saves a failed recording to Downloads">Save audio</string>
+    <string name="dictate__error_out_of_credit" comment="Short error: the Dictate Cloud credit is used up; shown instead of the generic quota error">Credit used up</string>
+    <string name="dictate__action_top_up" comment="Content description for the button that opens Dictate Cloud to buy more credit">Top up credit</string>
     <string name="dictate__audio_saved" comment="Toast after saving a failed recording; %s is the file name">Audio saved to Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed" comment="Toast when saving a failed recording did not work">Couldn\'t save the audio</string>
     <string name="dictate__action_dismiss" comment="Content description for the button that dismisses the resend error">Dismiss</string>
@@ -1573,6 +1586,8 @@
     <string name="dictate__promo_milestone_time" comment="Smartbar milestone nudge for saved time; %s is a duration. Keep short (single line).">Saved %s with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_count" comment="Smartbar milestone nudge for dictation count; %s is a number. Keep short (single line).">%s dictations with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action" comment="Short label of the accent pill that opens the statistics screen. Must stay short to fit the single-line Smartbar.">Stats</string>
+    <string name="dictate__promo_low_credit_message" comment="Smartbar nudge shown once when Dictate Cloud credit is nearly used up">Credit almost gone.</string>
+    <string name="dictate__promo_low_credit_action" comment="Short label of the accent pill that opens Dictate Cloud. Must stay short to fit the single-line Smartbar.">Top up</string>
 
     <!-- Dictate settings screen -->
     <string name="dictate__title" comment="Title of the Dictate settings screen and home tile">Dictate</string>
@@ -1619,6 +1634,68 @@
     <string name="dictate__providers_test" comment="Button that checks the provider's base URL and API key">Test connection</string>
     <string name="dictate__providers_test_success" comment="Shown after a successful connection test. {count} is the number of available models.">Connected · {count} models</string>
     <string name="dictate__providers_test_failed" comment="Generic fallback shown when a connection test fails without a specific message">Connection failed</string>
+    <!-- Dictate Cloud: prepaid credit bought in the app, as an alternative to bringing your own API key -->
+    <string name="dictate__cloud_title" comment="Title of the Dictate Cloud screen and the row linking to it">Dictate Cloud</string>
+    <string name="dictate__cloud_row_summary_none" comment="Summary of the Dictate Cloud row when no credit account exists">Buy dictation credit — no API key needed</string>
+    <string name="dictate__cloud_row_summary_balance" comment="Summary of the Dictate Cloud row when credit exists; {minutes} is a number">{minutes} minutes of credit left</string>
+    <string name="dictate__cloud_intro_title">Dictate without an API key</string>
+    <string name="dictate__cloud_intro_body">Buy dictation credit right here in the app. No account with an AI provider, no API key, no subscription. Credit never expires and is only used up when you actually use it — a minute of dictation costs a minute, a rewording about two seconds.</string>
+    <string name="dictate__cloud_intro_alternative">This is entirely optional. Dictate works just as well with your own key from a provider of your choice — several are free — and then you keep your own account and pay the provider directly, at their prices.</string>
+    <string name="dictate__cloud_use_own_provider_btn">Use my own provider instead</string>
+    <string name="dictate__cloud_balance_label">Credit remaining</string>
+    <string name="dictate__cloud_balance_minutes" comment="{minutes} is a number">{minutes} min</string>
+    <string name="dictate__cloud_balance_rewords" comment="{count} is a number; credit is one balance, so this is what it is worth in rewordings rather than a separate allowance">or about {count} rewordings</string>
+    <string name="dictate__cloud_balance_checked" comment="{time} is a formatted date and time">Updated {time}</string>
+    <string name="dictate__cloud_balance_refresh">Refresh balance</string>
+    <string name="dictate__cloud_packs_title">Credit packs</string>
+    <string name="dictate__cloud_topup_title">Top up</string>
+    <string name="dictate__cloud_pack_minutes" comment="{minutes} is a number">{minutes} minutes of dictation</string>
+    <string name="dictate__cloud_shop_unavailable">The credit packs can\'t be shown here. Usually that means the app wasn\'t installed from Google Play, or no Play account is signed in on this device. Your own API key works either way.</string>
+    <string name="dictate__cloud_activate_title">Credit is ready</string>
+    <string name="dictate__cloud_activate_body">You have credit, but dictation currently runs through a different provider. Switch whenever you like — nothing changes without you.</string>
+    <string name="dictate__cloud_activate_btn">Dictate through Dictate Cloud</string>
+    <string name="dictate__cloud_notice_purchased" comment="{minutes} is a number">{minutes} minutes added to your credit.</string>
+    <string name="dictate__cloud_notice_pending">Your payment hasn\'t completed yet. The credit appears as soon as Google confirms it.</string>
+    <string name="dictate__cloud_notice_not_redeemed">The payment went through, but the credit couldn\'t be fetched. Nothing is lost — open this screen again and it will be added.</string>
+    <string name="dictate__cloud_notice_needs_recovery">This purchase belongs to another credit account. Use its recovery code to bring the credit to this device.</string>
+    <string name="dictate__cloud_notice_failed">The purchase couldn\'t be completed.</string>
+    <string name="dictate__cloud_notice_deleted">Your credit account was deleted.</string>
+    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Your credit account no longer exists — it was deleted on the website or on another device. It has now been removed from this phone as well.</string>
+    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">This device was signed out of your credit account. The account and its credit are untouched — enter your recovery code below to sign in again.</string>
+    <string name="dictate__cloud_delete_title">Delete credit account</string>
+    <string name="dictate__cloud_delete_explain">Deletes your credit account and everything stored about it. Any remaining credit is forfeited — it isn\'t refunded. You can also do this at api.dictatekeyboard.com/delete if you no longer have the app.</string>
+    <string name="dictate__cloud_delete_btn">Delete account</string>
+    <string name="dictate__cloud_delete_dialog_title">Delete your account?</string>
+    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">You still have {minutes} minutes of credit. Deleting removes your account, your recovery code and every signed-in device.</string>
+    <string name="dictate__cloud_delete_dialog_forfeit">This credit is forfeited and cannot be restored — not even by us.</string>
+    <string name="dictate__cloud_delete_dialog_records">Your purchase records stay for ten years, as tax law requires. They hold an order number and an amount, nothing that leads back to you.</string>
+    <string name="dictate__cloud_delete_dialog_confirm">Delete permanently</string>
+    <string name="dictate__cloud_delete_dialog_cancel">Keep my account</string>
+    <string name="dictate__cloud_notice_dismiss">OK</string>
+    <string name="dictate__cloud_recovery_title">Recovery code</string>
+    <string name="dictate__cloud_recovery_explain">Write this code down. Google doesn\'t restore used-up credit after a reinstall, so this code is the only way to get your remaining minutes onto a new phone. It also lets you use the same credit on a second device.</string>
+    <string name="dictate__cloud_recovery_copy">Copy recovery code</string>
+    <string name="dictate__cloud_recovery_copied">Recovery code copied</string>
+    <string name="dictate__cloud_recovery_restore_btn">Restore credit</string>
+    <string name="dictate__cloud_recovery_dialog_body">Enter the recovery code of an existing credit account. The device you were using it on keeps working.</string>
+    <string name="dictate__cloud_recovery_field">Recovery code</string>
+    <string name="dictate__cloud_recovery_confirm">Restore</string>
+    <string name="dictate__cloud_recovery_not_found">No credit found for this code.</string>
+    <string name="dictate__error_cloud_no_account" comment="Smartbar error when Dictate Cloud is the active provider but this device holds no credit account any more">No credit account on this device</string>
+    <string name="dictate__cloud_devices_full_title">Too many devices</string>
+    <string name="dictate__cloud_devices_full_body" comment="{count} is the number of devices already signed in">Your credit is already in use on {count} devices, which is the most allowed at once. Sign one out to use it here — the credit itself is untouched.</string>
+    <string name="dictate__cloud_devices_sign_out">Sign out</string>
+    <string name="dictate__cloud_devices_unnamed">Unnamed device</string>
+    <string name="dictate__cloud_devices_last_used" comment="{time} is a formatted date and time">Last used {time}</string>
+    <string name="dictate__cloud_devices_never_used">Never used</string>
+    <string name="dictate__cloud_recovery_error">Couldn\'t reach the server. Check your connection and try again.</string>
+    <string name="dictate__cloud_limits_title">What Dictate Cloud can\'t do</string>
+    <string name="dictate__cloud_limits_body">Live transcription while you speak isn\'t available on credit — it costs about four times as much per minute, and the on-device engine does it offline and for free. The AI model and how hard it thinks are set by the server, so model choice, reasoning effort and custom endpoints stay off. Everything else is unchanged: prompts, history, the floating button, long-form dictation and the watch.</string>
+    <string name="dictate__cloud_privacy_title">What gets stored</string>
+    <string name="dictate__cloud_privacy_body">Your recordings and texts are passed straight through and never written to disk. Only numbers are kept: which account, when, how long, and whether it worked. There\'s no name, no email address and no Google account behind a credit account — only a random ID.</string>
+    <string name="dictate__cloud_other_way_title">Your own provider stays available</string>
+    <string name="dictate__cloud_other_way_body">You can switch to your own API key at any time, and back again. Your credit stays where it is.</string>
+
     <string name="dictate__providers_network_group" comment="Group title for network-level provider settings (proxy)">Network</string>
 
     <string name="dictate__wear_title" comment="Title of the Wear OS companion settings screen">Wear OS</string>

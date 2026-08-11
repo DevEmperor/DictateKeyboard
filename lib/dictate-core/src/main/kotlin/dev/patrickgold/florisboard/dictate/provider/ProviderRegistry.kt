@@ -99,6 +99,32 @@ object ProviderRegistry {
         ),
     )
 
+    /**
+     * Dictate Cloud — credit bought inside the app instead of an API key of one's own.
+     *
+     * Technically the least remarkable entry in this list: the server speaks the same OpenAI formats
+     * as everything else, so [OpenAiCompatibleClient] reaches it unchanged and the wallet token
+     * simply sits where an API key would, in [ProviderAccount.apiKey]. What differs is who decides.
+     * The model is not the user's pick but the server's, because the price is calculated from it —
+     * so there is nothing for the picker to offer and [supportsDynamicModels] is false. The ids
+     * below travel with the request and are overwritten upstream; they exist so the request stays
+     * well-formed, not because they name anything real.
+     *
+     * Realtime stays off on purpose rather than by omission: streaming costs nearly four times a
+     * dictated minute, and the on-device engine already does it for nothing.
+     */
+    val CLOUD = ProviderPreset(
+        id = "cloud",
+        displayName = "Dictate Cloud",
+        baseUrl = "https://api.dictatekeyboard.com/v1/",
+        capabilities = CHAT_AND_STT,
+        supportsDynamicModels = false,
+        apiKeyUrl = null,
+        defaultChatModel = "dictate-cloud",
+        defaultTranscriptionModel = "dictate-cloud",
+        supportsRealtime = false,
+    )
+
     val GROQ = ProviderPreset(
         id = "groq",
         displayName = "Groq",
@@ -385,7 +411,7 @@ object ProviderRegistry {
 
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
-        OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
+        CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
         ELEVENLABS, DEEPGRAM, ASSEMBLYAI, XAI, DEEPSEEK, OLLAMA, LOCAL,
     )
 

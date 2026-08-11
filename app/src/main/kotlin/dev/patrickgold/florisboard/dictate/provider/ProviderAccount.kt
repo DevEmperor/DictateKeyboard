@@ -80,10 +80,34 @@ data class ProviderAccount(
      * sleeps, so this is theirs to state. Additive field, defaults off.
      */
     val customWarmUp: Boolean = false,
+    /**
+     * Dictate Cloud only — the credit account this device talks to. The wallet's bearer token is not
+     * stored here but in [apiKey]: it is what the server authenticates, so putting it anywhere else
+     * would mean teaching every call site about a second kind of credential.
+     *
+     * [walletRecoveryCode] is kept because the server hands it out exactly once, when the account is
+     * created, and only ever stores its hash. If it is not written down here at that moment it
+     * cannot be recovered later — and it is the only thing standing between a factory reset and
+     * lost credit, since Google does not restore a consumed one-time product.
+     */
+    val walletId: String = "",
+    val walletRecoveryCode: String = "",
+    /**
+     * Last balance the server reported, in seconds and included rewordings; -1 means never fetched.
+     * A cache for display only — every request is metered server-side, so this may lag behind and
+     * nothing is ever decided from it.
+     */
+    val balanceSeconds: Int = -1,
+    val balanceRewords: Int = -1,
+    val balanceCheckedAt: Long = 0L,
 ) {
     /** True once the user has supplied a usable key (or this is a keyless endpoint like Ollama). */
     val hasKey: Boolean
         get() = apiKey.isNotBlank()
+
+    /** True once a Dictate Cloud credit account exists on this device (see [walletId]). */
+    val hasWallet: Boolean
+        get() = walletId.isNotBlank() && apiKey.isNotBlank()
 
     /** True for user-defined endpoints (the legacy singular "custom" id or a "custom:<uuid>" one). */
     val isCustom: Boolean

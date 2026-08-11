@@ -31,6 +31,9 @@ import dev.patrickgold.florisboard.R
 @Composable
 fun providerIcon(providerId: String): ImageVector {
     val drawable = when (providerId) {
+        // Dictate Cloud gets its own mark rather than the generic cloud, so it reads as a service
+        // in its own right wherever it appears — onboarding, provider list, Smartbar.
+        "cloud" -> R.drawable.ic_dictate_cloud
         "openai" -> R.drawable.ic_provider_openai
         "groq" -> R.drawable.ic_provider_groq
         "openrouter" -> R.drawable.ic_provider_openrouter

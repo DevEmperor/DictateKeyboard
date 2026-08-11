@@ -1,0 +1,147 @@
+// VORLAGE. Die echte Fassung liegt nicht in diesem Repo.
+//
+// Zwei Dinge gehören nicht in ein öffentliches Repository: die Empfängeradresse der Warnungen
+// (sie steht als `destination_address` auch in der Bindung und lässt sich nicht in ein Secret
+// auslagern) und die Schwellenwerte des Wachhunds. Letztere sind kein Geheimnis im engeren Sinn —
+// sie schützen nichts, sie melden nur — aber wer sie kennt, weiß genau, wie er darunter bleibt.
+//
+// Zum Einrichten: diese Datei nach `wrangler.jsonc` kopieren, Platzhalter ausfüllen, dann die
+// Geheimnisse setzen (nie in diese Datei):
+//
+//   npx wrangler secret put OPENAI_API_KEY
+//   npx wrangler secret put GOOGLE_SERVICE_ACCOUNT   # das gesamte JSON des Dienstkontos
+//   npx wrangler secret put RTDN_SECRET
+//   npx wrangler secret put OPENAI_ADMIN_KEY         # optional, nur für die Kostenanzeige
+//
+// Das Dashboard unter /admin verlangt zusätzlich ACCESS_TEAM_DOMAIN und ACCESS_AUD von
+// Cloudflare Access. Fehlen sie, antwortet es 404 statt 403 — siehe src/admin/auth.ts.
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dictate-cloud",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Nur Metadaten landen im Log — niemals Inhalte. Siehe README, Abschnitt Datenschutz.
+  "observability": { "enabled": true },
+
+  // Eine einzige öffentliche Adresse. Die App bekommt diese fest eingebaut, deshalb darf
+  // sie sich nie ändern — anders als eine workers.dev-Adresse, die am Konto-Subdomain hängt.
+  "routes": [{ "pattern": "api.dictatekeyboard.com", "custom_domain": true }],
+
+  // Ausdrücklich abgeschaltet, nicht nur als Nebenwirkung der Route: Sonst gäbe es je
+  // Version eine weitere öffentliche URL, die dieselbe Datenbank und dasselbe OpenAI-Konto
+  // anspricht — jede davon wäre eine Adresse, an der ein Limit umgangen werden könnte.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dictate-cloud",
+      // Angelegt mit `wrangler d1 create dictate-cloud --location weur` — Westeuropa,
+      // damit die Metadaten die EU nicht verlassen.
+      "database_id": "<d1-database-id>"
+    }
+  ],
+
+  "durable_objects": {
+    "bindings": [
+      { "name": "WALLET", "class_name": "Wallet" },
+      { "name": "GLOBAL", "class_name": "GlobalGuard" }
+    ]
+  },
+
+  // Fortschreibend, niemals kürzen: Cloudflare merkt sich die zuletzt angewandte Marke. Wird ein
+  // bereits angewandter Eintrag entfernt, versucht der nächste Deploy, v1 erneut anzuwenden, und
+  // scheitert mit „Cannot apply new-sqlite-class migration to class 'Wallet' that is already
+  // depended on by existing Durable Objects".
+  //
+  // v2 legte kurzzeitig eine eigene Klasse für die Codesperre an. Die antwortete auf jeden Aufruf
+  // mit „internal error"; der Zähler sitzt jetzt im GlobalGuard, der ohnehin läuft. v3 räumt die
+  // Klasse wieder ab — Löschen statt Verschweigen, sonst bleibt sie für immer im Konto stehen.
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["Wallet", "GlobalGuard"]
+    },
+    {
+      "tag": "v2",
+      "new_sqlite_classes": ["CodeGuard"]
+    },
+    {
+      "tag": "v3",
+      "deleted_classes": ["CodeGuard"]
+    }
+  ],
+
+  // Alles hier ist öffentlich einsehbar — Geheimnisse gehören zu `wrangler secret put`.
+  // Schwellenwerte stehen bewusst in der Konfiguration und nicht im Code, damit der
+  // Quelltext veröffentlicht werden kann, ohne die Grenzwerte mitzuverraten.
+  "vars": {
+    "TRANSCRIBE_MODEL": "gpt-transcribe",
+    "CHAT_MODEL": "gpt-5-nano",
+    "MAX_AUDIO_SECONDS": "<zahl>",
+    "MAX_CHAT_INPUT_TOKENS": "<zahl>",
+    "MAX_CHAT_OUTPUT_TOKENS": "<zahl>",
+    "RATE_LIMIT_PER_MINUTE": "<zahl>",
+    // Wie viele Geräte gleichzeitig einen gültigen Zugang zu einem Guthaben halten dürfen.
+    // Handy, Uhr und Tablet sind der ehrliche Fall; darüber hinaus ist ein Wiederherstellungscode
+    // kein Konto mehr, sondern ein geteiltes Passwort. Im Dashboard unter Betrieb änderbar.
+    "MAX_DEVICES": "<zahl>",
+    "PACKAGE_NAME": "net.devemperor.dictate",
+    "DAILY_BUDGET_USD": "<zahl>",
+    // Einzelne Anfragezeilen altern weg, die Tagessummen bleiben dauerhaft. Siehe retention.ts.
+    "USAGE_RETENTION_DAYS": "<zahl>",
+    // Auszahlungswährung. Der Kurs kommt inzwischen nachts von der EZB (src/fx.ts); der Wert
+    // hier ist nur noch der Notnagel für den allerersten Lauf, bevor Kurse vorliegen.
+    "HOME_CURRENCY": "EUR",
+    "USD_TO_HOME_RATE": "<zahl>",
+
+    // Wohin die Warnungen gehen. Die Absenderadresse muss auf einer Domain liegen, die in
+    // diesem Cloudflare-Konto zum Versand freigegeben ist — sonst schlägt der Versand mit
+    // E_SENDER_NOT_VERIFIED fehl und die Warnung steht nur im Dashboard.
+    "ALERT_EMAIL_TO": "<deine-adresse@example.com>",
+    "ALERT_EMAIL_FROM": "alerts@<deine-domain>",
+    // Stunde (UTC) für den Tagesbericht. 5 UTC ist 6 oder 7 Uhr deutscher Zeit.
+    "DIGEST_HOUR_UTC": "<zahl>",
+    "ADMIN_URL": "https://api.dictatekeyboard.com/admin",
+
+    // Schwellenwerte des Wachhunds. Die Voreinstellungen sind so gewählt, dass ein normaler Tag
+    // still bleibt: Ein Alarm, der wöchentlich kommt, wird nach einem Monat nicht mehr gelesen.
+    "ALERT_BUDGET_STEPS": "<zahl>",
+    "ALERT_FAST_BURN_PERCENT": "<zahl>",
+    "ALERT_FAST_BURN_HOURS": "<zahl>",
+    "ALERT_REFUND_USED_PERCENT": "<zahl>",
+    "ALERT_WALLET_BUDGET_SHARE": "<zahl>",
+    "ALERT_DEVICES_PER_WALLET": "<zahl>",
+    "ALERT_COST_DRIFT_PERCENT": "<zahl>",
+    "ALERT_ERROR_RATE_PERCENT": "<zahl>",
+    // Ab wie viel Minus insgesamt gemeldet wird, in der Auszahlungswährung. Unter diesem Betrag
+    // ist es Rundung oder die Anlaufphase, in der ein paar Testanfragen mehr wiegen als noch
+    // gar keine Verkäufe.
+    "ALERT_MIN_LOSS": "<zahl>"
+  },
+
+  // Versand über Cloudflares Email Service. Kein Drittanbieter und kein API-Schlüssel.
+  //
+  // `destination_address` ist bewusst gesetzt und nicht weggelassen. Zwei Gründe: Ohne die
+  // Beschränkung dürfte dieser Worker an beliebige Adressen schreiben — ein Fehler im Code oder
+  // ein kompromittiertes Deployment hätte damit einen Mailversender in der Hand. Und der Versand
+  // an eine *verifizierte* Zieladresse ist in jedem Tarif kostenlos, während freier Versand den
+  // kostenpflichtigen Workers-Plan verlangt.
+  //
+  // Die Adresse muss vorher unter Email Routing → Destination Addresses bestätigt worden sein,
+  // sonst antwortet der Versand mit E_RECIPIENT_NOT_ALLOWED.
+  "send_email": [{ "name": "MAIL", "destination_address": "<deine-adresse@example.com>" }],
+
+  // Zwei Takte, im Code an der Cron-Zeichenkette unterschieden (siehe src/index.ts):
+  //   viertelstündlich — der Wachhund und die Prüfung, ob der Tagesbericht fällig ist
+  //   nachts           — Aufräumen, Wechselkurse holen, fehlende Umrechnungen nachtragen
+  // Die nächtliche Zeile steht bewusst auf einer krummen Minute statt zur vollen Stunde, wo sich
+  // auf der Plattform sämtliche Cronjobs stauen.
+  "triggers": {
+    "crons": ["*/15 * * * *", "17 3 * * *"]
+  }
+}

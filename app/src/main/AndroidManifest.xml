@@ -5,6 +5,10 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Buying credit packs for Dictate Cloud. The billing library declares this itself, but
+         stating it here keeps it visible: without it in the uploaded build, the Play Console
+         will not let in-app products be created at all. -->
+    <uses-permission android:name="com.android.vending.BILLING"/>
 
     <!-- Permission needed to record audio for Dictate voice transcription -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
