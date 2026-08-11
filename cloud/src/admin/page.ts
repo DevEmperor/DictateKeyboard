@@ -84,6 +84,17 @@ export const DASHBOARD_HTML = `<!doctype html>
      whole document 45px wider than the screen and every tab under it sat shifted and clipped. */
   .bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px var(--pad); }
   .bar > * { min-width: 0; }
+  /* Shown while anything is in flight. Indeterminate on purpose: the page makes several requests
+     per view and none of them reports progress, so a filling bar would be a fiction. It sits beside
+     the refresh button because that is where someone looks after asking for fresh numbers. */
+  .busy { width: 90px; height: 3px; border-radius: 999px; background: var(--surface-2); overflow: hidden; opacity: 0; transition: opacity .18s ease; flex: none; }
+  .busy.on { opacity: 1; }
+  .busy i { display: block; height: 100%; width: 42%; border-radius: 999px; background: var(--accent); transform: translateX(-110%); }
+  .busy.on i { animation: busyslide 1.05s cubic-bezier(.65, .05, .36, 1) infinite; }
+  @keyframes busyslide { from { transform: translateX(-110%); } to { transform: translateX(250%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .busy.on i { animation: none; width: 100%; transform: none; }
+  }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.015em; white-space: nowrap; }
   .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); flex: none; }
   /* The signed-in address: useful, but the longest unbreakable thing in the row. */
@@ -358,6 +369,7 @@ export const DASHBOARD_HTML = `<!doctype html>
     #who { display: none; }
     .bar { gap: 8px; padding: 9px var(--pad); }
     #refresh { padding: 8px 13px; font-size: 16px; line-height: 1; }
+    .busy { width: 56px; }
 
     /* Fingers, not a mouse: 40px is the smallest target that is not a lottery. */
     nav { gap: 4px; padding-bottom: 9px; }
@@ -391,6 +403,7 @@ export const DASHBOARD_HTML = `<!doctype html>
     <span style="flex:1"></span>
     <button class="bell quiet" id="bell" title="Offene Warnungen"><span class="wide-only">— Warnungen</span><span class="narrow-only">—</span></button>
     <span class="sub mono" id="who"></span>
+    <div class="busy" id="busy" role="status" aria-live="off" aria-label="Wird geladen"><i></i></div>
     <button class="btn ghost" id="refresh" title="Aktualisieren" aria-label="Aktualisieren"><span class="wide-only">Aktualisieren</span><span class="narrow-only" aria-hidden="true">↻</span></button>
   </div>
   <nav id="nav">
@@ -659,11 +672,38 @@ var GRAPH = ${GRAPH_JSON};
     e.stopPropagation();
     modal({ title: 'Dazu', text: esc(mark.getAttribute('data-tip') || ''), cancel: false, okLabel: 'Verstanden' });
   }, true);
-  function get(p) { return fetch(p, { credentials: 'same-origin' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
+  /**
+   * Anything talking to the server says so.
+   *
+   * Counted rather than switched, because a view fires several requests at once and the first one
+   * to finish must not turn the bar off while three are still running. Switching off is delayed a
+   * moment as well: between two chained requests the bar would otherwise blink, and a blink reads
+   * as a glitch rather than as progress.
+   */
+  var busyCount = 0, busyOff = null;
+  function busy(delta) {
+    busyCount = Math.max(0, busyCount + delta);
+    var el = $('busy');
+    if (!el) return;
+    if (busyCount > 0) { clearTimeout(busyOff); el.classList.add('on'); }
+    else { clearTimeout(busyOff); busyOff = setTimeout(function () { el.classList.remove('on'); }, 220); }
+  }
+  function tracked(promise) {
+    busy(1);
+    return promise.then(
+      function (v) { busy(-1); return v; },
+      function (e) { busy(-1); throw e; },
+    );
+  }
+
+  function get(p) {
+    return tracked(fetch(p, { credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }));
+  }
   function act(p) {
-    return fetch('/admin/api/action', { method: 'POST', credentials: 'same-origin',
+    return tracked(fetch('/admin/api/action', { method: 'POST', credentials: 'same-origin',
       headers: { 'content-type': 'application/json' }, body: JSON.stringify(p) })
-      .then(function (r) { return r.json(); });
+      .then(function (r) { return r.json(); }));
   }
 
   /* --------------------------------------------------------------- Dialoge */
@@ -1216,6 +1256,20 @@ var GRAPH = ${GRAPH_JSON};
           stateSub) +
         '</div>';
 
+      // The question this answers before it is asked: no, the recovery code cannot be shown. Only
+      // its SHA-256 is stored, which is the point of storing it that way — whoever obtains the
+      // database cannot sign in with it, and that has to include the operator. Said here rather
+      // than left to be discovered, because the absence of a field reads as an oversight.
+      if (!deleted) {
+        html += '<div class="empty" style="text-align:left">' +
+          '<strong>Der Wiederherstellungscode lässt sich nicht anzeigen.</strong> Gespeichert ist nur sein ' +
+          'SHA-256-Abzug — genau darin besteht der Schutz: Wer die Datenbank in die Hände bekommt, kann ' +
+          'sich damit nicht anmelden, und das schließt dich ein. Zwei Dinge sind trotzdem möglich: ' +
+          'einen genannten Code oben in der Suche eingeben, um zu <em>prüfen</em>, ob er zu diesem Konto ' +
+          'gehört — und unter <em>Wiederherstellung</em> einen neuen ausgeben, der genau einmal ' +
+          'angezeigt wird.</div>';
+      }
+
       // Nothing here can be done to a deleted account: it has no devices to sign out, no code to
       // reissue, and credit given to it would sit in a wallet nobody can reach. Showing the
       // buttons anyway would be an offer that quietly does nothing.
@@ -1486,10 +1540,22 @@ var GRAPH = ${GRAPH_JSON};
    * page load. Now it is one call, served from a ten-minute cache, refreshed behind the response
    * when it is stale.
    */
-  function loadMoney() {
+  /**
+   * The money view, which is the one call that leaves the house.
+   *
+   * It asks Google for payouts and OpenAI for costs, so it is the slowest thing on the page and the
+   * only one with a rate limit at the far end. Now that every tab visit reloads, it keeps a minute
+   * of cache: switching between tabs must not fire this again and again, and figures that count in
+   * whole days do not change in the meantime. The refresh button clears it outright.
+   */
+  var moneyAt = 0;
+  var MONEY_TTL = 60000;
+  function loadMoney(force) {
+    if (!force && sum && Date.now() - moneyAt < MONEY_TTL) return Promise.resolve();
     $('finance').innerHTML = skeleton('card', 3);
     return get('/admin/api/money').then(function (r) {
       sum = r.summary;
+      moneyAt = Date.now();
       renderFinance(r);
       if (current) renderOverview(current);
     }).catch(function (e) {
@@ -2123,7 +2189,7 @@ var GRAPH = ${GRAPH_JSON};
   var LOADERS = {
     overview: function () {
       $('stats').innerHTML = skeleton('card', 6);
-      var money = sum ? Promise.resolve() : loadMoney();
+      var money = loadMoney();
       return get('/admin/api/overview').then(function (o) {
         // Wait for the money only if it is not in yet, so the first paint is not held up by
         // Google and OpenAI — but never render the cards twice for nothing.
@@ -2147,7 +2213,9 @@ var GRAPH = ${GRAPH_JSON};
     network: function () {},
     // Drawn from the overview's data, so opening it before the overview has landed would show
     // nothing at all.
-    ops: function () { return loaded.overview ? null : LOADERS.overview(); },
+    // Its numbers come from the overview's call, so opening it has to make that call — the
+    // difference to before is that this now happens on every visit rather than only the first.
+    ops: function () { return LOADERS.overview(); },
   };
 
   var loaded = {};
@@ -2161,7 +2229,7 @@ var GRAPH = ${GRAPH_JSON};
 
   /** Reloads everything already on screen. The refresh button and anything that changed state. */
   function loadAll() {
-    sum = null;
+    sum = null; moneyAt = 0;
     Object.keys(loaded).forEach(function (v) { if (LOADERS[v]) LOADERS[v](); });
     get('/admin/api/me').then(function (r) { $('who').textContent = r.email; });
   }
@@ -2185,7 +2253,10 @@ var GRAPH = ${GRAPH_JSON};
       // to the right — reached from the bell, from a deep link, or simply because it is the ninth.
       // Being on a page whose tab you cannot see is the same as not knowing where you are.
       if (b.scrollIntoView) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-      load(view);
+      // Reloaded on every visit, not only the first. A dashboard is read to find out what is true
+      // now; a tab that shows what was true when it was last opened is worse than a slow one,
+      // because nothing about it says the numbers are old.
+      load(view, true);
       if (view === 'network') setTimeout(fit, 0);
     };
   });
