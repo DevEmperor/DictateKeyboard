@@ -250,7 +250,10 @@ back, contact Google Play before deleting.
 
 Your purchase records remain for the retention period above; they hold an order
 number and an amount, and once the account is gone there is nothing in them that
-leads back to you.
+leads back to you. Because those records refer to the account, the account's own
+entry is emptied rather than dropped: what is left is the random identifier, the
+dates it was created and deleted, and the minute totals. No recovery code, no
+device, no Google pseudonym, nothing that can be signed in to or traced to you.
 
 ### 4.6 Identifying you
 
