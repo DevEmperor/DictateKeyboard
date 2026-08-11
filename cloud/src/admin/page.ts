@@ -84,16 +84,24 @@ export const DASHBOARD_HTML = `<!doctype html>
      whole document 45px wider than the screen and every tab under it sat shifted and clipped. */
   .bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px var(--pad); }
   .bar > * { min-width: 0; }
-  /* Shown while anything is in flight. Indeterminate on purpose: the page makes several requests
-     per view and none of them reports progress, so a filling bar would be a fiction. It sits beside
-     the refresh button because that is where someone looks after asking for fresh numbers. */
-  .busy { width: 90px; height: 3px; border-radius: 999px; background: var(--surface-2); overflow: hidden; opacity: 0; transition: opacity .18s ease; flex: none; }
-  .busy.on { opacity: 1; }
-  .busy i { display: block; height: 100%; width: 42%; border-radius: 999px; background: var(--accent); transform: translateX(-110%); }
-  .busy.on i { animation: busyslide 1.05s cubic-bezier(.65, .05, .36, 1) infinite; }
-  @keyframes busyslide { from { transform: translateX(-110%); } to { transform: translateX(250%); } }
+  /* Loading, shown on the button that asked for it rather than beside it.
+     A separate bar needed a strip of the header reserved for it at all times — visible for a second
+     now and then, blank the rest of the day. The accent sweeping through the label says the same
+     thing and costs no space: it is the one control the eye is already on after a tab change. */
+  #refresh.working { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  #refresh.working span {
+    /* Not currentColor: the element's own colour is transparent here, so currentColor inside the
+       gradient would resolve to transparent and the label would vanish between sweeps. */
+    background: linear-gradient(100deg, var(--text) 0 38%, var(--accent) 50%, var(--text) 62% 100%);
+    background-size: 320% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: sweep 1s linear infinite;
+  }
+  @keyframes sweep { from { background-position: 160% 0; } to { background-position: -160% 0; } }
+  /* No sweep where motion is unwelcome — the label simply turns accent-coloured while it works. */
   @media (prefers-reduced-motion: reduce) {
-    .busy.on i { animation: none; width: 100%; transform: none; }
+    #refresh.working span { animation: none; background: none; color: var(--accent); }
   }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.015em; white-space: nowrap; }
   .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); flex: none; }
@@ -369,7 +377,6 @@ export const DASHBOARD_HTML = `<!doctype html>
     #who { display: none; }
     .bar { gap: 8px; padding: 9px var(--pad); }
     #refresh { padding: 8px 13px; font-size: 16px; line-height: 1; }
-    .busy { width: 56px; }
 
     /* Fingers, not a mouse: 40px is the smallest target that is not a lottery. */
     nav { gap: 4px; padding-bottom: 9px; }
@@ -403,7 +410,6 @@ export const DASHBOARD_HTML = `<!doctype html>
     <span style="flex:1"></span>
     <button class="bell quiet" id="bell" title="Offene Warnungen"><span class="wide-only">— Warnungen</span><span class="narrow-only">—</span></button>
     <span class="sub mono" id="who"></span>
-    <div class="busy" id="busy" role="status" aria-live="off" aria-label="Wird geladen"><i></i></div>
     <button class="btn ghost" id="refresh" title="Aktualisieren" aria-label="Aktualisieren"><span class="wide-only">Aktualisieren</span><span class="narrow-only" aria-hidden="true">↻</span></button>
   </div>
   <nav id="nav">
@@ -673,20 +679,29 @@ var GRAPH = ${GRAPH_JSON};
     modal({ title: 'Dazu', text: esc(mark.getAttribute('data-tip') || ''), cancel: false, okLabel: 'Verstanden' });
   }, true);
   /**
-   * Anything talking to the server says so.
+   * Anything talking to the server says so, on the refresh button.
    *
-   * Counted rather than switched, because a view fires several requests at once and the first one
-   * to finish must not turn the bar off while three are still running. Switching off is delayed a
-   * moment as well: between two chained requests the bar would otherwise blink, and a blink reads
-   * as a glitch rather than as progress.
+   * Counted rather than switched: a view fires several requests at once, and the first one to land
+   * must not call it finished while three are still running.
+   *
+   * And held for a moment at the end — a full sweep, however fast the answer came. The point of the
+   * signal is to confirm that a refresh happened at all; a request answered in forty milliseconds
+   * would otherwise flick the colour on and off inside a single frame and confirm nothing.
    */
-  var busyCount = 0, busyOff = null;
+  var busyCount = 0, busySince = 0, busyOff = null;
+  var SWEEP = 620;
   function busy(delta) {
     busyCount = Math.max(0, busyCount + delta);
-    var el = $('busy');
+    var el = $('refresh');
     if (!el) return;
-    if (busyCount > 0) { clearTimeout(busyOff); el.classList.add('on'); }
-    else { clearTimeout(busyOff); busyOff = setTimeout(function () { el.classList.remove('on'); }, 220); }
+    clearTimeout(busyOff);
+    if (busyCount > 0) {
+      if (!el.classList.contains('working')) busySince = Date.now();
+      el.classList.add('working');
+      return;
+    }
+    busyOff = setTimeout(function () { el.classList.remove('working'); },
+      Math.max(120, SWEEP - (Date.now() - busySince)));
   }
   function tracked(promise) {
     busy(1);
