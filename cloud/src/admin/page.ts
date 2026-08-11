@@ -226,6 +226,12 @@ export const DASHBOARD_HTML = `<!doctype html>
   .zone-label { font: 650 15px ui-sans-serif, system-ui, sans-serif; fill-opacity: .85; }
   .zone-sub { font: 400 12px ui-sans-serif, system-ui, sans-serif; fill: currentColor; opacity: .55; }
   .gnode rect { rx: 11; fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  /* Both of these are rects inside .gnode and would otherwise inherit the box's own fill and
+     border from the rule above — a CSS declaration beats a fill="…" attribute every time. The
+     accent bar was painted over in surface grey, and the invisible tap target came out as an
+     empty box sitting on the "?" it was meant to enlarge. */
+  .gnode rect.bar { stroke: none; rx: 2; }
+  .gask rect.hit { fill: transparent; stroke: none; }
   .gnode:hover rect, .gnode.sel rect { stroke: var(--accent); stroke-width: 2.5; }
   .gnode text.t { font: 650 13.5px ui-sans-serif, system-ui, sans-serif; fill: var(--text); }
   .gnode text.s { font: 400 11.5px ui-sans-serif, system-ui, sans-serif; fill: var(--muted); }
@@ -1714,7 +1720,7 @@ var GRAPH = ${GRAPH_JSON};
       var on = selected && selected.type === 'node' && selected.id === n.id;
       parts.push('<g class="gnode' + (on ? ' sel' : '') + '" data-n="' + esc(n.id) + '">' +
         '<rect x="' + n.x + '" y="' + n.y + '" width="' + n.w + '" height="' + n.h + '"/>' +
-        '<rect x="' + n.x + '" y="' + n.y + '" width="4" height="' + n.h + '" fill="' + TONE[zone ? zone.tone : 'client'] + '" rx="2"/>' +
+        '<rect class="bar" x="' + n.x + '" y="' + n.y + '" width="4" height="' + n.h + '" style="fill:' + TONE[zone ? zone.tone : 'client'] + '"/>' +
         '<text class="t" x="' + (n.x + 16) + '" y="' + (n.y + 27) + '">' + esc(n.label) + '</text>' +
         '<text class="s" x="' + (n.x + 16) + '" y="' + (n.y + 46) + '">' + esc(n.sub) + '</text>' +
         '<g class="gask" data-ask="' + esc(n.id) + '"><circle cx="' + (n.x + n.w - 17) + '" cy="' + (n.y + 17) + '" r="9"/>' +
@@ -1748,51 +1754,72 @@ var GRAPH = ${GRAPH_JSON};
    * Where each label goes.
    *
    * The layout offers several places along the route, best first; the browser is the only side that
-   * knows how wide the text turns out, so it measures and then takes the first place that lands on
-   * nothing. Only if every offered place is occupied does it fall back to nudging the chip aside —
-   * which used to be the only strategy, and is why chips ended up on top of boxes.
+   * knows how wide the text turns out, so it measures and then scores every candidate — each offered
+   * place, and each of those shifted sideways off the line in steps.
+   *
+   * A score, not a search for the first free spot. There is not always a free spot, and the version
+   * that took the first one and gave up afterwards left two chips exactly on top of each other,
+   * which is worse than either of them sitting slightly off its line. Overlap is counted in square
+   * pixels and weighed against how far the chip has strayed, so the least bad place wins and an
+   * unobstructed one always beats a compromise.
    */
+  // Off the line, and along it. A chip that may only step sideways has one way out of a clash;
+  // sliding it a little further down its own route is usually the tidier answer and is charged
+  // less accordingly.
+  var LABEL_PERP = [0, -19, 19, -38, 38, -57, 57, -76, 76];
+  var LABEL_ALONG = [0, -24, 24, -48, 48];
+
+  function areaOver(a, b) {
+    var w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+    var h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+    return w > 0 && h > 0 ? w * h : 0;
+  }
+
   function placeLabels() {
     var blockers = obstacles();
     var placed = [];
-    Array.prototype.forEach.call($('gcam').querySelectorAll('.glabel'), function (g) {
+    // Fewest options first. Seated in drawing order, an edge with a single possible place can arrive
+    // to find it taken by one that had a dozen and picked this one; the other way round everybody
+    // fits. Ties keep drawing order, so the arrangement is the same on every redraw.
+    var chips = Array.prototype.slice.call($('gcam').querySelectorAll('.glabel'));
+    chips.sort(function (p, q) {
+      var pe = GRAPH.edges[Number(p.getAttribute('data-e'))];
+      var qe = GRAPH.edges[Number(q.getAttribute('data-e'))];
+      return pe.spots.length - qe.spots.length ||
+        Number(p.getAttribute('data-e')) - Number(q.getAttribute('data-e'));
+    });
+    chips.forEach(function (g) {
       var e = GRAPH.edges[Number(g.getAttribute('data-e'))];
       var text = g.querySelector('text'), rect = g.querySelector('rect');
       var tw = 0;
-      try { tw = text.getComputedTextLength(); } catch (err) { tw = text.textContent.length * 5.6; }
+      try { tw = text.getComputedTextLength(); } catch (err) { tw = 0; }
+      if (!tw) tw = text.textContent.length * 5.7;
       var w = tw + 12, h = 17;
-      var best = null, fallback = null;
-      for (var k = 0; k < e.spots.length; k++) {
+
+      var best = null, bestCost = Infinity;
+      for (var k = 0; k < e.spots.length && bestCost > 0; k++) {
         var spot = e.spots[k];
-        var box = { x: spot.x - w / 2, y: spot.y - h / 2, w: w, h: h };
-        if (!fallback) fallback = { spot: spot, box: box };
-        var clash = false, j;
-        for (j = 0; j < blockers.length && !clash; j++) if (hits(box, blockers[j])) clash = true;
-        for (j = 0; j < placed.length && !clash; j++) if (hits(box, placed[j])) clash = true;
-        if (!clash) { best = { spot: spot, box: box }; break; }
-      }
-      if (!best) {
-        // Nothing was free: shove the chip off its line, along the axis that moves it away fastest,
-        // until it stops touching things. Bounded, because a label that has wandered half a screen
-        // from its line is no longer that line's label.
-        best = fallback;
-        for (var step = 1; step <= 6; step++) {
-          for (var dir = -1; dir <= 1; dir += 2) {
-            var off = dir * step * 19;
-            var probe = best.spot.along === 'h'
-              ? { x: best.box.x, y: fallback.box.y + off, w: w, h: h }
-              : { x: fallback.box.x + off, y: best.box.y, w: w, h: h };
-            var bad = false, m;
-            for (m = 0; m < blockers.length && !bad; m++) if (hits(probe, blockers[m])) bad = true;
-            for (m = 0; m < placed.length && !bad; m++) if (hits(probe, placed[m])) bad = true;
-            if (!bad) { best = { spot: best.spot, box: probe }; step = 99; break; }
+        for (var o = 0; o < LABEL_PERP.length; o++) {
+          for (var a = 0; a < LABEL_ALONG.length; a++) {
+            var off = LABEL_PERP[o], slide = LABEL_ALONG[a];
+            var box = spot.along === 'h'
+              ? { x: spot.x - w / 2 + slide, y: spot.y - h / 2 + off, w: w, h: h }
+              : { x: spot.x - w / 2 + off, y: spot.y - h / 2 + slide, w: w, h: h };
+            var cost = k * 26 + Math.abs(off) * 1.4 + Math.abs(slide) * 0.5;
+            var m;
+            for (m = 0; m < blockers.length; m++) cost += areaOver(box, blockers[m]) * 0.9;
+            for (m = 0; m < placed.length; m++) cost += areaOver(box, placed[m]) * 1.6;
+            if (cost < bestCost) { bestCost = cost; best = box; }
+            if (cost === 0) break;
           }
+          if (bestCost === 0) break;
         }
       }
-      placed.push(best.box);
-      rect.setAttribute('x', best.box.x); rect.setAttribute('y', best.box.y);
+
+      placed.push(best);
+      rect.setAttribute('x', best.x); rect.setAttribute('y', best.y);
       rect.setAttribute('width', w); rect.setAttribute('height', h);
-      text.setAttribute('x', best.box.x + w / 2); text.setAttribute('y', best.box.y + h / 2 + 4);
+      text.setAttribute('x', best.x + w / 2); text.setAttribute('y', best.y + h / 2 + 4);
     });
   }
 

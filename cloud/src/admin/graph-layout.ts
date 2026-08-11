@@ -232,13 +232,18 @@ function spotsAlong(pts: Point[]): LabelSpot[] {
   for (let i = 1; i < pts.length; i++) {
     const a = at(pts, i - 1), b = at(pts, i);
     const len = Math.abs(b.x - a.x) + Math.abs(b.y - a.y);
-    if (len > 30) legs.push({ a, b, len });
+    if (len > 24) legs.push({ a, b, len });
   }
   legs.sort((p, q) => q.len - p.len);
   const spots: LabelSpot[] = [];
   for (const leg of legs) {
     const along: 'h' | 'v' = Math.abs(leg.b.x - leg.a.x) > Math.abs(leg.b.y - leg.a.y) ? 'h' : 'v';
-    const fracs = leg.len > 170 ? [0.5, 0.3, 0.7] : [0.5];
+    // Longer legs offer more places to try. A route that crosses the whole picture has plenty of
+    // room; the one label that could not be seated cleanly was on exactly such a route, and it had
+    // three places to choose from.
+    const fracs = leg.len > 300 ? [0.5, 0.32, 0.68, 0.18, 0.82]
+      : leg.len > 160 ? [0.5, 0.3, 0.7]
+      : [0.5];
     for (const f of fracs) {
       spots.push({
         x: Math.round(leg.a.x + (leg.b.x - leg.a.x) * f),

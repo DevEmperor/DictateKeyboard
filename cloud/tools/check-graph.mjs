@@ -137,37 +137,43 @@ for (let i = 0; i < segments.length; i++) {
  * fits there.
  */
 const CHAR = 6.1, PAD = 12, LH = 17;
+const PERP = [0, -19, 19, -38, 38, -57, 57, -76, 76];
+const ALONG = [0, -24, 24, -48, 48];
 const blockers = nodes.map((n) => ({ x: n.x, y: n.y, w: n.w, h: n.h }))
   .concat(zones.map((z) => ({ x: z.x + 10, y: z.y + 6, w: 260, h: 46 })));
+const areaOver = (a, b) => {
+  const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+  const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+  return w > 0 && h > 0 ? w * h : 0;
+};
+
 const placedLabels = [];
-let nudged = 0;
-for (const e of edges) {
+let onLine = 0, shifted = 0, dirty = 0;
+// Fewest options first. Placed in list order, an edge with one possible place can arrive to find it
+// taken by an edge that had five and picked this one; the other way round, everybody fits.
+const order = edges.map((e, i) => ({ e, i })).sort((p, q) => p.e.spots.length - q.e.spots.length || p.i - q.i);
+for (const { e } of order) {
   const w = e.label.length * CHAR + PAD;
-  let chosen = null;
-  for (const spot of e.spots) {
-    const box = { x: spot.x - w / 2, y: spot.y - LH / 2, w, h: LH };
-    const clash = blockers.some((b) => overlap(box, b)) || placedLabels.some((b) => overlap(box, b));
-    if (!clash) { chosen = box; break; }
-  }
-  if (!chosen) {
-    nudged++;
-    const first = e.spots[0];
-    let box = { x: first.x - w / 2, y: first.y - LH / 2, w, h: LH };
-    let free = false;
-    for (let step = 1; step <= 6 && !free; step++) {
-      for (const dir of [-1, 1]) {
-        const probe = first.along === 'h'
-          ? { ...box, y: first.y - LH / 2 + dir * step * 19 }
-          : { ...box, x: first.x - w / 2 + dir * step * 19 };
-        if (!blockers.some((b) => overlap(probe, b)) && !placedLabels.some((b) => overlap(probe, b))) {
-          box = probe; free = true; break;
-        }
-      }
+  let best = null, bestCost = Infinity, bestK = 0, bestOff = 0;
+  for (let k = 0; k < e.spots.length && bestCost > 0; k++) {
+    const spot = e.spots[k];
+    for (const [off, slide] of PERP.flatMap((o) => ALONG.map((a) => [o, a]))) {
+      const box = spot.along === 'h'
+        ? { x: spot.x - w / 2 + slide, y: spot.y - LH / 2 + off, w, h: LH }
+        : { x: spot.x - w / 2 + off, y: spot.y - LH / 2 + slide, w, h: LH };
+      let cost = k * 26 + Math.abs(off) * 1.4 + Math.abs(slide) * 0.5;
+      for (const b of blockers) cost += areaOver(box, b) * 0.9;
+      for (const b of placedLabels) cost += areaOver(box, b) * 1.6;
+      if (cost < bestCost) { bestCost = cost; best = box; bestK = k; bestOff = off + slide; }
+      if (cost === 0) break;
     }
-    if (!free) fail(`Beschriftung "${e.label}" findet nirgends Platz (${e.from}→${e.to})`);
-    chosen = box;
   }
-  placedLabels.push(chosen);
+  placedLabels.push(best);
+  const clean = blockers.every((b) => areaOver(best, b) === 0)
+    && placedLabels.slice(0, -1).every((b) => areaOver(best, b) === 0);
+  if (!clean) { dirty++; fail(`Beschriftung "${e.label}" überdeckt etwas (${e.from}→${e.to})`); }
+  else if (bestK === 0 && bestOff === 0) onLine++;
+  else shifted++;
 }
 
 /* ------------------------------------------------------------------ Inhalt */
@@ -206,7 +212,7 @@ if (problems.length) {
 
 console.log(
   `✓ ${nodes.length} Kacheln, ${edges.length} Wege, ${zones.length} Zonen · ` +
-  `${edges.length - nudged} von ${edges.length} Beschriftungen sitzen auf ihrem Weg · ` +
+  `${onLine} Beschriftungen mittig, ${shifted} versetzt, ${dirty} mit Überdeckung · ` +
   `${segments.length} Wegstücke, keines durch eine Kachel · ` +
   `Fläche ${Math.round(extent.w)}×${Math.round(extent.h)} · ${words} Wörter Erklärung`,
 );
