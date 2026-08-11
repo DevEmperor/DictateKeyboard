@@ -70,9 +70,28 @@ export function wavDuration(head: Uint8Array, fileSize: number): AudioDuration |
  * 4000 bytes/s is 32 kbit/s — hardly any real speech recording sits below that. A typical
  * 64 kbit/s m4a is therefore estimated at roughly twice its length. That is the intent: too
  * much is reserved and corrected once the answer arrives.
+ *
+ * **Only for reserving credit.** Deciding whether a file is too long is the other question and
+ * needs the opposite bias — see [shortestPossibleSeconds].
  */
 export function estimateSeconds(fileSize: number): AudioDuration {
   return { seconds: fileSize / 4000, exact: false };
+}
+
+/**
+ * The shortest this file could possibly be, for the "is it too long" decision.
+ *
+ * The generous estimate above is the wrong tool for refusing something: it assumes the *lowest*
+ * plausible bitrate, so anything encoded better than speech looks longer than it is. A three-minute
+ * song at 192 kbit/s came out as eighteen minutes and was turned away as too long — the message was
+ * true about the calculation and false about the file.
+ *
+ * 40000 bytes/s is 320 kbit/s, past what anything short of lossless uses. A file below
+ * `limit × 40000` bytes *might* be within the limit, so it is let through and the real duration
+ * settles it afterwards. One above it cannot be, whatever it contains.
+ */
+export function shortestPossibleSeconds(fileSize: number): number {
+  return fileSize / 40_000;
 }
 
 function ascii(bytes: Uint8Array, start: number, length: number): string {

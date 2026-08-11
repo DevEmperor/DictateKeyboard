@@ -1,5 +1,5 @@
 import { raise } from '../alerts';
-import { estimateSeconds, wavDuration } from '../audio';
+import { estimateSeconds, shortestPossibleSeconds, wavDuration } from '../audio';
 import { authenticate, touch } from '../auth';
 import { OPENAI_BASE, transcribeCostNano, type Env, type Limits } from '../config';
 import { budgetAllows, logUsage, settleBudget, walletStub } from '../meter';
@@ -47,7 +47,14 @@ export async function handleTranscription(
   const head = new Uint8Array(await file.slice(0, 4096).arrayBuffer());
   const duration = wavDuration(head, file.size) ?? estimateSeconds(file.size);
 
-  if (duration.seconds > limits.maxAudioSeconds) {
+  // Refused only when the file cannot be within the limit however it is encoded — for a WAV that is
+  // the header's own figure, for anything else the shortest length its size allows. Using the
+  // generous estimate here turned an ordinary three-minute song into "eighteen minutes, too long".
+  const tooLong = duration.exact
+    ? duration.seconds > limits.maxAudioSeconds
+    : shortestPossibleSeconds(file.size) > limits.maxAudioSeconds;
+
+  if (tooLong) {
     // The app turns 413 into CONTENT_SIZE_LIMIT and offers to keep the recording — exactly
     // the right response to "too long".
     logRefusal(env, session, 'transcribe', 413, started, ctx);
@@ -59,7 +66,10 @@ export async function handleTranscription(
     );
   }
 
-  const chargedSeconds = Math.ceil(duration.seconds);
+  // Held up front, and never more than the longest recording allowed: the estimate assumes speech
+  // at 32 kbit/s, so a better-encoded file reads several times its true length and would demand
+  // credit for minutes it does not contain. Corrected to the real duration once OpenAI reports it.
+  const chargedSeconds = Math.min(Math.ceil(duration.seconds), limits.maxAudioSeconds);
   const estimateNano = transcribeCostNano(chargedSeconds);
 
   if (!(await budgetAllows(env, limits, estimateNano, ctx))) {
