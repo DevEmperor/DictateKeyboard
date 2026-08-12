@@ -43,9 +43,10 @@ import kotlin.math.sin
  * - [Mode.SUCCESS] / [Mode.ERROR]: the whole cloud field tints green / red so the terminal feedback still
  *   looks like the same cloud instead of a detached colored circle.
  *
- * Android 13+ renders the procedural cloud field as an AGSL [RuntimeShader]; older versions keep the same
- * palette and audio motion with cached Canvas gradients. Both paths animate only while the orb is visible
- * in an animating state; the microphone level itself still arrives at 20 Hz.
+ * Android 13+ renders the procedural cloud field as an AGSL [RuntimeShader]; older versions — and any
+ * frame that arrives on a software canvas, where a [RuntimeShader] is not allowed to draw at all — keep
+ * the same palette and audio motion with cached Canvas gradients. Both paths animate only while the orb
+ * is visible in an animating state; the microphone level itself still arrives at 20 Hz.
  */
 internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
     context: Context,
@@ -164,12 +165,26 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
         val motionEnabled = shouldAnimate()
         updateMotion(deltaSeconds, motionEnabled)
 
+        // The AGSL field only exists on the GPU: handing a RuntimeShader to a software canvas throws
+        // (issue #267), and having the version is no promise of having the pipeline. The floating button
+        // is a window this app adds itself, and such a window can end up in ViewRootImpl.drawSoftware —
+        // when the render thread is gone, under memory pressure, or because the platform decided so. The
+        // canvas is the only thing that knows, and it knows per frame, so ask it per frame: the same
+        // palette is already cached as plain gradients, which costs texture rather than identity.
+        val renderer = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            canvas.isHardwareAccelerated
+        ) {
+            cloudRenderer
+        } else {
+            null
+        }
+
         val cx = width / 2f
         val cy = height / 2f
         canvas.save()
         canvas.scale(currentScale, currentScale, cx, cy)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && cloudRenderer != null) {
-            cloudRenderer.draw(canvas, width, height, flowTime, activity(), tintR, tintG, tintB, currentTint)
+        if (renderer != null) {
+            renderer.draw(canvas, width, height, flowTime, activity(), tintR, tintG, tintB, currentTint)
         } else {
             drawFallback(canvas, cx, cy)
             if (currentTint > 0.01f) drawFallbackTint(canvas, cx, cy)
@@ -185,7 +200,7 @@ internal class AudioReactiveCloudOrbView @JvmOverloads constructor(
                 mode == Mode.ERROR || currentTint > 0.01f ||
                 (mode == Mode.IDLE && abs(currentScale - IDLE_SCALE) > 0.004f))
         if (animating) {
-            if (cloudRenderer != null) postInvalidateOnAnimation()
+            if (renderer != null) postInvalidateOnAnimation()
             else postInvalidateDelayed(FALLBACK_FRAME_MS)
         }
     }
