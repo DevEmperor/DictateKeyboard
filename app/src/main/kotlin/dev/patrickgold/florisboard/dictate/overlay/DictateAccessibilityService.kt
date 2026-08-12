@@ -14,11 +14,15 @@ import android.accessibilityservice.AccessibilityService
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ServiceInfo
 import android.os.Build
+import android.os.PowerManager
 import android.os.SystemClock
 import android.os.Handler
 import android.os.Looper
@@ -32,6 +36,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.florisboard.lib.android.systemService
 
 /**
  * Optional accessibility service that powers the floating dictation button (issue #88). It does two
@@ -54,6 +59,9 @@ class DictateAccessibilityService : AccessibilityService() {
     private var bubble: DictateBubbleController? = null
     private var isForeground = false
     private val mainHandler = Handler(Looper.getMainLooper())
+
+    /** Listens for the display going dark and coming back; see [refreshScreenState] for why (#269). */
+    private var screenReceiver: BroadcastReceiver? = null
 
     // Coalesce selection re-checks. Selection-changed events can arrive on every keystroke, but the
     // expensive part of updateEditableFocus() — fetching the focused node's full AccessibilityNodeInfo
@@ -83,6 +91,8 @@ class DictateAccessibilityService : AccessibilityService() {
         instance = this
         flogDebug { "DictateAccessibilityService connected" }
         createNotificationChannel()
+        registerScreenReceiver()
+        refreshScreenState()
         bubble = DictateBubbleController(this).also { it.start() }
         updateEditableFocus()
     }
@@ -165,7 +175,65 @@ class DictateAccessibilityService : AccessibilityService() {
         windows.any { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }
     }.getOrDefault(false)
 
+    /**
+     * Starts listening for the display turning off and on. Both actions are sent to runtime-registered
+     * receivers only — a manifest entry would never fire — and they are protected system broadcasts, so the
+     * receiver is registered as not exported. Registered for as long as the service lives, unlike the
+     * screen-off listener in `DictateController` (#147), which only runs during a recording.
+     */
+    private fun registerScreenReceiver() {
+        if (screenReceiver != null) return
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) = refreshScreenState()
+        }
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_OFF)
+            addAction(Intent.ACTION_SCREEN_ON)
+        }
+        val registered = runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(receiver, filter)
+            }
+        }.isSuccess
+        if (registered) screenReceiver = receiver
+    }
+
+    /** Stops listening. Idempotent, and safe to call from both teardown paths. */
+    private fun unregisterScreenReceiver() {
+        val receiver = screenReceiver ?: return
+        screenReceiver = null
+        runCatching { unregisterReceiver(receiver) }
+    }
+
+    /**
+     * Publishes whether the display is interactive right now (#269).
+     *
+     * The floating button lives in a [android.view.WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY]
+     * window, a layer that deliberately outlives the keyguard so an accessibility tool keeps working there.
+     * The platform therefore never takes it down for us, and no accessibility event announces a screen going
+     * dark — so without this the last "a text field is focused" survives into the always-on display, and the
+     * button is still sitting on a phone the user believes to be off.
+     *
+     * Cheap enough to call on every focus update as well: a single binder call for a boolean, not the node
+     * tree fetch that made typing janky in #222. That second caller is the safety net — if an
+     * [Intent.ACTION_SCREEN_ON] is ever missed, the next accessibility event brings the button back rather
+     * than leaving it gone for the rest of the session.
+     */
+    private fun refreshScreenState() {
+        val on = runCatching { systemService(PowerManager::class).isInteractive }.getOrDefault(true)
+        if (_screenOn.value != on) {
+            _screenOn.value = on
+            flogDebug { "screen interactive = $on" }
+        }
+    }
+
     private fun updateEditableFocus() {
+        // Re-read the screen here too, not only from the broadcast: every path that can make the bubble
+        // appear runs through this method, so a missed ACTION_SCREEN_ON heals on the next event instead of
+        // hiding the button for the rest of the session (#269).
+        refreshScreenState()
         // Show the bubble whenever there is somewhere to dictate: either an editable field holds focus, or a
         // soft keyboard is physically out (covers apps whose fields don't report an accessible editable focus).
         val imeShown = isImeWindowShown()
@@ -495,6 +563,7 @@ class DictateAccessibilityService : AccessibilityService() {
     private fun clearInstance() {
         if (instance === this) {
             instance = null
+            unregisterScreenReceiver()
             _editableFocused.value = false
             _dictateKeyboardActive.value = false
             _imeVisible.value = false
@@ -596,6 +665,14 @@ class DictateAccessibilityService : AccessibilityService() {
 
         /** Package name of the current foreground app, for per-app bubble positioning. */
         val foregroundPackage: StateFlow<String?> = _foregroundPackage.asStateFlow()
+
+        private val _screenOn = MutableStateFlow(true)
+
+        /**
+         * Whether the display is interactive. The bubble's window layer outlives a screen going dark, so it
+         * has to be told to leave (#269).
+         */
+        val screenOn: StateFlow<Boolean> = _screenOn.asStateFlow()
 
         /**
          * Inserts [text] into the focused editable field via the running service, returning true on

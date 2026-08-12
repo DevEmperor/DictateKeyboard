@@ -215,9 +215,13 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             ) { inputs, design, size, imeVisible, color ->
                 Emission(inputs, design, size, imeVisible, color.toArgb())
             }
-            combine(emissions, RecognitionBridge.active) { emission, recogActive ->
-                emission to recogActive
-            }.collect { (emission, recogActive) ->
+            combine(
+                emissions,
+                RecognitionBridge.active,
+                DictateAccessibilityService.screenOn,
+            ) { emission, recogActive, screenOn ->
+                Triple(emission, recogActive, screenOn)
+            }.collect { (emission, recogActive, screenOn) ->
                 val (inputs, design, size, imeVisible, accent) = emission
                 val (enabled, showWithKeyboard, focused, dictateKeyboard, state) = inputs
                 if (design != currentDesign || size.scale != sizeScale || accent != accentColor) {
@@ -237,8 +241,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // Hide the bubble entirely while another keyboard/app drives a system voice-input session
                 // (#67) — its own overlay/panel is showing, and the recording isn't the bubble's (RECOGNITION
                 // target), so a floating mic on top would be confusing.
-                val show = enabled && (focused || active) && !hiddenByOwnKeyboard && !recogActive
+                // A dark screen is no place for a floating window (#269). This layer deliberately outlives the
+                // keyguard, so nobody takes the bubble away for us, and an always-on display will happily
+                // draw a button on a phone its owner believes to be off. The window is *removed* rather than
+                // faded: alpha or GONE is a request to a compositor we do not control, and that compositor is
+                // exactly the part behaving unexpectedly here.
+                val show = enabled && (focused || active) && !hiddenByOwnKeyboard && !recogActive && screenOn
                 if (show) ensureShown() else hide()
+                // The rewording menu is a window of its own and does not come down with hide(). Tied to the
+                // screen alone on purpose: taking it away whenever the bubble hides would be a different
+                // change, about focus, not about the screen.
+                if (!screenOn) hidePromptMenu()
                 recordingState = state as? DictateController.UiState.Recording
                 applyState(state)
                 manageForeground(state)
