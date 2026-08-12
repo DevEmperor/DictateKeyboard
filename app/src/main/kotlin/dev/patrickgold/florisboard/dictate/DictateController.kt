@@ -3123,6 +3123,11 @@ object DictateController {
                 promptsDb(context).getAll().filter { it.autoApply }
             }
             autoApply.forEach { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { parts.add(it) } }
+            // The same anchor the two-call path gets from REWORDING_BE_PRECISE (issue #268). The
+            // prompts folded in above are seeded in the device's locale, so on a Ukrainian phone a
+            // "fix my grammar" instruction is a Ukrainian sentence — and without this line the model
+            // answers in the language it was addressed in rather than the one that was spoken.
+            if (autoApply.isNotEmpty()) parts.add(DictatePromptDefaults.KEEP_SPOKEN_LANGUAGE)
         }
         return parts.joinToString("\n\n")
     }

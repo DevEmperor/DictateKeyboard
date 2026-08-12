@@ -36,10 +36,35 @@ object DictatePromptDefaults {
     // conspicuous, and [looksLikeStylePromptEcho] now discards any echo regardless of the wording.
     const val PUNCTUATION_CAPITALIZATION = "Hello. Thank you very much."
 
+    /**
+     * The default system prompt, appended to every rewording request.
+     *
+     * The output language is anchored to the **text**, not to the instruction (issue #268). Anchoring
+     * it to the instruction looked harmless and was not: the example prompts are seeded in the device
+     * locale, so on a Ukrainian phone "fix my grammar" is a Ukrainian sentence — and every English
+     * dictation that passed through it came back translated into Ukrainian, exactly as instructed and
+     * nothing like what was meant.
+     *
+     * The instruction's language is kept only as the fallback for prompts that get no text at all
+     * (a quote, a sign-off), where there is nothing else to follow. An explicit "translate to X" still
+     * wins over both.
+     */
     const val REWORDING_BE_PRECISE =
         "Be accurate with your output. Only output exactly what the user has asked for above. Do not " +
-            "add any text before or after the actual output. Output the text in the language of the " +
-            "instruction, unless a different language was explicitly requested."
+            "add any text before or after the actual output. Write the output in the same language as " +
+            "the text you were given, even if this instruction is written in a different language. " +
+            "Only when no text was given, use the language of the instruction. If a different output " +
+            "language is explicitly requested, that request wins."
+
+    /**
+     * The single-call multimodal path (issue #130) does not send [REWORDING_BE_PRECISE] — it folds
+     * instruction, style and auto-apply prompts into one message beside the audio. This is that
+     * message's version of the same rule: written for a transcript that does not exist yet.
+     */
+    const val KEEP_SPOKEN_LANGUAGE =
+        "Write the result in the language that was actually spoken in the audio, even if the " +
+            "instructions above are written in a different language. Only follow a different output " +
+            "language if one of them explicitly asks for it."
 
     const val AUTO_FORMATTING_PROMPT =
         "You are an attentive, adaptive formatting assistant. Clean up speech transcripts that may " +
