@@ -42,6 +42,13 @@ interface GlideTypingClassifier {
     fun setWordData(subtype: Subtype)
 
     /**
+     * Throw away the word data built for [subtype] and build it again, because the vocabulary itself changed
+     * — the user added or removed a personal word (issue #263). Does nothing if no word data has been built
+     * yet: the first build will read the new vocabulary anyway.
+     */
+    fun invalidateWordData(subtype: Subtype)
+
+    /**
      * Process a completed gesture and find its location.
      */
     fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData)

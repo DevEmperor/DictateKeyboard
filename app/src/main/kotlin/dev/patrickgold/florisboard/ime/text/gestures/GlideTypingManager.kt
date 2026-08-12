@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.florisboard.lib.kotlin.collectLatestIn
 import kotlin.math.min
 
 /**
@@ -47,6 +48,14 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var glideTypingClassifier = StatisticalGlideTypingClassifier(context)
     private var lastTime = System.currentTimeMillis()
+
+    init {
+        // Switching either personal dictionary off or on changes the vocabulary just as much as editing a
+        // word in it does (issue #263). The first emission arrives before anything is built, where
+        // invalidateWordData is a no-op by design.
+        prefs.dictionary.enableFlorisUserDictionary.asFlow().collectLatestIn(scope) { invalidateWordData() }
+        prefs.dictionary.enableSystemUserDictionary.asFlow().collectLatestIn(scope) { invalidateWordData() }
+    }
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
@@ -76,6 +85,20 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     fun setLayout(keys: List<TextKey>) {
         if (keys.isNotEmpty()) {
             glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype)
+        }
+    }
+
+    /**
+     * Tell the classifier that the vocabulary changed — a personal word was added, edited or removed
+     * (issue #263). Without this the index and its pruner are built once per subtype and keep answering from
+     * the vocabulary as it was, so a word added without leaving the keyboard could not be swiped.
+     *
+     * Off the main thread: rebuilding the index walks the whole dictionary. Nothing is being swiped at the
+     * moment a word is added, so it does not race with a gesture in practice.
+     */
+    fun invalidateWordData() {
+        scope.launch {
+            glideTypingClassifier.invalidateWordData(subtypeManager.activeSubtype)
         }
     }
 

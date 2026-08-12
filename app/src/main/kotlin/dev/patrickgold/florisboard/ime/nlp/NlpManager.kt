@@ -22,6 +22,7 @@ import android.util.LruCache
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -64,6 +65,9 @@ class NlpManager(context: Context) {
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
+    // Kept as the Lazy rather than unwrapped with `by`: the glide manager reaches back for this very
+    // NlpManager, so it must not be built while this one is still being constructed.
+    private val glideTypingManager = context.glideTypingManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
@@ -299,6 +303,9 @@ class NlpManager(context: Context) {
                     )
                 )
                 scope.launch { suggest(subtypeManager.activeSubtype, editorInstance.activeContent) }
+                // Glide builds its index up front, so a word added mid-session would otherwise be typable
+                // but not swipeable until the next subtype change (issue #263).
+                glideTypingManager.value.invalidateWordData()
                 AddToDictionaryResult.ADDED
             }
         }.getOrDefault(AddToDictionaryResult.UNAVAILABLE)

@@ -106,6 +106,14 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE (${UserDictionary.Words.LOCALE} = :locale AND :locale IS NOT NULL) OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL)")
     fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry>
 
+    /**
+     * Every word that applies while typing in [locale]: the ones saved for that language, plus the ones saved
+     * for no language at all. The same reading of "applies here" as [query] and [queryExactFuzzyLocale] — the
+     * strict [queryAll] above is for the settings list, which shows one language at a time.
+     */
+    @Query("$SELECT_ALL_FROM_WORDS WHERE $LOCALE_MATCHES")
+    fun queryAllFuzzyLocale(locale: FlorisLocale?): List<UserDictionaryEntry>
+
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word")
     fun queryExact(word: String): List<UserDictionaryEntry>
 
@@ -321,6 +329,21 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 queryResolver(
                     selection = "${UserDictionary.Words.LOCALE} = ?",
                     selectionArgs = arrayOf(locale.localeTag()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
+        }
+
+        override fun queryAllFuzzyLocale(locale: FlorisLocale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryAll(null)
+            } else {
+                // Same three-way match the word queries above use: the exact tag, the bare language, or no
+                // language at all. The system dictionary stores both "en_US" and "en", so asking for one only
+                // would silently drop half of the user's own words.
+                queryResolver(
+                    selection = "${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(locale.localeTag(), locale.language),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }

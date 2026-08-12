@@ -104,6 +104,17 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // prefix, a NUL character that no dictionary word can contain.
         private const val TYPED_WORD_KEY = "\u0000"
 
+        // How frequent a word the user added counts as when glide ranks candidates (issue #263), on the
+        // dictionary's own 128..255 scale. Measured against the bundled English dictionary, 212 is its 90th
+        // percentile: a personal word beats nine tenths of the vocabulary, which is what it takes for a name
+        // to win against the similar-shaped rarities it actually competes with, while the words everybody
+        // writes still come first.
+        //
+        // Deliberately not the frequency stored on the entry. Every word added through this app is saved at
+        // the maximum (NlpManager's USER_DICTIONARY_FREQ, 255), so honouring it would put a nickname above
+        // "the" — and that number was chosen to protect words from autocorrect, a different question.
+        private const val USER_DICTIONARY_GLIDE_FREQ = 212
+
         // German umlaut/ß restoration (issue #219): bound the variant generation so a long word with many
         // a/o/u doesn't explode combinatorially (2^sites). Words needing more than this are left alone.
         private const val MAX_UMLAUT_SITES = 6
@@ -158,6 +169,16 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val subtypeManager by lazy { appContext.subtypeManager().value }
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    /**
+     * The personal words that went into the glide index last built, with the locale they were read for
+     * (issue #263). Written by [getListOfWords], read by [getFrequencyForWord] — which runs for every pruned
+     * candidate of every gesture, so this is a plain volatile reference to an immutable map rather than
+     * another lock on that path. Both always concern the active subtype: the classifier rebuilds its word
+     * data whenever the subtype changes, and asks for frequencies only afterwards.
+     */
+    @Volatile
+    private var glideUserWords: Pair<String, Map<String, Int>>? = null
 
     // Word→frequency dictionaries cached per language (issue #127, glide typing phase 2). Each bundled
     // ime/dict/<lang>.json maps a word to a frequency in [128,255]; languages without a bundled file fall
@@ -966,13 +987,52 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return false
     }
 
+    /**
+     * The vocabulary glide typing builds its index from: the bundled dictionary plus the words the user added
+     * themselves (issue #263).
+     *
+     * Those two used to disagree with [isKnownWord], which does consult the personal dictionary — so a word
+     * the user added was safe from autocorrect but could not be swiped, which is a strange thing to have to
+     * explain. Read fresh from the database on every call, because this runs once per index build and the
+     * personal dictionary is the one part of the vocabulary that changes while the app is running.
+     */
     override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        return wordDataFor(subtype).keys.toList()
+        val bundled = wordDataFor(subtype)
+        val personal = userGlideWords(subtype)
+        // Remember them for getFrequencyForWord, which is asked about these very words moments later.
+        glideUserWords = subtype.primaryLocale.localeTag() to personal
+        flogDebug { "glide vocabulary (${subtype.primaryLocale.localeTag()}): ${bundled.size} + ${personal.size} personal" }
+        if (personal.isEmpty()) return bundled.keys.toList()
+        return buildList(bundled.size + personal.size) {
+            addAll(bundled.keys)
+            for (word in personal.keys) if (!bundled.containsKey(word)) add(word)
+        }
     }
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return (wordDataFor(subtype)[word] ?: 0) / 255.0
+        val bundled = wordDataFor(subtype)[word]
+        if (bundled != null) return bundled / 255.0
+        val (locale, personal) = glideUserWords ?: return 0.0
+        if (locale != subtype.primaryLocale.localeTag()) return 0.0
+        return (personal[word] ?: 0) / 255.0
     }
+
+    /**
+     * The user's own words for [subtype], each at [USER_DICTIONARY_GLIDE_FREQ].
+     *
+     * Blank entries are dropped: the glide pruner indexes a word by its first and last character and would
+     * throw on an empty one, and the system dictionary is not ours to trust for that.
+     */
+    private fun userGlideWords(subtype: Subtype): Map<String, Int> = runCatching {
+        val dm = DictionaryManager.default()
+        dm.loadUserDictionariesIfNecessary()
+        buildMap {
+            for (entry in dm.queryAllUserWords(subtype.primaryLocale)) {
+                val word = entry.word.trim()
+                if (word.isNotEmpty()) put(word, USER_DICTIONARY_GLIDE_FREQ)
+            }
+        }
+    }.getOrDefault(emptyMap())
 
     override suspend fun destroy() {
         // Here we have the chance to de-allocate memory and finish our work. However this might never be called if

@@ -90,6 +90,31 @@ class DictionaryManager private constructor(context: Context) {
 
     }
 
+    /**
+     * Every word the user has added that applies while typing in [locale], from both dictionaries and
+     * honouring the same enable-prefs as [queryUserDictionary] — the whole personal vocabulary rather than
+     * an answer about one word.
+     *
+     * Added for glide typing (issue #263), which builds an index up front and so cannot ask word by word:
+     * a personal word was protected from autocorrect but could not be swiped, because the two questions were
+     * answered from different sources.
+     */
+    fun queryAllUserWords(locale: FlorisLocale): List<UserDictionaryEntry> {
+        val florisDao = florisUserDictionaryDao()
+        val systemDao = systemUserDictionaryDao()
+        if (florisDao == null && systemDao == null) {
+            return emptyList()
+        }
+        return buildList {
+            if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+                florisDao?.queryAllFuzzyLocale(locale)?.let { addAll(it) }
+            }
+            if (prefs.dictionary.enableSystemUserDictionary.get()) {
+                systemDao?.queryAllFuzzyLocale(locale)?.let { addAll(it) }
+            }
+        }
+    }
+
     fun spell(word: String, locale: FlorisLocale): Boolean {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()

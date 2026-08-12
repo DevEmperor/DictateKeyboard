@@ -158,6 +158,18 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         }
     }
 
+    override fun invalidateWordData(subtype: Subtype) {
+        // Nothing built yet: leave it that way. Building here would load the whole dictionary early for a
+        // keyboard that may never be opened, and the first real build reads the new words regardless.
+        if (wordDataSubtype == null) return
+        // The pruner is keyed by subtype and outlives a rebuild, and the suggestion cache answers by gesture
+        // shape — both would keep handing out the vocabulary from before the user's edit.
+        prunerCache.evictAll()
+        lruSuggestionCache.evictAll()
+        wordDataSubtype = null
+        setWordData(subtype)
+    }
+
     /**
      * Exists because Pruner requires both word data and layout are initialized,
      * however we don't know what order they're initialized in.
