@@ -144,6 +144,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         return activeState.isComposingEnabled && nlpManager.isSuggestionOn()
     }
 
+    override fun determinePhantomSpacePending(): Boolean = phantomSpace.isActive
+
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
         return keyboardManager.resources.composers.value[composerName] ?: Appender
     }

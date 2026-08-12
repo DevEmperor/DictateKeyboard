@@ -27,6 +27,10 @@ import org.florisboard.lib.kotlin.safeSubstring
  * @property localComposing The composing region for the editor, without [offset] included.
  * @property localCurrentWord The current word for the editor (typically the same as [localComposing]), without [offset]
  *     included.
+ * @property phantomSpacePending Whether a space has been promised but not yet written — the state accepting a
+ *     suggestion or a glided word leaves behind. It is part of the content because it is part of what the text
+ *     means: the word before the cursor is finished, exactly as if a space had been typed, and whatever is
+ *     committed next inserts that space first.
  */
 data class EditorContent(
     val text: String,
@@ -34,6 +38,7 @@ data class EditorContent(
     val localSelection: EditorRange,
     val localComposing: EditorRange,
     val localCurrentWord: EditorRange,
+    val phantomSpacePending: Boolean = false,
 ) {
     /**
      * The text before the selection as a new string. This may be the whole text before the selection or only a subset,

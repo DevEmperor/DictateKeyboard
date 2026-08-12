@@ -260,7 +260,9 @@ abstract class AbstractEditorInstance(context: Context) {
             append(selectedText)
             append(textAfterSelection)
         }
-        return EditorContent(text, offset, localSelection, localComposing, localCurrentWord)
+        return EditorContent(
+            text, offset, localSelection, localComposing, localCurrentWord, determinePhantomSpacePending(),
+        )
     }
 
     private suspend fun EditorContent.generateCopy(
@@ -289,6 +291,13 @@ abstract class AbstractEditorInstance(context: Context) {
     abstract fun determineComposingEnabled(): Boolean
 
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
+
+    /**
+     * Whether a space is promised but not yet written (see [EditorContent.phantomSpacePending]). Answered by
+     * the subclass that owns that state; the base class only reads it into the content it generates, so that
+     * everyone looking at a content sees the promise and the text as of the same moment.
+     */
+    protected open fun determinePhantomSpacePending(): Boolean = false
 
     protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
         return editorInfo.isRichInputEditor && !editorInfo.inputAttributes.flagTextNoSuggestions

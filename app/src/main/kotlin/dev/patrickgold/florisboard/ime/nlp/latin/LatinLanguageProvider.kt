@@ -109,6 +109,31 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         private const val MAX_UMLAUT_SITES = 6
         private const val MAX_GERMAN_VARIANTS = 128
 
+        // Next-word prediction (issue #245) stops at these: past one of them the previous word belongs to a
+        // sentence that is over. Deliberately only the hard enders — a comma or a semicolon separates clauses
+        // that still read as one sentence, and the bigram across them is worth having.
+        private val SENTENCE_ENDINGS = setOf('.', '!', '?', '…')
+
+        /**
+         * Whether the cursor stands somewhere a next-word prediction is worth offering. Split out of
+         * `nextWordPredictions` because it is the whole decision — the rest of that method is dictionary
+         * lookup — and because it is the part with edge cases worth pinning down in a test.
+         *
+         * Two things finish a word: a space that was typed, and a space that was promised. Accepting a
+         * suggestion leaves the second kind (issue #266) — nothing is written until the next commit needs
+         * it, so the text still ends in a letter while the word is as finished as if space had been pressed.
+         * Requiring a written space is what made the strip stay empty until the user pressed space.
+         *
+         * A sentence end stops it either way. The bigram tables know nothing about sentences, so what could
+         * be offered after a full stop continues the sentence that just ended; offering nothing is the better
+         * answer, and it hands the quick-action row back for the same reason an empty field does.
+         */
+        internal fun isAtPredictionPoint(textBeforeCursor: String, phantomSpacePending: Boolean): Boolean {
+            if (!textBeforeCursor.endsWith(" ") && !phantomSpacePending) return false
+            val settled = textBeforeCursor.trimEnd()
+            return settled.isNotEmpty() && settled.last() !in SENTENCE_ENDINGS
+        }
+
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
         private val LANG_ALIASES = mapOf("iw" to "he", "in" to "id", "ji" to "yi")
@@ -462,9 +487,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         maxCandidateCount: Int,
     ): List<SuggestionCandidate> {
         if (!prefs.suggestion.nextWordPrediction.get()) return emptyList()
-        // Only directly after a completed word: a trailing space means the previous word is finished, while
-        // a cursor sitting mid-word or right after punctuation gives nothing meaningful to continue from.
-        if (!content.textBeforeSelection.endsWith(" ")) return emptyList()
+        if (!isAtPredictionPoint(content.textBeforeSelection, content.phantomSpacePending)) return emptyList()
         val prevWord = previousWordOf(content) ?: return emptyList()
         val bigrams = bigramsFor(subtype)
         if (bigrams.isEmpty()) return emptyList()
