@@ -30,7 +30,7 @@ try {
       '--module', 'commonjs', '--moduleResolution', 'node', '--skipLibCheck',
     ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8' });
   } catch (err) {
-    console.error('Übersetzen fehlgeschlagen:\n' + (err.stdout || '') + (err.stderr || ''));
+    console.error('Compiling failed:\n' + (err.stdout || '') + (err.stderr || ''));
     process.exit(1);
   }
   const require = createRequire(import.meta.url);
@@ -50,24 +50,24 @@ const overlap = (a, b) =>
 
 for (let i = 0; i < nodes.length; i++) {
   for (let j = i + 1; j < nodes.length; j++) {
-    if (overlap(nodes[i], nodes[j])) fail(`Kacheln überlappen: ${nodes[i].id} / ${nodes[j].id}`);
+    if (overlap(nodes[i], nodes[j])) fail(`Boxes overlap: ${nodes[i].id} / ${nodes[j].id}`);
   }
 }
 
 const zoneById = new Map(zones.map((z) => [z.id, z]));
 for (const n of nodes) {
   const z = zoneById.get(n.zone);
-  if (!z) { fail(`${n.id} nennt eine Zone, die es nicht gibt: ${n.zone}`); continue; }
+  if (!z) { fail(`${n.id} names a zone that does not exist: ${n.zone}`); continue; }
   const inside = n.x >= z.x && n.y >= z.y && n.x + n.w <= z.x + z.w && n.y + n.h <= z.y + z.h;
-  if (!inside) fail(`${n.id} liegt nicht vollständig in Zone ${n.zone}`);
+  if (!inside) fail(`${n.id} does not sit entirely inside zone ${n.zone}`);
 }
 for (let i = 0; i < zones.length; i++) {
   for (let j = i + 1; j < zones.length; j++) {
-    if (overlap(zones[i], zones[j])) fail(`Zonen überlappen: ${zones[i].id} / ${zones[j].id}`);
+    if (overlap(zones[i], zones[j])) fail(`Zones overlap: ${zones[i].id} / ${zones[j].id}`);
   }
 }
 
-/* -------------------------------------------------------------------- Wege */
+/* ------------------------------------------------------------------ Routes */
 
 /** Every straight leg of every route, as an axis-aligned box with a little width. */
 const segments = [];
@@ -92,16 +92,16 @@ for (const s of segments) {
     if (n.id === from || n.id === to) continue;
     if (s.x0 < n.x + n.w - TOUCH && n.x + TOUCH < s.x1 &&
         s.y0 < n.y + n.h - TOUCH && n.y + TOUCH < s.y1) {
-      fail(`Weg ${s.edge} schneidet Kachel ${n.id}`);
+      fail(`Route ${s.edge} crosses box ${n.id}`);
     }
     // A leg with no extent on one axis still crosses if the other axis passes through the box.
     if (s.axis === 'v' && s.x0 > n.x + TOUCH && s.x0 < n.x + n.w - TOUCH &&
         s.y0 < n.y + n.h - TOUCH && n.y + TOUCH < s.y1) {
-      fail(`Weg ${s.edge} schneidet Kachel ${n.id} (senkrecht)`);
+      fail(`Route ${s.edge} crosses box ${n.id} (vertical leg)`);
     }
     if (s.axis === 'h' && s.y0 > n.y + TOUCH && s.y0 < n.y + n.h - TOUCH &&
         s.x0 < n.x + n.w - TOUCH && n.x + TOUCH < s.x1) {
-      fail(`Weg ${s.edge} schneidet Kachel ${n.id} (waagerecht)`);
+      fail(`Route ${s.edge} crosses box ${n.id} (horizontal leg)`);
     }
   }
 }
@@ -114,18 +114,18 @@ for (let i = 0; i < segments.length; i++) {
     if (a.axis === 'v') {
       if (Math.abs(a.x0 - b.x0) > NEAR) continue;
       if (Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0) > RUN) {
-        fail(`Zwei Wege liegen deckungsgleich bei x≈${Math.round(a.x0)}: ${a.edge} / ${b.edge}`);
+        fail(`Two routes coincide at x≈${Math.round(a.x0)}: ${a.edge} / ${b.edge}`);
       }
     } else {
       if (Math.abs(a.y0 - b.y0) > NEAR) continue;
       if (Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0) > RUN) {
-        fail(`Zwei Wege liegen deckungsgleich bei y≈${Math.round(a.y0)}: ${a.edge} / ${b.edge}`);
+        fail(`Two routes coincide at y≈${Math.round(a.y0)}: ${a.edge} / ${b.edge}`);
       }
     }
   }
 }
 
-/* ------------------------------------------------------- Beschriftungen */
+/* ------------------------------------------------------------------ Labels */
 
 /**
  * Would every label find a free place?
@@ -171,48 +171,48 @@ for (const { e } of order) {
   placedLabels.push(best);
   const clean = blockers.every((b) => areaOver(best, b) === 0)
     && placedLabels.slice(0, -1).every((b) => areaOver(best, b) === 0);
-  if (!clean) { dirty++; fail(`Beschriftung "${e.label}" überdeckt etwas (${e.from}→${e.to})`); }
+  if (!clean) { dirty++; fail(`Label "${e.label}" covers something (${e.from}→${e.to})`); }
   else if (bestK === 0 && bestOff === 0) onLine++;
   else shifted++;
 }
 
-/* ------------------------------------------------------------------ Inhalt */
+/* ----------------------------------------------------------------- Content */
 
 const ids = new Set(nodes.map((n) => n.id));
 const touched = new Set();
 for (const e of edges) {
-  if (!ids.has(e.from)) fail(`Kante nennt unbekannte Quelle: ${e.from}`);
-  if (!ids.has(e.to)) fail(`Kante nennt unbekanntes Ziel: ${e.to}`);
+  if (!ids.has(e.from)) fail(`Edge names an unknown source: ${e.from}`);
+  if (!ids.has(e.to)) fail(`Edge names an unknown target: ${e.to}`);
   touched.add(e.from); touched.add(e.to);
-  if (!e.long || e.long.length < 120) fail(`Kante ${e.from}→${e.to} hat keinen Langtext`);
-  if (!e.spots.length) fail(`Kante ${e.from}→${e.to} hat keinen Platz für ihre Beschriftung`);
-  if (/<\/script/i.test(e.long)) fail(`Kante ${e.from}→${e.to}: </script im Text`);
+  if (!e.long || e.long.length < 120) fail(`Edge ${e.from}→${e.to} has no long text`);
+  if (!e.spots.length) fail(`Edge ${e.from}→${e.to} has nowhere to put its label`);
+  if (/<\/script/i.test(e.long)) fail(`Edge ${e.from}→${e.to}: </script inside the text`);
 }
 for (const n of nodes) {
-  if (!touched.has(n.id)) fail(`Kachel ${n.id} hängt an keiner einzigen Kante`);
-  if (!n.long || n.long.length < 120) fail(`Kachel ${n.id} hat keinen Langtext`);
-  if (/<\/script/i.test(n.long)) fail(`Kachel ${n.id}: </script im Text`);
+  if (!touched.has(n.id)) fail(`Box ${n.id} is on no edge at all`);
+  if (!n.long || n.long.length < 120) fail(`Box ${n.id} has no long text`);
+  if (/<\/script/i.test(n.long)) fail(`Box ${n.id}: </script inside the text`);
 }
 for (const z of zones) {
-  if (!z.long || z.long.length < 120) fail(`Zone ${z.id} hat keinen Langtext`);
+  if (!z.long || z.long.length < 120) fail(`Zone ${z.id} has no long text`);
 }
 
-/* ------------------------------------------------------------------ Bericht */
+/* ------------------------------------------------------------------ Report */
 
 const words = [...nodes, ...edges, ...zones]
   .map((x) => (x.long || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length)
   .reduce((a, b) => a + b, 0);
 
 if (problems.length) {
-  console.error(`\n${problems.length} Problem(e):\n`);
+  console.error(`\n${problems.length} problem(s):\n`);
   for (const p of problems) console.error('  ✗ ' + p);
   console.error('');
   process.exit(1);
 }
 
 console.log(
-  `✓ ${nodes.length} Kacheln, ${edges.length} Wege, ${zones.length} Zonen · ` +
-  `${onLine} Beschriftungen mittig, ${shifted} versetzt, ${dirty} mit Überdeckung · ` +
-  `${segments.length} Wegstücke, keines durch eine Kachel · ` +
-  `Fläche ${Math.round(extent.w)}×${Math.round(extent.h)} · ${words} Wörter Erklärung`,
+  `✓ ${nodes.length} boxes, ${edges.length} routes, ${zones.length} zones · ` +
+  `${onLine} labels centred, ${shifted} shifted, ${dirty} overlapping · ` +
+  `${segments.length} legs, none through a box · ` +
+  `area ${Math.round(extent.w)}×${Math.round(extent.h)} · ${words} words of explanation`,
 );

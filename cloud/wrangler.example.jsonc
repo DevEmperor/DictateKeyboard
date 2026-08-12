@@ -1,20 +1,20 @@
-// VORLAGE. Die echte Fassung liegt nicht in diesem Repo.
+// TEMPLATE. The real file is not in this repository.
 //
-// Zwei Dinge gehören nicht in ein öffentliches Repository: die Empfängeradresse der Warnungen
-// (sie steht als `destination_address` auch in der Bindung und lässt sich nicht in ein Secret
-// auslagern) und die Schwellenwerte des Wachhunds. Letztere sind kein Geheimnis im engeren Sinn —
-// sie schützen nichts, sie melden nur — aber wer sie kennt, weiß genau, wie er darunter bleibt.
+// Two things do not belong in a public repo: the address the alerts are sent to (it also appears as
+// `destination_address` in the binding below, where it cannot be moved into a secret) and the
+// watchdog's thresholds. The latter are not secrets in the strict sense — they protect nothing, they
+// only report — but knowing them tells you exactly how to stay underneath.
 //
-// Zum Einrichten: diese Datei nach `wrangler.jsonc` kopieren, Platzhalter ausfüllen, dann die
-// Geheimnisse setzen (nie in diese Datei):
+// To set up: copy this file to `wrangler.jsonc`, fill in the placeholders, then set the secrets
+// (never in this file):
 //
 //   npx wrangler secret put OPENAI_API_KEY
-//   npx wrangler secret put GOOGLE_SERVICE_ACCOUNT   # das gesamte JSON des Dienstkontos
+//   npx wrangler secret put GOOGLE_SERVICE_ACCOUNT   # the service account's entire JSON key
 //   npx wrangler secret put RTDN_SECRET
-//   npx wrangler secret put OPENAI_ADMIN_KEY         # optional, nur für die Kostenanzeige
+//   npx wrangler secret put OPENAI_ADMIN_KEY         # optional, only for the cost figures
 //
-// Das Dashboard unter /admin verlangt zusätzlich ACCESS_TEAM_DOMAIN und ACCESS_AUD von
-// Cloudflare Access. Fehlen sie, antwortet es 404 statt 403 — siehe src/admin/auth.ts.
+// The dashboard at /admin additionally needs ACCESS_TEAM_DOMAIN and ACCESS_AUD from Cloudflare
+// Access. Without them it answers 404 rather than 403 — see src/admin/auth.ts.
 
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -23,16 +23,16 @@
   "compatibility_date": "2026-08-01",
   "compatibility_flags": ["nodejs_compat"],
 
-  // Nur Metadaten landen im Log — niemals Inhalte. Siehe README, Abschnitt Datenschutz.
+  // Only metadata reaches the log — never content. See the README, privacy section.
   "observability": { "enabled": true },
 
-  // Eine einzige öffentliche Adresse. Die App bekommt diese fest eingebaut, deshalb darf
-  // sie sich nie ändern — anders als eine workers.dev-Adresse, die am Konto-Subdomain hängt.
+  // One public address, and one only. The app has it compiled in, so it must never change — unlike
+  // a workers.dev address, which hangs off the account subdomain.
   "routes": [{ "pattern": "api.dictatekeyboard.com", "custom_domain": true }],
 
-  // Ausdrücklich abgeschaltet, nicht nur als Nebenwirkung der Route: Sonst gäbe es je
-  // Version eine weitere öffentliche URL, die dieselbe Datenbank und dasselbe OpenAI-Konto
-  // anspricht — jede davon wäre eine Adresse, an der ein Limit umgangen werden könnte.
+  // Switched off deliberately, not merely as a side effect of the route: otherwise every version
+  // would get its own public URL, each one reaching the same database and the same OpenAI account —
+  // and each one an address at which a limit could be walked around.
   "workers_dev": false,
   "preview_urls": false,
 
@@ -40,8 +40,8 @@
     {
       "binding": "DB",
       "database_name": "dictate-cloud",
-      // Angelegt mit `wrangler d1 create dictate-cloud --location weur` — Westeuropa,
-      // damit die Metadaten die EU nicht verlassen.
+      // Created with `wrangler d1 create dictate-cloud --location weur` — western Europe, so the
+      // metadata does not leave the EU.
       "database_id": "<d1-database-id>"
     }
   ],
@@ -53,14 +53,14 @@
     ]
   },
 
-  // Fortschreibend, niemals kürzen: Cloudflare merkt sich die zuletzt angewandte Marke. Wird ein
-  // bereits angewandter Eintrag entfernt, versucht der nächste Deploy, v1 erneut anzuwenden, und
-  // scheitert mit „Cannot apply new-sqlite-class migration to class 'Wallet' that is already
-  // depended on by existing Durable Objects".
+  // Append only, never shorten: Cloudflare remembers the last tag it applied. Remove an entry that
+  // has already been applied and the next deploy tries to apply v1 again, failing with "Cannot apply
+  // new-sqlite-class migration to class 'Wallet' that is already depended on by existing Durable
+  // Objects".
   //
-  // v2 legte kurzzeitig eine eigene Klasse für die Codesperre an. Die antwortete auf jeden Aufruf
-  // mit „internal error"; der Zähler sitzt jetzt im GlobalGuard, der ohnehin läuft. v3 räumt die
-  // Klasse wieder ab — Löschen statt Verschweigen, sonst bleibt sie für immer im Konto stehen.
+  // v2 briefly gave the code throttle a class of its own. It answered every call with "internal
+  // error"; the counter now lives in GlobalGuard, which runs anyway. v3 clears the class away again
+  // — deleting rather than quietly abandoning it, or it stays in the account forever.
   "migrations": [
     {
       "tag": "v1",
@@ -76,71 +76,70 @@
     }
   ],
 
-  // Alles hier ist öffentlich einsehbar — Geheimnisse gehören zu `wrangler secret put`.
-  // Schwellenwerte stehen bewusst in der Konfiguration und nicht im Code, damit der
-  // Quelltext veröffentlicht werden kann, ohne die Grenzwerte mitzuverraten.
+  // Everything here is publicly readable — secrets belong in `wrangler secret put`. Thresholds sit
+  // in the configuration rather than in the code so that the source can be published without giving
+  // the limits away with it.
   "vars": {
     "TRANSCRIBE_MODEL": "gpt-transcribe",
     "CHAT_MODEL": "gpt-5-nano",
-    "MAX_AUDIO_SECONDS": "<zahl>",
-    "MAX_CHAT_INPUT_TOKENS": "<zahl>",
-    "MAX_CHAT_OUTPUT_TOKENS": "<zahl>",
-    "RATE_LIMIT_PER_MINUTE": "<zahl>",
-    // Wie viele Geräte gleichzeitig einen gültigen Zugang zu einem Guthaben halten dürfen.
-    // Handy, Uhr und Tablet sind der ehrliche Fall; darüber hinaus ist ein Wiederherstellungscode
-    // kein Konto mehr, sondern ein geteiltes Passwort. Im Dashboard unter Betrieb änderbar.
-    "MAX_DEVICES": "<zahl>",
+    "MAX_AUDIO_SECONDS": "<number>",
+    "MAX_CHAT_INPUT_TOKENS": "<number>",
+    "MAX_CHAT_OUTPUT_TOKENS": "<number>",
+    "RATE_LIMIT_PER_MINUTE": "<number>",
+    // How many devices may hold a working token for one balance at the same time. A phone, a watch
+    // and a tablet are the honest case; beyond that a recovery code is not an account any more but a
+    // shared password. Adjustable from the dashboard under Betrieb.
+    "MAX_DEVICES": "<number>",
     "PACKAGE_NAME": "net.devemperor.dictate",
-    "DAILY_BUDGET_USD": "<zahl>",
-    // Einzelne Anfragezeilen altern weg, die Tagessummen bleiben dauerhaft. Siehe retention.ts.
-    "USAGE_RETENTION_DAYS": "<zahl>",
-    // Auszahlungswährung. Der Kurs kommt inzwischen nachts von der EZB (src/fx.ts); der Wert
-    // hier ist nur noch der Notnagel für den allerersten Lauf, bevor Kurse vorliegen.
+    "DAILY_BUDGET_USD": "<number>",
+    // Individual request rows age out; the daily totals stay. See retention.ts.
+    "USAGE_RETENTION_DAYS": "<number>",
+    // Payout currency. The rate now arrives nightly from the ECB (src/fx.ts); the value here is only
+    // the stopgap for the very first run, before any rates exist.
     "HOME_CURRENCY": "EUR",
-    "USD_TO_HOME_RATE": "<zahl>",
+    "USD_TO_HOME_RATE": "<number>",
 
-    // Wohin die Warnungen gehen. Die Absenderadresse muss auf einer Domain liegen, die in
-    // diesem Cloudflare-Konto zum Versand freigegeben ist — sonst schlägt der Versand mit
-    // E_SENDER_NOT_VERIFIED fehl und die Warnung steht nur im Dashboard.
-    "ALERT_EMAIL_TO": "<deine-adresse@example.com>",
-    "ALERT_EMAIL_FROM": "alerts@<deine-domain>",
-    // Stunde (UTC) für den Tagesbericht. 5 UTC ist 6 oder 7 Uhr deutscher Zeit.
-    "DIGEST_HOUR_UTC": "<zahl>",
+    // Where the alerts go. The sender address must be on a domain cleared for sending in this
+    // Cloudflare account — otherwise sending fails with E_SENDER_NOT_VERIFIED and the alert only
+    // ever appears in the dashboard.
+    "ALERT_EMAIL_TO": "<your-address@example.com>",
+    "ALERT_EMAIL_FROM": "alerts@<your-domain>",
+    // Hour (UTC) for the daily report. 5 UTC is 6 or 7 in the morning in Germany.
+    "DIGEST_HOUR_UTC": "<number>",
     "ADMIN_URL": "https://api.dictatekeyboard.com/admin",
 
-    // Schwellenwerte des Wachhunds. Die Voreinstellungen sind so gewählt, dass ein normaler Tag
-    // still bleibt: Ein Alarm, der wöchentlich kommt, wird nach einem Monat nicht mehr gelesen.
-    "ALERT_BUDGET_STEPS": "<zahl>",
-    "ALERT_FAST_BURN_PERCENT": "<zahl>",
-    "ALERT_FAST_BURN_HOURS": "<zahl>",
-    "ALERT_REFUND_USED_PERCENT": "<zahl>",
-    "ALERT_WALLET_BUDGET_SHARE": "<zahl>",
-    "ALERT_DEVICES_PER_WALLET": "<zahl>",
-    "ALERT_COST_DRIFT_PERCENT": "<zahl>",
-    "ALERT_ERROR_RATE_PERCENT": "<zahl>",
-    // Ab wie viel Minus insgesamt gemeldet wird, in der Auszahlungswährung. Unter diesem Betrag
-    // ist es Rundung oder die Anlaufphase, in der ein paar Testanfragen mehr wiegen als noch
-    // gar keine Verkäufe.
-    "ALERT_MIN_LOSS": "<zahl>"
+    // The watchdog's thresholds. The defaults are chosen so an ordinary day stays silent: an alarm
+    // that arrives weekly stops being read within a month.
+    "ALERT_BUDGET_STEPS": "<number>",
+    "ALERT_FAST_BURN_PERCENT": "<number>",
+    "ALERT_FAST_BURN_HOURS": "<number>",
+    "ALERT_REFUND_USED_PERCENT": "<number>",
+    "ALERT_WALLET_BUDGET_SHARE": "<number>",
+    "ALERT_DEVICES_PER_WALLET": "<number>",
+    "ALERT_COST_DRIFT_PERCENT": "<number>",
+    "ALERT_ERROR_RATE_PERCENT": "<number>",
+    // From how much cumulative loss to report, in the payout currency. Below that it is rounding, or
+    // the opening phase where a handful of test requests weigh more than the sales that have not
+    // happened yet.
+    "ALERT_MIN_LOSS": "<number>"
   },
 
-  // Versand über Cloudflares Email Service. Kein Drittanbieter und kein API-Schlüssel.
+  // Sent through Cloudflare's Email Service. No third party and no API key.
   //
-  // `destination_address` ist bewusst gesetzt und nicht weggelassen. Zwei Gründe: Ohne die
-  // Beschränkung dürfte dieser Worker an beliebige Adressen schreiben — ein Fehler im Code oder
-  // ein kompromittiertes Deployment hätte damit einen Mailversender in der Hand. Und der Versand
-  // an eine *verifizierte* Zieladresse ist in jedem Tarif kostenlos, während freier Versand den
-  // kostenpflichtigen Workers-Plan verlangt.
+  // `destination_address` is set on purpose rather than omitted, for two reasons. Without the
+  // restriction this worker could write to any address at all — a bug in the code or a compromised
+  // deployment would hand someone a mail sender. And sending to a *verified* destination is free on
+  // every plan, while unrestricted sending requires the paid Workers plan.
   //
-  // Die Adresse muss vorher unter Email Routing → Destination Addresses bestätigt worden sein,
-  // sonst antwortet der Versand mit E_RECIPIENT_NOT_ALLOWED.
-  "send_email": [{ "name": "MAIL", "destination_address": "<deine-adresse@example.com>" }],
+  // The address must have been confirmed under Email Routing → Destination Addresses beforehand, or
+  // sending answers with E_RECIPIENT_NOT_ALLOWED.
+  "send_email": [{ "name": "MAIL", "destination_address": "<your-address@example.com>" }],
 
-  // Zwei Takte, im Code an der Cron-Zeichenkette unterschieden (siehe src/index.ts):
-  //   viertelstündlich — der Wachhund und die Prüfung, ob der Tagesbericht fällig ist
-  //   nachts           — Aufräumen, Wechselkurse holen, fehlende Umrechnungen nachtragen
-  // Die nächtliche Zeile steht bewusst auf einer krummen Minute statt zur vollen Stunde, wo sich
-  // auf der Plattform sämtliche Cronjobs stauen.
+  // Two rhythms, told apart in the code by the cron string (see src/index.ts):
+  //   every quarter hour — the watchdog, and the check whether the daily report is due
+  //   nightly            — cleaning up, fetching exchange rates, filling in missing conversions
+  // The nightly line sits on an odd minute rather than on the hour, where every cron on the platform
+  // piles up.
   "triggers": {
     "crons": ["*/15 * * * *", "17 3 * * *"]
   }

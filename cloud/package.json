@@ -2,7 +2,7 @@
   "name": "dictate-cloud",
   "version": "0.1.0",
   "private": true,
-  "description": "Guthaben-Proxy für Dictate Keyboard: prüft Play-Käufe, rechnet Minuten ab und reicht an OpenAI weiter.",
+  "description": "Credit proxy for Dictate Keyboard: verifies Play purchases, meters minutes and forwards to OpenAI.",
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",

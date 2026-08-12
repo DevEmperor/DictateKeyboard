@@ -88,5 +88,5 @@ CREATE TABLE IF NOT EXISTS cache (
   fetched_at INTEGER NOT NULL
 );
 
--- Alles Weitere — Erstattungszähler, `settings`, `expenses` — kam später dazu und steht in 003.
--- Diese Datei bildet ab, was in der Produktion bereits gelaufen ist; sie wird nicht mehr geändert.
+-- Everything after this — the refund counter, `settings`, `expenses` — came later and lives in 003.
+-- This file records what has already run in production; it is not edited again.

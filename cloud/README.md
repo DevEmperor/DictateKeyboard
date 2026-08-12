@@ -33,6 +33,22 @@ nothing away.
 **The business papers.** Record of processing, technical and organisational measures, the tax notes,
 the third-country documentation, the abuse test plan. They belong to the operator, not to the code.
 
+## Why half of this is in German
+
+Code, comments, configuration and everything a user of the app can ever see are **English** — API
+errors, the public deletion page at `/delete`, this file.
+
+The dashboard under `/admin` and the alert mails are **German**, and that is a decision rather than
+an unfinished translation. Both have exactly one reader: the dashboard sits behind Cloudflare Access
+bound to a single address, and the mails go to a single inbox. Translating a surface with one reader
+into a language that reader does not think in buys consistency for people reading the source and
+costs clarity for the one person who has to act on a warning at seven in the morning.
+
+The line runs at the boundary, not through the middle of a file: `src/admin/*` and the alert texts
+in `notify/`, `rules.ts`, `rtdn.ts`, `throttle.ts`, `meter.ts`, `sweep.ts`, `redeem.ts`,
+`transcriptions.ts` and `wallet.ts` are German; their comments, and everything else, are not. Anything
+that can reach an app user is English wherever it lives.
+
 ## Layout
 
 ```
