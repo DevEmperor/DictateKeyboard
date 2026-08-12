@@ -30,6 +30,10 @@ TEXT_EXT = {'.kt', '.java', '.ts', '.tsx', '.js', '.mjs', '.py', '.md', '.xml', 
             '.sql', '.yml', '.yaml', '.gradle', '.kts', '.sh', '.txt', '.html', '.css', '.pro',
             '.cfg', '.toml', '.properties'}
 
+# Files worth reading that carry no extension at all. `.gitignore` had six German comment lines in it
+# and went unnoticed for exactly this reason.
+TEXT_NAMES = {'.gitignore', '.gitattributes', '.editorconfig', 'Dockerfile', 'NOTICE', 'Makefile'}
+
 # Allowed to be German, each with the reason. A path matches if the pattern occurs anywhere in it.
 ALLOWED = [
     (r'/res/values-[a-z]{2}(-r[A-Z]{2})?/',
@@ -105,7 +109,7 @@ def main():
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
         for name in sorted(filenames):
             path = os.path.join(dirpath, name).replace('./', '', 1)
-            if os.path.splitext(path)[1].lower() in TEXT_EXT:
+            if os.path.splitext(path)[1].lower() in TEXT_EXT or name in TEXT_NAMES:
                 candidates.append(path)
 
     ignored = git_ignored(candidates)
