@@ -64,7 +64,10 @@ class NextWordPredictionPointTest {
     }
 
     @Test
-    fun `a comma separates clauses, not sentences`() {
+    fun `a comma is not a sentence end`() {
+        // This gate lets a comma through; whether a prediction then appears is decided further on by the
+        // previous-word lookup, which today stops at any punctuation. So nothing is offered after a comma
+        // either — but for a different reason, and one that could sensibly change.
         assertTrue(atPoint("ich denke, "))
         assertTrue(atPoint("erstens; "))
     }

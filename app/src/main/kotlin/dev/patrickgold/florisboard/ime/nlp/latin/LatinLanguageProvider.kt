@@ -110,8 +110,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         private const val MAX_GERMAN_VARIANTS = 128
 
         // Next-word prediction (issue #245) stops at these: past one of them the previous word belongs to a
-        // sentence that is over. Deliberately only the hard enders — a comma or a semicolon separates clauses
-        // that still read as one sentence, and the bigram across them is worth having.
+        // sentence that is over. Only the hard enders — a comma separates clauses that still read as one
+        // sentence, and the bigram across them would be worth having.
         private val SENTENCE_ENDINGS = setOf('.', '!', '?', '…')
 
         /**
@@ -127,6 +127,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
          * A sentence end stops it either way. The bigram tables know nothing about sentences, so what could
          * be offered after a full stop continues the sentence that just ended; offering nothing is the better
          * answer, and it hands the quick-action row back for the same reason an empty field does.
+         *
+         * That last rule changes nothing today, and is here on purpose. [previousWordOf] reads the word by
+         * walking letters backwards, so it already stops at *any* punctuation — measured on a device, a full
+         * stop was silent before this rule existed. But it stops there incidentally, not because anyone
+         * decided sentences should end a prediction: the day that walk learns to look past a comma (worth
+         * doing — the bigram context in `correctionsFor` wants exactly that), the full stop would quietly
+         * start being crossed too. The decision belongs where predictions are decided.
          */
         internal fun isAtPredictionPoint(textBeforeCursor: String, phantomSpacePending: Boolean): Boolean {
             if (!textBeforeCursor.endsWith(" ") && !phantomSpacePending) return false
