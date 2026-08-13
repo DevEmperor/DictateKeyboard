@@ -89,6 +89,9 @@ object RealtimeClient {
     }
 }
 
+private fun base64AudioJson(prefix: String, pcm16: ByteArray, len: Int, suffix: String): String =
+    prefix + Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP) + suffix
+
 /**
  * OpenAI realtime transcription over `wss://api.openai.com/v1/realtime?intent=transcription`. Sends a
  * `session.update` transcription config on open, streams 24 kHz mono PCM16 as base64
@@ -114,6 +117,8 @@ private class OpenAiRealtimeSession(
 
     private companion object {
         const val URL = "wss://api.openai.com/v1/realtime?intent=transcription"
+        const val AUDIO_APPEND_PREFIX = "{\"type\":\"input_audio_buffer.append\",\"audio\":\""
+        const val AUDIO_APPEND_SUFFIX = "\"}"
 
         /**
          * The websocket address of a self-hosted server, derived from the base URL its batch requests
@@ -221,17 +226,14 @@ private class OpenAiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
         audioGate.sendAudio(pcm16, len) { audio, length ->
             ws?.let { sendAudioFrame(it, audio, length) }
         }
     }
 
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
-        val b64 = Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP)
-        val msg = buildJsonObject {
-            put("type", "input_audio_buffer.append")
-            put("audio", b64)
-        }.toString()
+        val msg = base64AudioJson(AUDIO_APPEND_PREFIX, pcm16, len, AUDIO_APPEND_SUFFIX)
         runCatching { socket.send(msg) }
     }
 
@@ -343,6 +345,7 @@ private class SonioxRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
         audioGate.sendAudio(pcm16, len) { audio, length ->
             runCatching { ws?.send(audio.toByteString(0, length)) }
         }
@@ -433,7 +436,9 @@ private class AssemblyAiRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
@@ -482,6 +487,13 @@ private class ElevenLabsRealtimeSession(
     private val audioGate = RealtimeAudioGate()
     @Volatile private var done = false
 
+    private companion object {
+        const val AUDIO_CHUNK_PREFIX =
+            "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\""
+        const val AUDIO_CHUNK_SUFFIX = "\",\"commit\":false,\"sample_rate\":16000}"
+        const val FINAL_CHUNK = "{\"message_type\":\"input_audio_chunk\",\"audio_base_64\":\"\",\"commit\":true}"
+    }
+
     fun connect() {
         val lang = if (!language.isNullOrBlank() && language != "detect") "&language_code=$language" else ""
         val url = "wss://api.elevenlabs.io/v1/speech-to-text/realtime" +
@@ -515,28 +527,19 @@ private class ElevenLabsRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
         audioGate.sendAudio(pcm16, len) { audio, length ->
             ws?.let { sendAudioFrame(it, audio, length) }
         }
     }
 
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
-        val msg = buildJsonObject {
-            put("message_type", "input_audio_chunk")
-            put("audio_base_64", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
-            put("commit", false)
-            put("sample_rate", 16_000)
-        }.toString()
+        val msg = base64AudioJson(AUDIO_CHUNK_PREFIX, pcm16, len, AUDIO_CHUNK_SUFFIX)
         runCatching { socket.send(msg) }
     }
 
     private fun sendCommit(socket: WebSocket) {
-        val msg = buildJsonObject {
-            put("message_type", "input_audio_chunk")
-            put("audio_base_64", "")
-            put("commit", true)
-        }.toString()
-        runCatching { socket.send(msg) }
+        runCatching { socket.send(FINAL_CHUNK) }
     }
 
     override fun finish() {
@@ -590,6 +593,11 @@ private class GeminiRealtimeSession(
     private val audioGate = RealtimeAudioGate()
     @Volatile private var finishing = false
     @Volatile private var done = false
+
+    private companion object {
+        const val AUDIO_PREFIX = "{\"realtimeInput\":{\"audio\":{\"data\":\""
+        const val AUDIO_SUFFIX = "\",\"mimeType\":\"audio/pcm;rate=16000\"}}}"
+    }
 
     fun connect() {
         val url = "wss://generativelanguage.googleapis.com/ws/" +
@@ -645,20 +653,14 @@ private class GeminiRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
+        if (done) return
         audioGate.sendAudio(pcm16, len) { audio, length ->
             ws?.let { sendAudioFrame(it, audio, length) }
         }
     }
 
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
-        val msg = buildJsonObject {
-            putJsonObject("realtimeInput") {
-                putJsonObject("audio") {
-                    put("data", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
-                    put("mimeType", "audio/pcm;rate=16000")
-                }
-            }
-        }.toString()
+        val msg = base64AudioJson(AUDIO_PREFIX, pcm16, len, AUDIO_SUFFIX)
         runCatching { socket.send(msg) }
     }
 
@@ -762,7 +764,9 @@ private class MistralRealtimeSession(
     }.toString()
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
@@ -845,7 +849,9 @@ private class DeepgramRealtimeSession(
     }
 
     override fun sendAudio(pcm16: ByteArray, len: Int) {
-        runCatching { ws?.send(pcm16.toByteString(0, len)) }
+        if (done) return
+        val socket = ws ?: return
+        runCatching { socket.send(pcm16.toByteString(0, len)) }
     }
 
     override fun finish() {
