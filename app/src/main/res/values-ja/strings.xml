@@ -1121,6 +1121,7 @@
     <string name="dictate__status_idle">タップして音声入力</string>
     <string name="dictate__status_recording">録音中 – タップで停止</string>
     <string name="dictate__status_transcribing">文字起こし中…</string>
+    <string name="dictate__status_transcribing_local">端末で文字起こし中…</string>
     <string name="dictate__back_to_keyboard">キーボードに戻る</string>
     <string name="dictate__error_recording_failed">録音に失敗しました – マイクの権限を許可してください。(%s)</string>
     <string name="dictate__error_no_audio">録音が検出されませんでした – もう少し長く話してください。</string>
@@ -1419,7 +1420,7 @@
     <string name="dictate__local_models_live_header">ライブ（ストリーミング）</string>
     <string name="dictate__local_models_live_summary">話しながら文字が入力されます。使うには「録音」の「リアルタイム文字起こし」をオンにしてください。</string>
     <string name="dictate__local_longpress_send_title">送信長押しでローカルモデル</string>
-    <string name="dictate__local_longpress_send_summary">録音中に送信を長押しで、クラウドではなくこのモデルを使用。</string>
+    <string name="dictate__local_longpress_send_summary">録音中は送信を、アップロード中は停止を長押しで、クラウドではなくこのモデルを使用。</string>
     <string name="dictate__local_unload_after">アイドル時、{n}分後にモデルを解放</string>
     <string name="dictate__local_unload_pressure">メモリ逼迫時のみモデルを解放</string>
     <string name="dictate__local_model_status_active">使用中</string>

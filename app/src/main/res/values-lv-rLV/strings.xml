@@ -1132,6 +1132,7 @@
     <string name="dictate__status_idle">Pieskarieties, lai diktētu</string>
     <string name="dictate__status_recording">Ieraksta – pieskarieties, lai apturētu</string>
     <string name="dictate__status_transcribing">Transkribē…</string>
+    <string name="dictate__status_transcribing_local">Transkribē ierīcē…</string>
     <string name="dictate__back_to_keyboard">Atpakaļ uz tastatūru</string>
     <string name="dictate__error_recording_failed">Ierakstīšana neizdevās – piešķiriet mikrofona atļauju. (%s)</string>
     <string name="dictate__error_no_audio">Ieraksts nav konstatēts – lūdzu, runājiet nedaudz ilgāk.</string>
@@ -1430,7 +1431,7 @@
     <string name="dictate__local_models_live_header">Tiešraidē (straumēšana)</string>
     <string name="dictate__local_models_live_summary">Tie raksta, kamēr runā. Ieslēdz “Reāllaika transkripcija” sadaļā Ierakstīšana, lai tos izmantotu.</string>
     <string name="dictate__local_longpress_send_title">Turēt sūtīšanu vietējam modelim</string>
-    <string name="dictate__local_longpress_send_summary">Ierakstīšanas laikā turi sūtīšanu, lai lietotu šo modeli mākoņa vietā.</string>
+    <string name="dictate__local_longpress_send_summary">Turi sūtīšanu ierakstīšanas laikā — vai apturēšanu augšupielādes laikā — lai lietotu šo modeli mākoņa vietā.</string>
     <string name="dictate__local_unload_after">Izlādēt dīkstāves modeli pēc {n} min</string>
     <string name="dictate__local_unload_pressure">Izlādēt dīkstāves modeli tikai pie zemas atmiņas</string>
     <string name="dictate__local_model_status_active">Aktīvs</string>

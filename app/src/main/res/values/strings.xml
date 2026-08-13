@@ -1524,6 +1524,7 @@
     <string name="dictate__status_idle" comment="Status shown on the Dictate panel when ready to record">Tap to dictate</string>
     <string name="dictate__status_recording" comment="Status shown while recording audio">Recording – tap to stop</string>
     <string name="dictate__status_transcribing" comment="Status shown while the audio is being transcribed">Transcribing…</string>
+    <string name="dictate__status_transcribing_local" comment="Status shown while the on-device model is transcribing, instead of a cloud provider (issues #228/#270)">Transcribing on device…</string>
     <string name="dictate__back_to_keyboard" comment="Content description for the button that returns from the Dictate panel to the typing keyboard">Back to keyboard</string>
 
     <!-- Dictate errors. %s is a provider/system error detail. -->
@@ -1740,7 +1741,7 @@
     <string name="dictate__local_models_live_header" comment="Group heading above the on-device models that transcribe while you speak (issue #233)">Live (streaming)</string>
     <string name="dictate__local_models_live_summary" comment="Explainer under the live model group heading: these models need the real-time switch under Recording (issue #233)">These type while you speak. Turn on “Real-time transcription” under Recording to use them.</string>
     <string name="dictate__local_longpress_send_title" comment="Search-index label for the on-device long-press-send checkbox (issue #228)">Long-press send for local model</string>
-    <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: long-pressing the send button transcribes with the local model (issue #228)">Hold send while recording to use this model instead of the cloud.</string>
+    <string name="dictate__local_longpress_send_summary" comment="Checkbox explainer in the on-device model dialog: holding send (while recording) or stop (while a cloud request runs) transcribes with the local model (issues #228/#270)">Hold send while recording — or stop while it uploads — to use this model instead of the cloud.</string>
     <string name="dictate__local_unload_after" comment="Slider label: free the on-device model from RAM after {n} minutes idle">Unload idle model after {n} min</string>
     <string name="dictate__local_unload_pressure" comment="Slider label at 0: free the on-device model only when the system is low on memory">Unload idle model only under memory pressure</string>
     <string name="dictate__local_model_status_active" comment="Badge on the on-device model that is currently selected for use">Active</string>

@@ -454,15 +454,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
 
     private fun onLongPress() {
         val state = DictateController.state.value
-        // Holding while recording sends with the on-device model instead of the cloud provider (#228),
-        // exactly as holding the keyboard's send button does — same preference, same guard, so the two
-        // buttons never disagree about whether the shortcut exists. With no model downloaded the
-        // transcription surfaces the "install one" feedback rather than the hold doing nothing.
-        if (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressSendLocal()) {
+        // Holding runs the on-device model on this one dictation, exactly as holding the keyboard's key
+        // does — same preference, same guard, so the two buttons never disagree about whether the
+        // shortcut exists: while recording it sends there instead of to the cloud (#228), and while a
+        // cloud request is still running it takes the recording back from it (#270). With no model
+        // downloaded the transcription surfaces the "install one" feedback rather than the hold doing
+        // nothing.
+        if (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressLocal()) {
             if (prefs.dictate.floatingButtonHaptic.get()) vibrateTap()
             cancelDim()
             applyDim(false)
-            DictateController.stopAndTranscribeLocal(context)
+            DictateController.holdForLocalModel(context)
             return
         }
         // Rewording only makes sense when not already recording/transcribing.

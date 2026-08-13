@@ -416,7 +416,7 @@ fun QuickActionButton(
     // pop the tooltip text.
     val dictateLongPressArmed = action.keyData().code == KeyCode.IME_UI_MODE_DICTATE && (
         DictateController.canStartRecording() ||
-            (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressSendLocal())
+            (prefs.dictate.longPressSendLocalModel.get() && DictateController.canLongPressLocal())
     )
     // Push-to-talk (#235): the mic swells while it is being held, the way a voice-message button does —
     // the one piece of feedback that survives the finger covering the button itself.
@@ -511,9 +511,13 @@ fun QuickActionButton(
                             // Not "state is Idle": the interrupted-recording chip is also a state a hold
                             // has to work from, and a tap there already starts a recording.
                             val dictateIdle = isDictate && DictateController.canStartRecording()
+                            // Holding runs the on-device model on this one dictation: while recording it
+                            // sends there instead of to the cloud (#228), and while a cloud request is
+                            // still running it takes the recording back from it (#270). Same preference,
+                            // same button, one entry point that decides which of the two applies.
                             val dictateSendLocal = isDictate && !dictateIdle &&
                                 prefs.dictate.longPressSendLocalModel.get() &&
-                                DictateController.canLongPressSendLocal()
+                                DictateController.canLongPressLocal()
                             // The whole mic press is decided from the window's own touch stream, not from
                             // this coroutine: Compose ends it of its own accord part way into a press,
                             // sometimes by cancelling it outright, while the window goes on receiving the
@@ -549,7 +553,7 @@ fun QuickActionButton(
                                     holdDelayMs = prefs.keyboard.longPressDelay.get().toLong(),
                                     onHold = when {
                                         dictateIdle -> { { DictateController.startFileTranscription(context) } }
-                                        dictateSendLocal -> { { DictateController.stopAndTranscribeLocal(context) } }
+                                        dictateSendLocal -> { { DictateController.holdForLocalModel(context) } }
                                         else -> null
                                     },
                                     onEnd = { interactionSource.tryEmit(PressInteraction.Release(press)) },

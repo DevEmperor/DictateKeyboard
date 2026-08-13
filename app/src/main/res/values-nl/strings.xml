@@ -1088,6 +1088,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__status_idle">Tik om te dicteren</string>
     <string name="dictate__status_recording">Opnemen – tik om te stoppen</string>
     <string name="dictate__status_transcribing">Transcriberen…</string>
+    <string name="dictate__status_transcribing_local">Transcriberen op apparaat…</string>
     <string name="dictate__back_to_keyboard">Terug naar toetsenbord</string>
     <string name="dictate__error_recording_failed">Opname mislukt – verleen de microfoontoestemming. (%s)</string>
     <string name="dictate__error_no_audio">Geen opname gedetecteerd – spreek wat langer.</string>
@@ -1386,7 +1387,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__local_models_live_header">Live (streaming)</string>
     <string name="dictate__local_models_live_summary">Ze typen terwijl je praat. Zet “Realtime-transcriptie” aan onder Opname om ze te gebruiken.</string>
     <string name="dictate__local_longpress_send_title">Verzenden ingedrukt houden voor lokaal model</string>
-    <string name="dictate__local_longpress_send_summary">Houd tijdens opnemen verzenden ingedrukt om dit model te gebruiken i.p.v. de cloud.</string>
+    <string name="dictate__local_longpress_send_summary">Houd verzenden ingedrukt tijdens opnemen — of stoppen tijdens uploaden — om dit model te gebruiken i.p.v. de cloud.</string>
     <string name="dictate__local_unload_after">Inactief model na {n} min ontladen</string>
     <string name="dictate__local_unload_pressure">Inactief model alleen bij geheugendruk ontladen</string>
     <string name="dictate__local_model_status_active">Actief</string>

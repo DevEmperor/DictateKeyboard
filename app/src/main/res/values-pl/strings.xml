@@ -1204,6 +1204,7 @@
     <string name="dictate__status_idle">Dotknij, aby dyktować</string>
     <string name="dictate__status_recording">Nagrywanie – dotknij, aby zatrzymać</string>
     <string name="dictate__status_transcribing">Transkrypcja…</string>
+    <string name="dictate__status_transcribing_local">Transkrypcja na urządzeniu…</string>
     <string name="dictate__back_to_keyboard">Powrót do klawiatury</string>
     <string name="dictate__error_recording_failed">Nagrywanie nie powiodło się – przyznaj uprawnienie do mikrofonu. (%s)</string>
     <string name="dictate__error_no_audio">Nie wykryto nagrania – mów trochę dłużej.</string>
@@ -1502,7 +1503,7 @@
     <string name="dictate__local_models_live_header">Na żywo (strumieniowo)</string>
     <string name="dictate__local_models_live_summary">Piszą, gdy mówisz. Włącz „Transkrypcja w czasie rzeczywistym” w sekcji Nagrywanie, aby ich użyć.</string>
     <string name="dictate__local_longpress_send_title">Przytrzymaj wyślij dla modelu lokalnego</string>
-    <string name="dictate__local_longpress_send_summary">Podczas nagrywania przytrzymaj wyślij, aby użyć tego modelu zamiast chmury.</string>
+    <string name="dictate__local_longpress_send_summary">Przytrzymaj wyślij podczas nagrywania — lub stop podczas wysyłania — aby użyć tego modelu zamiast chmury.</string>
     <string name="dictate__local_unload_after">Zwolnij bezczynny model po {n} min</string>
     <string name="dictate__local_unload_pressure">Zwolnij bezczynny model tylko przy braku pamięci</string>
     <string name="dictate__local_model_status_active">Aktywny</string>

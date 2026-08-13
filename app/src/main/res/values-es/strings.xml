@@ -1170,6 +1170,7 @@
     <string name="dictate__status_idle">Toca para dictar</string>
     <string name="dictate__status_recording">Grabando: toca para detener</string>
     <string name="dictate__status_transcribing">Transcribiendo…</string>
+    <string name="dictate__status_transcribing_local">Transcribiendo en el dispositivo…</string>
     <string name="dictate__back_to_keyboard">Volver al teclado</string>
     <string name="dictate__error_recording_failed">Error al grabar: concede el permiso de micrófono. (%s)</string>
     <string name="dictate__error_no_audio">No se detectó grabación: habla un poco más.</string>
@@ -1468,7 +1469,7 @@
     <string name="dictate__local_models_live_header">En directo (streaming)</string>
     <string name="dictate__local_models_live_summary">Escriben mientras hablas. Activa «Transcripción en tiempo real» en Grabación para usarlos.</string>
     <string name="dictate__local_longpress_send_title">Mantener pulsado enviar para el modelo local</string>
-    <string name="dictate__local_longpress_send_summary">Durante la grabación, mantén pulsado enviar para usar este modelo en vez de la nube.</string>
+    <string name="dictate__local_longpress_send_summary">Mantén pulsado enviar al grabar — o detener mientras sube — para usar este modelo en vez de la nube.</string>
     <string name="dictate__local_unload_after">Descargar el modelo inactivo tras {n} min</string>
     <string name="dictate__local_unload_pressure">Descargar el modelo inactivo solo con poca memoria</string>
     <string name="dictate__local_model_status_active">Activo</string>

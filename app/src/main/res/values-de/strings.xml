@@ -1079,6 +1079,7 @@
     <string name="dictate__status_idle">Tippen zum Diktieren</string>
     <string name="dictate__status_recording">Aufnahme – tippen zum Stoppen</string>
     <string name="dictate__status_transcribing">Transkribiere…</string>
+    <string name="dictate__status_transcribing_local">Transkribiere auf dem Gerät…</string>
     <string name="dictate__back_to_keyboard">Zurück zur Tastatur</string>
     <string name="dictate__error_recording_failed">Aufnahme fehlgeschlagen – erteile die Mikrofonberechtigung. (%s)</string>
     <string name="dictate__error_no_audio">Keine Aufnahme erkannt – bitte sprich etwas länger.</string>
@@ -1423,7 +1424,7 @@
     <string name="dictate__local_models_live_header">Live (Streaming)</string>
     <string name="dictate__local_models_live_summary">Sie tippen mit, während du sprichst. Aktiviere „Echtzeit-Transkription“ unter Aufnahme, um sie zu nutzen.</string>
     <string name="dictate__local_longpress_send_title">Senden gedrückt halten für lokales Modell</string>
-    <string name="dictate__local_longpress_send_summary">Beim Aufnehmen Senden gedrückt halten, um dieses Modell statt der Cloud zu nutzen.</string>
+    <string name="dictate__local_longpress_send_summary">Beim Aufnehmen Senden gedrückt halten – oder Stopp während des Hochladens – um dieses Modell statt der Cloud zu nutzen.</string>
     <string name="dictate__local_unload_after">Inaktives Modell nach {n} Min entladen</string>
     <string name="dictate__local_unload_pressure">Inaktives Modell nur bei Speicherdruck entladen</string>
     <string name="dictate__local_model_status_active">Aktiv</string>

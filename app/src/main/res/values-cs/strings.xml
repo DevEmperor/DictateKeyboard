@@ -1203,6 +1203,7 @@
     <string name="dictate__status_idle">Klepnutím diktujte</string>
     <string name="dictate__status_recording">Nahrávání – klepnutím zastavíte</string>
     <string name="dictate__status_transcribing">Přepis…</string>
+    <string name="dictate__status_transcribing_local">Přepis v zařízení…</string>
     <string name="dictate__back_to_keyboard">Zpět na klávesnici</string>
     <string name="dictate__error_recording_failed">Nahrávání selhalo – udělte oprávnění k mikrofonu. (%s)</string>
     <string name="dictate__error_no_audio">Nebylo zjištěno žádné nahrávání – mluvte o něco déle.</string>
@@ -1501,7 +1502,7 @@
     <string name="dictate__local_models_live_header">Živě (streamování)</string>
     <string name="dictate__local_models_live_summary">Píší, zatímco mluvíte. Zapněte „Přepis v reálném čase“ v Nahrávání, abyste je mohli použít.</string>
     <string name="dictate__local_longpress_send_title">Podržení odeslat pro místní model</string>
-    <string name="dictate__local_longpress_send_summary">Během nahrávání podrž tlačítko odeslat, aby se použil tento model místo cloudu.</string>
+    <string name="dictate__local_longpress_send_summary">Podrž odeslat během nahrávání — nebo stop během odesílání — a použije se tento model místo cloudu.</string>
     <string name="dictate__local_unload_after">Uvolnit nečinný model po {n} min</string>
     <string name="dictate__local_unload_pressure">Uvolnit nečinný model jen při nedostatku paměti</string>
     <string name="dictate__local_model_status_active">Aktivní</string>

@@ -1047,6 +1047,7 @@
     <string name="dictate__status_idle">انقر للإملاء</string>
     <string name="dictate__status_recording">جارٍ التسجيل – انقر للإيقاف</string>
     <string name="dictate__status_transcribing">جارٍ التفريغ النصي…</string>
+    <string name="dictate__status_transcribing_local">جارٍ التفريغ على الجهاز…</string>
     <string name="dictate__back_to_keyboard">العودة إلى لوحة المفاتيح</string>
     <string name="dictate__error_recording_failed">فشل التسجيل – امنح إذن الميكروفون. (%s)</string>
     <string name="dictate__error_no_audio">لم يُكتشف أي تسجيل – من فضلك تحدّث لفترة أطول قليلًا.</string>
@@ -1345,7 +1346,7 @@
     <string name="dictate__local_models_live_header">مباشر (بث)</string>
     <string name="dictate__local_models_live_summary">تكتب أثناء تحدثك. فعّل «النسخ الفوري» ضمن التسجيل لاستخدامها.</string>
     <string name="dictate__local_longpress_send_title">الضغط المطوّل على الإرسال للنموذج المحلي</string>
-    <string name="dictate__local_longpress_send_summary">أثناء التسجيل، اضغط مطولاً على زر الإرسال لاستخدام هذا النموذج بدلاً من السحابة.</string>
+    <string name="dictate__local_longpress_send_summary">اضغط مطولاً على الإرسال أثناء التسجيل — أو على الإيقاف أثناء الرفع — لاستخدام هذا النموذج بدلاً من السحابة.</string>
     <string name="dictate__local_unload_after">تفريغ النموذج الخامل بعد {n} دقيقة</string>
     <string name="dictate__local_unload_pressure">تفريغ النموذج الخامل فقط عند انخفاض الذاكرة</string>
     <string name="dictate__local_model_status_active">نشط</string>

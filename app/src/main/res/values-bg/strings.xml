@@ -1189,6 +1189,7 @@
     <string name="dictate__status_idle">Докоснете, за да диктувате</string>
     <string name="dictate__status_recording">Записване – докоснете за спиране</string>
     <string name="dictate__status_transcribing">Транскрибиране…</string>
+    <string name="dictate__status_transcribing_local">Транскрибиране на устройството…</string>
     <string name="dictate__back_to_keyboard">Обратно към клавиатурата</string>
     <string name="dictate__error_recording_failed">Записването е неуспешно – дайте разрешение за микрофона. (%s)</string>
     <string name="dictate__error_no_audio">Не е открит запис – моля, говорете малко по-дълго.</string>
@@ -1487,7 +1488,7 @@
     <string name="dictate__local_models_live_header">На живо (поточно)</string>
     <string name="dictate__local_models_live_summary">Пишат, докато говорите. Включете „Транскрипция в реално време“ в Записване, за да ги използвате.</string>
     <string name="dictate__local_longpress_send_title">Задържане на изпращане за локален модел</string>
-    <string name="dictate__local_longpress_send_summary">По време на запис задръжте бутона за изпращане, за да ползвате този модел вместо облака.</string>
+    <string name="dictate__local_longpress_send_summary">Задръжте изпращане при запис — или спиране по време на качване — за да ползвате този модел вместо облака.</string>
     <string name="dictate__local_unload_after">Разтоварване на неактивния модел след {n} мин</string>
     <string name="dictate__local_unload_pressure">Разтоварване на неактивния модел само при недостиг на памет</string>
     <string name="dictate__local_model_status_active">Активен</string>

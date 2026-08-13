@@ -59,6 +59,7 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.AddCard
@@ -476,18 +477,25 @@ private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
         label = "spin",
     )
     val retrying = state.attempt > 1
+    // Which engine is running is worth a word: waiting on a network and waiting on this phone are
+    // different kinds of waiting, and after holding the button to escape a hanging request (#270) the
+    // bar is the only confirmation that the escape worked.
     SnyggIcon(
-        imageVector = if (retrying) Icons.Default.CloudOff else Icons.Default.Sync,
+        imageVector = when {
+            state.onDevice -> Icons.Default.PhoneAndroid
+            retrying -> Icons.Default.CloudOff
+            else -> Icons.Default.Sync
+        },
         modifier = Modifier
             .size(18.dp)
-            .then(if (retrying) Modifier else Modifier.rotate(rotation)),
+            .then(if (retrying || state.onDevice) Modifier else Modifier.rotate(rotation)),
     )
     Spacer(modifier = Modifier.width(10.dp))
     SnyggText(
-        text = if (retrying) {
-            stringRes(R.string.dictate__status_retrying, "attempt" to state.attempt)
-        } else {
-            stringRes(R.string.dictate__status_transcribing)
+        text = when {
+            state.onDevice -> stringRes(R.string.dictate__status_transcribing_local)
+            retrying -> stringRes(R.string.dictate__status_retrying, "attempt" to state.attempt)
+            else -> stringRes(R.string.dictate__status_transcribing)
         },
     )
 }

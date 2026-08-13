@@ -1167,6 +1167,7 @@
     <string name="dictate__status_idle">Dikte etmek için dokunun</string>
     <string name="dictate__status_recording">Kaydediliyor – durdurmak için dokunun</string>
     <string name="dictate__status_transcribing">Yazıya dökülüyor…</string>
+    <string name="dictate__status_transcribing_local">Cihazda yazıya dökülüyor…</string>
     <string name="dictate__back_to_keyboard">Klavyeye geri dön</string>
     <string name="dictate__error_recording_failed">Kayıt başarısız oldu – mikrofon iznini verin. (%s)</string>
     <string name="dictate__error_no_audio">Kayıt algılanmadı – lütfen biraz daha uzun konuşun.</string>
@@ -1465,7 +1466,7 @@
     <string name="dictate__local_models_live_header">Canlı (akış)</string>
     <string name="dictate__local_models_live_summary">Siz konuşurken yazarlar. Bunları kullanmak için Kayıt altındaki “Gerçek zamanlı transkripsiyon” seçeneğini açın.</string>
     <string name="dictate__local_longpress_send_title">Yerel model için gönder\'e basılı tut</string>
-    <string name="dictate__local_longpress_send_summary">Kayıt sırasında gönder\'e basılı tut, bulut yerine bu modeli kullan.</string>
+    <string name="dictate__local_longpress_send_summary">Kayıt sırasında gönder\'e, yükleme sırasında durdur\'a basılı tut; bulut yerine bu model kullanılsın.</string>
     <string name="dictate__local_unload_after">Boştaki modeli {n} dk sonra bellekten kaldır</string>
     <string name="dictate__local_unload_pressure">Boştaki modeli yalnızca bellek azaldığında kaldır</string>
     <string name="dictate__local_model_status_active">Etkin</string>

@@ -145,8 +145,14 @@ object DictateController {
             val accumulatedMs: Long = 0L,
             val paused: Boolean = false,
         ) : UiState
-        /** [attempt] is 1 for the first try, 2/3/… while retrying after a transient failure. */
-        data class Transcribing(val attempt: Int = 1) : UiState
+        /**
+         * [attempt] is 1 for the first try, 2/3/… while retrying after a transient failure.
+         * [onDevice] means the on-device engine is doing the work — because it is the chosen provider,
+         * because the offline fallback took over (#104), or because the user held the button to send this
+         * one dictation locally (#228/#270). The bar says so: which engine is running is the difference
+         * between waiting on a network and waiting on this phone.
+         */
+        data class Transcribing(val attempt: Int = 1, val onDevice: Boolean = false) : UiState
         /** A rewording/GPT request is in flight (manual prompt, auto-apply, auto-format or live). */
         data class Rewording(val label: String) : UiState
         /**
@@ -457,6 +463,16 @@ object DictateController {
     /** Recorded seconds of [carryOverAudio], so the continued recording's total length stays correct. */
     private var carryOverSeconds = 0L
 
+    /**
+     * The recording a cloud request is currently carrying, or null when nothing is in flight (or the
+     * request is already the on-device one). It is what holding the stop button hands to the local model
+     * when a transcription hangs (#270) — see [cancelAndTranscribeLocal].
+     */
+    private var inFlightAudio: File? = null
+
+    /** Recorded seconds of [inFlightAudio], so a rescued dictation still counts for the right length. */
+    private var inFlightSeconds = 0L
+
     /** Cache file name for the merged audio when a continued interrupted recording is stitched together. */
     private const val MERGED_AUDIO_NAME = "dictate_merged.wav"
     // Silence trimming (issue #232): cache file for the trimmed upload, plus the gap thresholds — a silence
@@ -467,6 +483,8 @@ object DictateController {
     private const val TRIM_KEEP_SILENCE_MS = 400
     /** Cache file for the sped-up upload copy (issue #272); the recording itself is never overwritten. */
     private const val SPED_UP_AUDIO_NAME = "dictate_speedup.wav"
+    /** Cache file for a recording taken back from a hanging cloud request to finish on-device (#270). */
+    private const val RESCUED_AUDIO_NAME = "dictate_rescued.wav"
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
@@ -1086,6 +1104,51 @@ object DictateController {
     fun canLongPressSendLocal(): Boolean =
         _state.value is UiState.Recording && !segmentedActive && realtimeSession == null
 
+    /**
+     * True while a cloud transcription is in flight that could still be handed to the on-device model
+     * (issue #270): the request is waiting on a network we cannot hurry, and its recording is still here.
+     *
+     * The stop button's ordinary tap cancels — and cancelling throws the recording away. This is the same
+     * button, held, doing the opposite: keeping the dictation and finishing it here.
+     */
+    fun canCancelToLocalModel(): Boolean =
+        _state.value is UiState.Transcribing && inFlightAudio != null
+
+    /** Whether holding the Dictate button right now would run the on-device model (#228 or #270). */
+    fun canLongPressLocal(): Boolean = canLongPressSendLocal() || canCancelToLocalModel()
+
+    /**
+     * What holding the Dictate button does when the on-device shortcut is enabled: send this recording to
+     * the local model instead of the cloud ([stopAndTranscribeLocal], #228), or take a cloud request that
+     * is still running away from it ([cancelAndTranscribeLocal], #270). One entry point, so the keyboard
+     * and the floating button cannot end up disagreeing about which of the two applies.
+     */
+    fun holdForLocalModel(context: Context) {
+        when {
+            canLongPressSendLocal() -> stopAndTranscribeLocal(context)
+            canCancelToLocalModel() -> cancelAndTranscribeLocal(context)
+        }
+    }
+
+    /**
+     * Aborts the in-flight cloud transcription and transcribes the same recording on this device (#270).
+     *
+     * The audio is copied first: cancelling the job runs its `finally`, which deletes the file it was
+     * uploading. Copying is a few hundred kilobytes and removes the race entirely — no flag the cancelled
+     * coroutine has to notice, no ordering to get right.
+     */
+    fun cancelAndTranscribeLocal(context: Context) {
+        val audio = inFlightAudio?.takeIf { it.exists() && it.length() > 0L } ?: return
+        if (_state.value !is UiState.Transcribing) return
+        val seconds = inFlightSeconds
+        val rescued = File(context.applicationContext.cacheDir, RESCUED_AUDIO_NAME)
+        runCatching { audio.copyTo(rescued, overwrite = true) }.getOrElse { return }
+        cancelTranscription()
+        // gate=false: this recording has already passed the silence gate once — running it again would
+        // only spend the time twice, and a second opinion on the same audio is not the point here.
+        transcribe(context, rescued, seconds, gate = false, forceLocal = true)
+    }
+
     private fun stopAndTranscribe(context: Context, forceLocal: Boolean = false) {
         setPushToTalk(phase = PushToTalkPhase.NONE)
         // Long-form segmented (#170): finish the segment queue instead of uploading one big file.
@@ -1263,7 +1326,12 @@ object DictateController {
         }
 
         ensureHapticObserver(appContext)
-        _state.value = UiState.Transcribing()
+        val localEngine = preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE
+        _state.value = UiState.Transcribing(onDevice = localEngine)
+        // What a held button can still rescue (#270): the recording this request is carrying, for as long
+        // as it is in flight. Cleared in the finally below, so the offer disappears with the request.
+        inFlightAudio = if (localEngine) null else audioFile
+        inFlightSeconds = recordedSeconds
         // Live prompt is consumed by this transcription only (the next recording is normal again).
         val live = livePromptArmed
         livePromptArmed = false
@@ -1394,12 +1462,12 @@ object DictateController {
                         // Offline fallback (#104): the cloud call failed because we're offline (after its
                         // retries) — transcribe on-device with the downloaded model instead of erroring.
                         val fallback = localFallbackProvider(appContext, preset, e) ?: throw e
-                        _state.value = UiState.Transcribing()
                         LocalTranscriptionProvider.setIdleUnloadMillis(
                             prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
                         )
                         // Sped-up audio (#272) is for the provider that charges by the second, not for the
                         // engine on this phone: the fallback gets the recording as it was.
+                        _state.value = UiState.Transcribing(onDevice = true)
                         fallback.transcribe(
                             localFallbackFile?.let { request.copy(audioFile = it) } ?: request,
                         )
@@ -1475,6 +1543,8 @@ object DictateController {
                     detail = t.message?.takeIf { it.isNotBlank() },
                 )
             } finally {
+                // The request is over, however it ended: there is nothing left for a held button to rescue.
+                inFlightAudio = null
                 if (!keepAudio) audioFile.delete()
                 // Drop the derived upload copies — trimmed (#232) and/or sped up (#272); the original
                 // audioFile is the one history keeps.

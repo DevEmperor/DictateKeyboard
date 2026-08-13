@@ -1187,6 +1187,7 @@
     <string name="dictate__status_idle">Koppintson a diktáláshoz</string>
     <string name="dictate__status_recording">Felvétel – koppintson a leállításhoz</string>
     <string name="dictate__status_transcribing">Átírás…</string>
+    <string name="dictate__status_transcribing_local">Átírás az eszközön…</string>
     <string name="dictate__back_to_keyboard">Vissza a billentyűzethez</string>
     <string name="dictate__error_recording_failed">A felvétel sikertelen – engedélyezze a mikrofont. (%s)</string>
     <string name="dictate__error_no_audio">Nem érzékelhető felvétel – kérjük, beszéljen egy kicsit tovább.</string>
@@ -1485,7 +1486,7 @@
     <string name="dictate__local_models_live_header">Élő (streamelés)</string>
     <string name="dictate__local_models_live_summary">Gépelnek, miközben beszélsz. Kapcsold be a „Valós idejű átírás” lehetőséget a Felvétel alatt a használatukhoz.</string>
     <string name="dictate__local_longpress_send_title">Küldés lenyomva tartása helyi modellhez</string>
-    <string name="dictate__local_longpress_send_summary">Felvétel közben tartsd nyomva a küldést, hogy ezt a modellt használd a felhő helyett.</string>
+    <string name="dictate__local_longpress_send_summary">Tartsd nyomva a küldést felvétel közben — vagy a leállítást feltöltés közben — hogy ezt a modellt használd a felhő helyett.</string>
     <string name="dictate__local_unload_after">Tétlen modell felszabadítása {n} perc után</string>
     <string name="dictate__local_unload_pressure">Tétlen modell felszabadítása csak memórianyomás esetén</string>
     <string name="dictate__local_model_status_active">Aktív</string>
