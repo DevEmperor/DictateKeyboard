@@ -61,7 +61,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.boundsInWindow
@@ -85,7 +84,6 @@ import androidx.compose.material.icons.filled.Deselect
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
@@ -516,46 +514,51 @@ fun QuickActionButton(
                             val dictateSendLocal = isDictate && !dictateIdle &&
                                 prefs.dictate.longPressSendLocalModel.get() &&
                                 DictateController.canLongPressSendLocal()
-                            // Push-to-talk (#235) takes the whole gesture: hold to record, slide left to
-                            // discard, slide up to latch. It replaces the long-press shortcuts below,
-                            // which is why it is opt-in.
-                            if (dictateIdle && DictateController.isPushToTalkActive(context)) {
-                                // The press is reported and then let go of entirely. Everything that
-                                // follows — the delay that tells a tap from a hold, sliding, latching,
-                                // releasing — is decided in DictateHoldTouch from the window's own touch
-                                // stream, because this coroutine cannot be relied on to still be alive:
-                                // Compose ends it of its own accord part way into a press, sometimes by
-                                // cancelling it outright, and every attempt to handle that from in here
-                                // died along with it.
-                                interactionSource.tryEmit(PressInteraction.Release(press))
-                                DictateHoldTouch.arm(
+                            // The whole mic press is decided from the window's own touch stream, not from
+                            // this coroutine: Compose ends it of its own accord part way into a press,
+                            // sometimes by cancelling it outright, while the window goes on receiving the
+                            // finger until the genuine release. For a hold that lost the recording (#235);
+                            // for a plain tap it withdraws the key press instead of completing it, which is
+                            // why the mic needed a second tap to start and a second one to stop (#261).
+                            // Measured: sendDown, then waitForUpOrCancellation returning null 15 ms later
+                            // with the finger still down, and no dispose in between.
+                            val armed = when {
+                                // Push-to-talk (#235) takes the whole gesture: hold to record, slide left
+                                // to discard, slide up to latch. Opt-in, and it replaces the shortcuts.
+                                dictateIdle && DictateController.isPushToTalkActive(context) -> {
+                                    DictateHoldTouch.arm(
+                                        context = context,
+                                        action = action,
+                                        feedback = inputFeedbackController,
+                                        holdDelayMs = PUSH_TO_TALK_HOLD_MS,
+                                        cancelSlidePx = PUSH_TO_TALK_CANCEL_SLIDE.toPx(),
+                                        lockSlidePx = PUSH_TO_TALK_LOCK_SLIDE.toPx(),
+                                        commitPx = PUSH_TO_TALK_AXIS_COMMIT.toPx(),
+                                        releasePx = PUSH_TO_TALK_AXIS_RELEASE.toPx(),
+                                        onEnd = { interactionSource.tryEmit(PressInteraction.Release(press)) },
+                                    )
+                                }
+                                // Otherwise a tap, with at most a long-press shortcut on it:
+                                //  • idle: hold to pick an existing audio/video file to transcribe (#88).
+                                //  • recording (opt-in, #228): hold the send button to transcribe with the
+                                //    on-device model instead of the cloud provider.
+                                isDictate -> DictateHoldTouch.armTap(
                                     context = context,
                                     action = action,
                                     feedback = inputFeedbackController,
-                                    holdDelayMs = PUSH_TO_TALK_HOLD_MS,
-                                    cancelSlidePx = PUSH_TO_TALK_CANCEL_SLIDE.toPx(),
-                                    lockSlidePx = PUSH_TO_TALK_LOCK_SLIDE.toPx(),
-                                    commitPx = PUSH_TO_TALK_AXIS_COMMIT.toPx(),
-                                    releasePx = PUSH_TO_TALK_AXIS_RELEASE.toPx(),
+                                    holdDelayMs = prefs.keyboard.longPressDelay.get().toLong(),
+                                    onHold = when {
+                                        dictateIdle -> { { DictateController.startFileTranscription(context) } }
+                                        dictateSendLocal -> { { DictateController.stopAndTranscribeLocal(context) } }
+                                        else -> null
+                                    },
+                                    onEnd = { interactionSource.tryEmit(PressInteraction.Release(press)) },
                                 )
-                            } else if (dictateIdle || dictateSendLocal) {
-                                val longPressDelay = prefs.keyboard.longPressDelay.get().toLong()
-                                try {
-                                    val up = withTimeout(longPressDelay) { waitForUpOrCancellation() }
-                                    handleUpOrCancel(up, press, interactionSource, action, context)
-                                } catch (_: PointerEventTimeoutCancellationException) {
-                                    // Held long enough: run the shortcut and swallow the rest of the
-                                    // gesture so the normal tap (start recording / send) does not run.
-                                    interactionSource.tryEmit(PressInteraction.Cancel(press))
-                                    action.onPointerCancel(context)
-                                    if (dictateIdle) {
-                                        DictateController.startFileTranscription(context)
-                                    } else {
-                                        DictateController.stopAndTranscribeLocal(context)
-                                    }
-                                    waitForUpOrCancellation()?.consume()
-                                }
-                            } else {
+                                else -> false
+                            }
+                            if (!armed) {
+                                // Either an ordinary action, or a mic press the window never saw land —
+                                // handing that one over would leave the key held with nobody to release it.
                                 handleUpOrCancel(
                                     waitForUpOrCancellation(), press, interactionSource, action, context,
                                 )

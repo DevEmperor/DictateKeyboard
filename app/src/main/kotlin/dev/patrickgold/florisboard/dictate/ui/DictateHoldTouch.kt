@@ -64,6 +64,13 @@ object DictateHoldTouch {
     private var feedback: InputFeedbackController? = null
     private var action: QuickAction? = null
 
+    /** True while the hold in question is push-to-talk; false for a plain long-press shortcut. */
+    private var pushToTalk = false
+    /** What a long press runs when this is not push-to-talk, or null when the press can only be a tap. */
+    private var onHold: (() -> Unit)? = null
+    /** Told when the press ends, however it ends, so the caller can put its key back into its resting look. */
+    private var onEnd: (() -> Unit)? = null
+
     private val _pressed = MutableStateFlow(false)
 
     /**
@@ -79,6 +86,9 @@ object DictateHoldTouch {
     /**
      * The mic was pressed. If the finger is still there once [holdDelayMs] have passed this becomes a
      * recording; if it lifts first it stays the ordinary tap it looks like.
+     *
+     * Returns false when the window never saw this press land, in which case the caller keeps the gesture
+     * itself — arming on a press we cannot follow would leave the key held forever.
      */
     fun arm(
         context: Context,
@@ -89,19 +99,61 @@ object DictateHoldTouch {
         lockSlidePx: Float,
         commitPx: Float,
         releasePx: Float,
-    ) {
-        if (lastDownId < 0 || !lastDownStillDown) return
+        onEnd: (() -> Unit)? = null,
+    ): Boolean {
+        if (!take(context, action, feedback, onEnd)) return false
+        pushToTalk = true
+        this.cancelSlidePx = cancelSlidePx
+        this.lockSlidePx = lockSlidePx
+        this.commitPx = commitPx
+        this.releasePx = releasePx
+        handler.postDelayed(holdDue, holdDelayMs)
+        return true
+    }
+
+    /**
+     * The mic was pressed and this press cannot become a recording — it is a tap, or at most the long-press
+     * shortcut [onHold] (#261).
+     *
+     * The tap is delivered from here rather than from the gesture layer for the same reason the hold is:
+     * Compose cancels that gesture part way into a press often enough to matter, and a cancelled gesture
+     * withdraws the key press instead of completing it — which is what made the mic need two taps to start
+     * and two to stop. The window's own touch stream still has the real release.
+     *
+     * Returns false when the window never saw this press land; the caller then keeps the gesture itself.
+     */
+    fun armTap(
+        context: Context,
+        action: QuickAction,
+        feedback: InputFeedbackController,
+        holdDelayMs: Long,
+        onHold: (() -> Unit)?,
+        onEnd: (() -> Unit)? = null,
+    ): Boolean {
+        if (!take(context, action, feedback, onEnd)) return false
+        pushToTalk = false
+        this.onHold = onHold
+        // No hold to wait for: the press can only ever end as a tap, so nothing is scheduled.
+        if (onHold != null) handler.postDelayed(holdDue, holdDelayMs)
+        return true
+    }
+
+    /** Takes over the press the window last saw land, or reports that there is none to take. */
+    private fun take(
+        context: Context,
+        action: QuickAction,
+        feedback: InputFeedbackController,
+        onEnd: (() -> Unit)?,
+    ): Boolean {
+        if (lastDownId < 0 || !lastDownStillDown) return false
         cancel()
         pendingId = lastDownId
         this.context = context
         this.action = action
         this.feedback = feedback
-        this.cancelSlidePx = cancelSlidePx
-        this.lockSlidePx = lockSlidePx
-        this.commitPx = commitPx
-        this.releasePx = releasePx
+        this.onEnd = onEnd
         _pressed.value = true
-        handler.postDelayed(holdDue, holdDelayMs)
+        return true
     }
 
     /** Every touch the IME window receives, before anyone gets to consume or cancel it. */
@@ -151,7 +203,7 @@ object DictateHoldTouch {
         }
     }
 
-    /** The delay elapsed with the finger still down: this press is a recording. */
+    /** The delay elapsed with the finger still down: this press is a hold, not a tap. */
     private fun startHold() {
         val ctx = context ?: return
         if (pendingId < 0 || !lastDownStillDown || lastDownId != pendingId) {
@@ -162,10 +214,18 @@ object DictateHoldTouch {
         // itself must not also fire — and the dispatcher drops any later press of a key it still believes
         // to be held (see InputEventDispatcher.sendDown).
         action?.onPointerCancel(ctx)
-        DictateController.onPushToTalkDown(ctx)
-        // The one moment worth feeling: the press has become a recording. The tick when the finger landed
-        // is the ordinary key one and fires for a tap that records nothing.
+        // The one moment worth feeling: the press has become something other than a tap. The tick when the
+        // finger landed is the ordinary key one and fires for a tap that records nothing.
         feedback?.keyLongPress(TextKeyData.UNSPECIFIED)
+        if (!pushToTalk) {
+            // A one-shot shortcut: run it and let go of the finger. Whatever the window still sends for this
+            // press belongs to nobody, which is exactly what swallowing the rest of the gesture means.
+            val run = onHold
+            cancel()
+            run?.invoke()
+            return
+        }
+        DictateController.onPushToTalkDown(ctx)
         trackedId = pendingId
         pendingId = -1
         originX = lastDownX
@@ -212,6 +272,13 @@ object DictateHoldTouch {
         context = null
         feedback = null
         action = null
+        onHold = null
+        pushToTalk = false
+        // Last, and taken first: the press is over as far as the caller is concerned, and it may well arm a
+        // new one from inside this callback.
+        val end = onEnd
+        onEnd = null
         _pressed.value = false
+        end?.invoke()
     }
 }
