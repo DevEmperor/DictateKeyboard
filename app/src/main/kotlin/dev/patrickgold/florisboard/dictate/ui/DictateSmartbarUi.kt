@@ -477,27 +477,32 @@ private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
         label = "spin",
     )
     val retrying = state.attempt > 1
-    // Which engine is running is worth a word: waiting on a network and waiting on this phone are
-    // different kinds of waiting, and after holding the button to escape a hanging request (#270) the
-    // bar is the only confirmation that the escape worked.
     SnyggIcon(
-        imageVector = when {
-            state.onDevice -> Icons.Default.PhoneAndroid
-            retrying -> Icons.Default.CloudOff
-            else -> Icons.Default.Sync
-        },
+        imageVector = if (retrying) Icons.Default.CloudOff else Icons.Default.Sync,
         modifier = Modifier
             .size(18.dp)
-            .then(if (retrying || state.onDevice) Modifier else Modifier.rotate(rotation)),
+            .then(if (retrying) Modifier else Modifier.rotate(rotation)),
     )
     Spacer(modifier = Modifier.width(10.dp))
     SnyggText(
-        text = when {
-            state.onDevice -> stringRes(R.string.dictate__status_transcribing_local)
-            retrying -> stringRes(R.string.dictate__status_retrying, "attempt" to state.attempt)
-            else -> stringRes(R.string.dictate__status_transcribing)
+        text = if (retrying) {
+            stringRes(R.string.dictate__status_retrying, "attempt" to state.attempt)
+        } else {
+            stringRes(R.string.dictate__status_transcribing)
         },
     )
+    // Transcribing is transcribing — the spinner and the wording stay the same wherever it happens. The
+    // phone alongside them says only where: this one is running here, not on a provider's machine. It
+    // matters most right after holding the button to escape a hanging request (#270), where it is the
+    // confirmation that the escape worked.
+    if (state.onDevice) {
+        Spacer(modifier = Modifier.width(8.dp))
+        SnyggIcon(
+            imageVector = Icons.Default.PhoneAndroid,
+            modifier = Modifier.size(16.dp),
+            contentDescription = stringRes(R.string.dictate__status_transcribing_local),
+        )
+    }
 }
 
 /**
