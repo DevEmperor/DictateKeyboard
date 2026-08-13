@@ -1290,6 +1290,12 @@
     <string name="dictate__skip_silent_summary">Evita texto alucinado e chamadas de API desnecessárias em áudio silencioso</string>
     <string name="dictate__trim_silent_gaps_title">Cortar pausas longas</string>
     <string name="dictate__trim_silent_gaps_summary">Corta as pausas longas antes de enviar — envio mais rápido, menor custo</string>
+    <string name="dictate__speed_up_title">Acelerar o áudio</string>
+    <string name="dictate__speed_up_off">Desligado</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Enviado à velocidade a que falou</string>
+    <string name="dictate__speed_up_summary">As mesmas palavras e o mesmo tom — cerca de {percent} % menos áudio a pagar</string>
+    <string name="dictate__speed_up_summary_caution">Cerca de {percent} % menos áudio a pagar, mas a esta velocidade as palavras são mais difíceis de reconhecer</string>
     <string name="dictate__paragraph_split_title">Dividir em parágrafos</string>
     <string name="dictate__paragraph_split_off">Desligado</string>
     <string name="dictate__paragraph_split_value">Após {n} palavras</string>

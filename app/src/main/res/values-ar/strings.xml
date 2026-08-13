@@ -1169,6 +1169,12 @@
     <string name="dictate__skip_silent_summary">تجنّب النصوص المُختلَقة واستدعاءات API المهدورة في الصوت الصامت</string>
     <string name="dictate__trim_silent_gaps_title">اقتصاص فترات التوقف الطويلة</string>
     <string name="dictate__trim_silent_gaps_summary">قص فترات التوقف الطويلة قبل الإرسال — رفع أسرع وتكلفة أقل</string>
+    <string name="dictate__speed_up_title">تسريع الصوت</string>
+    <string name="dictate__speed_up_off">إيقاف</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">يُرسَل بالسرعة التي تحدثت بها</string>
+    <string name="dictate__speed_up_summary">نفس الكلمات ونفس طبقة الصوت — صوت أقل بنحو {percent} % تدفع مقابله</string>
+    <string name="dictate__speed_up_summary_caution">صوت أقل بنحو {percent} % تدفع مقابله، لكن عند هذه السرعة يصعب التعرف على الكلمات</string>
     <string name="dictate__paragraph_split_title">التقسيم إلى فقرات</string>
     <string name="dictate__paragraph_split_off">إيقاف</string>
     <string name="dictate__paragraph_split_value">بعد {n} كلمة</string>

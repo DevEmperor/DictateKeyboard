@@ -12,8 +12,6 @@ package dev.patrickgold.florisboard.dictate.audio
 
 import java.io.File
 import java.io.RandomAccessFile
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 /**
  * Concatenates several PCM **WAV** segments (as produced by [RecordingController]) into a single WAV
@@ -29,8 +27,6 @@ import java.nio.ByteOrder
  */
 object AudioConcat {
 
-    private const val WAV_HEADER_SIZE = 44
-
     private class WavFmt(val sampleRate: Int, val channels: Int, val bitsPerSample: Int)
 
     /**
@@ -38,7 +34,7 @@ object AudioConcat {
      * [output] is removed and false is returned, so the caller can fall back to a single segment.
      */
     fun concat(segments: List<File>, output: File): Boolean {
-        val usable = segments.filter { it.exists() && it.length() > WAV_HEADER_SIZE }
+        val usable = segments.filter { it.exists() && it.length() > AudioWav.HEADER_SIZE }
         if (usable.isEmpty()) return false
         output.delete()
         var fmt: WavFmt? = null
@@ -46,7 +42,7 @@ object AudioConcat {
         try {
             RandomAccessFile(output, "rw").use { out ->
                 out.setLength(0)
-                out.write(ByteArray(WAV_HEADER_SIZE)) // placeholder; patched once totals are known
+                out.write(ByteArray(AudioWav.HEADER_SIZE)) // placeholder; patched once totals are known
                 for (segment in usable) {
                     val parsed = RandomAccessFile(segment, "r").use { input ->
                         parseWav(input)?.also {
@@ -63,20 +59,22 @@ object AudioConcat {
                     return false
                 }
                 out.seek(0)
-                out.write(wavHeader(format, dataBytes))
+                out.write(
+                    AudioWav.header(format.sampleRate, format.channels, format.bitsPerSample, dataBytes),
+                )
             }
         } catch (_: Throwable) {
             output.delete()
             return false
         }
-        return output.exists() && output.length() > WAV_HEADER_SIZE
+        return output.exists() && output.length() > AudioWav.HEADER_SIZE
     }
 
     private class ParsedWav(val fmt: WavFmt, val dataOffset: Long, val dataLength: Long)
 
     /** Parses a PCM WAV's `fmt `/`data` chunks, or returns null if [input] is not a usable WAV. */
     private fun parseWav(input: RandomAccessFile): ParsedWav? {
-        if (input.length() < WAV_HEADER_SIZE) return null
+        if (input.length() < AudioWav.HEADER_SIZE) return null
         val header = ByteArray(12)
         input.readFully(header)
         if (!header.hasTag(0, "RIFF") || !header.hasTag(8, "WAVE")) return null
@@ -124,25 +122,6 @@ object AudioConcat {
             remaining -= read
         }
         return written
-    }
-
-    private fun wavHeader(fmt: WavFmt, dataLen: Long): ByteArray {
-        val byteRate = fmt.sampleRate * fmt.channels * fmt.bitsPerSample / 8
-        return ByteBuffer.allocate(WAV_HEADER_SIZE).order(ByteOrder.LITTLE_ENDIAN).apply {
-            put("RIFF".toByteArray(Charsets.US_ASCII))
-            putInt((36 + dataLen).toInt())
-            put("WAVE".toByteArray(Charsets.US_ASCII))
-            put("fmt ".toByteArray(Charsets.US_ASCII))
-            putInt(16)                  // PCM subchunk size
-            putShort(1)                 // audio format = PCM
-            putShort(fmt.channels.toShort())
-            putInt(fmt.sampleRate)
-            putInt(byteRate)
-            putShort((fmt.channels * fmt.bitsPerSample / 8).toShort()) // block align
-            putShort(fmt.bitsPerSample.toShort())
-            put("data".toByteArray(Charsets.US_ASCII))
-            putInt(dataLen.toInt())
-        }.array()
     }
 
     private fun ByteArray.hasTag(offset: Int, tag: String): Boolean =

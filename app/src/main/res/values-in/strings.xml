@@ -1266,6 +1266,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__skip_silent_summary">Hindari teks halusinasi dan panggilan API sia-sia pada audio senyap</string>
     <string name="dictate__trim_silent_gaps_title">Pangkas jeda panjang</string>
     <string name="dictate__trim_silent_gaps_summary">Memotong jeda panjang sebelum dikirim — unggah lebih cepat, biaya lebih murah</string>
+    <string name="dictate__speed_up_title">Percepat audio</string>
+    <string name="dictate__speed_up_off">Nonaktif</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Dikirim dengan kecepatan saat kamu berbicara</string>
+    <string name="dictate__speed_up_summary">Kata dan nada yang sama — sekitar {percent} % lebih sedikit audio yang dibayar</string>
+    <string name="dictate__speed_up_summary_caution">Sekitar {percent} % lebih sedikit audio yang dibayar, tetapi secepat ini kata-kata lebih sulit dikenali</string>
     <string name="dictate__paragraph_split_title">Bagi menjadi paragraf</string>
     <string name="dictate__paragraph_split_off">Nonaktif</string>
     <string name="dictate__paragraph_split_value">Setelah {n} kata</string>

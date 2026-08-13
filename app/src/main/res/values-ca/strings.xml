@@ -1186,6 +1186,12 @@
     <string name="dictate__skip_silent_summary">Evita el text al·lucinat i les crides a l\'API inútils en àudio silenciós</string>
     <string name="dictate__trim_silent_gaps_title">Retalla les pauses llargues</string>
     <string name="dictate__trim_silent_gaps_summary">Retalla les pauses llargues abans d\'enviar: pujada més ràpida i menys cost</string>
+    <string name="dictate__speed_up_title">Accelera l\'àudio</string>
+    <string name="dictate__speed_up_off">Desactivat</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">S\'envia a la velocitat amb què has parlat</string>
+    <string name="dictate__speed_up_summary">Mateixes paraules i mateix to: al voltant d\'un {percent} % menys d\'àudio a pagar</string>
+    <string name="dictate__speed_up_summary_caution">Al voltant d\'un {percent} % menys d\'àudio a pagar, però a aquesta velocitat les paraules costen més de reconèixer</string>
     <string name="dictate__paragraph_split_title">Divideix en paràgrafs</string>
     <string name="dictate__paragraph_split_off">Desactivat</string>
     <string name="dictate__paragraph_split_value">Després de {n} paraules</string>

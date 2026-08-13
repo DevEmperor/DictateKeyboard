@@ -1306,6 +1306,12 @@
     <string name="dictate__skip_silent_summary">避免静音录音产生幻觉文本和浪费 API 调用</string>
     <string name="dictate__trim_silent_gaps_title">裁剪长停顿</string>
     <string name="dictate__trim_silent_gaps_summary">发送前剪掉长停顿 — 上传更快、花费更少</string>
+    <string name="dictate__speed_up_title">加快音频速度</string>
+    <string name="dictate__speed_up_off">关闭</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">按你说话的速度发送</string>
+    <string name="dictate__speed_up_summary">用词相同、音调不变 — 计费音频约减少 {percent} %</string>
+    <string name="dictate__speed_up_summary_caution">计费音频约减少 {percent} %，但这么快的语速更难识别</string>
     <string name="dictate__paragraph_split_title">分段</string>
     <string name="dictate__paragraph_split_off">关闭</string>
     <string name="dictate__paragraph_split_value">{n} 个词后</string>

@@ -1309,6 +1309,12 @@
     <string name="dictate__skip_silent_summary">Kerüli a kitalált szöveget és a felesleges API-hívásokat néma hangnál</string>
     <string name="dictate__trim_silent_gaps_title">Hosszú szünetek levágása</string>
     <string name="dictate__trim_silent_gaps_summary">Küldés előtt levágja a hosszú szüneteket – gyorsabb feltöltés, kevesebb költség</string>
+    <string name="dictate__speed_up_title">Hang gyorsítása</string>
+    <string name="dictate__speed_up_off">Ki</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Olyan tempóban megy el, ahogy beszéltél</string>
+    <string name="dictate__speed_up_summary">Ugyanazok a szavak, ugyanaz a hangmagasság – nagyjából {percent} %-kal kevesebb fizetendő hang</string>
+    <string name="dictate__speed_up_summary_caution">Nagyjából {percent} %-kal kevesebb fizetendő hang, de ilyen tempóban nehezebb felismerni a szavakat</string>
     <string name="dictate__paragraph_split_title">Bekezdésekre bontás</string>
     <string name="dictate__paragraph_split_off">Ki</string>
     <string name="dictate__paragraph_split_value">{n} szó után</string>

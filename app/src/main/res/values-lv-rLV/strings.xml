@@ -1254,6 +1254,12 @@
     <string name="dictate__skip_silent_summary">Novērš izdomātu tekstu un liekus API izsaukumus klusā ierakstā</string>
     <string name="dictate__trim_silent_gaps_title">Apgriezt garās pauzes</string>
     <string name="dictate__trim_silent_gaps_summary">Pirms nosūtīšanas izgriež garās pauzes — ātrāka augšupielāde, mazākas izmaksas</string>
+    <string name="dictate__speed_up_title">Paātrināt audio</string>
+    <string name="dictate__speed_up_off">Izslēgts</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Tiek nosūtīts tādā ātrumā, kādā runāji</string>
+    <string name="dictate__speed_up_summary">Tie paši vārdi un tā pati balss — apmēram par {percent} % mazāk apmaksājamā audio</string>
+    <string name="dictate__speed_up_summary_caution">Apmēram par {percent} % mazāk apmaksājamā audio, taču šādā ātrumā vārdus atpazīt ir grūtāk</string>
     <string name="dictate__paragraph_split_title">Sadalīt rindkopās</string>
     <string name="dictate__paragraph_split_off">Izslēgts</string>
     <string name="dictate__paragraph_split_value">Pēc {n} vārdiem</string>

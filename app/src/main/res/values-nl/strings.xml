@@ -1210,6 +1210,12 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__skip_silent_summary">Voorkomt gehallucineerde tekst en overbodige API-aanroepen bij stille audio</string>
     <string name="dictate__trim_silent_gaps_title">Lange pauzes inkorten</string>
     <string name="dictate__trim_silent_gaps_summary">Knipt lange pauzes weg vóór verzenden — sneller uploaden, lagere kosten</string>
+    <string name="dictate__speed_up_title">Audio versnellen</string>
+    <string name="dictate__speed_up_off">Uit</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Wordt verstuurd op de snelheid waarop je sprak</string>
+    <string name="dictate__speed_up_summary">Dezelfde woorden, dezelfde toonhoogte — ongeveer {percent} % minder audio om te betalen</string>
+    <string name="dictate__speed_up_summary_caution">Ongeveer {percent} % minder audio om te betalen, maar zo snel zijn de woorden lastiger te herkennen</string>
     <string name="dictate__paragraph_split_title">In alinea\'s opsplitsen</string>
     <string name="dictate__paragraph_split_off">Uit</string>
     <string name="dictate__paragraph_split_value">Na {n} woorden</string>

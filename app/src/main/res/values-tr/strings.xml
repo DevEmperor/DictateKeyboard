@@ -1289,6 +1289,12 @@
     <string name="dictate__skip_silent_summary">Sessiz seste uydurma metni ve gereksiz API çağrılarını önler</string>
     <string name="dictate__trim_silent_gaps_title">Uzun duraklamaları kırp</string>
     <string name="dictate__trim_silent_gaps_summary">Göndermeden önce uzun duraklamaları keser — daha hızlı yükleme, daha az maliyet</string>
+    <string name="dictate__speed_up_title">Sesi hızlandır</string>
+    <string name="dictate__speed_up_off">Kapalı</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Konuştuğun hızla gönderilir</string>
+    <string name="dictate__speed_up_summary">Aynı kelimeler, aynı ses tonu — ücreti ödenen sesin yaklaşık %{percent} kadarı azalır</string>
+    <string name="dictate__speed_up_summary_caution">Ücreti ödenen ses yaklaşık %{percent} azalır, ancak bu hızda kelimeleri tanımak zorlaşır</string>
     <string name="dictate__paragraph_split_title">Paragraflara böl</string>
     <string name="dictate__paragraph_split_off">Kapalı</string>
     <string name="dictate__paragraph_split_value">{n} kelimeden sonra</string>

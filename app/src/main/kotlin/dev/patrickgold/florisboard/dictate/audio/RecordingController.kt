@@ -17,8 +17,6 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import java.io.File
 import java.io.RandomAccessFile
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 /**
  * Records microphone audio into a 16 kHz mono PCM16 **WAV** file in the app cache.
@@ -226,24 +224,8 @@ class RecordingController(private val context: Context) {
         peak = max.coerceAtMost(32767)
     }
 
-    private fun wavHeader(dataLen: Long): ByteArray {
-        val byteRate = SAMPLE_RATE * CHANNELS * BITS_PER_SAMPLE / 8
-        return ByteBuffer.allocate(WAV_HEADER_SIZE).order(ByteOrder.LITTLE_ENDIAN).apply {
-            put("RIFF".toByteArray(Charsets.US_ASCII))
-            putInt((36 + dataLen).toInt())
-            put("WAVE".toByteArray(Charsets.US_ASCII))
-            put("fmt ".toByteArray(Charsets.US_ASCII))
-            putInt(16)                                  // PCM subchunk size
-            putShort(1)                                 // audio format = PCM
-            putShort(CHANNELS.toShort())
-            putInt(SAMPLE_RATE)
-            putInt(byteRate)
-            putShort((CHANNELS * BITS_PER_SAMPLE / 8).toShort()) // block align
-            putShort(BITS_PER_SAMPLE.toShort())
-            put("data".toByteArray(Charsets.US_ASCII))
-            putInt(dataLen.toInt())
-        }.array()
-    }
+    private fun wavHeader(dataLen: Long): ByteArray =
+        AudioWav.header(SAMPLE_RATE, CHANNELS, BITS_PER_SAMPLE, dataLen)
 
     companion object {
         private const val AUDIO_FILE_NAME = "dictate_audio.wav"
@@ -252,6 +234,6 @@ class RecordingController(private val context: Context) {
         private const val ENCODING = AudioFormat.ENCODING_PCM_16BIT
         private const val CHANNELS = 1
         private const val BITS_PER_SAMPLE = 16
-        private const val WAV_HEADER_SIZE = 44
+        private const val WAV_HEADER_SIZE = AudioWav.HEADER_SIZE
     }
 }

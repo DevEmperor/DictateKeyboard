@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
 import dev.patrickgold.florisboard.dictate.DictateLongformMode
+import dev.patrickgold.florisboard.dictate.audio.AudioSpeedUp
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonSize
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
@@ -373,6 +374,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val trimSilentGaps = boolean(
             key = "dictate__trim_silent_gaps",
             default = true,
+        )
+        // Play the recording faster before uploading it, without raising its pitch (issue #272). Stored as
+        // a percentage of the original speed: 100 = off, 150 = 1.5x, which bills two thirds of what was
+        // spoken. Where #93 and #232 remove dead time, this shortens the speech itself — so it is off by
+        // default: it is the only one of the three that can change what the model hears.
+        val audioSpeedUpPercent = int(
+            key = "dictate__audio_speed_up_percent",
+            default = AudioSpeedUp.MIN_PERCENT,
         )
         // Break long *plain* transcripts into paragraphs (issue #225): once at least this many words have
         // accumulated, the next sentence end starts a new paragraph. 0 = off (default). Deterministic and

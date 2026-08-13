@@ -1326,6 +1326,12 @@
     <string name="dictate__skip_silent_summary">Unikaj zmyślonego tekstu i zbędnych wywołań API przy cichym nagraniu</string>
     <string name="dictate__trim_silent_gaps_title">Przycinaj długie pauzy</string>
     <string name="dictate__trim_silent_gaps_summary">Wycina długie pauzy przed wysłaniem — szybsze przesyłanie, niższy koszt</string>
+    <string name="dictate__speed_up_title">Przyspiesz dźwięk</string>
+    <string name="dictate__speed_up_off">Wył.</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Wysyłane w tempie, w jakim mówiłeś</string>
+    <string name="dictate__speed_up_summary">Te same słowa i ta sama wysokość głosu — około {percent} % mniej płatnego dźwięku</string>
+    <string name="dictate__speed_up_summary_caution">Około {percent} % mniej płatnego dźwięku, ale przy tym tempie słowa trudniej rozpoznać</string>
     <string name="dictate__paragraph_split_title">Dziel na akapity</string>
     <string name="dictate__paragraph_split_off">Wył.</string>
     <string name="dictate__paragraph_split_value">Po {n} słowach</string>

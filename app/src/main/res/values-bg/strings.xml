@@ -1311,6 +1311,12 @@
     <string name="dictate__skip_silent_summary">Избягвайте измислен текст и излишни API заявки при тих запис</string>
     <string name="dictate__trim_silent_gaps_title">Изрязване на дългите паузи</string>
     <string name="dictate__trim_silent_gaps_summary">Изрязва дългите паузи преди изпращане — по-бързо качване, по-ниска цена</string>
+    <string name="dictate__speed_up_title">Ускоряване на звука</string>
+    <string name="dictate__speed_up_off">Изкл.</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Изпраща се със скоростта, с която сте говорили</string>
+    <string name="dictate__speed_up_summary">Същите думи и същият тон — около {percent} % по-малко платено аудио</string>
+    <string name="dictate__speed_up_summary_caution">Около {percent} % по-малко платено аудио, но при тази скорост думите се разпознават по-трудно</string>
     <string name="dictate__paragraph_split_title">Разделяне на абзаци</string>
     <string name="dictate__paragraph_split_off">Изкл.</string>
     <string name="dictate__paragraph_split_value">След {n} думи</string>

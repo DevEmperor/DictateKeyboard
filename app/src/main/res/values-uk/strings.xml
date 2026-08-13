@@ -1158,6 +1158,12 @@
     <string name="dictate__skip_silent_summary">Уникайте вигаданого тексту й зайвих викликів API при тихому записі</string>
     <string name="dictate__trim_silent_gaps_title">Обрізати довгі паузи</string>
     <string name="dictate__trim_silent_gaps_summary">Вирізає довгі паузи перед надсиланням — швидше завантаження, менші витрати</string>
+    <string name="dictate__speed_up_title">Пришвидшувати аудіо</string>
+    <string name="dictate__speed_up_off">Вимк.</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">Надсилається зі швидкістю, з якою ви говорили</string>
+    <string name="dictate__speed_up_summary">Ті самі слова й та сама висота голосу — приблизно на {percent} % менше оплачуваного аудіо</string>
+    <string name="dictate__speed_up_summary_caution">Приблизно на {percent} % менше оплачуваного аудіо, але на такій швидкості слова розпізнаються гірше</string>
     <string name="dictate__paragraph_split_title">Розбивати на абзаци</string>
     <string name="dictate__paragraph_split_off">Вимк.</string>
     <string name="dictate__paragraph_split_value">Після {n} слів</string>

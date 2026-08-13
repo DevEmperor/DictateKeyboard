@@ -253,7 +253,7 @@ object SpeechGate {
 
         runCatching {
             outFile.outputStream().buffered().use { os ->
-                os.write(wavHeader(sr, channels = 1, bitsPerSample = 16, dataLen = keptCount.toLong() * 2))
+                os.write(AudioWav.header(sr, channels = 1, bitsPerSample = 16, dataLen = keptCount.toLong() * 2))
                 val buf = ByteArray(8192) // even size: two bytes per sample
                 var bi = 0
                 for (r in kept) {
@@ -281,26 +281,6 @@ object SpeechGate {
             runCatching { outFile.delete() }
             null
         }
-    }
-
-    /** Minimal 44-byte PCM WAV header (little-endian). */
-    private fun wavHeader(sampleRate: Int, channels: Int, bitsPerSample: Int, dataLen: Long): ByteArray {
-        val byteRate = sampleRate * channels * bitsPerSample / 8
-        return java.nio.ByteBuffer.allocate(44).order(java.nio.ByteOrder.LITTLE_ENDIAN).apply {
-            put("RIFF".toByteArray(Charsets.US_ASCII))
-            putInt((36 + dataLen).toInt())
-            put("WAVE".toByteArray(Charsets.US_ASCII))
-            put("fmt ".toByteArray(Charsets.US_ASCII))
-            putInt(16)              // PCM subchunk size
-            putShort(1)             // audio format = PCM
-            putShort(channels.toShort())
-            putInt(sampleRate)
-            putInt(byteRate)
-            putShort((channels * bitsPerSample / 8).toShort()) // block align
-            putShort(bitsPerSample.toShort())
-            put("data".toByteArray(Charsets.US_ASCII))
-            putInt(dataLen.toInt())
-        }.array()
     }
 
     /** Below this much removed silence, trimming isn't worth the re-encode (issue #232). */

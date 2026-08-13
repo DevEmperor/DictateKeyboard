@@ -1243,6 +1243,12 @@
     <string name="dictate__skip_silent_summary">無音の録音での幻覚テキストや無駄なAPI呼び出しを回避します</string>
     <string name="dictate__trim_silent_gaps_title">長い無音を除去</string>
     <string name="dictate__trim_silent_gaps_summary">送信前に長い無音をカット — 高速アップロード、低コスト</string>
+    <string name="dictate__speed_up_title">音声を速める</string>
+    <string name="dictate__speed_up_off">オフ</string>
+    <string name="dictate__speed_up_value">{rate}×</string>
+    <string name="dictate__speed_up_summary_off">話した速さのまま送信します</string>
+    <string name="dictate__speed_up_summary">言葉も声の高さもそのまま — 課金される音声が約 {percent} % 減ります</string>
+    <string name="dictate__speed_up_summary_caution">課金される音声が約 {percent} % 減りますが、この速さでは言葉を認識しにくくなります</string>
     <string name="dictate__paragraph_split_title">段落に分割</string>
     <string name="dictate__paragraph_split_off">オフ</string>
     <string name="dictate__paragraph_split_value">{n}語以降</string>

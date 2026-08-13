@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioLevelSmoother
+import dev.patrickgold.florisboard.dictate.audio.AudioSpeedUp
 import dev.patrickgold.florisboard.dictate.audio.BluetoothMicRouter
 import dev.patrickgold.florisboard.dictate.audio.LiveSpeechSplitter
 import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
@@ -464,6 +465,8 @@ object DictateController {
     private const val TRIMMED_AUDIO_NAME = "dictate_trimmed.wav"
     private const val TRIM_MAX_SILENCE_MS = 2_000
     private const val TRIM_KEEP_SILENCE_MS = 400
+    /** Cache file for the sped-up upload copy (issue #272); the recording itself is never overwritten. */
+    private const val SPED_UP_AUDIO_NAME = "dictate_speedup.wav"
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
     // commit the already-streamed text. Short — the text is already on screen; we only wait for the tail.
     private const val REALTIME_FINALIZE_TIMEOUT_MS = 1_200L
@@ -1271,6 +1274,10 @@ object DictateController {
             // The file actually uploaded. Normally the original recording; the silence trimmer (#232) may
             // swap in a shorter copy, while history/retention/cleanup keep referencing the original audioFile.
             var uploadFile = audioFile
+            // Set only when the audio was sped up (#272): the same audio *before* that, which is what the
+            // on-device fallback (#104) transcribes — the local engine is deliberately never fed sped-up
+            // audio, since there is no bill to shorten there. Null means "the upload file is fine".
+            var localFallbackFile: File? = null
             try {
                 logLatency(latencyTrace, "coroutineStarted", coroutineScheduledNanos)
                 reconcileActiveLanguage() // correct a stale active language before it's read for the request
@@ -1322,6 +1329,30 @@ object DictateController {
                         }
                     }
                 }
+                // Time compression (issue #272): send the speech faster than it was spoken, at unchanged
+                // pitch, so a provider that bills by duration bills less. Whatever the file was before —
+                // the recording or the trimmed copy — is what gets sped up.
+                //
+                // Not for picked files (they would be rewritten as 16 kHz WAV, which for a long compressed
+                // source is *more* bytes than the original) and not for the on-device engine (nothing is
+                // billed there — it would be accuracy traded for nothing but speed).
+                val speedPercent = prefs.dictate.audioSpeedUpPercent.get()
+                if (speedPercent > AudioSpeedUp.MIN_PERCENT &&
+                    source != DictateHistorySource.IMPORT &&
+                    preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE
+                ) {
+                    val spedUp = AudioSpeedUp.process(
+                        uploadFile,
+                        File(appContext.cacheDir, SPED_UP_AUDIO_NAME),
+                        speedPercent / 100f,
+                    )
+                    if (spedUp != null) {
+                        // The un-sped copy stays on disk for the on-device fallback below; the finally
+                        // block knows about both files and removes whichever of them isn't the original.
+                        localFallbackFile = uploadFile
+                        uploadFile = spedUp
+                    }
+                }
                 // Single-call multimodal (issue #130): one chat/completions+input_audio request transcribes
                 // and formats together (cloud chat models only, never the on-device engine).
                 val chatAudio = account.transcriptionViaChat &&
@@ -1367,7 +1398,11 @@ object DictateController {
                         LocalTranscriptionProvider.setIdleUnloadMillis(
                             prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
                         )
-                        fallback.transcribe(request)
+                        // Sped-up audio (#272) is for the provider that charges by the second, not for the
+                        // engine on this phone: the fallback gets the recording as it was.
+                        fallback.transcribe(
+                            localFallbackFile?.let { request.copy(audioFile = it) } ?: request,
+                        )
                     }
                 }
                 logLatency(latencyTrace, "providerCompleted", providerStartedNanos)
@@ -1441,8 +1476,11 @@ object DictateController {
                 )
             } finally {
                 if (!keepAudio) audioFile.delete()
-                // Drop the trimmed upload copy (#232); the original audioFile is the one history keeps.
+                // Drop the derived upload copies — trimmed (#232) and/or sped up (#272); the original
+                // audioFile is the one history keeps.
                 if (uploadFile !== audioFile) runCatching { uploadFile.delete() }
+                localFallbackFile?.takeIf { it !== audioFile && it !== uploadFile }
+                    ?.let { runCatching { it.delete() } }
                 // System voice input (#67): hand the terminal outcome back to the RecognitionService so it
                 // delivers results / an error to the calling app. One hook covers every path (success,
                 // no-speech, prompt-echo, API/unexpected error) since `outcome` is set before each return.
@@ -2018,7 +2056,21 @@ object DictateController {
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
         val style = transcriptionStylePrompt()
         val prompt = continuity.takeLast(200).trim().let { if (it.isEmpty()) style else "$it $style".trim() }
-        val request = TranscriptionRequest(audioFile = wav, model = model, language = language, prompt = prompt)
+        // Time compression (issue #272): every segment is billed on its own, so the speed-up belongs here
+        // too — this is where a long dictation's duration actually adds up. Segments are transcribed
+        // concurrently, hence a cache file per segment; the segment itself is left alone because it is
+        // merged into the retained history audio afterwards.
+        val speedPercent = prefs.dictate.audioSpeedUpPercent.get()
+        val spedUp = if (speedPercent > AudioSpeedUp.MIN_PERCENT &&
+            preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE
+        ) {
+            AudioSpeedUp.process(wav, File(appContext.cacheDir, "spd_${wav.name}"), speedPercent / 100f)
+        } else {
+            null
+        }
+        val request = TranscriptionRequest(
+            audioFile = spedUp ?: wav, model = model, language = language, prompt = prompt,
+        )
         return try {
             val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
                 if (!LocalModelManager.isInstalled(appContext, model)) return null
@@ -2037,7 +2089,8 @@ object DictateController {
                     ).transcribe(request)
                 } catch (e: DictateApiException) {
                     val fallback = localFallbackProvider(appContext, preset, e) ?: throw e
-                    fallback.transcribe(request)
+                    // On-device gets the segment as recorded, never the sped-up copy (#272).
+                    fallback.transcribe(if (spedUp != null) request.copy(audioFile = wav) else request)
                 }
             }
             result.text
@@ -2045,6 +2098,8 @@ object DictateController {
             throw c
         } catch (t: Throwable) {
             null
+        } finally {
+            spedUp?.let { runCatching { it.delete() } }
         }
     }
 

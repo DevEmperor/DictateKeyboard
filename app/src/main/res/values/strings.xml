@@ -1792,6 +1792,12 @@
     <string name="dictate__skip_silent_summary" comment="Summary for the skip-silent-recordings setting">Avoid ghost text and wasted API calls on silent audio</string>
     <string name="dictate__trim_silent_gaps_title" comment="Setting: cut long pauses out of a recording before uploading it (issue #232)">Trim long pauses</string>
     <string name="dictate__trim_silent_gaps_summary" comment="Summary for the trim-long-pauses setting">Cut long pauses out before sending — faster upload, lower cost</string>
+    <string name="dictate__speed_up_title" comment="Setting: send the recording faster than it was spoken, at unchanged pitch (issue #272)">Speed up audio</string>
+    <string name="dictate__speed_up_off" comment="Slider value label when the speed-up is off (1.0x)">Off</string>
+    <string name="dictate__speed_up_value" comment="Slider value label for the playback rate. {rate} is a number like 1.5">{rate}×</string>
+    <string name="dictate__speed_up_summary_off" comment="Summary for the speed-up setting when it is off">Sent at the speed you spoke it</string>
+    <string name="dictate__speed_up_summary" comment="Summary for the speed-up setting. {percent} is a whole number like 33">Same words, same pitch — about {percent} % less audio to pay for</string>
+    <string name="dictate__speed_up_summary_caution" comment="Summary for the speed-up setting at rates where accuracy suffers. {percent} is a whole number like 50">About {percent} % less audio to pay for, but this fast the words are harder to recognise</string>
     <string name="dictate__paragraph_split_title" comment="Setting: break long plain transcripts into paragraphs at sentence boundaries (issue #225)">Break into paragraphs</string>
     <string name="dictate__paragraph_split_off" comment="Slider value label when paragraph splitting is off (0)">Off</string>
     <string name="dictate__paragraph_split_value" comment="Slider value label: after how many words a paragraph break may start. {n} is the word count">After {n} words</string>
