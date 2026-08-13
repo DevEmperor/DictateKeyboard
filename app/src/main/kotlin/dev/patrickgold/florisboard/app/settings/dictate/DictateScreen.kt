@@ -453,11 +453,13 @@ fun DictateRecordingScreen() = FlorisScreen {
             summary = { percent ->
                 when {
                     percent <= AudioSpeedUp.MIN_PERCENT -> stringRes(R.string.dictate__speed_up_summary_off)
-                    percent >= AudioSpeedUp.CAUTION_PERCENT -> stringRes(
+                    // The rate leads, because a slider dialog shows its summary instead of its value:
+                    // without this the row would never say what it is set to.
+                    percent >= AudioSpeedUp.CAUTION_PERCENT -> speedUpValueLabel(percent) + " · " + stringRes(
                         R.string.dictate__speed_up_summary_caution,
                         "percent" to speedUpSaving(percent),
                     )
-                    else -> stringRes(
+                    else -> speedUpValueLabel(percent) + " · " + stringRes(
                         R.string.dictate__speed_up_summary,
                         "percent" to speedUpSaving(percent),
                     )
