@@ -47,8 +47,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.latin"
 
-        // Language used when the active subtype has no bundled dictionary of its own.
+        // Language whose dictionary is assumed present when the assets cannot be listed at all.
         private const val FALLBACK_LANG = "en"
+
+        // Sentinel for "this language has no dictionary" in the resolved-language cache, which cannot
+        // store nulls. Never a real language code.
+        private const val NO_DICT = ""
 
         // A typo is only auto-corrected when its best fix is at least this frequent (on the dictionary's
         // 128..255 scale). Rarer fixes are still offered as tap suggestions but never swapped in
@@ -190,6 +194,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     // frequent words first and stop early. Built lazily from the word data and cached.
     private val rankedWordsByLang = guardedByLock { mutableMapOf<String, List<String>>() }
 
+    // Fold keys aligned with rankedWordsByLang, for the languages where the two differ (issue #265).
+    private val rankedFoldKeysByLang = guardedByLock { mutableMapOf<String, List<String>>() }
+
     // Languages that ship a bundled ime/dict/<lang>.json (currently just English), listed once.
     private val bundledDictLangs: Set<String> by lazy {
         runCatching {
@@ -208,12 +215,28 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private fun hasDict(lang: String): Boolean =
         GlideDictionaryManager.isInstalled(appContext, lang) || lang in bundledDictLangs
 
-    /** The dictionary language to use for [subtype] — its own if available, else English. */
-    private fun dictLangFor(subtype: Subtype): String {
+    /**
+     * The dictionary language to use for [subtype], or null when there is none.
+     *
+     * This used to answer English for any language without a dictionary of its own (issue #265), which is
+     * the worst of the three possible answers. Typing Arabic, every word came back unknown, the spell
+     * checker underlined the entire language, and the distance-2 fallback ground through ~500,000 string
+     * allocations per keystroke over the Latin alphabet to find nothing it could ever have found. Worse for
+     * the languages that *are* written in Latin: an English dictionary does not merely fail to help
+     * Finnish, it actively corrects Finnish into English.
+     *
+     * Null instead means no suggestions, no autocorrect, no red underline — a state the provider contract
+     * explicitly allows (see SuggestionProvider.suggest) and the one the Han provider already uses when its
+     * language pack is missing.
+     */
+    private fun dictLangFor(subtype: Subtype): String? {
         val subLang = normalizeLang(subtype.primaryLocale.language)
-        return resolvedDictLang.getOrPut(subLang) {
-            if (subLang.isNotBlank() && hasDict(subLang)) subLang else FALLBACK_LANG
+        // ConcurrentHashMap cannot hold a null value, and a language code is never blank, so the empty
+        // string stands in for "looked, found nothing".
+        val resolved = resolvedDictLang.getOrPut(subLang) {
+            if (subLang.isNotBlank() && hasDict(subLang)) subLang else NO_DICT
         }
+        return resolved.takeIf { it != NO_DICT }
     }
 
     /**
@@ -241,13 +264,24 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     /** Loads (and caches) the word→frequency map for [subtype]'s resolved dictionary language. */
-    private suspend fun wordDataFor(subtype: Subtype): Map<String, Int> = wordDataForLang(dictLangFor(subtype))
+    private suspend fun wordDataFor(subtype: Subtype): Map<String, Int> =
+        dictLangFor(subtype)?.let { wordDataForLang(it) }.orEmpty()
 
-    /** Loads (and caches) the word→frequency map for a specific dictionary [lang]. */
+    /**
+     * Loads (and caches) the word→frequency map for a specific dictionary [lang], or an empty map if it
+     * cannot be read.
+     *
+     * The runCatching is load-bearing since issue #265: [readDict] falls through to an asset that only
+     * exists for bundled languages and throws otherwise, and it was the English fallback that used to keep
+     * that from ever happening. It now can — a dictionary deleted between the resolve and the read, for
+     * instance — and an empty map is the honest answer.
+     */
     private suspend fun wordDataForLang(lang: String): Map<String, Int> =
         wordDataByLang.withLock { cache ->
             cache[lang] ?: run {
-                val loaded = Json.decodeFromString(wordDataSerializer, readDict(lang))
+                val loaded = runCatching {
+                    Json.decodeFromString(wordDataSerializer, readDict(lang))
+                }.getOrDefault(emptyMap())
                 cache[lang] = loaded
                 loaded
             }
@@ -259,7 +293,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val bigramsByLang = guardedByLock { mutableMapOf<String, Map<String, Long>>() }
 
     private suspend fun bigramsFor(subtype: Subtype): Map<String, Long> {
-        val lang = dictLangFor(subtype)
+        val lang = dictLangFor(subtype) ?: return emptyMap()
         return bigramsByLang.withLock { cache ->
             cache[lang] ?: loadBigrams(lang).also { cache[lang] = it }
         }
@@ -275,19 +309,28 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             appContext.assets.readText("ime/dict/${lang}_bigrams.txt")
         }
         val map = HashMap<String, Long>(45_000)
+        // The file stores "w1 w2" lowercased; the lookup happens in fold space, so an Arabic-script
+        // language has to fold the key too or no pair would ever match. Folding the whole key at once is
+        // safe — the fold passes the separating space through untouched.
+        val folds = DictFold.hasNonTrivialFold(lang)
         text.lineSequence().forEach { line ->
             val tab = line.indexOf('\t')
             if (tab > 0) {
-                line.substring(tab + 1).toLongOrNull()?.let { map[line.substring(0, tab)] = it }
+                val key = line.substring(0, tab)
+                line.substring(tab + 1).toLongOrNull()?.let {
+                    map[if (folds) DictFold.foldKey(lang, key) else key] = it
+                }
             }
         }
         map
     }.getOrDefault(emptyMap())
 
-    /** The word right before the one being composed, lowercased — the context for the bigram model. */
-    private fun previousWordOf(content: EditorContent): String? {
+    /** The word right before the one being composed, folded — the context for the bigram model. */
+    private fun previousWordOf(content: EditorContent, index: LowerIndex): String? {
         val before = content.textBeforeSelection.removeSuffix(content.composingText).trimEnd()
-        return before.takeLastWhile { it.isLetter() || it == '\'' }.lowercase().takeIf { it.isNotEmpty() }
+        return before.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
+            .let { index.fold(it) }
+            .takeIf { it.isNotEmpty() }
     }
 
     /** Context-score function for [correctionsFor]: boosts candidates that commonly follow [prevWord]. */
@@ -298,7 +341,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     /** Frequency-sorted (descending) word list for [subtype]'s dictionary language, cached per language. */
     private suspend fun rankedWordsFor(subtype: Subtype): List<String> {
-        val lang = dictLangFor(subtype)
+        val lang = dictLangFor(subtype) ?: return emptyList()
         val data = wordDataFor(subtype)
         return rankedWordsByLang.withLock { cache ->
             cache[lang] ?: run {
@@ -309,18 +352,58 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
+    /**
+     * The fold keys of [rankedWordsFor], positionally aligned with it, or null when the language's fold is
+     * a plain lowercase and prefix matching can compare the words directly.
+     *
+     * Prefix completion is the one place that works on the *stored* spellings rather than the folded index,
+     * so an Arabic writer typing ان would otherwise get no completions at all — أنا and أنت do not start
+     * with what they typed. Precomputed once per language because folding 79,000 words on every keystroke
+     * is not an option.
+     */
+    private suspend fun rankedFoldKeysFor(subtype: Subtype): List<String>? {
+        val lang = dictLangFor(subtype)?.takeIf { DictFold.hasNonTrivialFold(it) } ?: return null
+        val ranked = rankedWordsFor(subtype)
+        return rankedFoldKeysByLang.withLock { cache ->
+            cache[lang] ?: ranked.map { DictFold.foldKey(lang, it) }.also { cache[lang] = it }
+        }
+    }
+
     // --- Spell check / autocorrect core (issue #127 follow-up) --------------------------------------
 
     /**
-     * Case-folded view of a language's dictionary for spell checking / correction: [freq] maps a lowercase
-     * word to its frequency, [canonical] to its correctly-cased form, and [alphabet] holds every letter the
-     * language uses (for generating edit candidates).
+     * Folded view of a language's dictionary for spell checking / correction: [freq] maps a folded word to
+     * its frequency, [canonical] to the spelling to commit, and [alphabet] holds every letter the language
+     * uses (for generating edit candidates).
+     *
+     * "Folded" was "lowercased" until issue #265; for Arabic script it also unifies the letter forms writers
+     * use interchangeably, which is what lets a word be found however it was spelled. See [DictFold].
      */
     private class LowerIndex(
+        val lang: String,
         val freq: Map<String, Int>,
         val canonical: Map<String, String>,
         val alphabet: Set<Char>,
-    )
+        /**
+         * Fold key → every dictionary spelling sharing it, most frequent first; only the keys with more
+         * than one. Empty for languages whose fold merges nothing, which is all of them but Arabic script.
+         *
+         * أن، إن and آن all fold to ان, and all three belong in the strip — picking one and hiding the
+         * others would turn a choice the writer can make into a guess the keyboard makes for them.
+         */
+        val variants: Map<String, List<String>> = emptyMap(),
+    ) {
+        /** The key [word] is looked up under. */
+        fun fold(word: String): String = DictFold.foldKey(lang, word)
+
+        /** Every dictionary spelling that folds to [key], most frequent first. */
+        fun formsOf(key: String): List<String> = variants[key] ?: listOfNotNull(canonical[key])
+
+        companion object {
+            /** For a subtype whose language has no dictionary at all — see [dictLangFor]. */
+            val EMPTY = LowerIndex("", emptyMap(), emptyMap(), emptySet())
+        }
+    }
 
     private val lowerIndexByLang = guardedByLock { mutableMapOf<String, LowerIndex>() }
 
@@ -329,8 +412,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     // costs one array of references per language and no duplicated character data.
     private val prefixIndexByLang = guardedByLock { mutableMapOf<String, TouchBeamDecoder.PrefixIndex>() }
 
-    private suspend fun prefixIndexFor(subtype: Subtype): TouchBeamDecoder.PrefixIndex {
-        val lang = dictLangFor(subtype)
+    private suspend fun prefixIndexFor(subtype: Subtype): TouchBeamDecoder.PrefixIndex? {
+        val lang = dictLangFor(subtype) ?: return null
         val index = lowerIndexFor(subtype)
         return prefixIndexByLang.withLock { cache ->
             cache[lang] ?: TouchBeamDecoder.PrefixIndex(index.freq.keys.toTypedArray().apply { sort() })
@@ -347,7 +430,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         ioScope.launch {
             GlideDictionaryManager.installedVersion.collect {
                 resolvedDictLang.clear()
+                // Also the raw word data: since #265 a failed read caches an empty map under that
+                // language, and without dropping it the dictionary that just finished downloading would
+                // never be seen.
+                wordDataByLang.withLock { it.clear() }
                 rankedWordsByLang.withLock { it.clear() }
+                rankedFoldKeysByLang.withLock { it.clear() }
                 lowerIndexByLang.withLock { it.clear() }
                 bigramsByLang.withLock { it.clear() }
                 prefixIndexByLang.withLock { it.clear() }
@@ -355,29 +443,40 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
-    private suspend fun lowerIndexFor(subtype: Subtype): LowerIndex = lowerIndexForLang(dictLangFor(subtype))
+    private suspend fun lowerIndexFor(subtype: Subtype): LowerIndex =
+        dictLangFor(subtype)?.let { lowerIndexForLang(it) } ?: LowerIndex.EMPTY
 
     private suspend fun lowerIndexForLang(lang: String): LowerIndex {
         val data = wordDataForLang(lang)
+        if (data.isEmpty()) return LowerIndex.EMPTY
         return lowerIndexByLang.withLock { cache ->
             cache[lang] ?: run {
                 val freq = HashMap<String, Int>(data.size)
                 val canonical = HashMap<String, String>(data.size)
                 val alphabet = HashSet<Char>()
+                // Only collected where the fold actually merges spellings, so nothing is paid for the
+                // languages where every key has exactly one form anyway.
+                val forms = if (DictFold.hasNonTrivialFold(lang)) HashMap<String, MutableList<String>>() else null
                 for ((word, f) in data) {
-                    val lower = word.lowercase()
-                    if ((freq[lower] ?: -1) < f) {
-                        freq[lower] = f
-                        canonical[lower] = word
+                    val key = DictFold.foldKey(lang, word)
+                    if ((freq[key] ?: -1) < f) {
+                        freq[key] = f
+                        canonical[key] = word
                     }
-                    for (ch in lower) if (ch.isLetter()) alphabet.add(ch)
+                    forms?.getOrPut(key) { ArrayList(1) }?.add(word)
+                    // Combining marks count: Devanagari, Bengali and Tamil write their vowels that way, and
+                    // an alphabet without them cannot generate a correction that inserts or fixes one.
+                    for (ch in key) if (DictFold.isWordChar(ch)) alphabet.add(ch)
                 }
                 // Include the apostrophe so a missing-apostrophe typo of an unknown word can be corrected;
-                // dictionary words like "what's"/"don't" carry it but isLetter() drops it above. (The
+                // dictionary words like "what's"/"don't" carry it but isWordChar() drops it above. (The
                 // common case — the apostrophe-less form is itself a known word, e.g. "whats" — is handled
                 // by the contraction-restoration block in suggest(), issue #212.)
                 alphabet.add('\'')
-                LowerIndex(freq, canonical, alphabet).also { cache[lang] = it }
+                val variants = forms.orEmpty().asSequence()
+                    .filter { it.value.size > 1 }
+                    .associate { (key, spellings) -> key to spellings.sortedByDescending { data[it] ?: 0 } }
+                LowerIndex(lang, freq, canonical, alphabet, variants).also { cache[lang] = it }
             }
         }
     }
@@ -389,9 +488,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      */
     private fun acceptedDictLangs(subtype: Subtype): List<String> {
         val active = dictLangFor(subtype)
-        if (!prefs.suggestion.multilingualTyping.get()) return listOf(active)
-        val langs = LinkedHashSet<String>().apply { add(active) }
-        runCatching { subtypeManager.subtypes.forEach { langs.add(dictLangFor(it)) } }
+        if (!prefs.suggestion.multilingualTyping.get()) return listOfNotNull(active)
+        // A subtype without a dictionary contributes nothing rather than dragging English in (#265) —
+        // otherwise turning multilingual typing on would quietly restore the fallback this removed.
+        val langs = LinkedHashSet<String>().apply { active?.let { add(it) } }
+        runCatching { subtypeManager.subtypes.forEach { s -> dictLangFor(s)?.let { langs.add(it) } } }
         return langs.toList()
     }
 
@@ -401,7 +502,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * German subtype active should not become "Hand".
      */
     private suspend fun isLowercaseWordInAnotherLanguage(lower: String, subtype: Subtype): Boolean {
-        val active = dictLangFor(subtype)
+        val active = dictLangFor(subtype) ?: return false
         for (lang in acceptedDictLangs(subtype)) {
             if (lang == active) continue
             if (lowerIndexForLang(lang).canonical[lower]?.first()?.isLowerCase() == true) return true
@@ -411,9 +512,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     /** True if [word] is a known dictionary word in any accepted language, or in the user dictionary. */
     private suspend fun isKnownWord(word: String, subtype: Subtype): Boolean {
-        val lower = word.lowercase()
         for (lang in acceptedDictLangs(subtype)) {
-            if (lowerIndexForLang(lang).freq.containsKey(lower)) return true
+            val index = lowerIndexForLang(lang)
+            if (index.freq.containsKey(index.fold(word))) return true
         }
         return isInUserDictionary(word, subtype)
     }
@@ -442,7 +543,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         allowDistance2: Boolean,
         contextScore: (cand: String) -> Double = { 0.0 },
     ): List<String> {
-        val lower = word.lowercase()
+        val lower = index.fold(word)
         val e1 = edits1(lower, index.alphabet)
         val known = e1.filterTo(LinkedHashSet()) { index.freq.containsKey(it) }
         if (known.isEmpty() && allowDistance2) {
@@ -516,11 +617,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): List<SuggestionCandidate> {
         if (!prefs.suggestion.nextWordPrediction.get()) return emptyList()
         if (!isAtPredictionPoint(content.textBeforeSelection, content.phantomSpacePending)) return emptyList()
-        val prevWord = previousWordOf(content) ?: return emptyList()
+        val index = lowerIndexFor(subtype)
+        val prevWord = previousWordOf(content, index) ?: return emptyList()
         val bigrams = bigramsFor(subtype)
         if (bigrams.isEmpty()) return emptyList()
 
-        val index = lowerIndexFor(subtype)
         val prefix = "$prevWord "
         // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
         // ("the", "and", "of") that carries no information about what the user is writing.
@@ -571,10 +672,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): TouchCorrections? {
         val points = TouchTrace.pointsFor(word) ?: return null
         val layout = KeyProximityInfo.snapshot() ?: return null
+        val prefixIndex = prefixIndexFor(subtype) ?: return null
         val beam = TouchBeamDecoder.decode(
             points = points,
             typed = word,
-            index = prefixIndexFor(subtype),
+            index = prefixIndex,
             layout = layout,
             maxResults = BEAM_CANDIDATES,
         )
@@ -591,7 +693,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             costs[candidate.word] = candidate.cost
         }
         // Length-changing slips (a letter dropped or typed twice) are invisible to the beam.
-        val lower = word.lowercase()
+        val lower = index.fold(word)
         for (edit in edits1(lower, index.alphabet)) {
             if (edit.length == lower.length) continue
             val freq = index.freq[edit] ?: continue
@@ -728,6 +830,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Don't flag single characters, numbers or words containing digits.
         if (trimmed.length <= 1 || trimmed.any { it.isDigit() }) return SpellingResult.validWord()
         val index = lowerIndexFor(subtype)
+        // No dictionary for this language (#265): say nothing rather than underline every word of it.
+        if (index.freq.isEmpty()) return SpellingResult.unspecified()
         // Known in the active language OR any other configured keyboard language (multilingual, #190).
         if (isKnownWord(trimmed, subtype)) {
             return SpellingResult.validWord()
@@ -735,7 +839,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Unknown word → typo, offering the closest dictionary words as corrections (may be empty).
         // Re-rank by the previous word (Tier 2 bigram context) when available.
         val prevWord = precedingWords.lastOrNull()
-            ?.takeLastWhile { it.isLetter() || it == '\'' }?.lowercase()?.takeIf { it.isNotEmpty() }
+            ?.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
+            ?.let { index.fold(it) }?.takeIf { it.isNotEmpty() }
         val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
         val suggestions = correctionsFor(
             trimmed, index, maxSuggestionCount, allowDistance2 = true,
@@ -769,6 +874,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // strip), then the user's personal dictionary, then the main dictionary ranked by frequency.
         val out = LinkedHashMap<String, SuggestionCandidate>()
         val index = lowerIndexFor(subtype)
+        val autoCorrectOn = prefs.suggestion.autoCorrect.get()
 
         // German umlaut/ß restoration (issue #219) runs FIRST, so the correct spelling leads the strip and a
         // non-word is auto-committed even when the ASCII form prefixes real words (fur→für). Because this
@@ -776,13 +882,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // substitution never wins over the umlaut form (Madchen→Mädchen, not Machen). Dictionary-driven, so
         // only real words are produced; a validly-typed word is never swapped, only offered (schon→schön).
         // ß-restoration is off for Swiss German (de-CH), which has no ß.
-        if (prefs.suggestion.autoCorrect.get() && isGermanSubtype(subtype) && word.length >= 3) {
+        if (autoCorrectOn && isGermanSubtype(subtype) && word.length >= 3) {
             val allowSharpS = !subtype.primaryLocale.country.equals("CH", ignoreCase = true)
             val variants = germanSpellingVariants(word, allowSharpS).mapNotNull { v ->
                 index.freq[v.lowercase()]?.let { f -> Triple(v, f, index.canonical[v.lowercase()] ?: v) }
             }
             if (variants.isNotEmpty()) {
-                val prevWord = previousWordOf(content)
+                val prevWord = previousWordOf(content, index)
                 val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
                 val ctx = bigramContextScore(prevWord, bigrams)
                 val ranked = variants.sortedByDescending { (v, f, _) -> ln((f + 1).toDouble()) + ctx(v.lowercase()) }
@@ -808,16 +914,55 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
+        // Arabic-script spelling restoration (issue #265). The base keyboard carries only ا, ي and the
+        // plain letters; أ إ آ ى ک ی hide behind long presses, so people type the bare form and the review
+        // that prompted this asked for exactly that to be fixed — "correcting text when there's a writing
+        // error", where in Arabic most writing errors *are* these variants.
+        //
+        // Because the dictionary was filtered through Hunspell, it holds only correct spellings: ان is not
+        // in it, أن is. So a typed form whose fold key exists but whose own spelling does not is a spelling
+        // to restore, and every dictionary word sharing that key is a legitimate reading — أن، إن، آن all
+        // go in the strip, most frequent first, rather than the keyboard guessing which was meant.
+        //
+        // Runs before the correction path below, which never sees these words: isKnownWord answers on the
+        // fold key, so ان counts as known and is not treated as a typo. That is the intended reading — it
+        // is a recognisable word with a preferred spelling, not a mistake.
+        // Length 2 rather than the 3 the German and apostrophe blocks use: Arabic's most-written words are
+        // two letters (من، في، ما), and فى → في is exactly the fix being asked for.
+        if (DictFold.hasNonTrivialFold(index.lang) && word.length >= 2) {
+            val key = index.fold(word)
+            val forms = index.formsOf(key)
+            if (forms.isNotEmpty() && forms.none { it == word }) {
+                // Keep the typed spelling tappable and left-most so the restoration can be bypassed (#150).
+                out[TYPED_WORD_KEY + key] = WordSuggestionCandidate(
+                    text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
+                )
+                forms.forEachIndexed { i, form ->
+                    val freq = index.freq[key] ?: 0
+                    out.putIfAbsent(
+                        form.lowercase(),
+                        WordSuggestionCandidate(
+                            text = cased(form),
+                            confidence = freq / 255.0,
+                            isEligibleForAutoCommit =
+                                i == 0 && autoCorrectOn && freq >= AUTOCORRECT_MIN_FREQ,
+                            sourceProvider = this,
+                        ),
+                    )
+                }
+            }
+        }
+
         // Apostrophe/contraction restoration (issue #212): "whats"→"what's", "cant"→"can't", "dont"→"don't",
         // "im"→"I'm". The apostrophe-less form is often itself a dictionary word (so the generic correction
         // path below skips it), yet the apostrophe form is usually what was meant and more common. Offered at
         // the front of the strip as a tap suggestion — not auto-committed, so a genuine "ill"/"well" is never
         // silently turned into "i'll"/"we'll".
-        if (prefs.suggestion.autoCorrect.get() && word.length >= 3 && !word.contains('\'')) {
-            val typedFreq = index.freq[word.lowercase()] ?: 0
+        if (autoCorrectOn && word.length >= 3 && !word.contains('\'')) {
+            val typedFreq = index.freq[index.fold(word)] ?: 0
             (1 until word.length)
                 .map { word.substring(0, it) + "'" + word.substring(it) }
-                .mapNotNull { v -> index.freq[v.lowercase()]?.let { f -> f to (index.canonical[v.lowercase()] ?: v) } }
+                .mapNotNull { v -> index.fold(v).let { k -> index.freq[k]?.let { f -> f to (index.canonical[k] ?: v) } } }
                 .filter { it.first > typedFreq }
                 .sortedByDescending { it.first }
                 .forEach { (freq, canonical) ->
@@ -832,8 +977,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     )
                 }
         }
-
-        val autoCorrectOn = prefs.suggestion.autoCorrect.get()
 
         // Noun capitalisation (issue #242 follow-up). German capitalises every noun, but typing one
         // lowercase produced no correction at all: the case-folded index reports "haus" as a known word, so
@@ -851,7 +994,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         if (autoCorrectOn && prefs.correction.autoCapitalization.get() &&
             word.length >= 2 && word.none { it.isUpperCase() }
         ) {
-            val lower = word.lowercase()
+            val lower = index.fold(word)
             val canonical = index.canonical[lower]
             if (canonical != null && canonical.first().isUpperCase() && canonical != word &&
                 !isLowercaseWordInAnotherLanguage(lower, subtype)
@@ -894,9 +1037,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
 
         val data = wordDataFor(subtype)
-        for (dictWord in rankedWordsFor(subtype)) {
+        // Prefix matching happens on the stored spellings, so an Arabic writer typing ان would find
+        // nothing — أنا does not start with it. Where the fold merges spellings, compare the precomputed
+        // fold keys instead; everywhere else this is the same comparison it always was.
+        val ranked = rankedWordsFor(subtype)
+        val rankedKeys = rankedFoldKeysFor(subtype)
+        val foldedPrefix = rankedKeys?.let { index.fold(word) }
+        for ((rank, dictWord) in ranked.withIndex()) {
             if (out.size >= completionCap) break
-            if (!dictWord.startsWith(word, ignoreCase = true)) continue
+            val matches = if (rankedKeys != null) {
+                rankedKeys[rank].startsWith(foldedPrefix!!)
+            } else {
+                dictWord.startsWith(word, ignoreCase = true)
+            }
+            if (!matches) continue
             val text = cased(dictWord)
             out.putIfAbsent(
                 text.lowercase(),
@@ -916,7 +1070,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // swap in silently). #190: never correct a word valid in any configured language.
         if (autoCorrectOn && !isKnown && word.length >= 3) {
             val hadCandidatesBefore = out.isNotEmpty() // German restoration and/or prefix completions
-            val prevWord = previousWordOf(content)
+            val prevWord = previousWordOf(content, index)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
             val ctx = bigramContextScore(prevWord, bigrams)
             // Preferred: decode from the actual tap positions (issue #242). Falls back to edit distance
@@ -957,7 +1111,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
             corrections.forEachIndexed { i, correction ->
                 val text = cased(correction)
-                val freq = index.freq[correction.lowercase()] ?: 0
+                val freq = index.freq[index.fold(correction)] ?: 0
                 out.putIfAbsent(
                     text.lowercase(),
                     WordSuggestionCandidate(
