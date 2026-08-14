@@ -28,12 +28,17 @@ data class GlideDict(
 /**
  * Catalog of downloadable glide-typing dictionaries, mirrored on the project's own GitHub release ([REL])
  * — same hosting pattern as the on-device Whisper models ([dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog]).
- * English ships bundled in the APK ([ime/dict/en.json]) and is always available; every other language is
- * downloaded on demand when its subtype is selected.
+ * English and German ship bundled in the APK ([ime/dict/en.json], [ime/dict/de.json]) and are always
+ * available; every other language is downloaded on demand when its subtype is selected.
  *
- * The dictionaries are generated with `tools/glide-dict/generate.py` from the Leipzig Corpora Collection
- * (Universität Leipzig), which preserves correct casing and diacritics. To (re-)host, upload the generated
- * `<lang>.json` files as assets of the release named below and paste each script-printed catalog line here.
+ * Despite the name, this is not only glide typing's word list: word suggestions, autocorrect and the spell
+ * checker all read the same file, and a language without one gets none of them (issue #265).
+ *
+ * The dictionaries are generated with `tools/glide-dict/generate.py`, mainly from the OPUS OpenSubtitles
+ * frequency lists with Hunspell restoring casing and filtering corpus noise; see
+ * `tools/glide-dict/ATTRIBUTION.md` for the per-language sources and licences. To (re-)host, upload the
+ * generated `<lang>.json` files as assets of the release named below and paste each script-printed catalog
+ * line here. Both the size and the SHA-256 are enforced on download, so a stale line fails closed.
  */
 object GlideDictionaryCatalog {
     /** Project-hosted release holding the dictionary files. Single re-point for hosting. */
@@ -44,7 +49,9 @@ object GlideDictionaryCatalog {
      * (English is intentionally absent — it is bundled in the APK.)
      */
     val all: List<GlideDict> = listOf(
+        GlideDict("ar", "Arabic · العربية", "$REL/ar.json", 1430039, "1c176e07231f709f9da675dfa4a3d07335ee600f8f7ce62838404882b1d0f821"),
         GlideDict("bg", "Bulgarian · Български", "$REL/bg.json", 1794600, "fa3b438e428427e2ff6597d3db50593e3e045415099b520d203ef5e934e7f623"),
+        GlideDict("bn", "Bengali · বাংলা", "$REL/bn.json", 1403181, "bd906038fceb03b186cb41fdfa08234978b5ce63549aa1f548146f0263b8ea54"),
         GlideDict("ca", "Catalan · Català", "$REL/ca.json", 908503, "57069d83f312c608db9c3b19aec4389acd5ea7b5583b63f57f8c51de9c5263fb"),
         GlideDict("cs", "Czech · Čeština", "$REL/cs.json", 1293084, "b7b0d4aea071aebe22ce9c4284ba205816ee0bac7d006ce42f8a84dd21c28112"),
         GlideDict("da", "Danish · Dansk", "$REL/da.json", 1207132, "fd916d4861b70a2f2317d0c788f07d452100c64e1cc64defc59d71c8ea511f2a"),
@@ -53,10 +60,13 @@ object GlideDictionaryCatalog {
         GlideDict("es", "Spanish · Español", "$REL/es.json", 1035140, "1cf52f26081615cca70a498a3ea80ca8010cac0d51f30a1d8a35abcdf92ce126"),
         GlideDict("et", "Estonian · Eesti", "$REL/et.json", 1238171, "1a845ba70014ffcad5dbe3e6a90fe35e3b35cdf566ca82776d450887cdf27039"),
         GlideDict("fa", "Persian · فارسی", "$REL/fa.json", 480596, "ff83c40921458dc42b026a75e37cb1cd97070bd6841f1f8e1d5d111d38ffe923"),
+        GlideDict("fi", "Finnish · Suomi", "$REL/fi.json", 1610146, "3fd2a7195277c31c623fa5d9f065c2060254ba19d540834b94368f3b8b2b82dc"),
         GlideDict("fr", "French · Français", "$REL/fr.json", 1082093, "ee78ad4cad149c62895fa5f285b638c16bc7ceb908a5d4e7f22ec825a2473ec3"),
+        GlideDict("hi", "Hindi · हिन्दी", "$REL/hi.json", 1118922, "3be30bf5d19891ac83ce2d62117f7542e1a2a513f42517bf9cbfce22b4d3a228"),
         GlideDict("hr", "Croatian · Hrvatski", "$REL/hr.json", 1128369, "1f01c211d27380a96564816a41b920980c8447dc30934e3b606422cc381347dd"),
         GlideDict("hu", "Hungarian · Magyar", "$REL/hu.json", 1419533, "d62b994d0f850214cd5d9ef16ff99aa9ac17150fe6bf5ec49b81821b3d3326ad"),
         GlideDict("hy", "Armenian · Հայերեն", "$REL/hy.json", 64323, "a8500f822bf91af56d93661c40cb45c9bbd38913d5d4152d0feeab3a9c8b0201"),
+        GlideDict("id", "Indonesian · Bahasa Indonesia", "$REL/id.json", 499241, "9fd442604662cf2351eba0b9a0464fef65a763cb35eed3dd6ad9085d9a576a37"),
         GlideDict("is", "Icelandic · Íslenska", "$REL/is.json", 912647, "ccc6201d291df83ea2dbf87b9137e4e88ccd8363b99e402dd2e47cc01385218e"),
         GlideDict("it", "Italian · Italiano", "$REL/it.json", 1112321, "69e2c34c64e9ce3d695768016f959f997bebed482950ff4e11ed7d6eba70ea4a"),
         GlideDict("he", "Hebrew · עברית", "$REL/he.json", 1064193, "b4c9f080f4433a9ecb6e7d9bd5152c2a3020d20ba0ea25cead9ca5462f9bbe74"),
@@ -74,8 +84,10 @@ object GlideDictionaryCatalog {
         GlideDict("sl", "Slovenian · Slovenščina", "$REL/sl.json", 1180769, "6fb51d930483c98a55610241aa9e7ef6f75e46e28e1498740716226f23e11fd4"),
         GlideDict("sr", "Serbian · Српски", "$REL/sr.json", 161220, "e765337efc1edf8cc726562e7bbaba54208f648179753b762effa3d3d82bdf6e"),
         GlideDict("sv", "Swedish · Svenska", "$REL/sv.json", 1178943, "95dd05108d3035cd7dd501accd4dfa60e20da4ae11adf8f082941fab277f7cee"),
+        GlideDict("ta", "Tamil · தமிழ்", "$REL/ta.json", 1072095, "296a6f62074adf02e94b5e130fbc22a6c5e7b349e6faf4c0c46774dffbb27596"),
         GlideDict("tr", "Turkish · Türkçe", "$REL/tr.json", 1397305, "7ac6fae177496d60b12b7f5fb82c14b4da0e0e83bfcd62233edf36fd292d1b28"),
         GlideDict("uk", "Ukrainian · Українська", "$REL/uk.json", 1260704, "d4e66ac5e00cc76418de3391c0abea68fe03f2653fc0d6e508fd38d7cd7cbe73"),
+        GlideDict("ur", "Urdu · اردو", "$REL/ur.json", 1906015, "9a4370dcf094e35d7fe45f690cf00db4a76430b4b084ff25824a417806fab1b1"),
         GlideDict("vi", "Vietnamese · Tiếng Việt", "$REL/vi.json", 202701, "3f1669574875da6491db36f6fe291d31827de4de95e0b4658be271b82db57c07"),
     )
 

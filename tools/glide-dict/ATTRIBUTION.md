@@ -8,21 +8,30 @@ themselves (they are consulted only at build time to decide casing and to filter
 ## Frequencies
 - **OPUS — OpenSubtitles** frequency lists (<https://opus.nlpl.eu>). J. Tiedemann, *Parallel Data, Tools
   and Interfaces in OPUS* (LREC 2012). Freely available for use.
+- **Leipzig Corpora Collection** (<https://wortschatz-leipzig.de>), the `*-words.txt` word counts inside the
+  downloadable packages, **CC BY** — © Universität Leipzig / Sächsische Akademie der Wissenschaften / InfAI;
+  Goldhahn, Eckart & Quasthoff, *Building Large Monolingual Dictionaries at the Leipzig Corpora Collection*
+  (LREC 2012). Merged with OPUS by relative share for `hi`, `ta` and `ur`, where OpenSubtitles alone yields
+  too few words to correct against. (The same collection is the sole source of the bigram files.)
 
 ## Casing / spell-filter (build-time only)
 - **Hunspell** (<https://hunspell.github.io>) — the `hunspell` binary.
-- **wooorm/dictionaries** (<https://github.com/wooorm/dictionaries>) — Hunspell dictionaries, one per
-  language, each under its own licence. Licences of the dictionaries actually used:
+- **wooorm/dictionaries** (<https://github.com/wooorm/dictionaries>) and
+  **LibreOffice/dictionaries** (<https://github.com/LibreOffice/dictionaries>) — Hunspell dictionaries, one
+  per language, each under its own licence. wooorm covers neither Arabic nor any Indic language, so those
+  come from LibreOffice. Licences of the dictionaries actually used:
 
   | Licence | Languages |
   |---|---|
   | MIT / BSD-3-Clause / Apache-2.0 | ka, tr, lt, ru, fa, nl |
-  | MPL-2.0 / LGPL-2.1 / LGPL-3.0 | fr, sv, et, lv |
-  | Multi-licensed incl. LGPL/MPL (permissive option taken) | bg, ca, da, el, es, hr, hu, hy, pl, pt, ro, sk, sl, sr |
-  | GPL-2.0 / GPL-3.0 (used under the "word list = factual data" rationale, with attribution) | cs, eo, nb, nn, vi, it, uk |
+  | MPL-2.0 / LGPL-2.1 / LGPL-3.0 | fr, sv, et, lv, id (LO) |
+  | Multi-licensed incl. LGPL/MPL (permissive option taken) | bg, ca, da, el, es, hr, hu, hy, pl, pt, ro, sk, sl, sr, ar (LO, GPL-2.0/LGPL-2.1/MPL-1.1 — ayaspell), ta (LO, MPL) |
+  | GPL-2.0 / GPL-3.0 (used under the "word list = factual data" rationale, with attribution) | cs, eo, nb, nn, vi, it, uk, bn (LO), hi (LO) |
 
-- Languages whose only Hunspell dictionary is **AGPL-3.0** (`he`) or **CC-BY-SA-3.0** (`is`) are built
-  **without Hunspell** (`--no-hunspell`, OPUS frequencies only) so no copyleft content is derived.
+- Languages built **without Hunspell** (`--no-hunspell`, frequencies only), because the only dictionary
+  carries a licence we cannot use — `he` AGPL-3.0, `is` CC-BY-SA-3.0, `fi` Voikko/GPL — or because none
+  exists at all (`ur`). The cost is not only cosmetic: with nothing to filter corpus noise, misspelled
+  variants stay in the word list, where the engine can no longer correct them.
 
 ## Bundled languages
 English (`en`, from the upstream FlorisBoard dictionary) and German (`de`) ship inside the app; all other

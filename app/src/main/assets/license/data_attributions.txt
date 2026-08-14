@@ -15,8 +15,11 @@ Derived from the OPUS OpenSubtitles frequency lists.
   - OPUS — the open parallel corpus: https://opus.nlpl.eu
   - Please cite: P. Lison & J. Tiedemann (2016), "OpenSubtitles2016: Extracting
     Large Parallel Corpora from Movie and TV Subtitles", LREC 2016.
-Casing was restored using the Hunspell dictionaries (github.com/wooorm/dictionaries)
-as a build-time oracle only; their word lists are not redistributed.
+For Hindi, Tamil and Urdu, where subtitle data alone is too sparse, word counts from
+the Leipzig Corpora Collection (CC BY, cited in section 2 below) are merged in.
+Casing was restored, and corpus noise filtered out, using Hunspell dictionaries as a
+build-time oracle only (github.com/wooorm/dictionaries and, for Arabic and the Indic
+languages, github.com/LibreOffice/dictionaries); their word lists are not redistributed.
 
 
 2. Bigram (word-pair) frequency data for autocorrect context (Tier 2)
