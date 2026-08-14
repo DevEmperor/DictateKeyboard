@@ -736,6 +736,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="action__apply">Van toepassing zijn</string>
     <string name="action__back_up">Back-up</string>
     <string name="action__cancel">Annuleren</string>
+    <string name="action__clear">Wissen</string>
     <string name="action__create">Creëren</string>
     <string name="action__default">Standaard</string>
     <string name="action__delete">Verwijderen</string>

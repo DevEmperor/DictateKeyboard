@@ -42,7 +42,6 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     override val providerId = "org.florisboard.nlp.providers.emoji"
 
     private val prefs by FlorisPreferenceStore
-    private val lettersRegex = "^[A-Za-z]*$".toRegex()
 
     private val cachedEmojiMappings = Cache.Builder<FlorisLocale, EmojiDataBySkinTone>().build()
 
@@ -52,7 +51,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     override suspend fun preload(subtype: Subtype) {
         subtype.locales().forEach { locale ->
             cachedEmojiMappings.get(locale) {
-                EmojiData.get(context, locale).bySkinTone
+                EmojiData.annotated(context, locale).bySkinTone
             }
         }
     }
@@ -127,7 +126,9 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             return null
         }
         val emojiPartialName = composingText.substring(prefix.length)
-        if (!lettersRegex.matches(emojiPartialName)) {
+        // Letters of any script, not `[A-Za-z]`: that spelling rejected every accented or non-Latin
+        // query outright, so ":csók", ":grün" and ":улыбка" never reached the matcher (issue #274).
+        if (!emojiPartialName.all { it.isLetter() }) {
             return null
         }
         return emojiPartialName

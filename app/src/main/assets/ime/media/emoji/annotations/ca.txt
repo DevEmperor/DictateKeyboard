@@ -1,0 +1,1913 @@
+😀;cara molt somrient;alegre|animada|animat|cara|dents|feliç|rialla|somrient|somriure|ulls
+😃;cara molt somrient amb els ulls ben oberts;boca oberta|cara|dents|feliç|genial|sí!|somriure|somriure obert
+😄;cara amb rialla i els ulls somrients;boca|boca oberta|cara|feliç|rialla|riure|somriure|ull
+😁;cara molt somrient amb els ulls alegres;cara|dents|feliç|gran somriure|simpàtic|simpàtica|somrient|ull|ulls
+😆;cara somrient amb els ulls tancats fortament;boca|cara|feliç|ha ha ha!|oberta|petar-se de riure|satisfet|somrient|somriure|ulls tancats
+😅;cara somrient amb una gota de suor;cara|emocionada|emocionat|estrès|estressada|estressat|nerviós|nerviosa|obert|somriure|suor|suor freda
+🤣;cara que es peta de riure;cara|divertit|ha ha ha|hilarant|llàgrima|molt de riure|mort de riure|partir-se|petar-se de riure|pixar-se|plorar de riure|riure
+😂;cara amb llàgrimes d’alegria;alegria|cara|divertida|divertit|feliç|llàgrimes|molt de riure|mort de riure|plorant|riure
+🙂;cara que somriu una mica;cara|feliç|somrient|somriure|somriure tímid
+🙃;cara de cap per avall;cara|ha ha ha|revés|somriure
+🫠;cara que es desfà;acalorada|acalorat|calor|desaparèixer|desfer-se|dissoldre’s|fondre’s|haha|líquid|sarcasme|vergonya
+😉;cara que pica l’ullet;cara|flirteig|picar l’ullet|provocar|sexy|trencacors|ullet|ullets
+😊;cara somrient amb els ulls alegres;cara|content|contenta|galtes vermelles|rubor|satisfet|satisfeta|somrient|somriure|ull
+😇;cara somrient amb aurèola;angelet|aurèola|Bíblia|conte de fades|fantasia|halo|innocent|pacífic|pacífica|sant|santa|somrient
+🥰;cara somrient amb 3 cors;amor|aventura|cara|cara somrient amb cors|cor|cors|enamorada|enamorament|enamorat|estimar moltíssim|somriure|t’estimo
+😍;cara somrient amb ulls en forma de cor;amor|amorós|amorosa|aventura|cara|cor|cors|cors als ulls|enamorada|enamorat|romàntic|romàntica|sentiments|somriure|t’estimo|tendra|tendre|ulls|ulls en forma de cor
+🤩;cara amb estrelles als ulls;apa!|cara|emocionada|emocionat|estrella|somrient|somriure|ulls|ulls amb estrelles
+😘;cara que llança un petó;adorables|amor|aventura amorosa|bon dia|bona nit|cara|cor|et trobo a faltar|flirteig|muac|petó|petonejar-se|petons i abraçades|t’estimo
+😗;cara que fa un petó;amor|cara|cita|flirteig|petó|petonejar-se|petons|petons i abraçades|t’estimo
+☺️;cara somrient;cara|feliç|relaxada|relaxat|somrient|somriure
+😚;cara que fa un petó amb els ulls tancats;cara|cita|flirteig|petó|petonejar-se|petons|rubor|t’estimo|ulls tancats
+😙;cara que fa un petó amb els ulls alegres;amor|cara|cita|flirteig|nit|petó|petons|somriure|t’estimo|ull|ulls alegres|ulls tancats
+🥲;cara somrient amb una llàgrima;agraïment|alleujament|cara|emoció|llàgrima|orgull|smiley|somriure
+😋;cara que assaboreix menjar;afamada|afamat|assaborir|cara|cara d’assaborir un menjar deliciós|deliciós|deliciosa|gustós|gustosa|llengua|llépol|menjar|nyam|somrient|somriure
+😛;cara que fa llengotes;cara|dolç|dolça|excel·lent|festa|genial|guai|llengota|llengua|llengua fora
+😜;cara que fa llengotes i pica l’ullet;cara|diversió|divertida|divertit|estrafolari|estrafolària|festa|llengota|llengua|ull|ullet
+🤪;cara de bogeria;boig|boja|ull|ull gran|ull petit|ulls
+😝;cara amb els ulls tancats i la llengua fora;cara|cara que fa llengotes i amb els ulls tancats|Déu meu|ecs|el que sigui|fastigós|horrible|llengota|llengua|només es viu una vegada|sabor|ull|ulls tancats
+🤑;cara de diners;boca|cara|diners|llengua|pagat|ulls
+🤗;cara amb abraçada;abraçada|abraçant|cara|mans
+🤭;cara amb la mà sobre la boca;adonar-se sobtadament|ai!|riure ximplet|secret|sorpresa|tapant-se la boca|tenir el riure ximplet|ups|xoc
+🫢;cara amb ulls oberts i mà sobre la boca;al·lucinar|callar|cara amb els ulls oberts i la mà sobre la boca|estupefacció|incredulitat|increïble|por|sorpresa|vergonya
+🫣;cara tapada que espia amb un ull;amagar-se|espiar|fascinació|mirada|mirar|por|timidesa|vergonya
+🤫;cara que demana silenci;callar|psit|pst|silenci
+🤔;cara pensativa;barbeta|cara|considerar|curiós|curiosa|mentó|mmm|pensant|pensatiu|pensativa|reflexionant|reflexionar
+🫡;cara que saluda;bona sort|exèrcit|ordre|respecte|salutació|sí|sí, senyor|sí, senyora|val
+🤐;cara amb cremallera a la boca;boca|boca tancada|callada|callat|cara|cremallera|mantenir la boca tancada|secret|silenci
+🤨;cara amb una cella aixecada;desaprovació|desconfiada|desconfiat|escèptic|escèptica|escepticisme|incredulitat|sorpresa
+😐;cara neutra;bé|cara|cara seriosa|en blanc|gelós|gelosa|inexpressiu|inexpressiva|infeliç|neutral|no és divertit|no és per riure|no impressiona
+😑;cara inexpressiva;bàsic|bàsica|cara|cara de pòquer|Déu meu|dolent|dolenta|gelós|gelosa|incòmoda|incòmode|inexpressió|inexpressiu|inexpressiva|infeliç|mort|morta|no|oh!|què coi
+😶;cara sense boca;callada|callat|cara|en blanc|inexpressiu|inexpressiva|secret|sense boca|sense paraules|silenci|silenciós|silenciosa
+🫥;cara amb línia de punts;amagar-se|depressió|desaparèixer|introversió|invisible|m’és igual
+😶‍🌫️;cara entre núvols;cap als núvols|distracció|distret
+😏;cara somrient amb superioritat;broma|cap|cara|cara que somriu amb superioritat|celles|fatxenda|flirteig|mirada impúdica|murri|múrria|riure per sota el nas|somriure astut|somriure de manera afectada|superioritat
+😒;cara de desaprovació;avorrida|avorriment|avorrit|cara|desaprovació|emprenyada|emprenyat|estrany|estranya|gelós|gelosa|infeliç|negació amb el cap|no és divertit|que coi
+🙄;cara amb els ulls en blanc;cara|el que sigui|en blanc|ulls|ulls en blanc
+😬;cara que fa una ganyota amb les dents;cara|dentista|dents|estrany|ganyota|res|somrient
+😮‍💨;cara que exhala;alleujament|exhalar|exhaust|xiulet|xiuxiueig
+🤥;cara de mentider;cara|mentider|nas|Pinotxo
+🫨;cara que tremola;cara|caram|pànic|sorpresa|terratrèmol|tremolar|tremolor|vibració|vibrar|xoc
+🙂‍↔️;cap que tremola horitzontalment;negació|no|tremolar|tremolor
+🙂‍↕️;cap que tremola verticalment;afirmació|sí|tremolar|tremolor
+😌;cara d’alleujament;alleugerida|alleugerit|alleujada|alleujament|alleujat|calma|cara|zen
+😔;cara desanimada;abatuda|avorrida|avorrit|cara|decebuda|decebut|desanimada|desanimat|pensatiu|pensativa|perduda|perdut|que malament|trist|trista
+😪;cara de son;cansada|cansat|cara|dormint|dormir|plorant|son|trist|trista
+🤤;cara que baveja;bava|bavejant|cara
+😴;cara de dormir;badall|badallar|becaina|bona nit|cansada|cansat|cara|cara de son|dormint|dormir|el que sigui|hora de dormir|llit|son|zz|zzz
+🫩;cara ullerosa;cansament|cara que fa ulleres|esgotament|son
+😷;cara amb mascareta;cara|cara amb màscara|dentista|dermatòleg|dermatòloga|doctor|doctora|Dr.|Dra.|gèrmens|malalt|malalta|malaltia|màscara|mascareta|medecina|refredat
+🤒;cara amb termòmetre;cara|malalt|malalta|malaltia|termòmetre
+🤕;cara amb el cap embenat;ai|bena|cap embenat|cara|ferida|ferit|lesió
+🤢;cara de nàusees;cara|mareig|marejada|marejat|nàusea|repugnant|vomitar
+🤮;cara que vomita;cara|fastigós|marejada|marejat|repugnant|vòmit|vomitar
+🤧;cara que esternuda;cara|constipat|esternudant|esternut|febre|malalt|malalta|mocs|salut
+🥵;cara de calor;calor|cara vermella|cop de calor|febre|febril|fogots|insolació|suada|suat|suor
+🥶;cara de fred;blau|blava|cara blava|caramell|caramells|congelació|dents fredes|fred|gel|gelada|gelat|glaçada|glaçat
+🥴;cara de mareig;beguda|begut|boca ondulada|embriac|embriaga|intoxicada|intoxicat|mareig|marejada|marejat|ulls desiguals
+😵;cara marejada;cansada|cansat|cara|malalt|malalta|marejada|marejat|mort|morta
+😵‍💫;cara amb ulls d’espiral;confós|confosa|Déu meu|espiral|hipnosi|mareig|marejada|marejat|ostres|problema|vaja
+🤯;cap que explota;estupefacta|estupefacte|explotar|impossible|impressionada|impressionat|sorprès|sorpresa
+🤠;cara amb barret de vaquer;barret|cara|cowboy|vaquer|vaquera
+🥳;cara festiva;aniversari|barret|celebració|celebrar|emocionada|emocionat|espanta-sogres|festa|hurra|per molts anys
+🥸;cara disfressada;bigoti|cara|celles|disfressa|incògnit|mostatxo|nas|persona|ulleres
+😎;cara somrient amb ulleres de sol;cara|estil|fatxenda|genial|impressionant|platja|relaxada|relaxat|sí|sol|somriure|ulleres|victòria
+🤓;cara de setciències;aplicada|aplicat|cara|estudiar|estudiós|estudiosa|intel·ligent|rata de biblioteca|setciències|ulleres
+🧐;cara amb monocle;amb classe|estirada|estirat|monocle|ric|rica
+😕;cara de confusió;arrufada|cara|confós|confosa|confusió|ho sento|m’és igual|ni idea|no ho sé|trist|trista|um um
+🫤;cara amb la boca en diagonal;cara d’escepticisme|cara d’inseguretat|cara de decepció|confós|confusió|decepcionat|dubte|dubtós|escèptic|frustració|frustrat|insegur|m’és igual|meh
+😟;cara de preocupació;cara|estrès|nerviós|nerviosa|nervis|preocupació|preocupada|preocupat|sorprès|sorpresa
+🙁;cara una mica arrufada;cara|emmurriada|emmurriat|empipada|empipat|trist|trista
+☹️;cara arrufada;cara|emmurriada|emmurriat|empipada|empipat|enfadada|enfadat|trist|trista
+😮;cara amb la boca oberta;apa!|boca|bocabadada|bocabadat|cara|estupefacta|estupefacte|increïble|no et crec|oberta|sorprès|sorpresa
+😯;cara de sorpresa;atònit|atònita|cara|Déu meu|èpic|oh!|sorprès|sorpresa
+😲;cara estupefacta;cara|Déu meu!|escandalitzada|escandalitzat|estupefacta|estupefacte|I ara!|que coi!|totalment
+😳;cara enrojolada;apa!|avergonyida|avergonyit|cara|culpa|enrojolada|galtes vermelles|impressionada|impressionat|incòmoda|incòmode|incredulitat|vergonya
+🫪;cara distorsionada;ansietat|inflamat|pànic|sorprès|vulnerable|xoc
+🥺;cara de súplica;cara|compassió|per què no|pietat|si us plau|sispli|súplica|suplicar|trist|trista|ulls de cadell|ulls grans
+🥹;cara que s’aguanta les llàgrimes;admiració|agraït|avergonyit|dolor|emoció|enuig|gratitud|llàgrimes d’alegria|oh|orgull|resistir|sentiments|si us plau
+😦;cara emmurriada amb la boca oberta;agafar per sorpresa|apa!|arrufada|boca|cara|emmurriada|esgarrifada|esgarrifat|espantada|espantat|oberta|què|sorpresa
+😧;cara d’angoixa;angoixa|angoixada|angoixat|cara|espantada|espantat|estressada|estressat|infeliç|sopresa
+😨;cara de por;atemorida|atemorit|espantada|espantat|por|preocupada|preocupat
+😰;cara amb la boca oberta i suor freda;boca|boca oberta|cara|espantada|espantat|nerviós|nerviosa|nervis|suor|suor freda
+😥;cara de decepció, però alleujada;alleujament|cara|cara de decepció|complicada|complicat|decebuda|decebut|decepció|preocupada|preocupat|suor|uf
+😢;cara que plora;cara|infeliç|llàgrimes|plorant|plorar|sentiments|terrible|trist|trista|trobar a faltar
+😭;cara que plora desconsoladament;bramar|cara|infeliç|llàgrima|llàgrimes de desconsol|plorant|plorar|sanglot
+😱;cara que crida de por;cara|crit de por|espantada|espantat|Munch|pànic|por|sorprès|sorpresa|temorós|temorosa|terror
+😖;cara de frustració;cara|confós|confosa|encongir-se|frustració|frustrada|frustrat|furiós|furiosa|molest|molesta|sentiments|torbada|torbat|trist|trista
+😣;cara de perseverança;cara|centrar-se|concentració|concentrar-se|mal de cap|perseverança|perseverar
+😞;cara de decepció;abatuda|abatut|cara|culpa|decebuda|decebut|decepció|fracàs|infeliç|perdedor|perdedora|terrible|trist|trista
+😓;cara amb suor freda;cara|espantada|espantat|mal de cap|nerviós|nerviosa|sentiments|suor|suor freda|trist|trista|uf
+😩;cara d’esgotament;afamada|afamat|cansada|cansat|cara|esgotada|esgotament|esgotat|fracàs|infeliç|no|plorant|sentiments|somnolent|somnolenta|trist|trista
+😫;cara de cansament;becaina|cansada|cansament|cansat|cara|sentiments|trist|trista
+🥱;cara que badalla;adormida|adormit|avorriment|badall|becaina|bona nit|cansada|cansament|cansat|cara|zzz
+😤;cara que treu fum del nas;cara|enfadada|enfadat|enrabiada|enrabiat|fum|fúria|furiós|furiosa|infeliç|ira|nas|sentiments
+😡;cara enutjada;cara|cara vermella|enutjada|enutjat|furiós|furiosa|ira|irritant|ràbia|sentiments|vermell
+😠;cara enfadada;cara|culpa|empipada|empipat|enfadada|enfadat|frustrada|frustrat|furiós|furiosa|infeliç|ira
+🤬;cara amb símbols a la boca;censurar|emprenyada|emprenyat|furiós|furiosa|insults|maledicció|paraulotes|renecs
+😈;cara somrient amb banyes;banyes|cara|conte de fades|dimoni|fantasia|foscor|malvat|somriure
+👿;cara enfadada amb banyes;cara|conte de fades|diable|dimoni|dimoniet|entremaliada|entremaliat|fantasia|malvada|malvat|trapella
+💀;crani;calavera|cara|conte|estic mort|estic morta|ha ha ha|monstre|mort|morta|només es viu una vegada
+☠️;crani amb ossos;calavera|cara|crani|monstre|mort|os|ossos
+💩;caca amb ulls;caca|cara|còmic|fa pudor|fer pudor|merda|monstre|pudent|pudenta|ulls
+🤡;cara de pallasso;cara|pallassa|pallasso
+👹;ogre japonès;cara|conte|conte de fades|criatura|dimoni|esgarrifós|fantasia|japonès|màscara|monstre|ogre
+👺;follet japonès;cara|conte|conte de fades|criatura|enfadat|fantasia|follet|japonès|malvat|màscara|monstre
+👻;fantasma;agitada|agitat|aparició|buu|cara|cara de fantasma|conte|conte de fades|criatura|esgarrifós|fantasia|Halloween|monstre|ximple
+👽;alienígena;cara|conte de fades|criatura|espai|extraterrestre|fantasia|monstre|ovni
+👾;monstre alienígena;àlien|alienígena|conte de fades|extraterrestre|fantasia|invasors de l’espai|joc|jocs|jugador|monstre|ovni|pixelat
+🤖;robot;cara|cara de robot|monstre
+😺;gat somrient amb la boca oberta;animal|boca|cara|gat|oberta|somrient|somriure
+😸;gat somrient amb els ulls alegres;animal|cara|gat|somrient|somriure obert|ulls alegres
+😹;gat amb llàgrimes d’alegria;alegria|animal|cara|fart de riure|gat|llàgrimes|riure
+😻;gat somrient amb cors als ulls;amor|cara|cor|gat|somriure|ulls
+😼;gat amb somriure irònic;animal|cara|gat|ironia|irònic|irònica|somriure
+😽;gat que fa un petó;animal|cara|gat|gat que fa un petó amb els ulls tancats|petó|ull|ulls tancats
+🙀;gat sorprès;animal|cara|cara de gat espantat|espantat|gat|oh|por|sorprès|sorpresa
+😿;gat que plora;animal|cara|cara de gat que plora|gat|llàgrima|llàgrimes|plorar|trist|trista
+😾;gat enutjat;animal|cara|cara de gat enutjat|enuig|gat|gat enfadat
+🙈;mona que no mira;animal|avergonyida|cara|Déu meu|espantada|gest|malvada|mona|no|no mira|oblit|prohibida|secret|ulls tapats
+🙉;mona que no escolta;animal|escoltar|gest|massa informació|mona|no|orelles|orelles tapades|prohibit|pst|secret
+🙊;mona que no parla;animal|boca tapada|gest|mona|no|parlar|prohibit|secret|sigil|silenci|ui!
+💌;carta d’amor;amor|aventura amorosa|carta|correu|Sant Valentí
+💘;cor amb fletxa;adorables|amor|aventura|cita|cor|Cupido|emoció|fletxa|Sant Valentí|t’estimo
+💝;cor amb un llaç;abraçades i petons|aniversari|cor|emoció|llaç|petons|Sant Valentí|t’estimo
+💖;cor espurnejant;bona nit|cor|emocionada|emocionat|espurna|espurneig|petons|petons i abraçades|t’estimo
+💗;cor que creix;abraçades i petons|batec|cor|creixent|emoció|emocionada|emocionat|muac|petons|t’estimo
+💓;cor que batega;amor|batec|bategant|càrdio|cor|cor rosa que batega|emoció|t’estimo|vibrant
+💞;cors que giren;adorable|aniversari|cor|cors|emoció|gir|girant
+💕;dos cors;amor|aniversari|cita|cor|emoció|petons|t’estimo
+💟;cor decoratiu;cor|cor blanc|cor blanc sobre fons morat|cor morat
+❣️;exclamació en forma de cor;cor|exclamació|exclamació en forma de cor gruixuda|puntuació|signe
+💔;cor trencat;cor|desolada|desolat|emoció|solitari|solitària|trencar|trencat|trist|trista
+❤️‍🔥;cor en flames;amor|cor|cor sagrat|foc|luxúria
+❤️‍🩹;cor embenat;cor|millor|millora|recuperació|salut
+❤️;cor vermell;amor|cor|emoció
+🩷;cor rosa;adorable|agradar|amor|bonic|cor|especial|rosa
+🧡;cor taronja;taronja
+💛;cor groc;amor|cardíac|cardíaca|cor|emoció|groc|t’estimo
+💚;cor verd;amor|cor|emoció|romàntic|romàntica|t’estimo|verd
+💙;cor blau;amor|aventura amorosa|cor|emoció|t’estimo
+🩵;cor blau cel;amor|blau cel|bonic|cian|cor|turquesa
+💜;cor lila;amor|cor|el millor|emoció|la millor|t’estimo
+🤎;cor marró;cor|marró
+🖤;cor negre;cor|dolent|dolenta|malvada|malvat|negre
+🩶;cor gris;amor|bonic|cor|gris|plata|platejat
+🤍;cor blanc;blanc|cor
+💋;marca de petó;aventura amorosa|cita|cor|emoció|fer un petó|llavis|marca|petó|sexy
+💯;100 punts;100|cent punts|cert|clarament|estic d’acord|punts|puntuació|puntuació perfecta|sens dubte|sí|veritat
+💢;símbol d’enuig;còmic|enfadada|enfadat|enuig|furiós|furiosa|malhumorada|malhumorat|símbol d’ira
+🫯;núvol de baralla;baralla|batalla|debat|desacord|discussió|lluita
+💥;col·lisió;bomba|bum|col·lisionar|còmic|esclat|explotar
+💫;mareig;brillant|còmic|estel fugaç|estrella|estrelles|marejada|marejat
+💦;gotes de suor;aigua|còmic|entrenament|entrenar-se|esquitxada|gota|gotes|suor
+💨;sortir corrent;còmic|córrer|he de marxar|núvol|pet|pressa|ràpid
+🕳️;forat;
+💬;bafarada de parlar;bafarada|còmic|conversa|diàleg|discurs|escrivint|missatge|parla|parlar|sms|text
+👁️‍🗨️;ull dins d’una bafarada;bafarada|testimoni|ull|vist
+🗨️;bafarada de parlar cap a l’esquerra;bafarada|diàleg|esquerra|parla|parlar
+🗯️;bafarada d’enuig cap a la dreta;bafarada|dreta|empipada|empipat|enfadada|enfadat|furiós|furiosa|parlar
+💭;bafarada de pensar;adonar-se|bafarada|còmic|decisions|dibuix animat|idea|il·lusió|invenció|invent|pensament|pensaments|pensant|pensar|preguntar-se|somni|somnis
+💤;zzz;adormida|adormit|bona nit|cansada|cansat|còmic|dormir|son|zz
+👋;mà que saluda;adéu|ei|ens veiem|fins aviat|fins després|he de marxar|hola|mà|me’n vaig|que hi ets?|saludant|saludar|salutació
+🤚;revers de la mà;alçada|mà|revers
+🖐️;mà oberta;alto|dits|dits oberts|mà|mà aixecada amb els dits oberts|mà amb els dits oberts
+✋;mà aixecada;alto|cinc|mà|xoca-la
+🖖;salutació vulcaniana;dit|mà|mans|Spock|Star Trek|vulcanià
+🫱;mà cap a la dreta;a la dreta|agafar|dreta|encaixada de mans|encaixar|mà
+🫲;mà cap a l’esquerra;a l’esquerra|agafar|encaixada de mans|encaixar|esquerra|mà
+🫳;mà amb el palmell cap avall;abaixa|agafar|deixar anar|descarta|mà|no|rebutja|recollir
+🫴;mà amb el palmell cap amunt;acosta’t|aixeca|digue’m|dona’m|mà|no ho sé|ofereix|vine
+🫷;mà que empeny cap a l’esquerra;aturar|bloquejar|empènyer|esperar|esquerra|prou|rebutjar|xoca|xocar
+🫸;mà que empeny cap a la dreta;aturar|bloqueja|bloquejar|dreta|empènyer|esperar|prou|rebutjar
+👌;senyal d’aprovació amb la mà;acceptació|d’acord|entesos|genial|impressionant|mà|mà d’acceptació|ok|perfecte|senyal d’aprovació
+🤌;dits junts;dits|gest de la mà|interrogació|italià|paciència|què dius|relaxació|sarcàstic
+🤏;mà que pessiga;dits|petit|quantitat petita|una mica
+✌️;senyal de la victòria;mà|pau|senyal|V|victòria
+🤞;dits creuats;creuar|creuats|dit|dits|mà|sort
+🫰;mà amb el dit índex i el polze creuats;<3|amor|car|cor|diners|fregar els dits|mà|petar els dits
+🤟;gest de t’estimo;dits|mà|t’estimo|tres dits
+🤘;dits en forma de banyes;banyes|dits|genial|rock|signe de les banyes
+🤙;mà que representa una trucada;mà|trucada|trucar
+👈;dit índex que apunta cap a l’esquerra;assenyalar|dit|esquerra|índex|mà
+👉;dit índex que apunta cap a la dreta;assenyalar|dit|dreta|índex|mà
+👆;dit índex que apunta cap amunt;amunt|assenyalar|dit índex|mà
+🖕;dit del cor;dit|dit cor|dit del mig|dit mitger|fer la figa|mà
+👇;dit índex que apunta cap avall;avall|índex
+☝️;índex que apunta cap amunt;això|amunt|assenyalar|dit|índex|mà
+🫵;índex que assenyala l’espectador;apuntar|assenyalar|dit|mà|tocar|tu
+👍;polze cap amunt;+1|amunt|bé|brutal|d’acord|entesos|fantàstic|genial|guai|m’agrada|mà|polze|sí
+👎;polze cap avall;-1|avall|aversió|malament|no|no m’agrada|polze
+✊;puny alçat;mà|puny|puny tancat|solidaritat
+👊;cop de puny;a prop|artells|col·lega|cop|copejar|correcte|d’acord|mà|puny|totalment
+🤛;puny dret;cap a l’esquerra|esquerre|puny|puny cap a l’esquerra|salutació
+🤜;puny esquerre;cap a la dreta|dret|puny|puny cap a la dreta|salutació
+👏;mans que aplaudeixen;aplaudiment|aplaudint|aprovació|ben fet|bona feina|enhorabona|entusiasme|fantàstic|genial|mans|picar de mans|visca!
+🙌;mans enlaire;celebració|gest|hurra|lloança|mans aixecades
+🫶;mans que formen un cor;<3|amor|cor|mans|t’estimo
+👐;mans obertes;abraçada|cos|mà|mans de jazz|oberta|virar bruscament
+🤲;mans juntes amb els palmells cap amunt;desig|duà|mans en forma còncava|pregar|pregària
+🤝;encaixada de mans;acord|encaixada|mans|salutació|tracte
+🙏;mans ajuntades;apreciar|demanar|gest|gràcies|mà|mans|mans en oració|oració|pregar|si us plau
+✍️;mà que escriu;escriure|mà
+💅;esmalt d’ungles;cosmètics|cura|esmalt|manicura|maquillatge|s’ha acabat|ungla
+🤳;autofoto;càmera|foto|mòbil|selfie
+💪;bíceps tensat;aixecament de peses|bíceps|braç|còmic|cos|culturista|flexió de bíceps|forçuda|forçut|fort|forta|múscul|musculada|musculat
+🦾;pròtesi de braç;accessibilitat|braç mecànic|pròtesi
+🦿;pròtesi de cama;accessibilitat|cama mecànica|cama ortopèdica|pròtesi
+🦵;cama;cama doblegada|cama flexionada|extremitat|genoll|peu|puntada de peu
+🦶;peu;peus|puntada de peu|trepitjada|turmell
+👂;orella;cos|escoltar|oïda|orelles|sentir|so
+🦻;orella amb audiòfon;accessibilitat|problema d’audició
+👃;nas;cos|nassos|olor|olors|pudor|tafaner|tafanera
+🧠;cervell;coneixement|intel·ligent|llest|saviesa
+🫀;cor;anatomia|batec|cardiologia|cor real|òrgan|pols|vermell
+🫁;pulmons;exhalació|inhalació|òrgan|pulmó|respiració|respirar
+🦷;dent;blanc|dentista|dents|perlí|perlina
+🦴;os;esquelet|gos|os de la sort|ossos
+👀;ulls;cara|cos|Déu meu|mirant|mirar|ull|ullada|veure|vista
+👁️;ull;cos
+👅;llengua;cos|llepada|llepar|xarrupada|xarrupar
+👄;boca;bellesa|cos|fer un petó|llavis|petó|pintallavis
+🫦;boca que es mossega el llavi;flirteig|incomoditat|llavi|mossegada|nervis|petó|pintallavis|por|preocupació|preocupat|sexy
+👶;nadó;bebè|bebès|embarassada|jove|nounat
+🧒;criatura;gènere neutre|infant|jove|nen
+👦;noi;jove|nen
+👧;noia;filla|jove|nena|trenes|ulls brillants
+🧑;persona;adult|gènere neutre
+👱;persona: cabells rossos;cabells|cabells curts rossos|cabells rossos|cara|home|persona|persona amb cabells curts i rossos|persona amb cabells rossos|persona amb els cabells rossos|persona rossa|ros
+👨;home;amic|masculí|noi|xicot
+🧔;persona: barba;barba|barbut|bigoti|bigotut|persona|persona amb barba
+🧔‍♂️;home: barba;barba|home
+🧔‍♀️;dona: barba;barba|dona
+👨‍🦰;home: cabells vermells;amic|cabells vermells|home|masculí|noi|xicot
+👨‍🦱;home: cabells arrissats;amic|cabells arrissats|home|masculí|noi|xicot
+👨‍🦳;home: cabells blancs;amic|cabells blancs|home|masculí|noi|xicot
+👨‍🦲;home: calvície;amic|calvície|home|masculí|noi|xicot
+👩;dona;adulta|castanya|femení|senyora|tall de cabells
+👩‍🦰;dona: cabells vermells;adulta|cabells vermells|castanya|dona|femení|senyora|tall de cabells
+🧑‍🦰;persona: cabells vermells;adult|cabells vermells|gènere neutre|persona
+👩‍🦱;dona: cabells arrissats;adulta|cabells arrissats|castanya|dona|femení|senyora|tall de cabells
+🧑‍🦱;persona: cabells arrissats;adult|cabells arrissats|gènere neutre|persona
+👩‍🦳;dona: cabells blancs;adulta|cabells blancs|castanya|dona|femení|senyora|tall de cabells
+🧑‍🦳;persona: cabells blancs;adult|cabells blancs|gènere neutre|persona
+👩‍🦲;dona: calvície;adulta|calvície|castanya|dona|femení|senyora|tall de cabells
+🧑‍🦲;persona: calvície;adult|calvície|gènere neutre|persona
+👱‍♀️;dona: cabell ros;cabell|dona|rossa
+👱‍♂️;home: cabell ros;cabell|home|ros
+🧓;persona gran;adult|gènere neutre|gran|persona|persona anciana
+👴;home gran;ancià|avi|calb|gran|home|iaio|perdent cabell|savi|vell
+👵;dona gran;anciana|àvia|cabell gris|dona|gran|iaia|monyo|sàvia|vella
+🙍;persona emmurriada;afectada|cara trista|disgustada|dona emmurriada|emmurriament|gest|molesta|persona|persona arrufada|trista
+🙍‍♂️;home emmurriat;arrufar|arrufat|celles|disgustat|gest|masculí
+🙍‍♀️;dona emmurriada;arrufar|celles|femení|gest
+🙎;persona enutjada;arrufar les celles|cara d’enfadada|dona|dona empipada|enfadada|enuig|ganyota|gest|morros|persona
+🙎‍♂️;home enutjat;enuig|gest|home|home fent morros|masculí
+🙎‍♀️;dona enutjada;dona|enuig|femení|gest
+🙅;gest de negació;barrar el pas|braços|dona|dona fent el gest de negació|gest|mà|negació|no|persona|persona fent el gest de negació|prohibit
+🙅‍♂️;home amb gest de negació;gest|home|mà|no|prohibit
+🙅‍♀️;dona amb gest de negació;dona|gest|mà|prohibit
+🙆;gest d’aprovació;aprovació|braços amunt|cara|d’acord|exercici|mans al cap|persona|persona amb els braços amunt|persona amb les mans amunt|persona fent el gest d’aprovació
+🙆‍♂️;home amb gest d’aprovació;acord|d’acord|Déu meu|exercici|gest|mà|mans al cap|OK
+🙆‍♀️;dona amb gest d’aprovació;acord|gest|mà|OK
+💁;persona amb mà inclinada cap amunt;ajuda|és igual|flexió|informació|mà|moviment dels cabells|persona|persona amb la mà inclinada cap amunt|sarcasme|sarcàstica|xafarderia
+💁‍♂️;home amb mà inclinada cap amunt;ajuda|home|inclinant|informació|mà|moviment del cabell|sarcasme|sarcàstic|xafarderia
+💁‍♀️;dona amb mà inclinada cap amunt;ajuda|dona|informació|mà
+🙋;persona amb la mà aixecada;dona que aixeca la mà|gest|ho sé|jo|mà|mà aixecada|noia que aixeca la mà|persona|persona contenta que aixeca la mà|persona que aixeca la mà|pregunta|somriure
+🙋‍♂️;home amb la mà aixecada;gest|ho sé|home|jo|mà|mans|masculí|persona amb la mà aixecada|pregunta
+🙋‍♀️;dona amb la mà aixecada;dona|femení|gest|mà
+🧏;persona sorda;accessibilitat|oïda|sentir|sord|sorda
+🧏‍♂️;home sord;home|sord
+🧏‍♀️;dona sorda;dona|sorda
+🙇;persona capcota;capbaix|capcot|demanar perdó|disculpa|gest|inclinació|meditació|meditar|perdó|persona|persona capbaixa|persona fent una reverència|persona inclinant-se|reverència
+🙇‍♂️;home capcot;disculpa|gest|home|reverència
+🙇‍♀️;dona capcota;disculpa|dona|gest|meditació|meditar|perdó|reverència
+🤦;persona amb la mà a la cara;cara|exasperació|frustració|incredulitat|mà a la cara|persona|vergonya
+🤦‍♂️;home amb la mà a la cara;cara|exasperació|home|incredulitat|mà|mà a la cara|persona
+🤦‍♀️;dona amb la mà a la cara;cara|dona|exasperació|incredulitat|mà|mà a la cara|perplexitat|persona
+🤷;persona que arronsa les espatlles;arronsar|desconeixement|dubte|espatlles|ignorància|indiferència|ni idea|no ho sé|persona|persona arronsant les espatlles|persona dubtant|persona que dubta
+🤷‍♂️;home que arronsa les espatlles;dubte|encongir-se d’espatlles|home|ignorància|indiferència|ni idea|no ho sé|noi|noi que arronsa les espatlles|persona|persona que arronsa les espatlles|potser
+🤷‍♀️;dona que arronsa les espatlles;cara|dona|dubte|encongir les espatlles|ignorància|indiferència|ni idea|no ho sé|noia|noia que arronsa les espatlles|persona|persona que arronsa les espatlles|potser
+🧑‍⚕️;professional de la salut;doctor|infermer|salut|terapeuta
+👨‍⚕️;home professional de la salut;assistència sanitària|doctor|home|infermer|metge|salut|terapeuta
+👩‍⚕️;dona professional de la salut;assistència sanitària|doctora|dona|infermera|metgessa|professional de la salut|salut|terapeuta
+🧑‍🎓;estudiant;graduat
+👨‍🎓;noi estudiant;estudiant|graduació|graduat|home|masculí
+👩‍🎓;noia estudiant;dona|estudiant|femení|graduació|graduada
+🧑‍🏫;professor;instructor|mestre
+👨‍🏫;home professor;home|instructor|masculí|mestre|professor
+👩‍🏫;professora;dona|femení|instructora|mestra
+🧑‍⚖️;jutge;balança
+👨‍⚖️;home jutge;balança|home|justícia|jutge|masculí
+👩‍⚖️;jutgessa;balança|dona|femení|justícia
+🧑‍🌾;agricultor;granger|jardiner|llaurador|pagès|ramader|rural
+👨‍🌾;home pagès;agricultor|granger|home|jardiner|llaurador|masculí|pagès|ramader|rural
+👩‍🌾;agricultora;dona|femení|grangera|jardinera|llauradora|pagesa|ramadera|rural
+🧑‍🍳;cuiner;xef
+👨‍🍳;home cuiner;cuiner|home|masculí|xef
+👩‍🍳;cuinera;dona|femení|xef
+🧑‍🔧;mecànic;electricista|lampista
+👨‍🔧;home mecànic;comerciant|electricista|home|lampista|masculí|mecànic|operari
+👩‍🔧;mecànica;comerciant|dona|electricista|femení|lampista|operària
+🧑‍🏭;operari;fàbrica|industrial|treballador
+👨‍🏭;home operari;fàbrica|industrial|muntatge|operari|treballador
+👩‍🏭;operària;dona|fàbrica|industrial|muntatge|treballadora
+🧑‍💼;treballador d’oficina;arquitecte|negoci|oficina
+👨‍💼;home treballador d’oficina;arquitecte|director|gerent|negoci|oficina|oficinista|treballador d’oficina
+👩‍💼;treballadora d’oficina;arquitecta|directora|dona|gerent|negoci|oficina|oficinista
+🧑‍🔬;científic;biòleg|enginyer|físic|químic
+👨‍🔬;home científic;biòleg|científic|enginyer|físic|home|matemàtic|químic
+👩‍🔬;científica;biòloga|enginyera|física|matemàtica|química
+🧑‍💻;tecnòleg;desenvolupador|inventor|programador
+👨‍💻;home tecnòleg;codificador|desenvolupador|home|inventor|ordinador|programador|programari|tecnòleg
+👩‍💻;tecnòloga;codificadora|desenvolupadora|dona|inventora|ordinador|programadora|programari
+🧑‍🎤;cantant;actor|estrella|presentador
+👨‍🎤;cantant home;actor|artista|cantant|estrella|estrella del rock|presentador
+👩‍🎤;cantant dona;actriu|artista|cantant|dona|estrella|estrella del rock|presentadora
+🧑‍🎨;artista;paleta
+👨‍🎨;artista home;artista|home|masculí|paleta|pintor
+👩‍🎨;artista dona;artista|dona|femení|paleta|pintora
+🧑‍✈️;pilot;avió
+👨‍✈️;home pilot;avió|home|masculí|pilot
+👩‍✈️;dona pilot;avió|dona|femení|pilot
+🧑‍🚀;astronauta;coet
+👨‍🚀;home astronauta;astronauta|coet|espai|home
+👩‍🚀;dona astronauta;astronauta|coet|dona|espai
+🧑‍🚒;bomber;bombera|camió de bombers
+👨‍🚒;home bomber;bomber|camió de bombers|home|masculí
+👩‍🚒;bombera;camió de bombers|dona|femení
+👮;agent de policia;agent|detenir|gorra de policia|home|persona|poli|policia|seguretat
+👮‍♂️;agent de policia home;agent|home|masculí|policia
+👮‍♀️;agent de policia dona;agent|agent de policia|arrest|detenir|dona|femení|gorra de policia|persona|poli|policia
+🕵️;detectiu;espia|home|investigador
+🕵️‍♂️;detectiu home;detectiu|espia|home|investigador
+🕵️‍♀️;detectiu dona;detectiu|dona|espia|investigadora
+💂;guarda;barret|Londres|palau de Buckingham
+💂‍♂️;home guarda;guarda|home|masculí
+💂‍♀️;dona guarda;casc|dona|femení|guarda|londres|palau de buckingham
+🥷;ninja;assassí|guerrer|lluitador|ocult|persona|sigilós
+👷;treballador de la construcció;casc|casc de protecció|casc de seguretat|construcció|feina|home|obra|paleta|persona|treballador
+👷‍♂️;home paleta;construcció|home|masculí|treballador
+👷‍♀️;dona paleta;casc|casc de protecció|casc de seguretat|construcció|dona|feina|femení|obra|paleta|treballadora|treballadora de la construcció
+🫅;persona amb corona;monarca|noble|noblesa|rei|reial|reialesa|reina
+🤴;príncep;reial|reialesa
+👸;princesa;conte|conte de fades|corona|fades|fantasia|reial|reialesa|reina
+👳;persona amb turbant;home|home amb turbant|persona|turbant
+👳‍♂️;home amb turbant;home|masculí|turbant
+👳‍♀️;dona amb turbant;dona|femení|turbant
+👲;home amb barret xinès;barret|gorra|guapimao|home|xinès
+🧕;dona amb el cap cobert;cap cobert|dona amb mocador de cap|hijab|mantellina|mocador de cap
+🤵;persona amb esmòquing;elegant|esmòquing|formal|home|nuvi|persona
+🤵‍♂️;home amb esmòquing;esmòquing|home
+🤵‍♀️;dona amb esmòquing;dona|esmòquing
+👰;persona amb vel;casament|núvia|núvia amb vel|persona|vel
+👰‍♂️;home amb vel;home|vel
+👰‍♀️;dona amb vel;dona|vel
+🤰;dona embarassada;dona|embaràs|embarassada|prenyada
+🫃;home embarassat;embaràs|embarassat|menjar massa|panxa|prenyat
+🫄;persona embarassada;embaràs|embarassada|embarassat|menjar massa|panxa|prenyada|prenyat
+🤱;dona que alleta;alletar|lactància|lactant|nadó|pit
+👩‍🍼;dona que alleta un bebè;alimentar|alletar|amor|bebè|biberó|dona|mama|mare
+👨‍🍼;home que alleta un bebè;alimentar|alletar|amor|bebè|biberó|home|pare
+🧑‍🍼;persona que alleta un bebè;alimentar|alletar|bebè|biberó|dona|home|persona
+👼;angelet;ales|àngel|bebè|conte de fades|església|fantasia
+🎅;pare Noel;celebració|conte de fades|fantasia|Nadal|Noel|pare|Santa Claus
+🤶;mare Noel;àvia|còfia|mare|Nadal|Noel|senyora
+🧑‍🎄;Noel;festes|Nadal|persona|santa claus
+🦸;superheroi;bé|bo|heroi|heroïna|persona|persona amb superpoders|superheroïna|superman|superpoder|superpoders
+🦸‍♂️;home superheroi;bo|heroi|home|superpoder
+🦸‍♀️;dona superheroïna;bo|dona|heroïna|superpoder
+🦹;superdolent;criminal|dolent|malvat|persona|persona dolenta|persona malvada|superpoder|superpoders
+🦹‍♂️;home superdolent;criminal|dolent|home|malvat|superpoder
+🦹‍♀️;dona superdolenta;criminal|dolenta|dona|malvada|superpoder
+🧙;mag;barret de punta|bruixa|bruixot|conjur|encantament|fantasia|fetiller|fetillera|personatge|personatge fantàstic|sortilegi
+🧙‍♂️;home mag;bruixot|fetiller
+🧙‍♀️;dona maga;bruixa|fetillera
+🧚;fada;ales|conte|conte de fades|fantasia|follet|mitologia|Oberó|personatge|personatge fantàstic|Puck|Titània
+🧚‍♂️;home fada;Oberó|Puck
+🧚‍♀️;dona fada;Titània
+🧛;vampir;dents|disfressa|Dràcula|esgarrifós|fantasia|halloween|mort vivent|morta vivent|personatge|personatge fantàstic|sang|supernatural|ullals|xuclar la sang
+🧛‍♂️;home vampir;Dràcula|mort vivent
+🧛‍♀️;dona vampir;morta vivent|vampiressa
+🧜;persona sirena;cant de sirena|conte de fades|criatura|criatura del mar|fantasia|folklore|mitologia|personatge|personatge fantàstic|sirena|trident|tritó
+🧜‍♂️;home sirena;conte de fades|criatura|criatura del mar|fantasia|folklore|mar|mitologia|neptú|personatge fantàstic|poseidó|trident|tritó
+🧜‍♀️;sirena;cant de sirena|conte de fades|criatura|criatura del mar|fantasia|folklore|mar|mitologia|personatge fantàstic|trident
+🧝;elf;el senyor dels anells|encantament|fantasia|folklore|màgic|mitologia|orelles de punta|personatge|personatge fantàstic
+🧝‍♂️;home elf;màgic|màgica
+🧝‍♀️;dona elfa;màgic|màgica
+🧞;geni;desitjos|fantasia|fregar la llàntia|geni blau|geni de la llàntia|personatge|personatge fantàstic
+🧞‍♂️;home geni;geni
+🧞‍♀️;dona geni;geni
+🧟;zombi;esgarrifós|halloween|horror|mort|mort vivent|por|terror|terrorífic|walking dead
+🧟‍♂️;home zombi;mort vivent
+🧟‍♀️;dona zombi;morta vivent
+🧌;trol;conte|fades|fantasia|monstre
+🫈;criatura peluda;bigfoot|bosc|gegant|ieti|monstre|pèl|pelut|sasquatch
+💆;persona que rep un massatge al cap;bellesa|calmar|cara|mal de cap|massatge|massatge de cap|massatge facial|persona|persona que rep un massatge facial|relax|relaxació|relaxant|saló|spa|tensió
+💆‍♂️;home que rep un massatge al cap;calmar|cara|home|home que rep un massatge|mal de cap|masculí|massatge|massatge facial a un home|relax|relaxant|saló|tensió
+💆‍♀️;dona que rep un massatge al cap;cara|dona|dona que rep un massatge|femení|massatge|massatge facial a una dona|relax|relaxant
+💇;persona que es talla els cabells;bellesa|cabells|cara|perruqueria|persona|persona a la perruqueria|tallada de cabells|tallar els cabells|tallat de cabells
+💇‍♂️;home que es talla els cabells;barber|bellesa|cabells|home|masculí|perruqueria|saló|tall de cabell|tallada|tallada de cabells|tallat de cabells
+💇‍♀️;dona que es talla els cabells;cabells|dona|femení|tallada|tallada de cabells
+🚶;persona que camina;caminada|caminar|home|home que camina|noi|passeig|passejada|passejar|passejar xino-xano|persona|persona caminant|vianant
+🚶‍♂️;home que camina;caminada|home|home caminant|masculí|passejada
+🚶‍♀️;dona que camina;caminada|caminar|deambular|dona|dona caminant|femení|gambada|passejada|passejar xino-xano|vianant
+🚶‍➡️;persona que camina: que mira a la dreta;a|caminada|caminar|dreta|home|home que camina|la|mira|noi|passeig|passejada|passejar|passejar xino-xano|persona|persona caminant|persona que camina|que|vianant
+🚶‍♀️‍➡️;dona que camina: que mira a la dreta;a|caminada|caminar|deambular|dona|dona caminant|dona que camina|dreta|femení|gambada|la|mira|passejada|passejar xino-xano|que|vianant
+🚶‍♂️‍➡️;home que camina: que mira a la dreta;a|caminada|dreta|home|home caminant|home que camina|la|masculí|mira|passejada|que
+🧍;persona dreta;dempeus|dret|dreta
+🧍‍♂️;home dret;dempeus|dret|home
+🧍‍♀️;dona dreta;dempeus|dona|dreta
+🧎;persona agenollada;agenollada|agenollat|de genolls|genoll|genolls
+🧎‍♂️;home agenollat;agenollat|de genolls|home
+🧎‍♀️;dona agenollada;agenollada|de genolls|dona
+🧎‍➡️;persona agenollada: que mira a la dreta;a|agenollada|agenollat|de genolls|dreta|genoll|genolls|la|mira|persona agenollada|que
+🧎‍♀️‍➡️;dona agenollada: que mira a la dreta;a|agenollada|de genolls|dona|dreta|la|mira|que
+🧎‍♂️‍➡️;home agenollat: que mira a la dreta;a|agenollat|de genolls|dreta|home|la|mira|que
+🧑‍🦯;persona amb un bastó per a invidents;accessibilitat|invident
+🧑‍🦯‍➡️;persona amb un bastó per a invidents: que mira a la dreta;a|accessibilitat|dreta|invident|la|mira|persona amb un bastó per a invidents|que
+👨‍🦯;home amb un bastó per a invidents;accessibilitat|cec|home|home amb un bastó per a cecs|invident
+👨‍🦯‍➡️;home amb un bastó per a invidents: que mira a la dreta;a|accessibilitat|cec|dreta|home|home amb un bastó per a cecs|home amb un bastó per a invidents|invident|la|mira|que
+👩‍🦯;dona amb un bastó per a invidents;accessibilitat|cega|dona|invident
+👩‍🦯‍➡️;dona amb un bastó per a invidents: que mira a la dreta;a|accessibilitat|cega|dona|dona amb un bastó per a invidents|dreta|invident|la|mira|que
+🧑‍🦼;persona amb una cadira de rodes elèctrica;accessibilitat|cadira de rodes amb motor|cadira de rodes elèctrica|persona amb una cadira de rodes amb motor
+🧑‍🦼‍➡️;persona amb una cadira de rodes elèctrica: que mira a la dreta;a|accessibilitat|cadira de rodes amb motor|cadira de rodes elèctrica|dreta|la|mira|persona amb una cadira de rodes amb motor|persona amb una cadira de rodes elèctrica|que
+👨‍🦼;home amb una cadira de rodes elèctrica;accessibilitat|cadira de rodes|home|home amb una cadira de rodes amb motor|home amb una cadira de rodes motoritzada
+👨‍🦼‍➡️;home amb una cadira de rodes elèctrica: que mira a la dreta;a|accessibilitat|cadira de rodes|dreta|home|home amb una cadira de rodes amb motor|home amb una cadira de rodes elèctrica|home amb una cadira de rodes motoritzada|la|mira|que
+👩‍🦼;dona amb una cadira de rodes elèctrica;accessibilitat|cadira de rodes|dona|dona amb una cadira de rodes amb motor|dona amb una cadira de rodes motoritzada
+👩‍🦼‍➡️;dona amb una cadira de rodes elèctrica: que mira a la dreta;a|accessibilitat|cadira de rodes|dona|dona amb una cadira de rodes amb motor|dona amb una cadira de rodes elèctrica|dona amb una cadira de rodes motoritzada|dreta|la|mira|que
+🧑‍🦽;persona amb una cadira de rodes manual;accessibilitat|cadira de rodes manual
+🧑‍🦽‍➡️;persona amb una cadira de rodes manual: que mira a la dreta;a|accessibilitat|cadira de rodes manual|dreta|la|mira|persona amb una cadira de rodes manual|que
+👨‍🦽;home amb una cadira de rodes manual;accessibilitat|cadira de rodes|home
+👨‍🦽‍➡️;home amb una cadira de rodes manual: que mira a la dreta;a|accessibilitat|cadira de rodes|dreta|home|home amb una cadira de rodes manual|la|mira|que
+👩‍🦽;dona amb una cadira de rodes manual;accessibilitat|cadira de rodes|dona
+👩‍🦽‍➡️;dona amb una cadira de rodes manual: que mira a la dreta;a|accessibilitat|cadira de rodes|dona|dona amb una cadira de rodes manual|dreta|la|mira|que
+🏃;persona que corre;corredor|corredora|corrent|cursa|esport|marató|persona|pressa|ràpid|ràpida|velocitat
+🏃‍♂️;home que corre;córrer|cursa|home|marató
+🏃‍♀️;dona que corre;afanyar-se|corredora|corrent|córrer|cursa|de pressa|dona|marató|pressa|ràpid|velocitat
+🏃‍➡️;persona que corre: que mira a la dreta;a|corredor|corredora|corrent|cursa|dreta|esport|la|marató|mira|persona|persona que corre|pressa|que|ràpid|ràpida|velocitat
+🏃‍♀️‍➡️;dona que corre: que mira a la dreta;a|afanyar-se|corredora|corrent|córrer|cursa|de pressa|dona|dona que corre|dreta|la|marató|mira|pressa|que|ràpid|velocitat
+🏃‍♂️‍➡️;home que corre: que mira a la dreta;a|córrer|cursa|dreta|home|home que corre|la|marató|mira|que
+🧑‍🩰;ballarí de ballet;ballarí|ballet
+💃;dona que balla;ballant|ballarina|dansa|dona|elegant|festiva|flamenc|flamenca|ritme|salsa|talent|tango
+🕺;home que balla;ball|ballant|ballem|dansa|disco|elegant|flamenc|home|música|ritme|salsa|talent|tango
+🕴️;home de negocis que levita;home|home amb vestit de negocis que levita|levitar|negocis|vestit
+👯;persones que ballen disfressades;amigues|ballarines|bessones|conillet|conilletes|dansaires|dobles|dones|dones idèntiques|dues dones|dues noies|festa|germanes|noies idèntiques|orelles de conill|orelletes de conill|parella|persones
+👯‍♂️;homes que ballen disfressats;ballarí|ballarins amb orelles de conill|conillet|dos homes idèntics|festa|homes|millor amic
+👯‍♀️;dones que ballen disfressades;ballarina|ballarines amb orelles de conill|conilleta|festa
+🧖;persona a la sauna;bany de vapor|persona|persona en un bany de vapor|persona en una sauna|relaxació|sauna|spa|vapor
+🧖‍♂️;home a la sauna;sauna|vapor
+🧖‍♀️;dona a la sauna;sauna|vapor
+🧗;persona que escala;escalada|escalador|escaladora|escalar|esport|muntanya|persona|persona escalant
+🧗‍♂️;escalador;escalada|home
+🧗‍♀️;escaladora;dona|escalada
+🤺;persona que fa esgrima;esgrima|esgrimidor|esgrimidora|espasa|floret|sabre|tirador|tiradora
+🏇;curses de cavalls;cavall|cavall de cursa|cavalls|curses|equitació|genet|joquei|triple corona
+⛷️;esquiador;esquiadora|esquiar|neu
+🏂;surfista de neu;esport|esquí|esquiar|neu|surf de neu|surfista
+🏌️;golfista;birdie|bola|esport|golf|green|home que juga al golf|pal|persona que juga al golf|pilota|putt
+🏌️‍♂️;home que juga a golf;golf|golfista|home|masculí
+🏌️‍♀️;dona que juga a golf;dona|femení|golf|golfista|pilota
+🏄;persona que fa surf;esport|mar|onada|persona fent surf|platja|surf|surfista|taula
+🏄‍♂️;home que fa surf;home|masculí|surf|taula
+🏄‍♀️;dona que fa surf;dona|femení|oceà|ones|persona fent surf|platja|surf|surfera|taula
+🚣;persona que rema en una barca;aigua|barca de rems|bot|canoa|esport|llac|navegar|persona remant en una barca|pesca|remar|rems|riu
+🚣‍♂️;home que rema en una barca;barca|home|masculí|rem
+🚣‍♀️;dona que rema en una barca;barca|dona|dona que rema|femení|llac|navegar|pesca|rem|remant|remar|riu
+🏊;persona que neda;crol|esport|natació|nedador|nedar|persona nedant|triatló
+🏊‍♂️;home que neda;home|masculí|nedador|nedar
+🏊‍♀️;dona que neda;dona|femení|nedadora|nedar
+⛹️;persona amb una pilota;bàsquet|basquetbol|esport|esportista|home|home amb una pilota|home fent botar una pilota|jugador de bàsquet|jugador de basquetbol|persona|persona fent botar una pilota|pilota|tir lliure
+⛹️‍♂️;home amb una pilota;home|masculí|pilota
+⛹️‍♀️;dona amb una pilota;dona|femení|pilota
+🏋️;persona que aixeca pesos;aixecador|culturista|entrenament|esport|exercici|halter|halterofília|home que aixeca pesos|persona|persona que practica halterofília|pes
+🏋️‍♂️;home que aixeca pesos;aixecador|home|masculí|pes|pesos
+🏋️‍♀️;dona que aixeca pesos;aixecadora|dona|femení|pes|pesos
+🚴;ciclista;bici|bicicleta|ciclisme|esport|persona|persona amb bicicleta|persona en bicicleta|persona pedalejant
+🚴‍♂️;ciclista home;bicicleta|ciclisme|ciclista|home|masculí
+🚴‍♀️;ciclista dona;anar amb bicicleta|bicicleta|ciclisme|ciclista|dona|dona amb bicicleta|femení
+🚵;ciclista de muntanya;anar amb bicicleta|bicicleta|ciclisme|ciclisme de muntanya|ciclista|esport|muntanya|pedalejar|persona amb bicicleta de muntanya
+🚵‍♂️;ciclista de muntanya home;bicicleta|ciclista|home|muntanya
+🚵‍♀️;ciclista de muntanya dona;anar amb bicicleta|bici|bicicleta|ciclista|dona|esport|muntanya
+🤸;persona que fa la roda;esport|exercici|gimnasta|gimnàstica|persona|persona fent la roda|roda
+🤸‍♂️;home que fa la roda;emoció|esport|felicitat|fer la roda|gimnàstica|home|home actiu|home emocionat|noi|noi actiu|noi emocionat|noi que fa la roda|persona|roda|salt|tombarella
+🤸‍♀️;dona que fa la roda;dona|dona activa|dona emocionada|emoció|esport|felicitat|fer la roda|gimnàstica|noia|noia activa|noia emocionada|noia que fa la roda|persona|roda|salt|tombarella
+🤼;persones que lluiten;combat|enfrontament|esport|lluita grecoromana|lluita lliure|lluitadores|lluitadors|lluitar|persones|persones lluitant|quadrilàter
+🤼‍♂️;jugadors de lluita;combat|enfrontament|esport|homes|homes lluitant|homes que lluiten|lluita|lluita grecoromana|lluita lliure|lluitadors|lluitar|masculí|persones|quadrilàter
+🤼‍♀️;jugadores de lluita;combat|dona|dones|dones lluitant|dones que lluiten|enfrontament|esport|femení|lluita|lluita grecoromana|lluita lliure|lluitadores|lluitar|persona|persones|quadrilàter
+🤽;persona que juga a waterpolo;aigua|esport|esport aquàtic|esportista|persona|persona jugant a waterpolo|waterpolista|waterpolo
+🤽‍♂️;jugador de waterpolo;esport|esport aquàtic|esportista|home|home jugant a waterpolo|home que juga a waterpolo|masculí|persona|persona jugant a waterpolo|persona que juga a waterpolo|waterpolista|waterpolo
+🤽‍♀️;jugadora de waterpolo;dona|dona que juga a waterpolo|esport|esportista|femení|noia|noia que juga a waterpolo|persona|persona que juga a waterpolo|waterpolista|waterpolo
+🤾;persona que juga a handbol;esport|esportista|handbol|persona|persona jugant a handbol|pilota
+🤾‍♂️;jugador d’handbol;esport|handbol|home|masculí
+🤾‍♀️;jugadora d’handbol;dona|esport|femení|handbol|jugar a handbol|llançament|llançament de pilota|llançar|noia|persona|pilota
+🤹;persona que fa malabars;circ|home|home fent malabars|home que fa malabars|joc malabar|malabarisme|malabarista|malabars|multitasca|persona|persona fent malabars
+🤹‍♂️;malabarista home;home|home fent malabars|malabars|masculí|multitasca|noi|noi fent malabars|persona|persona fent malabars
+🤹‍♀️;malabarista dona;dona|femení|fer jocs malabars|malabars|multitasca
+🧘;persona en la posició de lotus;amb les cames creuades|cames creuades|ioga|iogui|lotus|meditació|pau|persona|persona en posició de lotus|persona meditant|relax|zen
+🧘‍♂️;home en la posició de lotus;ioga|lotus|meditació
+🧘‍♀️;dona en la posició de lotus;ioga|lotus|meditació
+🛀;persona a la banyera;bany|banyera|persona
+🛌;persona al llit;becaina|bona nit|cansada|cansat|dormir|hotel|llit|nit|persona|zz|zzz
+🧑‍🤝‍🧑;persones que s’agafen de la mà;agafar|agafar-se de la mà|mà|mans agafades|parella|persona
+👭;dones que s’agafen de la mà;agafar-se de la mà|amigues|amistat|cita|dones|gai|germana|germanes|lesbiana|lgbt|lgbtq|lgbtqia|mans agafades|millor amiga|millors amigues|noies|parella|parella de dones|queer
+👫;home i dona que s’agafen de la mà;agafar-se de la mà|amics|amigues|cita|dona|enamorats|flirteig|home|mans agafades|parella|tothom
+👬;homes que s’agafen de la mà;agafar-se de la mà|amic|amics|bessons|cita|els millors amics|enamorats|gai|Gèmini|home|lgbt|lgbtq|lgbtqia|mà|mans agafades|nois|parella|queer
+💏;petó;amor|aniversari|aventura|cita|cor|parella|romàntic
+👩‍❤️‍💋‍👨;petó: dona i home;amor|aniversari|aventura|cita|cor|dona|home|parella|petó|romàntic
+👨‍❤️‍💋‍👨;petó: home i home;amor|aniversari|aventura|cita|cor|home|parella|petó|romàntic
+👩‍❤️‍💋‍👩;petó: dona i dona;amor|aniversari|aventura|cita|cor|dona|parella|petó|romàntic
+💑;parella amb un cor;amor|aniversari|aventura amorosa|cor|parella|petó|romàntic
+👩‍❤️‍👨;parella amb un cor: dona i home;amor|aniversari|aventura amorosa|cor|dona|home|parella|parella amb un cor|petó|romàntic
+👨‍❤️‍👨;parella amb un cor: home i home;amor|aniversari|aventura amorosa|cor|home|parella|parella amb un cor|petó|romàntic
+👩‍❤️‍👩;parella amb un cor: dona i dona;amor|aniversari|aventura amorosa|cor|dona|parella|parella amb un cor|petó|romàntic
+👨‍👩‍👦;família: home, dona i noi;criatura|dona|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👩‍👧;família: home, dona i noia;criatura|dona|família|fill|filla|home|mare|nen|nena|noia|pare
+👨‍👩‍👧‍👦;família: home, dona, noia i noi;criatura|dona|família|fill|filla|home|mare|nen|nena|noi|noia|pare
+👨‍👩‍👦‍👦;família: home, dona, noi i noi;criatura|dona|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👩‍👧‍👧;família: home, dona, noia i noia;criatura|dona|família|fill|filla|home|mare|nen|nena|noia|pare
+👨‍👨‍👦;família: home, home i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👨‍👧;família: home, home i noia;criatura|família|fill|filla|home|mare|nen|nena|noia|pare
+👨‍👨‍👧‍👦;família: home, home, noia i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|noia|pare
+👨‍👨‍👦‍👦;família: home, home, noi i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👨‍👧‍👧;família: home, home, noia i noia;criatura|família|fill|filla|home|mare|nen|nena|noia|pare
+👩‍👩‍👦;família: dona, dona i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|pare
+👩‍👩‍👧;família: dona, dona i noia;criatura|dona|família|fill|filla|mare|nen|nena|noia|pare
+👩‍👩‍👧‍👦;família: dona, dona, noia i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|noia|pare
+👩‍👩‍👦‍👦;família: dona, dona, noi i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|pare
+👩‍👩‍👧‍👧;família: dona, dona, noia i noia;criatura|dona|família|fill|filla|mare|nen|nena|noia|pare
+👨‍👦;família: home i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👦‍👦;família: home, noi i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|pare
+👨‍👧;família: home i noia;criatura|família|fill|filla|home|mare|nen|nena|noia|pare
+👨‍👧‍👦;família: home, noia i noi;criatura|família|fill|filla|home|mare|nen|nena|noi|noia|pare
+👨‍👧‍👧;família: home, noia i noia;criatura|família|fill|filla|home|mare|nen|nena|noia|pare
+👩‍👦;família: dona i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|pare
+👩‍👦‍👦;família: dona, noi i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|pare
+👩‍👧;família: dona i noia;criatura|dona|família|fill|filla|mare|nen|nena|noia|pare
+👩‍👧‍👦;família: dona, noia i noi;criatura|dona|família|fill|filla|mare|nen|nena|noi|noia|pare
+👩‍👧‍👧;família: dona, noia i noia;criatura|dona|família|fill|filla|mare|nen|nena|noia|pare
+🗣️;persona que parla;cap|cap que parla|parlant|parlar|persona|silueta|silueta que parla
+👤;silueta d’un bust;bust|misteriós|misteriosa|ombra|silueta
+👥;silueta de bustos;amic|amics|bustos|persones|siluetes|tothom
+🫂;persones que s’abracen;abraçada|adeu|amistat|amor|gràcies|hola
+👪;família;criatura|fill|filla|mare|nen|nena|pare
+🧑‍🧑‍🧒;família: adult, adult, infant;adult|família|infant
+🧑‍🧑‍🧒‍🧒;família: adult, adult, infant, infant;adult|família|infant|infants
+🧑‍🧒;família: adult, infant;adult|família|infant
+🧑‍🧒‍🧒;família: adult, infant, infant;adult|família|infant
+👣;petjades;caminar|cos|descalç|descalça|empremta|petja|roba|vestit
+🫆;empremta dactilar;empremta digital|forense|identitat|seguretat
+🐵;cara de mona;animal|cara|curiosa|mona
+🐒;mico;animal|mona
+🦍;goril·la;animal|simi
+🦧;orangutan;animal|mico|mona|simi
+🐶;cara de gos;animal|cadell|cadells|cara|gos|mascota
+🐕;gos;animal|animals|gossos|mascota
+🦮;gos pigall;accessibilitat|cec|cega|gos guia|guia|invident
+🐕‍🦺;gos de servei;accessibilitat|assistència|gos|servei
+🐩;caniche;gos|peluda|pelut|púdel
+🐺;llop;animal|cara|cara de llop
+🦊;guineu;animal|cara
+🦝;os rentador;animal|astut|curiós
+🐱;cara de gat;animal|cara|gat|gatet|mascota
+🐈;gat;animal|animals|gatet|gats|mascota
+🐈‍⬛;gat negre;animal|felí|gat|mala sort|marrameu|negre
+🦁;cara de lleó;alfa|animal|bram|cara|fort|leo|lleó|rugit|safari|zodíac
+🐯;cara de tigre;animal|cara|depredador|gran felí|tigre
+🐅;tigre;animal|animals|depredador|gran felí|zoo
+🐆;lleopard;animal|depredador|gran felí|pantera|zoo
+🐴;cara de cavall;animal|cara|cavall|cavalls|domatge|equí|equina|granja
+🫎;ant;animal|banyes|mamífer|uapití
+🫏;ase;animal|mamífer|mula|ruc|somer|tossut
+🐎;cavall;animal|cursa de cavalls|curses|derbi|eqüestre|equitació|granja|hípica|triple corona
+🦄;unicorn;cara|cara d’unicorn
+🦓;zebra;ratlla
+🦌;cérvol;animal
+🦬;bisó;animal|bisó europeu|búfal|ramat
+🐮;cara de vaca;animal|cara|granja|llet|muuu|vaca
+🐂;bou;animal|animals|brau|granja|Taure|zodíac
+🐃;búfal aquàtic;aigua|animal|animals|búfal|zoo
+🐄;vaca;animal|animals|granja|llet|muuu
+🐷;cara de porc;animal|cansalada|cara|granja|porc
+🐖;porc;animal|animals|cansalada|granja|gras|grassa|truja
+🐗;senglar;animal|porc
+🐽;nas de porc;animal|cara|granja|morro|nas|porc
+🐏;marrà;animal|animals|Àries|banyes|mardà|ovella|zodíac|zoo
+🐑;ovella;animal|be|bel|femella|granja|llana|pècora|xai
+🐐;cabra;animal|animals|Capricorn|granja|llet|zodíac
+🐪;dromedari;animal|desert|gepa|una gepa
+🐫;camell;animal|camell amb dues gepes|camell bactrià|dues gepes|gepa|gepes
+🦙;llama;alpaca|animal|guanac|llana|vicunya
+🦒;girafa;taques
+🐘;elefant;animal
+🦣;mamut;animal|extinció|gran|llanut|ullal
+🦏;rinoceront;animal
+🦛;hipopòtam;animal
+🐭;cara de ratolí;animal|cara|ratolí
+🐁;ratolí;animal|animals
+🐀;rata;animal|ratolí
+🐹;hàmster;animal|cara|cara de hàmster|mascota
+🐰;cara de conill;animal|cara|conill|conillet|mascota
+🐇;conill;animal|conillet|mascota
+🐿️;esquirol;esquirol nord-americà
+🦫;castor;animal|dents|presa
+🦔;eriçó;punxes
+🦇;ratapinyada;animal|muricec|ratapenada|ratpenat|vampir|voliac
+🐻;cara d’os;animal|cara|esbramec|mel|os
+🐻‍❄️;os polar;àrtic|blanc|os
+🐨;coala;animal|Austràlia|marsupial|os
+🐼;panda;animal|bambú|cara|cara de panda
+🦥;peresós;gandul|lent|mandrós
+🦦;llúdria;juganera|llúdriga|pescadora
+🦨;mofeta;fer pudor|pudor
+🦘;cangur;animal|Austràlia|cria de cangur|marsupial|salt|saltar
+🦡;teixó;animal|toixó
+🐾;petjades d’animal;animal|petjades|potes
+🦃;gall dindi;au|dia d’acció de gràcies|engolir|indiot
+🐔;pollastre;animal|au|gallina|ornitologia
+🐓;gall;animal|animals|au|aus|ornitologia
+🐣;pollet que surt de l’ou;animal|au|cria|desclosa|eclosió|ou|pollet|sortida de l’ou
+🐤;pollet de perfil;au|bebè|cria|ornitologia|petit|pollet
+🐥;pollet de cara;au|bebè|cria|nadó|ornitologia|petit|pollet
+🐦;ocell;animal|au|ornitologia
+🐧;pingüí;Antàrtida|au|ornitologia
+🕊️;colom;au|ocell|ornitologia|pacifista|pau|volar
+🦅;àliga;àguila|animal|au|ocell
+🦆;ànec;animal|au|ocell
+🦢;cigne;aneguet lleig|animal|au|ocell|ornitologia
+🦉;mussol;animal|au|ocell|ornitologia|savi
+🦤;dodo;animal|au|extinció|gran|Maurici|ornitologia
+🪶;ploma;au|lleuger|plomatge|volar
+🦩;flamenc;animal|au|cridaner|llampant|ocell|ornitologia|tropical
+🦚;paó;animal|bonic|colors vius|cua|ocell|orgull|ornitologia|ostentós|ostentosa|paona
+🦜;lloro;animal|au|ocell|ornitologia|parlar|pirata
+🪽;ala;angelical|aviació|mitologia|ocell|volar
+🐦‍⬛;ocell negre;animal|au|corb|còrvids|grall|merla|negre|ocell|ornitologia
+🪿;oca;ànec|animal|au|clacar|ocell
+🐦‍🔥;fènix;au|cendres|fantasia|flama|foc|mitologia|ocell|reencarnació|reencarnar-se|renaixement|renéixer|resiliència|resorgir|transformació|transformar-se
+🐸;granota;animal|cara|cara de granota
+🐊;cocodril;animal|animals|zoo
+🐢;tortuga;animal|tortuga aquàtica|tortugues
+🦎;llangardaix;animal|rèptil
+🐍;serp;Ofiüc|portador|rèptil|serpentari|zodíac
+🐲;cara de drac;animal|cara|conte de fades|drac
+🐉;drac;animal|cavallers|conte|conte de fades|fades|fantasia|xinès
+🦕;sauròpode;braquiosaure|brontosaure|dinosaure|diplodocus
+🦖;tiranosaure;dinosaure|Tyrannosaurus Rex
+🐳;balena que treu aigua;aigua|animal|balena|cara|oceà|platja|sortir a raig
+🐋;balena;animal|oceà|platja
+🐬;dofí;aleta|animal|oceà|platja
+🫍;orca;animal|balena|marí|oceà
+🦭;foca;animal|lleó marí|oceà
+🐟;peix;animal|Peixos|pesca|sopar|zodíac
+🐠;peix tropical;animal|peix|peixos|tropical
+🐡;peix globus;animal|globus|peix
+🦈;tauró;animal|peix
+🐙;pop;animal|criatura|mar|oceà
+🐚;cargol de mar;animal|caragol|caragol de mar|cargol|closca|conquilla|espiral|mar|platja
+🪸;corall;canvi climàtic|escull|escullera|mar|oceà
+🪼;medusa;animal|aquari|coïssor|cremada|dolor|invertebrat|marí|oceà|picada|plàncton|tentacles
+🦀;cranc;Càncer|horòscop|zodíac
+🦞;llagosta;animal|bisque|llagosta vermella|marisc|pinces|sopa de marisc
+🦐;gamba;crustaci|llagostí|marisc|menjar
+🦑;calamar;animal|menjar|molusc
+🦪;ostra;busseig|perla
+🐌;cargol;animal|caragol|jardí|llimac|natura
+🦋;papallona;animal|bonica|insecte
+🐛;eruga;animal|bestiola|insecte|jardí
+🐜;formiga;animal|insecte|jardí
+🐝;abella;abellot|insecte|mel|natura|primavera
+🪲;escarabat;animal|cuca|insecte
+🐞;marieta;animal|escarabat|insecte|jardí|natura
+🦗;grill;bestiola|insecte|llagosta|ortòpter|saltamartí
+🪳;panerola;animal|ballarola|cuca molla|cuca panissera|escarabat|escarabat de cuina|insecte|panderola|plaga|repugnant
+🕷️;aranya;insecte
+🕸️;teranyina;aranya
+🦂;escorpí;animal|Escorpió|zodíac
+🦟;mosquit;febre|fiblada|insecte|malaltia|malària|picada|picar|virus
+🪰;mosca;animal|epidèmia|insecte|larva|malaltia|mosca blava|podrit
+🪱;cuc;animal|annèl·lid|cuc de terra|paràsit
+🦠;microbi;ameba|bacteri|ciència|virus
+💐;ram de flors;amor|aniversari|aventura|cita|flor|planta|ram
+🌸;flor de cirerer;cirerer|flor|florir|planta|primavera
+💮;flor blanca;blanca|flor
+🪷;lotus;budisme|calma|ellesa|flor|hinduisme|Índia|pau|puresa|serenitat
+🏵️;roseta;planta
+🌹;rosa;bellesa|elegant|flor|planta|rosa d’amor|Sant Valentí|vermella
+🥀;rosa pansida;flor|marcida|mústia|pansida|rosa
+🌺;hibisc;flor|planta
+🌻;gira-sol;aire lliure|flor|planta|sol
+🌼;flor;dent de lleó|floració|margarida|planta|ranuncle
+🌷;tulipa;cultiu|flor|floració|planta
+🪻;jacint;antirrínum|flor|lavanda|lilà|lupinus|planta|violeta
+🌱;brot;jove|nou|plançó|planta
+🪴;planta amb test;casa|créixer|decoració|planta|test
+🌲;arbre de fulla perenne;arbre|arbre de Nadal|avet|bosc|fulla perenne|perenne|pi
+🌳;arbre de fulla caduca;arbre|bosc|caduc|caiguda de fulles|hàbitat|verd
+🌴;palmera;arbre|palma|planta|tropical
+🌵;cactus;desert|natura|planta|sequera
+🌾;espiga d’arròs;arròs|espiga|gra|grans|planta
+🌿;herba;fulla|planta
+☘️;trèvol;irlandès|irlandesa|planta
+🍀;trèvol de quatre fulles;4|afortunada|afortunat|fulles|irlandès|irlandesa|quatre|sort|trèvol
+🍁;fulla d’auró;auró|caient|fulla
+🍂;fulla seca;fulla|fulla que cau|seca|tardor
+🍃;fulla que vola amb el vent;fulla|sortir volant|vent|voletejar
+🪹;niu buit;branca|covar|llar|niu
+🪺;niu amb ous;covar|niu|ocell|ou|ous
+🍄;bolet;bolet verinós|fong|Mario|planta
+🪾;arbre sense fulles;caiguda de la fulla|fulla caduca|hivern|sequera
+🍇;raïm;Dionís|Dionisi|fruita|planta
+🍈;meló;cantalup|fruita|planta
+🍉;síndria;fruita|meló d’aigua|meló d’Alger|meló de moro|planta
+🍊;mandarina;cítric|fruita|nectarina|planta|taronja|vitamina C
+🍋;llimona;àcid|àcida|cítric|fruita|planta
+🍋‍🟩;llima;àcid|aliment|cítric|fruita|menjar|planta|refrescant|tropical|verd
+🍌;plàtan;fruita|potassi
+🍍;pinya;colada|fruita|tropical
+🥭;mango;aliment|fruita|menjar|tropical
+🍎;poma vermella;dieta|fruita|madura|menjar|poma|sana|vermella
+🍏;poma verda;fruita|poma|verda
+🍐;pera;fruita|planta
+🍑;préssec;fruita|planta
+🍒;cireres;cirera|fruita|planta|vermell
+🍓;maduixa;baia|fruita|planta
+🫐;nabius;blau|fruit del bosc|gerd|menjar|nabiu
+🥝;kiwi;fruita|menjar
+🍅;tomàquet;hortalissa|planta|tomata|verdura
+🫒;oliva;menjar|oliver|olivera
+🥥;coco;cocoter|palmera|pinya colada
+🥑;alvocat;fruita|menjar
+🍆;albergínia;hortalissa|planta|verdura
+🥔;patata;hortalissa|menjar|tubercle
+🥕;pastanaga;hortalissa|menjar|verdura
+🌽;panotxa;blat de moro|collita|conrear|cultiu|dacsa|moresc|panís
+🌶️;bitxo;pebrot|picant|planta|xili
+🫑;pebrot verd;capsicum|hortalissa|menjar|pebrot|verd
+🥒;cogombre;cogombret|hortalissa|menjar
+🥬;fulla verda;amanida|bleda xinesa|col|enciam|hamburgueses|kale
+🥦;bròcoli;bròquil|col|col silvestre
+🧄;all;aromatitzant|cabeça d’alls|condiment
+🧅;ceba;aromatitzant|condiment
+🥜;cacauets;cacauet|fruit|fruita seca|llegum|menjar|sec
+🫘;fesols;llegum|menjar|monget|mongeta|petit|ronyó
+🌰;castanya;fruita seca|planta|tardor
+🫚;arrel de gingebre;arrel|beguda|espècia|gingebre|gínger|herba|natural|salut
+🫛;beina de pèsol;beina|edamame|fesol|llegum|mongeta|pèsol|soja|verdura
+🍄‍🟫;bolet marró;aliment|bolet|fong|menjar|natura|vegetal|vegetarià|xampinyó
+🫜;tubercle;arrel|hort|rave|remolatxa|verdura
+🍞;pa;blat|gra|llesca|menjar|restaurant|torrada
+🥐;croissant;brioixeria|francès|menjar|pa
+🥖;baguet;barra|menjar|pa
+🫓;pa de coca;arepa|coca|lavash|naan|pita
+🥨;brètzel;brioixeria|cargolat|menjar
+🥯;bagel;esmorzar|fleca|forn|pa|panet
+🥞;creps americanes;americanes|crep|creps|menjar|pancake
+🧇;gofra;esmorzar|gofrera|indecís|indecisa
+🧀;tall de formatge;formatge|porció de formatge|tall|tros de formatge
+🍖;carn amb os;carn|os
+🍗;cuixa de pollastre;afamada|afamat|carn de pollastre|cuixa|gall d’indi|pollastre
+🥩;tall de carn;bistec|carn|carn vermella|tall de porc|tall de xai
+🥓;bacó;cansalada|carn|menjar|porc|viada
+🍔;hamburguesa;afamada|afamat|menjar|menjar ràpid
+🍟;patates fregides;fregides|menjar ràpid|patates
+🍕;pizza;afamada|afamat|formatge|pepperoni|porció|tall
+🌭;frankfurt;hot dog|salsitxa
+🥪;entrepà;pa
+🌮;taco;mexicà
+🌯;burrito;enrotllat|mexicà|rotlle|tortilla
+🫔;tamal;enrotllat|menjar|mexicà|pamonha
+🥙;durum;falàfel|farcit|kebab|menjar|pa
+🧆;falàfel;cigró|croqueta|mandonguilla|pilota
+🥚;ou;menjar
+🍳;ou ferrat;cuina|esmorzar|fàcil|fregir|ou|paella|restaurant
+🥘;paella;arròs|cassola|menjar|poc fonda|valenciana
+🍲;cassola de menjar;cassola|estofat|guisat|menjar|olla|sopa
+🫕;fondue;cassola|desfet|esquí|formatge|menjar|suís|suïssa|xocolata
+🥣;bol amb cullera;arròs congee|cereals|esmorzar|farina de civada|farinetes
+🥗;amanida;bol|enciam|menjar|verd
+🍿;crispetes;blat de moro|pel·lícula
+🧈;mantega;producte lacti
+🧂;sal;condiment|disgustada|disgustat|fada|fat|gust|sabor|salat|saler
+🥫;llauna de conserva;aliments enllaunats|conserva|llauna|menjar
+🍱;caixa de bento;bento|caixa|menjar
+🍘;galeta d’arròs;arròs|galeta|galeta salada|menjar
+🍙;bola d’arròs;arròs|bola|japonès|menjar|onigiri
+🍚;arròs bullit;arròs|bullit|menjar
+🍛;arròs al curri;arròs|curri|menjar
+🍜;bol fumejant;bastonets|bol|fideus|fum|fumejant|menjar|palets|pho|plat|ramen|sopa
+🍝;espaguetis;italià|mandonguilles|menjar|pasta|restaurant
+🍠;moniato rostit;dolç|menjar|moniato|rostit
+🍢;broqueta de marisc;broqueta|kebab|marisc|menjar|oden|pal|restaurant
+🍣;sushi;cru|menjar|peix
+🍤;gamba fregida;fregida|gamba|tempura
+🍥;pastís de peix amb remolí;menjar|pastís|peix|remolí|restaurant
+🥮;pastisset de lluna;festival|pastís de lluna|tardor|yuèbǐng
+🍡;broqueta dolça japonesa;broqueta|dango|dolç|japonès|postres
+🥟;cresta xinesa;cresta|cresta japonesa|empanada|gyōza|jiaozi|pierogui
+🥠;galeta de la sort;fortuna|futur|galeta|profecia|sort
+🥡;menjar per emportar;bastonets|emportar|envàs|menjar a domicili|menjar xinès|paper
+🍦;gelat de màquina;dolç|gelat|màquina|menjar|postres|restaurant
+🍧;granissat;dolç|gel|gelat|picat|postres
+🍨;gelat;crema|dolç|gel|menjar|postres|restaurant
+🍩;dònut;dolç|menjar|postres|rosquilla
+🍪;galeta;dolç|galeta de xocolata|postres|xocolata
+🎂;pastís d’aniversari;aniversari|celebració|dolç|pastís|per molts anys|postres
+🍰;porció de pastís;dolç|massa|pastís|porció|postres|tall
+🧁;cupcake;dolç|fideus|fleca|forn|magdalena|postres|sucre
+🥧;coca;carn|farcit|fruita|pastís|pastís de carbassa|pastís de poma|tros de pastís
+🍫;rajola de xocolata;dolç|Halloween|llaminer|llaminera|rajola|xocolata|xocolatina
+🍬;caramel;càries|dolç|embolcall|Halloween|llaminadura|llaminer|llaminera|postres|restaurant
+🍭;piruleta;caramel|confits|dolç|llaminadura|menjar|pal|postres|restaurant
+🍮;flam;crema|dolç|postres|púding
+🍯;pot de mel;mel|menjar|os|pot
+🍼;biberó;bebè|bebès|beguda|beure|llet|nadó|nadons|naixement|nascuda|nascut
+🥛;got de llet;beguda|beure|got|llet
+☕;beguda calenta;beguda|cafè|cafeïna|calenta|fumejant|matí|te|xocolata calenta
+🫖;tetera;beguda|menjar|te
+🍵;tassa de te;beguda|beure|oolong|tassa|tassa de te amb nansa|te
+🍶;sake;ampolla|bar|beguda|got|restaurant
+🍾;ampolla de cava;ampolla|ampolla amb tap de suro destapat|bar|beguda|cava|destapar|suro|tap
+🍷;copa de vi;alcohol|bar|beguda|begudes|copa|restaurant|vi
+🍸;copa de còctel;alcohol|bar|beguda|begudes|beure|club|còctel|copa|martini
+🍹;beguda tropical;alcohol|bar|beguda|begut|club|còctel|copa|festa|mai tai|tròpic|tropical
+🍺;gerra de cervesa;alcohol|alemanya|bar|cervesa|cervesa d’estiu|gerra|Oktoberfest|pinta|tanc de cervesa
+🍻;brindis amb gerra de cervesa;alcohol|bar|beguda|begudes|brindar|brindis|cervesa|gerra|salut
+🥂;brindis;beguda|beure|cava|celebrar|copes|tritlleig|xampany|xin-xin
+🥃;got de licor;beguda|copeta|got|licor|whisky|whisky escocès
+🫗;got que aboca un líquid;abocar|accident|aigua|beguda|buit|got|rajar|vaja|vessar
+🥤;got amb canya;aigua|beguda|canya|got|refresc|suc
+🧋;te amb bombolles;bombolla|llet|menjar|perla|taiwan|te
+🧃;bric;beguda|bric de suc|dolç|palla|suc
+🧉;mate;beguda|beure
+🧊;glaçó;fred|gel|iceberg
+🥢;bastonets xinesos;bastonet|bastonets|oriental|xinès
+🍽️;forquilla, ganivet i plat;cuina|forquilla|ganivet|ganivet i plat|menjar|plat|sopar
+🍴;forquilla i ganivet;afamada|afamat|alimentar-se|cobert|deliciós|dinar|esmorzar|forquilla|ganivet|menjar|restaurant|sopar
+🥄;cullera;cobert|menjar
+🔪;ganivet de cuina;arma|cuina|eina|ganivet|ganivet japonès|xef
+🫙;pot;buit|condiment|contenidor|emmagatzemar|res|salsa|vidre
+🏺;àmfora;aquari|beguda|cuina|eina|gerra|zodíac
+🌍;globus terraqüi amb Europa i Àfrica;Àfrica|bola del món|Europa|món|terra
+🌎;globus terraqüi amb Amèrica;Amèrica|bola del món|globus terraqüi|món|terra
+🌏;globus terraqüi amb Àsia i Austràlia;Àsia|Austràlia|bola del món|món|terra
+🌐;globus terraqüi amb meridians;bola del món|meridians|món|terra|xarxa d’abast mundial
+🗺️;mapa del món;mapa|món
+🗾;mapa del Japó;Japó|mapa
+🧭;brúixola;direcció|magnètic|magnètica|navegació|orientació
+🏔️;muntanya amb neu al cim;fred|muntanya|muntanya nevada|neu
+⛰️;muntanya;
+🛘;esllevissada;allau|desastre|devessall|muntanya|perill|roques|terratrèmol
+🌋;volcà;erupció|muntanya|natura
+🗻;mont Fuji;Fuji|mont|muntanya|natura
+🏕️;acampada;campament|càmping
+🏖️;platja amb para-sol;para-sol|platja
+🏜️;desert;desèrtic
+🏝️;illa deserta;desert|deserta|illa
+🏞️;parc nacional;nacional|parc
+🏟️;estadi;
+🏛️;edifici clàssic;clàssic|edifici
+🏗️;construcció d’edificis;construcció|edificis|grua|obra
+🧱;totxo;fang|maó|morter|mur|paret|totxana|totxanes|totxos
+🪨;roca;còdol|dur|dura|pedra|penyal|pesada|pesat|roc|sòlid
+🪵;llenya;fusta|tronc
+🛖;cabana;casa|casa rodona|iurta|refugi
+🏘️;cases;casa|edifici
+🏚️;casa abandonada;abandonada|casa|casa en ruïnes|ruïnes
+🏠;casa;afores|casa de camp|casa senzilla|edifici|instal·lar-se|llar|on és el cor|ranxo|suburbà|suburbana
+🏡;casa amb jardí;afores|casa|casa de camp|casa senzilla|edifici|jardí|on és el cor|suburbà|suburbana
+🏢;edifici d’oficines;ciutat|cúbic|edifici|feina
+🏣;oficina de correus japonesa;correus|edifici|japonès|oficina
+🏤;oficina de correus europea;correus|europea|oficina|oficina de correus
+🏥;hospital;clínica|doctor|doctora|edifici|medicina|metge|metgessa|salut
+🏦;banc;edifici
+🏨;hotel;edifici
+🏩;hotel de cites;cites|edifici|hotel
+🏪;botiga a l’abast;24|24 hores|botiga|botiga de conveniència|edifici
+🏫;escola;edifici
+🏬;centre comercial;botiga|edifici|magatzem
+🏭;fàbrica;edifici
+🏯;castell japonès;castell|edifici|japonès
+🏰;castell;construcció|edifici|europeu
+💒;casament;amor|capella|noces
+🗼;torre de Tòquio;Tòquio|torre
+🗽;estàtua de la Llibertat;estàtua|llibertat|Nova York|NY
+⛪;església;benedicció|beneir|capella|creu|cristià|edifici|religió
+🕌;mesquita;islam|musulmà|musulmana|religió
+🛕;temple hindú;hindú|hinduisme|temple
+🕍;sinagoga;judaisme|jueu|jueva|religió|temple
+⛩️;santuari xintoista;religió|santuari|temple|xintoista
+🕋;Ka’ba;islam|musulmà|religió
+⛲;font;
+⛺;tenda;acampada|campament|càmping|tenda de campanya
+🌁;paisatge emboirat;boira|bromós|bromosa|paisatge
+🌃;nit estrellada;estel|estrella|estrelles|nit|nit estelada
+🏙️;paisatge urbà;ciutat|paisatge|urbà
+🌄;alba sobre les muntanyes;matí|muntanya|muntanyes|sol|sortida del sol
+🌅;alba;matí|sol|sortida del sol|temps
+🌆;paisatge urbà al vespre;ciutat|crepuscle|edifici|ocàs|paisatge urbà|posta de sol|vespre
+🌇;posta de sol;ciutat|crepuscle|edifici|ocàs|sol
+🌉;pont de nit;nit|pont
+♨️;fonts termals;aigües termals|brolladors|calor|complex turístic|fumejant|vapor
+🎠;cavallets;atraccions|cavall|entreteniment
+🛝;togoban;divertit|jugar|lliscar|parc
+🎡;roda de fira;fira|parc d’atraccions|roda
+🎢;muntanya russa;atraccions|parc d’atraccions
+💈;barberia;afaitada|barber|pal|pal de barberia|tallada de cabells
+🎪;carpa de circ;carpa|circ
+🚂;locomotora;ferrocarril|motor|tren|trens|vagó de cua|vapor|vehicle|viatge
+🚃;vagó de tren elèctric;elèctric|ferrocarril|tramvia|transport|tren elèctric|troleibús|vagó|viatge
+🚄;tren d’alta velocitat;alta velocitat|ferrocarril|Shinkansen|tren|velocitat|via del tren
+🚅;tren bala;alta velocitat|bala|ferrocarril|shinkansen|tren|velocitat|via del tren|viatge
+🚆;tren;arribada|arribat|ferrocarril|vehicle|via del tren|xuc-xuc
+🚇;metro;transport|túnel|vehicle|viatge
+🚈;tren lleuger;arribada|arribat|ferrocarril|ferrocarril lleuger|metro lleuger|monorail|tren|vehicle
+🚉;estació;ferrocarril|tren|vehicle|vies
+🚊;tramvia;transport|tròlei|troleibús|vehicle
+🚝;monocarril;monorail|vehicle
+🚞;ferrocarril de muntanya;ferrocarril|muntanya|vagó|viatge
+🚋;vagó de tramvia;autobús|tramvia|troleibús|vagó
+🚌;autobús;bus|vehicle
+🚍;autobús que arriba;autobús|autobús de cara|bus|bus de cara|proper
+🚎;troleibús;autobús|bus|tramvia|tròlei
+🚐;microbús;autobús|bus|conduir|furgoneta|minibús|vehicle
+🚑;ambulància;emergència|urgència|vehicle
+🚒;cotxe de bombers;bombers|camió de bombers|cotxe|motor
+🚓;cotxe de policia;cotxe|policia|policies
+🚔;cotxe de policia que arriba;arribant|cotxe|cotxe de policia de cara|policia|proper
+🚕;taxi;conduir|taxi groc|transport|vehicle
+🚖;taxi que arriba;aturar un taxi|cotxes|proper|taxi|taxi de cara|taxi groc
+🚗;automòbil;conducció|cotxe|vehicle
+🚘;automòbil que arriba;arribant|automòbil|automòbil de cara|cotxe|cotxes|proper
+🚙;vehicle tot camí;conduir|cotxe|recreatiu|tot camí|totterreny|vehicle|vehicle tot terreny
+🛻;camioneta descoberta;camioneta|descoberta|pickup|transport
+🚚;camió de repartiment;camió|conduir|cotxe|repartiment|vehicle
+🚛;camió articulat;articulat|camió|conduir|cotxe|moure|semiremolc|vehicle
+🚜;tractor;agricultura|vehicle
+🏎️;cotxe de curses;carreres|cotxe|curses|fórmula 1
+🏍️;motocicleta;curses|moto
+🛵;escúter;moto|motocicleta|transport
+🦽;cadira de rodes manual;accessibilitat
+🦼;cadira de rodes elèctrica;accessibilitat|cadira de rodes motoritzada
+🛺;bicitaxi amb motor;bicitaxi|rickshaw
+🚲;bicicleta;anar amb bicicleta|bici|ciclisme|ciclisme de sala|ciclista|vehicle
+🛴;patinet;transport
+🛹;monopatí;patí|patinador|patinadora|rodes
+🛼;patí de rodes;esport|patí|rodes
+🚏;parada d’autobús;autobús|bus|parada|parada de bus
+🛣️;autopista;autovia|carretera|via ràpida
+🛤️;via de tren;ferrocarril|tren|via
+🛢️;bidó de petroli;barril|barril de petroli|bidó|petroli
+⛽;assortidor de gasolina;assortidor|benzina|benzinera|combustible|gasolina
+🛞;roda;cercle|cotxe|girar|pneumàtic|rodar|vehicle
+🚨;llum de cotxe de policia;alarma|alerta|cotxe|emergència|girant|llum|policia|sirena
+🚥;semàfor horitzontal;horitzontal|intersecció|semàfor|senyal|trànsit
+🚦;semàfor vertical;conducció|intersecció|semàfor|senyal|trànsit|vertical
+🛑;senyal d’estop;detenció|estop|octogonal|senyal|senyal de detenció obligatòria|stop
+🚧;obres;barrera|construcció|tanca
+⚓;àncora;eina|vaixell
+🛟;salvavides;boia|cèrcol|flotador|nedar|rescat|salvament|seguretat
+⛵;veler;iot|mar|vaixell|vehicle|vela
+🛶;canoa;barca|caiac|kayak|nau
+🚤;llanxa ràpida;barca|estiu|llac|llanxa|luxe|milionari|milionària|ràpida|viatge
+🛳️;vaixell de passatgers;passatgers|vaixell
+⛴️;ferri;passatger|vaixell|vaixell de passatgers
+🛥️;llanxa de motor;llanxa|motor|vaixell
+🚢;vaixell;mar|passatger|passatgers|riu|Titànic|vehicle|viatge
+✈️;avió;aeroplà|jet|vehicle|viatge|vol|volant|volar
+🛩️;avioneta;aeroplà|avió|vehicle|vol
+🛫;enlairament d’avió;avió|enlairament|facturació|sortida|sortida d’avió|sortides|vehicle
+🛬;aterratge d’avió;arribada|arribada d’avió|arribades|arribant|aterratge|avió|vehicle
+🪂;paracaigudes;ala delta|fer paracaigudisme|paracaigudisme|paracaigudista|parapent
+💺;seient;cadira
+🚁;helicòpter;vehicle|viatge
+🚟;ferrocarril de suspensió;ferrocarril|suspensió|tramvia elevat|vehicle
+🚠;telefèric de muntanya;muntanya|telecabina|telecadira|telefèric
+🚡;telefèric;aeri|cabina|telecabina|tramvia|vehicle
+🛰️;satèl·lit;espacial|espai|vehicle
+🚀;coet;coets|espacial|espai|llançament|llançar|vehicle|viatge
+🛸;plat volador;extraterrestre|extraterrestres|objecte volador no identificat|ovni|UFO
+🛎️;timbre del grum;grum|hotel|recepció|timbre
+🧳;maleta;bossa de viatge amb rodes|equipatge|fer la maleta|maleta amb rodes|viatge|viatjar
+⌛;rellotge de sorra;rellotge|rellotge d’arena|sorra|temporitzador
+⏳;rellotge amb sorra que cau;ampolleta|hores|només es viu una vegada|rellotge|rellotge d’arena|rellotge d’arena que cau|rellotge de sorra|sorra|temporitzador
+⌚;rellotge;hora
+⏰;despertador;alarma|espera|h|hora|hores|rellotge|retard|tard
+⏱️;cronòmetre;hora|rellotge
+⏲️;temporitzador;rellotge
+🕰️;rellotge de taula;hora|rellotge|rellotge de sobretaula|taula
+🕛;les dotze en punt;00.00|12|12.00|dotze|en punt|hora|rellotge
+🕧;dos quarts d’una;00.30|12.30|dos quarts|hora|rellotge
+🕐;la una en punt;1|1.00|13|13.00|en punt|hora|rellotge
+🕜;dos quarts de dues;1.30|13.30|dos quarts|hora|rellotge|una
+🕑;les dues en punt;14|14.00|2|2.00|dues|en punt|hora|rellotge
+🕝;dos quarts de tres;14.30|2.30|dos quarts|dues|hora|rellotge|tres
+🕒;les tres en punt;15|15.00|3|3.00|en punt|hora|rellotge|tres
+🕞;dos quarts de quatre;15.30|3.30|dos quarts|hora|rellotge
+🕓;les quatre en punt;16|16.00|4|en punt|hora|quatre|rellotge
+🕟;dos quarts de cinc;16.30|4.30|dos quarts|hora|rellotge
+🕔;les cinc en punt;17|17.00|5|5.00|cinc|en punt|hora|rellotge
+🕠;dos quarts de sis;17.30|5.30|dos quarts|hora|rellotge
+🕕;les sis en punt;18|18.00|6|6.00|en punt|rellotge|sis
+🕡;dos quarts de set;18.30|6.30|dos quarts|hora|rellotge
+🕖;les set en punt;19|19.00|7|7.00|en punt|hora|rellotge|set
+🕢;dos quarts de vuit;19.30|7.30|dos quarts|hora|rellotge
+🕗;les vuit en punt;20|20.00|8|en punt|hora|rellotge|vuit
+🕣;dos quarts de nou;20.30|8.30|dos quarts|hora|rellotge
+🕘;les nou en punt;21|21.00|9|9.00|en punt|hora|nou|rellotge
+🕤;dos quarts de deu;21.30|9.30|dos quarts|hora|rellotge
+🕙;les deu en punt;10|10.00|22|22.00|deu|en punt|hora|rellotge
+🕥;dos quarts d’onze;10.30|22.30|dos quarts|hora|rellotge
+🕚;les onze en punt;11|11.00|23|en punt|hora|onze|rellotge
+🕦;dos quarts de dotze;11.30|23.30|dos quarts|hora|rellotge
+🌑;lluna nova;fosc|fosca|lluna|nova
+🌒;lluna en quart creixent;creixent|espai|lluna|quart|somnis
+🌓;lluna en el primer quart creixent;creixent|espai|lluna|quart
+🌔;lluna gibosa creixent;creixent|espai|gibosa|lluna
+🌕;lluna plena;espai|lluna|plena
+🌖;lluna gibosa minvant;espai|gibosa|lluna|minvant
+🌗;lluna en l’últim quart minvant;espai|lluna|lluna en quart minvant|minvant|quart
+🌘;lluna minvant;espai|lluna|minvant
+🌙;lluna creixent;creixent|espai|lluna|ramadà
+🌚;cara de lluna nova;cara|espai|lluna|lluna nova
+🌛;lluna en el primer quart amb cara;cara|creixent|espai|lluna|quart
+🌜;lluna en l’últim quart amb cara;cara|fase lunar|lluna|lluna en quart minvant amb cara|lluna minvant amb cara|minvant|quart|somnis
+🌡️;termòmetre;temperatura|temps
+☀️;sol;assolellat|brillant|clar|espai|raigs|solejat|temps
+🌝;lluna plena amb cara;brillant|cara|lluna|plena
+🌞;sol amb cara;assolellat|calor|cara|clar|dia|llum del sol|sol|temps
+🪐;planeta amb anell;planeta amb anells|saturn|saturní|saturnià|saturniana
+⭐;estrella;astronomia|estel|estels|estrella mitjana blanca|estrelles
+🌟;estrella brillant;brillant|brillantor|brillar|centellejar|espurna|estrella|nit|victòria
+🌠;estel fugaç;cel|espai|estel|estrella|fugaç|pluja d’estels
+🌌;Via Làctia;espai|temps
+☁️;núvol;ennuvolat|temps
+⛅;sol darrere un núvol;ennuvolat|núvol|sol|temps
+⛈️;núvol amb llamp i pluja;llamp|núvol|pluja|temps|tro|tronada
+🌤️;sol darrere d’un núvol petit;núvol|núvol petit|sol|temps
+🌥️;sol darrere d’un núvol gran;núvol gran|sol|temps
+🌦️;sol darrere d’un núvol amb pluja;núvol|pluja|sol|temps
+🌧️;núvol amb pluja;núvol|pluja|temps
+🌨️;núvol amb neu;fred|neu|núvol|temps
+🌩️;núvol amb llamp;llamp|núvol|temps
+🌪️;tornado;núvol|remolí|remolí de vent|temps
+🌫️;boira;núvol|temps
+🌬️;vent;bufar|cara|cara de vent|núvol
+🌀;cicló;mareig|marejada|marejat|remolí|temps|tifó|tornado
+🌈;arc de Sant Martí;arc|bisexual|gai|gènere no-binari|lgbt|lgbtia|lgbtq|natura|orgull|pluja|queer|Sant Martí|temps|transgènere|transsexual
+🌂;paraigua tancat;paraigua|pluja|tancat
+☂️;paraigua;pluja
+☔;paraigua amb gotes de pluja;gota|gotes|meteorologia|paraigua|pluja|temps
+⛱️;para-sol a la sorra;para-sol|pluja|sol|sorra
+⚡;alta tensió;elèctric|elèctrica|electricitat|fulminar|llamp|llampec|natura|perill|tensió|tro|voltatge
+❄️;floc de neu;floc|fred|neu|temps|volva de neu
+☃️;ninot de neu;fred|neu|nevada|ninot
+⛄;ninot de neu sense neu;fred|neu|ninot
+☄️;cometa;espai
+🔥;foc;calent|calenta|cremar|eina|encès|encesa|flama|genial
+💧;gota;aigua|còmic|fred|llàgrima|natura|suor|temps|trist|trista
+🌊;onada;aigua|mar|natura|oceà|ona|surf|surfista
+🎃;carabassa de Halloween;carabassa|carbassa|celebració|Halloween|llanterna
+🎄;arbre de Nadal;arbre|celebració|Nadal
+🎆;focs d’artifici;bum|celebració|entreteniment|focs artificials|només es viu una vegada
+🎇;bengala;bum|celebració|espurna|foc|focs artificials|pirotècnia
+🧨;petard;dinamita|espurna|explosiu|foc|focs d’artifici|llum
+✨;espurnes;*|brillar|centellejar|espurna|estrella|màgia
+🎈;globus;aniversari|celebració|celebrar
+🎉;tub de confeti;celebració|confeti|emocionada|emocionat|festa|genial|hurra!|tatxam|tub|visca!
+🎊;bola de confeti;bola|celebració|celebrar|confeti|festa
+🎋;arbre dels desitjos de Tanabata;arbre|arbre dels desitjos|celebració|desitjos|japonès|pancarta|Tanabata
+🎍;decoració de pi;bambú|celebració|decoració|japonès|pi
+🎎;nines japoneses;celebració|festival|nines
+🎏;banderins de carpes;banderins|carpa|carpes|celebració
+🎐;campaneta de vent;campaneta|celebració|vent
+🎑;cerimònia de la lluna;celebració|cerimònia|lluna
+🧧;sobre vermell;bona sort|diners|hóngbāo|lai see|regal
+🎀;llaç;celebració|cinta
+🎁;regal embolicat;aniversari|caixa|celebració|embolicat|llaç|Nadal|regal|sorpresa
+🎗️;llaç commemoratiu;celebració|cinta|commemorar
+🎟️;bitllet d’entrada;accés|admissió|bitllet|bitllets d’entrada|entrada
+🎫;tiquet;admissió|entrada|resguard
+🎖️;medalla militar;celebració|condecoració|condecorar|medalla|militar|premi
+🏆;trofeu;campió|campiona|esport|guanyar|premi|victòria
+🏅;medalla esportiva;esport|guanyador|guanyadora|medalla|or|premi
+🥇;medalla d’or;medalla|or|posició|primer
+🥈;medalla de plata;argent|plata|posició|segon
+🥉;medalla de bronze;bronze|medalla|posició|tercer
+⚽;pilota de futbol;esport|futbol|pilota
+⚾;pilota de beisbol;beisbol|esport|pilota
+🥎;pilota de softbol;esports|guant|mà baixa|pilota|softbol
+🏀;pilota de bàsquet;bàsquet|cistella|esport|pilota
+🏐;pilota de voleibol;bola|joc|partit|pilota|voleibol
+🏈;pilota de futbol americà;americà|esport|futbol americà|pilota|super bowl
+🏉;pilota de rugbi;esport|pilota|rugbi
+🎾;tennis;pilota|raqueta|raqueta i pilota de tennis|tenis
+🥏;disc volador;disc|esport|frisbee|plat a gol|plat volador|ultimate
+🎳;bitlles;bola|esport|joc|joc de bitlles|ple
+🏏;criquet;bat|bola|joc|partit
+🏑;hoquei sobre herba;estic|herba|hoquei|joc|pilota
+🏒;hoquei sobre gel;disc|estic|gel|hoquei|joc
+🥍;lacrosse;esports|estic|gol|pilota
+🏓;tennis de taula;joc|ping-pong|raqueta|tenis de taula
+🏸;bàdminton;joc|partit|raqueta|volant
+🥊;guant de boxa;boxa|esport|guant
+🥋;quimono d’arts marcials;arts marcials|judo|karate|quimono|taekwondo|uniforme
+🥅;porteria;esport|gol|xarxa
+⛳;banderí al forat;banderí|esport|forat|golf
+⛸️;patinatge sobre gel;gel|patí|patinar|patinar sobre gel|patinatge|patins
+🎣;canya de pescar;canya|entreteniment|esport|peix|pescar
+🤿;ulleres de busseig;busseig|immersió lleugera|submarinisme|submarinisme amb tub
+🎽;samarreta per córrer;atletisme|banda|córrer|samarreta|samarreta de tirants
+🎿;esquís;esport|esquiar|neu
+🛷;trineu;lliscar|neu
+🥌;pedra de cúrling;esport|gel|joc|pedra
+🎯;dards;dard|diana|entreteniment|joc|punteria
+🪀;io-io;fluctuar|joguina
+🪁;estel;enlairar|enlairar-se|fer volar|grua|volar
+🔫;pistola d’aigua;arma|arma de foc|eina|pistola|revòlver
+🎱;bola de billar;8|billar|bola|bola 8 de billar|bola negra de billar|joc|vuit
+🔮;bola de vidre;bola|conte de fades|fantasia|fortuna|futur|màgia|sort|vidre
+🪄;vareta màgica;bruixa|bruixot|màgia
+🎮;videojoc;comandament|consola|entreteniment|joc|videoconsola
+🕹️;palanca de control;control|joystick|palanca|videojoc
+🎰;màquina escurabutxaques;apostar|apostes|atzar|casino|escurabutxaques|joc
+🎲;daus;dau|entreteniment|joc|joc de daus
+🧩;peces de trencaclosques;encaixar|peça|pista|puzle|trencaclosques
+🧸;os de peluix;joc|joguina|os|pelfa|peluix
+🪅;pinyata;caramels|celebració|festa|mexicà
+🪩;bola de miralls;ballar|brillant|discoteca|festa
+🪆;nines russes;matrioixca|nina|russa
+♠️;pal de piques;carta|cartes|coll de piques|joc|pal|partida|piques
+♥️;pal de cors;cartes|coll de cors|cors|emoció|joc|pal|partida
+♦️;pal de diamants;cartes|coll de diamants|diamants|joc|pal|partida
+♣️;pal de trèvols;carta|coll de trèvols|joc|pal|partida|trèvols
+♟️;peó d’escacs;escacs|peó|prescindible|sacrificable
+🃏;comodí;carta|cartes|joc|partida
+🀄;drac vermell de mahjong;drac|joc|mahjong|vermell
+🎴;cartes de les flors;cartes|cartes de flors|flors|hanafuda|japonès|joc
+🎭;arts interpretatives;actor|actor dramàtic|actriu|actriu dramàtica|arts|entreteniment|interpretació|màscara|Shakespeare|teatre
+🖼️;quadre emmarcat;art|marc|marc amb quadre|museu|pintura|quadre
+🎨;paleta d’artista;art|artista|artístic|artística|creatiu|creativa|entreteniment|museu|paleta|pintor|pintora|pintura
+🧵;fil;bobina|cordill|cosir|enfilar|rodet
+🪡;agulla de cosir;agulla|brodat|cosir|costura|fil|modista|puntada|sutura
+🧶;llana;bola|cabdell|ganxet|mitja
+🪢;nus;bramant|corda
+👓;ulleres;complements|roba|ull|vestuari
+🕶️;ulleres de sol;fosques|sol|ull|ulleres
+🥽;ulleres de piscina;busseig|natació|protecció|protecció dels ulls|protecció ocular|soldadura|submarinisme
+🥼;bata de laboratori;bata blanca|científic|doctor|Dr.|experiment|roba
+🦺;armilla salvavides;armilla|armilla de seguretat|emergència|seguretat
+👔;corbata;camisa|empleat|roba|seriós
+👕;samarreta;camiseta|cap de setmana|coll|compres|informal|roba|verd|vestit
+👖;texans;cap de setmana|compres|informal|pantaló|pantalons|roba|roba texana
+🧣;bufanda;abrigar-se|coll|fred
+🧤;guants;mà
+🧥;abric;abrigar-se|brrr|fred|jaqueta
+🧦;mitjons;mitges|mitja|mitjó
+👗;vestit;compres|elegant|roba|ropa|vestida
+👘;quimono;còmoda|còmode|japonès|roba|vestit
+🥻;sari;peça de roba|roba|vestit
+🩱;banyador;vestit de bany|vestit de bany d’una peça
+🩲;eslip;banyador|roba interior|una peça|vestit de bany
+🩳;pantalons curts;banyador|pantaló|roba interior|vestit de bany
+👙;biquini;banyador|nedar|piscina|platja|roba|vestit de bany
+👚;roba de dona;brusa|camisa|coll|compres|dona|roba|senyora|vestimenta
+🪭;ventall;aire|calor|dansa|vano|vent|ventar|vergonya
+👛;moneder;accessori|bossa|bossa de mà|compres|luxe|moneda|roba|vestimenta
+👜;bossa de mà;accessori|bossa|compres|roba|senyora
+👝;bossa;accessori|bossa de mà|roba|vestimenta
+🛍️;bosses de compres;bossa|bosses|compra|equipatge|hotel
+🎒;motxilla d’escola;bossa|educació|escola|motxilla
+🩴;xancleta de dit;xancleta|xancleta de platja
+👞;sabata d’home;calçat|compres|home|marró|peu|peus|roba|sabata|sabates
+👟;sabatilla de córrer;bambes|calçat|calçat esportiu|compres|córrer|ràpid|sabatilla|sabatilles
+🥾;bota de muntanya;a l’aire lliure|acampada|bota|càmping|excursionisme|sabata|sabata marró|senderisme|trekking|tresc|viatjar amb motxilla
+🥿;sabata plana;ballarina|calçat|còmode|sabatilla|xinel·la
+👠;sabata de taló;calçat|compres|dona|moda|sabata|sabates|sabates de taló|sabates de taló d’agulla|sabates de talons alts|taló|vestit
+👡;sandàlia de dona;calçat|dona|sandàlia
+🩰;sabatilles de ballet;ballet|dansa
+👢;bota de dona;bota|botina|botina amb taló|calçat|compres|dona|roba|sabata|sabates|vestimenta
+🪮;pinta;afro|cabell|pinça|recollir
+👑;corona;cap|complement|família reial|rei|reial|reialesa|reina|roba|victòria
+👒;barret de dona;accessori|barret|barrets|dona|festa al jardí|roba
+🎩;barret de copa;barret|copa|formal|luxe|màgia|roba|sofisticat
+🎓;barret de graduació;acadèmic|acadèmica|barret|birret|celebració|educació|graduació
+🧢;gorra;beisbol|gorra amb la visera corbada|gorra amb visera|gorra de beisbol|visera
+🪖;casc militar;casc|exèrcit|guerrer|militar|soldat
+⛑️;casc amb creu blanca;ajuda|cara|casc|casc de rescatador|casc de rescatadora|creu|creu blanca|emergència|urgència
+📿;rosari;collaret|granadura|oració|religió
+💄;pintallavis;cita|cosmètics|maquillatge
+💍;anell;brillant|casada|casament|casat|compromís|diamant|promès|promesa
+💎;gemma;aventura amorosa|casament|compromís|diamant|diners|joia
+🔇;altaveu desactivat;altaveu|silenci|silenciar|silenciat|so
+🔈;altaveu amb el volum baix;baix|so|volum suau
+🔉;altaveu amb el volum mitjà;mitjà|so|volum mitjà
+🔊;altaveu amb el volum alt;alt|fort|música|so|volum fort
+📢;altaveu de megafonia;alt|altaveu|comunicació|megafonia|so
+📣;megàfon;animació|animar|aplaudiments|so
+📯;corn de posta;corn|corn de postilló|corneta de posta|corneta de postilló|correus|posta|símbol|símbol de correus|trompa
+🔔;campana;descans|església|so|timbre
+🔕;campana silenciada;campana|campana ratllada|no|prohibit|silenci|so
+🎼;pentagrama;música|nota|partitura
+🎵;nota musical;música|nota|so
+🎶;notes musicals;música|nota|notes|so
+🎙️;micròfon d’estudi;estudi|micròfon|música
+🎚️;control lliscant de nivell;control lliscant|música|nivell
+🎛️;botons de control;botons|control|música
+🎤;micròfon;cantar|karaoke|música|so
+🎧;auricular;auriculars|so
+📻;ràdio;entreteniment
+🎷;saxofon;instrument|música|saxo|saxòfon
+🎺;trompeta;instrument|música|vent
+🪊;trombó;instrument|jazz|metall|música|tristesa|vent
+🪗;acordió;concertina|instrument|música
+🎸;guitarra;corda|instrument|música|rock|Stratocaster
+🎹;teclat musical;instrument|música|piano|teclat
+🎻;violí;corda|instrument|música
+🪕;banjo;corda|de corda|música
+🥁;tambor;baquetes|música|timbal
+🪘;conga;instrument|percussió|ritme|timbal
+🪇;maraques;ball|diversió|festa|instrument|música|percussió|ritme|sacsejar|sonall
+🪈;flauta;flauta dolça|flautista|instrument|instrument de vent de fusta|música|orquestra|vent
+🪉;arpa;amor|cupido|instrument|música|orquestra
+📱;telèfon mòbil;comunicació|mòbil|telèfon
+📲;telèfon mòbil amb fletxa;comunicació|fletxa|mòbil|rebre|telèfon mòbil|trucar
+☎️;telèfon;
+📞;auricular de telèfon;auricular|comunicació|telèfon|VoIP
+📟;buscapersones;cercapersones|comunicació
+📠;fax;comunicació
+🔋;bateria;càrrega
+🪫;bateria baixa;bateria|electrònica|esgotada|poca bateria
+🔌;endoll;connexió|elèctric|electricitat
+💻;ordinador portàtil;equip|oficina|PC|personal|portàtil
+🖥️;ordinador d’escriptori;equip|escriptori|monitor|ordinador de sobretaula|PC
+🖨️;impressora;ordinador
+⌨️;teclat;ordinador|PC
+🖱️;ratolí d’ordinador;ordinador|ratolí
+🖲️;ratolí de bola;ordinador|PC
+💽;minidisc;disc|disc de PC|equip|òptic|PC
+💾;disquet;desar|disc|equip|ordinador|PC
+💿;disc òptic;cd|disc|dvd|equip|òptic|ordinador|PC
+📀;DVD;Blu-ray|cd|disc|equip|òptic|ordinador|PC
+🧮;àbac;càlcul|calculadora
+🎥;càmera cinematogràfica;Bollywood|càmera|cinema|enregistrar|Hollywood|pel·lícula
+🎞️;fotograma de pel·lícula;cinema|fotograma|fotogrames|pel·lícula
+📽️;projector cinematogràfic;cinema|pel·lícula|projector|vídeo
+🎬;claqueta;acció|cinema|pel·lícula
+📺;televisió;televisor|tv|vídeo
+📷;càmera;autofoto|foto|instagram|instantània|viatge|vídeo
+📸;càmera amb flaix;càmera|flaix|vídeo
+📹;càmera de vídeo;càmera|vídeo|videocàmera
+📼;videocasset;antiga|cinta|vhs|vídeo
+🔍;lupa cap a l’esquerra;augment|buscar|ciència|eina|esquerra|laboratori|lent|lent d’augment cap a l’esquerra|lupa|recerca
+🔎;lupa cap a la dreta;augment|buscar|ciència|contacte|dreta|eina|laboratori|lent d’augment cap a la dreta|lupa
+🕯️;espelma;cera|flama|llum
+💡;bombeta;còmic|electricitat|idea|llum
+🔦;llanterna;eina|elèctric|elèctrica|electricitat|llum
+🏮;fanal de paper vermell;bar|fanal|fanalet|japonès|llum|paper|restaurant|vermell
+🪔;llum d’oli;ble|bricolatge|làmpada|làmpada d’oli|llàntia|llàntia d’oli|llum|oli
+📔;quadern amb coberta decorativa;coberta|coberta decorativa|educació|escola|escriptura|llibre|llibreta|quadern
+📕;llibre tancat;educació|llibre|tancat
+📖;llibre obert;biblioteca|coneixement|educació|fantasia|lectura|llibre|novel·les|obert
+📗;llibre verd;biblioteca|educació|fantasia|lectura|llibre|verd
+📘;llibre blau;biblioteca|blau|educació|fantasia|lectura|llibre
+📙;llibre taronja;biblioteca|educació|fantasia|lectura|llibre|taronja
+📚;llibres;biblioteca|coneixement|educació|escola|estudi|fantasia|lectura|llibre|novel·les
+📓;llibreta;quadern
+📒;llibre de comptabilitat;comptabilitat|llibre
+📃;pàgina que es cargola;cargolada|document|pàgina
+📜;pergamí;escriptura|paper|pell
+📄;pàgina;amunt|document|pàgina cap amunt
+📰;diari;comunicació|notícies
+🗞️;diari enrotllat;diari|enrotllat|notícies
+📑;marcadors;fitxa|marca|marcador|punt|punt de llibre|punts de llibre
+🔖;punt de llibre;marcador|punt
+🏷️;etiqueta;
+🪙;moneda;diners|dòlar|euro|metall|or|plata|ric|tresor
+💰;bossa de diners;banc|bossa|cost|diners|dòlar|efectiu|ric|rica
+🪎;bagul del tresor;bagul|botí|diners|gemma|joies|or|plata|premi|riquesa
+💴;bitllets de ien;banc|bitllets|diners|divisa|ien|moneda|signe
+💵;bitllets de dòlar;banc|bitllet|bitllet de dòlar|bitllets|divisa|dòlar|moneda|signe
+💶;bitllets d’euro;bitllets|euro|signe
+💷;bitllets de lliura;banc|bitllets|diners|divisa|efectiu|lliura|lliures|milions|moneda|signe
+💸;diners amb ales;ales|banc|bilió|bitllet|diners|efectiu|milió|pagar|volar
+💳;targeta de crèdit;banc|càrrec|cobrar|crèdit|diners|efectiu|pagar|targeta
+🧾;rebut;comptabilitat|factura|llibres|prova|tiquet
+💹;gràfic d’augment amb el signe del ien;augment|cap amunt|creixement|gràfic|ien|mercat|moneda|signe|tendència
+✉️;sobre;carta|correu|correu electrònic|mail
+📧;correu electrònic;carta|correu|electrònic|mail
+📨;sobre que arriba;carta|correu electrònic|entrada|enviant|enviat|rebre|recepció|sobre
+📩;sobre amb fletxa;avall|comunicació|correu|correu electrònic|enviar|enviat|fletxa|sobre|sortint
+📤;safata de sortida;bústia|carta|correu|correu electrònic|enviats|safata|sortida
+📥;safata d’entrada;bústia|carta|correu|correu electrònic|entrada|rebre|safata|safata d’entrada a zero
+📦;paquet;caixa|comunicació|enviament|lliurament|repartiment
+📫;bústia tancada amb la bandera aixecada;bandera aixecada|bústia|comunicació|correu|tancada
+📪;bústia tancada amb la bandera abaixada;abaixada|bandera abaixada|bústia|correu|tancada
+📬;bústia plena amb la bandera aixecada;bandera aixecada|bústia|bústia oberta amb la bandera aixecada|correu|oberta
+📭;bústia oberta amb la bandera abaixada;abaixada|bandera abaixada|bústia|correu|oberta
+📮;bústia;carta|correu
+🗳️;urna amb vot;papereta|urna|urna amb papereta|vot|votació
+✏️;llapis;
+✒️;ploma negra;bolígraf|negra|ploma
+🖋️;ploma estilogràfica;estilogràfica|ploma
+🖊️;bolígraf;
+🖌️;pinzell;brotxa|pintar|pintura
+🖍️;llapis de color;color|llapis
+📝;nota;comunicació|llapis|mitjà|notes
+💼;maletí;oficina
+📁;carpeta de fitxers;arxius|carpeta|carpeta d’arxius|fitxers
+📂;carpeta de fitxers oberta;arxiu|arxius|carpeta|carpeta d’arxius oberta|fitxer|fitxers|oberta
+🗂️;separadors per a organitzador de targetes;organitzador|separadors|targeta|targetes
+📅;calendari;data
+📆;calendari de bloc;bloc|calendari
+🗒️;bloc de notes d’espiral;bloc|espiral|notes
+🗓️;calendari d’espiral;bloc|calendari|espiral
+📇;organitzador de targetes;fitxer rotatiu|organitzador|targetes|vella escola
+📈;gràfic d’augment;a l’alça|amunt i cap a la dreta|augment|cap amunt|creixement|dades|gràfic|tendència
+📉;gràfic de disminució;a la baixa|cap avall|dades|descendent|disminució|gràfic|negatiu|tendència
+📊;gràfic de barres;barres|dades|gràfic
+📋;portanotes;clip|llista de tasques pendents|notes|petjapapers|porta-retalls
+📌;xinxeta;agulla|collage
+📍;xinxeta rodona;mapa|rodona|ubicació|xinxeta
+📎;clip;
+🖇️;clips enganxats;clip|clips|enganxats
+📏;regle;angle|matemàtiques|recte|regle de vora recta
+📐;esquadra;angle|cartabó|matemàtiques|regle|regle de càlcul|triangle
+✂️;tisores;eina|paper|retall|tall|tallar
+🗃️;arxivador de targetes;arxiu|caixa|dossier|targeta
+🗄️;arxivador;armari|dossier|moble
+🗑️;paperera;cubell
+🔒;cadenat tancat;cadenat|privat|tancar|tancat
+🔓;cadenat obert;cadenat|obert|obrir|tancar
+🔏;cadenat amb ploma;cadenat tancat|ploma|privacitat|privadesa|tinta
+🔐;cadenat tancat amb clau;bloqueig|cadenat|clau|segur|tancat
+🔑;clau;bloqueig|bloquejar|clau important|claus|contrasenya|desbloqueig|desbloquejar
+🗝️;clau antiga;antiga|clau|pany|tancar
+🔨;martell;eina|reforma de la llar|reparacions
+🪓;destral;clivellar|cop de destral|llenya|tallar
+⛏️;pic;eina|martell|mineria
+⚒️;martell i pic;eina|martell|pic
+🛠️;martell i clau anglesa;clau anglesa|eina|martell
+🗡️;daga;arma|ganivet
+⚔️;espases creuades;arma|creuades|espases
+💣;bomba;bum|calent|calenta|còmic|explosió|perillós|perillosa
+🪃;bumerang;aborigen|arma|Austràlia|rebot|repercussió
+🏹;arc i fletxa;arc|arquer|arquera|eina|fletxa|Sagitari|tir amb arc|zodíac
+🛡️;escut;arma
+🪚;xerrac;eina|fuster|llenyataire|serra|tallar
+🔧;clau anglesa;clau|eina|fixa|reforma de la llar
+🪛;tornavís;eina|punta plana|útil|vis
+🔩;cargol i femella;cargol|eina|femella|reforma de la llar
+⚙️;engranatge;eina|marxa
+🗜️;serjant;cargol d’aplacar|cargol d’estrènyer|cargol de banc|compressió|eina
+⚖️;balança (aparell);aparell|Balança|balances|eina|justícia|pes|zodíac
+🦯;bastó per a invidents;accessibilitat|cec|cega|invident
+🔗;enllaç;anella|anelles|baula|cadena|enllaçar
+⛓️‍💥;cadena trencada;baula|cadena|llibertat|malbé|manilla|trencar
+⛓️;cadenes;cadena
+🪝;ham;atrapar|corba|ganxo|pescar|punt de venda
+🧰;caixa d’eines;caixa|caixa vermella|eines|mecànic
+🧲;imant;atracció|ferradura|forma d’U|magnètic|positiu negatiu
+🪜;escala de mà;escala|esglaó|graó|pujar
+🪏;pala;cavar|forat
+⚗️;alambí;eina|instrument|química
+🧪;tub d’assaig;ciència|experiment|laboratori|químic|química
+🧫;placa de Petri;bacteri|biòleg|biòloga|biologia|cultiu|laboratori|placa de cultiu
+🧬;adn;biòleg|biòloga|evolució|gen|genètica|vida
+🔬;microscopi;augment|ciència|eina|laboratori
+🔭;telescopi;augment|ciència|contacte|eina|extraterrestre|instrument
+📡;antena de satèl·lit;antena|ciència|contacte|extraterrestres|plat|satèl·lit
+💉;xeringa;agulla|doctor|doctora|injecció|injecció contra la grip|instrument mèdic|malalt|malalta|medicina|metge|vacuna|vacunació
+🩸;gota de sang;donació de sang|ferida|lesió|medicina|menstruació|sagnar
+💊;píndola;malalt|malalta|medicada|medicaments|medicat|medicina|metge|pastilla|píndoles|vitamina
+🩹;tireta;bena|bena adhesiva
+🩼;crossa;ajuda|ajuda a la mobilitat|bastó|discapacitat|lesió
+🩺;estetoscopi;cor|doctor|medicina
+🩻;radiografia;diagnòstic|esquelet|medicina|ossos
+🚪;porta;armari|porta del darrere|porta principal
+🛗;ascensor;accessibilitat|muntacàrregues
+🪞;mirall;espill|maquillatge|reflector|reflex
+🪟;finestra;aire fresc|marc|obertura|transparent|vista
+🛏️;llit;dormir|hotel
+🛋️;sofà i làmpada;hotel|làmpada|llum|sofà|sofà i llum
+🪑;cadira;seient|seure
+🚽;lavabo;bany|inodor|tassa|vàter
+🪠;desembossador;embós|lampista|lavabo|succió
+🚿;dutxa;aigua
+🛁;banyera;bany
+🪤;ratera;atreure|formatge|parany|rata|ratolí|trampa
+🪒;maquineta d’afaitar;afaitada|afaitar-se|afilada|esmolada|navalla d’afaitar
+🧴;ampolla de crema;crema hidratant|loció|protecció solar|suavitzant|xampú
+🧷;imperdible;punk|punk rock
+🧹;escombra;bruixa|escombrar|neteja|netejar
+🧺;cistella;bugada|cultiu|granja|pícnic
+🧻;rotlle de paper;paper de vàter|paper higiènic|tovalloleta de paper|tovalloletes de paper
+🪣;cubell;galleda
+🧼;sabó;bany|bombolles|ensabonar-se|higiene|net|neta|neteja|netejar|pastilla|sabonera
+🫧;bombolles;bombolla|flotant|net|perla|sabó|subaquàtic|submarí
+🪥;raspall de dents;dental|dents|higiene|lavabo|raspall|rentar
+🧽;esponja;absorbent|absorbir|amarar|neteja|netejar|porosa
+🧯;extintor;apagar|extingir|foc
+🛒;carretó;compra
+🚬;cigarreta;fumar
+⚰️;taüt;mort|vampir
+🪦;làpida;cementiri|rip|tomba
+⚱️;urna funerària;cendres|funeral|incineració|incinerar|mort|urna
+🧿;nazar;amulet|blau|pedra del mal d’ull|talismà
+🪬;mà de Fàtima;amulet|fortuna|guia|hamsa|mà|mà de Míriam|palmell|protecció
+🗿;moai;cara|cara de pedra|estàtua|viatge
+🪧;pancarta;cartell|manifestació|placa|protesta|senyal|targeta
+🪪;targeta d’identificació;carnet|credencials|document|ID|identificació|seguretat|targeta
+🏧;signe de caixer automàtic;atm|automàtic|banc|caixer|diners|efectiu|signe
+🚮;signe de paperera;brossa|escombraries|llençar|paperera|senyal|signe
+🚰;aigua potable;aigua|aixeta|got|potable|vas
+♿;símbol de cadira de rodes;accés|accessible|cadira|discapacitat|rodes|símbol
+🚹;lavabo d’homes;homes|lavabo|servei|wc
+🚺;lavabo de dones;dones|lavabo|servei|wc
+🚻;lavabos;lavabo|servei|tocador|wc
+🚼;símbol de nadó;bebè|canviador per a nadons|canviar|nadó|símbol de bebè
+🚾;vàter;bany|lavabo|servei|wc
+🛂;control de passaports;control|passaport
+🛃;duana;equipatge
+🛄;recollida d’equipatges;arribada|avió|bosses|equipatge|equipatges|facturat|maleta|recollida|trajecte|viatge|viatjar
+🛅;consigna;armari|equipatge|maleta|maletes|servei de consigna
+⚠️;advertència;advertiment|alerta|avís|cautela|precaució
+🚸;nens que creuen;creuant|nens|trànsit|vianant
+⛔;prohibit entrar;direcció prohibida|entrada|no|no passeu|prohibició|prohibit|trànsit
+🚫;prohibit;accés|entrada|fumar|no|no passeu|prohibició
+🚳;bicicletes prohibides;bici|bicicletes|bicis|bicis prohibides|prohibició
+🚭;prohibit fumar;fumar|no|prohibició
+🚯;prohibit llençar brossa;brossa|llençar|no|prohibició
+🚱;aigua no potable;aigua|no potable|prohibit
+🚷;prohibit el pas als vianants;no|prohibició|prohibit|vianants
+📵;prohibits els telèfons mòbils;mòbil|no|prohibició|prohibit|prohibit l’ús de telèfons mòbils|telèfon|telèfons mòbils
+🔞;prohibit a menors d’edat;18|divuit|menors d’edat|ningú menor de divuit anys|no|prohibició|prohibit|prohibit a menors de 18 anys|prohibit a menors de divuit anys|restricció d’edat
+☢️;radioactiu;radioactiva|senyal
+☣️;risc biològic;perill|risc|senyal
+⬆️;fletxa cap amunt;amunt|cardinal|direcció|fletxa|nord|punt cardinal
+↗️;fletxa cap amunt a la dreta;amunt a la dreta|direcció|fletxa|intercardinal|nord-est
+➡️;fletxa cap a la dreta;cardinal|direcció|dreta|est|fletxa|punt cardinal
+↘️;fletxa cap avall a la dreta;avall a la dreta|direcció|fletxa|intercardinal|sud-est
+⬇️;fletxa cap avall;avall|cardinal|direcció|fletxa|punt cardinal|sud
+↙️;fletxa cap avall a l’esquerra;avall a l’esquerra|direcció|fletxa|intercardinal|sud-oest
+⬅️;fletxa cap a l’esquerra;cardinal|direcció|esquerra|fletxa|oest|punt cardinal
+↖️;fletxa cap amunt a l’esquerra;amunt a l’esquerra|direcció|fletxa|intercardinal|nord-oest
+↕️;fletxa cap amunt i cap avall;amunt|avall|fletxa
+↔️;fletxa cap a l’esquerra i cap a la dreta;dreta|esquerra|fletxa
+↩️;fletxa dreta que gira cap a l’esquerra;dreta|esquerra|fletxa|gir
+↪️;fletxa esquerra que gira cap a la dreta;dreta|esquerra|fletxa|gir
+⤴️;fletxa dreta que gira cap amunt;amunt|dreta|fletxa|gir
+⤵️;fletxa dreta que gira cap avall;avall|dreta|fletxa|gir
+🔃;fletxes que giren cap a la dreta;actualitzar|dreta|fletxa|fletxes|fletxes verticals en sentit horari|gir|tornar a carregar
+🔄;botó de fletxes que giren cap a l’esquerra;actualitzar|de nou|déjà vu|esquerra|fletxa|fletxes en sentit antihorari|gir|rebobinar|sentit antihorari
+🔙;fletxa amb la paraula Back;Back|fletxa|paraula
+🔚;fletxa amb la paraula End;End|fletxa|paraula
+🔛;fletxa amb la paraula ON!;fletxa|ON!|paraula
+🔜;fletxa amb la paraula Soon;aviat|de camí|fletxa|paraula|Soon|torno aviat
+🔝;fletxa amb la paraula Top;fletxa|paraula|Top
+🛐;lloc de culte;culte|lloc|oració|religió
+⚛️;símbol d’àtom;atea|ateisme|ateu|àtom|símbol
+🕉️;símbol d’om;hindú|hinduisme|om|religió
+✡️;estrella de David;David|estrella|judaisme|jueu|jueva|religió
+☸️;roda del dharma;budisme|budista|dharma|religió|roda
+☯️;yin-yang;daoisme|daoista|difícil|religió|tao|taoisme|taoista|total|vides|yin i yang
+✝️;creu llatina;creu|Crist|cristià|cristiana|cristianisme|religió
+☦️;creu ortodoxa;creu|cristià|cristiana|cristianes|cristians|ortodoxa|religió
+☪️;creixent lunar i estel;creixent lunar i estrella|islam|islamisme|lluna creixent i estel|lluna creixent i estrella|musulmà|ramadà|religió
+☮️;símbol de la pau;curació|curatiu|curativa|pacífic|pacífica|pacifisme|pacifista|pau|símbol
+🕎;canelobre de set braços;canelobre|judaisme|jueu|jueva|menorà|religió|set braços
+🔯;estrella de sis puntes amb punt;estrella|fortuna|judaisme|jueu|jueva|punt|sis puntes
+🪯;khanda;fe|religió|sikh|sikhisme
+♈;Àries;be|horòscop|marrà|zodíac
+♉;Taure;bou|brau|horòscop|toro|zodíac
+♊;Bessons;Gèmini|horòscop|zodíac
+♋;Càncer;Cranc|horòscop|zodíac
+♌;Lleó;horòscop|zodíac
+♍;Verge;horòscop|Virgo|zodíac
+♎;Balança;bàscula|horòscop|justícia|zodíac
+♏;Escorpió;Escorpí|horòscop|zodíac
+♐;Sagitari;arquer|horòscop|zodíac
+♑;Capricorn;cabra|horòscop|zodíac
+♒;Aquari;aigua|horòscop|portador|zodíac
+♓;Peixos;horòscop|peix|zodíac
+⛎;Ofiüc;portador|serp|Serpentari|zodíac
+🔀;botó de reproducció aleatòria;aleatòria|botó|creuada|fletxa|reproducció
+🔁;botó de repetició;botó|fletxa|fletxes en sentit horari|repetició|sentit horari
+🔂;botó de repetició única;botó|fletxa|fletxes en sentit horari|repetició|sentit horari|una vegada|única
+▶️;botó de reproducció;botó|dreta|fletxa|fletxa cap a la dreta|reproducció|reproduir|triangle
+⏩;botó d’avançar ràpidament;avançar|botó|doble|dues fletxes|fletxa|ràpidament
+⏭️;botó de pista següent;botó|escena següent|fletxa|pista|següent|triangle
+⏯️;botó de pausa o de reproducció;botó|dreta|fletxa|pausa|posar en pausa|reproducció|reproduir|triangle
+◀️;botó de retrocedir;botó|esquerra|fletxa|fletxa cap a l’esquerra|retrocedir
+⏪;botó de retrocedir ràpidament;botó|doble|dues fletxes|fletxa|ràpidament|retrocedir
+⏮️;botó de pista anterior;anterior|botó|botó d’última pista|escena anterior|fletxa|pista|triangle
+🔼;botó d’anar amunt;amunt|botó|botó d’apujar|fletxa|vermell
+⏫;botó d’anar amunt ràpidament;amunt|botó|botó d’apujar ràpidament|doble|dues fletxes|fletxa|ràpidament
+🔽;botó d’anar avall;abaixar|avall|botó|fletxa|vermell
+⏬;botó d’anar avall ràpidament;avall|botó|botó d’abaixar ràpidament|doble|dues fletxes|fletxa|ràpidament
+⏸️;botó de pausa;botó|doble|dues barres|pausa|posar en pausa|vertical
+⏹️;botó d’aturada;aturada|aturar|botó|quadrat
+⏺️;botó d’enregistrar;botó|cercle|enregistrar
+⏏️;botó d’expulsar;botó|expulsar
+🎦;cinema;càmera|film|pel·lícula
+🔅;botó d’atenuar la brillantor;abaixar|atenuar|botó|brillantor
+🔆;botó d’augmentar la brillantor;apujar|augmentar|botó|brillant|brillantor|clar|llum
+📶;barres de cobertura;barres|cobertura|comunicació|mòbil|senyal|telèfon
+🛜;sense fil;banda ampla|connectivitat|internet|ordinador|telèfon intel·ligent|Wi-Fi|xarxa
+📳;mode de vibració;comunicació|mòbil|mode|telèfon|vibració
+📴;telèfon mòbil desactivat;apagat|desactivat|desconnectat|mòbil|telèfon
+♀️;símbol femení;dona|femella|femení
+♂️;símbol masculí;home|mascle|masculí
+⚧️;símbol transgènere;trans|transgènere
+✖️;signe de multiplicar;×|cancel·lar|multiplicació|multiplicar|signe|x
+➕;signe de sumar;+|matemàtiques|més|signe|signe de sumar gruixut
+➖;signe de restar;-|−|matemàtiques|menys|signe|signe de restar gruixut
+➗;signe de dividir;÷|divisió|matemàtiques|signe|signe de dividir gruixut
+🟰;signe d’igual gran;és igual a|igualtat|matemàtiques|resposta|signe d’igual gruixut
+♾️;infinit;il·limitat|per sempre|universal
+‼️;signe d’exclamació doble;!|!!|doble exclamació|exclamació|puntuació
+⁉️;signe d’exclamació i d’interrogació;!|!?|?|exclamació|interrogació|pregunta amb exclamació|puntuació|signe
+❓;signe d’interrogació vermell;?|interrogació|puntuació|signe|signe d’interrogació
+❔;signe d’interrogació blanc;?|blanc|interrogació|perfilat|puntuació|signe|signe d’interrogació
+❕;signe d’exclamació blanc;!|blanc|exclamació|perfilat|puntuació|signe
+❗;signe d’exclamació vermell;!|exclamació|puntuació|signe|signe d’exclamació
+〰️;guió ondulat;guió|ondulat|puntuació
+💱;canvi de divisa;banc|canvi|diners|divisa|moneda
+💲;signe de dòlar gran;bilió|càrrec|cobrar|diners|divisa|dòlar|efectiu|gran|mil milions|miliard|milió|moneda|pagar|signe
+⚕️;símbol mèdic;Asclepi|Esculapi|medicina|personal|serp
+♻️;símbol de reciclatge;reciclar|reciclatge|símbol
+⚜️;flor de lis;cavallers|flor|lis
+🔱;marca de trident;àncora|eina|emblema|marca|Posidó|trident|vaixell
+📛;etiqueta identificadora;etiqueta|identificació|nom
+🔰;símbol japonès de principiant;eina|full|galó|groc|japonès|principiant|símbol|verd
+⭕;cercle buit vermell;cercle|cercle gran gruixut|gran|o|vermell
+✅;botó de marca de verificació;✓|arreglat|botó|completat|fet|marca|marca de verificació|marcat|selecció|verificació
+☑️;casella amb marca de verificació;✓|casella|fet|marca|marcat|quadre|selecció|verificació|votació
+✔️;marca de verificació;✓|fet|marca|marca de vistiplau|marca de vistiplau gruixuda|marcar|marcat|selecció|verificació
+❌;marca de creu;×|cancel·lar|creu|marca|multiplicació|multiplicar|x
+❎;botó de creu;×|marca|multiplicació|multiplicar|quadrat|x
+➰;llaç arrissat;bucle|llaç
+➿;bucle doble;bucle|doble|enrotllat|llaç
+〽️;signe d’alternança;alternança|marca d’alternança de la part|part|signe
+✳️;asterisc de vuit radis;*|asterisc
+✴️;estrella de vuit puntes;*|estrella
+❇️;espurna;*
+©️;drets d’autor;copyright
+®️;marca registrada;marca|registrada
+™️;marca comercial;comercial|marca|marca registrada|símbol de marca comercial|TM
+🫟;esquitx;holi|pintura|taca|vessament
+*️⃣;tecla: *;tecla
+0️⃣;tecla: 0;0|tecla|zero
+1️⃣;tecla: 1;1|tecla|u
+2️⃣;tecla: 2;2|dos|tecla
+3️⃣;tecla: 3;3|tecla|tres
+4️⃣;tecla: 4;4|quatre|tecla
+5️⃣;tecla: 5;5|cinc|tecla
+6️⃣;tecla: 6;6|sis|tecla
+7️⃣;tecla: 7;7|set|tecla
+8️⃣;tecla: 8;8|tecla|vuit
+9️⃣;tecla: 9;9|nou|tecla
+🔟;tecla: 10;tecla
+🔠;botó de lletres llatines en majúscules;ABCD|llatines|lletres|majúscules
+🔡;botó de lletres llatines en minúscules;abcd|entrada|llatines|lletres|minúscules
+🔢;botó de números;1234|dígits|entrada|números|números per introduir|xifres
+🔣;botó de símbols;〒♪&%|entrada|símbols|símbols per introduir
+🔤;botó de lletres llatines;abc|alfabet|entrada|lletres|lletres llatines
+🅰️;botó A (grup sanguini);A|botó|grup sanguini
+🆎;botó AB (grup sanguini);AB|botó|grup sanguini
+🅱️;botó B (grup sanguini);B|botó|grup sanguini
+🆑;botó CL;botó esborrar|CL|esborrar|quadre
+🆒;botó COOL;Cool|paraula|quadre
+🆓;botó FREE;Free|paraula|quadre
+ℹ️;informació;i|punt d’informació
+🆔;botó ID;ID|identificació|identitat|símbol d’identificació
+Ⓜ️;lletra M en cercle;cercle|lletra|M|M encerclada
+🆕;botó NEW;New|nou|paraula|quadre
+🆖;botó NG;NG|paraula|quadre
+🅾️;botó O (grup sanguini);botó|grup sanguini|O
+🆗;botó OK;d’acord|OK|paraula
+🅿️;botó P;aparcament|lletra P|P|pàrquing
+🆘;botó SOS;ajuda|auxili|emergència|socors|SOS
+🆙;botó amb la paraula Up!;botó|paraula|Up!
+🆚;botó VS;contra|versus|VS|vs.
+🈁;botó japonès "aquí";botó "aquí" en japonès|japonès|katakana|koko|quadre
+🈂️;botó japonès "càrrec per servei";botó "càrrec per servei" en japonès|japonès|katakana|quadre|sa
+🈷️;botó japonès "import mensual";"quantitat mensual"|botó "import mensual" en japonès|ideograma|japonès|kanji
+🈶;botó japonès "de pagament";"de pagament"|ideograma|japonès|kanji
+🈯;botó japonès "reservat";"reservat"|botó "reservat" en japonès|ideograma|japonès|kanji
+🉐;botó japonès "ganga";"ganga"|botó "ganga" en japonès|ideograma|japonès|kanji
+🈹;botó japonès "descompte";ideograma|japonès|kanji|quadre
+🈚;botó japonès "gratis";"gratis"|botó "gratis" en japonès|ideograma|japonès|kanji
+🈲;botó japonès "prohibit";botó "prohibit" en japonès|ideograma|japonès|kanji|prohibició|prohibit
+🉑;botó japonès "acceptable";acceptable|botó "acceptable en japonès"|ideograma|japonès|kanji
+🈸;botó japonès "aplicació";aplicar|ideograma|japonès|kanji
+🈴;botó japonès "qualificació d’aprovat";"qualificació d’aprovat"|botó "qualificació d’aprovat" en japonès|ideograma|japonès|kanji
+🈳;botó japonès "plaça lliure";botó "plaça lliure" en japonès|buit|ideograma|japonès|kanji|plaça lliure
+㊗️;botó japonès "enhorabona";botó "enhorabona" en japonès|enhorabona|ideograma|japonès|kanji
+㊙️;botó japonès "secret";"secret"|botó "secret" en japonès|ideograma|japonès|kanji
+🈺;botó japonès "negoci obert";botó "negoci obert" en japonès|ideograma|japonès|kanji|obert
+🈵;botó japonès "cap plaça lliure";botó "cap plaça lliure" en japonès|cap plaça lliure|ideograma|japonès|kanji|ple
+🔴;cercle vermell;cercle|circumferència|circumferència vermella|geometria|vermell
+🟠;cercle taronja;cercle|circumferència|geometria|taronja
+🟡;cercle groc;cercle|circumferència|circumferència groga|geometria|groc
+🟢;cercle verd;cercle|circumferència|circumferència verda|geometria|verd
+🔵;cercle blau;blau|cercle|circumferència|circumferència blava|geometria
+🟣;cercle lila;cercle|circumferència|circumferència morada|geometria|morat
+🟤;cercle marró;cercle|circumferència|geometria|marró
+⚫;cercle negre;cercle|circumferència|circumferència negra|geometria|negre
+⚪;cercle blanc;blanc|cercle|circumferència|circumferència blanca|geometria
+🟥;quadrat vermell;quadrat|roig|targeta|targeta vermella|vermell
+🟧;quadrat taronja;quadrat|taronja
+🟨;quadrat groc;groc|quadrat|targeta|targeta groga
+🟩;quadrat verd;quadrat|verd
+🟦;quadrat blau;blau|quadrat
+🟪;quadrat lila;lila|morat|quadrat|violeta
+🟫;quadrat marró;marró|quadrat
+⬛;quadrat gran negre;geometria|gran|negre|quadrat
+⬜;quadrat gran blanc;blanc|geometria|gran|quadrat
+◼️;quadrat mitjà negre;geometria|mitjà|negre|quadrat
+◻️;quadrat mitjà blanc;blanc|geometria|mitjà|quadrat
+◾;quadrat negre petit-mitjà;geometria|negre|petit-mitjà|quadrat
+◽;quadrat blanc petit-mitjà;blanc|geometria|petit-mitjà|quadrat
+▪️;quadrat negre petit;geometria|negre|petit|quadrat
+▫️;quadrat blanc petit;blanc|geometria|petit|quadrat
+🔶;rombe gran taronja;geometria|gran|rombe|taronja
+🔷;rombe gran blau;blau|geometria|gran|rombe
+🔸;rombe petit taronja;geometria|petit|rombe|taronja
+🔹;rombe petit blau;blau|geometria|petit|rombe
+🔺;triangle vermell cap amunt;amunt|geometria|triangle|vermell|vermell cap amunt
+🔻;triangle vermell cap avall;avall|geometria|triangle|vermell
+💠;rombe amb punt;flor|geometria|interior|pètals|rombe
+🔘;botó d’opció;botó|geometria|opció
+🔳;botó de quadrat blanc;blanc|botó|geometria|perfilat|quadrat
+🔲;botó de quadrat negre;botó|geometria|negre|quadrat
+🏁;bandera de quadres;automobilisme|bandera|banderes|cursa|curses|curses de cotxes|de quadres|esport|joc|meta|motor|nascar|victòria
+🚩;bandera triangular;bandera|banderí|construcció|golf|pal
+🎌;banderes creuades;banderes|celebració|japó|japoneses
+🏴;bandera negra;bandera|oneig|onejant
+🏳️;bandera blanca;bandera|oneig
+🏳️‍🌈;bandera de l’arc de Sant Martí;arc de Sant Martí|bandera|bisexual|gai|gènere no binari|lesbiana|lgbt|lgbtq|lgbtqia|orgull|queer|trans|transgènere
+🏳️‍⚧️;bandera transgènere;bandera|blanc|blau cel|rosa|trans|transgènere
+🏴‍☠️;bandera pirata;botí|Jolly Roger|pirata|tresor
+🇦🇨;bandera: Illa de l’Ascensió;bandera
+🇦🇩;bandera: Andorra;bandera
+🇦🇪;bandera: Emirats Àrabs Units;bandera
+🇦🇫;bandera: Afganistan;bandera
+🇦🇬;bandera: Antigua i Barbuda;bandera
+🇦🇮;bandera: Anguilla;bandera
+🇦🇱;bandera: Albània;bandera
+🇦🇲;bandera: Armènia;bandera
+🇦🇴;bandera: Angola;bandera
+🇦🇶;bandera: Antàrtida;bandera
+🇦🇷;bandera: Argentina;bandera
+🇦🇸;bandera: Samoa Americana;bandera
+🇦🇹;bandera: Àustria;bandera
+🇦🇺;bandera: Austràlia;bandera
+🇦🇼;bandera: Aruba;bandera
+🇦🇽;bandera: Illes Åland;bandera
+🇦🇿;bandera: Azerbaidjan;bandera
+🇧🇦;bandera: Bòsnia i Hercegovina;bandera
+🇧🇧;bandera: Barbados;bandera
+🇧🇩;bandera: Bangladesh;bandera
+🇧🇪;bandera: Bèlgica;bandera
+🇧🇫;bandera: Burkina Faso;bandera
+🇧🇬;bandera: Bulgària;bandera
+🇧🇭;bandera: Bahrain;bandera
+🇧🇮;bandera: Burundi;bandera
+🇧🇯;bandera: Benín;bandera
+🇧🇱;bandera: Saint-Barthélemy;bandera
+🇧🇲;bandera: Bermudes;bandera
+🇧🇳;bandera: Brunei;bandera
+🇧🇴;bandera: Bolívia;bandera
+🇧🇶;bandera: Carib Neerlandès;bandera
+🇧🇷;bandera: Brasil;bandera
+🇧🇸;bandera: Bahames;bandera
+🇧🇹;bandera: Bhutan;bandera
+🇧🇻;bandera: Illa Bouvet;bandera
+🇧🇼;bandera: Botswana;bandera
+🇧🇾;bandera: Belarús;bandera
+🇧🇿;bandera: Belize;bandera
+🇨🇦;bandera: Canadà;bandera
+🇨🇨;bandera: Illes Cocos (Keeling);bandera
+🇨🇩;bandera: Congo - Kinshasa;bandera
+🇨🇫;bandera: República Centreafricana;bandera
+🇨🇬;bandera: Congo - Brazzaville;bandera
+🇨🇭;bandera: Suïssa;bandera
+🇨🇮;bandera: Côte d’Ivoire;bandera
+🇨🇰;bandera: Illes Cook;bandera
+🇨🇱;bandera: Xile;bandera
+🇨🇲;bandera: Camerun;bandera
+🇨🇳;bandera: Xina;bandera
+🇨🇴;bandera: Colòmbia;bandera
+🇨🇵;bandera: Illa Clipperton;bandera
+🇨🇶;bandera: Sark;bandera
+🇨🇷;bandera: Costa Rica;bandera
+🇨🇺;bandera: Cuba;bandera
+🇨🇻;bandera: Cap Verd;bandera
+🇨🇼;bandera: Curaçao;bandera
+🇨🇽;bandera: Illa Christmas;bandera
+🇨🇾;bandera: Xipre;bandera
+🇨🇿;bandera: Txèquia;bandera
+🇩🇪;bandera: Alemanya;bandera
+🇩🇬;bandera: Diego Garcia;bandera
+🇩🇯;bandera: Djibouti;bandera
+🇩🇰;bandera: Dinamarca;bandera
+🇩🇲;bandera: Dominica;bandera
+🇩🇴;bandera: República Dominicana;bandera
+🇩🇿;bandera: Algèria;bandera
+🇪🇦;bandera: Ceuta i Melilla;bandera
+🇪🇨;bandera: Equador;bandera
+🇪🇪;bandera: Estònia;bandera
+🇪🇬;bandera: Egipte;bandera
+🇪🇭;bandera: Sàhara Occidental;bandera
+🇪🇷;bandera: Eritrea;bandera
+🇪🇸;bandera: Espanya;bandera
+🇪🇹;bandera: Etiòpia;bandera
+🇪🇺;bandera: Unió Europea;bandera
+🇫🇮;bandera: Finlàndia;bandera
+🇫🇯;bandera: Fiji;bandera
+🇫🇰;bandera: Illes Falkland;bandera
+🇫🇲;bandera: Micronèsia;bandera
+🇫🇴;bandera: Illes Fèroe;bandera
+🇫🇷;bandera: França;bandera
+🇬🇦;bandera: Gabon;bandera
+🇬🇧;bandera: Regne Unit;bandera
+🇬🇩;bandera: Grenada;bandera
+🇬🇪;bandera: Geòrgia;bandera
+🇬🇫;bandera: Guaiana Francesa;bandera
+🇬🇬;bandera: Guernsey;bandera
+🇬🇭;bandera: Ghana;bandera
+🇬🇮;bandera: Gibraltar;bandera
+🇬🇱;bandera: Groenlàndia;bandera
+🇬🇲;bandera: Gàmbia;bandera
+🇬🇳;bandera: Guinea;bandera
+🇬🇵;bandera: Guadalupe;bandera
+🇬🇶;bandera: Guinea Equatorial;bandera
+🇬🇷;bandera: Grècia;bandera
+🇬🇸;bandera: Illes Geòrgia del Sud i Sandwich del Sud;bandera
+🇬🇹;bandera: Guatemala;bandera
+🇬🇺;bandera: Guam;bandera
+🇬🇼;bandera: Guinea Bissau;bandera
+🇬🇾;bandera: Guyana;bandera
+🇭🇰;bandera: Hong Kong (RAE Xina);bandera
+🇭🇲;bandera: Illes Heard i McDonald;bandera
+🇭🇳;bandera: Hondures;bandera
+🇭🇷;bandera: Croàcia;bandera
+🇭🇹;bandera: Haití;bandera
+🇭🇺;bandera: Hongria;bandera
+🇮🇨;bandera: Illes Canàries;bandera
+🇮🇩;bandera: Indonèsia;bandera
+🇮🇪;bandera: Irlanda;bandera
+🇮🇱;bandera: Israel;bandera
+🇮🇲;bandera: Illa de Man;bandera
+🇮🇳;bandera: Índia;bandera
+🇮🇴;bandera: Territori Britànic de l’Oceà Índic;bandera
+🇮🇶;bandera: Iraq;bandera
+🇮🇷;bandera: Iran;bandera
+🇮🇸;bandera: Islàndia;bandera
+🇮🇹;bandera: Itàlia;bandera
+🇯🇪;bandera: Jersey;bandera
+🇯🇲;bandera: Jamaica;bandera
+🇯🇴;bandera: Jordània;bandera
+🇯🇵;bandera: Japó;bandera
+🇰🇪;bandera: Kenya;bandera
+🇰🇬;bandera: Kirguizstan;bandera
+🇰🇭;bandera: Cambodja;bandera
+🇰🇮;bandera: Kiribati;bandera
+🇰🇲;bandera: Comores;bandera
+🇰🇳;bandera: Saint Kitts i Nevis;bandera
+🇰🇵;bandera: Corea del Nord;bandera
+🇰🇷;bandera: Corea del Sud;bandera
+🇰🇼;bandera: Kuwait;bandera
+🇰🇾;bandera: Illes Caiman;bandera
+🇰🇿;bandera: Kazakhstan;bandera
+🇱🇦;bandera: Lao;bandera
+🇱🇧;bandera: Líban;bandera
+🇱🇨;bandera: Saint Lucia;bandera
+🇱🇮;bandera: Liechtenstein;bandera
+🇱🇰;bandera: Sri Lanka;bandera
+🇱🇷;bandera: Libèria;bandera
+🇱🇸;bandera: Lesotho;bandera
+🇱🇹;bandera: Lituània;bandera
+🇱🇺;bandera: Luxemburg;bandera
+🇱🇻;bandera: Letònia;bandera
+🇱🇾;bandera: Líbia;bandera
+🇲🇦;bandera: Marroc;bandera
+🇲🇨;bandera: Mònaco;bandera
+🇲🇩;bandera: Moldàvia;bandera
+🇲🇪;bandera: Montenegro;bandera
+🇲🇫;bandera: Saint Martin;bandera
+🇲🇬;bandera: Madagascar;bandera
+🇲🇭;bandera: Illes Marshall;bandera
+🇲🇰;bandera: Macedònia del Nord;bandera
+🇲🇱;bandera: Mali;bandera
+🇲🇲;bandera: Myanmar (Birmània);bandera
+🇲🇳;bandera: Mongòlia;bandera
+🇲🇴;bandera: Macau (RAE Xina);bandera
+🇲🇵;bandera: Illes Marianes del Nord;bandera
+🇲🇶;bandera: Martinica;bandera
+🇲🇷;bandera: Mauritània;bandera
+🇲🇸;bandera: Montserrat;bandera
+🇲🇹;bandera: Malta;bandera
+🇲🇺;bandera: Maurici;bandera
+🇲🇻;bandera: Maldives;bandera
+🇲🇼;bandera: Malawi;bandera
+🇲🇽;bandera: Mèxic;bandera
+🇲🇾;bandera: Malàisia;bandera
+🇲🇿;bandera: Moçambic;bandera
+🇳🇦;bandera: Namíbia;bandera
+🇳🇨;bandera: Nova Caledònia;bandera
+🇳🇪;bandera: Níger;bandera
+🇳🇫;bandera: Illa Norfolk;bandera
+🇳🇬;bandera: Nigèria;bandera
+🇳🇮;bandera: Nicaragua;bandera
+🇳🇱;bandera: Països Baixos;bandera
+🇳🇴;bandera: Noruega;bandera
+🇳🇵;bandera: Nepal;bandera
+🇳🇷;bandera: Nauru;bandera
+🇳🇺;bandera: Niue;bandera
+🇳🇿;bandera: Nova Zelanda;bandera
+🇴🇲;bandera: Oman;bandera
+🇵🇦;bandera: Panamà;bandera
+🇵🇪;bandera: Perú;bandera
+🇵🇫;bandera: Polinèsia Francesa;bandera
+🇵🇬;bandera: Papua Nova Guinea;bandera
+🇵🇭;bandera: Filipines;bandera
+🇵🇰;bandera: Pakistan;bandera
+🇵🇱;bandera: Polònia;bandera
+🇵🇲;bandera: Saint-Pierre-et-Miquelon;bandera
+🇵🇳;bandera: Illes Pitcairn;bandera
+🇵🇷;bandera: Puerto Rico;bandera
+🇵🇸;bandera: Territoris palestins;bandera
+🇵🇹;bandera: Portugal;bandera
+🇵🇼;bandera: Palau;bandera
+🇵🇾;bandera: Paraguai;bandera
+🇶🇦;bandera: Qatar;bandera
+🇷🇪;bandera: Illa de la Reunió;bandera
+🇷🇴;bandera: Romania;bandera
+🇷🇸;bandera: Sèrbia;bandera
+🇷🇺;bandera: Rússia;bandera
+🇷🇼;bandera: Ruanda;bandera
+🇸🇦;bandera: Aràbia Saudí;bandera
+🇸🇧;bandera: Illes Salomó;bandera
+🇸🇨;bandera: Seychelles;bandera
+🇸🇩;bandera: Sudan;bandera
+🇸🇪;bandera: Suècia;bandera
+🇸🇬;bandera: Singapur;bandera
+🇸🇭;bandera: Santa Helena;bandera
+🇸🇮;bandera: Eslovènia;bandera
+🇸🇯;bandera: Svalbard i Jan Mayen;bandera
+🇸🇰;bandera: Eslovàquia;bandera
+🇸🇱;bandera: Sierra Leone;bandera
+🇸🇲;bandera: San Marino;bandera
+🇸🇳;bandera: Senegal;bandera
+🇸🇴;bandera: Somàlia;bandera
+🇸🇷;bandera: Surinam;bandera
+🇸🇸;bandera: Sudan del Sud;bandera
+🇸🇹;bandera: São Tomé i Príncipe;bandera
+🇸🇻;bandera: El Salvador;bandera
+🇸🇽;bandera: Sint Maarten;bandera
+🇸🇾;bandera: Síria;bandera
+🇸🇿;bandera: Eswatini;bandera
+🇹🇦;bandera: Tristan da Cunha;bandera
+🇹🇨;bandera: Illes Turks i Caicos;bandera
+🇹🇩;bandera: Txad;bandera
+🇹🇫;bandera: Terres Australs Antàrtiques Franceses;bandera
+🇹🇬;bandera: Togo;bandera
+🇹🇭;bandera: Tailàndia;bandera
+🇹🇯;bandera: Tadjikistan;bandera
+🇹🇰;bandera: Tokelau;bandera
+🇹🇱;bandera: Timor-Leste;bandera
+🇹🇲;bandera: Turkmenistan;bandera
+🇹🇳;bandera: Tunísia;bandera
+🇹🇴;bandera: Tonga;bandera
+🇹🇷;bandera: Turquia;bandera
+🇹🇹;bandera: Trinidad i Tobago;bandera
+🇹🇻;bandera: Tuvalu;bandera
+🇹🇼;bandera: Taiwan;bandera
+🇹🇿;bandera: Tanzània;bandera
+🇺🇦;bandera: Ucraïna;bandera
+🇺🇬;bandera: Uganda;bandera
+🇺🇲;bandera: Illes Menors Allunyades dels Estats Units;bandera
+🇺🇳;bandera: Nacions Unides;bandera
+🇺🇸;bandera: Estats Units;bandera
+🇺🇾;bandera: Uruguai;bandera
+🇺🇿;bandera: Uzbekistan;bandera
+🇻🇦;bandera: Ciutat del Vaticà;bandera
+🇻🇨;bandera: Saint Vincent i les Grenadines;bandera
+🇻🇪;bandera: Veneçuela;bandera
+🇻🇬;bandera: Illes Verges Britàniques;bandera
+🇻🇮;bandera: Illes Verges dels Estats Units;bandera
+🇻🇳;bandera: Vietnam;bandera
+🇻🇺;bandera: Vanuatu;bandera
+🇼🇫;bandera: Wallis i Futuna;bandera
+🇼🇸;bandera: Samoa;bandera
+🇽🇰;bandera: Kosovo;bandera
+🇾🇪;bandera: Iemen;bandera
+🇾🇹;bandera: Mayotte;bandera
+🇿🇦;bandera: Sud-àfrica;bandera
+🇿🇲;bandera: Zàmbia;bandera
+🇿🇼;bandera: Zimbàbue;bandera
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;bandera: Anglaterra;bandera
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;bandera: Escòcia;bandera
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;bandera: Gal·les;bandera

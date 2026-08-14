@@ -1,0 +1,1913 @@
+😀;leveä hymy;hymy|kasvot|naama|virnistys
+😃;hymy suu auki;auki|hymy|iloinen|kasvot|naama|suu
+😄;hymyilevät silmät ja suu;auki|hymy|kasvot|naama|silmä|suu
+😁;virnistys ja hymyilevät silmät;hymy|kasvot|naama|silmä|virnistys
+😆;hymy ja tiukasti suljetut silmät;auki|hymy|naama|nauru|suu|tyytyväinen
+😅;hymy ja kylmänhiki;auki|hiki|hymy|kylmä|naama
+🤣;nauraa kippurassa;kasvot|kippura|naama|nauraa|nauru
+😂;kasvot naurunkyynelissä;ilo|itkunauru|kasvot|naama|naurunkyyneleet
+🙂;pieni hymy;hymy|naama
+🙃;ylösalainen naama;naama|väärinpäin|ylösalainen
+🫠;sulava naama;kadota|kuuma|liueta|nolo|pehmenevä|sarkasmi|sulaa|sulavat kasvot|valuva
+😉;silmänisku;flirtti|huumori|kasvot|naama|salaisuus|silmä
+😊;punastunut hymy;hymy|naama|punastunut|silmä
+😇;hymy ja sädekehä;enkeli|hymy|naama|sädekehä|satu|viaton
+🥰;hymy ja kolme sydäntä;hymy|ihailla|ihastunut|kasvot|rakastunut
+😍;hymy ja sydänsilmät;hymy|naama|rakkaus|silmä|sydän
+🤩;tähtisilmä;iloinen|kasvot|naama|silmät|tähdet|virnistys
+😘;lentosuukko;naama|pusu|sydän
+😗;pusunaama;naama|pusu|suudelma|suukko
+☺️;hymynaama;hymy|naama|punoitus|rento
+😚;pusunaama ja suljetut silmät;naama|pusu|silmä|suljettu
+😙;pusunaama ja hymyilevät silmät;hymy|naama|pusu|silmä
+🥲;hymyilevät kasvot ja kyynel;helpottunut|hymiö|hymyilee|itku|kiitollinen|kyynel|liikuttunut|ylpeä
+😋;herkullista ruokaa nauttinut;herkullinen|hymy|naama|nam|nami|nautiskeleva
+😛;kieli ulkona;juhla|kieli|mahtavaa|naama
+😜;kieli ulkona ja silmänisku;kieli|kieli ulkona|naama|silmä|silmänisku|vitsi
+🤪;mielipuoli;eripari|silmät|virne
+😝;kieli ulkona ja silmät tiukasti kiinni;kamala|kieli|maku|naama|silmä
+🤑;dollarisilmät ja rahasuu;naama|raha|suu
+🤗;halaava naama;halaus|hali|naama
+🤭;käsi suun edessä;hups|kiherrys|lipsahdus|salaisuus|yllätys
+🫢;silmät pyöreinä käsi suun edessä;ällikkä|ällistys|epäusko|hämmästys|nolo|peloissaan|yllättyny|yllättynyt
+🫣;kurkistus sormien takaa;ihastunut|kiehtova|kurkistaa|kurkkia|tiirata|ujo|vilkuilla
+🤫;hyssyttelevä;hiljentää|hyssyttää|kasvot|shh
+🤔;mietteliäs;naama
+🫡;kunnioittava tervehdys;joukot|käsi lippaan|kunniatervehdys|kyllä|ok|palveluksessanne|selvä
+🤐;vetoketjusuu;naama|suu|vetoketju
+🤨;kohotetut kulmakarvat;epäilevä|kasvot|mietteliäs|naama|skeptinen
+😐;naama peruslukemilla;naama|neutraali|peruslukemat|pettynyt|surullinen|tunteeton
+😑;ilmeetön;kasvot|naama|tunteeton|tyhjä|vihainen
+😶;naama ilman suuta;hiljaa|hiljainen|naama|sanaton|suu
+🫥;katkoviivalla piirretty naama;haihtuva|häviävä|introvertti|katoava|masentunut|näkymätön|piiloon
+😶‍🌫️;naama pilvissä;hajamielinen|naama sumussa|pää pilvissä
+😏;virnistys;huvittunut|hymy|naama|virne
+😒;ei naurata;naama|onneton
+🙄;silmien pyöritys;ihan sama|naama|pyörivä|silmät
+😬;irvistävä;irvistys|naama
+😮‍💨;hämmästynyt;hämmästyä|haukkoa henkeään|helpotus|hymiö|kuiskaus|puhaltaa|tupakointi|uupunut|vihellys
+🤥;valehteleva;kasvot|valehdella|valehtelija
+🫨;tärisevä;hymiö|maanjäristys|naama|omg|paniikki|shokissa|tärähdys|vapiseva|värisevä|yllättynyt
+🙂‍↔️;ravistaa päätä vaakasuunnassa;ei|pudistus
+🙂‍↕️;ravistaa päätä pystysuunnassa;kyllä|nyökkäys
+😌;helpottunut;helpotus|naama
+😔;pohdiskeleva;ajatteleva|lannistunut|mietteliäs|naama
+😪;unelias;naama|uni
+🤤;kuolaava;kasvot|kuola|kuolata|naama
+😴;nukkuva;naama|uni|väsynyt|yö|zzz
+🫩;silmäpussit;pussit silmien alla|uninen|uupunut|väsynyt
+😷;naama ja hengityssuoja;flunssa|lääkäri|lääke|naama|sairas|suoja
+🤒;naama ja kuumemittari;kasvot|kipeä|kuume|lämpö|lämpömittari|naama|sairas
+🤕;naama ja pääside;kipeä|loukkaantunut|naama|sairas|side|vamma
+🤢;pahoinvoiva;kasvot|oksentaa|pahoinvoida|pahoinvointi
+🤮;oksentava;darra|kasvot|naama|oksennus|oksentaa|pahoinvointi|yrjötä
+🤧;aivastava;aivastaa|aivastus|kasvot|naama|terveydeksi
+🥵;kuumottava;hikoilee|kuume|kuumeinen|kuumissaan|lämpöhalvaus|punanaama|sairaus
+🥶;paleleva;jääpuikot|jäätynyt|kasvot|kylmä|kylmettynyt|sininen naama
+🥴;tokkurainen naama;aaltoileva suu|heikotus|humala|huppelissa|kännissä|päissään|silmät sikkaralla|tokkurainen
+😵;tajuton;huimaus|kuollut|naama|pyörtyvä|tuupertuva
+😵‍💫;naama jolla spiraalisilmät;apua|huimata|hymiö|hypnoosissa|naama|ongelmia|sekava|spiraali
+🤯;räjähdys päässä;järkytys|naama|paukku|räjähdys|raju|sokki
+🤠;cowboy-hattu;cowboy|hattu|kasvot
+🥳;juhliva;hattu|juhla|juhlia|kasvot|leikki|pilli|syntymäpäivä
+🥸;naamioitunut;henkilö|lasit|naama|naamio|nenä|tuntematon|valepuku|viikset
+😎;aurinkolasihymy;aurinko|aurinkolasit|cool|hymy|lasit
+🤓;nörtti;fiksu|hymiö|jänöhammas|naama|silmälasit
+🧐;monokkeli silmässä;fiinu|kalkkis|katse|vanhanaikainen
+😕;hämmentynyt;häkeltynyt|hämmennys|naama
+🫤;naama suu vinossa;epäilevä|epävarma|hämmentynyt|pah|pettynyt|pyh|skeptinen|turhautunut
+😟;huolestunut;huoli|naama
+🙁;hieman surullinen;naama|surullinen
+☹️;surullinen;naama|suru|tuomitseva
+😮;yllättynyt;auki|empatia|naama|suu
+😯;järkyttynyt;naama|sanaton|yllättynyt
+😲;ällistynyt;ihmetys|järkyttynyt|naama|tosi
+😳;punastunut naama;naama|punastunut|tyrmistynyt|vau
+🫪;vääristyneet kasvot;ahdistus|haavoittuvainen|järkyttynyt|paniikki|turvonnut|yllättynyt
+🥺;anova;koiranpentuilme|sääli
+🥹;kyyneliä pidättelevä naama;hämmentynyt|itku|kiitollinen|pidätellä itkua|surullinen|tunteellinen|tunteet|vihainen|ylpeä
+😦;surullinen ja suu auki;auki|naama|surullinen|suu
+😧;ahdistunut;ahdistus|hätä|naama
+😨;pelokas;huolestunut|naama|pelästynyt|pelko|yllättynyt
+😰;avoin suu ja kylmänhiki;auki|hiki|kylmä|naama|sininen|suu
+😥;pettynyt mutta helpottunut;ahdistunut|helpottunut|hiki|huh|naama|pettynyt|vaikea
+😢;itkevä;itku|kyynel|naama|surullinen
+😭;ääneen itkevä;itku|kyynel|naama|nyyhky|surullinen
+😱;pelokas huuto;huuto|Munch|naama|pelko|pelokas
+😖;tyrmistynyt;hämmentynyt|naama|pöyristynyt
+😣;kärsivä;hellittämätön|naama|peräänantamaton|sisukas
+😞;pettynyt;naama|pettymys
+😓;kylmänhiki;hiki|kylmä|naama
+😩;uupunut;naama|poikki|uupumus|väsynyt
+😫;väsynyt;naama|uupumus|väsymys
+🥱;haukotteleva naama;haukotus|kasvot|kyllästynyt|uni|väsynyt
+😤;höyryä nenästä;höyry|naama|surullinen|vihainen|voittaja|voitto
+😡;mököttävä;naama|punainen|raivo|suuttunut|vihainen
+😠;vihainen;kiukku|naama|raivo|suuttunut|viha
+🤬;sensuroitu suu;kasvot|kiroilu|sensuuri|vihainen
+😈;pirullinen hymy ja sarvet;fantasia|hymy|naama|piru|sarvet|satu
+👿;pikkupaholainen;demoni|fantasia|naama|piru|satu
+💀;pääkallo;hirviö|kuolema|naama|ruumis|satu
+☠️;pääkallo ja reisiluut;hirviö|kuolema|myrkyllinen|naama|pääkallo|reisiluut|ruumis
+💩;kakkakasa;hirviö|kakka|lanta|naama|sarjakuva|sonta
+🤡;pelle;kasvot|klovni
+👹;peikko;fantasia|hirviö|japanilainen|naama|olio|satu
+👺;hiisi;fantasia|hirviö|japanilainen|menninkäinen|naama|olio|satu
+👻;kummitus;fantasia|hirviö|naama|olio|satu
+👽;avaruusolio;alien|olio
+👾;avaruushirviö;avaruusmonsteri|avaruusolio|naama|olio
+🤖;robotti;hirviö|naama|robottinaama
+😺;leveästi hymyilevä kissa;auki|hymy|kissa|naama|suu
+😸;virnistävä kissa ja hymyilevät silmät;hymy|kissa|naama|silmä|virnistys
+😹;kissa ja naurunkyyneleet;ilo|kissa|kissanaama ja naurunkyyneleet|kyyneleet|naama|nauru
+😻;kissa ja sydänsilmät;hymy|kissa|kissanaama ja sydänsilmät|naama|rakkaus|silmä|sydän
+😼;vinosti hymyilevä kissa;hymy|ironinen|kissa|naama|vino
+😽;kissan pusunaama ja suljetut silmät;kissa|naama|pusu|silmä|suukko
+🙀;yllättynyt kissa;eläin|kissa|naama|oho|yllättynyt
+😿;itkevä kissa;itku|kissa|kyynel|naama|surullinen
+😾;mököttävä kissa;kissa|mököttävä|naama
+🙈;en näe pahaa;apina|ei|ele|kielletty|paholainen|pelokas
+🙉;en kuule pahaa;apina|ei|ele|kielletty
+🙊;en puhu pahaa;apina|eläin|hiljaa|hups|kielletty
+💌;rakkauskirje;kirje|posti|rakkaus|romantiikka|sydän
+💘;sydän ja nuoli;amor|nuoli|romantiikka|sydän
+💝;sydän ja lahjanauha;nauha|rakkaus|sydän|vuosipäivä|ystävänpäivä
+💖;kimaltava sydän;innostunut|kimalle|sydän
+💗;kasvava sydän;hermostunut|innostunut|kasvava|sydämen syke|sydän
+💓;sykkivä sydän;sydän|syke|sykkiä|sykkivä
+💞;toisiaan kiertävät sydämet;pyörivä|sydän
+💕;kaksi sydäntä;kaksi|merkkipäivä|rakkaus|sydän|xoxo
+💟;sydänkoriste;143|sydän|tunne
+❣️;sydänhuutomerkki;huutomerkki|sydän|välimerkit
+💔;särkynyt sydän;särkyä|särkynyt|suru|sydän|tunne|yksin
+❤️‍🔥;palava sydän;himo|liekki|palaa|pyhä sydän|rakkaus|sydän
+❤️‍🩹;parantuva sydän;elpyvä|hyvinvoiva|parantuminen|parantuva|tervehtyvä|toipuminen
+❤️;punainen sydän;punainen|rakkaus|sydän|tunne
+🩷;pinkki sydän;pinkki|rakkaus|söpö|sydän|tunne|tykkäys|vaaleanpunainen
+🧡;oranssi sydän;oranssi|sydän
+💛;keltainen sydän;keltainen|sydän
+💚;vihreä sydän;sydän|vihreä
+💙;sininen sydän;rakkaus|romanssi|sininen|sydän|tunne
+🩵;vaaleansininen sydän;rakkaus|sinivihreä|syaani|sydän|tunne|vaaleansininen
+💜;violetti sydän;sydän|violetti
+🤎;ruskea sydän;ruskea|sydän
+🖤;musta sydän;musta|sydän
+🩶;harmaa sydän;harmaa|hopea|rakkaus|siniharmaa|sydän|tunne
+🤍;valkoinen sydän;sydän|valkoinen
+💋;huulipunajälki;huulet|jälki|pusu
+💯;sata pistettä;100|pisteet|täydet
+💢;viha;pettynyt|sarjakuva|vihainen
+🫯;tappelupilvi;argumentti|erimielisyys|metakka|nujakka|paini|tappelu|väittely
+💥;törmäys;pum|sarjakuva
+💫;pyörryttävä;sarjakuva|tähti
+💦;hikipisarat;hiki|sarjakuva|vesi
+💨;pikalähtö;juoksu|sarjakuva
+🕳️;musta aukko;musta|pallo|reikä
+💬;puhekupla;ilmapallo|keskustelu|kupla|puhe|sarjakuva
+👁️‍🗨️;puhekuplasilmä;puhekupla|silmä|silminnäkijä|todistaja
+🗨️;vasen puhekupla;keskustelu|puhe
+🗯️;oikea vihainen puhekupla;ilmapallo|kupla|puhekupla|vihainen
+💭;ajatuskupla;ajatus|haaveet|ilmapallo|kupla|sarjakuva
+💤;zzz;sänky|sarjakuva|uni|väsynyt|yö
+👋;käden heilautus;heilautus|käsi|vartalo|vilkuttaa|vilkutus
+🤚;kämmenselkä koholla;kädenselkä|kädenselkä koholla|kohotettu
+🖐️;nostettu käsi ja sormet erillään;käsi|levitetty|sormi|vartalo
+✋;nostettu käsi;käsi|vartalo
+🖖;vulkanilaisten tervehdys;käsi|sormi|spock|vartalo|vulkanilainen
+🫱;oikealle ojentuva käsi;kädenojennus|käsi|oikea käsi|oikealle
+🫲;vasemmalle ojentuva käsi;kädenojennus|käsi|vasemmalle|vasen
+🫳;käsi kämmen alaspäin;ei kelpaa|hätistää|hätyyttää|hus|hylätä|nostaa|noutaa|pudottaa|tarttua
+🫴;käsi kämmen ylöspäin;houkutella|käsi|kutsua|nostaa|pidellä|pyydystää|tarjota|viittilöidä|viittoa
+🫷;vasemmalle työntävä käsi;käsi|kieltäytyä|odota|seis|stop|työntö|vartalo|vasemmalle|ylävitonen
+🫸;oikealle työntävä käsi;käsi|kieltäytyä|odota|oikealle|seis|stop|työntö|vartalo|ylävitonen
+👌;ok-sormiele;käsi|ok|vartalo
+🤌;sormet supussa;käsi supussa|käsiele|kuulustelu|mitä|sarkastinen|sormet|supussa
+🤏;nipistävä käsi;hippunen|nipistys|nipistysote|pieni määrä|sormet|vähäinen määrä|vähän
+✌️;voitonmerkki;käsi|v|vartalo|voitto
+🤞;sormet ristissä;käsi|narrata|onni|risti|sormi
+🫰;etusormi ja peukalo ristissä;anna rahaa|hinta|kallis|napsautus|raha|rakkaus|sydän
+🤟;rakastan sinua -ele;fanitus|käsi|kolme sormea|rakkaus
+🤘;sarviele;käsi|rock|sarvet|sormi|vartalo
+🤙;soita minulle;käsi|puhelu|soita
+👈;kämmenselkä ja etusormi vasemmalle;etusormi|kämmenselkä|käsi|osoittaa|sormi|vartalo|vasemmalle osoittava etusormi kämmenselkä katsojaan päin
+👉;kämmenselkä ja etusormi oikealle;etusormi|kämmenselkä|käsi|oikealle osoittava etusormi kämmenselkä katsojaan päin|osoittaa|sormi|vartalo
+👆;kämmenselkä ja etusormi ylös;etusormi|kämmenselkä|käsi|osoittaa|sormi|vartalo|ylös|ylös osoittava etusormi kämmenselkä katsojaan päin
+🖕;keskisormi;käsi|keskari|sormi|vartalo
+👇;kämmenselkä ja etusormi alas;alas|alas osoittava etusormi kämmenselkä katsojaan päin|etusormi|kämmenselkä|käsi|osoittaa|sormi|vartalo
+☝️;ylös osoittava etusormi;etusormi|käsi|osoittaa|sormi|vartalo|ylös
+🫵;etusormi osoittaa katsojaa;osoittaa|sinä|sinä siinä
+👍;peukalo ylös;+1|käsi|peukalo|peukku|vartalo|ylös
+👎;peukalo alas;-1|alas|käsi|peukalo|vartalo
+✊;nostettu nyrkki;isku|käsi|nyrkki|puristettu|vartalo
+👊;kohti tuleva nyrkki;isku|käsi|nyrkki|puristettu|vartalo
+🤛;nyrkki vasemmalle;nyrkki|vasen
+🤜;nyrkki oikealle;nyrkki|oikea
+👏;käsien taputus;käsi|taputtaa|vartalo
+🙌;nousevat kädet;ele|hurraa|juhla|käsi|nostettu|vartalo
+🫶;sydänkuvio käsillä;rakas|rakastaa|rakastan sinua|rakkaus|sydän|sydänkädet
+👐;avoimet kädet;avoin|halaus|käsi|vartalo
+🤲;kämmenet vierekkäin;anelu|kämmenet|toive
+🤝;kädenpuristus;käsi|kätellä|sopimus|tapaaminen
+🙏;kämmenet yhdessä;kämmenet|kiitos|kumarrus|pliis|pyyntö|rukous|yläfemma
+✍️;kirjoittava käsi;käsi|kirjoittaa|vartalo
+💅;kynsilakka;kosmetiikka|kynsi|kynsihuolto|lakka|manikyyri|vartalo
+🤳;selfie;kamera|omakuva|puhelin
+💪;pullistettu hauis;hauis|lihas|pullistaa|sarjakuva|vartalo
+🦾;tekokäsi;esteettömyys
+🦿;tekojalka;esteettömyys
+🦵;jalka;alaraaja|potkaista|potku|raaja
+🦶;jalkaterä;potkaista|potku|tallata|töminä
+👂;korva;kuulo|kuunnella|pää|vartalo
+🦻;kuulolaite korvassa;esteettömyys|huonokuuloinen|kuulolaite|kuulonalenema
+👃;nenä;haju|pää|tuoksu|vartalo
+🧠;aivot;äly|pää|vartalo|viisas
+🫀;sydän;elin|kardiologia|pulssi|syke|verenkierto
+🫁;keuhkot;elin|hengitys|henkäisy
+🦷;hammas;hammaslääkäri|hampaisto|lääkäri
+🦴;luu;koira|luuranko|luusto
+👀;silmät;naama|silmä|vartalo
+👁️;silmä;pää|vartalo
+👅;kieli;pää|suu|uhma|vartalo
+👄;suu;huulet|pää|vartalo
+🫦;purra huulta;flirttaileva|hermostunut|huolestunut|huuli|huulipuna|kiusaantunut|pelokas|seksikäs|vaivautunut
+👶;vauva;lapsi|nuori|raskaana
+🧒;lapsi;lapsuus|nuori|sukupuolineutraali
+👦;poika;miespuolinen|nuori
+👧;tyttö;horoskooppi|horoskooppimerkki|neiti|neito|neitsyt|nuori|tytär
+🧑;aikuinen;aikaihminen|aikuisuus|keski-ikäinen|sukupuolineutraali|täysikasvuinen
+👱;vaaleatukkainen henkilö;blondi|hiukset|vaalea|vaaleahiuksinen henkilö
+👨;mies;miespuolinen
+🧔;parrakas henkilö;karvainen|parta|pulisongit|sänki|viikset
+🧔‍♂️;parrakas mies;mies|parta
+🧔‍♀️;parrakas nainen;nainen|parta
+👨‍🦰;mies: punatukkainen;mies|miespuolinen|punatukkainen
+👨‍🦱;mies: kiharatukkainen;kiharatukkainen|mies|miespuolinen
+👨‍🦳;mies: valkotukkainen;mies|miespuolinen|valkotukkainen
+👨‍🦲;mies: kalju;kalju|mies|miespuolinen
+👩;nainen;aikuinen|naispuolinen
+👩‍🦰;nainen: punatukkainen;aikuinen|nainen|naispuolinen|punatukkainen
+🧑‍🦰;aikuinen: punatukkainen;aikaihminen|aikuinen|aikuisuus|keski-ikäinen|punatukkainen|sukupuolineutraali|täysikasvuinen
+👩‍🦱;nainen: kiharatukkainen;aikuinen|kiharatukkainen|nainen|naispuolinen
+🧑‍🦱;aikuinen: kiharatukkainen;aikaihminen|aikuinen|aikuisuus|keski-ikäinen|kiharatukkainen|sukupuolineutraali|täysikasvuinen
+👩‍🦳;nainen: valkotukkainen;aikuinen|nainen|naispuolinen|valkotukkainen
+🧑‍🦳;aikuinen: valkotukkainen;aikaihminen|aikuinen|aikuisuus|keski-ikäinen|sukupuolineutraali|täysikasvuinen|valkotukkainen
+👩‍🦲;nainen: kalju;aikuinen|kalju|nainen|naispuolinen
+🧑‍🦲;aikuinen: kalju;aikaihminen|aikuinen|aikuisuus|kalju|keski-ikäinen|sukupuolineutraali|täysikasvuinen
+👱‍♀️;vaaleatukkainen nainen;blondi|hiukset|nainen|vaalea|vaaleahiuksinen nainen
+👱‍♂️;vaaleatukkainen mies;blondi|hiukset|mies|vaalea|vaaleahiuksinen mies
+🧓;vanhus;ikäihminen|seniori|sukupuolineutraali|vanha
+👴;vanha mies;mies|vanha
+👵;vanha nainen;mummi|mummo|nainen|vanha
+🙍;surullinen henkilö;ele|surullinen
+🙍‍♂️;surullinen mies;ele|harmi|mies|suru
+🙍‍♀️;surullinen nainen;harmi|nainen|suru
+🙎;mököttävä henkilö;ele|mököttävä
+🙎‍♂️;mököttävä mies;ele|harmi|mies|mökötys
+🙎‍♀️;mököttävä nainen;harmi|mökötys|nainen
+🙅;ei-ele;ei|ele|käsi|kielletty
+🙅‍♂️;ei käy -merkkiä näyttävä mies;ei|ele|kielletty|mies
+🙅‍♀️;ei käy -merkkiä näyttävä nainen;ei|ele|kielletty|nainen
+🙆;ok-ele;ele|harjoittelu|käsi|nainen|ok
+🙆‍♂️;ok-merkkiä näyttävä mies;ele|kyllä|mies|ok
+🙆‍♀️;ok-merkkiä näyttävä nainen;ele|kyllä|nainen|ok
+💁;kämmentä ylöspäin näyttävä henkilö;apu|info|käsi|nenäkäs
+💁‍♂️;kämmentä ylöspäin näyttävä mies;käsi|mies|nenäkäs
+💁‍♀️;kämmentä ylöspäin näyttävä nainen;käsi|nainen|nenäkäs
+🙋;iloinen henkilö viittaa;ele|iloinen|käsi|nostettu|viittaa
+🙋‍♂️;viittaava mies;ele|käsi|mies|viittaus
+🙋‍♀️;viittaava nainen;käsi|nainen|viittaus
+🧏;kuuro henkilö;esteettömyys|korva|kuulo|kuuro
+🧏‍♂️;kuuro mies;kuuro|mies
+🧏‍♀️;kuuro nainen;kuuro|nainen
+🙇;kumartava henkilö;anteeksi|anteeksipyyntö|ele|kumarrus
+🙇‍♂️;syvään kumartava mies;anteeksipyyntö|ele|kumarrus|mies
+🙇‍♀️;syvään kumartava nainen;anteeksipyyntö|ele|kumarrus|nainen|pahoillaan
+🤦;peittää kasvot kädellä;ei taas|epätoivo|epäusko|facepalm|ihminen|järkytys|käsi|kasvot|omg|peittää kasvot kämmenellä|pettymys|turhautuneisuus|voi ei
+🤦‍♂️;kasvonsa kädellä peittävä mies;epäusko|käsi|kasvot|mies|pettymys|smh
+🤦‍♀️;kasvonsa kädellä peittävä nainen;käsi|kasvot|nainen|pettymys
+🤷;olkapäitään kohauttava henkilö;ehkä|ei välitä|en tiedä|epäilys|epävarmuus|ihan sama|kohauttaa olkapäitään|niin kai|olankohautus|tietämättömyys|välinpitämättömyys
+🤷‍♂️;olkapäitään kohauttava mies;ehkä|ei välitä|en tiedä|epäilys|epävarmuus|ihan sama|kohauttaa olkapäitään|niin kai|olankohautus|tietämättömyys|välinpitämättömyys
+🤷‍♀️;olkapäitään kohauttava nainen;ehkä|ei välitä|en tiedä|epäilys|epävarmuus|ihan sama|kohauttaa olkapäitään|niin kai|olankohautus|tietämättömyys|välinpitämättömyys
+🧑‍⚕️;hoitotyöntekijä;lääkäri|sairaanhoitaja|terapeutti|terveydenhoito
+👨‍⚕️;mieshoitotyöntekijä;lääkäri|mies|sairaanhoitaja|terapeutti|terveydenhuolto
+👩‍⚕️;naishoitotyöntekijä;lääkäri|nainen|sairaanhoitaja|terapeutti|terveydenhuollon naisammattilainen|terveydenhuolto
+🧑‍🎓;opiskelija;lakki|opiskelu|valmistujaiset
+👨‍🎓;miesopiskelija;lakki|mies|opiskelu|valmistujaiset
+👩‍🎓;naisopiskelija;lakki|nainen|opiskelija|opiskelu|valmistujaiset|valmistunut
+🧑‍🏫;opettaja;koulu
+👨‍🏫;miesopettaja;koulu|mies|ohjaaja|opettaja
+👩‍🏫;naisopettaja;koulu|nainen|opettaja
+🧑‍⚖️;tuomari;vaaka
+👨‍⚖️;miestuomari;laki|mies|oikeus|tuomari
+👩‍⚖️;naistuomari;laki|nainen|oikeus|tuomari
+🧑‍🌾;maanviljelijä;farmari|puutarhuri
+👨‍🌾;miesmaanviljelijä;maanviljelijä|mies|puutarhuri|sato
+👩‍🌾;naismaanviljelijä;maanviljelijä|nainen|puutarhuri|sato
+🧑‍🍳;kokki;keittiömestari
+👨‍🍳;mieskokki;kokki|mies|paistinpannu|ruoka
+👩‍🍳;naiskokki;kokki|nainen|paistinpannu|ruoka
+🧑‍🔧;mekaanikko;putkiasentaja|sähköasentaja|työkalu
+👨‍🔧;miesmekaanikko;jakoavain|mekaanikko|mies|työkalu
+👩‍🔧;naismekaanikko;jakoavain|mekaanikko|nainen|työkalu
+🧑‍🏭;tehdastyöntekijä;kokoaminen|tehdas|teollisuus|työntekijä
+👨‍🏭;miestehdastyöntekijä;hitsaaja|mies|tehdas|työntekijä
+👩‍🏭;naistehdastyöntekijä;hitsaaja|nainen|tehdas|työntekijä
+🧑‍💼;toimistotyöntekijä;arkkitehti|toimisto|valkokaulus|yritys
+👨‍💼;miestoimistotyöntekijä;mies|pomo|toimisto|työntekijä|valkokaulus
+👩‍💼;naistoimistotyöntekijä;nainen|toimisto|työntekijä|valkokaulus
+🧑‍🔬;tutkija;biologi|insinööri|kemisti|lääkäri|tiede
+👨‍🔬;miestutkija;biologi|matemaatikko|mies|tiede|tutkija
+👩‍🔬;naistutkija;nainen|tiede|tutkija
+🧑‍💻;IT-työntekijä;kehittäjä|keksijä|koodari|ohjelmisto
+👨‍💻;IT-mies;IT|koodaus|mies|tietokone
+👩‍💻;IT-nainen;IT|koodaus|nainen|tietokone
+🧑‍🎤;laulaja;karaoke|mikki
+👨‍🎤;mieslaulaja;karaoke|laulaja|mies|mikki
+👩‍🎤;naislaulaja;karaoke|laulaja|mikki|nainen
+🧑‍🎨;artisti;paletti|taiteilija
+👨‍🎨;miestaiteilija;maalari|mies|miesartisti|taide|taiteilija
+👩‍🎨;naistaiteilija;kuvataiteilija|maalari|nainen|naisartisti|taide|taiteilija
+🧑‍✈️;pilotti;lentäjä|lentokone
+👨‍✈️;miespilotti;lentäjä|lentokone|mies|pilotti
+👩‍✈️;naispilotti;lentäjä|lentokone|nainen|pilotti
+🧑‍🚀;astronautti;raketti
+👨‍🚀;miesastronautti;astronautti|avaruus|mies
+👩‍🚀;naisastronautti;astronautti|avaruus|nainen
+🧑‍🚒;pelastaja;paloauto
+👨‍🚒;palomies;mies|tulipalo|tulitaistelija
+👩‍🚒;palonainen;nainen|tulipalo|tulitaistelija
+👮;poliisi;etsivä|konstaapeli|kyttä|laki
+👮‍♂️;miespoliisi;etsivä|konstaapeli|kyttä|laki|mies|poliisi
+👮‍♀️;naispoliisi;etsivä|konstaapeli|kyttä|laki|nainen|poliisi
+🕵️;etsivä;salapoliisi|vakooja
+🕵️‍♂️;miesetsivä;etsivä|mies|salapoliisi|vakooja
+🕵️‍♀️;naisetsivä;etsivä|nainen|salapoliisi|vakooja
+💂;vartija;
+💂‍♂️;miesvartija;mies|vartija
+💂‍♀️;naisvartija;nainen|vartija
+🥷;ninja;piilossa|sotilas|soturi|taistelija|väijyy
+👷;rakennustyöläinen;hattu|rakennus|työmies
+👷‍♂️;rakennusmies;mies|rakennustyöläinen|raksa
+👷‍♀️;rakennusnainen;kypärä|nainen|rakennus|rakennustyöläinen|raksa
+🫅;kruunua kantava henkilö;aatelinen|kruunupäinen|kuningas|kuningatar|kuninkaallinen|monarkki|ruhtinaallinen
+🤴;prinssi;fantasia|kruunu|kuninkaallinen|satuprinssi
+👸;prinsessa;fantasia|kruunu|kuninkaallinen|satuprinsessa
+👳;turbaanipäinen henkilö;henkilö|turbaani
+👳‍♂️;turbaanipäinen mies;mies|turbaani
+👳‍♀️;turbaanipäinen nainen;nainen|turbaani
+👲;mies ja kiinalainen hattu;gua pi mao|hattu|mies
+🧕;huivipäinen nainen;hijab|khimār|mantilja|pääliina|silkkihuivi|tichel
+🤵;henkilö smokissa;häät|henkilö|smokki|smokkipukuinen henkilö
+🤵‍♂️;mies smokissa;häät|mies|smokki|smokkipukuinen mies
+🤵‍♀️;nainen smokissa;häät|nainen|smokki|smokkipukuinen nainen
+👰;huntupäinen henkilö;häät|huntu
+👰‍♂️;huntupäinen mies;häät|huntu|mies|mies ja huntu
+👰‍♀️;huntupäinen nainen;häät|huntu|nainen|nainen ja huntu
+🤰;raskaana oleva nainen;maha|masu|nainen|paisunut|raskaana|täynnä|täysi|turvonnut
+🫃;raskaana oleva mies;maha|masu|paisunut|täynnä|täysi|turvonnut
+🫄;raskaana oleva henkilö;maha|masu|paisunut|täynnä|täysi|turvonnut
+🤱;imetys;äiti|imettää|rintamaito|ruokkia|syöttää|vauva
+👩‍🍼;vauvaa syöttävä nainen;äiti|imettävä|nainen|syöttävä|vauva
+👨‍🍼;vauvaa syöttävä mies;imettävä|isä|mies|syöttävä|vastasyntynyt|vauva
+🧑‍🍼;vauvaa syöttävä henkilö;henkilö|imettävä|imetys|isä|syöttävä|vanhempi|vastasyntynyt|vauva|vauvaa imettävä henkilö
+👼;vauvaenkeli;enkeli|fantasia|naama|satu|vauva
+🎅;joulupukki;fantasia|joulu|juhla|satu
+🤶;joulupukin muori;joulu|muori
+🧑‍🎄;tonttu;joulu|joulupukki|joulutonttu|xmas
+🦸;supersankari;batman|hyvä|hyvis|sankari|sankaritar|supermies|supervoimat
+🦸‍♂️;miessupersankari;hyvä|hyvis|sankari|supervoimat
+🦸‍♀️;naissupersankari;hyvä|hyvis|sankari|sankaritar|supervoimat
+🦹;superpahis;kelmi|konna|paha|rikollinen|roisto|supervoimat
+🦹‍♂️;miessuperpahis;kelmi|konna|paha|rikollinen|roisto|supervoimat
+🦹‍♀️;naissuperpahis;kelmi|konna|paha|rikollinen|roisto|supervoimat
+🧙;velho;fantasia|loitsu|maagi|noita|roolileikki|sauva|taikasanat|taikasauva|taikavoima|taikuri|taikuus|tietäjä
+🧙‍♂️;miesvelho;maagi|noita|sauva|taikasauva|taikavoima|taikuri|tietäjä
+🧙‍♀️;naisvelho;maagi|noita|sauva|taikasauva|taikavoima|taikuri|tietäjä
+🧚;keiju;fantasia|hyönteismäinen|keijukainen|luonnotar|menninkäinen|myytti|satu|siivet|tarina|taru
+🧚‍♂️;mieskeiju;hyönteismäinen|Oberon|Puck|siivet
+🧚‍♀️;naiskeiju;ilmatar|keijukainen|keijukuningatar|luonnotar|metsänneito|Titania
+🧛;vampyyri;Dracula|elävä kuollut|halloween|hampaat|naamiaisasu|pelottava|torahammas|verenhimo|verenimijä|veri|yliluonnollinen
+🧛‍♂️;miesvampyyri;Dracula|elävä kuollut|hampaat|torahammas|verenhimo|verenimijä
+🧛‍♀️;naisvampyyri;elävä kuollut|hampaat|torahammas|verenhimo|verenimijä
+🧜;merenväki;Ahti|kalanpyrstö|merenhaltija|pyrstö|vedenhaltija|vetehinen
+🧜‍♂️;merenmies;Ahti|kalanpyrstö|merenhaltija|merenväki|Triton|vedenhaltija|vetehinen
+🧜‍♀️;merenneito;kalanpyrstö|merenväki|pyrstö|seireeni|vedenväki
+🧝;haltia;fantasia|haltija|kansanperinne|keiju|keijukainen|mystinen|myyttinen|suippokorva
+🧝‍♂️;mieshaltia;alf|haltia|keiju|Legolas|suippokorva
+🧝‍♀️;haltiatar;alf|Galadriel|haltia|keiju|suippokorva
+🧞;henki;fantasia|genius|hiero lamppua|jinni|juno|lamppu|lampunhenki|mystinen|myyttinen|toive
+🧞‍♂️;mieshenki;genius|henki|jinni|lamppu
+🧞‍♀️;naishenki;henki|juno|lamppu
+🧟;zombi;elävä kuollut|halloween|kauhu|maailmanloppu|pelottava|tahdoton|voodoo|zombie
+🧟‍♂️;mieszombi;elävä kuollut|tahdoton|voodoo|zombie
+🧟‍♀️;naiszombi;elävä kuollut|tahdoton|voodoo|zombie
+🧌;trolli;fantasia|hirviö|mörkö|mörökölli|peikko|rölli|satuolento|trollata
+🫈;karvainen otus;isojalka|jätti|karvainen|kryptidi|lumimies|metsä|sasquatch|villi-ihminen
+💆;hieronta;henkilö|hieroja|kasvot|pääkipu|salonki
+💆‍♂️;hieronnassa oleva mies;hieronta|mies|pääkipu|rentoutuminen|salonki
+💆‍♀️;hieronnassa oleva nainen;hieronta|nainen
+💇;hiustenleikkaus;kauneus|parturi|salonki
+💇‍♂️;parturissa oleva mies;hiukset|hiustenhoito|mies|parturi
+💇‍♀️;kampaajalla oleva nainen;hiukset|hiustenhoito|kampaaja|nainen
+🚶;jalankulkija;ihminen|kävelijä|kävellä|kävely|patikointi
+🚶‍♂️;kävelevä mies;kävely|mies|patikointi
+🚶‍♀️;kävelevä nainen;kävely|nainen|patikointi
+🚶‍➡️;jalankulkija: kohti oikeaa;ihminen|kävelijä|kävellä|kävely|kohti|oikeaa|patikointi
+🚶‍♀️‍➡️;kävelevä nainen: kohti oikeaa;kävelevä nainen|kävely|kohti|nainen|oikeaa|patikointi
+🚶‍♂️‍➡️;kävelevä mies: kohti oikeaa;kävelevä mies|kävely|kohti|mies|oikeaa|patikointi
+🧍;seisova henkilö;ihminen|seisoa|seisova
+🧍‍♂️;seisova mies;mies|seisova
+🧍‍♀️;seisova nainen;nainen|seisova
+🧎;polvistuva ihminen;ihminen|polvi|polvillaan|polvistua|polvistuminen
+🧎‍♂️;polvistuva mies;mies|polvistuva
+🧎‍♀️;polvistuva nainen;nainen|polvistuva
+🧎‍➡️;polvistuva ihminen: kohti oikeaa;ihminen|kohti|oikeaa|polvi|polvillaan|polvistua|polvistuminen
+🧎‍♀️‍➡️;polvistuva nainen: kohti oikeaa;kohti|nainen|oikeaa|polvistuva
+🧎‍♂️‍➡️;polvistuva mies: kohti oikeaa;kohti|mies|oikeaa|polvistuva
+🧑‍🦯;henkilö ja valkoinen keppi;esteettömyys|sokea
+🧑‍🦯‍➡️;henkilö ja valkoinen keppi: kohti oikeaa;esteettömyys|henkilö ja valkoinen keppi|kohti|oikeaa|sokea
+👨‍🦯;mies ja valkoinen keppi;esteettömyys|mies|sokea|valkoinen keppi
+👨‍🦯‍➡️;mies ja valkoinen keppi: kohti oikeaa;esteettömyys|kohti|mies|oikeaa|sokea|valkoinen keppi
+👩‍🦯;nainen ja valkoinen keppi;esteettömyys|nainen|sokea
+👩‍🦯‍➡️;nainen ja valkoinen keppi: kohti oikeaa;esteettömyys|kohti|nainen|nainen ja valkoinen keppi|oikeaa|sokea
+🧑‍🦼;henkilö moottoroidussa pyörätuolissa;esteettömyys|pyörätuoli
+🧑‍🦼‍➡️;henkilö moottoroidussa pyörätuolissa: kohti oikeaa;esteettömyys|henkilö moottoroidussa pyörätuolissa|kohti|oikeaa|pyörätuoli
+👨‍🦼;mies moottoroidussa pyörätuolissa;esteettömyys|mies|pyörätuoli
+👨‍🦼‍➡️;mies moottoroidussa pyörätuolissa: kohti oikeaa;esteettömyys|kohti|mies|mies moottoroidussa pyörätuolissa|oikeaa|pyörätuoli
+👩‍🦼;nainen moottoroidussa pyörätuolissa;esteettömyys|nainen|pyörätuoli
+👩‍🦼‍➡️;nainen moottoroidussa pyörätuolissa: kohti oikeaa;esteettömyys|kohti|nainen|nainen moottoroidussa pyörätuolissa|oikeaa|pyörätuoli
+🧑‍🦽;henkilö käsikäyttöisessä pyörätuolissa;esteettömyys|pyörätuoli
+🧑‍🦽‍➡️;henkilö käsikäyttöisessä pyörätuolissa: kohti oikeaa;esteettömyys|henkilö käsikäyttöisessä pyörätuolissa|kohti|oikeaa|pyörätuoli
+👨‍🦽;mies käsikäyttöisessä pyörätuolissa;esteettömyys|mies|pyörätuoli
+👨‍🦽‍➡️;mies käsikäyttöisessä pyörätuolissa: kohti oikeaa;esteettömyys|kohti|mies|mies käsikäyttöisessä pyörätuolissa|oikeaa|pyörätuoli
+👩‍🦽;nainen käsikäyttöisessä pyörätuolissa;esteettömyys|nainen|pyörätuoli
+👩‍🦽‍➡️;nainen käsikäyttöisessä pyörätuolissa: kohti oikeaa;esteettömyys|kohti|nainen|nainen käsikäyttöisessä pyörätuolissa|oikeaa|pyörätuoli
+🏃;juoksija;juokseminen|maratoni|urheilu
+🏃‍♂️;juokseva mies;juokseminen|juoksija|lenkki|mies
+🏃‍♀️;juokseva nainen;juokseminen|juoksija|lenkki|nainen|urheilu
+🏃‍➡️;juoksija: kohti oikeaa;juokseminen|kohti|maratoni|oikeaa|urheilu
+🏃‍♀️‍➡️;juokseva nainen: kohti oikeaa;juokseminen|juoksija|kohti|lenkki|nainen|oikeaa|urheilu
+🏃‍♂️‍➡️;juokseva mies: kohti oikeaa;juokseminen|juokseva mies|juoksija|kohti|lenkki|mies|oikeaa
+🧑‍🩰;balettitanssija;baletti|tanssija
+💃;tanssiva nainen;juhlat|nainen|salsa|tanssi|tanssija
+🕺;tanssiva mies;mies|mies tanssii|salsa|tango|tanssi
+🕴️;levitoiva mies puvussa;bisnes|mies|puku
+👯;puputytöt;korva|nainen|pupu|tanssija|tyttö
+👯‍♂️;tanssivat pupupojat;bff|juhla|juhlat|nainen|pupu|tanssi|tanssija
+👯‍♀️;tanssivat puputytöt;juhlat|mies|pupu|tanssija
+🧖;henkilö saunassa;hemmotella|höyry|kiuas|kylpylä|löyly|löylyhuone|nautinto|rentoutua|sauna|spa
+🧖‍♂️;mies saunassa;höyry|kiuas|löyly|sauna
+🧖‍♀️;nainen saunassa;höyry|kiuas|löyly|sauna
+🧗;kiipeilijä;ihminen kiipeilee|kallio|kalliokiipeilijä|kiipeily|kiivetä ylös|seinä|vuori
+🧗‍♂️;mieskiipeilijä;kallio|kiipeily|seinämä|vuori
+🧗‍♀️;naiskiipeilijä;kallio|kiipeily|seinä|vuori
+🤺;miekkailija;liikunta|miekka|miekkailu|urheilu
+🏇;ratsastus;eläin|hevonen|jockey|kilparatsastus|ravit
+⛷️;hiihtäjä;hiihto|lumi|sauvat|sukset
+🏂;lumilautailija;laskettelu|lumi|lumilauta
+🏌️;golfaaja;birdie|golf|harjoituslyöntialue|pallo|pga|putata|tii|viheriö
+🏌️‍♂️;golfaajamies;golf|mies
+🏌️‍♀️;golfaajanainen;golf|nainen
+🏄;surffaaja;lauta|surffaus
+🏄‍♂️;surffaajamies;lainelautailu|mies|surffaus
+🏄‍♀️;surffaajanainen;lainelautailu|nainen|surffaus
+🚣;soutaja;meri|soutaa|soutuvene|vene
+🚣‍♂️;soutava mies;mies|soutaja
+🚣‍♀️;soutava nainen;järvi|joki|nainen|soutaja
+🏊;uimari;uinti
+🏊‍♂️;uiva mies;mies|uija|uimari
+🏊‍♀️;uiva nainen;nainen|uija|uimari|urheilu
+⛹️;pallottelija;pallo
+⛹️‍♂️;pallotteleva mies;palloilija|pallomies|poika
+⛹️‍♀️;pallotteleva nainen;palloilija|pallonainen|tyttö
+🏋️;painonnostaja;kehonrakennus|painot|treeni
+🏋️‍♂️;painonnostajamies;mies|painonnosto
+🏋️‍♀️;painonnostajanainen;nainen|painonnosto
+🚴;pyöräilijä;polkupyörä|pyörä
+🚴‍♂️;pyöräilevä mies;mies|pyöräilijä
+🚴‍♀️;pyöräileva nainen;nainen|pyöräilijä|urheilu
+🚵;maastopyöräilijä;maasto|polkupyörä|pyörä|pyöräilijä
+🚵‍♂️;maastopyöräilevä mies;mies|pyöräilijä|vuori
+🚵‍♀️;maastopyöräilevä nainen;maastopyöräily|nainen|pyöräilijä|vuori
+🤸;kärrynpyörä;aktiivinen|ihminen|iloinen|innostunut|kuperkeikka|liikunta|urheilu|voimistelu|voltti
+🤸‍♂️;kärrynpyörää tekevä mies;kärrynpyörä|mies
+🤸‍♀️;kärrynpyörää tekevä nainen;kärrynpyörä|nainen|urheilu
+🤼;painijat;ihmiset|kaksintaistelu|kamppailu|kehässä|liikunta|paini|painia|painija|painiturnaus|urheilu
+🤼‍♂️;painivat miehet;judo|kamppailu|miehet
+🤼‍♀️;painivat naiset;judo|kamppailu|naiset
+🤽;vesipalloilija;ihminen|liikunta|pallo|uinti|urheilu|vesi|vesipallo|vesiurheilu
+🤽‍♂️;vesipalloa pelaava mies;mies|uinti|vesipallo
+🤽‍♀️;vesipalloa pelaava nainen;nainen|uinti|vesipallo
+🤾;käsipalloilija;heittää|heitto|ihminen|käsipallo|kenttä|liikunta|ottaa koppi|pallo|urheilu|viskata
+🤾‍♂️;käsipalloa pelaava mies;käsipallo|mies
+🤾‍♀️;käsipalloa pelaava nainen;käsipallo|nainen|urheilu
+🤹;jongleeraaja;hallita|ihminen|jongleerata|jongleeraus|jonglöörata|jonglööraus|multitaskaus|pitää käsissä|taito|tasapainoilu
+🤹‍♂️;jongleeraava mies;jongleeraus|mies|pallot|tasapainoilla
+🤹‍♀️;jongleeraava nainen;jongleeraus|nainen|pallot|tasapainoilla
+🧘;henkilö lootusasennossa;jalat ristissä|jooga|joogi|meditaatio|mietiskely|rauha|rento|rentoutua|risti-istunta|zen
+🧘‍♂️;mies lootusasennossa;jooga|mietiskely
+🧘‍♀️;nainen lootusasennossa;jooga|mietiskely
+🛀;kylpijä;kylpy|kylpyamme
+🛌;nukkuja;hotelli|nukkua|sänky|uni|yö
+🧑‍🤝‍🧑;ihmiset käsi kädessä;käsi|pari|pariskunta|pitää|pitää toisiaan käsistä
+👭;kaksi naista käsi kädessä;kädestä pitäminen|kaksoset|käsi|naiset|pariskunta|sisaret
+👫;mies ja nainen käsi kädessä;kädestä pitäminen|käsi|mies|nainen|pariskunta
+👬;kaksi miestä käsi kädessä;kädestä pitäminen|kaksoset|käsi|miehet|pariskunta|veljet
+💏;pusu;pariskunta|romantiikka
+👩‍❤️‍💋‍👨;pusu: nainen, mies;mies|nainen|pariskunta|pusu|romantiikka
+👨‍❤️‍💋‍👨;pusu: mies, mies;mies|pariskunta|pusu|romantiikka
+👩‍❤️‍💋‍👩;pusu: nainen, nainen;nainen|pariskunta|pusu|romantiikka
+💑;pariskunta ja sydän;pariskunta|rakkaus|romantiikka|sydän
+👩‍❤️‍👨;pariskunta ja sydän: nainen, mies;mies|nainen|pariskunta|pariskunta ja sydän|rakkaus|romantiikka|sydän
+👨‍❤️‍👨;pariskunta ja sydän: mies, mies;mies|pariskunta|pariskunta ja sydän|rakkaus|romantiikka|sydän
+👩‍❤️‍👩;pariskunta ja sydän: nainen, nainen;nainen|pariskunta|pariskunta ja sydän|rakkaus|romantiikka|sydän
+👨‍👩‍👦;perhe: mies, nainen, poika;äiti|isä|lapsi|mies|nainen|perhe|poika
+👨‍👩‍👧;perhe: mies, nainen, tyttö;äiti|isä|lapsi|mies|nainen|perhe|tyttö
+👨‍👩‍👧‍👦;perhe: mies, nainen, tyttö, poika;äiti|isä|lapsi|mies|nainen|perhe|poika|tyttö
+👨‍👩‍👦‍👦;perhe: mies, nainen, poika, poika;äiti|isä|lapsi|mies|nainen|perhe|poika
+👨‍👩‍👧‍👧;perhe: mies, nainen, tyttö, tyttö;äiti|isä|lapsi|mies|nainen|perhe|tyttö
+👨‍👨‍👦;perhe: mies, mies, poika;äiti|isä|lapsi|mies|perhe|poika
+👨‍👨‍👧;perhe: mies, mies, tyttö;äiti|isä|lapsi|mies|perhe|tyttö
+👨‍👨‍👧‍👦;perhe: mies, mies, tyttö, poika;äiti|isä|lapsi|mies|perhe|poika|tyttö
+👨‍👨‍👦‍👦;perhe: mies, mies, poika, poika;äiti|isä|lapsi|mies|perhe|poika
+👨‍👨‍👧‍👧;perhe: mies, mies, tyttö, tyttö;äiti|isä|lapsi|mies|perhe|tyttö
+👩‍👩‍👦;perhe: nainen, nainen, poika;äiti|isä|lapsi|nainen|perhe|poika
+👩‍👩‍👧;perhe: nainen, nainen, tyttö;äiti|isä|lapsi|nainen|perhe|tyttö
+👩‍👩‍👧‍👦;perhe: nainen, nainen, tyttö, poika;äiti|isä|lapsi|nainen|perhe|poika|tyttö
+👩‍👩‍👦‍👦;perhe: nainen, nainen, poika, poika;äiti|isä|lapsi|nainen|perhe|poika
+👩‍👩‍👧‍👧;perhe: nainen, nainen, tyttö, tyttö;äiti|isä|lapsi|nainen|perhe|tyttö
+👨‍👦;perhe: mies, poika;äiti|isä|lapsi|mies|perhe|poika
+👨‍👦‍👦;perhe: mies, poika, poika;äiti|isä|lapsi|mies|perhe|poika
+👨‍👧;perhe: mies, tyttö;äiti|isä|lapsi|mies|perhe|tyttö
+👨‍👧‍👦;perhe: mies, tyttö, poika;äiti|isä|lapsi|mies|perhe|poika|tyttö
+👨‍👧‍👧;perhe: mies, tyttö, tyttö;äiti|isä|lapsi|mies|perhe|tyttö
+👩‍👦;perhe: nainen, poika;äiti|isä|lapsi|nainen|perhe|poika
+👩‍👦‍👦;perhe: nainen, poika, poika;äiti|isä|lapsi|nainen|perhe|poika
+👩‍👧;perhe: nainen, tyttö;äiti|isä|lapsi|nainen|perhe|tyttö
+👩‍👧‍👦;perhe: nainen, tyttö, poika;äiti|isä|lapsi|nainen|perhe|poika|tyttö
+👩‍👧‍👧;perhe: nainen, tyttö, tyttö;äiti|isä|lapsi|nainen|perhe|tyttö
+🗣️;puhuva pää;naama|pää|puhu|puhuminen|siluetti
+👤;rintasiluetti;rintakuva|siluetti
+👥;kaksi rintasiluettia;rintakuva|siluetti
+🫂;halaus;hei|kiitos|näkemiin|rakkaus|ystävä
+👪;perhe;äiti|isä|lapsi
+🧑‍🧑‍🧒;perhe: aikuinen, aikuinen, lapsi;aikuinen|lapsi|perhe: aikuinen
+🧑‍🧑‍🧒‍🧒;perhe: aikuinen, aikuinen, lapsi, lapsi;aikuinen|lapsi|perhe: aikuinen
+🧑‍🧒;perhe: aikuinen, lapsi;aikuinen|lapsi|perhe
+🧑‍🧒‍🧒;perhe: aikuinen, lapsi, lapsi;aikuinen|lapsi|perhe
+👣;jalanjäljet;jalanjäljki|jälki|vaatteet|vartalo
+🫆;sormenjälki;henkilöllisyys|johtolanka|rikostutkinta|turvallisuus
+🐵;apinan naama;apina|banaani|eläin|naama
+🐒;apina;banaani|eläin
+🦍;gorilla;eläin
+🦧;oranki;apina|eläin
+🐶;koiran naama;koira|lemmikki|naama|pentu
+🐕;koira;lemmikki
+🦮;opaskoira;eläin|esteettömyys|koira|opas|sokea
+🐕‍🦺;palveluskoira;apu|esteettömyys
+🐩;villakoira;eläin|koira|puudeli
+🐺;susi;naama|suden naama
+🦊;kettu;eläin|ketun naama
+🦝;pesukarhu;ovela|supi|utelias|viekas
+🐱;kissan naama;kissa|lemmikki|naama
+🐈;kissa;eläin|kissanpentu|lemmikki
+🐈‍⬛;musta kissa;eläin|epäonni|kissa|musta
+🦁;leijona;horoskooppi|horoskooppimerkki|leijonan naama|naama
+🐯;tiikerin naama;naama|tiikeri
+🐅;tiikeri;eläin|eläintarha|iso kissa|kissapeto|peto
+🐆;leopardi;
+🐴;hevosen naama;hevonen|naama
+🫎;hirvi;eläin|luonto|nisäkäs|sarvet
+🫏;aasi;eläin|itsepäinen|luonto|muuli|muuliaasi|nisäkäs|potku
+🐎;hevonen;kilpa|kilpahevonen|ratsastaja|ratsu|ratsuhevonen|ravihevonen|ravit
+🦄;yksisarvinen;naama|yksisarvisen naama
+🦓;seepra;nisäkäs|raidallinen|raidat|valkomusta
+🦌;peura;eläin|hirvi
+🦬;biisoni;eläin|lauma|puhveli|visentti
+🐮;lehmän naama;lehmä|naama
+🐂;härkä;eläin|horoskooppi|horoskooppimerkki|maatila
+🐃;vesipuhveli;puhveli|vesi
+🐄;lehmä;läikikäs|maatila|muu|nauta
+🐷;sian naama;eläin|naama|possu|sika
+🐖;sika;emakko|pekoni|porsas|possu
+🐗;villisika;eläin|possu|sika
+🐽;sian kärsä;kärsä|naama|nenä|sika
+🐏;pässi;horoskooppi|horoskooppimerkki|lammas|oinas
+🐑;lammas;naispuolinen|uuhi
+🐐;vuohi;horoskooppi|horoskooppimerkki|kauris|maatila|maito
+🐪;kameli;dromedaari|kyttyrä|yksikyttyräinen
+🐫;kaksikyttyräinen kameli;kaksikyttyräinen|kameli|kyttyrä
+🦙;laama;alpakka|guanako|vikunja|villa
+🦒;kirahvi;läikät
+🐘;elefantti;norsu
+🦣;mammutti;eläin|sukupuutto|suuri|torahammas|villainen
+🦏;sarvikuono;eläin
+🦛;virtahepo;eläin
+🐭;hiiren naama;hiiri|naama
+🐁;hiiri;valkoinen
+🐀;rotta;eläin|harmaa
+🐹;hamsteri;hamsterin naama|lemmikki|naama
+🐰;jäniksen naama;jänis|kani|lemmikki|naama|pupu
+🐇;kani;eläin|lemmikki|pupu
+🐿️;maaorava;orava
+🦫;majava;eläin|hampaat|pato
+🦔;siili;eläin|piikikäs
+🦇;lepakko;eläin|vampyyri
+🐻;karhu;karhun naama|naama
+🐻‍❄️;jääkarhu;arktinen|karhu|valkoinen
+🐨;koala;karhu
+🐼;panda;bambu|naama|pandan naama
+🦥;laiskiainen;hidas|laiska
+🦦;saukko;kalastaja|kalastus|leikkisä
+🦨;haisunäätä;eläin|haista|haju
+🦘;kenguru;Australia|hypätä|loikata|pussieläin
+🦡;mäyrä;eläin|mesimäyrä
+🐾;tassunjäljet;jalka|jälki|käpälä|tassu
+🦃;kalkkuna;lintu
+🐔;kana;eläin|lintu|muna
+🐓;kukko;lintu
+🐣;kuoriutuva tipu;kananpoika|kuoriutuva|lintu|tipu
+🐤;tipu;kananpoika|lintu
+🐥;tipu edestäpäin;kananpoika|lintu|tipu
+🐦;lintu;pikkulintu|turkoosi
+🐧;pingviini;lintu
+🕊️;kyyhky;lentää|lintu|rauha
+🦅;kotka;lintu
+🦆;sorsa;lintu
+🦢;joutsen;eläin|lintu|ruma ankanpoikanen
+🦉;pöllö;lintu|viisas
+🦤;dodo;eläin|lentokyvytön|lintu|Mauritius|sukupuutto
+🪶;höyhen;keveä|lento|lintu|sulka
+🦩;flamingo;pramea|trooppinen
+🦚;riikinkukko;eläin|komeileva|lintu|mahtaileva|pramea|värikäs|ylpeä
+🦜;papukaija;lintu|merirosvo|puhe|puhuva
+🪽;siipi;enkeli|lentää|lentäminen|liitää|lintu|mytologia
+🐦‍⬛;mustarastas;eläin|korppi|lintu|luonto|musta|mustavaris|nokka|siivekäs|varis
+🪿;hanhi;eläin|hanhen huuto|hassu|lintu|luonto|siivekäs
+🐦‍🔥;feeniks;fantasia|jälleensyntymä|jälleensyntynyt|kuolematon|muuttua|reinkarnaatio|tulilintu|uudelleensyntynyt|uudistuminen
+🐸;sammakko;naama|sammakon naama
+🐊;krokotiili;eläin|eläintarha
+🐢;kilpikonna;
+🦎;lisko;matelija
+🐍;käärme;horoskooppi|horoskooppimerkki|käärmeenkantaja|viestintuoja
+🐲;lohikäärmeen naama;lohikäärme|naama|satu
+🐉;lohikäärme;satu
+🦕;sauropodi;brontosaurus|dinosaurus|eläin
+🦖;tyrannosaurus rex;dinosaurus|eläin|hirmulisko|rex
+🐳;suihkuttava valas;naama|suihkuttaa|valas|valtameri|vesi
+🐋;valas;eläin|valtameri
+🐬;delfiini;eläin|flipper|meri|pyöriäinen
+🫍;miekkavalas;merellinen|meri|valas
+🦭;hylje;eläin|meri|merileijona
+🐟;kala;horoskooppi|horoskooppimerkki|kalat
+🐠;trooppinen kala;kala|trooppinen
+🐡;pallokala;kala|pallo
+🦈;hai;kala
+🐙;mustekala;eläin|meri|valtameri
+🐚;kotilo;eläin|koraali|kuori
+🪸;koralli;ilmastonmuutos|koralliriutta|meri|riutta
+🪼;meduusa;auts|eläin|hyytelö|kirvely|lonkero|luonto|meri|pistävä|polte|selkärangaton
+🦀;rapu;horoskooppi|horoskooppimerkki
+🦞;hummeri;äyriäinen|äyriäiset|äyriäiskeitto|merenelävät|sakset
+🦐;katkarapu;äyriäiset|ruoka
+🦑;kalmari;mustekala|ruoka
+🦪;osteri;helmi|sukellus
+🐌;etana;eläin|luonto
+🦋;perhonen;hyönteinen|kaunis|sievä
+🐛;ötökkä;hyönteinen|puutarha
+🐜;muurahainen;hyönteinen|murkku|puutarha
+🐝;mehiläinen;ampiainen|hyönteinen|kimalainen|luonto|pörriäinen
+🪲;kuoriainen;hyönteinen|koppakuoriainen|ötökkä
+🐞;leppäkerttu;hyönteinen
+🦗;sirkka;heinäsirkka
+🪳;torakka;hyönteinen|russakka|tuholainen
+🕷️;hämähäkki;hyönteinen
+🕸️;hämähäkin seitti;hämähäkki|seitti|verkko
+🦂;skorpioni;horoskooppi|horoskooppimerkki
+🦟;hyttynen;hyönteinen|kuume|malaria|sääski|sairaus|tauti|virus
+🪰;kärpänen;eläin|mätänevä|sairaus|tauti|toukka|tuholainen
+🪱;mato;eläin|kastemato|loinen
+🦠;mikrobi;ameba|bakteeri|sairaus|tiede|virus
+💐;kukkakimppu;kasvi|kimppu|kukka|romantiikka|treffit
+🌸;kirsikankukka;kasvi|kirsikka|kukka
+💮;valkoinen kukka;kukka
+🪷;lootus;buddhalaisuus|hindulaisuus|Intia|kauneus|kukka|puhtaus|rauhallinen|viattomuus
+🏵️;ruusuke;kasvi
+🌹;ruusu;kasvi|kukka
+🥀;nuutunut kukka;kukka|nuutunut
+🌺;kiinanruusu;kasvi|kukka
+🌻;auringonkukka;aurinko|kasvi|kukka
+🌼;kukinta;kasvi|kukka
+🌷;tulppaani;kasvi|kukka
+🪻;hyasintti;kasvi|kukka|laventeli|leijonankita|luonto|lupiini|sinilupiini|syreeni|violetti
+🌱;taimi;kasvi|verso
+🪴;ruukkukasvi;hoivata|hyödytön|kasvaa|kasvi|kokousfiikus|koriste|koti|tylsä
+🌲;ikivihreä;joulukuusi|kasvi|metsä|puu
+🌳;lehtipuu;kasvi|palmu|puu
+🌴;palmu;kasvi|puu
+🌵;kaktus;kasvi
+🌾;riisikasvi;kasvi|riisi|tähkä
+🌿;yrtti;kasvi|lehti
+☘️;kolmiapila;kasvi
+🍀;neliapila;kasvi|lehti|nelilehtinen|neljä
+🍁;vaahteranlehti;kasvi|lehti|putoava|vaahtera
+🍂;pudonnut lehti;kasvi|lehti|putoava
+🍃;lehti tuulessa;kasvi|lehti|puhaltaa|tuuli
+🪹;tyhjä pesä;koti|linnunpesä|pesä|pesiminen|pesintä
+🪺;munia pesässä;linnunpesä|muna|munat|muninta|pesiminen|pesintä
+🍄;sieni;rihmasto
+🪾;lehdetön puu;kelo|kuivuus|lehdetön|oksat|paljas|talvi
+🍇;viinirypäleet;hedelmä|kasvi|rypäle|viinirypäle
+🍈;meloni;cantaloupe|hedelmä|kasvi
+🍉;vesimeloni;hedelmä|kasvi
+🍊;mandariini;appelsiini|c-vitamiini|hedelmä|kasvi
+🍋;sitruuna;hedelmä|kasvi|sitrus
+🍋‍🟩;limetti;cocktail|hapan|hedelmä|kirpeä|koriste|lime|margarita|mojito|raikas|salsa|sitrus|tequila|trooppinen|vihreä
+🍌;banaani;hedelmä|kasvi
+🍍;ananas;hedelmä|kasvi
+🥭;mango;hedelmä|ruoka|tehosekoitin|trooppinen
+🍎;punainen omena;hedelmä|kasvi|omena|punainen
+🍏;vihreä omena;hedelmä|kasvi|omena|vihreä
+🍐;päärynä;hedelmä|kasvi
+🍑;persikka;hedelmä|kasvi
+🍒;kirsikat;hedelmä|kasvi|kirsikka
+🍓;mansikka;hedelmä|kasvi|marja
+🫐;mustikat;marja|mustikka|sininen
+🥝;kiivi;hedelmä|ruoka
+🍅;tomaatti;kasvi|kasvis|vihannes
+🫒;oliivi;ruoka
+🥥;kookospähkinä;palmu|piña colada
+🥑;avokado;hedelmä|ruoka
+🍆;munakoiso;kasvi|kasvis|vihannes
+🥔;peruna;ruoka|vihannes
+🥕;porkkana;ruoka|vihannes
+🌽;maissintähkä;kasvi|maissi|tähkä
+🌶️;jalapeno;kasvi|kuuma|paprika|tulinen
+🫑;paprika;capsicum|vihannes
+🥒;kurkku;ruoka|vihannes
+🥬;lehtivihannes;kaali|pinaattikiinankaali|salaatinlehti|salaatti
+🥦;parsakaali;broccoli|vihannes
+🧄;valkosipuli;mauste
+🧅;sipuli;mauste
+🥜;maapähkinä;pähkinä|ruoka|vihannes
+🫘;pavut;munuainen|palkokasvi|papu|pieru|ruoka|tarhapapu
+🌰;kastanja;kasvi|pähkinä
+🫚;inkivääri;juuri|mauste|olut|ruoka
+🫛;herneenpalko;edamame|herne|palko|palkokasvi|pavut|ruoka|vihannes
+🍄‍🟫;ruskea herkkusieni;itiö|kasvis|kasvissyöjä|luonto|pizzan täytteet|portobello|ruoka|ruskea sieni|sieni|siitake|tryffeli|vegetaristi|vihannes
+🫜;juures;juuri|juurikas|kasvis|kasvissyöjä|nauris|puutarha|retiisi|ruoka|salaatti
+🍞;leipä;aamiainen|paahtoleipä|pala|ravintola|vehnä
+🥐;voisarvi;croissant|leipä|ranskalainen|ruoka
+🥖;patonki;leipä|ranskalainen|ruoka
+🫓;rieska;arepa|lavash|leipä|naan|pita|ruoka
+🥨;rinkilä;kierretty|pretzel
+🥯;vesirinkeli;aamiainen|aamupala|bagel|bageli|leivonnainen|rinkeli
+🥞;letut;lettu|ohukainen|pannukakku|ruoka
+🧇;vohveli;aamiainen|aamupala|vohvelirauta
+🧀;juustopala;juusto|palanen
+🍖;lihaa luineen;liha|luu
+🍗;kanankoipi;kana|koipi|luu|ruoka|siipikarja
+🥩;lihanpala;kyljys|lampaankyljys|pihvi|porsaankyljys
+🥓;pekoni;aamiainen|liha|porsas|ruoka
+🍔;hampurilainen;burgeri|hamppari|jauhelihapihvi
+🍟;ranskalaiset;peruna|ranskikset|tikkuperunat
+🍕;pizza;juusto|pepperoni|siivu|viipale
+🌭;hodari;hot dog|makkara|nakki|sämpylä
+🥪;voileipä;aamiainen|kerrosleipä|leipä|ruoka|sandwich|täyte
+🌮;taco;meksikolainen|tortilla
+🌯;burrito;meksikolainen
+🫔;tamal;käärö|meksikolainen
+🥙;täytetty pita;falafel|gyros|kebab|leipä|pita|ruoka|täyte
+🧆;falafel;kasvispyörykkä|kikherne
+🥚;kananmuna;ruoka
+🍳;kokkaus;aamiainen|kananmuna|paistinpannu|ruoanlaitto|ruoka
+🥘;paellapannu;paella|pata|pataruoka|ruoka
+🍲;ruokakulho;pata
+🫕;fondue;juusto|pata|ruoka|suklaa|sulatettu|sveitsiläinen
+🥣;kulho ja lusikka;aamiainen|congee|murot|puuro
+🥗;vihreä salaatti;ruoka|salaatti|vihreä
+🍿;popcorn;elokuva|leffa|maissi|popparit
+🧈;voi;maitotuote
+🧂;suola;mauste|sirotin|suolasirotin
+🥫;säilyketölkki;purkki|ruoka|säilykepurkki|tölkki
+🍱;bento-rasia;bento|rasia
+🍘;riisikakku;keksi|riisi
+🍙;riisipallo;japanilainen|pallo|riisi|ruoka
+🍚;keitetty riisi;keitetty|riisi
+🍛;curry-riisi;curry|riisi
+🍜;höyryävä kulho;höyryävä|kulho|kuuma|nuudeli|ramen
+🍝;spagetti;lihapullat|pasta|ravintola|ruoka
+🍠;paahdettu bataatti;bataatti|paahdettu|paistettu bataatti|uunipaahdettu
+🍢;oden;merenelävät|ravintola|ruoka|tikku|varras
+🍣;sushi;raaka kala|riisi|ruoka
+🍤;paistettu katkarapu;katkarapu|paistettu|tempura
+🍥;kalakakku;kakku|kala|leivonnainen|ravintola
+🥮;kuukakku;juhla|syksy|yuèbĭng
+🍡;dango;jälkiruoka|japanilainen|makea|tikku
+🥟;taikinanyytti;gyoza|myky|nyytti|pelmeni|ruoka
+🥠;onnenkeksi;ennustus
+🥡;ateriarasia;noutoruoka|ruoka|syömäpuikot
+🍦;pehmis;jää|jäätelö|jälkiruoka|kerma|makea|pehmeä
+🍧;jäähilejälkiruoka;herkku|jää|jäähile|jälkiruoka|makea
+🍨;jäätelö;jälkiruoka|kerma|makea|ravintola|ruoka
+🍩;donitsi;jälkiruoka|makea|munkki|munkkirinkeli
+🍪;keksi;jälkiruoka|makea|suklaa
+🎂;syntymäpäiväkakku;jälkiruoka|juhla|kakku|leivonnainen|makea|syntymäpäivä
+🍰;kakkupala;jälkiruoka|kakku|leivonnainen|makea|pala
+🧁;vuokaleivos;kuppikakku|leivonnainen|leivos|makea
+🥧;piirakka;leivonnainen|täyte
+🍫;suklaapatukka;jälkiruoka|makea|patukka|suklaa
+🍬;karkki;jälkiruoka|makea
+🍭;tikkari;jälkiruoka|karkki|makea
+🍮;vanukas;jälkiruoka|makea
+🍯;hunaja;makea
+🍼;tuttipullo;juoda|maito|pullo|vauva
+🥛;maitolasi;juoma|lasi|maito
+☕;kuuma juoma;höyryävä|juoda|juoma|kahvi|kuuma|tee
+🫖;teepannu;juoda|juoma|pannu|ruoka|tee
+🍵;korvaton teekuppi;juoda|juoma|kuppi|tee|teekuppi
+🍶;sake;baari|juoma|kuppi|pullo|riisiviini
+🍾;pullo ja korkin poksautus;baari|juoda|korkki|poksauttaa|pullo
+🍷;viinilasi;baari|juoda|juoma|lasi|viini
+🍸;cocktaillasi;baari|cocktail|juoda|lasi
+🍹;trooppinen drinkki;baari|drinkki|juoda|lasi|trooppinen
+🍺;oluttuoppi;alkoholi|baari|juoda|kalja|olut|tuoppi
+🍻;kilisevät oluttuopit;baari|juoda|juoma|kalja|kippis|olut|tuoppi
+🥂;kilisevät lasit;juhlia|juoda|kilistää|kippis|lasi|pikarit|skumppa
+🥃;juomalasi;paukku|viina|viski
+🫗;nesteen kaataminen;juoma|kaataminen|läikyttää|lasi|tyhjä|vahinko|valuttaa
+🥤;lasi ja pilli;juoma|limsa|mehu|pilli|vesi
+🧋;kuplatee;helmi|juoma|kupla|maito|ruoka|taiwan|tee
+🧃;juomatetra;juomat|mehu|pillijuoma|tetra
+🧉;mate;juoma
+🧊;jääkuutio;jää|jääpala|kylmä
+🥢;syömäpuikot;aterimet|ruokailu
+🍽️;haarukka, veitsi ja lautanen;aterimet|haarukka|lautanen|ruokailu|veitsi
+🍴;haarukka ja veitsi;aterimet|haarukka|ruokailu|veitsi
+🥄;lusikka;aterimet|ruokailu
+🔪;keittiöveitsi;leikkuuveitsi|ruoanlaitto|teräase|työkalu|veitsi
+🫙;purkki;astia|höyste|kastike|mauste|säilytys|tyhjä
+🏺;amfora;horoskooppi|horoskooppimerkki|juoma|kannu|ruoanlaitto|vesimies
+🌍;maapallo jossa näkyy Eurooppa ja Afrikka;Afrikka|Eurooppa|maailma|maapallo
+🌎;maapallo jossa näkyy Amerikka;Amerikka|maailma|maapallo
+🌏;maapallo jossa näkyy Aasia ja Australia;Aasia|Australia|maailma|maapallo
+🌐;maapallo jossa näkyy pituuspiirit;internet|maailma|maapallo|netti|pituuspiirit
+🗺️;maailmankartta;kartta|maailma
+🗾;Japanin kartta;Japani|kartta
+🧭;kompassi;magneettinen|navigointi|suunnistus
+🏔️;lumihuippuinen vuori;kylmä|lumi|vuori
+⛰️;vuori;vuoristo
+🛘;maanvyörymä;kivet|maanjäristys|mutavyöry|onnettomuus|vaara|vuori|vyöry
+🌋;tulivuori;sää|tulivuorenpurkaus|vuori
+🗻;Fuji-vuori;Fuji|vuori
+🏕️;telttailu;leiri|leirintäalue|teltta
+🏖️;ranta ja aurinkovarjo;aurinkovarjo|ranta
+🏜️;autiomaa;aavikko|kaktus
+🏝️;autiosaari;autio|saari
+🏞️;kansallispuisto;puisto
+🏟️;stadion;urheilukatsomo
+🏛️;klassinen rakennus;antiikki|klassismi|rakennus
+🏗️;rakennustyömaa;rakennus|työmaa
+🧱;tiili;laasti|muuri|savi|seinä|tiilet
+🪨;kivi;kallio|lohkare|painava
+🪵;halko;metsä|pölkky|puu|puutavara
+🛖;maja;jurtta|koti|mökki|savimaja|talo
+🏘️;taloryhmä;rakennus|talo
+🏚️;autiotalo;hylätty|rakennus|talo|tyhjä
+🏠;talo;asumus|koti|rakennus
+🏡;talo ja puutarha;puutarha|rakennus|talo
+🏢;toimistorakennus;rakennus|toimisto
+🏣;japanilainen postitoimisto;Japani|posti|rakennus
+🏤;postitoimisto;posti|rakennus
+🏥;sairaala;ensiapu|hoito|lääkäri|rakennus
+🏦;pankki;rakennus
+🏨;hotelli;majoitus|rakennus
+🏩;tuntihotelli;hotelli|rakennus|tunti
+🏪;lähikauppa;kauppa|ostokset|rakennus
+🏫;koulu;oppi|rakennus
+🏬;tavaratalo;kauppa|rakennus
+🏭;tehdas;rakennus|tuotanto
+🏯;japanilainen linna;Japani|linna|rakennus
+🏰;linna;eurooppalainen|länsimainen|rakennus
+💒;häät;kappeli|romantiikka|vihkiminen
+🗼;Tokyo Tower;Japani|rakennus|Tokio|torni
+🗽;Vapaudenpatsas;New York|patsas|USA|vapaus|yhdysvallat
+⛪;kirkko;kristinusko|rakennus|uskonto
+🕌;moskeija;islam|muslimi|rakennus|uskonto
+🛕;hindutemppeli;hindu|temppeli
+🕍;synagoga;juutalaisuus|rakennus|temppeli|uskonto
+⛩️;shinto-temppeli;rakennus|shintolaisuus|uskonto
+🕋;Kaaba;islam|muslimi|rakennus|uskonto
+⛲;suihkulähde;suihku|vesi
+⛺;teltta;leirintä|telttailu
+🌁;sumuinen;sää|sumu
+🌃;tähtitaivas;sää|tähti|yö
+🏙️;kaupunkimaisema;kaupunki|rakennus
+🌄;auringonnousu vuorten takaa;aamu|aurinko|sää
+🌅;auringonnousu;aamu|aurinko|sää
+🌆;kaupunkimaisema illanhämärässä;aurinko|ilta|kaupunki|sää
+🌇;auringonlasku;aurinko|ilta|sää
+🌉;silta yöllä;sää|silta|yö
+♨️;kuumat lähteet;höyry|kuuma|kylpylä|lähde|vesi
+🎠;karusellihevonen;hevonen|karuselli
+🛝;liukumäki;leikki|leikkiä|leikkipuisto|liukua
+🎡;maailmanpyörä;huvipuisto
+🎢;vuoristorata;huvipuisto
+💈;punasiniraitainen pylväs;kampaaja|parturi|raidat
+🎪;sirkusteltta;sirkus|teltta
+🚂;veturi;ajoneuvo|juna|rautatie
+🚃;junavaunu;ajoneuvo|juna|raitiovaunu|rautatie
+🚄;pikajuna;ajoneuvo|juna|luotijuna|rautatie|shinkansen
+🚅;luotipikajuna;ajoneuvo|juna|luotijuna|rautatie|shinkansen
+🚆;juna;ajoneuvo|rautatie|saapunut
+🚇;metro;ajoneuvo|maanalainen|matkailu
+🚈;kevytraidejuna;ajoneuvo|juna|rautatie
+🚉;asema;ajoneuvo|juna|rautatie
+🚊;raitioliikenne;ajoneuvo|raiteet
+🚝;monorail;ajoneuvo|juna|raide|yksiraidejuna
+🚞;rinnerata;ajoneuvo|funikulaari|juna|matka|rautatie
+🚋;raitiovaunu;ajoneuvo|raiteet|ratikka|spora
+🚌;bussi;ajoneuvo|auto|linja-auto
+🚍;saapuva bussi;ajoneuvo|auto|bussi|linja-auto
+🚎;johdinbussi;ajoneuvo|auto|johdinauto
+🚐;minibussi;ajoneuvo|auto|bussi|linja-auto|pikkubussi
+🚑;ambulanssi;ajoneuvo|auto
+🚒;paloauto;ajoneuvo|auto|tulipalo
+🚓;poliisiauto;ajoneuvo|auto|poliisi
+🚔;saapuva poliisiauto;ajoneuvo|auto|poliisi|vastaantuleva
+🚕;taksi;ajoneuvo|auto|kyyti
+🚖;saapuva taksi;ajoneuvo|auto|taksi
+🚗;auto;ajoneuvo
+🚘;saapuva auto;ajoneuvo|auto
+🚙;katumaasturi;ajoneuvo|auto
+🛻;lava-auto;auto|avolava|kuljetus|kuorma-auto
+🚚;kuljetusauto;ajoneuvo|auto|kuorma-auto|rekka
+🚛;rekka-auto;ajoneuvo|auto|kuorma-auto|rekka
+🚜;traktori;ajoneuvo|auto|maatila
+🏎️;kilpa-auto;auto|kilpa-ajot
+🏍️;moottoripyörä;kilpa-ajot|liikenne
+🛵;skootteri;ajoneuvo
+🦽;käsikäyttöinen pyörätuoli;esteettömyys|pyörätuoli
+🦼;moottoroitu pyörätuoli;esteettömyys|pyörätuoli
+🛺;autorikša;tuktuk
+🚲;polkupyörä;ajoneuvo|pyörä
+🛴;potkulauta;lauta|potku|skuutti
+🛹;rullalauta;skeittilauta
+🛼;rullaluistin;luistin|urheilu
+🚏;bussipysäkki;asema|bussi|pysäkki
+🛣️;moottoritie;pikatie|tie
+🛤️;junaraide;juna|raide|rautatie
+🛢️;öljytynnyri;öljy|tynnyri
+⛽;bensapumppu;asema|bensiini|polttoaine
+🛞;rengas;ajoneuvo|auto|autonrengas|kääntyminen|pyörä
+🚨;poliisiauton valo;hälytys|poliisi|valo|vilkku
+🚥;vaakasuuntaiset liikennevalot;liikenne|liikennevalo|valo
+🚦;pystysuuntaiset liikennevalot;ajaa|liikenne|liikennevalo|risteys|valo
+🛑;pysähtymismerkki;merkki|pysähtyä|stop
+🚧;rakennustyömaan merkki;este|rakennustyömaa|tietyö|tietyömaa
+⚓;ankkuri;alus|laiva|merenkulku|meri
+🛟;pelastusrengas;hengenpelastus|kelluminen|pelastaa|pelastaminen|turvallisuus|uiminen
+⛵;purjevene;ajoneuvo|alus|jahti|meri|vene
+🛶;kanootti;vene
+🚤;pikavene;ajoneuvo|meri|moottorivene|vene
+🛳️;matkustajalaiva;ajoneuvo|alus|laiva|meri|vene
+⛴️;lautta;ajoneuvo|alus|laiva|meri
+🛥️;moottorivene;ajoneuvo|meri|pikavene|vene
+🚢;laiva;ajoneuvo|alus|meri|vene
+✈️;lentokone;ajoneuvo|matkailu|suihkukone
+🛩️;pienkone;ajoneuvo|lentokone
+🛫;lähtevä lentokone;ajoneuvo|lähtevä|lähtö|lentokone
+🛬;saapuva lentokone;ajoneuvo|laskeutuminen|lentokone|saapuva
+🪂;laskuvarjo;laskuvarjohyppy|riippuliito|varjoliito
+💺;istuin;lentokone|tuoli
+🚁;helikopteri;ajoneuvo
+🚟;riippurata;ajoneuvo|juna|kisko|rata|rautatie
+🚠;gondolihissi;ajoneuvo|gondoli|hissi|kaapeli|kabiini|vuori
+🚡;köysirata;ajoneuvo|gondoli|hissi|kaapeli|rata
+🛰️;satelliitti;avaruus|tekokuu
+🚀;raketti;ajoneuvo|avaruus
+🛸;lentävä lautanen;UFO
+🛎️;soittokello;hotelli|hotellipoika|kello
+🧳;matkatavara;matka|matkalaukku|matkustus|pakkaaminen
+⌛;tiimalasi;ajanotto|hiekka
+⏳;valuva tiimalasi;ajanotto|hiekka|tiimalasi
+⌚;kello;ranne|rannekello
+⏰;herätyskello;herätys|kello|myöhä
+⏱️;sekuntikello;aika|ajanotto|kello
+⏲️;ajastin;ajastus|ajoitus|kello|munakello
+🕰️;pöytäkello;kello|takanreunus
+🕛;kello kaksitoista;00.00|12|12.00|24.00|aika|kello|kellonaika
+🕧;puoli yksi;00.30|12.30|30|aika|kello|kellonaika
+🕐;kello yksi;1|1.00|13|13.00|aika|kello|kellonaika
+🕜;puoli kaksi;1.30|13.30|30|aika|kello|kellonaika
+🕑;kello kaksi;14|14.00|2|2.00|aika|kello|kellonaika
+🕝;puoli kolme;14.30|2.30|30|aika|kello|kellonaika
+🕒;kello kolme;15|15.00|3|3.00|aika|kello|kellonaika
+🕞;puoli neljä;15.30|3.30|30|aika|kello|kellonaika
+🕓;kello neljä;16|16.00|4|4.00|aika|kello|kellonaika
+🕟;puoli viisi;16.30|30|4.30|aika|kello|kellonaika
+🕔;kello viisi;17|17.00|5|5.00|aika|kello|kellonaika
+🕠;puoli kuusi;17.30|30|5.30|aika|kello|kellonaika
+🕕;kello kuusi;18|18.00|6|6.00|aika|kello|kellonaika
+🕡;puoli seitsemän;18.30|30|6.30|aika|kello|kellonaika
+🕖;kello seitsemän;19|7|7.00|aika|kello|kellonaika
+🕢;puoli kahdeksan;19.30|30|7.30|aika|kello|kellonaika
+🕗;kello kahdeksan;20|20.00|8|8.00|aika|kello|kellonaika
+🕣;puoli yhdeksän;20.30|30|8.30|aika|kello|kellonaika
+🕘;kello yhdeksän;21|21.00|9|9.00|aika|kello|kellonaika
+🕤;puoli kymmenen;21.30|30|9.30|aika|kello|kellonaika
+🕙;kello kymmenen;10|10.00|22|22.00|aika|kello|kellonaika
+🕥;puoli yksitoista;10.30|22.30|30|aika|kello|kellonaika
+🕚;kello yksitoista;11|11.00|23|23.00|aika|kello|kellonaika
+🕦;puoli kaksitoista;11.30|23.30|30|aika|kello|kellonaika
+🌑;uusikuu;kuu|pimeä|sää|taivaankappale
+🌒;kasvava kuunsirppi;kasvava|kuu|sää|sirppi|taivaankappale
+🌓;ensimmäinen neljänneskuu;kuu|puolikuu|sää|taivaankappale
+🌔;kasvava puolikuu;kasvava|kuu|sää|taivaankappale
+🌕;täysikuu;kuu|sää|taivaankappale|täysi
+🌖;vähenevä puolikuu;kuu|sää|taivaankappale|vähenevä
+🌗;viimeinen neljänneskuu;kuu|puolikuu|sää|taivaankappale
+🌘;vähenevä kuunsirppi;kuu|sää|sirppi|taivaankappale|vähenevä
+🌙;kuunsirppi;kuu|sää|sirppi|taivaankappale
+🌚;uudenkuun kasvot;kasvot|kuu|sää|taivaankappale
+🌛;kasvava puolikuu kasvoilla;kasvot|kuu|puolikuu|sää|taivaankappale
+🌜;vähenevä puolikuu kasvoilla;kasvot|kuu|puolikuu|sää|taivaankappale
+🌡️;lämpömittari;lämpötila|sää
+☀️;aurinko;helle|kirkas|paiste|sää|säteet
+🌝;täysikuu kasvoilla;kasvot|kirkas|kuu|sää|valo
+🌞;aurinko kasvoilla;aurinko|kasvot|kuu|paiste|sää|valo
+🪐;rengasplaneetta;Saturnus
+⭐;valkoinen tähti;tähti|tähtitiede
+🌟;loistava tähti;loiste|säihke|tähti|valo
+🌠;tähdenlento;avaruus|tähti|toive
+🌌;linnunrata;avaruus|galaksi|sää
+☁️;pilvi;sää
+⛅;aurinko pilvessä;aurinko|pilvi|sää
+⛈️;ukkospilvi ja sade;pilvi|sää|sade|salama|ukkonen
+🌤️;aurinko ja pieni pilvi;aurinko|pilvi|sää
+🌥️;aurinko ja suuri pilvi;aurinko|pilvi|sää
+🌦️;aurinko sadepilvessä;aurinko|pilvi|sää|sade
+🌧️;sadepilvi;pilvi|sää|sade
+🌨️;lumisadepilvi;lumi|lumisade|pilvi|pyry|sää
+🌩️;ukkospilvi;pilvi|sää|salama|ukkonen
+🌪️;hurrikaani;hirmumyrsky|sää|tornado
+🌫️;sumu;sää|usva|utu
+🌬️;puhuri;pilvi|puuska|sää|tuuli
+🌀;pyörremyrsky;hirmumyrsky|pyörre|sää|sykloni
+🌈;sateenkaari;biseksuali|genderqueer|hlbt|hlbtq|hlbtqia|homo|lesbo|queer|sää|sade|trans
+🌂;suljettu sateenvarjo;asuste|sää|sade|sateenvarjo
+☂️;sateenvarjo;asuste|sää|sade
+☔;sateenvarjo ja pisarat;asuste|pisara|sää|sade|sateenvarjo
+⛱️;aurinkovarjo;aurinko|kesä|ranta|sää|varjo
+⚡;korkeajännite;sähkö|sähköisku|vaara|virta
+❄️;lumihiutale;hiutale|kylmä|lumi|sää
+☃️;lumiukko;kylmä|lumi|sää
+⛄;lumiukko ilman lunta;kylmä|lumi|lumiukko|sää
+☄️;komeetta;avaruus|pyrstötähti
+🔥;tuli;liekki|lieska|nuotio
+💧;pisara;hiki|sää|tippa|vesi
+🌊;aalto;meri|tyrsky|valtameri|vesi
+🎃;kurpitsalyhty;halloween|juhla|kaivertaa|kurpitsa
+🎄;joulukuusi;joulu|joulupuu|juhla|kuusi
+🎆;ilotulitus;juhla
+🎇;tähtisadetikku;ilotulite|juhla|tähtisade
+🧨;sähikäinen;dynamiitti|ilotulitus|räjähde|raketti|tykinlaukaus
+✨;säihke;loiste|tähti|taika
+🎈;ilmapallo;juhla
+🎉;paukkuserpentiini;hurraa|juhla|yllätys
+🎊;konfettipallo;juhla|konfetti|koristepaperi
+🎋;tanabatapuu;bambu|Japani|juhla|puu|tanabata
+🎍;puukoriste;bambu|havu|Japani|juhla
+🎎;japanilaiset nuket;Japani|juhlinta|nukke
+🎏;karppiviiri;juhla|karppi|koinobori|viiri
+🎐;tuulikello;juhla|kello|tuuli
+🎑;kuuseremonia;juhla|juhlamenot|kuu
+🧧;punainen kirjekuori;hóngbāo|lahja|lai see|onni|raha
+🎀;rusetti;juhla|lahjanaru|ruusuke
+🎁;lahjapaketti;juhla|käärepaperi|lahja|paketti
+🎗️;tietoisuusnauha;merkkipäivä|muistutus|nauha|tietoisuus
+🎟️;pääsylippu;lippu|sisäänpääsylippu
+🎫;lippu;sisäänpääsylippu
+🎖️;kunniamerkki;armeija|juhla|mitali
+🏆;pokaali;kisat|palkinto|urheilu
+🏅;urheilumitali;mitali
+🥇;kultamitali;ensimmäinen|kulta|mitali|voittaja
+🥈;hopeamitali;hopea|mitali|toinen
+🥉;pronssimitali;kolmas|mitali|pronssi
+⚽;jalkapallo;pallo|urheilu
+⚾;pesäpallo;baseball|pallo|urheilu
+🥎;softball;hanska|pallo|räpylä|urheilu
+🏀;koripallo;pallo|urheilu
+🏐;lentopallo;ottelu
+🏈;amerikkalainen jalkapallo;jalkapallo|pallo|super bowl|urheilu
+🏉;rugby-pallo;jalkapallo|pallo|rugby|urheilu
+🎾;tennis;pallo|tennispallo|urheilu
+🥏;liitokiekko;Frisbee|kiekko|ultimate
+🎳;keilailu;keila|keilapallo|pallo|peli
+🏏;kriketti;maila|ottelu|pallo
+🏑;maahockey;hockey|maila|ottelu|pallo|peli
+🏒;jääkiekko ja maila;jää|jääkiekko|kiekko|maila|ottelu|peli
+🥍;lacrosse;haavipallo|maali|maila|pallo|urheilu
+🏓;pingis;maila|ottelu|pallo|pingispallo|pöytätennis
+🏸;sulkapallo;maila|ottelu|sulka|sulkapallomaila
+🥊;nyrkkeilyhanska;hanska|liikunta|nyrkkeily|urheilu
+🥋;kamppailulajiasu;asu|judo|kamppailulajit|karate|taekwondo|urheilu
+🥅;maaliverkko;liikunta|maali|urheilu
+⛳;lippu reiän päällä;golf|lippu|reikä
+⛸️;luistin;jää|luistelu
+🎣;onkivapa;kalastus|onki|virveli
+🤿;sukellusmaski;snorkkelisetti|snorklaus|sukellus
+🎽;juoksupaita;juokseminen|nauha|paita|urheilu
+🎿;sukset;hiihto|lumi|sauvat
+🛷;kelkka;kouru|lasku|liukuri|pulkkamäki
+🥌;curling-kivi;jää|kivi|peli
+🎯;napakymppi;darts|häränsilmä|kymmenen|tikka|tikkataulu
+🪀;jojo;jojoilla|lelu
+🪁;leija;leijailla|lennättää
+🔫;vesipyssy;pistooli|pyssy|revolveri
+🎱;biljardi;8|biljardipallo|kahdeksan|kasipallo|pallo|peli
+🔮;kristallipallo;ennustaja|ennustus|kristalli|povaus|taika|tulevaisuus
+🪄;taikasauva;noita|taika|taikuri|velho
+🎮;videopeli;ohjain|peli
+🕹️;joystick;ohjain|sauvaohjain|videopeli
+🎰;pelikone;kasino|kolikko|rahapeli
+🎲;noppa;noppakuutio|peli|viihde
+🧩;palapeli;arvoitus|pala|vihje|yhteenliittynyt|yhteensopiva
+🧸;nalle;lelu|pehmolelu|täytetty|teddykarhu
+🪅;piñata;juhla|juhlat|juhlinta|karkki|meksiko|pinada|pinata
+🪩;peilipallo;bileet|disco|disko|diskopallo|glitter|juhlat|tanssi
+🪆;maatuskanuket;maatuska|nukke|venäläinen
+♠️;pata;kortti|korttipeli|maa
+♥️;hertta;kortti|korttipeli|maa
+♦️;ruutu;kortti|korttipeli|maa|peli|timantti
+♣️;risti;kortti|korttipeli|maa
+♟️;šakkipelin sotilas;nappula|pelinappula|punapaita|šakki|sotilas|uhrattavissa
+🃏;jokeri;kortti|korttipeli|peli
+🀄;mahjong;keskusta|lohikäärme|peli|punainen
+🎴;kukkapelikortit;hanafuda|Japani|kortti|korttipeli|kukat
+🎭;näyttämötaiteet;naamio|näytelmä|näyttämö|shakespeare|taide|teatteri
+🖼️;kuva kehyksissä;kehys|maalaus|museo|taide|taulu
+🎨;taiteilijan paletti;maalari|maali|taide
+🧵;lankarulla;lanka|neula|ompelu|rulla|rullalanka
+🪡;ompeluneula;käsinompelu|kirjonta|neula|ompelu|parsiminen|silmäneula|tikit
+🧶;lankakerä;kerä|kutominen|lanka|neulominen|virkkaus
+🪢;solmu;kiinnittää|köysi|naru|solmulla
+👓;silmälasit;silmä|vaatteet
+🕶️;aurinkolasit;lasit|silmä|silmälasit|tumma
+🥽;suojalasit;hitsaus|silmien suojelu|uimalasit
+🥼;laboratoriotakki;koe|lääkärintakki|tohtori|tutkija
+🦺;turvaliivi;hätä|hätätilanne|liivi|turvallisuus
+👔;solmio;asuste|kravatti|vaatteet
+👕;t-paita;paita|vaatteet
+👖;farkut;housut|vaatteet
+🧣;huivi;asuste|kaula|kaulaliina|niska
+🧤;hansikkaat;asuste|hanskat|kädet|käsineet
+🧥;takki;hrr|päällysvaate|pusero|vaatteet
+🧦;sukat;vaatteet|villasukka
+👗;mekko;leninki|ostokset|vaatteet
+👘;kimono;japanilainen|vaatteet
+🥻;sari;mekko|vaate
+🩱;uimapuku;uima-asu
+🩲;uimahousut;alushousut|uima-asu|vaatteet
+🩳;uimashortsit;alushousut|shortsit|uimahousut|uinti
+👙;bikinit;ranta|uida|uimapuku|vaatteet|vesi
+👚;naistenvaatteet;nainen|ostokset|paita|vaatteet
+🪭;taittuva käsiviuhka;arka|jäähdytys|kuuma|lepatus|tanssi|ujo|viilentää|viuhka
+👛;rahakukkaro;asuste|kolikko
+👜;käsilaukku;asuste|laukku|ostokset
+👝;kirjekuorilaukku;asuste|iltalaukku|laukku
+🛍️;ostoskassit;kauppakassi|laukku|shoppailu
+🎒;koulureppu;koulu|koululaukku|laukku|reppu
+🩴;varvassandaali;flip flop|rantasandaalit|sandaalit|tossut|varvassandaalit|varvastossut
+👞;miehen kenkä;kenkä|mies|vaatteet
+👟;juoksukenkä;kenkä|lenkkarit|urheilu|vaatteet
+🥾;vaelluskenkä;erävaellus|kenkä|patikointi|retkeily|telttailu
+🥿;balleriina;balettitossu|kenkä|lipokas|tossu
+👠;korkokenkä;kenkä|korko|nainen|vaatteet
+👡;naisen sandaali;kenkä|nainen|sandaali|vaatteet
+🩰;balettitossut;baletti|tanssi
+👢;naisen saapas;kenkä|nainen|ostokset|saapas|vaatteet
+🪮;selvityskampa;afrokampaus|esine|harva|hiukset|kampa|tukka
+👑;kruunu;asuste|kuningas|kuningatar
+👒;naisen hattu;hattu|nainen|vaatteet
+🎩;silinteri;hattu|taikuri|vaatteet
+🎓;valmistujaislakki;hattu|juhla|lakki|vaatteet|valmistujaiset
+🧢;lippalakki;hattu|lakki|vaatteet
+🪖;sotilaskypärä;armeija|kypärä|sotilaallinen|sotilas
+⛑️;kypärä, jossa valkoinen risti;apu|hattu|jossa valkoinen risti|kypärä|naama|risti
+📿;rukoushelmet;asuste|helmet|helminauha|rukous|uskonto
+💄;huulipuna;kosmetiikka|kosmetiikkaa|meikit|meikki
+💍;sormus;häissä|kihlat|romantiikka|timantti
+💎;jalokivi;romantiikka|timantti
+🔇;mykistetty kaiutin;äänenvoimakkuus|äänetön|hiljaa|kaiutin|mykistys
+🔈;hiljainen kaiutin;äänenvoimakkuus|alhainen
+🔉;kaiutin normaalilla äänenvoimakkuudella;äänenvoimakkuus|äänet|kaiutin
+🔊;äänekäs kaiutin;äänenvoimakkuus|kaiutin|kovempaa|lisää
+📢;kovaääninen;ääni|huomio|keskusradio|kova
+📣;megafoni;ääni|huomio|kovaääninen|suosionosoitus
+📯;postitorvi;posti|soitin|torvi
+🔔;kirkonkello;ääni|kello|sointi
+🔕;mykistetty kello;äänetön|hiljaisuus|kello|kielto|mykistys
+🎼;nuottiviivasto;musiikki|nuotti|nuottiavain
+🎵;nuotti;musiikki
+🎶;nuotteja;musiikki|nuotti
+🎙️;studiomikrofoni;äänitys|levytys|mikrofoni|musiikki
+🎚️;liukusäädin;liu’utin|musiikki|valitsin|voimakkuus
+🎛️;säätimet;musiikki|nuppi|säädin
+🎤;mikrofoni;karaoke|mikki
+🎧;kuuloke;korvanappi|nappi|nappikuuloke
+📻;radio;vastaanotin|viihde
+🎷;saksofoni;instrumentti|musiikki
+🎺;trumpetti;instrumentti|musiikki|torvi
+🪊;pasuuna;instrumentti|jazz|liukua|musiikki|surullinen|vaski
+🪗;harmonikka;haitari|hanuri
+🎸;kitara;instrumentti|musiikki
+🎹;koskettimet;instrumentti|musiikki|piano|syntikka
+🎻;viulu;instrumentti|jousi|musiikki
+🪕;banjo;kielisoitin|musiikki
+🥁;rumpu;musiikki|rumpukapula
+🪘;congarumpu;conga|kongo|rumpu|rytmi|soitin
+🪇;marakassit;esine|instrumentti|kalina|lyömäsoittimet|musiikki|rämistä|ravista|ravistaa|soitin
+🪈;huilu;esine|instrumentti|musiikki|nokkahuilu|orkesteri|pilli|puupuhallin|säkkipilli|soitin|urkupilli
+🪉;harppu;musiikki|orkesteri|rakkaus|soitin
+📱;kännykkä;matkapuhelin|mobiili|mobiililaite|puhelin
+📲;kännykkä ja nuoli;matkapuhelin|nuoli|puhelin|puhelu|saapuva
+☎️;puhelin;lankapuhelin
+📞;luuri;kuuloke|puhelin
+📟;hakulaite;
+📠;faksi;faksilaite|viestintä
+🔋;akku;akkuvirta|paristo
+🪫;akku vähissä;akku|sähkö|tyhjä|virta vähissä
+🔌;pistoke;sähkö|sähköpistoke|sähkötöpseli|töpseli
+💻;kannettava tietokone;kannetava|kannettava|läppäri|pc|tietokone|toimisto
+🖥️;pöytäkone;näyttö|tietokone
+🖨️;tulostin;printteri|tietokone
+⌨️;näppäimistö;näppäimet|näppis|tietokone
+🖱️;tietokoneen hiiri;hiiri|tietokone
+🖲️;ohjauspallo;hiiri|tietokone
+💽;minidisk;levy|minidisc|tietokone
+💾;disketti;korppu|levyke|tietokone
+💿;CD;blu-ray|dvd|levy|tietokone
+📀;DVD;blu-ray|cd|levy|tietokone
+🧮;helmitaulu;koulu|laskeminen
+🎥;elokuvakamera;elokuva|kamera|kuvaukset
+🎞️;filminauha;elokuva|filmirulla
+📽️;elokuvaprojektori;elokuva|elokuvakone|projektori|video
+🎬;klaffitaulu;elokuva|klaffi|kuvaukset|toiminta
+📺;televisio;telkkari|tv|video
+📷;kamera;instagram|video
+📸;kamera ja salama;kamera|salama|video
+📹;videokamera;kamera|video
+📼;videokasetti;nauha|VHS|video|videonauha
+🔍;suurennuslasi vasemmalle;etsi|haku|lasi|suurennuslasi|työkalu
+🔎;suurennuslasi oikealle;etsi|haku|lasi|suurennuslasi|työkalu
+🕯️;kynttilä;valo
+💡;hehkulamppu;ajatus|lamppu|sähkö|valo
+🔦;taskulamppu;lamppu|sähkö|työkalu|valo
+🏮;punainen paperilyhty;baari|Japani|lyhty|punainen|valo
+🪔;savilamppu;diya|lamppu|öljy|öljylamppu
+📔;koristeellinen muistikirja;kansi|kirja|kirjoitus|koulu|lehtiö|muistikirja|muistio
+📕;suljettu kirja;kirja|suljettu
+📖;avoin kirja;avoin|kirja
+📗;vihreä kirja;kirja|vihreä
+📘;sininen kirja;kirja|sininen
+📙;oranssi kirja;kirja|oranssi
+📚;kirjoja;kirja|kirjapino|kirjat
+📓;muistikirja;kirja|lehtiö|muistio
+📒;tilikirja;kirja|kirjanpito|lehtiö
+📃;käännetty sivu;asiakirja|dokumentti|sivu
+📜;kirjakäärö;käärö|paperi
+📄;sivu;asiakirja|dokumentti
+📰;sanomalehti;lehti|uutiset
+🗞️;sanomalehti rullalla;lehti|rulla|sanomalehti|uutiset
+📑;kirjanmerkkivälilehdet;kirjanmerkki|merkki|välilehti
+🔖;kirjanmerkki;merkki
+🏷️;lappu;etiketti|kortti|lipuke
+🪙;kolikko;aarre|hopea|kulta|metalli|raha
+💰;rahasäkki;raha|rahapussi|säkki
+🪎;aarrearkku;arvoesineet|hopea|jalokivi|korut|kulta|palkinto|raha|ryöstösaalis|vauraus
+💴;yen-seteli;pankki|raha|seteli|valuutta|yen
+💵;dollariseteli;dollari|pankki|raha|seteli|valuutta
+💶;euroseteli;euro|pankki|raha|seteli|valuutta
+💷;puntaseteli;pankki|punta|raha|seteli|valuutta
+💸;rahalla on siivet;pankki|raha|seteli|siivet|valuutta
+💳;luottokortti;kortti|luotto|pankki|raha
+🧾;kuitti;kirjanpito|kulut|tilinpito|todistus|tosite
+💹;yen ja nouseva käyrä;kasvu|käyrä|markkinat|nousu|pankki|raha|valuutta
+✉️;kirjekuori;e-mail|kirje|sähköposti|viesti
+📧;sähköposti;e-mail|email|kirje|sähköpostiviesti|viesti
+📨;saapuva kirjekuori;e-mail|saapuva|sähköposti|sähköpostiviesti|viesti
+📩;kirjekuori ja nuoli;e-mail|kirjekuori|lähetetty|lähtevä|posti|sähköposti|sähköpostiviesti|viesti
+📤;lähtevät;e-mail|lähettää|postilaatikko|sähköposti
+📥;saapuvat;e-mail|postilaatikko|sähköposti|vastaanottaa
+📦;paketti;laatikko|lähetys|pakkaus
+📫;suljettu postilaatikko, lippu ylhäällä;lähtevä|lippu ylhäällä|postilaatikko|suljettu
+📪;suljettu postilaatikko, lippu alhaalla;alhaalla|lippu alhaalla|postilaatikko|suljettu
+📬;avoin postilaatikko, lippu ylhäällä;auki|avoin postilaatikko|lippu ylhäällä|postilaatikko
+📭;avoin postilaatikko, lippu alhaalla;alhaalla|auki|avoin postilaatikko|lippu alhaalla|postilaatikko
+📮;postilaatikko;posti
+🗳️;ääniuurna;äänestyslippu|ääni|uurna|vaali
+✏️;lyijykynä;kynä
+✒️;musta kynänkärki;kynä|mustekynä
+🖋️;täytekynä;kynä|mustekynä
+🖊️;kuulakärkikynä;kynä
+🖌️;sivellin;maalaaminen|maali|maalisuti
+🖍️;väriliitu;liitu|väri
+📝;muistio;lyijykynä|muistiinpanot
+💼;salkku;toimisto
+📁;tiedostokansio;kansio|tiedosto
+📂;avoin tiedostokansio;avoin|kansio|tiedosto
+🗂️;kortiston välilehdet;arkisto|kortisto|kortti|välilehti
+📅;kalenteri;päivämäärä
+📆;päiväkalenteri;kalenteri
+🗒️;kierrelehtiö;kierre|lehtiö|muistio
+🗓️;kierrekalenteri;kalenteri|kierre|lehtiö
+📇;kortisto;kortti|rolodex
+📈;nouseva käyrä;kaavio|kasvu|käyrä|nousu|suuntaus|trendi
+📉;laskeva käyrä;kaavio|käyrä|lasku|suuntaus
+📊;pylväskaavio;kaavio|pylväs|tilasto
+📋;leikepöytä;levy|paperinpidike
+📌;nuppineula;
+📍;pyöreä nasta;karttanaula|nasta|naula|neula
+📎;paperiliitin;klemmari|liitin
+🖇️;klemmarit yhdessä;klemmari|liitin|paperiliitin|yhdessä
+📏;viivoitin;suora|viivain
+📐;kolmioviivain;kolmio|viivain|viivotin
+✂️;sakset;leikkaus|työkalu
+🗃️;arkistolaatikko;kortisto|laatikko|mappi
+🗄️;arkistokaappi;kaappi|kortisto|mappi
+🗑️;roskakori;roskis
+🔒;lukko;kiinni|yksityinen
+🔓;lukko auki;auki|avata|lukko
+🔏;lukko ja kynä;kirjoittaa|lukko|mustekynä|suojaus
+🔐;avain ja lukko kiinni;avain|kiinni|lukko|pyörä|turva
+🔑;avain;lukittu|salasana
+🗝️;vanha avain;avain|lukko|vanha|vihje
+🔨;vasara;korjaus|työkalu
+🪓;kirves;hakata|halkoa|metsä|pilkkoa|puu
+⛏️;hakku;kaivaa|kaivos|työkalu
+⚒️;hakku ja vasara;hakku|työkalu|vasara
+🛠️;jakoavain ja vasara;jakoavain|työkalu|vasara
+🗡️;tikari;ase|miekka|teräase|veitsi
+⚔️;miekat ristissä;ase|miekka|risti
+💣;pommi;räjähdys|sarjakuva
+🪃;bumerangi;ase|australia|kimmota takaisin|seuraus
+🏹;jousi ja nuoli;ase|horoskooppi|horoskooppimerkki|jousiammunta|jousimies|jousipyssy|työkalu
+🛡️;kilpi;ase
+🪚;käsisaha;puuseppä|saha|sahatavara|työkalu
+🔧;jakoavain;työkalu
+🪛;ruuvimeisseli;meisseli|ruuvi|taltta|työkalu
+🔩;ruuvi ja mutteri;mutteri|ruuvi|työkalu
+⚙️;hammasratas;työkalu
+🗜️;ruuvipuristin;puristin|ruuvipenkki|työkalu
+⚖️;vaaka;horoskooppi|horoskooppimerkki|oikeus|punnus|työkalu
+🦯;valkoinen keppi;esteettömyys|sokea
+🔗;lenkki;ketju
+⛓️‍💥;katkennut ketju;irti kahleista|käsiraudat|katketa|ketju|vapaus
+⛓️;ketjut;ketju
+🪝;koukku;haka|koukuttaa
+🧰;työkalulaatikko;laatikko|mekaaninen|pakki|työkalu|työkalupakki
+🧲;magneetti;hevosenkenkä|magneettinen|negatiivinen|positiivinen|puoleensavetävä
+🪜;tikkaat;askelma|kiivetä|tikapuut
+🪏;lapio;haudata|kaivaa|kasvi|kuoppa|puutarha
+⚗️;tislauskolvi;kemia|työkalu
+🧪;koeputki;kemia|kemisti|koe|laboratorio|tiede
+🧫;petrimalja;bakteerikasvusto|bakteerit|biologi|laboratorio|viljely
+🧬;dna;biologi|evoluutio|geeni|genetiikka|perimä
+🔬;mikroskooppi;koe|tiede|työkalu
+🔭;kaukoputki;teleskooppi|työkalu
+📡;lautasantenni;antenni|lautanen|satelliitti|satelliittiantenni
+💉;ruisku;lääkäri|lääke|piikki|rokote|tauti|työkalu
+🩸;veripisara;kuukautiset|lääketiede|vamma|verenluovutus
+💊;pilleri;lääkäri|lääke|lääketiede|tauti
+🩹;laastari;haava|hoito
+🩼;kainalosauva;keppi|liikkumisen apuväline|rajoite|sauva|vamma
+🩺;stetoskooppi;kuuntelu|lääkäri|sydän
+🩻;röntgen;lääkäri|lääketiede|luuranko|luut
+🚪;ovi;
+🛗;hissi;esteettömyys
+🪞;peili;heijastus|meikkaus|peilata
+🪟;ikkuna;aukko|kehys|läpinäkyvä|näkymä|raikas ilma
+🛏️;sänky;hotelli|nukkua|uni
+🛋️;sohva ja lamppu;hotelli|lamppu|sohva
+🪑;tuoli;istua|istuin|istumapaikka
+🚽;vessanpönttö;vessa|wc
+🪠;viemäripumppu;imukuppi|kakka|putkimies|WC
+🚿;suihku;vesi
+🛁;kylpyamme;amme|kylpy
+🪤;hiirenloukku;ansa|hiiri|juusto|loukku|syötti
+🪒;partaveitsi;ajaa parta|terävä
+🧴;hoitoainepullo;aurinkovoide|hoitoaine|kosteusvoide|sampoo|shampoo
+🧷;hakaneula;punk|punkkari|vaippa
+🧹;luuta;harja|lakaisu|noita|siivous
+🧺;kori;maatalous|piknik|pyykki|pyykkikori
+🧻;paperirulla;paperipyyhkeet|talouspaperi|vessapaperi|wc-paperi
+🪣;ämpäri;sanko
+🧼;saippua;kylpy|palasaippua|peseytyminen|saippuavaahto|siivous
+🫧;kuplat;helmi|kupla|leijua|pinnanalainen|puhdas|röyhtäisy|saippua|vedenalainen
+🪥;hammasharja;hampaat|harja|hygienia|kylpyhuone|puhdas
+🧽;pesusieni;huokoinen|imukykyinen|pesu|sieni|siivous
+🧯;sammutin;palonsammutin|palosammutin|sammuttaa|sammutusväline|tuli|tulipalo
+🛒;ostoskärryt;kärryt|ostaminen|ostokset
+🚬;savuke;tupakointi
+⚰️;arkku;kuolema|ruumisarkku|vampyyri
+🪦;hautakivi;hauta|hautausmaa|kuolema|muisto
+⚱️;tuhkauurna;hautajaiset|kuolema|uurna
+🧿;nazar-amuletti;amuletti|helmi|paha silmä|taikakalu|talismaani
+🪬;hamsa;amuletti|ennustus|Fatima|kämmen|käsi|Maria|Miriam|suoja|suojelu
+🗿;moai;kasvot|kivipatsas|moait|Pääsiäissaari|patsas
+🪧;kyltti;kortti|mielenosoitus|protesti
+🪪;henkilökortti;ajokortti|henkilötodistus|henkkarit|kortti|kulkulupa|tunnistus|turvallisuus
+🏧;pankkiautomaatti;automaatti|otto|pankki
+🚮;roskat-merkki;roska|roskakori
+🚰;juomakelpoista vettä;hana|juoma|juomavesi|juotava|vesi
+♿;pyörätuoli;esteettömyys
+🚹;miesten wc;miestenhuone|vessa|wc
+🚺;naisten wc;naistenhuone|vessa|wc
+🚻;wc;saniteetti|vessa
+🚼;vauva-merkki;lapsenhoito|vaipanvaihto|vauva
+🚾;vessa;huussi|käymälä|wc
+🛂;passintarkastus;passi|tarkastus
+🛃;tulli;paketti
+🛄;matkatavarat;hihna|luovutus
+🛅;säilytyslokero;matkatavarat|säilytys|tavarasäilytys
+⚠️;varoitus;muu vaara|tiedote|vaara
+🚸;lapsia liikenteessä;jalankulkija|lapsi|liikenne|suojatie|ylitys
+⛔;kielletty ajosuunta;ajosuunta|ei|kielletty|liikenne|sallittu
+🚫;pääsy kielletty;ei|kielletty|liikenne|pääsy
+🚳;polkupyörällä ajo kielletty;ei polkupyörille|kielletty|liikenne|polkupyörä|pyörä
+🚭;tupakointi kielletty;kielletty|tupakka|tupakointi
+🚯;roskaaminen kielletty;kielletty|roska|sotku
+🚱;vesi ei juomakelpoista;ei juomakelpoinen|juomakelvoton|juominen kielletty|kielto|pilaantunut vesi|vesi
+🚷;jalankulku kielletty;jalankulkija|kielletty
+📵;ei matkapuhelimia;kielletty|matkapuhelin|puhelin
+🔞;kielletty alaikäisiltä;18|ikäraja|ikärajoitus|kielletty|täysi-ikäinen
+☢️;säteilyvaara;radioaktiivinen|säteily|vaara|ydinsäteily
+☣️;biologinen vaara;biologinen|biovaara|vaara
+⬆️;nuoli ylös;ilmansuunta|nuoli|pääilmansuunta|pohjoinen
+↗️;nuoli yläoikealle;ilmansuunta|koillinen|nuoli|väli-ilmansuunta
+➡️;nuoli oikealle;ilmansuunta|itä|nuoli|pääilmansuunta
+↘️;nuoli alaoikealle;ilmansuunta|kaakko|nuoli|väli-ilmansuunta
+⬇️;nuoli alas;etelä|ilmansuunta|nuoli|pääilmansuunta
+↙️;nuoli alavasemmalle;ilmansuunta|lounas|nuoli|väli-ilmansuunta
+⬅️;nuoli vasemmalle;ilmansuunta|länsi|nuoli|pääilmansuunta
+↖️;nuoli ylävasemmalle;ilmansuunta|luode|nuoli|väli-ilmansuunta
+↕️;nuoli ylös ja alas;nuoli|suunta
+↔️;nuoli oikealle ja vasemmalle;nuoli|suunta
+↩️;vasemmalle kääntyvä nuoli;nuoli
+↪️;oikealle kääntyvä nuoli;nuoli|oikea
+⤴️;ylös kääntyvä nuoli;nuoli|ylös
+⤵️;alas kääntyvä nuoli;alas|nuoli
+🔃;pystynuolet myötäpäivään;myötäpäivään|nuoli|päivitä
+🔄;nuolet vastapäivään;nuoli|uudelleen|vastapäivään
+🔙;BACK-nuoli;nuoli|takaisin
+🔚;END-nuoli;lopeta|nuoli
+🔛;ON!-nuoli;nuoli|päällä
+🔜;SOON-nuoli;nuoli|pian|tulossa
+🔝;TOP-nuoli;alkuun|nuoli|ylös
+🛐;pyhä rakennus;palvonta|palvontapaikka|pyhäkkö|uskonto
+⚛️;atomi;ateisti
+🕉️;om-tavu;hindu|hindulaisuus|symboli|tavu|uskonto
+✡️;Daavidin tähti;Daavid|daavidintähti|juutalaisuus|tähti|uskonto
+☸️;dharma-pyörä;buddha|buddhalaisuus|dharma|pyörä|ratas|uskonto
+☯️;jin ja jang;jang|jin|tao|taolaisuus|uskonto|vaikea
+✝️;latinalainen risti;kristinusko|risti|uskonto
+☦️;ortodoksiristi;kristinusko|ortodoksisuus|risti|uskonto
+☪️;kuunsirppi ja tähti;islam|kuu|muslimi|tähti|uskonto
+☮️;rauhansymboli;rauha|symboli
+🕎;menora;juutalaisuus|kynttilä|seitsenhaarainen|uskonto
+🔯;kuusisakarainen tähti pisteellä;onnentähti|tähti|uskonto
+🪯;khanda;khalsa|sikhi|sikhiläinen|sikhismi|symboli|uskonto|veljeys
+♈;oinas-merkki;horoskooppi|horoskooppimerkki|oinas
+♉;härkä-merkki;härkä|horoskooppi|horoskooppimerkki
+♊;kaksonen-merkki;horoskooppi|horoskooppimerkki|kaksonen|kaksoset
+♋;rapu-merkki;horoskooppi|horoskooppimerkki|rapu
+♌;leijona-merkki;horoskooppi|horoskooppimerkki|leijona
+♍;neitsyt-merkki;horoskooppi|horoskooppimerkki|neitsyt
+♎;vaaka-merkki;horoskooppi|horoskooppimerkki|Libra|vaaka
+♏;skorpioni-merkki;horoskooppi|horoskooppimerkki|skorpioni
+♐;jousimies-merkki;horoskooppi|horoskooppimerkki|jousimies
+♑;kauris-merkki;horoskooppi|horoskooppimerkki|kauris
+♒;vesimies-merkki;horoskooppi|horoskooppimerkki|vesimies
+♓;kalat-merkki;horoskooppi|horoskooppimerkki|kalat
+⛎;käärmeenkantaja;horoskooppi|horoskooppimerkki|käärme|ophiuchus|tähtikuvio
+🔀;sekoitus;nappi|nuoli|painike|ristissä
+🔁;toista uudelleen;myötäpäivään|nappi|nuoli|painike|uudestaan
+🔂;toista kerran;kerran|myötäpäivään|nappi|nuoli|painike
+▶️;toista;aloita|kolmio|nappi|oikealle|painike|toisto
+⏩;kelaa eteenpäin;2|eteen|kelaus|nappi|nuoli|painike
+⏭️;seuraava kappale;eteen|kolmiot|nappi|painike|seuraava|siirry
+⏯️;toista/pysäytä;aloita|kolmio|nappi|painike|pysäytä|tauko|toisto
+◀️;kelaa hitaasti taakse;kelaus|kolmio|nappi|painike|taakse
+⏪;kelaa taaksepäin;2|kelaus|nappi|nuoli|painike|taakse
+⏮️;edellinen kappale;edellinen|kolmiot|nappi|painike|siirry|taakse
+🔼;ylös;kolmio|nappi|painike
+⏫;nopeasti ylös;2|kolmio|nappi|painike|ylös
+🔽;alas;kolmio|nappi|painike
+⏬;nopeasti alas;2|alas|kolmio|nappi|painike
+⏸️;pysäytä;2|nappi|painike|palkki|tauko
+⏹️;lopeta;nappi|neliö|painike|pysäytä
+⏺️;tallenna;äänitä|nappi|nauhoita|painike|ympyrä
+⏏️;poista;anna|avaus|nappi|painike
+🎦;videokuva;elokuva|kamera|kuvata|video
+🔅;himmennä;kirkkaus|nappi|painike|vähennä
+🔆;kirkasta;kirkkaus|lisää|nappi|painike
+📶;kuuluvuuspalkit;kenttä|kuuluvuus|matkapuhelin|palkki|puhelin|signaali
+🛜;langaton;internet|laajakaista|netti|symboli|tietokone|verkko|wifi
+📳;värinätila;äänetön|hiljainen|kännykkä|matkapuhelin|puhelin|värinä
+📴;matkapuhelin suljettava;kielletty|matkapuhelin|pois|puhelin
+♀️;Venus-symboli;naissymboli
+♂️;Mars-symboli;miessymboli
+⚧️;transsymboli;trans|transsukupuolinen
+✖️;kertomerkki;×|kertolasku|merkki|peruuta|x
+➕;plusmerkki;+|matematiikka|plus
+➖;miinusmerkki;-|matematiikka|miinus|vähennys
+➗;jakomerkki;/|jako|jakoviiva|matematiikka
+🟰;paksu yhtäsuuruusmerkki;matematiikka|vastaus|yhtä kuin|yhtäsuuruus
+♾️;äärettömyys;ääretön|aina|ikuinen|rajaton|universaali
+‼️;kaksoishuutomerkki;2|huutomerkki|merkki|välimerkki
+⁉️;huuto-kysymysmerkki;2|huutomerkki|kysymysmerkki|merkki|välimerkki
+❓;kysymysmerkki;merkki|välimerkki
+❔;valkoinen kysymysmerkki;kysymysmerkki|merkki|välimerkki
+❕;valkoinen huutomerkki;huutomerkki|merkki|välimerkki|valkoinen
+❗;huutomerkki;merkki|välimerkki
+〰️;aaltoviiva;aaltoileva|välimerkki|viiva
+💱;valuutanvaihto;pankki|raha|vaihto|valuutta
+💲;paksu dollarimerkki;dollari|raha|valuutta
+⚕️;lääketieteen symboli;Asklepioksen sauva|lääketiede
+♻️;kierrätyssymboli;kierrättää|kierrätys
+⚜️;Ranskan lilja;fleur-de-lis|heraldinen lilja|lilja|ranskanlilja
+🔱;kolmikärki;ankkuri|atrain|kolme|laiva|meri
+📛;nimikyltti;kyltti|lappu|nimi
+🔰;japanilainen symboli aloittelijalle;ajokortti|aloittelija|auto|japani|shoshinsha|vihreä
+⭕;suuri ympyrä;O|ympyrä
+✅;valkoinen valintamerkki;merkki|oikein|rasti|tarkistusmerkki|V|valmis
+☑️;punainen valintamerkki;merkki|rasti|tarkistusmerkki|V
+✔️;paksu valintamerkki;merkki|oikein|tarkistusmerkki|V|valintamerkki
+❌;punainen rastimerkki;kertolasku|merkki|peruuta|X
+❎;rastimerkki;kertolasku|laatikko|merkki|peruuta|X
+➰;silmukka;kaareva silmukka
+➿;kaksoissilmukka;2|nauhuri|silmukka|vastaaja
+〽️;osanvaihtomerkki;ioriten|japani|merkki
+✳️;kahdeksanpiikkinen tähtimerkki;8|asteriski|tähti|tähtimerkki
+✴️;kahdeksankärkinen tähti;8|asteriski|tähti|tähtimerkki
+❇️;kipinä;säihke|tähti
+©️;tekijänoikeusmerkki;C|tekijänoikeus
+®️;rekisteröity-merkki;R|rekisteröity
+™️;tavaramerkki;merkki|TM
+🫟;roiske;holi|maali|tahra
+*️⃣;näppäin: *;näppäin
+0️⃣;näppäin: 0;0|näppäin|nolla
+1️⃣;näppäin: 1;1|näppäin|yksi
+2️⃣;näppäin: 2;2|kaksi|näppäin
+3️⃣;näppäin: 3;3|kolme|näppäin
+4️⃣;näppäin: 4;4|näppäin|neljä
+5️⃣;näppäin: 5;5|näppäin|viisi
+6️⃣;näppäin: 6;6|kuusi|näppäin
+7️⃣;näppäin: 7;7|näppäin|seitsemän
+8️⃣;näppäin: 8;8|kahdeksan|näppäin
+9️⃣;näppäin: 9;9|näppäin|yhdeksän
+🔟;näppäin: 10;näppäin
+🔠;syötä isoja kirjaimia;aakkoset|ABCD|isot|kirjaimet|latinalaiset|syötä
+🔡;syötä pieniä kirjaimia;aakkoset|abcd|kirjaimet|latinalaiset|pienet|syötä
+🔢;syötä numeroja;1234|numerot|syötä
+🔣;syötä merkkejä;merkit|symbolit|syötä
+🔤;syötä kirjaimia;aakkoset|abc|kirjaimet|latinalaiset|syötä
+🅰️;A-veriryhmä;a|veriryhmä
+🆎;AB-veriryhmä;ab|veriryhmä
+🅱️;B-veriryhmä;b|veriryhmä
+🆑;pyyhi-näppäin;cl|kumita|pyyhi
+🆒;COOL;laatikko|siistiä|teksti
+🆓;FREE;ilmainen|laatikko|painike|teksti|vapaa
+ℹ️;info;i|info-piste|tietoja
+🆔;ID;henkilöllisyystodistus|identiteetti
+Ⓜ️;m ympyrässä;m|metro|ympyrä
+🆕;NEW;laatikko|painike|teksti|uusi|uutta
+🆖;NG;good|moka|no|teksti
+🅾️;O-veriryhmä;o|veriryhmä
+🆗;OK;laatikko|okay|okei|selvä
+🅿️;P;merkki|parkkipaikka|pysäköinti
+🆘;SOS;apua|hätämerkki|merkki
+🆙;UP!;huutomerkki|merkki|päivitys|up|uutta|ylös
+🆚;VS;merkki|versus
+🈁;täällä-kirjainmerkki;japani|katakana|kirjoitusmerkki
+🈂️;palvelumaksu-kirjainmerkki;japani|katakana|kirjoitusmerkki
+🈷️;kuukausittainen määrä -kirjainmerkki;japani|kirjoitusmerkki|kuukausittainen määrä
+🈶;maksullinen-kirjainmerkki;ei ilmainen|japani|kirjoitusmerkki
+🈯;varattu-kirjainmerkki;japani|kirjoitusmerkki
+🉐;hyvä ostos -kirjainmerkki;hyvä ostos|japani|kirjoitusmerkki
+🈹;alennus-kirjoitusmerkki;alennus|japani|kirjoitusmerkki
+🈚;maksuton-kirjainmerkki;japani|kirjoitusmerkki
+🈲;kielletty-kirjoitusmerkki;japani|kirjoitusmerkki
+🉑;hyväksyttävä-kirjoitusmerkki;japani|kiina|kirjoitusmerkki
+🈸;hakemus-kirjoitusmerkki;hakemus|japani|kiina|kirjoitusmerkki
+🈴;hyväksytty arvosana -kirjoitusmerkki;japani|kiina|kirjoitusmerkki
+🈳;tyhjä-kirjoitusmerkki;japani|kiina|kirjoitusmerkki
+㊗️;onnittelut-kirjoitusmerkki;japani|kirjoitusmerkki
+㊙️;salainen-kirjoitusmerkki;ideogrammi|japani|käsitemerkki|kirjoitusmerkki
+🈺;avoinna-kirjoitusmerkki;avoinna|japani|kirjoitusmerkki
+🈵;täynnä-kirjoitusmerkki;japani|kirjoitusmerkki
+🔴;punainen ympyrä;muoto|punainen|ympyrä
+🟠;oranssi ympyrä;oranssi|ympyrä
+🟡;keltainen ympyrä;keltainen|ympyrä
+🟢;vihreä ympyrä;vihreä|ympyrä
+🔵;sininen ympyrä;muoto|sininen|ympyrä
+🟣;violetti ympyrä;violetti|ympyrä
+🟤;ruskea ympyrä;ruskea|ympyrä
+⚫;musta ympyrä;muoto|musta|ympyrä
+⚪;valkoinen ympyrä;muoto|ympyrä
+🟥;punainen neliö;neliö|punainen
+🟧;oranssi neliö;neliö|oranssi
+🟨;keltainen neliö;keltainen|neliö
+🟩;vihreä neliö;neliö|vihreä
+🟦;sininen neliö;neliö|sininen
+🟪;violetti neliö;neliö|violetti
+🟫;ruskea neliö;neliö|ruskea
+⬛;iso musta neliö;muoto|neliö
+⬜;iso valkoinen neliö;muoto|neliö|valkoinen
+◼️;keskikokoinen musta neliö;muoto|neliö
+◻️;keskikokoinen valkoinen neliö;muoto|neliö
+◾;pienehkö musta neliö;muoto|musta|neliö
+◽;pienehkö valkoinen neliö;muoto|neliö|valkoinen
+▪️;pieni musta neliö;muoto|musta|neliö
+▫️;pieni valkoinen neliö;muoto|neliö|valkoinen
+🔶;iso oranssi vinoneliö;muoto|oranssi|vinoneliö
+🔷;iso sininen vinoneliö;muoto|sininen|vinoneliö
+🔸;pieni oranssi vinoneliö;muoto|oranssi|vinoneliö
+🔹;pieni sininen vinoneliö;muoto|sininen|vinoneliö
+🔺;punainen kolmio kärki ylös;kolmio|muoto|punainen
+🔻;punainen kolmio kärki alas;kolmio|muoto|punainen
+💠;vinoneliö/kukka;kukka|muoto|vinoneliö
+🔘;valintanappi;muoto|valinta|valintaruutu|ympyrä
+🔳;valkoinen neliöruutu;muoto|neliö|valinta|valintaruutu
+🔲;musta neliöruutu;muoto|neliö|valinta|valintaruutu
+🏁;ruutulippu;kilpa-ajot|ruutukuvio
+🚩;kolmiolippu;golf|lippu
+🎌;liput ristissä;Japani|juhla|ristityt
+🏴;musta lippu;liehuva|lippu|musta
+🏳️;valkoinen lippu;liehuva|lippu|valkoinen
+🏳️‍🌈;sateenkaarilippu;biseksuaali|hlbt|hlbtq|hlbtqia|homo|lesbo|lhbt|lhbtq|lhbtqia|liehuva|lippu|sateenkaari|trans|transsukupuolinen
+🏳️‍⚧️;translippu;lippu|trans|transsukupuolinen
+🏴‍☠️;merirosvolippu;aarre|lippu|pääkallolippu|rosvous|ryöstö
+🇦🇨;lippu: Ascension-saari;lippu
+🇦🇩;lippu: Andorra;lippu
+🇦🇪;lippu: Arabiemiirikunnat;lippu
+🇦🇫;lippu: Afganistan;lippu
+🇦🇬;lippu: Antigua ja Barbuda;lippu
+🇦🇮;lippu: Anguilla;lippu
+🇦🇱;lippu: Albania;lippu
+🇦🇲;lippu: Armenia;lippu
+🇦🇴;lippu: Angola;lippu
+🇦🇶;lippu: Antarktis;lippu
+🇦🇷;lippu: Argentiina;lippu
+🇦🇸;lippu: Amerikan Samoa;lippu
+🇦🇹;lippu: Itävalta;lippu
+🇦🇺;lippu: Australia;lippu
+🇦🇼;lippu: Aruba;lippu
+🇦🇽;lippu: Ahvenanmaa;lippu
+🇦🇿;lippu: Azerbaidžan;lippu
+🇧🇦;lippu: Bosnia ja Hertsegovina;lippu
+🇧🇧;lippu: Barbados;lippu
+🇧🇩;lippu: Bangladesh;lippu
+🇧🇪;lippu: Belgia;lippu
+🇧🇫;lippu: Burkina Faso;lippu
+🇧🇬;lippu: Bulgaria;lippu
+🇧🇭;lippu: Bahrain;lippu
+🇧🇮;lippu: Burundi;lippu
+🇧🇯;lippu: Benin;lippu
+🇧🇱;lippu: Saint-Barthélemy;lippu
+🇧🇲;lippu: Bermuda;lippu
+🇧🇳;lippu: Brunei;lippu
+🇧🇴;lippu: Bolivia;lippu
+🇧🇶;lippu: Karibian Alankomaat;lippu
+🇧🇷;lippu: Brasilia;lippu
+🇧🇸;lippu: Bahama;lippu
+🇧🇹;lippu: Bhutan;lippu
+🇧🇻;lippu: Bouvet’nsaari;lippu
+🇧🇼;lippu: Botswana;lippu
+🇧🇾;lippu: Valko-Venäjä;lippu
+🇧🇿;lippu: Belize;lippu
+🇨🇦;lippu: Kanada;lippu
+🇨🇨;lippu: Kookossaaret (Keelingsaaret);lippu
+🇨🇩;lippu: Kongon demokraattinen tasavalta;lippu
+🇨🇫;lippu: Keski-Afrikan tasavalta;lippu
+🇨🇬;lippu: Kongon tasavalta;lippu
+🇨🇭;lippu: Sveitsi;lippu
+🇨🇮;lippu: Norsunluurannikko;lippu
+🇨🇰;lippu: Cookinsaaret;lippu
+🇨🇱;lippu: Chile;lippu
+🇨🇲;lippu: Kamerun;lippu
+🇨🇳;lippu: Kiina;lippu
+🇨🇴;lippu: Kolumbia;lippu
+🇨🇵;lippu: Clippertoninsaari;lippu
+🇨🇶;lippu: Sark;lippu
+🇨🇷;lippu: Costa Rica;lippu
+🇨🇺;lippu: Kuuba;lippu
+🇨🇻;lippu: Kap Verde;lippu
+🇨🇼;lippu: Curaçao;lippu
+🇨🇽;lippu: Joulusaari;lippu
+🇨🇾;lippu: Kypros;lippu
+🇨🇿;lippu: Tšekki;lippu
+🇩🇪;lippu: Saksa;lippu
+🇩🇬;lippu: Diego Garcia;lippu
+🇩🇯;lippu: Djibouti;lippu
+🇩🇰;lippu: Tanska;lippu
+🇩🇲;lippu: Dominica;lippu
+🇩🇴;lippu: Dominikaaninen tasavalta;lippu
+🇩🇿;lippu: Algeria;lippu
+🇪🇦;lippu: Ceuta ja Melilla;lippu
+🇪🇨;lippu: Ecuador;lippu
+🇪🇪;lippu: Viro;lippu
+🇪🇬;lippu: Egypti;lippu
+🇪🇭;lippu: Länsi-Sahara;lippu
+🇪🇷;lippu: Eritrea;lippu
+🇪🇸;lippu: Espanja;lippu
+🇪🇹;lippu: Etiopia;lippu
+🇪🇺;lippu: Euroopan unioni;lippu
+🇫🇮;lippu: Suomi;lippu
+🇫🇯;lippu: Fidži;lippu
+🇫🇰;lippu: Falklandinsaaret;lippu
+🇫🇲;lippu: Mikronesia;lippu
+🇫🇴;lippu: Färsaaret;lippu
+🇫🇷;lippu: Ranska;lippu
+🇬🇦;lippu: Gabon;lippu
+🇬🇧;lippu: Iso-Britannia;lippu
+🇬🇩;lippu: Grenada;lippu
+🇬🇪;lippu: Georgia;lippu
+🇬🇫;lippu: Ranskan Guayana;lippu
+🇬🇬;lippu: Guernsey;lippu
+🇬🇭;lippu: Ghana;lippu
+🇬🇮;lippu: Gibraltar;lippu
+🇬🇱;lippu: Grönlanti;lippu
+🇬🇲;lippu: Gambia;lippu
+🇬🇳;lippu: Guinea;lippu
+🇬🇵;lippu: Guadeloupe;lippu
+🇬🇶;lippu: Päiväntasaajan Guinea;lippu
+🇬🇷;lippu: Kreikka;lippu
+🇬🇸;lippu: Etelä-Georgia ja Eteläiset Sandwichinsaaret;lippu
+🇬🇹;lippu: Guatemala;lippu
+🇬🇺;lippu: Guam;lippu
+🇬🇼;lippu: Guinea-Bissau;lippu
+🇬🇾;lippu: Guyana;lippu
+🇭🇰;lippu: Hongkong – Kiinan erityishallintoalue;lippu
+🇭🇲;lippu: Heard ja McDonaldinsaaret;lippu
+🇭🇳;lippu: Honduras;lippu
+🇭🇷;lippu: Kroatia;lippu
+🇭🇹;lippu: Haiti;lippu
+🇭🇺;lippu: Unkari;lippu
+🇮🇨;lippu: Kanariansaaret;lippu
+🇮🇩;lippu: Indonesia;lippu
+🇮🇪;lippu: Irlanti;lippu
+🇮🇱;lippu: Israel;lippu
+🇮🇲;lippu: Mansaari;lippu
+🇮🇳;lippu: Intia;lippu
+🇮🇴;lippu: Brittiläinen Intian valtameren alue;lippu
+🇮🇶;lippu: Irak;lippu
+🇮🇷;lippu: Iran;lippu
+🇮🇸;lippu: Islanti;lippu
+🇮🇹;lippu: Italia;lippu
+🇯🇪;lippu: Jersey;lippu
+🇯🇲;lippu: Jamaika;lippu
+🇯🇴;lippu: Jordania;lippu
+🇯🇵;lippu: Japani;lippu
+🇰🇪;lippu: Kenia;lippu
+🇰🇬;lippu: Kirgisia;lippu
+🇰🇭;lippu: Kambodža;lippu
+🇰🇮;lippu: Kiribati;lippu
+🇰🇲;lippu: Komorit;lippu
+🇰🇳;lippu: Saint Kitts ja Nevis;lippu
+🇰🇵;lippu: Pohjois-Korea;lippu
+🇰🇷;lippu: Etelä-Korea;lippu
+🇰🇼;lippu: Kuwait;lippu
+🇰🇾;lippu: Caymansaaret;lippu
+🇰🇿;lippu: Kazakstan;lippu
+🇱🇦;lippu: Laos;lippu
+🇱🇧;lippu: Libanon;lippu
+🇱🇨;lippu: Saint Lucia;lippu
+🇱🇮;lippu: Liechtenstein;lippu
+🇱🇰;lippu: Sri Lanka;lippu
+🇱🇷;lippu: Liberia;lippu
+🇱🇸;lippu: Lesotho;lippu
+🇱🇹;lippu: Liettua;lippu
+🇱🇺;lippu: Luxemburg;lippu
+🇱🇻;lippu: Latvia;lippu
+🇱🇾;lippu: Libya;lippu
+🇲🇦;lippu: Marokko;lippu
+🇲🇨;lippu: Monaco;lippu
+🇲🇩;lippu: Moldova;lippu
+🇲🇪;lippu: Montenegro;lippu
+🇲🇫;lippu: Saint-Martin;lippu
+🇲🇬;lippu: Madagaskar;lippu
+🇲🇭;lippu: Marshallinsaaret;lippu
+🇲🇰;lippu: Pohjois-Makedonia;lippu
+🇲🇱;lippu: Mali;lippu
+🇲🇲;lippu: Myanmar (Burma);lippu
+🇲🇳;lippu: Mongolia;lippu
+🇲🇴;lippu: Macao – Kiinan erityishallintoalue;lippu
+🇲🇵;lippu: Pohjois-Mariaanit;lippu
+🇲🇶;lippu: Martinique;lippu
+🇲🇷;lippu: Mauritania;lippu
+🇲🇸;lippu: Montserrat;lippu
+🇲🇹;lippu: Malta;lippu
+🇲🇺;lippu: Mauritius;lippu
+🇲🇻;lippu: Malediivit;lippu
+🇲🇼;lippu: Malawi;lippu
+🇲🇽;lippu: Meksiko;lippu
+🇲🇾;lippu: Malesia;lippu
+🇲🇿;lippu: Mosambik;lippu
+🇳🇦;lippu: Namibia;lippu
+🇳🇨;lippu: Uusi-Kaledonia;lippu
+🇳🇪;lippu: Niger;lippu
+🇳🇫;lippu: Norfolkinsaari;lippu
+🇳🇬;lippu: Nigeria;lippu
+🇳🇮;lippu: Nicaragua;lippu
+🇳🇱;lippu: Alankomaat;lippu
+🇳🇴;lippu: Norja;lippu
+🇳🇵;lippu: Nepal;lippu
+🇳🇷;lippu: Nauru;lippu
+🇳🇺;lippu: Niue;lippu
+🇳🇿;lippu: Uusi-Seelanti;lippu
+🇴🇲;lippu: Oman;lippu
+🇵🇦;lippu: Panama;lippu
+🇵🇪;lippu: Peru;lippu
+🇵🇫;lippu: Ranskan Polynesia;lippu
+🇵🇬;lippu: Papua-Uusi-Guinea;lippu
+🇵🇭;lippu: Filippiinit;lippu
+🇵🇰;lippu: Pakistan;lippu
+🇵🇱;lippu: Puola;lippu
+🇵🇲;lippu: Saint-Pierre ja Miquelon;lippu
+🇵🇳;lippu: Pitcairn;lippu
+🇵🇷;lippu: Puerto Rico;lippu
+🇵🇸;lippu: Palestiinalaisalue;lippu
+🇵🇹;lippu: Portugali;lippu
+🇵🇼;lippu: Palau;lippu
+🇵🇾;lippu: Paraguay;lippu
+🇶🇦;lippu: Qatar;lippu
+🇷🇪;lippu: Réunion;lippu
+🇷🇴;lippu: Romania;lippu
+🇷🇸;lippu: Serbia;lippu
+🇷🇺;lippu: Venäjä;lippu
+🇷🇼;lippu: Ruanda;lippu
+🇸🇦;lippu: Saudi-Arabia;lippu
+🇸🇧;lippu: Salomonsaaret;lippu
+🇸🇨;lippu: Seychellit;lippu
+🇸🇩;lippu: Sudan;lippu
+🇸🇪;lippu: Ruotsi;lippu
+🇸🇬;lippu: Singapore;lippu
+🇸🇭;lippu: Saint Helena;lippu
+🇸🇮;lippu: Slovenia;lippu
+🇸🇯;lippu: Huippuvuoret ja Jan Mayen;lippu
+🇸🇰;lippu: Slovakia;lippu
+🇸🇱;lippu: Sierra Leone;lippu
+🇸🇲;lippu: San Marino;lippu
+🇸🇳;lippu: Senegal;lippu
+🇸🇴;lippu: Somalia;lippu
+🇸🇷;lippu: Suriname;lippu
+🇸🇸;lippu: Etelä-Sudan;lippu
+🇸🇹;lippu: São Tomé ja Príncipe;lippu
+🇸🇻;lippu: El Salvador;lippu
+🇸🇽;lippu: Sint Maarten;lippu
+🇸🇾;lippu: Syyria;lippu
+🇸🇿;lippu: Eswatini;lippu
+🇹🇦;lippu: Tristan da Cunha;lippu
+🇹🇨;lippu: Turks- ja Caicossaaret;lippu
+🇹🇩;lippu: Tšad;lippu
+🇹🇫;lippu: Ranskan eteläiset ja antarktiset alueet;lippu
+🇹🇬;lippu: Togo;lippu
+🇹🇭;lippu: Thaimaa;lippu
+🇹🇯;lippu: Tadžikistan;lippu
+🇹🇰;lippu: Tokelau;lippu
+🇹🇱;lippu: Itä-Timor;lippu
+🇹🇲;lippu: Turkmenistan;lippu
+🇹🇳;lippu: Tunisia;lippu
+🇹🇴;lippu: Tonga;lippu
+🇹🇷;lippu: Turkki;lippu
+🇹🇹;lippu: Trinidad ja Tobago;lippu
+🇹🇻;lippu: Tuvalu;lippu
+🇹🇼;lippu: Taiwan;lippu
+🇹🇿;lippu: Tansania;lippu
+🇺🇦;lippu: Ukraina;lippu
+🇺🇬;lippu: Uganda;lippu
+🇺🇲;lippu: Yhdysvaltain erillissaaret;lippu
+🇺🇳;lippu: Yhdistyneet kansakunnat;lippu
+🇺🇸;lippu: Yhdysvallat;lippu
+🇺🇾;lippu: Uruguay;lippu
+🇺🇿;lippu: Uzbekistan;lippu
+🇻🇦;lippu: Vatikaani;lippu
+🇻🇨;lippu: Saint Vincent ja Grenadiinit;lippu
+🇻🇪;lippu: Venezuela;lippu
+🇻🇬;lippu: Brittiläiset Neitsytsaaret;lippu
+🇻🇮;lippu: Yhdysvaltain Neitsytsaaret;lippu
+🇻🇳;lippu: Vietnam;lippu
+🇻🇺;lippu: Vanuatu;lippu
+🇼🇫;lippu: Wallis ja Futuna;lippu
+🇼🇸;lippu: Samoa;lippu
+🇽🇰;lippu: Kosovo;lippu
+🇾🇪;lippu: Jemen;lippu
+🇾🇹;lippu: Mayotte;lippu
+🇿🇦;lippu: Etelä-Afrikka;lippu
+🇿🇲;lippu: Sambia;lippu
+🇿🇼;lippu: Zimbabwe;lippu
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;lippu: Englanti;lippu
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;lippu: Skotlanti;lippu
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;lippu: Wales;lippu

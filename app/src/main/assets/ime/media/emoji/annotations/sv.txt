@@ -1,0 +1,1911 @@
+😀;ansikte med stort leende;ansikte|glad|kul|leende|roligt|skratt
+😃;flinande ansikte med stora ögon;ansikte|flina|glad|kul|leende|mun|ögon|öppen|roligt|skratt|stora|tänder
+😄;flinande ansikte med leende ögon;ansikte|blundar|flina|glad|kul|leende|lol|ögon|roligt|skratt
+😁;strålande ansikte med leende ögon;ansikte|leende|ögon|roligt|skratt|strålande|tänder
+😆;flinande ansikte med kisande ögon;ansikte|flinande|hahaha|jätteroligt|kiknar|leende|mun|ögon|öppen|roligt|skratt|stängda
+😅;flinande ansikte med svettdroppe;ansikte|droppe|glad|jobbigt|leende|nervös|stress|svett|trött
+🤣;rullar runt på golvet och skrattar;ansikte|gapskratt|golv|gråter|jätteroligt|rullar|skratt|tårar
+😂;ansikte med glädjetårar;ansikte|gapskratt|glädjetårar|gråt|jätteroligt|skratt|tårar
+🙂;småleende ansikte;ansikte|glad|leende|ler|litet|nöjd
+🙃;upp-och-nervänt ansikte;ansikte|leende|upp-och-ner
+🫠;smältande ansikte;ansikte|flytande|försvinner|smälter|upplöses|varmt
+😉;ansikte som blinkar med ett öga;ansikte|blinkar|flört|öga|skämt
+😊;leende ansikte och ögon;ansikte|glad|kinder|leende|ler|nöjd|ögon|rosiga
+😇;leende ansikte med gloria;ansikte|gloria|leende
+🥰;leende ansikte med tre hjärtan;älskar|ansikte|förtjust|hjärtan|kär|leende|romantik
+😍;leende ansikte med hjärtformade ögon;älskar|ansikte|gullig|hjärta|kärlek|leende|ögon|söt
+🤩;stjärnögt ansikte;ansikte|glad|imponerad|stjärnögd|stjärnsmäll|wow
+😘;ansikte ger en slängkyss;älskar|ansikte|hjärta|puss|slängkyss
+😗;pussande ansikte;ansikte|plutar|puss
+☺️;leende ansikte;ansikte|glad|leende|nöjd|smiley
+😚;pussande ansikte med slutna ögon;ansikte|blundar|glad|kinder|puss|rosiga
+😙;pussande ansikte med leende ögon;ansikte|glad|godnatt|leende|ögon|puss
+🥲;tårögt leende ansikte;ansikte|berörd|lättad|leende|smiley|stolt|tacksam|tår|tårögt
+😋;ansikte som njuter av god mat;ansikte|dreglar|god|gott|hungrig|leende|mat|mums|njuter|smakar|tunga
+😛;ansikte räcker ut tungan;ansikte|blä|räcker ut|tunga
+😜;blinkande ansikte räcker ut tungan;ansikte|blinkande|knäpp|räcker ut|skojar|tokigt|tungan
+🤪;tokigt ansikte;ansikte|liten|öga|skojar|stor|tokigt|tunga
+😝;ansikte räcker ut tungan med stängda ögon;äckligt|ansikte|kniper ihop|ögon|räcker ut|tunga
+🤑;ansikte med dollarögon;ansikte|dollarögon|girig|pengamun|pengar|tjäna
+🤗;ansikte som kramas;ansikte|glad|hej|kram|leende|vinkar
+🤭;ansikte med handen för munnen;ansikte|fnissar|hand|hoppsan|mun
+🫢;ansikte med öppna ögon och hand för munnen;åh nej|ansikte|chockad|förvånad|generad|hand|mun|ögon|överraskad|överväldigad|rädd|stora
+🫣;ansikte med kikande öga;ansikte|blyg|fängslad|försiktig|kikar|öga|rädd|tjuvkikar
+🤫;hyssjande ansikte;ansikte|hemlighet|hyssjar|tyst
+🤔;ansikte som tänker;ansikte|funderar|fundersamt|tänker|undrar
+🫡;ansikte som gör honnör;ajaj kapten|ansikte|hälsa|honnör|instämma|ja|lycka till|ok|salutera
+🤐;ansikte som tiger;ansikte|dragkedja|håller|hemlighet|mun|tiger|tyst
+🤨;ansikte med höjt ögonbryn;ansikte|höjt|ögonbryn|skeptisk|tveksam
+😐;neutralt ansikte;ansikte|ingen|kommentar|neutralt
+😑;uttryckslöst ansikte;ansikte|ingen|kommentar|uttryckslöst
+😶;ansikte utan mun;ansikte|hemlighet|mun|stum|tyst|utan|uttryckslös
+🫥;osynligt ansikte;ansikte|deprimerad|försvinner|gömd|introvert|osynlig
+😶‍🌫️;ansikte i moln;ansikte|dimma|disträ|glömsk|moln|tankspridd
+😏;halvleende ansikte;ansikte|flin|halvleende|småleende
+😒;missnöjt ansikte;ansikte|less|missnöjd|sur
+🙄;ansikte som himlar med ögonen;ansikte|himlar|ögon|osäker
+😬;grimaserande ansikte;ansikte|biter ihop|grimaserar|tänder
+😮‍💨;ansikte andas ut;andas ut|ansikte|ledsen|pustar|suckar
+🤥;ljugande ansikte;ansikte|ljugande|ljuger|lögn|näsa|pinocchio|växer
+🫨;skakande ansikte;ansikte|chock|förvirring|galet|jordbävning|överraskad|panik|shock|skakande|vibrera
+🙂‍↔️;huvud skakar horisontellt;horisontellt|huvud|nej|skakar
+🙂‍↕️;huvud skakar vertikalt;huvud|ja|nickar|skakar|vertikalt
+😌;lättat ansikte;ansikte|lättat|lättnad|lugn
+😔;funderande ansikte;ansikte|funderande|funderar|ledsen|sörjer|tänker
+😪;sömnigt ansikte;ansikte|gråtande|sömnig|trött
+🤤;dreglande ansikte;ansikte|dreglar
+😴;sovande ansikte;ansikte|gäsp|sängdags|snarkar|sömnig|sover|trött|zzz
+🫩;ansikte med påsar under ögonen;ansikte|rödögd|sent|sömnig|trött|utmattad
+😷;ansikte med munskydd;ansikte|baciller|läkare|munskydd|sjuk|smitta|virus
+🤒;ansikte med termometer;ansikte|feber|sjuk|termometer
+🤕;ansikte med bandage på huvudet;aj|ansikte|bandage|huvud|skadad
+🤢;äcklat ansikte;äcklad|ansikte|kasta upp|kräks|mår illa|spy
+🤮;kräkande ansikte;ansikte|illamående|kräks|spyr
+🤧;nysande ansikte;ansikte|atjoo|nysa|nyser|prosit
+🥵;hett ansikte;ansikte|febrig|hett|överhettad|rött|svett|värmeslag|varmt
+🥶;kallt ansikte;ansikte|blått|frostbiten|frusen|istappar|kall|minus|snö
+🥴;yrt ansikte;ansikte|full|mun|ostadig|på örat|påverkad|vågig|yr
+😵;omtumlat ansikte;ansikte|död|knockad|kryss|ögon|omtumlad|yr
+😵‍💫;ansikte med spiralögon;ansikte|fara|förvirrad|fundersam|hypnotiserad|snurrig|spiralögon|yrsel
+🤯;exploderande huvud;chockad|exploderande|huvud
+🤠;ansikte med cowboyhatt;ansikte|cowboy|cowboyhatt|cowgirl|hatt
+🥳;festande ansikte;ansikte|fest|födelsedag|hatt|kalas|partyhatt|tuta
+🥸;maskerat ansikte;anonym|ansikte|förklädnad|glasögon|inkognito|mask|näsa
+😎;leende ansikte med solglasögon;ansikte|chillar|cool|koppla av|leende|solglasögon
+🤓;nördansikte;ansikte|expert|glad|glasögon|intelligent|nörd|smart
+🧐;ansikte med monokel;ansikte|gammaldags|monokel|torr
+😕;förbryllat ansikte;ansikte|förbryllad|inte|ledsen|vad|vet
+🫤;ansikte med diagonal mun;ansikte|besviken|diagonal|förvirrad|mun|osäker|skeptisk|tveksam
+😟;bekymrat ansikte;ansikte|bekymrad|ledsen|nervös|orolig|rädd
+🙁;ansikte med lite sur mun;ansikte|besviken|mun|sur
+☹️;ansikte med sur mun;ansikte|besviken|mun|sur
+😮;förvånat ansikte;ansikte|chockad|förvånad|gapar|mun|omg|öppen|otroligt
+😯;hyssjat ansikte;ansikte|gapar|hyssjad|överraskad|stum
+😲;chockat ansikte;ansikte|chockad|förvånad|inte|otroligt|sant
+😳;rodnande ansikte;ansikte|generad|omtumlad|pinsamt|rodnar|skäms
+🫪;ansikte i närbild;chockad|förstoppad|orolig|överraskad|panik|rädd|vettskrämd
+🥺;bönfallande ansikte;ansikte|bönfallande|hundögon|ledsen|nåd|snälla|tigga|varför
+🥹;ansikte som håller tillbaka tårarna;ansikte|glädjetårar|gråter|känslosam|ledsen|ögon|stolt|tårar|tårfyllda
+😦;ogillande ansikte med öppen mun;ansikte|bister|mun|oförstående|ogillande|öppen|rädd|vad
+😧;plågat ansikte;åh nej|ångest|ansikte|lider|olycklig|plågat|rädd
+😨;skrämt ansikte;ansikte|rädd|skräckinjagat|skrämd
+😰;oroligt svettigt ansikte;ansikte|blått|kallsvettig|orolig|panik|rädd|svettig
+😥;besviket men lättat ansikte;ansikte|besviken|lättad|nära|ögat
+😢;gråtande ansikte;ansikte|gråter|ledsen|saknar|sorgligt|tårar
+😭;storgråtande ansikte;ansikte|bölar|gråter|ledsen|olycklig|rinner|storgråtande|tårar
+😱;ansikte som skriker av fasa;ansikte|fasa|katastrof|livrädd|rädd|skriet|skriker
+😖;förvirrat ansikte;ansikte|besviken|förvirrad|frustrerad|irriterad
+😣;uthålligt ansikte;ansikte|besviken|huvudvärk|misslyckades|står ut|uthålligt|uthärdar
+😞;besviket ansikte;ansikte|besviken|misslyckades|nedslagen
+😓;nedslaget kallsvettigt ansikte;ansikte|kallsvettig|nedslagen|nervös|rädd|svettig
+😩;uttröttat ansikte;ansikte|besviken|ledsen|olycklig|slut|uppgiven|uttröttad
+😫;trött ansikte;ansikte|inte|ledsen|less|orkar|trött
+🥱;gäspande ansikte;ansikte|gäspa|godnatt|sängdags|sömnig|trött|uttråkad
+😤;ansikte med ånga ur näsan;ånga|ansikte|arg|näsan|rasande|seger|triumf|vansinnig
+😡;rasande ansikte;ansikte|arg|rasande|röd|sur
+😠;argt ansikte;ansikte|arg|ilsken|upprörd
+🤬;ansikte med symboler på munnen;ansikte|arg|förbannad|mun|svär|svordomar|symboler
+😈;leende ansikte med horn;ansikte|djävul|elak|horn|leende|lila
+👿;argt ansikte med horn;ansikte|arg|djävul|horn
+💀;dödskalle;döskalle
+☠️;dödskalle med ben i kors;benknotor|dödskalle|pirater
+💩;bajshög;avföring|bajs
+🤡;clownansikte;ansikte|clown|pajas
+👹;japanskt monster;ansikte|demon|japansk|monster|saga
+👺;japanskt troll;ansikte|japansk|saga|troll
+👻;spöke;ansikte|saga
+👽;utomjording;alien|rymdvarelse|saga|ufo
+👾;utomjordiskt monster;monster|rymdvarelse|saga|ufo|utomjording
+🤖;robotansikte;ansikte|robot
+😺;flinande kattansikte;flinande|glad|katt|leende
+😸;flinande kattansikte med leende ögon;flin|glad|grin|kattansikte|leende|ögon|tänder
+😹;kattansikte med glädjetårar;glädjetårar|gråter|kattansikte|roligt|skrattar|tårar
+😻;leende kattansikte med hjärtformade ögon;älskar|hjärtan|kärlek|kattansikte|leende|ögon
+😼;kattansikte med snett leende;ironiskt|kattansikte|leende|snett
+😽;kyssande kattansikte;blundar|kattansikte|kyss|plutar|puss
+🙀;uttröttat kattansikte;chockad|förvånad|kattansikte|överraskad|rädd|uttröttad
+😿;gråtande kattansikte;gråter|kattansikte|ledsen|tår
+😾;tjurande katt;katt|sur|tjura|tjurig
+🙈;apa ser inget;apa|håller för|inget|ögon|ser
+🙉;apa hör inget;apa|håller för|hör|inget|öron
+🙊;apa säger inget;apa|håller för|hemlighet|inget|munnen|säger|tyst
+💌;kärleksbrev;brev|hjärta|kärlek
+💘;hjärta med pil;amors|hjärta|kärlek|pil
+💝;hjärta med rosett;hjärta|kärlek|present|rosa|rosett
+💖;gnistrande hjärta;gnistrande|hjärta|känslor|kärlek|upprymd
+💗;växande hjärta;hjärta|känslor|kärlek|nervös|puls|upprymd|växande
+💓;bultande hjärta;bankar|bultande|hjärta|känslor|kärlek|puls|slår
+💞;snurrande hjärtan;hjärtan|känslor|kärlek|snurrar|två
+💕;två hjärtan;hjärtan|känslor|kärlek|två
+💟;hjärtdekoration;dekoration|hjärta|lila|vitt
+❣️;utropstecken i form av ett hjärta;hjärta|rött|utropstecken
+💔;brustet hjärta;brustet|hjärta|känslor|trasigt
+❤️‍🔥;brinnande hjärta;brinnande|eld|hjärta|lust
+❤️‍🩹;läkande hjärta;friskna till|läker|läker sår|repa sig|tillfriskna
+❤️;rött hjärta;hjärta|känslor|kärlek|rött
+🩷;rosa hjärta;älskar|bedårande|gullig|hjärta|kärlek|rosa|sött
+🧡;hjärta i orange;hjärta|orange
+💛;gult hjärta;gult|hjärta
+💚;grönt hjärta;grönt|hjärta
+💙;blått hjärta;blått|hjärta
+🩵;ljusblått hjärta;cyan|himmelsblå|hjärta|känsla|kärlek|ljusblå
+💜;lila hjärta;hjärta|lila
+🤎;brunt hjärta;brunt|hjärta
+🖤;svart hjärta;hjärta|ond|svart
+🩶;grått hjärta;grå|hjärta|känsla|kärlek|silver|skiffer
+🤍;vitt hjärta;hjärta|vitt
+💋;läppavtryck;kärlek|kyssmärke|läppar
+💯;100 poäng;full pott
+💢;symbol för ilska;arg|ilska|symbol
+🫯;slagsmål;bråk|brottas|fajt|fajtas|fight|slåss|våld
+💥;explosion;kollision|serietidning|smäll
+💫;omtumlad;serietidning|stjärna|stjärnfall|yr
+💦;stänkande svett;droppar|serietidning|stänkande|svettig
+💨;fartsymbol;borta|pust|springa|springer iväg
+🕳️;hål;
+💬;pratbubbla;bubbla|dialogbubbla
+👁️‍🗨️;öga i pratbubbla;öga|pratbubbla|vittne
+🗨️;pratbubbla åt vänster;pratbubbla|svart|vänster
+🗯️;arg pratbubbla åt höger;arg|höger|pratbubbla|taggig
+💭;tankebubbla;bubbla|funderar
+💤;snarkningar;snarkar|sömnig|sover|trött|uttråkad|zzz
+👋;vinkande hand;är du där?|hallå|hand|hej|vinka|vinkning
+🤚;höjd handrygg;hand|lyft
+🖐️;hand med utspretade fingrar;finger|hand
+✋;hand i luften;hand|handflata|uppräckt
+🖖;vulcan-hälsning;hand|spock|Star Trek|vulcan
+🫱;hand som pekar till höger;hälsa|hand|handslag|hej|höger|skaka|till höger
+🫲;hand som pekar till vänster;hand|skaka|till vänster|vänster
+🫳;handflatan nedåt;avvisa|neka|plocka upp|schas|släppa|släppte
+🫴;handflatan uppåt;bjuda in|erbjuda|fånga|kalla på|sträcka ut en hand
+🫷;hand som knuffar åt vänster;hand|high five|neka|stanna|stopp|till vänster|trycka|vänta
+🫸;hand som knuffar åt höger;blockera|hand|high five|neka|pausa|stanna|stopp|till höger|trycka|vänta
+👌;OK-tecken;hand|Instämmer|Javisst|Ok|tecken
+🤌;fingerportmonnä;fingrar|förhör|handgest|nypa|sarkastisk
+🤏;nypande hand;liten mängd
+✌️;v-tecken;seger
+🤞;korsade fingrar;finger|hand|korsa|lycka
+🫰;hand med tummen och pekfingret korsade;<3|betala|dyrt|fingrarna|knäppa|korsade|pekfinger|pengar|tumme
+🤟;jag älskar dig-gest;hand
+🤘;djävulstecknet;djävulstecken|hand|hårdrock|horn|rock|rocka loss
+🤙;ring mig-hand;hand|ring
+👈;vänsterpekande finger;peka åt vänster|pekfinger
+👉;högerpekande finger;peka åt höger|pekfinger
+👆;pekfinger upp;finger|hand som pekar pekfingret uppåt|peka uppåt|pekfinger
+🖕;långfinger upp;finger|hand
+👇;nedåtpekande finger;finger|peka nedåt|pekfinger
+☝️;finger upp;finger|förmaning|peka
+🫵;finger som pekar på mig;du|finger som pekar mot tittaren|mig|peka
+👍;tummen upp;bra|gillar|ok|okej|tumme|upp
+👎;tummen ned;ner|ogilla|tumme
+✊;knytnäve i luften;hand|knytnäve
+👊;knuten hand;knytnäve
+🤛;vänstervänd näve;näve|vänster|vänstervänd
+🤜;högervänd näve;höger|högervänd|näve
+👏;klappande händer;klappa|klappa händer
+🙌;båda händerna i luften;hurra|räcker upp händerna
+🫶;handhjärta;älskar|kärlek
+👐;öppna händer;hand|händer|jazzhänder|öppna
+🤲;handflatorna upp;bön
+🤝;handskakning;avtal|hand|möte
+🙏;beende händer;be|ber|händer|knäppta händer
+✍️;hand som skriver;hand|skriver
+💅;nagellack;måla naglar|manikyr|smink
+🤳;selfie;arm som tar en selfie med telefon|kamera|telefon
+💪;spänd biceps;muskler|stark
+🦾;mekanisk arm;bionisk arm|protes
+🦿;mekaniskt ben;bioniskt ben|protes
+🦵;ben;lem|sparka
+🦶;fot;sparka|stampa
+👂;öra;kropp
+🦻;öra med hörapparat;
+👃;näsa;kropp
+🧠;hjärna;klok
+🫀;hjärta;kardiologi|organ|puls
+🫁;lungor;andning|exhalering|inhalering|organ
+🦷;tand;tandläkare
+🦴;benknota;skelett
+👀;ögon;öga
+👁️;öga;kropp
+👅;tunga;kropp
+👄;mun;läppar
+🫦;biter i läppen;ängslig|flirtar|nervös|obekväm|orolig|rädd|tveksam
+👶;bebis;baby|liten|ung
+🧒;barn;könsneutral|leende barn|ung
+👦;pojke;kille|ung
+👧;flicka;jungfru|stjärntecken|tjej|ung
+🧑;person;könsneutral|vuxen
+👱;blond person;blond|blond man|människor
+👨;man;vuxen
+🧔;man med skägg;person med skägg|skägg
+🧔‍♂️;man: skägg;man|skägg
+🧔‍♀️;kvinna: skägg;kvinna|skägg
+👨‍🦰;man: rödhårig;man|rödhårig|vuxen
+👨‍🦱;man: lockigt hår;lockigt hår|man|vuxen
+👨‍🦳;man: vithårig;man|vithårig|vuxen
+👨‍🦲;man: skallig;man|skallig|vuxen
+👩;kvinna;vuxen
+👩‍🦰;kvinna: rödhårig;kvinna|rödhårig|vuxen
+🧑‍🦰;person: rödhårig;könsneutral|person|rödhårig|vuxen
+👩‍🦱;kvinna: lockigt hår;kvinna|lockigt hår|vuxen
+🧑‍🦱;person: lockigt hår;könsneutral|lockigt hår|person|vuxen
+👩‍🦳;kvinna: vithårig;kvinna|vithårig|vuxen
+🧑‍🦳;person: vithårig;könsneutral|person|vithårig|vuxen
+👩‍🦲;kvinna: skallig;kvinna|skallig|vuxen
+🧑‍🦲;person: skallig;könsneutral|person|skallig|vuxen
+👱‍♀️;blond kvinna;blond|blondin|kvinna
+👱‍♂️;blond man;blond|man
+🧓;äldre person;äldre|gammal|könsneutral|vuxen
+👴;gammal man;äldre man|gammal|man|vuxen
+👵;gammal kvinna;äldre kvinna|gammal|kvinna|vuxen
+🙍;sur person;missnöjd|person|sur|sur kvinna|sur uppsyn
+🙍‍♂️;sur man;gest|man|missnöjd|sur
+🙍‍♀️;sur kvinna;gest|kvinna|sur
+🙎;plutande person;kvinna som putar med läpparna|person som plutar|plutar|puta med munnen|putar med läpparna
+🙎‍♂️;plutande man;man|plutar
+🙎‍♀️;plutande kvinna;kvinna|plutar
+🙅;person gestikulerar NEJ;förbjudet|gest|gest för NEJ|icke|kvinna som gestikulerar NEJ|nej
+🙅‍♂️;man gestikulerar NEJ;förbjudet|gest|man
+🙅‍♀️;kvinna gestikulerar NEJ;förbjudet|gest|kvinna
+🙆;person gestikulerar OK;gest|gest för OK|hand|kvinna som gestikulerar OK|okej
+🙆‍♂️;man gestikulerar OK;gest|gest för OK|hand|okej
+🙆‍♀️;kvinna gestikulerar OK;gest|gest för OK|hand|okej
+💁;receptionist;hand|information|kvinna som vinkar med handen|människor|reception|sarkastisk|skvaller
+💁‍♂️;hjälpande man;hjälpa|information|man|man som vinkar
+💁‍♀️;hjälpande kvinna;hjälpa|information|kvinna
+🙋;person som räcker upp handen;fråga|jag vet|kvinna som räcker upp handen|person|räcker upp handen
+🙋‍♂️;man som räcker upp handen;man|räcka upp handen
+🙋‍♀️;kvinna som räcker upp handen;kvinna|räcka upp handen
+🧏;hörselskadad person;döv|hörsel|öra|tillgänglighet
+🧏‍♂️;hörselskadad man;dåligt|döv|gest|höra|man|öra|tillgänglighet
+🧏‍♀️;hörselskadad kvinna;döv|funktion|hörselskada|kvinna|nedsatt|öra
+🙇;bugande person;ångra|be|bön|förlåt|gest|meditation|meditera|person|ursäkt
+🙇‍♂️;bugande man;beklagelse|buga|man|ursäkt
+🙇‍♀️;bugande kvinna;beklagelse|buga|kvinna|ursäkt
+🤦;person som slår sig för pannan;ansikte|frustration|handflata|irritation|slå sig för pannan
+🤦‍♂️;man som slår sig för pannan;facepalm|frustration|irritation|man
+🤦‍♀️;kvinna som slår sig för pannan;facepalm|frustration|irritation|kvinna
+🤷;person som rycker på axlarna;axelryckning|likgiltighet|okunskap|tvivel
+🤷‍♂️;man som rycker på axlarna;axelryckning|likgiltighet|man|okunskap|tvivel|vet inte
+🤷‍♀️;kvinna som rycker på axlarna;axelryckning|kvinna|likgiltighet|okunskap|tvivel
+🧑‍⚕️;läkare;sjuksköterska|sjukvård|terapeut|vårdpersonal
+👨‍⚕️;manlig läkare;doktor|hälsovård|läkare|man|manlig|skötare
+👩‍⚕️;kvinnlig läkare;doktor|hälsovård|kvinna|kvinnlig|läkare|skötare
+🧑‍🎓;student;studerande
+👨‍🎓;manlig student;man|manlig|student|studerande
+👩‍🎓;kvinnlig student;kvinna|kvinnlig|student|studerande
+🧑‍🏫;lärare;instruktör|professor
+👨‍🏫;manlig lärare;instruktör|lärare|man|manlig|professor
+👩‍🏫;kvinnlig lärare;instruktör|kvinna|kvinnlig|lärarinna|professor
+🧑‍⚖️;domare;advokat
+👨‍⚖️;manlig domare;advokat|jurist|man|manlig
+👩‍⚖️;kvinnlig domare;advokat|jurist|kvinna|kvinnlig
+🧑‍🌾;bonde;jordbrukare|lantbrukare
+👨‍🌾;manlig bonde;bonde|jordbruk|man|trädgårdsmästare
+👩‍🌾;kvinnlig bonde;bonde|jordbruk|kvinna|trädgårdsmästare
+🧑‍🍳;kock;köksmästare
+👨‍🍳;manlig kock;man|matlagning|restaurang
+👩‍🍳;kvinnlig kock;kvinna|matlaging|restaurang
+🧑‍🔧;mekaniker;elektriker|rörmontör
+👨‍🔧;manlig mekaniker;bil|elektriker|man|mekaniker|motor|rörmokare
+👩‍🔧;kvinnlig mekaniker;bil|kvinna|mekaniker|motor
+🧑‍🏭;fabriksarbetare;arbetare|industri|industriarbetare
+👨‍🏭;manlig fabriksarbetare;fabrik|industri|man|produktion
+👩‍🏭;kvinnlig fabriksarbetare;fabrik|industri|kvinna|produktion
+🧑‍💼;kontorist;affärsman|ämbetsman|arkitekt|tjänsteman
+👨‍💼;kontorstjänsteman;chef|kontor|man|näringsliv
+👩‍💼;kontorstjänstekvinna;chef|kontor|kvinna|näringsliv
+🧑‍🔬;forskare;biolog|fysiker|kemist|vetenskapsman
+👨‍🔬;manlig forskare;kemi|laboratorium|man|vetenskap|vetenskapsman
+👩‍🔬;kvinnlig forskare;kemi|kvinna|laboratorium|vetenskap
+🧑‍💻;IT-tekniker;ingenjör|mjukvarutekniker|uppfinnare|utvecklare
+👨‍💻;manlig IT-expert;data|IT|man|teknologi
+👩‍💻;kvinnlig IT-expert;data|IT|kvinna|teknologi
+🧑‍🎤;sångare;artist|rockstjärna|underhållare|vokalist
+👨‍🎤;manlig sångare;artist|kändis|konsert|man|stjärna
+👩‍🎤;kvinnlig sångare;artist|kändis|konsert|kvinna|stjärna
+🧑‍🎨;konstnär;palett
+👨‍🎨;manlig konstnär;målare|man|palett
+👩‍🎨;kvinnlig konstnär;kvinna|målare|palett
+🧑‍✈️;pilot;flygkapten
+👨‍✈️;manlig pilot;flyga|man|pilot
+👩‍✈️;kvinnlig pilot;flyga|kvinna|pilot
+🧑‍🚀;astronaut;kosmonaut
+👨‍🚀;manlig astronaut;astronaut|man|raket|rymden
+👩‍🚀;kvinnlig astronaut;astronaut|kvinna|raket|rymden
+🧑‍🚒;brandman;brandbil
+👨‍🚒;manlig brandman;brandbil|brandman|brandväsendet|man
+👩‍🚒;kvinnlig brandman;brandbil|brandväsendet|kvinna
+👮;polis;aina|arrestera|bötfälla|farbror blå|gripa|konstapel|lagen|snut
+👮‍♂️;manlig polis;konstapel|lagen|man|polisman
+👮‍♀️;kvinnlig polis;aina|arrestera|bötfälla|farbror blå|gripa|konstapel|kvinna|lagen|snut
+🕵️;detektiv;spion
+🕵️‍♂️;manlig detektiv;kommissarie|man|privatdetektiv|spanare|spion
+🕵️‍♀️;kvinnlig detektiv;detektiv|kommissarie|kvinna|privatdetektiv|spanare|spion
+💂;vakt;grenadjär
+💂‍♂️;manlig grenadjär;grenadjär|man|manlig vakt|vaktbyte|vaktparad
+💂‍♀️;kvinnlig grenadjär;grenadjär|kvinna|kvinnlig vakt|vaktbyte|vaktparad
+🥷;ninja;gömd|hemlig|lönnmördare
+👷;byggarbetare;arbetare|hatt
+👷‍♂️;manlig byggarbetare;arbetare|bygge|man
+👷‍♀️;kvinnlig byggarbetare;arbetare|bygge|kvinna
+🫅;person med krona;ädling|kung|kunglighet|monark
+🤴;prins;
+👸;prinsessa;saga
+👳;man med turban;person med turban|turban
+👳‍♂️;man i turban;man|turban
+👳‍♀️;kvinna i turban;kvinna|turban
+👲;man med kinesisk hatt;hatt|kinesisk hatt|man|man med hatt
+🧕;kvinna i sjal;hijab|sjal|slöja
+🤵;person i smoking;bröllop|brudgum|person|smoking
+🤵‍♂️;man i smoking;man|smoking
+🤵‍♀️;kvinna i smoking;kvinna|smoking
+👰;person i brudslöja;bröllop|brud|brud med slöja|brudslöja|person
+👰‍♂️;man i brudslöja;brudslöja|man
+👰‍♀️;kvinna i brudslöja;brudslöja|kvinna
+🤰;gravid kvinna;gravid|kvinna
+🫃;gravid man;gravid|proppmätt|stor mage|uppsvälld
+🫄;gravid person;gravid|stor mage|uppsvälld
+🤱;amning;amma|baby|bröst
+👩‍🍼;kvinna matar spädbarn;amma|kvinna|mata|spädbarn
+👨‍🍼;man matar spädbarn;amma|barnskötare|fader|far|man|mata|pappa|spädbarn
+🧑‍🍼;person ammar spädbarn;amma|barnskötare|bebis|förälder|mata|person|person matar spädbarn|spädbarn
+👼;bebisängel;ängel|saga
+🎅;jultomte;högtid|jul|tomten
+🤶;tomtemor;jul|mor|nisse
+🧑‍🎄;könsneutral tomte;jul|jultomte|tomte
+🦸;superhjälte;god|hjälte|hjältinna|superkraft|superkrafter
+🦸‍♂️;manlig superhjälte;god|hjälte|man|superkraft
+🦸‍♀️;kvinnlig superhjälte;god|hjälte|hjältinna|kvinna|man|superkraft
+🦹;superskurk;brottsling|elak|ond|skurk|superkraft|superkrafter
+🦹‍♂️;manlig superskurk;brottsling|man|ond|skurk|superkraft
+🦹‍♀️;kvinnlig superskurk;brottsling|kvinna|ond|skurk|superkraft
+🧙;magiker;häxa|trollkarl
+🧙‍♂️;manlig magiker;trollkarl
+🧙‍♀️;kvinnlig magiker;häxa
+🧚;fé;älva|Oberon|Puck|Titania|vingar
+🧚‍♂️;manlig älva;Oberon|Puck
+🧚‍♀️;kvinnlig fé;kvinnlig älva|Titania
+🧛;vampyr;blod|Drakula|huggtänder|vandöd
+🧛‍♂️;manlig vampyr;Drakula|vandöd
+🧛‍♀️;kvinnlig vampyr;vandöd
+🧜;vattenväsen;näcken|sjöjungfru|sjörå
+🧜‍♂️;strömkarl;Triton
+🧜‍♀️;sjöjungfru;sjörå
+🧝;alv;magisk|mystisk
+🧝‍♂️;manlig alv;magisk
+🧝‍♀️;kvinnlig alv;magisk
+🧞;ande;anden i flaskan|djinn
+🧞‍♂️;manlig ande;ande|manlig djinn
+🧞‍♀️;kvinnlig ande;djinn
+🧟;zombie;levande död|odöd|vandöd
+🧟‍♂️;manlig zombie;levande död|odöd|vandöd
+🧟‍♀️;kvinnlig zombie;levande död|odöd|vandöd
+🧌;troll;fantasy|monster|saga|sägen
+🫈;hårig varelse;bigfoot|hårig|jätte|sasquatch|yeti
+💆;person som blir masserad;ansiktsmassage|behandling|kvinna som blir masserad|massage
+💆‍♂️;man som blir masserad;avslappning|huvudmassage|man|man som får massage|massage
+💆‍♀️;kvinna som blir masserad;avslappning|huvudmassage|kvinna|kvinna som får massage|massage
+💇;person som får håret klippt;frisör|frisyr|hårklippning|kvinna som får håret klippt|skönhet
+💇‍♂️;man som får håret klippt;frisör|hårklipp|man
+💇‍♀️;kvinna som får håret klippt;frisör|hårklipp|kvinna
+🚶;fotgängare;lunka|man som går|promenerar|vandra
+🚶‍♂️;man som går;fotgängare|gå|man|man går
+🚶‍♀️;kvinna som går;fotgängare|gå|kvinna|kvinna går
+🚶‍➡️;fotgängare: åt höger;åt|fotgängare|höger|lunka|man som går|promenerar|vandra
+🚶‍♀️‍➡️;kvinna som går: åt höger;åt|fotgängare|gå|höger|kvinna|kvinna går|kvinna som går
+🚶‍♂️‍➡️;man som går: åt höger;åt|fotgängare|gå|höger|man|man går|man som går
+🧍;stående person;person|stående
+🧍‍♂️;stående man;man|stående
+🧍‍♀️;stående kvinna;kvinna|stående
+🧎;knäsittande person;knäsittande|knästående person|på knäna
+🧎‍♂️;knäsittande man;knäsittande|knästående|man
+🧎‍♀️;knäsittande kvinna;knäsittande|knästående|kvinna
+🧎‍➡️;knäsittande person: åt höger;åt|höger|knäsittande|knästående person|på knäna
+🧎‍♀️‍➡️;knäsittande kvinna: åt höger;åt|höger|knäsittande|knästående|kvinna
+🧎‍♂️‍➡️;knäsittande man: åt höger;åt|höger|knäsittande|knästående|man
+🧑‍🦯;person med vit käpp;hjälpmedel|synskadad
+🧑‍🦯‍➡️;person med vit käpp: åt höger;åt|hjälpmedel|höger|person med vit käpp|synskadad
+👨‍🦯;man med vit käpp;blind|blindkäpp|man|man med blindkäpp|vit käpp
+👨‍🦯‍➡️;man med vit käpp: åt höger;åt|blind|blindkäpp|höger|man|man med blindkäpp|man med vit käpp|vit käpp
+👩‍🦯;kvinna med vit käpp;blind|blindkäpp|kvinna|kvinna med blindkäpp|vit käpp
+👩‍🦯‍➡️;kvinna med vit käpp: åt höger;åt|blind|blindkäpp|höger|kvinna|kvinna med blindkäpp|kvinna med vit käpp|vit käpp
+🧑‍🦼;person i permobil;eldriven rullstol|elektrisk rullstol|tillträde
+🧑‍🦼‍➡️;person i permobil: åt höger;åt|eldriven rullstol|elektrisk rullstol|höger|person i permobil|tillträde
+👨‍🦼;man i permobil;man|permobil|rullstol
+👨‍🦼‍➡️;man i permobil: åt höger;åt|höger|man|man i permobil|permobil|rullstol
+👩‍🦼;kvinna i permobil;kvinna|permobil|rullstol
+👩‍🦼‍➡️;kvinna i permobil: åt höger;åt|höger|kvinna|kvinna i permobil|permobil|rullstol
+🧑‍🦽;person i manuell rullstol;rullstol|tillträde
+🧑‍🦽‍➡️;person i manuell rullstol: åt höger;åt|höger|person i manuell rullstol|rullstol|tillträde
+👨‍🦽;man i manuell rullstol;man|rullstol
+👨‍🦽‍➡️;man i manuell rullstol: åt höger;åt|höger|man|man i manuell rullstol|rullstol
+👩‍🦽;kvinna i manuell rullstol;kvinna|rullstol
+👩‍🦽‍➡️;kvinna i manuell rullstol: åt höger;åt|höger|kvinna|kvinna i manuell rullstol|rullstol
+🏃;person som springer;löpare|löpning|maraton|person som löper
+🏃‍♂️;man som springer;jogga|löpa|man|man springer
+🏃‍♀️;kvinna som springer;jogga|kvinna|kvinna springer|löpa
+🏃‍➡️;person som springer: åt höger;åt|höger|löpare|löpning|maraton|person som löper|person som springer
+🏃‍♀️‍➡️;kvinna som springer: åt höger;åt|höger|jogga|kvinna|kvinna som springer|kvinna springer|löpa
+🏃‍♂️‍➡️;man som springer: åt höger;åt|höger|jogga|löpa|man|man som springer|man springer
+🧑‍🩰;balettdansare;balett|ballerina|dansare
+💃;dansande kvinna;dans|människor
+🕺;dansande man;dans|man
+🕴️;svävande man i kostym;kostym|människor|svävar
+👯;personer med kaninöron;kaninöron|kvinna|kvinnor med kaninöron|människor|tjej
+👯‍♂️;män med kaninöron;dans|kaninöron|man|män|party
+👯‍♀️;kvinnor med kaninöron;dans|kaninöron|kvinna|kvinnor|party
+🧖;person i ångbastu;ångbastu|bastu|slappna av|spa
+🧖‍♂️;man i ångbastu;ångbastu|bastu
+🧖‍♀️;kvinna i ångbastu;ångbastu|bastu
+🧗;person som klättrar;bergsklättring|klättra upp|klättrare|person klättrar
+🧗‍♂️;man som klättrar;klättrare|man klättrar
+🧗‍♀️;kvinna som klättrar;klättrare|kvinna klättrar
+🤺;person som fäktas;fäktare|fäktning|person|sport|svärd
+🏇;hästkapplöpning;häst|jockey|kapplöpning|person som galopperar med en häst
+⛷️;skidåkare;skidor|snö|vinter
+🏂;snowboardåkare;snowboard
+🏌️;person som spelar golf;birdie|golf|golfspelare|putt|sport|tee
+🏌️‍♂️;man som spelar golf;golf|man|man spelar golf|manlig
+🏌️‍♀️;kvinna som spelar golf;golf|kvinna|kvinna spelar golf|kvinnlig
+🏄;person som surfar;hav|strand|surfare|surfing|surfning
+🏄‍♂️;man som surfar;man|man surfar|manlig|surfing
+🏄‍♀️;kvinna som surfar;kvinna surfar|kvinnlig|surfing|woman
+🚣;person som ror en båt;båt|roddbåt
+🚣‍♂️;man som ror en båt;eka|man|man ror|manlig|roddbåt
+🚣‍♀️;kvinna som ror en båt;eka|kvinna|kvinna ror|kvinnlig|roddbåt
+🏊;person som simmar;simma|simmare|simning
+🏊‍♂️;man som simmar;man|simmare|simning
+🏊‍♀️;kvinna som simmar;kvinna|simmare|simning
+⛹️;person med boll;basket|basketspelare|boll|dribbla|sport
+⛹️‍♂️;man med boll;boll|man|manlig
+⛹️‍♀️;kvinna med boll;boll|kvinna|kvinnlig
+🏋️;person som lyfter tyngder;kroppsbyggare|sport|tyngdlyftare
+🏋️‍♂️;man som lyfter tyngder;man|man lyfter tyngder|manlig|tyngdlyftare
+🏋️‍♀️;kvinna som lyfter tyngder;kvinna|kvinna lyfter tyngder|kvinnlig|tyngdlyftare
+🚴;person som cyklar;cykel|cykla|cyklist
+🚴‍♂️;man som cyklar;cykel|cyklist|man|man cyklar|manlig
+🚴‍♀️;kvinna som cyklar;cykel|cyklist|kvinna|kvinna cyklar|kvinnlig
+🚵;person som cyklar på en mountainbike;cykel|cykla|cyklist|mountainbikeåkare
+🚵‍♂️;man som cyklar på en mountainbike;cykel|cyklist|man|man åker mountainbike
+🚵‍♀️;kvinna som cyklar på en mountainbike;cykel|cyklist|kvinna|kvinna åker mountainbike|kvinna som cyklar
+🤸;person som hjular;gymnastik|hjula|person
+🤸‍♂️;man som hjular;gymnastik|kullerbytta|man|volt
+🤸‍♀️;kvinna som hjular;gymnastik|kullerbytta|kvinna|volt
+🤼;brottande personer;brottare|brottning|person|sport
+🤼‍♂️;brottande män;brottning|män|män som brottas|manlig|person|sport
+🤼‍♀️;brottande kvinnor;brottning|kvinnor|sport
+🤽;person som spelar vattenpolo;person|polo|sport|vattenpolo
+🤽‍♂️;man som spelar vattenpolo;man|sport|vattenpolo
+🤽‍♀️;kvinna som spelar vattenpolo;kvinna|sport|vattenpolo
+🤾;person som spelar handboll;boll|handboll|person|sport
+🤾‍♂️;man som spelar handboll;handboll|man|sport
+🤾‍♀️;kvinna som spelar handboll;boll|handboll|kasta|kvinna|sport
+🤹;person som jonglerar;balans|färdighet|jonglera|jonglering|multitasking
+🤹‍♂️;man som jonglerar;jonglera|jonglering|man|multitasking
+🤹‍♀️;kvinna som jonglerar;jonglering|kvinna|kvinna jonglerar|kvinnlig|multitask
+🧘;person i lotusposition;ben|fokus|frid|korsade|lotusposition|meditation|yoga
+🧘‍♂️;man i lotusposition;meditering|yoga
+🧘‍♀️;kvinna i lotusposition;meditering|yoga
+🛀;person som badar;bad|badar|badkar
+🛌;person i en säng;hotell|hotellnatt|ligger i sängen|säng|sömn|sömnig|sova|sova middag|trött
+🧑‍🤝‍🧑;personer som håller hand;håller hand|människor|par
+👭;två kvinnor håller hand;håller hand|människor|par|två kvinnor
+👫;man och kvinna håller hand;håller hand|människor|par
+👬;två män håller hand;håller hand|människor|par|två män
+💏;puss;kärlek|kyssas|människor
+👩‍❤️‍💋‍👨;puss: kvinna, man;kärlek|kvinna|kyssas|man|människor|puss
+👨‍❤️‍💋‍👨;puss: man, man;kärlek|kyssas|man|människor|puss
+👩‍❤️‍💋‍👩;puss: kvinna, kvinna;kärlek|kvinna|kyssas|människor|puss
+💑;par med hjärta;hjärta|kärlek|människor
+👩‍❤️‍👨;par med hjärta: kvinna, man;hjärta|kärlek|kvinna|man|människor|par med hjärta
+👨‍❤️‍👨;par med hjärta: man, man;hjärta|kärlek|man|människor|par med hjärta
+👩‍❤️‍👩;par med hjärta: kvinna, kvinna;hjärta|kärlek|kvinna|människor|par med hjärta
+👨‍👩‍👦;familj: man, kvinna, pojke;barn|familj|kvinna|mamma|man|människor|pappa|pojke
+👨‍👩‍👧;familj: man, kvinna, flicka;barn|familj|flicka|kvinna|mamma|man|människor|pappa
+👨‍👩‍👧‍👦;familj: man, kvinna, flicka, pojke;barn|familj|flicka|kvinna|mamma|man|människor|pappa|pojke
+👨‍👩‍👦‍👦;familj: man, kvinna, pojke, pojke;barn|familj|kvinna|mamma|man|människor|pappa|pojke
+👨‍👩‍👧‍👧;familj: man, kvinna, flicka, flicka;barn|familj|flicka|kvinna|mamma|man|människor|pappa
+👨‍👨‍👦;familj: man, man, pojke;barn|familj|mamma|man|människor|pappa|pojke
+👨‍👨‍👧;familj: man, man, flicka;barn|familj|flicka|mamma|man|människor|pappa
+👨‍👨‍👧‍👦;familj: man, man, flicka, pojke;barn|familj|flicka|mamma|man|människor|pappa|pojke
+👨‍👨‍👦‍👦;familj: man, man, pojke, pojke;barn|familj|mamma|man|människor|pappa|pojke
+👨‍👨‍👧‍👧;familj: man, man, flicka, flicka;barn|familj|flicka|mamma|man|människor|pappa
+👩‍👩‍👦;familj: kvinna, kvinna, pojke;barn|familj|kvinna|mamma|människor|pappa|pojke
+👩‍👩‍👧;familj: kvinna, kvinna, flicka;barn|familj|flicka|kvinna|mamma|människor|pappa
+👩‍👩‍👧‍👦;familj: kvinna, kvinna, flicka, pojke;barn|familj|flicka|kvinna|mamma|människor|pappa|pojke
+👩‍👩‍👦‍👦;familj: kvinna, kvinna, pojke, pojke;barn|familj|kvinna|mamma|människor|pappa|pojke
+👩‍👩‍👧‍👧;familj: kvinna, kvinna, flicka, flicka;barn|familj|flicka|kvinna|mamma|människor|pappa
+👨‍👦;familj: man, pojke;barn|familj|mamma|man|människor|pappa|pojke
+👨‍👦‍👦;familj: man, pojke, pojke;barn|familj|mamma|man|människor|pappa|pojke
+👨‍👧;familj: man, flicka;barn|familj|flicka|mamma|man|människor|pappa
+👨‍👧‍👦;familj: man, flicka, pojke;barn|familj|flicka|mamma|man|människor|pappa|pojke
+👨‍👧‍👧;familj: man, flicka, flicka;barn|familj|flicka|mamma|man|människor|pappa
+👩‍👦;familj: kvinna, pojke;barn|familj|kvinna|mamma|människor|pappa|pojke
+👩‍👦‍👦;familj: kvinna, pojke, pojke;barn|familj|kvinna|mamma|människor|pappa|pojke
+👩‍👧;familj: kvinna, flicka;barn|familj|flicka|kvinna|mamma|människor|pappa
+👩‍👧‍👦;familj: kvinna, flicka, pojke;barn|familj|flicka|kvinna|mamma|människor|pappa|pojke
+👩‍👧‍👧;familj: kvinna, flicka, flicka;barn|familj|flicka|kvinna|mamma|människor|pappa
+🗣️;silhuett som talar;silhuett|talar
+👤;figur i silhuett;figur|människa
+👥;figurer i silhuett;figurer|människor
+🫂;personer kramas;adjö|hej|kram|tack
+👪;familj;barn|mamma|människor|pappa
+🧑‍🧑‍🧒;familj: vuxen, vuxen, barn;barn|familj|vuxna
+🧑‍🧑‍🧒‍🧒;familj: vuxen, vuxen, barn, barn;barn|familj|vuxen
+🧑‍🧒;familj: vuxen, barn;barn|familj|vuxen
+🧑‍🧒‍🧒;familj: vuxen, barn, barn;barn|familj|vuxen
+👣;fotavtryck;avtryck|fötter
+🫆;fingeravtryck;identitet|kriminalteknik|säkerhet
+🐵;apansikte;apa|djur
+🐒;apa;djur
+🦍;gorilla;djur
+🦧;orangutang;apa
+🐶;hundansikte;djur|hund
+🐕;hund;djur|valp
+🦮;ledarhund;blindhund|hjälp|hund|service
+🐕‍🦺;servicehund;hjälp|hund|service|tillgång
+🐩;pudel;djur|hund
+🐺;vargansikte;djur|varg
+🦊;rävansikte;ansikte|djur|räv
+🦝;tvättbjörn;nyfiken|slug
+🐱;kattansikte;djur|katt
+🐈;katt;djur
+🐈‍⬛;svart katt;djur|halloween|katt|mjau|otur|skrock|svart
+🦁;lejonansikte;djur|lejon
+🐯;tigeransikte;djur|tiger
+🐅;tiger;djur
+🐆;leopard;djur
+🐴;hästansikte;djur|häst
+🫎;älg;alces|älghorn|däggdjur|djur|hjortdjur|horn
+🫏;åsna;däggdjur|djur|envis|mula|mulåsna
+🐎;häst;djur|galopp|galopperande häst|hästlopp|trav
+🦄;enhörningsansikte;djur|enhörning
+🦓;zebra;ränder
+🦌;hjort;djur
+🦬;bisonoxe;buffalo|hjord|visent
+🐮;koansikte;djur|ko
+🐂;oxe;oxen|stjärntecken|tjur
+🐃;vattenbuffel;djur
+🐄;ko;djur|kossa
+🐷;grisansikte;djur|gris
+🐖;gris;so|sugga
+🐗;vildsvin;djur|svin
+🐽;gristryne;djur|gris|tryne
+🐏;vädur;bagge|får|stjärntecken
+🐑;tacka;får
+🐐;get;stenbock|stjärntecken
+🐪;dromedar;puckel
+🐫;kamel;puckel|pucklar
+🦙;lama;alpaca|guanaco|ull|vicuña
+🦒;giraff;prickar
+🐘;elefant;djur
+🦣;mammut;betar|stor|utrotad
+🦏;noshörning;djur|horn|näsa
+🦛;flodhäst;hovdjur
+🐭;musansikte;djur|mus
+🐁;mus;djur
+🐀;råtta;djur
+🐹;hamsteransikte;djur|hamster
+🐰;kaninansikte;djur|kanin
+🐇;kanin;djur
+🐿️;jordekorre;djur
+🦫;bäver;damm
+🦔;igelkott;taggig
+🦇;fladdermus;djur|vampyr
+🐻;björnansikte;björn|djur
+🐻‍❄️;isbjörn;djur|vit
+🐨;koala;Australien|djur|koala-ansikte|koalabjörn|pungdjur
+🐼;pandaansikte;djur|panda
+🦥;sengångare;långsam|lat
+🦦;utter;fiskar|lekfull
+🦨;skunk;stank
+🦘;känguru;Australien|hoppa|joey|pungdjur
+🦡;grävling;honungsgrävling|plåga
+🐾;tassavtryck;djur|tassar
+🦃;kalkon;fågel
+🐔;höna;fågel
+🐓;tupp;fågel
+🐣;nykläckt kyckling;fågel|kläckt|kyckling
+🐤;kyckling;djur|kycklingansikte
+🐥;kyckling framifrån;fågel|kyckling
+🐦;fågel;djur|fågelansikte
+🐧;pingvin;fågel|pingvinansikte
+🕊️;duva;fågel|fred|fredsduva
+🦅;örn;fågel
+🦆;and;fågel
+🦢;svan;den fula ankungen|fågel
+🦉;uggla;fågel|vis
+🦤;dront;Mauritius|stor|utrotad
+🪶;fågelfjäder;fågel|fjäder|fjäderdräkt|lätt
+🦩;flamingo;flambojant|tropisk
+🦚;påfågel;fågel|praktfull|stolt
+🦜;papegoja;fågel|pirat|prata
+🪽;vinge;änglalik|fågel|flyga|flyger|himmelsk|mytologi|stiga
+🐦‍⬛;koltrast;djur|fågel|korp|kråka|kraxa|näbb|råka|svart
+🪿;gås;and|anka|dum|fä|fågel|fånig|flock|kackel|rolig
+🐦‍🔥;fenix;eldfågel|fantasy|förnyelse|pånyttfödelse|reinkarnation
+🐸;grodansikte;djur|groda
+🐊;krokodil;djur
+🐢;sköldpadda;havssköldpadda|padda
+🦎;ödla;kräldjur
+🐍;orm;djur
+🐲;drakansikte;djur|drake
+🐉;drake;djur
+🦕;sauropod;brachiosaurus|brontosaurus|diplodocus
+🦖;T-rex;Tyrannosaurus Rex
+🐳;val som sprutar vatten;djur|val|vatten
+🐋;val;djur
+🐬;delfin;djur
+🫍;späckhuggare;hav|ocean|val
+🦭;säl;sjölejon
+🐟;fisk;fiskarna|stjärntecken
+🐠;tropisk fisk;djur|fisk|tropisk
+🐡;blåsfisk;djur|fisk
+🦈;haj;fisk
+🐙;bläckfisk;djur
+🐚;snäcka;djur|snäckskal
+🪸;korall;klimatförändring|ocean|rev
+🪼;manet;bränner|brännmanet|hav|nässeldjur|ocean|svida|svider|tentakler
+🦀;krabba;kräfta|skaldjur|stjärntecken
+🦞;hummer;fisksoppa|klor|skaldjur
+🦐;räka;liten|mat|skaldjur
+🦑;mindre bläckfisk;bläck|bläckfisk|mat|skaldjur
+🦪;ostron;dyka|pärlor
+🐌;snigel;djur
+🦋;fjäril;insekt|sommar|vacker
+🐛;tusenfoting;djur|kryp|larv
+🐜;myra;djur|insekt
+🐝;bi;djur|geting|insekt
+🪲;skalbagge;insekt|småkryp
+🐞;nyckelpiga;djur|insekt|skalbagge
+🦗;syrsa;gräshoppa
+🪳;kackerlacka;insekt|skadedjur
+🕷️;spindel;djur|insekt
+🕸️;spindelnät;nät|spindel
+🦂;skorpion;skorpionen|stjärntecken
+🦟;mygga;insekt|malaria|sjukdom|virus
+🪰;fluga;asätande insekt|sjukdom
+🪱;mask;daggmask|parasit|ringmask
+🦠;mikrob;amöba|bakterie|mikrober|virus
+💐;blombukett;blommor|kärlek
+🌸;körsbärsblomma;blomma|körsbär
+💮;vit blomma;blomma
+🪷;lotus;blomma|buddhism|frid|hinduism|renhet|stillhet
+🏵️;bandros;blomma
+🌹;ros;blomma
+🥀;vissnad blomma;blomma|torkad|vissen
+🌺;hibiskus;blomma|hibiskusblomma
+🌻;solros;blomma
+🌼;blomma;blomster|växt
+🌷;tulpan;blomma
+🪻;hyacint;blomma|bluebonnet|lavendel|lila|luktärter|lupin|purpur|violblå|violett
+🌱;skott;grodd|växtskott
+🪴;krukväxt;inomhus|odla|växt
+🌲;barrträd;gran|träd|vintergrön
+🌳;lövträd;lövfällande|träd
+🌴;palm;träd
+🌵;kaktus;växt
+🌾;risax;planta|ris|risplanta
+🌿;ört;blad
+☘️;treklöver;Irland
+🍀;fyrklöver;Irland|klöver|lycka|tur
+🍁;lönnlöv;höst|löv
+🍂;fallande löv;faller|fallna löv|höst|höstlöv|löv
+🍃;löv i vinden;blåser|fladdrande|höst|löv|vind
+🪹;tomt bo;rede|ruva
+🪺;bo med ägg;fågelbo|rede med ägg|ruva
+🍄;svamp;flugsvamp|växt
+🪾;träd utan löv;kargt|torka|vinter
+🍇;vindruvor;frukt
+🍈;melon;frukt
+🍉;vattenmelon;frukt|melon|vattenmelonskiva
+🍊;mandarin;citrusfrukt|frukt
+🍋;citron;citrusfrukt|frukt
+🍋‍🟩;lime;citrusfrukt|frukt|tropisk
+🍌;banan;frukt
+🍍;ananas;frukt
+🥭;mango;frukt|tropisk frukt
+🍎;rött äpple;äpple|frukt|hälsa|mat|moget|nyttigt|rött|sunt
+🍏;grönt äpple;äpple|frukt|grönt
+🍐;päron;frukt
+🍑;persika;frukt
+🍒;körsbär;frukt
+🍓;jordgubbe;bär|frukt
+🫐;blåbär;
+🥝;kiwifrukt;frukt|kiwi|mat
+🍅;tomat;grönsak
+🫒;oliv;mat
+🥥;kokosnöt;halv kokosnöt|palm|piña colada
+🥑;avokado;frukt|mat
+🍆;aubergine;äggplanta|grönsak
+🥔;potatis;grönsak|mat
+🥕;morot;grönsak|mat|rotfrukt
+🌽;majskolv;majs
+🌶️;chili;peppar|starkt|växt
+🫑;paprika;grönsak
+🥒;gurka;grönsak|mat
+🥬;sallat;bok choy|grönkål|kål|sallad|salladsblad
+🥦;broccoli;kål
+🧄;vitlök;smaksättning
+🧅;lök;gul lök|smaksättning
+🥜;jordnötter;grönsak|jordnöt|mat|nöt
+🫘;bönor;kidneybönor|mat|små
+🌰;kastanj;växt
+🫚;ingefära;hälsa|krydda|kryddväxt|öl|ört|rot
+🫛;ärtskida;ärta|bönor|bönstjälk|edamame|grönsaker|sojaböna
+🍄‍🟫;brun svamp;brun flugsvamp|brunsvamp|grönsaker|mat|natur|sopp|svamp|trädgårdschampinjon|tryffel
+🫜;rotfrukt;grönsak|rödbeta|rova|trädgård
+🍞;bröd;limpa
+🥐;croissant;bröd|fransk|mat
+🥖;baguette;bröd|fransk|mat
+🫓;tunnbröd;naanbröd|pitabröd
+🥨;pretzel;snurrad
+🥯;bagel;bakverk|bröd
+🥞;pannkakor;crêpes|mat|pannkaka
+🧇;våffla;våffeldagen|våffeljärn
+🧀;ostbit;ost
+🍖;köttben;kött|på ben
+🍗;kycklinglår;kyckling|lår
+🥩;styckdel;fläskkotlett|lammkotlett|stek
+🥓;bacon;kött|mat
+🍔;hamburgare;burgare
+🍟;pommes frites;pommes
+🍕;pizzabit;bit|pizza|slice
+🌭;varmkorv;korv|mat
+🥪;smörgås;bröd|macka
+🌮;taco;fredagsmys|mat|mexikanskt
+🌯;burrito;fredagsmys|mat|mexikanskt
+🫔;tamale;mexikanskt|wrap
+🥙;pitabröd;falafel|gyro|kebab|mat|pita
+🧆;falafel;kikärter|köttbulle
+🥚;ägg;mat
+🍳;matlagning;laga mat|steka ägg
+🥘;paella;mat|stekpanna
+🍲;gryta;mat|varm gryta
+🫕;fondue;choklad|gryta|ost|schweiziskt|smältande
+🥣;skål och sked;flingor|frukost
+🥗;grönsallad;grön|mat|sallad
+🍿;popcorn;bio|snacks
+🧈;smör;mjölkprodukt
+🧂;salt;krydda|saltkar|saltströare
+🥫;konserv;burk|konservburk
+🍱;bentolåda;bento|låda
+🍘;riskaka;kex|ris
+🍙;risboll;ris|risportion
+🍚;kokt ris;ris
+🍛;curry och ris;curry|ris
+🍜;skål nudelsoppa;nudelsoppa|nudlar|rykande|skål|soppa
+🍝;spagetti;mat|pasta
+🍠;rostad sötpotatis;mat|rostad|sötpotatis
+🍢;skaldjursspett;skaldjur|spett
+🍣;sushi;
+🍤;friterad räka;friterad|räka|tempura
+🍥;fiskkaka;fisk|snurrad fiskkaka
+🥮;månkaka;festival|höst|månfest
+🍡;dango;efterrätt|japan
+🥟;dumpling;degknyte|empanada|gyōza|jiaozi|pirog
+🥠;lyckokaka;profetia
+🥡;hämtmatkartong;takeout box
+🍦;mjukglass;efterrätt|glass
+🍧;kakigōri;dessert|efterrätt|is
+🍨;glass;efterrätt
+🍩;munk;donut
+🍪;kaka;desert|efterrätt|småbröd
+🎂;födelsedagstårta;fest|födelsedag|fördelsedagstårta|Grattis|tårta|Tårta med ljus på
+🍰;tårtbit;kaka|kakbit|tårta
+🧁;muffin;bakelse|bakverk
+🥧;paj;deg|fyllnad
+🍫;chokladkaka;choklad|chokladbit|godis
+🍬;godis;karamell
+🍭;klubba;godis
+🍮;brylépudding;efterrätt
+🍯;honungsburk;burk|honung
+🍼;nappflaska;dryck|flaska|mjölk
+🥛;mjölkglas;dryck|glas|mjölk
+☕;varm dryck;ångande|dryck|kaffe|te|varm
+🫖;tekanna;dryck|kanna|te
+🍵;tekopp;te|varm dryck
+🍶;sake;dryck|flaska|flaska och kopp med saké|kopp
+🍾;champagne;bubbel|fest|nyår
+🍷;vinglas;dryck|glas|rödvinsglas|vin
+🍸;cocktailglas;cocktail|drink
+🍹;tropisk drink;alkohol|bar|cocktail|drink|drinkar|festa|full|mai tai|nattklubb|party|supa|tropisk
+🍺;ölstop;glas|öl|ölglas|stop
+🍻;skålande ölstop;glas|öl|skål|skålande ölglas
+🥂;skålande glas;dryck|fira|glas|skål
+🥃;whiskyglas;brännvin|glas|shot|sprit|whisky
+🫗;hälla vätska;dryck|glas|hälla|oj då!|spilla|tomt
+🥤;mugg med sugrör;juice|läskedryck
+🧋;bubbelte;mjölk|pärlor|tapiokapärlor|te
+🧃;dryckeskartong;dryckesförpackning
+🧉;mate-te;dryck
+🧊;isbit;isberg|kallt
+🥢;ätpinnar;
+🍽️;tallrik, kniv och gaffel;äta|bestick|dukning|kniv och gaffel|tallrik
+🍴;kniv och gaffel;äta|bestick|gaffel|gaffel och kniv|hungrig|kniv|mat|matdags|middag
+🥄;sked;bestick
+🔪;kökskniv;kniv
+🫙;burk;behållare|förvaring|krydda|sås|tom
+🏺;amfora;kruka|krus
+🌍;jordglob Europa–Afrika;Afrika|Europa|Europa-Afrika|jorden|jordglob|världen|visar
+🌎;jordglob nord- och sydamerika;jorden|jordglob|nord- och sydamerika|Nordamerika|Sydamerika|världen|visar
+🌏;jordglob Asien–Australien;Asien|Asien-Australien|Australien|jorden|jordglob|världen|visar
+🌐;jordglob med meridianer;meridianer
+🗺️;världskarta;karta|världen
+🗾;karta över Japan;Japan|karta
+🧭;kompass;magnetisk|navigation|orientering
+🏔️;snöklätt berg;berg|kallt|snö|snöklädda berg
+⛰️;berg;
+🛘;jordskred;berg|fallande|fara|ras|stenar
+🌋;vulkan;vulkanutbrott
+🗻;Fuji;berg
+🏕️;camping;tält
+🏖️;strand med parasoll;parasoll|strand
+🏜️;öken;torrt|varmt
+🏝️;öde ö;ö|öde
+🏞️;nationalpark;park
+🏟️;stadion;
+🏛️;klassisk byggnad;byggnad|sevärdhet
+🏗️;byggarbetsplats;bygge
+🧱;tegelsten;bruk|lera|tegelstenar|tegelstensvägg|vägg
+🪨;sten;berg|bumling|klippa
+🪵;trästockar;stock|stubbe|timmerstock|trä|trästock|ved
+🛖;koja;hydda|kåta
+🏘️;flera hus;byggnader|hus
+🏚️;fallfärdigt hus;förfallet|hus|öde|ödehus
+🏠;hus;byggnad
+🏡;hus med trädgård;hus|trädgård
+🏢;kontorsbyggnad;byggnad|kontor
+🏣;japanskt postkontor;byggnad|postkontor
+🏤;postkontor;byggnad|europeiskt postkontor
+🏥;sjukhus;byggnad
+🏦;bank;byggnad
+🏨;hotell;byggnad
+🏩;kärlekshotell;byggnad|hotell|hotell med hjärta|kärlek
+🏪;jourbutik;affär|butik|butik som har öppet dygnet runt|byggnad
+🏫;skola;byggnad|skolbyggnad
+🏬;varuhus;butik
+🏭;fabrik;byggnad
+🏯;japanskt slott;slott
+🏰;slott;europeiskt slott
+💒;bröllop;bröllopskapell|kärlek|kyrka
+🗼;Tokyo Tower;Tokyo|torn|torn i Tokyo
+🗽;Frihetsgudinnan;frihet|new york|ny|nyc|staty
+⛪;kyrka;byggnad|kristen
+🕌;moské;islam|muslim|religion
+🛕;hindutempel;hindu|tempel
+🕍;synagoga;judisk|religion|tempel
+⛩️;shintohelgedom;religion|shinto
+🕋;kaba;islam|muslim|religion
+⛲;fontän;springbrunn
+⛺;tält;camping
+🌁;dimmigt;dimma
+🌃;stjärnklar natt;natt|stjärnor
+🏙️;stadsbild;höga hus|skyskrapa|storstad
+🌄;soluppgång över berg;berg|morgonsol|soluppgång|soluppgång vid berg
+🌅;soluppgång;morgonsol
+🌆;stad i skymning;byggnader|kväll|skymning|solnedgång|stadsvy
+🌇;solnedgång;byggnader|skymning|solnedgång över stad
+🌉;bro på natten;bro|natt
+♨️;varma källor;ångande|het källa|termalkälla
+🎠;karusellhäst;häst|karusell
+🛝;rutschbana;leka|lekplats|nöjesfält
+🎡;pariserhjul;karusell|nöjespark
+🎢;berg- och dalbana;karusell|nöjespark
+💈;barberarstolpe;barberare|frisör|stolpe
+🎪;cirkustält;cirkus|tält
+🚂;ånglok;fordon|lok|lokomotiv|tåg
+🚃;tågvagn;fordon|järnväg|tåg
+🚄;snabbtåg;fordon|tåg
+🚅;höghastighetståg;fordon|Shinkansen|tåg|TGV
+🚆;tåg;fordon|järnväg
+🚇;tunnelbana;fordon|metro
+🚈;snabbspårväg;anlänt|balkbana|enskensbana|lättbana|monorail|spårväg|spårvagn
+🚉;tågstation;station|tåg
+🚊;spårvagn;fordon
+🚝;monorail;balkbana|fordon|tåg
+🚞;bergbana;bergsbana|bergståg|järnväg
+🚋;spårvagnsvagn;fordon|spårvagn
+🚌;buss;fordon
+🚍;mötande buss;buss|fordon|mötande
+🚎;trådbuss;buss|fordon
+🚐;minibuss;buss|fordon
+🚑;ambulans;fordon
+🚒;brandbil;fordon
+🚓;polisbil;fordon|polis
+🚔;mötande polisbil;fordon|polis|polisbil
+🚕;taxi;fordon
+🚖;mötande taxi;fordon|taxi|taxi framifrån
+🚗;bil;fordon
+🚘;mötande bil;bil|bilar|fordon|körde|mötande
+🚙;SUV;bil|fordon
+🛻;pickup;lastbil|transportvagn|varubil
+🚚;budbil;fordon|skåpbil
+🚛;lastbil;fordon
+🚜;traktor;fordon
+🏎️;racerbil;bil|sport
+🏍️;motorcykel;racing
+🛵;skoter;motor
+🦽;manuell rullstol;tillgänglighet
+🦼;eldriven rullstol;tillgänglighet
+🛺;automatisk riksha;motordriven|rickshaw|riksha|tuk-tuk
+🚲;cykel;fordon
+🛴;sparkcykel;cykel|sparka
+🛹;skateboard;bräda
+🛼;rullskridsko;
+🚏;busshållplats;buss|hållplats
+🛣️;motorväg;väg
+🛤️;räls;järnväg|tåg|tågräls
+🛢️;oljefat;olja
+⛽;bränslepump;bensin|bensinpump|bensinstation|bränsle
+🛞;hjul;cirkel|däck|rulla
+🚨;polisbilslampa;lampa|polisbil|saftblandare
+🚥;vågräta trafikljus;trafikljus
+🚦;lodräta trafikljus;trafikljus
+🛑;stoppskylt;åttakantig|skylt|stopp
+🚧;skylt för byggområde;bygge
+⚓;ankare;hopp
+🛟;livboj;flytetyg|frälsarkrans|livräddning|räddning|säkerhet
+⛵;segelbåt;båt|segling
+🛶;kanot;båt
+🚤;racerbåt;båt|fordon
+🛳️;passagerarfartyg;fartyg|fordon|passagerare
+⛴️;färja;båt|passagerare
+🛥️;motorbåt;båt|fordon
+🚢;fartyg;båt|fordon
+✈️;flygplan;fordon
+🛩️;litet flygplan;flygplan|fordon
+🛫;avgång med flyg;avgång|flyg|flyg som avgår|resa
+🛬;ankomst med flyg;ankomst|flyg|flyg som landar|resa
+🪂;fallskärm;fallskärmshopp|hängflygning|parasegling
+💺;flygstol;stol
+🚁;helikopter;fordon
+🚟;hängbana;fordon
+🚠;linbana;gondolbana|kabinbana|skidlift
+🚡;kabinbana;funifor|gondolbana|linbana
+🛰️;satellit;fordon|rymden
+🚀;raket;fordon|rymdraket
+🛸;flygande tefat;UFO
+🛎️;receptionsklocka;hotell|klocka|piccolo|plingklocka
+🧳;bagage;packning|resa|resväska
+⌛;utrunnet timglas;sand|timglas
+⏳;timglas med rinnande sand;sand|tid|timglas
+⌚;armbandsur;klocka
+⏰;väckarklocka;klocka
+⏱️;tidtagarur;klocka|stoppur
+⏲️;timer;klocka|tid|tidtagarklocka
+🕰️;mantelklocka;klocka
+🕛;klockan tolv;00.00|24.00|klocka som visar tolv|tolv
+🕧;halv ett;00.30|12.30|klocka som visar halv ett
+🕐;klockan ett;01.00|13.00|ett|klocka som visar ett
+🕜;halv två;01.30|13.30|klocka som visar halv två
+🕑;klockan två;02.00|14.00|klocka som visar två|två
+🕝;halv tre;02.30|14.30|klocka som visar halv tre
+🕒;klockan tre;03.00|15.00|klocka som visar tre|tre
+🕞;halv fyra;03.30|15.30|klocka som visar halv fyra
+🕓;klockan fyra;04.00|16.00|fyra|klocka som visar fyra
+🕟;halv fem;04.30|16.30|klocka som visar halv fem
+🕔;klockan fem;05.00|17.00|fem|klocka som visar fem
+🕠;halv sex;05.30|17.30|klocka som visar halv sex
+🕕;klockan sex;06.00|18.00|klocka som visar sex|sex
+🕡;halv sju;06.30|18.30|klocka som visar halv sju
+🕖;klockan sju;07.00|19.00|klocka som visar halv sju|sju
+🕢;halv åtta;07.30|19.30|klocka som visar halv åtta
+🕗;klockan åtta;08.00|20.00|åtta|klocka som visar åtta
+🕣;halv nio;08.30|20.30|klocka som visar halv nio
+🕘;klockan nio;09.00|21.00|klocka som visar nio|nio
+🕤;halv tio;09.30|21.30|klocka som visar halv tio
+🕙;klockan tio;10.00|22.00|klocka som visar tio|tio
+🕥;halv elva;10.30|22.30|klocka som visar halv elva
+🕚;klockan elva;11.00|23.00|elva|klocka som visar elva
+🕦;halv tolv;11.30|23.30|klocka som visar halv tolv
+🌑;nymåne;måne
+🌒;måne i första kvarteret;kvartsmåne|måne|månskära|tilltagande måne
+🌓;tilltagande halvmåne;kvarts|måne
+🌔;måne i andra kvarteret;halvmåne till fullmåne|tilltagande måne
+🌕;fullmåne;måne
+🌖;måne i tredje kvarteret;måne|rymden|tilltagande
+🌗;avtagande halvmåne;avtagande måne|halvmåne|måne
+🌘;måne i fjärde kvarteret;avtagande måne|kvartsmåne|måne|månskära
+🌙;månskära;måne
+🌚;nymåne med ansikte;ansikte|gubben i månen|månansikte|måne|nymåne
+🌛;tilltagande halvmåne med ansikte;ansikte|gubben i månen|halvmåne|månansikte|måne
+🌜;avtagande halvmåne med ansikte;ansikte|gubben i månen|halvmåne|månansikte|måne
+🌡️;termometer;väder
+☀️;sol;strålar|väder
+🌝;fullmåne med ansikte;ansikte|fullmåne|gubben i månen|månansikte|måne
+🌞;sol med ansikte;ansikte|sol
+🪐;planet med ringar;saturnine|saturnus
+⭐;stjärna;vit medelstor stjärna
+🌟;blänkande stjärna;blänkande|glänsande|glittrande|gnistrande|natt|seger|stjärna
+🌠;stjärnfall;fallande stjärna
+🌌;Vintergatan;galax|rymden
+☁️;moln;väder
+⛅;sol bakom moln;moln|sol|sol med moln
+⛈️;moln med regn och blixtar;moln|oväder|väder
+🌤️;sol bakom litet moln;moln|sol|väder
+🌥️;sol bakom stort moln;moln|sol|väder
+🌦️;sol bakom moln med regn;moln|regn|sol|väder
+🌧️;regnmoln;moln|regn|väder
+🌨️;moln med snö;moln|snö|väder
+🌩️;moln med blixt;moln|oväder|väder
+🌪️;tornado;väder|virvelvind
+🌫️;dimma;dimmigt|väder
+🌬️;blåser vind;ansikte som blåser luft|blåser|väder|vind
+🌀;cyklon;tromb|tyfon|väder|vind
+🌈;regnbåge;regn|väder
+🌂;hopfällt paraply;paraply
+☂️;paraply;accessoar|regn|utfällt paraply|väder
+☔;paraply med regndroppar;accessoar|paraply|regn|väder
+⛱️;parasoll på marken;paraply|parasoll|sol|väder
+⚡;högspänning;fara|hög spänning|spänning|varningssymbol
+❄️;snöflinga;snö
+☃️;snögubbe;snö|snöar
+⛄;snögubbe utan snö;snö|snögubbe
+☄️;komet;rymden
+🔥;eld;brinner|flamma
+💧;droppe;kallsvettig|svettdroppe|svettig|vattendroppe
+🌊;våg;havsvåg
+🎃;lyktgubbe;fest|Halloween|lykta|pumpa|pumplykta
+🎄;julgran;gran|högtid|jul
+🎆;fyrverkerier;firande|högtid
+🎇;glittrande fyrverkeri;fyrverkerier|högtid
+🧨;smällare;dynamit|fyrverkeri|sprängämne
+✨;gnistrande stjärnor;gnistrar|stjärnor
+🎈;ballong;fest
+🎉;konfettismällare;fest|partypopper|serpentiner
+🎊;konfettiboll;boll|fest|konfetti
+🎋;tanabataträd;fest|japansk festival|pappersremsor|träd|träd med pappersremsor
+🎍;pinjedekoration;bambu|japanskt|nyår
+🎎;japanska dockor;dockor|festival
+🎏;karpvindstrut;fest|japan|karp|vindstrut
+🎐;vindspel;fest|japan
+🎑;månskådning;japan|månfest
+🧧;rött kuvert;hóngbāo|lai see|pengar|present|tur
+🎀;rosett;fest
+🎁;inslagen present;fest|födelsedag|gåva|inslagen|julklapp|överraskning|paket|present
+🎗️;påminnelseband;band|firande
+🎟️;inträdesbiljetter;biljett|inträde
+🎫;biljett;inträde
+🎖️;militär medalj;firande|medalj|militär|pris
+🏆;pokal;pris
+🏅;sportmedalj;medalj|sport
+🥇;guldmedalj;guld|medalj|segrare
+🥈;silvermedalj;andra plats|medalj|silver
+🥉;bronsmedalj;brons|medalj|tredje plats
+⚽;fotboll;boll|sport
+⚾;baseboll;sport
+🥎;softboll;boll|handske|underarm
+🏀;basketboll;basket|boll
+🏐;volleyboll;sport
+🏈;amerikansk fotboll;boll|sport
+🏉;rugbyboll;boll|rugby|sport
+🎾;tennis;boll|tennisboll|tennisrack och boll|tennisracket och boll
+🥏;frisbee;ultimate
+🎳;bowling;bowlingklot|bowlingklot och käglor|klot
+🏏;cricket;cricketslagträ och boll|sport
+🏑;landhockey;landhockeyklubba|landhockeyklubba och boll|sport
+🏒;ishockey;ishockeyklubba och puck|klubba|puck|sport
+🥍;lacrosse;boll|klubba|mål
+🏓;bordtennis;bordtennisracket med pingisboll|pingis|pingpong|sport
+🏸;badminton;badmintonracket och badmintonboll|sport
+🥊;boxningshandske;boxning|handske|sport
+🥋;kampsportdräkt;judo|kampsport|karate|självförsvar|sport|taekwondo
+🥅;målnät;mål|nät|sport
+⛳;flagga i hål;golf|golfflagga|hål
+⛸️;skridsko;is|sport
+🎣;fiskespö;fisk|fiska|fiskespö och fisk|spö
+🤿;dykmask;dyka|snorkelmask|snorkla
+🎽;löparlinne;löpartröja|löpning|träningskläder
+🎿;skidor;skidor och pjäxa|skidor och stavar
+🛷;kälke;släde
+🥌;curlingsten;spel|sten
+🎯;mitt i prick;bullseye|fullträff|pilkastning|piltavla med pil mitt i prick|rakt på mål
+🪀;jojo;jojare|snöre|trissa
+🪁;flygande drake;flyga|sväva
+🔫;vattenpistol;leksakspistol|pistol|revolver|vapen
+🎱;biljardboll;åttan|biljard|biljardboll med nummer 8
+🔮;kristallkula;framtiden|spåkula
+🪄;trollspö;häxa|magi|trollkarl|trollkonst|trollstav
+🎮;tv-spel;kontroll|spel|tv-spelskontroll
+🕹️;joystick;spak|spel|styrspak
+🎰;enarmad bandit;spel|spelautomat|spelmaskin
+🎲;speltärning;spel|tärning
+🧩;pusselbit;bit|ledtråd|pussel|pusselbitar|sammanfoga
+🧸;nallebjörn;gosedjur|leksak|mjukdjur
+🪅;piñata;fest|kalas
+🪩;discokula;dansa|disco|fest|glitter
+🪆;ryska dockor;babuschkadocka|matrjosjka|rysk docka
+♠️;spader;färg|kort|svart spader
+♥️;hjärter;färg|kort|rött hjärter
+♦️;ruter;färg|kort|röd ruter
+♣️;klöver;färg|kort|svart klöver
+♟️;schackbonde;schack|utbytbar
+🃏;joker;Joker-kort|spelkort|spelkort med joker
+🀄;mahjong-bricka;drake|röd drake|spelbricka
+🎴;spelkort med blomma;blomma|japanskt spelkort med blomma|kort|kortspel|spelkort
+🎭;dans och teater;ansiktsmasker|masker|teater
+🖼️;tavla;bild i ram|konst|museum
+🎨;färgpalett;färger|konst|palett
+🧵;tråd;nål|spole|trådrulle
+🪡;synål;broderi|nål|skräddarsy|stygn
+🧶;garn;garnnystan|sticka|virka
+🪢;knut;knop|rep|tågvirke
+👓;glasögon;accessoarer|brillor|ögon
+🕶️;solglasögon;glasögon
+🥽;simglasögon;ögonskydd|simma|svetsning
+🥼;labbrock;doktor|experiment|vetenskapsman
+🦺;varselväst;nöd|säkerhet|varningsväst|väst
+👔;skjorta med slips;kläder|skjorta|slips
+👕;t-shirt;kläder|tröja
+👖;jeans;byxor|kläder
+🧣;halsduk;hals|scarf
+🧤;handske;hand
+🧥;jacka;kavaj
+🧦;sockor;strumpa
+👗;klänning;kläder
+👘;kimono;kläder|klänning
+🥻;sari;kläder|klänning
+🩱;baddräkt;simdräkt
+🩲;badbyxor;badkläder|badshorts|simutrustning
+🩳;shorts;badbyxor|badkläder|badshorts|underkläder
+👙;bikini;badkläder|kläder
+👚;blus;damkläder|kläder
+🪭;solfjäder;blyg|dans|fläkt|fläktar|flört|hett|svalka
+👛;portmonnä;accessoar
+👜;handväska;accessoar|väska
+👝;kuvertväska;accessoar|clutch
+🛍️;shoppingpåsar;påsar|shopping
+🎒;ryggsäck;skolväska|väska
+🩴;flip-flops;remsko|sandaler
+👞;herrsko;sko|skor
+👟;gympasko;sko|sneaker
+🥾;vandringskänga;camping|pjäxor|vandring
+🥿;ballerinasko;lågklackad|toffla
+👠;högklackad sko;klack|pumps|sko
+👡;damsandal;högklackad damsandal|sandal|sko
+🩰;ballettskor;balett|dans
+👢;damstövel;sko|stövel
+🪮;afrokam;afro|hår|kam
+👑;krona;drottning|kung|kungakrona
+👒;damhatt;hatt
+🎩;hög hatt;hatt
+🎓;examenshatt;examen|hatt|högtid
+🧢;skärmmössa;basebollkeps|keps
+🪖;militärhjälm;armé|hjälm|krigare|militär|soldat
+⛑️;räddningsarbetarhjälm;hjälm|hjälm med vitt kors|hjälp|räddningsarbetare|utryckningspersonal
+📿;radband;bön|halsband|religion
+💄;läppstift;makeup|smink
+💍;ring;diamant|diamantring|kärlek|romantik
+💎;ädelsten;diamant|juvel|kärlek
+🔇;avstängd högtalare;tyst
+🔈;högtalare;högtalare med låg volym|låg volym
+🔉;högtalare med medium volym;högtalare|volym
+🔊;högtalare med hög volym;högtalare|volym
+📢;handhögtalare;kommunikation
+📣;megafon;kommunikation
+📯;postsymbol;posthorn
+🔔;ringklocka;klocka|ljud
+🔕;överstruken ringklocka;inget ljud|ljudlös|ringklocka
+🎼;g-klav;musik|noter
+🎵;musiknot;musik|not
+🎶;musiknoter;musik|not|noter
+🎙️;studiomikrofon;mikrofon|sjunga
+🎚️;nivåreglage;reglage
+🎛️;reglagevred;musik|reglage
+🎤;mikrofon;karaoke|sjunga
+🎧;hörlur;musik
+📻;radio;video
+🎷;saxofon;musik|musikinstrument
+🎺;trumpet;musik|musikinstrument
+🪊;trombon;bleckblås|instrument|jazz|musik|sorgen
+🪗;dragspel;ackordeon|dragharmonika
+🎸;gitarr;elgitarr|musik|musikinstrument
+🎹;klaviatur;musik|musikinstrument|piano
+🎻;fiol;fiol med stråke|musik|musikinstrument|violin
+🪕;banjo;musik|sträng
+🥁;trumma;musik|trumma med trumpinnar|trumpinnar
+🪘;congatrumma;djembe|rytm|takt|trumma
+🪇;maracas;instrument|musik|skaka|slaginstrument|slagverk
+🪈;flöjt;band|blockflöjt|flöjtist|instrument|musik|orkester|panflöjt|pickolaflöjt|träblås
+🪉;harpa;amor|instrument|musik|orkester|romantik
+📱;mobiltelefon;mobil|telefon
+📲;mobiltelefon med pil;mobil|ringa|telefon
+☎️;telefon;
+📞;telefonlur;kommunikation|telefon
+📟;personsökare;kommunikation
+📠;fax;kommunikation
+🔋;batteri;
+🪫;låg batterinivå;elektronik|låg energinivå
+🔌;elkontakt;kontakt
+💻;bärbar dator;bärbar|dator|kontor|laptop|pc
+🖥️;stationär dator;dator|pc
+🖨️;skrivare;dator
+⌨️;tangentbord;dator
+🖱️;datormus;dator|mus
+🖲️;styrkula;dator|mus
+💽;datordiskett;dator|optisk|skiva
+💾;diskett;dator
+💿;optisk skiva;bluray-skiva|cd-skiva|dvd-skiva
+📀;dvd-skiva;bluray-skiva
+🧮;kulram;beräkning
+🎥;filmkamera;film|spela in film
+🎞️;filmnegativ;film|negativ
+📽️;filmprojektor;film|projektor
+🎬;filmklappa;film|klappa
+📺;tv;television|video
+📷;kamera;video
+📸;kamera med blixt;blixt|kamera
+📹;videokamera;kamera|video
+📼;videokassett;VHS|video|videoband
+🔍;förstoringsglas som lutar åt vänster;förstoringsglas|förstoringsglas vänster|vänsterpekande
+🔎;förstoringsglas som lutar åt höger;förstoringsglas|förstoringsglas höger|högerpekande
+🕯️;stearinljus;levande ljus|ljus
+💡;glödlampa;elektrisk|fått en idé|lampa
+🔦;ficklampa;lampa
+🏮;röd papperslykta;lykta|restaurang|röd lykta
+🪔;diyalampa;diya|lampa|oljelampa
+📔;anteckningsbok med dekorativt omslag;anteckningsbok med snyggt omslag|skrivbok
+📕;stängd bok;bok
+📖;öppen bok;bok
+📗;grön bok;bok
+📘;blå bok;bok
+📙;orange bok;bok
+📚;böcker;bok
+📓;anteckningsbok;skrivbok
+📒;liggare;skrivbok
+📃;upprullad sida;dokument
+📜;bokrulle;pergament|rulle
+📄;sida med text uppåt;dokument|sida|text uppåt
+📰;tidning;nyheter
+🗞️;ihoprullad tidning;ihoprullad|nyheter|tidning
+📑;bokmärkesflikar;bokmärken|flikar|markörer
+🔖;bokmärke;märke
+🏷️;etikett;
+🪙;mynt;guld|pengar|silver|skatt
+💰;pengapåse;pengar|säck
+🪎;skattkista;ädelstenar|guld|pengar|pris|rikedom
+💴;yensedel;pengar|sedel|yen
+💵;dollarsedel;dollar|pengar|sedel
+💶;eurosedel;euro|pengar|sedel
+💷;pundsedel;pengar|pund|sedel
+💸;pengar med vingar;flygande sedlar|pengar
+💳;kreditkort;betalkort|kort
+🧾;kvitto;belägg|bevis|bokföring|redovisning
+💹;stigande diagram med yen;diagram|diagram stigande marknad|stigande marknad|uppåtpekande
+✉️;kuvert;brev|e-post|e-postmeddelande|mail|mejl
+📧;e-post;brev|e-postsymbol|kommunikation|mail|mejl
+📨;inkommande brev;e-post|kommunikation|kuvert|mottaget brev
+📩;kuvert med pil;e-post|kuvert|mejl|pil|skickat|utgående
+📤;utkorg;kommunikation|skickat
+📥;inkorg;kommunikation|mottaget
+📦;paket;låda
+📫;stängd brevlåda med hissad flagga;post
+📪;stängd brevlåda med sänkt flagga;post
+📬;öppen brevlåda med hissad flagga;post
+📭;öppen brevlåda med sänkt flagga;post
+📮;postlåda;brevlåda
+🗳️;valurna med röstsedel;rösta|val
+✏️;blyertspenna;
+✒️;stiftpenna;penna|reservoarpenna|stift
+🖋️;reservoarpenna;penna
+🖊️;kulspetspenna;
+🖌️;målarpensel;pensel
+🖍️;krita;
+📝;kom ihåg-block;anteckningar
+💼;portfölj;väska
+📁;arkivmapp;arkiv|mapp
+📂;öppen mapp;mapp|öppet arkiv
+🗂️;indexflikar;flikar|index|kort|pärmflikar
+📅;kalender;datum
+📆;avdragbar kalender;datum|kalender
+🗒️;anteckningsblock;anteckningar|block|spiralblock
+🗓️;spiralbunden kalender;kalender|månadskalender
+📇;kortregister;register
+📈;uppåtgående trend;diagram|graf
+📉;nedåtgående trend;diagram|graf
+📊;stapeldiagram;diagram|staplar
+📋;skrivplatta;clipboard|urklipp
+📌;kartnål;stift
+📍;knappnål;nål|stift
+📎;gem;
+🖇️;länkade gem;gem|ihopsatta gem
+📏;linjal;rak
+📐;rätvinklig linjal;linjal|triangel
+✂️;sax;klippa
+🗃️;kartotek;låda
+🗄️;dokumentskåp;dokument|skåp
+🗑️;papperskorg;skräp|sopor|soptunna
+🔒;låst lås;lås|stängt lås
+🔓;öppet lås;lås|olåst
+🔏;lås med bläckpenna;bläckpenna|lås
+🔐;lås med nyckel;lås|stängt
+🔑;nyckel;lösenord
+🗝️;gammal nyckel;nyckel
+🔨;hammare;verktyg
+🪓;yxa;hacka|hugga|klyva|ved
+⛏️;hacka;verktyg
+⚒️;hammare och hacka;hacka|hammare|verktyg
+🛠️;hammare och skiftnyckel;hammare|skiftnyckel|verktyg
+🗡️;dolk;kniv|vapen
+⚔️;korslagda svärd;korsade|svärd|vapen
+💣;bomb;serietidning
+🪃;boomerang;australien|bumerang|flyga tillbaka
+🏹;pil och båge;båge|bågskytt|pilbåge|vapen
+🛡️;sköld;vapen
+🪚;fogsvans;såg|snickare|trä|verktyg
+🔧;skiftnyckel;verktyg
+🪛;skruvmejsel;verktyg
+🔩;skruv och mutter;mutter|skruv
+⚙️;kugghjul;kugge
+🗜️;skruvtving;tving|verktyg
+⚖️;balansvåg;rättvisa|våg|vågen
+🦯;blindkäpp;blind|tillgänglighet
+🔗;länk;länkar|länksymbol|två ringar
+⛓️‍💥;bruten länk;boja|bryta|frihet|kedja
+⛓️;kedjor;kedja
+🪝;krok;hake|klo|snärja
+🧰;verktygslåda;låda|mekaniker|verktyg
+🧲;magnet;hästsko|magnetisk
+🪜;stege;klätterstege|klättra|steg
+🪏;spade;begrava|gräva|hål|plantera|scoop|skopa|skyffel|trädgård
+⚗️;retort;kemi
+🧪;provrör;experiment|kemi|kemist|labb|vetenskap
+🧫;petriskål;bakterie|biolog|biologi|labb
+🧬;DNA;biolog|evolution|gen|genetik|liv
+🔬;mikroskop;vetenskap
+🔭;teleskop;kikare|stjärnkikare
+📡;tv-satellit;antenn|kommunikation|satellit|tv-satellitantenn
+💉;spruta;nål|sjukvård
+🩸;blodsdroppe;bloddroppe|ge blod|medicin|menstruation
+💊;piller;medicin|tablett
+🩹;plåster;bandage
+🩼;krycka;funktionsnedsättning|handikapp|käpp|mobilitetshjälpmedel|skadad
+🩺;stetoskop;doktor|hjärta|medicin
+🩻;röntgen;ben|läkare|medicin|skelett|undersökning
+🚪;dörr;
+🛗;hiss;lift|tillgång|vinsch
+🪞;spegel;reflektor|spegelglas
+🪟;fönster;genomskinlig|öppning|ram|utsikt
+🛏️;säng;hotell|sömn
+🛋️;soffa och lampa;hotell|lampa|soffa
+🪑;stol;säte|sitta
+🚽;toalett;toalettstol
+🪠;vaskrensare;rörmokare|sugkopp|toalett
+🚿;dusch;vatten
+🛁;badkar;bad
+🪤;musfälla;bete|fälla|snara
+🪒;rakhyvel;raka|vass
+🧴;lotionflaska;kräm|lotion|shampoo|solkräm
+🧷;säkerhetsnål;blöja|punkrock
+🧹;kvast;häxa|sopa|städa
+🧺;korg;jordbruk|picknick|tvätt
+🧻;toarulle;pappershanddukar|toalettpapper
+🪣;spann;ämbar|hink|kärl
+🧼;tvål;bada|duscha|lödder|skål|tvålbit
+🫧;bubblor;lödder|rap|rent|såpbubblor|tvål|under vatten
+🪥;tandborste;borste|ren|tänder|tandhygien|tvätta
+🧽;tvättsvamp;mjuk|rengörande
+🧯;brandsläckare;eld|kväva|släcka
+🛒;shoppingvagn;handla|inköp|shopping|vagn
+🚬;cigarett;rökning|rökning tillåtet|rykande cigarett|symbol
+⚰️;kista;begravning
+🪦;gravsten;begravningsplats|grav|gravplats|minneslund
+⚱️;begravningsurna;aska|begravning|urna
+🧿;onda ögat-sten;amulett|nazar|onda ögat
+🪬;hamsa;amulett|Fatima|hand|lycka|Maria|Miriam|skydd
+🗿;staty;påskön
+🪧;plakat;demonstration|protest|skylt
+🪪;ID-kort;ID|legitimation|personuppgifter|säkerhet
+🏧;bankomat;bankomatskylt|pengar|uttagsautomat
+🚮;soptunna;slänga skräp|symbol
+🚰;dricksvatten;drickbart vatten|symbol
+♿;rullstolssymbol;rullstol|symbol|tillgänglighet
+🚹;herrtoalett;män|symbol för män|toalett
+🚺;damtoalett;kvinnor|symbol för kvinnor|toalett
+🚻;wc-skylt;toalett|wc
+🚼;bebissymbol;bebis|skötrum
+🚾;WC;toalett|uthus
+🛂;passkontroll;kontroll|pass
+🛃;tull;tullkontroll
+🛄;bagagehämtning;bagage
+🛅;kvarlämnat bagage;bagage|bagageservice
+⚠️;varning;fara|se upp|skylt|utropstecken|varningstecken
+🚸;passerande barn;barn|passerar|symbol
+⛔;förbud mot infart med fordon;infart förbjuden
+🚫;förbjudet;förbudsmarkering
+🚳;förbud mot trafik med cykel;cyklar förbjudna|fordon|inte tillåtet att cykla
+🚭;rökning förbjuden;rökning|rökning förbjudet|symbol
+🚯;skräpa inte ner;inget skräp|släng inte skräp här|symbol
+🚱;ej dricksvatten;odrickbart vatten|symbol
+🚷;förbud mot gångtrafik;inga fotgängare|inte tillåtet att gå|symbol
+📵;mobil förbjuden;inga mobiler|inga samtal
+🔞;ej för minderåriga;åldersgräns|barnförbjuden|förbjudet|minderåriga
+☢️;varning för strålrisk;fara|joniserande strålning|radioaktiv|radioaktiva ämnen|strålning|varning
+☣️;biologisk fara;biologisk|fara|skylt|varning
+⬆️;uppåtpil;norr|pil|riktning|väderstreck
+↗️;uppåtpil höger;höger|pil|uppåt
+➡️;högerpil;öster|pil|riktning|väderstreck
+↘️;nedåtpil höger;höger|nedåt|pil
+⬇️;nedåtpil;nedåt|pil|riktning|söder|väderstreck
+↙️;nedåtpil vänster;nedåt|pil|vänster
+⬅️;vänsterpil;pil|riktning|väderstreck|väster
+↖️;uppåtpil vänster;pil|uppåt|vänster
+↕️;pil upp och ned;nedåt|pil|uppåt
+↔️;pil höger och vänster;höger|pil|vänster
+↩️;svängd vänsterpil;pil|sväng|vänster
+↪️;svängd högerpil;höger|pil|sväng
+⤴️;svängd uppåtpil;pil|sväng|uppåt
+⤵️;svängd nedåtpil;nedåt|pil|sväng
+🔃;vertikala pilar medurs;pilar|pilar medurs|uppdateringssymbol
+🔄;pilar moturs;deja vu|förnya|moturs|pil|pilar|spola tilllbaka|uppdatera|upprepa
+🔙;Back med vänsterpil;bakåt|TILLBAKA med vänsterpil|vänsterpil
+🔚;End med högerpil;framåt|högerpil|Slut med högerpil
+🔛;ON! med pil höger och vänster ovanför;höger|ON!|PÅ!|pil|vänster
+🔜;Soon med högerpil ovanför;höger|omw|pil|SNART|SOON
+🔝;Top med uppåtpil;homie|kompis|pil|TOP|TOPP|upp|uppåtpil
+🛐;plats för tillbedjan;religion|tempel|tillbedjan
+⚛️;symbol för atom;ateist|atom|naturvetenskap
+🕉️;aum-tecken;hinduism|ohm-tecken|religion
+✡️;davidsstjärna;jude|judendom|religion|stjärna
+☸️;livets hjul;buddhist|hjul|livshjul|religion
+☯️;yin och yang;religion|tao|taoist|yang|yin
+✝️;latinskt kors;kors|kristendom|religion
+☦️;ortodoxt kors;kors|kristendom|religion
+☪️;stjärna och halvmåne;halvmåne|islam|muslim|religion
+☮️;fredssymbol;fred|peace
+🕎;menora;judendom|ljusstake
+🔯;sexuddig stjärna med prick;spådom|stjärna
+🪯;khanda;Khalsa|religion|Sikh|sikhism|tro
+♈;Väduren;stjärntecken
+♉;Oxen;stjärntecken
+♊;Tvillingarna;stjärntecken
+♋;Kräftan;stjärntecken
+♌;Lejonet;stjärntecken
+♍;Jungfrun;stjärntecken
+♎;Vågen;balans|rättvisa|stjärntecken
+♏;Skorpionen;stjärntecken
+♐;Skytten;stjärntecken
+♑;Stenbocken;stjärntecken
+♒;Vattumannen;stjärntecken
+♓;Fiskarna;stjärntecken
+⛎;Ormbäraren;stjärnbild
+🔀;blanda låtar;blanda|korsade|pilar|shuffle
+🔁;upprepning;medurs|pil|repeat
+🔂;upprepa en låt;medurs|pil|repeat|upprepning
+▶️;uppspelningsknapp;knapp|knapp för spela|play|spela
+⏩;framåtspolningsknapp;framåt|knapp|knapp för snabbspola framåt|snabbspola
+⏭️;knapp för nästa spår;knapp|nästa spår
+⏯️;knapp för spela eller pausa;knapp|paus|play|spela
+◀️;bakåtspolningsknapp;knapp|knapp för spola tillbaka|spola tillbaka
+⏪;knapp för snabbspola tillbaka;dubbla vänsterpilar|pilar
+⏮️;knapp för sista spåret;knapp|sista spåret
+🔼;uppåtknapp;triangel|uppåtpekande liten triangel
+⏫;dubbla uppåtpilar;uppåtpilar
+🔽;nedåtknapp;nedåtpekande liten triangel|triangel
+⏬;dubbla nedåtpilar;nedåtpilar
+⏸️;pausknapp;knapp|knapp för pausa|paus
+⏹️;stoppknapp;knapp|knapp för stoppa|stopp
+⏺️;inspelningsknapp;knapp|knapp för spela in|spela in
+⏏️;utmatningsknapp;knapp|knapp för mata ut|mata ut
+🎦;bio;bioskylt|film
+🔅;låg ljusstyrka;låg|ljusstyrka
+🔆;hög ljusstyrka;hög|ljus|ljusstyrka
+📶;stapel signalstyrka;antenn|kommunikation|mobil|mottagning|signal|signalstyrka|stapel|staplar|täckning|telefon
+🛜;trådlös;bredband|hotspot|internet|internetdelning|nätverk|router|surfpunkt|surfzon|trådlöst|Wi‑Fi|wlan
+📳;vibrationsläge;läge|mobil|telefon
+📴;avstängd mobil;avstängd|mobil av|telefon
+♀️;kvinnosymbol;kvinna|kvinnlig
+♂️;manssymbol;man|manlig
+⚧️;transgendersymbol;transgender
+✖️;multiplicera;×|avbryt|multiplikation|multiplikationstecken|tecken|x
+➕;addera;+|matte|plus|plustecken|tecken
+➖;subtrahera;-|−|matte|minus|minustecken|tecken
+➗;dividera;÷|division|divisionstecken|matte|tecken
+🟰;fetstilt likamedtecken;likhet|matte
+♾️;oändlighet;evig|obegränsad|universal
+‼️;dubbla utropstecken;två|utropstecken
+⁉️;utropstecken och frågetecken;frågetecken|utropstecken
+❓;rött frågetecken;?|fråga|frågetecken|interpunktion|tecken
+❔;vitt frågetecken;fråga|frågetecken
+❕;vitt utropstecken;kommatering|utropstecken|vitt
+❗;rött utropstecken;kommatering|rött|utropstecken
+〰️;vågigt tankstreck;tankstreck|vågig
+💱;valutaväxling;pengar|valuta|växelkurs
+💲;dollartecken;dollar|pengar
+⚕️;medicinsk symbol;aesculapius|medicin|personal
+♻️;återvinningssymbol;återvinning|symbol
+⚜️;fransk lilja;fleur de lys|heraldisk lilja
+🔱;treudd;hav
+📛;namnskylt;namn|skylt
+🔰;japansk symbol för nybörjare;grönt och gult blad
+⭕;tung stor cirkel;cirkel|o|röd|vit cirkel med röd kant
+✅;vit bockmarkering;bock|vit fet bockmarkering
+☑️;kryssruta med bockmarkering;avbockad|bock|kryssruta|kryssruta med bock
+✔️;bockmarkering;avbockad|bock
+❌;rött kryss;kryss|X
+❎;vitt kryss i ruta;kryss|X i ruta
+➰;ögla;kurva|slinga
+➿;dubbel ögla;öglor
+〽️;japansk kommatering;japansk|kommatering
+✳️;åttauddig spetsig stjärna;asterisk|åttauddig|spetsig|stjärna
+✴️;åttauddig stjärna;åttauddig|stjärna
+❇️;glittra;gnistra
+©️;upphovsrättssymbol;copyright|upphovsrätt
+®️;registrerat varumärke;registrerat
+™️;skyddat varumärke;varumärke
+🫟;stänk;färg|fläck|holi|utspill
+0️⃣;tangent: 0;0|noll|tangent
+1️⃣;tangent: 1;1|ett|keycap
+2️⃣;tangent: 2;2|keycap|två
+3️⃣;tangent: 3;3|keycap|tre
+4️⃣;tangent: 4;4|fyra|keycap
+5️⃣;tangent: 5;5|fem|keycap
+6️⃣;tangent: 6;6|keycap|sex
+7️⃣;tangent: 7;7|keycap|sju
+8️⃣;tangent: 8;8|åtta|keycap
+9️⃣;tangent: 9;9|keycap|nio
+🔠;versaler;ABC|alfabet|stora bokstäver
+🔡;gemener;små bokstäver
+🔢;siffror;nummer
+🔣;specialtecken;symboler
+🔤;bokstäver;ABC|alfabet
+🅰️;blodgrupp A;typ A
+🆎;blodgrupp AB;typ AB
+🅱️;blodgrupp B;typ B
+🆑;rensa-symbol;CL-symbol|redo|renssymbol
+🆒;COOL-knapp;cool
+🆓;FREE-knapp;FRI-knapp|gratis|gratis-symbol|symbol
+ℹ️;information;i|informationskälla
+🆔;ID-knapp;ID|ID-symbol|identitet
+Ⓜ️;m i en cirkel;cirkel
+🆕;NEW-knapp;NY-knapp|Nyhet|nyhetssymbol|symbol
+🆖;NG-knapp;inte bra|inte bra-symbol|symbol
+🅾️;blodgrupp 0;typ 0
+🆗;OK-knapp;OK
+🅿️;P-knapp;parkering|parkeringsplats
+🆘;SOS-knapp;hjälp|SOS|SOS-symbol|symbol
+🆙;UP!-knapp;UP!|UPP!-knapp
+🆚;VS-knapp;kontra|mot|symbol|vs
+🈁;japansk ”här”-knapp;här|katakana|katakana för koko
+🈂️;japansk ”serviceavgift”-knapp;katakana|katakana för sa|serviceavgift
+🈷️;japansk ”månadsbelopp”-knapp;ideogram|ideogram för månad|japansk|månadsbelopp
+🈶;japansk ”inte gratis”-knapp;ideogram|ideogram för finns|inte gratis|japansk
+🈯;japansk ”reserverad”-knapp;ideogram|ideogram för finger|japansk|reserverad
+🉐;japansk ”fynd”-knapp;fynd|ideogram|ideogram för bonus|japansk
+🈹;japansk ”rabatt”-knapp;ideogram|ideogram för rabatt|japansk|rabatt
+🈚;japansk ”gratis”-knapp;gratis|ideogram|ideogram för gratis|japansk
+🈲;japansk ”förbjudet”-knapp;förbjudet|ideogram|ideogram för förbud|japansk
+🉑;japansk ”godtagbart”-knapp;godtagbart|ideogram|ideogram för godkänna|japansk
+🈸;japansk ”användning”-knapp;användning|ideogram|ideogram för tillämpa|japansk
+🈴;japansk ”godkänt betyg”-knapp;användning|ideogram|japansk
+🈳;japansk ”lediga rum”-knapp;ideogram|ideogram för ledig|japansk|lediga rum
+㊗️;japansk ”grattis”-knapp;grattis|ideogram|ideogram för grattis|japansk
+㊙️;japansk ”hemligt”-knapp;hemligt|ideogram|ideogram för hemlighet|japansk
+🈺;japansk ”öppet”-knapp;ideogram|ideogram för öppet|japansk|öppet
+🈵;japansk ”fullbelagt”-knapp;fullbelagt|ideogram|ideogram för inget ledigt|inga lediga rum|japansk
+🔴;röd cirkel;cirkel|geometrisk|röd
+🟠;orange cirkel;cirkel|orange
+🟡;gul cirkel;cirkel|gul
+🟢;grön cirkel;cirkel|grön
+🔵;blå cirkel;blå|cirkel|geometrisk
+🟣;lila cirkel;cirkel|lila
+🟤;brun cirkel;brun|cirkel
+⚫;svart cirkel;cirkel|geometrisk
+⚪;vit cirkel;cirkel|geometrisk
+🟥;röd kvadrat;kvadrat|röd
+🟧;orange kvadrat;kvadrat|orange
+🟨;gul kvadrat;gul|kvadrat
+🟩;grön kvadrat;grön|kvadrat
+🟦;blå kvadrat;blå|kvadrat
+🟪;lila kvadrat;kvadrat|lila
+🟫;brun kvadrat;brun|kvadrat
+⬛;stor svart ruta;geometrisk|ruta|svart
+⬜;stor vit ruta;geometrisk|ruta
+◼️;mellanstor svart ruta;geometrisk|ruta|svart
+◻️;mellanstor vit ruta;geometrisk|ruta|vit
+◾;mellanliten svart ruta;geometrisk|medelstor svart ruta|ruta|svart
+◽;mellanliten vit ruta;geometrisk|medelstor vit ruta|ruta|vit
+▪️;liten svart ruta;ruta|svart
+▫️;liten vit ruta;ruta|vit
+🔶;stor orange diamantform;diamant|orange
+🔷;stor blå diamantform;blå|diamant
+🔸;liten orange diamantform;diamant|orange
+🔹;liten blå romb;blå|diamant|liten blå diamantform
+🔺;uppåtpekande röd triangel;röd triangel
+🔻;nedåtpekande röd triangel;röd triangel
+💠;diamantform med en prick;blomblad|diamant|diamantform|känslor
+🔘;alternativknapp;knapp|vit rund knapp med svart kant
+🔳;vit fyrkantig knapp;fyrkant|knapp|svart fyrkantig knapp med vit kant
+🔲;svart fyrkantig knapp;fyrkant|knapp|vit fyrkantig knapp med svart kant
+🏁;schackrutig flagga;flagga|flaggor|mållinen|racing|schackrutig|sport|vinna
+🚩;trekantig flagga;flagga|trekantig röd flagga
+🎌;korsade flaggor;fest|flaggor|japanska|korsade
+🏴;svart flagga;flagga
+🏳️;vit flagga;flagga
+🏳️‍🌈;regnbågsflagga;flagga|regnbåge
+🏳️‍⚧️;transflagga;flagga|ljusblå|rosa|transgender|vit
+🏴‍☠️;sjörövarflagga;pirater|plundra|skatter
+🇦🇨;flagga: Ascension;flagga
+🇦🇩;flagga: Andorra;flagga
+🇦🇪;flagga: Förenade Arabemiraten;flagga
+🇦🇫;flagga: Afghanistan;flagga
+🇦🇬;flagga: Antigua och Barbuda;flagga
+🇦🇮;flagga: Anguilla;flagga
+🇦🇱;flagga: Albanien;flagga
+🇦🇲;flagga: Armenien;flagga
+🇦🇴;flagga: Angola;flagga
+🇦🇶;flagga: Antarktis;flagga
+🇦🇷;flagga: Argentina;flagga
+🇦🇸;flagga: Amerikanska Samoa;flagga
+🇦🇹;flagga: Österrike;flagga
+🇦🇺;flagga: Australien;flagga
+🇦🇼;flagga: Aruba;flagga
+🇦🇽;flagga: Åland;flagga
+🇦🇿;flagga: Azerbajdzjan;flagga
+🇧🇦;flagga: Bosnien och Hercegovina;flagga
+🇧🇧;flagga: Barbados;flagga
+🇧🇩;flagga: Bangladesh;flagga
+🇧🇪;flagga: Belgien;flagga
+🇧🇫;flagga: Burkina Faso;flagga
+🇧🇬;flagga: Bulgarien;flagga
+🇧🇭;flagga: Bahrain;flagga
+🇧🇮;flagga: Burundi;flagga
+🇧🇯;flagga: Benin;flagga
+🇧🇱;flagga: S:t Barthélemy;flagga
+🇧🇲;flagga: Bermuda;flagga
+🇧🇳;flagga: Brunei;flagga
+🇧🇴;flagga: Bolivia;flagga
+🇧🇶;flagga: Karibiska Nederländerna;flagga
+🇧🇷;flagga: Brasilien;flagga
+🇧🇸;flagga: Bahamas;flagga
+🇧🇹;flagga: Bhutan;flagga
+🇧🇻;flagga: Bouvetön;flagga
+🇧🇼;flagga: Botswana;flagga
+🇧🇾;flagga: Belarus;flagga
+🇧🇿;flagga: Belize;flagga
+🇨🇦;flagga: Kanada;flagga
+🇨🇨;flagga: Kokosöarna;flagga
+🇨🇩;flagga: Kongo-Kinshasa;flagga
+🇨🇫;flagga: Centralafrikanska republiken;flagga
+🇨🇬;flagga: Kongo-Brazzaville;flagga
+🇨🇭;flagga: Schweiz;flagga
+🇨🇮;flagga: Elfenbenskusten;flagga
+🇨🇰;flagga: Cooköarna;flagga
+🇨🇱;flagga: Chile;flagga
+🇨🇲;flagga: Kamerun;flagga
+🇨🇳;flagga: Kina;flagga
+🇨🇴;flagga: Colombia;flagga
+🇨🇵;flagga: Clippertonön;flagga
+🇨🇶;flagga: Sark;flagga
+🇨🇷;flagga: Costa Rica;flagga
+🇨🇺;flagga: Kuba;flagga
+🇨🇻;flagga: Kap Verde;flagga
+🇨🇼;flagga: Curaçao;flagga
+🇨🇽;flagga: Julön;flagga
+🇨🇾;flagga: Cypern;flagga
+🇨🇿;flagga: Tjeckien;flagga
+🇩🇪;flagga: Tyskland;flagga
+🇩🇬;flagga: Diego Garcia;flagga
+🇩🇯;flagga: Djibouti;flagga
+🇩🇰;flagga: Danmark;flagga
+🇩🇲;flagga: Dominica;flagga
+🇩🇴;flagga: Dominikanska republiken;flagga
+🇩🇿;flagga: Algeriet;flagga
+🇪🇦;flagga: Ceuta och Melilla;flagga
+🇪🇨;flagga: Ecuador;flagga
+🇪🇪;flagga: Estland;flagga
+🇪🇬;flagga: Egypten;flagga
+🇪🇭;flagga: Västsahara;flagga
+🇪🇷;flagga: Eritrea;flagga
+🇪🇸;flagga: Spanien;flagga
+🇪🇹;flagga: Etiopien;flagga
+🇪🇺;flagga: Europeiska unionen;flagga
+🇫🇮;flagga: Finland;flagga
+🇫🇯;flagga: Fiji;flagga
+🇫🇰;flagga: Falklandsöarna;flagga
+🇫🇲;flagga: Mikronesien;flagga
+🇫🇴;flagga: Färöarna;flagga
+🇫🇷;flagga: Frankrike;flagga
+🇬🇦;flagga: Gabon;flagga
+🇬🇧;flagga: Storbritannien;flagga
+🇬🇩;flagga: Grenada;flagga
+🇬🇪;flagga: Georgien;flagga
+🇬🇫;flagga: Franska Guyana;flagga
+🇬🇬;flagga: Guernsey;flagga
+🇬🇭;flagga: Ghana;flagga
+🇬🇮;flagga: Gibraltar;flagga
+🇬🇱;flagga: Grönland;flagga
+🇬🇲;flagga: Gambia;flagga
+🇬🇳;flagga: Guinea;flagga
+🇬🇵;flagga: Guadeloupe;flagga
+🇬🇶;flagga: Ekvatorialguinea;flagga
+🇬🇷;flagga: Grekland;flagga
+🇬🇸;flagga: Sydgeorgien och Sydsandwichöarna;flagga
+🇬🇹;flagga: Guatemala;flagga
+🇬🇺;flagga: Guam;flagga
+🇬🇼;flagga: Guinea-Bissau;flagga
+🇬🇾;flagga: Guyana;flagga
+🇭🇰;flagga: Hongkong SAR;flagga
+🇭🇲;flagga: Heardön och McDonaldöarna;flagga
+🇭🇳;flagga: Honduras;flagga
+🇭🇷;flagga: Kroatien;flagga
+🇭🇹;flagga: Haiti;flagga
+🇭🇺;flagga: Ungern;flagga
+🇮🇨;flagga: Kanarieöarna;flagga
+🇮🇩;flagga: Indonesien;flagga
+🇮🇪;flagga: Irland;flagga
+🇮🇱;flagga: Israel;flagga
+🇮🇲;flagga: Isle of Man;flagga
+🇮🇳;flagga: Indien;flagga
+🇮🇴;flagga: Brittiska territoriet i Indiska oceanen;flagga
+🇮🇶;flagga: Irak;flagga
+🇮🇷;flagga: Iran;flagga
+🇮🇸;flagga: Island;flagga
+🇮🇹;flagga: Italien;flagga
+🇯🇪;flagga: Jersey;flagga
+🇯🇲;flagga: Jamaica;flagga
+🇯🇴;flagga: Jordanien;flagga
+🇯🇵;flagga: Japan;flagga
+🇰🇪;flagga: Kenya;flagga
+🇰🇬;flagga: Kirgizistan;flagga
+🇰🇭;flagga: Kambodja;flagga
+🇰🇮;flagga: Kiribati;flagga
+🇰🇲;flagga: Komorerna;flagga
+🇰🇳;flagga: S:t Kitts och Nevis;flagga
+🇰🇵;flagga: Nordkorea;flagga
+🇰🇷;flagga: Sydkorea;flagga
+🇰🇼;flagga: Kuwait;flagga
+🇰🇾;flagga: Caymanöarna;flagga
+🇰🇿;flagga: Kazakstan;flagga
+🇱🇦;flagga: Laos;flagga
+🇱🇧;flagga: Libanon;flagga
+🇱🇨;flagga: S:t Lucia;flagga
+🇱🇮;flagga: Liechtenstein;flagga
+🇱🇰;flagga: Sri Lanka;flagga
+🇱🇷;flagga: Liberia;flagga
+🇱🇸;flagga: Lesotho;flagga
+🇱🇹;flagga: Litauen;flagga
+🇱🇺;flagga: Luxemburg;flagga
+🇱🇻;flagga: Lettland;flagga
+🇱🇾;flagga: Libyen;flagga
+🇲🇦;flagga: Marocko;flagga
+🇲🇨;flagga: Monaco;flagga
+🇲🇩;flagga: Moldavien;flagga
+🇲🇪;flagga: Montenegro;flagga
+🇲🇫;flagga: Saint-Martin;flagga
+🇲🇬;flagga: Madagaskar;flagga
+🇲🇭;flagga: Marshallöarna;flagga
+🇲🇰;flagga: Nordmakedonien;flagga
+🇲🇱;flagga: Mali;flagga
+🇲🇲;flagga: Myanmar (Burma);flagga
+🇲🇳;flagga: Mongoliet;flagga
+🇲🇴;flagga: Macao SAR;flagga
+🇲🇵;flagga: Nordmarianerna;flagga
+🇲🇶;flagga: Martinique;flagga
+🇲🇷;flagga: Mauretanien;flagga
+🇲🇸;flagga: Montserrat;flagga
+🇲🇹;flagga: Malta;flagga
+🇲🇺;flagga: Mauritius;flagga
+🇲🇻;flagga: Maldiverna;flagga
+🇲🇼;flagga: Malawi;flagga
+🇲🇽;flagga: Mexiko;flagga
+🇲🇾;flagga: Malaysia;flagga
+🇲🇿;flagga: Moçambique;flagga
+🇳🇦;flagga: Namibia;flagga
+🇳🇨;flagga: Nya Kaledonien;flagga
+🇳🇪;flagga: Niger;flagga
+🇳🇫;flagga: Norfolkön;flagga
+🇳🇬;flagga: Nigeria;flagga
+🇳🇮;flagga: Nicaragua;flagga
+🇳🇱;flagga: Nederländerna;flagga
+🇳🇴;flagga: Norge;flagga
+🇳🇵;flagga: Nepal;flagga
+🇳🇷;flagga: Nauru;flagga
+🇳🇺;flagga: Niue;flagga
+🇳🇿;flagga: Nya Zeeland;flagga
+🇴🇲;flagga: Oman;flagga
+🇵🇦;flagga: Panama;flagga
+🇵🇪;flagga: Peru;flagga
+🇵🇫;flagga: Franska Polynesien;flagga
+🇵🇬;flagga: Papua Nya Guinea;flagga
+🇵🇭;flagga: Filippinerna;flagga
+🇵🇰;flagga: Pakistan;flagga
+🇵🇱;flagga: Polen;flagga
+🇵🇲;flagga: S:t Pierre och Miquelon;flagga
+🇵🇳;flagga: Pitcairnöarna;flagga
+🇵🇷;flagga: Puerto Rico;flagga
+🇵🇸;flagga: Palestinska territorierna;flagga
+🇵🇹;flagga: Portugal;flagga
+🇵🇼;flagga: Palau;flagga
+🇵🇾;flagga: Paraguay;flagga
+🇶🇦;flagga: Qatar;flagga
+🇷🇪;flagga: Réunion;flagga
+🇷🇴;flagga: Rumänien;flagga
+🇷🇸;flagga: Serbien;flagga
+🇷🇺;flagga: Ryssland;flagga
+🇷🇼;flagga: Rwanda;flagga
+🇸🇦;flagga: Saudiarabien;flagga
+🇸🇧;flagga: Salomonöarna;flagga
+🇸🇨;flagga: Seychellerna;flagga
+🇸🇩;flagga: Sudan;flagga
+🇸🇪;flagga: Sverige;flagga
+🇸🇬;flagga: Singapore;flagga
+🇸🇭;flagga: S:t Helena;flagga
+🇸🇮;flagga: Slovenien;flagga
+🇸🇯;flagga: Svalbard och Jan Mayen;flagga
+🇸🇰;flagga: Slovakien;flagga
+🇸🇱;flagga: Sierra Leone;flagga
+🇸🇲;flagga: San Marino;flagga
+🇸🇳;flagga: Senegal;flagga
+🇸🇴;flagga: Somalia;flagga
+🇸🇷;flagga: Surinam;flagga
+🇸🇸;flagga: Sydsudan;flagga
+🇸🇹;flagga: São Tomé och Príncipe;flagga
+🇸🇻;flagga: El Salvador;flagga
+🇸🇽;flagga: Sint Maarten;flagga
+🇸🇾;flagga: Syrien;flagga
+🇸🇿;flagga: Eswatini;flagga
+🇹🇦;flagga: Tristan da Cunha;flagga
+🇹🇨;flagga: Turks- och Caicosöarna;flagga
+🇹🇩;flagga: Tchad;flagga
+🇹🇫;flagga: Franska sydterritorierna;flagga
+🇹🇬;flagga: Togo;flagga
+🇹🇭;flagga: Thailand;flagga
+🇹🇯;flagga: Tadzjikistan;flagga
+🇹🇰;flagga: Tokelauöarna;flagga
+🇹🇱;flagga: Östtimor;flagga
+🇹🇲;flagga: Turkmenistan;flagga
+🇹🇳;flagga: Tunisien;flagga
+🇹🇴;flagga: Tonga;flagga
+🇹🇷;flagga: Turkiet;flagga
+🇹🇹;flagga: Trinidad och Tobago;flagga
+🇹🇻;flagga: Tuvalu;flagga
+🇹🇼;flagga: Taiwan;flagga
+🇹🇿;flagga: Tanzania;flagga
+🇺🇦;flagga: Ukraina;flagga
+🇺🇬;flagga: Uganda;flagga
+🇺🇲;flagga: USA:s yttre öar;flagga
+🇺🇳;flagga: Förenta Nationerna;flagga
+🇺🇸;flagga: USA;flagga
+🇺🇾;flagga: Uruguay;flagga
+🇺🇿;flagga: Uzbekistan;flagga
+🇻🇦;flagga: Vatikanstaten;flagga
+🇻🇨;flagga: S:t Vincent och Grenadinerna;flagga
+🇻🇪;flagga: Venezuela;flagga
+🇻🇬;flagga: Brittiska Jungfruöarna;flagga
+🇻🇮;flagga: Amerikanska Jungfruöarna;flagga
+🇻🇳;flagga: Vietnam;flagga
+🇻🇺;flagga: Vanuatu;flagga
+🇼🇫;flagga: Wallis- och Futunaöarna;flagga
+🇼🇸;flagga: Samoa;flagga
+🇽🇰;flagga: Kosovo;flagga
+🇾🇪;flagga: Jemen;flagga
+🇾🇹;flagga: Mayotte;flagga
+🇿🇦;flagga: Sydafrika;flagga
+🇿🇲;flagga: Zambia;flagga
+🇿🇼;flagga: Zimbabwe;flagga
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;flagga: England;flagga
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;flagga: Skottland;flagga
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;flagga: Wales;flagga

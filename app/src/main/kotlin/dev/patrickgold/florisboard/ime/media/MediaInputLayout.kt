@@ -73,7 +73,7 @@ fun MediaInputLayout(
 
     var emojiLayoutDataMap by remember { mutableStateOf(EmojiData.Fallback) }
     LaunchedEffect(Unit) {
-        emojiLayoutDataMap = EmojiData.get(context, "ime/media/emoji/root.txt")
+        emojiLayoutDataMap = EmojiData.get(context, EmojiData.RootPath)
     }
 
     SnyggColumn(

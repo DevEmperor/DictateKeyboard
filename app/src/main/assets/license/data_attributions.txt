@@ -75,7 +75,17 @@ Inference runs through ONNX Runtime, © Microsoft, MIT License. https://onnxrunt
 All of the above permit redistribution; the files are mirrored on the project's own GitHub release
 for a stable, project-controlled source.
 
-6. Provider logos
+6. Emoji names and keywords (emoji search, emoji suggestions)
+-------------------------------------------------------------
+Files: ime/media/emoji/annotations/<lang>.txt  (bundled, ~50 languages)
+
+The searchable name and keywords of every emoji, in each language, come from the Unicode Common
+Locale Data Repository (CLDR v48), both the curated and the derived annotation sets.
+  - © Unicode, Inc., licensed under the Unicode License v3 (SPDX: Unicode-3.0).
+    https://github.com/unicode-org/cldr-json — https://www.unicode.org/license.txt
+  - Regenerate with tools/emoji-annotations/generate.py
+
+7. Provider logos
 ------------------
 
 The settings list marks each AI provider with its own logo, so a row can be found by its mark rather

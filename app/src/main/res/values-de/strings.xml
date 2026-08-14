@@ -729,6 +729,7 @@
     <string name="action__apply">Übernehmen</string>
     <string name="action__back_up">Sicherung erstellen</string>
     <string name="action__cancel">Abbrechen</string>
+    <string name="action__clear">Leeren</string>
     <string name="action__create">Erstellen</string>
     <string name="action__default">Standard</string>
     <string name="action__delete">Entfernen</string>

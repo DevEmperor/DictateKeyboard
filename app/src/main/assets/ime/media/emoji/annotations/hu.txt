@@ -1,0 +1,1913 @@
+😀;nevető arc;arc|boldog|fogak|nevetés|szmájli|vidám
+😃;nagyra nyílt szemmel mosolygó arc;arc|boldog|fogak|mosoly|nevet|nevetés|nyitott száj|nyitott szájjal mosolygó arc|szmájli|vidámság
+😄;nevető arc mosolygó szemmel;arc|boldog|fogak|mosoly|nevet|nyitott száj|nyitott szájjal mosolygó arc mosolygó szemmel|örül|száj|szem|szmájli|vidám szem
+😁;mosolygó szemmel nevető arc;arc|boldog|fogak|mosoly|nevet|szem|szmájli|teli szájjal nevet
+😆;nyitott szájjal és lehunyt szemmel mosolygó arc;arc|boldog|haha|kacag|nevetés|nyitott száj|szmájli
+😅;nevető arc verejtékkel;arc|hideg verejték|ideges|izgatott|megúsztam|mosoly|nyitott száj|nyitott szájjal mosolygó arc hideg verejtékkel|stressz|szmájli
+🤣;gurul a nevetéstől;arc|boldog|fej|gurul|kicsordul a könnye a nevetéstől|könny|nevet|nevetés|nevetséges|szmájli|vicces
+😂;arc örömkönnyekkel;arc|haha|könnyek|nevetés|öröm|röhög|sírva nevet|sírva nevetős|szmájli|vicces
+🙂;finoman mosolygó arc;arc|boldog|mosoly|szmájli
+🙃;arc fejjel lefelé;arc|fejjel lefelé|fejjel lefelé fordult arc|szmájli
+🫠;elolvadó arc;eloszlik|eltűnik|folyékony|olvad
+😉;kacsintó arc;arc|flörtöl|húz|kacsintás|szmájli|ugrat
+😊;mosolygó arc mosolygó szemmel;boldog|elégdett|elpirul|elvörösödik|mosoly|örül|szmájli|vidám szemek
+😇;mosolygó arc glóriával;áldott|angyal|arc|ártatlanság|békés|dicsfény|glória|jó|jóságos|lélek|mese|mosoly|szmájli
+🥰;mosolygó arc szívekkel;arc|három szív|i love you|imád|imádat|mosoly|rajong|románc|szerelem|szerelmes|szeret|szeretlek|szív
+😍;mosolygó arc szív alakú szemmel;arc|mosoly|szem|szerelem|szerelmes|szívek|szmájli
+🤩;csillagszemű;arc|azta|csillag|csillagos szemű|elbűvölt|elragadtatott|fülig ér a szája|hű|izgatott|szemek|szmájli|vigyorgó|vigyorog
+😘;csókot dobó arc;arc|csók|flörtöl|puszi|szeret|szeretlek|szív|szmájli
+😗;csókoló arc;arc|csók|flört|puszi|randi|szerelem|szmájli
+☺️;mosolygó arc;arc|boldog|mosoly|nyugodt|örül|szmájli
+😚;csókoló arc lehunyt szemmel;arc|behunyt szem|csók|csókot dob|csukott szem|lehunyt szem|puszi|puszit dob|szmájli
+😙;csókoló arc mosolygó szemmel;arc|csók|puszi|szem|szmájli
+🥲;mosolygó arc könnycseppel;arc|büszke|hálás|könny|meghatott|megkönnyebbült|mosolyog
+😋;finom ételt élvező arc;arc|fini|finom|jóízű|megnyalja a száját utána|mosoly|nyami|nyelv|szmájli
+😛;arc kinyújtott nyelvvel;arc|csipkelődik|csúfolódik|fantasztikus|huncutkodik|kiöltött nyelv|király|nyelv|szmájli
+😜;arc kinyújtott nyelvvel és kacsintó szemmel;arc|csipkelődik|csúfolódik|huncutkodik|kacsintás|kiöltött nyelv|mosoly|nyelv|szem|szmájli|vicc|viccelődik
+🤪;őrült fej;bolond|dilis|dinnye|hülye|kicsi|lökött|nagy|őrült arc|őrült szemek|szem|szmájli|tökfej
+😝;arc kilógó nyelvvel és erősen behunyt szemmel;arc|borzasztó|kiöltött nyelv|lehunyt szem|szmájli|szörnyű íz
+🤑;arc dollárjelekkel;arc|dollár|fizetett|pénz|száj|szmájli
+🤗;ölelés;arc|kezek|szmájli
+🤭;arc szájra tett kézzel;hirtelen ráébred|hirtelen rájön|hoppá|kéz a száj előtt arc|kuncog|nevet|röhög|rötyög|szmájli|titok|vihog
+🫢;nyitott szemű, száját takaró arc;áhítat|ámulat|arc|csend|elakadt lélegzet|előtt|félelem|hitetlenkedés|kéz|meglepetés|nyitva|omg|sokk|száj|szemek|zavar
+🫣;kémlelő szemű arc;bámul|ijedt|kukucskál|megbabonázott|pillant|riadt|szégyenlős
+🤫;csitító arc;arc|csend|csitt|csönd|csöndesen|csöndre int|elhallgattat|halkan|maradj csendben|pszt|szmájli
+🤔;gondolkodó arc;arc|elgondolkodó|gondolkozik|megfontol|szmájli|tűnődő
+🫡;tisztelgő arc;derűs|igen|katonák|oké|tisztelgés
+🤐;arc összecipzározott szájjal;arc|cipzár|nem mond el|száj|szmájli|titok
+🤨;felhúzott szemöldökű arc;arc felvont szemöldökkel|bizalmatlan|gyanakvó|helytelenít|hitetlen|hitetlenkedő|hmm|kételkedő|kétkedő|meglepett|mit|nem bízik|nem hiszi el|szkeptikus|szmájli|tessék
+😐;semleges arc;arc|flegma|kifejezéstelen|közömbös|meh|nem nevet|nem vicces|pókerarc|rezzenéstelen|semleges|szmájli|unott
+😑;kifejezéstelen arc;arc|érzéketlen|flegma|kifejezéstelen|meh|semleges|szmájli
+😶;száj nélküli arc;arc|csendes|csöndes|kellemetlen|kifejezéstelen|néma|nincs szája|szmájli
+🫥;pontozott vonalas arc;elrejtőzik|eltűnik|introvertált|láthatatlan|levert
+😶‍🌫️;arc a felhőben;arc a ködben|elgondolkodó|fej a felhők között
+😏;önelégült vigyor;arc|gyanakvó|önelégült|szmájli|viccelsz|vigyor
+😒;unott arc;arc|boldogtalan|mérges|szmájli|szomorú|unatkozik|unott
+🙄;szemét forgató arc;arc|bosszús|forgatja a szemeit|forgó szemek|ideges|mérges|szemforgatás|szmájli
+😬;grimaszoló arc;arc|fogorvos|grimasz|kellemetlen|kínos|mosoly|mosolyog|szmájli
+😮‍💨;levegőt kifújó arc;arc|fáradt|füst|fütty|kifúj|kilégzés|kimerült|megkönnyebbülés|sóhaj|sóhajtás|suttogás|zihálás
+🤥;hazudó arc;arc|hazudik|hazudó|hazudó fej|hazudós|hazug|hosszú orr|orr|pinokkió|szmájli
+🫨;rázkódó arc;arc|földrengés|meglepődés|rázkódó|rezeg
+🙂‍↔️;vízszintes fejrázás;fej|fejcsóválás|fejrázás|nem|vízszintes
+🙂‍↕️;függőleges fejrázás;bólintás|fej|függőleges|igen
+😌;megkönnyebbült arc;arc|béke|békés|megkönnyebbült|nyugodt|szmájli
+😔;elgondolkodó arc;arc|borzasztó|csalódott|elgondolkodó|elkeseredett|rossz|szmájli|szomorú|tűnődő|unott|veszít
+😪;álmos arc;álmos|arc|ásít|fáradt|sír|szmájli|szomorú
+🤤;nyáladzó fej;arc|fej|folyik a nyála|nyál|nyáladzó|szmájli
+😴;alvó arc;álmos|alszik|alvás|arc|fáradt|jó éjszakát|jó éjt|lefekvés|lefekvés ideje|szmájli|szundi|zzz
+🫩;arc táskás szemekkel;álmos|arc|elnyűtt|fáradt|késő|kifáradt|kimerült|szemek|táskás|unatkozik
+😷;arc egészségügyi maszkkal;arc|beteg|betegség|egészségügyi maszk|gyógyszer|maszk|orvos|szmájli
+🤒;arc lázmérővel;arc|beteg|láza van|lázas|lázmérő|szmájli
+🤕;arc bekötött fejjel;arc|beütötte a fejét|fáj|fej|kötés|sérülés|szmájli
+🤢;émelygő arc;arc|beteg|émelygő|fej|hányás|hányingere van|rosszul van|szmájli
+🤮;hányó arc;arc|beteg|hány|kidobja a taccsot|köp|öklendezik|rosszul van|szmájli
+🤧;tüsszentő arc;arc|beteg|fej|fújja az orrát|hapci|meg van fázva|megfázott|szmájli|tüsszent|tüsszentő
+🥵;forró arc;arc|forróság|haldoklik|hőguta|hőség|izzad|izzadás|izzadó|lázas|liheg|megsül|nyelv|piros arc|vörös arcú
+🥶;fagyos arc;arc|befagy|didereg|elkékült arc|fagyás|fagyoskodik|fázik|hideg|hűvös|jégcsap|jégcsapok|jéghideg|kék|megfagy|mínusz|vacog
+🥴;részeges arc;arc|becsípett|ferde szemek|hullámvonalas száj|ittas|kába|kábult|kapatos|keresztbeálló szemek|részeg|spicces|szédül
+😵;szédülő arc;arc|beteg|fáradt|szédülés|szmájli
+😵‍💫;spirálszemű arc;arc|baj|hipnotizált|húha|omg|spirál|spirálszemű|szédül|szédülő|zavar|zavarodott
+🤯;felrobbanó fej;arc|egyáltalán nem|elképesztő|felfoghatatlan|felrobban|megdöbbent|semmiképpen|sokkolt|szmájli
+🤠;cowboykalapos fej;arc|boldog|cowboy|cowboy kalapos fej|fej|kalap|nevet|szmájli
+🥳;bulizó arc;arc|buli|csákó|duda|hurrá|izgatott|kalap|partiarc|party|születésnap|szülinap|ünnep|ünneplés
+🥸;álcázott arc;álbajusz|álca|arc|bajusz|inkognító|kém|orr|szemöldök|szemüveg
+😎;mosolygó arc napszemüveggel;arc|laza|menő|mosoly|nap|napszemüveg|nyár|strand|szmájli
+🤓;kockaarc;arc|gépmániás|kocka
+🧐;arc monoklival;arc félszemüveggel|gazdag|kifinomult|klasszikus|mérges|szmájli|tehetős|vagyonos
+😕;zavart arc;arc|bizonytalan|nem tudom|sajnálom|szmájli|szomorú|zavart
+🫤;átlós szájú arc;bizonytalan|csalódott|kétkedő|meh
+😟;aggódó arc;aggodalmas|aggódik|arc|ideges|izgul|stresszes|szmájli|szomorú
+🙁;kissé komor arc;arc|rosszallás|szmájli|szomorú
+☹️;rosszalló arc;arc|rosszallás|szmájli|szomorú
+😮;arc nyitott szájjal;arc|csodálkozás|csodálkozik|elképed|hihetetlen|megdöbben|meglepett|meglepődik|nyitott száj|ó|szmájli|tátva marad a szája
+😯;meglepődött arc;arc|döbbent|elképedt|meglepett|meglepődött|szmájli|tátott száj|tátva maradt a szája
+😲;lenyűgözött arc;arc|csodálkozó|döbbent|elcsodálkozott|elképedt|lenyűgözött|megdöbbent|szmájli
+😳;elpirult arc;arc|elképedt|elpirul|elvörösödik|hitetlen|kellemetlen|kételkedő|kétkedő|kidülledt szemek|kipirult|melege van|mi|okol|szmájli|zavarban van
+🫪;eltorzult arc;aggodalmas|felpuffadt|lesokkolt|meglepődött|pánikoló|sebezhető
+🥺;esedező arc;arc|bociszemek|kegyelem|kerek szem|kérlek|kérlek szépen|kérlelő|kiskutyaszemek|könyörgős|könyörög|lécci|légyszi|megszán|miért ne|sóvárog|szomorú
+🥹;könnyeivel küszködő arc;büszke|dühös|ellenáll|örömteli|sír|szomorú
+😦;rosszalló arc nyitott szájjal;arc|ijedt|ijesztő|meglepett|nyitott száj|rosszallás|szmájli
+😧;elkínzott arc;arc|elgyötört|elkínzott|fél|ijedt|rémült|riadt|szmájli
+😨;félelemmel teli arc;aggódik|arc|félelem|ijedt|rémült|szmájli
+😰;aggódó arc nyitott szájjal és verejtékkel;arc|arc nyitott szájjal és hideg verejtékkel|hideg verejték|ideges|izzad|kék|kiveri a víz|nyitott száj|rohanás|szmájli
+😥;csalódott, de megkönnyebbült arc;aggódik|arc|boldogtalan|csalódott|de megkönnyebbült arc|huhh|izzadság|megkönnyebbült|szmájli|szomorú
+😢;síró arc;arc|boldogtalan|hiányzik|könnycsepp|sírás|szmájli|szomorúság
+😭;zokogó arc;arc|boldogtalan|könnyek|sír|sírás|szmájli|szomorúság|zokogás
+😱;félelemtől sikoltó arc;arc|félelem|ijedt|ijesztő|munch|rémület|sikolt|sikoly|szmájli
+😖;összezavarodott arc;arc|frusztrált|mérges|összezavarodott|szmájli|szomorú|zavart
+😣;állhatatos arc;állhatatosság|arc|fáj a feje|fejfájás|koncentrál|szmájli
+😞;csalódott arc;arc|boldogtalan|borzasztó|csalódott|lehangolt|levert|megbukik|nem sikerül|okol|szmájli|szomorú|veszít
+😓;lehangolt arc verejtékkel;arc|arc hideg verejtékkel|hideg verejték|ideges|izzad|izzadtság|kiveri a víz|szmájli|szomorú|verejték
+😩;kimerült arc;arc|boldogtalan|éhes|fáradt|kimerült|megviselt|síró|sírós|szmájli|szomorú
+😫;fáradt arc;arc|fáradtság|szmájli|szomorú|tüsszent
+🥱;ásító arc;álmos|arc|ásít|ásítás|ásító|fáradt
+😤;orrából gőzt fújtató arc;arc|dühös|gőz|győzelem|mérges|siker|szmájli
+😡;duzzogó arc;arc|dühös|duzzog|ideges|mérges|szmájli|vörös
+😠;mérges arc;arc|dühös|mérges|szmájli
+🤬;arc jelekkel a száján;bosszús|cenzúra|csúnyán beszél|dühös|elátkoz|gyalázkodik|káromkodás|káromkodik|mérges|szimbólumok a szájon arc|szitkozódik|szmájli
+😈;mosolygó arc szarvakkal;arc|fantasy|gonosz|mese|mosoly|ördög|rosszindulatú|szarvak
+👿;mérges arc szarvakkal;arc|démon|fantasy|gonosz|mese|ördög|rossz|szarvak|szmájli
+💀;koponya;csont|halál|halálfej|halott|szörny
+☠️;koponya csontokkal;arc|csont|csontok|halál|halálfej|kalóz|koponya
+💩;kakihalom;arc|büdi|büdös|kaka|kaki|kakiarc|képregény
+🤡;bohócfej;bohóc|cirkusz|fej
+👹;ogre;arc|fantasy|félelmetes|ijesztő|japán|lény|maszk|mese|ördög|óriás|szörny
+👺;kobold;álarc|arc|fantasy|japán|lény|maszk|mérges|mese|szörny
+👻;szellem;arc|fél|félelmetes|ijesztő|kísértet|lény|mese|szörny
+👽;földönkívüli;idegen|marslakó|ufó|űrlény
+👾;földönkívüli szörny;fantasy|földönkívüli|idegen|játék|pixel|pixeles|szörny|szörnyecske|ufó|űrlény
+🤖;robot;arc|robotarc|szörny
+😺;nevető macska;állat|arc|cica|macska|mosoly|mosolygó macskaarc nyitott szájjal|nyitott|száj
+😸;nevető macska mosolygó szemmel;állat|arc|cica|macska|mosoly|mosolygó|nevetés|nevető macskaarc mosolygó szemmel|szem
+😹;macska örömkönnyekkel;állat|arc|cica|kicsordul a könnye|könny|macska|macskaarc örömkönnyekkel|mosoly|nevet|örömkönny|szmájli
+😻;mosolygó macska szív alakú szemmel;állat|arc|cica|macska|mosoly|mosolygó macskaarc szív alakú szemmel|szerelem|szív|szmájli
+😼;macska fanyar mosollyal;arc|cica|fanyar|irónia|ironikus|macska|macskaarc fanyar mosollyal|mosoly|szmájli
+😽;csókoló macska;arc|cica|csók|csókoló|csókoló macskaarc lehunyt szemmel|csukott szem|macska|puszi|szmájli
+🙀;kimerült macska;állat|arc|fáradt|hűha|ijedt|kimerült|kimerült macskaarc|macska|meglepett|ó
+😿;síró macska;arc|cica|könny|macska|sírás|síró|síró macskaarc|szmájli|szomorú
+😾;duzzogó macska;állat|arc|cica|duzzogás|duzzogó|duzzogó macskaarc|macska|mérges|szmájli
+🙈;nem láttam semmit;állat|bújócska|elbújik|elfelejt|ijedt|majom|nem|nem figyelek|nem lát semmit|tilos|zavarban van
+🙉;nem hallottam semmit;állat|fül|hall|majom|nem|nem figyel|nem hall semmit|tilos|titok
+🙊;nem szólok semmit;állat|bocsánat|elnézést|elszóltam magam|hoppá|majom|nem|nem beszél|nem szól semmit|tilos|titok
+💌;szerelmes levél;levél|romantika|szerelem|szív
+💘;nyíllal átlőtt szív;Ámor nyila|Cupido|nyíl|romantika|szerelem|szív
+💝;szív szalaggal;ajándék|csók|puszi|szalag|szerelem|szív|valentin-nap
+💖;ragyogó szív;csillog|izgatott|ragyogás|szív
+💗;növekvő szív;idegesség|izgalom|szív|szívdobogás
+💓;dobogó szív;érted dobog a szívem|szerelem|szív|szívdobogás
+💞;forgó szívek;évforduló|forgás|szerelem|szeretlek|szív
+💕;két szív;évforduló|randevú|randi|szerelem|szerelmes szívek|szeretlek|szív|szívek
+💟;szív formájú dekoráció;dekoráció|dísz|fehér szív|lila szív|szív
+❣️;nagy szív alakú felkiáltójel;írásjel|központozás|szív
+💔;összetört szív;egyedül|megszakad a szíve|összetört|szakít|szakítani|szív|szomorú
+❤️‍🔥;lángoló szív;égő|lángoló|szerelem|szív|vágy
+❤️‍🩹;gyógyuló szív;egészségesebb|felépülő|gyógyuló|javuló|jól van|meggyógyuló
+❤️;vörös szív;piros|szerelem|szeretlek|szív
+🩷;rózsaszín szív;cuki|rózsaszín|szerelem|szív|tetszik
+🧡;narancssárga szív;narancssárga|szív, narancssárga szív, narancssárga
+💛;sárga szív;sárga|szív
+💚;zöld szív;szív|zöld
+💙;kék szív;kék|szív
+🩵;világoskék szív;cián|pávakék|szív|világoskék
+💜;lila szív;lila|szív
+🤎;barna szív;barna|szív
+🖤;fekete szív;fekete|gonosz|rossz|szív
+🩶;szürke szív;ezüst|pala|szív|szürke
+🤍;fehér szív;fehér|szív
+💋;csóknyom;ajkak|csók|romantika|rúzs|rúzsfolt|rúzsnyom|szenvedély
+💯;száz pont;100|a+|aha|egyértelműen|egyetértés|hűséges|IGAZ|igazság|megtartás|mindenképpen|mutatás|remek|száz|találat|teljes|tökéletes
+💢;a düh szimbóluma;dühös|képregény|mérges
+🫯;verekedésfelhő;birkózás|csetepaté|dulakodás|egyet nem értés|verekedés|vita
+💥;ütközés;bumm|csattanás|képregény|robbanás
+💫;szédülés;csillag|csillagokat lát|fényes|hullócsillag|képregény
+💦;izzadságcseppek;csepp|cseppek|csobbanás|edzés|fröccsenés|izzadság|képregény|víz
+💨;rohanás;elillan|ereget|ereszt|felhő|füst|futás|gyors|képregény|puki|pukizik|púzik|szellent
+🕳️;lyuk;
+💬;szövegbuborék;beszéd|buborék|gépel|képregény|párbeszéd|sms|üzenet
+👁️‍🗨️;szem szövegbuborékban;párbeszéd|szem|szövegbuborék|tanú
+🗨️;balra nyíló szövegbuborék;beszéd|buborék|párbeszéd|szövegbuborék
+🗯️;jobbra nyíló dühös szövegbuborék;buborék|dühös|jobbra nyíló szövegbuborék|mérges|szövegbuborék
+💭;gondolatbuborék;álmodozik|álom|buborék|felhő|gondol|gondolat|gondolkozik|képregény|ötlet
+💤;alvás;álmos|alszik|éjszaka|fáradt|jó éjszakát|képregény|zzz
+👋;integető kéz;hello|integet|integetés|kéz|szia|test|viszlát
+🤚;kézfej;felemelt|kéz
+🖐️;felemelt kéz szétálló ujjakkal;állj|kéz|ne tovább|stop|szétálló|test|ujj
+✋;felemelt kéz;állj|fel|kéz|ne tovább|pacsi|stop|tenyér|test
+🖖;star trek-üdvözlet;kéz|spock|star trek|test|ujj|vulcan
+🫱;jobbra néző kéz;jobb|jobbra néző|kéz
+🫲;balra néző kéz;bal|balra néző|kéz
+🫳;lefelé néző kéz;elejt|hess|mellőz
+🫴;felfelé néző kéz;elkap|felajánl|hív|int
+🫷;balra toló kéz;balra|elutasít|pacsi|stop|tol|vár
+🫸;jobbra toló kéz;elutasít|jobbra|pacsi|stop|tol|vár
+👌;ok jel;kéz|oké|perfekt|rendben|szuper|test|ujj
+🤌;összecsippentett ujjak;gúnyos|kéz|kézmozdulat|kihallgatás|mi van|micsoda|mit akarsz|összecsippentett|türelem|ujjak|várj
+🤏;csippentő kéz;kicsi|kicsit|kis összeg|ujjak
+✌️;győzelmi jelet mutató kéz;béke|betű|győzelem|jel|kéz|kézjel|test|ujj|v
+🤞;keresztezett ujjak;drukkolok|keresztezett|kéz|sok szerencsét|szerencse|szorítok|ujj
+🫰;keresztezett mutató- és hüvelykujjú kéz;csettint|drága|pénz|szeretet|szív
+🤟;szeretlek kézmozdulat;3 ujj|három ujj|kéz|szeretlek|szeretlek jel
+🤘;metálvilla;kéz|metál|ördögvilla|rock|rock & roll|szarvak|ujj
+🤙;„hívj fel” kézjel;hívás|kéz
+👈;kéz balra mutató ujjal;kéz|kézfej|mutat|mutatóujj|tenyér|test|ujj
+👉;kéz jobbra mutató ujjal;arra|kéz|kézfej|mutatóujj|tenyér|test|ujj
+👆;tenyér felfelé mutató ujjal;felfelé|kéz|kézfej|kézfej felfelé mutató ujjal|mutat|mutatóujj|tenyér|test|ujj
+🖕;középső ujj;kéz|test|ujj
+👇;tenyér lefelé mutató ujjal;kéz|kézfej|kézfej lefelé mutató ujjal|lefelé|mutat|mutatóujj|tenyér|test|ujj
+☝️;kéz felfelé mutató ujjal;felfelé|kéz|mutat|mutatóujj|test|ujj
+🫵;felhasználóra mutató ujj;mutat|te
+👍;felfelé mutató hüvelykujj;cool|hüvelykujj|hüvelykujj felfelé|jó|kéz|like|megbeszéltük|ok|oké|rendben|test|ujj
+👎;lefelé mutató hüvelykujj;elvetés|hüvelykujj lefelé|kéz|nem|rossz|test
+✊;felemelt ököl;felemelt|kéz|ököl|ökölbe szorított kéz|test|ütés
+👊;ütésre emelt ököl;egyetért|egyetértek|felemelt|haver|kéz|ököl|tesó|test|ütés
+🤛;balra néző ököl;bal szélső|kéz|ököl
+🤜;jobbra néző ököl;jobb szélső|kéz|ököl
+👏;tapsoló kéz;gratulál|kéz|szép munka volt|taps|tapsol|test
+🙌;kezét felemelő ember;felemelt kezek|hurrá|kéz|test|ünneplés|vidámság
+🫶;szívet formázó kezek;szeretet|szív
+👐;széttárt kéz;kéz|kitárva|test
+🤲;felfelé fordított tenyerek;ima|imádkozik|imádság|kér|kéz|kezek|koldul|könyörgés|könyörög|köszönet|tenyér|tenyérrel felfelé|tölcsér|tölcsért formáz
+🤝;kézfogás;alku|alkut köt|kéz|kezet ráz|megállapodás|megegyezés|találkozás|üdvözlés
+🙏;összetett kéz;ima|imádkozik|kér|kérés|kérlek|kéz|könyörög|köszi|köszönet|köszönöm|test
+✍️;író kéz;írás|kéz|test
+💅;körömlakk;kéz|kifestés|körmös|köröm|körömápolás|körömfestés|lakk|lakkoz|manikűr|testrész
+🤳;szelfi;fényképező|kamera|telefon
+💪;befeszített bicepsz;bicepsz|edzés|edzőterem|erős|izom|kar|karizom|képregény|kéz|test
+🦾;mechanikus kar;akadálymentesség|prosztetikus kar|protézis
+🦿;mechanikus láb;akadálymentesség|prosztetikus láb|protézis
+🦵;lábszár;behajlított láb|comb|láb|lábfej|rúg|rúgás|térd|végtag
+🦶;lábfej;boka|dobogás|láb|rúg|rúgás|tapos|tipor|topog|toporog
+👂;fül;fej|hall|hallás|hallgat|test|testrész
+🦻;fül hallókészülékkel;akadálymentesség|hallássérült|nagyothalló
+👃;orr;fej|szag|szaglás|szagol|test|testrész
+🧠;agy;intelligens|okos
+🫀;szív;anatómia|kardiológia|középpont|piros|pulzus|szerv|szívdobogás|szívverés
+🫁;tüdő;belégzés|kilégzés|légzés|lélegzet|levegő|oxigén|szerv
+🦷;fog;fehér|fogak|fogász|fogorvos
+🦴;csont;csontok|csontváz|kutya
+👀;szemek;arc|les|néz|szem|test|testrész
+👁️;szem;test|testrész
+👅;nyelv;kinyújtja a nyelvét|nyal|test|testrész
+👄;száj;ajkak|rúzs|test|testrész
+🫦;ajkába harapó száj;aggódó|félelem|flört|ideges|kényelmetlen|nyugtalan
+👶;baba;kisbaba|kisfiú|kisgyerek|újszülött
+🧒;gyerek;fiatal|gyermek|kisgyerek|kölyök
+👦;fiú;kisfiú|srác
+👧;lány;copf|fiatal lány|kislány|lányka
+🧑;felnőtt;
+👱;szőke hajú ember;ember|férfi|szőke
+👨;férfi;barát|báty|férj|fiú|haver|öcs|társ|testvér
+🧔;szakállas ember;szakáll|szakállas
+🧔‍♂️;férfi: szakáll;férfi|szakáll
+🧔‍♀️;nő: szakáll;nő|szakáll
+👨‍🦰;férfi: vörös haj;barát|báty|férfi|férj|fiú|haver|öcs|társ|testvér|vörös haj
+👨‍🦱;férfi: göndör haj;barát|báty|férfi|férj|fiú|göndör haj|haver|öcs|társ|testvér
+👨‍🦳;férfi: ősz haj;barát|báty|férfi|férj|fiú|haver|öcs|ősz haj|társ|testvér
+👨‍🦲;férfi: kopasz;barát|báty|férfi|férj|fiú|haver|kopasz|öcs|társ|testvér
+👩;nő;felnőtt|hölgy
+👩‍🦰;nő: vörös haj;felnőtt|hölgy|nő|vörös haj
+🧑‍🦰;felnőtt: vörös haj;felnőtt|vörös haj
+👩‍🦱;nő: göndör haj;felnőtt|göndör haj|hölgy|nő
+🧑‍🦱;felnőtt: göndör haj;felnőtt|göndör haj
+👩‍🦳;nő: ősz haj;felnőtt|hölgy|nő|ősz haj
+🧑‍🦳;felnőtt: ősz haj;felnőtt|ősz haj
+👩‍🦲;nő: kopasz;felnőtt|hölgy|kopasz|nő
+🧑‍🦲;felnőtt: kopasz;felnőtt|kopasz
+👱‍♀️;szőke nő;nő|szőke
+👱‍♂️;szőke férfi;férfi|szőke
+🧓;idősebb felnőtt;idős|nemi szempontból semleges|öreg
+👴;idős férfi;bácsi|idős|kopasz|nagyapa|nagypapa|öreg|öregember
+👵;idős nő;anyóka|idős hölgy|nagyi|nagymama|néni|öreg néni
+🙍;rosszalló ember;csüggedt|homlokát ráncolja|mérges|rosszallás|rosszalló tekintet|rosszkedvű|szemöldökét ráncolja|szomorú
+🙍‍♂️;rosszalló férfi;csüggedt|elégedetlen|férfi|gesztus|homlokát ráncolja|mérges|rosszallás|rosszalló|rosszkedvű|szemöldökét ráncolja|szomorú
+🙍‍♀️;rosszalló nő;gesztus|nő|rosszallás|rosszalló
+🙎;duzzogó ember;biggyeszt|duzzogás|duzzogó lány|duzzogó nő|grimasz|lebiggyeszt|lebiggyesztett ajak|mérges
+🙎‍♂️;duzzogó férfi;duzzogás|duzzogó|férfi|gesztus|mérges
+🙎‍♀️;duzzogó nő;duzzogás|duzzogó|gesztus|nő
+🙅;tiltás mutatása;kézjel|ki van zárva|kizárt|nem|nem szabad|szó sem lehet róla|tilos|tiltást mutató nő|tiltott
+🙅‍♂️;tiltást mutató férfi;férfi|gesztus|kézmozdulat|ki van zárva|kizárt|nem|szó sem lehet róla|tilos|tiltás
+🙅‍♀️;tiltást mutató nő;gesztus|kézmozdulat|nő|tilos|tiltás
+🙆;beleegyezés mutatása;kézjel|ok|oké|rendben|tornázik
+🙆‍♂️;beleegyezést mutató férfi;beleegyezés|férfi|gesztus|kézmozdulat|ok|oké|rendben|tornázik
+🙆‍♀️;beleegyezést mutató nő;beleegyezés|gesztus|kézmozdulat|nő|oké
+💁;ember az információs pultnál;borravaló|ember|kéz|mindegy|nyitott tenyér|pletyka|szarkasztikus|szarkazmus|szemtelen
+💁‍♂️;nyitott tenyerű férfi;férfi|információ|nyitott tenyér|segítség
+💁‍♀️;nyitott tenyerű nő;információ|nő|nyitott tenyér|segítség
+🙋;vidáman intő ember;boldog|én tudom|felemeli a kezét|integet|intés|jelentkezik|kézmozdulat|vidám
+🙋‍♂️;vidáman intő férfi;én tudom|felemeli a kezét|férfi|gesztus|intés|jelentkezik|kézmozdulat|vidám
+🙋‍♀️;vidáman intő nő;gesztus|intés|kézmozdulat|nő|vidám
+🧏;siket ember;akadálymentesség|fül|hall|hallássérült|nagyothalló|siket
+🧏‍♂️;siket férfi;férfi|siket
+🧏‍♀️;siket nő;nő|siket
+🙇;meghajló ember;bocsánat|bocsánatkérés|elnézést|meditáció|meditál|meghajlás|meghajol|sajnálat|sajnálom
+🙇‍♂️;meghajló férfi;bocsánat|bocsánatkérés|férfi|meghajlás|meghajló|sajnálat
+🙇‍♀️;meghajló nő;bocsánat|bocsánatkérés|elnézést|meditáció|meditál|meghajlás|meghajló|meghajol|nő|sajnálat|sajnálom
+🤦;kézbe temetett arc;arc|elkeseredés|kéz|nem hiszem el
+🤦‍♂️;arcát a kezébe temető férfi;arc|elkeseredés|férfi|fogja a fejét|hitetlenség|kézbe temetett arc
+🤦‍♀️;arcát a kezébe temető nő;arc|elkeseredés|fogja a fejét|hitetlenség|kézbe temetett arc|nő
+🤷;vállrándítás;közömbös|nem érdekel|rándít|váll
+🤷‍♂️;vállrándító férfi;érdektelenség|férfi|kétség|közömbös|nekem mindegy|nem érdekel|nem tudom|vállrándítás
+🤷‍♀️;vállrándító nő;érdektelenség|kétség|közömbös|nekem mindegy|nem érdekel|nem tudom|nő|vállrándítás
+🧑‍⚕️;egészségügyi dolgozó;ápolónő|egészségügy|orvos|terapeuta
+👨‍⚕️;doktor;ápoló|egészségügy|foglalkozás|orvos|terapeuta
+👩‍⚕️;doktornő;ápolónő|egészségügy|foglalkozás|nővér|orvos|terapeuta
+🧑‍🎓;diák;végzős
+👨‍🎓;férfi tanuló;diák|diplomaosztó|diplomázik|egyetemista|férfi|foglalkozás|tanuló
+👩‍🎓;női tanuló;diák|diplomaosztó|diplomázik|egyetemista|nő|tanuló
+🧑‍🏫;tanár / tanárnő;oktató|professzor|tanár
+👨‍🏫;tanár;férfi|foglalkozás|oktató|professzor
+👩‍🏫;tanárnő;foglalkozás|nő|oktató|professzorasszony|tanár|tanítónő
+🧑‍⚖️;bíró / bírónő;bíró|mérleg
+👨‍⚖️;bíró;férfi|igazság|mérleg|törvény
+👩‍⚖️;bírónő;bíró|igazság|mérleg|nő|törvény
+🧑‍🌾;gazda / női gazda;földműves|gazda|növénytermesztő
+👨‍🌾;gazda;farmer|férfi|foglalkozás|földműves|kertész
+👩‍🌾;női gazda;farmer|foglalkozás|földműves|gazda|kertész|nő
+🧑‍🍳;szakács / szakácsnő;séf|szakács
+👨‍🍳;szakács;férfi|foglalkozás|séf
+👩‍🍳;szakácsnő;foglalkozás|nő|séf
+🧑‍🔧;szerelő / szerelőnő;szaki|szerelő|villanyszerelő|vízvezeték-szerelő
+👨‍🔧;szerelő;férfi|foglalkozás|villanyszerelő|vízszerelő
+👩‍🔧;szerelőnő;foglalkozás|nő|szerelő|villanyszerelő|vízszerelő
+🧑‍🏭;munkás;dolgozó|gyári
+👨‍🏭;férfi munkás;dolgozó|férfi|foglalkozás|forraszt|gyári|munkás|összeszerel|szerel
+👩‍🏭;női munkás;dolgozó|foglalkozás|forraszt|gyári|munkás|nő|összeszerel|szerel
+🧑‍💼;irodai dolgozó;építész|értelmiségi|menedzser|üzletember
+👨‍💼;férfi irodista;alkalmazott|férfi|foglalkozás|irodai
+👩‍💼;női irodista;alkalmazott|foglalkozás|irodai|női
+🧑‍🔬;tudás;biológus|fizikus|mérnök|tudós|vegyész
+👨‍🔬;férfi tudós;biológus|férfi|fizikus|foglalkozás|kémikus|matematikus|tudós
+👩‍🔬;női tudós;fizikus|foglalkozás|kémikus|matematikus|nő|tudós
+🧑‍💻;informatikus;fejlesztő|feltaláló|programozó|szoftver
+👨‍💻;programozó férfi;fejlesztő|feltaláló|férfi|foglalkozás|kódoló|programozó|számítógép|szoftver
+👩‍💻;programozó nő;fejlesztő|feltaláló|foglalkozás|kódoló|nő|programozó|számítógép|szoftver
+🧑‍🎤;énekes;előadóművész|rock|színés|sztár
+👨‍🎤;férfi énekes;előadó|énekes|férfi|foglalkozás|művész|rock|színész|sztár
+👩‍🎤;női énekes;előadó|énekes|foglalkozás|művész|nő|rock|színész|sztár
+🧑‍🎨;művész;festő|paletta
+👨‍🎨;férfi művész;férfi|festő|festőművész|foglalkozás|művész|paletta
+👩‍🎨;női művész;festő|festőnő|foglalkozás|művész|nő|paletta
+🧑‍✈️;pilóta / pilótanő;pilóta|repülőgép
+👨‍✈️;pilóta;férfi|foglalkozás|repülő
+👩‍✈️;pilótanő;foglalkozás|nő|pilóta|repülő
+🧑‍🚀;űrhajós / űrhajósnő;rakéta|űrhajós
+👨‍🚀;űrhajós;férfi|foglalkozás|rakéta|űr|űrutazás
+👩‍🚀;űrhajósnő;asztronauta|foglalkozás|nő|rakéta|űr|űrhajós
+🧑‍🚒;tűzoltó / tűzoltónő;tűzoltó|tűzoltóautó
+👨‍🚒;tűzoltó;férfi|foglalkozás|tűz
+👩‍🚒;tűzoltónő;foglalkozás|nő|tűz|tűzoltó
+👮;zsaru;foglalkozás|letartóztat|rendőr|rendőrség|rendőrtiszt|tiszt|törvény
+👮‍♂️;rendőr;férfi|zsaru
+👮‍♀️;rendőrnő;foglalkozás|letartóztat|nő|rendőr|rendőrtiszt|tiszt|törvény|zsaru
+🕵️;detektív;foglalkozás|kém|kopó|nyomozó
+🕵️‍♂️;nyomozó;detektív|férfi|kém
+🕵️‍♀️;nyomozónő;detektív|foglalkozás|kém|kémnő|nő|nyomozó
+💂;gárdista;Buckingham-palota|London|őrség|őrségváltás|sisak
+💂‍♂️;őr;férfi
+💂‍♀️;női őr;medvekucsma|nő|őr|sisak
+🥷;nindzsa;ember|harcos|ninja|rejtett|rejtőzködés
+👷;építőmunkás;építkezés|férfi|foglalkozás|munkás|sisak|védősisak
+👷‍♂️;építőmunkás férfi;építkezés|építőmunkás|férfi|munkás
+👷‍♀️;építőmunkás nő;építkezés|építőmunkás|építőmunkásnő|foglalkozás|munkás|nő|női munkás|sisak|védősisak
+🫅;koronás személy;király|méltóság|nemes|uralkodó|uralkodói
+🤴;herceg;király|királyi|koronás
+👸;hercegnő;fantasy|királykisasszony|királylány|királynő|korona|mese|mesehős
+👳;turbános ember;ember|turbán
+👳‍♂️;turbános férfi;férfi|turbán
+👳‍♀️;turbános nő;nő|turbán
+👲;kínai sapkás ember;ember|sapka
+🧕;nő fejkendővel;fejkendő|hidzsáb|kendő|mantilla|ruházat|tichel
+🤵;szmokingos ember;elegáns|ember|férfi|öltöny|szmoking|szmokingos férfi|vőlegény
+🤵‍♂️;szmokingos férfi;férfi|szmoking
+🤵‍♀️;szmokingos nő;nő|szmoking
+👰;ember fátyollal;ember|esküvő|fátyol|lakodalom|menyasszony|menyasszony fátyollal
+👰‍♂️;férfi fátyollal;fátyol|férfi
+👰‍♀️;nő fátyollal;fátyol|nő
+🤰;terhes nő;nő|terhes|várandós
+🫃;terhes férfi;has|puffadt|teli|terhes
+🫄;terhes személy;has|puffadt|teli|terhes
+🤱;szoptatás;baba|etet|kisbaba|mell|szoptat
+👩‍🍼;kisbabát etető nő;anya|anyu|etetés|gondozás|kisbaba|mama|nő|újszülött
+👨‍🍼;kisbabát etető férfi;apa|apu|apuka|etetés|férfi|gondozás|kisbaba|újszülött
+🧑‍🍼;kisbabát etető személy;anya|anyu|ember|etetés|gondozás|kisbaba|kisbabát etető ember|mami|személy|szoptatás|újszülött
+👼;babaangyal;angyal|arc|baba|mese
+🎅;mikulás;arc|fej|karácsony|télapó|ünnep|ünneplés
+🤶;mikulás ruhás anyó;anyó|karácsony|Mikulás felesége|ünnep
+🧑‍🎄;télapó;ember|karácsony|mikulás|sapka|ünnepek
+🦸;szuperhős;hős|jó|szupererő|szuperképesség
+🦸‍♂️;férfi szuperhős;férfi|hős|hősnő|jó|szuperképesség
+🦸‍♀️;női szuperhős;hős|hősnő|jó|nő|szuperképesség
+🦹;főgonosz;bűnöző|ember|gazember|gonosz|gonosztevő|rossz|szupererő|szupergonosz|szuperképesség
+🦹‍♂️;férfi főgonosz;bűnöző|férfi|gazember|gonosz|szuperképesség
+🦹‍♀️;női főgonosz;bűnöző|gazember|gonosz|nő|szuperképesség
+🧙;varázsló;boszorkány|boszorkánymester|bűbáj|férfi boszorkány|mágia|mágus|mese|varázsige|varázslás|varázslat
+🧙‍♂️;férfi varázsló;boszorkánymester|mágus
+🧙‍♀️;varázslónő;boszorkány
+🧚;tündér;lepke|mese|Oberon|pillangó|Puck|szárny|Titánia|tündérmese
+🧚‍♂️;férfi tündér;Oberon|Puck
+🧚‍♀️;női tündér;Titánia
+🧛;vámpír;Drakula|élőhalott|fogak|vér
+🧛‍♂️;férfi vámpír;Drakula|élőhalott|élőholt
+🧛‍♀️;női vámpír;élőhalott|élőholt
+🧜;sellő;hableány|hablegény|mese|óceán|szirén|tündérmese
+🧜‍♂️;férfi sellő;Triton
+🧜‍♀️;sellőlány;női sellő
+🧝;tünde;fantasy|kobold|mágikus|manó|mese|varázslat|varázslatos
+🧝‍♂️;férfi tünde;mágikus
+🧝‍♀️;női tünde;mágikus
+🧞;dzsinn;Dzsini|kívánság|lámpa|lámpás|lámpás szelleme|mese|olajlámpás|szellem|varázslámpás
+🧞‍♂️;férfi dzsinn;dzsinn
+🧞‍♀️;női dzsinn;dzsinn
+🧟;zombi;csontváz|élőhalott|élőholt|félelmetes|horror|ijesztő|sétáló halott
+🧟‍♂️;férfi zombi;élőhalott|élőholt|sétáló halott
+🧟‍♀️;női zombi;élőhalott|élőholt|sétáló halott
+🧌;troll;képzelet|szörny|tündérmese
+🫈;szőrös lény;erdő|jeti|nagyláb|óriás|sasquatch|vadember
+💆;arcmasszázs;arc|fejfájás|feszültség|kozmetika|masszázs|masszíroz|relaxáció|relaxál|szalon|szépségszalon
+💆‍♂️;férfi arcmasszázson;arc|arcmasszázs|enyhít|fejfájás|férfi|feszültség|kozmetika|masszázs|masszíroz|relaxáció|relaxál|szalon|szépségszalon
+💆‍♀️;nő arcmasszázson;arc|masszázs|nő
+💇;hajvágás;fodrász|fodrászat|haj|hajnyírás|nő fodrásznál|szépségápolás
+💇‍♂️;férfi fodrásznál;férfi|fodrász|fodrászat|haj|hajnyírás|hajvágás
+💇‍♀️;nő fodrásznál;fodrász|fodrászat|haj|hajvágás|nő
+🚶;gyalogos;férfi|gyaloglás|séta|sétáló|túra
+🚶‍♂️;sétáló férfi;férfi|séta|sétáló|túra
+🚶‍♀️;sétáló nő;gyalog|gyalogol|gyalogos|megy|nő|séta|sétáló|túra
+🚶‍➡️;gyalogos: jobbra néző;férfi|gyaloglás|gyalogos|jobbra|néző|séta|sétáló|túra
+🚶‍♀️‍➡️;sétáló nő: jobbra néző;gyalog|gyalogol|gyalogos|jobbra|megy|néző|nő|séta|sétáló|túra
+🚶‍♂️‍➡️;sétáló férfi: jobbra néző;férfi|jobbra|néző|séta|sétáló|túra
+🧍;álló ember;áll|álló
+🧍‍♂️;álló férfi;áll|férfi
+🧍‍♀️;álló nő;áll|nő
+🧎;térdelő ember;térdel|térdelő
+🧎‍♂️;térdelő férfi;férfi|térdel
+🧎‍♀️;térdelő nő;nő|térdel
+🧎‍➡️;térdelő ember: jobbra néző;jobbra|néző|térdel|térdelő|térdelő ember
+🧎‍♀️‍➡️;térdelő nő: jobbra néző;jobbra|néző|nő|térdel|térdelő nő
+🧎‍♂️‍➡️;térdelő férfi: jobbra néző;férfi|jobbra|néző|térdel|térdelő férfi
+🧑‍🦯;ember fehér bottal;akadálymentesség|vak
+🧑‍🦯‍➡️;ember fehér bottal: jobbra néző;akadálymentesség|ember fehér bottal|jobbra|néző|vak
+👨‍🦯;férfi fehér bottal;akadálymentesség|férfi|látássérült|vak
+👨‍🦯‍➡️;férfi fehér bottal: jobbra néző;akadálymentesség|férfi|férfi fehér bottal|jobbra|látássérült|néző|vak
+👩‍🦯;nő fehér bottal;akadálymentesség|nő|vak
+👩‍🦯‍➡️;nő fehér bottal: jobbra néző;akadálymentesség|jobbra|néző|nő|nő fehér bottal|vak
+🧑‍🦼;ember motoros kerekesszékben;akadálymentesség|kerekesszék
+🧑‍🦼‍➡️;ember motoros kerekesszékben: jobbra néző;akadálymentesség|ember motoros kerekesszékben|jobbra|kerekesszék|néző
+👨‍🦼;férfi motoros kerekesszékben;akadálymentesség|férfi|kerekesszék|mozgáskorlátozott|tolószék
+👨‍🦼‍➡️;férfi motoros kerekesszékben: jobbra néző;akadálymentesség|férfi|férfi motoros kerekesszékben|jobbra|kerekesszék|mozgáskorlátozott|néző|tolószék
+👩‍🦼;nő motoros kerekesszékben;akadálymentesség|kerekesszék|mozgáskorlátozott|nő|tolószék
+👩‍🦼‍➡️;nő motoros kerekesszékben: jobbra néző;akadálymentesség|jobbra|kerekesszék|mozgáskorlátozott|néző|nő|nő motoros kerekesszékben|tolószék
+🧑‍🦽;kerekesszékes ember;akadálymentesség|kerekesszék
+🧑‍🦽‍➡️;kerekesszékes ember: jobbra néző;akadálymentesség|jobbra|kerekesszék|kerekesszékes ember|néző
+👨‍🦽;férfi kézi hajtású kerekesszékben;akadálymentesség|férfi|kerekesszék|mozgáskorlátozott|mozgássérült|tolószék
+👨‍🦽‍➡️;férfi kézi hajtású kerekesszékben: jobbra néző;akadálymentesség|férfi|férfi kézi hajtású kerekesszékben|jobbra|kerekesszék|mozgáskorlátozott|mozgássérült|néző|tolószék
+👩‍🦽;nő kézi hajtású kerekesszékben;akadálymentesség|kerekesszék|mozgáskorlátozott|nő|tolószék
+👩‍🦽‍➡️;nő kézi hajtású kerekesszékben: jobbra néző;akadálymentesség|jobbra|kerekesszék|mozgáskorlátozott|néző|nő|nő kézi hajtású kerekesszékben|tolószék
+🏃;futó;fut|futás|gyors|maraton|siet|sport
+🏃‍♂️;futó férfi;férfi|fut|futás|maraton|verseny
+🏃‍♀️;futó nő;fut|futás|futó|futónő|gyors|gyorsaság|maraton|nő|női futó|sebesség|siet|sport|verseny
+🏃‍➡️;futó: jobbra néző;fut|futás|futó|gyors|jobbra|maraton|néző|siet|sport
+🏃‍♀️‍➡️;futó nő: jobbra néző;fut|futás|futó|futónő|gyors|gyorsaság|jobbra|maraton|néző|nő|női futó|sebesség|siet|sport|verseny
+🏃‍♂️‍➡️;futó férfi: jobbra néző;férfi|fut|futás|futó férfi|jobbra|maraton|néző|verseny
+🧑‍🩰;balett-táncos;balett|táncos
+💃;táncoló nő;nő|salsa|tánc|táncol|táncoló|táncos|táncosnő|tangó
+🕺;táncoló férfi;férfi|flamenco|salsa|tánc|táncol|táncos|tangó
+🕴️;öltönyös, lebegő ember;lebegő ember|öltöny|öltönyös|üzletember
+👯;bulizó emberek;buli|lányok|nő|nyuszi|nyuszifül|parti
+👯‍♂️;bulizó férfiak;buil|buli|férfi|férfiak|ikrek|nyuszifül|parti|partizik|party|táncol|táncos
+👯‍♀️;bulizó nők;buil|nő|nők|nyuszifül|parti|táncos
+🧖;ember a gőzfürdőben;gőz|gőzfürdő|gőzszoba|nő szaunázik|szauna|szaunázás|szaunázik
+🧖‍♂️;férfi a gőzfürdőben;gőzfürdő|szauna
+🧖‍♀️;nő a gőzfürdőben;gőzfürdő|szauna
+🧗;mászó ember;hegy|hegymászás|mászás|mászó|megmászik|sziklamászás|sziklamászó
+🧗‍♂️;mászó férfi;mászó
+🧗‍♀️;mászó nő;mászó
+🤺;vívó;kard|sport|sportoló|vív|vívás
+🏇;lóverseny;ló|lovaglás|lovi|sport|versenyló|zsoké
+⛷️;síelő;hó|síel|síelés|téli sportok
+🏂;snowboardozó;hó|hódeszka|snowboard|téli sportok
+🏌️;golfozó;golf|golflabda|golfozik|golfütő|labda|sport|tee
+🏌️‍♂️;golfozó férfi;férfi|golf
+🏌️‍♀️;golfozó nő;golf|golfozik|nő|sport
+🏄;szörföző;hullám|sport|szörf|szörfös|szörfözik|vízi sport
+🏄‍♂️;szörföző férfi;férfi|szörf
+🏄‍♀️;szörföző nő;hullám|hullámlovaglás|hullámlovas|nő|sport|szörf|szörfözik|vízisport
+🚣;evező ember;csónak|evez|evezés|evező|hajó|kenu|tutaj|vízi jármű
+🚣‍♂️;evező férfi;csónak|evezés|férfi
+🚣‍♀️;evező nő;csónak|evezés|hajó|kenu|kenuzik|nő|sport
+🏊;úszó;sport|triatlon|úszás|úszik
+🏊‍♂️;úszó férfi;férfi|úszás|úszó
+🏊‍♀️;úszó nő;nő|női úszó|sport|úszás|úszik|úszó
+⛹️;ember labdával;kosarazik|kosarazó|kosárlabda|kosárlabdázik|kosárlabdázó|labda|pattogtat|sport|sportoló
+⛹️‍♂️;férfi labdával;férfi|labda
+⛹️‍♀️;nő labdával;játékos|kosaras|kosarazik|kosárlabda|kosárlabdázik|labda|nő|pattogtat|sport
+🏋️;súlyemelő;edzés|sport|sportoló|súly|súlyemelés|súlyzó
+🏋️‍♂️;súlyemelő férfi;férfi|súly|súlyemelő
+🏋️‍♀️;súlyemelő nő;edzés|nő|sport|súly|súlyemelő
+🚴;kerékpáros;bicikli|biciklis|biciklista|biciklizik|kerékpár|kerékpározik|sport|sportoló|teker
+🚴‍♂️;kerékpáros férfi;bicaj|bicajos|férfi|kerékpár|kerékpáros
+🚴‍♀️;kerékpáros nő;bicaj|bicajos|bicikli|biciklis|biciklista|kerékpár|kerékpáros|nő|sport|teker
+🚵;hegyikerékpáros;bicikli|biciklis|biciklista|hegy|kerékpár|mountain bike|sport|sportoló
+🚵‍♂️;hegyikerékpáros férfi;bicaj|bicajos|férfi|hegy|kerékpár|kerékpáros
+🚵‍♀️;hegyikerékpáros nő;bicaj|bicajos|bicikli|biciklis|hegy|kerékpár|kerékpáros|mountain bike|nő|sport|teker
+🤸;cigánykerék;sport|sportoló|torna
+🤸‍♂️;cigánykerekező férfi;cigánykerék|férfi|sport|torna|tornász|tornázik
+🤸‍♀️;cigánykerekező nő;cigánykerék|nő|sport|torna|tornász|tornásznő|tornázik
+🤼;birkózók;birkózás|birkózó|harc|sport|sportoló
+🤼‍♂️;birkózó férfiak;birkozás|birkozó|férfi|férfi birkózás|harc|sport
+🤼‍♀️;birkózó nők;birkozás|birkozó|harc|nő|női birkózás|sport
+🤽;vízilabda;póló|sport|víz
+🤽‍♂️;vízilabdázó férfi;férfi|póló|sport|vízilabda|vízisport
+🤽‍♀️;vízilabdázó nő;nő|póló|sport|vízilabda|vízilabdás
+🤾;kézilabda;dob|labda|sport|sportoló
+🤾‍♂️;kézilabdázó férfi;férfi|kézilabda|kézilabdás|kézilabdázik|sport
+🤾‍♀️;kézilabdázó nő;dob|kézilabda|labda|nő|sport
+🤹;zsonglőr;egyensúly|egyszerre|kézügyesség|multitask|ügyes|zsonglőrködik
+🤹‍♂️;zsonglőr férfi;egyensúly|egyszerre|férfi|több feladat|zsonglőr
+🤹‍♀️;zsonglőr nő;egyensúly|egyszerre|nő|női zsonglőr|több feladat|zsonglőr
+🧘;ember lótuszülésben;jóga|jógázik|lótuszülés|meditáció|meditál|nő lótuszülésben|relaxáció|relaxál
+🧘‍♂️;férfi lótuszülésben;jóga|meditáció
+🧘‍♀️;nő lótuszülésben;jóga|meditáció
+🛀;fürdő ember;fürdés|fürdik|fürdőkád
+🛌;ember az ágyban;ágy|álmos|alszik|alvás|szálloda
+🧑‍🤝‍🧑;egymás kezét fogó emberek;fogás|kéz|kézenfogva|pár
+👭;kézen fogva álló nők;barátnők|barátok|barátság|gyerekek|húg|kézen fogva|kislányok|lányok|legjobb barátnők|nők|nővér|pár|randevú|randi|szövetség|testvérek
+👫;kézen fogva álló férfi és nő;barátok|férfi|fiú|kéz a kézben|lány|nő|pár|randevú|randi|szerelem|szerelmesek
+👬;kézen fogva álló férfiak;barátok|barátság|báty|férfiak|fiúk|ikrek|kézen fogva|öcs|pár|randevú|randi|testvérek
+💏;csók;barát|barátnő|évforduló|pár|randevú|randi|romantika|szerelem|szív
+👩‍❤️‍💋‍👨;csók: nő és férfi;barát|barátnő|csók|évforduló|férfi|nő|pár|randevú|randi|romantika|szerelem|szív
+👨‍❤️‍💋‍👨;csók: férfi és férfi;barát|barátnő|csók|évforduló|férfi|pár|randevú|randi|romantika|szerelem|szív
+👩‍❤️‍💋‍👩;csók: nő és nő;barát|barátnő|csók|évforduló|nő|pár|randevú|randi|romantika|szerelem|szív
+💑;pár szívvel;csók|évforduló|pár|romantika|szerelem|szív
+👩‍❤️‍👨;pár szívvel: nő és férfi;csók|évforduló|férfi|nő|pár|pár szívvel|romantika|szerelem|szív
+👨‍❤️‍👨;pár szívvel: férfi és férfi;csók|évforduló|férfi|pár|pár szívvel|romantika|szerelem|szív
+👩‍❤️‍👩;pár szívvel: nő és nő;csók|évforduló|nő|pár|pár szívvel|romantika|szerelem|szív
+👨‍👩‍👦;család: férfi, nő és fiú;család|férfi|fiú|gyerek|nő
+👨‍👩‍👧;család: férfi, nő és lány;család|férfi|gyerek|lány|nő
+👨‍👩‍👧‍👦;család: férfi, nő, lány és fiú;család|férfi|fiú|gyerek|lány|nő
+👨‍👩‍👦‍👦;család: férfi, nő, fiú és fiú;család|férfi|fiú|gyerek|nő
+👨‍👩‍👧‍👧;család: férfi, nő, lány és lány;család|férfi|gyerek|lány|nő
+👨‍👨‍👦;család: férfi, férfi és fiú;család|férfi|fiú|gyerek
+👨‍👨‍👧;család: férfi, férfi és lány;család|férfi|gyerek|lány
+👨‍👨‍👧‍👦;család: férfi, férfi, lány és fiú;család|férfi|fiú|gyerek|lány
+👨‍👨‍👦‍👦;család: férfi, férfi, fiú és fiú;család|férfi|fiú|gyerek
+👨‍👨‍👧‍👧;család: férfi, férfi, lány és lány;család|férfi|gyerek|lány
+👩‍👩‍👦;család: nő, nő és fiú;család|fiú|gyerek|nő
+👩‍👩‍👧;család: nő, nő és lány;család|gyerek|lány|nő
+👩‍👩‍👧‍👦;család: nő, nő, lány és fiú;család|fiú|gyerek|lány|nő
+👩‍👩‍👦‍👦;család: nő, nő, fiú és fiú;család|fiú|gyerek|nő
+👩‍👩‍👧‍👧;család: nő, nő, lány és lány;család|gyerek|lány|nő
+👨‍👦;család: férfi és fiú;család|férfi|fiú|gyerek
+👨‍👦‍👦;család: férfi, fiú és fiú;család|férfi|fiú|gyerek
+👨‍👧;család: férfi és lány;család|férfi|gyerek|lány
+👨‍👧‍👦;család: férfi, lány és fiú;család|férfi|fiú|gyerek|lány
+👨‍👧‍👧;család: férfi, lány és lány;család|férfi|gyerek|lány
+👩‍👦;család: nő és fiú;család|fiú|gyerek|nő
+👩‍👦‍👦;család: nő, fiú és fiú;család|fiú|gyerek|nő
+👩‍👧;család: nő és lány;család|gyerek|lány|nő
+👩‍👧‍👦;család: nő, lány és fiú;család|fiú|gyerek|lány|nő
+👩‍👧‍👧;család: nő, lány és lány;család|gyerek|lány|nő
+🗣️;beszélő fej;arc|beszéd|beszél|fej|sziluett
+👤;ember sziluettje melltől felfelé;árnyék|ember|mellszobor|sziluett
+👥;két ember sziluettje melltől felfelé;ember|emberek|mellszobor|sziluett
+🫂;egymást ölelő emberek;barátság|helló|köszönet|ölel|ölelés|ölelkezés|ölelkező emberek|szerelem|üdv|viszlát
+👪;család;gyerek
+🧑‍🧑‍🧒;család: felnőtt, felnőtt, gyerek;család|felnőtt|gyerek
+🧑‍🧑‍🧒‍🧒;család: felnőtt, felnőtt, gyerek, gyerek;család|felnőtt|gyerek
+🧑‍🧒;család: felnőtt, gyerek;család|felnőtt|gyerek
+🧑‍🧒‍🧒;család: felnőtt, gyerek, gyerek;család|felnőtt|gyerek
+👣;lábnyomok;lábnyom|mezítláb|nyom|nyomok|úton
+🫆;ujjlenyomat;biztonság|bűncselekmény|lenyomat|nyom|nyomozó|nyomravezető jel|rejtély|személyazonosság|törvényszék
+🐵;majomfej;állat|fej|majom
+🐒;majom;állat|banán
+🦍;gorilla;állat
+🦧;orangután;állat|emberszabású majom|majom
+🐶;kutyafej;állat|fej|kedvenc|kisállat|kiskutya|kutya
+🐕;kutya;állat|háziállat|kisállat
+🦮;vakvezető kutya;akadálymentesség|vak|vakvezető
+🐕‍🦺;segítőkutya;akadálymentesség|kutya|segítő|segítség
+🐩;pudli;állat|háziállat|kedvenc|kisállat|kutya|uszkár
+🐺;farkasfej;állat|farkas|fej
+🦊;rókafej;állat|fej|róka
+🦝;mosómedve;állat|kíváncsi|mosómaci|ravasz
+🐱;macskafej;állat|cica|fej|kedvenc|kisállat|macska
+🐈;macska;állat|cica|kedvenc|kisállat
+🐈‍⬛;fekete macska;állat|balszerencse|fekete|halloween|macska|nyávog
+🦁;oroszlánfej;állat|állatöv|csillagjegy|fej|oroszlán
+🐯;tigrisfej;állat|fej|nagymacska|ragadozó|tigris
+🐅;tigris;állat|nagymacska|ragadozó
+🐆;leopárd;állat|nagymacska|párduc|ragadozó
+🐴;lófej;állat|farm|fej|ló
+🫎;jávorszarvas;agancs|állat|emlős
+🫏;szamár;állat|csacsi|emlős|makacs|öszvér
+🐎;ló;állat|derbi|fogadás|lovaglás|lovassport|lóverseny|lovi|sport|sportfogadás|versenyló|versenyzés
+🦄;unikornisfej;egyszarvú|fej|unikornis
+🦓;zebra;állat|csíkos
+🦌;szarvas;agancs|állat
+🦬;bölény;állat|csorda
+🐮;tehénfej;állat|fej|tehén|tej
+🐂;ökör;állat|állatöv|bika|csillagjegy
+🐃;vízibölény;állat|bölény|víz
+🐄;tehén;állat|tej
+🐷;malacfej;állat|disznó|disznófej|fej|malac
+🐖;disznó;állat|koca|kövér|malac
+🐗;vaddisznó;állat|disznó
+🐽;malacorr;disznó|disznóorr|malac|orr
+🐏;kos;állat|állatöv|csillagjegy
+🐑;birka;állat|anyajuh|bárány|gyapjú|juh
+🐐;kecske;állat|állatöv|bak|bakkecske|csillagjegy|sajt
+🐪;teve;állat|dromedár|egypúpú teve|púposteve|sivatag
+🐫;kétpúpú teve;állat|púp|púposteve|sivatag|teve
+🦙;láma;állat|alpaka|guanako|guanakó|gyapjas|gyapjú|vicuña
+🦒;zsiráf;állat|foltos
+🐘;elefánt;állat
+🦣;mamut;állat|gyapjas|kihalt|nagy|ormányos
+🦏;orrszarvú;állat|rinocérosz
+🦛;víziló;állat
+🐭;egérfej;állat|egér|fej
+🐁;egér;állat
+🐀;patkány;állat
+🐹;hörcsögfej;állat|fej|hörcsög|kedvenc|kisállat
+🐰;nyúlfej;állat|fej|kedvenc|kisállat|nyúl|nyuszi
+🐇;nyúl;állat|háziállat|kedvenc|kisállat|nyuszi
+🐿️;mókus;állat|mogyoró
+🦫;hód;állat|fog|gát
+🦔;sün;állat|sündisznó|tüskés
+🦇;denevér;állat|drakula|vámpír
+🐻;medvefej;állat|fej|maci|medve
+🐻‍❄️;jegesmedve;fehér|medve|sarkvidék
+🐨;koala;állat|fej|koalamaci|maci|medve
+🐼;pandafej;állat|fej|maci|panda|pandamaci
+🦥;lajhár;lassú|lusta
+🦦;vidra;halászó|játékos
+🦨;bűzösborz;borz|büdös|bűz|bűzborz|bűzös borz
+🦘;kenguru;állat|Ausztrália|erszényes|kengu|ugrás|ugrik
+🦡;borz;állat|méhészborz
+🐾;mancsnyomok;lábak|lábnyomok
+🦃;pulyka;állat|hálaadás|madár|mérges|szárnyas
+🐔;tyúk;állat|madár
+🐓;kakas;állat|madár
+🐣;kikelő kiscsibe;állat|csibe|kikel|kikelés|kiscsibe|kiscsirke|madár|naposcsibe|tojás
+🐤;naposcsibe;állat|csibe|kiscsibe|madár
+🐥;előre néző kiscsibe;állat|csibe|kiscsibe|madár|naposcsibe
+🐦;madár;állat
+🐧;pingvin;állat|madár
+🕊️;galamb;állat|béke|békegalamb|madár|olajág
+🦅;sas;állat|madár
+🦆;kacsa;állat|madár
+🦢;hattyú;állat|fiatal hattyú|madár|rút kiskacsa
+🦉;bagoly;állat|bölcs|madár
+🦤;dodó;állat|kihalt|madár|Mauritius|nagy
+🪶;madártoll;madár|repülés|toll|tollazat
+🦩;flamingó;színpompás|trópusi
+🦚;páva;állat|büszke|hivalkodó|madár|pávakakas|pávatyúk|szép madár|színes|színpompás
+🦜;papagáj;állat|beszél|kalóz|lóri|madár
+🪽;szárny;angyal|angyalszárny|madár|mitológia|repül|repülés
+🐦‍⬛;fekete madár;fekete|holló|madár|varjú|vetési varjú
+🪿;liba;bolondos|gágog|madár|szárnyas
+🐦‍🔥;főnix;fantasy|feltámad|halhatatlan|reinkarnáció|tűzmadár|újjászületés
+🐸;békafej;állat|béka|fej
+🐊;krokodil;állat
+🐢;teknős;állat|teknőc|teknősbéka
+🦎;gyík;állat|hüllő
+🐍;kígyó;állat|állatöv|csillagjegy|zodiákus
+🐲;sárkányfej;állat|fantasy|fej|mese|sárkány|tündérmese
+🐉;sárkány;állat|mese
+🦕;sauropoda;állat|brachiosaurus|brontosaurus|dínó|dinoszaurusz|diplodocus|kihalt|őslény
+🦖;T. rex;állat|dínó|dinoszaurusz|kihalt|őslény|T-rex|T.-rex|Tyrannosaurus|Tyrannosaurus rex
+🐳;fröcskölő bálna;állat|bálna|fej|fröcskölés
+🐋;bálna;állat|óceán|tengerpart
+🐬;delfin;állat|flipper|óceán|tengerpart
+🫍;kardszárnyú delfin;bálna|óceán|tengeri állat
+🦭;fóka;állat|oroszlánfóka|tenger
+🐟;hal;állat|állatöv|csillagjegy|étel|halak|halászat|halászik|horoszkóp
+🐠;trópusi hal;állat|díszhal|hal|trópusi
+🐡;gömbhal;állat|hal
+🦈;cápa;állat|hal
+🐙;polip;állat|óceán|oktopusz
+🐚;tengeri csiga;kagyló|spirális|tengerpart
+🪸;korall;korallzátony|óceán|zátony
+🪼;medúza;csíp|gerinctelen|jaj|kocsonyás|szúrószerv|tengeri
+🦀;rák;állatöv|csillagjegy
+🦞;homár;állat|ollók|rák|rákleves|tenger gyümölcsei|tengeri étel
+🦐;garnélarák;étel|kicsi|rák|tengeri
+🦑;tintahal;állat|étel
+🦪;osztriga;búvárkodás|gyöngy
+🐌;csiga;állat|lassú
+🦋;pillangó;állat|lepke|rovar|szép
+🐛;rovar;állat|bogár|hernyó|kukac|százlábú
+🐜;hangya;állat|kert|rovar
+🐝;méh;állat|darázs|dongó|háziméh|méhecske|rovar|tavasz|természet
+🪲;bogár;állat|cserebogár|rovar
+🐞;katica;állat|bogár|katicabogár|rovar
+🦗;tücsök;állat|bogár|ciripel|rovar|szöcske|ugrik
+🪳;csótány;állat|kártevő|rovar|svábbogár|undi|undorító
+🕷️;pók;állat|rovar
+🕸️;pókháló;háló|pók
+🦂;skorpió;állat|állatöv|csillagjegy
+🦟;szúnyog;betegség|csípés|láz|malária|rovar|vírus
+🪰;légy;állat|betegség|féreg|kártevő|rohadás|rovar
+🪱;kukac;állat|féreg|földigiliszta|giliszta|gyűrűs féreg|gyűrűsféreg|parazita
+🦠;mikróba;amőba|baktérium|tudomány|vírus
+💐;csokor;évforduló|növény|randevú|randi|romantika|születésnap|virág|virágcsokor
+🌸;cseresznyevirág;cseresznye|növény|virág
+💮;fehér virág;növény|virág
+🪷;lótusz;buddhizmus|hinduizmus|India|lótuszvirág|tisztaság|Vietnam|virág
+🏵️;rozetta;növény|virág
+🌹;rózsa;növény|romantika|szenvedély|szerelem|szerelmes|virág|vörös rózsa
+🥀;hervadt virág;hervadt|rózsa|virág
+🌺;hibiszkusz;növény|virág
+🌻;napraforgó;nap|növény|virág
+🌼;virágzás;növény|virág
+🌷;tulipán;növény|virág
+🪻;jácint;búzavirág|csillagfürt|levendula|tátika|virág
+🌱;palánta;hajtás|kihajt|növény
+🪴;cserepes növény;cserepes virág|gondozás|hasztalan|növény|szoba|szobanövény|unalmas
+🌲;örökzöld;fa|fenyő|fenyőfa|karácsonyfa|növény
+🌳;lombhullató fa;erdő|fa|lombhullató|növény|zöld
+🌴;pálmafa;fa|növény|pálma|strand|tengerpart
+🌵;kaktusz;növény|sivatag|szárazság|természet
+🌾;rizs;gabona|gabonaféle|növény
+🌿;gyógynövény;levél|növény
+☘️;lóhere;növény
+🍀;négylevelű lóhere;lóhere|négylevelű|növény|szerencse|szerencsés
+🍁;juharlevél;falevél|juhar|levél|növény|ősz
+🍂;lehullott levél;avar|falevél|lehullott|levél|növény|ősz
+🍃;szélfútta levél;hulló|lebegő|levél|növény|szél
+🪹;üres fészek;fészek|fészekrakás
+🪺;fészek tojásokkal;fészek|fészekrakás|tojások
+🍄;gomba;növény
+🪾;levél nélküli fa;ágak|csupasz|fa|faanyag|halott|kiszáradt|levél nélküli|tél|terméketlen|törzs
+🍇;szőlő;étel|gyümölcs|növény
+🍈;sárgadinnye;étel|gyümölcs|növény
+🍉;görögdinnye;dinnye|étel|gyümölcs|növény
+🍊;mandarin;c-vitamin|gyümölcs|narancs|nektarin|növény
+🍋;citrom;citrusféle|étel|gyümölcs|keserű|növény
+🍋‍🟩;lime;citrus|friss|gyümölcs|koktél|lé|margarita|mojito|salsa|tequila|trópusi|zöld
+🍌;banán;gyümölcs|kálium
+🍍;ananász;étel|gyümölcs|növény
+🥭;mangó;déligyümölcs|étel|gyümölcs|trópusi
+🍎;piros alma;alma|egészség|érett|étel|gyümölcs|növény|piros
+🍏;zöld alma;alma|egészség|étel|gyümölcs|növény|zöld
+🍐;körte;étel|gyümölcs|növény
+🍑;őszibarack;barack|étel|gyümölcs|növény
+🍒;cseresznye;étel|gyümölcs|meggy|növény
+🍓;eper;étel|gyümölcs|növény|szamóca
+🫐;áfonya;bogyó|bogyós gyümölcs|étel|fekete áfonya|gyümölcs
+🥝;kivi;étel|gyümölcs
+🍅;paradicsom;étel|növény|zöldség
+🫒;olajbogyó;étel|növény|olajág|olíva|olívabogyó|olívaolaj
+🥥;kókuszdió;étel|gyümölcs|kókusz|növény|pálma|piña colada
+🥑;avokádó;étel|gyümölcs
+🍆;padlizsán;étel|növény|zöldség
+🥔;krumpli;burgonya|étel|zöldség
+🥕;sárgarépa;étel|répa|zöldség
+🌽;kukoricacső;cső|csöves kukorica|étel|kukorica|növény
+🌶️;erőspaprika;csípős|erős|étel|növény|paprika
+🫑;kaliforniai paprika;paprika|pritamin|pritaminpaprika|zöldség
+🥒;uborka;étel|kígyóuborka|kovászosuborka|zöldség
+🥬;leveles zöldség;burger|fodros kel|hamburger|káposzta|kel|kelkáposzta|kínai kel|saláta|zöldség
+🥦;brokkoli;étel|vadkáposzta|zöldség
+🧄;fokhagyma;ízesítés
+🧅;hagyma;ízesítés|vöröshagyma
+🥜;földimogyoró;allergia|étel|mogyoró
+🫘;bab;étel|hüvelyes növény|vese|vesebab|vörösbab
+🌰;gesztenye;étel|mogyoró|növény
+🫚;gyömbérgyökér;fűszer|gyökér|gyömbér|sör
+🫛;borsóhüvely;bab|borsó|edamame|hüvely|hüvelyes|zöldség
+🍄‍🟫;barna gomba;étel|gomba|portobello|szarvasgomba|természet|vega|vegán|vegetariánus
+🫜;gyökérzöldség;cékla|étel|fehérrépa|gyökér|kert|retek|saláta|vegetáriánus|zöldség
+🍞;kenyér;étel|vekni
+🥐;croissant;étel|francia|kifli|péksütemény|péksüti|reggeli
+🥖;bagett;étel|francia|kenyér
+🫓;laposkenyér;étel|kenyér|lapos kenyér|lepénykenyér|naan|pita
+🥨;perec;csavart|perec, étel, csavart
+🥯;bagel;kenyér|pékáru|pékség|reggeli|szendvics|vajkrém|zsemle
+🥞;palacsinta;étel
+🧇;gofri;gofrisütő|határozatlan|vas|waffle
+🧀;sajtdarab;ementáli|étel|lyukas sajt|sajt
+🍖;csontos hús;csont|étel|hús
+🍗;csirkecomb;baromfi|comb|csirke|csontos|étel|hús|kacsacomb|libacomb
+🥩;húsdarab;bárányszelet|étel|hús|hússzelet|nyers hús|sertésszelet|steak|szelet hús
+🥓;szalonna;bacon|étel|hús
+🍔;hamburger;burger|étel|gyorskaja|hambi|sajtburger
+🍟;sült krumpli;étel|gyorsétel|gyorskaja|hasábburgonya|krumpli|sültkrumpli
+🍕;pizza;étel|pepperoni|sajtos|szelet
+🌭;hot dog;étel|hotdog|kifli|kolbász|mustár|virsli
+🥪;szendvics;kenyér
+🌮;taco;étel|mexikói
+🌯;burrito;étel|mexikói
+🫔;tamale;étel|felcsavart|mexikói
+🥙;pita;étel|falafel|gírosz|gyros|kebab|töltött
+🧆;falafel;csicseriborsó|húsgolyó
+🥚;tojás;étel
+🍳;sütés-főzés;étel|reggeli|serpenyő|tojás|tükörtojás
+🥘;serpenyős étel;étel|paella|serpenyő
+🍲;egy tál étel;ebéd|ennivaló|étel|tál
+🫕;fondü;csokoládé|étel|lábas|olvasztott|sajt|sí|svájci
+🥣;tál kanállal;ebéd|étel|gabonapehely|leves|paradicsomleves|reggeli|rizskása|tál
+🥗;zöld saláta;étel|saláta|zöld|zöldsaláta
+🍿;pattogatott kukorica;étel|kukorica|mozi
+🧈;vaj;tejtermék
+🧂;só;dühös|fűszer|íz|sós|sószóró
+🥫;konzerv;étel
+🍱;japán ételdoboz;bento|doboz|étel|ételdoboz
+🍘;rizskeksz;étel|japán|keksz|rizs
+🍙;rizsgolyó;étel|golyó|japán|rizs
+🍚;főtt rizs;étel|főzött|rizs
+🍛;currys rizs;curry|étel|rizs
+🍜;gőzölgő tál;étel|evőpálcika|forró|gőzölög|tál|tészta
+🍝;spagetti;étel|makaróni|milánói|olasz étel|tészta
+🍠;sült édesburgonya;burgonya|édesburgonya|étel|krumpli
+🍢;oden;étel|grillezés|japán kebab|nyárs|saslik
+🍣;szusi;étel|japán
+🍤;sült garnélarák;étel|garnélarák|rák|sült|tenger gyümölcsei
+🍥;csavart haltorta;csavart|étel|hal|haltorta|japán|torta
+🥮;holdsütemény;fesztivál|ősz|őszközép|yuèbǐng
+🍡;dango;desszert|édesség|étel|gombóc|japán|nyárs|pálca
+🥟;gombóc;batyu|étel|gyoza|japán|jiaozi|kínai|pierogi|tészta|töltött
+🥠;szerencsesüti;desszert|édesség|étel|jóslás|jóslat
+🥡;elviteles doboz;doboz|elviteles papírdoboz|elvitelre|étel|étel házhozszállítás|evőpálcika|kínai|pálcika
+🍦;lágyfagylalt;desszert|édesség|étel|fagyi|fagylalt|gépi fagylalt|tölcséres fagylalt
+🍧;fagylalt öntettel;desszert|édesség|étel|fagyi|fagylalt|öntet
+🍨;fagylalt;desszert|édesség|étel|fagyi|fagylaltkehely
+🍩;fánk;desszert|édesség|étel
+🍪;sütemény;desszert|édesség|étel|keksz|süti
+🎂;születésnapi torta;desszert|édesség|étel|sütemény|süti|születésnap|szülinap|torta
+🍰;gyümölcstorta;desszert|édesség|étel|sütemény|süti|szelet|torta|tortaszelet
+🧁;cupcake;cukor|desszert|édesség|finomság|pékáru|pékség
+🥧;pite;almáspite|desszert|édesség|étel|gyümölcsös|sütemény|süti|tészta|töltelék|töltött
+🍫;csokoládé;csoki|desszert|édesség|tábla csoki|táblás csokoládé
+🍬;cukorka;bonbon|desszert|édesség
+🍭;nyalóka;cukorka|desszert|édesség
+🍮;puding;desszert|édesség|étel
+🍯;mézes csupor;bödön|csupor|édes|méz|mézes bödön
+🍼;cumisüveg;baba|cumi|ital|tej|újszülött
+🥛;egy pohár tej;ital|pohár|tej
+☕;forró ital;forró|gőzölgő|ital|kávé|koffein|reggel|reggeli ital|tea
+🫖;teáskanna;bögre|ital|kanna|tea
+🍵;fül nélküli teáscsésze;csésze|ital|tea|teáscsésze
+🍶;szaké;alkohol|bár|csésze|ital|japán|üveg
+🍾;üveg kiugró dugóval;bár|dugó|ital|kiugrik|kupak|pezsgő|pezsgőt pukkaszt|születésnap|ünneplés
+🍷;borospohár;alkohol|bár|bor|étterem|ital|pohár|vörösbor
+🍸;koktélos pohár;alkohol|bár|ital|koktél|pohár
+🍹;trópusi ital;alkohol|bár|ital|koktél|trópusi
+🍺;söröskorsó;alkohol|bár|ital|korsó|sör
+🍻;összekoccanó söröskorsók;alkohol|bár|ital|koccintás|korsó|sör|söröskorsó
+🥂;koccintó poharak;ivás|koccint|koccintás|koccintó|pohár|ünneplés
+🥃;feles pohár;alkohol|feles|ital|pia|pohár|szeszes ital|tömény|whisky
+🫗;ömlő folyadék;ital|kiönt|pohár|üres
+🥤;pohár szívószállal;dzsúz|ital|ivólé|papírpohár|pohár|szénsavas ital|szívószál|szóda|üdítő|üdítőital
+🧋;buborékos tea;bubble tea|buborék|étel|gyöngy|ital|tajvan|tea|tej
+🧃;italos doboz;édes|gyümölcslé|gyümölcsleves doboz|ivólé|juice|szívószál
+🧉;maté;ital
+🧊;jégkocka;hideg|jég|jéghegy
+🥢;evőpálcikák;evés|evőpálcika|hashi|pálcika
+🍽️;kés és villa tányérral;kés|tálalás|tányér|villa
+🍴;kés és villa;ebéd|ebédszünet|éhes|evőeszköz|kaja|kés|tálalás|vacsora|villa
+🥄;kanál;evés, eszik|evőeszköz
+🔪;konyhakés;eszköz|fegyver|felszerelés|főzés|kés|konyha|séf|szakács
+🫙;befőttesüveg;fűszer|szósz|tárolás|tároló|üres
+🏺;amfora;antik váza|edény|váza|vízöntő
+🌍;Európát és Afrikát mutató földgömb;Afrika|Európa|föld|földgömb|világ
+🌎;Amerikát mutató földgömb;Amerika|föld|földgömb|földrajz|világ
+🌏;Ázsiát és Ausztráliát mutató földgömb;Ausztrália|Ázsia|föld|földgömb|földrajz|világ
+🌐;földgömb délkörökkel;délkörök|föld|földgömb|földrajz|internet|világ
+🗺️;világtérkép;föld|térkép|világ
+🗾;Japán térképe;földrajz|Japán|térkép
+🧭;iránytű;irány|mágneses|navigáció|tájékozódás
+🏔️;hegy hótakaróval;hegy|hideg|hó
+⛰️;hegy;hegység
+🛘;földcsuszamlás;földrengés|hegy|katasztrófa|lavina|sárlavina|sziklák|veszély
+🌋;vulkán;katasztrófa|kitörés|természet|tűzhányó|vulkánkitörés
+🗻;Fudzsi-hegy;fudzsi|hegy
+🏕️;sátorozás;kemping|kempingezés|sátor
+🏖️;strand napernyővel;homok|napernyő|strand|tengerpart
+🏜️;sivatag;kaktusz
+🏝️;lakatlan sziget;pálmafa|sivatag|sziget
+🏞️;nemzeti park;park|védett terület
+🏟️;stadion;sportlétesítmény
+🏛️;klasszikus épület;épület|klasszikus|múzeum|régi
+🏗️;építkezés;daru|építés
+🧱;tégla;agyag|fal|habarcs|malter|téglafal|téglák
+🪨;szikla;kemény|kő|kőszikla|nehéz
+🪵;fa;faanyag|farönk|rönk
+🛖;kunyhó;ház|jurta|lak|otthon
+🏘️;lakóházak;családi ház|épület|ház
+🏚️;elhagyatott ház;elhagyatott|épület|ház|romos
+🏠;lakóház;családi ház|épület|ház|hétvégi ház|lak|otthon|vidéki ház
+🏡;ház kerttel;családi ház|épület|ház|hétvégi ház|kert|kertes ház|lak|nyaraló|otthon|vidéki ház
+🏢;irodaépület;épület|iroda|munka|munkahely
+🏣;japán postahivatal;épület|japán|posta
+🏤;postahivatal;épület|európai|posta
+🏥;kórház;doktor|épület|gyógyítás|orvos
+🏦;bank;épület
+🏨;hotel;épület
+🏩;szálló szerelmeseknek;épület|love hotel|szálloda|szerelmi fészek
+🏪;kisbolt;bolt|éjjel-nappali|épület|non-stop
+🏫;iskola;épület
+🏬;áruház;boltok|épület
+🏭;gyár;épület
+🏯;japán kastély;épület|japán|kastély
+🏰;vár;épület|európai|kastély
+💒;esküvő;épület|kápolna|romantika
+🗼;Tokiói torony;tokió|torony
+🗽;Szabadság-szobor;New York|szabadság|szobor
+⛪;templom;épület|kereszt|keresztény|vallás
+🕌;mecset;iszlám|mohamedán|muszlim|vallás
+🛕;hindu templom;hindu|templom
+🕍;zsinagóga;judaizmus|szentély|templom|vallás|zsidó
+⛩️;sintó szentély;japán|sintó|szentély|vallás
+🕋;kába;fekete|iszlám|kő|kocka|mohamedán|muszlim|vallás
+⛲;szökőkút;
+⛺;sátor;kempingezés|szállás
+🌁;ködös;időjárás|köd
+🌃;éjszaka csillagokkal;csillag|derült idő|éjszaka|épület|város
+🏙️;városkép;éjszaka|épületek|város
+🌄;hegyek mögött felkelő nap;hajnal|hegyek|nap|napfelkelte|napkelte|reggel
+🌅;napfelkelte;felkelő nap|hajnal|nap|napkelte|reggel
+🌆;városkép alkonyatkor;alkonyat|épület|este|nap|naplemente|napnyugta|város|városkép
+🌇;naplemente;alkonyat|épületek|lemenő nap|nap|város
+🌉;híd éjszaka;éjszaka|híd
+♨️;hőforrás;forrás|forró|gőz|gőzölgő
+🎠;ló a körhintáról;játék|körhinta|szórakozás|vidámpark
+🛝;játszótéri csúszda;csúszda|játék|vidámpark
+🎡;óriáskerék;játék|kerék|vidámpark
+🎢;hullámvasút;hullámnvasút|játék|vidámpark
+💈;fodrászcégér;borbély|cégér|fodrász|hajvágás
+🎪;cirkuszsátor;cirkusz|sátor
+🚂;mozdony;gőz|gőzmozdony|jármű|játékmozdony|játékvasút|közlekedés|utazás|vasút|vonat
+🚃;vasúti kocsi;elektromos|kocsi|közlekedés|vasút|villamos|vonat
+🚄;gyorsvasút;gyorsvonat|jármű|közlekedés|személyszállítás|vasút
+🚅;golyóorrú gyorsvasút;golyóorrú|gyorsvonat|jármű|közlekedés|nagysebességű|sebes|személyszállítás|vasút|vonat
+🚆;vonat;jármű|közlekedés|vasút
+🚇;metró;földalatti|jármű|közlekedés|utazás
+🚈;hév;jármű|közlekedés|metró|vasút
+🚉;állomás;jármű|közlekedés|vasút|vonat
+🚊;villamos;hév|jármű|közlekedés|közlekedési eszköz|metró|nagyvárosi közlekedés|személyszállítás
+🚝;egysínű vasút;jármű|közlekedés|közlekedési eszköz|személyszállítás|vasút|vonat
+🚞;hegyi vasút;jármű|kocsi|közlekedés|vasút
+🚋;villamoskocsi;jármű|kocsi|közlekedés|villamos
+🚌;busz;jármű|közlekedés
+🚍;érkező busz;busz|érkezés|jármű|közlekedés
+🚎;trolibusz;busz|jármű|közlekedés|troli
+🚐;mikrobusz;busz|jármű|kisbusz|közlekedés|minibusz|teherautó|vezet
+🚑;mentő;jármű|közlekedés|mentőautó
+🚒;tűzoltóautó;jármű|közlekedés|tűz|tűzoltó|tűzoltóság
+🚓;rendőrautó;autó|jármű|járőrautó|közlekedés|rendőr|rendőrség
+🚔;érkező rendőrautó;autó|érkező|jármű|járőrautó|közlekedés|rendőrautó|rendőrség
+🚕;taxi;autó|jármű|közlekedés|személyszállítás
+🚖;érkező taxi;érkező|jármű|közlekedés|személyszállítás|taxi
+🚗;autó;jármű|kocsi|közlekedés|vezet|vezetés
+🚘;érkező autó;autó|érkező|jármű|kocsi|közlekedés|vezet
+🚙;szabadidőautó;autó|jármű|közlekedés|lakókocsi|suv|szabadidő-autó|terepjáró|utcai terepjáró|városi terepjáró|vezet
+🛻;kisteherautó;autó|furgon|kocsi|pick-up|pickup|szállítás
+🚚;teherautó;autó|jármű|költözés|költöztetés|közlekedés|szállítás|teherfuvarozás
+🚛;billenős teherautó;autó|fuvar|fuvaroz|jármű|kamion|költözik|költöztetés|közlekedés|szállít|szállítás|teherautó|teherfuvarozás|vezet
+🚜;traktor;jármű
+🏎️;versenyautó;autó|Forma-1|közlekedés|verseny|versenyzés
+🏍️;motorkerékpár;közlekedési eszköz|motor|sport|verseny|versenyzés
+🛵;robogó;jármű|közlekedés|motor|Vespa
+🦽;kézi hajtású kerekesszék;akadálymentesség|kerekesszék|tolókocsi|tolószék
+🦼;motoros kerekesszék;akadálymentesség|kerekesszék
+🛺;motoros riksa;riksa|tuk tuk
+🚲;kerékpár;bicikli|biciklis|biciklizik|jármű|kerékpáros|kerékpározik|közlekedés|spinning|sport|teker|tekerés
+🛴;roller;közlekedés
+🛹;gördeszka;deszka|deszkás|kerék|kerekek
+🛼;görkorcsolya;görkori|kori|sport
+🚏;buszmegálló;busz|megálló
+🛣️;autópálya;autóút|főút|országút|pálya|út
+🛤️;vasúti sín;sín|vágány|vasút|vonat
+🛢️;olajoshordó;hordó|olaj
+⛽;benzinkút;benzin|dízel|kút|tank|tankol|tankolás|töltőállomás|üzemanyag
+🛞;kerék;abroncs|felni|fordul|gumiabroncs|kör
+🚨;rendőrautó villogója;autó|forgó|jármű|lámpa|mentő|rendőr|riaszt|sziréna|tűzoltó|vészhelyzet|villogó
+🚥;vízszintes közlekedési lámpa;kereszteződés|közlekedési|lámpa
+🚦;függőleges közlekedési lámpa;kereszteződés|közlekedési|lámpa
+🛑;stoptábla;nyolcszög|stop
+🚧;útépítés;közlekedés|sorompó
+⚓;vasmacska;hajózás|horgony|kikötés|lehorgonyoz
+🛟;mentőöv;biztonság|életmentő|lebeg|megment
+⛵;vitorlás hajó;hajó|jacht|közlekedés|tenger|vitorlás|vitorlázik|vízi jármű
+🛶;kenu;csónak|evezés|evezőlapát|közlekedés|lapát|sport
+🚤;motoros siklócsónak;csónak|hajó|kishajó|közlekedés|motorcsónak|vízi jármű
+🛳️;utasszállító hajó;csónak|hajó|jármű|közlekedés|utasszállítás|vízi jármű
+⛴️;komp;hajó|közlekedés|utasszállítás
+🛥️;motorcsónak;csónak|hajó|jacht|közlekedés|utasszállítás
+🚢;hajó;közlekedés|óceánjáró|utasszállítás|utazás|vízi jármű
+✈️;repülőgép;közlekedés|légi jármű|repül|repülő|utazás
+🛩️;kisrepülő;közlekedés|légi jármű|repülő|repülőgép|személyszállítás
+🛫;repülőgép indulása;felszállás|indulás|jármű|közlekedés|légi jármű|repülő|repülőgép|utasfelvétel
+🛬;repülőgép érkezése;érkezés|közlekedés|légi jármű|leszállás|repülőgép
+🪂;ejtőernyő;siklóernyő
+💺;ülés;szék
+🚁;helikopter;jármű|közlekedés|légi jármű|utazás
+🚟;függővasút;függő|jármű|közlekedés|vasút
+🚠;hegyi felvonó;hegyi|jármű|kábelvasút|közlekedés|sílift
+🚡;kötélpályás felvonó;jármű|kábelvasút|kötélpálya|közlekedés|levegő
+🛰️;műhold;jármű|szatelit|szatellit|űr
+🚀;rakéta;jármű|közlekedés|űr|űrutazás
+🛸;repülő csészealj;földönkívüli|idegenek|marslakó|UFO|ufó
+🛎️;londinerhívó csengő;csengő|szálloda
+🧳;bőrönd;csomag|csomagolás|gurulós|poggyász|utazás
+⌛;lejárt homokóra;homok|homokóra|idő|letelt|óra
+⏳;nem lejárt homokóra;homok|homokóra|homokóra csordogáló homokkal|idő|lejár|letelik|telik|várakozás
+⌚;óra;idő|karóra
+⏰;ébresztőóra;ébresztés|idő|óra|vekker
+⏱️;stopperóra;óra|stopper
+⏲️;visszaszámláló óra;időzítő|óra|visszaszámlálás
+🕰️;régies óra;óra
+🕛;tizenkét óra;00|12|12:00|dél|egész óra|éjfél|óra|tizenkettő
+🕧;fél egy;12|12:30|30|harminc|idő|óra|tizenkettő
+🕐;egy óra;00|1|1:00|egész óra|egy|idő|óra
+🕜;fél kettő;1|1:30|30|egy|harminc|idő|óra
+🕑;két óra;00|2|2:00|egész óra|idő|kettő|óra
+🕝;fél három;2|2:30|30|harminc|idő|kettő|óra
+🕒;három óra;00|3|3:00|egész óra|három|idő|óra
+🕞;fél négy;3|3:30|30|harminc|három|idő|óra
+🕓;négy óra;00|4|4:00|egész óra|idő|négy|óra
+🕟;fél öt;30|4|4:30|harminc|idő|négy|óra
+🕔;öt óra;00|5|5:00|egész óra|idő|óra|öt
+🕠;fél hat;30|5|5:30|harminc|idő|óra|öt
+🕕;hat óra;00|6|6:00|egész óra|hat|idő|óra
+🕡;fél hét;30|6|6:30|harminc|hat|idő|óra
+🕖;hét óra;00|7|7:00|egész óra|hét|óra
+🕢;fél nyolc;30|7|7:30|harminc|hét|idő|óra
+🕗;nyolc óra;00|8|8:00|egész óra|idő|nyolc|óra
+🕣;fél kilenc;30|8|8:30|harminc|idő|nyolc|óra
+🕘;kilenc óra;00|9|9:00|egész óra|kilenc|óra
+🕤;fél tíz;30|9|9:30|harminc|idő|kilenc|óra
+🕙;tíz óra;00|10|10:00|egész óra|idő|óra|tíz
+🕥;fél tizenegy;10|10:30|30|harminc|idő|óra|tíz
+🕚;tizenegy óra;00|11|11:00|egész óra|óra|tizenegy
+🕦;fél tizenkettő;11|11:30|30|harminc|idő|óra|tizenegy
+🌑;újhold;ég|éjszaka|hold|holdfázisok|sötétség|űr
+🌒;növő, sarló alakú hold;ég|éjszaka|hold|holdfázisok|kifli|növő|növő, kifli alakú hold|sarló|sarló alakú hold|űr
+🌓;első negyedben lévő hold;ég|éjszaka|hold|holdfázisok|negyed
+🌔;növő domború hold;domború|ég|éjszaka|hold|holdfázisok|űr
+🌕;telihold;ég|éjszaka|hold|holdfázisok|űr
+🌖;fogyó domború hold;domború|ég|éjszaka|hold|holdfázisok|homorú
+🌗;utolsó negyedben lévő hold;ég|éjszaka|hold|holdfázisok|utolsó negyed
+🌘;fogyó, sarló alakú hold;ég|fogyó|fogyó, kifli alakú hold|hold|holdfázisok|kifli|kifli alakú hold|sarló|sarló alakú hold
+🌙;növekvő hold;ég|éjszaka|hold|holdfázisok|kifli|kifli alakú hold|sarló
+🌚;újhold arccal;arc|ég|hold|holdfázisok|új hold arccal|újhold
+🌛;első negyedben lévő hold arccal;arc|ég|éjszaka|első negyed|hold|holdfázisok
+🌜;utolsó negyedben lévő hold arccal;arc|ég|éjszaka|hold|holdfázisok|utolsó negyed
+🌡️;hőmérő;időjárás
+☀️;nap;fényes sugarak|időjárás|napos|napsugarak
+🌝;telihold arccal;arc|ég|éjszaka|hold|holdfázisok|telihold
+🌞;nap arccal;arc|égitest|hőség|időjárás|nap|napfény|napos|strand
+🪐;gyűrűs bolygó;bolygó|szaturnusz
+⭐;csillag;közepes fehér csillag
+🌟;fénylő csillag;csillag|csillog|csillogás|éjszaka|fény|fényes
+🌠;hullócsillag;csillag|csillaghullás|ég
+🌌;tejút;csillagrendszer|Tejútrendszer|űr|világűr
+☁️;felhő;felhős|időjárás
+⛅;nap egy felhő mögött;felhő|felhős|időjárás|nap
+⛈️;felhő villámmal és esővel;eső|felhő|felhőszakadás|időjárás|mennydörgés|villámlás
+🌤️;nap egy kis felhő mögött;felhő|időjárás|nap|napos
+🌥️;nap egy nagy felhő mögött;felhő|felhős|időjárás|nap
+🌦️;nap a felhő mögött esővel;eső|felhő|időjárás|nap
+🌧️;felhő esővel;esik|eső|esőfelhő|felhő|felhőszakadás|időjárás
+🌨️;felhő hóval;felhő|havazik|hideg|hó|időjárás
+🌩️;felhő villámmal;felhő|időjárás|villám|villámlik
+🌪️;tornádó;felhő|forgószél|hurrikán|időjárás|szél
+🌫️;köd;felhő|időjárás
+🌬️;szélarc;arc|fúj|időjárás|szél|szeles
+🌀;ciklon;hurrikán|időjárás|tájfun
+🌈;szivárvány;aszexuális|biszexuális|büszke|büszkeség|eső|homoszexuális|időjárás|interszexuális|kérdéses|kíváncsi|leszbikus|LGBT|LMBT|meleg|omniszexuális|pánszexuális|természet|transznemű|transzszexuális
+🌂;becsukott esernyő;ernyő|esernyő|eső|időjárás|kiegészítő
+☂️;esernyő;eső|időjárás|kiegészítő
+☔;esernyő esőcseppekkel;csepp|ernyő|esernyő|eső|időjárás|kiegészítő
+⛱️;ernyő a földön;ernyő|eső|időjárás|nap|napernyő|nyár|strand
+⚡;magasfeszültség;nagyfeszültség|veszély|vihar|villám|villámlás
+❄️;hópehely;hideg|hó|időjárás|tél|zúzmara
+☃️;hóember;hideg|hó|hóesés|időjárás|tél
+⛄;hóember hó nélkül;hideg|hó|hóember|időjárás|tél
+☄️;üstökös;meteor|űr
+🔥;tűz;ég|felgyullad|forró|gyúlékony|gyullad|láng|meleg|perzsel
+💧;csepp;hideg|időjárás|izzadság|képregény|könny|könnycsepp|szomorú|vicces|víz
+🌊;vízhullám;hullám|hullám a vízen|időjárás|óceán|tenger|víz
+🎃;töklámpás;halloween|töklámpa|ünnep|ünnepi hangulat|ünneplés
+🎄;karácsonyfa;fa|fenyő|fenyőfa|karácsony|ünnep|ünnepi hangulat|ünneplés
+🎆;tűzijáték;ünnep|ünnepi hangulat|ünneplés
+🎇;csillagszóró;tűzijáték|ünnep|ünnepi hangulat|ünneplés
+🧨;petárda;dinamit|fény|pukkan|robban|robbanószer|szikra|tűz|tüzijáték|tűzijáték
+✨;szikrák;csillag|csillog|szikra|varázslat
+🎈;léggömb;lufi, születésnap, ünnepel|ünnep|ünnepi hangulat|ünneplés
+🎉;partikellékek;buli|bulizik|konfetti|partizik|party|szerpentin|szilveszter|születésnap|ünnep|ünnepel|ünnepi hangulat|ünneplés
+🎊;konfetti;buli|parti|party|születésnap|ünnep|ünnepi hangulat|ünneplés
+🎋;tanabata ünnepi fa;fa|japán|ünnep|ünnepi hangulat|ünneplés
+🎍;fenyődekoráció;bambusz|fenyő|japán|növény|ünnep|ünnepi hangulat|ünneplés
+🎎;japán babák;baba|figura|japán|ünnep|ünnepi hangulat|ünneplés
+🎏;rizspapír pontyok;hal|lobogó|ponty|rizspapír|ünnep|ünnepi hangulat|ünneplés
+🎐;szélharang;csengő|harang|harangjáték|szél|szélcsengő|ünnep|ünnepi hangulat|ünneplés
+🎑;holdünnep;hold|ünnep|ünnepi hangulat|ünneplés
+🧧;piros boríték;ajándék|hong bao|hóngbāo|lai see|pénz|szerencse|szerencsehozó
+🎀;szalag;masni|ünnep|ünnepi hangulat|ünneplés
+🎁;becsomagolt ajándék;ajándék|becsomagolt|doboz|karácsony|meglepetés|születésnap|ünnep|ünnepi hangulat|ünneplés
+🎗️;emlékező szalag;emlékezés|megemlékezés|sárga szalag|szalag
+🎟️;belépőjegyek;belépő|belépőjegy|jegy
+🎫;jegy;belépő|belépőjegy
+🎖️;katonai kitüntetés;érem|katonai|kitüntetés|medál|megemlékezés
+🏆;kupa;díj|győzelem|győzni|győztes|sport|trófea|verseny
+🏅;sportérem;aranyérem|érem|győztes|medál
+🥇;aranyérem;arany|első|érem|medál
+🥈;ezüstérem;érem|ezüst|második
+🥉;bronzérem;bronz|érem|harmadik|medál
+⚽;foci;focilabda|futball|labda|labdarúgás|sport
+⚾;baseball;baseball-labda|labda|sport
+🥎;softball;baseball|kar alatti dobás|kesztyű|labda|sport|sportok
+🏀;kosárlabda;kosár|labda|sport
+🏐;röplabda;játék|labda|röpi|sport
+🏈;amerikai foci;amerikai foci, sport, Super Bowl|amerikai futball|amerikaifoci-labda|labda
+🏉;rögbi;labda|rögbilabda|sport
+🎾;tenisz;labda|sport|teniszlabda
+🥏;frizbi;korong|repül|ultimate
+🎳;bowling;golyó|játék|sport
+🏏;krikett;játék|labda|sport|ütő
+🏑;gyeplabda;bot|hoki|játék|labda|sport|ütő
+🏒;hokiütő és korong;hoki|jéghoki|jégkorong|korong|labda|sport|ütő
+🥍;lacrosse;bot|gól|kapu|labda|labdajáték|sport|ütő
+🏓;pingpong;asztalitenisz|labda|sport|ütő
+🏸;tollaslabda;játék|labda|sport|tollas|ütő
+🥊;bokszkesztyű;boksz|box|boxkesztyű|kesztyű|sport
+🥋;karateruha;cselgáncs|dzsúdó|egyenruha|harcművészet|judo|karate|ruha|sport|taekwondo
+🥅;kapu;háló|sport
+⛳;zászló a lyuknál;golf|lyuk|sport
+⛸️;jégkorcsolya;jég|korcsolya|korcsolyázik|kori|sport|téli sport
+🎣;horgászbot;bot|hal|hobbi|horgászik|horogra akadt|pecabot|pecázik|sport|szabadidő
+🤿;búvármaszk;búvár|búvárkodás|búvárszemüveg|merülés|szabadtüdős merülés
+🎽;futómez;atlétika|futás|mez|trikó
+🎿;sílécek;hó|síel|síelés|sport|téli sportok
+🛷;szán;szán, szánkó, szánkózás, szánkózik, tobogán, lesiklás, hó, sport|szánkó
+🥌;curlingkő;csapatjáték|csúszókorong|curling|játék|jégteke|kő|sport|téli sport
+🎯;telitalálat;bullseye|cél|céltábla|darts|játék|szórakozás|találat
+🪀;jojó;játék|jojózik
+🪁;papírsárkány;repül|sárkányrepülő|szárnyal
+🔫;vízipisztoly;fegyver|játékpisztoly|kézifegyver|pisztoly|revolver
+🎱;biliárd;8-as|biliárdgolyó|golyó|játék
+🔮;kristálygömb;gömb|jós|jóslás|jósnő|jövendő|jövendőmondás|jövő|mese
+🪄;varázspálca;boszi|boszorkány|mágus|pálca|varázslat|varázsló
+🎮;videojáték;játék|kontroller|konzol|playstation|szórakozás|xbox
+🕹️;joystick;játék|videojáték
+🎰;nyerőgép;félkarú rabló|játékgép|pénzbedobós|szerencsejáték|szerencsejátékot űz
+🎲;dobókocka;játék|kocka|társas|társasjáték
+🧩;kirakó;darab|illeszkedik|illeszkedő|nyom|összekapcsolódó|puzzle
+🧸;plüssmaci;játék|játékmackó|játszótárs|mackó|medve|plüss|plüssmackó|tömött
+🪅;pinyáta;buli|cukor|édesség|mexikó|ünnepség
+🪩;tükörgömb;buli|csillám|diszkó|diszkógömb|tánc
+🪆;matrjoska;baba|bábuska|egymásba rakható|orosz
+♠️;pikk szín;francia kártya|játék|kártya|pikk|szín
+♥️;kőr szín;francia kártya|játék|kőr|szín|szív
+♦️;káró szín;francia kártya|játék|káró|piros rombusz|rombusz|szín
+♣️;treff szín;francia kártya|játék|szín|treff
+♟️;gyalog;feláldozható|paraszt|sakk
+🃏;dzsóker;francia kártya|játék|joker|kártya
+🀄;madzsong vörös sárkány;játék|kínai|madzsong|vörös
+🎴;virágos kártyajáték;japán|játék|kártya|virág
+🎭;előadóművészetek;előadás|játék|kikapcsolódás|maszkok|művészet|színész|színház|szórakozás
+🖼️;kép kerettel;bekeretezett kép|festmény|galéria|kép|keret|műalkotás|művészet|múzeum
+🎨;festőpaletta;festészet|festő|galéria|hobbi|kreatív|művészet|múzeum|paletta|színes
+🧵;cérna;fonal|madzag|orsó|tű|varrás
+🪡;varrótű;cérna|hímzés|öltés|szabászat|tű|varrás|varrat
+🧶;fonál;fonal|gombolyag|horgol|horgolás|köt|kötés|kötöget
+🪢;csomó;hurok|kötél|madzag|tengerészcsomó|zsineg
+👓;szemüveg;kiegészítő|szem|viselet
+🕶️;napszemüveg;kiegészítő|sötét|szem|szemüveg
+🥽;védőszemüveg;búvár|búvárszemüveg|hegeszt|hegesztés|hegesztőszemüveg|merülés|szemüveg|szemvédelem|szemvédő|úszás
+🥼;laborköpeny;doktor|dr|fehér köpeny|kísérlet|köpeny|laboratóriumi köpeny|orvos|orvosi köpeny|ruha|tudós
+🦺;mentőmellény;biztonság|láthatósági mellény|mellény|mentő|vészhelyzet
+👔;nyakkendő;elegancia|hivatalos|ing|ing nyakkendővel|komoly|ruházat
+👕;póló;alkalmi|gallér|galléros póló|ing|kék póló|ruha|ruházat
+👖;farmer;farmernadrág|nadrág|ruha|ruházat|vásárlás
+🧣;sál;hideg|nyak|ruházat
+🧤;kesztyű;kesztyű, kék kesztyű, kéz|kéz
+🧥;kabát;dzseki|hideg|ruházat|télikabát
+🧦;zokni;harisnya
+👗;ruha;ruházat|vásárlás
+👘;kimonó;japán|ruha|ruházat
+🥻;szári;indiai ruha|ruha|ruházat
+🩱;egyrészes fürdőruha;fürdőruha
+🩲;fürdőnadrág;alsó|alsónadrág|egyrészes|fürdőgatya
+🩳;rövidnadrág;alsó|fürdőgatya|fürdőnadrág|gatya
+👙;bikini;fürdő|fürdőruha|medence|ruha|ruházat|úszás
+👚;női ruha;blúz|ing|nők|ruha|ruházat
+🪭;összecsukható kézi legyező;félénk|forróság|hűtés|legyez|legyező|tánc
+👛;pénztárca;kiegészítő|női pénztárca|pénz|vásárlás
+👜;női táska;kézitáska|kiegészítő|táska|vásárlás
+👝;táska;kézitáska|kiegészítő|pénztárca|retikül
+🛍️;bevásárlótáskák;bevásárlótáska|táska|vásárlás
+🎒;iskolatáska;hátizsák|iskola|kiegészítő|táska
+🩴;tangapapucs;flip-flop|lábbeli|lábujjközes papucs|papucs|strandpapucs|szandál
+👞;férfi cipő;cipő|férfi|ruha|ruházat|vásárlás
+👟;futócipő;atlétika|cipő|edzőcipő|futás|ruha|ruházat|sportcipő|tornacipő
+🥾;túrabakancs;bakancs|barna cipő|cipő|erdő|hátizsákos túra|hegymászás|kemping|szabad levegő|túra|túrázás|vadon
+🥿;lapos sarkú cipő;balenira|balerina|balerinacipő|balettcipő|belebújós cipő|kényelmes|mamusz|mokaszin|papucs
+👠;magas sarkú cipő;cipő|divat|kiegészítő|magas sarkú|magassarkú|nők|ruha|ruházat|sarok|vásárlás
+👡;női szandál;cipő|kiegészítő|nők|ruha|ruházat|szandál
+🩰;balettcipő;balett|tánc
+👢;női csizma;csizma|kiegészítő|lábbeli|nők|ruha|ruházat
+🪮;hosszú fogú fésű;afro|fésű|fogú|haj|hosszú
+👑;korona;fejdísz|kiegészítő|király|királynő|királyság|középkori
+👒;női kalap;kalap|nők|ruha|ruházat
+🎩;cilinder;bűvész|elegáns|kalap|ruha|ruházat
+🎓;diplomaosztón használt kalap;diplomaosztó|diplomázás|diplomázik|egyetem|kalap|oktatás|ruha|ruházat|ünneplés
+🧢;sildes sapka;baseball sapka|baseballsapka|kiegészítő|ruházat|sapka
+🪖;katonai sisak;hadsereg|harcos|katona|katonaság|sisak
+⛑️;sisak vörös kereszttel;elsősegély|kereszt|ment|segítség|sisak|védősisak|vöröskereszt
+📿;imafüzér;gyöngyök|ima|nyaklánc|rózsafüzér|vallás
+💄;ajakrúzs;kozmetikum|randevú|randi|rúzs|smink|szépségápolás
+💍;gyűrű;ékszer|eljegyez|eljegyzési gyűrű|gyémánt|házasság|jegyben jár|jegyes|lánykérés|megkéri a kezét|romantika
+💎;ékkő;drágakő|ékszer|eljegyzés|érték|értékes|esküvő|gyémánt|romantika
+🔇;elnémított hangszóró;csendes|hangerő|hangszóró|néma|némított
+🔈;hangszóró;hangerő
+🔉;bekapcsolt hangszóró;hang|hangerő|hangszóró|közepes
+🔊;hangos hangszóró;hangos|hangszóró|nagy hangerő|zene
+📢;hangosbeszélő;hangos|kikiált|közhírré tesz|közlemények|megafon
+📣;megafon;hangosbeszélő|szurkolás
+📯;postakürt;kürt|posta|postai
+🔔;harang;csengő|szünet|templom
+🔕;áthúzott harang;csengő|harang|nem|nem csörög|néma|némítás|némított|tilos|tiltott
+🎼;zenei kotta;G-kulcs|hangjegy|kotta|violinkulcs|zene
+🎵;hangjegy;dallam|hang|zene
+🎶;hangjegyek;hangjegy|zene
+🎙️;stúdiómikrofon;mikrofon|stúdió|zene
+🎚️;csúszka;hangerő|zene
+🎛️;vezérlőgombok;gombok|irányítás|kontroller|poti|potméter|zene
+🎤;mikrofon;hangjegyek|karaoke|zene
+🎧;fülhallgató;zenehallgatás
+📻;rádió;rádiókészülék
+🎷;szaxofon;hangszer|szaxi|zene
+🎺;trombita;hangszer|zene
+🪊;harsona;hangszer|jazz|rézfúvós|szomorú|zene
+🪗;harmonika;hangszer|tangóharmonika|zene
+🎸;gitár;elektromos gitár|hangszer|zene
+🎹;zenei billentyűzet;billentyűzet|hangszer|szintetizátor|zene|zongora
+🎻;hegedű;hangszer|zene
+🪕;bendzsó;húros|zene
+🥁;dob;dobol|dobverő|hangszer|zene
+🪘;hosszú dob;dob|hangszer|konga|ritmus|ütem
+🪇;rumbatök;csörgő|hangszer|ráz|ütőhangszer|zene
+🪈;fuvola;blockflöte|fafúvós|fife|furulya|zene
+🪉;hárfa;Ámor|hangszer|szerelem|zene|zenekar
+📱;mobiltelefon;kommunikáció|mobil|rádiótelefon|telefon
+📲;mobiltelefon nyíllal;hívás|kommunikáció, hívásfogadás|mobil|mobiltelefon|nyíl|rádiótelefon|telefon
+☎️;telefon;
+📞;telefonkagyló;kagyló|telefon
+📟;személyhívó;
+📠;faxkészülék;fax
+🔋;elem;akkumulátor
+🪫;alacsony töltöttség;alacsony energiaszint|elektronikus|lemerült akkumulátor
+🔌;elektromos dugó;dugó|elektronika|hálózati csatlakozó|villamosság
+💻;laptop;munka|notebook|pc|számítógép
+🖥️;asztali számítógép;asztali|monitor|pc|számítógép
+🖨️;nyomtató;számítógép
+⌨️;billentyűzet;számítógép
+🖱️;számítógépes egér;3 gombos|egér|három|számítógép
+🖲️;trackball;hanyattegér, egér|számítógép
+💽;minidisk;CD|DVD|lemez|minidisc|optikai|számítógép
+💾;floppylemez;floppy|hajlékonylemez|lemez|számítógép
+💿;optikai lemez;blu-ray|CD|dvd|lemez|optikai|számítógép
+📀;dvd;blu-ray|cd|lemez|optikai|számítógép|zene
+🧮;abakusz;számítás|számolás|számológép
+🎥;kamera;felvétel|felvevő|film|mozi
+🎞️;filmkockák;film|filmtekercs|kocka|kockák|mozi
+📽️;filmvetítő;film|mozi|vetítő|vetítőgép|videó
+🎬;csapó;film|filmfelvétel|filmforgatás|forgatás|mozi
+📺;televízió;tévé|tévékészülék|tv
+📷;fényképezőgép;fotó|kamera|utazás
+📸;fényképező vakuval;fényképezőgép|kamera|vaku|videó
+📹;videokamera;kamera|videó|videók
+📼;videokazetta;kazetta|szalag|vhs|videó
+🔍;balra mutató nagyító;keresés|lencse|nagyító|nyomozó
+🔎;jobbra mutató nagyító;keresés|lencse|nagyító
+🕯️;gyertya;világítás
+💡;villanykörte;fény|képregény|ötlet|világítás
+🔦;zseblámpa;elektronikus|elemlámpa|fény|világítás
+🏮;piros papírlámpa;bár|étterem|fény|japán|lámpa|lámpás|piros
+🪔;olajlámpa;diya|lámpa|olaj
+📔;jegyzetfüzet díszkötésben;borító|díszes|díszkötés|egyetem|füzet|iskola|jegyzet|jegyzetfüzet|könyv|oktatás|olvas|olvasás|tanul|tanulás
+📕;becsukott könyv;csukott|egyetem|iskola|könyv|oktatás|olvas|olvasás|piros könyv|tanul|tanulás|tudás
+📖;nyitott könyv;iskola|könyv|könyvtár|nyitott|oktatás|olvas|tanul|tudás
+📗;zöld könyv;iskola|könyv|könyvtár|kötet|oktatás|olvas|olvasás|regény|tanul|tanulás|zöld
+📘;kék könyv;egyetem|iskola|kék|könyv|könyvtár|oktatás|olvas|olvasás|tanul|tanulás
+📙;narancssárga könyv;egyetem|iskola|könyv|könyvtár|narancssárga|oktatás|olvas|olvasás|tanul|tanulás
+📚;könyvek;iskola|könyv|könyvtár|oktatás|olvas|olvasás|regény|tanul|tanulás|tanulmányok|tudás
+📓;jegyzetfüzet;füzet|jegyzetek
+📒;főkönyv;füzet|jegyzetfüzet|könyv|notesz|spirálos füzet
+📃;kunkorodó lap;csavarodik|csavarodó|dokumentum|kunkorodik|lap|oldal
+📜;tekercs;papír|papírtekercs|pergamen
+📄;felfelé néző oldal;dokumentum|lap|oldal
+📰;újság;hírek|újságos
+🗞️;feltekert újság;feltekert|papír|újság
+📑;könyvjelzők;fülek|jelzés|könyvjelző
+🔖;könyvjelző;
+🏷️;címke;árcédula|cédula
+🪙;érme;arany|dollár|euró|ezüst|fém|kincs|pénz
+💰;pénzeszsák;bank|dollár|drága|fizet|gazdag|nyer|pénz|zsák
+🪎;kincsesláda;arany|drágakő|ékszerek|érték|ezüst|gazdagság|jutalom|pénz|zsákmány
+💴;jen bankjegy;bank|bankjegy|bankó|jen|köteg|papírpénz|pénz|pénznem|valuta
+💵;dollár bankjegy;bank|bankjegy|bankó|dollár|köteg|papírpénz|pénz|pénznem|valuta
+💶;euró bankjegy;bank|bankjegy|bankó|euró|gazdag|papírpénz|pénz|pénznem|valuta
+💷;font bankjegy;bank|bankjegy|bankó|font|gazdag|készpénz|papírpénz|pénz|pénznem|valuta
+💸;pénz szárnyakkal;bank|bankjegy|bankó|dollár|fizet|készpénz|kifizet|papírpénz|pénz|repülés|szárnyak
+💳;hitelkártya;bank|bankkártya|fizet|kártya
+🧾;nyugta;bizonyíték|bizonylat|könyvelés|pénzügyek|számla|számvitel
+💹;növekvő jendiagram;bank|diagram|emelkedés|felfelé|jen|növekedés|pénz|pénznem|piac|trend|valuta
+✉️;boríték;e-mail|levél|üzenet
+📧;e-mail;email|levél
+📨;beérkező boríték;beérkező|bejövő|boríték|e-mail|fogadás|kézbesíteni|küldött|levél|posta
+📩;boríték nyíllal;boríték|e-mail|elküldött|kimenő|levél|nyíl|posta
+📤;kimenő tálca;doboz|e-mail|elküldött|email|kimenő|levél|posta|tálca
+📥;beérkező tálca;beérkező|doboz|e-mail|email|fogadás|levél|posta|tálca
+📦;csomag;doboz|szállítás
+📫;csukott levelesláda felemelt zászlóval;csukott|levél|levelesláda|postaláda
+📪;csukott levelesláda leengedett zászlóval;csukott|leengedett|levél|levelesláda|posta|postaláda|zárt
+📬;nyitott levelesláda felemelt zászlóval;felemelt|levél|levelesláda|nyitott|postaláda|postás
+📭;nyitott levelesláda leengedett zászlóval;leengedett|levél|levelesláda|nyitott|posta|postaláda|postás
+📮;postaláda;doboz|levél|levelesláda
+🗳️;urna szavazólappal;doboz|szavazás|urna
+✏️;ceruza;írószer|iskola
+✒️;fekete tollhegy;fekete toll|írószer|toll|tollhegy|töltőtoll
+🖋️;töltőtoll;írószer|toll
+🖊️;toll;golyóstoll|írószer
+🖌️;ecset;festés|írószer|toll|töltőtoll
+🖍️;zsírkréta;rajz
+📝;feljegyzés;ceruza|jegyzet|lap|üzenet
+💼;aktatáska;iroda
+📁;fájlmappa;fájl|mappa
+📂;nyitott fájlmappa;dosszié|fájl|mappa|nyitott
+🗂️;kartotékelválasztók;elválasztók|kartoték|katalógus
+📅;naptár;dátum
+📆;fali naptár;falinaptár|naptár
+🗒️;spirálfüzet;jegyzetfüzet|jegyzettömb|notesz|spirál|tömb|üzenet
+🗓️;spirálos naptár;naptár|spirál|tömb
+📇;forgó névjegykártyatartó;forgó|kártya|névjegykártya|névjegykártyatartó|rolodex|tartó
+📈;növekvő diagram;adat|diagram|emelkedés|emelkedő|felfelé|gráf|növekedés|trend
+📉;csökkenő diagram;adat|csökkenés|diagram|esik|gráf|lefelé|negatív|trend
+📊;oszlopdiagram;ábra|adat|diagram|grafikon|oszlop|sáv
+📋;írótábla;jegyzetek
+📌;rajzszög;irodaszer|iskola
+📍;kerek rajzszög;cím|helyzet|kitűz|rajzszög|térkép
+📎;gemkapocs;irodaszer|papírkapocs
+🖇️;összekapcsolt gemkapcsok;gemkapcsok|kapcsolódás
+📏;egyenes vonalzó;egyenes|felszerelés|iskola|matek|matematika|mérés|vonalzó
+📐;háromszögvonalzó;derékszögű|háromszög|matek|matematika|szög|vonalzó
+✂️;olló;eszköz|papírvágó olló|vág
+🗃️;kartotékdoboz;akták|doboz|kartoték
+🗄️;iratszekrény;akták|iratok|irattár|iroda|szekrény
+🗑️;papírkosár;szemeteskosár
+🔒;lakat;zárt|zárva
+🔓;nyitott lakat;kinyitás|lakat|nyitva
+🔏;lakat tollal;adatvédelem|tinta|toll|töltőtoll|zár
+🔐;zárt lakat kulccsal;biztonságos|kulcs|lakat|zár|zárt|zárva
+🔑;kulcs;jelszó
+🗝️;régi kulcs;kulcs|öreg kulcs|zár
+🔨;kalapács;javít|szerel|szerszám
+🪓;balta;fa|favágás|fejsze|szekerce|vágás
+⛏️;csákány;bányász|bányászat|szerszám
+⚒️;kalapács és csákány;csákány|kalapács|szerszám
+🛠️;kalapács és csavarkulcs;csavarkulcs|javít|kalapács|szerel|szerszám|villáskulcs
+🗡️;tőr;fegyver|kés|szúrás
+⚔️;keresztezett kardok;fegyver|kardok|keresztbe tett|keresztezett|lovag
+💣;bomba;képregény|robban|robbanás|veszélyes
+🪃;bumeráng;ausztrália|fegyver|visszajön|visszarepül
+🏹;íj és nyíl;fegyver|íj|nyíl|nyilas|sport
+🛡️;pajzs;fegyver
+🪚;rókafarkú fűrész;ács|asztalos|fa|fűrész|rókafarkú|szerszám|vágás
+🔧;csavarkulcs;szerel|szerszám|villáskulcs
+🪛;csavarhúzó;ezermester|laposfejű|szerszám
+🔩;csavar és anya;anya|csavar|szerel|szerszám
+⚙️;fogaskerék;beállítások|szerszám
+🗜️;satu;szerszám
+⚖️;kétkarú mérleg;eszköz|felszerelés|igazság|jog|mérleg|súly|tömeg
+🦯;fehér bot;akadálymentesség|vak
+🔗;kapocs;láncszem
+⛓️‍💥;elszakadt lánc;bilincs|elszakít|lánc|szabadság|szakítás
+⛓️;lánc;láncszemek
+🪝;kampó;csapda|fogás|horog
+🧰;szerszámosláda;barkácsolás|doboz|láda|piros doboz|szerelő|szerszám|szerszámok|szerszámos doboz|szerszámos láda
+🧲;mágnes;mágneses|negatív|patkó|patkómágnes|pozitív|vonz|vonzás|vonzódás
+🪜;létra;fok|létrafok|mászás
+🪏;ásó;ás|elás|hó|kert|lapát|lyuk|ültet
+⚗️;lombik;eszköz|felszerelés|kémia
+🧪;kémcső;kémia|kísérlet|labor|laboratórium|tudomány|vegyész|vegyészet|vegyi anyag|vegyipar
+🧫;Petri-csésze;baktérium|biológia|biológus|labor|laboratórium|tenyészet|tenyésztés
+🧬;DNS;biológia|biológus|élet|evolúció|fejlődés|gén|gének|genetika|tudomány
+🔬;mikroszkóp;biológia|eszköz|felszerelés|kísérlet|laboratórium|tudomány
+🔭;távcső;csillagászat|eszköz|felszerelés
+📡;parabolaantenna;antenna|műhold|parabola antenna|tányér
+💉;fecskendő;eszköz|injekciós tű|orvos|véradás|vérvétel
+🩸;vércsepp;gyógyszer|menstruáció|seb|sebesülés|sérülés|véradás|vérvétel|vérzés
+💊;tabletta;betegség|doktor|gyógyszer|kapszula|orvos|pirula|vitamin
+🩹;ragtapasz;kötszer|seb|tapasz
+🩼;mankó;bot|fogyatékosság|mozgássegítő|sérülés|sétapálca
+🩺;sztetoszkóp;gyógyszer|orvos|szív|szívhang
+🩻;röntgen;csontok|csontváz|orvos|orvosi|röntgenkép
+🚪;ajtó;
+🛗;lift;akadálymentesítés|felvonó
+🪞;tükör;smink|tükröződés|visszaverődés
+🪟;ablak;átlátszó|friss levegő|keret|kilátás|nyílás
+🛏️;ágy;alvás|hotel|szálloda
+🛋️;kanapé és lámpa;kanapé|lámpa|szálloda
+🪑;szék;ül|ülés
+🚽;vécé;mosdó|toalett|wc
+🪠;vécépumpa;dugulás|kaki|pumpa|vécé|vízvezeték-szerelő|wc|WC-pumpa
+🚿;zuhanyzó;víz|vízsugár|zuhany|zuhanyzik
+🛁;fürdőkád;fürdés
+🪤;egércsapda;csalétek|csali|csapda|egérfogó|sajt
+🪒;borotva;borotvál|borotválkozik|éles|leborotvál|megborotválkozik
+🧴;krémes flakon;hidratáló|krém|naptej|napvédő krém|sampon|testápoló
+🧷;biztosítótű;biztostű|pelenka|punk rock
+🧹;seprű;boszorkány|seper|sepreget|seprés|söpör|takarítás|tisztítás
+🧺;kosár;gazdálkodás|mosás|növénytermesztés|piknik|szennyes|tanya
+🧻;papírtekercs;papír|papírhenger|papírtörlő|papírtörölköző|vécépapír|WC|WC-papír
+🪣;vödör;felmosó|felmosóvödör
+🧼;szappan;buborék|darab|fürdés|szappanhab|szappantartó|tiszta|tisztálkodás|tisztaság|zuhany
+🫧;buborékok;böfi|szappan|szappanbuborékok|tiszta|víz alatti
+🪥;fogkefe;fogak|fogászat|fogmosás|fürdőszoba|higiénia|kefe|tisztítás
+🧽;szivacs;felszív|lyukacsos|nedvszívó|porózus|takarít|tisztít|tisztítás
+🧯;tűzoltó készülék;elfojt|elolt|tűz|tüzet olt|tűzoltó
+🛒;bevásárlókocsi;bevásárlás|bevásárló|élelmiszer áruház|kocsi|közért|shopping|szupermarket|vásárlás
+🚬;dohányzás;cigaretta|cigi
+⚰️;koporsó;halál|temetés|vámpír
+🪦;sírkő;fejfa|halál|rip|sír|temető
+⚱️;halotti urna;halál|hamvak|hamvasztás|temetés|urna
+🧿;nazar amulett;amulett|bűbáj|gonoszűző|gyöngy|kék|nazar|rontás|szem|talizmán
+🪬;hamsza;amulett|Fatima|kéz|Mária|Mirjam|védelem
+🗿;moai;arc|japán|kő|kőarc|szobor
+🪧;transzparens;demonstráció|sztrájk|tábla|tüntetés
+🪪;személyi igazolvány;azonosító|biztonság|engedély|hitelesítő adatok|igazolvány
+🏧;ATM-jel;atm|automata|bank|bankautomata|készpénz|kiadó|pénzfelvétel
+🚮;szemét a kukában szimbólum;környezettudatosság|szemét|szemetes
+🚰;ivóvíz;fogyasztható víz|iható|víz
+♿;kerekesszék;akadálymentesség|mozgássérült|rokkant
+🚹;férfimosdó;férfi mosdó|férfiak|mosdó|toalett|vécé|wc
+🚺;női mosdó;mosdó|nők|toalett|vécé|wc
+🚻;mosdó;toalett|vécé|WC
+🚼;baba szimbólum;kisbaba|pelenkázó
+🚾;toalett;mellékhelyiség|mosdó|vécé|wc
+🛂;útlevél-ellenőrzés;ellenőrzés|utazás|útlevél
+🛃;vám;ellenőrzés|poggyász átvizsgálása|vizsgálat
+🛄;poggyászfelvétel;csomag|felvétel|poggyász|repülő|utazás
+🛅;csomagmegőrző;csomag|megőrzés|poggyász|poggyászmegőrző
+⚠️;figyelmeztetés;figyelem
+🚸;átkelő gyermekek;gyalogos-átkelőhely|gyalogosok|gyermekek|iskola|közlekedési tábla|KRESZ-tábla
+⛔;behajtani tilos;behajtás|forgalom|közlekedési tábla|KRESZ-tábla|nincs behajtás|tilos|tiltott
+🚫;tilos;behajtani tilos|behajtás|frogalom|közlekedési tábla|KRESZ-tábla|nincs behajtás|tábla|tiltott
+🚳;kerékpározni tilos;bicikli|kerékpár|tilos|tiltott
+🚭;dohányozni tilos;cigaretta|dohányzás|tilos|tiltott
+🚯;szemetelni tilos;szemét|szemetelés|tilos|tiltott
+🚱;nem ivóvíz;ivás|ivóvíz|nem|nem iható|tilos|tiltott|víz
+🚷;nem gyalogos zóna;gyalog|gyalogos|tilos|tiltott
+📵;mobiltelefon használata tilos;mobil|mobiltelefon|telefon|tilos|tiltott
+🔞;18 év alatt tilos;18-as karika|kiskorú|korhatár|szám|tilos|tiltás|tiltott|tizennyolc
+☢️;radioaktív;jel|nukleáris veszély|sugárzás|veszély
+☣️;biológiai veszély;biológiai|jel|veszély
+⬆️;felfelé mutató nyíl;égtáj|észak|felfelé|gomb|irány|nyíl
+↗️;jobbra felfelé mutató nyíl;égtáj|északkelet|felfelé|irány|nyíl
+➡️;jobbra mutató nyíl;égtáj|irány|jobbra|kelet|nyíl
+↘️;jobbra lefelé mutató nyíl;délkelet|égtáj|irány|nyíl
+⬇️;lefelé mutató nyíl;dél|égtáj|irány|lefelé|nyíl
+↙️;balra lefelé mutató nyíl;délnyugat|égtáj|irány|nyíl
+⬅️;balra mutató nyíl;balra|égtáj|irány|nyíl|nyugat
+↖️;balra felfelé mutató nyíl;égtáj|északnyugat|irány|nyíl
+↕️;fel-le mutató nyíl;kétirányú nyíl|nyíl
+↔️;balra-jobbra mutató nyíl;kétirányú nyíl|nyíl
+↩️;balra görbülő jobb nyíl;nyíl
+↪️;jobbra görbülő bal nyíl;nyíl
+⤴️;felfelé görbülő jobb nyíl;nyíl
+⤵️;lefelé görbülő jobb nyíl;lefelé|nyíl
+🔃;óramutató járásával megegyező irányú függőleges nyilak;frissítés gomb|nyíl|óramutató járásával megegyező|újratöltés
+🔄;óramutató járásával ellentétes irányú nyilak gombja;csavar|frissítés|frissítés gomb|megint|nyíl|óramutató járásával ellentétes|teker|újból
+🔙;vissza nyíl;nyíl|visszafelé
+🔚;vége nyíl;nyíl|vége
+🔛;bekapcsolva nyíl;bekapcsolva|jelzés|nyíl
+🔜;hamarosan nyíl;hamarosan|jön|nyíl|pill.
+🔝;csúcsra nyíl;felfelé|nyíl|top
+🛐;imahely;ima|imád|imádkozik|vallás
+⚛️;atom szimbólum;ateista|atom
+🕉️;om;hindu|vallás
+✡️;Dávid-csillag;csillag|Dávid|Izrael|vallás|zsidó
+☸️;dharma-kerék;buddha|buddhista|buddhizmus|kerék|vallás
+☯️;jin-jang;jang|jin|tao|taoizmus|vallás
+✝️;latin kereszt;kereszt|kereszténység|vallás
+☦️;ortodox kereszt;kereszt|keresztény|kereszténység|vallás
+☪️;csillag és félhold;iszlám|muszlim|vallás
+☮️;békejel;béke|békés|szimbólum
+🕎;menóra;gyertyatartó|hanuka|judaizmus|vallás|zsidó
+🔯;hatágú csillag ponttal;csillag|judaizmus|szerencse|vallás|zsidó
+🪯;khanda;szikh|vallás
+♈;kos csillagjegy;horoszkóp|kos
+♉;bika csillagjegy;bika|horoszkóp
+♊;ikrek csillagjegy;horoszkóp|ikrek
+♋;rák csillagjegy;csillagjegy|horoszkóp|rák
+♌;oroszlán csillagjegy;horoszkóp|oroszlán
+♍;szűz csillagjegy;horoszkóp|szűz
+♎;mérleg csillagjegy;horoszkóp|mérleg
+♏;skorpió csillagjegy;horoszkóp|skorpió
+♐;nyilas csillagjegy;horoszkóp|nyilas
+♑;bak csillagjegy;bak|horoszkóp
+♒;vízöntő csillagjegy;horoszkóp|vízöntő
+♓;halak csillagjegy;halak|horoszkóp
+⛎;kígyótartó;csillagjegy|horoszkóp|kígyó
+🔀;véletlenszerű lejátszás gomb;egymást keresztező nyilak|nyíl|nyilak
+🔁;ismétlés gomb;ismétlés|megint|nyíl|nyilak|óra járásának megfelelően|újból|újra
+🔂;egy szám ismétlése gomb;ismétlés egyszer|még egyszer|nyíl|nyilak|óra járásának irányában|óra járásának megegyezően|óra járásának megfelelően|újra
+▶️;lejátszás gomb;jobbra nyíl|lejátszás|nyíl
+⏩;előretekerés gomb;dupla nyíl|előre|gyors tekerés
+⏭️;következő szám gomb;gomb|következő jelenet|következő szám|nyíl
+⏯️;lejátszás vagy szünet gomb;lejátszás|szüneteltetés
+◀️;visszajátszás gomb;balra nyíl|gomb|háromszög|nyíl|vissza
+⏪;visszatekerés gomb;dupla nyíl|gyors tekerés|vissza
+⏮️;legutóbbi szám gomb;előző jelenet|előző szám|nyíl
+🔼;felfelé gomb;gomb|nyíl|piros
+⏫;gyors felfelé gomb;dupla|gomb|nyíl
+🔽;lefelé gomb;gomb|lefelé|nyíl|piros
+⏬;gyors lefelé gomb;gomb|lefelé|nyíl|piros
+⏸️;szüneteltetés gomb;dupla vonal|függőleges|gomb|szünet
+⏹️;leállítás gomb;gomb|leállítás|négyzet|stop
+⏺️;felvétel gomb;felvétel|gomb|kör
+⏏️;lemez kiadása gomb;gomb|kiadás
+🎦;mozi;film|kamera
+🔅;sötétítés gomb;fényerő|sötétítés
+🔆;világosítás gomb;fényerő|világosítás
+📶;antennasávok;antenna|mobil|mobiltelefon|térerő
+🛜;vezeték nélküli;hálózat|hotspot|internet|kapcsolat|okostelefon|router|számítógép|szélessávú|wi-fi|wifi|wlan
+📳;rezgő mód;mobil|mobiltelefon|rádiótelefon|rezgés|telefon|tiltott
+📴;mobiltelefon kikapcsolva;kikapcsolva|mobil|mobiltelefon|rádiótelefon|telefon|tiltott
+♀️;női nem jelképe;nem|női
+♂️;férfi nem jelképe;férfi|nem
+⚧️;transznemű szimbólum;transznemű
+✖️;szorzás;×|jel|mégse|vastag szorzásjel|x
+➕;plusz;+|jel|matek|matematika|meg|pluszjel|vastag pluszjel
+➖;mínusz;-|−|gondolatjel|jel|kivonás jel|matematika|vastag mínuszjel
+➗;osztás;÷|jel|matematika|vastag osztásjel
+🟰;vastag egyenlőségjel;egyenlőség|egyenlőségjel|matematika
+♾️;végtelen;korlátlan|örökké|univerzális
+‼️;dupla felkiáltójel;felkiáltás|felkiáltójel|írásjel|központozás
+⁉️;felkiáltójel kérdőjellel;felkiáltás|írásjel|kérdés|kérdőjel|központozás
+❓;piros kérdőjel;írásjel|kérdés|kérdőjel|központozás
+❔;fehér kérdőjel;?|fehér|írásjel|kérdés|kérdőjel|központozás
+❕;fehér felkiáltójel;!|fehér|felkiáltás|felkiáltójel|írásjel|központozás
+❗;piros felkiáltójel;felkiáltás|felkiáltójel|írásjel|központozás
+〰️;hullámos gondolatjel;gondolatjel|hullám|hullámos|központozás|víz
+💱;pénzváltás;átváltás|bank|pénz|pénzváltó|valuta
+💲;vastag dollárjel;dollár|fizet|pénz|pénznem
+⚕️;orvosi szimbólum;Aszklépiosz|bot|gyógyszer|gyógyszertár|kígyó|orvos|orvoslás|patika
+♻️;újrahasznosítás szimbólum;újra|újrahasznosítás
+⚜️;Anjou-liliom;Anjou|liliom|lovag|lovagok
+🔱;háromágú szigony;embléma|hajó|horgony|jel|szigony|vasmacska
+📛;kitűző;jelvény|név|névjegytábla
+🔰;a kezdő japán szimbóluma;japán|kezdő|levél|sárga|zöld
+⭕;nagy, vastag kör;alakzat|kör|nagy|o|piros kör|vastag kör
+✅;vastag fehér pipa;jel|kész|pipa
+☑️;jelölőnégyzet pipával;kész|kipipál|négyzet|pipa|szavazás
+✔️;vastag pipa;jel|kész|pipa
+❌;áthúzásjel;jel|mégse|szorzás|x
+❎;áthúzásjel gomb;bekeretezett|jel|négyzet|szoroz|szorzás|x
+➰;hurok;
+➿;dupla hurok;dupla|hurok
+〽️;részelválasztó;jel|rész|választó
+✳️;nyolcágú csillag;csillag
+✴️;nyolcas csillag;csillag|nyolcágú csillag
+❇️;szikra;
+©️;copyright (szerzői jog által védett);szerzői jog|védett
+®️;registered (bejegyzett);bejegyzett|védjegy
+™️;védjegy;bejegyzett védjegy|tm
+🫟;fröccsenés;csepp|festék|folt|folyadék|kiömlik|rendetlenség|tinta
+*️⃣;gombfej: *;gombfej
+0️⃣;gombfej: 0;0|gombfej|nulla
+1️⃣;gombfej: 1;1|egy|gombfej
+2️⃣;gombfej: 2;2|gombfej|kettő
+3️⃣;gombfej: 3;3|gombfej|három
+4️⃣;gombfej: 4;4|gombfej|négy
+5️⃣;gombfej: 5;5|gombfej|öt
+6️⃣;gombfej: 6;6|gombfej|hat
+7️⃣;gombfej: 7;7|gombfej|hét
+8️⃣;gombfej: 8;8|gombfej|nyolc
+9️⃣;gombfej: 9;9|gombfej|kilenc
+🔟;gombfej: 10;gombfej
+🔠;latin nagybetűs bevitel;abcd|betűk|bevitel|latin|nagybetűs
+🔡;latin kisbetűs bevitel;abcd|betűk|bevitel|kisbetűs|latin
+🔢;számbevitel;1234|bevitel|számok
+🔣;szimbólumok bevitele;bevitel|szimbólum
+🔤;latin betűk bevitele;abc|betűk|bevitel|gomb|latin
+🅰️;A gomb (vércsoport);a|gomb|vércsoport|vértípus
+🆎;AB gomb (vércsoport);ab|ab gomb|vércsoport|vértípus
+🅱️;B gomb (vércsoport);b|gomb|vércsoport|vértípus
+🆑;CL gomb;bekeretezett „cl” rövidítés|cl|gomb
+🆒;COOL gomb;bekeretezett „cool” szó|cool|gomb|laza
+🆓;FREE gomb;bekeretezett „free” szó|free|ingyen|ingyenes|szabad
+ℹ️;információforrás;i|információ|tájékoztatás
+🆔;ID gomb;azonosítás|bekeretezett „id” rövidítés|id|identitás
+Ⓜ️;bekarikázott M betű;kör|m|metró
+🆕;NEW gomb;bekeretezett „new” szó|gomb|new|új
+🆖;NG gomb;bekeretezett „ng” rövidítés|gomb|ng
+🅾️;0 gomb (vércsoport);0|gomb|vércsoport|vértípus
+🆗;OK gomb;bekeretezett „ok” szó|ok|rendben
+🅿️;P gomb;parkolás|parkoló
+🆘;SOS gomb;gomb|segélykérés|segítség|sos
+🆙;UP! gomb;„up!” gomb|fel|jel|up
+🆚;VS gomb;bekeretezett „vs” rövidítés|ellen|ellenfél|kontra|szemben|versus|vs
+🈁;japán „itt” gomb;„itt”|bekeretezett „itt” katakana|japán|katakana|ココ
+🈂️;japán „szervizdíj” gomb;„szervizdíj”|„szervízköltség”|bekeretezett „szervízköltség” katakana|japán|katakana|サ
+🈷️;japán „havi összeg” gomb;„havi összeg”|bekeretezett „havi összeg” képírásjel|gomb|havi összeg|japán|képírásjel|月
+🈶;japán „nem ingyenes” gomb;„nem ingyenes”|bekeretezett „nem díjmentes” képírásjel|fizetős|gomb|japán|képírásjel|nem díjmentes|有
+🈯;japán „foglalt” gomb;„foglalt”|bekeretezett „foglalt” képírásjel|foglalt|japán|képírásjel|指
+🉐;japán „alkalmi vétel” gomb;„alkalmi vétel”|alku|bekarikázott „alku” képírásjel|japán|képírásjel|得
+🈹;japán „engedmény” gomb;„engedmény”|bekeretezett „engedmény” képírásjel|japán|képírásjel|割
+🈚;japán „ingyenes” gomb;“díjmentes”|„ingyenes”|bekeretezett “díjmentes” képírásjel|japán|képírásjel|無
+🈲;japán „tiltott” gomb;„tiltott”|bekeretezett „tiltás” képírásjel|japán|képírásjel|tilos|禁
+🉑;japán „elfogadás” gomb;„elfogadás”|„elfogadható”|bekarikázott „elfogadás” képírásjel|japán|képírásjel|可
+🈸;japán „alkalmazás” gomb;„alkalmazás”|bekeretezett „alkalmazás” képírásjel|gomb|japán|képírásjel|申
+🈴;japán „minimális pontszám” gomb;„minimális pontszám”|bekeretezett „megfelelt” képírásjel|japán|képírásjel|合
+🈳;japán „megüresedés” gomb;„megüresedés”|bekeretezett „üres” képírásjel|japán|képírásjel|空
+㊗️;japán „gratuláció” gomb;„gratuláció”|bekarikázott „gratuláció” képírásjel|gratuláció|gratulálok|japán|képírásjel|祝
+㊙️;japán „titok” gomb;„titok”|bekarikázott „titok” képírásjel|japán|képírásjel|titok|秘
+🈺;japán „működik” gomb;„működik”|bekeretezett „működik” képírásjel|gomb|japán|képírásjel|nyitva|営
+🈵;japán „megtelt” gomb;„megtelt”|bekeretezett „teli” képírásjel|japán|képírásjel|満
+🔴;piros kör;alakzat|kör|piros
+🟠;narancssárga kör;kör|narancssárga
+🟡;sárga kör;kör|sárga
+🟢;zöld kör;kör|zöld
+🔵;kék kör;alakzat|kék|kör
+🟣;lila kör;kör|lila
+🟤;barna kör;barna|kör
+⚫;fekete kör;alakzat|geometriai|kör
+⚪;fehér kör;alakzat|kör
+🟥;vörös négyzet;négyzet|piros|vörös
+🟧;narancssárga négyzet;narancssárga|négyzet
+🟨;sárga négyzet;négyzet|sárga
+🟩;zöld négyzet;négyzet|zöld
+🟦;kék négyzet;kék|négyzet
+🟪;lila négyzet;lila|négyzet
+🟫;barna négyzet;barna|négyzet
+⬛;nagy fekete négyzet;alakzat|geometria|négyzet
+⬜;nagy fehér négyzet;geometria|négyzet
+◼️;közepes fekete négyzet;fekete négyzet|geometria|négyzet
+◻️;közepes fehér négyzet;alakzat|geometria|négyzet
+◾;kis-közepes fekete négyzet;alakzat|fekete|geometria|négyzet
+◽;kis-közepes fehér négyzet;alakzat|geometria|négyzet
+▪️;kis fekete négyzet;alakzat|fekete négyzet|geometria|négyzet
+▫️;kis fehér négyzet;alakzat|geometria|négyzet
+🔶;nagy narancssárga rombusz;alakzat|geometria|narancs|rombusz
+🔷;nagy kék rombusz;alakzat|geometria|kék|rombusz
+🔸;kis narancssárga rombusz;alakzat|geometria|narancs|rombusz
+🔹;kis kék rombusz;alakzat|geometria|kék|rombusz
+🔺;fölfelé mutató piros háromszög;alakzat|felfelé|felfelé mutató piros háromszög|geometriai alakzat|háromszög|piros
+🔻;lefelé mutató piros háromszög;alakzat|geometriai|háromszög|lefelé|piros
+💠;rombusz ponttal;alakzat|geometriai|gyémánt ponttal|képregény|rombusz
+🔘;választógomb;gomb|rádiógomb|választó
+🔳;fehér, négyzet alakú gomb;alakzat|bekeretezett|fehér|geometriai|gomb|négyzet|négyzet alakú gomb
+🔲;fekete, négyzet alakú gomb;fekete|gomb|négyzet|négyzet alakú gomb
+🏁;kockás zászló;autóverseny|cél|Forma-1|kockás|sport|versenyzés|zászló
+🚩;háromszög alakú zászló;építkezés|golf|piros zászló|posta|zászló|zászlórúd
+🎌;keresztbe tett zászlók;japán|keresztbe tett|ünnep|ünnepi hangulat|ünneplés|zászlók
+🏴;lengő fekete zászló;halál|lengő|zászló
+🏳️;lengő fehér zászló;fegyverszünet|leng|lengő|megadás|zászló
+🏳️‍🌈;szivárványszínű zászló;aszexuális|biszexuális|büszke|büszkeség|homoszexuális|interszexuális|kérdéses|kíváncsi|leszbikus|LGBT|LMBT|meleg|omniszexuális|pánszexuális|szivárvány|szivárványszínű|transznemű|transzszexuális|zászló
+🏳️‍⚧️;transznemű zászló;transznemű|zászló
+🏴‍☠️;kalózzászló;fosztogató|Jolly Roger|kalóz|kincs
+🇦🇨;zászló: Ascension-sziget;zászló
+🇦🇩;zászló: Andorra;zászló
+🇦🇪;zászló: Egyesült Arab Emírségek;zászló
+🇦🇫;zászló: Afganisztán;zászló
+🇦🇬;zászló: Antigua és Barbuda;zászló
+🇦🇮;zászló: Anguilla;zászló
+🇦🇱;zászló: Albánia;zászló
+🇦🇲;zászló: Örményország;zászló
+🇦🇴;zászló: Angola;zászló
+🇦🇶;zászló: Antarktisz;zászló
+🇦🇷;zászló: Argentína;zászló
+🇦🇸;zászló: Amerikai Szamoa;zászló
+🇦🇹;zászló: Ausztria;zászló
+🇦🇺;zászló: Ausztrália;zászló
+🇦🇼;zászló: Aruba;zászló
+🇦🇽;zászló: Åland-szigetek;zászló
+🇦🇿;zászló: Azerbajdzsán;zászló
+🇧🇦;zászló: Bosznia-Hercegovina;zászló
+🇧🇧;zászló: Barbados;zászló
+🇧🇩;zászló: Banglades;zászló
+🇧🇪;zászló: Belgium;zászló
+🇧🇫;zászló: Burkina Faso;zászló
+🇧🇬;zászló: Bulgária;zászló
+🇧🇭;zászló: Bahrein;zászló
+🇧🇮;zászló: Burundi;zászló
+🇧🇯;zászló: Benin;zászló
+🇧🇱;zászló: Saint-Barthélemy;zászló
+🇧🇲;zászló: Bermuda;zászló
+🇧🇳;zászló: Brunei;zászló
+🇧🇴;zászló: Bolívia;zászló
+🇧🇶;zászló: Holland Karib-térség;zászló
+🇧🇷;zászló: Brazília;zászló
+🇧🇸;zászló: Bahama-szigetek;zászló
+🇧🇹;zászló: Bhután;zászló
+🇧🇻;zászló: Bouvet-sziget;zászló
+🇧🇼;zászló: Botswana;zászló
+🇧🇾;zászló: Belarusz;zászló
+🇧🇿;zászló: Belize;zászló
+🇨🇦;zászló: Kanada;zászló
+🇨🇨;zászló: Kókusz (Keeling)-szigetek;zászló
+🇨🇩;zászló: Kongó – Kinshasa;zászló
+🇨🇫;zászló: Közép-afrikai Köztársaság;zászló
+🇨🇬;zászló: Kongó – Brazzaville;zászló
+🇨🇭;zászló: Svájc;zászló
+🇨🇮;zászló: Elefántcsontpart;zászló
+🇨🇰;zászló: Cook-szigetek;zászló
+🇨🇱;zászló: Chile;zászló
+🇨🇲;zászló: Kamerun;zászló
+🇨🇳;zászló: Kína;zászló
+🇨🇴;zászló: Kolumbia;zászló
+🇨🇵;zászló: Clipperton-sziget;zászló
+🇨🇶;zászló: Sark;zászló
+🇨🇷;zászló: Costa Rica;zászló
+🇨🇺;zászló: Kuba;zászló
+🇨🇻;zászló: Zöld-foki Köztársaság;zászló
+🇨🇼;zászló: Curaçao;zászló
+🇨🇽;zászló: Karácsony-sziget;zászló
+🇨🇾;zászló: Ciprus;zászló
+🇨🇿;zászló: Csehország;zászló
+🇩🇪;zászló: Németország;zászló
+🇩🇬;zászló: Diego Garcia;zászló
+🇩🇯;zászló: Dzsibuti;zászló
+🇩🇰;zászló: Dánia;zászló
+🇩🇲;zászló: Dominika;zászló
+🇩🇴;zászló: Dominikai Köztársaság;zászló
+🇩🇿;zászló: Algéria;zászló
+🇪🇦;zászló: Ceuta és Melilla;zászló
+🇪🇨;zászló: Ecuador;zászló
+🇪🇪;zászló: Észtország;zászló
+🇪🇬;zászló: Egyiptom;zászló
+🇪🇭;zászló: Nyugat-Szahara;zászló
+🇪🇷;zászló: Eritrea;zászló
+🇪🇸;zászló: Spanyolország;zászló
+🇪🇹;zászló: Etiópia;zászló
+🇪🇺;zászló: Európai Unió;zászló
+🇫🇮;zászló: Finnország;zászló
+🇫🇯;zászló: Fidzsi;zászló
+🇫🇰;zászló: Falkland-szigetek;zászló
+🇫🇲;zászló: Mikronézia;zászló
+🇫🇴;zászló: Feröer szigetek;zászló
+🇫🇷;zászló: Franciaország;zászló
+🇬🇦;zászló: Gabon;zászló
+🇬🇧;zászló: Egyesült Királyság;zászló
+🇬🇩;zászló: Grenada;zászló
+🇬🇪;zászló: Grúzia;zászló
+🇬🇫;zászló: Francia Guyana;zászló
+🇬🇬;zászló: Guernsey;zászló
+🇬🇭;zászló: Ghána;zászló
+🇬🇮;zászló: Gibraltár;zászló
+🇬🇱;zászló: Grönland;zászló
+🇬🇲;zászló: Gambia;zászló
+🇬🇳;zászló: Guinea;zászló
+🇬🇵;zászló: Guadeloupe;zászló
+🇬🇶;zászló: Egyenlítői-Guinea;zászló
+🇬🇷;zászló: Görögország;zászló
+🇬🇸;zászló: Déli-Georgia és Déli-Sandwich-szigetek;zászló
+🇬🇹;zászló: Guatemala;zászló
+🇬🇺;zászló: Guam;zászló
+🇬🇼;zászló: Bissau-Guinea;zászló
+🇬🇾;zászló: Guyana;zászló
+🇭🇰;zászló: Hongkong KKT;zászló
+🇭🇲;zászló: Heard-sziget és McDonald-szigetek;zászló
+🇭🇳;zászló: Honduras;zászló
+🇭🇷;zászló: Horvátország;zászló
+🇭🇹;zászló: Haiti;zászló
+🇭🇺;zászló: Magyarország;zászló
+🇮🇨;zászló: Kanári-szigetek;zászló
+🇮🇩;zászló: Indonézia;zászló
+🇮🇪;zászló: Írország;zászló
+🇮🇱;zászló: Izrael;zászló
+🇮🇲;zászló: Man-sziget;zászló
+🇮🇳;zászló: India;zászló
+🇮🇴;zászló: Brit Indiai-óceáni Terület;zászló
+🇮🇶;zászló: Irak;zászló
+🇮🇷;zászló: Irán;zászló
+🇮🇸;zászló: Izland;zászló
+🇮🇹;zászló: Olaszország;zászló
+🇯🇪;zászló: Jersey;zászló
+🇯🇲;zászló: Jamaica;zászló
+🇯🇴;zászló: Jordánia;zászló
+🇯🇵;zászló: Japán;zászló
+🇰🇪;zászló: Kenya;zászló
+🇰🇬;zászló: Kirgizisztán;zászló
+🇰🇭;zászló: Kambodzsa;zászló
+🇰🇮;zászló: Kiribati;zászló
+🇰🇲;zászló: Comore-szigetek;zászló
+🇰🇳;zászló: Saint Kitts és Nevis;zászló
+🇰🇵;zászló: Észak-Korea;zászló
+🇰🇷;zászló: Dél-Korea;zászló
+🇰🇼;zászló: Kuvait;zászló
+🇰🇾;zászló: Kajmán-szigetek;zászló
+🇰🇿;zászló: Kazahsztán;zászló
+🇱🇦;zászló: Laosz;zászló
+🇱🇧;zászló: Libanon;zászló
+🇱🇨;zászló: Saint Lucia;zászló
+🇱🇮;zászló: Liechtenstein;zászló
+🇱🇰;zászló: Srí Lanka;zászló
+🇱🇷;zászló: Libéria;zászló
+🇱🇸;zászló: Lesotho;zászló
+🇱🇹;zászló: Litvánia;zászló
+🇱🇺;zászló: Luxemburg;zászló
+🇱🇻;zászló: Lettország;zászló
+🇱🇾;zászló: Líbia;zászló
+🇲🇦;zászló: Marokkó;zászló
+🇲🇨;zászló: Monaco;zászló
+🇲🇩;zászló: Moldova;zászló
+🇲🇪;zászló: Montenegró;zászló
+🇲🇫;zászló: Saint Martin;zászló
+🇲🇬;zászló: Madagaszkár;zászló
+🇲🇭;zászló: Marshall-szigetek;zászló
+🇲🇰;zászló: Észak-Macedónia;zászló
+🇲🇱;zászló: Mali;zászló
+🇲🇲;zászló: Mianmar;zászló
+🇲🇳;zászló: Mongólia;zászló
+🇲🇴;zászló: Makaó KKT;zászló
+🇲🇵;zászló: Északi Mariana-szigetek;zászló
+🇲🇶;zászló: Martinique;zászló
+🇲🇷;zászló: Mauritánia;zászló
+🇲🇸;zászló: Montserrat;zászló
+🇲🇹;zászló: Málta;zászló
+🇲🇺;zászló: Mauritius;zászló
+🇲🇻;zászló: Maldív-szigetek;zászló
+🇲🇼;zászló: Malawi;zászló
+🇲🇽;zászló: Mexikó;zászló
+🇲🇾;zászló: Malajzia;zászló
+🇲🇿;zászló: Mozambik;zászló
+🇳🇦;zászló: Namíbia;zászló
+🇳🇨;zászló: Új-Kaledónia;zászló
+🇳🇪;zászló: Niger;zászló
+🇳🇫;zászló: Norfolk-sziget;zászló
+🇳🇬;zászló: Nigéria;zászló
+🇳🇮;zászló: Nicaragua;zászló
+🇳🇱;zászló: Hollandia;zászló
+🇳🇴;zászló: Norvégia;zászló
+🇳🇵;zászló: Nepál;zászló
+🇳🇷;zászló: Nauru;zászló
+🇳🇺;zászló: Niue;zászló
+🇳🇿;zászló: Új-Zéland;zászló
+🇴🇲;zászló: Omán;zászló
+🇵🇦;zászló: Panama;zászló
+🇵🇪;zászló: Peru;zászló
+🇵🇫;zászló: Francia Polinézia;zászló
+🇵🇬;zászló: Pápua Új-Guinea;zászló
+🇵🇭;zászló: Fülöp-szigetek;zászló
+🇵🇰;zászló: Pakisztán;zászló
+🇵🇱;zászló: Lengyelország;zászló
+🇵🇲;zászló: Saint-Pierre és Miquelon;zászló
+🇵🇳;zászló: Pitcairn-szigetek;zászló
+🇵🇷;zászló: Puerto Rico;zászló
+🇵🇸;zászló: Palesztin Autonómia;zászló
+🇵🇹;zászló: Portugália;zászló
+🇵🇼;zászló: Palau;zászló
+🇵🇾;zászló: Paraguay;zászló
+🇶🇦;zászló: Katar;zászló
+🇷🇪;zászló: Réunion;zászló
+🇷🇴;zászló: Románia;zászló
+🇷🇸;zászló: Szerbia;zászló
+🇷🇺;zászló: Oroszország;zászló
+🇷🇼;zászló: Ruanda;zászló
+🇸🇦;zászló: Szaúd-Arábia;zászló
+🇸🇧;zászló: Salamon-szigetek;zászló
+🇸🇨;zászló: Seychelle-szigetek;zászló
+🇸🇩;zászló: Szudán;zászló
+🇸🇪;zászló: Svédország;zászló
+🇸🇬;zászló: Szingapúr;zászló
+🇸🇭;zászló: Szent Ilona;zászló
+🇸🇮;zászló: Szlovénia;zászló
+🇸🇯;zászló: Svalbard és Jan Mayen;zászló
+🇸🇰;zászló: Szlovákia;zászló
+🇸🇱;zászló: Sierra Leone;zászló
+🇸🇲;zászló: San Marino;zászló
+🇸🇳;zászló: Szenegál;zászló
+🇸🇴;zászló: Szomália;zászló
+🇸🇷;zászló: Suriname;zászló
+🇸🇸;zászló: Dél-Szudán;zászló
+🇸🇹;zászló: São Tomé és Príncipe;zászló
+🇸🇻;zászló: Salvador;zászló
+🇸🇽;zászló: Sint Maarten;zászló
+🇸🇾;zászló: Szíria;zászló
+🇸🇿;zászló: Szváziföld;zászló
+🇹🇦;zászló: Tristan da Cunha;zászló
+🇹🇨;zászló: Turks- és Caicos-szigetek;zászló
+🇹🇩;zászló: Csád;zászló
+🇹🇫;zászló: Francia Déli Területek;zászló
+🇹🇬;zászló: Togo;zászló
+🇹🇭;zászló: Thaiföld;zászló
+🇹🇯;zászló: Tádzsikisztán;zászló
+🇹🇰;zászló: Tokelau;zászló
+🇹🇱;zászló: Kelet-Timor;zászló
+🇹🇲;zászló: Türkmenisztán;zászló
+🇹🇳;zászló: Tunézia;zászló
+🇹🇴;zászló: Tonga;zászló
+🇹🇷;zászló: Törökország;zászló
+🇹🇹;zászló: Trinidad és Tobago;zászló
+🇹🇻;zászló: Tuvalu;zászló
+🇹🇼;zászló: Tajvan;zászló
+🇹🇿;zászló: Tanzánia;zászló
+🇺🇦;zászló: Ukrajna;zászló
+🇺🇬;zászló: Uganda;zászló
+🇺🇲;zászló: Az USA lakatlan külbirtokai;zászló
+🇺🇳;zászló: Egyesült Nemzetek Szervezete;zászló
+🇺🇸;zászló: Egyesült Államok;zászló
+🇺🇾;zászló: Uruguay;zászló
+🇺🇿;zászló: Üzbegisztán;zászló
+🇻🇦;zászló: Vatikán;zászló
+🇻🇨;zászló: Saint Vincent és a Grenadine-szigetek;zászló
+🇻🇪;zászló: Venezuela;zászló
+🇻🇬;zászló: Brit Virgin-szigetek;zászló
+🇻🇮;zászló: Amerikai Virgin-szigetek;zászló
+🇻🇳;zászló: Vietnám;zászló
+🇻🇺;zászló: Vanuatu;zászló
+🇼🇫;zászló: Wallis és Futuna;zászló
+🇼🇸;zászló: Szamoa;zászló
+🇽🇰;zászló: Koszovó;zászló
+🇾🇪;zászló: Jemen;zászló
+🇾🇹;zászló: Mayotte;zászló
+🇿🇦;zászló: Dél-afrikai Köztársaság;zászló
+🇿🇲;zászló: Zambia;zászló
+🇿🇼;zászló: Zimbabwe;zászló
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;zászló: Anglia;zászló
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;zászló: Skócia;zászló
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;zászló: Wales;zászló

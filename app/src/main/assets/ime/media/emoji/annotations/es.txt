@@ -1,0 +1,1913 @@
+😀;cara sonriendo;cara|divertido|feliz|sonrisa
+😃;cara sonriendo con ojos grandes;cara|divertido|risa|sonriendo
+😄;cara sonriendo con ojos sonrientes;abierta|cara|ojo|sonrisa
+😁;cara radiante con ojos sonrientes;cara|ojo|risa|sonrisa
+😆;cara sonriendo con los ojos cerrados;abierta|boca|cara|risa
+😅;cara sonriendo con sudor frío;cara|frío|risa|sudor
+🤣;cara revolviéndose de la risa;cara|carcajada|ojos cerrados|risa
+😂;cara llorando de risa;cara|felicidad|lágrima|risa
+🙂;cara sonriendo ligeramente;cara|sonrisa
+🙃;cara al revés;cara|revés
+🫠;cara derritiéndose;calor|derretido|derretirse|desaparecer|fundirse|líquido
+😉;cara guiñando el ojo;cara|guiño
+😊;cara feliz con ojos sonrientes;cara|ojo|rubor|sonrisa
+😇;cara sonriendo con aureola;ángel|cara|halo|sonrisa
+🥰;cara sonriendo con corazones;adorar|amor|corazones|enamorada|enamorado
+😍;cara sonriendo con ojos de corazón;amor|cara|corazón|sonrisa
+🤩;cara sonriendo con estrellas;cara|estrellas|sonrisa
+😘;cara lanzando un beso;beso|cara
+😗;cara besando;beso|cara
+☺️;cara sonriente;cara|contorno|relajado|sonrisa
+😚;cara besando con los ojos cerrados;beso|cara|cerrado|ojo
+😙;cara besando con ojos sonrientes;beso|cara|ojo|sonrisa
+🥲;cara sonriente con lágrima;agradecido|aliviado|emocionado|lágrima|orgulloso|sonrisa
+😋;cara saboreando comida;cara|delicioso|hambre|rico
+😛;cara sacando la lengua;cara|lengua
+😜;cara sacando la lengua y guiñando un ojo;cara|guiño|lengua|ojo
+🤪;cara de loco;grande|ojo|pequeño
+😝;cara con ojos cerrados y lengua fuera;cara|lengua|ojo|sabor
+🤑;cara con lengua de dinero;boca|cara|dinero
+🤗;cara con manos abrazando;abrazo|cara|sonrisa
+🤭;cara con mano sobre la boca;ostras|uy|vaya
+🫢;cara con ojos abiertos y boca tapada;alucinar|asombro|increíble|sorpresa|vergüenza
+🫣;cara tapada con ojo espiando;espiar|fascinado|mirar|vistazo
+🤫;cara pidiendo silencio;callado|silencio
+🤔;cara pensativa;cara|duda|pensando
+🫡;cara saludando;ejército|orden|saludo|sí|sol|vale
+🤐;cara con la boca cerrada con cremallera;boca|cara|cremallera
+🤨;cara con ceja alzada;desconfiado|escéptico
+😐;cara neutral;cara|inexpresivo|neutral
+😑;cara sin expresión;cara|inexpresión|inexpresiva|inexpresivo
+😶;cara sin boca;boca|callado|cara|silencio
+🫥;cara con línea de puntos;depresivo|deprimido|desaparecer|esconderse|introvertido|invisible
+😶‍🌫️;cara entre las nubes;ausente|cabeza en las nubes|cara en la niebla|en las nubes
+😏;cara sonriendo con superioridad;cara|listillo|superioridad
+😒;cara de desaprobación;cara|insatisfacción|rechazo
+🙄;cara con ojos en blanco;cara|frustración|ojos|vueltos
+😬;cara haciendo una mueca;cara|mueca
+😮‍💨;cara exhalando;alivio|bocanada|exhalar|jadear|resoplido|silbar
+🤥;cara de mentiroso;cara|mentiroso|nariz|pinocho
+🫨;cara temblorosa;shock|temblar|terremoto|vibrar
+🙂‍↔️;cabeza negando;cabeza moviéndose horizontalmente|negar|no
+🙂‍↕️;cabeza asintiendo;asentir|cabeza moviéndose verticalmente|sí
+😌;cara de alivio;aliviado|cara
+😔;cara desanimada;alicaído|cara|desanimado|pensativo
+😪;cara de sueño;cara|dormir|sueño
+🤤;cara babeando;baba|babeando|cara
+😴;cara durmiendo;cara|dormido|sueño|zzz
+🫩;cara con ojeras;agotado|agotamiento|cansado|cansancio|cara|extenuación|extenuado|ojeras|ojos|sueño
+😷;cara con mascarilla médica;cara|enfermo|malo|máscara
+🤒;cara con termómetro;cara|enfermo|malo|termómetro
+🤕;cara con la cabeza vendada;cara|dolor|herida|venda
+🤢;cara de náuseas;cara|náuseas|vomitar
+🤮;cara vomitando;enfermo|malo|vomitar
+🤧;cara estornudando;cara|estornudar|estornudo|pañuelo
+🥵;cara con calor;calor|cara roja|fiebre|golpe de calor|sudor
+🥶;cara con frío;cara congelada|congelado|frío|helado
+🥴;cara de grogui;atontado|entonado|grogui|intoxicado|mareado
+😵;cara mareada;cara|mareo
+😵‍💫;cara con ojos en espiral;espiral|hipnotizado|indispuesto|mareado|mareo|problema
+🤯;cabeza explotando;cabeza|explosión
+🤠;cara con sombrero de vaquero;cara|sombrero|vaquera|vaquero
+🥳;cara de fiesta;capirote|celebración|fiesta|gorro|matasuegras
+🥸;cara disfrazada;careta|disfraz|disimulo|gafas|incógnito|nariz
+😎;cara sonriendo con gafas de sol;cara|gafas|guay|sol
+🤓;cara de empollón;cara|empollón|friki|friqui
+🧐;cara con monóculo;aristocrático|estirado
+😕;cara de confusión;cara|confuso
+🫤;cara con boca diagonal;decepción|decepcionado|escéptico|inseguro|jo|vaya
+😟;cara preocupada;cara|preocupación|preocupado
+🙁;cara con el ceño ligeramente fruncido;cara|ceño|fruncido
+☹️;cara con el ceño fruncido;cara|ceño|fruncido
+😮;cara con la boca abierta;boca|cara
+😯;cara estupefacta;alucinado|cara|estupefacto|sorprendido
+😲;cara asombrada;alucinado|asombrado|cara|pasmado
+😳;cara sonrojada;cara|colorado|sonrojado
+🫪;cara deformada;ansiedad|conmocionado|hinchado|pánico|sorprendido|vulnerable
+🥺;cara suplicante;implorar|ojos adorables|piedad|por favor
+🥹;cara aguantándose las lágrimas;emoción|emocionado|llorar|orgulloso|resistir|triste
+😦;cara con el ceño fruncido y la boca abierta;boca abierta|cara|ceño fruncido con boca abierta
+😧;cara angustiada;angustia|angustiado|cara
+😨;cara asustada;asustado|cara|miedo|miedoso
+😰;cara con ansiedad y sudor;ansiedad|cara|frío|sudor
+😥;cara triste pero aliviada;aliviado|cara|decepcionado|menos mal
+😢;cara llorando;cara|lágrima|llorar|triste
+😭;cara llorando fuerte;cara|lágrima|llorar|triste
+😱;cara gritando de miedo;asustado|cara|miedo|pánico
+😖;cara de frustración;cara|frustrado
+😣;cara desesperada;cara|desesperación|frustración
+😞;cara decepcionada;cara|decepción|decepcionado
+😓;cara con sudor frío;cara|frío|sudor
+😩;cara agotada;agotado|cansado|cara
+😫;cara cansada;cansado|cara
+🥱;cara de bostezo;aburrido|bostezo|cansado|dormido|sueño
+😤;cara resoplando;cabreo|cara|enfado
+😡;cara cabreada;cabreo|cara|enfadado|furia
+😠;cara enfadada;cara|enfadado|histérico
+🤬;cara con símbolos en la boca;maldecir|palabrota|símbolo
+😈;cara sonriendo con cuernos;cara|cuernos|demonio|sonrisa
+👿;cara enfadada con cuernos;cara|cuernos|demonio|diablo
+💀;calavera;cara|cuento|monstruo|muerte
+☠️;calavera y huesos cruzados;calavera|cara|huesos|muerte
+💩;caca con ojos;caca|cómic|mierda|mojón
+🤡;cara de payaso;cara|payaso
+👹;demonio japonés oni;cara|cuento|cuernos|sonrisa
+👺;demonio japonés tengu;cara|cuento|fantasía|monstruo|tengu
+👻;fantasma;cara|criatura|cuento|monstruo
+👽;alienígena;alien|cara|criatura|extraterrestre|ovni
+👾;monstruo alienígena;alien|cara|criatura|extraterrestre|ovni
+🤖;robot;cara|monstruo
+😺;gato sonriendo;cara|feliz|gato alegre|gato feliz|sonrisa
+😸;gato sonriendo con ojos sonrientes;cara|gato|ojos|sonriente|sonrisa
+😹;gato llorando de risa;cara|gato|lágrima|risa
+😻;gato sonriendo con ojos de corazón;cara|corazón|enamorado|gato
+😼;gato haciendo una mueca;cara|gato|irónico|sonrisa
+😽;gato besando;beso|cara|cariñoso|gato
+🙀;gato asustado;cara|gato|pánico|preocupación|sorpresa
+😿;gato llorando;cara|gato|lágrima|pena|triste
+😾;gato enfadado;cara|enfadado|gato
+🙈;mono con los ojos tapados;cara|mal|mono|prohibido
+🙉;mono con los oídos tapados;cara|mal|mono|prohibido
+🙊;mono con la boca tapada;cara|mal|mono|prohibido
+💌;carta de amor;amor|carta|corazón|correo
+💘;corazón con flecha;amor|corazón|emoción|flecha
+💝;corazón con lazo;corazón|emoción|lazo|san valentín
+💖;corazón brillante;amor|brillante|emoción
+💗;corazón creciente;corazón|creciente|emocionado|latido|nervioso
+💓;corazón latiendo;amor|corazón|emoción|latido
+💞;corazones giratorios;corazón|giratorio
+💕;dos corazones;amantes|amor|corazón
+💟;adorno de corazón;corazón
+❣️;exclamación de corazón;corazón|exclamación|puntuación
+💔;corazón roto;corazón|emoción|partido|roto
+❤️‍🔥;corazón en llamas;amor|corazón|fuego|llamas|lujuria|pasión
+❤️‍🩹;corazón vendado;bien|curarse|mejor|mejorar|recuperación|salud
+❤️;corazón rojo;corazón|emoción|rojo
+🩷;corazón rosa;amor|bonito|corazón|gustar|rosa
+🧡;corazón naranja;corazón|emoción|naranja
+💛;corazón amarillo;amarillo|corazón|emoción
+💚;corazón verde;corazón|emoción|verde
+💙;corazón azul;azul|corazón|emoción
+🩵;corazón azul claro;azul|celeste|cián|claro|corazón
+💜;corazón morado;corazón|emoción|morado
+🤎;corazón marrón;corazón|emoción|marrón
+🖤;corazón negro;corazón|negro
+🩶;corazón gris;corazón|gris|pizarra|plata
+🤍;corazón blanco;blanco|corazón|emoción
+💋;marca de beso;beso|labios|romance
+💯;cien puntos;100|pleno|puntos
+💢;símbolo de enfado;cómic|enfadado|enfado
+🫯;nube de pelea;alboroto|altercado|bronca|desacuerdo|discusión|lucha|pelea
+💥;colisión;cómic
+💫;símbolo de mareo;cómic|emoción|estrella|mareo
+💦;gotas de sudor;cómic|emoción|sudor
+💨;salir corriendo;carrera|cómic|correr|humo
+🕳️;agujero;orificio
+💬;bocadillo de diálogo;bocadillo|cómic|conversación|diálogo
+👁️‍🗨️;ojo en bocadillo de texto;bocadillo de texto|ojo|testigo
+🗨️;bocadillo de diálogo por la izquierda;bocadillo|burbuja|conversación|diálogo
+🗯️;bocadillo de enfado por la derecha;bocadillo|cabreo|enfado|rabia
+💭;bocadillo de pensamiento;bocadillo|burbuja|cómic|pensamiento
+💤;símbolo de sueño;cómic|dormir|sueño|zzz
+👋;mano saludando;agitar|mano|saludar|saludo
+🤚;dorso de la mano;dorso|levantado|mano
+🖐️;mano abierta;abierta|dedo|mano
+✋;mano levantada;choca esos cinco|levantada|mano
+🖖;saludo vulcano;mano|saludo|spock|vulcano
+🫱;mano hacia la derecha;a la derecha|derecha|mano
+🫲;mano hacia la izquierda;a la izquierda|izquierda|mano
+🫳;mano con la palma hacia abajo;bajar|descartar|fuera|no|quita|rechazar
+🫴;mano con la palma hacia arriba;acércate|dame|ofrecer|trae|ven
+🫷;mano empujando hacia la izquierda;a la izquierda|choca esos cinco|detener|empujar|rechazar|stop
+🫸;mano empujando hacia la derecha;a la derecha|choca esos cinco|detener|empujar|rechazar|stop
+👌;señal de aprobación con la mano;aprobación|mano|ok
+🤌;dedos juntos apuntando hacia arriba;dedos|gesto|italia|italiano|mano|sarcasmo
+🤏;mano pellizcando;pellizco|poco|poquito
+✌️;mano con señal de victoria;mano|señal de victoria|victoria
+🤞;dedos cruzados;cruzar|dedos|mano|suerte
+🫰;mano con dedo índice y pulgar cruzados;amor|caro|chasquido|corazón|dinero
+🤟;gesto de te quiero;mano|quiero
+🤘;mano haciendo el signo de cuernos;cuernos|dedo|mano|rock
+🤙;mano haciendo el gesto de llamar;llamar|mano|meñique|pulgar
+👈;dorso de mano con índice a la izquierda;dedo|índice|izquierda|mano
+👉;dorso de mano con índice a la derecha;dedo|derecha|índice|mano
+👆;dorso de mano con índice hacia arriba;apuntar|arriba|dedo|mano
+🖕;dedo corazón hacia arriba;corazón|dedo|mano|peineta
+👇;dorso de mano con índice hacia abajo;abajo|apuntar|dedo|mano
+☝️;dedo índice hacia arriba;apuntar|arriba|dedo|mano
+🫵;dedo índice apuntándote a ti;apuntar|ti|tú
+👍;pulgar hacia arriba;arriba|mano|pulgar|señal
+👎;pulgar hacia abajo;abajo|mano|pulgar|señal
+✊;puño en alto;cerrado|mano|puñetazo|puño
+👊;puño cerrado;puñetazo|puño
+🤛;puño hacia la izquierda;izquierda|puño
+🤜;puño hacia la derecha;derecha|puño
+👏;manos aplaudiendo;aplaudir|manos|palmas|señal
+🙌;manos levantadas celebrando;celebración|gesto|hurra|mano
+🫶;manos formando un corazón;amor
+👐;manos abiertas;abiertas|manos
+🤲;palmas hacia arriba juntas;oración
+🤝;apretón de manos;acuerdo|apretón|manos
+🙏;manos en oración;gracias|mano|oración|orar|por favor|rezar
+✍️;mano escribiendo;escribir|lápiz|mano
+💅;pintarse las uñas;cosmética|esmalte|manicura|uñas
+🤳;selfi;autofoto|cámara|selfie|teléfono
+💪;bíceps flexionado;bíceps|cómic|flexionado|fuerte|músculo
+🦾;brazo mecánico;accesibilidad|ortopedia|prótesis
+🦿;pierna mecánica;accesibilidad|ortopedia|prótesis
+🦵;pierna;extremidad|patada
+🦶;pie;patada|pisotón
+👂;oreja;cuerpo
+🦻;oreja con audífono;accesibilidad|audífono|prótesis auditiva|sordo
+👃;nariz;cuerpo
+🧠;cerebro;inteligente
+🫀;corazón humano;anatomía|cardiología|corazón|latido|órgano|pulso
+🫁;pulmones;exhalar|inhalar|órgano|respiración|respirar
+🦷;diente;dentista|molar|muela
+🦴;hueso;esqueleto
+👀;ojos;cara
+👁️;ojo;cuerpo
+👅;lengua;cuerpo
+👄;boca;labios
+🫦;labio mordido;ansioso|incómodo|ligar|miedo|nervioso|preocupado
+👶;bebé;joven|niño
+🧒;infante;crío|género|joven|neutro
+👦;niño;joven
+👧;niña;chica|joven
+🧑;persona adulta;género|neutro
+👱;persona adulta rubia;rubia|rubias|rubio|rubios
+👨;hombre;adulto
+🧔;persona con barba;barbas|barbudo|persona
+🧔‍♂️;hombre: barba;barba|hombre
+🧔‍♀️;mujer: barba;barba|mujer
+👨‍🦰;hombre: pelo pelirrojo;adulto|hombre|pelo pelirrojo
+👨‍🦱;hombre: pelo rizado;adulto|hombre|pelo rizado
+👨‍🦳;hombre: pelo blanco;adulto|hombre|pelo blanco
+👨‍🦲;hombre: sin pelo;adulto|hombre|sin pelo
+👩;mujer;adulta
+👩‍🦰;mujer: pelo pelirrojo;adulta|mujer|pelo pelirrojo
+🧑‍🦰;persona adulta: pelo pelirrojo;género|neutro|pelo pelirrojo|persona adulta
+👩‍🦱;mujer: pelo rizado;adulta|mujer|pelo rizado
+🧑‍🦱;persona adulta: pelo rizado;género|neutro|pelo rizado|persona adulta
+👩‍🦳;mujer: pelo blanco;adulta|mujer|pelo blanco
+🧑‍🦳;persona adulta: pelo blanco;género|neutro|pelo blanco|persona adulta
+👩‍🦲;mujer: sin pelo;adulta|mujer|sin pelo
+🧑‍🦲;persona adulta: sin pelo;género|neutro|persona adulta|sin pelo
+👱‍♀️;mujer rubia;mujer|rubia|rubiales
+👱‍♂️;hombre rubio;hombre|rubiales|rubio
+🧓;persona mayor;adulto|género neutro|género no especificado|maduro|mayor
+👴;anciano;hombre|mayor
+👵;anciana;mayor|mujer
+🙍;persona frunciendo el ceño;ceño|fruncido|gesto|persona
+🙍‍♂️;hombre frunciendo el ceño;ceño|fruncido|gesto|hombre
+🙍‍♀️;mujer frunciendo el ceño;ceño|fruncido|gesto|mujer
+🙎;persona haciendo pucheros;gesto|persona|pucheros
+🙎‍♂️;hombre haciendo pucheros;gesto|hombre|pucheros
+🙎‍♀️;mujer haciendo pucheros;gesto|mujer|pucheros
+🙅;persona haciendo el gesto de "no";gesto|mano|no|prohibido
+🙅‍♂️;hombre haciendo el gesto de "no";gesto|hombre|mano|prohibido
+🙅‍♀️;mujer haciendo el gesto de "no";gesto|mano|mujer|prohibido
+🙆;persona haciendo el gesto de "de acuerdo";gesto|mano|OK|vale
+🙆‍♂️;hombre haciendo el gesto de "de acuerdo";gesto|mano|OK|vale
+🙆‍♀️;mujer haciendo el gesto de "de acuerdo";gesto|mano|OK|vale
+💁;persona de mostrador de información;información|mano|mostrador|persona
+💁‍♂️;empleado de mostrador de información;hombre|información|mano|mostrador
+💁‍♀️;empleada de mostrador de información;información|mano|mostrador|mujer
+🙋;persona con la mano levantada;feliz|gesto|levantar|mano
+🙋‍♂️;hombre con la mano levantada;gesto|hombre|levantar|mano
+🙋‍♀️;mujer con la mano levantada;gesto|levantar|mano|mujer
+🧏;persona sorda;accesibilidad|escuchar|oído|oír|sordera
+🧏‍♂️;hombre sordo;hombre|sordera|sordo
+🧏‍♀️;mujer sorda;mujer|sorda|sordera
+🙇;persona haciendo una reverencia;disculpa|gesto|perdón|reverencia
+🙇‍♂️;hombre haciendo una reverencia;disculpa|gesto|perdón|reverencia
+🙇‍♀️;mujer haciendo una reverencia;disculpa|gesto|perdón|reverencia
+🤦;persona con la mano en la frente;facepalm|frente|incredulidad|mano
+🤦‍♂️;hombre con la mano en la frente;facepalm|frente|incredulidad|mano
+🤦‍♀️;mujer con la mano en la frente;facepalm|frente|incredulidad|mano
+🤷;persona encogida de hombros;duda|encogerse|hombros|indiferencia
+🤷‍♂️;hombre encogido de hombros;duda|encogerse|hombros|indiferencia
+🤷‍♀️;mujer encogida de hombros;duda|encogerse|hombros|indiferencia
+🧑‍⚕️;profesional sanitario;doctor|enfermero|médico|salud|terapeuta
+👨‍⚕️;profesional sanitario hombre;doctor|enfermero|médico|sanitario|terapeuta hombre
+👩‍⚕️;profesional sanitario mujer;doctora|enfermera|médica|sanitaria|terapeuta mujer
+🧑‍🎓;estudiante;graduado|licenciado|universitario
+👨‍🎓;estudiante hombre;estudiante|graduado|hombre|licenciado|universitario
+👩‍🎓;estudiante mujer;estudiante|graduada|licenciada|mujer|universitaria
+🧑‍🏫;docente;educador|enseñanza|instructor|maestro|profesor
+👨‍🏫;docente hombre;educador|hombre|instructor|maestro|profesor
+👩‍🏫;docente mujer;educadora|instructora|maestra|mujer|profesora
+🧑‍⚖️;fiscal;juez|juicio|magistrado
+👨‍⚖️;fiscal hombre;hombre|juez|justicia|magistrado
+👩‍⚖️;fiscal mujer;jueza|justicia|magistrada|mujer
+🧑‍🌾;profesional de la agricultura;agricultor|cultivador|granjero|jardinero|labrador
+👨‍🌾;profesional de la agricultura hombre;agricultor|campo|granjero|hombre|labrador
+👩‍🌾;profesional de la agricultura mujer;agricultora|campo|granjera|labradora|mujer
+🧑‍🍳;chef;cocinero|cocinillas|guisandero|pinche
+👨‍🍳;chef hombre;chef|cocinero|hombre|pinche
+👩‍🍳;chef mujer;chef|cocinera|mujer|pinche
+🧑‍🔧;profesional de la mecánica;electricista|fontanero|mecánico|operario|técnico
+👨‍🔧;profesional de la mecánica hombre;electricista|fontanero|hombre|mecánico|operario
+👩‍🔧;profesional de la mecánica mujer;electricista|fontanera|mecánica|mujer|operaria
+🧑‍🏭;profesional industrial;fábrica|montaje|obrero|operario|trabajador
+👨‍🏭;profesional industrial hombre;fábrica|montaje|obrero|operario|trabajador
+👩‍🏭;profesional industrial mujer;fábrica|montaje|obrera|operaria|trabajadora
+🧑‍💼;oficinista;arquitecto|director|ejecutivo|empresa
+👨‍💼;oficinista hombre;director|ejecutivo|empresa|hombre|oficina|oficinista
+👩‍💼;oficinista mujer;directora|ejecutiva|empresa|mujer|oficina|oficinista
+🧑‍🔬;profesional de la ciencia;biólogo|científico|físico|investigador|químico
+👨‍🔬;profesional de la ciencia hombre;biólogo|científico|físico|hombre|químico
+👩‍🔬;profesional de la ciencia mujer;bióloga|científica|física|mujer|química
+🧑‍💻;profesional de la tecnología;desarrollador|informático|programador|software|tecnólogo
+👨‍💻;profesional de la tecnología hombre;desarrollador|hombre|informático|programador|tecnólogo
+👩‍💻;profesional de la tecnología mujer;desarrolladora|informática|mujer|programadora|tecnóloga
+🧑‍🎤;cantante;artista|estrella|rock
+👨‍🎤;cantante hombre;artista|estrella|hombre|rock
+👩‍🎤;cantante mujer;artista|estrella|mujer|rock
+🧑‍🎨;artista;paleta|pintor|pinturas
+👨‍🎨;artista hombre;hombre|paleta|pintor|pinturas
+👩‍🎨;artista mujer;mujer|paleta|pintora|pinturas
+🧑‍✈️;piloto;avión|capitán|vuelo
+👨‍✈️;piloto hombre;avión|capitán|hombre|piloto|vuelo
+👩‍✈️;piloto mujer;avión|capitana|mujer|piloto|vuelo
+🧑‍🚀;astronauta;cohete|espacio
+👨‍🚀;astronauta hombre;astronauta|cohete|espacio|hombre
+👩‍🚀;astronauta mujer;astronauta|cohete|espacio|mujer
+🧑‍🚒;bombero;camión|manguera
+👨‍🚒;bombero hombre;apagafuegos|bombero|camión|manguera
+👩‍🚒;bombera;apagafuegos|bombera mujera|camión|manguera
+👮;agente de policía;agente|personas|policía
+👮‍♂️;agente de policía hombre;agente|hombre|poli|policía
+👮‍♀️;agente de policía mujer;agente|mujer|poli|policía
+🕵️;detective;cara|espía
+🕵️‍♂️;detective hombre;agente|detective|espía|hombre|investigador
+🕵️‍♀️;detective mujer;agente|detective|espía|investigadora|mujer
+💂;guardia;guardia real británica
+💂‍♂️;guardia hombre;guardia|hombre|vigilante
+💂‍♀️;guardia mujer;guardia|mujer|vigilante
+🥷;ninja;furtivo|guerrero|luchador|oculto|sigilo
+👷;profesional de la construcción;casco|construcción|obrero|trabajador
+👷‍♂️;profesional de la construcción hombre;albañil|construcción|hombre|obrero|trabajador
+👷‍♀️;profesional de la construcción mujer;albañila|construcción|mujer|obrera|trabajadora
+🫅;persona con corona;majestad|monarca|monarquía|noble|real|realeza
+🤴;príncipe;corona
+👸;princesa;cuento|fantasía|hadas
+👳;persona con turbante;turbante
+👳‍♂️;hombre con turbante;hombre|turbante
+👳‍♀️;mujer con turbante;mujer|turbante
+👲;persona con gorro chino;gorro|gua|gua pi mao|mao|persona
+🧕;mujer con hiyab;hiyab|pañuelo
+🤵;persona con esmoquin;esmoquin|novio|persona
+🤵‍♂️;hombre con esmoquin;esmoquin|hombre
+🤵‍♀️;mujer con esmoquin;esmoquin|mujer
+👰;persona con velo;boda|novia|persona|velo
+👰‍♂️;hombre con velo;boda|hombre|novio|velo
+👰‍♀️;mujer con velo;boda|mujer|novia|velo
+🤰;mujer embarazada;embarazada|mujer
+🫃;hombre embarazado;barriga|embarazado|hinchado|hinchazón|inflado|lleno
+🫄;persona embarazada;barriga|embarazo|gestación|hinchazón
+🤱;lactancia materna;amamantar|bebé|dar pecho|pecho
+👩‍🍼;mujer alimentando a bebé;alimentar|amamantar|bebé|lactancia|mujer
+👨‍🍼;hombre alimentando a bebé;alimentar|amamantar|bebé|hombre|lactancia
+🧑‍🍼;persona alimentando a bebé;alimentar|amamantar|bebé|lactancia|persona
+👼;bebé ángel;ángel|bebé|cara|cuento
+🎅;Papá Noel;celebración|claus|cuento|fantasía|feliz|fiestas|Navidad|padre|santa
+🤶;Mamá Noel;celebración|claus|cuento|fantasía|feliz|fiestas|madre|Navidad|santa
+🧑‍🎄;Noel;celebración|claus|cuento|fantasía|feliz|fiestas|Navidad|santa
+🦸;personaje de superhéroe;bien|héroe|heroína|superhéroe|superheroína|superpoder
+🦸‍♂️;superhéroe;bueno|héroe|hombre|superhombre|superpoder
+🦸‍♀️;superheroína;bondad|héroe|heroína|mujer|superhéroe|superpoder
+🦹;personaje de supervillano;mal|superpoder|supervillana|supervillano|villana|villano
+🦹‍♂️;supervillano;hombre|mal|malvado|villano
+🦹‍♀️;supervillana;mal|malvada|mujer|villana
+🧙;persona maga;bruja|brujo|hechicera|hechicero
+🧙‍♂️;mago;brujo|hechicero
+🧙‍♀️;maga;bruja|hechicera
+🧚;hada;campanilla|oberón|puck|titania
+🧚‍♂️;hada hombre;hada|oberón|puck
+🧚‍♀️;hada mujer;campanilla|hada|titania
+🧛;vampiro;drácula|muerto viviente|no muerto
+🧛‍♂️;vampiro hombre;drácula|muerto viviente|no muerto
+🧛‍♀️;vampiresa;muerta viviente|no muerta
+🧜;persona sirena;sirena|tritón
+🧜‍♂️;sirena hombre;sirena|tritón
+🧜‍♀️;sirena;
+🧝;elfo;mágico
+🧝‍♂️;elfo hombre;elfo|mágico
+🧝‍♀️;elfa;mágico|mujer
+🧞;genio;lámpara
+🧞‍♂️;genio hombre;djinn|genio|lámpara
+🧞‍♀️;genio mujer;genio|lámpara
+🧟;zombi;muerto viviente|no muerto
+🧟‍♂️;zombi hombre;caminante|muerto viviente|no muerto
+🧟‍♀️;zombi mujer;caminante|muerta viviente|no muerta
+🧌;trol;cuento de hadas|fantasía|monstruo
+🫈;criatura peluda;bigfoot|bosque|críptido|gigante|monstruo|peludo|sasquatch|yeti
+💆;persona recibiendo masaje;cara|facial|masaje|salón
+💆‍♂️;hombre recibiendo masaje;cara|facial|masaje|salón
+💆‍♀️;mujer recibiendo masaje;cara|facial|masaje|salón
+💇;persona cortándose el pelo;belleza|corte|pelo|peluquero
+💇‍♂️;hombre cortándose el pelo;belleza|corte|pelo|peluquero
+💇‍♀️;mujer cortándose el pelo;belleza|corte|pelo|peluquero
+🚶;persona caminando;andar|caminando|caminar
+🚶‍♂️;hombre caminando;andar|caminata|hombre|marcha
+🚶‍♀️;mujer caminando;andar|caminata|marcha|mujer
+🚶‍➡️;persona caminando: hacia la derecha;andar|caminando|caminar|derecha|hacia|la|persona caminando
+🚶‍♀️‍➡️;mujer caminando: hacia la derecha;andar|caminata|derecha|hacia|la|marcha|mujer|mujer caminando
+🚶‍♂️‍➡️;hombre caminando: hacia la derecha;andar|caminata|derecha|hacia|hombre|hombre caminando|la|marcha
+🧍;persona de pie;de pie|levantada|levantado|levantarse
+🧍‍♂️;hombre de pie;de pie|hombre|levantado|levantarse
+🧍‍♀️;mujer de pie;de pie|levantada|levantarse|mujer
+🧎;persona de rodillas;arrodillada|arrodillado|arrodillarse|de rodillas
+🧎‍♂️;hombre de rodillas;arrodillado|arrodillarse|de rodillas|hombre
+🧎‍♀️;mujer de rodillas;arrodillada|arrodillarse|de rodillas|mujer
+🧎‍➡️;persona de rodillas: hacia la derecha;arrodillada|arrodillado|arrodillarse|de rodillas|derecha|hacia|la|persona de rodillas
+🧎‍♀️‍➡️;mujer de rodillas: hacia la derecha;arrodillada|arrodillarse|de rodillas|derecha|hacia|la|mujer|mujer de rodillas
+🧎‍♂️‍➡️;hombre de rodillas: hacia la derecha;arrodillado|arrodillarse|de rodillas|derecha|hacia|hombre|hombre de rodillas|la
+🧑‍🦯;persona con bastón;accesibilidad|ciego|invidente
+🧑‍🦯‍➡️;persona con bastón: hacia la derecha;accesibilidad|ciego|derecha|hacia|invidente|la|persona con bastón
+👨‍🦯;hombre con bastón;accesibilidad|bastón|ciego|hombre|invidente
+👨‍🦯‍➡️;hombre con bastón: hacia la derecha;accesibilidad|bastón|ciego|derecha|hacia|hombre|hombre con bastón|invidente|la
+👩‍🦯;mujer con bastón;accesibilidad|bastón|ciega|invidente|mujer
+👩‍🦯‍➡️;mujer con bastón: hacia la derecha;accesibilidad|bastón|ciega|derecha|hacia|invidente|la|mujer|mujer con bastón
+🧑‍🦼;persona en silla de ruedas eléctrica;accesibilidad|silla de ruedas
+🧑‍🦼‍➡️;persona en silla de ruedas eléctrica: hacia la derecha;accesibilidad|derecha|hacia|la|persona en silla de ruedas eléctrica|silla de ruedas
+👨‍🦼;hombre en silla de ruedas eléctrica;accesibilidad|hombre|silla de ruedas
+👨‍🦼‍➡️;hombre en silla de ruedas eléctrica: hacia la derecha;accesibilidad|derecha|hacia|hombre|hombre en silla de ruedas eléctrica|la|silla de ruedas
+👩‍🦼;mujer en silla de ruedas eléctrica;accesibilidad|mujer|silla de ruedas
+👩‍🦼‍➡️;mujer en silla de ruedas eléctrica: hacia la derecha;accesibilidad|derecha|hacia|la|mujer|mujer en silla de ruedas eléctrica|silla de ruedas
+🧑‍🦽;persona en silla de ruedas manual;accesibilidad|silla de ruedas
+🧑‍🦽‍➡️;persona en silla de ruedas manual: hacia la derecha;accesibilidad|derecha|hacia|la|persona en silla de ruedas manual|silla de ruedas
+👨‍🦽;hombre en silla de ruedas manual;accesibilidad|hombre|silla de ruedas
+👨‍🦽‍➡️;hombre en silla de ruedas manual: hacia la derecha;accesibilidad|derecha|hacia|hombre|hombre en silla de ruedas manual|la|silla de ruedas
+👩‍🦽;mujer en silla de ruedas manual;accesibilidad|mujer|silla de ruedas
+👩‍🦽‍➡️;mujer en silla de ruedas manual: hacia la derecha;accesibilidad|derecha|hacia|la|mujer|mujer en silla de ruedas manual|silla de ruedas
+🏃;persona corriendo;carrera|deporte|maratón
+🏃‍♂️;hombre corriendo;carrera|correr|hombre|maratón
+🏃‍♀️;mujer corriendo;carrera|correr|maratón|mujer
+🏃‍➡️;persona corriendo: hacia la derecha;carrera|deporte|derecha|hacia|la|maratón|persona corriendo
+🏃‍♀️‍➡️;mujer corriendo: hacia la derecha;carrera|correr|derecha|hacia|la|maratón|mujer|mujer corriendo
+🏃‍♂️‍➡️;hombre corriendo: hacia la derecha;carrera|correr|derecha|hacia|hombre|hombre corriendo|la|maratón
+🧑‍🩰;bailarina de ballet;bailarín|bailarina|ballet
+💃;mujer bailando;bailar|mujer
+🕺;hombre bailando;bailar|hombre
+🕴️;persona trajeada levitando;levitar|negocios|persona|traje
+👯;personas con orejas de conejo;bailar|fiesta|orejas de conejo|personas
+👯‍♂️;hombres con orejas de conejo;bailar|fiesta|hombre|orejas de conejo
+👯‍♀️;mujeres con orejas de conejo;bailar|fiesta|mujer|orejas de conejo
+🧖;persona en una sauna;sauna|vapor
+🧖‍♂️;hombre en una sauna;sauna|vapor
+🧖‍♀️;mujer en una sauna;sauna|vapor
+🧗;persona escalando;alpinista|escalador
+🧗‍♂️;hombre escalando;alpinista|escalador
+🧗‍♀️;mujer escalando;alpinista|escaladora
+🤺;persona haciendo esgrima;esgrima|esgrimista|espada
+🏇;carrera de caballos;caballo|caballo de carreras|carreras|jinete
+⛷️;persona esquiando;esquí|esquiador|nieve
+🏂;practicante de snowboard;nieve|snowboard
+🏌️;persona jugando al golf;golf|golfista|pelota
+🏌️‍♂️;hombre jugando al golf;golf|hombre|jugador
+🏌️‍♀️;mujer jugando al golf;golf|jugadora|mujer
+🏄;persona haciendo surf;surf|surfear
+🏄‍♂️;hombre haciendo surf;hombre|surf|surfero|surfista
+🏄‍♀️;mujer haciendo surf;mujer|surf|surfera|surfista
+🚣;persona remando en un bote;barca|bote|remo
+🚣‍♂️;hombre remando en un bote;barca|bote|hombre|remo
+🚣‍♀️;mujer remando en un bote;barca|bote|mujer|remo
+🏊;persona nadando;nadar|natación
+🏊‍♂️;hombre nadando;hombre|nadar
+🏊‍♀️;mujer nadando;mujer|nadar
+⛹️;persona botando un balón;balón|botar|pelota
+⛹️‍♂️;hombre botando un balón;balón|botar|hombre|pelota
+⛹️‍♀️;mujer botando un balón;balón|botar|mujer|pelota
+🏋️;persona levantando pesas;halterofilia|levantador|pesas|peso
+🏋️‍♂️;hombre levantando pesas;halterofilia|hombre|levantador de pesas|pesas
+🏋️‍♀️;mujer levantando pesas;halterofilia|levantadora de pesas|mujer|pesas
+🚴;persona en bicicleta;bicicleta|ciclismo|ciclista
+🚴‍♂️;hombre en bicicleta;bicicleta|ciclismo|ciclista|hombre
+🚴‍♀️;mujer en bicicleta;bicicleta|ciclismo|ciclista|mujer
+🚵;persona en bicicleta de montaña;bicicleta|ciclista|montaña|mountain bike
+🚵‍♂️;hombre en bicicleta de montaña;bicicleta|ciclista|montaña|mountain bike
+🚵‍♀️;mujer en bicicleta de montaña;bicicleta|ciclista|montaña|mountain bike
+🤸;persona haciendo voltereta lateral;acrobacia|gimnasia|pirueta|rueda|voltereta
+🤸‍♂️;hombre dando una voltereta lateral;deporte|gimnasia|hombre|rueda|voltereta
+🤸‍♀️;mujer dando una voltereta lateral;deporte|gimnasia|mujer|rueda|voltereta
+🤼;personas luchando;lucha|luchador
+🤼‍♂️;hombres luchando;deporte|hombre|lucha|luchador
+🤼‍♀️;mujeres luchando;deporte|lucha|luchadora|mujer
+🤽;persona jugando al waterpolo;waterpolista|waterpolo
+🤽‍♂️;hombre jugando al waterpolo;agua|deporte|waterpolista|waterpolo
+🤽‍♀️;mujer jugando al waterpolo;agua|deporte|waterpolista|waterpolo
+🤾;persona jugando al balonmano;balonmanista|balonmano
+🤾‍♂️;hombre jugando al balonmano;balonmanista|balonmano|deporte|hombre
+🤾‍♀️;mujer jugando al balonmano;balonmanista|balonmano|deporte|mujer
+🤹;persona haciendo malabares;equilibrio|malabares|malabarismo|malabarista
+🤹‍♂️;hombre haciendo malabares;hombre|malabares|malabarismo|malabarista
+🤹‍♀️;mujer haciendo malabares;malabares|malabarismo|malabarista|mujer
+🧘;persona en posición de loto;meditación|yoga
+🧘‍♂️;hombre en posición de loto;meditación|yoga
+🧘‍♀️;mujer en posición de loto;meditación|yoga
+🛀;persona en la bañera;bañera|baño|persona
+🛌;persona en la cama;dormir|hotel
+🧑‍🤝‍🧑;dos personas de la mano;mano|pareja|persona
+👭;mujeres de la mano;lesbianas|mujeres|novias|pareja
+👫;mujer y hombre de la mano;hombre|hombre y mujer de la mano|mujer|novios|pareja
+👬;hombres de la mano;gays|hombres|novios|pareja
+💏;beso;personas|romance
+👩‍❤️‍💋‍👨;beso: mujer y hombre;beso|hombre|mujer|personas|romance
+👨‍❤️‍💋‍👨;beso: hombre y hombre;beso|hombre|personas|romance
+👩‍❤️‍💋‍👩;beso: mujer y mujer;beso|mujer|personas|romance
+💑;pareja enamorada;amor|pareja|personas enamoradas
+👩‍❤️‍👨;pareja enamorada: mujer y hombre;amor|hombre|mujer|pareja|pareja enamorada|personas enamoradas
+👨‍❤️‍👨;pareja enamorada: hombre y hombre;amor|hombre|pareja|pareja enamorada|personas enamoradas
+👩‍❤️‍👩;pareja enamorada: mujer y mujer;amor|mujer|pareja|pareja enamorada|personas enamoradas
+👨‍👩‍👦;familia: hombre, mujer, niño;familia|hombre|mujer|niño
+👨‍👩‍👧;familia: hombre, mujer, niña;familia|hombre|mujer|niña
+👨‍👩‍👧‍👦;familia: hombre, mujer, niña, niño;familia|hombre|mujer|niña|niño
+👨‍👩‍👦‍👦;familia: hombre, mujer, niño, niño;familia|hombre|mujer|niño
+👨‍👩‍👧‍👧;familia: hombre, mujer, niña, niña;familia|hombre|mujer|niña
+👨‍👨‍👦;familia: hombre, hombre, niño;familia|hombre|niño
+👨‍👨‍👧;familia: hombre, hombre, niña;familia|hombre|niña
+👨‍👨‍👧‍👦;familia: hombre, hombre, niña, niño;familia|hombre|niña|niño
+👨‍👨‍👦‍👦;familia: hombre, hombre, niño, niño;familia|hombre|niño
+👨‍👨‍👧‍👧;familia: hombre, hombre, niña, niña;familia|hombre|niña
+👩‍👩‍👦;familia: mujer, mujer, niño;familia|mujer|niño
+👩‍👩‍👧;familia: mujer, mujer, niña;familia|mujer|niña
+👩‍👩‍👧‍👦;familia: mujer, mujer, niña, niño;familia|mujer|niña|niño
+👩‍👩‍👦‍👦;familia: mujer, mujer, niño, niño;familia|mujer|niño
+👩‍👩‍👧‍👧;familia: mujer, mujer, niña, niña;familia|mujer|niña
+👨‍👦;familia: hombre y niño;familia|hombre|niño
+👨‍👦‍👦;familia: hombre, niño, niño;familia|hombre|niño
+👨‍👧;familia: hombre y niña;familia|hombre|niña
+👨‍👧‍👦;familia: hombre, niña, niño;familia|hombre|niña|niño
+👨‍👧‍👧;familia: hombre, niña, niña;familia|hombre|niña
+👩‍👦;familia: mujer y niño;familia|mujer|niño
+👩‍👦‍👦;familia: mujer, niño, niño;familia|mujer|niño
+👩‍👧;familia: mujer y niña;familia|mujer|niña
+👩‍👧‍👦;familia: mujer, niña, niño;familia|mujer|niña|niño
+👩‍👧‍👧;familia: mujer, niña, niña;familia|mujer|niña
+🗣️;cabeza parlante;cabeza|cara|hablar|silueta
+👤;silueta de busto;busto|silueta
+👥;dos siluetas de bustos;bustos|siluetas
+🫂;personas abrazándose;abrazo|adiós|despedida|gracias|saludo
+👪;familia;
+🧑‍🧑‍🧒;familia: adulto, adulto, niño;adulto|familia|niño
+🧑‍🧑‍🧒‍🧒;familia: adulto, adulto, niño, niño;adulto|familia|niño
+🧑‍🧒;familia: adulto, niño;adulto|familia|niño
+🧑‍🧒‍🧒;familia: adulto, niño, niño;adulto|familia|niño
+👣;huellas de pies;huellas|pies
+🫆;huella dactilar;delito|detective|forense|huella|huella digital|identidad|misterio|rastro|seguridad
+🐵;cara de mono;cara|mono
+🐒;mono;macaco|simio
+🦍;gorila;primate|simio
+🦧;orangután;mono|primate|simio
+🐶;cara de perro;cara|mascota|perro
+🐕;perro;cachorro|perrete|perrito
+🦮;perro guía;accesibilidad|ciego|guía|invidente|lazarillo
+🐕‍🦺;perro de servicio;accesibilidad|apoyo|asistencia|perro|servicio
+🐩;caniche;perrito|perro
+🐺;lobo;cara
+🦊;zorro;cara
+🦝;mapache;astuto|curioso|ladino|maquillaje|ojeras
+🐱;cara de gato;cara|gato|mascota
+🐈;gato;gatete|minino
+🐈‍⬛;gato negro;gato|mala suerte|negro
+🦁;león;cara|leo|zodiaco
+🐯;cara de tigre;cara|tigre
+🐅;tigre;felino
+🐆;leopardo;felino
+🐴;cara de caballo;caballo|cara
+🫎;alce;animal|asta|ciervo canadiense|cuernos|mamífero|uapití
+🫏;burro;animal|asno|borrico|mamífero|mula|terco
+🐎;caballo;caballo de carreras|carreras de caballos|ecuestre
+🦄;unicornio;cara
+🦓;cebra;raya
+🦌;ciervo;bambi|cervatillo
+🦬;bisonte;búfalo|cíbolo
+🐮;cara de vaca;cara|vaca
+🐂;buey;cabestro|tauro|zodiaco
+🐃;búfalo de agua;agua|búfalo
+🐄;vaca;bovino|res
+🐷;cara de cerdo;cara|cerdo|gorrino
+🐖;cerdo;cochino|gorrino|puerco
+🐗;jabalí;cerdo salvaje
+🐽;nariz de cerdo;cara|cerdo|morro|nariz
+🐏;carnero;aries|morueco|zodiaco
+🐑;oveja;borrego|cordero|ovino
+🐐;cabra;capricornio|caprino|chivo|zodiaco
+🐪;dromedario;camello|desierto|joroba
+🐫;camello;bactriano|desierto|dromedario|jorobas
+🦙;llama;alpaca|guanaco|lana|vicuña
+🦒;jirafa;manchas
+🐘;elefante;paquidermo
+🦣;mamut;colmillo|extinguido|lanudo
+🦏;rinoceronte;paquidermo
+🦛;hipopótamo;paquidermo
+🐭;cara de ratón;cara|ratón
+🐁;ratón;roedor
+🐀;rata;roedor
+🐹;hámster;cara|mascota
+🐰;cara de conejo;cara|conejo|mascota
+🐇;conejo;conejito|gazapo
+🐿️;ardilla;
+🦫;castor;roedor
+🦔;erizo;espinas|púas
+🦇;murciélago;vampiro
+🐻;oso;cara
+🐻‍❄️;oso polar;ártico|blanco|oso|polar
+🐨;koala;cara|marsupial
+🐼;panda;cara|oso panda
+🦥;perezoso;gandul|lento|vago
+🦦;nutria;bromista|juguetón|pesca
+🦨;mofeta;apestar|hedor|mal olor|peste|tufo
+🦘;canguro;marsupial|saltar|salto
+🦡;tejón;ratel|tejón de la miel|tejón melero
+🐾;huellas de pezuñas;huellas|pezuñas
+🦃;pavo;ave
+🐔;gallina;ave|gallinácea|pollo
+🐓;gallo;ave|gallina|gallinácea|pollo
+🐣;pollito rompiendo el cascarón;ave|huevo|pollito|pollo
+🐤;pollito;ave|pollo|polluelo
+🐥;pollito de frente;ave|pollito|pollo
+🐦;pájaro;ave|pajarillo
+🐧;pingüino;ave
+🕊️;paloma;ave|pájaro|paz
+🦅;águila;ave
+🦆;pato;ave
+🦢;cisne;ave|patito feo
+🦉;búho;ave|lechuza|pájaro
+🦤;dodo;ave|dronte|extinguido|Mauricio|pájaro
+🪶;pluma;ave|ligero|pájaro|plumaje
+🦩;flamenco;extravangante|ostentoso|tropical
+🦚;pavo real;ave|orgulloso|pavo|plumas
+🦜;loro;ave|hablar|papagayo|pirata
+🪽;ala;ángel|angelical|ave|mitología|pájaro|volar
+🐦‍⬛;pájaro negro;cuervo|grajo|mirlo|negro|pájaro
+🪿;oca;ave|ganso|graznar|pájaro
+🐦‍🔥;fénix;ave de fuego|ave fénix|fantasía|reencarnación|renacer
+🐸;rana;cara
+🐊;cocodrilo;caimán
+🐢;tortuga;galápago
+🦎;lagarto;lagartija|reptil
+🐍;serpiente;culebra|reptil|víbora
+🐲;cara de dragón;cara|cuento|dragón|fantasía
+🐉;dragón;cuento|fantasía
+🦕;saurópodo;braquiosaurio|brontosaurio|diplodocus
+🦖;t-rex;tiranosaurio|tiranosaurio rex
+🐳;ballena soltando un chorro;ballena|chorro de agua
+🐋;ballena;cachalote|cetáceo
+🐬;delfín;cetáceo
+🫍;orca;ballena|mar|marino|océano
+🦭;foca;león marino
+🐟;pez;pececillo|pescado|piscis|zodiaco
+🐠;pez tropical;pez|tropical
+🐡;pez globo;globo|pez
+🦈;tiburón;pez
+🐙;pulpo;cefalópodo|octópodo
+🐚;caracola;concha|espiral
+🪸;coral;arrecife|océano
+🪼;medusa;invertebrado|marino|picadura|picar
+🦀;cangrejo;animal|cáncer|zodiaco
+🦞;bogavante;langosta|marisco|pinzas
+🦐;gamba;camarón|comida|langostino|marisco
+🦑;calamar;comida|molusco
+🦪;ostra;buceo|perla
+🐌;caracol;caracola|molusco
+🦋;mariposa;bonito|insecto
+🐛;bicho;gusano|insecto
+🐜;hormiga;antenas|insecto
+🐝;abeja;insecto|miel
+🪲;escarabajo;bicho|insecto
+🐞;mariquita;cochinilla|insecto
+🦗;grillo;saltamontes
+🪳;cucaracha;alimaña|bicho|insecto|plaga
+🕷️;araña;insecto
+🕸️;tela de araña;araña|tela|telaraña
+🦂;escorpión;escorpio|zodiaco
+🦟;mosquito;fiebre|insecto|malaria|virus
+🪰;mosca;basura|bicho|mal olor|podrido
+🪱;gusano;lombriz|oruga|parásito
+🦠;microbio;ameba|bacteria|germen|virus
+💐;ramo de flores;bouquet|flores|ramo
+🌸;flor de cerezo;cerezo|flor
+💮;flor blanca;blanca|flor
+🪷;loto;budismo|flor|hinduismo|pureza
+🏵️;roseta;flor|planta
+🌹;rosa;flor
+🥀;flor marchita;flor|marchita|marchitada|marchitarse
+🌺;flor de hibisco;flor|hibisco
+🌻;girasol;flor|sol
+🌼;flor;
+🌷;tulipán;flor
+🪻;campanilla;boca de dragón|flor|jacinto|lavanda|lila|lupino
+🌱;planta joven;plantón
+🪴;planta de maceta;crecer|maceta|planta|tiesto
+🌲;árbol de hoja perenne;árbol|hoja perenne|perenne
+🌳;árbol de hoja caduca;árbol|caducifolio|hoja caduca
+🌴;palmera;árbol|árbol de palma
+🌵;cactus;planta
+🌾;espiga de arroz;arroz|espiga|planta
+🌿;hierba;hoja|verde
+☘️;trébol;planta
+🍀;trébol de cuatro hojas;suerte|trébol
+🍁;hoja de arce;arce|hoja
+🍂;hojas caídas;caída|hojas
+🍃;hojas revoloteando al viento;hoja|revolotear|soplar|viento
+🪹;nido vacío;anidación|anidamiento|anidar
+🪺;nido con huevos;anidación|anidamiento|anidar
+🍄;champiñón;hongo|seta
+🪾;árbol sin hojas;árbol|deshojado|estéril|invierno|madera|muerto|ramas|sequía|sin hojas|tronco
+🍇;uvas;agracejo|fruta|racimo|uva
+🍈;melón;fruta
+🍉;sandía;fruta
+🍊;mandarina;fruta|naranja
+🍋;limón;cítrico|citrón|fruta
+🍋‍🟩;lima;cítrico|fruta|tropical
+🍌;plátano;banana|fruta
+🍍;piña;ananás|fruta
+🥭;mango;fruta|tropical
+🍎;manzana roja;fruta|manzana|poma|roja
+🍏;manzana verde;fruta|manzana|poma|verde
+🍐;pera;fruta|perilla
+🍑;melocotón;durazno|fruta
+🍒;cerezas;cereza|fruta|guindas
+🍓;fresa;fresón|fruta
+🫐;arándanos;arándano|azul|baya|frutos del bosque|mirtilo
+🥝;kiwi;comida|fruta
+🍅;tomate;ensalada|fruta|verdura
+🫒;aceituna;aperitivo|comida|oliva
+🥥;coco;palmera|piña colada
+🥑;aguacate;comida|fruta
+🍆;berenjena;fruto|verdura
+🥔;patata;comida|papa|verdura
+🥕;zanahoria;comida|verdura
+🌽;espiga de maíz;espiga|maíz|mazorca|mijo
+🌶️;chile picante;chile|picante|planta
+🫑;pimiento;ají|chile|morrón|rojo|verdura
+🥒;pepino;comida|pepinillo|verdura
+🥬;verdura de hoja verde;bok choy|col|kale|lechuga|pak choi
+🥦;brócoli;col|repollo
+🧄;ajo;condimento|vampiro
+🧅;cebolla;condimento|llorar
+🥜;cacahuetes;cacahuete|comida|fruto seco|verdura
+🫘;alubias;comida|habichuela roja|habichuelas|judía roja|judías|legumbre
+🌰;castaña;castaño|fruto seco
+🫚;raíz de jengibre;cerveza|especia|garganta|raíz
+🫛;vaina;edamame|guisante|judías|legumbre|soja|verdura
+🍄‍🟫;champiñón marrón;comida|hongo|naturaleza|seta|vegetal
+🫜;túberculo comestible;chirivía|comida|ensalada|huerto|nabo|rábano|raíz|remolacha|vegetariano|verdura
+🍞;pan de molde;pan|rebanada|tostada
+🥐;cruasán;bollo|comida|croissant|francés
+🥖;baguete;baguette|barra|comida|francés|pan
+🫓;pan sin levadura;arepa|naan|pita|tortilla
+🥨;bretzel;galleta salada|pretzel
+🥯;bagel;bocadillo|pan|panadería
+🥞;tortitas;comida|dulce|pancakes|postre|tortita
+🧇;gofre;waffle
+🧀;cuña de queso;cuña|queso|trozo
+🍖;carne con hueso;carne|hueso|restaurante
+🍗;muslo de pollo;muslo|pollo|restaurante
+🥩;corte de carne;carne|chuleta|filete
+🥓;beicon;bacon|carne|comida|panceta
+🍔;hamburguesa;burger
+🍟;patatas fritas;papas fritas|patatas|restaurante
+🍕;pizza;porción|restaurante
+🌭;perrito caliente;perrito|salchicha
+🥪;sándwich;bocadillo|bocata|emparedado
+🌮;taco;comida|mexicano
+🌯;burrito;comida|mexicano|tex mex|wrap
+🫔;tamal;mejicano|mexicano|wrap
+🥙;pan relleno;comida|durum|falafel|kebab|pan de pita
+🧆;falafel;albóndiga|garbanzo
+🥚;huevo;comida
+🍳;cocinar;freír|huevo|sartén
+🥘;paella;arroz|comida
+🍲;olla de comida;comida de olla|puchero|restaurante
+🫕;fondue;chocolate|olla|queso|suizo
+🥣;cuenco con cuchara;cereal|desayuno
+🥗;ensalada;bol|comida|verde
+🍿;palomitas;maíz
+🧈;mantequilla;lácteo
+🧂;sal;condimento|salero
+🥫;comida enlatada;conserva|lata
+🍱;caja de bento;bento|caja|comida|restaurante
+🍘;galleta de arroz;arroz|galleta
+🍙;bola de arroz;arroz|japonés|onigiri|restaurante
+🍚;arroz cocido;arroz|restaurante
+🍛;arroz con curry;arroz|curry|restaurante
+🍜;tazón de fideos;fideos calientes|fideos chinos|fideos ramen|ramen
+🍝;espagueti;pasta|restaurante
+🍠;patata asada;asada|papa asada|patata|restaurante
+🍢;brocheta;japonés|marisco|oden|pincho
+🍣;sushi;restaurante
+🍤;gamba frita;frito|gamba|restaurante
+🍥;pastel de pescado japonés;comida japonesa|pastel|pescado
+🥮;pastel de luna;festival|luna|otoño|yuebing
+🍡;dango;japonés|pincho|postre|restaurante
+🥟;dumpling;comida|gyōza|jiaozi|masa
+🥠;galleta de la fortuna;adivinación|profecía|superstición
+🥡;caja para llevar;recipiente para llevar|restaurante
+🍦;cucurucho de helado;cucurucho|dulce|helado|helado de cucurucho|restaurante
+🍧;granizado hawaiano;helado|hielo|postre|raspado
+🍨;helado;postre|sorbete
+🍩;dónut;berlina|pastel|rosquilla
+🍪;galleta;dulce|pasta|postre
+🎂;tarta de cumpleaños;celebración|cumpleaños|tarta
+🍰;trozo de tarta;pedazo de tarta|restaurante|tarta
+🧁;magdalena;cupcake|dulce|repostería
+🥧;pastel;masa|relleno
+🍫;tableta de chocolate;barra|chocolate|restaurante|tableta
+🍬;caramelo;chuche|chuchería|dulce|golosina
+🍭;piruleta;chuche|chuchería|dulce|golosina
+🍮;flan;dulce|postre|pudding
+🍯;tarro de miel;dulce|miel|tarro
+🍼;biberón;bebé|bibe|bibi|botella|leche
+🥛;vaso de leche;bebida|leche|vaso
+☕;bebida caliente;bebida|café|caliente|té
+🫖;tetera;bebida|infusión|té
+🍵;tazón de té;bebida|taza|té
+🍶;sake;bar|bebida|botella|restaurante|tazón
+🍾;botella descorchada;bar|beber|botella|cava|corcho
+🍷;copa de vino;bar|bebida|copa|vaso|vino
+🍸;copa de cóctel;bar|cóctel|copa|restaurante
+🍹;bebida tropical;bar|bebida|restaurante|tropical
+🍺;jarra de cerveza;bar|cerveza|jarra|restaurante
+🍻;jarras de cerveza brindando;bar|cerveza|jarra|jarras|restaurante
+🥂;copas brindando;bebida|brindar|brindis|celebración|copa
+🥃;vaso de whisky;chupito|copa|licor|vaso|whisky
+🫗;líquido derramándose;bebida|derramar|vacío|vaso|verter
+🥤;vaso con pajita;refresco|zumo
+🧋;té de burbujas;boba|bubble tea|burbuja|leche|perla|té
+🧃;tetrabrik;brick|cartón|envase|zumo
+🧉;mate;bebida|infusión
+🧊;cubito de hielo;frío|iceberg
+🥢;palillos;cubiertos|hashi
+🍽️;cuchillo y tenedor con un plato;cuchillo|plato|restaurante|tenedor
+🍴;tenedor y cuchillo;cuchillo|restaurante|tenedor
+🥄;cuchara;cubiertos|cucharilla
+🔪;cuchillo de cocina;arma|cocinar|cuchillo
+🫙;tarro;almacenar|condimento|frasco|recipiente|salsa|vacío
+🏺;ánfora;acuario|beber|jarra|zodiaco
+🌍;globo terráqueo mostrando Europa y África;África|Europa|mundo|planeta|Tierra
+🌎;globo terráqueo mostrando América;América|globo|mundo|planeta|Tierra
+🌏;globo terráqueo mostrando Asia y Australia;Asia|Australia|mundo|planeta|Tierra
+🌐;globo terráqueo con meridianos;globo|meridianos|mundo|Tierra
+🗺️;mapa mundial;mapa|mapamundi|mundo
+🗾;mapa de Japón;Japón|mapa
+🧭;brújula;compás|magnético|navegación|orientación
+🏔️;montaña con nieve;frío|montaña|nieve
+⛰️;montaña;monte
+🛘;desprendimiento;alud|avalancha|desastre|montaña|peligro|rocas|terremoto
+🌋;volcán;erupción|erupción volcánica
+🗻;monte Fuji;Fuji|montaña|monte|naturaleza
+🏕️;camping;acampada|campamento|vacaciones
+🏖️;playa y sombrilla;playa|sombrilla
+🏜️;desierto;arena
+🏝️;isla desierta;desierta|isla
+🏞️;parque nacional;nacional|parque
+🏟️;estadio;
+🏛️;edificio clásico;clásico|edificio
+🏗️;construcción;edificio|obra
+🧱;ladrillo;arcilla|cemento|muro|pared
+🪨;piedra;pedrusco|peña|peñasco|roca
+🪵;madera;hoguera|leña|madero|palos|tronco
+🛖;cabaña;casa|yurta
+🏘️;casas;edificio|urbanización
+🏚️;casa abandonada;abandonada|casa|deshabitada|inhabitada|vacía
+🏠;casa;vivienda
+🏡;casa con jardín;casa|construcción|jardín|vivienda
+🏢;edificio de oficinas;construcción|edificio|oficinas
+🏣;oficina de correos japonesa;correos|edificio|japón|oficina de correos
+🏤;oficina de correos europea;correos|edificio|europa|oficina de correos
+🏥;hospital;doctor|edificio|medicina|médico
+🏦;banco;banca|edificio
+🏨;hotel;alojamiento|edificio|turismo
+🏩;hotel del amor;amor|edificio|hotel
+🏪;tienda 24 horas;edificio|establecimiento|tienda de comestibles
+🏫;colegio;edificio|escuela
+🏬;grandes almacenes;comercio
+🏭;fábrica;edificio|industria
+🏯;castillo japonés;castillo|construcción
+🏰;castillo europeo;castillo|construcción
+💒;iglesia celebrando boda;boda|iglesia|romance
+🗼;Torre de Tokio;Tokio|torre
+🗽;Estatua de la Libertad;estatua|libertad|nueva|ny|nyc|york
+⛪;iglesia;cristianismo|cruz|edificio|religión
+🕌;mezquita;islam|religión
+🛕;templo hindú;hindú|templo
+🕍;sinagoga;judaísmo|religión
+⛩️;santuario sintoísta;japón|religión|santuario|sintoísmo
+🕋;Kaaba;hach|islam|musulmán|religión|umrah
+⛲;fuente;
+⛺;tienda de campaña;campaña|camping|tienda|vacaciones
+🌁;bruma;niebla
+🌃;noche estrellada;estrellas|noche
+🏙️;paisaje urbano;ciudad|edificio|paisaje
+🌄;amanecer sobre montañas;amanecer|montaña|salida|sol
+🌅;amanecer;salida del sol
+🌆;ciudad al atardecer;atardecer|ciudad|edificios|paisaje
+🌇;puesta del sol;edificios
+🌉;puente de noche;noche|puente
+♨️;aguas termales;termas|vapor
+🎠;caballo de tiovivo;caballo|entretenimiento|tiovivo
+🛝;tobogán;jugar|parque|parque de atracciones
+🎡;noria de feria;atracciones|entretenimiento|feria|noria
+🎢;montaña rusa;atracciones|entretenimiento|feria|parque
+💈;poste de barbero;barbería|barbero|peluquero|poste
+🎪;carpa de circo;carpa|circo|entretenimiento
+🚂;locomotora de vapor;locomotora|tren|vehículo
+🚃;vagón;ferrocarril|tranvía|tren eléctrico|vehículo
+🚄;tren de alta velocidad;AVE|ferrocarril|rápido|tren|velocidad
+🚅;tren bala;bala|shinkansen|tren|vehículo|velocidad
+🚆;tren;ferrocarril|vehículo
+🚇;metro;subterráneo|suburbano|transporte
+🚈;tren ligero;ferrocarril|transporte|tren
+🚉;estación de tren;estación|tren
+🚊;tranvía;transporte|trolebús
+🚝;monorraíl;ferrocarril|monocarril|transporte|tren
+🚞;ferrocarril de montaña;ferrocarril|montaña|vehículo
+🚋;vagón de tranvía;tranvía|vagón|vehículo
+🚌;autobús;bus|transporte
+🚍;autobús próximo;autobús|próximo|vehículo
+🚎;trolebús;transporte|tranvía
+🚐;minibús;autobús|bus|transporte
+🚑;ambulancia;asistencia médica|transporte|vehículo
+🚒;coche de bomberos;camión|camión de bomberos|fuego|vehículo
+🚓;coche de policía;coche patrulla|policía|vehículo
+🚔;coche de policía próximo;coche patrulla|policía|próximo|vehículo
+🚕;taxi;coche|vehículo
+🚖;taxi próximo;taxi|vehículo
+🚗;coche;automóvil|vehículo
+🚘;coche próximo;automóvil|coche|próximo|vehículo
+🚙;vehículo deportivo utilitario;camping|caravana|furgoneta|vacaciones|vehículo
+🛻;camioneta;pickup|ranchera
+🚚;camión de reparto;mercancías|reparto|transporte|vehículo
+🚛;camión articulado;camión|tráiler|vehículo
+🚜;tractor;agricultura|vehículo
+🏎️;coche de carreras;carreras|coche
+🏍️;moto;carreras|motocicleta|vehículo
+🛵;scooter;escúter|moto
+🦽;silla de ruedas manual;accesibilidad
+🦼;silla de ruedas eléctrica;accesibilidad
+🛺;mototaxi;rickshaw|tuk tuk
+🚲;bicicleta;bici|vehículo
+🛴;patinete;
+🛹;monopatín;skateboard|tabla
+🛼;patines;patín|patín de 4 ruedas|patín de cuatro ruedas
+🚏;parada de autobús;autobús|parada
+🛣️;autopista;carretera
+🛤️;vía de tren;tren|vía
+🛢️;barril de petróleo;barril|bidón|petróleo
+⛽;surtidor de gasolina;bomba de gasolina|combustible|gasolina|surtidor
+🛞;rueda;círculo|girar|neumático|rodar
+🚨;luces de policía;coche de policía|luces|policía
+🚥;semáforo horizontal;luz|señales de tráfico|tráfico
+🚦;semáforo;luz|semáforo vertical|señales de tráfico|tráfico
+🛑;señal de stop;octágono|parada|señal|stop
+🚧;obras;construcción|señal|señal de obras
+⚓;ancla;barco|gancho
+🛟;salvavidas;flotador|rescate|seguridad|socorrista
+⛵;velero;barco|barco de vela|yate
+🛶;canoa;barca|barco|piragua
+🚤;lancha motora;barco|vehículo
+🛳️;barco de pasajeros;barco|pasajeros|vehículo
+⛴️;ferri;barco|ferry
+🛥️;barco a motor;barco|motor|vehículo
+🚢;barco;vehículo
+✈️;avión;aeroplano
+🛩️;avioneta;avión
+🛫;avión despegando;aeroplano|avión|salida
+🛬;avión aterrizando;aeroplano|avión|llegada
+🪂;paracaídas;ala delta|paracaidismo|paravela|volar
+💺;asiento de transporte;asiento|plaza|silla
+🚁;helicóptero;aspas|rotores|vehículo|volar
+🚟;ferrocarril de suspensión;ferrocarril|suspensión|vehículo
+🚠;teleférico de montaña;cable|funicular|montaña|teleférico|vehículo
+🚡;teleférico;aéreo|tranvía|vehículo
+🛰️;satélite;espacio|vehículo
+🚀;cohete;espacio|vehículo
+🛸;platillo volante;ovni
+🛎️;timbre de hotel;botones|campanilla|hotel|timbre
+🧳;equipaje;maleta|viajar
+⌛;reloj de arena sin tiempo;arena|reloj|temporizador
+⏳;reloj de arena con tiempo;reloj con arena cayendo|temporizador
+⌚;reloj;
+⏰;reloj despertador;alarma|despertador|reloj
+⏱️;cronómetro;reloj
+⏲️;temporizador;reloj
+🕰️;reloj de sobremesa;reloj|sobremesa
+🕛;12 en punto;12:00|doce|reloj
+🕧;doce y media;12:30|reloj
+🕐;1 en punto;1:00|reloj|una
+🕜;una y media;1:30|reloj
+🕑;2 en punto;2:00|dos|reloj
+🕝;dos y media;2:30|reloj
+🕒;3 en punto;3:00|reloj|tres
+🕞;tres y media;3:30|reloj
+🕓;4 en punto;4:00|cuatro|reloj
+🕟;cuatro y media;4:30|reloj
+🕔;5 en punto;5:00|cinco|reloj
+🕠;cinco y media;5:30|reloj
+🕕;6 en punto;6:00|reloj|seis
+🕡;seis y media;6:30|reloj
+🕖;7 en punto;7:00|reloj|siete
+🕢;siete y media;7:30|reloj
+🕗;8 en punto;8:00|ocho|reloj
+🕣;ocho y media;8:30|reloj
+🕘;9 en punto;9:00|nueve|reloj
+🕤;nueve y media;9:30|reloj
+🕙;10 en punto;10:00|diez|reloj
+🕥;diez y media;10:30|reloj
+🕚;11 en punto;11:00|once|reloj
+🕦;once y media;11:30|reloj
+🌑;luna nueva;luna|oscuridad
+🌒;luna creciente;creciente|cuarto|espacio|luna
+🌓;luna en cuarto creciente;creciente|cuarto|espacio|luna
+🌔;luna gibosa creciente;creciente|gibosa|luna
+🌕;luna llena;llena|luna|plenilunio
+🌖;luna gibosa menguante;gibosa|luna|menguante
+🌗;luna en cuarto menguante;cuarto|luna|menguante
+🌘;luna menguante;luna|menguante
+🌙;luna;creciente|espacio
+🌚;luna nueva con cara;cara|espacio|luna
+🌛;luna de cuarto creciente con cara;cara|creciente|cuarto|espacio|luna
+🌜;luna de cuarto menguante con cara;cara|creciente|cuarto|espacio|luna
+🌡️;termómetro;temperatura
+☀️;sol;espacio|rayos|soleado
+🌝;luna llena con cara;cara|llena|luna
+🌞;sol con cara;brillante|cara|sol
+🪐;planeta con anillos;saturnino|saturno
+⭐;estrella;estelar
+🌟;estrella brillante;brillante|estrella|resplandeciente
+🌠;estrella fugaz;estrella|lluvia
+🌌;Vía Láctea;espacio|galaxia|láctea|vía
+☁️;nube;tiempo
+⛅;sol detrás de una nube;nube|sol|sol con nubes
+⛈️;nube con rayo y lluvia;lluvia|nube|trueno
+🌤️;sol detrás de una nube pequeña;nube|sol
+🌥️;sol detrás de una nube grande;nube|sol
+🌦️;sol detrás de una nube con lluvia;lluvia|nube|sol
+🌧️;nube con lluvia;lluvia|nube
+🌨️;nube con nieve;frío|nieve|nube
+🌩️;nube con rayo;nube|rayo
+🌪️;tornado;nube|torbellino
+🌫️;niebla;nube
+🌬️;cara de viento;cara|nube|soplar|viento
+🌀;ciclón;mareo|tifón|tornado
+🌈;arcoíris;colores|lluvia
+🌂;paraguas cerrado;accesorios|lluvia|paraguas
+☂️;paraguas;lluvia|paraguas abierto
+☔;paraguas con gotas de lluvia;gotas|lluvia|paraguas
+⛱️;sombrilla en la arena;arena|sol|sombrilla
+⚡;alto voltaje;electricidad|peligro|peligro de alto voltaje|señal de alto voltaje|voltaje
+❄️;copo de nieve;frío|nieve
+☃️;muñeco de nieve con nieve;nieve
+⛄;muñeco de nieve;muñeco de nieve sin nieve|nieve
+☄️;meteorito;cometa|espacio
+🔥;fuego;llama
+💧;gota;agua|cómic|sudor
+🌊;ola de mar;mar|océano|ola
+🎃;calabaza de Halloween;calabaza|celebración|Halloween|linterna
+🎄;árbol de Navidad;abeto de Navidad|árbol|celebración|Navidad
+🎆;fuegos artificiales;celebración
+🎇;bengala;celebración|fuegos artificiales
+🧨;petardo;dinamita|explosivo|fuegos artificiales
+✨;chispas;*|bengala|estrellas
+🎈;globo;celebración
+🎉;cañón de confeti;celebración|confeti|fiesta
+🎊;bola de confeti;celebración|confeti
+🎋;árbol de tanabata;árbol|celebración|festividad|tanabata
+🎍;decoración de pino;año nuevo japonés|bambú|celebración|decoración|kadomatsu
+🎎;muñecas japonesas;celebración|festival|hinamatsuri|muñecas
+🎏;banderín de carpas;banderín|carpa|celebración|koinobori
+🎐;campanilla de viento;campanilla|furin|viento
+🎑;ceremonia de contemplación de la luna;celebración|contemplación|luna|tsukimi
+🧧;sobre rojo;buena suerte|hóngbāo|lai see|regalo
+🎀;lazo;celebración
+🎁;regalo;celebración|envoltorio|presente|regalo envuelto
+🎗️;lazo conmemorativo;conmemorativo|lazo
+🎟️;entradas;acceso|admisión|entrada|evento
+🎫;tique;acceso|admisión
+🎖️;medalla militar;celebración|medalla|militar
+🏆;trofeo;premio
+🏅;medalla deportiva;medalla|premio
+🥇;medalla de oro;medalla|oro|primero
+🥈;medalla de plata;medalla|plata|segundo
+🥉;medalla de bronce;bronce|medalla|tercero
+⚽;balón de fútbol;balón|fútbol
+⚾;béisbol;balón|baseball|pelota
+🥎;pelota de softball;bola|pelota|softball
+🏀;balón de baloncesto;balón|canasta|deporte
+🏐;pelota de voleibol;balón|juego|pelota|voleibol
+🏈;balón de fútbol americano;balón|deporte|fútbol americano
+🏉;balón de rugby;balón|deporte|rugby
+🎾;pelota de tenis;deporte|pelota|tenis
+🥏;disco volador;disco|frisbee
+🎳;bolos;bola|bola de bolos|juego
+🏏;críquet;juego|pelota
+🏑;hockey sobre hierba;hierba|hockey|juego|palo|pelota
+🏒;hockey sobre hielo;disco|hielo|hockey|palo
+🥍;lacrosse;bola|palo|pelota|raqueta
+🏓;tenis de mesa;juego|mesa|pelota|ping pong
+🏸;bádminton;pluma|raqueta|volante
+🥊;guante de boxeo;boxeo|deporte|guante
+🥋;uniforme de artes marciales;artes marciales|judo|kárate|taekwondo
+🥅;portería;deporte|red
+⛳;banderín en hoyo;banderín|golf|hoyo
+⛸️;patín de hielo;hielo|patín
+🎣;caña de pescar;caña|entretenimiento|esparcimiento|pesca|pez
+🤿;máscara de buceo;bucear|buzo|esnórquel|máscara|tubo
+🎽;camiseta sin mangas;banda|camiseta con banda|camiseta de correr|deporte
+🎿;esquís;esquí|esquíes|nieve
+🛷;trineo;
+🥌;piedra de curling;juego|roca
+🎯;diana;blanco|en el blanco|juego
+🪀;yoyó;dieta|efecto|fluctuar|juguete
+🪁;cometa;juguete|planear|viento|volar
+🔫;pistola de agua;agua|juguete|pistola|verano
+🎱;bola negra de billar;8|billar|bola ocho|juego
+🔮;bola de cristal;adivinación|bola|buena fortuna|cristal
+🪄;varita mágica;bruja|hechicero|magia|mago|prestidigitación|varita
+🎮;mando de videoconsola;juego|mando|videojuego
+🕹️;joystick;juego|mando|palanca|videojuego
+🎰;máquina tragaperras;juego|máquina
+🎲;dado;juego
+🧩;pieza de puzle;conectar|pieza|pista|puzle|rompecabezas
+🧸;osito de peluche;juguete|oso|peluche
+🪅;piñata;caballito|celebración|fiesta
+🪩;bola de espejos;bailar|brillar|disco|discoteca|fiesta
+🪆;muñeca rusa;babushka|mamushka|matrioska|rusia
+♠️;palo de picas;carta|juego|palo|picas
+♥️;palo de corazones;carta|corazones|juego|palo
+♦️;palo de diamantes;carta|diamantes|juego|palo
+♣️;palo de tréboles;carta|juego|palo|tréboles
+♟️;peón de ajedrez;ajedrez|peón
+🃏;comodín;joker
+🀄;dragón rojo de mahjong;dragón rojo|juego|mahjong
+🎴;cartas de flores;carta|flor|hanafuda|naipe japonés
+🎭;máscaras de teatro;actuación|arte|artes escénicas|entretenimiento
+🖼️;cuadro enmarcado;marco|museo
+🎨;paleta de pintor;arte|artista|paleta|pintura
+🧵;hilo;aguja|carrete|coser|costura
+🪡;aguja de coser;aguja|bordado|coser|hilar|punto|tejer
+🧶;ovillo;bola|croché|punto|tejer
+🪢;nudo;anudar|atar|enredar|trenzar
+👓;gafas;accesorios|ojo|ropa
+🕶️;gafas de sol;gafas|ojo|oscuras|sol
+🥽;gafas de protección;gafas|nadar|protección ocular|soldar
+🥼;bata de laboratorio;científico|doctor|experimento|médico
+🦺;chaleco de seguridad;chaleco|emergencia|seguridad
+👔;corbata;accesorio|ropa
+👕;camiseta;ropa
+👖;vaqueros;pantalones|ropa
+🧣;bufanda;abrigo|cuello
+🧤;guantes;mano
+🧥;abrigo;chaquetón
+🧦;calcetines;pies|ropa
+👗;vestido;mujer|ropa
+👘;kimono;japonés|ropa
+🥻;sari;prenda|ropa|vestido
+🩱;traje de baño de una pieza;bañador
+🩲;ropa interior;bañador|bragas|braguitas|calzoncillos|slip
+🩳;pantalones cortos;bañador|bermudas|calzoncillos|ropa interior|shorts
+👙;bikini;baño|playa|ropa
+👚;ropa de mujer;blusa|camisa|femenina|ropa
+🪭;abanico abierto;abanico|airear|bailar|calor|feria|flamenco
+👛;monedero;accesorios|cartera|complementos
+👜;bolso;accesorios|complementos
+👝;bolso de mano;accesorios|bolso|cartera|complementos
+🛍️;bolsas de compras;bolsa|compra
+🎒;mochila escolar;colegio|mochila
+🩴;chancla;chancla de dedo|chancleta|chinela|sandalia
+👞;zapato de hombre;calzado|hombre|ropa|zapato
+👟;zapatilla deportiva;calzado|correr|ropa|tenis
+🥾;bota de senderismo;bota|camping|mochilero|senderismo
+🥿;bailarina;calzado|zapato
+👠;zapato de tacón;mujer|tacón|zapato
+👡;sandalia de mujer;calzado|mujer|ropa|sandalia
+🩰;zapatillas de ballet;bailar|balé|ballet|danza
+👢;bota de mujer;bota|calzado|mujer|ropa
+🪮;peineta;afro|peine|pelo
+👑;corona;accesorios|complementos|reina|rey
+👒;sombrero de mujer;accesorio|mujer|ropa|sombrero
+🎩;sombrero de copa;chistera|copa|ropa|sombrero
+🎓;birrete;celebración|gorro|graduación
+🧢;gorra con visera;béisbol|gorra|visera
+🪖;casco militar;casco|ejército|guerra|guerrero|soldado
+⛑️;casco con una cruz blanca;ayuda|cara|casco|cruz
+📿;rosario;collar|cuentas|religión
+💄;pintalabios;barra|cosmética|labios|maquillaje
+💍;anillo;diamante
+💎;piedra preciosa;diamante|gema|joya|piedra|preciosa
+🔇;altavoz silenciado;altavoz|altavoz con marca de cancelación|mute|silencio
+🔈;altavoz a volumen bajo;volumen bajo
+🔉;altavoz a volumen medio;altavoz con volumen medio|medio|volumen medio
+🔊;altavoz a volumen alto;altavoz|alto|volumen alto
+📢;altavoz de mano;altavoz|comunicación
+📣;megáfono;comunicación
+📯;corneta de posta;corneta|posta
+🔔;campana;
+🔕;campana con signo de cancelación;campana|cancelación|ruido
+🎼;pentagrama;música|partitura
+🎵;nota musical;música|nota
+🎶;notas musicales;música|notas
+🎙️;micrófono de estudio;estudio|micrófono|música
+🎚️;control de volumen;control|fader|volumen
+🎛️;ruedas de control;control|diales|música|potenciómetros|ruedas
+🎤;micrófono;entretenimiento|karaoke|micro
+🎧;auricular;cascos
+📻;radio;
+🎷;saxofón;instrumento|instrumento musical|música|saxo
+🎺;trompeta;instrumento|instrumento musical|música
+🪊;trombón;instrumento|jazz|metal|música|triste|viento
+🪗;acordeón;concertina
+🎸;guitarra;instrumento|instrumento musical|música
+🎹;teclado musical;instrumento|instrumento musical|música|piano|teclado
+🎻;violín;instrumento|instrumento musical|música
+🪕;banjo;banyo|cuerda|instrumento|música
+🥁;tambor;baquetas|música
+🪘;tamboril;conga|ritmo|tambor
+🪇;maracas;agitar|brasil|instrumento|movimiento|música|percusión
+🪈;flauta;flautín|instrumento|instrumento de viento madera|música
+🪉;arpa;amor|cupido|harpa|instrumento|música|orquesta
+📱;teléfono móvil;celular|móvil|teléfono
+📲;móvil con una flecha;flecha|llamada|móvil|recibir|teléfono
+☎️;teléfono;
+📞;auricular de teléfono;comunicación|teléfono
+📟;busca;comunicación|localizador
+📠;máquina de fax;comunicación|fax
+🔋;pila;batería
+🪫;batería baja;batería|carga baja|electrónico|energía baja|pila
+🔌;enchufe eléctrico;corriente|electricidad|eléctrico|enchufe
+💻;ordenador portátil;ordenador|pc|personal
+🖥️;ordenador de sobremesa;ordenador|sobremesa
+🖨️;impresora;ordenador
+⌨️;teclado;ordenador
+🖱️;ratón de ordenador;ordenador|ratón
+🖲️;bola de desplazamiento;ordenador|trackball
+💽;minidisc;disco|md
+💾;disquete;disco|disco de 3 1/2
+💿;disco óptico;cd|disco
+📀;disco DVD;disco|dvd
+🧮;ábaco;cálculo|contar|matemáticas
+🎥;cámara de cine;cámara|cine|entretenimiento|película
+🎞️;fotograma de película;cine|fotograma|película
+📽️;proyector de cine;cine|película|proyector
+🎬;claqueta;cine|claqueta de cine|entretenimiento|película
+📺;televisión;tv
+📷;cámara de fotos;cámara
+📸;cámara con flash;cámara|flash
+📹;videocámara;cámara|vídeo
+📼;cinta de vídeo;cinta
+🔍;lupa orientada hacia la izquierda;buscar|lupa
+🔎;lupa orientada hacia la derecha;buscar|lupa
+🕯️;vela;luz
+💡;bombilla;cómic|electricidad|idea|luz
+🔦;linterna;luz
+🏮;lámpara japonesa;izakaya|lámpara roja|linterna izakaya|linterna japonesa|restaurante
+🪔;lámpara de aceite;aceite|diya|lámpara
+📔;cuaderno con tapa decorativa;cuaderno|decoración|tapa
+📕;libro cerrado;cerrado|libro
+📖;libro abierto;abierto|libro
+📗;libro verde;libro|verde
+📘;libro azul;azul|libro
+📙;libro naranja;libro|naranja
+📚;libros;libro
+📓;cuaderno;libreta
+📒;libro de contabilidad;cuaderno
+📃;página doblada;documento|página
+📜;pergamino;pergamino de papel
+📄;página hacia arriba;anverso|documento|página
+📰;periódico;diario
+🗞️;periódico enrollado;noticias|papel|periódico
+📑;marcadores;pestañas
+🔖;marcapáginas;marcador
+🏷️;etiqueta;
+🪙;moneda;dinero|metal|oro|plata|tesoro
+💰;bolsa de dinero;bolsa|bolsa de dólares|dinero
+🪎;cofre de tesoro;botín|dinero|joyas|objetos de valor|oro|piedras preciosas|plata|premio|riqueza
+💴;billete de yen;billete|billete de banco|dinero|yen
+💵;billete de dólar;billete|billete de banco|dinero|dólar
+💶;billete de euro;billete|billete de banco|dinero|euro
+💷;billete de libra;billete de banco|dinero|libra
+💸;billete con alas;billete|billete de banco|dinero|dinero con alas
+💳;tarjeta de crédito;crédito|tarjeta
+🧾;recibo;contabilidad|prueba|teneduría de libros|testimonio
+💹;mercado al alza;alza|mercado|mercado alcista|tabla
+✉️;sobre;carta|correo
+📧;correo electrónico;comunicación|correo|sobre
+📨;sobre entrante;carta|comunicación|correo|correo electrónico|sobre
+📩;sobre con flecha;carta|comunicación|correo|correo electrónico|sobre
+📤;bandeja de salida;bandeja|comunicación|correo|enviado|salida
+📥;bandeja de entrada;bandeja|comunicación|correo|entrada|recibido
+📦;paquete;caja
+📫;buzón cerrado con la bandera levantada;bandera|buzón|buzón cerrado|con contenido
+📪;buzón cerrado con la bandera bajada;bandera|buzón|buzón cerrado|vacío
+📬;buzón abierto con la bandera levantada;bandera|buzón|buzón abierto|con contenido
+📭;buzón abierto con la bandera bajada;bandera|buzón|buzón abierto|vacío
+📮;buzón;cartas|correo
+🗳️;urna con papeleta;papeleta|urna|voto
+✏️;lápiz;escolar|escribir|lapicero
+✒️;pluma negra;bolígrafo|escribir|pluma|tinta
+🖋️;estilográfica;bolígrafo|escribir|pluma|tinta
+🖊️;bolígrafo;boli|escribir
+🖌️;pincel;pintar
+🖍️;lápiz de cera;cera|lápiz
+📝;cuaderno de notas;comunicación
+💼;maletín;cartera|documentos
+📁;carpeta de archivos;archivo|carpeta
+📂;carpeta de archivos abierta;abierta|archivo|carpeta
+🗂️;separador de fichas;fichas|fichero|separador
+📅;calendario;fecha
+📆;calendario recortable;calendario|fecha
+🗒️;bloc de notas de espiral;bloc|cuaderno|espiral|notas
+🗓️;calendario de espiral;calendario|espiral
+📇;organizador de fichas;cartera|ficha|organizador|tarjetas
+📈;gráfica de evolución ascendente;ascendente|gráfica|gráfico|tendencia ascendente
+📉;gráfica de evolución descendente;descendente|gráfica|gráfico|tendencia descendente
+📊;gráfico de barras;barras|gráfico
+📋;portapapeles;papeles|pinza|tabla
+📌;chincheta;tachuela
+📍;chincheta redonda;chincheta
+📎;clip;
+🖇️;clips unidos;clips|unidos|unión
+📏;regla;
+📐;escuadra;regla|regla triangular|triángulo
+✂️;tijeras;cortar|herramienta
+🗃️;archivador de tarjetas;archivador|archivo|caja
+🗄️;archivador;archivos|oficina|organizador
+🗑️;papelera;basura|cubo
+🔒;candado cerrado;candado|cerrado|cerrar
+🔓;candado abierto;abierto|abrir|candado
+🔏;candado con pluma estilográfica;candado|cerrado|estilográfica|pluma|privacidad
+🔐;candado cerrado y llave;candado|cerrado|llave|seguro
+🔑;llave;contraseña
+🗝️;llave antigua;antigua|llave
+🔨;martillo;herramienta
+🪓;hacha;cortar|dividir|hachuela|madera|talar
+⛏️;pico;herramienta|mina
+⚒️;martillo y pico;herramienta|martillo|pico
+🛠️;martillo y llave inglesa;herramienta|llave inglesa|martillo
+🗡️;puñal;arma|cuchillo|daga
+⚔️;espadas cruzadas;arma|cruzadas|espadas
+💣;bomba;cómic|emoción
+🪃;bumerán;boomerang|rebotar
+🏹;arco y flecha;arco|arquero|flecha|sagitario|zodiaco
+🛡️;escudo;defensa
+🪚;sierra de carpintería;carpintería|carpintero|herramienta|sierra|talar
+🔧;llave inglesa;herramienta
+🪛;destornillador;atornillador|herramienta|tornillo
+🔩;tornillo y tuerca;herramienta|tornillo|tuerca
+⚙️;engranaje;herramienta
+🗜️;tornillo de banco;herramienta|tornillo
+⚖️;balanza;justicia|libra|peso|zodiaco
+🦯;bastón;accesibilidad|ceguera|ciega|ciego|invidente
+🔗;eslabón;
+⛓️‍💥;cadena rota;cadena|esposas|libertad|romper|rotura
+⛓️;cadenas;cadena
+🪝;gancho;agarrar|anzuelo|atrapar|garfio
+🧰;caja de herramientas;armario|herramienta|mecánico
+🧲;imán;atracción|herradura|magnético
+🪜;escalera;escalar|escalerilla|escalón|peldaño
+🪏;pala;agujero|cavar|enterrar|excavar|hoyo|huerto|nieve|planta
+⚗️;alambique;herramienta|química
+🧪;tubo de ensayo;ciencia|experimento|laboratorio|química|químico
+🧫;placa de petri;bacterias|biología|biólogo|cultivo|laboratorio
+🧬;adn;biólogo|evolución|gen|genética|vida
+🔬;microscopio;instrumento|laboratorio
+🔭;telescopio;astronomía|instrumento
+📡;antena de satélite;antena|comunicación|satélite
+💉;jeringuilla;aguja|jeringa|medicina|médico
+🩸;gota de sangre;donación de sangre|donar sangre|herida|medicina|sangre
+💊;píldora;comprimido|medicina|médico|pastilla
+🩹;tirita;apósito
+🩼;muleta;ayuda para la movilidad|bastón|discapacidad|lesión|palo
+🩺;estetoscopio;corazón|doctor|fonendoscopio|latido|medicina|médico
+🩻;radiografía;doctor|doctora|esqueleto|huesos|médico|rayos
+🚪;puerta;
+🛗;ascensor;accesibilidad|elevador|montacargas
+🪞;espejo;espéculo|reflector|reflejo
+🪟;ventana;abertura|apertura|cristal|marco|transparente|vista
+🛏️;cama;dormir|hotel
+🛋️;sofá y lámpara;hotel|lámpara|sofá
+🪑;silla;asiento|sentarse
+🚽;inodoro;baño|váter|wc
+🪠;desatascador;fontanero|retrete|servicio|succión
+🚿;ducha;agua|baño
+🛁;bañera;baño
+🪤;trampa de ratones;cebo|cepo|engañar|ratón|ratonera|trampa
+🪒;cuchilla de afeitar;afeitado|afeitar|afilado|barbero|navaja
+🧴;bote de crema;champú|crema|hidratante|protector solar
+🧷;imperdible;pañal|punk rock
+🧹;escoba;barrer|bruja|fregar
+🧺;cesta;colada|cosecha|pícnic
+🧻;rollo de papel;papel absorbente|papel higiénico
+🪣;cubo;balde|barreño|cuba|cubeta
+🧼;jabón;bañarse|enjabonarse|jabonera|lavarse|pastilla
+🫧;burbujas;bajo el agua|eructar|jabón|limpiar
+🪥;cepillo de dientes;cepillo|dental|higiene|limpio|servicio
+🧽;esponja;absorbente|limpiar|poroso
+🧯;extintor;apagar|extinguir|incendio
+🛒;carrito de la compra;carrito|carro|compra|supermercado
+🚬;cigarrillo;cigarro|fumar
+⚰️;ataúd;muerte
+🪦;lápida;cementario|estela|sepulcro|tumba
+⚱️;urna funeraria;funeraria|muerte|urna
+🧿;ojo turco;amuleto|mal de ojo|nazar|talismán
+🪬;hamsa;amuleto|Fátima|jamsa|mano|María|Miriam
+🗿;estatua moái;estatua|moái|Pascua
+🪧;letrero;anuncio|aviso|cartel|pancarta|poste
+🪪;carné de identidad;carné de conducir|credenciales|identificación|permiso|seguridad
+🏧;señal de cajero automático;atm|banco|cajero
+🚮;señal de usar papelera;basura|papelera|señal|tirar la basura en la papelera
+🚰;agua potable;agua|potable
+♿;símbolo de silla de ruedas;acceso|señal|silla|silla de ruedas|símbolo
+🚹;aseo para hombres;aseo de caballeros|baño|señal|señal con un hombre|servicio
+🚺;señal de aseo para mujeres;aseo de señoras|baño|señal|señal con una mujer|servicio
+🚻;señal de aseos;aseos|servicios|wc
+🚼;señal de bebé;bebé|cambiar|lactancia
+🚾;aseos;lavabo|servicios|WC
+🛂;control de pasaportes;control|pasaportes
+🛃;aduana;
+🛄;recogida de equipajes;equipaje|maleta
+🛅;consigna;depósito|equipaje|servicio de equipaje en depósito
+⚠️;advertencia;cuidado|señal
+🚸;niños cruzando;cruzando|niños|señal
+⛔;dirección prohibida;no|prohibido|señal|señal de dirección prohibida
+🚫;prohibido;entrar|no|pasar|prohibición
+🚳;bicicletas prohibidas;bicicleta|prohibido|vehículo
+🚭;prohibido fumar;fumar|no|prohibido|señal
+🚯;prohibido tirar basura;basura|prohibido|señal|señal de no tirar basura
+🚱;agua no potable;agua|no potable
+🚷;prohibido el paso de peatones;peatón|peatones|prohibido|señal
+📵;prohibido el uso de móviles;móvil|no hacer llamadas|prohibido|teléfono
+🔞;prohibido para menos de 18 años;18|no apto para menores|prohibido|prohibido para menores de 18 años
+☢️;radiactivo;radiactividad|radioactividad|radioactivo|señal
+☣️;riesgo biológico;peligro|señal
+⬆️;flecha hacia arriba;dirección|flecha|flecha arriba|norte
+↗️;flecha hacia la esquina superior derecha;arriba|derecha|dirección|flecha|noreste
+➡️;flecha hacia la derecha;derecha|dirección|este|flecha
+↘️;flecha hacia la esquina inferior derecha;abajo|derecha|dirección|flecha|sudeste
+⬇️;flecha hacia abajo;abajo|dirección|flecha|sur
+↙️;flecha hacia la esquina inferior izquierda;abajo|dirección|flecha|izquierda|suroeste
+⬅️;flecha hacia la izquierda;flecha|izquierda|oeste
+↖️;flecha hacia la esquina superior izquierda;arriba|dirección|flecha|izquierda|noroeste
+↕️;flecha arriba y abajo;abajo|arriba|dirección|flecha
+↔️;flecha izquierda y derecha;derecha|dirección|flecha|izquierda
+↩️;flecha derecha curvándose a la izquierda;curva|dirección|flecha|izquierda
+↪️;flecha izquierda curvándose a la derecha;curva|derecha|dirección|flecha
+⤴️;flecha derecha curvándose hacia arriba;arriba|curva|dirección|flecha
+⤵️;flecha derecha curvándose hacia abajo;abajo|curva|dirección|flecha
+🔃;flechas verticales en sentido horario;flechas|flechas verticales sentido horario|horario|señal de recarga
+🔄;flechas en sentido antihorario;dirección|flechas|señal de recarga|sentido antihorario
+🔙;flecha BACK;atrás|atrás con flecha izquierda|back|flecha|flecha a la izquierda
+🔚;flecha END;final|final con flecha izquierda|flecha|flecha a la izquierda
+🔛;flecha ON!;flecha|flecha de doble punta con la palabra "on" encima|on|señal
+🔜;flecha SOON;flecha|soon|soon con flecha a la derecha
+🔝;flecha TOP;arriba|flecha hacia arriba|top|top con flecha hacia arriba
+🛐;lugar de culto;culto|religión
+⚛️;símbolo de átomo;átomo|símbolo
+🕉️;om;hindú|religión
+✡️;estrella de David;David|estrella|judaísmo|judío|religión
+☸️;rueda del dharma;budismo|dharma|religión|rueda
+☯️;yin yang;religión|taoísmo|yang|yin
+✝️;cruz latina;cristianismo|cruz|religión
+☦️;cruz ortodoxa;cruz|religión
+☪️;media luna y estrella;estrella|islam|luna|religión
+☮️;símbolo de la paz;paz
+🕎;menorá;candelabro|religión
+🔯;estrella de seis puntas;adivinación|buena fortuna|estrella|seis puntas
+🪯;khanda;religión|sij|sijismo|sikh
+♈;Aries;carnero|horóscopo|zodiaco
+♉;Tauro;buey|horóscopo|toro|zodiaco
+♊;Géminis;gemelos|horóscopo|zodiaco
+♋;Cáncer;cangrejo|horóscopo|zodiaco
+♌;Leo;horóscopo|león|zodiaco
+♍;Virgo;horóscopo|zodiaco
+♎;Libra;balanza|escala|horóscopo|justicia|zodiaco
+♏;Escorpio;escorpión|horóscopo|zodiaco
+♐;Sagitario;arquero|horóscopo|zodiaco
+♑;Capricornio;cabra|horóscopo|zodiaco
+♒;Acuario;agua|horóscopo|zodiaco
+♓;Piscis;horóscopo|pescado|pez|zodiaco
+⛎;Ofiuco;horóscopo|portador|serpiente|zodiaco
+🔀;reproducción aleatoria;cruzado|flechas|flechas entrecruzadas
+🔁;repetir;flechas|repetición
+🔂;repetir una vez;flechas|repetición|uno
+▶️;reproducir;botón de reproducción|flecha|triángulo
+⏩;avance rápido;avanzar|doble|flecha
+⏭️;pista siguiente;raya vertical|siguiente|triángulos
+⏯️;reproducir o pausa;pausa|reproducir|triángulo
+◀️;retroceso;izquierda|triángulo
+⏪;retroceso rápido;flecha|flecha doble a la izquierda|izquierda|rebobinado|rebobinar
+⏮️;pista anterior;atrás|escena anterior|triángulo
+🔼;triángulo hacia arriba;arriba|botón|botón triángulo hacia arriba|triángulo
+⏫;triángulo doble hacia arriba;arriba|flecha
+🔽;triángulo hacia abajo;abajo|botón|botón triángulo hacia abajo|triángulo
+⏬;triángulo doble hacia abajo;triángulo|triángulo doble abajo
+⏸️;pausa;barras|botón|vertical
+⏹️;detener;botón|cuadrado|parar
+⏺️;grabar;botón|círculo
+⏏️;expulsar;botón
+🎦;cine;entretenimiento|película
+🔅;brillo bajo;bajo|brillo|señal de brillo bajo|tenue
+🔆;brillo alto;alto|brillante|brillo|señal de brillo alto
+📶;barras de cobertura;antena|celular|móvil|señal|teléfono
+🛜;wifi;conexión|inalámbrica|internet|red|wi-fi
+📳;modo vibración;móvil|teléfono|teléfono celular|vibración
+📴;teléfono móvil apagado;apagado|móvil|teléfono|teléfono celular
+♀️;signo femenino;mujer|signo|símbolo
+♂️;signo masculino;hombre|signo|símbolo
+⚧️;símbolo de transgénero;transgénero
+✖️;multiplicación;×|cancelar|marca|prohibido|signo de multiplicación|x
+➕;más;+|signo|suma
+➖;menos;-|−|resta|signo
+➗;división;÷|signo|signo de división
+🟰;signo igual grueso;equivalencia|igualdad|matemáticas|mates
+♾️;infinito;ilimitado|siempre|universal
+‼️;exclamación doble;!!|exclamación|puntuación|sorpresa
+⁉️;exclamación e interrogación;!|!?|?|exclamación|interrogación
+❓;interrogación roja;?|interrogación|pregunta|puntuación|signo de interrogación
+❔;interrogación blanca;?|interrogación|pregunta|puntuación
+❕;exclamación blanca;!|exclamación|puntuación
+❗;exclamación roja;!|exclamación|puntuación|signo de exclamación
+〰️;guion ondulado;guion|marca de sonido largo|ondulado
+💱;cambio de divisas;cambio|dinero|divisa|moneda
+💲;símbolo de dólar;dinero|dólar|símbolo
+⚕️;símbolo de medicina;asclepio|esculapio|medicina|serpiente
+♻️;símbolo de reciclaje;reciclaje|reciclar|señal|símbolo universal de reciclaje sólido|universal
+⚜️;flor de lis;flor|lis
+🔱;emblema de tridente;ancla|emblema|tridente
+📛;etiqueta identificativa;etiqueta|nombre
+🔰;símbolo japonés para principiante;amarillo|japonés|principiante|verde
+⭕;círculo rojo hueco;aro|círculo|o|rojo
+✅;botón de marca de verificación;✓|botón|marca|selección|verificación
+☑️;casilla con marca de verificación;✓|casilla|marca|selección|verificación
+✔️;marca de verificación;✓|marca|selección|verificación
+❌;marca de cruz;×|cancelar|cruz|marca de tachado|tachar|x
+❎;botón con marca de cruz;×|casilla|cruz|marca|x
+➰;bucle;giro|tirabuzón
+➿;bucle doble;bucle|doble
+〽️;marca de alternancia;alternancia|marca
+✳️;asterisco de ocho puntas;*|asterisco
+✴️;estrella de ocho puntas;*|estrella
+❇️;chispa;*
+©️;copyright;c|símbolo
+®️;marca registrada;r|símbolo de marca registrada
+™️;símbolo de marca comercial;marca comercial
+🫟;salpicadura;gotear|líquido|mancha|manchar|pintura|salpicar|tinta
+*️⃣;Teclas: *;Teclas
+0️⃣;tecla: 0;0|cero|tecla
+1️⃣;tecla: 1;1|tecla|uno
+2️⃣;tecla: 2;2|dos|tecla
+3️⃣;tecla: 3;3|tecla|tres
+4️⃣;tecla: 4;4|cuatro|tecla
+5️⃣;tecla: 5;5|cinco|tecla
+6️⃣;tecla: 6;6|seis|tecla
+7️⃣;tecla: 7;7|siete|tecla
+8️⃣;tecla: 8;8|ocho|tecla
+9️⃣;tecla: 9;9|nueve|tecla
+🔟;Teclas: 10;Teclas
+🔠;letras latinas mayúsculas;abcd|letras|mayúsculas
+🔡;letras latinas minúsculas;abcd|letras|minúsculas
+🔢;números;1234|dígitos
+🔣;símbolos;〒♪&%
+🔤;alfabeto latino;ABC|latino
+🅰️;grupo sanguíneo A;A|grupo|sanguíneo|tipo A
+🆎;grupo sanguíneo AB;AB|grupo|sanguíneo|tipo AB
+🅱️;grupo sanguíneo B;B|grupo|sanguíneo|tipo B
+🆑;borrar;símbolo
+🆒;botón COOL;botón|cool|mola
+🆓;botón FREE;gratis|símbolo gratis
+ℹ️;información;i
+🆔;símbolo de identificación;ID|identidad|símbolo identidad
+Ⓜ️;m en círculo;círculo|m
+🆕;botón NEW;botón|NEW|nuevo
+🆖;botón NG;botón|ng|nuevo
+🅾️;grupo sanguíneo tipo O;grupo sanguíneo|o
+🆗;botón OK;botón|ok
+🅿️;aparcamiento;p|parking
+🆘;símbolo de socorro;ayuda|símbolo|socorro|sos
+🆙;botón UP!;arriba|información|novedad|símbolo|up
+🆚;botón VS;contra|frente a|símbolo|versus|vs
+🈁;ideograma japonés para "aquí";“aquí”|japonés|katakana
+🈂️;ideograma japonés para "de cortesía";cortesía|japonés|katakana
+🈷️;ideograma japonés para "cantidad mensual";“cantidad mensual”|ideograma|japonés|kanji
+🈶;ideograma japonés para "de pago";“de pago”|ideograma|japonés|kanji
+🈯;ideograma japonés para "reservado";ideograma|japonés|kanji|reservado
+🉐;ideograma japonés para "ganga";ganga|ideograma|japonés|kanji
+🈹;ideograma japonés para "descuento";descuento|ideograma|japonés|kanji
+🈚;ideograma japonés para "gratis";gratis|ideograma|japonés|kanji
+🈲;ideograma japonés para "prohibido";ideograma|japonés|kanji|prohibido
+🉑;ideograma japonés para "aceptable";aceptable|ideograma|japonés|kanji
+🈸;ideograma japonés para "aplicación";aplicación|ideograma|japonés|kanji
+🈴;ideograma japonés para "aprobado";aprobado|ideograma|japonés|kanji
+🈳;ideograma japonés para "vacante";ideograma|japonés|kanji|vacante
+㊗️;ideograma japonés para "enhorabuena";enhorabuena|ideograma|japonés|kanji
+㊙️;ideograma japonés para "secreto";ideograma|japonés|kanji|secreto
+🈺;ideograma japonés para "abierto";abierto|ideograma|japonés|kanji
+🈵;ideograma japonés para "completo";completo|ideograma|japonés|kanji|lleno
+🔴;círculo rojo;círculo|geometría|rojo
+🟠;círculo naranja;círculo|naranja
+🟡;círculo amarillo;amarillo|círculo
+🟢;círculo verde;círculo|verde
+🔵;círculo azul;azul|círculo|geometría
+🟣;círculo morado;círculo|lila|morado|púrpura
+🟤;círculo marrón;círculo|marrón
+⚫;círculo negro;círculo|geometría
+⚪;círculo blanco;círculo|geometría
+🟥;cuadrado rojo;cuadrado|rojo
+🟧;cuadrado naranja;cuadrado|naranja
+🟨;cuadrado amarillo;amarillo|cuadrado
+🟩;cuadrado verde;cuadrado|verde
+🟦;cuadrado azul;azul|cuadrado
+🟪;cuadrado morado;cuadrado|lila|morado|púrpura
+🟫;cuadrado marrón;cuadrado|marrón
+⬛;cuadrado negro grande;cuadrado|geometría|negro
+⬜;cuadrado blanco grande;blanco|cuadrado|geometría
+◼️;cuadrado negro mediano;cuadrado|geometría|negro
+◻️;cuadrado blanco mediano;blanco|cuadrado|geometría
+◾;cuadrado negro mediano-pequeño;cuadrado|geometría|negro
+◽;cuadrado blanco mediano-pequeño;blanco|cuadrado|geometría
+▪️;cuadrado negro pequeño;cuadrado|geometría|negro
+▫️;cuadrado blanco pequeño;blanco|cuadrado|geometría
+🔶;rombo naranja grande;geometría|naranja|rombo
+🔷;rombo azul grande;azul|geometría|rombo
+🔸;rombo naranja pequeño;geometría|naranja|rombo
+🔹;rombo azul pequeño;azul|geometría|rombo
+🔺;triángulo rojo hacia arriba;geometría|rojo|triángulo|triángulo hacia arriba rojo
+🔻;triángulo rojo hacia abajo;geometría|rojo|triángulo|triángulo hacia abajo rojo
+💠;rombo con pétalo;flor|geometría|rombo
+🔘;botón de opción;botón|opción
+🔳;botón cuadrado con borde blanco;botón|cuadrado
+🔲;botón cuadrado con borde negro;botón|cuadrado
+🏁;bandera de cuadros;bandera|carreras|cuadros|deporte|motor
+🚩;bandera triangular;bandera|bandera de localización triangular|bandera informativa de localización|localización
+🎌;banderas cruzadas;banderas|celebración|japón
+🏴;bandera negra;bandera|negra|ondear
+🏳️;bandera blanca;bandera|blanca|ondear
+🏳️‍🌈;bandera del arcoíris;arcoíris|bandera
+🏳️‍⚧️;bandera transgénero;azul|bandera|blanco|LGTB|rosa|transgénero
+🏴‍☠️;bandera pirata;botín|Jolly Roger|pirata|tesoro
+🇦🇨;Bandera: Isla de la Ascensión;Bandera
+🇦🇩;Bandera: Andorra;Bandera
+🇦🇪;Bandera: Emiratos Árabes Unidos;Bandera
+🇦🇫;Bandera: Afganistán;Bandera
+🇦🇬;Bandera: Antigua y Barbuda;Bandera
+🇦🇮;Bandera: Anguila;Bandera
+🇦🇱;Bandera: Albania;Bandera
+🇦🇲;Bandera: Armenia;Bandera
+🇦🇴;Bandera: Angola;Bandera
+🇦🇶;Bandera: Antártida;Bandera
+🇦🇷;Bandera: Argentina;Bandera
+🇦🇸;Bandera: Samoa Americana;Bandera
+🇦🇹;Bandera: Austria;Bandera
+🇦🇺;Bandera: Australia;Bandera
+🇦🇼;Bandera: Aruba;Bandera
+🇦🇽;Bandera: Islas Aland;Bandera
+🇦🇿;Bandera: Azerbaiyán;Bandera
+🇧🇦;Bandera: Bosnia y Herzegovina;Bandera
+🇧🇧;Bandera: Barbados;Bandera
+🇧🇩;Bandera: Bangladés;Bandera
+🇧🇪;Bandera: Bélgica;Bandera
+🇧🇫;Bandera: Burkina Faso;Bandera
+🇧🇬;Bandera: Bulgaria;Bandera
+🇧🇭;Bandera: Baréin;Bandera
+🇧🇮;Bandera: Burundi;Bandera
+🇧🇯;Bandera: Benín;Bandera
+🇧🇱;Bandera: San Bartolomé;Bandera
+🇧🇲;Bandera: Bermudas;Bandera
+🇧🇳;Bandera: Brunéi;Bandera
+🇧🇴;Bandera: Bolivia;Bandera
+🇧🇶;Bandera: Caribe neerlandés;Bandera
+🇧🇷;Bandera: Brasil;Bandera
+🇧🇸;Bandera: Bahamas;Bandera
+🇧🇹;Bandera: Bután;Bandera
+🇧🇻;Bandera: Isla Bouvet;Bandera
+🇧🇼;Bandera: Botsuana;Bandera
+🇧🇾;Bandera: Bielorrusia;Bandera
+🇧🇿;Bandera: Belice;Bandera
+🇨🇦;Bandera: Canadá;Bandera
+🇨🇨;Bandera: Islas Cocos;Bandera
+🇨🇩;Bandera: República Democrática del Congo;Bandera
+🇨🇫;Bandera: República Centroafricana;Bandera
+🇨🇬;Bandera: Congo;Bandera
+🇨🇭;Bandera: Suiza;Bandera
+🇨🇮;Bandera: Côte d’Ivoire;Bandera
+🇨🇰;Bandera: Islas Cook;Bandera
+🇨🇱;Bandera: Chile;Bandera
+🇨🇲;Bandera: Camerún;Bandera
+🇨🇳;Bandera: China;Bandera
+🇨🇴;Bandera: Colombia;Bandera
+🇨🇵;Bandera: Isla Clipperton;Bandera
+🇨🇶;Bandera: Sark;Bandera
+🇨🇷;Bandera: Costa Rica;Bandera
+🇨🇺;Bandera: Cuba;Bandera
+🇨🇻;Bandera: Cabo Verde;Bandera
+🇨🇼;Bandera: Curazao;Bandera
+🇨🇽;Bandera: Isla de Navidad;Bandera
+🇨🇾;Bandera: Chipre;Bandera
+🇨🇿;Bandera: Chequia;Bandera
+🇩🇪;Bandera: Alemania;Bandera
+🇩🇬;Bandera: Diego García;Bandera
+🇩🇯;Bandera: Yibuti;Bandera
+🇩🇰;Bandera: Dinamarca;Bandera
+🇩🇲;Bandera: Dominica;Bandera
+🇩🇴;Bandera: República Dominicana;Bandera
+🇩🇿;Bandera: Argelia;Bandera
+🇪🇦;Bandera: Ceuta y Melilla;Bandera
+🇪🇨;Bandera: Ecuador;Bandera
+🇪🇪;Bandera: Estonia;Bandera
+🇪🇬;Bandera: Egipto;Bandera
+🇪🇭;Bandera: Sáhara Occidental;Bandera
+🇪🇷;Bandera: Eritrea;Bandera
+🇪🇸;Bandera: España;Bandera
+🇪🇹;Bandera: Etiopía;Bandera
+🇪🇺;Bandera: Unión Europea;Bandera
+🇫🇮;Bandera: Finlandia;Bandera
+🇫🇯;Bandera: Fiyi;Bandera
+🇫🇰;Bandera: Islas Malvinas;Bandera
+🇫🇲;Bandera: Micronesia;Bandera
+🇫🇴;Bandera: Islas Feroe;Bandera
+🇫🇷;Bandera: Francia;Bandera
+🇬🇦;Bandera: Gabón;Bandera
+🇬🇧;Bandera: Reino Unido;Bandera
+🇬🇩;Bandera: Granada;Bandera
+🇬🇪;Bandera: Georgia;Bandera
+🇬🇫;Bandera: Guayana Francesa;Bandera
+🇬🇬;Bandera: Guernesey;Bandera
+🇬🇭;Bandera: Ghana;Bandera
+🇬🇮;Bandera: Gibraltar;Bandera
+🇬🇱;Bandera: Groenlandia;Bandera
+🇬🇲;Bandera: Gambia;Bandera
+🇬🇳;Bandera: Guinea;Bandera
+🇬🇵;Bandera: Guadalupe;Bandera
+🇬🇶;Bandera: Guinea Ecuatorial;Bandera
+🇬🇷;Bandera: Grecia;Bandera
+🇬🇸;Bandera: Islas Georgia del Sur y Sandwich del Sur;Bandera
+🇬🇹;Bandera: Guatemala;Bandera
+🇬🇺;Bandera: Guam;Bandera
+🇬🇼;Bandera: Guinea-Bisáu;Bandera
+🇬🇾;Bandera: Guyana;Bandera
+🇭🇰;Bandera: RAE de Hong Kong (China);Bandera
+🇭🇲;Bandera: Islas Heard y McDonald;Bandera
+🇭🇳;Bandera: Honduras;Bandera
+🇭🇷;Bandera: Croacia;Bandera
+🇭🇹;Bandera: Haití;Bandera
+🇭🇺;Bandera: Hungría;Bandera
+🇮🇨;Bandera: Canarias;Bandera
+🇮🇩;Bandera: Indonesia;Bandera
+🇮🇪;Bandera: Irlanda;Bandera
+🇮🇱;Bandera: Israel;Bandera
+🇮🇲;Bandera: Isla de Man;Bandera
+🇮🇳;Bandera: India;Bandera
+🇮🇴;Bandera: Territorio Británico del Océano Índico;Bandera
+🇮🇶;Bandera: Irak;Bandera
+🇮🇷;Bandera: Irán;Bandera
+🇮🇸;Bandera: Islandia;Bandera
+🇮🇹;Bandera: Italia;Bandera
+🇯🇪;Bandera: Jersey;Bandera
+🇯🇲;Bandera: Jamaica;Bandera
+🇯🇴;Bandera: Jordania;Bandera
+🇯🇵;Bandera: Japón;Bandera
+🇰🇪;Bandera: Kenia;Bandera
+🇰🇬;Bandera: Kirguistán;Bandera
+🇰🇭;Bandera: Camboya;Bandera
+🇰🇮;Bandera: Kiribati;Bandera
+🇰🇲;Bandera: Comoras;Bandera
+🇰🇳;Bandera: San Cristóbal y Nieves;Bandera
+🇰🇵;Bandera: Corea del Norte;Bandera
+🇰🇷;Bandera: Corea del Sur;Bandera
+🇰🇼;Bandera: Kuwait;Bandera
+🇰🇾;Bandera: Islas Caimán;Bandera
+🇰🇿;Bandera: Kazajistán;Bandera
+🇱🇦;Bandera: Laos;Bandera
+🇱🇧;Bandera: Líbano;Bandera
+🇱🇨;Bandera: Santa Lucía;Bandera
+🇱🇮;Bandera: Liechtenstein;Bandera
+🇱🇰;Bandera: Sri Lanka;Bandera
+🇱🇷;Bandera: Liberia;Bandera
+🇱🇸;Bandera: Lesoto;Bandera
+🇱🇹;Bandera: Lituania;Bandera
+🇱🇺;Bandera: Luxemburgo;Bandera
+🇱🇻;Bandera: Letonia;Bandera
+🇱🇾;Bandera: Libia;Bandera
+🇲🇦;Bandera: Marruecos;Bandera
+🇲🇨;Bandera: Mónaco;Bandera
+🇲🇩;Bandera: Moldavia;Bandera
+🇲🇪;Bandera: Montenegro;Bandera
+🇲🇫;Bandera: San Martín;Bandera
+🇲🇬;Bandera: Madagascar;Bandera
+🇲🇭;Bandera: Islas Marshall;Bandera
+🇲🇰;Bandera: Macedonia del Norte;Bandera
+🇲🇱;Bandera: Mali;Bandera
+🇲🇲;Bandera: Myanmar (Birmania);Bandera
+🇲🇳;Bandera: Mongolia;Bandera
+🇲🇴;Bandera: RAE de Macao (China);Bandera
+🇲🇵;Bandera: Islas Marianas del Norte;Bandera
+🇲🇶;Bandera: Martinica;Bandera
+🇲🇷;Bandera: Mauritania;Bandera
+🇲🇸;Bandera: Montserrat;Bandera
+🇲🇹;Bandera: Malta;Bandera
+🇲🇺;Bandera: Mauricio;Bandera
+🇲🇻;Bandera: Maldivas;Bandera
+🇲🇼;Bandera: Malaui;Bandera
+🇲🇽;Bandera: México;Bandera
+🇲🇾;Bandera: Malasia;Bandera
+🇲🇿;Bandera: Mozambique;Bandera
+🇳🇦;Bandera: Namibia;Bandera
+🇳🇨;Bandera: Nueva Caledonia;Bandera
+🇳🇪;Bandera: Níger;Bandera
+🇳🇫;Bandera: Isla Norfolk;Bandera
+🇳🇬;Bandera: Nigeria;Bandera
+🇳🇮;Bandera: Nicaragua;Bandera
+🇳🇱;Bandera: Países Bajos;Bandera
+🇳🇴;Bandera: Noruega;Bandera
+🇳🇵;Bandera: Nepal;Bandera
+🇳🇷;Bandera: Nauru;Bandera
+🇳🇺;Bandera: Niue;Bandera
+🇳🇿;Bandera: Nueva Zelanda;Bandera
+🇴🇲;Bandera: Omán;Bandera
+🇵🇦;Bandera: Panamá;Bandera
+🇵🇪;Bandera: Perú;Bandera
+🇵🇫;Bandera: Polinesia Francesa;Bandera
+🇵🇬;Bandera: Papúa Nueva Guinea;Bandera
+🇵🇭;Bandera: Filipinas;Bandera
+🇵🇰;Bandera: Pakistán;Bandera
+🇵🇱;Bandera: Polonia;Bandera
+🇵🇲;Bandera: San Pedro y Miquelón;Bandera
+🇵🇳;Bandera: Islas Pitcairn;Bandera
+🇵🇷;Bandera: Puerto Rico;Bandera
+🇵🇸;Bandera: Territorios Palestinos;Bandera
+🇵🇹;Bandera: Portugal;Bandera
+🇵🇼;Bandera: Palaos;Bandera
+🇵🇾;Bandera: Paraguay;Bandera
+🇶🇦;Bandera: Catar;Bandera
+🇷🇪;Bandera: Reunión;Bandera
+🇷🇴;Bandera: Rumanía;Bandera
+🇷🇸;Bandera: Serbia;Bandera
+🇷🇺;Bandera: Rusia;Bandera
+🇷🇼;Bandera: Ruanda;Bandera
+🇸🇦;Bandera: Arabia Saudí;Bandera
+🇸🇧;Bandera: Islas Salomón;Bandera
+🇸🇨;Bandera: Seychelles;Bandera
+🇸🇩;Bandera: Sudán;Bandera
+🇸🇪;Bandera: Suecia;Bandera
+🇸🇬;Bandera: Singapur;Bandera
+🇸🇭;Bandera: Santa Elena;Bandera
+🇸🇮;Bandera: Eslovenia;Bandera
+🇸🇯;Bandera: Svalbard y Jan Mayen;Bandera
+🇸🇰;Bandera: Eslovaquia;Bandera
+🇸🇱;Bandera: Sierra Leona;Bandera
+🇸🇲;Bandera: San Marino;Bandera
+🇸🇳;Bandera: Senegal;Bandera
+🇸🇴;Bandera: Somalia;Bandera
+🇸🇷;Bandera: Surinam;Bandera
+🇸🇸;Bandera: Sudán del Sur;Bandera
+🇸🇹;Bandera: Santo Tomé y Príncipe;Bandera
+🇸🇻;Bandera: El Salvador;Bandera
+🇸🇽;Bandera: Sint Maarten;Bandera
+🇸🇾;Bandera: Siria;Bandera
+🇸🇿;Bandera: Esuatini;Bandera
+🇹🇦;Bandera: Tristán de Acuña;Bandera
+🇹🇨;Bandera: Islas Turcas y Caicos;Bandera
+🇹🇩;Bandera: Chad;Bandera
+🇹🇫;Bandera: Territorios Australes Franceses;Bandera
+🇹🇬;Bandera: Togo;Bandera
+🇹🇭;Bandera: Tailandia;Bandera
+🇹🇯;Bandera: Tayikistán;Bandera
+🇹🇰;Bandera: Tokelau;Bandera
+🇹🇱;Bandera: Timor-Leste;Bandera
+🇹🇲;Bandera: Turkmenistán;Bandera
+🇹🇳;Bandera: Túnez;Bandera
+🇹🇴;Bandera: Tonga;Bandera
+🇹🇷;Bandera: Turquía;Bandera
+🇹🇹;Bandera: Trinidad y Tobago;Bandera
+🇹🇻;Bandera: Tuvalu;Bandera
+🇹🇼;Bandera: Taiwán;Bandera
+🇹🇿;Bandera: Tanzania;Bandera
+🇺🇦;Bandera: Ucrania;Bandera
+🇺🇬;Bandera: Uganda;Bandera
+🇺🇲;Bandera: Islas menores alejadas de EE. UU.;Bandera
+🇺🇳;Bandera: Naciones Unidas;Bandera
+🇺🇸;Bandera: Estados Unidos;Bandera
+🇺🇾;Bandera: Uruguay;Bandera
+🇺🇿;Bandera: Uzbekistán;Bandera
+🇻🇦;Bandera: Ciudad del Vaticano;Bandera
+🇻🇨;Bandera: San Vicente y las Granadinas;Bandera
+🇻🇪;Bandera: Venezuela;Bandera
+🇻🇬;Bandera: Islas Vírgenes Británicas;Bandera
+🇻🇮;Bandera: Islas Vírgenes de EE. UU.;Bandera
+🇻🇳;Bandera: Vietnam;Bandera
+🇻🇺;Bandera: Vanuatu;Bandera
+🇼🇫;Bandera: Wallis y Futuna;Bandera
+🇼🇸;Bandera: Samoa;Bandera
+🇽🇰;Bandera: Kosovo;Bandera
+🇾🇪;Bandera: Yemen;Bandera
+🇾🇹;Bandera: Mayotte;Bandera
+🇿🇦;Bandera: Sudáfrica;Bandera
+🇿🇲;Bandera: Zambia;Bandera
+🇿🇼;Bandera: Zimbabue;Bandera
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;Bandera: Inglaterra;Bandera
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;Bandera: Escocia;Bandera
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;Bandera: Gales;Bandera

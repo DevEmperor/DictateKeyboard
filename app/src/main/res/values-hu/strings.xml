@@ -825,6 +825,7 @@
     <string name="action__apply">Alkalmaz</string>
     <string name="action__back_up">Biztonsági mentés</string>
     <string name="action__cancel">Mégse</string>
+    <string name="action__clear">Törlés</string>
     <string name="action__create">Létrehozás</string>
     <string name="action__default">Alapértelmezett</string>
     <string name="action__delete">Törlés</string>

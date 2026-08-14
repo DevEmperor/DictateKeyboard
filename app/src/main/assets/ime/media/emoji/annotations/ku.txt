@@ -1,0 +1,310 @@
+🧒;zarok;
+👧;keç;
+🧑;kes;
+👨;mêr;
+👩;jin;
+🐵;rûyê meymûnê;meymûn|rû
+🐒;meymûn;heywan
+🦍;gorîl;heywan
+🐶;rûyê kûçikê;heywan|kûçik|rû
+🐕;kûçik;heywan
+🐺;gur;
+🦊;rovî;
+🐈;pisîk;
+🦁;şêr;
+🫏;ker;
+🐎;hesp;
+🦓;zebra;
+🐂;ga;
+🐄;çêl;
+🐖;beraz;
+🐏;beran;
+🐑;mih;
+🐐;bizin;
+🐪;hêştir;
+🦙;lama;
+🐘;fîl;
+🐁;mişk;
+🐻;hirç;
+🐼;panda;
+🦃;elok;
+🐔;mirîşk;
+🐓;dîk;
+🐸;beq;
+🐢;kûsî;
+🐍;mar;
+🐟;masî;
+🍇;tirî;fêkî
+🍉;zebeş;fêkî
+🍋;lîmon;
+🍌;mûz;fêkî
+🥭;mango;
+🍎;sêva sor;fêkî|sêv|sor
+🍏;sêva kesk;fêkî|kesk|sêv
+🍐;hirmî;fêkî
+🍑;xox;fêkî
+🍒;gêraz;
+🍅;firengî;riwek|sebze
+🥥;giwêza hindê;
+🥑;avokado;fêkî|xwarin
+🍆;balîcan;sebze
+🥔;kartol;
+🇦🇨;ala: Girava Ascensionê;ala
+🇦🇩;ala: Andorra;ala
+🇦🇪;ala: Mîrgehên Erebî yên Yekbûyî;ala
+🇦🇫;ala: Efxanistan;ala
+🇦🇬;ala: Antîgua û Berbûda;ala
+🇦🇮;ala: Anguîla;ala
+🇦🇱;ala: Albanya;ala
+🇦🇲;ala: Ermenistan;ala
+🇦🇴;ala: Angola;ala
+🇦🇶;ala: Antarktîka;ala
+🇦🇷;ala: Arjantîn;ala
+🇦🇸;ala: Samoaya Amerîkanî;ala
+🇦🇹;ala: Awistirya;ala
+🇦🇺;ala: Awistralya;ala
+🇦🇼;ala: Arûba;ala
+🇦🇽;ala: Giravên Alandê;ala
+🇦🇿;ala: Azerbeycan;ala
+🇧🇦;ala: Bosna û Hersek;ala
+🇧🇧;ala: Barbados;ala
+🇧🇩;ala: Bengladeş;ala
+🇧🇪;ala: Belçîka;ala
+🇧🇫;ala: Burkîna Faso;ala
+🇧🇬;ala: Bulgaristan;ala
+🇧🇭;ala: Behreyn;ala
+🇧🇮;ala: Bûrûndî;ala
+🇧🇯;ala: Bênîn;ala
+🇧🇱;ala: Saint Barthelemy;ala
+🇧🇲;ala: Bermûda;ala
+🇧🇳;ala: Brûney;ala
+🇧🇴;ala: Bolîvya;ala
+🇧🇶;ala: Holendaya Karayîbê;ala
+🇧🇷;ala: Brezîlya;ala
+🇧🇸;ala: Bahama;ala
+🇧🇹;ala: Bûtan;ala
+🇧🇻;ala: Girava Bouvetê;ala
+🇧🇼;ala: Botswana;ala
+🇧🇾;ala: Belarûs;ala
+🇧🇿;ala: Belîze;ala
+🇨🇦;ala: Kanada;ala
+🇨🇨;ala: Giravên Kokosê (Keeling);ala
+🇨🇩;ala: Kongo - Kînşasa;ala
+🇨🇫;ala: Cimhûrîyeta Afrîkaya Navîn;ala
+🇨🇬;ala: Kongo - Brazzaville;ala
+🇨🇭;ala: Swîsre;ala
+🇨🇮;ala: Côte d’Ivoire;ala
+🇨🇰;ala: Giravên Cookê;ala
+🇨🇱;ala: Şîlî;ala
+🇨🇲;ala: Kamerûn;ala
+🇨🇳;ala: Çîn;ala
+🇨🇴;ala: Kolombîya;ala
+🇨🇵;ala: Girava Clippertonê;ala
+🇨🇶;ala: Sark;ala
+🇨🇷;ala: Kosta Rîka;ala
+🇨🇺;ala: Kuba;ala
+🇨🇻;ala: Kap Verde;ala
+🇨🇼;ala: Curaçao;ala
+🇨🇽;ala: Girava Christmasê;ala
+🇨🇾;ala: Qibris;ala
+🇨🇿;ala: Çekya;ala
+🇩🇪;ala: Almanya;ala
+🇩🇬;ala: Diego Garcia;ala
+🇩🇯;ala: Cîbûtî;ala
+🇩🇰;ala: Danîmarka;ala
+🇩🇲;ala: Domînîka;ala
+🇩🇴;ala: Cimhûrîyeta Domînîkê;ala
+🇩🇿;ala: Cezayîr;ala
+🇪🇦;ala: Ceuta û Melîla;ala
+🇪🇨;ala: Ekwador;ala
+🇪🇪;ala: Estonya;ala
+🇪🇬;ala: Misir;ala
+🇪🇭;ala: Sahraya Rojava;ala
+🇪🇷;ala: Erître;ala
+🇪🇸;ala: Spanya;ala
+🇪🇹;ala: Etîyopya;ala
+🇪🇺;ala: Yekîtîya Ewropayê;ala
+🇫🇮;ala: Fînlenda;ala
+🇫🇯;ala: Fîjî;ala
+🇫🇰;ala: Giravên Falklandê;ala
+🇫🇲;ala: Mîkronezya;ala
+🇫🇴;ala: Giravên Faroeyê;ala
+🇫🇷;ala: Fransa;ala
+🇬🇦;ala: Gabon;ala
+🇬🇧;ala: Qiralîyeta Yekbûyî;ala
+🇬🇩;ala: Grenada;ala
+🇬🇪;ala: Gurcistan;ala
+🇬🇫;ala: Guyanaya Fransî;ala
+🇬🇬;ala: Guernsey;ala
+🇬🇭;ala: Gana;ala
+🇬🇮;ala: Cebelîtariq;ala
+🇬🇱;ala: Grînlanda;ala
+🇬🇲;ala: Gambîya;ala
+🇬🇳;ala: Gîne;ala
+🇬🇵;ala: Guadeloupe;ala
+🇬🇶;ala: Gîneya Ekwadorê;ala
+🇬🇷;ala: Yûnanistan;ala
+🇬🇸;ala: Giravên Georgîyaya Başûr û Sandwicha Başûr;ala
+🇬🇹;ala: Guatemala;ala
+🇬🇺;ala: Guam;ala
+🇬🇼;ala: Gîne-Bissau;ala
+🇬🇾;ala: Guyana;ala
+🇭🇰;ala: Hong Konga HîT ya Çînê;ala
+🇭🇲;ala: Giravên Heard û MacDonaldê;ala
+🇭🇳;ala: Hondûras;ala
+🇭🇷;ala: Xirwatistan;ala
+🇭🇹;ala: Haîtî;ala
+🇭🇺;ala: Macaristan;ala
+🇮🇨;ala: Giravên Kanaryayê;ala
+🇮🇩;ala: Endonezya;ala
+🇮🇪;ala: Îrlanda;ala
+🇮🇱;ala: Îsraîl;ala
+🇮🇲;ala: Girava Manê;ala
+🇮🇳;ala: Hindistan;ala
+🇮🇴;ala: Herêma Okyanûsa Hindî ya Brîtanyayê;ala
+🇮🇶;ala: Îraq;ala
+🇮🇷;ala: Îran;ala
+🇮🇸;ala: Îslanda;ala
+🇮🇹;ala: Îtalya;ala
+🇯🇪;ala: Jersey;ala
+🇯🇲;ala: Jamaîka;ala
+🇯🇴;ala: Urdun;ala
+🇯🇵;ala: Japonya;ala
+🇰🇪;ala: Kenya;ala
+🇰🇬;ala: Qirgizistan;ala
+🇰🇭;ala: Kamboçya;ala
+🇰🇮;ala: Kirîbatî;ala
+🇰🇲;ala: Komor;ala
+🇰🇳;ala: Saint Kitts û Nevîs;ala
+🇰🇵;ala: Koreya Bakur;ala
+🇰🇷;ala: Koreya Başûr;ala
+🇰🇼;ala: Kuweyt;ala
+🇰🇾;ala: Giravên Kaymanê;ala
+🇰🇿;ala: Qazaxistan;ala
+🇱🇦;ala: Laos;ala
+🇱🇧;ala: Libnan;ala
+🇱🇨;ala: Saint Lucia;ala
+🇱🇮;ala: Liechtenstein;ala
+🇱🇰;ala: Srî Lanka;ala
+🇱🇷;ala: Lîberya;ala
+🇱🇸;ala: Lesoto;ala
+🇱🇹;ala: Lîtvanya;ala
+🇱🇺;ala: Luksembûrg;ala
+🇱🇻;ala: Letonya;ala
+🇱🇾;ala: Lîbya;ala
+🇲🇦;ala: Fas;ala
+🇲🇨;ala: Monako;ala
+🇲🇩;ala: Moldova;ala
+🇲🇪;ala: Qeredax;ala
+🇲🇫;ala: Saint Martin;ala
+🇲🇬;ala: Madagaskar;ala
+🇲🇭;ala: Giravên Marşalê;ala
+🇲🇰;ala: Makedonyaya Bakur;ala
+🇲🇱;ala: Malî;ala
+🇲🇲;ala: Myanmar (Bûrma);ala
+🇲🇳;ala: Moxolistan;ala
+🇲🇴;ala: Makaoya Hît ya Çînê;ala
+🇲🇵;ala: Giravên Bakurê Marianan;ala
+🇲🇶;ala: Martînîk;ala
+🇲🇷;ala: Morîtanya;ala
+🇲🇸;ala: Montserat;ala
+🇲🇹;ala: Malta;ala
+🇲🇺;ala: Mauritius;ala
+🇲🇻;ala: Maldîv;ala
+🇲🇼;ala: Malawî;ala
+🇲🇽;ala: Meksîka;ala
+🇲🇾;ala: Malezya;ala
+🇲🇿;ala: Mozambîk;ala
+🇳🇦;ala: Namîbya;ala
+🇳🇨;ala: Kaledonyaya Nû;ala
+🇳🇪;ala: Nîjer;ala
+🇳🇫;ala: Girava Norfolkê;ala
+🇳🇬;ala: Nîjerya;ala
+🇳🇮;ala: Nîkaragua;ala
+🇳🇱;ala: Holanda;ala
+🇳🇴;ala: Norwec;ala
+🇳🇵;ala: Nepal;ala
+🇳🇷;ala: Naûrû;ala
+🇳🇺;ala: Niûe;ala
+🇳🇿;ala: Zelandaya Nû;ala
+🇴🇲;ala: Uman;ala
+🇵🇦;ala: Panama;ala
+🇵🇪;ala: Perû;ala
+🇵🇫;ala: Polînezyaya Fransizî;ala
+🇵🇬;ala: Papua Gîneya Nû;ala
+🇵🇭;ala: Fîlîpîn;ala
+🇵🇰;ala: Pakistan;ala
+🇵🇱;ala: Polonya;ala
+🇵🇲;ala: Saint-Pierre û Miquelon;ala
+🇵🇳;ala: Giravên Pitcairnê;ala
+🇵🇷;ala: Porto Rîko;ala
+🇵🇸;ala: Herêmên Filistînî;ala
+🇵🇹;ala: Portugal;ala
+🇵🇼;ala: Palau;ala
+🇵🇾;ala: Paragûay;ala
+🇶🇦;ala: Qeter;ala
+🇷🇪;ala: Réunion;ala
+🇷🇴;ala: Romanya;ala
+🇷🇸;ala: Sirbistan;ala
+🇷🇺;ala: Rûsya;ala
+🇷🇼;ala: Rwanda;ala
+🇸🇦;ala: Erebistana Siûdî;ala
+🇸🇧;ala: Giravên Solomonê;ala
+🇸🇨;ala: Seyşel;ala
+🇸🇩;ala: Sûdan;ala
+🇸🇪;ala: Swêd;ala
+🇸🇬;ala: Sîngapûr;ala
+🇸🇭;ala: Saint Helena;ala
+🇸🇮;ala: Slovenya;ala
+🇸🇯;ala: Svalbard û Jan Mayen;ala
+🇸🇰;ala: Slovakya;ala
+🇸🇱;ala: Sierra Leone;ala
+🇸🇲;ala: San Marîno;ala
+🇸🇳;ala: Senegal;ala
+🇸🇴;ala: Somalya;ala
+🇸🇷;ala: Surînam;ala
+🇸🇸;ala: Sûdana Başûr;ala
+🇸🇹;ala: Sao Tome û Prînsîpe;ala
+🇸🇻;ala: El Salvador;ala
+🇸🇽;ala: Sint Marteen;ala
+🇸🇾;ala: Sûrîye;ala
+🇸🇿;ala: Eswatînî;ala
+🇹🇦;ala: Tristan da Cunha;ala
+🇹🇨;ala: Giravên Turks û Kaîkosê;ala
+🇹🇩;ala: Çad;ala
+🇹🇫;ala: Herêmên Başûr ên Fransayê;ala
+🇹🇬;ala: Togo;ala
+🇹🇭;ala: Tayland;ala
+🇹🇯;ala: Tacikistan;ala
+🇹🇰;ala: Tokelau;ala
+🇹🇱;ala: Tîmor-Leste;ala
+🇹🇲;ala: Tirkmenistan;ala
+🇹🇳;ala: Tûnis;ala
+🇹🇴;ala: Tonga;ala
+🇹🇷;ala: Türkiye;ala
+🇹🇹;ala: Trînîdad û Tobago;ala
+🇹🇻;ala: Tûvalû;ala
+🇹🇼;ala: Taywan;ala
+🇹🇿;ala: Tanzanya;ala
+🇺🇦;ala: Ûkrayna;ala
+🇺🇬;ala: Ûganda;ala
+🇺🇲;ala: Giravên Biçûk ên Derveyî DAYê;ala
+🇺🇳;ala: Miletên Yekbûyî;ala
+🇺🇸;ala: Dewletên Amerîkayê yên Yekbûyî;ala
+🇺🇾;ala: Ûrûguay;ala
+🇺🇿;ala: Ozbekistan;ala
+🇻🇦;ala: Vatîkan;ala
+🇻🇨;ala: Saint Vincent û Giravên Grenadînê;ala
+🇻🇪;ala: Venezuela;ala
+🇻🇬;ala: Giravên Vîrjînê yên Brîtanyayê;ala
+🇻🇮;ala: Giravên Vîrjînê yên Amerîkayê;ala
+🇻🇳;ala: Vîetnam;ala
+🇻🇺;ala: Vanûatû;ala
+🇼🇫;ala: Wallis û Futuna;ala
+🇼🇸;ala: Samoa;ala
+🇽🇰;ala: Kosova;ala
+🇾🇪;ala: Yemen;ala
+🇾🇹;ala: Mayotte;ala
+🇿🇦;ala: Afrîkaya Başûr;ala
+🇿🇲;ala: Zambîya;ala
+🇿🇼;ala: Zîmbabwe;ala

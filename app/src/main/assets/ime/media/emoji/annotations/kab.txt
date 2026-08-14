@@ -1,0 +1,458 @@
+😀;;acmumeḥ meqqren
+😁;;acmumeḥ n tuɣmas meṛṛa
+😊;;udem innecṛaḥen s wallen icmumḥen
+😘;;tasudent d wul
+☺️;;udem n ucmumeḥ
+😚;;tasudent allen medlent
+😛;;Udem s yiles
+😜;;Udem yessufɣen iles
+🤗;;udem yefkan ahennec
+😐;;war awal
+😪;;udem yeṭṭsen
+🤒;;udem s utirmumitr
+☹️;;udem amiglaz
+😯;;udem war taɣect
+😣;;udem akayay
+😫;;udem yeɛyan
+🧒;;agrud
+👨‍🦰;argaz: acekkuḥ azeggaɣ;acekkuḥ azeggaɣ|argaz
+👨‍🦱;argaz: acekkuḥ akerṭuṭfan;acekkuḥ akerṭuṭfan|argaz
+👨‍🦳;argaz: acekkuḥ amellal;acekkuḥ amellal|argaz
+👨‍🦲;argaz: aferḍas;aferḍas|argaz
+👩‍🦰;tameṭṭut: acekkuḥ azeggaɣ;acekkuḥ azeggaɣ|tameṭṭut
+🧑‍🦰;amdan: acekkuḥ azeggaɣ;acekkuḥ azeggaɣ|amdan
+👩‍🦱;tameṭṭut: acekkuḥ akerṭuṭfan;acekkuḥ akerṭuṭfan|tameṭṭut
+🧑‍🦱;amdan: acekkuḥ akerṭuṭfan;acekkuḥ akerṭuṭfan|amdan
+👩‍🦳;tameṭṭut: acekkuḥ amellal;acekkuḥ amellal|tameṭṭut
+🧑‍🦳;amdan: acekkuḥ amellal;acekkuḥ amellal|amdan
+👩‍🦲;tameṭṭut: aferḍas;aferḍas|tameṭṭut
+🧑‍🦲;amdan: aferḍas;aferḍas|amdan
+👩‍❤️‍👨;tayuga s wul: tameṭṭut, argaz;argaz|tameṭṭut|tayuga s wul
+👨‍❤️‍👨;tayuga s wul: argaz, argaz;argaz|tayuga s wul
+👩‍❤️‍👩;tayuga s wul: tameṭṭut, tameṭṭut;tameṭṭut|tayuga s wul
+👨‍👩‍👦;tawacult: argaz, tameṭṭut, aqcic;aqcic|argaz|tameṭṭut|tawacult
+👨‍👩‍👧;tawacult: argaz, tameṭṭut, taqcict;argaz|tameṭṭut|taqcict|tawacult
+👨‍👩‍👧‍👦;tawacult: argaz, tameṭṭut, taqcict, aqcic;aqcic|argaz|tameṭṭut|taqcict|tawacult
+👨‍👩‍👦‍👦;tawacult: argaz, tameṭṭut, aqcic, aqcic;aqcic|argaz|tameṭṭut|tawacult
+👨‍👩‍👧‍👧;tawacult: argaz, tameṭṭut, taqcict, taqcict;argaz|tameṭṭut|taqcict|tawacult
+👨‍👨‍👦;tawacult: argaz, argaz, aqcic;aqcic|argaz|tawacult
+👨‍👨‍👧;tawacult: argaz, argaz, taqcict;argaz|taqcict|tawacult
+👨‍👨‍👧‍👦;tawacult: argaz, argaz, taqcict, aqcic;aqcic|argaz|taqcict|tawacult
+👨‍👨‍👦‍👦;tawacult: argaz, argaz, aqcic, aqcic;aqcic|argaz|tawacult
+👨‍👨‍👧‍👧;tawacult: argaz, argaz, taqcict, taqcict;argaz|taqcict|tawacult
+👩‍👩‍👦;tawacult: tameṭṭut, tameṭṭut, aqcic;aqcic|tameṭṭut|tawacult
+👩‍👩‍👧;tawacult: tameṭṭut, tameṭṭut, taqcict;tameṭṭut|taqcict|tawacult
+👩‍👩‍👧‍👦;tawacult: tameṭṭut, tameṭṭut, taqcict, aqcic;aqcic|tameṭṭut|taqcict|tawacult
+👩‍👩‍👦‍👦;tawacult: tameṭṭut, tameṭṭut, aqcic, aqcic;aqcic|tameṭṭut|tawacult
+👩‍👩‍👧‍👧;tawacult: tameṭṭut, tameṭṭut, taqcict, taqcict;tameṭṭut|taqcict|tawacult
+👨‍👦;tawacult: argaz, aqcic;aqcic|argaz|tawacult
+👨‍👦‍👦;tawacult: argaz, aqcic, aqcic;aqcic|argaz|tawacult
+👨‍👧;tawacult: argaz, taqcict;argaz|taqcict|tawacult
+👨‍👧‍👦;tawacult: argaz, taqcict, aqcic;aqcic|argaz|taqcict|tawacult
+👨‍👧‍👧;tawacult: argaz, taqcict, taqcict;argaz|taqcict|tawacult
+👩‍👦;tawacult: tameṭṭut, aqcic;aqcic|tameṭṭut|tawacult
+👩‍👦‍👦;tawacult: tameṭṭut, aqcic, aqcic;aqcic|tameṭṭut|tawacult
+👩‍👧;tawacult: tameṭṭut, taqcict;tameṭṭut|taqcict|tawacult
+👩‍👧‍👦;tawacult: tameṭṭut, taqcict, aqcic;aqcic|tameṭṭut|taqcict|tawacult
+👩‍👧‍👧;tawacult: tameṭṭut, taqcict, taqcict;tameṭṭut|taqcict|tawacult
+🦗;;ajṛad
+💮;;ajeğğig amellal
+🥀;;ajeğğig akiwan
+🌼;;amgud
+🌱;;imɣi aleqqaq
+🌳;;aseklu bu yifer
+🌴;;tazdayt
+🌾;;taceṛṛaft n ṛṛuz
+🌿;;ifer
+☘️;;ikeffis
+🍀;;ikeffis bu kuẓ n wafriwen
+🍇;;tiẓurin
+🍈;;afeqqus
+🍉;;delleɛ
+🍌;;tabanant
+🍍;;tananast
+🍐;;ifires
+🍓;;tariwalt
+🍅;;taṭumaṭict
+🥥;;iɣsan n koko
+🌽;;ageṭṭuc
+🥒;;ilekkel
+🗺️;;takarḍa n umaḍal
+🗾;;takarḍa n Japun
+🏔️;;adrar n udfel
+⛰️;;adrar
+🏕️;;asdar
+🏜️;;aneẓruf
+🏟️;;annar
+🏘️;;ixxamen
+🕋;;lkaɛva
+⛲;;tala
+🚇;;amitṛu
+🚈;;amitru afess
+🛹;;Avilu
+✈️;;asafag
+🛩️;;asafag ameẓyan
+💺;;tasɣimt
+🚁;;talikuptirt
+🛰️;;Aṣatilit
+🛸;;taɣawsa tarussint yettafgen
+⌛;;tamrilt n ijdan
+⏳;;tamrilt n ijdan yettmirin
+⌚;;tamrilt
+⏱️;;amesnakud
+⏲️;;Asakway
+🌡️;;atirmumitr
+☀️;;iṭij
+☁️;;asigna
+🔥;;times
+🎃;;taxsayt
+🎆;;asfugel
+🎇;;ifṭiwej
+✨;;itran
+🎈;;asfugel|tacuffut
+🎫;;atiki
+🏆;;arraz
+🔮;;takurt n ukrisṭal
+🎴;;takarḍa|tikarḍiwin n wurra n ujeǧǧig|urar
+⛑️;;akaskiḍ amidag amellal
+📿;;teṣbiḥ
+💍;;taxatemt
+🔇;;asusam
+📣;;amigafun
+💻;;aselkim aziraz
+🖥️;;aselkim n tnarit
+🖨️;;tasaggazt
+⌨️;;anasiw
+🖱️;;taɣerdayt n uselkim
+📺;;tiliẓri
+📷;;Takamiṛat
+📔;;imedlis s tduli icebḥen
+📕;;adlis imedlen
+📖;;adlis yeldin
+📗;;adlis azegzaw
+📘;;adlis amidadi
+📙;;adlis ačinawi
+📚;;idlisen
+📓;;imedlis
+📒;;ambellez
+📜;;adrurem
+📄;;asebter
+📰;;aɣmis
+🔖;;tacreṭ n usebter
+🏷️;;tabzimt
+✉️;;tajellabt
+📧;;imayl
+📨;;izen ukcim
+📩;;izen yettwazen
+📤;;tanaka n tuzna
+🗳️;;asenduq
+✏️;;aɣnib|imru
+✒️;;imru n tricet aberkan
+📁;;akaram n ufaylu
+📂;;ldi akaram n ufaylu
+🔓;;yeldi
+🔗;;aseɣwen
+💉;;tisegnit
+🚪;;tabburt
+🛒;;taqecwalt n tiɣin
+🚬;;ageṛṛu
+🏧;;tamacint n tedrimt tawurmant
+🚻;;azamul n teslalayt
+🚾;;taslalayt
+⬆️;;aneccab d asawen
+➡️;;aneccab ayeffus
+↘️;;aneccab d akesser uẓẓil
+⬇️;;aneccab akesser
+↙️;;aneccab akesser ayeffus
+⬅️;;aneccab azelmaḍ
+↖️;;aneccab asawen azelmaḍ
+↕️;;aneccab asawen akesser
+↔️;;aneccab azelmaḍ ayeffus
+↩️;;aneccab ayeffus yettin s azelmaḍ
+↪️;;aneccab azelmaḍ yettin s ayeffus
+⤴️;;aneccab ayeffus yettin d asawen
+⤵️;;aneccab ayeffus yettin d akesser
+🔃;;ineccaben tanila n isegnan n temrilt
+🔄;;taqeffalt n ineccaben n tnila yettin n isegnan n temrilt
+🔙;;Aneccab n tuɣalin
+🔛;;urmid
+🔜;;Aneccab Qrib
+♈;;Ikerri
+♉;;Aramul
+♊;;Akniwen
+♋;;Afurray
+♍;;Taḥbayrit
+♎;;Tacihant
+♐;;Amnaccab
+♑;;Aqelwac
+♒;;Azfuf
+♓;;Islem
+⛎;;Aẓudyak
+🔀;;Aneccab anmidag
+🔁;;aneccab imdewweṛ
+▶️;;taqeffalt n tɣuri
+🎦;;sinima
+🏁;;anay s texxamin
+🚩;;anay azeggaɣ
+🎌;;anayen ijapuniyen
+🏴;;anay aberkan
+🏳️;;anay amellal
+🏳️‍🌈;;anay n teslit n unẓar
+🇦🇨;anay: Tigzirt n Aṣunsyun;anay
+🇦🇩;anay: Undura;anay
+🇦🇪;anay: Tigeldunin Yedduklen Taɛrabin;anay
+🇦🇫;anay: Afɣanistan;anay
+🇦🇬;anay: Untiga d Barbuda;anay
+🇦🇮;anay: Ungiya;anay
+🇦🇱;anay: Lalbani;anay
+🇦🇲;anay: Arminya;anay
+🇦🇴;anay: Ungula;anay
+🇦🇶;anay: Anṭarktik;anay
+🇦🇷;anay: Arjuntin;anay
+🇦🇸;anay: Samwa Tamarikanit;anay
+🇦🇹;anay: Ustriya;anay
+🇦🇺;anay: Ustrali;anay
+🇦🇼;anay: Aruba;anay
+🇦🇽;anay: Tigzirin n Aland;anay
+🇦🇿;anay: Azrabijan;anay
+🇧🇦;anay: Busna d Hersek;anay
+🇧🇧;anay: Barbadus;anay
+🇧🇩;anay: Bangladac;anay
+🇧🇪;anay: Belǧik;anay
+🇧🇫;anay: Burkina Fasu;anay
+🇧🇬;anay: Bulgari;anay
+🇧🇭;anay: Baḥrin;anay
+🇧🇮;anay: Burandi;anay
+🇧🇯;anay: Binin;anay
+🇧🇱;anay: Sant Baṛtilimi;anay
+🇧🇲;anay: Bermuda;anay
+🇧🇳;anay: Bruney;anay
+🇧🇴;anay: Bulivi;anay
+🇧🇶;anay: Huland n Kaṛayib;anay
+🇧🇷;anay: Brizil;anay
+🇧🇸;anay: Bahamas;anay
+🇧🇹;anay: Bhutan;anay
+🇧🇻;anay: Tigzirin n Buvet;anay
+🇧🇼;anay: Bustwana;anay
+🇧🇾;anay: Bilarus;anay
+🇧🇿;anay: Biliz;anay
+🇨🇦;anay: Kanada;anay
+🇨🇨;anay: Tigzirin n Kukus;anay
+🇨🇩;anay: Tigduda Tagdudant n Kungu;anay
+🇨🇫;anay: Tigduda n Tefriqt Talemmast;anay
+🇨🇬;anay: Kungu;anay
+🇨🇭;anay: Swis;anay
+🇨🇮;anay: Kuṭ Divwar;anay
+🇨🇰;anay: Tigzirin n Kuk;anay
+🇨🇱;anay: Cili;anay
+🇨🇲;anay: Kamirun;anay
+🇨🇳;anay: Lacin;anay
+🇨🇴;anay: Kulumbi;anay
+🇨🇵;anay: Tigzirt n Klipirṭun;anay
+🇨🇷;anay: Kusta Rika;anay
+🇨🇺;anay: Kuba;anay
+🇨🇻;anay: Tigzirin n yixef azegzaw;anay
+🇨🇼;anay: Kurasaw;anay
+🇨🇽;anay: Tigzrin n Kristmaṣ;anay
+🇨🇾;anay: Cipr;anay
+🇨🇿;anay: Čček;anay
+🇩🇪;anay: Lalman;anay
+🇩🇬;anay: Dyigu Garsiya;anay
+🇩🇯;anay: Ǧibuti;anay
+🇩🇰;anay: Denmark;anay
+🇩🇲;anay: Duminik;anay
+🇩🇴;anay: Tigduda Taduminikit;anay
+🇩🇿;anay: Lezzayer;anay
+🇪🇦;anay: Sebta d Melilla;anay
+🇪🇨;anay: Ikwaṭur;anay
+🇪🇪;anay: Istunya;anay
+🇪🇬;anay: Maṣr;anay
+🇪🇭;anay: Seḥra n umalu;anay
+🇪🇷;anay: Iritiria;anay
+🇪🇸;anay: Spanya;anay
+🇪🇹;anay: Utyupi;anay
+🇪🇺;anay: Tiddukkla n Turuft;anay
+🇫🇮;anay: Finlund;anay
+🇫🇯;anay: Fiji;anay
+🇫🇰;anay: Tigzirin n Falkland;anay
+🇫🇲;anay: Mikrunizya;anay
+🇫🇴;anay: Tigzirin n Faṛwi;anay
+🇫🇷;anay: Fransa;anay
+🇬🇦;anay: Gabun;anay
+🇬🇧;anay: Tagelda Yedduklen;anay
+🇬🇩;anay: Grunad;anay
+🇬🇪;anay: Jiyurji;anay
+🇬🇫;anay: Ɣana tafransist;anay
+🇬🇬;anay: Girnizi;anay
+🇬🇭;anay: Ɣana;anay
+🇬🇮;anay: Jibraltar;anay
+🇬🇱;anay: Grunland;anay
+🇬🇲;anay: Gambya;anay
+🇬🇳;anay: Ɣinya;anay
+🇬🇵;anay: Gwadalupi;anay
+🇬🇶;anay: Ɣinya Tasebgast;anay
+🇬🇷;anay: Lagris;anay
+🇬🇸;anay: Tigzirin n Jyuṛjya n Unẓul akked Sandwič n Unẓul;anay
+🇬🇹;anay: Gwatimala;anay
+🇬🇺;anay: Gwam;anay
+🇬🇼;anay: Ɣinya-Bisaw;anay
+🇬🇾;anay: Guwana;anay
+🇭🇰;anay: Tamnaṭ Taqbuṛt Tacinwat n Hung Kung;anay
+🇭🇲;anay: Tigzirin n Hird d Makdunalt;anay
+🇭🇳;anay: Hunduras;anay
+🇭🇷;anay: Kerwasya;anay
+🇭🇹;anay: Hayti;anay
+🇭🇺;anay: Hungri;anay
+🇮🇨;anay: Tigzirin Tikanaṛiyin;anay
+🇮🇩;anay: Indunizi;anay
+🇮🇪;anay: Lirlund;anay
+🇮🇱;anay: Izrayil;anay
+🇮🇲;anay: Tigzirt n Man;anay
+🇮🇳;anay: Lhend;anay
+🇮🇴;anay: Akal Aglizi deg Ugaraw Ahendi;anay
+🇮🇶;anay: Lɛiraq;anay
+🇮🇷;anay: Iran;anay
+🇮🇸;anay: Island;anay
+🇮🇹;anay: Ṭelyan;anay
+🇯🇪;anay: Jirzi;anay
+🇯🇲;anay: Jamyika;anay
+🇯🇴;anay: Lajurdani;anay
+🇯🇵;anay: Jappu;anay
+🇰🇪;anay: Kinya;anay
+🇰🇬;anay: Kirigistan;anay
+🇰🇭;anay: Cambudya;anay
+🇰🇮;anay: Kiribati;anay
+🇰🇲;anay: Kumur;anay
+🇰🇳;anay: San Kits d Nivis;anay
+🇰🇵;anay: Kurya, Ufella;anay
+🇰🇷;anay: Kurya, Wadda;anay
+🇰🇼;anay: Kuwayt;anay
+🇰🇾;anay: Tigzirin n Kamyan;anay
+🇰🇿;anay: Kazaxistan;anay
+🇱🇦;anay: Laws;anay
+🇱🇧;anay: Lubnan;anay
+🇱🇨;anay: San Lučya;anay
+🇱🇮;anay: Layctenstan;anay
+🇱🇰;anay: Sri Lanka;anay
+🇱🇷;anay: Libirya;anay
+🇱🇸;anay: Lizuṭu;anay
+🇱🇹;anay: Liṭwanya;anay
+🇱🇺;anay: Luksamburg;anay
+🇱🇻;anay: Latvia;anay
+🇱🇾;anay: Libya;anay
+🇲🇦;anay: Lmerruk;anay
+🇲🇨;anay: Munaku;anay
+🇲🇩;anay: Muldabi;anay
+🇲🇪;anay: Muntinigru;anay
+🇲🇫;anay: San Maṛtan;anay
+🇲🇬;anay: Madaɣecqer;anay
+🇲🇭;anay: Tigzirin n Marcal;anay
+🇲🇰;anay: Masidunya n ugafa;anay
+🇲🇱;anay: Mali;anay
+🇲🇲;anay: Myanmar;anay
+🇲🇳;anay: Mungulya;anay
+🇲🇴;anay: Tamnaḍt tudbilt tuzzigt tacinwat n Makaw;anay
+🇲🇵;anay: Tigzirin n Maryan Ufella;anay
+🇲🇶;anay: Martinik;anay
+🇲🇷;anay: Muriṭanya;anay
+🇲🇸;anay: Munsirat;anay
+🇲🇹;anay: Malṭ;anay
+🇲🇺;anay: Muris;anay
+🇲🇻;anay: Maldib;anay
+🇲🇼;anay: Malawi;anay
+🇲🇽;anay: Meksik;anay
+🇲🇾;anay: Malizya;anay
+🇲🇿;anay: Muzembiq;anay
+🇳🇦;anay: Namibya;anay
+🇳🇨;anay: Kalidunya Tamaynut;anay
+🇳🇪;anay: Nijer;anay
+🇳🇫;anay: Tigzirin Tinawfukin;anay
+🇳🇬;anay: Nijirya;anay
+🇳🇮;anay: Nikaragwa;anay
+🇳🇱;anay: Timura-Yessakesren;anay
+🇳🇴;anay: Nurvij;anay
+🇳🇵;anay: Nipal;anay
+🇳🇷;anay: Nuru;anay
+🇳🇺;anay: Niwi;anay
+🇳🇿;anay: Ziland Tamaynut;anay
+🇴🇲;anay: Ɛuman;anay
+🇵🇦;anay: Panam;anay
+🇵🇪;anay: Piru;anay
+🇵🇫;anay: Pulunizi tafransist;anay
+🇵🇬;anay: Ɣinya Tamaynut Tapaput;anay
+🇵🇭;anay: Filipin;anay
+🇵🇰;anay: Pakistan;anay
+🇵🇱;anay: Pulund;anay
+🇵🇲;anay: San Pyar d Miklun;anay
+🇵🇳;anay: Pitkarin;anay
+🇵🇷;anay: Purtu Riku;anay
+🇵🇸;anay: Falisṭin d Ɣezza;anay
+🇵🇹;anay: Purtugal;anay
+🇵🇼;anay: Palu;anay
+🇵🇾;anay: Paragway;anay
+🇶🇦;anay: Qaṭar;anay
+🇷🇪;anay: Timlilit;anay
+🇷🇴;anay: Rumani;anay
+🇷🇸;anay: Ṣirbya;anay
+🇷🇺;anay: Rrus;anay
+🇷🇼;anay: Ruwanda;anay
+🇸🇦;anay: Suɛudiya Taɛrabt;anay
+🇸🇧;anay: Tigzirin n Sulumun;anay
+🇸🇨;anay: Seycel;anay
+🇸🇩;anay: Sudan;anay
+🇸🇪;anay: Swid;anay
+🇸🇬;anay: Singafur;anay
+🇸🇭;anay: Sant Ilina;anay
+🇸🇮;anay: Sluvinya;anay
+🇸🇯;anay: Svalvard d Jan Mayen;anay
+🇸🇰;anay: Sluvakya;anay
+🇸🇱;anay: Sira Lyun;anay
+🇸🇲;anay: San Marinu;anay
+🇸🇳;anay: Sinigal;anay
+🇸🇴;anay: Ṣumal;anay
+🇸🇷;anay: Surinam;anay
+🇸🇸;anay: Sudan n unẓul;anay
+🇸🇹;anay: Saw Tumi d Pransip;anay
+🇸🇻;anay: Salvadur;anay
+🇸🇽;anay: Sint Maarten;anay
+🇸🇾;anay: Surya;anay
+🇸🇿;anay: Swazilund;anay
+🇹🇦;anay: Tristan da Kunha;anay
+🇹🇨;anay: Ṭurk d Tegzirin n Kaykus;anay
+🇹🇩;anay: Čad;anay
+🇹🇫;anay: Timura tifransisin n unẓul;anay
+🇹🇬;anay: Ṭugu;anay
+🇹🇭;anay: Ṭayland;anay
+🇹🇯;anay: Tajikistan;anay
+🇹🇰;anay: Ṭuklu;anay
+🇹🇱;anay: Tumur Asamar;anay
+🇹🇲;anay: Ṭurkmanistan;anay
+🇹🇳;anay: Tunes;anay
+🇹🇴;anay: Ṭunga;anay
+🇹🇷;anay: Ṭurk;anay
+🇹🇹;anay: Ṭrindad d Ṭubagu;anay
+🇹🇻;anay: Ṭuvalu;anay
+🇹🇼;anay: Ṭaywan;anay
+🇹🇿;anay: Ṭanzanya;anay
+🇺🇦;anay: Ukran;anay
+🇺🇬;anay: Uɣanda;anay
+🇺🇲;anay: Tigzirin ibeɛden n Marikan;anay
+🇺🇳;anay: Timura Iddukklen;anay
+🇺🇸;anay: WDM;anay
+🇺🇾;anay: Urugway;anay
+🇺🇿;anay: Uzbaxistan;anay
+🇻🇦;anay: Awanek n Vatikan;anay
+🇻🇨;anay: San Vansu d Grunadin;anay
+🇻🇪;anay: Venzwila;anay
+🇻🇬;anay: Tigzirin Tiverjiniyin Tigliziyin;anay
+🇻🇮;anay: W.D. Tigzirin n Virginya;anay
+🇻🇳;anay: Vyeṭnam;anay
+🇻🇺;anay: Vanwatu;anay
+🇼🇫;anay: Wallis d Futuna;anay
+🇼🇸;anay: Samwa;anay
+🇽🇰;anay: Kuṣuvu;anay
+🇾🇪;anay: Lyamen;anay
+🇾🇹;anay: Mayuṭ;anay
+🇿🇦;anay: Tafriqt Wadda;anay
+🇿🇲;anay: Zambya;anay
+🇿🇼;anay: Zimbabwi;anay

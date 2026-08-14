@@ -107,7 +107,7 @@ import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
 // Tighter cells + a larger glyph so emojis look bigger with less gap between them (issue #148).
-private val EmojiBaseWidth = 38.dp
+internal val EmojiBaseWidth = 38.dp
 private val EmojiDefaultFontSize = 26.sp
 
 private val VariantsTriangleShapeLtr = GenericShape { size, _ ->
@@ -395,7 +395,7 @@ fun EmojiPaletteView(
 }
 
 @Composable
-private fun EmojiKey(
+internal fun EmojiKey(
     emojiSet: EmojiSet,
     emojiCompatInstance: EmojiCompat?,
     preferredSkinTone: EmojiSkinTone,

@@ -810,6 +810,7 @@
     <string name="action__apply">Aplicar</string>
     <string name="action__back_up">Criar backup</string>
     <string name="action__cancel">Cancelar</string>
+    <string name="action__clear">Limpar</string>
     <string name="action__create">Criar</string>
     <string name="action__default">Padrão</string>
     <string name="action__delete">Eliminar</string>

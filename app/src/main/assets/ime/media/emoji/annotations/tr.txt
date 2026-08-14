@@ -1,0 +1,1913 @@
+😀;sırıtan yüz;gülen yüz|gülme|keyifli|lol|mutlu|neşeli|sırıtma|yüz
+😃;ağzı açık sırıtma;ağzı açık gülen yüz|ağzı açık gülümseme|gülen yüz|gülme|gülümseme|lol|neşeli|yüz
+😄;gülen gözlerle ağzı açık sırıtma;ağzı açık gülen gözler|gülen gözlerle ağzı açık gülümseme|gülen yüz|gülme|gülümseme|lol|neşeli|yüz
+😁;gülen gözlerle sırıtma;gülen gözlerle sırıtan yüz|gülen yüz|gülme|gülümseme|gülümseyen gözler|lol|neşeli|yüz
+😆;kapalı gözlerle ağzı açık sırıtma;32 diş|ağız|ahaha|çok komik|gözler kapalı|gülmek|hahaha|kahkaha|komik|lol|mutlu|yüz
+😅;soğuk terli ağzı açık gülümseme;heyecanlı|soğuk ter|stresli|yüz
+🤣;gülmekten yerlere yatma;ahaha|çok komik|gözümden yaş geldi|gözyaşı|gülme|hahaha|kahkaha|komik|mutluluk|neşe|yerlere yatmak|yüz
+😂;sevinç gözyaşları;ağlamak|gözyaşı|gülmek|gülmekten ağlamak|haha|inanılmaz|kahkaha|katılmak|komik|mutluluk|neşe|sevinç
+🙂;hafifçe gülümseyen yüz;gülme|gülümseme|hafifçe gülümseme|mutlu|neşeli|yüz
+🙃;ters yüz;gülme|gülümseme|hehe|yüz
+🫠;eriyen yüz;aşkından erimek|çözülme|eridim|erime|eriyorum|ifade|kaybolma|sıcak|sıvılaşma|utanç|yüz ifadesi
+😉;göz kırpan yüz;cilve|göz kırpma|yüz
+😊;ağzı açık gülme;gülen gözlerle gülümseme|gülümseyen gözler|gülümseyen yüz|gülümseyen yüz ve gözler|samimi|sevecen|yüz
+😇;ışık halkalı gülümseme;gülümseme|hare|ışık halkası|melek|yüz
+🥰;3 kalpli gülümseyen yüz;aşık|aşk|çarpılma|gülen yüz|hayranlık|ilk görüşte aşk|kalp|mutluluk|romantik|seni seviyorum|sevgi|üç kalpli yüz
+😍;kalp gözlü gülümseme;aşk|değer verme|gözler|kalp|kalpler|romantik|yüz
+🤩;yıldız çarpmış;gözler|heyecanlı|sırıtan|surat|vov|yıldız|yüz
+😘;öpücük gönderen yüz;aşk|muah|muck|öptüm|romantik|sevgi|yüz
+😗;öpen yüz;aşk|cilve|muah|muck|öpücük|sevgi|yüz
+☺️;gülen yüz;içi boş gülen yüz|masum|mutlu|utandım|utanmış|yüz
+😚;kapalı gözlerle öpen yüz;aşk|gözler kapalı|gözler kapalı öpüşme|öpücük yollama|yüz
+😙;gülen gözlerle öpen yüz;gülümseme|gülümseyen gözler|gülümseyerek öpen yüz|öptüm|öpücük|yüz
+🥲;gözü yaşlı gülümseyen yüz;acı|duygulanmış|gözyaşı|gülümseme|gururlu|hislenmiş|memnun|minnettar|mutluluk|rahatlamış|sevinç|yüz ifadesi
+😋;lezzetli yiyecek beğenen yüz;gülümseyen yüz|harika yemek|keyifli yemek|lezzetli|oh oh harika|yüz
+😛;dil dışarıda;dil çıkarmış yüz|dil dışarıda kalmış|komik|şapşal|yüz
+😜;dili dışarda göz kırpma;dil dışardayken göz kırpma|göz kırpma|haylaz|kışkırtma|şaka|yaramaz|yüz
+🤪;çılgın surat;büyük|çılgın|deli|göz|gözler|küçük|surat
+😝;dil dışarıda ve gözler kapalı;dil dışarıda|gözler kapalı|gözler kapalı ve dil dışarıda|iğrenç|korkunç|öğk|yüz
+🤑;para ağızlı yüz;ağız|gözünü para bürümüş|para|para göz|yüz
+🤗;kucaklayarak gülümseme;heyecanlı|kucaklama|sarılma|yüz
+🤭;eliyle ağzını kapatan yüz;a ah|sır|şok olmak|süpriz|surat|tüh
+🫢;gözleri açık ve eliyle ağzını kapatan yüz;hayret|ifade|inanamama|inanılmaz|korku|şaşkınlık|şok|sürpriz|utanma|yüz ifadesi
+🫣;gizlice bakan yüz;çaktırmadan|dikizleme|gizlice|gizlice bakma|gözetleme|ifade|korkma|saklanma|ürkek|utanma|yüz ifadesi
+🤫;sus işareti yapan yüz;sessiz|şişt|şş|surat
+🤔;düşünen yüz;düşünme|yüz
+🫡;selamlayan yüz;anlaştık|asker|başüstüne|emredersiniz|güneşli|ifade|komutan|onay|saygı|selam|yüz ifadesi
+🤐;ağzı fermuarlı yüz;ağız|ağzı fermuarlı|ağzım kapalı|fermuar|sır|yüz
+🤨;tek kaşı çatık yüz;güvenmeyen|şüpheci|surat|tek kaşı havada
+😐;duygusuz yüz;duygusuz|etkilenmemiş|nötr|umurumda değil|yorum yok|yüz
+😑;ifadesiz yüz;ifadesizlik|kıskanç|umurumda değil|yorum yok|yüz
+😶;ağzı olmayan yüz;ağız|ifadesiz|sakin|sesi kesilmiş|sessiz|sır|suskun|yüz
+🫥;noktalı çizgili yüz;bilinmez|depresif|endişe|gizlenme|gizli|görünmez|içe dönük|kaybolma|kaygılı|yüz ifadesi
+😶‍🌫️;bulutlardaki yüz;bulutlardaki kafa|dalgın|sisler arasındaki yüz
+😏;imalı gülümseme;hin|kuşkucu|sinsi|yapmacık gülümseme|yapmacık gülümseyen|yapmacık gülümseyen yüz|yüz
+😒;keyifsiz yüz;canı sıkkın|canım sıkıldı|garip|keyifsiz|mutsuz|neyse|sıkılmış|yüz
+🙄;gözlerini deviren yüz;bana ne|banane|beni ilgilendirmez|bilemiyorum|göz devirme|her neyse|hmm|neyse|yani|yüz
+😬;dişlerini gösteren yüz;dişçi|dişlerini sıkmak|endişeli|tedirgin|yüz|yüzünü ekşitme
+😮‍💨;nefes veren yüz;bitik|duman|fısıldama|iç çekme|ıslık|nefes verme|off|rahatlama|sızlanma|üfleme|yorgun
+🤥;yalan söyleyen yüz;pinokyo|yalan söyleme|yüz
+🫨;sallanan yüz;deprem|olamaz|panik|sallama|sallanma|sersemlik|şok|sürpriz|titreme|titreşim|titreyen yüz|yüz
+🙂‍↔️;yatay olarak sallanan yüz;hayır|sallama
+🙂‍↕️;dikey olarak sallanan yüz;evet|onay
+😌;rahatlamış yüz;huzur|rahatlamış|yüz
+😔;düşünceli yüz;dargın|düşünceli|gemileri batmış|karamsar|üzgün|yüz
+😪;uykulu yüz;ağlayan yüz|yorgun|yüz
+🤤;salya akıtan yüz;ağzı sulanmış|salya akıtma|yüz
+😴;uyuyan yüz;esnemek|iyi geceler|iyi uykular|şekerleme|tatlı rüyalar|uyku|uykulu|uyumak|yatak|yatmak|yorgun|zzz
+🫩;gözlerinin altı torbalı yüz;tükenmiş|uykulu|yorgun
+😷;maskeli yüz;grip|hasta|maske|nezle|rahatsız|soğuk|tıbbi maske|yüz
+🤒;ağzında termometre olan yüz;ateş|grip|hasta|nezle|termometre|yüz
+🤕;kafası sarılı yüz;bandaj|yara|yaralı|yüz
+🤢;kusmak üzere olan yüz;iğrenç|istifra|kusmak üzere|midesi bulanmış|yüz
+🤮;kusan yüz;hasta|istifra|kusmak|kusmuk|surat
+🤧;hapşıran yüz;çok yaşa|grip|hapşırma|hasta|nezle|yüz
+🥵;kızarmış yüz;ateşlenmek|çarpıntı|hararet|nefes nefese|sıcak|sıcak çarpması|terleme|tükenmek|yorgun
+🥶;üşümüş yüz;buz|buz gibi|buz kesme|donma|kış|mavi surat|morarmış yüz|sıfırın altı|soğuk|soğuktan donmak|titremek|üşümek
+🥴;sarhoş yüz;akşamdan kalma|alkollü|baş dönmesi|çakırkeyif|kaymış gözler|sarhoş|şaşı|sersemlemiş|yamuk|yamuk ağız|yamulmak|yüz ifadesi
+😵;sersemlemiş yüz;başı dönen|baygınlık|hasta|sersemlemiş|yüz
+😵‍💫;sarmal gözlü yüz;aklı karışık|aman tanrım|başım döndü|gülen yüz|hipnotize|inanamıyorum|kafası bulanık|kafası karışık|mide bulantısı|sersem|sıkıntı|yüz ifadesi
+🤯;patlayan kafa;aklını başından almak|şaşırmış|şok olmuş|şoke|surat
+🤠;kovboy şapkalı yüz;kadın kovboy|kovboy|kovboy şapkası yüzü|şapka|yüz
+🥳;partide eğlenen yüz;doğum günü|eğlence|iyi ki doğdun|konfeti|kutlama|mutlu yıllar|neşeli|oley|parti|şapka|yılbaşı
+🥸;gizlenmiş yüz;ajan|bıyık|burun|casus|gözlük|kimliğini gizlemek|kılık değiştirmek|maskeli|yüz|yüz ifadesi
+😎;güneş gözlüklü gülümseme;cool|gülümseme|güneş gözlüğü|güneş gözlükleri|güneş gözlükleriyle gülümseme|havalı|janti|kanka|kanki|yüz
+🤓;ukala yüz;akıllı|bilgili|bilmiş|çalışkan|gözlük|gözlüklü|inek öğrenci|ukala|yüz|zeki
+🧐;tek cam gözlüklü yüz;havalı|kendini beğenmiş|klas|surat|tek cam gözlük|varlıklı|zengin
+😕;kafası karışık yüz;bilmiyorum|emin olmayan|kafası karışmış|yüz
+🫤;yamuk ağızlı yüz;eh|hayal kırıklığı|hüsran|ifade|kararsız|kırgın|meh|memnuniyetsiz|şüpheli|şüpheli yüz|yüz ifadesi
+😟;endişeli yüz;endişeli|gergin|yüz
+🙁;biraz asık surat;asık surat|endişeli|yüz
+☹️;asık surat;asık|darılmış|üzgün|yüz
+😮;ağzı açık yüz;ağız|ağzı açık|şaşkın|şok|süpriz|yüz
+😯;şaşkın yüz;şaşırmış|şok olmuş|yüz
+😲;afallamış yüz;afallamış|şaşkın|şoke olmuş|tamamen şoke olmuş|yüz
+😳;kızarmış ve şaşkın yüz;kızarmış|şaşırmış|şaşkınlık içinde|şok|tuhaf|yüz
+🫪;biçimsiz yüz;kaygı|panik|şaşırmış|şaşkın|savunmasız|şişkin
+🥺;yalvaran yüz;acıklı bakışlar|af dilemek|gözleri dolmak|koca göz|lütfen|merhamet|pişmanlık|üzgün|yalvaran gözler|yalvarırım|yüz ifadesi
+🥹;gözleri dolmuş yüz;ağlamaklı|direnme|duygusal|gözyaşı|gurur|ifade|kızgın|mutlu|sevinç gözyaşları|sulugöz|üzgün|yüz ifadesi
+😦;hoşnutsuz yüz;açık ağızlı hoşnutsuz yüz|ağzı açık|boş bulunmuş|hoşnutsuz|korkmuş|yüz
+😧;kederli yüz;acı çeken|kederli|mutsuz|şaşkın|yüz
+😨;korkulu yüz;endişeli|korkmuş|korkulu|yüz
+😰;terli ve endişeli yüz;açık ağız|endişeli|korkmuş|korkulu yüz|soğuk ter|soğuk ter döken mavi yüz|yüz
+😥;üzgün ama rahatlamış yüz;canı sıkkın|canı sıkkın ama rahatlamış|endişeli|kafası karışmış|karışık|rahatlamış|üzgün|yırttık!|yüz
+😢;ağlayan yüz;ağlama|gözyaşları|mutsuz|üzgün|üzüntülü|yüz
+😭;avaz avaz ağlayan yüz;ağlama|avaz avaz ağlama|gözyaşları|mutsuz|üzgün|yüz
+😱;korkuyla çığlık atan yüz;korkmuş|korku|korku içinde bağıran yüz|korkunç|korkuyla haykıran yüz|yüz
+😖;kafası çok karışık yüz;kafası çok karışmış|kızgın|pişman|yüz
+😣;kararlı yüz;baş ağrısı|dayanıklı|dikkatli|inatçı|kararlı|konsantre olmuş|yüz|zorlanan yüz
+😞;memnuniyetsiz yüz;kırgın|kırgınlık|mutsuz|umutsuz|yüz
+😓;soğuk ter;baş ağrısı|endişeli|soğuk terli yüz|yüz
+😩;çok yorgun;acıkmış|hayır|olamaz|pişman|uykulu|yorgun yüz|yorulmuş|yüz
+😫;yorgun yüz;hapşuran yüz|perişan|pişman|üzgün|yorgun|yüz
+🥱;esneyen yüz;esneme|iyi geceler|iyi uykular|sıkıcı|sıkılmış|uykulu|uykusuz|uyuklama|uyumak|yatmak|yorgun|zzz
+😤;burnundan soluyan yüz;ben kazandım|ben kazandım yüzü|burnundan soluyan|kızgın|mutsuz|sinirli|yüz|zafer
+😡;somurtkan yüz;deli gibi|kırmızı somurtkan yüz|kırmızı yüz|öfkeli|somurtkan|yüz
+😠;öfkeli yüz;deli gibi|kızgın|mutsuz|öfkeli|yüz
+🤬;ağzında semboller olan yüz;kızgın|kızmış|küfür eden|küfür etmek|sembol surat|sensör|surat
+😈;boynuzlu gülen yüz;boynuzlar|boynuzlu gülümseme|gülümseme|şeytani gülümseme|yüz
+👿;boynuzlu kızgın yüz;kızgın|küçük şeytan|şeytan|şeytani|yüz
+💀;kafatası;cadılar bayramı|canavar|iskelet|masal|ölüm|yüz
+☠️;kuru kafa;canavar|iskelet|kemik|ölüm|tehlike|yüz
+💩;kaka;kaka yığını|leş|pislik|yığın
+🤡;palyaço yüzü;palyaço|yüz
+👹;dev;canavar|japon|japon canavarı|korkunç|maske|oni|peri masalı|yaratık|yüz
+👺;goblin;canavar|cin|japon|japon cini|maske|peri masalı|tengu|yaratık|yüz
+👻;hayalet;cadılar bayramı|öcü|peri masalı|yüz
+👽;uzaylı;dünya dışı|fantastik|peri masalı|UFO|yabancı|yaratık|yüz
+👾;uzaylı canavar;canavar|dünya dışı|peri masalı|UFO|uzaylı|yabancı canavar|yaratık|yüz
+🤖;robot;canavar|yüz
+😺;sırıtan kedi;açık|ağız|gülümseme|gülümseyen kedi yüzü|gülümseyen ve ağzı açık kedi yüzü|kedi|kedi yüzü|sırıtan|yüz
+😸;gülen gözlerle sırıtan kedi;göz|gülümseme|kedi|kedi yüzü|sırıtan kedi yüzü|sırıtan ve gözleri gülümseyen kedi yüzü|sırıtma|yüz
+😹;sevinç gözyaşları döken kedi;göz yaşı|gülen kedi|kahkaha atan kedi|kedi|kedi yüzü|komik kedi|sevinç|sevinç gözyaşları döken kedi yüzü|yüz
+😻;kalp gözlü gülümseyen kedi;aşık|aşk|gözler|gülümseme|gülümseyen ve kalp şeklinde gözleri olan kedi yüzü|kalp|kalp gözlü gülümseyen kedi yüzü|kedi|kedi yüzü|sevgi|yüz
+😼;iğneleyici kedi yüzü;iğneleyici|iğneleyici gülümseme|ironik|kedi|kedi yüzü|kurnaz|muzır|yüz
+😽;öpen kedi;göz|gözler|kapalı|kedi|öpen|öptüm|öpücük|yüz
+🙀;korkuyla bağıran kedi;aman tanrım|kedi|sahiden şaşırmış|şaşkın kedi yüzü|yüz
+😿;ağlayan kedi;ağlama|ağlayan kedi yüzü|göz yaşı|kedi|kedi yüzü|üzgün|yüz
+😾;somurtan kedi;kedi|kedi yüzü|somurtan|somurtan kedi yüzü|somurtma|yüz
+🙈;görmedim;görmeyen maymun|hayvan|komik|maymun|oyun|saklambaç
+🙉;duymadım;duymayan maymun|hayvan|kulak|maymun|üç maymun
+🙊;bilmiyorum;ağzı kapalı maymun|hayvan|konuşma|konuşmadım|maymun|söylemedim|söylemeyen maymun|sus|üç maymun
+💌;aşk mektubu;kalp|kalpli mektup|mektup|romantizm
+💘;ok saplanmış kalp;aşk|duygu|kalp|ok
+💝;kurdeleli kalp;duygu|kalp|kurdele|sevgililer günü
+💖;pırıldayan kalp;duygu|heyecanlı|kalp|pembe kalp|pırıldayan
+💗;büyüyen kalp;aşk|coşkulu|duygu|kalp|sinirli
+💓;çarpan kalp;aşk|duygu|heyecan|kalp|kalp atışı
+💞;dönen kalpler;aşk|dönen|kalp|kawaii|sevimli
+💕;iki kalp;aşıklar|aşk|duygu|evlilik yıldönümü|seni seviyorum|sevgili
+💟;kalpli dekorasyon;kalp
+❣️;kalp şeklinde ünlem işareti;işaret|kalp|noktalama|ünlem işareti
+💔;kırık kalp;duygu|hüsran|kalp|kırılmış|kırma
+❤️‍🔥;ateşli kalp;alev|arzu|aşk|kalp|kutsal kalp|tutku
+❤️‍🩹;iyileşen kalp;daha sağlıklı|iyi|iyileşen|onarılan
+❤️;kırmızı kalp;aşk|kalp
+🩷;pembe kalp;aşk|beğen|duygu|kalp|özel kişi|pembe|seni seviyorum|sevgi|sevimli|şirin
+🧡;turuncu kalp;kalp|portakal|turuncu
+💛;sarı kalp;duygu|kalp|sarı
+💚;yeşil kalp;duygu|kalp|yeşil
+💙;mavi kalp;duygu|kalp|mavi
+🩵;açık mavi kalp;açık mavi|aşk|camgöbeği|deniz mavisi|duygu|gökyüzü mavisi|kalp|özel kişi|sevgi
+💜;mor kalp;duygu|kalp|mor
+🤎;kahverengi kalp;kahverengi|kalp
+🖤;siyah kalp;fena|kalp|kötü|siyah
+🩶;gri kalp;aşk|duygu|gri|gümüş|kalp|kurşun|özel kişi|sevgi|taş
+🤍;beyaz kalp;beyaz|kalp
+💋;öpücük izi;aşk|dudak|dudaklar|öpücük|romantizm|seksi
+💯;yüz puan;100|100 puan|skor|yuz
+💢;öfke simgesi;çizgi roman|duygu|öfke|öfke işareti|öfkeli
+🫯;dövüş bulutu;anlaşmazlık|arbede|çekişme|dövüş|güreş|kavga|tartışma
+💥;çarpışma;bomba|bum|çarpışma işareti|çizgi roman|duygu|patlama
+💫;baş dönmesi;çizgi roman|dilek|duygu|gece|gökyüzü|kayan yıldız|uzay|yıldızlar|yıldızları görme
+💦;ter damlası;çizgi roman|damla|duygu|fışkır|su|ter|terli
+💨;hızla fırlama;çizgi roman|duygu|fırla|gaz çıkarma|hızlı|kaçma|koş|koşma|rüzgar
+🕳️;delik;çukur
+💬;konuşma balonu;balon|çizgi roman|iletişim|iletişim balonu
+👁️‍🗨️;konuşma balonunda göz;göz|göz boncuğu|konuşma balonu|nazar|tanıklık
+🗨️;sol konuşma balonu;diyalog|konuşma
+🗯️;sağ öfke balonu;balon|kızgın|öfke
+💭;düşünce balonu;balon|bulut|çizgi roman|düşünce|fikir
+💤;zzz;çizgi roman|gece|iyi geceler|iyi uykular|uyku|uyuklama|uyuma|yorgun
+👋;el sallama;bay bay|bye|el|görüşürüz|güle güle|hey|merhaba|orada mısın|sallama|sallamak|selam
+🤚;elinin tersini kaldırma;el|elinin tersi|kaldırma
+🖐️;parmaklar açık el kaldırma;avuç|beden|dur|el|izin isteme|parmak
+✋;el kaldırma;beş parmak|dur|dur işareti|el|havada el
+🖖;Vulkan selamı;beden|el|parmak|spock|star trek|uzay yolu|volkan|volkanlı selamı|vulcan selamı|vulkan
+🫱;sağa bakan el;anlaşma|dokun|el|el uzatma|merhaba|sağ|selam|temas|tokalaşmak
+🫲;sola bakan el;anlaşma|dokun|el|el uzatma|merhaba|selam|sol|temas|tokalaşma
+🫳;avuç içi aşağı bakan el;al|atmak|avuç|bırak|düşürmek|el|kışkışlamak|uzanmak|uzat
+🫴;avuç içi yukarı bakan el;çağırmak|çağrı|davet|el|el etmek|el uzatmak|gel|sunmak|teklif|yakalamak|yardım
+🫷;sola iten el;bekle|bekletme|çak|çakma|dur|durdurma|itme|reddetme|sola
+🫸;sağa iten el;bekle|bekletme|çak|çakma|dur|durdurma|itme|reddetme|sağa
+👌;tamam işareti;anlaştık|el|harika|işaret|işte bu|mükemmel|müthiş|ok|süper|tam olarak|Tamam|tamamdır
+🤌;kıstırma hareketi yapan parmaklar;bravo|çok güzel|el|el hareketleri|harika|lezzetli|parmaklar
+🤏;kıstırma hareketi yapan el;azıcık|bir tutam|biraz|kıstırma hareketi yapan parmaklar|küçük|parmaklar
+✌️;zafer işareti;barış|el|oleey|zafer|zafer eli
+🤞;şans dileme;çapraz|el|parmak|şans|söz verme
+🫰;işaret parmağı ve baş parmak birbirine geçmiş el;<3|aşk|borç|el|hesap|kalp|nakit|pahalı|para|parmak|sevgi
+🤟;seni seviyorum işareti;el|seni seviyorum|SS
+🤘;boynuz işareti;beden|boynuz|el|metal|metalci|parmak|rock|süper|yeah|yes
+🤙;beni ara işareti;ara|el|elle beni ara işareti
+👈;elinin tersiyle solu gösteren işaret parmağı;el|elin arkası|işaret parmağı|parmak|solu gösteren parmak
+👉;elinin tersiyle sağı gösteren işaret parmağı;el|elin arkası|işaret parmağı|parmak|sağı gösteren parmak
+👆;elinin tersiyle yukarıyı gösteren işaret parmağı;el|elin arkası|işaret parmağı|parmak|yukarıyı gösteren parmak
+🖕;orta parmak;beden|el|parmak
+👇;elinin tersiyle aşağıyı gösteren işaret parmağı;aşağıyı gösteren parmak|el|elin arkası|işaret parmağı|parmak
+☝️;yukarıyı gösteren işaret parmağı;beden|el|gösterme|işaret parmağı|izin isteme|parmak|yukarı
+🫵;karşıyı işaret eden işaret parmağı;dürtmek|el|göstermek|işaret|işaret parmağı|onlar|orası|parmak|sen
+👍;baş parmak yukarıda;+1|anlaştık|beğendim|bence de|el|iyi|onay|tamam
+👎;baş parmak aşağıda;aşağı|baş parmak|el|işaret
+✊;yumruk kaldırma;el|havada yumruk|yumruk
+👊;yaklaşan yumruk;anlaştık|bam|el|katılıyorum|tamam|yumruk
+🤛;sola bakan yumruk;el|güm|sola doğru|yumruk
+🤜;sağa bakan yumruk;el|güm|sağa doğru|yumruk
+👏;el çırpma;alkış|bravo|çırpma|el|eller|işaret|tebrik
+🙌;eller havaya;çak|her iki el|kutlama|kutlamak için iki eli birden kaldırma|tebrikler
+🫶;kalp oluşturan eller;<3|aşk|birlikte|biz|el|kalp|sevgi|seviyorum
+👐;eller açık;açık|el|eller açık işareti|işaret
+🤲;iki avuç açık;dilek|dua|dua eden eller|dua etmek|ellerini açmak
+🤝;el sıkışma;anlaşma|el|sallama|toplantı
+🙏;birleşen eller;dua|dua etme|el|hareket
+✍️;yazı yazan el;beden|el|kalem tutma|yazma
+💅;oje sürme;kozmetik|manikür|oje|tırnak|tırnak bakımı
+🤳;selfie;kamera|kendi çekim|öz çekim|özçekim|telefon
+💪;pazı;çizgi roman|esnek|güçlü|kas|kas esnetme|vücutcu
+🦾;mekanik kol;erişilebilirlik|protez
+🦿;mekanik bacak;erişilebilirlik|protez
+🦵;bacak;ayak|diz|tekme|tekme atmak|uzuv
+🦶;ayak;bilek|parmak|tekme|topuk
+👂;kulak;dinlemek|gövde|gürültü|ses
+🦻;işitme cihazı olan kulak;erişilebilirlik|işitme güçlüğü
+👃;burun;gövde|koklamak|koku|nefes|yüz
+🧠;beyin;akıllı|zeka|zeki
+🫀;kalp;anatomi|kalp atışı|kan|kardiyoloji|kırmızı|merkez|nabız|organ
+🫁;akciğer;beden|ciğerler|nefes|nefes almak|organ|soluk|solumak|solunum|vücut
+🦷;diş;ağız|ağrı|azı dişi|beyaz|diş ağrısı|diş hekimi|diş perisi|dişçi|inci gibi|köpek dişi|süt dişi
+🦴;kemik;iskelet|köpek|köpek kemiği|mama
+👀;gözler;bakmak|görmek|gözcü|gözetlemek|yüz
+👁️;göz;beden|kahverengi göz
+👅;dil;ağız|gövde|yalamak|yüz
+👄;ağız;aşk|dudaklar|gövde|öpme|öptüm|öpücük|yüz
+🫦;ısırılan dudak;davetkar|davetkâr|dudak|endişeli|flört|gergin|korku|öpücük|rahatsız|seksi|tutku
+👶;bebek;kişiler
+🧒;çocuk;genç|insan|kişi|küçük çocuk|surat
+👦;erkek çocuk;erkek|insan|kişiler|oğlan çocuk
+👧;kız çocuk;genç|insan|kişiler|kız
+🧑;yetişkin;adam|insan|kişi|yüz
+👱;sarışın kişi;erkek|insan|kişi|kişiler|saç|sarı saçlı kişi|sarışın|yüz
+👨;erkek;adam|insan|kişiler|sarışın erkek
+🧔;sakallı kişi;insan|sakal|sakallı|yüz
+🧔‍♂️;erkek: sakal;erkek|sakal
+🧔‍♀️;kadın: sakal;kadın|sakal
+👨‍🦰;erkek: kızıl saç;adam|erkek|insan|kişiler|kızıl saç|sarışın erkek
+👨‍🦱;erkek: kıvırcık saç;adam|erkek|insan|kişiler|kıvırcık saç|sarışın erkek
+👨‍🦳;erkek: beyaz saç;adam|beyaz saç|erkek|insan|kişiler|sarışın erkek
+👨‍🦲;erkek: kel;adam|erkek|insan|kel|kişiler|sarışın erkek
+👩;kadın;insan|kişiler|sarışın kadın
+👩‍🦰;kadın: kızıl saç;insan|kadın|kişiler|kızıl saç|sarışın kadın
+🧑‍🦰;yetişkin: kızıl saç;adam|insan|kişi|kızıl saç|yetişkin|yüz
+👩‍🦱;kadın: kıvırcık saç;insan|kadın|kişiler|kıvırcık saç|sarışın kadın
+🧑‍🦱;yetişkin: kıvırcık saç;adam|insan|kişi|kıvırcık saç|yetişkin|yüz
+👩‍🦳;kadın: beyaz saç;beyaz saç|insan|kadın|kişiler|sarışın kadın
+🧑‍🦳;yetişkin: beyaz saç;adam|beyaz saç|insan|kişi|yetişkin|yüz
+👩‍🦲;kadın: kel;insan|kadın|kel|kişiler|sarışın kadın
+🧑‍🦲;yetişkin: kel;adam|insan|kel|kişi|yetişkin|yüz
+👱‍♀️;sarışın kadın;bayan|insan|kadın|kız|sarışın
+👱‍♂️;sarışın erkek;adam|erkek|sarışın
+🧓;yaşlı yetişkin;insan|kişi|yaşlı
+👴;yaşlı erkek;büyükbaba|dede|erkek|insan|kişiler|yaşlı
+👵;yaşlı kadın;anneanne|babaanne|insan|kadın|kişiler|yaşlı
+🙍;somurtma;beğenmeme|hareket|hayal kırıklığı|kişi|mimik|öfkeli|rahatsız|sıkkın|somurtan kişi|surat asma
+🙍‍♂️;somurtan erkek;adam|erkek|insan|mimik|mutsuz|somurtma
+🙍‍♀️;somurtan kadın;bayan|kadın|mimik|somurtma
+🙎;darılma;darılan kişi|hareket|hayal kırıklığı|kişi|kırgın|küsme|mimik|öfkeli|somurtma|surat asma|üzgün
+🙎‍♂️;darılan erkek;adam|darılma|erkek|mimik
+🙎‍♀️;darılan kadın;bayan|darılma|kadın|mimik
+🙅;hayır hareketi;asla|hareket|hayır|insan|iyi değil|izin vermiyorum|izinsiz|kişi|olmaz|vücut|yasak|yüz
+🙅‍♂️;hayır hareketi yapan erkek;el|erkek|hareket|hayır|insan|iyi değil|yasak|yok
+🙅‍♀️;hayır hareketi yapan kadın;bayan|el|hareket|hayır|iyi değil|kadın|yasak
+🙆;tamam hareketi;aman tanrım|egzersiz|el|hareket|kişi|kocaman|oldu|tamam|vücut|yüz
+🙆‍♂️;tamam hareketi yapan erkek;adam|aman allah|aman tanrım|egzersiz|el|eller|eller yukarı|erkek|hareket|insan|tamam
+🙆‍♀️;tamam hareketi yapan kadın;bayan|el|hareket|kadın|tamam
+💁;elini yana yatırma;alaycı|bilgilendirme|dedikodu|el|keyfin bilir|kişi|kişiler|neyse|saçını savurma|sen bilirsin|umurumda değil
+💁‍♂️;elini yana yatıran erkek;adam|bilgi|dedikodu|erkek|insan|küstah|sarkastik|yana yatmış el
+💁‍♀️;elini yana yatıran kadın;bayan|kadın|küstah|yana yatmış el
+🙋;elini kaldırma;ben|burada|el|el kaldırma|hareket|kalkan el|kişi|merhaba|selam|soru|söz isteme
+🙋‍♂️;elini kaldıran erkek;adam|el hareketi|el kaldırma|erkek|hareket|insan|soru
+🙋‍♀️;elini kaldıran kadın;bayan|el kaldırma|hareket|kadın
+🧏;işitme engelli kişi;duyma|erişilebilirlik|işitme|işitme engelli|kulak
+🧏‍♂️;işitme engelli erkek;adam|erkek|işitme engelli
+🧏‍♀️;işitme engelli kadın;işitme engelli|kadın
+🙇;başını öne eğme;affet|affetme|bağışlama|eğilme|hareket|kişi|merhamet|özür dilerim|üzgünüm|yakarma|yalvarma
+🙇‍♂️;başını öne eğen erkek;adam|baş eğme|erkek|hareket|lütuf|özür
+🙇‍♀️;başını öne eğen kadın;baş eğme|bayan|hareket|kadın|lütuf|özür
+🤦;yüzünü eliyle kapama;aman tanrım|çileden çıkma|inanamıyorum|inanmama|inanmıyorum|kızgınlık|öfke|olamaz|şok
+🤦‍♂️;eliyle yüzünü kapatan erkek;adam|aman tanrım|çileden çıkma|erkek|inanamıyorum|inanmama|öfke|olamaz|sinir|utancından eliyle yüzünü kapatma|utanma
+🤦‍♀️;eliyle yüzünü kapatan kadın;aman tanrım|çileden çıkma|el|inanamıyorum|inanmama|kadın|öfke|olamaz|sinir|utanç|utancından eliyle yüzünü kapatma
+🤷;omuz silkme;bilemem|bilmem|bilmeme|bilmiyorum|ilgisizlik|kararsız|kişi|ne bileyim|ne yapalım|sanırım|vücut
+🤷‍♂️;omuz silken erkek;adam|belki|bilmem|erkek|her neyse|ilgisizlik|kişi|kuşku|omuz silkme|sanırım|şüphe
+🤷‍♀️;omuz silken kadın;bayan|belki|bilmem|cahillik|cehalet|her neyse|ilgisizlik|kadın|kişi|kuşku|omuz silkme|sanırım|şüphe|vücut
+🧑‍⚕️;sağlık çalışanı;doktor|hasta bakıcı|hemşire|sağlık personeli|terapist
+👨‍⚕️;erkek sağlık çalışanı;adam|doktor|erkek|hastabakıcı|meslek|sağlık|terapist
+👩‍⚕️;kadın sağlık çalışanı;bayan|doktor|hemşire|kadın|meslek|sağlık|terapist
+🧑‍🎓;öğrenci;mezun|talebe
+👨‍🎓;erkek öğrenci;adam|erkek|mezun|öğrenci
+👩‍🎓;kız öğrenci;bayan|kadın|mezun|öğrenci
+🧑‍🏫;öğretmen;doçent|eğitimci|profesör
+👨‍🏫;erkek öğretmen;adam|eğitmen|erkek|meslek|öğretmen|profesör
+👩‍🏫;kadın öğretmen;bayan|eğitmen|kadın|meslek|öğretmen|profesör
+🧑‍⚖️;hakim;adalet|terazi|yargıç
+👨‍⚖️;erkek hakim;adalet|adam|erkek|meslek|terazi|yargıç
+👩‍⚖️;kadın hakim;adalet|bayan|insan|kadın|meslek|savcı|terazi
+🧑‍🌾;çiftçi;bahçıvan|rençper
+👨‍🌾;erkek çiftçi;adam|bahçıvan|çiftçi|çiftlik sahibi|erkek|meslek
+👩‍🌾;kadın çiftçi;bahçıvan|bayan|çiftçi|çiftlik sahibi|kadın|meslek
+🧑‍🍳;aşçı;yemek pişirme
+👨‍🍳;erkek aşçı;adam|erkek|meslek|şef|yemek yapma
+👩‍🍳;kadın aşçı;bayan|kadın|şef|yemek|yemek yapma
+🧑‍🔧;tamirci;elektrikçi|tesisatçı
+👨‍🔧;erkek tamirci;adam|elektrikçi|erkek|esnaf|meslek|tamirci|tesisatçı
+👩‍🔧;kadın tamirci;bayan|elektrikçi|esnaf|kadın|meslek|tamirci|tesisatçı
+🧑‍🏭;fabrika işçisi;endüstri|fabrika|işçi|montaj|sanayi
+👨‍🏭;erkek fabrika işçisi;adam|erkek|fabrika|işçi|meslek|montaj|sanayi
+👩‍🏭;kadın fabrika işçisi;bayan|fabrika|işçi|kadın|meslek|montaj|sanayi
+🧑‍💼;ofis çalışanı;beyaz yakalı|iş yeri|mimar|müdür|yönetici
+👨‍💼;erkek ofis çalışanı;adam|beyaz yaka|erkek|iş|meslek|mimar|ofis|yönetici
+👩‍💼;kadın ofis çalışanı;bayan|beyaz yaka|iş|iş kadını|işkadını|kadın|meslek|mimar|ofis|yönetici
+🧑‍🔬;bilim insanı;biyolog|fizikçi|kimyacı|kimyager
+👨‍🔬;erkek bilim insanı;adam|bilim adamı|biyolog|erkek|fizikçi|kimyacı|matematikçi|meslek|mühendis
+👩‍🔬;kadın bilim insanı;bayan|bilim adamı|biyolog|fizikçi|kadın|kimyacı|matematikçi|meslek|mühendis
+🧑‍💻;teknoloji uzmanı;geliştirici|kodlayıcı|mucit|teknolog|yazılım|yazılımcı
+👨‍💻;erkek teknoloji uzmanı;adam|bilgisayar mühendisi|erkek|erkek bilgisayar mühendisi|geliştirici|kodlayıcı|meslek|mucit|mühendis|programlamacı|teknoloji uzmanı|yazılım
+👩‍💻;kadın teknoloji uzmanı;bayan|geliştirici|kadın|kadın mühendis|kodlayıcı|meslek|mucit|teknoloji uzmanı|yazılım
+🧑‍🎤;şarkıcı;aktör|aktris|gösterici|star|yıldız
+👨‍🎤;erkek şarkıcı;adam|aktör|erkek|gösterici|meslek|rock|şarkıcı|star
+👩‍🎤;kadın şarkıcı;aktör|bayan|gösterici|kadın|meslek|rock|şarkıcı|star
+🧑‍🎨;ressam;palet|sanatçı
+👨‍🎨;erkek ressam;adam|erkek|meslek|palet|ressam|sanatçı
+👩‍🎨;kadın ressam;bayan|kadın|meslek|palet|ressam|sanatçı
+🧑‍✈️;pilot;uçak
+👨‍✈️;erkek pilot;adam|erkek|insan|meslek|pilot|uçak
+👩‍✈️;kadın pilot;bayan|kadın|meslek|pilot|uçak
+🧑‍🚀;astronot;roket|uzay
+👨‍🚀;erkek astronot;adam|astronot|erkek|meslek|roket|uzay
+👩‍🚀;kadın astronot;astronot|bayan|kadın|meslek|roket|uzay
+🧑‍🚒;itfaiyeci;itfaiye aracı
+👨‍🚒;erkek itfaiyeci;adam|erkek|itfaiye aracı|itfaiyeci|meslek
+👩‍🚒;kadın itfaiyeci;bayan|itfaiye aracı|itfaiyeci|kadın|meslek
+👮;polis memuru;ceza|erkek polis|görevli|gözaltı|kanun|kişi|kişiler|meslek|polis|tutuklama|yasa
+👮‍♂️;erkek polis memuru;adam|aynasız|erkek|memur|polis
+👮‍♀️;kadın polis memuru;aynasız|bayan|ceza|gözaltı|kadın|kanun|kişi|kolluk|memur|polis|polis memuru|tutuklama|vücut|yasa
+🕵️;dedektif;casus|erkek casus|hafiye|meslek
+🕵️‍♂️;erkek dedektif;adam|casus|dedektif|erkek|hafiye
+🕵️‍♀️;kadın dedektif;bayan|casus|dedektif|hafiye|kadın|meslek
+💂;muhafız;bekçi|kişiler|koruma görevlisi|londra
+💂‍♂️;erkek muhafız;adam|erkek|muhafız
+💂‍♀️;kadın muhafız;bayan|buckingham sarayı|kadın|londra|muhafız
+🥷;ninja;asker|dövüşçü|gizli|insan|katana|kavga|kiralık katil|saklı|savaş|suikast
+👷;inşaat işçisi;baret|inşaat|iş|işçi|kişi|kişiler|meslek|onarım|tadilat|tamirat|vücut
+👷‍♂️;erkek inşaat işçisi;adam|erkek|inşaat|işçi
+👷‍♀️;kadın inşaat işçisi;bayan|inşaat|insan|işçi|kadın|kask|meslek
+🫅;taç takmış insan;asil|insan|kral|kraliçe|kraliyet|soylu|taç|taht
+🤴;prens;insan|kraliyet
+👸;prenses;insan|kişiler|kraliçe|peri masalı
+👳;sarıklı kişi;başörtüsü|insan|kişi|kişiler|sarık|sarıklı erkek|türban|türbanlı kişi|vücut
+👳‍♂️;sarıklı erkek;adam|erkek|sarık
+👳‍♀️;sarıklı kadın;bayan|insan|kadın|sarık|türban|türbanlı kadın
+👲;çin şapkalı erkek;adam|çinli şapkası olan adam|erkek|gua pi mao|gua pi mao takan erkek|kişiler|meslek
+🧕;başörtülü kadın;baş örtüsü|insan|türban|türbanlı
+🤵;smokinli kişi;adam|damat|kişi|simokin|smokin|smokinli adam
+🤵‍♂️;smokinli erkek;adam|smokin|smokinli adam
+🤵‍♀️;smokinli kadın;kadın|smokin
+👰;duvaklı gelin;duvak|evlilik|gelin|kişiler
+👰‍♂️;duvaklı erkek;adam|duvak|duvaklı adam
+👰‍♀️;duvaklı kadın;duvak|kadın
+🤰;hamile kadın;hamile|kadın
+🫃;hamile adam;gaz|göbek|göbekli|hamile|iki canlı|insan|karnı şiş|obur|şişmiş
+🫄;hamile kişi;çok yemek|gaz|göbek|göbekli|hamile|iki canlı|insan|karnı şiş|obur|şişmiş
+🤱;emziren kadın;anne sütü|bebek|emzirme|göğüs|meme verme|süt izni
+👩‍🍼;bebek emziren kadın;anne|bakıcı|bakım|bebek|bebek bakıcısı|beslemek|emzirme|insan|kadın|kucak|sevgi|yenidoğan
+👨‍🍼;bebek emziren erkek;baba|bakıcı|bakıcılık|bebek|bebek bakıcısı|beslemek|emzirme|erkek|insan|kucak|sevgi|yenidoğan
+🧑‍🍼;bebek emziren kişi;anne|baba|bakıcı|bakıcılık|bebek|bebek bakıcısı|beslemek|emzirme|erkek|insan|kadın|kişi|yenidoğan
+👼;bebek melek;bebek|melek|peri masalı|yüz
+🎅;Noel Baba;insan|kutlama|noel|santa claus
+🤶;Noel Anne;anne|insan|noel|noel annesi
+🧑‍🎄;cinsiyet belirtmeyen noel karakteri;christmas|insan|mutlu noeller|mutlu yıllar|noel|noel baba|Noel figürü|santa claus|şapka|tatil|yılbaşı
+🦸;süper kahraman;iyi|iyilik|kahraman|kurtarmak|pelerin|süper güç|uçmak
+🦸‍♂️;erkek süper kahraman;erkek|iyi|kahraman|süper güç
+🦸‍♀️;kadın süper kahraman;iyi|kadın|kahraman|süper güç
+🦹;süper kötü;acımasız|hain|kötü|kötü adam|pelerin|şeytani|suçlu|süper güç|süper kahraman|vampir|zalim
+🦹‍♂️;erkek süper kötü;erkek|kötü|şeytani|suçlu|süper güç
+🦹‍♀️;kadın süper kötü;kadın|kötü|şeytani|suçlu|süper güç
+🧙;büyücü;büyü|cadı|sihir|sihirbaz
+🧙‍♂️;erkek büyücü;büyücü|sihirbaz
+🧙‍♀️;kadın büyücü;büyücü|cadı
+🧚;peri;kanat|masal|mitoloji|Oberon|Puck|Titania
+🧚‍♂️;erkek peri;Oberon|Puck
+🧚‍♀️;kadın peri;Titania
+🧛;vampir;drakula|hortlak|kan
+🧛‍♂️;erkek vampir;Drakula|hortlak
+🧛‍♀️;kadın vampir;hortlak
+🧜;balık insan;balık kadın|deniz altı|deniz kızı|mitoloji|peri masalı|poseidon|su altı|üç dişli çatal
+🧜‍♂️;balık adam;
+🧜‍♀️;denizkızı;balık kadın
+🧝;elf;legolas|sihirli|sivri kulak
+🧝‍♂️;erkek elf;sihirli
+🧝‍♀️;kadın elf;sihirli
+🧞;cin;Alaaddin’in sihirli lambası|Alaaddinin sihirli lambası|dilek|lamba|sihir
+🧞‍♂️;erkek cin;cin
+🧞‍♀️;kadın cin;cin
+🧟;zombi;hortlak|kişi|kıyamet|korku|korkunç|ürkünç|yaşayan ölü|yürüyen ölü
+🧟‍♂️;erkek zombi;hortlak|yürüyen ölü
+🧟‍♀️;kadın zombi;hortlak|yürüyen ölü
+🧌;trol;canavar|dev|fantezi|gerçek dışı|hayali|hulk|ork|peri masalı|yaratık|yeşil dev
+🫈;tüylü yaratık;dev|efsanevi yaratık|koca ayak|orman|tüylü|yeti
+💆;yüz masajı;baş ağrısı|gerginlik|kişi|masaj|masaj yaptıran kişi|rahatlama|salon|spa|terapi
+💆‍♂️;yüz masajı yaptıran erkek;adam|erkek|masaj|yüz
+💆‍♀️;yüz masajı yaptıran kadın;bayan|kadın|masaj|yüz
+💇;saç kesimi;bakım|güzellik|güzellik salonu|kes|kişi|kuaför|makas|saç kestirme|saç stili|salon|tarz
+💇‍♂️;saç kestiren erkek;adam|berber|erkek|insan|saç kesimi|saç kestirmek
+💇‍♀️;saç kestiren kadın;bayan|kadın|saç kesimi
+🚶;yürüyen kişi;aylak|gezinti|kişi|salınma|tempo|vücut|yaya|yürüme|yürüyen|yürüyen adam|yürüyüş
+🚶‍♂️;yürüyen erkek;adam|dolaşma|erkek|yürüme
+🚶‍♀️;yürüyen kadın;bayan|dolaşma|kadın|yaya|yürüme
+🚶‍➡️;yürüyen kişi: sağa dönük;aylak|dönük|gezinti|kişi|sağa|salınma|tempo|vücut|yaya|yürüme|yürüyen|yürüyen adam|yürüyüş
+🚶‍♀️‍➡️;yürüyen kadın: sağa dönük;bayan|dolaşma|dönük|kadın|sağa|yaya|yürüme|yürüyen kadın
+🚶‍♂️‍➡️;yürüyen erkek: sağa dönük;adam|dolaşma|dönük|erkek|sağa|yürüme|yürüyen erkek
+🧍;ayakta duran kişi;ayakta duran|ayakta durma
+🧍‍♂️;ayakta duran erkek;adam|ayakta duran|erkek
+🧍‍♀️;ayakta duran kadın;ayakta duran|kadın
+🧎;diz çöken kişi;diz çöken|diz çökme|dizler
+🧎‍♂️;diz çöken erkek;adam|diz çöken|erkek
+🧎‍♀️;diz çöken kadın;diz çöken|kadın
+🧎‍➡️;diz çöken kişi: sağa dönük;diz çöken|diz çöken kişi|diz çökme|dizler|dönük|sağa
+🧎‍♀️‍➡️;diz çöken kadın: sağa dönük;diz çöken|diz çöken kadın|dönük|kadın|sağa
+🧎‍♂️‍➡️;diz çöken erkek: sağa dönük;adam|diz çöken|diz çöken erkek|dönük|erkek|sağa
+🧑‍🦯;görme engelli bastonlu kişi;erişilebilirlik|görme engelli|kör
+🧑‍🦯‍➡️;görme engelli bastonlu kişi: sağa dönük;dönük|erişilebilirlik|görme engelli|görme engelli bastonlu kişi|kör|sağa
+👨‍🦯;görme engelli bastonlu erkek;erişilebilirlik|erkek|görme engelli
+👨‍🦯‍➡️;görme engelli bastonlu erkek: sağa dönük;dönük|erişilebilirlik|erkek|görme engelli|görme engelli bastonlu erkek|sağa
+👩‍🦯;görme engelli bastonlu kadın;erişilebilirlik|görme engelli|kadın
+👩‍🦯‍➡️;görme engelli bastonlu kadın: sağa dönük;dönük|erişilebilirlik|görme engelli|görme engelli bastonlu kadın|kadın|sağa
+🧑‍🦼;elektrikli tekerlekli sandalyede kişi;erişilebilirlik|tekerlekli sandalye
+🧑‍🦼‍➡️;elektrikli tekerlekli sandalyede kişi: sağa dönük;dönük|elektrikli tekerlekli sandalyede kişi|erişilebilirlik|sağa|tekerlekli sandalye
+👨‍🦼;elektrikli tekerlekli sandalyede erkek;erişilebilirlik|erkek|tekerlekli sandalye
+👨‍🦼‍➡️;elektrikli tekerlekli sandalyede erkek: sağa dönük;dönük|elektrikli tekerlekli sandalyede erkek|erişilebilirlik|erkek|sağa|tekerlekli sandalye
+👩‍🦼;elektrikli tekerlekli sandalyede kadın;erişilebilirlik|kadın|tekerlekli sandalye
+👩‍🦼‍➡️;elektrikli tekerlekli sandalyede kadın: sağa dönük;dönük|elektrikli tekerlekli sandalyede kadın|erişilebilirlik|kadın|sağa|tekerlekli sandalye
+🧑‍🦽;tekerlekli sandalyede kişi;erişilebilirlik|tekerlekli sandalye
+🧑‍🦽‍➡️;tekerlekli sandalyede kişi: sağa dönük;dönük|erişilebilirlik|sağa|tekerlekli sandalye|tekerlekli sandalyede kişi
+👨‍🦽;tekerlekli sandalyede erkek;erişilebilirlik|erkek|tekerlekli sandalye
+👨‍🦽‍➡️;tekerlekli sandalyede erkek: sağa dönük;dönük|erişilebilirlik|erkek|sağa|tekerlekli sandalye|tekerlekli sandalyede erkek
+👩‍🦽;tekerlekli sandalyede kadın;erişilebilirlik|kadın|tekerlekli sandalye
+👩‍🦽‍➡️;tekerlekli sandalyede kadın: sağa dönük;dönük|erişilebilirlik|kadın|sağa|tekerlekli sandalye|tekerlekli sandalyede kadın
+🏃;koşan kişi;acele|çabuk|hızlı|kişi|koşu|koşucu|maraton|spor|vücut|yarış
+🏃‍♂️;koşan erkek;adam|erkek|koşma|maraton|yarış
+🏃‍♀️;koşan kadın;bayan|kadın|koşma|maraton|yarış
+🏃‍➡️;koşan kişi: sağa dönük;acele|çabuk|dönük|hızlı|kişi|koşan kişi|koşu|koşucu|maraton|sağa|spor|vücut|yarış
+🏃‍♀️‍➡️;koşan kadın: sağa dönük;bayan|dönük|kadın|koşan kadın|koşma|maraton|sağa|yarış
+🏃‍♂️‍➡️;koşan erkek: sağa dönük;adam|dönük|erkek|koşan erkek|koşma|maraton|sağa|yarış
+🧑‍🩰;bale dansçısı;bale|dansçı
+💃;dans eden kadın;dans|dansçı|festival|kadın dansçı|kişiler|meslek|tango
+🕺;dans eden adam;adam|dans|meslek
+🕴️;havalanan takım elbiseli adam;erkek|iş|işadamı|takım elbise|yukarıda süzülen takım elbiseli iş adamı
+👯;tavşan kulaklı kişiler;aynısı|dans|dansçı|ikiz|kadın|parti|ruh ikizi|tavşan kulak|tavşan kulaklar|vücut
+👯‍♂️;tavşan kulaklı erkekler;adam|dans eden erkekler|dansçı|erkek|partiye katılan erkek|partiye katılma|tavşan kulak|tavşan kulaklı erkek
+👯‍♀️;tavşan kulaklı kadınlar;bayan|dansçı|kadın|partiye katılma|tavşan kulak|tavşan kulaklı kadın
+🧖;buhar odasındaki kişi;buhar banyosu|buhar odası|hamam|rahatlamak|sauna
+🧖‍♂️;buhar odasındaki erkek;buhar odası|sauna
+🧖‍♀️;buhar odasındaki kadın;buhar odası|sauna
+🧗;dağcı kişi;dağ|kaya|kaya tırmanışı|tırmanıcı|tırmanmak
+🧗‍♂️;dağcı erkek;
+🧗‍♀️;dağcı kadın;
+🤺;eskrimci;birey|eskrim|kılıç|spor
+🏇;at yarışı;at|jokey|spor|yarış|yarış atı
+⛷️;kayakçı;kar|kayak
+🏂;snowbordçu;kar kayağı yapan|snowboard|snowboard yapmak|spor
+🏌️;golf oynayan kişi;golf|golf sahası|golf sopası|golfçü|kişi|top|vücut|vuruş
+🏌️‍♂️;golf oynayan erkek;adam|erkek|golf
+🏌️‍♀️;golf oynayan kadın;bayan|gol oynayan kadın|golf|kadın
+🏄;sörf yapan kişi;dalga|dalga sörfü|erkek sörfçü|kişi|okyanus|plaj|sahil|sörfçü|spor|vücut
+🏄‍♂️;sörf yapan erkek;adam|erkek|sörf
+🏄‍♀️;sörf yapan kadın;bayan|kadın|sörf
+🚣;sandalda kürek çeken kişi;göl|ırmak|kano|kayık|kürek|kürek çeken erkek|nehir|sandal|taşıt|tekne
+🚣‍♂️;sandalda kürek çeken erkek;adam|erkek|kayık|sandal
+🚣‍♀️;sandalda kürek çeken kadın;bayan|kadın|kayık|sandal
+🏊;yüzen kişi;antrenman|hareket|havuz|kişi|serbest stil|spor|triatlon|vücut|yüzme|yüzücü
+🏊‍♂️;yüzen erkek;adam|erkek|yüzme
+🏊‍♀️;yüzen kadın;bayan|kadın|yüzme
+⛹️;top sektiren kişi;atletik|basketbol|basketbolcu|kişi|spor|sporcu|top|top sürme|vücut
+⛹️‍♂️;top sektiren erkek;adam|erkek|top
+⛹️‍♀️;top sektiren kadın;basketbol|basketbolcu|bayan|kadın|top
+🏋️;ağırlık kaldıran kişi;ağırlık|ağırlık kaldırma|antrenman|erkek halterci|halter|halterci|kişi|vücut
+🏋️‍♂️;ağırlık kaldıran erkek;adam|ağırlık kaldıran|erkek
+🏋️‍♀️;ağırlık kaldıran kadın;ağırlık kaldıran|bayan|halter|kadın
+🚴;bisiklet süren kişi;antrenman|bisiklet|bisiklet sürücüsü|bisikletçi|hareket|kişi|spor|vücut
+🚴‍♂️;bisiklet süren erkek;adam|bisiklet|bisiklet sürme|bisikletçi|erkek
+🚴‍♀️;bisiklet süren kadın;bayan|bisiklet|bisiklet sürme|bisikletçi|kadın
+🚵;dağ bisikletçisi;antrenman|atletik|bisiklet|bisikletçi|dağ|kişi|spor|sürüş|vücut
+🚵‍♂️;dağ bisikleti süren erkek;adam|bisiklet|bisiklet sürme|bisikletçi|dağ|erkek
+🚵‍♀️;dağ bisikleti süren kadın;bayan|bisiklet|bisiklet sürme|bisikletçi|dağ|kadın
+🤸;perende atan kişi;aktif|birey|jimnastik|spor|yanlamasına takla
+🤸‍♂️;perende atan erkek;adam|çember hareketi|erkek|jimnastik|kişi|spor
+🤸‍♀️;perende atan kadın;aktif|bayan|çember hareketi|heyecanlı|jimnastik|kadın|kişi|mutlu|neşe|oyun|perende|sevinç|spor
+🤼;güreşen kişiler;birey|dövüş|düello|güreş|güreş minderi|güreşçi|güreşçilik|kişi|spor|vücut
+🤼‍♂️;güreş yapan erkek;adam|antrenman|dövüş|düello|er meydanı|erkek|güreş|kişi|kırkpınar|spor
+🤼‍♀️;güreş yapan kadın;bayan|dövüş|er meydanı|güreş|güreş turnuvası|güreşçi|kadın|kişi|kırkpınar|spor|vücut
+🤽;su topu;antrenman|birey|havuz|kişi|spor|su|su sporları|top|vücut|yüzme
+🤽‍♂️;su topu oynayan erkek;adam|antrenman|erkek|havuz|kişi|spor|su sporu|su topu|top|vücut
+🤽‍♀️;su topu oynayan kadın;antrenman|bayan|havuz|kadın|kişi|spor|su sporları|su topu|vücut|yüzme
+🤾;hentbol;atış|atletik|birey|el|kişi|spor|top|vücut
+🤾‍♂️;hentbol oynayan erkek;adam|erkek|hentbol|spor
+🤾‍♀️;hentbol oynayan kadın;antrenman|atış|atletik|bayan|hentbol|kadın|kişi|spor|top|vücut
+🤹;jonglör;aynı anda birçok iş yapma|denge|el becerisi|hokkabaz|hokkabazlık|jonglörlük|kişi|top çeviren erkek|top çevirme|vücut|yetenek
+🤹‍♂️;jonglör erkek;adam|aynı anda birçok iş|denge|erkek|hokkabaz|hokkabazlık|jonglör|top çevirme|vücut
+🤹‍♀️;jonglör kadın;aynı anda birçok iş|bayan|hokkabazlık|hokkabazlık yapan kadın|kadın
+🧘;lotus pozisyonundaki kişi;bağdaş kurmak|lotus pozisyonu|meditasyon|rahatlamak|yoga
+🧘‍♂️;lotus pozisyonundaki erkek;meditasyon|yoga
+🧘‍♀️;lotus pozisyonundaki kadın;meditasyon|yoga
+🛀;banyo yapan kişi;banyo|küvet
+🛌;yatakta yatan kişi;gece|insan|iyi geceler|iyi uykular|kestirme|otel|uyku|uyku saati|uyumak|yatan insan|yatmak|zzz
+🧑‍🤝‍🧑;el ele tutuşan insanlar;çift|el|el ele|kişi|tutmak|tutuşan eller
+👭;el ele tutuşan kadınlar;arkadaş|çift|dost|el|el ele tutuşan|el ele tutuşan iki kadın|kadın|kadınlar|kanki|kişiler|kızkardeşler
+👫;el ele tutuşan erkek ve kadın;çift|el ele tutuşan|el ele tutuşan kız ve erkek|erkek|kadın|kişiler|sevgili
+👬;el ele tutuşan erkekler;çift|el ele tutuşan|el ele tutuşan iki erkek|erkek|ikizler|kişiler
+💏;öpücük;aşk|kişiler|öpüşme|romantizm|seni seviyorum|yıldönümü
+👩‍❤️‍💋‍👨;öpücük: kadın erkek;aşk|erkek|kadın|kişiler|öpücük|öpüşme|romantizm|seni seviyorum|yıldönümü
+👨‍❤️‍💋‍👨;öpücük: erkek erkek;aşk|erkek|kişiler|öpücük|öpüşme|romantizm|seni seviyorum|yıldönümü
+👩‍❤️‍💋‍👩;öpücük: kadın kadın;aşk|kadın|kişiler|öpücük|öpüşme|romantizm|seni seviyorum|yıldönümü
+💑;kalpli çift;aşk|kadın erkek|kalp|kişiler|romantizm
+👩‍❤️‍👨;kalpli çift: kadın erkek;aşk|erkek|kadın|kalp|kalpli çift|kişiler|romantizm
+👨‍❤️‍👨;kalpli çift: erkek erkek;aşk|erkek|kadın erkek|kalp|kalpli çift|kişiler|romantizm
+👩‍❤️‍👩;kalpli çift: kadın kadın;aşk|kadın|kadın erkek|kalp|kalpli çift|kişiler|romantizm
+👨‍👩‍👦;aile: erkek kadın erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kadın|kişiler
+👨‍👩‍👧;aile: erkek kadın kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kadın|kişiler|kız çocuk
+👨‍👩‍👧‍👦;aile: erkek kadın kız çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kadın|kişiler|kız çocuk
+👨‍👩‍👦‍👦;aile: erkek kadın erkek çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kadın|kişiler
+👨‍👩‍👧‍👧;aile: erkek kadın kız çocuk kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kadın|kişiler|kız çocuk
+👨‍👨‍👦;aile: erkek erkek erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler
+👨‍👨‍👧;aile: erkek erkek kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👨‍👨‍👧‍👦;aile: erkek erkek kız çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👨‍👨‍👦‍👦;aile: erkek erkek erkek çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler
+👨‍👨‍👧‍👧;aile: erkek erkek kız çocuk kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👩‍👩‍👦;aile: kadın kadın erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler
+👩‍👩‍👧;aile: kadın kadın kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+👩‍👩‍👧‍👦;aile: kadın kadın kız çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+👩‍👩‍👦‍👦;aile: kadın kadın erkek çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler
+👩‍👩‍👧‍👧;aile: kadın kadın kız çocuk kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+👨‍👦;aile: erkek erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler
+👨‍👦‍👦;aile: erkek erkek çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler
+👨‍👧;aile: erkek kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👨‍👧‍👦;aile: erkek kız çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👨‍👧‍👧;aile: erkek kız çocuk kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek|kişiler|kız çocuk
+👩‍👦;aile: kadın erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler
+👩‍👦‍👦;aile: kadın erkek çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler
+👩‍👧;aile: kadın kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+👩‍👧‍👦;aile: kadın kız çocuk erkek çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+👩‍👧‍👧;aile: kadın kız çocuk kız çocuk;aile|anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kadın|kişiler|kız çocuk
+🗣️;konuşan kişi;bağırma|kafa|konuşma|profil|siluet|yüz
+👤;siluet büst;büst|kişiler|siluet
+👥;siluet büstler;büst|kişiler|siluet
+🫂;kucaklaşan insanlar;aşk|elveda|güle güle|hoşçakal|hoşçakalın|insan|kucaklaşma|merhaba|sağol|sağolun|sarılma|selam|sevgi|teşekkür|teşekkürler|teselli|veda
+👪;aile;anne|baba|bir erkek bir kadın bir erkek çocuk|çocuk|erkek çocuk|kişiler
+🧑‍🧑‍🧒;aile: yetişkin, yetişkin, çocuk;aile|çocuk|yetişkin
+🧑‍🧑‍🧒‍🧒;aile: yetişkin, yetişkin, çocuk, çocuk;aile|çocuk|yetişkin
+🧑‍🧒;aile: yetişkin, çocuk;aile|çocuk|yetişkin
+🧑‍🧒‍🧒;aile: yetişkin, çocuk, çocuk;aile|çocuk|yetişkin
+👣;ayak izi;ayak|gövde|iz
+🫆;parmak izi;adli tıp|güvenlik|kimlik
+🐵;maymun yüzü;hayvan|komik|maymun|meraklı maymun|muz|neşeli|yüz
+🐒;maymun;hayvan|muz|orman
+🦍;goril;hayvan
+🦧;orangutan;hayvan|maymun
+🐶;köpek yüzü;hayvan|köpek|yüz
+🐕;köpek;hav hav|hayvan|kuçu kuçu|süs köpeği
+🦮;rehber köpek;erişilebilirlik|görme engelli|rehber
+🐕‍🦺;yardımcı köpek;erişilebilirlik|köpek|rehber köpek|rehberlik|yardım
+🐩;kaniş;hayvan|köpek
+🐺;kurt;hayvan|kurt yüzü|orman|yüz
+🦊;tilki;akıllı|hayvan|kurnaz|tilki yüzü|yüz
+🦝;rakun;gri|hayvan|meraklı|sinsi
+🐱;kedi yüzü;ev hayvanı|hayvan|kedi|miyav|mındık|mırnav|pisi pisi|şirin|yüz
+🐈;kedi;hayvan|pisi pisi|sarman
+🐈‍⬛;kara kedi;cadılar bayramı|halloween|hayvan|kara|kedi|miyav|uğursuz
+🦁;aslan;aslan yüzü|burç|hayvan|ormanların kralı|yüz
+🐯;kaplan yüzü;büyük kedi|etobur|hayvan|kaplan|kedigiller|vahşi|yüz
+🐅;kaplan;büyük kedi|etobur|hayvanat bahçesi|kedigiller|vahşi
+🐆;leopar;büyük kedi|hayvan|hayvanat bahçesi|kedigiller|vahşi
+🐴;at yüzü;at|hayvan|yüz
+🫎;sığın;boynuz|boynuzlar|elk|geyik|geyik boynuzları|hayvan|memeli|mus
+🫏;eşek;hayvan|inatçı|katır|memeli|merkep|sıpa
+🐎;at;hayvan|yarış|yarış atı
+🦄;tek boynuzlu at;hayal|hayvan|sihirli|tek boynuz|unicorn|yüz
+🦓;zebra;çizgili|hayvan|hızlı|şeritli
+🦌;geyik;boynuz|hayvan|orman|ren geyiği
+🦬;bizon;boynuz|bufalo|hayvan|sürü
+🐮;inek yüzü;hayvan|inek|yüz
+🐂;öküz;boğa|boğa burcu|burçlar|çiftlik|hayvan
+🐃;manda;buffalo|hayvan|su
+🐄;inek;büyükbaş hayvan|çiftlik|siyah beyaz|süt
+🐷;domuz yüzü;domuz|hayvan|yüz
+🐖;domuz;çiftlik|dişi domuz|pembe domuz|şişko
+🐗;yaban domuzu;domuz|hayvan|inatçı
+🐽;domuz burnu;burun|domuz|hayvan|yüz
+🐏;koç;burç|hayvan|koç burcu|orman
+🐑;koyun;çiftlik|dişi koyun|küçük baş hayvan|yün
+🐐;keçi;burçlar|çiftlik|hayvan|koç|oğlak|oğlak burcu|oğlak burcu burçlar|peynir|süt
+🐪;deve;hayvan|hecin devesi|hörgüç
+🐫;iki hörgüçlü deve;çöl|deve|hayvan|hörgüç|kinci|sahara
+🦙;lama;alpaka|beyaz|guanako|hayvan|sevimli|tatlı|vikunya|yün
+🦒;zürafa;hayvan|noktalar|puanlar|uzun
+🐘;fil;hayvan|safari
+🦣;mamut;büyük|diş|fil dişi|hayvan|nesli tükenen|soyu tükenen|yünlü mamut
+🦏;gergedan;afrika|hayvan|safari
+🦛;hipopotam;çamur|hayvan|hipo|mor hayvan|sevimli|su aygırı
+🐭;fare yüzü;fare|hayvan|sıçan|yüz
+🐁;fare;beyaz fare|fil|hayvan|kemirgen
+🐀;sıçan;hayvan|kemirgen|lağım faresi
+🐹;hamster;evcil hayvan|hamster yüzü|hayvan|kemirgen|yüz
+🐰;tavşan yüzü;havuç|hayvan|kemirgen|tavşan|yüz
+🐇;tavşan;diş|havuç|hayvan|kemirgen|pamuk|şirin|zıp zıp
+🐿️;sincap;fındık
+🦫;kunduz;baraj|diş|hayvan|kemirgen|kemirmek|kuyruk
+🦔;kirpi;diken|dikenli|hayvan|şirin
+🦇;yarasa;drakula|hayvan|kan emen|kanatlı|kuş|mağara|siyah|vampir
+🐻;ayı;ayı yüzü|hayvan|orman|yüz
+🐻‍❄️;kutup ayısı;arktik|ayı|beyaz
+🐨;koala;hayvan|koala ayısı
+🐼;panda;bambu|hayvan|panda yüzü|tembel|yüz
+🦥;tembel hayvan;tembel|yavaş
+🦦;su samuru;balık avlayan|oyuncu
+🦨;kokarca;kokan
+🦘;kanguru;avustralya|hayvan|kese|keseli|kulak|memeli|otçul|sıçrama|yavru|zıplamak
+🦡;porsuk;bal porsuğu|bela|hayvan|sevimli
+🐾;pençe izi;hayvan|iz|pati izi
+🦃;hindi;hayvan|kuş|şükran günü
+🐔;tavuk;hayvan|kuş
+🐓;horoz;hayvan|kuş
+🐣;yumurtadan çıkan civciv;civciv|hayvan|kuluçka|kuluçka tavuğu|piliç|tavuk|yavru
+🐤;civciv;civciv başı|hayvan|piliç|tavuk|yavru
+🐥;önden civciv;civciv|hayvan|piliç|sarı civciv|şirin|tavuk|yavru|yüzü dönük civciv
+🐦;kuş;hayvan
+🐧;penguen;antartika|buz|hayvan|soğuk
+🕊️;güvercin;barış|beyaz güvercin|kuş|uçma
+🦅;kartal;amerika|beşiktaş|beyaz başlı kartal|hayvan|kara kartal|kuş
+🦆;ördek;hayvan|kuş|suna
+🦢;kuğu;beyaz|çirkin ördek|çirkin ördek yavrusu|gaga|göl|hayvan|kuğu yavrusu|kuş|ördek
+🦉;baykuş;bilge|hayvan|kuş
+🦤;dodo kuşu;büyük|dodo|hayvan|kuş|Mauritius|nesli tükenmiş|soyu tükenmiş
+🪶;kuş tüyü;gıdıklamak|hafif|hayvan|kuş|tüy|tüylü|uçma
+🦩;flamingo;gösterişli|tropikal
+🦚;tavus kuşu;dişi tavus kuşu|gösterişli|gururlu|hayvan|kuş|mavi kuş|renkli|tavuskuşu|züppe
+🦜;papağan;hayvan|kırmızı kuş|kırmızı papağan|konuşma|korsan|kuş|renkli kuş
+🪽;kanat;cennet|havacılık|kuş|kutsal|melek|melek gibi|mitoloji|semavi|uçma|uçuş
+🐦‍⬛;siyah kuş;gaga|gak|hayvan|hilebaz|kara|karga|kargagil|kuş|kuzgun|siyah
+🪿;kaz;hayvan|kaz sesi|kümes|kümes hayvanı|kuş|ördek|paytak|şapşal|vak
+🐦‍🔥;Anka;ateş kuşu|dönüşüm|fantezi|hayvan|küllerinden doğmak|ölümsüz|reenkarnasyon|yeniden doğuş|yenilenme|zafer
+🐸;kurbağa;hayvan|kurbağa yüzü|vırak|yüz|zıp zıp
+🐊;timsah;hayvan
+🐢;kaplumbağa;hayvan
+🦎;kertenkele;hayvan|sürüngen
+🐍;yılan;hayvan
+🐲;ejderha yüzü;ejderha|hayvan|masal|yüz
+🐉;ejderha;çin|efsane|hayvan|masal
+🦕;soropod;brachiosaurus|brontosaurus|brontozor|dinazor|diplodocus|hayvan|korkunç
+🦖;T-Rex;dinazor|hayvan|korkunç|Tyrannosaurus Rex
+🐳;su püskürten balina;balina|deniz|hayvan|mavi balina|okyanus|su püskürten
+🐋;balina;hayvan|okyanus
+🐬;yunus;balık|deniz|hayvan|mavi yunus|okyanus
+🫍;orka;balina|deniz|okyanus
+🦭;fok;ayı balığı|balık|bıyıklı|deniz|deniz aslanı|denizaslanı|fok balığı|hayvan|okyanus
+🐟;balık;burç|deniz|hayvan|mavi balık
+🐠;tropikal balık;balık|hayvan|okyanus
+🐡;balon balığı;balık|hayvan
+🦈;köpek balığı;balık|deniz|hayvan|jaws|okyanus
+🐙;ahtapot;hayvan|okyanus
+🐚;deniz kabuğu;deniz|deniz sesi|hayvan|midye|okyanus|spiral deniz kabuğu
+🪸;mercan;canlı|dalış|deniz|doğa|hayvan|iklim değişikliği|okyanus|resif|su altı
+🪼;denizanası;ahh|akvaryum|çarpma|deniz|dokunaç|hayvan|iğne|medüz|okyanus|omurgasız|plankton|sokma|yanma
+🦀;yengeç;burç|deniz|ıstakoz
+🦞;ıstakoz;bisque|deniz ürünü|hayvan|kabuklu|kırmızı|kıskaç
+🦐;karides;deniz|deniz mahsulü|kabuklu deniz hayvanı|küçük|okyanus|yiyecek
+🦑;mürekkep balığı;okyanus|yiyecek|yumuşakçalar sınıfı
+🦪;istiridye;dalma|inci
+🐌;salyangoz;böcek|hayvan|sümüklü böcek|yavaş
+🦋;kelebek;böcek|şirin
+🐛;tırtıl;böcek|hayvan|kırkayak
+🐜;karınca;bahçe|böcek|çalışkan|hayvan
+🐝;bal arısı;arı|hayvan|iğne|vız vız
+🪲;böcek;haşere|hayvan
+🐞;uğur böceği;benekli|böcek|hanım|hanımböceği|hayvan
+🦗;cırcır böceği;böcek|çekirge|hayvan
+🪳;hamam böceği;böcek|haşere|hayvan|iğrenç|kabuklu|karafatma
+🕷️;örümcek;böcek
+🕸️;örümcek ağı;örümcek
+🦂;akrep;burç|hayvan|iğne|zehir
+🦟;sivrisinek;ateş|böcek|hastalık|sıtma|virüs
+🪰;karasinek;at sineği|böcek|çürüme|hastalık|hayvan|kurt sineği|larva|sinek|uçmak
+🪱;solucan;hayvan|kurt|kurtçuk|parazit|sürüngen
+🦠;mikrop;amip|bakteri|bilim|deney|hastalık|hücre|laboratuvar|tek hücreli|virüs
+💐;buket;aşk|çiçek|doğum günü|gül|romantizm
+🌸;kiraz çiçeği;bahar|çiçek|çiçek izleme|kiraz
+💮;beyaz çiçek;çiçek|çiçek damgası|damga|iyi çalışma damgası
+🪷;nilüfer;bitki|Budizm|çiçek|Hinduizm|huzur|lotus|namaste|saflık|sakin|yoga
+🏵️;çiçek rozet;bitki|çiçek|gülce|sarı çiçek
+🌹;gül;aşk|bitki|çiçek|kırmızı gül
+🥀;solmuş çiçek;boynu bükük|çiçek|gül|kırgın|kırmızı gül|solmuş|üzgün
+🌺;çingülü;Atatürk çiçeği|bitki|çiçek|hatmi çiçeği
+🌻;ayçiçeği;bitki|çiçek|güneş
+🌼;çiçek açma;bitki|çiçek|sarı çiçek
+🌷;lale;bitki|çiçek|kırmızı lale
+🪻;sümbül;acı bakla|aslanağzı|bahar|bitki|çiçek|doğa|eflatun|lavanta|lila|lupin|mor
+🌱;filizlenme;fide|filiz|genç|genç bitki|yeşil
+🪴;saksı bitkisi;bitki|çiçek|dekor|doğa|ev|ev bitkisi|saksı|yeşil|yetiştirme
+🌲;yaprak dökmeyen ağaç;ağaç|çam|noel ağacı|orman|yaprak dökmeyen|yeni yıl|yeşil
+🌳;yaprak döken ağaç;ağaç|orman|yaprak döken|yeşil ağaç
+🌴;palmiye ağacı;ağaç|palmiye|yaz|yeşil
+🌵;kaktüs;bitki|çöl|diken
+🌾;pirinç bitkisi;başak|pirinç|pirinç başağı
+🌿;ot;bitki|yaprak
+☘️;yonca;bitki|yeşil yaprak
+🍀;dört yapraklı yonca;bitki|dört|iskoç|şans|şanslı|yaprak|yeşil|yonca
+🍁;akçaağaç yaprağı;düşen yaprak|kırmızı yaprak|sarı yaprak|sonbahar|turuncu yaprak|yaprak
+🍂;düşen yapraklar;düşen|düşmüş|güz|sonbahar|yaprak|yapraklar
+🍃;rüzgardaki yaprak;esen|rüzgar|yaprak
+🪹;boş yuva;dal|doğa|ev|kuş|yuva
+🪺;yumurta bulunan yuva;dal|doğa|hayvan|huzur|kuş|kuş yuvası|yavru kuş|yumurta|yuva
+🍄;mantar;bitki|kırmızı mantar|masal
+🪾;yapraksız ağaç;çorak|kış|kurak
+🍇;üzüm;gıda|meyve|salkım
+🍈;kavun;gıda|meyve|meze|rakı|yemek
+🍉;karpuz;gıda|meyve
+🍊;mandalina;gıda|meyve|portakal|turunç
+🍋;limon;gıda|meyve|narenciye
+🍋‍🟩;misket limonu;lim|limon|limonlu turta|margarita|meyve|narenciye|salsa|tekila|tropik|yeşil|yiyecek
+🍌;muz;gıda|maymun|meyve
+🍍;ananas;gıda|meyve|tropik
+🥭;mango;meyve|tropik|tropikal|yiyecek
+🍎;kırmızı elma;elma|gıda|kırmızı|meyve
+🍏;yeşil elma;ekşi elma|elma|gıda|meyve|yeşil|yiyecek
+🍐;armut;ayı|gıda|meyve
+🍑;şeftali;gıda|meyve
+🍒;kiraz;gıda|meyve
+🍓;çilek;gıda|meyve|yumuşak meyve
+🫐;yaban mersini;dağ mersini|likapa|mavi|mersin|meyve|orman meyvesi|yemek|yiyecek
+🥝;kivi;gıda|meyve|yiyecek
+🍅;domates;gıda|meyve|sebze
+🫒;zeytin;dal|yemek|yeşil zeytin|yiyecek|zeytin dalı
+🥥;Hindistan cevizi;gıda|maymun|palmiye|pina colada|tropikal
+🥑;avokado;gıda|meyve|tropik|yiyecek
+🍆;patlıcan;gıda|sebze|yemek
+🥔;patates;gıda|sebze|yiyecek
+🥕;havuç;gıda|sebze|tavşan|yiyecek
+🌽;mısır koçanı;başak|gıda|mısır|mısır başağı
+🌶️;acı biber;acı|biber|bitki|gıda|kırmızı biber
+🫑;dolma biber;biber|dolma|dolmalık biber|sebze|yemek|yeşil biber|yiyecek
+🥒;salatalık;gıda|hıyar|sebze|turşu|yiyecek
+🥬;yeşil yapraklı sebze;çin lahanası|karalahana|lahana|marul|salata|sebze|yaprak|yemek|yeşil|yeşillik|yiyecek
+🥦;brokoli;bitki|gıda|sebze|yabani lahana|yemek|yeşil
+🧄;sarımsak;baharat
+🧅;soğan;baharat|sebze|yiyecek
+🥜;yer fıstığı;fındık|fıstık|gıda|kuruyemiş|sebze|yiyecek
+🫘;fasulye;baklagil|barbunya|bitki|gıda|tohum|vegan|vejetaryen|yiyecek
+🌰;kestane;ağaç|bitki|gıda
+🫚;kök zencefil;baharat|bira|bitki|çeşni|doğal|kök|sağlık|şifalı|yiyecek|yumru|zencefil
+🫛;kabuklu bezelye;bakla|baklagil|barbunya|bezelye|edamame|fasulye|fasulye sırığı|kabuk|sebze|vejetaryen
+🍄‍🟫;kahverengi mantar;doğa|gıda|mantar|pizza malzemesi|portobello|sebze|şitaki|trüf|yiyecek
+🫜;kök sebze;bahçe|kök|pancar|sebze|turp
+🍞;ekmek;ekmek dilimi|gıda|kahvaltı|restoran|yemek
+🥐;kruvasan;ay çöreği|ekmek|fransız|gıda|pastane|yiyecek
+🥖;baget ekmek;baget|ekmek|fransız|gıda|yiyecek
+🫓;yassı ekmek;bazlama|ekmek|lavaş|naan|pide|pita|yemek|yiyecek
+🥨;pretzel;burgu|çubuk kraker|gıda
+🥯;simit;bagel|donut|ekmek|fırın|kahvaltı|pasta|peynirli simit|sürme peynir
+🥞;krep;gıda|gözleme|kahvaltı|pancake|pankek|yiyecek
+🧇;waffle;hamur|kahvaltı|vafıl
+🧀;peynir dilimi;fare|gıda|peynir
+🍖;kemikli et;et|gıda|restoran|yemek
+🍗;tavuk butu;but|gıda|restoran|tavuk|yemek
+🥩;parça et;biftek|bonfile|et|gıda|ızgara|kırmızı et|kuşbaşı|sote|steak|yemek
+🥓;domuz pastırması;bacon|et|gıda|kahvaltı|yiyecek
+🍔;hamburger;çizburger|gıda|restoran|yemek|yiyecek
+🍟;patates kızartması;gıda|kızartma patates|McDonald’s|restoran
+🍕;pizza dilimi;dilim|gıda|peynirli pizza|pizza|restoran|yiyecek
+🌭;sosisli sandviç;gıda|hot dog|sosis
+🥪;sandviç;ekmek|gıda|tost|yemek
+🌮;tako;gıda|meksika sandviçi
+🌯;burito;dürüm|gıda|meksika dürümü|yemek
+🫔;tamale;dürüm|Meksika yemeği|yemek|yiyecek
+🥙;dürüm;döner|ekmek arası|falafel|gıda|kebap|pide|pide arası|sarma|yiyecek
+🧆;falafel;köfte|nohut
+🥚;yumurta;gıda|kahvaltı|tavuk|yiyecek
+🍳;yemek pişirme;gıda|kahvaltı|kızartma tavası|pişirme|restoran|sahanda yumurta|tavada yumurta|yemek|yiyecek|yumurta
+🥘;sahanda yemek;gıda|güveç|kahvaltı|krep tavası|küçük|menemen|paella|tava|yemek|yiyecek
+🍲;yemek tenceresi;gıda|restoran|tencere yemeği|yahni|yemek|yiyecek
+🫕;fondü;çikolata|çubuk|erimiş|kap|kayak|peynir|raklet|yemek|yiyecek
+🥣;kaşıklı kase;çorba|gıda|kahvaltı|kase|pirinç lapası|tahıl gevreği|yemek
+🥗;yeşil salata;gıda|sağlıklı|salata|yemek|yeşil|yiyecek
+🍿;patlamış mısır;gıda|mısır|sinema
+🧈;tereyağı;süt ürünü|tereyağ
+🧂;tuz;baharat|baharatlık|beyaz|çeşni|tuzlu|tuzluk|yemek
+🥫;konserve gıda;konserve|konserve domates
+🍱;bento;bento paketi|gıda|paket|restoran|sushi|yemek
+🍘;pirinç gevreği;gıda|pirinç|yemek
+🍙;pirinç topu;gıda|onigiri|pirinç|restoran|yemek|yiyecek
+🍚;pilav;gıda|pirinç|restoran
+🍛;körili pilav;gıda|köri|pirinç|restoran|yemek
+🍜;erişte;buharda pişmiş|gıda|makarna|noodle|noodle tabağı|restoran|tabak
+🍝;spagetti;gıda|makarna|restoran|yemek
+🍠;fırınlanmış patates;fırınlanmış tatlı patates|gıda|restoran|tatlı|tatlı patates|tırınlanmış
+🍢;oden;çubuk|çubukta deniz ürünleri|gıda|kebap|restoran|şiş kebap
+🍣;suşi;çiğ balık|gıda|japon|restoran|sushi|suşi nigiri
+🍤;kızarmış karides;deniz ürünü|gıda|karides|restoran|yiyecek
+🍥;balık köftesi;balık|çörek|gıda|restoran|rulo balık köftesi|yiyecek
+🥮;ay pastası;çörek|festival|kek|pasta|sonbahar|tatlı|yemek|yiyecek|yuèbǐng
+🍡;pirinç tatlısı;çubukta pirinç tatlısı topları|dango|gıda|Japon pirinç tatlısı|pirinç tatlısı topları|restoran|tatlı
+🥟;mantı;empanada|gıda|gyōza|hamur köftesi|haşlanmış içli hamur|jiaozi|pierogi|potsticker
+🥠;fal kurabiyesi;gıda|içinden fal çıkan çin kurabiye|kehanet|şans kurabiyesi|talih kurabiyesi
+🥡;yiyecek paketi;çin yemeği|eve servis|gıda|kutu|paket yemek|yemek|yiyecek
+🍦;yumuşak dondurma;dondurma|dondurma külahı|gıda|krema|külah|restoran|vanilyalı dondurma
+🍧;meyveli buz;buz|meyveli|restoran
+🍨;dondurma;buz|gıda|krema|kup|restoran|tatlı
+🍩;donut;çikolatalı donut|çikolatalı lokma|donat|doughnut|gıda|restoran|tatlı|yiyecek
+🍪;kurabiye;çikolatalı kurabiye|cookie|gıda|restoran
+🎂;doğum günü pastası;dilek|doğum günü|gıda|iyi ki doğdun|kek|krema|kutlama|mum|mutlu yıllar|nice senelere|parti|pasta|tatlı|üflemek|yaş günü|yemek|yiyecek
+🍰;pasta dilimi;dilim pasta|doğum günü|gıda|pasta|restoran
+🧁;cupcake;fırın|kapkek|kek|krema|muffin|pasta|pembe krema|şekerli|tatlı|top kek|yemek
+🥧;tart;elmalı pay|gıda|pasta|pay|poğaça|şeftalili pay|tatlı|yemek
+🍫;çikolata;bar|çikolata barı|gıda|restoran|tatlı
+🍬;şekerleme;bayram|restoran|şeker
+🍭;lolipop;bayram|çocuk|gıda|restoran|şeker|şekerleme
+🍮;krem karamel;gıda|puding|restoran|tatlı
+🍯;bal kabı;bal|gıda|kahvaltı|kap|restoran|tatlı
+🍼;biberon;bebek|içecek|küçük şişe|şişe|süt
+🥛;süt bardağı;bardak|gıda|içecek|süt
+☕;sıcak içecek;çay|dumanı tüten|içecek|kahve|sıcak
+🫖;demlik;çay|çay demlemek|çaydanlık|demleme|içecek
+🍵;çay fincanı;çay|içecek|yeşil çay
+🍶;sake;bar|fincan|içecek|restoran|sake şişesi ve fincanı|şişe
+🍾;patlayan mantarlı şişe;bar|içki|kutlama|mantar|şampanya|şişe
+🍷;şarap kadehi;bar|bardak|bardak şarap|içecek|içedek|kadeh|kırmızı şarap|restoran|şarap bardağı
+🍸;kokteyl kadehi;bar|kokteyl|kokteyl bardağı|restoran
+🍹;tropik içecek;bar|içecek|kokteyl|restoran|tropik
+🍺;bira kupası;bar|kupa|restoran
+🍻;bira kupaları tokuşturma;bar|bira|içki|kupa|kupalar|restoran
+🥂;kadeh tokuşturma;bardak|içecek|kutlama|şampanya|tokuşturma
+🥃;kısa ve geniş bardak;bardak|içki|kısa ve geniş|likör|tek içki|viski
+🫗;dökülen sıvı;bardak|boş|cam|dök|dökme|dökmek|içecek|kaza|sıvı
+🥤;pipetli bardak;ayran|gazoz|içecek|kamışlı bardak|kola|plastik bardak
+🧋;bubble tea;baloncuk|boba|çay|içecek|inci|inci çayı|süt|tayvan
+🧃;içecek kutusu;içecek|kutu|kutu meyve suyu|meyve suyu|pipet
+🧉;mate çayı;içecek
+🧊;buz küpü;aysberg|buz|soğuk
+🥢;yemek çubukları;chopsticks|çin yemek çubuğu|yemek çubuğu
+🍽️;tabakla birlikte çatal ve bıçak;bıçak|çatal|tabak|yemek
+🍴;çatal ve bıçak;aç|akşam yemeği|beslenmek|bıçak|brunch|çatal|eline sağlık|kahvaltı|leziz|meyhane|mutfak|öğle yemeği|pişirmek|restoran|yemek|yiyecek
+🥄;kaşık;yemek|yemek takımı
+🔪;mutfak bıçağı;bıçak
+🫙;kavanoz;baharatlık|bitmiş|boş|cam|kap|mutfak|saklama kabı|sos|tamtakır
+🏺;amfora;alet|antika|içecek|kap|silah
+🌍;yerkürede Avrupa-Afrika;Afrika|Avrupa|dünya|yerküre
+🌎;yerkürede Amerika;Amerika|Amerika bölgeleri|dünya|yerküre
+🌏;yerkürede Asya-Avustralya;Asya|Avustralya|dünya|yerküre
+🌐;meridyenli yerküre;boylamlar|dünya|meridyen|yerküre
+🗺️;dünya haritası;dünya|harita
+🗾;Japonya haritası;harita|Japonya
+🧭;pusula;hedef bulma|kaybolmak|manyetik|navigasyon|oryantiring|yön bulma
+🏔️;karla kaplı dağ;dağ|kar|soğuk|uludağ
+⛰️;dağ;
+🛘;heyelan;çığ|dağ|deprem|felaket|kayalar|taşlar|tehlike|toprak kayması
+🌋;yanardağ;dağ|doğa|volkan|yanardağ patlaması
+🗻;Fuji Dağı;dağ
+🏕️;kamp;kamp yapma
+🏖️;plaj ve şemsiye;ada|kumsal|plaj|şemsiye|tatil
+🏜️;çöl;güneş|sıcak
+🏝️;ıssız ada;ada|çöl
+🏞️;milli park;açık hava|doğa|orman|park|ulusal park
+🏟️;stadyum;maç
+🏛️;tarihi yapı;bina|klasik|tarihi
+🏗️;bina inşaatı;bina|inşaat|iş makinası|vinç
+🧱;tuğla;duvar|duvar örmek|harç|inşaat|kil|kiremit|kırmızı|seramik|taş|tuğlalar
+🪨;kaya;ağır|büyük kaya|çakıl|katı|kayalık|sert|seyahat|taş
+🪵;kütük;ağaç|ahşap|kereste|odun|seyahat|tomruk
+🛖;kulübe;baraka|ev|seyahat|sığınak|yer|yurt
+🏘️;evler;bina|ev|komşu|konut|site
+🏚️;terkedilmiş ev;bina|ev|harabe
+🏠;ev;bina|konut|yuva
+🏡;bahçeli ev;bahçe|bina|ev|evim evim güzel evim|yazlık
+🏢;ofis binası;belediye|bina|devlet dairesi|ofis
+🏣;Japon postanesi;bina|Japon|posta|postane
+🏤;postane;Avrupa|Avrupa postanesi|bina|posta
+🏥;hastane;bina|klinik|sağlık ocağı
+🏦;banka;bina|dolar|para
+🏨;otel;bina|kalacak yer
+🏩;aşk oteli;aşk|bina|otel
+🏪;sürekli açık market;24 saat açık|bina|market|sürekli açık
+🏫;okul;bina|ilkokul|lise|okul binası
+🏬;çok katlı mağaza;büyük mağaza|çok katlı|mağaza
+🏭;fabrika;bina|sanayi
+🏯;Japon şatosu;bina|japon kalesi|kale|şato
+🏰;şato;avrupalı|bina|kale
+💒;düğün;evlenme|kilise|kilisede evlenme|romantizm
+🗼;Tokyo kulesi;kule|Tokyo
+🗽;Özgürlük Heykeli;heykel|new york|nyc|özgürlük
+⛪;kilise;bina|din|haç|hristiyan|papaz
+🕌;cami;din|ibadet|ibadethane|islam|İslam|mescit|müslüman
+🛕;Hindu tapınağı;hindu|tapınak
+🕍;sinagog;din|musevi|tapınak|yahudi
+⛩️;Şinto tapınağı;din|şinto|tapınak
+🕋;Kâbe;din|islam|kabe|müslüman
+⛲;fıskiye;çeşme|süs havuzu
+⛺;çadır;kamp|kamp yeri
+🌁;sisli;sis
+🌃;yıldızlı gece;gece|şehir|yıldızlar
+🏙️;şehir manzarası;bina|gökdelen|şehir
+🌄;dağların arasından güneşin doğuşu;dağ|dağların ardında güneş|güneş|sabah güneşi
+🌅;güneşin doğuşu;gün doğumu|güneş|sabah|sabah güneşi|şafak
+🌆;şehirde alacakaranlık;akşam|alacakaranlık|bina|gün batımı|manzara|şehir
+🌇;gün batımı;alacakaranlık|bina|binaların üzerinden gün batımı|gökdelen|maslak|new york|şehir
+🌉;gece vakti köprü;boğaz|gece|golden gate|köprü|manzara
+♨️;kaplıca;hamam|ılıca|sıcak
+🎠;atlıkarınca;at|atlı karınca|atlıkarınca atı|eğlence|karusel
+🛝;kaydırak;çocuk|çocuk parkı|eğlence|eğlence parkı|kaymak|oyun|park
+🎡;dönme dolap;dolap|dönme|eğlence|eğlence parkı|lunapark
+🎢;hız treni;eğlence|eğlence parkı|hız|lunapark|roller coaster|tren
+💈;berber dükkanı;berber|berber işareti|işaret
+🎪;sirk çadırı;çadır|eğlence|sirk
+🚂;buharlı lokomotif;buhar|lokomotif|seyahat|taşıt|tren|tren yolu
+🚃;vagon;demir yolu|demiryolu|elektrik|elektrikli tren|taşıt|toplu taşıma|tramvay
+🚄;yüksek hızlı tren;hızlı tren|marmaray|metro|shinkansen|taşıt|tren
+🚅;yuvarlak uçlu yüksek hızlı tren;hızlı tren|mermi burunlu|mermi burunlu shinkansen|shinkansen|taşıt|tren
+🚆;tren;demiryolu|taşıt
+🚇;metro;marmaray|taşıt|toplu taşıma|tren|ulaşım
+🚈;hafif raylı;demiryolu|hafif|taşıt|tren|tren yolculuğu|tren yolu
+🚉;tren istasyonu;istasyon|taşıt|tren|tren yolu
+🚊;tramvay;metrobüs|taşıt
+🚝;monoray;araç|metro|taşıt|tramvay
+🚞;dağ demiryolu;dağ|dağ teleferiği|demiryolu|taşıt|teleferik|tren|vagon|yolculuk
+🚋;tramvay vagonu;taşıt|toplu taşıma|tramvay|vagon
+🚌;otobüs;minibüs|taşıt|toplu taşıma
+🚍;yaklaşan otobüs;araba|otobüs|servis|taşıt|toplu taşıma|yaklaşan
+🚎;troleybüs;otobüs|taşıt|toplu taşıma|troley
+🚐;minibüs;otobüs|taşıt|toplu taşıma
+🚑;ambulans;acil|taşıt
+🚒;itfaiye arabası;araba|itfaiye|itfaiye kamyonu|taşıt|yangın
+🚓;polis arabası;araba|devriye arabası|polis|taşıt
+🚔;yaklaşan polis arabası;polis|polis arabası|taşıt
+🚕;taksi;araba|sarı taksi|taşıt
+🚖;yaklaşan taksi;taksi|taşıt
+🚗;araba;araç|otomobil|taşıt
+🚘;yaklaşan araba;araba|araç|otomobil|taşıt|yaklaşan
+🚙;cip;aile arabası|araba|eğlence taşıtı|karavan|mavi araba|minivan|spor araba|taşıt
+🛻;pikap;araba|araç|gitmek|kamyon|kamyonet|otomobil|seyahat|ulaşım|yol
+🚚;nakliye kamyonu;eve servis|kamyon|taşıt|teslimat kamyonu|ulaştırma
+🚛;tır;araba|araç|çekici|kamyon|taşıt|treyler
+🚜;traktör;taşıt
+🏎️;yarış arabası;araba|gokart|yarış
+🏍️;motosiklet;motor|yarış
+🛵;motorlu skuter;motor|skuter
+🦽;tekerlekli sandalye;erişilebilirlik
+🦼;elektrikli tekerlekli sandalye;akülü tekerlekli sandalye|erişilebilirlik
+🛺;elektrikli çekçek;tuk tuk
+🚲;bisiklet;bisiklete binmek|cycling|sürüş|taşıt
+🛴;ayakla sürülen skuter;ayak|skuter
+🛹;kaykay;kaykaycı|kaymak|rampa|spor|tahta|tekerlek
+🛼;paten;paten kaymak|patenle kaymak|roller blade|roller skate|seyahat|spor|tekerlek|tekerlekli paten|tekerlekli patenler
+🚏;otobüs durağı;durak|minibüs durağı|otobüs|toplu taşıma
+🛣️;otoban;anayol|cadde|çevre yolu|otoyol
+🛤️;tren yolu;demiryolu|tren
+🛢️;petrol varili;benzin|benzin fıçısı|fıçı|petrol|varil
+⛽;akaryakıt istasyonu;benzin|benzin istasyonu|benzinci|gaz|istasyon|pompa|yakıt|yakıt pompası
+🛞;tekerlek;araba|çark|dönüş|jant|lastik|oto|otomobil|seyahat|yedek parça|yolculuk
+🚨;polis lambası;alarm|araba|polis arabası|polis tepe lambası|siren|tepe lambası
+🚥;yatay trafik ışıkları;ışık|trafik|trafik lambası|trafik sinyalleri|yatay trafik ışığı
+🚦;dikey trafik ışıkları;dikey trafik ışığı|ışık|trafik|trafik ışıkları|trafik lambası|trafik sinyalleri
+🛑;dur işareti;dur|işaret|sekizgen
+🚧;inşaat;inşaat işareti|işaret
+⚓;çıpa;çapa|denizci|denizcilik|gemi|işaret|tekne
+🛟;cankurtaran simidi;can simidi|cankurtaran|deniz|güvenlik|havuz|hayat kurtaran|kurtarmak|önlem|simit|yüzme
+⛵;yelkenli tekne;deniz tatil yeri|deniz tatili|tatil yeri|tekne|yat
+🛶;kano;bot|kayık|tekne
+🚤;sürat teknesi;bot|taşıt|tekne
+🛳️;yolcu gemisi;gemi|motor|taşıt|tekne|vapur|yolcu
+⛴️;feribot;arabalı vapur|gemi|tekne|vapur
+🛥️;motorlu tekne;motor|taşıt|tekne|toplu taşıma|vapur|yat
+🚢;gemi;seyahat|taşıt|titanik|toplu taşıma|tur|vapur
+✈️;uçak;jet|seyahat|taşıt|uçmak|yolculuk
+🛩️;küçük uçak;taşıt|uçak
+🛫;kalkan uçak;check in|chek in|kalkış|taşıt|uçak
+🛬;inen uçak;iniş|inme|inmek|taşıt|uçak|varış|varmak
+🪂;paraşüt;delta kanat|deniz paraşütü|paraşütle atlama
+💺;koltuk;sandalye
+🚁;helikopter;taşıt
+🚟;asma demiryolu;asma|demiryolu|taşıt
+🚠;dağ teleferik hattı;dağ|dağ teleferiği|kablo|taşıt|teleferik|telesiyej|vagon
+🚡;teleferik;gondol|hava tramvayı|havadan yol|kablo yolu|taşıt|tramvay
+🛰️;uydu;araç|uzay
+🚀;roket;çıkış|taşıt|uzay|yolculuk
+🛸;uçan daire;ufo|uzaylı
+🛎️;resepsiyon zili;çan|otel|zil
+🧳;bavul;bagaj|çanta|seyahat|tatil|valiz|yol|yolculuk
+⌛;kum saati;kum
+⏳;akan kum saati;kum akan kum saati|kum saati|sayaç|zamanlayıcı
+⌚;kol saati;saat
+⏰;çalar saat;alarm|saat
+⏱️;kronometre;saat
+⏲️;alarm;saat|zamanlayıcı
+🕰️;raf saati;saat
+🕛;saat 12;12:00|on iki|saat
+🕧;on iki buçuk;12:30|on iki otuz|saat|yarım
+🕐;saat 1;1:00|bir|saat
+🕜;bir buçuk;1:30|saat
+🕑;saat 2;2:00|iki|saat
+🕝;iki buçuk;2:30|saat
+🕒;saat 3;3:00|saat|üç
+🕞;üç buçuk;3:30|saat
+🕓;saat 4;4:00|dört|saat
+🕟;dört buçuk;4:30|saat
+🕔;saat 5;5:00|beş|saat
+🕠;beş buçuk;5:30|saat
+🕕;saat 6;6:00|altı|saat
+🕡;altı buçuk;6:30|saat
+🕖;saat 7;7:00|saat|yedi
+🕢;yedi buçuk;7:30|saat
+🕗;saat 8;8:00|saat|sekiz
+🕣;sekiz buçuk;8:30|saat
+🕘;saat 9;9:00|dokuz|saat
+🕤;dokuz buçuk;9:30|saat
+🕙;saat 10;10:00|on|saat
+🕥;on buçuk;10:30|saat
+🕚;saat 11;11:00|on bir|saat
+🕦;on bir buçuk;11:30|saat
+🌑;yeni ay;ay|karanlık|yeni
+🌒;büyüyen ay;ay|hilal|yükselen
+🌓;ilk dördün;ay|uzay
+🌔;geniş ay;ay|şişkin|yükselen
+🌕;dolunay;ay|dolu|parlak|tam ay
+🌖;küçülen ay;ay|şişkin|solgun|uzay
+🌗;son dördün;ay|dördün
+🌘;ince ay;ay|ay kararması|ay tutulması|gece|gökyüzü|hilal|solgun|uzay
+🌙;hilal;ay|dilek|gece|gökyüzü|uzay|yeni ay
+🌚;yeni ay yüzü;ay|gece|yeni ay|yüz|yüzü olan yeni ay
+🌛;ilk dördün ay yüzü;ay|dördün|ilk dördün|yüz|yüzü olan ay|yüzü olan ilk dördün
+🌜;son dördün ay yüzü;ay|dördün|son dördün|yüz|yüzü olan ay|yüzü olan son dördün
+🌡️;termometre;derece|hava durumu
+☀️;güneş;aydınlık|güneşli|hava durumu|ışık|sıcak|uzay
+🌝;dolunay yüzü;ay|dolu|dolunay|yüz|yüzü olan ay|yüzü olan dolunay
+🌞;güneş yüz;güneş|parlak|sıcak|yaz|yüz
+🪐;halkalı gezegen;satürn
+⭐;yıldız;beyaz orta yıldız|gece|gökyüzü|kutup yıldızı
+🌟;parıldayan yıldız;dilek|dilek yıldızı|kıvılcım|kutup yıldızı|parıldama|parlak|parlayan yıldız|pırıltı|yıldız
+🌠;yıldız kayması;gece|kayan|meteor yağmuru|uzay|yıldız
+🌌;samanyolu;gökyüzü|uzay
+☁️;bulut;hava durumu
+⛅;bulutlar ardındaki güneş;bulut|bulutlu güneş|güneş|hava|parçalı bulutlu
+⛈️;şimşek ve yağmurlu bulut;bulut|gökgürültüsü|hava durumu|yağmur
+🌤️;bulutun arkasındaki güneş;bulut|güneş|hava durumu|parçalı bulutlu
+🌥️;bulutta kaybolan güneş;bulut|güneş|hava durumu|parçalı bulutlu
+🌦️;yağmur bulutunun arkasındaki güneş;bulut|güneş|hava durumu|parçalı bulutlu|yağmur|yer yer yağmur
+🌧️;yağmur bulutu;bulut|hava durumu|yağmur
+🌨️;kar bulutu;bulut|hava durumu|kar|soğuk
+🌩️;şimşek bulutu;bulut|fırtına|hava durumu|şimşek|yıldırım
+🌪️;hortum;bulut|fırtına|hava durumu|tayfun
+🌫️;sis;bulut|gökyüzü|hava durumu
+🌬️;rüzgar;esme|hava durumu
+🌀;siklon;baş dönmesi|hortum|tayfun
+🌈;gökkuşağı;biseksüel|gay|hava durumu|lezbiyen|yağmur
+🌂;kapalı şemsiye;şemsiye|yağmur|yağmurlu
+☂️;şemsiye;giyim|hava durumu|mor şemsiye|yağmur
+☔;yağmur damlalı şemsiye;giyim|hava durumu|ıslak|mor şemsiye|şemsiye|yağmur|yağmurlu
+⛱️;sabit şemsiye;gölge|güneş|hava durumu|kumsal|plaj|şemsiye|yağmur
+⚡;yüksek voltaj;doğa|elektrik|fırtına|işaret|şimşek|tehlike|voltaj|yıldırım|yüksek|yüksek voltaj işareti|yüksek voltaj tehlikesi
+❄️;kar tanesi;buz|hava durumu|kar|kış|soğuk
+☃️;kardan adam;hava durumu|kar|kış|soğuk
+⛄;kar yağmadan kardan adam;kar|kardan adam|karsız kardan adam|kış|soğuk
+☄️;kuyruklu yıldız;uzay
+🔥;ateş;alev|sıcak|yakmak
+💧;damlacık;çizgi roman|damla|su|ter|terli
+🌊;dalga;okyanus dalgası|sörf|su dalgası
+🎃;kabak fener;cadılar bayramı|fener|halloween|jack|kabak|kutlama
+🎄;Noel ağacı;ağaç|çam|kutlama|süs|yılbaşı
+🎆;havai fişek;eğlence|ışık|kutlama
+🎇;fişek;havai fişek|kıvılcım|kutlama|patlama
+🧨;maytap;ateş|bomba|dinamit|havai fişek|kırmızı|kıvılcım|patlama|patlayıcı
+✨;parıltılar;*|mucize|parıldayan yıldızlar|parıltı|pırıldayan yıldızlar|pırıltı|sihir|yıldız|yıldızlar
+🎈;balon;doğumgünü|kırmızı balon|kutlama|parti
+🎉;parti konfetisi;harika|konfeti|kutlama|parti|tebrikler
+🎊;konfeti;konfeti topu|kutlama|top
+🎋;tanabata ağacı;ağaç|ağaç ve kağıt şeritler|japon|kağıt şeritler|kutlama|Star Festivali
+🎍;çam süsleme;bambu|çam|Japon|kutlama|Yeni Yıl
+🎎;Japon oyuncak bebekleri;Bebek Festivali|festival|Japon|kutlama
+🎏;sazan şekilli flama;flama|kutlama
+🎐;rüzgar çanı;çan
+🎑;ay izleme;ay|ay izleme töreni|izleme|kutlama
+🧧;kırmızı zarf;çin hediyesi|hediye|hóngbāo|iyi şans|iyi şanslar|kırmızı kağıt|lai see|para|uzak doğu|zarf
+🎀;kurdele;kız|kutlama|pembe kurdele
+🎁;paketlenmiş hediye;doğum günü|hediye|kutlama|paketli
+🎗️;anma kurdelesi;anma|kurdele|kutlama
+🎟️;giriş bileti;bilet|giriş
+🎫;bilet;eğlence|giriş
+🎖️;askeri madalya;askeri|kutlama|madalya
+🏆;zafer kupası;kupa|ödül
+🏅;spor madalyası;altın madalya|madalya
+🥇;birincilik madalyası;altın|birinci|madalya
+🥈;ikincilik madalyası;gümüş|ikinci|İkincilik madalyası|madalya
+🥉;üçüncülük madalyası;bronz|madalya|üçüncü
+⚽;futbol topu;futbol|spor|top|topu
+⚾;beyzbol;beyzbol topu|spor|top
+🥎;softball;beyzbol|beyzbol eldiveni|eldiven|kol|oyun|spor|tenis topu|top|top oynamak|yuvarlak
+🏀;basketbol;basketbol potası|basketbol topu|pota|spor|top
+🏐;voleybol;maç|top|voleybol topu
+🏈;amerikan futbolu;amerikan|spor|top
+🏉;ragbi;futbol topu|ragbi futbolu|Ragbi topu|spor|top
+🎾;tenis;spor|tenis raketi ve topu|tenis topu|top
+🥏;frizbi;atmak|disk|fırlatmak|oynamak|oyuncak|turuncu|tutmak|ultimate
+🎳;bovling;bovling ekipmanı|bovling topu|oyun|top
+🏏;kriket;maç|sopa|top
+🏑;çim hokeyi;hokey|maç|saha|sopa|top
+🏒;buz hokeyi;buz|buz hokeyi ve disk|disk|hokey|maç|sopa
+🥍;lakros;atış|gol|maç|oyun|raket|sayı|sopa|spor|top|vurmak
+🏓;masa tenisi;maç|pinpon|raket|top
+🏸;badminton;maç|raket|tüylü top
+🥊;boks eldiveni;boks|eldiven|spor
+🥋;dövüş sporu forması;dövüş sporu|forma|judo|karate|spor|tekvando
+🥅;kale ağı;ağ|kale|spor
+⛳;delikteki bayrak;delik|golf|golf bayrağı
+⛸️;buz pateni;buz|paten
+🎣;olta;balık|balıkçı|dinlenme|eğlence|kamış|kamış olta ve balık
+🤿;dalgıç maskesi;aletli dalış|dalış|dalış maskesi|skuba|şnorkelle dalış
+🎽;koşu tişörtü;çizgi|çizgili koşu tişörtü|koşu|spor|tişört
+🎿;kayak;bot|kayak ve bot|spor
+🛷;kızak;kar|kaymak
+🥌;curling taşı;körling|körling oyunu|körling taşı|oyun|taş
+🎯;tam isabet;hedef|hedefe isabet|isabet|on ikiden vurma|oyun
+🪀;yoyo;inip çıkma|oyuncak
+🪁;uçurtma;süzülme|uçma
+🔫;su tabancası;revolver|silah|tabanca
+🎱;bilardo;oyun|sekiz top
+🔮;kristal küre;fal|fal bakma|kristal|küre
+🪄;sihirli asa;aktivite|asa|büyü|büyücü|cadı|değnek|etkinlik|sihir|sihirbaz|sihirli değnek
+🎮;video oyunu;kontrol cihazı|oyun|oyun konsolu|oyun kontrol cihazı|xbox
+🕹️;oyun çubuğu;oyun|video oyunu
+🎰;kumar makinesi;kollu makina|kumar|oyun|şans oyunu
+🎲;oyun zarı;oyun|tavla|zar
+🧩;yapboz parçası;bulmaca|ipucu|karmaşık|kenetleme|oyun|parça|puzzle|yap boz|yapboz
+🧸;oyuncak ayı;ayı|ayıcık|çocuk|dolgu|oyun|oyuncak|peluş|pelüş|sevimli|uyku
+🪅;pinyata;aktivite|cinco de mayo|etkinlik|kutlama|meksika|parti|pinata|şapka|şeker
+🪩;aynalı küre;90‘lar|dans|disko|disko topu|eğlence|gece hayatı|gece kulübü|parlak|parti
+🪆;matruşka;aktivite|babuşka|bebek|bebekler|etkinlik|iç içe|matruşka bebekleri|oyuncak|rus|Rusya
+♠️;maça;iskambil|kart|pik
+♥️;kupa;iskambil|kart|kör
+♦️;karo;baklava|iskambil|kart|kırmızı
+♣️;sinek;iskambil|kart|trefl
+♟️;piyon;harcanabilir|kullanılma|satranç
+🃏;joker;iskambil kartı|kart
+🀄;kızıl ejder mahjong taşı;Ejderha|Kızıl Ejder|mahjong|taş
+🎴;çiçekli oyun kağıtları;çiçek|çiçekli kart|hanafuda|kağıt oyunu|kart|oyun
+🎭;sahne sanatları;eğlence|performans|performans sanatı|sanat|tiyatro
+🖼️;resimli çerçeve;çerçeve|müze|resim|sanat|yağlı boya
+🎨;boya paleti;boya|palet|ressam|sanat|sanatçı|sanatçı paleti
+🧵;iplik;dikiş|dikmek|iğne|ip|kırmızı ip|makara|terzi
+🪡;dikiş iğnesi;aktivite|dikiş|dikme|etkinlik|iğne|iplik|nakış|sökük|terzi
+🧶;iplik yumağı;ip|kedi|kroşe|örgü|örgü ipi|tığ|top|yumak|yün
+🪢;denizci düğümü;aktivite|bağ|bağlama|bağlı|dolaşık|düğüm|halat|sicim
+👓;gözlük;giyim
+🕶️;güneş gözlüğü;göz|gözlük|kara|siyah gözlük
+🥽;koruyucu gözlük;dalgıç gözlüğü|dalış gözlüğü|dalmak|emniyet gözlüğü|göz koruması|gözlük|iş gözlüğü|kar gözlüğü|kayak|kayak gözlüğü|kaynak|kaynak gözlüğü|kaynakçı gözlüğü|koruma gözlüğü|yüzme|yüzücü gözlüğü
+🥼;laboratuvar önlüğü;beyaz önlük|bilim insanı|deney|doktor|doktor önlüğü|dr|giysi|gömlek|hasta bakıcı|hastane|laboratuvar|önlük
+🦺;güvenlik yeleği;acil durum|güvenlik|yelek
+👔;kravat;giyim|gömlek|iş adamı|takım kıyafet
+👕;tişört;alışveriş|giyim|gömlek
+👖;kot;blucin|blue jean|bluejean|giyim|kot pantalon|pantolon
+🧣;atkı;sıkı giyinmek|soğuk|yaka
+🧤;eldiven;el|mavi eldiven
+🧥;kaban;ceket|manto|mont|sıkı giyinmek|soğuk
+🧦;çorap;
+👗;elbise;alışveriş|giyim|Kokteyl elbisesi|şık|tek parça
+👘;kimono;elbise|giyim
+🥻;sari;elbise|giysi
+🩱;tek parça mayo;mayo
+🩲;slip mayo;alt|iç çamaşırı|mayo|slip|tek parça
+🩳;şort;alt|iç çamaşırı|mayo
+👙;bikini;benekli bikini|deniz|deniz giysisi|giyim|havuz|kumsal|tatil|yaz
+👚;kadın giysisi;alışveriş|bluz|giyim|giysiler
+🪭;yelpaze;çırpma|dans|flört|heyecan|nesne|şak|serinletme|sıcak|utangaç|yelleme
+👛;cüzdan;bozuk para|bozuk para çantası|giyim
+👜;el çantası;çanta|giyim|kadın el çantası
+👝;para kesesi;çanta|giyim
+🛍️;alışveriş çantası;alışveriş|çanta|hediye|otel|paket
+🎒;okul çantası;kırmızı sırt çantası|okul|okul sırt çantası|sırt çantası
+🩴;parmak arası terlik;ayakkabı|deniz terliği|eşya|flip flop|kumsal|kumsal terliği|parmak arası|sahil|sandalet|terlik|zori
+👞;erkek ayakkabısı;ayakkabı|giyim
+👟;koşu ayakkabısı;ayakkabı|bez ayakkabı|giyim|spor
+🥾;yürüyüş botu;ayakkabı|bot|dağcılık|kamp|kar botu|kış|kışlık|sırt çantası|yürümek|yürüyüş
+🥿;düz ayakkabı;ayakkabı|babet|bale|bale ayakkabısı|dans|pabuç|patik|puant|rahat|terlik|topuksuz|yeşil ayakkabı|yürümek|yürüyüş
+👠;yüksek topuklu ayakkabı;ayakkabı|giyim|kırmızı ayakkabı|topuklu ayakkabı
+👡;kadın sandaleti;ayakkabı|giyim|kadın|sandalet|topuklu ayakkabı
+🩰;bale ayakkabıları;bale|bale pabucu|dans
+👢;kadın botu;bot|çizme|giyim|kadın|kadın çizmesi
+🪮;perma tarağı;Afro saç|kıvırcık saç|nesne|saç|seçme|tarak|tarama|toka
+👑;taç;giyim|kral|kraliçe|kraliyet
+👒;kadın şapkası;giyim|şapka
+🎩;silindir şapka;eğlence|şapka|sihirbaz
+🎓;mezuniyet kepi;kep|kutlama|mezuniyet
+🧢;siperli şapka;beyzbol şapkası|şapka
+🪖;asker kaskı;asker|askerlik|eşya|kafa|kask|miğfer|ordu|savaş|savaşçı
+⛑️;yardım ekibi kaskı;beyaz haçlı kask|haç|kask|meslek|şapka|yardım|yüz
+📿;tespih;boncuk|din|dua|giyim|kolye|tesbih
+💄;ruj;kırmızı ruj|kozmetik|makyaj
+💍;yüzük;alyans|evlilik|nikah|nişan|pırlanta yüzük|romantizm|tek taş
+💎;mücevher;elmas|mücevher taşı|pırlanta|romantizm
+🔇;ses kapalı;iptal işaretli hoparlör|lütfen sessiz olun|sessiz olun
+🔈;kısık ses;hoparlör ses düzeyi|ses düzeyi
+🔉;ses açık;düşük|düşük ses|düşük sesli hoparlör
+🔊;yüksek ses;yüksek|yüksek sesli hoparlör
+📢;hoparlör;halka hitap|iletişim|megafon
+📣;megafon;iletişim|karşılama
+📯;posta klaksonu;borozan|klakson|posta
+🔔;zil;çan|kilise|ses|tenefüs
+🔕;üzeri çizili zil;çan|çan yok|iptal işaretli çan|ses yok|sessiz
+🎼;sol anahtarı;müzik|müzik partisyonu|partisyon
+🎵;müzik notası;müzik|nota
+🎶;müzik notaları;müzik|nota|notalar
+🎙️;stüdyo mikrofonu;mikrofon|müzik|stüdyo
+🎚️;ayarlama çubuğu;ayar çubuğu|kol|müzik
+🎛️;kontrol düğmeleri;düğme|kontrol|müzik
+🎤;mikrofon;eğlence|Karaoke|müzik|şarkı|şarkıcı
+🎧;kulaklık;eğlence|müzik
+📻;radyo;video
+🎷;saksafon;alet|müzik|müzik aleti
+🎺;trompet;alet|müzik|müzik aleti
+🪊;trombon;bakır|çalgı|caz|enstrüman|hüzünlü|müzik|sürgü|üzgün
+🪗;akordiyon;akordeon|armonika|çalmak|enstrüman|eşya|körük|müzik|müzik aleti|tuş
+🎸;gitar;alet|elektrik gitar|müzik|müzik aleti
+🎹;müzik klavyesi;alet|klavye|müzik|müzik aleti|piyano
+🎻;keman;alet|müzik|müzik aleti
+🪕;banjo;müzik|yaylı
+🥁;davul;bateri|müzik|ramazan davulu|tokmak
+🪘;uzun davul;conga|davul|davul çalmak|enstrüman|eşya|müzik aleti|perküsyon|ritim|ritm|tempo|tumba|vurmak|vuruş
+🪇;marakas;alet|çaça|çıngırak|dans|enstrüman|müzik|müzik aleti|nesne|parti|perküsyon|sallama|sallamalı|vurmalı
+🪈;flüt;ahşap üflemeli|bando|blokflüt|boru|enstrüman|fife|fifre|kaval|müzik|nefesli|orkestra|recorder|üflemeli
+🪉;arp;aşk|enstrüman|eros|müzik|orkestra
+📱;cep telefonu;iPhone|mobil telefon|telefon
+📲;ok işaretli cep telefonu;çağrı yapmak|cep telefonu|mobil telefon|telefon
+☎️;telefon;kırmızı telefon
+📞;ahize;alıcı|telefon
+📟;çağrı cihazı;iletişim
+📠;faks makinesi;iletişim
+🔋;pil;
+🪫;düşük pil;az şarj|batarya|düşük enerji|elektronik|güçsüz|nesne|pil|şarj
+🔌;elektrik fişi;elektrik
+💻;dizüstü bilgisayar;bilgisayar|kişisel
+🖥️;masaüstü bilgisayar;bilgisayar|masaüstü
+🖨️;yazıcı;bilgisayar
+⌨️;klavye;bilgisayar
+🖱️;bilgisayar faresi;bilgisayar|düğme|fare
+🖲️;iz topu;bilgisayar
+💽;mini disk;bilgisayar|disk
+💾;disket;floppy
+💿;optik disk;CD|disk|DVD
+📀;dvd;blu-ray|CD|disk|müzik
+🧮;abaküs;çocuk|hesap|hesaplama|renkli abaküs
+🎥;film kamerası;eğlence|film|sinema
+🎞️;film kareleri;film|film karesi|sinema
+📽️;film projektörü;film|projektör|sinema|video
+🎬;film tahtası;eğlence|film|tahta
+📺;televizyon;tv|video
+📷;fotoğraf makinesi;video
+📸;flaşlı fotoğraf makinesi;flaş|kamera|video
+📹;video kamera;kamera|video
+📼;videokaset;teyp|video|video kaseti
+🔍;sola dönük büyüteç;arama|büyüteç|cam|solu gösteren|solu gösteren büyüteç
+🔎;sağa dönük büyüteç;arama|büyüteç|cam|sağı gösteren|sağı gösteren büyüteç
+🕯️;mum;ışık
+💡;ampul;bir fikrim var|çizgi roman|elektrik|ışık
+🔦;el feneri;elektrik|ışık
+🏮;kırmızı kağıt fener;bar|fener|izakaya|kırmızı|restoran
+🪔;diya lamba;diya|lamba|yağ
+📔;süslü not defteri;dekorasyonlu not defteri|kapak|not defteri
+📕;kapalı kitap;kitap|kırmızı kitap
+📖;açık kitap;açık defter|defter|kitap|okul
+📗;yeşil kitap;eğitim|kitap|kütüphane|okul
+📘;mavi kitap;kitap
+📙;turuncu kitap;kitap
+📚;kitaplar;kitap
+📓;not defteri;defter
+📒;resmi defter;not defteri
+📃;kıvrık sayfa;kenarı kıvrılmış sayfa|sayfa
+📜;parşömen;bildiri|kağıt
+📄;yüzü yukarıda sayfa;doküman|ön yüz|ön yüzü görünen sayfa|sayfa
+📰;gazete;haber|kağıt|kâğıt
+🗞️;rulo gazete;gazete|haber|kağıt|rulo
+📑;sayfa ayraçları;ayraçlar|işaretçi|sayfa işareti
+🔖;yer işareti;defter|işaret|kitap|not
+🏷️;etiket;
+🪙;bozuk para;altın|avro|dolar|gümüş|hazine|jeton|madeni para|metal|para|sikke|zengin
+💰;para torbası;çanta|dolar çantası|para|para çuvalı|zengin
+🪎;hazine sandığı;altın|değerli|ganimet|gümüş|mücevher|ödül|para|zenginlik
+💴;yen banknot;banknot|döviz|para|yen
+💵;dolar banknot;banknot|dolar|döviz|fatura|para
+💶;euro banknot;avro|banknot|döviz|euro|fatura|para
+💷;sterlin banknot;banknot|döviz|para|sterlin
+💸;kanatlı para;banka|banknot|para|uçan banknot
+💳;kredi kartı;kart|kredi
+🧾;makbuz;belge|defter tutma|dekont|ekstre|evrak|fatura|fiş|hesap|kanıt|maliye|muhasebe|senet
+💹;yen simgeli artış grafiği;banka|grafik|para|piyasa|yen|yukarı giden grafik|yukarı yönlü
+✉️;zarf;e-mail|e-posta|mektup
+📧;e-posta;ileti|iletişim|mektup|posta
+📨;gelen zarf;alınan posta|e-posta|gelen|iletişim|mektup|posta|zarf
+📩;oklu zarf;e-posta|giden|gönderilen posta|iletişim|mektup|posta|zarf
+📤;giden kutusu;giden|iletişim|kutu|posta|tepsi
+📥;gelen kutusu;gelen|iletişim|kutu|posta|tepsi
+📦;paket;kutu|posta
+📫;işareti yukarıda kapalı posta kutusu;işaret|işareti kaldırılmış posta kutusu|kapalı|posta
+📪;işareti aşağıda kapalı posta kutusu;işaret|işareti indirilmiş posta kutusu|kapalı|posta
+📬;işareti yukarıda açık posta kutusu;açık|işaret|işareti kaldırılmış açık posta kutusu|posta
+📭;işareti aşağıda açık posta kutusu;açık|işaret|işareti indirilmiş açık posta kutusu|posta
+📮;posta kutusu;posta
+🗳️;oy sandığı;kutu|sandık|seçim
+✏️;kurşun kalem;
+✒️;siyah uç;dolma kalem|kalem
+🖋️;dolma kalem;kalem|mürekkepli kalem
+🖊️;kalem;tükenmez kalem
+🖌️;boya fırçası;boyama|fırça
+🖍️;pastel boya;boya|mum|pastel
+📝;not;ders|iletişim|kalem|kalem kağıt|not defteri
+💼;evrak çantası;müfettiş|ofis
+📁;dosya klasörü;dosya|klasör
+📂;açık dosya klasörü;açık|dosya|klasör
+🗂️;dosya ayırıcı;ayırıcı|dizin|dosya|kart
+📅;takvim;tarih
+📆;koparmalı takvim;takvim|takvim sayfası|tarih
+🗒️;spiral not defteri;defter|not|spiral
+🗓️;spiral takvim;defter|spiral|takvim
+📇;kart dizini;dizin|rolodeks
+📈;artış grafiği;grafik|yukarı yönlü|yükselen grafik
+📉;iniş grafiği;alçalan grafik|aşağı yönlü|grafik
+📊;çubuk grafiği;grafik
+📋;pano;duyuru
+📌;raptiye;iğne
+📍;yuvarlak raptiye;iğne|raptiye
+📎;ataş;klips
+🖇️;iç içe geçmiş ataşlar;ataş|bağlantı
+📏;düz cetvel;cetvel
+📐;gönye;cetvel|üçgen
+✂️;makas;alet
+🗃️;dosya kutusu;dosya|kart|kart kutusu|kutu
+🗄️;dosya dolabı;dolap|dosya
+🗑️;çöp sepeti;
+🔒;kilit;kapalı kilit
+🔓;açık kilit;açık|kilidini açma|kilit
+🔏;kilit ve kalem;gizlilik|mürekkepli kalem|mürekkepli kalemli kilit
+🔐;anahtarlı kapalı kilit;anahtarlı kilit|güvenli
+🔑;anahtar;kilit|parola|şifre
+🗝️;eski anahtar;anahtar|eski|ipucu|kilit
+🔨;çekiç;araç
+🪓;balta;ağaç|kesme|kısa balta|odun|yarma
+⛏️;kazma;alet|maden
+⚒️;çekiç ve kazma;alet|çekiç|inşaat|kazma
+🛠️;çekiç ve somun anahtarı;alet|çekiç|çekiç ve ingiliz anahtarı|ingiliz anahtarı
+🗡️;hançer;bıçak|silah
+⚔️;çapraz kılıçlar;çapraz|çarpı|çatma|kılıç|silah
+💣;bomba;çizgi roman|duygu
+🪃;bumerang;aborjin|atmak|boomerang|eşya|fırlatmak|geri gelmek|geri tepme|oyun|sekme|silah|tepki
+🏹;ok ve yay;araç|burç|ok|okçu|silah|yay
+🛡️;kalkan;silah
+🪚;testere;alet|eşya|kereste|kesmek|marangoz|odun
+🔧;somun anahtarı;araç|ingiliz anahtarı
+🪛;tornavida;alet|düz uçlu|eşya|montaj|sıkıştırmak|sıkma|tamir|tamirci|usta|vida
+🔩;somun ve vida;araç|somun|vida
+⚙️;dişli;alet
+🗜️;mengene;alet|sıkıştırma
+⚖️;terazi;adalet|ağırlık|alet|burç|denge|ölçek
+🦯;görme engelli bastonu;erişilebilirlik|görme engelli
+🔗;bağlantı işareti;bağlantılar|iki halka
+⛓️‍💥;zincirleri kırmak;kelepçe|kırık zincir|kırmak|özgürlük|patlama|zincir|zincirler
+⛓️;zincir;
+🪝;çengel;askı|asmak|çengellemek|eğri|eşya|kanca
+🧰;alet çantası;alet|alet kutusu|çanta|ingiliz anahtarı|kırmızı|kutu|onarmak|sandık|tamir|tamirat|tamirci
+🧲;mıknatıs;at nalı|çekim|çekmek|elektrik yükü|eş kutuplar|manyetik|pozitif negatif|zıt kutuplar
+🪜;merdiven;adım|aşağı|ayaklı merdiven|basamak|çıkmak|eşya|tırmanış|tırmanmak|yukarı
+🪏;kürek;çukur|kazı|kazmak
+⚗️;imbik;alet|damıtıcı|kimya
+🧪;deney tüpü;bilim|deney|kimya|kimyacı|laboratuvar
+🧫;petri kabı;bakteri|biyolog|biyoloji|kültür|laboratuvar
+🧬;dna;biyolog|biyoloji|evrim|gen|genetik|sarmal|yaşam
+🔬;mikroskop;alet|bilim|labrotuar|test
+🔭;teleskop;alet|uzay|uzay gözlemleme
+📡;uydu anteni;anten|çanak|iletişim|uydu
+💉;şırınga;doktor|iğne|ilaç
+🩸;kan damlası;âdet|aybaşı|ilaç|kan bağışı|mens|menstrüasyon|regl|tıp|yaralanma
+💊;hap;doktor|ilaç
+🩹;yara bandı;bandaj|bant|yapışkanlı bandaj
+🩼;koltuk değneği;araç|baston|değnek|engelli|engellilik|kırık|nesne|sakatlanmak|yaralı|yürüme engelli|yürüme yardımı
+🩺;stetoskop;doktor|kalp|tıp
+🩻;x ışını;doktor|film|iskelet|kaburga|kemik|medikal|muayene|nesne|röntgen|tıbbi
+🚪;kapı;
+🛗;asansör;alt kat|aşağı|çağırmak|çıkmak|erişilebilirlik|eşya|inmek|lift|üst kat|yukarı
+🪞;ayna;eşya|görüntü|makyaj|reflektör|spekulum|yansıma|yansıtıcı
+🪟;pencere;cam|çerçeve|dışarı bakmak|eşya|izlemek|manzara|saydam|şeffaf|temiz hava
+🛏️;yatak;otel|uyku|uyuma
+🛋️;kanepe ve lamba;kanepe|koltuk|lamba|otel
+🪑;sandalye;iskemle|oturma
+🚽;klozet;alafranga tuvalet|tuvalet|wc
+🪠;lavabo pompası;açıcı|çekme|eşya|lavabo açıcı|pompa|tuvalet|vakum
+🚿;duş;su
+🛁;banyo küveti;banyo|köpük|köpüklü banyo
+🪤;fare kapanı;eşya|fare|kapan|kıskaç|kıstırmak|peynir|tuzak|yem
+🪒;ustura;jilet|keskin|tıraş
+🧴;losyon şişesi;güneş koruyucu|güneş kremi|krem|losyon|nemlendirici|saç kremi|şampuan|şampuan şişesi|şişe
+🧷;çengelli iğne;bebek bezi|çengel|çengelli|dikiş|iğne|iğne kancası|iğnelemek|kanca|punk rock|tutturmak
+🧹;süpürge;büyücü|cadı|ev işi|harry potter|süpürme|süpürmek|temizlik|uçmak
+🧺;sepet;çamaşır|çamaşır sepeti|çiftçilik|hasır|piknik|piknik sepeti
+🧻;kağıt rulosu;banyo|emici|havlu|kağıt|rulo|silmek|temizlik|tuvalet|tuvalet kağıdı
+🪣;kova;bakraç|eşya|fıçı|gerdel|kap|kepçe|sap|silmek|temizlik
+🧼;sabun;banyo|banyo yapmak|el sabunu|el yıkamak|kalıp|katı sabun|köpük|köpürmek|köpürtmek|sabun köpüğü|sabunlamak|sabunluk|temiz|temizlik|yıkamak|yıkanmak
+🫧;baloncuk;hava kabarcığı|kabarcık|köpük|nesne|sabun|su|su altı|temiz
+🪥;diş fırçası;ağız|banyo|dental|diş|eşya|fırça|hijyen|lavabo|oral hijyen|temizlik
+🧽;sünger;banyo|banyo yapmak|bulaşık|emici|emmek|ev işi|gözenek|gözenekli|keselemek|köpürmek|köpürtmek|silmek|temizlik|yıkamak|yıkanmak
+🧯;yangın söndürücü;ateş|söndürme|söndürmek|yangın|yangın tüpü
+🛒;alışveriş arabası;alışveriş|araba|pazar arabası
+🚬;sigara;duman|işaret|sigara içilebilir|sigara içme|sigara içme işareti
+⚰️;tabut;cenaze|ölüm
+🪦;mezar taşı;cenaze|defin|defnetmek|eşya|huzur içinde uyu|huzur içinde yat|mezar|mezarlık|nur içinde yat|ölüm
+⚱️;kül kavanozu;cenaze|kül|ölüm|vazo
+🧿;nazarlık;boncuk|göz|iyi şans|kem göz|kötü şans|maşallah|mavi boncuk|muska|nazar|nazar boncuğu|nazar değmesin|tılsım
+🪬;Fatıma’nın Eli;Fatıma|Fatma|Fatma Ana’nın Eli|Fatma’nın eli|Hamsa|koruyucu|Meryem|muska|nazarlık|şans|sembol
+🗿;moyai heykeli;heykel|Moyai|taştan surat
+🪧;tabela;bildiri|döviz|eşya|gösteri|işaret|levha|pankart|plaka|protesto
+🪪;kimlik kartı;belge|ehliyet|güvenlik|kart|kimlik|kimlik bilgisi|lisans|nesne|nüfus cüzdanı
+🏧;ATM işareti;otomatik|vezne
+🚮;çöp kutusu işareti;çöp kutusu|çöpü yerine atın|işaret
+🚰;içilebilir su;içme suyu|işaret|musluk|musluk ve bardak|su
+♿;tekerlekli sandalye sembolü;erişim|işaret|tekerlekli sandalye|tekerlekli sandalye erişimi|tekerlekli sandalye simgesi
+🚹;erkekler tuvaleti;işaret|tuvalet
+🚺;kadınlar tuvaleti;bayanlar tuvaleti|işaret|tuvalet
+🚻;tuvalet;lavabo|wc
+🚼;bebek işareti;bebek|bebek alt değiştirme yeri|bebek teknede
+🚾;wc;lavabo|tuvalet
+🛂;pasaport kontrolü;kontrol|pasaport
+🛃;gümrük;
+🛄;bagaj teslim;bagaj|bagaj alma yeri|bavul|çanta|seyahat
+🛅;eşya emanet;bagaj|bagaj hizmeti|kasa|kayıp bagaj
+⚠️;uyarı işareti;dikkat|işaret|uyarı
+🚸;karşıya geçen çocuklar;çocuklar|işaret|karşıya geçiş
+⛔;girilmez;girilmez işareti|hayır|işaret|yasak
+🚫;girmek yasak;Girilmez|işaret
+🚳;bisiklet yasak;bisiklet|bisiklet giremez|taşıt
+🚭;sigara içilmez;duman|sigara içilmez işareti|tütün|yasak
+🚯;çöp atılmaz;çöp atmayın|çöp atmayın işareti|işaret
+🚱;içilmeyen su;içilmeyen|içilmez|su
+🚷;yayalara yasak;işaret|yaya|yayalar giremez|yürüyen
+📵;cep telefonu yasak;çağrı yapılmaz|mobil|telefon
+🔞;18 yaş altı yasak;18|18 yaş altı|18 yaş altı yasaktır|18‘den küçükler giremez
+☢️;radyoaktif;nükleer
+☣️;biyolojik tehlike;sembol
+⬆️;yukarı ok;ana yön|kuzey|ok|yön|yukarı yönlü ok
+↗️;sağ yukarı ok;ara yön|kuzey doğu|ok|yön
+➡️;sağ ok;ana yön|doğu|ok|yön
+↘️;sağ aşağı ok;ara yön|güney doğu|ok|yön
+⬇️;aşağı ok;ana yön|aşağı|aşağı yönlü ok|güney|ok|yön
+↙️;sol aşağı ok;ara yön|güney batı|ok|yön
+⬅️;sol ok;ana yön|batı|ok|yön
+↖️;sol yukarı ok;ara yön|kuzey batı|ok|yön
+↕️;yukarı ve aşağı ok;ok
+↔️;sol ve sağ ok;ok
+↩️;sola kıvrımlı sağ ok;ok
+↪️;sağa kıvrımlı sol ok;ok
+⤴️;yukarı kıvrımlı sağ ok;ok
+⤵️;aşağı kıvrımlı sağ ok;aşağı|ok
+🔃;saat yönünde dönen oklar;oklar|saat yönünde dikey oklar|saat yönüne dönen oklar|yeniden yükle işareti
+🔄;saat yönünün tersinde dönen oklar;oklar|saat yönünün tersine|saat yönünün tersine dönen oklar
+🔙;geri oku;geri ok|ok|sol geri ok|sol ok
+🔚;bitiş oku;ok|sol bitiş oku|sol ok
+🔛;açık oku;ok|ünlem|ünlem işareti|ünlem işareti ve okla AÇIK
+🔜;yakında işareti;ok|sağ okla Yakında|Yakında
+🔝;yukarı oku;yukarı|yukarı işareti|yukarı ok|yukarı okla Yukarı
+🛐;ibadethane;din|tapınma
+⚛️;atom sembolü;ateist|atom
+🕉️;om;din|hinduizm
+✡️;Davut yıldızı;davut|din|yahudi|yıldız
+☸️;darma çemberi;budist|çember|darma|dharma|dharma tekeri|din
+☯️;yin yang;din|tao|taocu|yang|yin
+✝️;Latin haçı;din|haç|Hristiyan|isa|İsa
+☦️;Ortodoks haçı;din|haç|Hristiyan|isa|İsa
+☪️;ay yıldız;din|islam|İslam|müslüman
+☮️;barış sembolü;barış
+🕎;Yahudi şamdanı;din|menora|mum|mumluk|şamdan
+🔯;altı köşeli yıldız;altı köşeli|fal|fal bakma|yıldız
+🪯;khanda;deg tegh fateh|din|inanç|khalsa|sih|sihizm
+♈;koç burcu;burçlar
+♉;boğa burcu;burçlar
+♊;ikizler burcu;burçlar
+♋;yengeç burcu;burçlar
+♌;aslan burcu;burçlar
+♍;başak burcu;burçlar
+♎;terazi burcu;burçlar
+♏;akrep burcu;burçlar
+♐;yay burcu;burçlar
+♑;oğlak burcu;burçlar
+♒;kova burcu;burçlar
+♓;balık burcu;burçlar
+⛎;Yılancı;burçlar|hain|iblis|yılan|zodyak
+🔀;parça karıştırma düğmesi;çapraz sağ oklar|oklar
+🔁;tekrarlama düğmesi;oklar|saat yönünde
+🔂;tek parça tekrarlama düğmesi;1 sayısı|1 sayısı olan saat yönünde oklar|oklar|saat yönünde
+▶️;oynatma düğmesi;ok|oynatma|sağ|üçgen
+⏩;ileri sarma düğmesi;ok|sağ|sağa çift ok
+⏭️;sonraki parça düğmesi;ok|sonraki parça|sonraki sahne|üçgen
+⏯️;oynatma veya duraklatma düğmesi;duraklatma|ok|oynatma|sağ|üçgen
+◀️;geri düğmesi;ok|sol|ters|üçgen
+⏪;hızlı geri düğmesi;geri sarma düğmesi|ok|sol|sola çift ok
+⏮️;son parça düğmesi;ok|önceki parça|önceki sahne|parça atlama düğmesi|üçgen
+🔼;yukarı düğmesi;düğme|üçgen|yukarı üçgen düğmesi
+⏫;hızlı yukarı düğmesi;ok|yukarı|yukarı çift ok
+🔽;aşağı düğmesi;aşağı üçgen düğmesi|düğme|üçgen
+⏬;hızlı aşağı düğmesi;aşağı|aşağı çift ok|ok
+⏸️;duraklatma düğmesi;çift çizgi|çubuk|dikey|duraklatma
+⏹️;durdurma düğmesi;durdur|kare
+⏺️;kayıt düğmesi;daire|kayıt
+⏏️;çıkarma düğmesi;çıkar
+🎦;sinema;eğlence|film işareti
+🔅;düşük parlaklık;düşük|düşük parlaklık işareti|karanlık|parlaklık
+🔆;yüksek parlaklık;parlak|parlaklık|yüksek parlaklık işareti
+📶;sinyal gücü;anten|çubuk işaretli anten|mobil|sinyal|telefon
+🛜;kablosuz;ağ|akıllı telefon|bağlantı|bilgisayar|geniş bant|internet|modem|wifi|wlan
+📳;titreşim modu;cep telefonu|mobil|mod|telefon
+📴;cep telefonu kapalı;cep telefonu|kapalı|mobil|telefon
+♀️;kadın sembolü;bayan|kadın
+♂️;erkek sembolü;adam|erkek
+⚧️;transgender sembolü;transgender|transseksüel
+✖️;çarpım işareti;×|çarpı|çarpım|çarpma|iptal|işaret|kalın çarpı işareti|x
+➕;artı;+|artı işareti|işaret|koyu renk artı işareti|matematik
+➖;eksi;-|−|eksi işareti|işaret|koyu renk eksi işareti|matematik
+➗;bölü işareti;÷|bölü|işaret|koyu renk bölü işareti|matematik
+🟰;kalın eşittir işareti;eşit|eşitlik|eşittir|eşittir işareti|işaret|matematik|sembol
+♾️;sonsuz;evrensel|sınırsız|sonsuzluk
+‼️;çift ünlem;!|!!|işaret|noktalama|ünlem
+⁉️;ünlemli soru işareti;!|!?|?|işaret|noktalama|soru|ünlem
+❓;kırmızı soru işareti;?|işaret|noktalama|soru|soru işareti
+❔;beyaz soru işareti;?|işaret|noktalama|soru
+❕;beyaz ünlem işareti;!|işaret|noktalama|ünlem
+❗;kırmızı ünlem işareti;!|işaret|noktalama|ünlem|ünlem işareti
+〰️;dalgalı çizgi;çizgi|dalgalı|uzun ses işareti
+💱;kambiyo;bozdurma|döviz|para
+💲;dolar işareti;dolar|koyu renk dolar işareti|para
+⚕️;tıp sembolü;Asklepios|medikal sembol|medikal sembolü|personel|tıbbi sembol|tıp|tıp çalışanı
+♻️;geri dönüşüm simgesi;evrensel|geri dönüşüm|işaret|koyu renk evrensel geri dönüşüm simgesi
+⚜️;zambak;fleur-de-lis
+🔱;üçlü çatal işareti;amblem|çıpa|üçlü çatal
+📛;ad rozeti;ad|rozet
+🔰;Japonca yeni başlayan sembolü;Japonca|yeni başlayan|yeşil ve sarı|yeşil ve sarı yaprak
+⭕;kalın kırmızı çember;çember|kalın çember|o
+✅;onay işareti düğmesi;✓|düğme|işaret|kalın onay işareti|onay|onay işareti
+☑️;seçilmiş onay kutusu;✓|kutu|kutulu|kutulu onay işareti|onay|seçili onay işareti
+✔️;onay işareti;✓|işaret|kalın onay işareti|onay
+❌;çarpı işareti;×|çarpı|çarpma|iptal|işaret|x
+❎;çarpı işareti düğmesi;×|çarpım|çarpma|kare|x|X kare içinde
+➰;kıvrık döngü;döngü|dönüş
+➿;çift kıvrık döngü;Japonya|kıvrık döngü|ücretsiz numara
+〽️;parça değiştirme işareti;bölüm değiştirme işareti|işaret|parça
+✳️;sekiz uçlu yıldız;*|asterisk|yıldız
+✴️;sekiz noktalı yıldız;*|yıldız
+❇️;parlama;*|pırıltı
+©️;telif hakkı işareti;c|telif hakkı
+®️;tescil işareti;r|tescilli|tescilli işareti
+™️;ticari marka işareti;işaret|ticari marka
+🫟;sıçratma;boya|dökmek|holi|leke|lekelemek|sıçratmak
+*️⃣;tuş: *;tuş
+0️⃣;tuş: 0;0|sıfır|tuş
+1️⃣;tuş: 1;1|bir|tuş
+2️⃣;tuş: 2;2|iki|tuş
+3️⃣;tuş: 3;3|tuş|üç
+4️⃣;tuş: 4;4|dört|tuş
+5️⃣;tuş: 5;5|beş|tuş
+6️⃣;tuş: 6;6|altı|tuş
+7️⃣;tuş: 7;7|tuş|yedi
+8️⃣;tuş: 8;8|sekiz|tuş
+9️⃣;tuş: 9;9|dokuz|tuş
+🔟;tuş: 10;tuş
+🔠;büyük harfler;ABCD|büyük harf|Latin|Latin büyük harfleri|Latin büyük harfleriyle giriş
+🔡;küçük harfler;abcd|alfabe|küçük harf|Latin|Latin küçük harfleri|Latin küçük harfleriyle giriş
+🔢;sayılar;1234|sayı girişi
+🔣;işaretler;işaret girişi
+🔤;Latin alfabesi;ABC|İngilizce|Latin|Latin alfabesiyle giriş
+🅰️;A düğmesi (kan grubu);A|A grubu kan|kan|kan grubu|kan grubu A|kırmızı kutuda A harfi
+🆎;AB düğmesi (kan grubu);AB|AB grubu kan|kan|kan grubu|kan grubu AB
+🅱️;B grubu (kan grubu);B|B grubu kan|B tuşu|kan|kan grubu|kan grubu B|kırmızı kutuda B harfi
+🆑;CL düğmesi;CL|CL işareti|sil
+🆒;COOL düğmesi;harika|hoş|serin|serin işareti
+🆓;FREE düğmesi;bedava|bedelsiz|işaret|ücretsiz|ücretsiz işareti
+ℹ️;bilgi;i harfi
+🆔;ID düğmesi;işaret|kimlik|kimlik işareti
+Ⓜ️;daire içinde M harfi;daire|m
+🆕;NEW düğmesi;işaret|yeni|Yeni işareti
+🆖;NG düğmesi;işaret|ng|NG işareti
+🅾️;0 düğmesi (kan grubu);kan|kan grubu|kan grubu O|O|O grubu kan
+🆗;OK düğmesi;OK işareti|tamam|tamam işareti
+🅿️;P düğmesi;park yeri
+🆘;SOS düğmesi;işaret|SOS|SOS işareti|Yardım
+🆙;UP! düğmesi;işaret|YUKARI!|YUKARI! işareti
+🆚;VS düğmesi;işaret|karşılaştırma|karşılaştırma işareti|vs
+🈁;Japonca "burada" düğmesi;burada|japonca|japonca burada işareti
+🈂️;Japonca "servis ücreti" düğmesi;japonca|japonca "servis ücreti" simgesi|servis ücreti
+🈷️;Japonca "aylık ücret" düğmesi;aylık|japonca|japonca "aylık" düğmesi|japonca "aylık" sembolü
+🈶;Japonca "ücretsiz değil" düğmesi;bedava değil|japonca|japonca "bedava değil" düğmesi|japonca "bedava değil" simgesi
+🈯;Japonca "rezerve" düğmesi;japonca|japonca rezerve sembolü|rezerve|rezerve düğmesi
+🉐;Japonca "avantaj" düğmesi;indirim|japonca|japonca "indirim" düğmesi|japonca "indirim" simgesi
+🈹;Japonca "indirim" düğmesi;indirim|japonca|japonca "indirim" sembolü
+🈚;Japonca "ücretsiz" düğmesi;bedava işareti|japonca|japonca bedava düğmesi
+🈲;Japonca "yasak" düğmesi;japon "yasak" düğmesi|japon "yasak" sembolü|Japonca
+🉑;Japonca "kabul edilebilir" düğmesi;japonca|japonca "kabul edilebilir" işareti|kabul edilebilir
+🈸;Japonca "uygulama" düğmesi;başvuru|japonca|japonca "başvuru" düğmesi|japonca "başvuru" simgesi
+🈴;Japonca "geçer not" düğmesi;geçer not|Japonca
+🈳;Japonca "yer var" düğmesi;çince|Japonca
+㊗️;Japonca "tebrikler" düğmesi;japonca|kutlama|sembol|tebrik|tebrik sembolü
+㊙️;Japonca "sır" düğmesi;japonca|japonca "sır" simgesi|sembol|sır
+🈺;Japonca "hizmete hazır" düğmesi;işletme açık|japinca "işletme açık" düğmesi|japonca|japonca "işletme açık" sembolü
+🈵;Japonca "yer yok" düğmesi;Japonca|yer yok
+🔴;kırmızı daire;büyük kırmızı çember|çember|kırmızı
+🟠;turuncu daire;daire|turuncu
+🟡;sarı daire;daire|sarı
+🟢;yeşil daire;daire|yeşil
+🔵;mavi daire;büyük mavi çember|çember|mavi
+🟣;mor daire;daire|mor
+🟤;kahverengi daire;daire|kahverengi
+⚫;siyah daire;daire|geometri
+⚪;beyaz daire;daire|geometri
+🟥;kırmızı kare;kare|kırmızı
+🟧;turuncu kare;kare|turuncu
+🟨;sarı kare;kare|sarı
+🟩;yeşil kare;kare|yeşil
+🟦;mavi kare;kare|mavi
+🟪;mor kare;kare|mor
+🟫;kahverengi kare;kahverengi|kare
+⬛;büyük siyah kare;geometri|kare|siyah kare
+⬜;büyük beyaz kare;geometri|kare
+◼️;orta boy siyah kare;geometri|kare|siyah
+◻️;orta boy beyaz kare;geometri|gri|kare
+◾;küçük-orta siyah kare;geometri|kare
+◽;küçük-orta beyaz kare;geometri|gri|kare
+▪️;küçük siyah kare;geometri|kare
+▫️;küçük beyaz kare;geometri|kare
+🔶;büyük turuncu karo;karo|turuncu
+🔷;büyük mavi karo;karo|mavi
+🔸;küçük turuncu karo;karo|turuncu
+🔹;küçük mavi karo;karo|mavi
+🔺;yukarı bakan kırmızı üçgen;kırmızı|üçgen|yukarı kırmızı üçgen
+🔻;aşağı bakan kırmızı üçgen;aşağı kırmızı üçgen|kırmızı|üçgen
+💠;içinde noktalı karo;baklava|çizgi roman|elmas|elmas biçimli|geometrik|içinde noktalı baklava şekli|içinde noktalı elmas biçimi|karo
+🔘;radyo düğmesi;düğme|radyo
+🔳;beyaz kare düğme;düğme|kare
+🔲;siyah kare düğme;düğme|kare
+🏁;damalı bayrak;bayrak|bitiş|damalı|ralli|spor|yarış
+🚩;üçgen bayrak;bayrak|işaret|kırmızı bayrak|konum|konum bilgisi işareti|konum işareti|üçgen işaret|üçgen konum işareti
+🎌;çapraz bayraklar;bayraklar|çapraz|çapraz Japon bayrakları|japon|kutlama
+🏴;siyah bayrak;bayrak|dalgalanan siyah bayrak
+🏳️;beyaz bayrak;bayrak|dalgalanan bayrak
+🏳️‍🌈;gökkuşağı bayrağı;bayrak|biseksüel|gay|gökkuşağı|homoseksüel|lezbiyen|lgbt|trans
+🏳️‍⚧️;transgender bayrağı;açık mavi|bayrak|beyaz|pembe|transgender
+🏴‍☠️;korsan bayrağı;hazine|Jolly Roger|korsan|yağmacı
+🇦🇨;bayrak: Ascension Adası;bayrak
+🇦🇩;bayrak: Andorra;bayrak
+🇦🇪;bayrak: Birleşik Arap Emirlikleri;bayrak
+🇦🇫;bayrak: Afganistan;bayrak
+🇦🇬;bayrak: Antigua ve Barbuda;bayrak
+🇦🇮;bayrak: Anguilla;bayrak
+🇦🇱;bayrak: Arnavutluk;bayrak
+🇦🇲;bayrak: Ermenistan;bayrak
+🇦🇴;bayrak: Angola;bayrak
+🇦🇶;bayrak: Antarktika;bayrak
+🇦🇷;bayrak: Arjantin;bayrak
+🇦🇸;bayrak: Amerikan Samoası;bayrak
+🇦🇹;bayrak: Avusturya;bayrak
+🇦🇺;bayrak: Avustralya;bayrak
+🇦🇼;bayrak: Aruba;bayrak
+🇦🇽;bayrak: Åland Adaları;bayrak
+🇦🇿;bayrak: Azerbaycan;bayrak
+🇧🇦;bayrak: Bosna-Hersek;bayrak
+🇧🇧;bayrak: Barbados;bayrak
+🇧🇩;bayrak: Bangladeş;bayrak
+🇧🇪;bayrak: Belçika;bayrak
+🇧🇫;bayrak: Burkina Faso;bayrak
+🇧🇬;bayrak: Bulgaristan;bayrak
+🇧🇭;bayrak: Bahreyn;bayrak
+🇧🇮;bayrak: Burundi;bayrak
+🇧🇯;bayrak: Benin;bayrak
+🇧🇱;bayrak: Saint Barthelemy;bayrak
+🇧🇲;bayrak: Bermuda;bayrak
+🇧🇳;bayrak: Brunei;bayrak
+🇧🇴;bayrak: Bolivya;bayrak
+🇧🇶;bayrak: Karayip Hollandası;bayrak
+🇧🇷;bayrak: Brezilya;bayrak
+🇧🇸;bayrak: Bahamalar;bayrak
+🇧🇹;bayrak: Butan;bayrak
+🇧🇻;bayrak: Bouvet Adası;bayrak
+🇧🇼;bayrak: Botsvana;bayrak
+🇧🇾;bayrak: Belarus;bayrak
+🇧🇿;bayrak: Belize;bayrak
+🇨🇦;bayrak: Kanada;bayrak
+🇨🇨;bayrak: Cocos (Keeling) Adaları;bayrak
+🇨🇩;bayrak: Kongo - Kinşasa;bayrak
+🇨🇫;bayrak: Orta Afrika Cumhuriyeti;bayrak
+🇨🇬;bayrak: Kongo - Brazavil;bayrak
+🇨🇭;bayrak: İsviçre;bayrak
+🇨🇮;bayrak: Côte d’Ivoire;bayrak
+🇨🇰;bayrak: Cook Adaları;bayrak
+🇨🇱;bayrak: Şili;bayrak
+🇨🇲;bayrak: Kamerun;bayrak
+🇨🇳;bayrak: Çin;bayrak
+🇨🇴;bayrak: Kolombiya;bayrak
+🇨🇵;bayrak: Clipperton Adası;bayrak
+🇨🇶;bayrak: Sark;bayrak
+🇨🇷;bayrak: Kosta Rika;bayrak
+🇨🇺;bayrak: Küba;bayrak
+🇨🇻;bayrak: Cabo Verde;bayrak
+🇨🇼;bayrak: Curaçao;bayrak
+🇨🇽;bayrak: Christmas Adası;bayrak
+🇨🇾;bayrak: Kıbrıs;bayrak
+🇨🇿;bayrak: Çekya;bayrak
+🇩🇪;bayrak: Almanya;bayrak
+🇩🇬;bayrak: Diego Garcia;bayrak
+🇩🇯;bayrak: Cibuti;bayrak
+🇩🇰;bayrak: Danimarka;bayrak
+🇩🇲;bayrak: Dominika;bayrak
+🇩🇴;bayrak: Dominik Cumhuriyeti;bayrak
+🇩🇿;bayrak: Cezayir;bayrak
+🇪🇦;bayrak: Ceuta ve Melilla;bayrak
+🇪🇨;bayrak: Ekvador;bayrak
+🇪🇪;bayrak: Estonya;bayrak
+🇪🇬;bayrak: Mısır;bayrak
+🇪🇭;bayrak: Batı Sahra;bayrak
+🇪🇷;bayrak: Eritre;bayrak
+🇪🇸;bayrak: İspanya;bayrak
+🇪🇹;bayrak: Etiyopya;bayrak
+🇪🇺;bayrak: Avrupa Birliği;bayrak
+🇫🇮;bayrak: Finlandiya;bayrak
+🇫🇯;bayrak: Fiji;bayrak
+🇫🇰;bayrak: Falkland Adaları;bayrak
+🇫🇲;bayrak: Mikronezya;bayrak
+🇫🇴;bayrak: Faroe Adaları;bayrak
+🇫🇷;bayrak: Fransa;bayrak
+🇬🇦;bayrak: Gabon;bayrak
+🇬🇧;bayrak: Birleşik Krallık;bayrak
+🇬🇩;bayrak: Grenada;bayrak
+🇬🇪;bayrak: Gürcistan;bayrak
+🇬🇫;bayrak: Fransız Guyanası;bayrak
+🇬🇬;bayrak: Guernsey;bayrak
+🇬🇭;bayrak: Gana;bayrak
+🇬🇮;bayrak: Cebelitarık;bayrak
+🇬🇱;bayrak: Grönland;bayrak
+🇬🇲;bayrak: Gambiya;bayrak
+🇬🇳;bayrak: Gine;bayrak
+🇬🇵;bayrak: Guadeloupe;bayrak
+🇬🇶;bayrak: Ekvator Ginesi;bayrak
+🇬🇷;bayrak: Yunanistan;bayrak
+🇬🇸;bayrak: Güney Georgia ve Güney Sandwich Adaları;bayrak
+🇬🇹;bayrak: Guatemala;bayrak
+🇬🇺;bayrak: Guam;bayrak
+🇬🇼;bayrak: Gine-Bissau;bayrak
+🇬🇾;bayrak: Guyana;bayrak
+🇭🇰;bayrak: Çin Hong Kong ÖİB;bayrak
+🇭🇲;bayrak: Heard Adası ve McDonald Adaları;bayrak
+🇭🇳;bayrak: Honduras;bayrak
+🇭🇷;bayrak: Hırvatistan;bayrak
+🇭🇹;bayrak: Haiti;bayrak
+🇭🇺;bayrak: Macaristan;bayrak
+🇮🇨;bayrak: Kanarya Adaları;bayrak
+🇮🇩;bayrak: Endonezya;bayrak
+🇮🇪;bayrak: İrlanda;bayrak
+🇮🇱;bayrak: İsrail;bayrak
+🇮🇲;bayrak: Man Adası;bayrak
+🇮🇳;bayrak: Hindistan;bayrak
+🇮🇴;bayrak: Britanya Hint Okyanusu Toprakları;bayrak
+🇮🇶;bayrak: Irak;bayrak
+🇮🇷;bayrak: İran;bayrak
+🇮🇸;bayrak: İzlanda;bayrak
+🇮🇹;bayrak: İtalya;bayrak
+🇯🇪;bayrak: Jersey;bayrak
+🇯🇲;bayrak: Jamaika;bayrak
+🇯🇴;bayrak: Ürdün;bayrak
+🇯🇵;bayrak: Japonya;bayrak
+🇰🇪;bayrak: Kenya;bayrak
+🇰🇬;bayrak: Kırgızistan;bayrak
+🇰🇭;bayrak: Kamboçya;bayrak
+🇰🇮;bayrak: Kiribati;bayrak
+🇰🇲;bayrak: Komorlar;bayrak
+🇰🇳;bayrak: Saint Kitts ve Nevis;bayrak
+🇰🇵;bayrak: Kuzey Kore;bayrak
+🇰🇷;bayrak: Güney Kore;bayrak
+🇰🇼;bayrak: Kuveyt;bayrak
+🇰🇾;bayrak: Cayman Adaları;bayrak
+🇰🇿;bayrak: Kazakistan;bayrak
+🇱🇦;bayrak: Laos;bayrak
+🇱🇧;bayrak: Lübnan;bayrak
+🇱🇨;bayrak: Saint Lucia;bayrak
+🇱🇮;bayrak: Liechtenstein;bayrak
+🇱🇰;bayrak: Sri Lanka;bayrak
+🇱🇷;bayrak: Liberya;bayrak
+🇱🇸;bayrak: Lesotho;bayrak
+🇱🇹;bayrak: Litvanya;bayrak
+🇱🇺;bayrak: Lüksemburg;bayrak
+🇱🇻;bayrak: Letonya;bayrak
+🇱🇾;bayrak: Libya;bayrak
+🇲🇦;bayrak: Fas;bayrak
+🇲🇨;bayrak: Monako;bayrak
+🇲🇩;bayrak: Moldova;bayrak
+🇲🇪;bayrak: Karadağ;bayrak
+🇲🇫;bayrak: Saint Martin;bayrak
+🇲🇬;bayrak: Madagaskar;bayrak
+🇲🇭;bayrak: Marshall Adaları;bayrak
+🇲🇰;bayrak: Kuzey Makedonya;bayrak
+🇲🇱;bayrak: Mali;bayrak
+🇲🇲;bayrak: Myanmar (Burma);bayrak
+🇲🇳;bayrak: Moğolistan;bayrak
+🇲🇴;bayrak: Çin Makao ÖİB;bayrak
+🇲🇵;bayrak: Kuzey Mariana Adaları;bayrak
+🇲🇶;bayrak: Martinik;bayrak
+🇲🇷;bayrak: Moritanya;bayrak
+🇲🇸;bayrak: Montserrat;bayrak
+🇲🇹;bayrak: Malta;bayrak
+🇲🇺;bayrak: Mauritius;bayrak
+🇲🇻;bayrak: Maldivler;bayrak
+🇲🇼;bayrak: Malavi;bayrak
+🇲🇽;bayrak: Meksika;bayrak
+🇲🇾;bayrak: Malezya;bayrak
+🇲🇿;bayrak: Mozambik;bayrak
+🇳🇦;bayrak: Namibya;bayrak
+🇳🇨;bayrak: Yeni Kaledonya;bayrak
+🇳🇪;bayrak: Nijer;bayrak
+🇳🇫;bayrak: Norfolk Adası;bayrak
+🇳🇬;bayrak: Nijerya;bayrak
+🇳🇮;bayrak: Nikaragua;bayrak
+🇳🇱;bayrak: Hollanda;bayrak
+🇳🇴;bayrak: Norveç;bayrak
+🇳🇵;bayrak: Nepal;bayrak
+🇳🇷;bayrak: Nauru;bayrak
+🇳🇺;bayrak: Niue;bayrak
+🇳🇿;bayrak: Yeni Zelanda;bayrak
+🇴🇲;bayrak: Umman;bayrak
+🇵🇦;bayrak: Panama;bayrak
+🇵🇪;bayrak: Peru;bayrak
+🇵🇫;bayrak: Fransız Polinezyası;bayrak
+🇵🇬;bayrak: Papua Yeni Gine;bayrak
+🇵🇭;bayrak: Filipinler;bayrak
+🇵🇰;bayrak: Pakistan;bayrak
+🇵🇱;bayrak: Polonya;bayrak
+🇵🇲;bayrak: Saint Pierre ve Miquelon;bayrak
+🇵🇳;bayrak: Pitcairn Adaları;bayrak
+🇵🇷;bayrak: Porto Riko;bayrak
+🇵🇸;bayrak: Filistin Bölgeleri;bayrak
+🇵🇹;bayrak: Portekiz;bayrak
+🇵🇼;bayrak: Palau;bayrak
+🇵🇾;bayrak: Paraguay;bayrak
+🇶🇦;bayrak: Katar;bayrak
+🇷🇪;bayrak: Reunion;bayrak
+🇷🇴;bayrak: Romanya;bayrak
+🇷🇸;bayrak: Sırbistan;bayrak
+🇷🇺;bayrak: Rusya;bayrak
+🇷🇼;bayrak: Ruanda;bayrak
+🇸🇦;bayrak: Suudi Arabistan;bayrak
+🇸🇧;bayrak: Solomon Adaları;bayrak
+🇸🇨;bayrak: Seyşeller;bayrak
+🇸🇩;bayrak: Sudan;bayrak
+🇸🇪;bayrak: İsveç;bayrak
+🇸🇬;bayrak: Singapur;bayrak
+🇸🇭;bayrak: Saint Helena;bayrak
+🇸🇮;bayrak: Slovenya;bayrak
+🇸🇯;bayrak: Svalbard ve Jan Mayen;bayrak
+🇸🇰;bayrak: Slovakya;bayrak
+🇸🇱;bayrak: Sierra Leone;bayrak
+🇸🇲;bayrak: San Marino;bayrak
+🇸🇳;bayrak: Senegal;bayrak
+🇸🇴;bayrak: Somali;bayrak
+🇸🇷;bayrak: Surinam;bayrak
+🇸🇸;bayrak: Güney Sudan;bayrak
+🇸🇹;bayrak: Sao Tome ve Principe;bayrak
+🇸🇻;bayrak: El Salvador;bayrak
+🇸🇽;bayrak: Sint Maarten;bayrak
+🇸🇾;bayrak: Suriye;bayrak
+🇸🇿;bayrak: Esvatini;bayrak
+🇹🇦;bayrak: Tristan da Cunha;bayrak
+🇹🇨;bayrak: Turks ve Caicos Adaları;bayrak
+🇹🇩;bayrak: Çad;bayrak
+🇹🇫;bayrak: Fransız Güney Toprakları;bayrak
+🇹🇬;bayrak: Togo;bayrak
+🇹🇭;bayrak: Tayland;bayrak
+🇹🇯;bayrak: Tacikistan;bayrak
+🇹🇰;bayrak: Tokelau;bayrak
+🇹🇱;bayrak: Timor-Leste;bayrak
+🇹🇲;bayrak: Türkmenistan;bayrak
+🇹🇳;bayrak: Tunus;bayrak
+🇹🇴;bayrak: Tonga;bayrak
+🇹🇷;bayrak: Türkiye;bayrak
+🇹🇹;bayrak: Trinidad ve Tobago;bayrak
+🇹🇻;bayrak: Tuvalu;bayrak
+🇹🇼;bayrak: Tayvan;bayrak
+🇹🇿;bayrak: Tanzanya;bayrak
+🇺🇦;bayrak: Ukrayna;bayrak
+🇺🇬;bayrak: Uganda;bayrak
+🇺🇲;bayrak: ABD Küçük Harici Adaları;bayrak
+🇺🇳;bayrak: Birleşmiş Milletler;bayrak
+🇺🇸;bayrak: Amerika Birleşik Devletleri;bayrak
+🇺🇾;bayrak: Uruguay;bayrak
+🇺🇿;bayrak: Özbekistan;bayrak
+🇻🇦;bayrak: Vatikan;bayrak
+🇻🇨;bayrak: Saint Vincent ve Grenadinler;bayrak
+🇻🇪;bayrak: Venezuela;bayrak
+🇻🇬;bayrak: Britanya Virjin Adaları;bayrak
+🇻🇮;bayrak: ABD Virjin Adaları;bayrak
+🇻🇳;bayrak: Vietnam;bayrak
+🇻🇺;bayrak: Vanuatu;bayrak
+🇼🇫;bayrak: Wallis ve Futuna;bayrak
+🇼🇸;bayrak: Samoa;bayrak
+🇽🇰;bayrak: Kosova;bayrak
+🇾🇪;bayrak: Yemen;bayrak
+🇾🇹;bayrak: Mayotte;bayrak
+🇿🇦;bayrak: Güney Afrika;bayrak
+🇿🇲;bayrak: Zambiya;bayrak
+🇿🇼;bayrak: Zimbabve;bayrak
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;bayrak: İngiltere;bayrak
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;bayrak: İskoçya;bayrak
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;bayrak: Galler;bayrak

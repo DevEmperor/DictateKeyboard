@@ -1,0 +1,1913 @@
+😀;grinning face;cheerful|cheery|face|grin|grinning|happy|laugh|nice|smile|smiling|teeth
+😃;grinning face with big eyes;awesome|big|eyes|face|grin|grinning|happy|mouth|open|smile|smiling|teeth|yay
+😄;grinning face with smiling eyes;eye|eyes|face|grin|grinning|happy|laugh|lol|mouth|open|smile|smiling
+😁;beaming face with smiling eyes;beaming|eye|eyes|face|grin|grinning|happy|nice|smile|smiling|teeth
+😆;grinning squinting face;closed|eyes|face|grinning|haha|hahaha|happy|laugh|lol|mouth|open|rofl|smile|smiling|squinting
+😅;grinning face with sweat;cold|dejected|excited|face|grinning|mouth|nervous|open|smile|smiling|stress|stressed|sweat
+🤣;rolling on the floor laughing;crying|face|floor|funny|haha|happy|hehe|hilarious|joy|laugh|lmao|lol|rofl|roflmao|rolling|tear
+😂;face with tears of joy;crying|face|feels|funny|haha|happy|hehe|hilarious|joy|laugh|lmao|lol|rofl|roflmao|tear
+🙂;slightly smiling face;face|happy|slightly|smile|smiling
+🙃;upside-down face;face|hehe|smile|upside-down
+🫠;melting face;disappear|dissolve|embarrassed|face|haha|heat|hot|liquid|lol|melt|melting|sarcasm|sarcastic
+😉;winking face;face|flirt|heartbreaker|sexy|slide|tease|wink|winking|winks
+😊;smiling face with smiling eyes;blush|eye|eyes|face|glad|satisfied|smile|smiling
+😇;smiling face with halo;angel|angelic|angels|blessed|face|fairy|fairytale|fantasy|halo|happy|innocent|peaceful|smile|smiling|spirit|tale
+🥰;smiling face with hearts;3|adore|crush|face|heart|hearts|ily|love|romance|smile|smiling|you
+😍;smiling face with heart-eyes;143|bae|eye|face|feels|heart-eyes|hearts|ily|kisses|love|romance|romantic|smile|xoxo
+🤩;star-struck;excited|eyes|face|grinning|smile|star|starry-eyed|wow
+😘;face blowing a kiss;adorbs|bae|blowing|face|flirt|heart|ily|kiss|love|lover|miss|muah|romantic|smooch|xoxo|you
+😗;kissing face;143|date|dating|face|flirt|ily|kiss|love|smooch|smooches|xoxo|you
+☺️;smiling face;face|happy|outlined|relaxed|smile|smiling
+😚;kissing face with closed eyes;143|bae|blush|closed|date|dating|eye|eyes|face|flirt|ily|kisses|kissing|smooches|xoxo
+😙;kissing face with smiling eyes;143|closed|date|dating|eye|eyes|face|flirt|ily|kiss|kisses|kissing|love|night|smile|smiling
+🥲;smiling face with tear;face|glad|grateful|happy|joy|pain|proud|relieved|smile|smiley|smiling|tear|touched
+😋;face savoring food;delicious|eat|face|food|full|hungry|savor|smile|smiling|tasty|um|yum|yummy
+😛;face with tongue;awesome|cool|face|nice|party|stuck-out|sweet|tongue
+😜;winking face with tongue;crazy|epic|eye|face|funny|joke|loopy|nutty|party|stuck-out|tongue|wacky|weirdo|wink|winking|yolo
+🤪;zany face;crazy|eye|eyes|face|goofy|large|small|zany
+😝;squinting face with tongue;closed|eye|eyes|face|gross|horrible|omg|squinting|stuck-out|taste|tongue|whatever|yolo
+🤑;money-mouth face;face|money|money-mouth|mouth|paid
+🤗;smiling face with open hands;face|hands|hug|hugging|open|smiling
+🤭;face with hand over mouth;face|giggle|giggling|hand|mouth|oops|realization|secret|shock|sudden|surprise|whoops
+🫢;face with open eyes and hand over mouth;amazement|awe|disbelief|embarrass|eyes|face|gasp|hand|mouth|omg|open|over|quiet|scared|shock|surprise
+🫣;face with peeking eye;captivated|embarrass|eye|face|hide|hiding|peek|peeking|peep|scared|shy|stare
+🤫;shushing face;face|quiet|shh|shush|shushing
+🤔;thinking face;chin|consider|face|hmm|ponder|pondering|thinking|wondering
+🫡;saluting face;face|good|luck|ma’am|OK|respect|salute|saluting|sir|troops|yes
+🤐;zipper-mouth face;face|keep|mouth|quiet|secret|shut|zip|zipper|zipper-mouth
+🤨;face with raised eyebrow;disapproval|disbelief|distrust|emoji|eyebrow|face|hmm|mild|raised|skeptic|skeptical|skepticism|surprise|what
+😐;neutral face;awkward|blank|deadpan|expressionless|face|fine|jealous|meh|neutral|oh|shade|straight|unamused|unhappy|unimpressed|whatever
+😑;expressionless face;awkward|dead|expressionless|face|fine|inexpressive|jealous|meh|not|oh|omg|straight|uh|unhappy|unimpressed|whatever
+😶;face without mouth;awkward|blank|expressionless|face|mouth|mouthless|mute|quiet|secret|silence|silent|speechless
+🫥;dotted line face;depressed|disappear|dotted|face|hidden|hide|introvert|invisible|line|meh|whatever|wtv
+😶‍🌫️;face in clouds;absentminded|clouds|face|fog|head
+😏;smirking face;boss|dapper|face|flirt|homie|kidding|leer|shade|slick|sly|smirk|smug|snicker|suave|suspicious|swag
+😒;unamused face;...|bored|face|fine|jealous|jel|jelly|pissed|smh|ugh|uhh|unamused|unhappy|weird|whatever
+🙄;face with rolling eyes;eyeroll|eyes|face|rolling|shade|ugh|whatever
+😬;grimacing face;awk|awkward|dentist|face|grimace|grimacing|grinning|smile|smiling
+😮‍💨;face exhaling;blow|blowing|exhale|exhaling|exhausted|face|gasp|groan|relief|sigh|smiley|smoke|whisper|whistle
+🤥;lying face;face|liar|lie|lying|pinocchio
+🫨;shaking face;crazy|daze|earthquake|face|omg|panic|shaking|shock|surprise|vibrate|whoa|wow
+🙂‍↔️;head shaking horizontally;head|horizontally|no|shake|shaking
+🙂‍↕️;head shaking vertically;head|nod|shaking|vertically|yes
+😌;relieved face;calm|face|peace|relief|relieved|zen
+😔;pensive face;awful|bored|dejected|died|disappointed|face|losing|lost|pensive|sad|sucks
+😪;sleepy face;crying|face|good|night|sad|sleep|sleeping|sleepy|tired
+🤤;drooling face;drooling|face
+😴;sleeping face;bed|bedtime|face|good|goodnight|nap|night|sleep|sleeping|tired|whatever|yawn|zzz
+🫩;face with bags under eyes;bags|bored|exhausted|eyes|face|fatigued|late|sleepy|tired|weary
+😷;face with medical mask;cold|dentist|dermatologist|doctor|dr|face|germs|mask|medical|medicine|sick
+🤒;face with thermometer;face|ill|sick|thermometer
+🤕;face with head-bandage;bandage|face|head-bandage|hurt|injury|ouch
+🤢;nauseated face;face|gross|nasty|nauseated|sick|vomit
+🤮;face vomiting;barf|ew|face|gross|puke|sick|spew|throw|up|vomit|vomiting
+🤧;sneezing face;face|fever|flu|gesundheit|sick|sneeze|sneezing
+🥵;hot face;dying|face|feverish|heat|hot|panting|red-faced|stroke|sweating|tongue
+🥶;cold face;blue|blue-faced|cold|face|freezing|frostbite|icicles|subzero|teeth
+🥴;woozy face;dizzy|drunk|eyes|face|intoxicated|mouth|tipsy|uneven|wavy|woozy
+😵;face with crossed-out eyes;crossed-out|dead|dizzy|eyes|face|feels|knocked|out|sick|tired
+😵‍💫;face with spiral eyes;confused|dizzy|eyes|face|hypnotized|omg|smiley|spiral|trouble|whoa|woah|woozy
+🤯;exploding head;blown|explode|exploding|head|mind|mindblown|no|shocked|way
+🤠;cowboy hat face;cowboy|cowgirl|face|hat
+🥳;partying face;bday|birthday|celebrate|celebration|excited|face|happy|hat|hooray|horn|party|partying
+🥸;disguised face;disguise|eyebrow|face|glasses|incognito|moustache|mustache|nose|person|spy|tache|tash
+😎;smiling face with sunglasses;awesome|beach|bright|bro|chilling|cool|face|rad|relaxed|shades|slay|smile|style|sunglasses|swag|win
+🤓;nerd face;brainy|clever|expert|face|geek|gifted|glasses|intelligent|nerd|smart
+🧐;face with monocle;classy|face|fancy|monocle|rich|stuffy|wealthy
+😕;confused face;befuddled|confused|confusing|dunno|face|frown|hm|meh|not|sad|sorry|sure
+🫤;face with diagonal mouth;confused|confusion|diagonal|disappointed|doubt|doubtful|face|frustrated|frustration|meh|mouth|skeptical|unsure|whatever|wtv
+😟;worried face;anxious|butterflies|face|nerves|nervous|sad|stress|stressed|surprised|worried|worry
+🙁;slightly frowning face;face|frown|frowning|sad|slightly
+☹️;frowning face;face|frown|frowning|sad
+😮;face with open mouth;believe|face|forgot|mouth|omg|open|shocked|surprised|sympathy|unbelievable|unreal|whoa|wow|you
+😯;hushed face;epic|face|hushed|omg|stunned|surprised|whoa|woah
+😲;astonished face;astonished|cost|face|no|omg|shocked|totally|way
+😳;flushed face;amazed|awkward|crazy|dazed|dead|disbelief|embarrassed|face|flushed|geez|heat|hot|impressed|jeez|what|wow
+🫪;distorted face;anxiety|bloated|panic|shocked|surprised|vulnerable
+🥺;pleading face;begging|big|eyes|face|mercy|not|pleading|please|pretty|puppy|sad|why
+🥹;face holding back tears;admiration|aww|back|cry|embarrassed|face|feelings|grateful|gratitude|holding|joy|please|proud|resist|sad|tears
+😦;frowning face with open mouth;caught|face|frown|frowning|guard|mouth|open|scared|scary|surprise|what|wow
+😧;anguished face;anguished|face|forgot|scared|scary|stressed|surprise|unhappy|what|wow
+😨;fearful face;afraid|anxious|blame|face|fear|fearful|scared|worried
+😰;anxious face with sweat;anxious|blue|cold|eek|face|mouth|nervous|open|rushed|scared|sweat|yikes
+😥;sad but relieved face;anxious|call|close|complicated|disappointed|face|not|relieved|sad|sweat|time|whew
+😢;crying face;awful|cry|crying|face|feels|miss|sad|tear|triste|unhappy
+😭;loudly crying face;bawling|cry|crying|face|loudly|sad|sob|tear|tears|unhappy
+😱;face screaming in fear;epic|face|fear|fearful|munch|scared|scream|screamer|screaming|shocked|surprised|woah
+😖;confounded face;annoyed|confounded|confused|cringe|distraught|face|feels|frustrated|mad|sad
+😣;persevering face;concentrate|concentration|face|focus|headache|persevere|persevering
+😞;disappointed face;awful|blame|dejected|disappointed|face|fail|losing|sad|unhappy
+😓;downcast face with sweat;close|cold|downcast|face|feels|headache|nervous|sad|scared|sweat|yikes
+😩;weary face;crying|face|fail|feels|hungry|mad|nooo|sad|sleepy|tired|unhappy|weary
+😫;tired face;cost|face|feels|nap|sad|sneeze|tired
+🥱;yawning face;bedtime|bored|face|goodnight|nap|night|sleep|sleepy|tired|whatever|yawn|yawning|zzz
+😤;face with steam from nose;anger|angry|face|feels|fume|fuming|furious|fury|mad|nose|steam|triumph|unhappy|won
+😡;enraged face;anger|angry|enraged|face|feels|mad|maddening|pouting|rage|red|shade|unhappy|upset
+😠;angry face;anger|angry|blame|face|feels|frustrated|mad|maddening|rage|shade|unhappy|upset
+🤬;face with symbols on mouth;censor|cursing|cussing|face|mad|mouth|pissed|swearing|symbols
+😈;smiling face with horns;demon|devil|evil|face|fairy|fairytale|fantasy|horns|purple|shade|smile|smiling|tale
+👿;angry face with horns;angry|demon|devil|evil|face|fairy|fairytale|fantasy|horns|imp|mischievous|purple|shade|tale
+💀;skull;body|dead|death|face|fairy|fairytale|i’m|lmao|monster|tale|yolo
+☠️;skull and crossbones;bone|crossbones|dead|death|face|monster|skull
+💩;pile of poo;bs|comic|doo|dung|face|fml|monster|pile|poo|poop|smelly|smh|stink|stinks|stinky|turd
+🤡;clown face;clown|face
+👹;ogre;creature|devil|face|fairy|fairytale|fantasy|mask|monster|scary|tale
+👺;goblin;angry|creature|face|fairy|fairytale|fantasy|mask|mean|monster|tale
+👻;ghost;boo|creature|excited|face|fairy|fairytale|fantasy|halloween|haunting|monster|scary|silly|tale
+👽;alien;creature|extraterrestrial|face|fairy|fairytale|fantasy|monster|space|tale|ufo
+👾;alien monster;alien|creature|extraterrestrial|face|fairy|fairytale|fantasy|game|gamer|games|monster|pixelated|space|tale|ufo
+🤖;robot;face|monster
+😺;grinning cat;animal|cat|face|grinning|mouth|open|smile|smiling
+😸;grinning cat with smiling eyes;animal|cat|eye|eyes|face|grin|grinning|smile|smiling
+😹;cat with tears of joy;animal|cat|face|joy|laugh|laughing|lol|tear|tears
+😻;smiling cat with heart-eyes;animal|cat|eye|face|heart|heart-eyes|love|smile|smiling
+😼;cat with wry smile;animal|cat|face|ironic|smile|wry
+😽;kissing cat;animal|cat|closed|eye|eyes|face|kiss|kissing
+🙀;weary cat;animal|cat|face|oh|surprised|weary
+😿;crying cat;animal|cat|cry|crying|face|sad|tear
+😾;pouting cat;animal|cat|face|pouting
+🙈;see-no-evil monkey;embarrassed|evil|face|forbidden|forgot|gesture|hide|monkey|no|omg|prohibited|scared|secret|smh|watch
+🙉;hear-no-evil monkey;animal|ears|evil|face|forbidden|gesture|hear|listen|monkey|no|not|prohibited|secret|shh|tmi
+🙊;speak-no-evil monkey;animal|evil|face|forbidden|gesture|monkey|no|not|oops|prohibited|quiet|secret|speak|stealth
+💌;love letter;heart|letter|love|mail|romance|valentine
+💘;heart with arrow;143|adorbs|arrow|cupid|date|emotion|heart|ily|love|romance|valentine
+💝;heart with ribbon;143|anniversary|emotion|heart|ily|kisses|ribbon|valentine|xoxo
+💖;sparkling heart;143|emotion|excited|good|heart|ily|kisses|morning|night|sparkle|sparkling|xoxo
+💗;growing heart;143|emotion|excited|growing|heart|heartpulse|ily|kisses|muah|nervous|pulse|xoxo
+💓;beating heart;143|beating|cardio|emotion|heart|heartbeat|ily|love|pulsating|pulse
+💞;revolving hearts;143|adorbs|anniversary|emotion|heart|hearts|revolving
+💕;two hearts;143|anniversary|date|dating|emotion|heart|hearts|ily|kisses|love|loving|two|xoxo
+💟;heart decoration;143|decoration|emotion|heart|hearth|purple|white
+❣️;heart exclamation;exclamation|heart|heavy|mark|punctuation
+💔;broken heart;break|broken|crushed|emotion|heart|heartbroken|lonely|sad
+❤️‍🔥;heart on fire;burn|fire|heart|love|lust|sacred
+❤️‍🩹;mending heart;healthier|heart|improving|mending|recovering|recuperating|well
+❤️;red heart;emotion|heart|love|red
+🩷;pink heart;143|adorable|cute|emotion|heart|ily|like|love|pink|special|sweet
+🧡;orange heart;143|heart|orange
+💛;yellow heart;143|cardiac|emotion|heart|ily|love|yellow
+💚;green heart;143|emotion|green|heart|ily|love|romantic
+💙;blue heart;143|blue|emotion|heart|ily|love|romance
+🩵;light blue heart;143|blue|cute|cyan|emotion|heart|ily|light|like|love|sky|special|teal
+💜;purple heart;143|bestest|emotion|heart|ily|love|purple
+🤎;brown heart;143|brown|heart
+🖤;black heart;black|evil|heart|wicked
+🩶;grey heart;143|emotion|gray|grey|heart|ily|love|silver|slate|special
+🤍;white heart;143|heart|white
+💋;kiss mark;dating|emotion|heart|kiss|kissing|lips|mark|romance|sexy
+💯;hundred points;100|a+|agree|clearly|definitely|faithful|fleek|full|hundred|keep|perfect|point|score|TRUE|truth|yup
+💢;anger symbol;anger|angry|comic|mad|symbol|upset
+🫯;fight cloud;argument|brawl|debate|disagreement|fight|ruckus|wrestle
+💥;collision;bomb|boom|collide|comic|explode
+💫;dizzy;comic|shining|shooting|star|stars
+💦;sweat droplets;comic|drip|droplet|droplets|drops|splashing|squirt|sweat|water|wet|work|workout
+💨;dashing away;away|cloud|comic|dash|dashing|fart|fast|go|gone|gotta|running|smoke
+🕳️;hole;
+💬;speech balloon;balloon|bubble|comic|dialog|message|sms|speech|talk|text|typing
+👁️‍🗨️;eye in speech bubble;balloon|bubble|eye|speech|witness
+🗨️;left speech bubble;balloon|bubble|dialog|left|speech
+🗯️;right anger bubble;anger|angry|balloon|bubble|mad|right
+💭;thought balloon;balloon|bubble|cartoon|cloud|comic|daydream|decisions|dream|idea|invent|invention|realize|think|thoughts|wonder
+💤;ZZZ;comic|good|goodnight|night|sleep|sleeping|sleepy|tired
+👋;waving hand;bye|cya|g2g|greetings|gtg|hand|hello|hey|hi|later|outtie|ttfn|ttyl|wave|yo|you
+🤚;raised back of hand;back|backhand|hand|raised
+🖐️;hand with fingers splayed;finger|fingers|hand|raised|splayed|stop
+✋;raised hand;5|five|hand|high|raised|stop
+🖖;vulcan salute;finger|hand|hands|salute|Vulcan
+🫱;rightwards hand;hand|handshake|hold|reach|right|rightward|rightwards|shake
+🫲;leftwards hand;hand|handshake|hold|left|leftward|leftwards|reach|shake
+🫳;palm down hand;dismiss|down|drop|dropped|hand|palm|pick|shoo|up
+🫴;palm up hand;beckon|catch|come|hand|hold|know|lift|me|offer|palm|tell
+🫷;leftwards pushing hand;block|five|halt|hand|high|hold|leftward|leftwards|pause|push|pushing|refuse|slap|stop|wait
+🫸;rightwards pushing hand;block|five|halt|hand|high|hold|pause|push|pushing|refuse|rightward|rightwards|slap|stop|wait
+👌;OK hand;awesome|bet|dope|fleek|fosho|got|gotcha|hand|legit|OK|okay|pinch|rad|sure|sweet|three
+🤌;pinched fingers;fingers|gesture|hand|hold|huh|interrogation|patience|pinched|relax|sarcastic|ugh|what|zip
+🤏;pinching hand;amount|bit|fingers|hand|little|pinching|small|sort
+✌️;victory hand;hand|peace|v|victory
+🤞;crossed fingers;cross|crossed|finger|fingers|hand|luck
+🫰;hand with index finger and thumb crossed;<3|crossed|expensive|finger|hand|heart|index|love|money|snap|thumb
+🤟;love-you gesture;fingers|gesture|hand|ILY|love|love-you|three|you
+🤘;sign of the horns;finger|hand|horns|rock-on|sign
+🤙;call me hand;call|hand|hang|loose|me|Shaka
+👈;backhand index pointing left;backhand|finger|hand|index|left|point|pointing
+👉;backhand index pointing right;backhand|finger|hand|index|point|pointing|right
+👆;backhand index pointing up;backhand|finger|hand|index|point|pointing|up
+🖕;middle finger;finger|hand|middle
+👇;backhand index pointing down;backhand|down|finger|hand|index|point|pointing
+☝️;index pointing up;finger|hand|index|point|pointing|this|up
+🫵;index pointing at the viewer;at|finger|hand|index|pointing|poke|viewer|you
+👍;thumbs up;+1|good|hand|like|thumb|up|yes
+👎;thumbs down;-1|bad|dislike|down|good|hand|no|nope|thumb|thumbs
+✊;raised fist;clenched|fist|hand|punch|raised|solidarity
+👊;oncoming fist;absolutely|agree|boom|bro|bruh|bump|clenched|correct|fist|hand|knuckle|oncoming|pound|punch|rock|ttyl
+🤛;left-facing fist;fist|left-facing|leftwards
+🤜;right-facing fist;fist|right-facing|rightwards
+👏;clapping hands;applause|approval|awesome|clap|congrats|congratulations|excited|good|great|hand|homie|job|nice|prayed|well|yay
+🙌;raising hands;celebration|gesture|hand|hands|hooray|praise|raised|raising
+🫶;heart hands;<3|hands|heart|love|you
+👐;open hands;hand|hands|hug|jazz|open|swerve
+🤲;palms up together;cupped|dua|hands|palms|pray|prayer|together|up|wish
+🤝;handshake;agreement|deal|hand|meeting|shake
+🙏;folded hands;appreciate|ask|beg|blessed|bow|cmon|five|folded|gesture|hand|high|please|pray|thanks|thx
+✍️;writing hand;hand|write|writing
+💅;nail polish;bored|care|cosmetics|done|makeup|manicure|nail|polish|whatever
+🤳;selfie;camera|phone
+💪;flexed biceps;arm|beast|bench|biceps|bodybuilder|bro|curls|flex|gains|gym|jacked|muscle|press|ripped|strong|weightlift
+🦾;mechanical arm;accessibility|arm|mechanical|prosthetic
+🦿;mechanical leg;accessibility|leg|mechanical|prosthetic
+🦵;leg;bent|foot|kick|knee|limb
+🦶;foot;ankle|feet|kick|stomp
+👂;ear;body|ears|hear|hearing|listen|listening|sound
+🦻;ear with hearing aid;accessibility|aid|ear|hard|hearing
+👃;nose;body|noses|nosey|odor|smell|smells
+🧠;brain;intelligent|smart
+🫀;anatomical heart;anatomical|beat|cardiology|heart|heartbeat|organ|pulse|real|red
+🫁;lungs;breath|breathe|exhalation|inhalation|lung|organ|respiration
+🦷;tooth;dentist|pearly|teeth|white
+🦴;bone;bones|dog|skeleton|wishbone
+👀;eyes;body|eye|face|googly|look|looking|omg|peep|see|seeing
+👁️;eye;1|body|one
+👅;tongue;body|lick|slurp
+👄;mouth;beauty|body|kiss|kissing|lips|lipstick
+🫦;biting lip;anxious|bite|biting|fear|flirt|flirting|kiss|lip|lipstick|nervous|sexy|uncomfortable|worried|worry
+👶;baby;babies|children|goo|infant|newborn|pregnant|young
+🧒;child;bright-eyed|grandchild|kid|young|younger
+👦;boy;bright-eyed|child|grandson|kid|son|young|younger
+👧;girl;bright-eyed|child|daughter|granddaughter|kid|Virgo|young|younger|zodiac
+🧑;person;adult
+👱;person: blond hair;blond|blond-haired|human|person
+👨;man;adult|bro
+🧔;person: beard;beard|bearded|person|whiskers
+🧔‍♂️;man: beard;beard|bearded|man|whiskers
+🧔‍♀️;woman: beard;beard|bearded|whiskers|woman
+👨‍🦰;man: red hair;adult|bro|man|red hair
+👨‍🦱;man: curly hair;adult|bro|curly hair|man
+👨‍🦳;man: white hair;adult|bro|man|white hair
+👨‍🦲;man: bald;adult|bald|bro|man
+👩;woman;adult|lady
+👩‍🦰;woman: red hair;adult|lady|red hair|woman
+🧑‍🦰;person: red hair;adult|person|red hair
+👩‍🦱;woman: curly hair;adult|curly hair|lady|woman
+🧑‍🦱;person: curly hair;adult|curly hair|person
+👩‍🦳;woman: white hair;adult|lady|white hair|woman
+🧑‍🦳;person: white hair;adult|person|white hair
+👩‍🦲;woman: bald;adult|bald|lady|woman
+🧑‍🦲;person: bald;adult|bald|person
+👱‍♀️;woman: blond hair;blond|blond-haired|blonde|hair|woman
+👱‍♂️;man: blond hair;blond|blond-haired|hair|man
+🧓;older person;adult|elderly|grandparent|old|person|wise
+👴;old man;adult|bald|elderly|gramps|grandfather|grandpa|man|old|wise
+👵;old woman;adult|elderly|grandma|grandmother|granny|lady|old|wise|woman
+🙍;person frowning;annoyed|disappointed|disgruntled|disturbed|frown|frowning|frustrated|gesture|irritated|person|upset
+🙍‍♂️;man frowning;annoyed|disappointed|disgruntled|disturbed|frown|frowning|frustrated|gesture|irritated|man|upset
+🙍‍♀️;woman frowning;annoyed|disappointed|disgruntled|disturbed|frown|frowning|frustrated|gesture|irritated|upset|woman
+🙎;person pouting;disappointed|downtrodden|frown|grimace|person|pouting|scowl|sulk|upset|whine
+🙎‍♂️;man pouting;disappointed|downtrodden|frown|grimace|man|pouting|scowl|sulk|upset|whine
+🙎‍♀️;woman pouting;disappointed|downtrodden|frown|grimace|pouting|scowl|sulk|upset|whine|woman
+🙅;person gesturing NO;forbidden|gesture|hand|NO|not|person|prohibit
+🙅‍♂️;man gesturing NO;forbidden|gesture|hand|man|NO|not|prohibit
+🙅‍♀️;woman gesturing NO;forbidden|gesture|hand|NO|not|prohibit|woman
+🙆;person gesturing OK;exercise|gesture|gesturing|hand|OK|omg|person
+🙆‍♂️;man gesturing OK;exercise|gesture|gesturing|hand|man|OK|omg
+🙆‍♀️;woman gesturing OK;exercise|gesture|gesturing|hand|OK|omg|woman
+💁;person tipping hand;fetch|flick|flip|gossip|hand|person|sarcasm|sarcastic|sassy|seriously|tipping|whatever
+💁‍♂️;man tipping hand;fetch|flick|flip|gossip|hand|man|sarcasm|sarcastic|sassy|seriously|tipping|whatever
+💁‍♀️;woman tipping hand;fetch|flick|flip|gossip|hand|sarcasm|sarcastic|sassy|seriously|tipping|whatever|woman
+🙋;person raising hand;gesture|hand|here|know|me|person|pick|question|raise|raising
+🙋‍♂️;man raising hand;gesture|hand|here|know|man|me|pick|question|raise|raising
+🙋‍♀️;woman raising hand;gesture|hand|here|know|me|pick|question|raise|raising|woman
+🧏;deaf person;accessibility|deaf|ear|gesture|hear|person
+🧏‍♂️;deaf man;accessibility|deaf|ear|gesture|hear|man
+🧏‍♀️;deaf woman;accessibility|deaf|ear|gesture|hear|woman
+🙇;person bowing;apology|ask|beg|bow|bowing|favor|forgive|gesture|meditate|meditation|person|pity|regret|sorry
+🙇‍♂️;man bowing;apology|ask|beg|bow|bowing|favor|forgive|gesture|man|meditate|meditation|pity|regret|sorry
+🙇‍♀️;woman bowing;apology|ask|beg|bow|bowing|favor|forgive|gesture|meditate|meditation|pity|regret|sorry|woman
+🤦;person facepalming;again|bewilder|disbelief|exasperation|facepalm|no|not|oh|omg|person|shock|smh
+🤦‍♂️;man facepalming;again|bewilder|disbelief|exasperation|facepalm|man|no|not|oh|omg|shock|smh
+🤦‍♀️;woman facepalming;again|bewilder|disbelief|exasperation|facepalm|no|not|oh|omg|shock|smh|woman
+🤷;person shrugging;doubt|dunno|guess|idk|ignorance|indifference|knows|maybe|person|shrug|shrugging|whatever|who
+🤷‍♂️;man shrugging;doubt|dunno|guess|idk|ignorance|indifference|knows|man|maybe|shrug|shrugging|whatever|who
+🤷‍♀️;woman shrugging;doubt|dunno|guess|idk|ignorance|indifference|knows|maybe|shrug|shrugging|whatever|who|woman
+🧑‍⚕️;health worker;doctor|health|healthcare|nurse|therapist|worker
+👨‍⚕️;man health worker;doctor|health|healthcare|man|nurse|therapist|worker
+👩‍⚕️;woman health worker;doctor|health|healthcare|nurse|therapist|woman|worker
+🧑‍🎓;student;graduate
+👨‍🎓;man student;graduate|man|student
+👩‍🎓;woman student;graduate|student|woman
+🧑‍🏫;teacher;instructor|lecturer|professor
+👨‍🏫;man teacher;instructor|lecturer|man|professor|teacher
+👩‍🏫;woman teacher;instructor|lecturer|professor|teacher|woman
+🧑‍⚖️;judge;justice|law|scales
+👨‍⚖️;man judge;judge|justice|law|man|scales
+👩‍⚖️;woman judge;judge|justice|law|scales|woman
+🧑‍🌾;farmer;gardener|rancher
+👨‍🌾;man farmer;farmer|gardener|man|rancher
+👩‍🌾;woman farmer;farmer|gardener|rancher|woman
+🧑‍🍳;cook;chef
+👨‍🍳;man cook;chef|cook|man
+👩‍🍳;woman cook;chef|cook|woman
+🧑‍🔧;mechanic;electrician|plumber|tradesperson
+👨‍🔧;man mechanic;electrician|man|mechanic|plumber|tradesperson
+👩‍🔧;woman mechanic;electrician|mechanic|plumber|tradesperson|woman
+🧑‍🏭;factory worker;assembly|factory|industrial|worker
+👨‍🏭;man factory worker;assembly|factory|industrial|man|worker
+👩‍🏭;woman factory worker;assembly|factory|industrial|woman|worker
+🧑‍💼;office worker;architect|business|manager|office|white-collar|worker
+👨‍💼;man office worker;architect|business|man|manager|office|white-collar|worker
+👩‍💼;woman office worker;architect|business|manager|office|white-collar|woman|worker
+🧑‍🔬;scientist;biologist|chemist|engineer|mathematician|physicist
+👨‍🔬;man scientist;biologist|chemist|engineer|man|mathematician|physicist|scientist
+👩‍🔬;woman scientist;biologist|chemist|engineer|mathematician|physicist|scientist|woman
+🧑‍💻;technologist;coder|computer|developer|inventor|software
+👨‍💻;man technologist;coder|computer|developer|inventor|man|software|technologist
+👩‍💻;woman technologist;coder|computer|developer|inventor|software|technologist|woman
+🧑‍🎤;singer;actor|entertainer|rock|rockstar|star
+👨‍🎤;man singer;actor|entertainer|man|rock|rockstar|singer|star
+👩‍🎤;woman singer;actor|entertainer|rock|rockstar|singer|star|woman
+🧑‍🎨;artist;palette
+👨‍🎨;man artist;artist|man|palette
+👩‍🎨;woman artist;artist|palette|woman
+🧑‍✈️;pilot;plane
+👨‍✈️;man pilot;man|pilot|plane
+👩‍✈️;woman pilot;pilot|plane|woman
+🧑‍🚀;astronaut;rocket|space
+👨‍🚀;man astronaut;astronaut|man|rocket|space
+👩‍🚀;woman astronaut;astronaut|rocket|space|woman
+🧑‍🚒;firefighter;fire|firetruck
+👨‍🚒;man firefighter;fire|firefighter|firetruck|man
+👩‍🚒;woman firefighter;fire|firefighter|firetruck|woman
+👮;police officer;apprehend|arrest|citation|cop|law|officer|over|police|pulled|undercover
+👮‍♂️;man police officer;apprehend|arrest|citation|cop|law|man|officer|over|police|pulled|undercover
+👮‍♀️;woman police officer;apprehend|arrest|citation|cop|law|officer|over|police|pulled|undercover|woman
+🕵️;detective;sleuth|spy
+🕵️‍♂️;man detective;detective|man|sleuth|spy
+🕵️‍♀️;woman detective;detective|sleuth|spy|woman
+💂;guard;buckingham|helmet|london|palace
+💂‍♂️;man guard;buckingham|guard|helmet|london|man|palace
+💂‍♀️;woman guard;buckingham|guard|helmet|london|palace|woman
+🥷;ninja;assassin|fight|fighter|hidden|person|secret|skills|sly|soldier|stealth|war
+👷;construction worker;build|construction|fix|hardhat|hat|man|person|rebuild|remodel|repair|work|worker
+👷‍♂️;man construction worker;build|construction|fix|hardhat|hat|man|rebuild|remodel|repair|work|worker
+👷‍♀️;woman construction worker;build|construction|fix|hardhat|hat|man|rebuild|remodel|repair|woman|work|worker
+🫅;person with crown;crown|monarch|noble|person|regal|royal|royalty
+🤴;prince;crown|fairy|fairytale|fantasy|king|royal|royalty|tale
+👸;princess;crown|fairy|fairytale|fantasy|queen|royal|royalty|tale
+👳;person wearing turban;person|turban|wearing
+👳‍♂️;man wearing turban;man|turban|wearing
+👳‍♀️;woman wearing turban;turban|wearing|woman
+👲;person with skullcap;cap|Chinese|gua|guapi|hat|mao|person|pi|skullcap
+🧕;woman with headscarf;bandana|head|headscarf|hijab|kerchief|mantilla|tichel|woman
+🤵;person in tuxedo;formal|person|tuxedo|wedding
+🤵‍♂️;man in tuxedo;formal|groom|man|tuxedo|wedding
+🤵‍♀️;woman in tuxedo;formal|tuxedo|wedding|woman
+👰;person with veil;person|veil|wedding
+👰‍♂️;man with veil;man|veil|wedding
+👰‍♀️;woman with veil;bride|veil|wedding|woman
+🤰;pregnant woman;pregnant|woman
+🫃;pregnant man;belly|bloated|full|man|overeat|pregnant
+🫄;pregnant person;belly|bloated|full|overeat|person|pregnant|stuffed
+🤱;breast-feeding;baby|breast|feeding|mom|mother|nursing|woman
+👩‍🍼;woman feeding baby;baby|feed|feeding|mom|mother|nanny|newborn|nursing|woman
+👨‍🍼;man feeding baby;baby|dad|father|feed|feeding|man|nanny|newborn|nursing
+🧑‍🍼;person feeding baby;baby|feed|feeding|nanny|newborn|nursing|parent
+👼;baby angel;angel|baby|church|face|fairy|fairytale|fantasy|tale
+🎅;Santa Claus;celebration|Christmas|claus|fairy|fantasy|father|holiday|merry|santa|tale|xmas
+🤶;Mrs. Claus;celebration|Christmas|claus|fairy|fantasy|holiday|merry|mother|Mrs|santa|tale|xmas
+🧑‍🎄;Mx Claus;celebration|Christmas|claus|fairy|fantasy|holiday|merry|Mx|santa|tale|xmas
+🦸;superhero;good|hero|superpower
+🦸‍♂️;man superhero;good|hero|man|superhero|superpower
+🦸‍♀️;woman superhero;good|hero|heroine|superhero|superpower|woman
+🦹;supervillain;bad|criminal|evil|superpower|villain
+🦹‍♂️;man supervillain;bad|criminal|evil|man|superpower|supervillain|villain
+🦹‍♀️;woman supervillain;bad|criminal|evil|superpower|supervillain|villain|woman
+🧙;mage;fantasy|magic|play|sorcerer|sorceress|sorcery|spell|summon|witch|wizard
+🧙‍♂️;man mage;fantasy|mage|magic|man|play|sorcerer|sorceress|sorcery|spell|summon|witch|wizard
+🧙‍♀️;woman mage;fantasy|mage|magic|play|sorcerer|sorceress|sorcery|spell|summon|witch|wizard|woman
+🧚;fairy;fairytale|fantasy|myth|person|pixie|tale|wings
+🧚‍♂️;man fairy;fairy|fairytale|fantasy|man|myth|Oberon|person|pixie|Puck|tale|wings
+🧚‍♀️;woman fairy;fairy|fairytale|fantasy|myth|person|pixie|tale|Titania|wings|woman
+🧛;vampire;blood|Dracula|fangs|halloween|scary|supernatural|teeth|undead
+🧛‍♂️;man vampire;blood|fangs|halloween|man|scary|supernatural|teeth|undead|vampire
+🧛‍♀️;woman vampire;blood|fangs|halloween|scary|supernatural|teeth|undead|vampire|woman
+🧜;merperson;creature|fairytale|folklore|ocean|sea|siren|trident
+🧜‍♂️;merman;creature|fairytale|folklore|Neptune|ocean|Poseidon|sea|siren|trident|Triton
+🧜‍♀️;mermaid;creature|fairytale|folklore|merwoman|ocean|sea|siren|trident
+🧝;elf;elves|enchantment|fantasy|folklore|magic|magical|myth
+🧝‍♂️;man elf;elf|elves|enchantment|fantasy|folklore|magic|magical|man|myth
+🧝‍♀️;woman elf;elf|elves|enchantment|fantasy|folklore|magic|magical|myth|woman
+🧞;genie;djinn|fantasy|jinn|lamp|myth|rub|wishes
+🧞‍♂️;man genie;djinn|fantasy|genie|jinn|lamp|man|myth|rub|wishes
+🧞‍♀️;woman genie;djinn|fantasy|genie|jinn|lamp|myth|rub|wishes|woman
+🧟;zombie;apocalypse|dead|halloween|horror|scary|undead|walking
+🧟‍♂️;man zombie;apocalypse|dead|halloween|horror|man|scary|undead|walking|zombie
+🧟‍♀️;woman zombie;apocalypse|dead|halloween|horror|scary|undead|walking|woman|zombie
+🧌;troll;fairy|fantasy|monster|tale|trolling
+🫈;hairy creature;bigfoot|cryptid|forest|giant|hairy|sasquatch|woodwose|yeti
+💆;person getting massage;face|getting|headache|massage|person|relax|relaxing|salon|soothe|spa|tension|therapy|treatment
+💆‍♂️;man getting massage;face|getting|headache|man|massage|relax|relaxing|salon|soothe|spa|tension|therapy|treatment
+💆‍♀️;woman getting massage;face|getting|headache|massage|relax|relaxing|salon|soothe|spa|tension|therapy|treatment|woman
+💇;person getting haircut;barber|beauty|chop|cosmetology|cut|groom|hair|haircut|parlor|person|shears|style
+💇‍♂️;man getting haircut;barber|beauty|chop|cosmetology|cut|groom|hair|haircut|man|parlor|person|shears|style
+💇‍♀️;woman getting haircut;barber|beauty|chop|cosmetology|cut|groom|hair|haircut|parlor|person|shears|style|woman
+🚶;person walking;amble|gait|hike|man|pace|pedestrian|person|stride|stroll|walk|walking
+🚶‍♂️;man walking;amble|gait|hike|man|pace|pedestrian|stride|stroll|walk|walking
+🚶‍♀️;woman walking;amble|gait|hike|man|pace|pedestrian|stride|stroll|walk|walking|woman
+🚶‍➡️;person walking: facing right;amble|facing|gait|hike|man|pace|pedestrian|person|right|stride|stroll|walk|walking
+🚶‍♀️‍➡️;woman walking: facing right;amble|facing|gait|hike|man|pace|pedestrian|right|stride|stroll|walk|walking|woman
+🚶‍♂️‍➡️;man walking: facing right;amble|facing|gait|hike|man|pace|pedestrian|right|stride|stroll|walk|walking
+🧍;person standing;person|stand|standing
+🧍‍♂️;man standing;man|stand|standing
+🧍‍♀️;woman standing;stand|standing|woman
+🧎;person kneeling;kneel|kneeling|knees|person
+🧎‍♂️;man kneeling;kneel|kneeling|knees|man
+🧎‍♀️;woman kneeling;kneel|kneeling|knees|woman
+🧎‍➡️;person kneeling: facing right;facing|kneel|kneeling|knees|person|right
+🧎‍♀️‍➡️;woman kneeling: facing right;facing|kneel|kneeling|knees|right|woman
+🧎‍♂️‍➡️;man kneeling: facing right;facing|kneel|kneeling|knees|man|right
+🧑‍🦯;person with white cane;accessibility|blind|cane|person|probing|white
+🧑‍🦯‍➡️;person with white cane: facing right;accessibility|blind|cane|facing|person|probing|right|white
+👨‍🦯;man with white cane;accessibility|blind|cane|man|probing|white
+👨‍🦯‍➡️;man with white cane: facing right;accessibility|blind|cane|facing|man|probing|right|white
+👩‍🦯;woman with white cane;accessibility|blind|cane|probing|white|woman
+👩‍🦯‍➡️;woman with white cane: facing right;accessibility|blind|cane|facing|probing|right|white|woman
+🧑‍🦼;person in motorized wheelchair;accessibility|motorized|person|wheelchair
+🧑‍🦼‍➡️;person in motorized wheelchair: facing right;accessibility|facing|motorized|person|right|wheelchair
+👨‍🦼;man in motorized wheelchair;accessibility|man|motorized|wheelchair
+👨‍🦼‍➡️;man in motorized wheelchair: facing right;accessibility|facing|man|motorized|right|wheelchair
+👩‍🦼;woman in motorized wheelchair;accessibility|motorized|wheelchair|woman
+👩‍🦼‍➡️;woman in motorized wheelchair: facing right;accessibility|facing|motorized|right|wheelchair|woman
+🧑‍🦽;person in manual wheelchair;accessibility|manual|person|wheelchair
+🧑‍🦽‍➡️;person in manual wheelchair: facing right;accessibility|facing|manual|person|right|wheelchair
+👨‍🦽;man in manual wheelchair;accessibility|man|manual|wheelchair
+👨‍🦽‍➡️;man in manual wheelchair: facing right;accessibility|facing|man|manual|right|wheelchair
+👩‍🦽;woman in manual wheelchair;accessibility|manual|wheelchair|woman
+👩‍🦽‍➡️;woman in manual wheelchair: facing right;accessibility|facing|manual|right|wheelchair|woman
+🏃;person running;fast|hurry|marathon|move|person|quick|race|racing|run|rush|speed
+🏃‍♂️;man running;fast|hurry|man|marathon|move|quick|race|racing|run|rush|speed
+🏃‍♀️;woman running;fast|hurry|marathon|move|quick|race|racing|run|rush|speed|woman
+🏃‍➡️;person running: facing right;facing|fast|hurry|marathon|move|person|quick|race|racing|right|run|rush|speed
+🏃‍♀️‍➡️;woman running: facing right;facing|fast|hurry|marathon|move|quick|race|racing|right|run|rush|speed|woman
+🏃‍♂️‍➡️;man running: facing right;facing|fast|hurry|man|marathon|move|quick|race|racing|right|run|rush|speed
+🧑‍🩰;ballet dancer;ballet|dancer
+💃;woman dancing;dance|dancer|dancing|elegant|festive|flair|flamenco|groove|let’s|salsa|tango|woman
+🕺;man dancing;dance|dancer|dancing|elegant|festive|flair|flamenco|groove|let’s|man|salsa|tango
+🕴️;person in suit levitating;business|levitating|person|suit
+👯;people with bunny ears;bestie|bff|bunny|counterpart|dancer|double|ear|identical|pair|party|partying|people|soulmate|twin|twinsies
+👯‍♂️;men with bunny ears;bestie|bff|bunny|counterpart|dancer|double|ear|identical|men|pair|party|partying|people|soulmate|twin|twinsies
+👯‍♀️;women with bunny ears;bestie|bff|bunny|counterpart|dancer|double|ear|identical|pair|party|partying|people|soulmate|twin|twinsies|women
+🧖;person in steamy room;day|luxurious|pamper|person|relax|room|sauna|spa|steam|steambath|unwind
+🧖‍♂️;man in steamy room;day|luxurious|man|pamper|relax|room|sauna|spa|steam|steambath|unwind
+🧖‍♀️;woman in steamy room;day|luxurious|pamper|relax|room|sauna|spa|steam|steambath|unwind|woman
+🧗;person climbing;climb|climber|climbing|mountain|person|rock|scale|up
+🧗‍♂️;man climbing;climb|climber|climbing|man|mountain|rock|scale|up
+🧗‍♀️;woman climbing;climb|climber|climbing|mountain|rock|scale|up|woman
+🤺;person fencing;fencer|fencing|person|sword
+🏇;horse racing;horse|jockey|racehorse|racing|riding|sport
+⛷️;skier;ski|snow
+🏂;snowboarder;ski|snow|snowboard|sport
+🏌️;person golfing;ball|birdie|caddy|driving|golf|golfing|green|person|pga|putt|range|tee
+🏌️‍♂️;man golfing;ball|birdie|caddy|driving|golf|golfing|green|man|pga|putt|range|tee
+🏌️‍♀️;woman golfing;ball|birdie|caddy|driving|golf|golfing|green|pga|putt|range|tee|woman
+🏄;person surfing;beach|ocean|person|sport|surf|surfer|surfing|swell|waves
+🏄‍♂️;man surfing;beach|man|ocean|sport|surf|surfer|surfing|swell|waves
+🏄‍♀️;woman surfing;beach|ocean|person|sport|surf|surfer|surfing|swell|waves
+🚣;person rowing boat;boat|canoe|cruise|fishing|lake|oar|paddle|person|raft|river|row|rowboat|rowing
+🚣‍♂️;man rowing boat;boat|canoe|cruise|fishing|lake|man|oar|paddle|raft|river|row|rowboat|rowing
+🚣‍♀️;woman rowing boat;boat|canoe|cruise|fishing|lake|oar|paddle|raft|river|row|rowboat|rowing|woman
+🏊;person swimming;freestyle|person|sport|swim|swimmer|swimming|triathlon
+🏊‍♂️;man swimming;freestyle|man|sport|swim|swimmer|swimming|triathlon
+🏊‍♀️;woman swimming;freestyle|man|sport|swim|swimmer|swimming|triathlon
+⛹️;person bouncing ball;athletic|ball|basketball|bouncing|championship|dribble|net|person|player|throw
+⛹️‍♂️;man bouncing ball;athletic|ball|basketball|bouncing|championship|dribble|man|net|player|throw
+⛹️‍♀️;woman bouncing ball;athletic|ball|basketball|bouncing|championship|dribble|net|player|throw|woman
+🏋️;person lifting weights;barbell|bodybuilder|deadlift|lifter|lifting|person|powerlifting|weight|weightlifter|weights|workout
+🏋️‍♂️;man lifting weights;barbell|bodybuilder|deadlift|lifter|lifting|man|powerlifting|weight|weightlifter|weights|workout
+🏋️‍♀️;woman lifting weights;barbell|bodybuilder|deadlift|lifter|lifting|powerlifting|weight|weightlifter|weights|woman|workout
+🚴;person biking;bicycle|bicyclist|bike|biking|cycle|cyclist|person|riding|sport
+🚴‍♂️;man biking;bicycle|bicyclist|bike|biking|cycle|cyclist|man|riding|sport
+🚴‍♀️;woman biking;bicycle|bicyclist|bike|biking|cycle|cyclist|riding|sport|woman
+🚵;person mountain biking;bicycle|bicyclist|bike|biking|cycle|cyclist|mountain|person|riding|sport
+🚵‍♂️;man mountain biking;bicycle|bicyclist|bike|biking|cycle|cyclist|man|mountain|riding|sport
+🚵‍♀️;woman mountain biking;bicycle|bicyclist|bike|biking|cycle|cyclist|mountain|riding|sport|woman
+🤸;person cartwheeling;active|cartwheel|cartwheeling|excited|flip|gymnastics|happy|person|somersault
+🤸‍♂️;man cartwheeling;active|cartwheel|cartwheeling|excited|flip|gymnastics|happy|man|somersault
+🤸‍♀️;woman cartwheeling;active|cartwheel|cartwheeling|excited|flip|gymnastics|happy|somersault|woman
+🤼;people wrestling;combat|duel|grapple|people|ring|tournament|wrestle|wrestling
+🤼‍♂️;men wrestling;combat|duel|grapple|men|ring|tournament|wrestle|wrestling
+🤼‍♀️;women wrestling;combat|duel|grapple|ring|tournament|women|wrestle|wrestling
+🤽;person playing water polo;person|playing|polo|sport|swimming|water|waterpolo
+🤽‍♂️;man playing water polo;man|playing|polo|sport|swimming|water|waterpolo
+🤽‍♀️;woman playing water polo;playing|polo|sport|swimming|water|waterpolo|woman
+🤾;person playing handball;athletics|ball|catch|chuck|handball|hurl|lob|person|pitch|playing|sport|throw|toss
+🤾‍♂️;man playing handball;athletics|ball|catch|chuck|handball|hurl|lob|man|pitch|playing|sport|throw|toss
+🤾‍♀️;woman playing handball;athletics|ball|catch|chuck|handball|hurl|lob|pitch|playing|sport|throw|toss|woman
+🤹;person juggling;act|balance|balancing|handle|juggle|juggling|manage|multitask|person|skill
+🤹‍♂️;man juggling;act|balance|balancing|handle|juggle|juggling|man|manage|multitask|skill
+🤹‍♀️;woman juggling;act|balance|balancing|handle|juggle|juggling|manage|multitask|skill|woman
+🧘;person in lotus position;cross|legged|legs|lotus|meditation|peace|person|position|relax|serenity|yoga|yogi|zen
+🧘‍♂️;man in lotus position;cross|legged|legs|lotus|man|meditation|peace|position|relax|serenity|yoga|yogi|zen
+🧘‍♀️;woman in lotus position;cross|legged|legs|lotus|meditation|peace|position|relax|serenity|woman|yoga|yogi|zen
+🛀;person taking bath;bath|bathtub|person|taking|tub
+🛌;person in bed;bed|bedtime|good|goodnight|hotel|nap|night|person|sleep|tired|zzz
+🧑‍🤝‍🧑;people holding hands;bae|bestie|bff|couple|dating|flirt|friends|hand|hold|people|twins
+👭;women holding hands;bae|bestie|bff|couple|dating|flirt|friends|girls|hand|hold|sisters|twins|women
+👫;woman and man holding hands;bae|bestie|bff|couple|dating|flirt|friends|hand|hold|man|twins|woman
+👬;men holding hands;bae|bestie|bff|boys|brothers|couple|dating|flirt|friends|hand|hold|men|twins
+💏;kiss;anniversary|babe|bae|couple|date|dating|heart|love|mwah|person|romance|together|xoxo
+👩‍❤️‍💋‍👨;kiss: woman, man;anniversary|babe|bae|couple|date|dating|heart|kiss|love|man|mwah|person|romance|together|woman|xoxo
+👨‍❤️‍💋‍👨;kiss: man, man;anniversary|babe|bae|couple|date|dating|heart|kiss|love|man|mwah|person|romance|together|xoxo
+👩‍❤️‍💋‍👩;kiss: woman, woman;anniversary|babe|bae|couple|date|dating|heart|kiss|love|mwah|person|romance|together|woman|xoxo
+💑;couple with heart;anniversary|babe|bae|couple|dating|heart|kiss|love|person|relationship|romance|together|you
+👩‍❤️‍👨;couple with heart: woman, man;anniversary|babe|bae|couple|dating|heart|kiss|love|man|person|relationship|romance|together|woman|you
+👨‍❤️‍👨;couple with heart: man, man;anniversary|babe|bae|couple|dating|heart|kiss|love|man|person|relationship|romance|together|you
+👩‍❤️‍👩;couple with heart: woman, woman;anniversary|babe|bae|couple|dating|heart|kiss|love|person|relationship|romance|together|woman|you
+👨‍👩‍👦;family: man, woman, boy;boy|child|family|man|woman
+👨‍👩‍👧;family: man, woman, girl;child|family|girl|man|woman
+👨‍👩‍👧‍👦;family: man, woman, girl, boy;boy|child|family|girl|man|woman
+👨‍👩‍👦‍👦;family: man, woman, boy, boy;boy|child|family|man|woman
+👨‍👩‍👧‍👧;family: man, woman, girl, girl;child|family|girl|man|woman
+👨‍👨‍👦;family: man, man, boy;boy|child|family|man
+👨‍👨‍👧;family: man, man, girl;child|family|girl|man
+👨‍👨‍👧‍👦;family: man, man, girl, boy;boy|child|family|girl|man
+👨‍👨‍👦‍👦;family: man, man, boy, boy;boy|child|family|man
+👨‍👨‍👧‍👧;family: man, man, girl, girl;child|family|girl|man
+👩‍👩‍👦;family: woman, woman, boy;boy|child|family|woman
+👩‍👩‍👧;family: woman, woman, girl;child|family|girl|woman
+👩‍👩‍👧‍👦;family: woman, woman, girl, boy;boy|child|family|girl|woman
+👩‍👩‍👦‍👦;family: woman, woman, boy, boy;boy|child|family|woman
+👩‍👩‍👧‍👧;family: woman, woman, girl, girl;child|family|girl|woman
+👨‍👦;family: man, boy;boy|child|family|man
+👨‍👦‍👦;family: man, boy, boy;boy|child|family|man
+👨‍👧;family: man, girl;child|family|girl|man
+👨‍👧‍👦;family: man, girl, boy;boy|child|family|girl|man
+👨‍👧‍👧;family: man, girl, girl;child|family|girl|man
+👩‍👦;family: woman, boy;boy|child|family|woman
+👩‍👦‍👦;family: woman, boy, boy;boy|child|family|woman
+👩‍👧;family: woman, girl;child|family|girl|woman
+👩‍👧‍👦;family: woman, girl, boy;boy|child|family|girl|woman
+👩‍👧‍👧;family: woman, girl, girl;child|family|girl|woman
+🗣️;speaking head;face|head|silhouette|speak|speaking
+👤;bust in silhouette;bust|mysterious|shadow|silhouette
+👥;busts in silhouette;bff|bust|busts|everyone|friend|friends|people|silhouette
+🫂;people hugging;comfort|embrace|farewell|friendship|goodbye|hello|hug|hugging|love|people|thanks
+👪;family;child
+🧑‍🧑‍🧒;family: adult, adult, child;adult|child|family
+🧑‍🧑‍🧒‍🧒;family: adult, adult, child, child;adult|child|family
+🧑‍🧒;family: adult, child;adult|child|family
+🧑‍🧒‍🧒;family: adult, child, child;adult|child|family
+👣;footprints;barefoot|clothing|footprint|omw|print|walk
+🫆;fingerprint;clue|crime|detective|forensics|identity|mystery|print|safety|trace
+🐵;monkey face;animal|banana|face|monkey
+🐒;monkey;animal|banana
+🦍;gorilla;animal
+🦧;orangutan;animal|ape|monkey
+🐶;dog face;adorbs|animal|dog|face|pet|puppies|puppy
+🐕;dog;animal|animals|dogs|pet
+🦮;guide dog;accessibility|animal|blind|dog|guide
+🐕‍🦺;service dog;accessibility|animal|assistance|dog|service
+🐩;poodle;animal|dog|fluffy
+🐺;wolf;animal|face
+🦊;fox;animal|face
+🦝;raccoon;animal|curious|sly
+🐱;cat face;animal|cat|face|kitten|kitty|pet
+🐈;cat;animal|animals|cats|kitten|pet
+🐈‍⬛;black cat;animal|black|cat|feline|halloween|meow|unlucky
+🦁;lion;alpha|animal|face|Leo|mane|order|rawr|roar|safari|strong|zodiac
+🐯;tiger face;animal|big|cat|face|predator|tiger
+🐅;tiger;animal|big|cat|predator|zoo
+🐆;leopard;animal|big|cat|predator|zoo
+🐴;horse face;animal|dressage|equine|face|farm|horse|horses
+🫎;moose;alces|animal|antlers|elk|mammal
+🫏;donkey;animal|ass|burro|hinny|mammal|mule|stubborn
+🐎;horse;animal|equestrian|farm|racehorse|racing
+🦄;unicorn;face
+🦓;zebra;animal|stripe
+🦌;deer;animal
+🦬;bison;animal|buffalo|herd|wisent
+🐮;cow face;animal|cow|face|farm|milk|moo
+🐂;ox;animal|animals|bull|farm|Taurus|zodiac
+🐃;water buffalo;animal|buffalo|water|zoo
+🐄;cow;animal|animals|farm|milk|moo
+🐷;pig face;animal|bacon|face|farm|pig|pork
+🐖;pig;animal|bacon|farm|pork|sow
+🐗;boar;animal|pig
+🐽;pig nose;animal|face|farm|nose|pig|smell|snout
+🐏;ram;animal|Aries|horns|male|sheep|zodiac|zoo
+🐑;ewe;animal|baa|farm|female|fluffy|lamb|sheep|wool
+🐐;goat;animal|Capricorn|farm|milk|zodiac
+🐪;camel;animal|desert|dromedary|hump|one
+🐫;two-hump camel;animal|bactrian|camel|desert|hump|two|two-hump
+🦙;llama;alpaca|animal|guanaco|vicuña|wool
+🦒;giraffe;animal|spots
+🐘;elephant;animal
+🦣;mammoth;animal|extinction|large|tusk|wooly
+🦏;rhinoceros;animal
+🦛;hippopotamus;animal|hippo
+🐭;mouse face;animal|face|mouse
+🐁;mouse;animal|animals
+🐀;rat;animal
+🐹;hamster;animal|face|pet
+🐰;rabbit face;animal|bunny|face|pet|rabbit
+🐇;rabbit;animal|bunny|pet
+🐿️;chipmunk;animal|squirrel
+🦫;beaver;animal|dam|teeth
+🦔;hedgehog;animal|spiny
+🦇;bat;animal|vampire
+🐻;bear;animal|face|grizzly|growl|honey
+🐻‍❄️;polar bear;animal|arctic|bear|polar|white
+🐨;koala;animal|australia|bear|down|face|marsupial|under
+🐼;panda;animal|bamboo|face
+🦥;sloth;lazy|slow
+🦦;otter;animal|fishing|playful
+🦨;skunk;animal|stink
+🦘;kangaroo;animal|joey|jump|marsupial
+🦡;badger;animal|honey|pester
+🐾;paw prints;feet|paw|paws|print|prints
+🦃;turkey;bird|gobble|thanksgiving
+🐔;chicken;animal|bird|ornithology
+🐓;rooster;animal|bird|ornithology
+🐣;hatching chick;animal|baby|bird|chick|egg|hatching
+🐤;baby chick;animal|baby|bird|chick|ornithology
+🐥;front-facing baby chick;animal|baby|bird|chick|front-facing|newborn|ornithology
+🐦;bird;animal|ornithology
+🐧;penguin;animal|antarctica|bird|ornithology
+🕊️;dove;bird|fly|ornithology|peace
+🦅;eagle;animal|bird|ornithology
+🦆;duck;animal|bird|ornithology
+🦢;swan;animal|bird|cygnet|duckling|ornithology|ugly
+🦉;owl;animal|bird|ornithology|wise
+🦤;dodo;animal|bird|extinction|large|ornithology
+🪶;feather;bird|flight|light|plumage
+🦩;flamingo;animal|bird|flamboyant|ornithology|tropical
+🦚;peacock;animal|bird|colorful|ornithology|ostentatious|peahen|pretty|proud
+🦜;parrot;animal|bird|ornithology|pirate|talk
+🪽;wing;angelic|ascend|aviation|bird|fly|flying|heavenly|mythology|soar
+🐦‍⬛;black bird;animal|beak|bird|black|caw|corvid|crow|ornithology|raven|rook
+🪿;goose;animal|bird|duck|flock|fowl|gaggle|gander|geese|honk|ornithology|silly
+🐦‍🔥;phoenix;ascend|ascension|emerge|fantasy|firebird|glory|immortal|rebirth|reincarnation|reinvent|renewal|revival|revive|rise|transform
+🐸;frog;animal|face
+🐊;crocodile;animal|zoo
+🐢;turtle;animal|terrapin|tortoise
+🦎;lizard;animal|reptile
+🐍;snake;animal|bearer|Ophiuchus|serpent|zodiac
+🐲;dragon face;animal|dragon|face|fairy|fairytale|tale
+🐉;dragon;animal|fairy|fairytale|knights|tale
+🦕;sauropod;brachiosaurus|brontosaurus|dinosaur|diplodocus
+🦖;T-Rex;dinosaur|Rex|T|Tyrannosaurus
+🐳;spouting whale;animal|beach|face|ocean|spouting|whale
+🐋;whale;animal|beach|ocean
+🐬;dolphin;animal|beach|flipper|ocean
+🫍;orca;marine|ocean|whale
+🦭;seal;animal|lion|ocean|sea
+🐟;fish;animal|dinner|fishes|fishing|Pisces|zodiac
+🐠;tropical fish;animal|fish|fishes|tropical
+🐡;blowfish;animal|fish
+🦈;shark;animal|fish
+🐙;octopus;animal|creature|ocean
+🐚;spiral shell;animal|beach|conch|sea|shell|spiral
+🪸;coral;change|climate|ocean|reef|sea
+🪼;jellyfish;animal|aquarium|burn|invertebrate|jelly|life|marine|ocean|ouch|plankton|sea|sting|stinger|tentacles
+🦀;crab;Cancer|zodiac
+🦞;lobster;animal|bisque|claws|seafood
+🦐;shrimp;food|shellfish|small
+🦑;squid;animal|food|mollusk
+🦪;oyster;diving|pearl
+🐌;snail;animal|escargot|garden|nature|slug
+🦋;butterfly;insect|pretty
+🐛;bug;animal|garden|insect
+🐜;ant;animal|garden|insect
+🐝;honeybee;animal|bee|bumblebee|honey|insect|nature|spring
+🪲;beetle;animal|bug|insect
+🐞;lady beetle;animal|beetle|garden|insect|lady|ladybird|ladybug|nature
+🦗;cricket;animal|bug|grasshopper|insect|Orthoptera
+🪳;cockroach;animal|insect|pest|roach
+🕷️;spider;animal|insect
+🕸️;spider web;spider|web
+🦂;scorpion;Scorpio|Scorpius|zodiac
+🦟;mosquito;bite|disease|fever|insect|malaria|pest|virus
+🪰;fly;animal|disease|insect|maggot|pest|rotting
+🪱;worm;animal|annelid|earthworm|parasite
+🦠;microbe;amoeba|bacteria|science|virus
+💐;bouquet;anniversary|birthday|date|flower|love|plant|romance
+🌸;cherry blossom;blossom|cherry|flower|plant|spring|springtime
+💮;white flower;flower|white
+🪷;lotus;beauty|Buddhism|calm|flower|Hinduism|peace|purity|serenity
+🏵️;rosette;plant
+🌹;rose;beauty|elegant|flower|love|plant|red|valentine
+🥀;wilted flower;dying|flower|wilted
+🌺;hibiscus;flower|plant
+🌻;sunflower;flower|outdoors|plant|sun
+🌼;blossom;buttercup|dandelion|flower|plant
+🌷;tulip;blossom|flower|growth|plant
+🪻;hyacinth;bloom|bluebonnet|flower|indigo|lavender|lilac|lupine|plant|purple|shrub|snapdragon|spring|violet
+🌱;seedling;plant|sapling|sprout|young
+🪴;potted plant;decor|grow|house|nurturing|plant|pot|potted
+🌲;evergreen tree;christmas|evergreen|forest|pine|tree
+🌳;deciduous tree;deciduous|forest|green|habitat|shedding|tree
+🌴;palm tree;beach|palm|plant|tree|tropical
+🌵;cactus;desert|drought|nature|plant
+🌾;sheaf of rice;ear|grain|grains|plant|rice|sheaf
+🌿;herb;leaf|plant
+☘️;shamrock;irish|plant
+🍀;four leaf clover;4|clover|four|four-leaf|irish|leaf|lucky|plant
+🍁;maple leaf;falling|leaf|maple
+🍂;fallen leaf;autumn|fall|fallen|falling|leaf
+🍃;leaf fluttering in wind;blow|flutter|fluttering|leaf|wind
+🪹;empty nest;branch|empty|home|nest|nesting
+🪺;nest with eggs;bird|branch|egg|eggs|nest|nesting
+🍄;mushroom;fungus|toadstool
+🪾;leafless tree;bare|barren|branches|dead|drought|leafless|tree|trunk|winter|wood
+🍇;grapes;Dionysus|fruit|grape
+🍈;melon;cantaloupe|fruit
+🍉;watermelon;fruit
+🍊;tangerine;c|citrus|fruit|nectarine|orange|vitamin
+🍋;lemon;citrus|fruit|sour
+🍋‍🟩;lime;acidity|citrus|cocktail|fruit|garnish|key|margarita|mojito|refreshing|salsa|sour|tangy|tequila|tropical|zest
+🍌;banana;fruit|potassium
+🍍;pineapple;colada|fruit|pina|tropical
+🥭;mango;food|fruit|tropical
+🍎;red apple;apple|diet|food|fruit|health|red|ripe
+🍏;green apple;apple|fruit|green
+🍐;pear;fruit
+🍑;peach;fruit
+🍒;cherries;berries|cherry|fruit|red
+🍓;strawberry;berry|fruit
+🫐;blueberries;berries|berry|bilberry|blue|blueberry|food|fruit
+🥝;kiwi fruit;food|fruit|kiwi
+🍅;tomato;food|fruit|vegetable
+🫒;olive;food
+🥥;coconut;colada|palm|piña
+🥑;avocado;food|fruit
+🍆;eggplant;aubergine|vegetable
+🥔;potato;food|vegetable
+🥕;carrot;food|vegetable
+🌽;ear of corn;corn|crops|ear|farm|maize|maze
+🌶️;hot pepper;hot|pepper
+🫑;bell pepper;bell|capsicum|food|pepper|vegetable
+🥒;cucumber;food|pickle|vegetable
+🥬;leafy green;bok|burgers|cabbage|choy|green|kale|leafy|lettuce|salad
+🥦;broccoli;cabbage|wild
+🧄;garlic;flavoring
+🧅;onion;flavoring
+🥜;peanuts;food|nut|peanut|vegetable
+🫘;beans;food|kidney|legume|small
+🌰;chestnut;almond|plant
+🫚;ginger root;beer|ginger|health|herb|natural|root|spice
+🫛;pea pod;beans|beanstalk|edamame|legume|pea|pod|soybean|vegetable|veggie
+🍄‍🟫;brown mushroom;food|fungi|fungus|mushroom|nature|pizza|portobello|shiitake|shroom|spore|sprout|toppings|truffle|vegetable|vegetarian|veggie
+🫜;root vegetable;beet|food|garden|radish|root|salad|turnip|vegetable|vegetarian
+🍞;bread;carbs|food|grain|loaf|restaurant|toast|wheat
+🥐;croissant;bread|breakfast|crescent|food|french|roll
+🥖;baguette bread;baguette|bread|food|french
+🫓;flatbread;arepa|bread|food|gordita|lavash|naan|pita
+🥨;pretzel;convoluted|twisted
+🥯;bagel;bakery|bread|breakfast|schmear
+🥞;pancakes;breakfast|crêpe|food|hotcake|pancake
+🧇;waffle;breakfast|indecisive|iron
+🧀;cheese wedge;cheese|wedge
+🍖;meat on bone;bone|meat
+🍗;poultry leg;bone|chicken|drumstick|hungry|leg|poultry|turkey
+🥩;cut of meat;chop|cut|lambchop|meat|porkchop|red|steak
+🥓;bacon;breakfast|food|meat
+🍔;hamburger;burger|eat|fast|food|hungry
+🍟;french fries;fast|food|french|fries
+🍕;pizza;cheese|food|hungry|pepperoni|slice
+🌭;hot dog;dog|frankfurter|hot|hotdog|sausage
+🥪;sandwich;bread
+🌮;taco;mexican
+🌯;burrito;mexican|wrap
+🫔;tamale;food|mexican|pamonha|wrapped
+🥙;stuffed flatbread;falafel|flatbread|food|gyro|kebab|stuffed
+🧆;falafel;chickpea|meatball
+🥚;egg;breakfast|food
+🍳;cooking;breakfast|easy|egg|fry|frying|over|pan|restaurant|side|sunny|up
+🥘;shallow pan of food;casserole|food|paella|pan|shallow
+🍲;pot of food;food|pot|soup|stew
+🫕;fondue;cheese|chocolate|food|melted|pot|ski
+🥣;bowl with spoon;bowl|breakfast|cereal|congee|oatmeal|porridge|spoon
+🥗;green salad;food|green|salad
+🍿;popcorn;corn|movie|pop
+🧈;butter;dairy
+🧂;salt;condiment|flavor|mad|salty|shaker|taste|upset
+🥫;canned food;can|canned|food
+🍱;bento box;bento|box|food
+🍘;rice cracker;cracker|food|rice
+🍙;rice ball;ball|food|Japanese|rice
+🍚;cooked rice;cooked|food|rice
+🍛;curry rice;curry|food|rice
+🍜;steaming bowl;bowl|chopsticks|food|noodle|pho|ramen|soup|steaming
+🍝;spaghetti;food|meatballs|pasta|restaurant
+🍠;roasted sweet potato;food|potato|roasted|sweet
+🍢;oden;food|kebab|restaurant|seafood|skewer|stick
+🍣;sushi;food
+🍤;fried shrimp;fried|prawn|shrimp|tempura
+🍥;fish cake with swirl;cake|fish|food|pastry|restaurant|swirl
+🥮;moon cake;autumn|cake|festival|moon|yuèbǐng
+🍡;dango;dessert|Japanese|skewer|stick|sweet
+🥟;dumpling;empanada|gyōza|jiaozi|pierogi|potsticker
+🥠;fortune cookie;cookie|fortune|prophecy
+🥡;takeout box;box|chopsticks|delivery|food|oyster|pail|takeout
+🍦;soft ice cream;cream|dessert|food|ice|icecream|restaurant|serve|soft|sweet
+🍧;shaved ice;dessert|ice|restaurant|shaved|sweet
+🍨;ice cream;cream|dessert|food|ice|restaurant|sweet
+🍩;doughnut;breakfast|dessert|donut|food|sweet
+🍪;cookie;chip|chocolate|dessert|sweet
+🎂;birthday cake;bday|birthday|cake|celebration|dessert|happy|pastry|sweet
+🍰;shortcake;cake|dessert|pastry|slice|sweet
+🧁;cupcake;bakery|dessert|sprinkles|sugar|sweet|treat
+🥧;pie;apple|filling|fruit|meat|pastry|pumpkin|slice
+🍫;chocolate bar;bar|candy|chocolate|dessert|halloween|sweet|tooth
+🍬;candy;cavities|dessert|halloween|restaurant|sweet|tooth|wrapper
+🍭;lollipop;candy|dessert|food|restaurant|sweet
+🍮;custard;dessert|pudding|sweet
+🍯;honey pot;barrel|bear|food|honey|honeypot|jar|pot|sweet
+🍼;baby bottle;babies|baby|birth|born|bottle|drink|infant|milk|newborn
+🥛;glass of milk;drink|glass|milk
+☕;hot beverage;beverage|cafe|caffeine|chai|coffee|drink|hot|morning|steaming|tea
+🫖;teapot;brew|drink|food|pot|tea
+🍵;teacup without handle;beverage|cup|drink|handle|oolong|tea|teacup
+🍶;sake;bar|beverage|bottle|cup|drink|restaurant
+🍾;bottle with popping cork;bar|bottle|cork|drink|popping
+🍷;wine glass;alcohol|bar|beverage|booze|club|drink|drinking|drinks|glass|restaurant|wine
+🍸;cocktail glass;alcohol|bar|booze|club|cocktail|drink|drinking|drinks|glass|mad|martini|men
+🍹;tropical drink;alcohol|bar|booze|club|cocktail|drink|drinking|drinks|drunk|mai|party|tai|tropical|tropics
+🍺;beer mug;alcohol|ale|bar|beer|booze|drink|drinking|drinks|mug|octoberfest|oktoberfest|pint|stein|summer
+🍻;clinking beer mugs;alcohol|bar|beer|booze|bottoms|cheers|clink|clinking|drinking|drinks|mugs
+🥂;clinking glasses;celebrate|clink|clinking|drink|glass|glasses
+🥃;tumbler glass;glass|liquor|scotch|shot|tumbler|whiskey|whisky
+🫗;pouring liquid;accident|drink|empty|glass|liquid|oops|pour|pouring|spill|water
+🥤;cup with straw;cup|drink|juice|malt|soda|soft|straw|water
+🧋;bubble tea;boba|bubble|food|milk|pearl|tea
+🧃;beverage box;beverage|box|juice|straw|sweet
+🧉;mate;drink
+🧊;ice;cold|cube|iceberg
+🥢;chopsticks;hashi|jeotgarak|kuaizi
+🍽️;fork and knife with plate;cooking|dinner|eat|fork|knife|plate
+🍴;fork and knife;breakfast|breaky|cooking|cutlery|delicious|dinner|eat|feed|food|fork|hungry|knife|lunch|restaurant|yum|yummy
+🥄;spoon;eat|tableware
+🔪;kitchen knife;chef|cooking|hocho|kitchen|knife|tool|weapon
+🫙;jar;condiment|container|empty|nothing|sauce|store
+🏺;amphora;Aquarius|cooking|drink|jug|tool|weapon|zodiac
+🌍;globe showing Europe-Africa;Africa|earth|Europe|Europe-Africa|globe|showing|world
+🌎;globe showing Americas;Americas|earth|globe|showing|world
+🌏;globe showing Asia-Australia;Asia|Asia-Australia|Australia|earth|globe|showing|world
+🌐;globe with meridians;earth|globe|internet|meridians|web|world|worldwide
+🗺️;world map;map|world
+🗾;map of Japan;Japan|map
+🧭;compass;direction|magnetic|navigation|orienteering
+🏔️;snow-capped mountain;cold|mountain|snow|snow-capped
+⛰️;mountain;
+🛘;landslide;avalanche|danger|disaster|earthquake|mountain|mudslide|rocks
+🌋;volcano;eruption|mountain|nature
+🗻;mount fuji;fuji|mount|mountain|nature
+🏕️;camping;
+🏖️;beach with umbrella;beach|umbrella
+🏜️;desert;
+🏝️;desert island;desert|island
+🏞️;national park;national|park
+🏟️;stadium;
+🏛️;classical building;building|classical
+🏗️;building construction;building|construction|crane
+🧱;brick;bricks|clay|mortar|wall
+🪨;rock;boulder|heavy|solid|stone|tough
+🪵;wood;log|lumber|timber
+🛖;hut;home|house|roundhouse|shelter|yurt
+🏘️;houses;house
+🏚️;derelict house;derelict|home|house
+🏠;house;building|country|heart|home|ranch|settle|simple|suburban|suburbia|where
+🏡;house with garden;building|country|garden|heart|home|house|ranch|settle|simple|suburban|suburbia|where
+🏢;office building;building|city|cubical|job|office
+🏣;Japanese post office;building|Japanese|office|post
+🏤;post office;building|European|office|post
+🏥;hospital;building|doctor|medicine
+🏦;bank;building
+🏨;hotel;building
+🏩;love hotel;building|hotel|love
+🏪;convenience store;24|building|convenience|hours|store
+🏫;school;building
+🏬;department store;building|department|store
+🏭;factory;building
+🏯;Japanese castle;building|castle|Japanese
+🏰;castle;building|European
+💒;wedding;chapel|hitched|nuptials|romance
+🗼;Tokyo tower;Tokyo|tower
+🗽;Statue of Liberty;liberty|new|ny|nyc|statue|york
+⛪;church;bless|chapel|Christian|cross|religion
+🕌;mosque;islam|masjid|Muslim|religion
+🛕;hindu temple;hindu|temple
+🕍;synagogue;Jew|Jewish|judaism|religion|temple
+⛩️;shinto shrine;religion|shinto|shrine
+🕋;kaaba;hajj|islam|Muslim|religion|umrah
+⛲;fountain;
+⛺;tent;camping
+🌁;foggy;fog
+🌃;night with stars;night|star|stars
+🏙️;cityscape;city
+🌄;sunrise over mountains;morning|mountains|over|sun|sunrise
+🌅;sunrise;morning|nature|sun
+🌆;cityscape at dusk;at|building|city|cityscape|dusk|evening|landscape|sun|sunset
+🌇;sunset;building|dusk|sun
+🌉;bridge at night;at|bridge|night
+♨️;hot springs;hot|hotsprings|springs|steaming
+🎠;carousel horse;carousel|entertainment|horse
+🛝;playground slide;amusement|park|play|playground|playing|slide|sliding|theme
+🎡;ferris wheel;amusement|ferris|park|theme|wheel
+🎢;roller coaster;amusement|coaster|park|roller|theme
+💈;barber pole;barber|cut|fresh|haircut|pole|shave
+🎪;circus tent;circus|tent
+🚂;locomotive;caboose|engine|railway|steam|train|trains|travel
+🚃;railway car;car|electric|railway|train|tram|travel|trolleybus
+🚄;high-speed train;high-speed|railway|shinkansen|speed|train
+🚅;bullet train;bullet|high-speed|nose|railway|shinkansen|speed|train|travel
+🚆;train;arrived|choo|railway
+🚇;metro;subway|travel
+🚈;light rail;arrived|light|monorail|rail|railway
+🚉;station;railway|train
+🚊;tram;trolleybus
+🚝;monorail;vehicle
+🚞;mountain railway;car|mountain|railway|trip
+🚋;tram car;bus|car|tram|trolley|trolleybus
+🚌;bus;school|vehicle
+🚍;oncoming bus;bus|cars|oncoming
+🚎;trolleybus;bus|tram|trolley
+🚐;minibus;bus|drive|van|vehicle
+🚑;ambulance;emergency|vehicle
+🚒;fire engine;engine|fire|truck
+🚓;police car;5–0|car|cops|patrol|police
+🚔;oncoming police car;car|oncoming|police
+🚕;taxi;cab|cabbie|car|drive|vehicle|yellow
+🚖;oncoming taxi;cab|cabbie|cars|drove|hail|oncoming|taxi|yellow
+🚗;automobile;car|driving|vehicle
+🚘;oncoming automobile;automobile|car|cars|drove|oncoming|vehicle
+🚙;sport utility vehicle;car|drive|recreational|sport|sportutility|utility|vehicle
+🛻;pickup truck;automobile|car|flatbed|pick-up|pickup|transportation|truck
+🚚;delivery truck;car|delivery|drive|truck|vehicle
+🚛;articulated lorry;articulated|car|drive|lorry|move|semi|truck|vehicle
+🚜;tractor;vehicle
+🏎️;racing car;car|racing|zoom
+🏍️;motorcycle;racing
+🛵;motor scooter;motor|scooter
+🦽;manual wheelchair;accessibility|manual|wheelchair
+🦼;motorized wheelchair;accessibility|motorized|wheelchair
+🛺;auto rickshaw;auto|rickshaw|tuk
+🚲;bicycle;bike|class|cycle|cycling|cyclist|gang|ride|spin|spinning
+🛴;kick scooter;kick|scooter
+🛹;skateboard;board|skate|skater|wheels
+🛼;roller skate;blades|roller|skate|skates|sport
+🚏;bus stop;bus|busstop|stop
+🛣️;motorway;highway|road
+🛤️;railway track;railway|track|train
+🛢️;oil drum;drum|oil
+⛽;fuel pump;diesel|fuel|fuelpump|gas|gasoline|pump|station
+🛞;wheel;car|circle|tire|turn|vehicle
+🚨;police car light;alarm|alert|beacon|car|emergency|light|police|revolving|siren
+🚥;horizontal traffic light;horizontal|intersection|light|signal|stop|stoplight|traffic
+🚦;vertical traffic light;drove|intersection|light|signal|stop|stoplight|traffic|vertical
+🛑;stop sign;octagonal|sign|stop
+🚧;construction;barrier
+⚓;anchor;ship|tool
+🛟;ring buoy;buoy|float|life|lifesaver|preserver|rescue|ring|safety|save|saver|swim
+⛵;sailboat;boat|resort|sailing|sea|yacht
+🛶;canoe;boat
+🚤;speedboat;billionaire|boat|lake|luxury|millionaire|summer|travel
+🛳️;passenger ship;passenger|ship
+⛴️;ferry;boat|passenger
+🛥️;motor boat;boat|motor|motorboat
+🚢;ship;boat|passenger|travel
+✈️;airplane;aeroplane|fly|flying|jet|plane|travel
+🛩️;small airplane;aeroplane|airplane|plane|small
+🛫;airplane departure;aeroplane|airplane|check-in|departure|departures|plane
+🛬;airplane arrival;aeroplane|airplane|arrival|arrivals|arriving|landing|plane
+🪂;parachute;hang-glide|parasail|skydive
+💺;seat;chair
+🚁;helicopter;copter|roflcopter|travel|vehicle
+🚟;suspension railway;railway|suspension
+🚠;mountain cableway;cable|cableway|gondola|lift|mountain|ski
+🚡;aerial tramway;aerial|cable|car|gondola|ropeway|tramway
+🛰️;satellite;space
+🚀;rocket;launch|rockets|space|travel
+🛸;flying saucer;aliens|extra|flying|saucer|terrestrial|UFO
+🛎️;bellhop bell;bell|bellhop|hotel
+🧳;luggage;bag|packing|roller|suitcase|travel
+⌛;hourglass done;done|hourglass|sand|time|timer
+⏳;hourglass not done;done|flowing|hourglass|hours|not|sand|timer|waiting|yolo
+⌚;watch;clock|time
+⏰;alarm clock;alarm|clock|hours|hrs|late|time|waiting
+⏱️;stopwatch;clock|time
+⏲️;timer clock;clock|timer
+🕰️;mantelpiece clock;clock|mantelpiece|time
+🕛;twelve o’clock;12|12:00|clock|o’clock|time|twelve
+🕧;twelve-thirty;12|12:30|30|clock|thirty|time|twelve
+🕐;one o’clock;1|1:00|clock|o’clock|one|time
+🕜;one-thirty;1|1:30|30|clock|one|thirty|time
+🕑;two o’clock;2|2:00|clock|o’clock|time|two
+🕝;two-thirty;2|2:30|30|clock|thirty|time|two
+🕒;three o’clock;3|3:00|clock|o’clock|three|time
+🕞;three-thirty;3|3:30|30|clock|thirty|three|time
+🕓;four o’clock;4|4:00|clock|four|o’clock|time
+🕟;four-thirty;30|4|4:30|clock|four|thirty|time
+🕔;five o’clock;5|5:00|clock|five|o’clock|time
+🕠;five-thirty;30|5|5:30|clock|five|thirty|time
+🕕;six o’clock;6|6:00|clock|o’clock|six|time
+🕡;six-thirty;30|6|6:30|clock|six|thirty
+🕖;seven o’clock;0|7|7:00|clock|o’clock|seven
+🕢;seven-thirty;30|7|7:30|clock|seven|thirty
+🕗;eight o’clock;8|8:00|clock|eight|o’clock|time
+🕣;eight-thirty;30|8|8:30|clock|eight|thirty|time
+🕘;nine o’clock;9|9:00|clock|nine|o’clock|time
+🕤;nine-thirty;30|9|9:30|clock|nine|thirty|time
+🕙;ten o’clock;0|10|10:00|clock|o’clock|ten
+🕥;ten-thirty;10|10:30|30|clock|ten|thirty|time
+🕚;eleven o’clock;11|11:00|clock|eleven|o’clock|time
+🕦;eleven-thirty;11|11:30|30|clock|eleven|thirty|time
+🌑;new moon;dark|moon|new|space
+🌒;waxing crescent moon;crescent|dreams|moon|space|waxing
+🌓;first quarter moon;first|moon|quarter|space
+🌔;waxing gibbous moon;gibbous|moon|space|waxing
+🌕;full moon;full|moon|space
+🌖;waning gibbous moon;gibbous|moon|space|waning
+🌗;last quarter moon;last|moon|quarter|space
+🌘;waning crescent moon;crescent|moon|space|waning
+🌙;crescent moon;crescent|moon|ramadan|space
+🌚;new moon face;face|moon|new|space
+🌛;first quarter moon face;face|first|moon|quarter|space
+🌜;last quarter moon face;dreams|face|last|moon|quarter
+🌡️;thermometer;weather
+☀️;sun;bright|rays|space|sunny|weather
+🌝;full moon face;bright|face|full|moon
+🌞;sun with face;beach|bright|day|face|heat|shine|sun|sunny|sunshine|weather
+🪐;ringed planet;planet|ringed|saturn|saturnine
+⭐;star;astronomy|medium|stars|white
+🌟;glowing star;glittery|glow|glowing|night|shining|sparkle|star|win
+🌠;shooting star;falling|night|shooting|space|star
+🌌;milky way;milky|space|way
+☁️;cloud;weather
+⛅;sun behind cloud;behind|cloud|cloudy|sun|weather
+⛈️;cloud with lightning and rain;cloud|lightning|rain|thunder|thunderstorm
+🌤️;sun behind small cloud;behind|cloud|sun|weather
+🌥️;sun behind large cloud;behind|cloud|sun|weather
+🌦️;sun behind rain cloud;behind|cloud|rain|sun|weather
+🌧️;cloud with rain;cloud|rain|weather
+🌨️;cloud with snow;cloud|cold|snow|weather
+🌩️;cloud with lightning;cloud|lightning|weather
+🌪️;tornado;cloud|weather|whirlwind
+🌫️;fog;cloud|weather
+🌬️;wind face;blow|cloud|face|wind
+🌀;cyclone;dizzy|hurricane|twister|typhoon|weather
+🌈;rainbow;gay|genderqueer|glbt|glbtq|lesbian|lgbt|lgbtq|lgbtqia|nature|pride|queer|rain|trans|transgender|weather
+🌂;closed umbrella;closed|clothing|rain|umbrella
+☂️;umbrella;clothing|rain
+☔;umbrella with rain drops;clothing|drop|drops|rain|umbrella|weather
+⛱️;umbrella on ground;ground|rain|sun|umbrella
+⚡;high voltage;danger|electric|electricity|high|lightning|nature|thunder|thunderbolt|voltage|zap
+❄️;snowflake;cold|snow|weather
+☃️;snowman;cold|man|snow
+⛄;snowman without snow;cold|man|snow|snowman
+☄️;comet;space
+🔥;fire;af|burn|flame|hot|lit|litaf|tool
+💧;droplet;cold|comic|drop|nature|sad|sweat|tear|water|weather
+🌊;water wave;nature|ocean|surf|surfer|surfing|water|wave
+🎃;jack-o-lantern;celebration|halloween|jack|lantern|pumpkin
+🎄;Christmas tree;celebration|Christmas|tree
+🎆;fireworks;boom|celebration|entertainment|yolo
+🎇;sparkler;boom|celebration|fireworks|sparkle
+🧨;firecracker;dynamite|explosive|fire|fireworks|light|pop|popping|spark
+✨;sparkles;*|magic|sparkle|star
+🎈;balloon;birthday|celebrate|celebration
+🎉;party popper;awesome|birthday|celebrate|celebration|excited|hooray|party|popper|tada|woohoo
+🎊;confetti ball;ball|celebrate|celebration|confetti|party|woohoo
+🎋;tanabata tree;banner|celebration|Japanese|tanabata|tree
+🎍;pine decoration;bamboo|celebration|decoration|Japanese|pine|plant
+🎎;Japanese dolls;celebration|doll|dolls|festival|Japanese
+🎏;carp streamer;carp|celebration|streamer
+🎐;wind chime;bell|celebration|chime|wind
+🎑;moon viewing ceremony;celebration|ceremony|moon|viewing
+🧧;red envelope;envelope|gift|good|hóngbāo|lai|luck|money|red|see
+🎀;ribbon;celebration
+🎁;wrapped gift;birthday|bow|box|celebration|christmas|gift|present|surprise|wrapped
+🎗️;reminder ribbon;celebration|reminder|ribbon
+🎟️;admission tickets;admission|ticket|tickets
+🎫;ticket;admission|stub
+🎖️;military medal;award|celebration|medal|military
+🏆;trophy;champion|champs|prize|slay|sport|victory|win|winning
+🏅;sports medal;award|gold|medal|sports|winner
+🥇;1st place medal;1st|first|gold|medal|place
+🥈;2nd place medal;2nd|medal|place|second|silver
+🥉;3rd place medal;3rd|bronze|medal|place|third
+⚽;soccer ball;ball|football|futbol|soccer|sport
+⚾;baseball;ball|sport
+🥎;softball;ball|glove|sports|underarm
+🏀;basketball;ball|hoop|sport
+🏐;volleyball;ball|game
+🏈;american football;american|ball|bowl|football|sport|super
+🏉;rugby football;ball|football|rugby|sport
+🎾;tennis;ball|racquet|sport
+🥏;flying disc;disc|flying|ultimate
+🎳;bowling;ball|game|sport|strike
+🏏;cricket game;ball|bat|cricket|game
+🏑;field hockey;ball|field|game|hockey|stick
+🏒;ice hockey;game|hockey|ice|puck|stick
+🥍;lacrosse;ball|goal|sports|stick
+🏓;ping pong;ball|bat|game|paddle|ping|pingpong|pong|table|tennis
+🏸;badminton;birdie|game|racquet|shuttlecock
+🥊;boxing glove;boxing|glove
+🥋;martial arts uniform;arts|judo|karate|martial|taekwondo|uniform
+🥅;goal net;goal|net
+⛳;flag in hole;flag|golf|hole|sport
+⛸️;ice skate;ice|skate|skating
+🎣;fishing pole;entertainment|fish|fishing|pole|sport
+🤿;diving mask;diving|mask|scuba|snorkeling
+🎽;running shirt;athletics|running|sash|shirt
+🎿;skis;ski|snow|sport
+🛷;sled;luge|sledge|sleigh|snow|toboggan
+🥌;curling stone;curling|game|rock|stone
+🎯;bullseye;bull|dart|direct|entertainment|game|hit|target
+🪀;yo-yo;fluctuate|toy
+🪁;kite;fly|soar
+🔫;water pistol;gun|handgun|pistol|revolver|tool|water|weapon
+🎱;pool 8 ball;8|8ball|ball|billiard|eight|game|pool
+🔮;crystal ball;ball|crystal|fairy|fairytale|fantasy|fortune|future|magic|tale|tool
+🪄;magic wand;magic|magician|wand|witch|wizard
+🎮;video game;controller|entertainment|game|video
+🕹️;joystick;game|video|videogame
+🎰;slot machine;casino|gamble|gambling|game|machine|slot|slots
+🎲;game die;dice|die|entertainment|game
+🧩;puzzle piece;clue|interlocking|jigsaw|piece|puzzle
+🧸;teddy bear;bear|plaything|plush|stuffed|teddy|toy
+🪅;piñata;candy|celebrate|celebration|cinco|de|festive|mayo|party|pinada|pinata
+🪩;mirror ball;ball|dance|disco|glitter|mirror|party
+🪆;nesting dolls;babooshka|baboushka|babushka|doll|dolls|matryoshka|nesting|russia
+♠️;spade suit;card|game|spade|suit
+♥️;heart suit;card|emotion|game|heart|hearts|suit
+♦️;diamond suit;card|diamond|game|suit
+♣️;club suit;card|club|clubs|game|suit
+♟️;chess pawn;chess|dupe|expendable|pawn
+🃏;joker;card|game|wildcard
+🀄;mahjong red dragon;dragon|game|mahjong|red
+🎴;flower playing cards;card|cards|flower|game|Japanese|playing
+🎭;performing arts;actor|actress|art|arts|entertainment|mask|performing|theater|theatre|thespian
+🖼️;framed picture;art|frame|framed|museum|painting|picture
+🎨;artist palette;art|artist|artsy|arty|colorful|creative|entertainment|museum|painter|painting|palette
+🧵;thread;needle|sewing|spool|string
+🪡;sewing needle;embroidery|needle|sew|sewing|stitches|sutures|tailoring|thread
+🧶;yarn;ball|crochet|knit
+🪢;knot;cord|rope|tangled|tie|twine|twist
+👓;glasses;clothing|eye|eyeglasses|eyewear
+🕶️;sunglasses;dark|eye|eyewear|glasses
+🥽;goggles;dive|eye|protection|scuba|swimming|welding
+🥼;lab coat;clothes|coat|doctor|dr|experiment|jacket|lab|scientist|white
+🦺;safety vest;emergency|safety|vest
+👔;necktie;clothing|employed|serious|shirt|tie
+👕;t-shirt;blue|casual|clothes|clothing|collar|dressed|shirt|shopping|tshirt|weekend
+👖;jeans;blue|casual|clothes|clothing|denim|dressed|pants|shopping|trousers|weekend
+🧣;scarf;bundle|cold|neck|up
+🧤;gloves;hand
+🧥;coat;brr|bundle|cold|jacket|up
+🧦;socks;stocking
+👗;dress;clothes|clothing|dressed|fancy|shopping
+👘;kimono;clothing|comfortable
+🥻;sari;clothing|dress
+🩱;one-piece swimsuit;bathing|one-piece|suit|swimsuit
+🩲;briefs;bathing|one-piece|suit|swimsuit|underwear
+🩳;shorts;bathing|pants|suit|swimsuit|underwear
+👙;bikini;bathing|beach|clothing|pool|suit|swim
+👚;woman’s clothes;blouse|clothes|clothing|collar|dress|dressed|lady|shirt|shopping|woman|woman’s
+🪭;folding hand fan;clack|clap|cool|cooling|dance|fan|flirt|flutter|folding|hand|hot|shy
+👛;purse;clothes|clothing|coin|dress|fancy|handbag|shopping
+👜;handbag;bag|clothes|clothing|dress|lady|purse|shopping
+👝;clutch bag;bag|clothes|clothing|clutch|dress|handbag|pouch|purse
+🛍️;shopping bags;bag|bags|hotel|shopping
+🎒;backpack;backpacking|bag|bookbag|education|rucksack|satchel|school
+🩴;thong sandal;beach|flip|flop|sandal|sandals|shoe|thong|thongs|zōri
+👞;man’s shoe;brown|clothes|clothing|feet|foot|kick|man|man’s|shoe|shoes|shopping
+👟;running shoe;athletic|clothes|clothing|fast|kick|running|shoe|shoes|shopping|sneaker|tennis
+🥾;hiking boot;backpacking|boot|brown|camping|hiking|outdoors|shoe
+🥿;flat shoe;ballet|comfy|flat|flats|shoe|slip-on|slipper
+👠;high-heeled shoe;clothes|clothing|dress|fashion|heel|heels|high-heeled|shoe|shoes|shopping|stiletto|woman
+👡;woman’s sandal;clothing|sandal|shoe|woman|woman’s
+🩰;ballet shoes;ballet|dance|shoes
+👢;woman’s boot;boot|clothes|clothing|dress|shoe|shoes|shopping|woman|woman’s
+🪮;hair pick;Afro|comb|groom|hair|pick
+👑;crown;clothing|family|king|medieval|queen|royal|royalty|win
+👒;woman’s hat;clothes|clothing|garden|hat|hats|party|woman|woman’s
+🎩;top hat;clothes|clothing|fancy|formal|hat|magic|top|tophat
+🎓;graduation cap;cap|celebration|clothing|education|graduation|hat|scholar
+🧢;billed cap;baseball|bent|billed|cap|dad|hat
+🪖;military helmet;army|helmet|military|soldier|war|warrior
+⛑️;rescue worker’s helmet;aid|cross|face|hat|helmet|rescue|worker’s
+📿;prayer beads;beads|clothing|necklace|prayer|religion
+💄;lipstick;cosmetics|date|makeup
+💍;ring;diamond|engaged|engagement|married|romance|shiny|sparkling|wedding
+💎;gem stone;diamond|engagement|gem|jewel|money|romance|stone|wedding
+🔇;muted speaker;mute|muted|quiet|silent|sound|speaker
+🔈;speaker low volume;low|soft|sound|speaker|volume
+🔉;speaker medium volume;medium|sound|speaker|volume
+🔊;speaker high volume;high|loud|music|sound|speaker|volume
+📢;loudspeaker;address|communication|loud|public|sound
+📣;megaphone;cheering|sound
+📯;postal horn;horn|post|postal
+🔔;bell;break|church|sound
+🔕;bell with slash;bell|forbidden|mute|no|not|prohibited|quiet|silent|slash|sound
+🎼;musical score;music|musical|note|score
+🎵;musical note;music|musical|note|sound
+🎶;musical notes;music|musical|note|notes|sound
+🎙️;studio microphone;mic|microphone|music|studio
+🎚️;level slider;level|music|slider
+🎛️;control knobs;control|knobs|music
+🎤;microphone;karaoke|mic|music|sing|sound
+🎧;headphone;earbud|sound
+📻;radio;entertainment|tbt|video
+🎷;saxophone;instrument|music|sax
+🎺;trumpet;instrument|music
+🪊;trombone;brass|instrument|jazz|music|sad|slide
+🪗;accordion;box|concertina|instrument|music|squeeze|squeezebox
+🎸;guitar;instrument|music|strat
+🎹;musical keyboard;instrument|keyboard|music|musical|piano
+🎻;violin;instrument|music
+🪕;banjo;music|stringed
+🥁;drum;drumsticks|music
+🪘;long drum;beat|conga|drum|instrument|long|rhythm
+🪇;maracas;cha|dance|instrument|music|party|percussion|rattle|shake|shaker
+🪈;flute;band|fife|flautist|instrument|marching|music|orchestra|piccolo|pipe|recorder|woodwind
+🪉;harp;cupid|instrument|love|music|orchestra
+📱;mobile phone;cell|communication|mobile|phone|telephone
+📲;mobile phone with arrow;arrow|build|call|cell|communication|mobile|phone|receive|telephone
+☎️;telephone;phone
+📞;telephone receiver;communication|phone|receiver|telephone|voip
+📟;pager;communication
+📠;fax machine;communication|fax|machine
+🔋;battery;
+🪫;low battery;battery|drained|electronic|energy|low|power
+🔌;electric plug;electric|electricity|plug
+💻;laptop;computer|office|pc|personal
+🖥️;desktop computer;computer|desktop|monitor
+🖨️;printer;computer
+⌨️;keyboard;computer
+🖱️;computer mouse;computer|mouse
+🖲️;trackball;computer
+💽;computer disk;computer|disk|minidisk|optical
+💾;floppy disk;computer|disk|floppy
+💿;optical disk;blu-ray|CD|computer|disk|dvd|optical
+📀;dvd;Blu-ray|cd|computer|disk|optical
+🧮;abacus;calculation|calculator
+🎥;movie camera;bollywood|camera|cinema|film|hollywood|movie|record
+🎞️;film frames;cinema|film|frames|movie
+📽️;film projector;cinema|film|movie|projector|video
+🎬;clapper board;action|board|clapper|movie
+📺;television;tv|video
+📷;camera;photo|selfie|snap|tbt|trip|video
+📸;camera with flash;camera|flash|video
+📹;video camera;camcorder|camera|tbt|video
+📼;videocassette;old|school|tape|vcr|vhs|video
+🔍;magnifying glass tilted left;glass|lab|left|left-pointing|magnifying|science|search|tilted|tool
+🔎;magnifying glass tilted right;contact|glass|lab|magnifying|right|right-pointing|science|search|tilted|tool
+🕯️;candle;light
+💡;light bulb;bulb|comic|electric|idea|light
+🔦;flashlight;electric|light|tool|torch
+🏮;red paper lantern;bar|lantern|light|paper|red|restaurant
+🪔;diya lamp;diya|lamp|light|oil
+📔;notebook with decorative cover;book|cover|decorated|decorative|education|notebook|school|writing
+📕;closed book;book|closed|education
+📖;open book;book|education|fantasy|knowledge|library|novels|open|reading
+📗;green book;book|education|fantasy|green|library|reading
+📘;blue book;blue|book|education|fantasy|library|reading
+📙;orange book;book|education|fantasy|library|orange|reading
+📚;books;book|education|fantasy|knowledge|library|novels|reading|school|study
+📓;notebook;
+📒;ledger;notebook
+📃;page with curl;curl|document|page|paper
+📜;scroll;paper
+📄;page facing up;document|facing|page|paper|up
+📰;newspaper;communication|news|paper
+🗞️;rolled-up newspaper;news|newspaper|paper|rolled|rolled-up
+📑;bookmark tabs;bookmark|mark|marker|tabs
+🔖;bookmark;mark
+🏷️;label;tag
+🪙;coin;dollar|euro|gold|metal|money|rich|silver|treasure
+💰;money bag;bag|bank|bet|billion|cash|cost|dollar|gold|million|money|moneybag|paid|paying|pot|rich|win
+🪎;treasure chest;gem|gold|jewels|loot|money|prize|silver|valuables|wealth
+💴;yen banknote;bank|banknote|bill|currency|money|note|yen
+💵;dollar banknote;bank|banknote|bill|currency|dollar|money|note
+💶;euro banknote;100|bank|banknote|bill|currency|euro|money|note|rich
+💷;pound banknote;bank|banknote|bill|billion|cash|currency|money|note|pound|pounds
+💸;money with wings;bank|banknote|bill|billion|cash|dollar|fly|million|money|note|pay|wings
+💳;credit card;bank|card|cash|charge|credit|money|pay
+🧾;receipt;accounting|bookkeeping|evidence|invoice|proof
+💹;chart increasing with yen;bank|chart|currency|graph|growth|increasing|market|money|rise|trend|upward|yen
+✉️;envelope;e-mail|email|letter
+📧;e-mail;email|letter|mail
+📨;incoming envelope;delivering|e-mail|email|envelope|incoming|letter|mail|receive|sent
+📩;envelope with arrow;arrow|communication|down|e-mail|email|envelope|letter|mail|outgoing|send|sent
+📤;outbox tray;box|email|letter|mail|outbox|sent|tray
+📥;inbox tray;box|email|inbox|letter|mail|receive|tray|zero
+📦;package;box|communication|delivery|parcel|shipping
+📫;closed mailbox with raised flag;closed|communication|flag|mail|mailbox|postbox|raised
+📪;closed mailbox with lowered flag;closed|flag|lowered|mail|mailbox|postbox
+📬;open mailbox with raised flag;flag|mail|mailbox|open|postbox|raised
+📭;open mailbox with lowered flag;flag|lowered|mail|mailbox|open|postbox
+📮;postbox;mail|mailbox
+🗳️;ballot box with ballot;ballot|box
+✏️;pencil;
+✒️;black nib;black|nib|pen
+🖋️;fountain pen;fountain|pen
+🖊️;pen;ballpoint
+🖌️;paintbrush;painting
+🖍️;crayon;
+📝;memo;communication|media|notes|pencil
+💼;briefcase;office
+📁;file folder;file|folder
+📂;open file folder;file|folder|open
+🗂️;card index dividers;card|dividers|index
+📅;calendar;date
+📆;tear-off calendar;calendar|tear-off
+🗒️;spiral notepad;note|notepad|pad|spiral
+🗓️;spiral calendar;calendar|pad|spiral
+📇;card index;card|index|old|rolodex|school
+📈;chart increasing;chart|data|graph|growth|increasing|right|trend|up|upward
+📉;chart decreasing;chart|data|decreasing|down|downward|graph|negative|trend
+📊;bar chart;bar|chart|data|graph
+📋;clipboard;do|list|notes
+📌;pushpin;collage|pin
+📍;round pushpin;location|map|pin|pushpin|round
+📎;paperclip;
+🖇️;linked paperclips;link|linked|paperclip|paperclips
+📏;straight ruler;angle|edge|math|ruler|straight|straightedge
+📐;triangular ruler;angle|math|rule|ruler|set|slide|triangle|triangular
+✂️;scissors;cut|cutting|paper|tool
+🗃️;card file box;box|card|file
+🗄️;file cabinet;cabinet|file|filing|paper
+🗑️;wastebasket;can|garbage|trash|waste
+🔒;locked;closed|lock|private
+🔓;unlocked;cracked|lock|open|unlock
+🔏;locked with pen;ink|lock|locked|nib|pen|privacy
+🔐;locked with key;bike|closed|key|lock|locked|secure
+🔑;key;keys|lock|major|password|unlock
+🗝️;old key;clue|key|lock|old
+🔨;hammer;home|improvement|repairs|tool
+🪓;axe;ax|chop|hatchet|split|wood
+⛏️;pick;hammer|mining|tool
+⚒️;hammer and pick;hammer|pick|tool
+🛠️;hammer and wrench;hammer|spanner|tool|wrench
+🗡️;dagger;knife|weapon
+⚔️;crossed swords;crossed|swords|weapon
+💣;bomb;boom|comic|dangerous|explosion|hot
+🪃;boomerang;rebound|repercussion|weapon
+🏹;bow and arrow;archer|archery|arrow|bow|Sagittarius|tool|weapon|zodiac
+🛡️;shield;weapon
+🪚;carpentry saw;carpenter|carpentry|cut|lumber|saw|tool|trim
+🔧;wrench;home|improvement|spanner|tool
+🪛;screwdriver;flathead|handy|screw|tool
+🔩;nut and bolt;bolt|home|improvement|nut|tool
+⚙️;gear;cog|cogwheel|tool
+🗜️;clamp;compress|tool|vice
+⚖️;balance scale;balance|justice|Libra|scale|scales|tool|weight|zodiac
+🦯;white cane;accessibility|blind|cane|probing|white
+🔗;link;links
+⛓️‍💥;broken chain;break|breaking|broken|chain|cuffs|freedom
+⛓️;chains;chain
+🪝;hook;catch|crook|curve|ensnare|point|selling
+🧰;toolbox;box|chest|mechanic|red|tool
+🧲;magnet;attraction|horseshoe|magnetic|negative|positive|shape|u
+🪜;ladder;climb|rung|step
+🪏;shovel;bury|dig|garden|hole|plant|scoop|snow|spade
+⚗️;alembic;chemistry|tool
+🧪;test tube;chemist|chemistry|experiment|lab|science|test|tube
+🧫;petri dish;bacteria|biologist|biology|culture|dish|lab|petri
+🧬;dna;biologist|evolution|gene|genetics|life
+🔬;microscope;experiment|lab|science|tool
+🔭;telescope;contact|extraterrestrial|science|tool
+📡;satellite antenna;aliens|antenna|contact|dish|satellite|science
+💉;syringe;doctor|flu|medicine|needle|shot|sick|tool|vaccination
+🩸;drop of blood;bleed|blood|donation|drop|injury|medicine|menstruation
+💊;pill;doctor|drugs|medicated|medicine|pills|sick|vitamin
+🩹;adhesive bandage;adhesive|bandage
+🩼;crutch;aid|cane|disability|help|hurt|injured|mobility|stick
+🩺;stethoscope;doctor|heart|medicine
+🩻;x-ray;bones|doctor|medical|skeleton|skull|xray
+🚪;door;back|closet|front
+🛗;elevator;accessibility|hoist|lift
+🪞;mirror;makeup|reflection|reflector|speculum
+🪟;window;air|frame|fresh|opening|transparent|view
+🛏️;bed;hotel|sleep
+🛋️;couch and lamp;couch|hotel|lamp
+🪑;chair;seat|sit
+🚽;toilet;bathroom
+🪠;plunger;cup|force|plumber|poop|suction|toilet
+🚿;shower;water
+🛁;bathtub;bath
+🪤;mouse trap;bait|cheese|lure|mouse|mousetrap|snare|trap
+🪒;razor;sharp|shave
+🧴;lotion bottle;bottle|lotion|moisturizer|shampoo|sunscreen
+🧷;safety pin;diaper|pin|punk|rock|safety
+🧹;broom;cleaning|sweeping|witch
+🧺;basket;farming|laundry|picnic
+🧻;roll of paper;paper|roll|toilet|towels
+🪣;bucket;cask|pail|vat
+🧼;soap;bar|bathing|clean|cleaning|lather|soapdish
+🫧;bubbles;bubble|burp|clean|floating|pearl|soap|underwater
+🪥;toothbrush;bathroom|brush|clean|dental|hygiene|teeth|toiletry
+🧽;sponge;absorbing|cleaning|porous|soak
+🧯;fire extinguisher;extinguish|extinguisher|fire|quench
+🛒;shopping cart;cart|shopping|trolley
+🚬;cigarette;smoking
+⚰️;coffin;dead|death|vampire
+🪦;headstone;cemetery|dead|grave|graveyard|memorial|rip|tomb|tombstone
+⚱️;funeral urn;ashes|death|funeral|urn
+🧿;nazar amulet;amulet|bead|blue|charm|evil-eye|nazar|talisman
+🪬;hamsa;amulet|Fatima|fortune|guide|hand|Mary|Miriam|palm|protect|protection
+🗿;moai;face|moyai|statue|stoneface|travel
+🪧;placard;card|demonstration|notice|picket|plaque|protest|sign
+🪪;identification card;card|credentials|document|ID|identification|license|security
+🏧;ATM sign;ATM|automated|bank|cash|money|sign|teller
+🚮;litter in bin sign;bin|litter|litterbin|sign
+🚰;potable water;drinking|potable|water
+♿;wheelchair symbol;access|handicap|symbol|wheelchair
+🚹;men’s room;bathroom|lavatory|man|men’s|restroom|room|toilet|WC
+🚺;women’s room;bathroom|lavatory|restroom|room|toilet|WC|woman|women’s
+🚻;restroom;bathroom|lavatory|toilet|WC
+🚼;baby symbol;baby|changing|symbol
+🚾;water closet;bathroom|closet|lavatory|restroom|toilet|water|WC
+🛂;passport control;control|passport
+🛃;customs;packing
+🛄;baggage claim;arrived|baggage|bags|case|checked|claim|journey|packing|plane|ready|travel|trip
+🛅;left luggage;baggage|case|left|locker|luggage
+⚠️;warning;caution
+🚸;children crossing;child|children|crossing|pedestrian|traffic
+⛔;no entry;do|entry|fail|forbidden|no|not|pass|prohibited|traffic
+🚫;prohibited;entry|forbidden|no|not|smoke
+🚳;no bicycles;bicycle|bicycles|bike|forbidden|no|not|prohibited
+🚭;no smoking;forbidden|no|not|prohibited|smoke|smoking
+🚯;no littering;forbidden|litter|littering|no|not|prohibited
+🚱;non-potable water;dry|non-drinking|non-potable|prohibited|water
+🚷;no pedestrians;forbidden|no|not|pedestrian|pedestrians|prohibited
+📵;no mobile phones;cell|forbidden|mobile|no|not|phone|phones|prohibited|telephone
+🔞;no one under eighteen;18|age|eighteen|forbidden|no|not|one|prohibited|restriction|underage
+☢️;radioactive;sign
+☣️;biohazard;sign
+⬆️;up arrow;arrow|cardinal|direction|north|up
+↗️;up-right arrow;arrow|direction|intercardinal|northeast|up-right
+➡️;right arrow;arrow|cardinal|direction|east|right
+↘️;down-right arrow;arrow|direction|down-right|intercardinal|southeast
+⬇️;down arrow;arrow|cardinal|direction|down|south
+↙️;down-left arrow;arrow|direction|down-left|intercardinal|southwest
+⬅️;left arrow;arrow|cardinal|direction|left|west
+↖️;up-left arrow;arrow|direction|intercardinal|northwest|up-left
+↕️;up-down arrow;arrow|up-down
+↔️;left-right arrow;arrow|left-right
+↩️;right arrow curving left;arrow|curving|left|right
+↪️;left arrow curving right;arrow|curving|left|right
+⤴️;right arrow curving up;arrow|curving|right|up
+⤵️;right arrow curving down;arrow|curving|down|right
+🔃;clockwise vertical arrows;arrow|arrows|clockwise|refresh|reload|vertical
+🔄;counterclockwise arrows button;again|anticlockwise|arrow|arrows|button|counterclockwise|deja|refresh|rewindershins|vu
+🔙;BACK arrow;arrow|BACK
+🔚;END arrow;arrow|END
+🔛;ON! arrow;arrow|mark|ON!
+🔜;SOON arrow;arrow|brb|omw|SOON
+🔝;TOP arrow;arrow|homie|TOP|up
+🛐;place of worship;place|pray|religion|worship
+⚛️;atom symbol;atheist|atom|symbol
+🕉️;om;Hindu|religion
+✡️;star of David;David|Jew|Jewish|judaism|religion|star
+☸️;wheel of dharma;Buddhist|dharma|religion|wheel
+☯️;yin yang;difficult|lives|religion|tao|taoist|total|yang|yin|yinyang
+✝️;latin cross;christ|Christian|cross|latin|religion
+☦️;orthodox cross;Christian|cross|orthodox|religion
+☪️;star and crescent;crescent|islam|Muslim|ramadan|religion|star
+☮️;peace symbol;healing|peace|peaceful|symbol
+🕎;menorah;candelabrum|candlestick|hanukkah|jewish|judaism|religion
+🔯;dotted six-pointed star;dotted|fortune|jewish|judaism|six-pointed|star
+🪯;khanda;Deg|Fateh|Khalsa|religion|Sikh|Sikhism|Tegh
+♈;Aries;horoscope|ram|zodiac
+♉;Taurus;bull|horoscope|ox|zodiac
+♊;Gemini;horoscope|twins|zodiac
+♋;Cancer;crab|horoscope|zodiac
+♌;Leo;horoscope|lion|zodiac
+♍;Virgo;horoscope|zodiac
+♎;Libra;balance|horoscope|justice|scales|zodiac
+♏;Scorpio;horoscope|scorpion|Scorpius|zodiac
+♐;Sagittarius;archer|horoscope|zodiac
+♑;Capricorn;goat|horoscope|zodiac
+♒;Aquarius;bearer|horoscope|water|zodiac
+♓;Pisces;fish|horoscope|zodiac
+⛎;Ophiuchus;bearer|serpent|snake|zodiac
+🔀;shuffle tracks button;arrow|button|crossed|shuffle|tracks
+🔁;repeat button;arrow|button|clockwise|repeat
+🔂;repeat single button;arrow|button|clockwise|once|repeat|single
+▶️;play button;arrow|button|play|right|triangle
+⏩;fast-forward button;arrow|button|double|fast|fast-forward|forward
+⏭️;next track button;arrow|button|next|scene|track|triangle
+⏯️;play or pause button;arrow|button|pause|play|right|triangle
+◀️;reverse button;arrow|button|left|reverse|triangle
+⏪;fast reverse button;arrow|button|double|fast|reverse|rewind
+⏮️;last track button;arrow|button|last|previous|scene|track|triangle
+🔼;upwards button;arrow|button|red|up|upwards
+⏫;fast up button;arrow|button|double|fast|up
+🔽;downwards button;arrow|button|down|downwards|red
+⏬;fast down button;arrow|button|double|down|fast
+⏸️;pause button;bar|button|double|pause|vertical
+⏹️;stop button;button|square|stop
+⏺️;record button;button|circle|record
+⏏️;eject button;button|eject
+🎦;cinema;camera|film|movie
+🔅;dim button;brightness|button|dim|low
+🔆;bright button;bright|brightness|button|light
+📶;antenna bars;antenna|bar|bars|cell|communication|mobile|phone|signal|telephone
+🛜;wireless;broadband|computer|connectivity|hotspot|internet|network|router|smartphone|wi-fi|wifi|wlan
+📳;vibration mode;cell|communication|mobile|mode|phone|telephone|vibration
+📴;mobile phone off;cell|mobile|off|phone|telephone
+♀️;female sign;female|sign|woman
+♂️;male sign;male|man|sign
+⚧️;transgender symbol;symbol|transgender
+✖️;multiply;×|cancel|multiplication|sign|x
+➕;plus;+
+➖;minus;-|−|heavy|math|sign
+➗;divide;÷|division|heavy|math|sign
+🟰;heavy equals sign;answer|equal|equality|equals|heavy|math|sign
+♾️;infinity;forever|unbounded|universal
+‼️;double exclamation mark;!|!!|bangbang|double|exclamation|mark|punctuation
+⁉️;exclamation question mark;!|!?|?|exclamation|interrobang|mark|punctuation|question
+❓;red question mark;?|mark|punctuation|question|red
+❔;white question mark;?|mark|outlined|punctuation|question|white
+❕;white exclamation mark;!|exclamation|mark|outlined|punctuation|white
+❗;red exclamation mark;!|exclamation|mark|punctuation|red
+〰️;wavy dash;dash|punctuation|wavy
+💱;currency exchange;bank|currency|exchange|money
+💲;heavy dollar sign;billion|cash|charge|currency|dollar|heavy|million|money|pay|sign
+⚕️;medical symbol;aesculapius|medical|medicine|staff|symbol
+♻️;recycling symbol;recycle|recycling|symbol
+⚜️;fleur-de-lis;knights
+🔱;trident emblem;anchor|emblem|poseidon|ship|tool|trident
+📛;name badge;badge|name
+🔰;Japanese symbol for beginner;beginner|chevron|green|Japanese|leaf|symbol|tool|yellow
+⭕;hollow red circle;circle|heavy|hollow|large|o|red
+✅;check mark button;✓|button|check|checked|checkmark|complete|completed|done|fixed|mark|tick
+☑️;check box with check;✓|ballot|box|check|checked|done|off|tick
+✔️;check mark;✓|check|checked|checkmark|done|heavy|mark|tick
+❌;cross mark;×|cancel|cross|mark|multiplication|multiply|x
+❎;cross mark button;×|button|cross|mark|multiplication|multiply|square|x
+➰;curly loop;curl|curly|loop
+➿;double curly loop;curl|curly|double|loop
+〽️;part alternation mark;alternation|mark|part
+✳️;eight-spoked asterisk;*|asterisk|eight-spoked
+✴️;eight-pointed star;*|eight-pointed|star
+❇️;sparkle;*
+©️;copyright;C
+®️;registered;R
+™️;trade mark;mark|TM|trade|trademark
+🫟;splatter;drip|holi|ink|liquid|mess|paint|spill|stain
+*️⃣;keycap: *;keycap
+0️⃣;keycap: 0;0|keycap|zero
+1️⃣;keycap: 1;1|keycap|one
+2️⃣;keycap: 2;2|keycap|two
+3️⃣;keycap: 3;3|keycap|three
+4️⃣;keycap: 4;4|four|keycap
+5️⃣;keycap: 5;5|five|keycap
+6️⃣;keycap: 6;6|keycap|six
+7️⃣;keycap: 7;7|keycap|seven
+8️⃣;keycap: 8;8|eight|keycap
+9️⃣;keycap: 9;9|keycap|nine
+🔟;keycap: 10;keycap
+🔠;input latin uppercase;ABCD|input|latin|letters|uppercase
+🔡;input latin lowercase;abcd|input|latin|letters|lowercase
+🔢;input numbers;1234|input|numbers
+🔣;input symbols;&|%|♪|〒|input|symbols
+🔤;input latin letters;abc|alphabet|input|latin|letters
+🅰️;A button (blood type);blood|button|type
+🆎;AB button (blood type);AB|blood|button|type
+🅱️;B button (blood type);B|blood|button|type
+🆑;CL button;button|CL
+🆒;COOL button;button|COOL
+🆓;FREE button;button|FREE
+ℹ️;information;I
+🆔;ID button;button|ID|identity
+Ⓜ️;circled M;circle|circled|M
+🆕;NEW button;button|NEW
+🆖;NG button;button|NG
+🅾️;O button (blood type);blood|button|O|type
+🆗;OK button;button|OK|okay
+🅿️;P button;button|P|parking
+🆘;SOS button;button|help|SOS
+🆙;UP! button;button|mark|UP|UP!
+🆚;VS button;button|versus|VS
+🈁;Japanese “here” button;button|here|Japanese|katakana
+🈂️;Japanese “service charge” button;button|charge|Japanese|katakana|service
+🈷️;Japanese “monthly amount” button;amount|button|ideograph|Japanese|monthly
+🈶;Japanese “not free of charge” button;button|charge|free|ideograph|Japanese|not
+🈯;Japanese “reserved” button;button|ideograph|Japanese|reserved
+🉐;Japanese “bargain” button;bargain|button|ideograph|Japanese
+🈹;Japanese “discount” button;button|discount|ideograph|Japanese
+🈚;Japanese “free of charge” button;button|charge|free|ideograph|Japanese
+🈲;Japanese “prohibited” button;button|ideograph|Japanese|prohibited
+🉑;Japanese “acceptable” button;acceptable|button|ideograph|Japanese
+🈸;Japanese “application” button;application|button|ideograph|Japanese
+🈴;Japanese “passing grade” button;button|grade|ideograph|Japanese|passing
+🈳;Japanese “vacancy” button;button|ideograph|Japanese|vacancy
+㊗️;Japanese “congratulations” button;button|congratulations|ideograph|Japanese
+㊙️;Japanese “secret” button;button|ideograph|Japanese|secret
+🈺;Japanese “open for business” button;business|button|ideograph|Japanese|open
+🈵;Japanese “no vacancy” button;button|ideograph|Japanese|no|vacancy
+🔴;red circle;circle|geometric|red
+🟠;orange circle;circle|orange
+🟡;yellow circle;circle|yellow
+🟢;green circle;circle|green
+🔵;blue circle;blue|circle|geometric
+🟣;purple circle;circle|purple
+🟤;brown circle;brown|circle
+⚫;black circle;black|circle|geometric
+⚪;white circle;circle|geometric|white
+🟥;red square;card|penalty|red|square
+🟧;orange square;orange|square
+🟨;yellow square;card|penalty|square|yellow
+🟩;green square;green|square
+🟦;blue square;blue|square
+🟪;purple square;purple|square
+🟫;brown square;brown|square
+⬛;black large square;black|geometric|large|square
+⬜;white large square;geometric|large|square|white
+◼️;black medium square;black|geometric|medium|square
+◻️;white medium square;geometric|medium|square|white
+◾;black medium-small square;black|geometric|medium-small|square
+◽;white medium-small square;geometric|medium-small|square|white
+▪️;black small square;black|geometric|small|square
+▫️;white small square;geometric|small|square|white
+🔶;large orange diamond;diamond|geometric|large|orange
+🔷;large blue diamond;blue|diamond|geometric|large
+🔸;small orange diamond;diamond|geometric|orange|small
+🔹;small blue diamond;blue|diamond|geometric|small
+🔺;red triangle pointed up;geometric|pointed|red|triangle|up
+🔻;red triangle pointed down;down|geometric|pointed|red|triangle
+💠;diamond with a dot;comic|diamond|dot|geometric
+🔘;radio button;button|geometric|radio
+🔳;white square button;button|geometric|outlined|square|white
+🔲;black square button;black|button|geometric|square
+🏁;chequered flag;checkered|chequered|finish|flag|flags|game|race|racing|sport|win
+🚩;triangular flag;construction|flag|golf|post|triangular
+🎌;crossed flags;celebration|cross|crossed|flags|Japanese
+🏴;black flag;black|flag|waving
+🏳️;white flag;flag|waving|white
+🏳️‍🌈;rainbow flag;bisexual|flag|gay|genderqueer|glbt|glbtq|lesbian|lgbt|lgbtq|lgbtqia|pride|queer|rainbow|trans|transgender
+🏳️‍⚧️;transgender flag;blue|flag|light|pink|transgender|white
+🏴‍☠️;pirate flag;flag|Jolly|pirate|plunder|Roger|treasure
+🇦🇨;flag: Ascension Island;flag
+🇦🇩;flag: Andorra;flag
+🇦🇪;flag: United Arab Emirates;flag
+🇦🇫;flag: Afghanistan;flag
+🇦🇬;flag: Antigua & Barbuda;flag
+🇦🇮;flag: Anguilla;flag
+🇦🇱;flag: Albania;flag
+🇦🇲;flag: Armenia;flag
+🇦🇴;flag: Angola;flag
+🇦🇶;flag: Antarctica;flag
+🇦🇷;flag: Argentina;flag
+🇦🇸;flag: American Samoa;flag
+🇦🇹;flag: Austria;flag
+🇦🇺;flag: Australia;flag
+🇦🇼;flag: Aruba;flag
+🇦🇽;flag: Åland Islands;flag
+🇦🇿;flag: Azerbaijan;flag
+🇧🇦;flag: Bosnia & Herzegovina;flag
+🇧🇧;flag: Barbados;flag
+🇧🇩;flag: Bangladesh;flag
+🇧🇪;flag: Belgium;flag
+🇧🇫;flag: Burkina Faso;flag
+🇧🇬;flag: Bulgaria;flag
+🇧🇭;flag: Bahrain;flag
+🇧🇮;flag: Burundi;flag
+🇧🇯;flag: Benin;flag
+🇧🇱;flag: St. Barthélemy;flag
+🇧🇲;flag: Bermuda;flag
+🇧🇳;flag: Brunei;flag
+🇧🇴;flag: Bolivia;flag
+🇧🇶;flag: Caribbean Netherlands;flag
+🇧🇷;flag: Brazil;flag
+🇧🇸;flag: Bahamas;flag
+🇧🇹;flag: Bhutan;flag
+🇧🇻;flag: Bouvet Island;flag
+🇧🇼;flag: Botswana;flag
+🇧🇾;flag: Belarus;flag
+🇧🇿;flag: Belize;flag
+🇨🇦;flag: Canada;flag
+🇨🇨;flag: Cocos (Keeling) Islands;flag
+🇨🇩;flag: Congo - Kinshasa;flag
+🇨🇫;flag: Central African Republic;flag
+🇨🇬;flag: Congo - Brazzaville;flag
+🇨🇭;flag: Switzerland;flag
+🇨🇮;flag: Côte d’Ivoire;flag
+🇨🇰;flag: Cook Islands;flag
+🇨🇱;flag: Chile;flag
+🇨🇲;flag: Cameroon;flag
+🇨🇳;flag: China;flag
+🇨🇴;flag: Colombia;flag
+🇨🇵;flag: Clipperton Island;flag
+🇨🇶;flag: Sark;flag
+🇨🇷;flag: Costa Rica;flag
+🇨🇺;flag: Cuba;flag
+🇨🇻;flag: Cape Verde;flag
+🇨🇼;flag: Curaçao;flag
+🇨🇽;flag: Christmas Island;flag
+🇨🇾;flag: Cyprus;flag
+🇨🇿;flag: Czechia;flag
+🇩🇪;flag: Germany;flag
+🇩🇬;flag: Diego Garcia;flag
+🇩🇯;flag: Djibouti;flag
+🇩🇰;flag: Denmark;flag
+🇩🇲;flag: Dominica;flag
+🇩🇴;flag: Dominican Republic;flag
+🇩🇿;flag: Algeria;flag
+🇪🇦;flag: Ceuta & Melilla;flag
+🇪🇨;flag: Ecuador;flag
+🇪🇪;flag: Estonia;flag
+🇪🇬;flag: Egypt;flag
+🇪🇭;flag: Western Sahara;flag
+🇪🇷;flag: Eritrea;flag
+🇪🇸;flag: Spain;flag
+🇪🇹;flag: Ethiopia;flag
+🇪🇺;flag: European Union;flag
+🇫🇮;flag: Finland;flag
+🇫🇯;flag: Fiji;flag
+🇫🇰;flag: Falkland Islands;flag
+🇫🇲;flag: Micronesia;flag
+🇫🇴;flag: Faroe Islands;flag
+🇫🇷;flag: France;flag
+🇬🇦;flag: Gabon;flag
+🇬🇧;flag: United Kingdom;flag
+🇬🇩;flag: Grenada;flag
+🇬🇪;flag: Georgia;flag
+🇬🇫;flag: French Guiana;flag
+🇬🇬;flag: Guernsey;flag
+🇬🇭;flag: Ghana;flag
+🇬🇮;flag: Gibraltar;flag
+🇬🇱;flag: Greenland;flag
+🇬🇲;flag: Gambia;flag
+🇬🇳;flag: Guinea;flag
+🇬🇵;flag: Guadeloupe;flag
+🇬🇶;flag: Equatorial Guinea;flag
+🇬🇷;flag: Greece;flag
+🇬🇸;flag: South Georgia & South Sandwich Islands;flag
+🇬🇹;flag: Guatemala;flag
+🇬🇺;flag: Guam;flag
+🇬🇼;flag: Guinea-Bissau;flag
+🇬🇾;flag: Guyana;flag
+🇭🇰;flag: Hong Kong SAR China;flag
+🇭🇲;flag: Heard & McDonald Islands;flag
+🇭🇳;flag: Honduras;flag
+🇭🇷;flag: Croatia;flag
+🇭🇹;flag: Haiti;flag
+🇭🇺;flag: Hungary;flag
+🇮🇨;flag: Canary Islands;flag
+🇮🇩;flag: Indonesia;flag
+🇮🇪;flag: Ireland;flag
+🇮🇱;flag: Israel;flag
+🇮🇲;flag: Isle of Man;flag
+🇮🇳;flag: India;flag
+🇮🇴;flag: British Indian Ocean Territory;flag
+🇮🇶;flag: Iraq;flag
+🇮🇷;flag: Iran;flag
+🇮🇸;flag: Iceland;flag
+🇮🇹;flag: Italy;flag
+🇯🇪;flag: Jersey;flag
+🇯🇲;flag: Jamaica;flag
+🇯🇴;flag: Jordan;flag
+🇯🇵;flag: Japan;flag
+🇰🇪;flag: Kenya;flag
+🇰🇬;flag: Kyrgyzstan;flag
+🇰🇭;flag: Cambodia;flag
+🇰🇮;flag: Kiribati;flag
+🇰🇲;flag: Comoros;flag
+🇰🇳;flag: St. Kitts & Nevis;flag
+🇰🇵;flag: North Korea;flag
+🇰🇷;flag: South Korea;flag
+🇰🇼;flag: Kuwait;flag
+🇰🇾;flag: Cayman Islands;flag
+🇰🇿;flag: Kazakhstan;flag
+🇱🇦;flag: Laos;flag
+🇱🇧;flag: Lebanon;flag
+🇱🇨;flag: St. Lucia;flag
+🇱🇮;flag: Liechtenstein;flag
+🇱🇰;flag: Sri Lanka;flag
+🇱🇷;flag: Liberia;flag
+🇱🇸;flag: Lesotho;flag
+🇱🇹;flag: Lithuania;flag
+🇱🇺;flag: Luxembourg;flag
+🇱🇻;flag: Latvia;flag
+🇱🇾;flag: Libya;flag
+🇲🇦;flag: Morocco;flag
+🇲🇨;flag: Monaco;flag
+🇲🇩;flag: Moldova;flag
+🇲🇪;flag: Montenegro;flag
+🇲🇫;flag: St. Martin;flag
+🇲🇬;flag: Madagascar;flag
+🇲🇭;flag: Marshall Islands;flag
+🇲🇰;flag: North Macedonia;flag
+🇲🇱;flag: Mali;flag
+🇲🇲;flag: Myanmar (Burma);flag
+🇲🇳;flag: Mongolia;flag
+🇲🇴;flag: Macao SAR China;flag
+🇲🇵;flag: Northern Mariana Islands;flag
+🇲🇶;flag: Martinique;flag
+🇲🇷;flag: Mauritania;flag
+🇲🇸;flag: Montserrat;flag
+🇲🇹;flag: Malta;flag
+🇲🇺;flag: Mauritius;flag
+🇲🇻;flag: Maldives;flag
+🇲🇼;flag: Malawi;flag
+🇲🇽;flag: Mexico;flag
+🇲🇾;flag: Malaysia;flag
+🇲🇿;flag: Mozambique;flag
+🇳🇦;flag: Namibia;flag
+🇳🇨;flag: New Caledonia;flag
+🇳🇪;flag: Niger;flag
+🇳🇫;flag: Norfolk Island;flag
+🇳🇬;flag: Nigeria;flag
+🇳🇮;flag: Nicaragua;flag
+🇳🇱;flag: Netherlands;flag
+🇳🇴;flag: Norway;flag
+🇳🇵;flag: Nepal;flag
+🇳🇷;flag: Nauru;flag
+🇳🇺;flag: Niue;flag
+🇳🇿;flag: New Zealand;flag
+🇴🇲;flag: Oman;flag
+🇵🇦;flag: Panama;flag
+🇵🇪;flag: Peru;flag
+🇵🇫;flag: French Polynesia;flag
+🇵🇬;flag: Papua New Guinea;flag
+🇵🇭;flag: Philippines;flag
+🇵🇰;flag: Pakistan;flag
+🇵🇱;flag: Poland;flag
+🇵🇲;flag: St. Pierre & Miquelon;flag
+🇵🇳;flag: Pitcairn Islands;flag
+🇵🇷;flag: Puerto Rico;flag
+🇵🇸;flag: Palestinian Territories;flag
+🇵🇹;flag: Portugal;flag
+🇵🇼;flag: Palau;flag
+🇵🇾;flag: Paraguay;flag
+🇶🇦;flag: Qatar;flag
+🇷🇪;flag: Réunion;flag
+🇷🇴;flag: Romania;flag
+🇷🇸;flag: Serbia;flag
+🇷🇺;flag: Russia;flag
+🇷🇼;flag: Rwanda;flag
+🇸🇦;flag: Saudi Arabia;flag
+🇸🇧;flag: Solomon Islands;flag
+🇸🇨;flag: Seychelles;flag
+🇸🇩;flag: Sudan;flag
+🇸🇪;flag: Sweden;flag
+🇸🇬;flag: Singapore;flag
+🇸🇭;flag: St. Helena;flag
+🇸🇮;flag: Slovenia;flag
+🇸🇯;flag: Svalbard & Jan Mayen;flag
+🇸🇰;flag: Slovakia;flag
+🇸🇱;flag: Sierra Leone;flag
+🇸🇲;flag: San Marino;flag
+🇸🇳;flag: Senegal;flag
+🇸🇴;flag: Somalia;flag
+🇸🇷;flag: Suriname;flag
+🇸🇸;flag: South Sudan;flag
+🇸🇹;flag: São Tomé & Príncipe;flag
+🇸🇻;flag: El Salvador;flag
+🇸🇽;flag: Sint Maarten;flag
+🇸🇾;flag: Syria;flag
+🇸🇿;flag: Eswatini;flag
+🇹🇦;flag: Tristan da Cunha;flag
+🇹🇨;flag: Turks & Caicos Islands;flag
+🇹🇩;flag: Chad;flag
+🇹🇫;flag: French Southern Territories;flag
+🇹🇬;flag: Togo;flag
+🇹🇭;flag: Thailand;flag
+🇹🇯;flag: Tajikistan;flag
+🇹🇰;flag: Tokelau;flag
+🇹🇱;flag: Timor-Leste;flag
+🇹🇲;flag: Turkmenistan;flag
+🇹🇳;flag: Tunisia;flag
+🇹🇴;flag: Tonga;flag
+🇹🇷;flag: Türkiye;flag
+🇹🇹;flag: Trinidad & Tobago;flag
+🇹🇻;flag: Tuvalu;flag
+🇹🇼;flag: Taiwan;flag
+🇹🇿;flag: Tanzania;flag
+🇺🇦;flag: Ukraine;flag
+🇺🇬;flag: Uganda;flag
+🇺🇲;flag: U.S. Outlying Islands;flag
+🇺🇳;flag: United Nations;flag
+🇺🇸;flag: United States;flag
+🇺🇾;flag: Uruguay;flag
+🇺🇿;flag: Uzbekistan;flag
+🇻🇦;flag: Vatican City;flag
+🇻🇨;flag: St. Vincent & Grenadines;flag
+🇻🇪;flag: Venezuela;flag
+🇻🇬;flag: British Virgin Islands;flag
+🇻🇮;flag: U.S. Virgin Islands;flag
+🇻🇳;flag: Vietnam;flag
+🇻🇺;flag: Vanuatu;flag
+🇼🇫;flag: Wallis & Futuna;flag
+🇼🇸;flag: Samoa;flag
+🇽🇰;flag: Kosovo;flag
+🇾🇪;flag: Yemen;flag
+🇾🇹;flag: Mayotte;flag
+🇿🇦;flag: South Africa;flag
+🇿🇲;flag: Zambia;flag
+🇿🇼;flag: Zimbabwe;flag
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;flag: England;flag
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;flag: Scotland;flag
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;flag: Wales;flag

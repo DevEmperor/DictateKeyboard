@@ -1,0 +1,1911 @@
+😀;wajah gembira;bahagia|gembira|muka|senang|senyum|tertawa|wajah
+😃;wajah tersenyum lebar;bahagia|gembira|muka|mulut|senyum|senyum lebar|terbuka|wajah
+😄;wajah tersenyum lebar dan mata tertutup;mata|muka|mulut|senyum|terbuka|wajah
+😁;wajah gembira dengan mata bahagia;cengiran|gembira|mata|menyeringai|senang|senyum|wajah|wajah tersenyum lebar
+😆;wajah tersenyum lebar dan memejamkan mata;bahagia|haha|mulut|puas|senyum|terbuka|tersenyum|tertawa|wajah|wajah tersenyum lebar memejamkan mata|wkwk
+😅;wajah tersenyum lebar dan berkeringat;dingin|gugup|keringat|muka|senyum|terbuka|wajah
+🤣;tertawa terbahak-bahak;ketawa|kocak|lucu|muka|ngakak|rofl|terbahak|terbahak-bahak|terpingkal-pingkal|tertawa
+😂;wajah gembira berurai air mata;air mata|bahagia|gembira|haha|kocak|lucu|ngakak|senang|tawa|terbahak|tertawa|wajah|wajah dengan air mata bahagia
+🙂;wajah agak tersenyum;muka|senyum|wajah|wajah tersenyum
+🙃;wajah terbalik;haha|jungkir balik|muka|terbalik|wajah
+🫠;wajah meleleh;cair|cairan|gerah|haha|hehe|larut|lol|malu|meleleh|menghilang|panas|sarkasme|sarkastik
+😉;wajah berkedip;berkedip mata|kedip|mengedipi|muka|wajah
+😊;wajah tersenyum dengan mata bahagia;bahagia|malu|mata|merona|muka|senang|senyum|tersipu|wajah
+😇;wajah malaikat;dongeng|fantasi|halo|lugu|malaikat|mitos|muka|polos|senyum|wajah|wajah malaikat tersenyum
+🥰;wajah tersenyum dengan 3 hati;asmara|bahagia|cinta|hati|jatuh cinta|kasmaran|memuja|naksir|romantis|senyum
+😍;wajah tersenyum lebar bermata hati;cinta|hati|jatuh cinta|mata|muka|sayang|senyum|wajah
+🤩;wajah dengan mata berbentuk bintang;bintang|kagum|mata|menyeringai|muka|takjub|terpesona|terpukau|wajah
+😘;wajah memberikan ciuman jauh;aku cinta kamu|cinta|cium|hati|imut|malam|muka|pagi|roman|romantis|wajah
+😗;wajah memberikan ciuman;cium|muka|wajah
+☺️;wajah tersenyum;merona|muka|rileks|santai|senyum|tersipu|wajah
+😚;wajah memberikan ciuman dengan mata tertutup;cium|mata|menggoda|muka|rindu|tersipu|tertutup|tutup|wajah
+😙;wajah memberikan ciuman dengan mata bahagia;cinta|cium|ciuman|kasih|mata|muka|sayang|senyum|wajah
+🥲;wajah tersenyum dengan air mata;air mata|bangga|bersyukur|lega|mata|terharu|tersentuh|tersenyum
+😋;wajah menikmati;enak|lezat|lidah|menikmati|muka|nikmat|nyam|sedap|senyum|wajah|wajah menikmati makanan
+😛;wajah menjulurkan lidah;lidah|manis|muka|wajah
+😜;wajah menjulurkan lidah dan mengedipkan mata;bercanda|kedip|lelucon|lidah|lucu|mata|muka|wajah|wajah mengedip dengan menjulurkan lidah|wajah menjulurkan lidah dan mengedipkan mara
+🤪;wajah konyol;besar|bodoh|cengar-cengir|kecil|mata|mata gila|muka|muka gila|wajah
+😝;wajah menjulurkan lidah dan memejamkan mata;lidah|mata|menjijikan|menjulurkan lidah|muka|parah|rasa|wajah
+🤑;wajah materialistis;cuan|dibayar|dollar|duit|mata duitan|matre|muka|mulut|uang|wajah
+🤗;wajah memeluk;muka|peluk|tangan|wajah
+🤭;wajah dengan tangan menutup mulut;cekikikan|ketawa|muka|oops|rahasia|terkejut|terkekeh|terkikik|ups|wajah
+🫢;wajah dengan mata terbuka dan tangan menutupi mulut;diam|kaget|kagum|memalukan|takjub|takut|terdiam|terkejut|terpukau|tertegun|tidak percaya|ya ampun
+🫣;wajah dengan mata mengintip;bersembunyi|intip|malu|menatap|mengintip|sembunyi|takut|terpikat|tersipu
+🤫;wajah menyuruh diam;diam|hening|jangan berisik|muka|pasti|ssst|sst|tenang|wajah
+🤔;wajah berpikir;berpikir|mikir|muka|pikir|wajah
+🫡;wajah memberi hormat;cerah|hormat|oke|salut|semoga beruntung|siap bu|siap pak|tentara|ya
+🤐;wajah dengan mulut tertutup rapat;gerakan tutup mulut|gtm|muka|mulut|rahasia|rapat|tertutup|tutup mulut|wajah
+🤨;wajah dengan alis terangkat;muka|ragu|ragu-ragu|sangsi|skeptis|tidak percaya|wajah
+😐;wajah netral;buruk|canggung|datar|iri|kosong|meh|muka datar|netral|tanpa ekspresi|terserah|tidak lucu|tidak terkesan|tidak tertawa|wajah
+😑;wajah tanpa ekspresi;buruk|canggung|datar|iri|kosong|meh|muka datar|netral|tanpa ekspresi|terserah|tidak lucu|tidak terkesan|tidak tertawa|wajah
+😶;wajah tanpa mulut;berdiam|diam|kosong|muka|mulut|tanpa ekspresi|tenang|tidak berekspresi|tutup mulut|wajah
+🫥;wajah dengan garis titik-titik;depresi|introvert|meh|menghilang|sembunyi|tak terlihat|tembus pandang|tersembunyi|terserah
+😶‍🌫️;wajah di awan;kepala di awan|linglung|wajah di kabut
+😏;wajah tersenyum sombong;curiga|ejek|masa sih|seringai|sinis|sombong|wajah|wajah menyeringai
+😒;wajah bosan;aneh|bosan|cemburu|keki|kesal|muka|sebal|wajah
+🙄;wajah dengan mata ke atas;berputar|idih|kesal|malesin|mata|membalikkan mata|memutar mata|muka|wajah
+😬;wajah menyeringai;menyeringai|merasa aneh|meringis|muka|nyengir|seringai|wajah
+😮‍💨;wajah mengembuskan napas;asap|bersiul|bisikan|capek|lega|lelah|mengembuskan napas|mengerang|meniup|smiley|terengah-engah
+🤥;bohong;hidung panjang|menipu|muka|pembohong|pinokio|tipu|wajah
+🫨;wajah gemetar;bergetar|gemetar|gempa bumi|gila|kaget|panik|terkejut|wajah|wow
+🙂‍↔️;kepala bergeleng;geleng|tidak
+🙂‍↕️;kepala mengangguk;angguk|ya
+😌;wajah lega;damai|lega|muka|tenang|wajah|zen
+😔;wajah merenung;kecewa|muka|murung|sedih|termenung|wajah
+😪;wajah mengantuk;lelah|menangis|muka|ngantuk|tidur|wajah
+🤤;ngiler;berliur|wajah
+😴;wajah tidur;istirahat|kantuk|lelap|letih|menguap|muka|ngantuk|rehat|tidur|wajah|zzz
+🫩;wajah dengan kantung mata;habis energi|lelah|ngantuk|payah|penat
+😷;wajah bermasker;dokter|flu|masker|meriang|obat|sakit|wajah
+🤒;wajah bertermometer;demam|meriang|muka|sakit|termometer|wajah
+🤕;wajah diperban di kepala;cedera|luka|muka|perban|pusing|puyeng|sakit kepala|wajah
+🤢;mual;muka|muntah|sakit|wajah
+🤮;wajah muntah;memuntahkan|muak|mual|muka|muntah|sakit|wajah
+🤧;bersin;demam|flu|ingusan|muka|panas dingin|pilek|sakit|wajah
+🥵;wajah kepanasan;berkeringat|demam|kepanasan|lidah menjulur|meriang|muka|panas|sekarat|terengah-engah|wajah merah
+🥶;wajah kedinginan;beku|biru|dingin|es|gigi dingin|kedinginan|membeku|membiru|menggigil|muka|radang dingin|wajah
+🥴;wajah pusing karena mabuk;agak mabuk|mabuk|mata juling|mulut bergelombang|pusing|teler|wajah teler
+😵;wajah pusing;capai|kecapaian|mati|muka|pusing|puyeng|sakit|wajah
+😵‍💫;wajah dengan mata berputar;bingung|mabuk|masalah|pening|pusing|puyeng|sakit kepala|spiral|teler|terhipnotis|waduh|wow
+🤯;kepala meledak;kaget|kepala pecah|muka|takjub|terkejut|terperanjat|wajah
+🤠;wajah koboi;cowboy|cowgirl|koboi|muka|topi|wajah
+🥳;wajah pesta;hore|perayaan|pesta|rayakan|terompet|topi|trompet|ulang tahun
+🥸;wajah menyamar;alis|berewok|hidung|kacamata|kumis|menyamar|penyamaran|samaran|topeng kumis|wajah
+😎;wajah berkacamata hitam;cerah|gaya|kacamata hitam|keren|matahari|menang|pantai|pintar|relaks|rileks|senyum|wajah|wajah tersenyum memakai kacamata
+🤓;wajah kutu buku;ahli|buku|kutu|muka|pintar|wajah
+🧐;wajah dengan monokel;berkelas|kaya|mewah|monokel|tajir|wajah|wajah memakai monokel
+😕;wajah bingung;bingung|muka|wajah
+🫤;wajah dengan mulut diagonal;bingung|frustrasi|kecewa|meh|ragu|skeptis|sudahlah|terserah|tidak yakin
+😟;wajah cemas;cemas|khawatir|kuatir|muka|muram|sedih|stres|wajah
+🙁;wajah agak cemberut;cemberut|muka|sedih|wajah
+☹️;wajah cemberut;cemberut|kecewa|muka|sedih|wajah
+😮;wajah dengan mulut terbuka;kaget|lupa|masa sih|menakjubkan|muka|mulut|simpati|takjub|terbuka|tercengang|tidak percaya|wajah
+😯;wajah hening;kaget|muka|terdiam|terkejut|wajah
+😲;wajah terpukau;kaget|muka|takjub|terkejut|terpukau|wajah
+😳;wajah tersipu;demam|kagok|malu|muka|tersipu|tidak percaya|wajah
+🫪;wajah syok;cemas|kembung|panik|rentan|syok|terkejut
+🥺;wajah memelas;berkaca-kaca|kasihan|mata besar|mata memelas|memelas|memohon|mohon belas kasihan|muka|sedih|wajah
+🥹;wajah menahan air mata;bangga|berkaca-kaca|haru|kagum|marah|menangis|menolak|sedih|terharu
+😦;wajah mengerutkan kening dengan mulut terbuka;cemberut|kaget|muka|mulut|nganga|simpati|takut|terbuka|terkejut|wajah
+😧;wajah menderita;kaget|lupa|menderita|merana|muka|sengsara|stres|terkejut|wajah|wow
+😨;wajah ketakutan;kaget|muka|ngeri|seram|takut|wajah
+😰;wajah ketakutan berkeringat;berdebar|biru|buru-buru|dingin|keringat|muka|mulut|takut|wajah|wajah ketakutan dengan keringat
+😥;wajah kecewa namun lega;deg-degan|fiuh|gelisah|kecewa|keringat|lega|muka|panik|wajah
+😢;wajah menangis;air|cengeng|mata|muka|nangis|sedih|wajah
+😭;wajah menangis keras;bombay|muka|nangis|sedih|tangisan|tersedu-sedu|wajah|wajah menangis tersedu-sedu
+😱;wajah sangat ketakutan;berteriak|ketakutan|mengunyah|muka|ngeri|seram|takut|teriak|wajah
+😖;wajah stres;gelisah|keki|marah|muka|pusing|putus asa|sedih|stres|wajah
+😣;wajah tidak setuju;fokus|konsen|konsentrasi|muka|ngotot|wajah
+😞;wajah kecewa;disalahkan|kecewa|kehilangan|muka|sedih|wajah
+😓;wajah berkeringat;bingung|dingin|gugup|keringat|muka|sakit|takut|wajah
+😩;wajah terlalu lelah;capek|gagal|kecewa|lapar|lelah|muka|sebal|sedih|wajah
+😫;wajah kelelahan;bersin|capek|lelah|muka|sedih|wajah
+🥱;wajah menguap;bosan|capek|istirahat|jemu|kantuk|lelah|letih|menguap|ngantuk|nguap|rehat
+😤;wajah bersungguh-sungguh;asap|emosi|keki|kesal|marah|menang|muka|niat|sebal|wajah
+😡;wajah sangat marah;gusar|kesal|kesel|marah|merah|muka|ngamuk|wajah
+😠;wajah marah;keki|kesel|marah|muka|sebel|wajah
+🤬;wajah dengan simbol pada mulut;eksplisit|marah|mengumpat|muka|ngamuk|sensor|wajah
+😈;wajah tersenyum bertanduk;dongeng|fantasi|iblis|jahat|kejam|muka|senyum|setan|tanduk|wajah
+👿;wajah marah dengan tanduk;belis|cemberut|fantasi|iblis|jahat|muka|setan|tanduk|wajah marah bertanduk
+💀;tengkorak;dongeng|kematian|mati|mati aku|mayat|monster|muka|orang mati|wajah
+☠️;tengkorak dan tulang;kematian|mati|monster|muka|tengkorak|tulang|wajah
+💩;kotoran;bau|busuk|muka|tahi|tinja|wajah
+🤡;badut;konyol|lucu|muka|topeng|wajah
+👹;wajah monster;dongeng|fantasi|jepang|makhluk|monster|muka|seram|setan|wajah
+👺;topeng hidung panjang;dongeng|fantasi|jepang|kejam|kesal|khayalan|makhluk|marah|monster|topeng|wajah
+👻;hantu;arwah|dongeng|fantasi|halloween|konyol|monster|muka|seram|wajah
+👽;alien;angkasa|dongeng|ekstraterestrial|et|fantasi|luar|makhluk|monster|ufo|wajah
+👾;monster alien;alien|angkasa|ekstraterestrial|fantasi|game|luar|makhluk|monster|ufo|wajah
+🤖;robot;monster|muka|wajah
+😺;wajah kucing tersenyum lebar;binatang|hewan|kucing|muka|mulut|senyum|terbuka|wajah
+😸;wajah kucing gembira dengan mata bahagia;bahagia|binatang|gembira|hewan|kucing|mata|muka|senang|senyum|seringai|wajah
+😹;wajah kucing gembira berurai air mata;air|bahagia|binatang|gembira|hewan|kucing|mata|muka|senang|tawa|wajah
+😻;wajah kucing gembira bermata hati;binatang|cinta|hati|hewan|jatuh cinta|kucing|mata|muka|senyum|wajah
+😼;wajah kucing tersenyum sombong;binatang|ejek|hewan|kucing|muka|senyum|sinis|sombong|wajah
+😽;wajah kucing memberikan ciuman dengan mata tertutup;binatang|cium|hewan|kucing|mata|muka|wajah
+🙀;wajah kucing ketakutan;binatang|hewan|kaget|kucing|lelah|muka|oh|takut|wajah
+😿;wajah kucing menangis;air|binatang|hewan|kucing|mata|muka|nangis|sedih|wajah
+😾;wajah kucing marah;binatang|cemberut|hewan|kucing|marah|muka|sebal|wajah
+🙈;tidak melihat;binatang|dilarang|hewan|jahat|lihat|monyet tidak melihat|muka|tutup mata|wajah
+🙉;tidak mendengar;binatang|dengar|dilarang|hewan|jahat|mamalia|monyet|monyet tidak mendengar|muka|tutup telinga|wajah
+🙊;tidak bicara;bicara|binatang|dilarang|hewan|jahat|mamalia|monyet|monyet tidak berbicara|muka|tutup mulut|wajah
+💌;surat cinta;cinta|hati|romantis|surat|valentine
+💘;hati terpanah;asmara|cinta|hati|jatuh cinta|panah|romantis|sayang|valentine
+💝;hati berpita;hati|pita|valentine
+💖;hati bersinar;bahagia|bersinar|gemerlap|hati|perasaan|senang
+💗;hati membesar;bahagia|deg|deg-degan|detak|gembira|gugup|hati|jantung|semangat|senang
+💓;hati berdetak;cinta|denyut|detak|hati|jantung|perasaan|sayang
+💞;hati berputar;berputar|cinta|hati|kangen|perasaan|rindu|sayang
+💕;dua hati;cinta|hati|mesra|perasaan|sayang
+💟;dekorasi hati;emosi|hati
+❣️;tanda seru berbentuk hati;hati|seru|tanda
+💔;patah hati;hati|kecewa|patah|perasaan|putus|sedih
+❤️‍🔥;hati berapi-api;cinta|hati|hati suci|nafsu|terbakar
+❤️‍🩹;mengobati hati terluka;lebih sehat|memperbaiki|memulihkan|memulihkan diri
+❤️;hati merah;cinta|hati|perasaan|sayang|suka
+🩷;hati merah muda;cinta|hati|imut|lucu|merah muda|pink|spesial|suka
+🧡;hati oranye;cinta|hati|jingga|kasih|oranye
+💛;hati kuning;hati|kuning
+💚;hati hijau;cinta|hati|hijau|perasaan|romantis|sayang
+💙;hati biru;biru|hati|perasaan
+🩵;hati biru muda;biru kehijauan|biru langit|biru muda|hati|hati biru langit|imut|lucu|sian
+💜;hati ungu;hati|ungu
+🤎;hati cokelat;cokelat|hati
+🖤;hati hitam;hati|hitam|jahat|kejam
+🩶;hati abu-abu;abu-abu|hati|hati terbuat dari batu|perak
+🤍;hati putih;hati|putih
+💋;tanda ciuman;bibir|cium|hati|romantis|seksi
+💯;nilai seratus;100|A+|benar|bercanda|penuh|selamat ultah|seratus|seratus poin|skor sempurna|tentunya
+💢;marah;kesel|komik|ngotot|sebel
+🫯;awan duel;adu jotos|adu mulut|gulat|keributan|ketidaksetujuan|perdebatan|perkelahian
+💥;tabrakan;duar|komik|meledak|meletus|nabrak
+💫;pusing;bintang|bintang jatuh|komik
+💦;keringat;air|ciprat|komik|olah raga
+💨;berlari;asap|kabur|kentut|komik|lari
+🕳️;lubang;lobang
+💬;balon ucapan;balon|bicara|dialog|gelembung|komik|mengetik|pesan|sms|teks|ucapan
+👁️‍🗨️;mata di dalam gelembung ucapan;gelembung|mata|saksi mata|ucapan
+🗨️;gelembung ucapan kiri;dialog|ucapan
+🗯️;gelembung marah kanan;balon|gelembung|marah
+💭;gelembung pikiran;balon|berkhayal|berpikir|gelembung|ide|khayal|komik|mikir|pikir|pikiran
+💤;zzz;cape|istirahat|komik|lelah|letih|malam|mengantuk|ngantuk|ngorok|tidur
+👋;tangan melambai;badan|dadah|dah|hai|halo|jari|lambai|sampai jumpa|tangan|tubuh
+🤚;angkat tangan;berhenti|jangan|lima|lima jari|stop|tangan
+🖐️;telapak tangan terbuka;badan|jari|lima jari|stop|tangan|telapak|terbuka|tos|tubuh
+✋;telapak tangan terbuka dengan jari rapat;badan|berhenti|lima jari|rapat|stop|tangan|telapak tangan|tubuh
+🖖;salam vulcan;badan|jari|spock|star trek|tangan|tubuh|vulcan
+🫱;tangan menghadap kanan;ambil|hadap kanan|jabat tangan|kanan|menghadap kanan|pegang|salaman|tangan
+🫲;tangan menghadap kiri;ambil|jabat tangan|kiri|menghadap kiri|pegang|salaman|sodorkan tangan|tangan
+🫳;telapak tangan menghadap ke bawah;ambil|angkat|hus|jatuhkan|letakkan|mengabaikan|menjatuhkan|tangan|tangan hadap bawah|taruh
+🫴;telapak tangan menghadap ke atas;datang|memberi isyarat|menangkap|menawarkan|pegang|tangan|tangan hadap atas|tidak tahu|ulurkan tangan
+🫷;tangan mendorong ke kiri;berhenti|blok|dorong|kiri|stop|tangan hadap kiri|tolak|tos|tunggu
+🫸;tangan mendorong ke kanan;berhenti|blok|dorong|kanan|stop|tangan|tangan hadap kanan|tolak|tos|tunggu
+👌;oke;badan|bagus|baiklah|cubit|ok|pasti|setuju|sip|tangan|tentu|tubuh
+🤌;jari terkuncup;apa|hus|interogasi|isyarat tangan|italia|jari|rileks|sabar|santai|sarkastik|tangan|terkuncup
+🤏;tangan menjepit;jepit|kecil|menjepit|sedikit|sejumlah kecil|sejumput
+✌️;isyarat kemenangan;damai|menang|tangan|v
+🤞;jari menyilang;beruntung|jari|semoga beruntung|semoga hoki|silang jari|tangan
+🫰;tangan dengan jari telunjuk dan ibu jari menyilang;cinta|hati|jari hati|korea|mahal|menjentikkan jari|uang
+🤟;gerakan sayang kamu;ILU|ILY|mantap|metal|tangan|tiga jari
+🤘;lambang tanduk;badan|dua jari|jari|metal|tanduk|tangan|tubuh
+🤙;panggil saya;isyarat|tangan|telepon|telepon aku|telepon saya
+👈;menunjuk ke arah kiri;badan|jari|kiri|organ|tangan|telunjuk|tubuh|tunjuk
+👉;menunjuk ke arah kanan;badan|jari|kanan|organ|tangan|telunjuk|tubuh|tunjuk
+👆;menunjuk ke atas (dibalik);arah|atas|badan|jari|tangan|telunjuk|tubuh|tunjuk
+🖕;jari tengah;jari|tangan
+👇;menunjuk ke bawah;arah|badan|bawah|di sini|jari|sini|tangan|tengah|tubuh|tunjuk|tunjuk ke bawah
+☝️;menunjuk ke atas;atas|badan|jari|satu|tangan|telunjuk|tubuh|tunjuk
+🫵;jari telunjuk menunjuk penonton;Anda|jari|kamu|menunjuk|telunjuk|tunjuk
+👍;jempol ke atas;+1|atas|badan|bagus|baik|hebat|jempol|keren|ok|oke|tangan|tubuh|ya
+👎;jempol ke bawah;-1|badan|bawah|buruk|jelek|jempol|parah|payah|tangan|tidak|tubuh
+✊;tangan terkepal ke atas;badan|kepal|kepalan tangan|kepalan tinju|tangan|tinju|tubuh
+👊;tangan terkepal ke depan;badan|kepal|setuju|tangan|tinju|tonjok|tos|tubuh
+🤛;tinju kiri;kepalan tangan|kiri|organ tubuh|tangan|tonjok
+🤜;tinju kanan;kanan|kepalan tangan|tangan|tonjok
+👏;tepuk tangan;badan|keren|mantap|selamat|tangan|tepuk|tubuh
+🙌;mengangkat tangan;angkat|gerakan|hore|perayaan|tangan
+🫶;tangan membentuk hati;<3|cinta|cinta kamu|hati|tanda cinta|tangan hati
+👐;tangan terbuka;badan|peluk|tangan|terbuka|tubuh
+🤲;tangan diangkat dan dirapatkan bersama;berdoa|doa
+🤝;jabat tangan;kenalan|pertemuan|salaman|sepakat|setuju|tangan
+🙏;melipat tangan;berdoa|bungkuk|doa|gerakan|lipat|makasih|minta|mohon|tangan|terima kasih|tolong|tubuh
+✍️;tangan menulis;badan|menulis|nulis|tangan|tubuh|tulis
+💅;poles kuku;badan|cat kuku|kosmetik|kuku|kuteks|manikur|perawatan|salon|tubuh
+🤳;selfie;cari signal|foto selfie|kamera|ponsel|selfi
+💪;lengan berotot;badan|berotot|bisep|biseps|kekar|kuat|lengan|otot|tangan|tubuh
+🦾;lengan robot;aksesibilitas|lengan mekanikal|mekanikal|prostetik|tangan mekanikal
+🦿;tungkai robot;aksesibilitas|kaki mekanikal|mekanikal|prostetik|tungkai mekanikal
+🦵;tungkai;bagian tubuh|dengkul|kaki|kaki ditekuk|lutut|tendang
+🦶;telapak kaki;injak|kaki|menendang|menginjak|tendang|tumit
+👂;telinga;badan|dengar|kuping|mendengar|organ tubuh|suara|tubuh
+🦻;telinga dengan alat bantu dengar;aksesibilitas|alat bantu dengar|kuping|pendengaran lemah|sulit mendengar|susah mendengar|telinga|tuli|tunarungu
+👃;hidung;badan|bau|cium|tubuh|wangi
+🧠;otak;cerdas|genius|kecerdasan|pintar
+🫀;organ jantung;anatomi|debar|denyut|detak|jantung|kardiologi|merah|nadi|organ|tengah
+🫁;paru-paru;buang napas|ekshalasi|inhalasi|napas|organ|pernapasan|respirasi|tarik napas|tubuh
+🦷;gigi;dokter gigi|mutiara|putih
+🦴;tulang;anjing|tengkorak|tulang belulang|tulang garpu
+👀;dua mata;badan|lihat|lirik|mata|melihat|mengintip|muka|tubuh|wajah
+👁️;satu mata;badan|mata|organ tubuh|tubuh
+👅;lidah;badan|jilat|mulut|tubuh
+👄;mulut;badan|bibir|cantik|cium|ciuman|kecantikan|lipstik|tubuh
+🫦;menggigit bibir;bibir|cemas|gigit bibir|gugup|khawatir|lipstik|menggoda|takut|tidak nyaman
+👶;bayi;muda
+🧒;anak;anak kecil|gender tak tentu|muda|netral gender
+👦;anak laki-laki;anak|anak kecil|cowok|laki-laki|lelaki|muda|pria|rambut pirang
+👧;anak perempuan;anak|cewek|gadis|muda|perempuan|poni rambut|rambut pirang|virgo|zodiak
+🧑;dewasa;cowok|gender tak tentu|laki-laki|lelaki|netral gender|orang|pria|remaja
+👱;orang: rambut pirang;laki-laki|lelaki|orang berambut pirang|pirang|pria|rambut
+👨;pria;bapak|laki-laki|lelaki|orang dewasa|pacar|teman
+🧔;orang: janggut;janggut|jenggot|laki-laki|lelaki|muka|orang|pria|wajah
+🧔‍♂️;pria: janggut;janggut|pria
+🧔‍♀️;wanita: janggut;janggut|wanita
+👨‍🦰;pria: rambut merah;bapak|laki-laki|lelaki|orang dewasa|pacar|pria|rambut merah|teman
+👨‍🦱;pria: rambut keriting;bapak|laki-laki|lelaki|orang dewasa|pacar|pria|rambut keriting|teman
+👨‍🦳;pria: rambut putih;bapak|laki-laki|lelaki|orang dewasa|pacar|pria|rambut putih|teman
+👨‍🦲;pria: gundul;bapak|gundul|laki-laki|lelaki|orang dewasa|pacar|pria|teman
+👩;wanita;bule|cewek bule|ibu|perempuan|pirang|potong rambut|rambut pirang
+👩‍🦰;wanita: rambut merah;bule|cewek bule|ibu|perempuan|pirang|potong rambut|rambut merah|rambut pirang|wanita
+🧑‍🦰;dewasa: rambut merah;cowok|dewasa|gender tak tentu|laki-laki|lelaki|netral gender|orang|pria|rambut merah|remaja
+👩‍🦱;wanita: rambut keriting;bule|cewek bule|ibu|perempuan|pirang|potong rambut|rambut keriting|rambut pirang|wanita
+🧑‍🦱;dewasa: rambut keriting;cowok|dewasa|gender tak tentu|laki-laki|lelaki|netral gender|orang|pria|rambut keriting|remaja
+👩‍🦳;wanita: rambut putih;bule|cewek bule|ibu|perempuan|pirang|potong rambut|rambut pirang|rambut putih|wanita
+🧑‍🦳;dewasa: rambut putih;cowok|dewasa|gender tak tentu|laki-laki|lelaki|netral gender|orang|pria|rambut putih|remaja
+👩‍🦲;wanita: gundul;bule|cewek bule|gundul|ibu|perempuan|pirang|potong rambut|rambut pirang|wanita
+🧑‍🦲;dewasa: gundul;cowok|dewasa|gender tak tentu|gundul|laki-laki|lelaki|netral gender|orang|pria|remaja
+👱‍♀️;wanita berambut pirang;perempuan|pirang|rambut|wanita|wanita: rambut pirang
+👱‍♂️;pria berambut pirang;laki-laki|pirang|pria: rambut pirang|rambut
+🧓;lanjut usia;kakek|netral gender|orang dewasa|tua
+👴;pria tua;bijaksana|botak|kakek|laki-laki|lelaki|opa|pria|tua
+👵;wanita tua;nenek|nenek berambut pirang|oma|perempuan|pirang|rambut pirang|tua|wanita
+🙍;orang marah;cemberut|dongkol|frustrasi|gerakan|jengkel|kecewa|kesal|marah|merengut|perempuan|tidak senang
+🙍‍♂️;pria muka tidak senang;cemberut|laki-laki|lelaki|masam|muka|muka sebal|pria|pria bermuka masam|pria bermuka sebal|tidak senang
+🙍‍♀️;wanita muka tidak senang;muka|perempuan|tidak senang
+🙎;orang tidak senang;cemberut|gerakan|kecewa|kesal|manyun|merajuk|merengut|ngambek|perempuan|sebal|wanita
+🙎‍♂️;pria tidak senang;bibir|cemberut|cowok|laki-laki|lelaki|pria|tidak senang
+🙎‍♀️;wanita tidak senang;bibir|perempuan|tidak senang
+🙅;orang mengisyaratkan TIDAK;bukan|dilarang|gerakan|isyarat|jangan|negatif|nggak|perempuan|tangan|tangan bersilang|terlarang|tidak|wanita
+🙅‍♂️;pria mengisyaratkan TIDAK;isyarat|laki-laki|lelaki|pria|pria menyilangkan tangan|tidak|tidak mau
+🙅‍♀️;wanita mengisyaratkan TIDAK;isyarat|perempuan|tangan|tidak
+🙆;orang mengisyaratkan OKE;baiklah|gerakan|isyarat oke|latihan|oke|perempuan|senam|setuju|tangan|tangan di atas kepala|wanita
+🙆‍♂️;pria mengisyaratkan OKE;isyarat|laki-laki|lelaki|oke|pria|pria berisyarat oke|pria melingkarkan tangan|tangan
+🙆‍♀️;wanita mengisyaratkan OKE;isyarat|oke|perempuan|tangan
+💁;orang menengadahkan tangan;bantuan|cewek|gosip|informasi|kibas rambut|perempuan|resepsionis|sarkas|sarkastik|tangan|wanita
+💁‍♂️;pria menengadahkan tangan;bantuan|isyarat|laki-laki|lelaki|pria|tangan
+💁‍♀️;wanita menengadahkan tangan;bantuan|isyarat|perempuan|tangan
+🙋;orang mengangkat tangan;angkat|bertanya|gerakan|hai|perempuan|saya tahu|sebelah sini|senang|tangan|tanya|wanita
+🙋‍♂️;pria mengangkat tangan;angkat|isyarat|laki-laki|pertanyaan|pria|pria bertanya|tangan
+🙋‍♀️;wanita mengangkat tangan;angkat|isyarat|perempuan|tangan
+🧏;orang tuli;aksesibilitas|dengar|kuping|mendengar|telinga|tuli|tunarungu
+🧏‍♂️;pria tuli;lelaki|pria|tuli|tunarungu
+🧏‍♀️;wanita tuli;perempuan|tuli|tunarungu|wanita
+🙇;orang membungkuk;bungkuk|gerakan|laki-laki|maaf|meditasi|minta maaf|nunduk|pria|sori|sujud|sungkem|tunduk
+🙇‍♂️;pria membungkuk;isyarat|laki-laki|maaf
+🙇‍♀️;wanita membungkuk;isyarat|maaf|meditasi|perempuan|sujud|sungkem|tunduk|wanita
+🤦;orang tepuk jidat;astaga|cape deh|capedeh|capek deh|cewek tepuk jidat|frustrasi|gusar|kesal|oh tidak|tepuk dahi|tepuk jidat|tidak percaya|wanita tepuk jidat|yah
+🤦‍♂️;pria tepuk jidat;cape deh|gusar|isyarat|jidat|kesal|laki-laki|letih|oh tidak|pria|sangsi|tangan|tepuk jidat|tidak percaya
+🤦‍♀️;wanita tepuk jidat;cape deh|isyarat|jidat|kesal|letih|oh tidak|perempuan|sangsi|tangan|tepuk dahi|tepuk jidat|wanita
+🤷;orang mengangkat bahu;angkat bahu|bingung|bisa jadi|entah|masa bodo|nggak tahu|siapa tahu|tau deh|terserah|tidak tahu|wanita mengangkat bahu
+🤷‍♂️;pria mengangkat bahu;angkat|bahu|bisa jadi|entah|isyarat|laki-laki|lelaki|masa bodo|mungkin|pria|terserah
+🤷‍♀️;wanita mengangkat bahu;angkat|bahu|entah|isyarat|masa bodo|mungkin|perempuan|terserah|tidak tahu|wanita
+🧑‍⚕️;petugas kesehatan;dokter|perawat|perawatan kesehatan|terapis
+👨‍⚕️;pekerja kesehatan pria;dokter|laki-laki|pekerja|pekerjaan|perawat|perawat pria|perawatan kesehatan
+👩‍⚕️;pekerja kesehatan wanita;dokter|kesehatan|pekerja|pekerjaan|perawatan kesehatan|perempuan|wanita
+🧑‍🎓;murid;kelulusan
+👨‍🎓;sarjana pria;kuliah|laki-laki|murid|pria|sarjana|toga|universitas|wisuda
+👩‍🎓;sarjana wanita;perempuan|sarjana|toga|universitas|wanita|wisuda
+🧑‍🏫;guru;dosen|instruktur
+👨‍🏫;pengajar pria;guru|kelas|laki-laki|lelaki|pengajar|pria|profesor|sekolah
+👩‍🏫;pengajar wanita;guru|ibu guru|pengajar|perempuan|profesor|sekolah|wanita
+🧑‍⚖️;hakim;timbangan
+👨‍⚖️;hakim pria;hakim|hukum|laki-laki|lelaki|neraca|pekerja|pekerjaan|pengadilan|pria|timbangan
+👩‍⚖️;hakim wanita;hukum|pekerja|pekerjaan|pengadilan|perempuan|wanita
+🧑‍🌾;petani;pekebun|peternak
+👨‍🌾;petani pria;laki-laki|padi|pekebun|petani|pria|sawah|tukang kebun
+👩‍🌾;petani wanita;padi|pekebun|pekerja|pekerjaan|perempuan|petani|sawah|topi|wanita
+🧑‍🍳;koki;chef
+👨‍🍳;koki pria;dapur|koki|laki-laki|memasak|pekerja|pekerjaan|pemasak|pria
+👩‍🍳;koki wanita;dapur|koki|memasak|pekerja|pekerjaan|perempuan|tukang masak|wanita
+🧑‍🔧;mekanik;pekerja terlatih|tukang ledeng|tukang listrik
+👨‍🔧;montir pria;laki-laki|montir|perbaikan|pria|teknisi|tukang
+👩‍🔧;montir wanita;ahli mesin|masinis|montir|perbaikan|perempuan|teknisi|tukang|wanita
+🧑‍🏭;pekerja pabrik;industri|pabrik|pekerja|perakitan
+👨‍🏭;pekerja pabrik pria;laki-laki|masinis|pabrik|pekerja|pria|teknisi|tukang
+👩‍🏭;pekerja pabrik wanita;pabrik|pekerja|perempuan|wanita
+🧑‍💼;pekerja kantoran;arsitek|bisnis|kerah putih|manajer
+👨‍💼;pekerja kantor pria;bisnis|kantor|karyawan|laki-laki|lelaki|orang bisnis|pria|staf
+👩‍💼;pekerja kantor wanita;bisnis|kantor|karyawan|karyawati|perempuan|staf|wanita
+🧑‍🔬;ilmuwan;ahli biologi|ahli fisika|ahli kimia|insinyur
+👨‍🔬;ilmuwan pria;ahli|ilmuwan|insinyur|laboratorium|laki-laki|sains
+👩‍🔬;ilmuwan wanita;laboratorium|pekerja|perempuan|perkerjaan|sains|wanita
+🧑‍💻;ahli teknologi;pemrogram|penemu|pengembang|perangkat lunak
+👨‍💻;ahli teknologi pria;ilmuwan|komputer|laki-laki|laptop|lelaki|pria|teknologi
+👩‍💻;ahli teknologi wanita;ilmuwan|komputer|perangkat lunak|perempuan|teknologi|wanita
+🧑‍🎤;penyanyi;aktor|bintang|penghibur|rock
+👨‍🎤;penyanyi pria;aktor|bintang|lelaki|penghibur|penyanyi|rock
+👩‍🎤;penyanyi wanita;aktris|bintang|penghibur|penyanyi|rock|wanita
+🧑‍🎨;seniman;palet
+👨‍🎨;seniman pria;artis|lelaki|palet|seniman
+👩‍🎨;seniman wanita;artis|palet|seniman|wanita
+🧑‍✈️;pilot;pesawat
+👨‍✈️;pilot pria;lelaki|perempuan|pesawat|pilot
+👩‍✈️;pilot wanita;perempuan|pesawat|pilot|wanita
+🧑‍🚀;astronaut;roket
+👨‍🚀;antariksawan pria;antariksa|antariksawan|astronaut|lelaki|roket
+👩‍🚀;antariksawan wanita;antariksa|antariksawan|astronaut|roket|wanita
+🧑‍🚒;pemadam kebakaran;truk pemadam kebakaran
+👨‍🚒;pemadam kebakaran pria;branwir|lelaki|pemadam kebakaran|truk pemadam kebakaran
+👩‍🚒;pemadam kebakaran wanita;branwir|pemadam kebakaran|truk pemadam kebakaran|wanita
+👮;polisi;hukum|penegak hukum|petugas|polantas|pria
+👮‍♂️;polisi pria;laki-laki|penegak hukum|polisi
+👮‍♀️;polisi wanita;hukum|penegak hukum|perempuan|petugas|polisi|polwan|wanita
+🕵️;detektif;mata-mata|spionase
+🕵️‍♂️;detektif pria;laki-laki|penyelidikan|rahasia
+🕵️‍♀️;detektif wanita;mata-mata|penyelidikan|perempuan|rahasia|wanita
+💂;penjaga;garda|helm|inggris|istana buckingham|london|pengawal|penjaga istana
+💂‍♂️;penjaga pria;keamanan|laki-laki|penjaga
+💂‍♀️;penjaga wanita;garda|garda istana|keamanan|penjaga|perempuan|wanita
+🥷;ninja;kelahi|penyusup|perang|petarung|rahasia|samurai|sembunyi-sembunyi|tersembunyi
+👷;pekerja konstruksi;helm|helm proyek|konstruksi|kontraktor|laki-laki|pekerja|perbaikan|pria|topi
+👷‍♂️;pekerja konstruksi pria;konstruksi|kontraktor|laki-laki
+👷‍♀️;pekerja konstruksi wanita;konstruksi|kontraktor|pekerja|pekerjaan|perempuan|wanita
+🫅;orang mengenakan mahkota;agung|bangsawan|kaisar|kerajaan|monarki|mulia|raja|ratu|sultan
+🤴;pangeran;kerajaan|laki-laki|lelaki|pria|raja
+👸;putri;dongeng|fantasi|mahkota|perempuan|puteri|ratu|wanita
+👳;orang mengenakan serban;laki-laki|lelaki|orang india|pria|serban|sorban|surban|turban
+👳‍♂️;pria mengenakan serban;laki-laki|serban
+👳‍♀️;wanita mengenakan serban;perempuan|serban|sorban|wanita
+👲;orang dengan topi Tionghoa;gua pi mao|laki-laki|lelaki|pria|pria bertopi cina|pria dengan topi Tionghoa|topi|topi cina
+🧕;wanita dengan kerudung;hijab|kerudung|mantilla|perempuan|tichel|wanita|wanita berhijab|wanita berjilbab
+🤵;orang bertuksedo;mempelai pria|orang|tuksedo
+🤵‍♂️;pria dewasa bertuksedo;pria|pria dewasa|tuksedo|tuxedo
+🤵‍♀️;wanita bertuksedo;tuksedo|wanita
+👰;orang berpenutup kepala;cadar|mempelai wanita|nikah|orang|pengantin
+👰‍♂️;pria berpenutup kepala;penutup kepala|pria
+👰‍♀️;wanita berpenutup kepala;penutup kepala|wanita
+🤰;wanita hamil;hamil|ibu hamil|perempuan|wanita
+🫃;pria hamil;buncit|cowok|hamil|kekenyangan|kenyang|laki-laki|penuh|perut|pria
+🫄;orang hamil;buncit|hamil|kekenyangan|kenyang|penuh|perut
+🤱;menyusui;bayi|ibu|payudara|perempuan|wanita
+👩‍🍼;wanita menyusui bayi;bayi|cinta|ibu|mama|mengasuh|menyusui|pengasuh|susu|wanita
+👨‍🍼;pria menyusui bayi;asuh|ayah|bapak|bayi|laki-laki|mengasuh|menyusui|papa|pria|susu
+🧑‍🍼;orang menyusui bayi;ayah|bapak|bayi|ibu|laki-laki|mengasuh|menyusui|orang|perempuan|pria|susu|wanita
+👼;malaikat bayi;anak-anak|bayi|dongeng|fantasi|laki-laki|malaikat|muda|muka|perempuan|wajah
+🎅;Sinterklas;ayah|bapak|dongeng|fantasi|laki-laki|mitos|natal|perayaan|pria|santa
+🤶;Nyonya Sinterklas;ibu|ibu sinterklas|natal|nenek|oma|perempuan|wanita
+🧑‍🎄;manusia sinterklas;bapak natal|liburan|natal|santa|sinterklas|topi natal
+🦸;pahlawan super;baik|kekuatan super|pahlawan|pahlawan super wanita|pahlawan wanita
+🦸‍♂️;pahlawan super pria;baik|kekuatan super|pahlawan|pria
+🦸‍♀️;pahlawan super wanita;baik|kekuatan super|pahlawan|wanita
+🦹;penjahat super;jahat|kekuatan super|kriminal|orang jahat|penjahat|penjahat kejam|penjahat keji|superpower
+🦹‍♂️;penjahat super pria;jahat|kekuatan super|kriminal|penjahat|pria
+🦹‍♀️;penjahat super wanita;jahat|kekuatan super|kriminal|penjahat|wanita
+🧙;magi;jampi|kakek|main peran|mantra|penyihir|pria tua|sihir|sulap|tukang sihir
+🧙‍♂️;magi pria;penyihir|tukang sihir
+🧙‍♀️;magi wanita;penyihir|tukang sihir
+🧚;peri;dongeng|fantasi|mitos|Oberon|Puck|sayap|Titania
+🧚‍♂️;peri pria;Oberon|Puck
+🧚‍♀️;peri wanita;Titania
+🧛;vampir;darah|drakula|fantasi|kostum|mayat hidup|menakutkan|seram|supernatural|taring
+🧛‍♂️;vampir pria;Drakula|mayat hidup
+🧛‍♀️;vampir wanita;mayat hidup
+🧜;orang duyung;bawah laut|dongeng|duyung|makhluk laut|perempuan|pria duyung|putri duyung|trisula|wanita
+🧜‍♂️;pria duyung;Triton
+🧜‍♀️;putri duyung;wanita duyung
+🧝;kurcaci;ajaib|dongeng|elf|fantasi|makhluk gaib|mantra|manusia peri|mistis|peri
+🧝‍♂️;kurcaci pria;ajaib
+🧝‍♀️;kurcaci wanita;ajaib
+🧞;jin;fantasi|gosok lampu|harapan|jin bertubuh manusia|keinginan|mitos|permintaan
+🧞‍♂️;jin pria;jin
+🧞‍♀️;jin wanita;jin
+🧟;zombi;apokalips|halloween|horor|kiamat|mayat hidup|seram|zombie
+🧟‍♂️;zombi pria;mayat berjalan|mayat hidup
+🧟‍♀️;zombi wanita;mayat berjalan|mayat hidup
+🧌;raksasa;dongeng|fantasi|monster
+🫈;makhluk berbulu;berbulu|bigfoot|cryptid|hutan|monster|raksasa|sasquatch|yeti
+💆;pria dipijat;perempuan|pijat|pijit|relaks|rileks|salon|santai|spa|tegang|tenang|terapi|wanita
+💆‍♂️;pria dipijat kepalanya;kepala|laki-laki|lelaki|pijat|relaks|santai
+💆‍♀️;wanita dipijat;kepala|perempuan|pijat
+💇;orang potong rambut;cantik|gaya rambut|kecantikan|perempuan|potong|rambut|salon|wanita
+💇‍♂️;pria potong rambut;kecantikan|pangkas rambut|pria|rambut|rambut pria dipangkas|tukan pangkas rambut
+💇‍♀️;wanita potong rambut;perempuan|potong|rambut
+🚶;orang berjalan kaki;jalan|kaki|lelaki|melangkah|melenggang|pria
+🚶‍♂️;pria berjalan kaki;jalan|kaki|laki-laki
+🚶‍♀️;wanita berjalan kaki;jalan|kaki|perempuan|wanita
+🚶‍➡️;orang berjalan kaki: menghadap kanan;jalan|kaki|kanan|lelaki|melangkah|melenggang|menghadap|orang berjalan kaki|pria
+🚶‍♀️‍➡️;wanita berjalan kaki: menghadap kanan;jalan|kaki|kanan|menghadap|perempuan|wanita|wanita berjalan kaki
+🚶‍♂️‍➡️;pria berjalan kaki: menghadap kanan;jalan|kaki|kanan|laki-laki|menghadap|pria berjalan kaki
+🧍;orang berdiri;berdiri|diri
+🧍‍♂️;pria berdiri;berdiri|pria
+🧍‍♀️;wanita berdiri;berdiri|wanita
+🧎;orang berlutut;berlutut|bersimpuh|bertelut|dengkul|lutut|simpuh
+🧎‍♂️;pria berlutut;berlutut|pria
+🧎‍♀️;wanita berlutut;berlutut|wanita
+🧎‍➡️;orang berlutut: menghadap kanan;berlutut|bersimpuh|bertelut|dengkul|kanan|lutut|menghadap|orang berlutut|simpuh
+🧎‍♀️‍➡️;wanita berlutut: menghadap kanan;berlutut|kanan|menghadap|wanita
+🧎‍♂️‍➡️;pria berlutut: menghadap kanan;berlutut|kanan|menghadap|pria
+🧑‍🦯;orang dengan tongkat;aksesibilitas|buta
+🧑‍🦯‍➡️;orang dengan tongkat: menghadap kanan;aksesibilitas|buta|kanan|menghadap|orang dengan tongkat
+👨‍🦯;pria dengan tongkat;aksesiblitas|buta|pria|tongkat|tunanetra
+👨‍🦯‍➡️;pria dengan tongkat: menghadap kanan;aksesiblitas|buta|kanan|menghadap|pria|pria dengan tongkat|tongkat|tunanetra
+👩‍🦯;wanita dengan tongkat;aksesiblitas|buta|perempuan|tongkat|tunanetra|wanita
+👩‍🦯‍➡️;wanita dengan tongkat: menghadap kanan;aksesiblitas|buta|kanan|menghadap|perempuan|tongkat|tunanetra|wanita|wanita dengan tongkat
+🧑‍🦼;orang dengan kursi roda bermotor;aksesibilitas|kursi roda
+🧑‍🦼‍➡️;orang dengan kursi roda bermotor: menghadap kanan;aksesibilitas|kanan|kursi roda|menghadap|orang dengan kursi roda bermotor
+👨‍🦼;pria dengan kursi roda bermotor;aksesibilitas|kursi roda|kursi roda bermotor|laki-laki|pria
+👨‍🦼‍➡️;pria dengan kursi roda bermotor: menghadap kanan;aksesibilitas|kanan|kursi roda|kursi roda bermotor|laki-laki|menghadap|pria|pria dengan kursi roda bermotor
+👩‍🦼;wanita dengan kursi roda bermotor;aksesibilitas|kursi roda|kursi roda bermotor|perempuan|wanita
+👩‍🦼‍➡️;wanita dengan kursi roda bermotor: menghadap kanan;aksesibilitas|kanan|kursi roda|kursi roda bermotor|menghadap|perempuan|wanita|wanita dengan kursi roda bermotor
+🧑‍🦽;orang dengan kursi roda manual;aksesibilitas|kursi roda
+🧑‍🦽‍➡️;orang dengan kursi roda manual: menghadap kanan;aksesibilitas|kanan|kursi roda|menghadap|orang dengan kursi roda manual
+👨‍🦽;pria dengan kursi roda manual;aksesibilitas|kursi roda|laki-laki|pria|pria dengan kursi roda
+👨‍🦽‍➡️;pria dengan kursi roda manual: menghadap kanan;aksesibilitas|kanan|kursi roda|laki-laki|menghadap|pria|pria dengan kursi roda|pria dengan kursi roda manual
+👩‍🦽;wanita dengan kursi roda manual;aksesibilitas|kursi roda|perempuan|wanita|wanita dengan kursi roda
+👩‍🦽‍➡️;wanita dengan kursi roda manual: menghadap kanan;aksesibilitas|kanan|kursi roda|menghadap|perempuan|wanita|wanita dengan kursi roda|wanita dengan kursi roda manual
+🏃;orang berlari;buru-buru|cepat|kabur|kejar|lari|marathon|maraton|olahraga|pergi
+🏃‍♂️;pria berlari;kaki|laki-laki|lari
+🏃‍♀️;wanita berlari;kaki|lari|pelari maraton|pelari wanita|perempuan|tergesa-gesa|wanita
+🏃‍➡️;orang berlari: menghadap kanan;buru-buru|cepat|kabur|kanan|kejar|lari|marathon|maraton|menghadap|olahraga|orang berlari|pergi
+🏃‍♀️‍➡️;wanita berlari: menghadap kanan;kaki|kanan|lari|menghadap|pelari maraton|pelari wanita|perempuan|tergesa-gesa|wanita|wanita berlari
+🏃‍♂️‍➡️;pria berlari: menghadap kanan;kaki|kanan|laki-laki|lari|menghadap|pria berlari
+🧑‍🩰;penari balet;balet|penari
+💃;wanita menari;dansa|elegan|festival|menari|perempuan|pesta|tari|wanita
+🕺;pria menari;berdansa|dansa|laki-laki|lelaki|menari|penari|pria|tango
+🕴️;pria melayang mengenakan jas;bisnis|jas|laki-laki|lelaki|pebisnis melayang|pria
+👯;orang dengan telinga kelinci;berpesta|bestie|kelinci|kostum|kuping|penari|perempuan|pesta|sahabat|sobat|telinga
+👯‍♂️;pria dengan telinga kelinci;kostum|laki-laki|lelaki|pesta|pria|tari
+👯‍♀️;wanita dengan telinga kelinci;kostum|perempuan|pesta|tari
+🧖;orang di ruangan beruap;beruap|mandi|relaks|ruang uap|santai|sauna|uap
+🧖‍♂️;pria di ruangan beruap;ruang uap|sauna
+🧖‍♀️;wanita di ruangan beruap;ruang uap|sauna
+🧗;orang memanjat;gunung|panjat|pemanjat|tebing
+🧗‍♂️;pria memanjat;pemanjat
+🧗‍♀️;wanita memanjat;pemanjat
+🤺;orang berolahraga anggar;anggar|atlet anggar|olahraga|orang|pedang
+🏇;balap kuda;balapan|joki|kuda|olahraga|pacuan
+⛷️;pemain ski;olahraga|salju|ski
+🏂;peselancar salju;olahraga|papan|salju|seluncur|ski
+🏌️;orang bermain golf;bola|caddy|golf|hijau|lapangan rumput|latihan golf|pukulan golf|tempat latihan golf|turnamen golf|turnamen pga
+🏌️‍♂️;pria bermain golf;bermain|bola|golf|laki-laki
+🏌️‍♀️;wanita bermain golf;bermain|bola|golf|olahraga|perempuan|wanita main golf
+🏄;orang berselancar;laki-laki|laut|olahraga|ombak|pantai|pria|selancar|seluncur
+🏄‍♂️;pria berselancar;laki-laki|ombak|selancar
+🏄‍♀️;wanita berselancar;berselancar|olahraga|ombak|pantai|perempuan|selancar
+🚣;orang mendayung perahu;danau|dayung|kano|kayuh|kendaraan|mendayung|olahraga|perahu|rakit|sungai
+🚣‍♂️;pria mendayung perahu;dayung|laki-laki|perahu
+🚣‍♀️;wanita mendayung perahu;dayung|olahraga|perahu|perempuan
+🏊;orang berenang;berenang|laki-laki|olahraga|perenang|pria|renang|triatlon
+🏊‍♂️;pria berenang;laki-laki|renang
+🏊‍♀️;wanita berenang;olahraga|perempuan|renang
+⛹️;orang memantulkan bola;atlet|basket|bola|dribble|kejuaraan|olahraga|pria
+⛹️‍♂️;pria memantulkan bola;bola|laki-laki|membawa
+⛹️‍♀️;wanita memantulkan bola;bola|bola basket|membawa|olahraga|perempuan
+🏋️;orang mengangkat beban;angkat|angkat besi|atlet|barbel|beban|binaraga|latihan|olahraga angkat besi|pria
+🏋️‍♂️;pria mengangkat beban;angkat|beban|laki-laki
+🏋️‍♀️;wanita mengangkat beban;angkat|beban|olahraga|perempuan
+🚴;orang bersepeda;laki-laki|mengendarai sepeda|olahraga|pesepeda cowok|pria|sepeda
+🚴‍♂️;pria bersepeda;laki-laki|sepeda
+🚴‍♀️;wanita bersepeda;bersepeda|olahraga|perempuan|sepeda
+🚵;orang bersepeda gunung;gunung|laki-laki|olahraga|pesepeda|pria|sepeda
+🚵‍♂️;pria bersepeda gunung;gunung|laki-laki|sepeda
+🚵‍♀️;wanita bersepeda gunung;bersepeda|gunung|olahraga|perempuan|sepeda
+🤸;orang melakukan gerakan meroda;aktif|gembira|gimnastik|jumpalitan|koprol|olahraga|orang|perempuan|salto|senam|senang|wanita
+🤸‍♂️;pria melakukan gerakan meroda;aktif|balik|gambira|gimnastik|jumpalitan|jungkir|laki-laki|pria|salto|senam|senang
+🤸‍♀️;wanita melakukan gerakan meroda;aktif|balik|gimnastik|jumpalitan|jungkir|koprol|perempuan|salto|senam|wanita
+🤼;orang bergulat;adu gulat|arena gulat|gulat|laki-laki|olahraga|orang|pegulat|pertandingan gulat|pertarungan gulat|pria|turnamen gulat
+🤼‍♂️;pria bergulat;adu gulat|arena gulat|gulat|laki-laki|olahraga|pegulat|pria|turnamen gulat
+🤼‍♀️;wanita bergulat;adu gulat|arena gulat|gulat|olahraga|pegulat|perempuan|pertarungan gulat
+🤽;orang bermain polo air;air|atlet polo air|berenang|laki-laki|olahraga|orang|polo|pria
+🤽‍♂️;pria bermain polo air;berenang|laki-laki|olahraga|polo|polo air|pria
+🤽‍♀️;wanita bermain polo air;air|berenang|olahraga|perempuan|polo|wanita
+🤾;orang bermain bola tangan;atlet|bola|bola tangan|laki-laki|lempar|lempar keras|olahraga|oper|orang
+🤾‍♂️;pria bermain bola tangan;bola tangan|laki-laki|olahraga|pria
+🤾‍♀️;wanita bermain bola tangan;atlet|bola tangan|lempar|olahraga|oper|perempuan|wanita
+🤹;orang melempar;atraksi|banyak kerjaan|banyak tugas|juggling|laki-laki|lempar bola|lempar tangkap bola|menyeimbangkan|multitasking|pria|repot|sibuk
+🤹‍♂️;pria melempar;atraksi|atraksi lempar bola|laki-laki|lempar bola|lempar tangkap bola
+🤹‍♀️;wanita melempar;atraksi|olahraga|perempuan|wanita melakukan atraksi
+🧘;orang dalam posisi teratai;damai|duduk sila|kaki silang|meditasi|perempuan|rileks|santai|tenang|wanita|yoga
+🧘‍♂️;pria dalam posisi teratai;meditasi|yoga
+🧘‍♀️;wanita dalam posisi teratai;meditasi|yoga
+🛀;orang di bak mandi;bak mandi|mandi|orang sedang mandi
+🛌;orang di tempat tidur;hotel|istirahat|lelap|nyenyak|rehat|selimut|tidur|zzz
+🧑‍🤝‍🧑;orang bergandengan;bergandengan|gandeng|orang|pasangan|pegang tangan|tangan
+👭;dua wanita bergandengan;bergandengan tangan|bestie|cewek|gandeng|kakak adik|pasangan|pegangan|saudara|sobat|tangan|wanita
+👫;pria dan wanita bergandengan;cinta|gandeng|laki-laki|pasangan|pegangan|perempuan|pria|pria dan wanita berpegangan tangan|tangan|teman|wanita
+👬;dua pria bergandengan;berteman|cowok|gandeng|gemini|kembar|pasangan|pegangan|pria|tangan|zodiak
+💏;berciuman;cinta|cium|kasih|pacar|pacaran|pasangan|romantis|sayang
+👩‍❤️‍💋‍👨;berciuman: wanita, pria;berciuman|cinta|cium|kasih|pacar|pacaran|pasangan|pria|romantis|sayang|wanita
+👨‍❤️‍💋‍👨;berciuman: pria, pria;berciuman|cinta|cium|kasih|pacar|pacaran|pasangan|pria|romantis|sayang
+👩‍❤️‍💋‍👩;berciuman: wanita, wanita;berciuman|cinta|cium|kasih|pacar|pacaran|pasangan|romantis|sayang|wanita
+💑;pasangan dengan hati;cinta|hati|hubungan|kasih|pacar|pasangan|romantis|sayang
+👩‍❤️‍👨;pasangan dengan hati: wanita, pria;cinta|hati|hubungan|kasih|pacar|pasangan|pasangan dengan hati|pria|romantis|sayang|wanita
+👨‍❤️‍👨;pasangan dengan hati: pria, pria;cinta|hati|hubungan|kasih|pacar|pasangan|pasangan dengan hati|pria|romantis|sayang
+👩‍❤️‍👩;pasangan dengan hati: wanita, wanita;cinta|hati|hubungan|kasih|pacar|pasangan|pasangan dengan hati|romantis|sayang|wanita
+👨‍👩‍👦;keluarga: pria, wanita, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria|wanita
+👨‍👩‍👧;keluarga: pria, wanita, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria|wanita
+👨‍👩‍👧‍👦;keluarga: pria, wanita, anak perempuan, anak laki-laki;anak|anak laki-laki|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria|wanita
+👨‍👩‍👦‍👦;keluarga: pria, wanita, anak laki-laki, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria|wanita
+👨‍👩‍👧‍👧;keluarga: pria, wanita, anak perempuan, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria|wanita
+👨‍👨‍👦;keluarga: pria, pria, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👨‍👧;keluarga: pria, pria, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👨‍👧‍👦;keluarga: pria, pria, anak perempuan, anak laki-laki;anak|anak laki-laki|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👨‍👦‍👦;keluarga: pria, pria, anak laki-laki, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👨‍👧‍👧;keluarga: pria, pria, anak perempuan, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👩‍👩‍👦;keluarga: wanita, wanita, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👩‍👧;keluarga: wanita, wanita, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👩‍👧‍👦;keluarga: wanita, wanita, anak perempuan, anak laki-laki;anak|anak laki-laki|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👩‍👦‍👦;keluarga: wanita, wanita, anak laki-laki, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👩‍👧‍👧;keluarga: wanita, wanita, anak perempuan, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👨‍👦;keluarga: pria, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👦‍👦;keluarga: pria, anak laki-laki, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👧;keluarga: pria, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👧‍👦;keluarga: pria, anak perempuan, anak laki-laki;anak|anak laki-laki|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👨‍👧‍👧;keluarga: pria, anak perempuan, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|pria
+👩‍👦;keluarga: wanita, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👦‍👦;keluarga: wanita, anak laki-laki, anak laki-laki;anak|anak laki-laki|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👧;keluarga: wanita, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👧‍👦;keluarga: wanita, anak perempuan, anak laki-laki;anak|anak laki-laki|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+👩‍👧‍👧;keluarga: wanita, anak perempuan, anak perempuan;anak|anak perempuan|ayah|bapak|ibu|keluarga|mama|papa|wanita
+🗣️;kepala berbicara;bayangan|berbicara|bicara|kepala|muka|ngomong|siluet|wajah
+👤;siluet foto setengah badan;bayangan|misteri|siluet
+👥;beberapa siluet foto setengah badan;bayangan|kawan|orang|semua orang|setiap orang|siluet|teman
+🫂;orang berpelukan;halo|hangat|kasih sayang|nyaman|orang|peluk|perpisahan|rangkul|sahabat|selamat tinggal|terima kasih
+👪;keluarga;anak|ayah|bapak|ibu|mama|papa
+🧑‍🧑‍🧒;keluarga: orang dewasa, orang dewasa, anak;anak|keluarga: orang dewasa|orang dewasa
+🧑‍🧑‍🧒‍🧒;keluarga: orang dewasa, orang dewasa, anak, anak;anak|keluarga: orang dewasa|orang dewasa
+🧑‍🧒;keluarga: orang dewasa, anak;anak|keluarga: orang dewasa
+🧑‍🧒‍🧒;keluarga: orang dewasa, anak, anak;anak|keluarga: orang dewasa
+👣;jejak kaki;badan|jejak|kaki|tubuh
+🫆;sidik jari;detektif|forensik|identitas|jejak|keamanan|kriminal|misteri|petunjuk
+🐵;wajah monyet;binatang|hewan|monyet|muka|wajah
+🐒;monyet;binatang|hewan|pisang
+🦍;gorila;binatang|hewan|kingkong
+🦧;orangutan;beruk|binatang|hewan|kera|monyet
+🐶;wajah anjing;anjing|binatang|hewan|mamalia|muka|wajah
+🐕;anjing;binatang|hewan|peliharaan
+🦮;anjing pemandu;aksesibilitas|buta|memandu|panduan|pemandu|tunanetra
+🐕‍🦺;anjing pembimbing;aksesibilitas|anjing|bantuan|bimbingan|layanan|pemandu|pembimbing
+🐩;pudel;anjing|binatang|bulu lembut|hewan
+🐺;serigala;binatang|hewan|muka|wajah
+🦊;rubah;hewan|muka|wajah
+🦝;rakun;binatang|cekatan|cerdik|hewan|licik|lihai|pandai|penasaran|pintar
+🐱;wajah kucing;anak kucing|binatang|hewan|kucing|muka|peliharaan|wajah
+🐈;kucing;anak kucing|binatang|hewan|peliharaan
+🐈‍⬛;kucing hitam;binatang|hewan|hitam|kesialan|kucing|meong|mitos|nasib buruk|sial|takhayul
+🦁;singa;alfa|aum|binatang|hewan|kuat|Leo|muka|safari|surai|wajah|zodiak
+🐯;wajah harimau;besar|binatang|harimau|hewan|kucing|macan|muka|predator|wajah
+🐅;harimau;besar|binatang|hewan|kebun binatang|kucing|macan|predator
+🐆;macan tutul;besar|binatang|hewan|kebun binatang|predator
+🐴;wajah kuda;binatang|hewan|kuda|mamalia|muka|wajah
+🫎;rusa besar;binatang|elk|hewan|mamalia|moose|rusa|tanduk
+🫏;keledai;binatang|bodoh|hewan|himar|kedelai|kelede|keras kepala|mamalia|tendang
+🐎;kuda;balap|binatang|hewan|pacuan
+🦄;unicorn;muka|wajah
+🦓;zebra;belang|binatang|hewan
+🦌;rusa;binatang|hewan
+🦬;bison;bison Eropa|hewan|kawanan|kerbau
+🐮;wajah sapi;binatang|hewan|moo|muka|peternakan|sapi|susu|wajah
+🐂;lembu;banteng|binatang|hewan|taurus|zodiak
+🐃;kerbau;air|binatang|hewan
+🐄;sapi;binatang|hewan|moo|susu
+🐷;wajah babi;babi|bakon|binatang|hewan|muka|wajah
+🐖;babi;babi betina|binatang|hewan|peternakan
+🐗;babi hutan;babi|binatang|hewan
+🐽;hidung babi;babi|hidung|muka|wajah
+🐏;domba jantan;aries|binatang|domba|hewan|kebun binatang|mamalia|tanduk|zodiak
+🐑;domba betina;betina|binatang|bulu lembut|domba|hewan|peternakan|wol
+🐐;kambing;binatang|capricorn|hewan|peternakan|susu|zodiak
+🐪;unta;binatang|dromedari|gurun|hewan|punuk|satu
+🐫;unta berpunuk dua;baktrian|binatang|dua|gurun|hewan|punuk|unta
+🦙;llama;alpaca|alpaka|binatang|guanaco|guanako|hewan|vikuna|wol
+🦒;jerapah;binatang|bintik|hewan
+🐘;gajah;binatang|hewan
+🦣;mamut;berbulu|besar|binatang|gading|hewan|punah|raksasa
+🦏;badak;binatang|hewan
+🦛;kuda nil;binatang|hewan|nil
+🐭;wajah tikus;binatang|hewan|muka|tikus|wajah
+🐁;tikus putih;binatang|hewan|tikus
+🐀;tikus;binatang|hewan
+🐹;hamster;binatang|hewan|hewan peliharaan|muka|wajah
+🐰;wajah kelinci;binatang|hewan|hewan peliharaan|kelinci|muka|wajah
+🐇;kelinci;binatang|hewan|hewan peliharaan
+🐿️;tupai;binatang|hewan
+🦫;biwara;bendungan|berang-berang|binatang|gigi|hewan
+🦔;landak;berduri|binatang|hewan
+🦇;kelelawar;binatang|hewan|vampir
+🐻;beruang;binatang|grizzly|hewan|madu|muka|wajah
+🐻‍❄️;beruang kutub;arktika|beruang|putih
+🐨;koala;australia|bawah|beruang|binatang|hewan|marsupial|muka|wajah
+🐼;panda;bambu|binatang|hewan|muka|wajah
+🦥;kungkang;lamban|lambat|lelet|malas|pelan
+🦦;berang-berang;bahagia|ceria|gembira|memancing ikan|menangkap ikan
+🦨;sigung;bau|busuk
+🦘;kanguru;anak kanguru|berkantung|binatang|hewan|kangguru|lompat|loncat|marsupial
+🦡;musang;binatang|hewan|luak|luwak|madu|pengganggu
+🐾;jejak kaki hewan;cakar|jejak|jejak hewan|kaki
+🦃;kalkun;binatang|burung|hewan|thanksgiving
+🐔;ayam;binatang|burung|hewan|ornitologi
+🐓;ayam jago;ayam|binatang|burung|hewan|ornitologi
+🐣;itik menetas;anak ayam|ayam|bayi|binatang|hewan|menetas|telur
+🐤;itik bayi;anak ayam|ayam|bayi|binatang|burung|hewan|ornitologi
+🐥;itik bayi menghadap ke depan;anak ayam|ayam|bayi|binatang|hewan|ornitologi
+🐦;burung;binatang|hewan|ornitologi
+🐧;pinguin;antarktika|binatang|burung|hewan|ornitologi
+🕊️;merpati;binatang|burung|damai|hewan|ornitologi|terbang
+🦅;elang;binatang|burung|hewan|ornitologi
+🦆;bebek;binatang|burung|hewan|ornitologi
+🦢;angsa leher panjang;anak angsa|angsa|angsa muda|binatang|buruk rupa|burung|hewan|itik|ornitologi|soang
+🦉;burung hantu;bijaksana|binatang|burung|hewan|ornitologi
+🦤;dodo;besar|binatang|burung|hewan|Mauritius|ornitologi|punah
+🪶;bulu;bulu ayam|burung|pena bulu|penerbangan|ringan
+🦩;flamingo;anggun|binatang|burung|flamboyan|hewan|ornitologi|tropikal|tropis
+🦚;merak;bangga|binatang|burung|cantik|hewan|merak betina|ornitologi|pamer|sok|sombong|warna-warni
+🦜;nuri;bajak laut|bicara|binatang|burung|hewan|kakatua|ornitologi
+🪽;sayap;bidadari|bulu|burung|malaikat|melayang|mitologi|mitos|penerbangan|terbang
+🐦‍⬛;burung hitam;binatang|burung|gagak|hewan|hitam|ornitologi|paruh
+🪿;angsa leher pendek;angsa|binatang|burung|gericau|hewan|konyol|ornitologi
+🐦‍🔥;phoenix;abadi|bangkit|burung api|fantasi|hidup kembali|kekal|kelahiran kembali|lahir kembali|reinkarnasi
+🐸;katak;binatang|hewan|kodok|muka|wajah
+🐊;buaya;binatang|hewan|kebun binatang
+🐢;kura-kura;binatang|hewan|penyu|reptil|terrapin
+🦎;kadal;binatang|cicak|hewan|reptil
+🐍;ular;binatang|hewan|ofiukus|pembawa|reptil|zodiak
+🐲;wajah naga;binatang|dongeng|hewan|mistis|muka|naga|wajah
+🐉;naga;binatang|dongeng|hewan|kisah|ksatria|peri
+🦕;sauropod;brachiosaurus|brontosaurus|dinosaur|diplodocus
+🦖;T-Rex;dinosaurus|Rex|T|Tyrannosaurus
+🐳;ikan paus menyembur;binatang|hewan|laut|muka|pantai|paus|samudra|sembur|wajah
+🐋;ikan paus;binatang|hewan|laut|pantai|paus|samudra
+🐬;lumba-lumba;binatang|hewan|laut|pantai|samudra
+🫍;orca;laut|paus|samudra
+🦭;anjing laut;binatang|hewan|laut|samudra|singa
+🐟;ikan;binatang|hewan|makan malam|memancing|pisces|zodiak
+🐠;ikan tropis;binatang|hewan|ikan|tropis
+🐡;ikan gembung;binatang|hewan|ikan
+🦈;hiu;binatang|hewan|ikan
+🐙;gurita;binatang|hewan|laut|mahluk|samudra
+🐚;cangkang spiral;cangkang|kerang|laut|pantai|spiral
+🪸;terumbu karang;karang|koral|laut|lautan|perubahan iklim|samudra
+🪼;ubur-ubur;akuarium|binatang|hewan|invertebrata|jeli|kehidupan|laut|lautan|penyengat|plankton|samudra|sengat|tentakel
+🦀;kepiting;Cancer|zodiak
+🦞;lobster;binatang|bisque|boga bahari|capit|hewan|seafood
+🦐;udang;binatang|hewan|ikan bercangkang|makanan
+🦑;cumi-cumi;binatang|cumi|hewan|makanan|moluska
+🦪;tiram;menyelam|mutiara|selam
+🐌;siput;alam|binatang|hewan|keong
+🦋;kupu-kupu;cantik|serangga
+🐛;serangga kecil;binatang|hewan|kebun|serangga|taman
+🐜;semut;binatang|hewan|kebun|serangga|taman
+🐝;lebah madu;alam|binatang|hewan|lebah|madu|musim semi|serangga
+🪲;kumbang;binatang|hewan|serangga
+🐞;kumbang betina;alam|binatang|hewan|kebun|kepik|perempuan|serangga|taman|wanita
+🦗;jangkrik;belalang|hama|insek|serangga
+🪳;kecoak;binatang|coro|hama|hewan|kecoa|lipas|serangga|sungut
+🕷️;laba-laba;binatang|hewan|serangga
+🕸️;jaring laba-laba;laba-laba|sarang
+🦂;kalajengking;Scorpio|Scorpius|zodiak
+🦟;nyamuk;demam|gigitan nyamuk|malaria|penyakit|sakit panas|serangga|virus
+🪰;lalat;belatung|bersayap|binatang|busuk|hama|hewan|penyakit|serangga|terbang
+🪱;cacing;annelida|binatang|cacing tanah|hermafrodit|hewan|melata|parasit
+🦠;mikroba;ameba|amuba|bakteri|ilmu pengetahuan|sains|virus
+💐;karangan bunga;buket|bunga|romantis|tanaman
+🌸;sakura;bunga|mekar|musim semi|tanaman
+💮;bunga putih;bunga|kembang|putih
+🪷;teratai;Buddhisme|bunga|damai|Hinduisme|kecantikan|kembang|kesucian|ketenangan|tenang
+🏵️;hiasan mawar;bros mawar|tanaman
+🌹;mawar;bunga|tanaman
+🥀;bunga layu;bunga|bunga kering|kecewa|layu|tanaman
+🌺;kembang sepatu;bunga|tanaman|tumbuhan
+🌻;bunga matahari;bunga|matahari|tanaman
+🌼;mekar;bunga|bunga sitrus|tanaman
+🌷;tulip;bunga|mekar|tanaman|tumbuhan
+🪻;hyacinthus;bunga|indigo|kembang|lavender|lembayung|lupin|lupin biru|mulut singa|tanaman|tumbuhan|ungu|violet
+🌱;semai;daun|muda|tanaman|tumbuhan|tunas
+🪴;tanaman pot;dalam pot|dekorasi|menanam|merawat|pot|rumah|tumbuh|tumbuhan
+🌲;pohon hijau abadi;hijau|pohon|pohon pinus|tanaman
+🌳;pohon meranggas;gugur|hijau|pohon|tanaman
+🌴;pohon palem;palem|pohon|tanaman|tropis
+🌵;kaktus;padang pasir|pohon|tanaman
+🌾;seikat padi;bulir|gandum|nasi|padi|tanaman
+🌿;herba;daun|herbal|tanaman
+☘️;semanggi;clover|daun|irlandia|shamrock|tanaman|tumbuhan
+🍀;empat daun semanggi;4|beruntung|daun|empat|semanggi|tanaman
+🍁;daun maple;daun|gugur|maple|tanaman
+🍂;daun berguguran;daun|gugur|tanaman
+🍃;daun tertiup angin;angin|daun|tanaman|terbang|tiup
+🪹;sarang burung kosong;bersarang|cabang|ranting|rumah|sarang|sarang burung
+🪺;sarang dengan telur;bersarang|bertelur|burung|cabang|ranting|sarang|telur|telur biru
+🍄;jamur;mario bros|tanaman
+🪾;pohon tanpa daun;gersang|kekeringan|musim dingin|tandus
+🍇;anggur;buah|Dionysus
+🍈;melon;buah
+🍉;semangka;buah|tanaman
+🍊;buah jeruk;buah|c|jeruk|oranye|vitamin
+🍋;lemon;asam|buah|jeruk|masam
+🍋‍🟩;jeruk limau;asam|buah|jeruk|jeruk nipis|kecut|koktail|mojito|salsa|segar|sitrus|tequila|tropis
+🍌;pisang;buah|kalium|potasium
+🍍;nanas;buah|colada|nenas|pina|tropikal|tropis
+🥭;mangga;buah|makanan|tropis
+🍎;apel merah;apel|buah|diet|kesehatan|makanan|matang|merah|sehat
+🍏;apel hijau;apel|buah|hijau
+🍐;pir;buah
+🍑;persik;buah|peach
+🍒;ceri;beri|buah|merah
+🍓;stroberi;beri|buah
+🫐;blueberry;beri|bilberry|biru|bluberi|buah|makanan
+🥝;buah kiwi;buah|kiwi|makanan
+🍅;tomat;buah|makanan|sayur
+🫒;zaitun;makanan
+🥥;kelapa;colada|palem|piña
+🥑;alpukat;alpuket|avokad|avokado|buah|makanan
+🍆;terung;sayuran|terong
+🥔;kentang;makanan|sayur|sayuran
+🥕;wortel;makanan|sayur
+🌽;bonggol jagung;jagung|kebun|labirin|panen|perkebunan|telinga
+🌶️;cabai pedas;cabai|panas|pedas
+🫑;paprika;bel|cabai|makanan|sayuran
+🥒;ketimun;acar|makanan|sayuran|timun
+🥬;selada hijau;bok choy|burger|daun|hijau|kale|kubis|salad|selada
+🥦;brokoli;kubis|liar
+🧄;bawang putih;perisa
+🧅;bawang bombay;bawang|bawang bombai|perisa
+🥜;kacang tanah;kacang|makanan|sayur|sayuran
+🫘;kacang merah;biji-bijian|ginjal|kacang-kacangan|kecil|legume|makanan
+🌰;kastanye;almon|tanaman
+🫚;akar jahe;akar|bir|bir pletok|hangat|herba|herbal|jahe|jamu|rempah
+🫛;kacang polong;edamame|kacang|kedelai|kulit kacang|legum|polong|sayuran|soya
+🍄‍🟫;jamur cokelat;alam|jamur|makanan|organik|portobello|sayuran|shitake|topping|topping piza|vegetarian
+🫜;sayuran umbi;akar|bit|kebun|lobak|sayur|umbi
+🍞;roti;biji-bijian|gandum|karbo|makanan|restoran|roti bakar|roti panggang
+🥐;croissant;bulan sabit|gulung|makanan|prancis|roti|sarapan
+🥖;roti baguette;baget|baguette|makanan|perancis|roti
+🫓;roti pipih;arepa|gordita|lavash|makanan|naan|pita|roti
+🥨;pretzel;berkeluk|simpul
+🥯;bagel;roti|sarapan|schmear|toko roti
+🥞;panekuk;crepe|makanan|pancake|sarapan|serabi
+🧇;wafel;besi|bingung|sarapan|waffle
+🧀;irisan keju;irisan|keju|potongan
+🍖;daging pada tulang;daging|tulang
+🍗;kaki ayam;ayam|kaki|kalkun|lapar|paha ayam|tulang|unggas
+🥩;potongan daging;daging|daging babi|daging domba|irisan|merah|potongan|steak
+🥓;babi asap;bacon|bakon|daging|makanan
+🍔;hamburger;burger|lapar|makan|makanan|roti
+🍟;kentang goreng;goreng|kentang|makanan
+🍕;pizza;keju|makanan|potongan|roti
+🌭;hot dog;hotdog|makanan|roti|sosis
+🥪;roti lapis;roti|sandwich
+🌮;taco;khas meksiko
+🌯;burrito;bungkus|meksiko
+🫔;tamale;dibungkus|makanan|meksiko|pamonha
+🥙;roti tawar isi;falafel|kebab|makanan|roti isi
+🧆;falafel;bakso|baso|bebola|kacang arab
+🥚;telur;makanan|telor
+🍳;memasak;goreng|makanan|menggoreng|sarapan|telur|wajan
+🥘;wajan dangkal;kaserol|makanan|seafood|wajan
+🍲;panci makanan;makanan|mangkuk|rebus|rebusan
+🫕;fondue;cokelat|keju|makanan|meleleh|panci|ski
+🥣;mangkuk dengan sendok;bubur|mangkok|mangkuk|oat|oatmeal|sarapan|sendok|sereal
+🥗;salad hijau;hijau|salad|sayuran
+🍿;popcorn;berondong|bioskop|film|jagung|nonton
+🧈;mentega;produk susu
+🧂;garam;asin|bumbu|kecewa|kesal|marah|perisa|rasa|sebal|wadah garam
+🥫;makanan kaleng;kaleng|makanan
+🍱;kotak bento;bento|kotak|makanan|nasi kotak
+🍘;kerupuk beras;beras|biskuit|keripik|makanan
+🍙;nasi kepal;bola|jepang|makanan|nasi
+🍚;nasi matang;makanan|masak|nasi|putih
+🍛;nasi kari;kari|makanan|nasi
+🍜;mangkuk mengepul;indomie|makanan|mangkuk|mie|ramen|rebusan
+🍝;spageti;italia|makanan|pasta|spaghetti
+🍠;ubi panggang;kentang|makanan|manis|panggang|ubi|ubi bakar
+🍢;oden;kebab|laut|makanan|otak-otak|sate|tempura|tusuk sate|udang
+🍣;sushi;makanan
+🍤;udang goreng;goreng|tempura|udang
+🍥;kue ikan dengan desain pusaran;ikan|kue|makanan|pastri|pusaran
+🥮;kue bulan;festival|musim gugur|perayaan|yuèbǐng
+🍡;dango;jepang|makanan|manis|penutup|sate|stik
+🥟;dumpling;empanada|gyoza|jiaozi|pangsit|pierogi
+🥠;kue keberuntungan;kue|ramalan
+🥡;kotak makanan;bungkus|ember|kotak|makanan|pesan antar|sumpit|tiram
+🍦;es krim lembut;es|krim|lembut|makanan|manis|penutup
+🍧;es serut;es|makanan|manis|penutup|serut
+🍨;es krim;es|krim|makanan|manis|penutup
+🍩;donat;makanan|makanan penutup|manis|sarapan
+🍪;biskuit;cokelat|keping|kue kering|makanan penutup|manis
+🎂;kue ulang tahun;bahagia|kue|makanan penutup|manis|pastri|perayaan|selebrasi|ulang tahun
+🍰;kue;makanan|manis|pastri|penutup|potongan
+🧁;kue mangkuk;camilan|cupcake|gula|kue mangkok|makanan penutup|manis|pugasan|taburan|toko roti
+🥧;pai;apel|buah|daging|irisan|isian|labu kuning|pastri
+🍫;sebatang cokelat;batangan|cemilan|cokelat|makanan|manis|penutup
+🍬;permen;makanan|manis|penutup
+🍭;permen lolipop;lolipop|makanan|makanan penutup|manis|permen|restoran
+🍮;puding susu;custard|makanan penutup|manis|puding
+🍯;toples madu;beruang|kendi|madu|makanan|manis|toples
+🍼;botol bayi;bayi|botol|minuman|susu
+🥛;gelas susu;gelas|minum|susu
+☕;minuman hangat;kafein|kopi|mengepul|minuman|panas|teh
+🫖;teko;makanan|minum|seduh|teh
+🍵;cangkir teh tanpa gagang;cangkir|cawan|gagang|minum|minuman|oolong|teh
+🍶;sake;bar|botol|cangkir|cawan|minum|minuman|restoran
+🍾;botol dengan penyumbat terlepas;bar|botol|gabus|minuman|sumbat
+🍷;gelas anggur;alkohol|bar|gelas|klub|minum|minuman|minuman keras|restoran|wine
+🍸;gelas cocktail;bar|gelas|koktail|minuman
+🍹;minuman tropis;alkohol|bar|cocktail|klub|mai tai|minum|minuman|minuman keras|pesta|tropis
+🍺;mug bir;alkohol|bar|bir|minuman|minuman keras|mug|musim panas|octoberfest|oktoberfest
+🍻;mug bir berdenting;alkohol|bar|berbenturan|bir|minuman|mug|tos
+🥂;mendentingkan gelas;alkohol|cling|gelas|hore|minuman|perayaan|pesta|selamat|tos
+🥃;gelas tumbler;alkohol|gelas|minum-minum|minuman|whisky|wiski
+🫗;menuang cairan;air|gelas|kosong|minum|tumpah
+🥤;cangkir dengan sedotan;air|jus|minuman|soda
+🧋;teh bubble;boba|bubble|makanan|minuman|mutiara|susu|teh
+🧃;kotak minuman;jus|kotak|manis|minuman|sedotan
+🧉;teh mate;mate|minuman
+🧊;es batu;dingin|es|gunung es
+🥢;sumpit;hashi
+🍽️;garpu dan pisau dengan piring;garpu|makan|makan malam|masak|memasak|piring|pisau
+🍴;garpu dan pisau;alat makan|garpu|lapar|makan|masak|pisau
+🥄;sendok;alat makan|makan|peralatan makan
+🔪;pisau dapur;alat|hocho|masak|pisau|senjata
+🫙;toples;bumbu|habis|kosong|menyimpan|saus|wadah
+🏺;amphora;akuarius|Aquarius|kendi|memasak|minuman|vas|zodiak
+🌍;bola dunia Eropa-Afrika;Afrika|bola dunia|bumi|dunia|Eropa|Eropa-Afrika|globe
+🌎;bola dunia Amerika;Amerika|bola dunia|bumi|dunia|globe
+🌏;bola dunia Asia-Australia;Asia|Asia-Australia|Australia|bola dunia|bumi|dunia|globe
+🌐;bola dunia dengan garis meridian;bola dunia|bumi|dunia|garis tengah|globe|internet|meridian|seluruh dunia|web
+🗺️;peta dunia;dunia|peta
+🗾;peta Jepang;jepang|peta
+🧭;kompas;arah|magnetik|magnetis|navigasi|orientasi|pedoman arah|penunjuk arah
+🏔️;gunung dengan puncak bersalju;dingin|gunung|salju
+⛰️;gunung;
+🛘;longsor;avalans|bahaya|bebatuan|gempa bumi|gunung|longsor lumpur|musibah
+🌋;gunung berapi;alam|erupsi|gunung|gunung api
+🗻;gunung Fuji;alam|fuji|gunung
+🏕️;berkemah;kemah|tenda
+🏖️;pantai dan payung;pantai|payung
+🏜️;gurun;
+🏝️;pulau terpencil;gurun|pulau
+🏞️;taman nasional;nasional|taman
+🏟️;stadion;
+🏛️;bangunan klasik;bangunan|gedung|klasik
+🏗️;konstruksi bangunan;bangunan|crane|derek|konstruksi|pembangunan
+🧱;batu bata;bata|dinding|lempung|mortar|semen|tanah liat|tanah merah
+🪨;batu;batu besar|batu kali|berat|cadas|keras|padat|solid
+🪵;kayu;batang kayu|batang pohon|gelondong|kayu bakar|kayu bulat|kayu pohon|potongan kayu
+🛖;pondok;gubuk|penampungan|perlindungan|pondok kayu|rumah|rumah bundar|rumah tradisional|yurt
+🏘️;perumahan;bangunan|rumah
+🏚️;rumah terlantar;bangunan|rumah|terlantar
+🏠;rumah;bangunan|gedung
+🏡;rumah dengan taman;bangunan|gedung|kebun|pinggir kota|rumah|rumah berpohon
+🏢;gedung perkantoran;bangunan|gedung|kantor|kota|kubikel|pekerjaan|perkantoran
+🏣;kantor pos Jepang;bangunan|gedung|Jepang|kantor|pos
+🏤;kantor pos;bangunan|Eropa|gedung|kantor|pos
+🏥;rumah sakit;bangunan|dokter|gedung|obat
+🏦;bank;bangunan|gedung
+🏨;hotel;bangunan|gedung
+🏩;hotel cinta;bangunan|cinta|gedung|hotel
+🏪;minimarket;24 jam|bangunan|toko
+🏫;sekolah;bangunan|gedung
+🏬;toserba;bangunan|departemen|gedung|mol|swalayan|toko
+🏭;pabrik;bangunan|gedung
+🏯;kastel Jepang;bangunan|gedung|Jepang|kastel|kastil
+🏰;kastel;bangunan|Eropa|gedung|kastil|puri
+💒;pernikahan;bangunan|gedung|kapel|romantis
+🗼;menara Tokyo;menara|tokyo
+🗽;Patung Liberty;liberty|patung
+⛪;gereja;agama|berkah|berkat|kapel|Kristen|Kristiani|salib
+🕌;masjid;agama|Islam|mushalla|Muslim|musola
+🛕;pura;candi|hindu|kuil
+🕍;sinagog;agama|bait suci|judaisme|kuil|Yahudi
+⛩️;kuil Shinto;agama|kuil|shinto
+🕋;ka’bah;agama|islam|muslim
+⛲;air mancur;air|pancuran
+⛺;tenda;berkemah
+🌁;berkabut;cuaca|kabut
+🌃;malam berbintang;bintang|malam
+🏙️;panorama kota;bangunan|kota
+🌄;matahari terbit di antara gunung;cuaca|gunung|matahari|pagi|terbit
+🌅;matahari terbit;alam|matahari|pagi|terbit
+🌆;panorama kota di sore hari;bangunan|gedung|kota|matahari|matahari terbenam|panorama kota|pemandangan|senja|sore
+🌇;matahari terbenam;bangunan|gedung|matahari|senja
+🌉;jembatan di malam hari;cuaca|jembatan|malam
+♨️;sumber air panas;beruap|mata air|mata air panas|mengepul|panas|sumber air
+🎠;komidi putar;hiburan|karosel|kuda
+🛝;perosotan;bermain|hiburan|main|meluncur|seluncuran|taman
+🎡;kincir ria;hiburan|kincir|permainan|roda|taman
+🎢;roller coaster;coaster|hiburan|permainan|roller|taman
+💈;tanda salon;potong|rambut|salon|tiang
+🎪;tenda sirkus;sirkus|tenda
+🚂;lokomotif;kendaraan|kereta|kereta api|mesin|rel|uap
+🚃;gerbong;bus listrik|elektrik|kendaraan|kereta|kereta api|listrik|mobil|rel|trem
+🚄;kereta ekspres;cepat|kendaraan|kereta|rel|shinkansen
+🚅;kereta ekspres peluru;cepat|kendaraan|kereta|peluru|rel|shinkansen
+🚆;kereta;kendaraan|rel
+🚇;kereta bawah tanah;bepergian|metro|perjalanan
+🚈;light rail;light|monorail|monorel|rail|tiba
+🚉;stasiun;kendaraan|kereta|rel
+🚊;trem;kendaraan|kereta|listrik
+🚝;monorel;kendaraan
+🚞;jalur kereta pegunungan;gunung|kendaraan|kereta|mobil|rel
+🚋;gerbong trem;kendaraan|kereta|mobil|trem
+🚌;bus;bis|kendaraan|sekolah
+🚍;bus datang;bis|bus|datang|mobil
+🚎;bus listrik;bis|bis trolley|bus|kendaraan|listrik|trem
+🚐;minibus;bis|bus|kendaraan|van
+🚑;ambulans;ambulan|darurat|kendaraan
+🚒;mobil pemadam kebakaran;api|mesin|truk
+🚓;mobil polisi;kendaraan|mobil|patroli|polisi
+🚔;mobil polisi datang;datang|kendaraan|mobil|polisi
+🚕;taksi;berkendara|kendaraan|kuning|mengemudi|mobil
+🚖;taksi datang;datang|kendaraan|mobil|taksi
+🚗;mobil;berkendara|kendaraan|mengemudi
+🚘;mobil datang;datang|kendaraan|mobil
+🚙;kendaraan rekreasi;kendaraan|mobil|rekreasi|RV
+🛻;truk pikap;angkutan barang|bak terbuka|mobil|mobil bak|pick-up|pikap|transportasi|truk
+🚚;truk pengiriman;kendaraan|pengiriman|truk
+🚛;lori gandeng;kendaraan|lori|semi|truk
+🚜;traktor;kendaraan
+🏎️;mobil balap;balap|balapan|kendaraan|mobil
+🏍️;sepeda motor;balap|balapan|motor
+🛵;motor skuter;motor|sepeda motor|skuter
+🦽;kursi roda manual;aksesibilitas
+🦼;kursi roda bermotor;aksesibilitas|bermotor|kursi roda
+🛺;bajaj;becak|bemo|tuk tuk
+🚲;sepeda;bersepeda|kendaraan
+🛴;otoped;skuter
+🛹;papan luncur;papan|roda|skateboard|skater|skating
+🛼;sepatu roda;olahraga|roda|roller skate|sepatu|sepatu luncur
+🚏;halte bus;bus|halte|perhentian
+🛣️;jalan raya;jalan|jalan tol|jalanan|raya
+🛤️;rel kereta;jalan|kereta|rel
+🛢️;drum minyak;drum|minyak
+⛽;pompa bahan bakar;bahan|bakar|bensin|pompa|SPBU|stasiun
+🛞;roda;ban|belok|kendaraan|lingkaran|mobil
+🚨;lampu mobil polisi;berputar|darurat|kendaraan|lampu|mobil|polisi|sirine|suar
+🚥;lampu lalu lintas horizontal;lalu|lampu|lintas|sinyal
+🚦;lampu lalu lintas vertikal;lalu|lampu|lintas|perempatan|sinyal
+🛑;rambu stop;berhenti|oktagon|rambu|segi delapan|stop|tanda
+🚧;konstruksi;batasan|pembatas
+⚓;jangkar;alat|kapal
+🛟;ban pelampung;berenang|keamanan|mengapung|pelampung|penyelamat|penyelamat hidup|penyelamatan
+⛵;perahu layar;kapal|kendaraan|laut|perahu|pesiar|resor
+🛶;kano;getek|perahu|sampan
+🚤;perahu cepat;kapal|kapal cepat|kendaraan|perahu
+🛳️;kapal penumpang;kapal|penumpang
+⛴️;kapal feri;feri|kapal|penumpang|perahu
+🛥️;perahu bermotor;bermotor|kapal|kendaraan|perahu
+🚢;kapal;kendaraan
+✈️;pesawat;kendaraan
+🛩️;pesawat kecil;kendaraan|pesawat
+🛫;pesawat lepas landas;berangkat|check-in|kapal terbang|keberangkatan|pesawat
+🛬;pesawat mendarat;datang|kedatangan|kendaraan|mendarat|pesawat
+🪂;parasut;hang-glide|paralayar|parasail|terjun payung
+💺;kursi;bangku|duduk|tempat duduk
+🚁;helikopter;kendaraan
+🚟;kereta suspensi;kendaraan|rel|suspensi
+🚠;kereta gantung;gondola|gunung|kabel|kendaraan
+🚡;trem gantung;gondola|jalur trem|kabel|kendaraan|trem
+🛰️;satelit;antariksa|luar angkasa
+🚀;roket;angkasa|kendaraan
+🛸;piring terbang;alien|cawan|ekstra|piring|terbang|terestrial|UFO
+🛎️;bel meja;bel|hotel|lonceng
+🧳;koper;bepergian|berkemas|jalan-jalan|mengepak|roda|tas
+⌛;jam pasir;pasir|pewaktu|waktu
+⏳;jam pasir yang bergerak;jam|pasir|pewaktu|waktu
+⌚;jam tangan;arloji|jam|waktu
+⏰;jam weker;alarm|jam
+⏱️;stopwatch;jam
+⏲️;penghitung waktu;jam|pewaktu
+🕰️;jam perapian;jam
+🕛;jam dua belas tepat;00|12|12.00|dua belas|jam|tepat
+🕧;jam setengah satu;12|12:30|12.30|30|dua belas|jam|jam dua belas tiga puluh|tiga puluh|waktu
+🕐;jam satu tepat;00|1|1:00|1.00|jam|satu|tepat
+🕜;jam setengah dua;1|1:30|1.30|30|jam|satu|setengah dua|tiga puluh
+🕑;jam dua tepat;00|2|2:00|2.00|dua|jam|tepat
+🕝;jam setengah tiga;2|2.30|30|dua|dua tiga puluh|jam|setengah tiga|tiga puluh
+🕒;jam tiga tepat;00|3|3:00|3.00|jam|tepat|tiga
+🕞;jam setengah empat;3|3:30|3.30|30|jam|jam tiga tiga puluh|tiga|tiga puluh|waktu
+🕓;jam empat tepat;00|4|4:00|4.00|empat|jam|tepat|waktu
+🕟;jam setengah lima;30|4|4.30|empat|empat tiga puluh|jam|setengah lima|tiga puluh
+🕔;jam lima tepat;00|5|5:00|5.00|jam|lima|tepat|waktu
+🕠;jam setengah enam;30|5|5:30|5.30|jam|jam lima tiga puluh|lima|tiga puluh|waktu
+🕕;jam enam tepat;00|6|6.00|enam|jam|pukul enam|tepat
+🕡;jam setengah tujuh;30|6|6:30|6.30|enam|jam|jam enam tiga puluh|tiga puluh|waktu
+🕖;jam tujuh tepat;00|7|7:00|7.00|jam|pukul tujuh|tepat|tujuh
+🕢;jam setengah delapan;30|7|7:30|7.30|jam|jam tujuh tiga puluh|tiga puluh|tujuh|waktu
+🕗;jam delapan tepat;00|8|8:00|8.00|delapan|jam|tepat|waktu
+🕣;jam setengah sembilan;30|8|8.30|delapan|delapan tiga puluh|jam|setengah sembilan|tiga puluh|waktu
+🕘;jam sembilan tepat;00|9|9:00|9.00|jam|sembilan|tepat
+🕤;jam setengah sepuluh;30|9|9:30|9.30|jam|jam sembilan tiga puluh|sembilan|tiga puluh|waktu
+🕙;jam sepuluh tepat;00|10|10:00|10.00|jam|sepuluh|tepat
+🕥;jam setengah sebelas;10|10.30|30|jam|sepuluh|sepuluh tiga puluh|setengah sebelas|tiga puluh|waktu
+🕚;jam sebelas tepat;00|11|11:00|11.00|jam|sebelas|tepat
+🕦;jam setengah dua belas;11|11:30|11.30|30|jam|jam sebelas tiga puluh|sebelas|sebelas tiga puluh|tiga puluh
+🌑;bulan baru;angkasa|bulan|cuaca|gelap
+🌒;bulan sabit awal;angkasa|bulan|cuaca|membesar|sabit
+🌓;bulan perbani awal;antariksa|bulan|kuartal|luar angkasa|perbani|pertama
+🌔;bulan cembung awal;antariksa|awal|bulan|cembung|luar angkasa|membesar
+🌕;bulan purnama;angkasa|bulan|cuaca|purnama
+🌖;bulan cembung akhir;akhir|antariksa|bulan|cembung|luar angkasa|mengecil
+🌗;bulan perbani akhir;angkasa|bulan|cuaca|seperempat
+🌘;bulan sabit akhir;angkasa|bulan|cuaca|mengecil|sabit
+🌙;bulan sabit;angkasa|bulan|cuaca|sabit
+🌚;wajah bulan baru;angkasa|bulan|cuaca|wajah
+🌛;wajah bulan perbani awal;antariksa|awal|bulan|kuartal|kuarter|luar angkasa|muka|perbani|wajah
+🌜;wajah bulan perbani akhir;bulan|impian|kuartal|kuarter|mimpi|muka|terakhir|wajah
+🌡️;termometer;cuaca
+☀️;matahari;angkasa|cerah|cuaca|sinar|terang
+🌝;wajah bulan purnama;angkasa|bulan|cuaca|purnama|terang|wajah
+🌞;wajah matahari;angkasa|bersinar|cuaca|matahari|sinar|terang|wajah
+🪐;planet bercincin;saturnus
+⭐;bintang medium putih;astronomi|bintang|medium|putih
+🌟;bintang bersinar;berkilau|bersinar|bintang|cemerlang|malam
+🌠;bintang jatuh;angkasa|bintang|jatuh
+🌌;bima sakti;antariksa|bima|luar angkasa|sakti
+☁️;awan;cuaca
+⛅;matahari di balik awan;awan|berawan|cuaca|matahari|mendung
+⛈️;awan dengan petir dan hujan;awan|cuaca|hujan|petir
+🌤️;matahari di balik awan kecil;awan|cuaca|matahari
+🌥️;matahari di balik awan besar;awan|cuaca|matahari
+🌦️;matahari di balik awan hujan;awan|cuaca|hujan|matahari
+🌧️;awan hujan;awan|cuaca|hujan
+🌨️;awan salju;awan|cuaca|dingin|salju
+🌩️;awan petir;awan|cuaca|kilat|petir
+🌪️;tornado;angin|angin puyuh|awan|cuaca|pusaran
+🌫️;kabut;awan|cuaca
+🌬️;wajah tertiup angin;angin|awan|embusan|muka|tiupan|wajah
+🌀;topan;berputar-putar|cuaca|pusaran|pusing
+🌈;pelangi;cuaca|hujan
+🌂;payung tertutup;cuaca|hujan|pakaian|payung
+☂️;payung;cuaca|hujan|pakaian
+☔;payung dengan tetesan hujan;cuaca|hujan|pakaian|payung
+⛱️;payung di tanah;cuaca|hujan|matahari|payung
+⚡;tegangan tinggi;bahaya|kilat|listrik|petir|sambaran|tegangan
+❄️;serpihan salju;cuaca|dingin|keping salju|salju
+☃️;boneka salju dengan hujan salju;boneka salju|dingin|manusia|salju
+⛄;boneka salju tanpa salju;boneka|cuaca|dingin|salju
+☄️;komet;antariksa|luar angkasa|meteor
+🔥;api;alat|bakar|kobaran|panas
+💧;tetesan air;air|alam|cuaca|dingin|keringat|komik|tetesan
+🌊;ombak;air|alam|berselancar|gelombang|laut|peselancar|samudra|selancar
+🎃;jack-o-lantern;dekorasi|halloween|horor|jack|labu|lentera|perayaan
+🎄;pohon Natal;Natal|perayaan|pohon
+🎆;kembang api;bum|hiburan|meledak|perayaan
+🎇;kembang api batang;api|berkilau|kembang|perayaan
+🧨;petasan;api|bahan peledak|bunga api|dinamit|kembang api|ledakan|mercon|percikan|sinar
+✨;berkilau;*|bintang|kilauan|majik
+🎈;balon;perayaan|ulang tahun
+🎉;party popper;jreng|perayaan|pesta|popper|selamat|trompet|ulang tahun
+🎊;bola konfeti;bola|confetti|perayaan|pesta|woohoo
+🎋;pohon tanabata;Jepang|perayaan|pohon]|spanduk|tanabata
+🎍;dekorasi pinus;bambu|dekorasi bambu|jepang|perayaan|pinus|tanaman|tumbuhan
+🎎;boneka Jepang;boneka|festival|jepang|perayaan
+🎏;bendera ikan koi;koi|panji|perayaan
+🎐;lonceng angin;angin|gemerincing|lonceng|perayaan
+🎑;perayaan bulan;bulan|perayaan|upacara
+🧧;amplop merah;amplop|angpau|baik|beruntung|hadiah|hóngbāo|keberuntungan|merah|uang
+🎀;pita;perayaan
+🎁;kado;bungkusan|hadiah|kotak|perayaan
+🎗️;pita pengingat;pengingat|perayaan|pita
+🎟️;tiket masuk;karcis|masuk|tiket
+🎫;tiket;masuk|potongan tiket
+🎖️;medali militer;medali|militer|penghargaan|perayaan
+🏆;piala;hadiah|juara|kemenangan|menang|olahraga|pemenang|trofi
+🏅;medali olahraga;emas|medali|menang|olahraga|penghargaan
+🥇;medali emas;emas|juara|medali|peringkat|pertama|posisi|satu
+🥈;medali perak;dua|juara|kedua|medali|perak|peringkat|posisi
+🥉;medali perunggu;juara|ketiga|medali|peringkat|perunggu|posisi|tiga
+⚽;bola sepak;bola|olahraga|sepak
+⚾;bisbol;bola|olahraga
+🥎;sofbol;bola|kasti|olahraga|sarung tangan|softball
+🏀;bola basket;basket|bola|keranjang|loncat|olahraga
+🏐;bola voli;bola|game|voli
+🏈;American football;american|bola|bowl|football|olahraga|super
+🏉;sepak bola rugbi;bola|football|olahraga|rugbi|rugby
+🎾;tenis;bola|game|olahraga|raket
+🥏;lempar cakram;cakram|disk|frisbee|piringan|terbang
+🎳;bowling;bola|game|olahraga|strike
+🏏;kriket;bola|game|olahraga|pemukul|permainan
+🏑;hoki lapangan;bola|game|hoki|lapangan|olahraga|permainan|stik
+🏒;hoki es;bola karet|es|game|hoki|olahraga|permainan|stik
+🥍;lacrosse;bola|gawang|gol|olahraga|tongkat
+🏓;ping pong;bet|bola|game|olahraga|pemukul|permainan|tenis meja
+🏸;bulu tangkis;game|kok|olahraga|raket
+🥊;sarung tinju;olahraga|sarung tangan|tinju
+🥋;seragam beladiri;bela diri|judo|karate|olahraga|seragam|seragam bela diri|silat|taekwondo
+🥅;gawang;gol|jaring|olahraga
+⛳;bendera di lubang golf;bendera|golf|lubang|olahraga
+⛸️;seluncur es;es|olahraga|seluncur
+🎣;tongkat pancing;ikan|mancing|olahraga|tongkat
+🤿;kacamata selam;diving|kacamata|menyelam|scuba|snorkeling
+🎽;kaos lari;kaos|lari|selempang
+🎿;ski;olahraga|salju
+🛷;kereta luncur;meluncur|salju|toboggan
+🥌;batu curling;batu|permainan
+🎯;dart;anak panah|game|lempar|mata|olahraga|papan sasaran|permainan|sasaran|target
+🪀;yo-yo;fluktuasi|mainan|naik-turun|yoyo
+🪁;layang-layang;layangan|melayang|terbang
+🔫;pistol air;alat|pistol|revolver|senjata
+🎱;biliar 8 bola;8|biliar|bola|delapan|game
+🔮;bola kristal;alat|bola|dongeng|fantasi|kristal|ramalan
+🪄;tongkat ajaib;penyihir|pesulap|sihir|sulap|tongkat sihir
+🎮;video game;game|hiburan|kontrol|pengontrol|permainan|video
+🕹️;joystick;game|tuas|video|videogame
+🎰;mesin slot;game|judi|kasino|slot
+🎲;dadu;game|hiburan|permainan
+🧩;keping puzzle;jigsaw|keping|kepingan|petunjuk|puzzle|saling terkait
+🧸;boneka beruang;beruang|boneka|empuk|mainan|teddy bear
+🪅;pinata;festival|Meksiko|meriah|perayaan|perayaan 5 mei|permen|pesta|rayakan|ulang tahun
+🪩;bola disko;bola|cermin|dansa|disko|glitter|kerlip|pesta
+🪆;boneka bersarang;babushka|bersarang|boneka|boneka kayu|boneka matryoshka|rusia
+♠️;waru;kartu|permainan|sekop
+♥️;hati;kartu|perasaan|permainan
+♦️;wajik;kartu|merah|permainan
+♣️;keriting;kartu|klub|permainan
+♟️;pion catur;anak buah|catur|pion
+🃏;joker;kartu|permainan
+🀄;naga merah mahyong;game|mahyong|merah|permainan
+🎴;kartu bunga;bunga|game|jepang|kartu|permainan
+🎭;seni drama;seni|tampil|teater|topeng
+🖼️;bingkai bergambar;bingkai|gambar|lukisan|museum|seni
+🎨;palet pelukis;lukisan|museum|palet|seni
+🧵;benang;gulungan|jahit|jarum|kelos|menjahit|tali
+🪡;jarum jahit;benang|jahit|jahitan|jarum|lancip|menjahit|penjahit|runcing|sulaman|tajam
+🧶;gulungan benang;benang|bola|crochet|menyulam|merajut|rajut|sulam
+🪢;simpul;belitan|buhul|ikatan|kusut|puntiran|tali|tambang
+👓;kacamata;kaca|mata|pakaian
+🕶️;kacamata hitam;gelap|kacamata|mata
+🥽;kacamata renang;berenang|diving|las|mata|mengelas|menyelam|pelindung|scuba|selam
+🥼;jas laboratorium;baju|dokter|dr|eksperimen|ilmuwan|jaket|lab|pakaian|percobaan|putih
+🦺;rompi pengaman;darurat|keamanan|keselamatan|pengaman|rompi
+👔;dasi;baju|bekerja|karyawan|kemeja|kerja|serius
+👕;kaos;akhir pekan|baju|belanja|biru|kasual|kaus|kerah|pakaian|t-shirt
+👖;celana jeans;akhir pekan|baju|belanja|biru|celana|celana panjang|denim|jeans|jins|kasual|pakaian
+🧣;syal;dingin|leher
+🧤;sarung tangan;tangan
+🧥;mantel;berlapis|dingin|jaket|tebal
+🧦;kaus kaki;kaki|kaos|stocking|stoking
+👗;gaun;baju|belanja|mewah|pakaian
+👘;kimono;baju|nyaman|pakaian
+🥻;sari;baju|gaun|pakaian
+🩱;pakaian renang one-piece;baju renang|berenang|one-piece|pakaian renang|renang
+🩲;celana renang;baju renang|one-piece|pakaian dalam|pakaian renang
+🩳;celana pendek;baju renang|berenang|celana|pakaian dalam|pakaian renang|renang
+👙;bikini;baju renang|kolam renang|pakaian|pantai|renang
+👚;pakaian wanita;baju|belanja|blus|pakaian|perempuan|wanita
+🪭;kipas tangan lipat;adem|angin|kepakan|kipas|kipas tangan|malu|menari|panas|penyejuk|sejuk|tari|tarian
+👛;dompet;belanja|koin|pakaian|tas|tas kecil
+👜;tas jinjing;aksesoris|belanja|pakaian|tas|tas tangan|wanita
+👝;kantung;dompet wanita|pakaian|tas|tas baju|tas tangan|tas wanita
+🛍️;tas belanja;belanja|hotel|tas
+🎒;tas sekolah;pakaian|ransel|sekolah|tas
+🩴;sandal jepit;alas kaki|benda|karet|murah|pantai|sandal|sendal|sepatu|zōri
+👞;sepatu pria;aksesoris|belanja|kaki|pakaian|pria|sepatu|sepatu coklat
+👟;sepatu lari;atletik|kets|olah raga|pakaian|sepatu|sepatu olah raga
+🥾;sepatu boot untuk mendaki;backpacking|boot|bot|camping|cokelat|hiking|kemping|luar ruangan|mendaki|sepatu
+🥿;sepatu flat;flats|nyaman|sandal selop|selop|sepatu|sepatu balet|sepatu datar|teplek
+👠;sepatu hak tinggi;belanja|hak|mode|pakaian|sepatu|wanita
+👡;sandal wanita;belanja|pakaian|perempuan|sandal|sepatu|wanita
+🩰;sepatu balet;balet|menari|tari|tarian
+👢;sepatu bot wanita;belanja|bot|pakaian|perempuan|sepatu bot|wanita
+🪮;sisir garpu;afro|jepit rambut|rambut|sisir
+👑;mahkota;bangsawan|darah biru|keluarga raja|ningrat|pakaian|raja|ratu|tahta|topi
+👒;topi wanita;pakaian|pesta kebun|pita|topi|wanita
+🎩;topi tinggi;baju|formal|mewah|pakaian|sulap|tophat|topi
+🎓;topi wisuda;lulus|pakaian|perayaan|toga|topi|topi sarjana|wisuda
+🧢;topi berlidah;topi|topi bisbol
+🪖;helm tentara;angkatan darat|helm|helm baja|militer|pejuang|pelindung|prajurit|topi baja|topi perang
+⛑️;helm dengan palang putih;bantuan|helm|muka|P3K|palang|pekerja|penyelamatan|pertolongan|salib|topi|wajah
+📿;tasbih;agama|berdoa|doa|kalung|pakaian|rosario
+💄;lipstik;dandan|kencan|kosmetik|pacaran
+💍;cincin;berlian|romantis
+💎;batu permata;berlian|perkawinan|permata|pernikahan|romantis|tunangan|uang
+🔇;speaker mati;bisu|bunyi|diam|hening|senyap|speaker|suara
+🔈;volume speaker rendah;kecil|lembut|speaker|volume
+🔉;volume speaker medium;bunyi|medium|speaker|suara|volume
+🔊;volume speaker tinggi;berisik|bising|bunyi|kencang|keras|musik|speaker|suara|tinggi|volume
+📢;pengeras suara;keras|pengumuman
+📣;megafon;bersorak|suara
+📯;trompet pos;pos|terompet|trompet
+🔔;lonceng;bunyi|gereja|istirahat|suara
+🔕;lonceng dicoret;bisu|diam|lonceng|senyap|sunyi|terlarang
+🎼;naskah musik;musik|nada|skor
+🎵;not musik;lambang|musik|not|simbol|tanda
+🎶;not-not musik;bunyi|lagu|lambang|musik|not|simbol|suara|tanda
+🎙️;mikrofon studio;mik|mikrofon|musik|studio
+🎚️;penggeser tingkat;level|musik|penggeser
+🎛️;kenop kontrol;kenop|kontrol|musik
+🎤;mikrofon;karaoke|lagu|mik|musik|nyanyi|suara
+🎧;headphone;bunyi|earbud|suara
+📻;radio;hiburan|video
+🎷;saksofon;instrumen|musik
+🎺;trompet;instrumen|musik
+🪊;trombon;alat musik tiup logam|geser|instrumen|jazz|musik|sedih
+🪗;akordeon;alat musik|concertina|instrumen|kotak remas|musik|tuts
+🎸;gitar;instrumen|musik
+🎹;keyboard musik;instrumen|keyboard|musik|piano
+🎻;biola;instrumen|musik
+🪕;banjo;musik|senar
+🥁;drum;musik|stik drum
+🪘;gendang;beat|conga|drum|instrumen|irama|ketukan|panjang|ritme
+🪇;marakas;alat musik|cha cha|gemerisik|goyang|instrumen|joget|kerincingan|menari|musik|perkusi|tarian
+🪈;seruling;alat musik tiup|band|instrumen|musik|orkestra|piccolo|pipa|rekorder|suling
+🪉;harpa;cupid|instrumen|musik|orkestra|romantis
+📱;ponsel;seluler|telepon
+📲;telepon masuk;panah|panggilan|ponsel|seluler|telefon|telepon|terima
+☎️;telepon;telefon
+📞;gagang telepon;komunikasi|penerima|telepon
+📟;pager;komunikasi
+📠;mesin faks;faksimili|komunikasi
+🔋;baterai;
+🪫;baterai lemah;baterai|baterai hampir habis|daya lemah|elektronik|energi lemah
+🔌;steker;listrik
+💻;komputer laptop;komputer|PC|personal
+🖥️;komputer desktop;desktop|komputer|monitor
+🖨️;printer;komputer
+⌨️;keyboard;komputer|papan ketik
+🖱️;mouse komputer;komputer|mouse|tetikus
+🖲️;trackball;bola tetikus|komputer
+💽;disk komputer;disk|disk mini|komputer|optik
+💾;disket;disk|komputer
+💿;disk optik;blu-ray|cd|disk|dvd|komputer|optik
+📀;dvd;blu-ray|cd|disk|komputer|optik
+🧮;sempoa;abakus|hitung|kalkulasi|kalkulator|perhitungan|swipoa
+🎥;kamera film;film|kamera|sinema
+🎞️;frame film;film|frame|sinema
+📽️;proyektor film;film|proyektor|sinema|video
+🎬;papan sutradara;film
+📺;televisi;layar tv|tv|tv tabung|video
+📷;kamera;video
+📸;kamera dengan flash;flash|kamera|video
+📹;kamera video;kamera|merekam|rekam|video
+📼;kaset video;pita|vhs|video
+🔍;kaca pembesar arah kiri;alat|kaca|pembesar|penelusuran
+🔎;kaca pembesar arah kanan;alat|kaca|pembesar|penelusuran
+🕯️;lilin;cahaya
+💡;bohlam;bola lampu|cahaya|elektrik|ide|komik|lampu
+🔦;lampu senter;alat|cahaya|listrik|senter
+🏮;lampion merah;bar|cahaya|jepang|lentera|lentera kertas merah|merah
+🪔;lampu diya;diya|lampu|lentera|minyak
+📔;buku catatan bersampul;buku|buku catatan|dekorasi|pendidikan|sampul|sekolah
+📕;buku tertutup;buku|merah|pelajaran|perpustakaan|tertutup
+📖;buku terbuka;baca|buku|membaca|pendidikan|pengetahuan|perpustakaan|terbuka
+📗;buku hijau;buku|hijau
+📘;buku biru;biru|buku|pelajaran|perpustakaan
+📙;buku oranye;buku|oranye|pelajaran|perpustakaan
+📚;buku;bahan pelajaran|cerita|pengetahuan
+📓;buku catatan;buku|catatan
+📒;buku besar;buku|buku catatan
+📃;halaman tergulung;dokumen|gulung|halaman
+📜;gulungan;kertas
+📄;halaman tampak depan;dokumen|halaman
+📰;koran;berita|kertas
+🗞️;gulungan koran;berita|kertas|koran|tergulung
+📑;penanda halaman buku;penanda|penanda halaman|tab|tanda
+🔖;pembatas buku;tanda
+🏷️;label;
+🪙;koin;dinar|dolar|duit|emas|euro|harta karun|kaya|logam|perak|uang
+💰;kantung uang;bayar|dolar|kantong|kas|pembayaran|uang
+🪎;peti harta karun;barang berharga|emas|hadiah|jarahan|kekayaan|perak|permata|uang
+💴;uang kertas yen;bank|kas|mata uang|uang|uang kertas|yen
+💵;uang kertas dolar;bank|dolar|kas|mata uang|uang|uang kertas
+💶;uang kertas euro;duit|eropa|euro|kas|mata uang|mata uang eropa|uang|uang kertas|uang kertas eropa
+💷;uang kertas pound;duit|inggris|mata uang|mata uang inggris|pound|uang|uang kertas|uang kertas inggris
+💸;uang bersayap;dolar|mata uang amerika|sayap|terbang|uang|uang kertas|uang kertas amerika
+💳;kartu kredit;bank|kartu|kredit|uang
+🧾;kuitansi;akuntansi|bon|bukti|bukti pembayaran|faktur|kwitansi|pembukuan|resi|tagihan|tanda terima
+💹;bagan meningkat dengan yen;bagan|bank|grafik|mata uang|pasar|pertumbuhan|tren|uang|yen
+✉️;amplop;email|surat
+📧;email;surat
+📨;amplop datang;amplop|email|kotak surat|masuk|surat|terima
+📩;amplop dengan panah;amplop|email|keluar|komunikasi|menerima|panah|surat|terkirim
+📤;baki kotak keluar;baki|keluar|kirim|kotak|pengiriman kotak surat|surat|terkirim
+📥;baki kotak masuk;baki|kotak|kotak masuk|penerimaan kotak surat|surat|terima
+📦;paket;kiriman|kotak|parsel|pengiriman
+📫;kotak surat tertutup dengan bendera terangkat;kotak surat|surat|tertutup
+📪;kotak surat tertutup dengan bendera turun;kotak surat|surat|tertutup|turun
+📬;kotak surat terbuka dengan bendera terangkat;kotak surat|surat|terbuka
+📭;kotak surat terbuka dengan bendera turun;kotak surat|surat|terbuka|turun
+📮;kotak pos;kotak surat|surat
+🗳️;kotak dengan surat suara;kotak|kotak suara|surat suara
+✏️;pensil;tulis
+✒️;ujung pena;pena|tulis
+🖋️;pena tinta;bolpoin|pen tinta|pena|tinta
+🖊️;pena;bolpoin|tulis
+🖌️;kuas;lukisan|melukis
+🖍️;krayon;
+📝;memo;catatan|pensil
+💼;tas kantor;kantor|koper|tas
+📁;folder file;file|folder|map
+📂;folder file terbuka;file|folder|map|terbuka
+🗂️;pembagi indeks kartu;indeks|kartu|pembagi
+📅;kalender;tanggal
+📆;kalender sobek;kalender|tanggal
+🗒️;catatan spiral;catatan|kertas|spiral
+🗓️;kalender spiral;kalender|kertas|spiral|tanggal
+📇;indeks kartu;indeks|kartu|rolodex
+📈;bagan meningkat;bagan|data|grafik|meningkat|naik|pertumbuhan|tren
+📉;bagan menurun;bagan|data|grafik|menurun|tren|turun
+📊;diagram batang;bagan|batang|diagram|grafik
+📋;papan klip;alas tulis|catatan
+📌;paku penanda;pin
+📍;paku penanda bulat;lokasi|paku|peta|pin
+📎;klip kertas;klip|penjepit kertas
+🖇️;klip kertas tertaut;klip kertas|penjepit kertas|tautan
+📏;penggaris lurus;matematika|penggaris|ujung lurus
+📐;penggaris segitiga;penggaris|rangkaian|segitiga
+✂️;gunting;alat|potong
+🗃️;kotak file kartu;file|kartu|kotak
+🗄️;lemari file;arsip|berkas|file|kabinet|lemari|pemberkasan|surat
+🗑️;keranjang sampah;keranjang|sampah|tong sampah
+🔒;gembok;privasi|terkunci|tutup
+🔓;gembok terbuka;buka|gembok|terbuka|tidak digembok|tidak terkunci
+🔏;gembok terkunci dengan pena;gembok|pena|privasi|tinta|ujung pena
+🔐;gembok terkunci dengan kunci;aman|gembok|kunci|tutup
+🔑;kunci;buka kunci|kata sandi|sandi
+🗝️;kunci antik;antik|gembok|kunci|petunjuk
+🔨;palu;alat
+🪓;kapak;belah|kampak|kayu|potong
+⛏️;beliung;alat|tambang
+⚒️;palu dan beliung;alat|beliung|palu
+🛠️;palu dan kunci inggris;alat|kunci inggris|palu
+🗡️;belati;pisau|senjata
+⚔️;pedang bersilang;pedang|senjata|silang
+💣;bom;bahaya|komik|ledakan
+🪃;bumerang;aborigin|australia|berbalik|melambung|senjata|senjata lempar|senjata tradisional
+🏹;busur dan panah;busur|olahraga|panah|pemanah|sagitarius|senjata|zodiak
+🛡️;perisai;senjata
+🪚;gergaji kayu;alat|benda|gergaji|kayu|pangkas|perkakas|potong|tajam|tukang kayu
+🔧;kunci inggris;alat
+🪛;obeng;alat|obeng lurus|obeng minus|peralatan|perkakas
+🔩;mur dan baut;alat|baut|mur
+⚙️;roda gigi;alat
+🗜️;klem;alat|pengompres|penjepit
+⚖️;timbangan gantung;adil|alat|imbang|keadilan|kejaksaan|libra|seimbang|skala|timbangan|zodiak
+🦯;tongkat tunanetra;aksesibilitas|buta|tunanetra
+🔗;tautan;rangkaian
+⛓️‍💥;rantai putus;ikatan|lepas|putus|rantai
+⛓️;rantai;
+🪝;kait;cantelan|cantolan|kail|kaitan|kurva|pengait|titik jual
+🧰;kotak perkakas;kotak|kotak merah|mekanik|perkakas|peti
+🧲;magnet;bentuk u|daya tarik|ketertarikan|ladam|magnetik|magnetis|positif negatif|tapal kuda|tarik-menarik|tarikan|tertarik
+🪜;tangga;alat panjat|anak tangga|panjat|tangga kayu
+🪏;sekop;gali|kebun|kubur|lubang|salju|taman|tanaman|tumbuhan
+⚗️;alembic;alat|kimia
+🧪;tabung uji;ahli kimia|eksperimen|ilmu pasti|ilmu pengetahuan|kimia|lab|laboratorium|pakar kimia|percobaan|sains|tabung reaksi
+🧫;cawan petri;ahli biologi|bakteri|biakan|biologi|kultur|lab|laboratorium|pakar biologi
+🧬;dna;ahli biologi|biologi|evolusi|gen|genetik|genetika|hidup|kehidupan|pakar biologi
+🔬;mikroskop;alat|eksperimen|percobaan|sains
+🔭;teleskop;alat|sains
+📡;antena satelit;antena|piring|satelit
+💉;suntikan;alat|dokter|jarum|obat|sakit|vaksin|vaksinasi
+🩸;tetesan darah;berdarah|darah|donor darah|luka|menstruasi|obat
+💊;pil;dokter|obat|sakit
+🩹;plester luka;perban|plester
+🩼;kruk;bantuan|bantuan mobilitas|cedera|disabilitas|sakit|tongkat|tongkat jalan
+🩺;stetoskop;dokter|jantung|obat
+🩻;sinar-x;dokter|kerangka|medis|radiologi|rontgen|sinar X|tengkorak|tulang
+🚪;pintu;
+🛗;elevator;aksesibilitas|alat transportasi|kerekan|lift|lift penumpang|transportasi vertikal
+🪞;cermin;berias|bersolek|dandan|kaca|pantulan|refleksi|reflektor|rias wajah|spekulum
+🪟;jendela;bingkai|bukaan|dinding|kaca|kosen|lubang|pemadangan|transparan|udara segar
+🛏️;tempat tidur;hotel|kasur|tidur
+🛋️;sofa dan lampu;hotel|istirahat|lampu|santai|sofa
+🪑;bangku;duduk|kursi|kursi kayu
+🚽;toilet;kakus|kamar kecil|kamar mandi
+🪠;penyedot wc;alat|mampet|penyedot|toilet|tukang ledeng|wc
+🚿;shower;air|mandi
+🛁;bathtub;bak|mandi
+🪤;perangkap tikus;jebakan|jepretan|jerat|keju|menjebak|penjebak|perangkap|umpan
+🪒;pisau cukur;bercukur|cukur|silet|tajam
+🧴;botol losion;krim|losion|lotion|moisturizer|pelembap|sampo|shampo|tabir surya
+🧷;peniti;popok|punk rock
+🧹;sapu;bersih-bersih|membersihkan|menyapu|penyihir|sapu terbang|tukang sihir
+🧺;keranjang;berkebun|cucian|pertanian|piknik
+🧻;gulungan kertas;lap|tisu|tisu rol|tisu toilet
+🪣;ember;angkut air|cuci baju|ember biru|tempat air|tong|wadah
+🧼;sabun;batang|bersih|buih|busa|mandi|membersihkan|menyabuni|sabun batangan|sabun padat|wadah sabun
+🫧;gelembung;bawah air|bersih|buih|busa|mutiara|sabun|sendawa
+🪥;sikat gigi;bersih|gigi|gigi dan mulut|gosok gigi|higienis|kamar mandi|mandi|pembersih|perlengkapan mandi|sikat
+🧽;spons;berpori|bersih-bersih|membersihkan|menyerap|merendam
+🧯;alat pemadam api ringan;alat pemadam|alat pemadam kebakaran|api|padam|pemadam|pemadam kebakaran
+🛒;troli belanja;belanja|troli
+🚬;rokok;merokok
+⚰️;peti mati;kematian|vampir
+🪦;batu nisan;kuburan|makam|mati|meninggal|nisan|pekuburan|pemakaman|wafat
+⚱️;guci abu;abu|guci|kematian|kendi|penguburan
+🧿;jimat nazar;azimat|biru|jimat|manik-manik|mantra|mata setan|nazar|penolak bala|tolak bala
+🪬;hamsa;Fatima|jimat|keberuntungan|Maria|Mariam|perlindungan|petunjuk|tangan|telapak tangan
+🗿;moai;moyai|patung|wajah
+🪧;plakat;demonstrasi|kartu|papan penanda|papan tanda|pemberitahuan|pengumuman|protes
+🪪;kartu identitas;identitas|kartu|keamanan|kredensial|KTP|paspor|pengenal|SIM
+🏧;tanda ATM;ATM|bank|cash|otomatis|teller|tunai|uang
+🚮;tanda membuang sampah;keranjang sampah|sampah|tanda tempat sampah|tanda tong sampah|tempat sampah|tong sampah
+🚰;air dapat diminum;air|dapat diminum|keran|minum
+♿;simbol kursi roda;akses|difabel|disabilitas|kursi roda
+🚹;toilet pria;kamar kecil|kamar mandi|lavatory|pria|toilet|WC
+🚺;toilet wanita;kamar kecil|kamar mandi|lavatory|toilet|wanita|WC
+🚻;kamar kecil;tanda|toilet|wc
+🚼;simbol bayi;bayi|ganti|lambang|simbol|tanda
+🚾;kloset air;air|kamar kecil|kloset|lambang|simbol|tanda|toilet|wc
+🛂;kontrol paspor;kontrol|paspor
+🛃;bea cukai;berkemas|paket
+🛄;pengambilan bagasi;bagasi|jalan-jalan|klaim|koper|lambang|pengambilan|pengambilan barang|perjalanan|simbol|tanda
+🛅;koper tertinggal;bagasi|barang|koper|loker|tertinggal
+⚠️;peringatan;hati-hati
+🚸;anak-anak menyeberang;anak|anak-anak|lalu lintas|menyeberang|trotoar
+⛔;dilarang masuk;dilarang|lalu lintas|masuk|terlarang|tidak|tidak boleh
+🚫;dilarang;masuk|merokok|rokok|terlarang|tidak|tidak boleh
+🚳;dilarang bersepeda;dilarang|kendaraan|sepeda|tanda|terlarang|tidak|tidak boleh
+🚭;dilarang merokok;dilarang|lambang|merokok|simbol|tanda|terlarang|tidak
+🚯;dilarang membuang sampah sembarangan;dilarang|membuang sampah|sampah|terlarang|tidak boleh
+🚱;air tidak dapat diminum;air|bukan air minum|dilarang|kering|lambang|simbol|tanda|terlarang
+🚷;pejalan kaki dilarang masuk;dilarang|lambang|larangan|pejalan kaki|simbol|tanda|terlarang|tidak
+📵;dilarang menggunakan ponsel;dilarang|lambang|mobile|ponsel|seluler|simbol|tanda|telepon|terlarang|tidak
+🔞;di bawah 18 tahun dilarang;18|batasan usia|delapan belas|di bawah umur|dilarang|lambang|simbol|tanda|terlarang
+☢️;radioaktif;berbahaya|lambang|simbol|tanda
+☣️;biohazard;bahaya|lambang|simbol|tanda
+⬆️;tanda panah atas;arah|atas|kardinal|lambang|panah|simbol|tanda|utara
+↗️;tanda panah kanan atas;arah|interkardinal|kanan atas|panah|timur laut
+➡️;tanda panah kanan;arah|kardinal|lambang|panah|simbol|tanda|timur
+↘️;tanda panah kanan bawah;arah|interkardinal|kanan bawah|panah|tenggara
+⬇️;tanda panah bawah;arah|bawah|kardinal|panah|selatan
+↙️;tanda panah kiri bawah;arah|barat daya|interkardinal|kiri bawah|panah
+⬅️;tanda panah kiri;arah|barat|kardinal|kiri|panah
+↖️;tanda panah kiri atas;arah|barat laut|interkardinal|kiri atas|panah
+↕️;tanda panah atas bawah;atas bawah|panah
+↔️;tanda panah kiri kanan;kanan kiri|panah
+↩️;tanda panah kanan melengkung ke kiri;kanan|kiri|lengkung|melengkung|panah
+↪️;tanda panah kanan melengkung ke kanan;kanan|kiri|lengkung|melengkung|panah
+⤴️;tanda panah kanan melengkung ke atas;atas|kanan|lengkung|melengkung|panah
+⤵️;tanda panah kanan melengkung ke bawah;bawah|kanan|lengkung|melengkung|panah
+🔃;tanda panah searah jarum jam;muat ulang|panah|searah jarum jam|tanda
+🔄;tanda panah berlawanan arah jarum jam;berlawan arah matahari|berlawanan jarum jam|kebalikan arah jarum jam|lambang|mengulang|panah|simbol|tanda|ulang
+🔙;tanda panah BACK;kembali|panah
+🔚;tanda panah END;END|panah|ujung
+🔛;tanda panah ON!;aktif|panah|tanda
+🔜;tanda panah SOON;panah|segera
+🔝;tanda panah TOP;atas|panah|TOP
+🛐;tempat ibadah;agama|doa|ibadah|pemujaan|tempat
+⚛️;simbol atom;ateis|atom|lambang|simbol|tanda
+🕉️;om;agama|aum|hindu
+✡️;bintang Daud;agama|bintang|Daud|David|judaisme|Yahudi
+☸️;roda dharma;agama|Buddha|dharma|roda
+☯️;yin yang;agama|sulit|susah|tao|taoisme|total|yang|yin|yinyang
+✝️;salib latin;agama|Kristen|kristiani|kristus|latin|salib
+☦️;salib ortodoks;agama|Kristen|kristiani|ortodoks|salib
+☪️;bintang dan bulan;agama|bintang|bulan sabit|Islam|muslim|ramadan
+☮️;simbol damai;damai|lambang|simbol|tanda
+🕎;menorah;agama|candelabra|hanukkah|judaisme|lilin|tempat lilin|Yahudi
+🔯;bintang sudut enam bertitik;bertitik|bertitik enam|bintang|Ibrani|judaisme|keberuntungan|ramalan
+🪯;khanda;agama|Deg|Fateh|Khalsa|Sikh|Sikhisme|Tegh
+♈;Aries;domba|horoskop|zodiak
+♉;Taurus;banteng|horoskop|zodiak
+♊;Gemini;horoskop|kembar|zodiak
+♋;Cancer;horoskop|kepiting|zodiak
+♌;Leo;horoskop|singa|zodiak
+♍;Virgo;horoskop|zodiak
+♎;Libra;adil|horoskop|keadilan|lambang|seimbang|timbangan|zodiak
+♏;Scorpio;horoskop|kalajengking|zodiak
+♐;Sagitarius;horoskop|pemanah|sagittarius|zodiak
+♑;Capricorn;horoskop|kambing|zodiak
+♒;Aquarius;air|horoskop|pembawa|zodiak
+♓;Pisces;horoskop|ikan|zodiak
+⛎;Ophiuchus;pembawa|ular|zodiak
+🔀;tombol acak lagu;acak|bersilangan|lagu|panah|tombol|trek
+🔁;tombol ulangi;panah|searah jarum jam|ulangi
+🔂;tombol ulangi satu lagu;panah|satu kali|searah jarum jam|sekali|tombol|ulang|ulangi
+▶️;tombol putar;kanan|mainkan|panah|putar|segitiga|tombol
+⏩;tombol maju cepat;cepat|dobel|dua kali|maju|panah|percepat|tombol
+⏭️;tombol lagu berikutnya;adegan|berikutnya|lagu|panah|segitiga|selanjutnya|tombol|trek
+⏯️;tombol putar atau jeda;jeda|kanan|mainkan|panah|putar|segitiga|tombol
+◀️;tombol mundur;kiri|mundur|panah|segitiga|terbalik|tombol
+⏪;tombol mundur cepat;cepat|dobel|dua kali|mundur|panah|putar balik|tombol
+⏮️;tombol lagu terakhir;adegan|lagu|panah|sebelumnya|segitiga|terakhir|tombol|trek
+🔼;tombol naik;atas|merah|naik|panah|tombol
+⏫;tombol naik cepat;atas|cepat|dobel|dua kali|panah|tombol
+🔽;tombol turun;bawah|merah|panah|tombol|turun
+⏬;tombol turun cepat;bawah|cepat|dobel|dua kali|panah|tombol|turun
+⏸️;tombol jeda;batang|dobel|dua kali|jeda|tombol|vertikal
+⏹️;tombol berhenti;berhenti|kotak|persegi|tombol
+⏺️;tombol rekam;lingkaran|rekam
+⏏️;tombol keluarkan;keluarkan
+🎦;film;bioskop|kamera|sinema
+🔅;tombol redupkan;kecerahan|redup|rendah|tombol
+🔆;tombol cerahkan;cahaya|cerah|kecerahan
+📶;batang antena;antena|batang|lambang|ponsel|seluler|simbol|sinyal|tanda|telepon
+🛜;nirkabel;daring|data|hotspot|internet|jaringan|komputer|koneksi|kuota|online|router|wifi
+📳;mode getar;bergetar|getar|mode|ponsel|seluler|telepon
+📴;ponsel nonaktif;mati|nonaktif|ponsel|seluler|telepon
+♀️;simbol wanita;perempuan
+♂️;simbol pria;laki-laki
+⚧️;simbol transgender;transgender
+✖️;kali;batal|matematika|operator|perkalian|tanda|x
+➕;tambah;+|plus
+➖;kurang;-|−|matematika|minus|operator|pengurangan|tanda
+➗;bagi;÷|matematika|operator|pembagian|tanda
+🟰;tanda sama dengan tebal;jawaban|matematika|persamaan|sama dengan|tanda sama dengan
+♾️;tak terhingga;selamanya|tak terbatas|universal
+‼️;tanda seru ganda;bangbang|tanda|tanda baca|tanda seru
+⁉️;tanda seru dan tanya;!|!?|?|pertanyaan|tanda|tanda baca|tanda seru|tanda seru tanda tanya
+❓;tanda tanya merah;?|pertanyaan|tanda|tanda baca|tanda tanya
+❔;tanda tanya putih;?|garis luar|pertanyaan|tanda|tanda baca
+❕;tanda seru putih;!|garis luar|tanda|tanda baca|tanda seru
+❗;tanda seru merah;tanda|tanda baca|tanda seru
+〰️;garis bergelombang;gelombang|tanda baca|tanda pisah
+💱;kurs;bank|mata uang|pertukaran|uang
+💲;tanda dolar tebal;dolar|kas|lambang|mata uang|simbol|tanda|tanda dollar tebal|uang
+⚕️;simbol kedokteran;aesculapius|apotek|kedokteran|kesehatan|lambang|simbol|tanda|tongkat
+♻️;simbol daur ulang;daur ulang|lambang|simbol|tanda
+⚜️;fleur-de-lis;kesatria|prajurit
+🔱;emblem trisula;alat|emblem|galah|jangkar|kapal|lambang|lembing|simbol|tombak|trisula
+📛;lencana nama;lencana|nama
+🔰;simbol jepang untuk pemula;alat|daun|hijau|jepang|kuning|pemula
+⭕;lingkaran besar tebal;besar|kosong|lingkaran|merah|o|tebal
+✅;tanda centang putih tebal;✓|centang|diperbaiki|lengkap|selesai|tanda|tombol
+☑️;kotak bercentang;✓|centang|kotak|mati|selesai|suara
+✔️;tanda centang tebal;centang|tanda
+❌;tanda silang;batal|kali|perkalian|salah|tanda|x
+❎;tombol tanda silang;kotak|salah|tanda
+➰;untaian bergelombang;gelombang|keriting|putaran
+➿;untaian bergelombang ganda;dobel|ganda|gelombang|keriting|putaran
+〽️;tanda alternasi bagian;bagian|tanda
+✳️;bintang berujung lancip delapan;*|asterisk|berujung lancip delapan|bintang
+✴️;bintang berujung delapan;*|asterisk|berujung lancip delapan|bintang
+❇️;kilauan;*|berkilau
+©️;hak cipta;C
+®️;terdaftar;R
+™️;merek dagang;tanda|tanda dagang|tanda merek|tm
+🫟;percikan;cat|holi|noda|tumpahan
+0️⃣;keycap: 0;0|keycap|nol
+1️⃣;keycap: 1;1|keycap|satu
+2️⃣;keycap: 2;2|dua|keycap
+3️⃣;keycap: 3;3|keycap|tiga
+4️⃣;keycap: 4;4|empat|keycap
+5️⃣;keycap: 5;5|keycap|lima
+6️⃣;keycap: 6;6|enam|keycap
+7️⃣;keycap: 7;7|keycap|tujuh
+8️⃣;keycap: 8;8|delapan|keycap
+9️⃣;keycap: 9;9|keycap|sembilan
+🔠;masukan huruf kapital latin;ABCD|alfabet|huruf|huruf besar|input|kapital|latin|masukan
+🔡;masukan huruf kecil latin;abcd|alfabet|huruf|huruf kecil|input|latin|masukan
+🔢;masukan angka;1234|angka|input|masukan
+🔣;masukan simbol;&|%|♪|〒|lambang|masukan|simbol|tanda
+🔤;masukan huruf latin;abc|alfabet|huruf|latin|masukan
+🅰️;tombol A (golongan darah);darah|golongan|tombol
+🆎;tombol AB (golongan darah);AB|darah|golongan|tombol
+🅱️;tombol B (golongan darah);B|darah|golongan|tombol
+🆑;tombol CL;cl
+🆒;tombol COOL;COOL|keren|tombol
+🆓;tombol FREE;bebas|FREE|gratis|tombol
+ℹ️;informasi;I
+🆔;tombol ID;id|identitas|tombol
+Ⓜ️;huruf M dalam lingkaran;dilingkari|lingkaran|M
+🆕;tombol NEW;baru|NEW|tombol
+🆖;tombol NG;NG|tombol
+🅾️;tombol O (golongan darah);darah|golongan|O|tombol
+🆗;tombol OK;OK|oke|tombol
+🅿️;tombol P;P|parkir|tombol
+🆘;tombol SOS;bantuan|pertolongan|SOS|tombol
+🆙;tombol UP!;ke atas|lambang|simbol|tanda|tombol|UP!
+🆚;tombol VS;tombol|versus|vs
+🈁;tombol Jepang "di sini";di sini|Jepang|katakan|tombol
+🈂️;tombol Jepang "biaya layanan";biaya|Jepang|katakana|layanan|tagihan|tombol
+🈷️;tombol Jepang "jumlah bulanan";bulanan|ideograf|Jepang|jumlah|per bulan|tombol
+🈶;tombol Jepang "tidak gratis";bebas|biaya|gratis|ideograf|Jepang|tagihan|tidak|tombol
+🈯;tombol Jepang "sudah dipesan";dipesan|ideograf|Jepang|tombol
+🉐;karakter keunggulan dalam lingkaran;ideograf|Jepang|tawar|tombol
+🈹;tombol Jepang "diskon";diskon|ideograf|Jepang|tombol
+🈚;tombol Jepang "gratis";bebas|biaya|gratis|ideograf|Jepang|tombol
+🈲;tombol Jepang "dilarang";dilarang|ideograf|Jepang|tombol
+🉑;tombol Jepang "dapat diterima";dapat diterima|ideograf|Jepang|tombol
+🈸;tombol Jepang "lamaran kerja";ideograf|Jepang|lamaran kerja|tombol
+🈴;tombol Jepang "nilai kelulusan";ideograf|Jepang|kelulusan|lulus|nilai|tombol
+🈳;tombol Jepang "ada lowongan";ideograf|Jepang|lowongan|tombol
+㊗️;tombol Jepang "selamat";ideograf|Jepang|selamat|tombol
+㊙️;tombol Jepang "rahasia";ideograf|Jepang|rahasia|tombol
+🈺;tombol Jepang "siap berbisnis";bisnis|buka|ideograf|Jepang|tombol
+🈵;tombol Jepang "tidak ada lowongan";ideograf|Jepang|lowongan|tidak ada|tombol
+🔴;lingkaran merah;geometri|lingkaran|merah
+🟠;lingkaran oranye;bulat|lingkaran|oranye
+🟡;lingkaran kuning;bulat|kuning|lingkaran
+🟢;lingkaran hijau;bulat|hijau|lingkaran
+🔵;lingkaran biru;biru|geometri|lingkaran
+🟣;lingkaran ungu;bulat|lingkaran|ungu
+🟤;lingkaran cokelat;bulat|cokelat|lingkaran
+⚫;lingkaran hitam;geometri|hitam|lingkaran
+⚪;lingkaran putih;geometri|lingkaran|putih
+🟥;persegi merah;kartu|kotak|merah|penalti|persegi
+🟧;persegi oranye;kotak|oranye|persegi
+🟨;persegi kuning;kartu|kotak|kuning|penalti|persegi
+🟩;persegi hijau;hijau|kotak|persegi
+🟦;persegi biru;biru|kotak|persegi
+🟪;persegi ungu;kotak|persegi|ungu
+🟫;persegi cokelat;cokelat|kotak|persegi
+⬛;persegi besar hitam;besar|geometri|hitam|kotak|persegi
+⬜;persegi besar putih;besar|geometri|kotak|persegi|putih
+◼️;persegi medium hitam;geometri|hitam|kotak|medium|persegi
+◻️;persegi medium putih;geometri|kotak|medium|persegi|putih
+◾;persegi kecil medium hitam;geometri|hitam|kotak|medium kecil|persegi
+◽;persegi kecil medium putih;geometri|kotak|medium kecil|persegi|putih
+▪️;persegi kecil hitam;geometri|hitam|kecil|kotak|persegi
+▫️;persegi kecil putih;geometri|kecil|kotak|persegi|putih
+🔶;wajik oranye besar;geometri|oranye|wajik
+🔷;wajik biru besar;biru|geometri|wajik
+🔸;wajik oranye kecil;geometri|oranye|wajik
+🔹;wajik biru kecil;biru|geometri|wajik
+🔺;segitiga merah mengarah ke atas;atas|geometri|mengarah|merah|naik|segitiga
+🔻;segitiga merah mengarah ke bawah;bawah|geometri|mengarah|merah|segitiga|turun
+💠;wajik bertitik;berlian|geometri|komik|titik|wajik
+🔘;tombol radio;geometri|radio|tombol
+🔳;tombol persegi putih;garis tepi|geometri|kotak|persegi|putih|tombol
+🔲;tombol persegi hitam;geometri|hitam|kotak|persegi|tombol
+🏁;bendera kotak-kotak;balapan|kotak-kotak|petak-petak
+🚩;bendera segitiga;bendera|golf|konstruksi|tiang
+🎌;bendera menyilang;Jepang|menyilang|perayaan|silang
+🏴;bendera hitam;bendera hitam berkibar|berkibar
+🏳️;bendera putih;bendera putih berkibar|berkibar
+🏳️‍🌈;bendera pelangi;biseksual|gay|genderqueer|glbt|glbtq|lesbian|lgbt|lgbtq|lgbtqia|pelangi|pride|queer|trans|transgender
+🏳️‍⚧️;bendera transgender;bendera|biru muda|merah muda|putih|transgender
+🏴‍☠️;bendera bajak laut;bajak|bajak laut|harta karun|Jolly Roger
+🇦🇨;bendera: Pulau Ascension;bendera
+🇦🇩;bendera: Andorra;bendera
+🇦🇪;bendera: Uni Emirat Arab;bendera
+🇦🇫;bendera: Afganistan;bendera
+🇦🇬;bendera: Antigua dan Barbuda;bendera
+🇦🇮;bendera: Anguilla;bendera
+🇦🇱;bendera: Albania;bendera
+🇦🇲;bendera: Armenia;bendera
+🇦🇴;bendera: Angola;bendera
+🇦🇶;bendera: Antarktika;bendera
+🇦🇷;bendera: Argentina;bendera
+🇦🇸;bendera: Samoa Amerika;bendera
+🇦🇹;bendera: Austria;bendera
+🇦🇺;bendera: Australia;bendera
+🇦🇼;bendera: Aruba;bendera
+🇦🇽;bendera: Kepulauan Aland;bendera
+🇦🇿;bendera: Azerbaijan;bendera
+🇧🇦;bendera: Bosnia dan Herzegovina;bendera
+🇧🇧;bendera: Barbados;bendera
+🇧🇩;bendera: Bangladesh;bendera
+🇧🇪;bendera: Belgia;bendera
+🇧🇫;bendera: Burkina Faso;bendera
+🇧🇬;bendera: Bulgaria;bendera
+🇧🇭;bendera: Bahrain;bendera
+🇧🇮;bendera: Burundi;bendera
+🇧🇯;bendera: Benin;bendera
+🇧🇱;bendera: Saint Barthélemy;bendera
+🇧🇲;bendera: Bermuda;bendera
+🇧🇳;bendera: Brunei;bendera
+🇧🇴;bendera: Bolivia;bendera
+🇧🇶;bendera: Belanda Karibia;bendera
+🇧🇷;bendera: Brasil;bendera
+🇧🇸;bendera: Bahama;bendera
+🇧🇹;bendera: Bhutan;bendera
+🇧🇻;bendera: Pulau Bouvet;bendera
+🇧🇼;bendera: Botswana;bendera
+🇧🇾;bendera: Belarus;bendera
+🇧🇿;bendera: Belize;bendera
+🇨🇦;bendera: Kanada;bendera
+🇨🇨;bendera: Kepulauan Cocos (Keeling);bendera
+🇨🇩;bendera: Kongo - Kinshasa;bendera
+🇨🇫;bendera: Republik Afrika Tengah;bendera
+🇨🇬;bendera: Kongo - Brazzaville;bendera
+🇨🇭;bendera: Swiss;bendera
+🇨🇮;bendera: Côte d’Ivoire;bendera
+🇨🇰;bendera: Kepulauan Cook;bendera
+🇨🇱;bendera: Cile;bendera
+🇨🇲;bendera: Kamerun;bendera
+🇨🇳;bendera: Tiongkok;bendera
+🇨🇴;bendera: Kolombia;bendera
+🇨🇵;bendera: Pulau Clipperton;bendera
+🇨🇶;bendera: Sark;bendera
+🇨🇷;bendera: Kosta Rika;bendera
+🇨🇺;bendera: Kuba;bendera
+🇨🇻;bendera: Tanjung Verde;bendera
+🇨🇼;bendera: Curaçao;bendera
+🇨🇽;bendera: Pulau Natal;bendera
+🇨🇾;bendera: Siprus;bendera
+🇨🇿;bendera: Ceko;bendera
+🇩🇪;bendera: Jerman;bendera
+🇩🇬;bendera: Diego Garcia;bendera
+🇩🇯;bendera: Jibuti;bendera
+🇩🇰;bendera: Denmark;bendera
+🇩🇲;bendera: Dominika;bendera
+🇩🇴;bendera: Republik Dominika;bendera
+🇩🇿;bendera: Aljazair;bendera
+🇪🇦;bendera: Ceuta dan Melilla;bendera
+🇪🇨;bendera: Ekuador;bendera
+🇪🇪;bendera: Estonia;bendera
+🇪🇬;bendera: Mesir;bendera
+🇪🇭;bendera: Sahara Barat;bendera
+🇪🇷;bendera: Eritrea;bendera
+🇪🇸;bendera: Spanyol;bendera
+🇪🇹;bendera: Etiopia;bendera
+🇪🇺;bendera: Uni Eropa;bendera
+🇫🇮;bendera: Finlandia;bendera
+🇫🇯;bendera: Fiji;bendera
+🇫🇰;bendera: Kepulauan Falkland;bendera
+🇫🇲;bendera: Mikronesia;bendera
+🇫🇴;bendera: Kepulauan Faroe;bendera
+🇫🇷;bendera: Prancis;bendera
+🇬🇦;bendera: Gabon;bendera
+🇬🇧;bendera: Inggris Raya;bendera
+🇬🇩;bendera: Grenada;bendera
+🇬🇪;bendera: Georgia;bendera
+🇬🇫;bendera: Guyana Prancis;bendera
+🇬🇬;bendera: Guernsey;bendera
+🇬🇭;bendera: Ghana;bendera
+🇬🇮;bendera: Gibraltar;bendera
+🇬🇱;bendera: Greenland;bendera
+🇬🇲;bendera: Gambia;bendera
+🇬🇳;bendera: Guinea;bendera
+🇬🇵;bendera: Guadeloupe;bendera
+🇬🇶;bendera: Guinea Ekuatorial;bendera
+🇬🇷;bendera: Yunani;bendera
+🇬🇸;bendera: Georgia Selatan & Kep. Sandwich Selatan;bendera
+🇬🇹;bendera: Guatemala;bendera
+🇬🇺;bendera: Guam;bendera
+🇬🇼;bendera: Guinea-Bissau;bendera
+🇬🇾;bendera: Guyana;bendera
+🇭🇰;bendera: Hong Kong DAK Tiongkok;bendera
+🇭🇲;bendera: Pulau Heard dan Kepulauan McDonald;bendera
+🇭🇳;bendera: Honduras;bendera
+🇭🇷;bendera: Kroasia;bendera
+🇭🇹;bendera: Haiti;bendera
+🇭🇺;bendera: Hungaria;bendera
+🇮🇨;bendera: Kepulauan Canaria;bendera
+🇮🇩;bendera: Indonesia;bendera
+🇮🇪;bendera: Irlandia;bendera
+🇮🇱;bendera: Israel;bendera
+🇮🇲;bendera: Pulau Man;bendera
+🇮🇳;bendera: India;bendera
+🇮🇴;bendera: Wilayah Inggris di Samudra Hindia;bendera
+🇮🇶;bendera: Irak;bendera
+🇮🇷;bendera: Iran;bendera
+🇮🇸;bendera: Islandia;bendera
+🇮🇹;bendera: Italia;bendera
+🇯🇪;bendera: Jersey;bendera
+🇯🇲;bendera: Jamaika;bendera
+🇯🇴;bendera: Yordania;bendera
+🇯🇵;bendera: Jepang;bendera
+🇰🇪;bendera: Kenya;bendera
+🇰🇬;bendera: Kirgizstan;bendera
+🇰🇭;bendera: Kamboja;bendera
+🇰🇮;bendera: Kiribati;bendera
+🇰🇲;bendera: Komoro;bendera
+🇰🇳;bendera: Saint Kitts dan Nevis;bendera
+🇰🇵;bendera: Korea Utara;bendera
+🇰🇷;bendera: Korea Selatan;bendera
+🇰🇼;bendera: Kuwait;bendera
+🇰🇾;bendera: Kepulauan Cayman;bendera
+🇰🇿;bendera: Kazakhstan;bendera
+🇱🇦;bendera: Laos;bendera
+🇱🇧;bendera: Lebanon;bendera
+🇱🇨;bendera: Saint Lucia;bendera
+🇱🇮;bendera: Liechtenstein;bendera
+🇱🇰;bendera: Sri Lanka;bendera
+🇱🇷;bendera: Liberia;bendera
+🇱🇸;bendera: Lesotho;bendera
+🇱🇹;bendera: Lituania;bendera
+🇱🇺;bendera: Luksemburg;bendera
+🇱🇻;bendera: Latvia;bendera
+🇱🇾;bendera: Libya;bendera
+🇲🇦;bendera: Maroko;bendera
+🇲🇨;bendera: Monako;bendera
+🇲🇩;bendera: Moldova;bendera
+🇲🇪;bendera: Montenegro;bendera
+🇲🇫;bendera: Saint Martin;bendera
+🇲🇬;bendera: Madagaskar;bendera
+🇲🇭;bendera: Kepulauan Marshall;bendera
+🇲🇰;bendera: Makedonia Utara;bendera
+🇲🇱;bendera: Mali;bendera
+🇲🇲;bendera: Myanmar (Burma);bendera
+🇲🇳;bendera: Mongolia;bendera
+🇲🇴;bendera: Makau DAK Tiongkok;bendera
+🇲🇵;bendera: Kepulauan Mariana Utara;bendera
+🇲🇶;bendera: Martinik;bendera
+🇲🇷;bendera: Mauritania;bendera
+🇲🇸;bendera: Montserrat;bendera
+🇲🇹;bendera: Malta;bendera
+🇲🇺;bendera: Mauritius;bendera
+🇲🇻;bendera: Maladewa;bendera
+🇲🇼;bendera: Malawi;bendera
+🇲🇽;bendera: Meksiko;bendera
+🇲🇾;bendera: Malaysia;bendera
+🇲🇿;bendera: Mozambik;bendera
+🇳🇦;bendera: Namibia;bendera
+🇳🇨;bendera: Kaledonia Baru;bendera
+🇳🇪;bendera: Niger;bendera
+🇳🇫;bendera: Kepulauan Norfolk;bendera
+🇳🇬;bendera: Nigeria;bendera
+🇳🇮;bendera: Nikaragua;bendera
+🇳🇱;bendera: Belanda;bendera
+🇳🇴;bendera: Norwegia;bendera
+🇳🇵;bendera: Nepal;bendera
+🇳🇷;bendera: Nauru;bendera
+🇳🇺;bendera: Niue;bendera
+🇳🇿;bendera: Selandia Baru;bendera
+🇴🇲;bendera: Oman;bendera
+🇵🇦;bendera: Panama;bendera
+🇵🇪;bendera: Peru;bendera
+🇵🇫;bendera: Polinesia Prancis;bendera
+🇵🇬;bendera: Papua Nugini;bendera
+🇵🇭;bendera: Filipina;bendera
+🇵🇰;bendera: Pakistan;bendera
+🇵🇱;bendera: Polandia;bendera
+🇵🇲;bendera: Saint Pierre dan Miquelon;bendera
+🇵🇳;bendera: Kepulauan Pitcairn;bendera
+🇵🇷;bendera: Puerto Riko;bendera
+🇵🇸;bendera: Wilayah Palestina;bendera
+🇵🇹;bendera: Portugal;bendera
+🇵🇼;bendera: Palau;bendera
+🇵🇾;bendera: Paraguay;bendera
+🇶🇦;bendera: Qatar;bendera
+🇷🇪;bendera: Réunion;bendera
+🇷🇴;bendera: Rumania;bendera
+🇷🇸;bendera: Serbia;bendera
+🇷🇺;bendera: Rusia;bendera
+🇷🇼;bendera: Rwanda;bendera
+🇸🇦;bendera: Arab Saudi;bendera
+🇸🇧;bendera: Kepulauan Solomon;bendera
+🇸🇨;bendera: Seychelles;bendera
+🇸🇩;bendera: Sudan;bendera
+🇸🇪;bendera: Swedia;bendera
+🇸🇬;bendera: Singapura;bendera
+🇸🇭;bendera: Saint Helena;bendera
+🇸🇮;bendera: Slovenia;bendera
+🇸🇯;bendera: Kepulauan Svalbard dan Jan Mayen;bendera
+🇸🇰;bendera: Slovakia;bendera
+🇸🇱;bendera: Sierra Leone;bendera
+🇸🇲;bendera: San Marino;bendera
+🇸🇳;bendera: Senegal;bendera
+🇸🇴;bendera: Somalia;bendera
+🇸🇷;bendera: Suriname;bendera
+🇸🇸;bendera: Sudan Selatan;bendera
+🇸🇹;bendera: Sao Tome dan Principe;bendera
+🇸🇻;bendera: El Salvador;bendera
+🇸🇽;bendera: Sint Maarten;bendera
+🇸🇾;bendera: Suriah;bendera
+🇸🇿;bendera: eSwatini;bendera
+🇹🇦;bendera: Tristan da Cunha;bendera
+🇹🇨;bendera: Kepulauan Turks dan Caicos;bendera
+🇹🇩;bendera: Chad;bendera
+🇹🇫;bendera: Wilayah Selatan Prancis;bendera
+🇹🇬;bendera: Togo;bendera
+🇹🇭;bendera: Thailand;bendera
+🇹🇯;bendera: Tajikistan;bendera
+🇹🇰;bendera: Tokelau;bendera
+🇹🇱;bendera: Timor Leste;bendera
+🇹🇲;bendera: Turkmenistan;bendera
+🇹🇳;bendera: Tunisia;bendera
+🇹🇴;bendera: Tonga;bendera
+🇹🇷;bendera: Turki;bendera
+🇹🇹;bendera: Trinidad dan Tobago;bendera
+🇹🇻;bendera: Tuvalu;bendera
+🇹🇼;bendera: Taiwan;bendera
+🇹🇿;bendera: Tanzania;bendera
+🇺🇦;bendera: Ukraina;bendera
+🇺🇬;bendera: Uganda;bendera
+🇺🇲;bendera: Kepulauan Terluar AS;bendera
+🇺🇳;bendera: Perserikatan Bangsa-Bangsa;bendera
+🇺🇸;bendera: Amerika Serikat;bendera
+🇺🇾;bendera: Uruguay;bendera
+🇺🇿;bendera: Uzbekistan;bendera
+🇻🇦;bendera: Vatikan;bendera
+🇻🇨;bendera: Saint Vincent dan Grenadine;bendera
+🇻🇪;bendera: Venezuela;bendera
+🇻🇬;bendera: Kepulauan Virgin Britania Raya;bendera
+🇻🇮;bendera: Kepulauan Virgin Amerika Serikat;bendera
+🇻🇳;bendera: Vietnam;bendera
+🇻🇺;bendera: Vanuatu;bendera
+🇼🇫;bendera: Kepulauan Wallis dan Futuna;bendera
+🇼🇸;bendera: Samoa;bendera
+🇽🇰;bendera: Kosovo;bendera
+🇾🇪;bendera: Yaman;bendera
+🇾🇹;bendera: Mayotte;bendera
+🇿🇦;bendera: Afrika Selatan;bendera
+🇿🇲;bendera: Zambia;bendera
+🇿🇼;bendera: Zimbabwe;bendera
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;bendera: Inggris;bendera
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;bendera: Skotlandia;bendera
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;bendera: Wales;bendera

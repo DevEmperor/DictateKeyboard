@@ -715,6 +715,7 @@
     <string name="action__apply">Aplica</string>
     <string name="action__back_up">Còpia de seguretat</string>
     <string name="action__cancel">Cancel·la</string>
+    <string name="action__clear">Esborra</string>
     <string name="action__create">Crea</string>
     <string name="action__default">Per defecte</string>
     <string name="action__delete">Suprimeix</string>

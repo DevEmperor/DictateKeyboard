@@ -1,0 +1,1913 @@
+😀;smiekli;priecīgs|prieks|seja|smaidīgs|smaids|smejas
+😃;plats smaids un lielas acis;atvērts|mute|seja|smaidīgs|smaids|super!
+😄;smaidoša seja ar atvērtu muti un smaidošām acīm;atvērts|mute|seja|smaids|smejas
+😁;plats smaids un smaidošas acis;jauks|plats smaids|priecīgs|seja|smaids|smīns
+😆;smaidoša seja ar atvērtu muti un aizmiegtām acīm;atvērts|laimīgs|mute|priecīgs|seja|smaids|smiekli
+😅;plats smaids ar sviedru lāsi;atvērts|auksts|nervozs|seja|smaids|stress|sviedri
+🤣;vārtās smieklos pa grīdu;grīda|līdz asarām|lol|seja|smieklīgi|smieties|vārtīties
+😂;seja ar prieka asarām;asaras|līdz asarām|prieks|seja|smiekli|smieklīgi|uzjautrinoši
+🙂;seja ar vieglu smaidu;seja|smaids
+🙃;apgriezta seja;apgriezts|otrādi|seja|smaids
+🫠;kūstoša seja;izkausēt|izkust|izšķīst|pazūd|sarkasms|šķidrums
+😉;seja ar piemiegtu aci;acs|miegt|mirkšķināt|seja|smaidiņš
+😊;smaidoša seja ar smaidošām acīm;nosarkt|prieks|seja|smaids
+😇;smaidoša seja ar nimbu;eņģelis|nevainīgs|nimbs|seja|smaids|svētais
+🥰;smaidoša seja ar sirsniņām;aizrāvies|dievināt|iemīlējies|seja|sirdis
+😍;smaidoša seja ar sirds formas acīm;acs|mīlestība|seja|sirds|smaids
+🤩;zvaigžņu pārņemts;acis|sajūsmināts|seja|smaidīt|zvaigznes
+😘;skūpstoša seja;buča|mīlestība|seja|sirds|skūpsts
+😗;seja sniedz skūpstu;buča|flirts|seja|skūpsts
+☺️;smaidoša seja;mierīgs|prieks|seja|smaids
+😚;seja ar aizvērtām acīm sniedz skūpstu;acs|aizvērtas acis|aizvērts|buča|seja|skūpsts|smaids
+😙;seja ar smaidošām acīm sniedz skūpstu;seja|skūpsts|smaids
+🥲;smaidoša seja ar asaru;aizkustināts|asara|atvieglots|lepns|pateicīgs|smaidošs
+😋;ēdienu baudoša seja;garšīgs|ņamm|seja|smaids
+😛;seja ar izbāztu mēli;forši|jauki|lieliski|mēle|seja|smaidiņš|superīgi
+😜;seja ar izbāztu mēli un piemiegtu aci;acs|mēle|miegt|mirkšķināt|piemiegta acs|seja
+🤪;traka seja;acs|ķēmoties|liels|mazs|seja|traks
+😝;seja ar izbāztu mēli un aizmiegtām acīm;acs|garša|mēle|negaršīgs|seja
+🤑;seja ar naudu mutē;mute|nauda|seja
+🤗;seja ar apskāvienu;apskaut|apskāviens|seja
+🤭;seja ar roku pār muti;ak vai|atklāsme|ķiķināt|noslēpums|pārsteigums|seja|smaidiņš|vai
+🫢;seja ar atvērtām acīm un roku pār muti;ak vai|apkaunot|bijība|izbrīns|neticība|nobijies|pārsteigums|šoks
+🫣;seja ar lūrošu aci;blenzt|kautrīgs|nokaunējies|palūrēt|paslēpies|valdzināts
+🤫;šušinoša seja;klusēt|klusināt|kuš|seja|smaidiņš|šušināt
+🤔;domīga seja;domāt|pārdomas|seja
+🫡;salutējoša seja;cieņa|jā|karavīri|labi|salutēšana|salutēt|sapratu|saulains|vēlu veiksmi
+🤐;seja ar rāvējslēdzēju mutes vietā;ciet|klusums|mute|rāvējslēdzējs|seja
+🤨;seja ar paceltām uzacīm;neticīgs|neuzticīgs|pacelta uzacs|skeptisks
+😐;neitrāla seja;bez izteiksmes|neitrāls|neizteiksmīgs|seja
+😑;seja bez izteiksmes;bez izteiksmes|neērti|neizteiksmīgs|seja
+😶;seja bez mutes;kluss|mēms|mute|noslēpums|seja
+🫥;punktētas līnijas seja;introverts|neredzams|nomākts|paslēpies|pazūd|slēpt|vienalga
+😶‍🌫️;seja mākoņos;galva mākoņos|pārdomas|seja miglā
+😏;smīnoša seja;seja|smīns|viltīgs
+😒;saīgusi seja;dusmas|dusmīgs|garlaikots|saīdzis|seja|vienalga
+🙄;seja ar pārgrieztām acīm;acis|bolīties|neapmierināts|pārgriezt|pārgrieztas acis|seja
+😬;saviebta seja;grimase|neveiklums|seja|zobārsts
+😮‍💨;nopūta;atvieglojums|čuksti|izelpa|seja|seja nopūšas|smaidiņš|svilpošana|vaids
+🤥;melojoša seja;meli|melis|pinokio|seja
+🫨;trīcoša seja;seja|šoks|trīcošs|vibrācija|zemestrīce
+🙂‍↔️;krata galvu horizontāli;kratīt|nē|noliegums
+🙂‍↕️;krata galvu vertikāli;jā|pamāt jā|piekrišana|piekrist
+😌;seja ar atvieglojuma izteiksmi;atvieglojums|miers|seja
+😔;domās iegrimusi seja;domīgs|pārdomas|seja|skumjš
+😪;miegaina seja;gulēt|miegs|nogurums|raudāt|seja
+🤤;siekalojas;seja|siekalas
+😴;guļoša seja;ar labu nakti|gulēt|miegs|seja|žāvas|žāvāties
+🫩;seja ar maisiņiem zem acīm;maisiņi zem acīm|miegains|noguris|pārgurums
+😷;seja ar medicīnas masku;ārsts|maska|medicīna|seja|slims
+🤒;seja ar termometru;seja|slims|termometrs
+🤕;seja ar galvas apsēju;apsējs|ievainojums|sāpes|seja
+🤢;nelabums;pretīgi|seja|slimība
+🤮;vemjoša seja;nelabums|pretīgi|seja|slimība|smaidiņš|vēmekļi
+🤧;šķauda;gripa|saaukstējies|seja|slims
+🥵;piesārtusi seja;drudzī|drudzis|karstuma dūriens|nosvīdis|sarkanu seju|saules dūriens|seja
+🥶;nosalusi seja;apsaldējies|auksts|lāstekas|nosalis|nozilējis|seja|stindzinošs
+🥴;noreibusi seja;apreibis|iedzēris|noreibis|piedzēries|šķībām acīm|šķību muti
+😵;apreibusi seja;apreibis|beigts|nelabums|reibonis|seja
+😵‍💫;seja ar spirālēm acu vietā;apreibis|hipnozē|nepatikšanas|oho|spirāles
+🤯;eksplodējoša galva;nevar būt!|seja|smaidiņš|šokēts
+🤠;seja kovboja cepurē;cepure|cilvēks|kovbojs|persona|seja|seja ar kovboja cepuri
+🥳;ballīšu seja;apsveikums|ballīte|cepure|prieks|seja|svinēt|svinības|taurīte
+🥸;paslēpta seja;brilles|deguns|inkognito|maska|seja|spiegs|ūsas
+😎;smaidoša seja ar saulesbrillēm;saulesbrilles|seja|smaids|stilīgs
+🤓;gudrītis;briļļainais|cilvēks|nūģis|seja|smaidiņš
+🧐;seja ar monokli;garlaicīgs|seja|smaidiņš|vecmodīga
+😕;apjukusi seja;apjucis|apjukums|neskaidrība|nezinu|seja
+🫤;seja ar diagonālu muti;meh|nezinu|skeptiski|skeptisks|vienalga|vīlies
+😟;noraizējusies seja;nervozs|noraizējies|rūpes|seja|stress
+🙁;nedaudz bēdīga seja;bēdas|bēdīgs|seja|smaidiņš
+☹️;bēdīga seja;bēdas|bēdīgs|seja
+😮;seja ar atvērtu muti;atvērts|mute|pārsteigt|seja|šokēts
+😯;pārsteigta seja;apklusināt|pārsteigt|seja
+😲;šokēta seja;oho|pārsteigts|seja|šokēts
+😳;nosarkusi seja;apmulsis|kauns|nosarkt|seja|vainīgs
+🫪;sašķobīta seja;ievainojams|izbrīnīts|lielīgs|panika|šokēts|trauksme
+🥺;lūdzoša seja;kucēna acis|lūgšanās|žēlastība
+🥹;seja ar aizturētām asarām;dusmīgs|lepns|lūdzošs|pretoties|prieka asaras|raudāt|skumji
+😦;bēdīga seja ar atvērtu muti;atvērts|bailes|bēdas|mulsums|mute|pārsteigums|seja
+😧;sāpjpilna seja;aizmirst|pārsteigt|sāpes|sāpināt|seja|stress
+😨;nobijusies seja;bailes|bailīgs|nobijies|noraizējies|seja
+😰;seja ar atvērtu muti un aukstiem sviedriem;atvērts|auksts|mute|nervozs|seja|sviedri|zils
+😥;vīlusies un atvieglota seja;atvieglojums|seja|sviedri|vīlies|vilties
+😢;raudoša seja;asaras|bēdīgs|raudāt|seja|skumjas
+😭;aizgūtnēm raudoša seja;asaras|bēdas|raudāt|seja|skumjš
+😱;bailēs kliedzoša seja;bailes|kliedziens|Munks|nobijies|seja
+😖;apmulsusi seja;aizkaitinājums|apmulsis|apmulsums|dusmas|seja|skumjas
+😣;piepūlēta seja;koncentrēšanās|neatlaidīgs|pacietīgs|piepūle|seja
+😞;vīlusies seja;seja|skumjas|vaina|vīlies
+😓;seja ar aukstu sviedru lāsi;auksts|galvassāpes|nervozs|seja|sviedri
+😩;nogurdināta seja;izsalcis|nelaimīgs|noguris|seja
+😫;nogurusi seja;nogurums|seja|šķaudīt|skumja
+🥱;seja žāvājas;garlaikots|miegains|nogurdināts|seja|smaidiņš|žāvas
+😤;seja ar tvaiku no deguna;dusmas|seja|tvaiks
+😡;sabozusies seja;dusmas|dusmīgs|sabozies|seja
+😠;dusmīga seja;dusmīgs|nelaimīgs|seja|vainot
+🤬;seja ar simboliem uz mutes;dusmīgs|lamāšanās|nikns|seja|smaidiņš
+😈;smaidoša seja ar ragiem;ragi|seja|smaids|velns
+👿;velniņš;dēmons|dusmīgs|ragi|seja|velns
+💀;galvaskauss;briesmonis|galva|nāve
+☠️;miroņgalva;galva|galvaskauss|jautrais Rodžers|kauli|nāve
+💩;ekskrementi;briesmonis|čupa|kakas|mēslu čupa|smieklīgs|smirdīgs
+🤡;klauna seja;klauns|seja
+👹;cilvēkēdājs;briesmonis|fantāzija|monstrs|pasaka|radījums|seja
+👺;goblins;briesmonis|fantāzija|monstrs|pasaka|radījums|seja
+👻;spoks;briesmonis|fantāzija|monstrs|pasaka|radījums|seja|smieklīgs
+👽;citplanētietis;briesmonis|kosmoss|NLO|visums
+👾;citplanētiešu briesmonis;briesmonis|citplanētietis|kosmoss|NLO|visums
+🤖;robots;monstrs|seja
+😺;plati smaidošs kaķis;atvērts|dzīvnieks|galva|kaķis|mute|plats smaids|smaids
+😸;plati smaidošs kaķis ar smaidošām acīm;acis|dzīvnieks|kaķis|plats smaids|seja|smaids
+😹;kaķis ar prieka asarām;asaras|kaķis|prieks|seja
+😻;smaidošs kaķis ar sirds formas acīm;acis|dzīvnieks|kaķis|mīlestība|seja|sirds|smaids
+😼;kaķis ar viltīgu smaidu;dzīvnieks|ironisks|kaķis|sājš|seja|smaids|viltīgs
+😽;kaķis sniedz skūpstu;acis|dzīvnieks|kaķis|seja|skūpsts
+🙀;noraizējies kaķis;ak|dzīvnieks|kaķis|noraizējies|pārsteigts|seja
+😿;raudošs kaķis;asaras|dzīvnieks|kaķis|raudāt|seja|skumjš
+😾;sabozies kaķis;dzīvnieks|kaķis|sabozies|seja
+🙈;neko neredzu;aizliegts|dzīvnieks|galva|ļauns|nē|nedrīkst|neredzu|pērtiķis|redzēt|žests
+🙉;neko nedzirdu;aizliegts|dzirdēt|dzīvnieks|galva|ļauns|nē|nedrīkst|nedzirdu|pērtiķis|žests
+🙊;neko nesaku;aizliegts|dzīvnieks|galva|klusēt|ļauns|nē|nedrīkst|pērtiķis|runāt|žests
+💌;mīlestības vēstule;mīlestība|pasts|romantika|sirds|vēstule
+💘;sirds ar bultu;bulta|mīlestība|romantika|sirds
+💝;sirds ar lentīti;lentīte|sirds|Valentīndiena
+💖;mirdzoša sirds;mirdzēt|sirds|spīdēt
+💗;augoša sirds;emocijas|sirds|sirdspuksti|uztraukums
+💓;pukstoša sirds;mīlestība|pukstēt|sirds|sirdspuksti
+💞;rotējošas sirdis;emocijas|gadadiena|mīlestība|sirds
+💕;divas sirdis;emocijas|mīlestība|sirds
+💟;sirds rotājums;balta sirds|lillā sirds|sirds|violeta sirds
+❣️;izsaukuma zīme sirds formā;izsaukums|pieturzīme|sirds
+💔;salauzta sirds;salauzt|sirds|skumjas
+❤️‍🔥;degoša sirds;kaisle|liesmas|mīla|sirds|svēta sirds
+❤️‍🩹;pārsieta sirds;atkopties|atspirgt|labi|pārsiet|uzlabot|veselību
+❤️;sarkana sirds;mīlestība|sarkans|sirds
+🩷;rozā sirds;jauka|mīlestība|patīk|rozā|sirds
+🧡;oranža sirds;mīlu|oranžs|sirds
+💛;dzeltena sirds;dzeltens|emocijas|mīlu|sirds
+💚;zaļa sirds;sirds|zaļš
+💙;zila sirds;mīlestība|sirds|zils
+🩵;gaiši zila sirds;ciānzils|gaiši zils|sirds|zilganzaļš
+💜;violeta sirds;lillā sirds|mīlu|sirds|violets
+🤎;brūna sirds;brūna|mīlu|sirds
+🖤;melna sirds;ļaunums|melna|sirds
+🩶;pelēka sirds;pelēks|šīferis|sirds|sudrabs
+🤍;balta sirds;balta|mīlu|sirds
+💋;skūpsta nospiedums;lūpas|lūpukrāsa|nospiedums|skūpsts
+💯;simt punktu;100|noteikti|piekrītu|simt|simts
+💢;dusmu simbols;dusmas|dusmīgs|komikss
+🫯;juceklis;cīkstēšanās|cīņa|debates|domstarpības|ķīviņš|strīds|tracis
+💥;sadursme;bums|sprādziens|troksnis
+💫;apdullis;krītoša|zvaigzne
+💦;sviedru lāses;lāses|sviedri|ūdens|vingrošana
+💨;bēgšana;bēgt|dūmi|purkšķis|skriešana
+🕳️;caurums;atvere
+💬;runas burbulis;burbulis|dialogs|raksta|runa
+👁️‍🗨️;liecinieka zīme;acs|liecinieks|runas burbulis
+🗨️;pa kreisi vērsts runas burbulis;burbulis|dialogs|komikss|runa
+🗯️;pa labi vērsts dusmu burbulis;burbulis|dialogs|dusmīgs|runa
+💭;domu burbulis;burbulis|domas
+💤;zzz;ar labu nakti|gulēt|miegains|miegs|nogurums
+👋;mājoša roka;atā|ķermenis|māt|roka|sveiciens|sveiki
+🤚;pacelta plauksta;pacelta|plauksta|roka
+🖐️;pacelta roka ar izvērstiem pirkstiem;izvērsts|ķermenis|pirksts|plauksta|roka
+✋;pacelta roka;ķermenis|plauksta|roka
+🖖;vulkāniešu sveiciens;ķermenis|pirksti|pirksts|roka|Spoks|Vulkāns
+🫱;labā roka;pa labi|pareizi|roka|rokasspiediens|sniegties|turēt
+🫲;kreiso roku;kreisā roka|pa kreisi|roka|rokasspiediens|sniegties|turēt
+🫳;plaukstu uz leju;atlaist|nomest|pacelt|plauksta uz leju|shoo
+🫴;plaukstu uz augšu;aicināt|nāc|pacelt|pastāsti man|piedāvājums
+🫷;pa kreisi spiedoša roka;atteikt|dod pieci|gaidīt|pa kreisi|stop|stumt
+🫸;pa labi spiedoša roka;dod pieci|gaidīt|pa labi|stop|stumt|Vote atteikt
+👌;simbols OK;ķermenis|labi|lieliski|ok|roka|sapratu
+🤌;pastiepti pirksti;pirksti|rokas žests|sarkastisks|saspiests
+🤏;roka rāda drusciņu;drusciņ|maz|nedaudz|roka
+✌️;uzvaras simbols;ķermenis|miers|roka|uzvara
+🤞;sakrustoti pirksti;pirksts|roka|sakrustot|turēt īkšķus|veiksme
+🫰;roka ar rādītājpirkstu un īkšķi sakrustota;dārgs|knipis|mīlestība|nauda|sirds
+🤟;mīlas žests;EMT|roka
+🤘;ragu simbols;Dio|pirksts|ragi|roka|rokmūzika|smagais metāls
+🤙;piezvani man;roka|zvans
+👈;pa kreisi vērsts rādītājpirksts;delna|ķermenis|pa kreisi|pirksts|rādīt|rādītājpirksts|roka
+👉;pa labi vērsts rādītājpirksts;delna|ķermenis|pa labi|pirksts|rādīt|rādītājpirksts|roka
+👆;augšup vērsts rādītājpirksts ar prom vērstu delnu;delna|ķermenis|pirksts|rādīt|rādītājpirksts|roka
+🖕;vidējais pirksts;delna|ķermenis|pirksts|rādīt|roka
+👇;lejup vērsts rādītājpirksts;delna|ķermenis|lejup|pirksts|rādīt|rādītājpirksts|roka
+☝️;augšup vērsts rādītājpirksts;delna|ķermenis|pirksts|rādīt|rādītājpirksts|roka
+🫵;rādītājpirksts pret sevi;jūs|pirksts|punkts|rādīt|rādītājpirksts
+👍;augšupvērsts īkšķis;+1|apstiprinājums|augšup|īkšķis|ķermenis|ok|patīk|roka
+👎;lejupvērsts īkšķis;-1|īkšķis|ķermenis|lejup|nepatīk|roka
+✊;pacelta dūre;dūre|ķermenis|roka|sist
+👊;pretim vērsta dūre;dūre|ķermenis|roka|sist
+🤛;dūre pa kreisi;dūre|pa kreisi
+🤜;dūre pa labi;dūre|pa labi
+👏;aplausi;aplaudēt|apsveicu|ķermenis|roka
+🙌;paceltas rokas;pacelts|rokas|slavēt|svinēt|uzvara
+🫶;sirds žests;mīlestība|rokas|sirds
+👐;atvērtas rokas;apskāviens|ķermenis|roka
+🤲;plaukstas kopā;lūdzējs|lūgties
+🤝;rokasspiediens;līgums|roka|sarokoties|tikšanās
+🙏;lūgšanā saliktas rokas;lūgt|lūgties|pateicība|rokas|žests
+✍️;rakstoša roka;ķermenis|rakstīt|roka
+💅;nagu laka;ķermenis|kosmētika|laka|manikīrs|nagi|roka|skaistumkopšana
+🤳;pašfoto;kamera|selfijs|tālrunis
+💪;bicepss;ķermenis|muskulis|saliekt
+🦾;mehāniska roka;pieejamība|protēzes
+🦿;mehāniska kāja;pieejamība|protēzes
+🦵;kāja;ekstremitāte|pēda|saliekts celis|spēriens
+🦶;pēda;pēdas|potīte|spēriens
+👂;auss;dzirde|ķermenis|skaņa
+🦻;auss ar dzirdes aparātu;apgrūtināta dzirde|auss|pieejamība
+👃;deguns;aromāts|ķermenis|smaka|smarža
+🧠;smadzenes;gudrība|intelekts|inteliģence
+🫀;cilvēka sirds;anatomisks|kardioloģija|orgāns|pulss|sirdspuksti
+🫁;plaušas;ekshalācija|elpošana|elpot|inhalācija|orgāns|respirācija
+🦷;zobs;balts|pērļu balts|zobārsts
+🦴;kauls;skelets|suns
+👀;acis;acs|ķermenis|skatīties
+👁️;acs;1 acs|ķermenis
+👅;mēle;ķermenis|laizīt|mute|seja
+👄;mute;buča|ķermenis|lūpas|skūpsts
+🫦;košana lūpā;bailes|flirts|lūpa|neērti|nervozs|noraizējies
+👶;zīdainis;bērns|cilvēks|mazulis|seja
+🧒;bērns;bezdzimuma|cilvēks|dzimumneitrāls|jauns|seja
+👦;zēns;cilvēks|jauns|puika|seja
+👧;meitene;bērns|cilvēks|jauna|Jaunava|meita|zodiaks
+🧑;pieaugušais;bezdzimuma|cilvēks|dzimumneitrāls|seja
+👱;blonds cilvēks;blonds|cilvēks|seja
+👨;vīrietis;cilvēks|draugs|kungs|seja|vīrs
+🧔;bārdains vīrietis;bārda|bārdaina persona|persona|vīrietis
+🧔‍♂️;vīrietis ar bārdu;bārda|vīrietis
+🧔‍♀️;sieviete ar bārdu;bārda|sieviete
+👨‍🦰;vīrietis: sarkani mati;cilvēks|draugs|kungs|sarkani mati|seja|vīrietis|vīrs
+👨‍🦱;vīrietis: sprogaini mati;cilvēks|draugs|kungs|seja|sprogaini mati|vīrietis|vīrs
+👨‍🦳;vīrietis: sirmi mati;cilvēks|draugs|kungs|seja|sirmi mati|vīrietis|vīrs
+👨‍🦲;vīrietis: bez matiem;bez matiem|cilvēks|draugs|kungs|seja|vīrietis|vīrs
+👩;sieviete;blondīne|cilvēks|dāma|kundze|seja
+👩‍🦰;sieviete: sarkani mati;blondīne|cilvēks|dāma|kundze|sarkani mati|seja|sieviete
+🧑‍🦰;pieaugušais: sarkani mati;bezdzimuma|cilvēks|dzimumneitrāls|pieaugušais|sarkani mati|seja
+👩‍🦱;sieviete: sprogaini mati;blondīne|cilvēks|dāma|kundze|seja|sieviete|sprogaini mati
+🧑‍🦱;pieaugušais: sprogaini mati;bezdzimuma|cilvēks|dzimumneitrāls|pieaugušais|seja|sprogaini mati
+👩‍🦳;sieviete: sirmi mati;blondīne|cilvēks|dāma|kundze|seja|sieviete|sirmi mati
+🧑‍🦳;pieaugušais: sirmi mati;bezdzimuma|cilvēks|dzimumneitrāls|pieaugušais|seja|sirmi mati
+👩‍🦲;sieviete: bez matiem;bez matiem|blondīne|cilvēks|dāma|kundze|seja|sieviete
+🧑‍🦲;pieaugušais: bez matiem;bez matiem|bezdzimuma|cilvēks|dzimumneitrāls|pieaugušais|seja
+👱‍♀️;blondīne;blonda|blondi mati|cilvēks|persona|sieviete
+👱‍♂️;blondīns;vīrietis
+🧓;vecāks pieaugušais;bezdzimuma|cilvēks|dzimumneitrāls|pieaugušais|vecs
+👴;vecs vīrietis;gudrs|seja|vecs|vectēvs|vīrietis
+👵;veca sieviete;cilvēks|seja|sieviete|vecmamma|vecs
+🙍;norūpējies cilvēks;aizkaitinājums|bēdīgs|iztraucēts|vilšanās|žests
+🙍‍♂️;norūpējies vīrietis;dusmoties|norūpējies|vīrietis|žests
+🙍‍♀️;norūpējusies sieviete;dusmoties|sieviete|žests
+🙎;sabozies cilvēks;cilvēks|grimase|neapmierināts|sabozies|sieviete|uzmesta lūpa|vilšanās|žests
+🙎‍♂️;sabozies vīrietis;bēdāties|cilvēks|emocijas|persona|vīrietis|žests
+🙎‍♀️;sabozusies sieviete;bēdāties|sieviete|žests
+🙅;cilvēks ar aizlieguma žestu;aizliegts|cilvēks ar noraidījuma žestu|nē|nedrīkst|roka|žests
+🙅‍♂️;vīrietis ar aizlieguma žestu;nepiekrišana|noraidījums|pret|vīrietis|vīrietis ar noraidījuma žestu|žests
+🙅‍♀️;sieviete ar aizlieguma žestu;aizliegts|nedrīkst|roka|sieviete|žests
+🙆;cilvēks ar apstiprinājuma žestu;cilvēks|labi|ok|roka|vingrošana|žests
+🙆‍♂️;vīrietis ar apstiprinājuma žestu;par|piekrišana|vingrot|vīrietis|žests
+🙆‍♀️;sieviete ar apstiprinājuma žestu;par|piekrišana|sieviete|žests
+💁;persona ar pastieptu roku;baumas|cilvēks|informācija|palīdzība|pastiept|roka|sarkasms|vienalga|žests
+💁‍♂️;vīrietis ar pastieptu roku;bezkaunība|pastiepta roka|sarkasms|vienalga|vīrietis|žests
+💁‍♀️;sieviete ar pastieptu roku;bezkaunība|sieviete|žests
+🙋;cilvēks ar paceltu roku;cilvēks|laimīgs|pacelts|roka|žests|zinu
+🙋‍♂️;vīrietis ar paceltu roku;pacelta roka|vīrietis|žests
+🙋‍♀️;sieviete ar paceltu roku;pacelta roka|sieviete|žests
+🧏;nedzirdīga persona;auss|cilvēks|dzirde|kurls|kurlums|nedzirdīgs|persona|pieejamība
+🧏‍♂️;nedzirdīgs vīrietis;nedzirdīgs|vīrietis
+🧏‍♀️;nedzirdīga sieviete;nedzirdīga|sieviete
+🙇;cilvēks paklanās;atvainošanās|cilvēks|paklanīties|piedodiet|vīrietis paklanās|žests
+🙇‍♂️;vīrietis paklanās;cieņa|paklanīšanās|vīrietis
+🙇‍♀️;sieviete paklanās;atvainošanās|cieņa|paklanīšanās|sieviete|žests
+🤦;cilvēks ar saķertu galvu;cilvēks|nav vārdu|ne jau atkal|neticība|nu nopietni|plauksta|seja|sieviete|šoks
+🤦‍♂️;vīrietis ar saķertu galvu;aizkaitinājums|cilvēks|nav vārdu|ne jau atkal|neticība|nu nopietni|plauksta|roka|šoks|vīrietis
+🤦‍♀️;sieviete ar saķertu galvu;aizkaitinājums|cilvēks|nav vārdu|neticība|nu nopietni|roka|sieviete|šoks
+🤷;rausta plecus;neziņa|nezinu|šaubas|vienaldzība|vienalga
+🤷‍♂️;vīrietis rausta plecus;cilvēks|neziņa|rausta plecus|vienaldzība|vienalga|vīrietis|žests
+🤷‍♀️;sieviete rausta plecus;cilvēks|neziņa|rausta plecus|šaubas|sieviete|vienaldzība|vienalga
+🧑‍⚕️;veselības aprūpes darbinieks;ārsts|medmāsa|veselības aprūpe
+👨‍⚕️;veselības aprūpes speciālists;ārsts|brālītis|dakteris|darbs|medmāsa|profesija|terapeits|vīrietis
+👩‍⚕️;veselības aprūpes speciāliste;ārste|daktere|darbs|medmāsa|profesija|sieviete|terapeite
+🧑‍🎓;absolvents;izlaidums|students
+👨‍🎓;students;absolvents|vīrietis
+👩‍🎓;studente;absolvente|sieviete
+🧑‍🏫;pedagogs;instruktors|profesors|skolotājs
+👨‍🏫;skolotājs;darbs|pasniedzējs|profesija|profesors|vīrietis
+👩‍🏫;skolotāja;cilvēks|darbs|docente|lektore|pasniedzēja|profesija|profesore|sieviete
+🧑‍⚖️;soģis;svari|tiesnesis
+👨‍⚖️;tiesnesis;darbs|likums|profesija|svari|taisnīgums|vīrietis
+👩‍⚖️;tiesnese;darbs|likums|profesija|sieviete|svari|taisnīgums
+🧑‍🌾;fermeris;dārznieks|lauksaimnieks|zemnieks
+👨‍🌾;lauksaimnieks;cilvēks|darbs|dārzenieks|profesija|vīrietis
+👩‍🌾;lauksaimniece;cilvēks|darbs|dārzeniece|profesija|sieviete
+🧑‍🍳;vīrietis pavārs;pavārs|šefpavārs
+👨‍🍳;pavārs;cilvēks|darbs|profesija|šefpavārs|vīrietis
+👩‍🍳;pavāre;cilvēks|darbs|profesija|šefpavāre|sieviete
+🧑‍🔧;vīrietis mehāniķis;elektriķis|mehāniķis|santehniķis|vīrietis
+👨‍🔧;mehāniķis;cilvēks|darbs|elektriķis|profesija|santehniķis|vīrietis
+👩‍🔧;mehāniķe;cilvēks|darbs|elektriķe|profesija|santehniķe|sieviete
+🧑‍🏭;rūpnīcas strādnieks;montāža|nozare|rūpnīca|strādnieks
+👨‍🏭;fabrikas strādnieks;cilvēks|darbs|profesija|ražošana|rūpnīca|strādnieks|vīrietis
+👩‍🏭;fabrikas strādniece;darbs|profesija|ražošana|rūpnīca|sieviete|strādniece
+🧑‍💼;vīrietis biroja darbinieks;arhitekts|baltā apkaklīte|pārvaldnieks|uzņēmējs
+👨‍💼;biroja darbinieks;arhitekts|baltās apkaklītes|birojs|darbs|menedžeris|profesija|uzņēmējdarbība|virietis|vīrietis
+👩‍💼;biroja darbiniece;arhitekte|baltās apkaklītes|birojs|cilvēks|darbs|menedžere|profesija|sieviete|uzņēmējdarbība
+🧑‍🔬;vīrietis zinātnieks;biologs|fiziķis|inženieris|ķīmiķis|zinātnieks
+👨‍🔬;zinātnieks;biologs|darbs|fiziķis|inženieris|ķīmiķis|matemātiķis|profesija|vīrietis
+👩‍🔬;zinātniece;bioloģe|cilvēks|darbs|fiziķe|inženiere|ķīmiķe|matemātiķe|profesija|sieviete
+🧑‍💻;vīrietis tehniķis;izgudrotājs|izstrādātājs|kodētājs|programmatūra|tehnologs
+👨‍💻;tehniķis;darbs|izstrādātājs|profesija|programmatūra|programmētājs|vīrietis
+👩‍💻;tehniķe;darbs|izstrādātāja|profesija|programmatūra|programmētāja|sieviete
+🧑‍🎤;vīrietis dziedātājs;aktieris|dziedātājs|izklaidētājs|roks|zvaigzne
+👨‍🎤;dziedātājs;aktieris|bovijs|cilvēks|izklaide|roks|rokzvaigzne|vīrietis|zvaigzne
+👩‍🎤;dziedātāja;aktrise|izklaide|profesija|roks|sieviete|zvaigzne
+🧑‍🎨;vīrietis mākslinieks;mākslinieks|palete
+👨‍🎨;mākslinieks;cilvēks|darbs|palete|profesija|vīrietis
+👩‍🎨;māksliniece;cilvēks|darbs|palete|profesija|sieviete
+🧑‍✈️;vīrietis pilots;lidmašīna|pilots
+👨‍✈️;pilots;darbs|lidmašīna|profesija|vīrietis
+👩‍✈️;pilote;darbs|lidmašīna|profesija|sieviete
+🧑‍🚀;vīrietis astronauts;astronauts|raķete
+👨‍🚀;astronauts;cilvēks|darbs|kosmoss|profesija|raķete|vīrietis
+👩‍🚀;astronaute;cilvēks|darbs|kosmoss|profesija|raķete|sieviete
+🧑‍🚒;vīrietis ugunsdzēsējs;ugunsdzēsēja|ugunsdzēsējs
+👨‍🚒;ugunsdzēsējs;cilvēks|darbs|profesija|vīrietis
+👩‍🚒;ugunsdzēsēja;cilvēks|darbs|profesija|sieviete
+👮;policists;cilvēks|policija|profesija|virsnieks
+👮‍♂️;policijas virsnieks;policija|policists|vīrietis|virsnieks
+👮‍♀️;policiste;cilvēks|darbs|policija|profesija|sieviete|virsniece
+🕵️;detektīvs;cilvēks|seja|spiegs|vīrietis
+🕵️‍♂️;detektīvs (vīrietis);detektīvs|spiegs|vīrietis|vīrietis izmeklē
+🕵️‍♀️;detektīve;darbs|detektīvs|profesija|sieviete|spiedze
+💂;sargs;bekingemas pils|londona|seja
+💂‍♂️;apsargs;sargs|vīrietis
+💂‍♀️;sardze;Bekingemas pils|Londona|sieviete
+🥷;nindzja;cilvēks|cīnītājs|kareivis|paslēpts|persona|slepens|slepkava
+👷;celtnieks;būvniecība|cilvēks|darbs|ķivere|profesija|seja
+👷‍♂️;būvstrādnieks;celtnieks|strādnieks|vīrietis
+👷‍♀️;būvstrādniece;būvniecība|celtniece|darbs|ķivere|profesija|sieviete|strādniece
+🫅;persona ar vainagu;cēls|honorārs|karalis|kronis|monarhs|valdnieks
+🤴;princis;karalis|karalisks|kronis|vīrietis
+👸;princese;cilvēks|fantāzija|karaliene|kronis|pasaka|sieviete
+👳;persona ar turbānu;cilvēks|seja|turbāns|vīrietis
+👳‍♂️;vīrietis ar turbānu;turbāns|vīrietis
+👳‍♀️;sieviete ar turbānu;cilvēks|persona|seja|sieviete|turbāns
+👲;vīrietis ar ķīniešu cepuri;cepure|cilvēks|seja|vīrietis
+🧕;sieviete ar lakatu;galvas lakats|hidžabs|lakats|seja|sieviete
+🤵;persona smokingā;cilvēks|līgavainis|persona|smokings|vīrietis
+🤵‍♂️;vīrietis smokingā;smokings|vīrietis
+🤵‍♀️;sieviete smokingā;sieviete|smokings
+👰;cilvēks ar plīvuru;cilvēks|kāzas|līgava|persona|persona ar plīvuru|plīvurs|sieviete
+👰‍♂️;vīrietis ar plīvuru;plīvurs|vīrietis
+👰‍♀️;sieviete ar plīvuru;plīvurs|sieviete
+🤰;sieviete stāvoklī;sieviete|stāvoklī
+🫃;vīrietis stāvoklī;apaļš|pārēdies|pilns|stāvoklī|vēders
+🫄;cilvēks stāvoklī;apaļš|pārēdies|pilns|stāvoklī|vēders
+🤱;barošana ar krūti;krūts|mazulis|zīdīšana
+👩‍🍼;sieviete baro bērnu;auklīte|barošana|cilvēks|mamma|mazulis|persona|sieviete|zīdīšana
+👨‍🍼;bērnu barojošs cilvēks;auklis|barošana|cilvēks|kopšana|mazulis|persona|tētis|vīrietis
+🧑‍🍼;persona baro bērnu;auklīte|barošana|mamma|mazulis|persona|tētis|zīdīšana
+👼;mazs eņģelītis;eņģelis|fantāzija|mazulis|pasaka|seja
+🎅;Ziemassvētku vecītis;salavecis|santaklauss|vecītis|ziemassvētki
+🤶;Ziemassvētku omīte;omīte|salavecis|ziemassvētki|ziemassvētku vecītis
+🧑‍🎄;dzimumneitrāls santaklauss;cilvēks|persona|Ziemassvētki|Ziemassvētku santaklauss
+🦸;supervaronis;betmens|labais|supermens|superspēks|varone|varonis
+🦸‍♂️;vīrietis supervaronis;labais|superspēks|varonis|vīrietis
+🦸‍♀️;sieviete supervarone;labais|sieviete|superspēks|varone|varonis
+🦹;superļaunais;krimināls|ļaunums|nelietis|noziedznieks|superspēks
+🦹‍♂️;superļaunais vīrietis;krimināls|ļaunums|nelietis|superspēks|vīrietis
+🦹‍♀️;superļaunā sieviete;krimināls|ļaunums|nelietis|sieviete|superspēks
+🧙;mags;burvestība|burvis|fantāzija|maģija|ragana
+🧙‍♂️;zintnieks;burvis
+🧙‍♀️;zintniece;burve|ragana
+🧚;feja;fantāzija|mīts|Oberons|Paks|pasaka|Titānija
+🧚‍♂️;laumiņš;Oberons|Paks|pasaku burvis
+🧚‍♀️;laumiņa;Titānija
+🧛;vampīrs;briesmonis|Drakula|ilkņi|nemirstīgais
+🧛‍♂️;vīriešu kārtas vampīrs;Drakula|nemirstīgais
+🧛‍♀️;vampīre;nemirstīgs
+🧜;cilvēks nāra;nāra|nāris|nārveidīgs|pasaka|sirēna|zemūdens valstība
+🧜‍♂️;vīrietis nāra;Tritons
+🧜‍♀️;nāra;sieviete nāra
+🧝;elfs;fantāzija|maģisks|pasaka
+🧝‍♂️;elfu vīrietis;maģisks
+🧝‍♀️;elfa;maģiska
+🧞;džins;burvis|pasaka|vēlēšanās|vēlēties vēlēšanos
+🧞‍♂️;vīrietis džins;burvis|džins
+🧞‍♀️;sieviete džins;džins
+🧟;zombijs;apokalipse|briesmonis|dzīvais mironis|nemirstīgs
+🧟‍♂️;zombijvīrietis;nemirstīgs|staigājošais mironis|vīrietis zombijs
+🧟‍♀️;zombijsieviete;nemirstīgs|sieviete zombijs|staigājošais mironis
+🧌;trollis;briesmonis|fantāzija|pasaka
+🫈;matiem noaudzis radījums;jetijs|kriptīds|matiem noaudzis|meža briesmonis|mežonis|mežs|milzis|sniega cilvēks
+💆;sejas masāža;atpūta|atslābināšanās|cilvēks|galvassāpes|masāža|nomierinošs|salons|saspringums|seja
+💆‍♂️;vīrietim masē seju;galvassāpes|masāža|seja|spriedze|vīrietis
+💆‍♀️;sievietei masē seju;masāža|seja|sieviete
+💇;frizūra;cilvēks|frizētava|frizieris|matu griezums|sieviete pie friziera|skaistums
+💇‍♂️;vīrietis pie friziera;frizieris|griezums|šķēres|vīrietis
+💇‍♀️;sieviete pie friziera;frizieris|griezums|sieviete|šķēres
+🚶;gājējs;cilvēks|gaita|iešana|kājāmgājējs|pārgājiens
+🚶‍♂️;vīrietis pastaigājas;pārgājiens|pastaiga|vīrietis
+🚶‍♀️;sieviete pastaigājas;cilvēks|pārgājiens|pastaiga|sieviete
+🚶‍➡️;gājējs: skatās pa labi;cilvēks|gaita|gājējs|iešana|kājāmgājējs|labi|pa|pārgājiens|skatās
+🚶‍♀️‍➡️;sieviete pastaigājas: skatās pa labi;cilvēks|labi|pa|pārgājiens|pastaiga|sieviete|sieviete pastaigājas|skatās
+🚶‍♂️‍➡️;vīrietis pastaigājas: skatās pa labi;labi|pa|pārgājiens|pastaiga|skatās|vīrietis|vīrietis pastaigājas
+🧍;stāvoša persona;cilvēks|stāvēšana|stāvēt
+🧍‍♂️;stāvošs vīrietis;stāvēšana|vīrietis
+🧍‍♀️;stāvoša sieviete;sieviete|stāvēšana
+🧎;persona uz ceļiem;celis|cilvēks|persona|uz ceļiem
+🧎‍♂️;vīrietis uz ceļiem;uz ceļiem|vīrietis
+🧎‍♀️;sieviete uz ceļiem;sieviete|uz ceļiem
+🧎‍➡️;persona uz ceļiem: skatās pa labi;celis|cilvēks|labi|pa|persona|persona uz ceļiem|skatās|uz ceļiem
+🧎‍♀️‍➡️;sieviete uz ceļiem: skatās pa labi;labi|pa|sieviete|sieviete uz ceļiem|skatās|uz ceļiem
+🧎‍♂️‍➡️;vīrietis uz ceļiem: skatās pa labi;labi|pa|skatās|uz ceļiem|vīrietis|vīrietis uz ceļiem
+🧑‍🦯;persona ar balto spieķi;akls|pieejamība
+🧑‍🦯‍➡️;persona ar balto spieķi: skatās pa labi;akls|labi|pa|persona ar balto spieķi|pieejamība|skatās
+👨‍🦯;vīrietis ar balto atbalsta spieķi;akls|cilvēks|neredzīgs|pieejamība|vīrietis
+👨‍🦯‍➡️;vīrietis ar balto atbalsta spieķi: skatās pa labi;akls|cilvēks|labi|neredzīgs|pa|pieejamība|skatās|vīrietis|vīrietis ar balto atbalsta spieķi
+👩‍🦯;sieviete ar balto atbalsta spieķi;akls|neredzīgs|pieejamība|sieviete
+👩‍🦯‍➡️;sieviete ar balto atbalsta spieķi: skatās pa labi;akls|labi|neredzīgs|pa|pieejamība|sieviete|sieviete ar balto atbalsta spieķi|skatās
+🧑‍🦼;persona ratiņkrēslā;pieejamība|ratiņkrēsls
+🧑‍🦼‍➡️;persona ratiņkrēslā: skatās pa labi;labi|pa|persona ratiņkrēslā|pieejamība|ratiņkrēsls|skatās
+👨‍🦼;vīrietis motorizētā ratiņkrēslā;cilvēks|pieejamība|ratiņkrēsls|vīrietis
+👨‍🦼‍➡️;vīrietis motorizētā ratiņkrēslā: skatās pa labi;cilvēks|labi|pa|pieejamība|ratiņkrēsls|skatās|vīrietis|vīrietis motorizētā ratiņkrēslā
+👩‍🦼;sieviete motorizētā ratiņkrēslā;cilvēks|pieejamība|ratiņkrēsls|sieviete
+👩‍🦼‍➡️;sieviete motorizētā ratiņkrēslā: skatās pa labi;cilvēks|labi|pa|pieejamība|ratiņkrēsls|sieviete|sieviete motorizētā ratiņkrēslā|skatās
+🧑‍🦽;persona manuālajā ratiņkrēslā;pieejamība|ratiņkrēsls
+🧑‍🦽‍➡️;persona manuālajā ratiņkrēslā: skatās pa labi;labi|pa|persona manuālajā ratiņkrēslā|pieejamība|ratiņkrēsls|skatās
+👨‍🦽;vīrietis manuālā ratiņkrēslā;cilvēks|pieejamība|ratiņkrēsls|vīretis manuālā ratiņkrēslā|vīrietis
+👨‍🦽‍➡️;vīrietis manuālā ratiņkrēslā: skatās pa labi;cilvēks|labi|pa|pieejamība|ratiņkrēsls|skatās|vīretis manuālā ratiņkrēslā|vīrietis|vīrietis manuālā ratiņkrēslā
+👩‍🦽;sieviete manuālā ratiņkrēslā;cilvēks|pieejamība|ratiņkrēsls|sieviete
+👩‍🦽‍➡️;sieviete manuālā ratiņkrēslā: skatās pa labi;cilvēks|labi|pa|pieejamība|ratiņkrēsls|sieviete|sieviete manuālā ratiņkrēslā|skatās
+🏃;skrējējs;ātrums|cilvēks|maratons|sacīkstes|skriešana|sportists
+🏃‍♂️;vīrietis skrien;maratons|sacīkstes|skrējiens|vīrietis
+🏃‍♀️;sieviete skrien;ātri|cilvēks|maratons|persona|sacīkstes|sieviete|skrējiens|steigties
+🏃‍➡️;skrējējs: skatās pa labi;ātrums|cilvēks|labi|maratons|pa|sacīkstes|skatās|skrējējs|skriešana|sportists
+🏃‍♀️‍➡️;sieviete skrien: skatās pa labi;ātri|cilvēks|labi|maratons|pa|persona|sacīkstes|sieviete|sieviete skrien|skatās|skrējiens|steigties
+🏃‍♂️‍➡️;vīrietis skrien: skatās pa labi;labi|maratons|pa|sacīkstes|skatās|skrējiens|vīrietis|vīrietis skrien
+🧑‍🩰;baletdejotājs;baleta|dejotājs
+💃;sieviete dejo;cilvēks|deja|dejotāja|sieviete|uzdejojam
+🕺;vīrietis dejo;cilvēks|deja|flamenko|tango|vīrietis
+🕴️;levitējošs cilvēks uzvalkā;lidināties|uzvalks|vīrietis
+👯;dejotāju šovs;ausis|ballīte|cilvēks|dejotāja|meitene|pāris|sieviete|zaķa ausis|zaķis
+👯‍♂️;dejotāji;ballīte|dejotājs|vīrietis|zaķa ausis
+👯‍♀️;dejotājas;ballīte|dejotājs|sieviete|zaķa ausis
+🧖;cilvēks tvaika telpā;atpūta|pirts|sauna|tvaika telpa
+🧖‍♂️;vīrietis tvaika telpā;sauna|tvaika telpa
+🧖‍♀️;sieviete tvaika telpā;sauna|tvaika telpa
+🧗;kalnā kāpējs;alpīniste|alpīnists|cilvēks|kalns|kāpt|klints|persona
+🧗‍♂️;alpīnists;kāpēja|kāpējs
+🧗‍♀️;alpīniste;alpīnists
+🤺;paukotājs;paukošana|rapieris
+🏇;zirgu skriešanās sacīkstes;sacīkstes|sports|zirgs|žokejs
+⛷️;slēpotājs;slēpes|sniegs|sports|ziema
+🏂;snovbordists;sniegs|snovbords|sports|ziema
+🏌️;golfa spēlētājs;bedrīte|bumbiņa|cilvēks|golfs|sports
+🏌️‍♂️;vīrietis spēlē golfu;golfs|sports|vīrietis
+🏌️‍♀️;sieviete spēlē golfu;cilvēks|golfere|golfs|sieviete|sports
+🏄;sērfotājs;cilvēks|okeāns|sērfot|sports|ūdens|viļņi
+🏄‍♂️;vīrietis sērfo;sērfošana|sports|vīrietis
+🏄‍♀️;sieviete sērfo;cilvēks sērfo|sērfošana|sieviete|sports|viļņi
+🚣;cilvēks airē;airēšana|cilvēks|ezers|laiva|makšķerēšana|transports|ūdens|upe
+🚣‍♂️;airētājs;airi|laiva|sports|vīrietis
+🚣‍♀️;airētāja;airi|airu laiva|ezers|laiva|makšķerēšana|sieviete|sports|upe
+🏊;peldētājs;cilvēks|peldēšana|peldēt|sportists|sports|ūdens
+🏊‍♂️;vīrietis peld;peldēšana|sports|vīrietis
+🏊‍♀️;peldētāja;cilvēks|peldēšana|persona|sieviete|sports
+⛹️;cilvēks driblē bumbu;basketbolists|bumba|cilvēks|driblēt|dribls|sportists
+⛹️‍♂️;vīrietis ar bumbu;basketbols|bumba|sports|vīrietis
+⛹️‍♀️;sieviete ar bumbu;basketboliste|basketbols|bumba|cilvēks|persona|sieviete|sports
+🏋️;cilvēks ar svaru stieni;cēlājs|cilvēks|sportists|sports|svarcēlājs|svarcelšana|svari|vīrietis
+🏋️‍♂️;svarcēlājs;sports|svarcelšana|vīrietis
+🏋️‍♀️;svarcēlāja;cilvēks|sieviete|sports|svarcelšana
+🚴;velosipēdists;braukt|cilvēks|riteņbraukšana|ritenis|sports|velosipēds
+🚴‍♂️;riteņbraucējs;sports|velosipēds|vīrietis
+🚴‍♀️;riteņbraucēja;cilvēks|divritenis|persona|sieviete|sports|velosipēds
+🚵;kalnu velosipēdists;braukt|cilvēks|kalns|riteņbraucējs|ritenis|sportists|sports|velosipēds
+🚵‍♂️;riteņbraucējs ar kalnu velosipēdu;kalnu velosipēds|sports|vīrietis
+🚵‍♀️;riteņbraucēja ar kalnu velosipēdu;cilvēks|kalns|kalnu velosipēds|sieviete|sports|velosipēds
+🤸;ritenītis;akrobātika|aktīvs|cilvēks|prieks|sports|vingrošana
+🤸‍♂️;akrobāts;akrobātika|aktīvs|cilvēks|prieks|ritenītis|sports|vingrošana|vīrietis
+🤸‍♀️;akrobāte;akrobātika|aktīvs|cilvēks|prieks|ritenītis|sieviete|sports|vingrošana
+🤼;cīkstoņi;cīkstēties|cīkstonis|cilvēks|cīņa|rings|sports
+🤼‍♂️;cīkstonis;cilvēki|cīņa|rings|sacīkstes|sports|vīrietis
+🤼‍♀️;cīkstone;cilvēks|cīņa|persona|rings|sacīkstes|sieviete|sports
+🤽;ūdenspolo sportists;cilvēks|polo|sports|ūdens|ūdenspolo
+🤽‍♂️;ūdenspolo spēlētājs;cilvēks|persona|sports|ūdens sports|ūdenspolo|vīrietis
+🤽‍♀️;ūdenspolo spēlētāja;cilvēks|persona|sieviete|sports|ūdens sports|ūdenspolo
+🤾;rokasbumba;bumba|cilvēks|handbols|mest|sports
+🤾‍♂️;rokasbumbas spēlētājs;cilvēks|rokasbumba|sportists|sports|vīrietis
+🤾‍♀️;rokasbumbas spēlētāja;bumba|cilvēks|mest|rokasbumba|sieviete|sports
+🤹;žonglēšana;cilvēks|līdzsvars|persona|prasme|vairāki uzdevumi|žonglēt
+🤹‍♂️;žonglieris;cilvēks|prasme|sports|vairāki uzdevumi|vīrietis|žonglēšana
+🤹‍♀️;žongliere;sieviete|sports|vairāki uzdevumi|žonglieris
+🧘;cilvēks lotosa pozā;atpūta|joga|meditācija|miers
+🧘‍♂️;vīrietis lotosa pozā;joga|meditācija
+🧘‍♀️;sieviete lotosa pozā;joga|meditācija
+🛀;cilvēks vannā;cilvēks mazgājas|mazgāties|ūdens|vanna
+🛌;cilvēks gultā;ar labu nakti|cilvēks|gulēt|gulta|viesnīca
+🧑‍🤝‍🧑;cilvēki sadevušies rokās;cilvēki|pāris|persona|roka|sadotas rokas|satvēriens
+👭;sievietes sadevušās rokās;pāris|rokas|sadot|sieviete
+👫;sieviete un vīrietis sadevušies rokās;pāris|rokas|sadot|sieviete|vīrietis
+👬;vīrieši sadevušies rokās;dvīņi|pāris|rokas|sadot|sieviete|vīrietis|zodiaks
+💏;skūpsts;mīlestība|pāris|randiņš|romantika
+👩‍❤️‍💋‍👨;skūpsts: sieviete un vīrietis;mīlestība|pāris|randiņš|romantika|sieviete|skūpsts|vīrietis
+👨‍❤️‍💋‍👨;skūpsts: vīrietis un vīrietis;mīlestība|pāris|randiņš|romantika|skūpsts|vīrietis
+👩‍❤️‍💋‍👩;skūpsts: sieviete un sieviete;mīlestība|pāris|randiņš|romantika|sieviete|skūpsts
+💑;pāris ar sirdi;mīlestība|pāris|romantika|sirds
+👩‍❤️‍👨;pāris ar sirdi: sieviete un vīrietis;mīlestība|pāris|pāris ar sirdi|romantika|sieviete|sirds|vīrietis
+👨‍❤️‍👨;pāris ar sirdi: vīrietis un vīrietis;mīlestība|pāris|pāris ar sirdi|romantika|sirds|vīrietis
+👩‍❤️‍👩;pāris ar sirdi: sieviete un sieviete;mīlestība|pāris|pāris ar sirdi|romantika|sieviete|sirds
+👨‍👩‍👦;ģimene: vīrietis, sieviete un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👩‍👧;ģimene: vīrietis, sieviete un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👨‍👩‍👧‍👦;ģimene: vīrietis, sieviete, meitene un zēns;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis|zēns
+👨‍👩‍👦‍👦;ģimene: vīrietis, sieviete, zēns un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👩‍👧‍👧;ģimene: vīrietis, sieviete, meitene un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👨‍👨‍👦;ģimene: vīrietis, vīrietis un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👨‍👧;ģimene: vīrietis, vīrietis un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👨‍👨‍👧‍👦;ģimene: vīrietis, vīrietis, meitene un zēns;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis|zēns
+👨‍👨‍👦‍👦;ģimene: vīrietis, vīrietis, zēns un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👨‍👧‍👧;ģimene: vīrietis, vīrietis, meitene un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👩‍👩‍👦;ģimene: sieviete, sieviete un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👩‍👩‍👧;ģimene: sieviete, sieviete un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👩‍👩‍👧‍👦;ģimene: sieviete, sieviete, meitene un zēns;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis|zēns
+👩‍👩‍👦‍👦;ģimene: sieviete, sieviete, zēns un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👩‍👩‍👧‍👧;ģimene: sieviete, sieviete, meitene un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👨‍👦;ģimene: vīrietis un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👦‍👦;ģimene: vīrietis, zēns un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👨‍👧;ģimene: vīrietis un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👨‍👧‍👦;ģimene: vīrietis, meitene un zēns;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis|zēns
+👨‍👧‍👧;ģimene: vīrietis, meitene un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👩‍👦;ģimene: sieviete un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👩‍👦‍👦;ģimene: sieviete, zēns un zēns;bērns|ģimene|māte|sieviete|tēvs|vīrietis|zēns
+👩‍👧;ģimene: sieviete un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+👩‍👧‍👦;ģimene: sieviete, meitene un zēns;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis|zēns
+👩‍👧‍👧;ģimene: sieviete, meitene un meitene;bērns|ģimene|māte|meitene|sieviete|tēvs|vīrietis
+🗣️;runājoša galva;galva|runāt|seja|siluets
+👤;krūšutēla siluets;ēna|krūšutēls|mistika|noslēpumains|siluets
+👥;divu krūšutēlu silueti;cilvēki|draugi|krūšutēls|siluets
+🫂;cilvēki apkampjas;apskāviens|ardievu|atvadīties|labdien|mierināt|paldies|sasveicināties
+👪;ģimene;bērns|māte|sieviete|tēvs|vīrietis
+🧑‍🧑‍🧒;ģimene: pieaugušais, pieaugušais, bērns;bērns|ģimene: pieaugušais|pieaugušais
+🧑‍🧑‍🧒‍🧒;ģimene: pieaugušais, pieaugušais, bērns, bērns;bērns|ģimene: pieaugušais|pieaugušais
+🧑‍🧒;ģimene: pieaugušais, bērns;bērns|ģimene: pieaugušais
+🧑‍🧒‍🧒;ģimene: pieaugušais, bērns, bērns;bērns|ģimene: pieaugušais
+👣;pēdu nospiedumi;ķermenis|nospiedumi|pēdas
+🫆;pirksta nospiedums;drošība|identitāte|izmeklēšana
+🐵;pērtiķa galva;dzīvnieks|galva|pērtiķis
+🐒;mērkaķis;banāns|dzīvnieks
+🦍;gorilla;dzīvnieks
+🦧;orangutans;dzīvnieks|mērkaķis|pērtiķis
+🐶;suņa galva;dzīvnieks|galva|lolojumdzīvnieks|mājdzīvnieks|suns
+🐕;suns;dzīvnieks|lolojumdzīvnieks|mājdzīvnieks
+🦮;suns pavadonis;akls|neredzīgs|pavadonis|pieejamība
+🐕‍🦺;dienesta suns;atbalsts|dienests|dzīvnieks|pieejamība|suns
+🐩;pūdelis;dzīvnieks|mājdzīvnieks|suns
+🐺;vilks;dzīvnieks|galva
+🦊;lapsa;dzīvnieks|galva|viltīgs
+🦝;jenots;dzīvnieks|viltīgs|ziņkārīgs
+🐱;kaķa galva;dzīvnieks|galva|kaķis|mājdzīvnieks
+🐈;kaķis;dzīvnieks|kaķēns|lolojumdzīvnieks|mājdzīvnieks
+🐈‍⬛;melns kaķis;dzīvnieks|Halovīni|kaķis|melns|mjau|neveiksme
+🦁;lauva;galva|seja|zodiaks
+🐯;tīģera galva;dzīvnieks|galva|plēsējs|tīģeris
+🐅;tīģeris;dzīvnieks|lielais kaķis|plēsējs|zoo
+🐆;leopards;dzīvnieks|lielais kaķis|plēsējs|zoo
+🐴;zirga galva;dzīvnieks|galva|saimniecība|zirgs
+🫎;alnis;dzīvnieks|ragi|zīdītājs
+🫏;ēzelis;dzīvnieks|mūlis|spītīgs|stulbenis|zīdītājs
+🐎;zirgs;dzīvnieks|hipodroms|sacīkstes|skriešana
+🦄;vienradzis;galva
+🦓;zebra;svītra|svītrains
+🦌;briedis;dzīvnieks
+🦬;bizons;bifelis|dzīvnieks|ganāmpulks|sumbrs
+🐮;govs galva;dzīvnieks|galva|govs|piens|saimniecība
+🐂;vērsis;bullis|dzīvnieks|zodiaks
+🐃;bifelis;dzīvnieks|ūdens|zoo
+🐄;govs;dzīvnieks|piens|saimniecība
+🐷;cūkas galva;bekons|cūka|dzīvnieks|galva|ruksis|saimniecība|sivēns
+🐖;cūka;dzīvnieks|resns|ruksis|sivēns
+🐗;mežacūka;dzīvnieks|galva|troņu spēles
+🐽;šņukurs;cūka|dzīvnieks|ruksis|sivēns
+🐏;auns;aita|dzīvnieks|zodiaks
+🐑;aita;auns|dzīvnieks|mājlops|vilna
+🐐;kaza;dzīvnieks|mežāzis|zodiaks
+🐪;kamielis;dzīvnieks|kupris|tuksnesis|vienkupra
+🐫;divkupru kamielis;dzīvnieks|kamielis|kupris|tuksnesis
+🦙;lama;alpaka|dzīvnieks|gvanako|vikunja|vilna
+🦒;žirafe;dzīvnieks|plankumi
+🐘;zilonis;dzīvnieks
+🦣;mamuts;dzīvnieks|ilknis|izmiršana|liels|vilnains
+🦏;degunradzis;dzīvnieks
+🦛;nīlzirgs;begemots|dzīvnieks
+🐭;peles galva;dzīvnieks|galva|pele
+🐁;pele;dzīvnieks
+🐀;žurka;dzīvnieks
+🐹;kāmis;dzīvnieks|galva|lolojumdzīvnieks|mājdzīvnieks|mīļdzīvnieks
+🐰;truša galva;galva|mājdzīvnieks|trusis|zaķis
+🐇;trusis;dzīvnieks|lolojumdzīvnieks|mājdzīvnieks|zaķis
+🐿️;burunduks;vāvere
+🦫;bebrs;dambis|dzīvnieks|grauzt|zobi
+🦔;ezis;adatains
+🦇;sikspārnis;dzīvnieks|vampīrs
+🐻;lācis;dzīvnieks|galva|seja
+🐻‍❄️;polārlācis;arktisks|balts|lācis|leduslācis
+🐨;koala;austrālija|dzīvnieks|lācis
+🐼;panda;dzīvnieks|galva|seja
+🦥;sliņķis;dzīvnieks|lēns|slinks
+🦦;ūdrs;rotaļāties|spēlēties|zivju ķeršana
+🦨;skunkss;smaka
+🦘;ķengurs;Austrālija|ķengura mazulis|lēciens|somainis
+🦡;āpsis;dzīvnieks|medusāpsis|traucētājs
+🐾;ķepu nospiedumi;ķepa|nospiedums
+🦃;tītars;dzīvnieks|Pateicības diena|putns
+🐔;vista;cālis|dzīvnieks|putns
+🐓;gailis;dzīvnieks|putns
+🐣;cālis šķiļas;cālis|dzīvnieks|ola|putns|šķilties
+🐤;cālis;dzīvnieks|galva|putns
+🐥;cālis no priekšpuses;cālis|dzīvnieks|putns
+🐦;putns;dzīvnieks|ornitoloģija
+🐧;pingvīns;Antarktika|dzīvnieks|putns
+🕊️;dūja;balodis|dzīvnieks|lidot|miers|putns
+🦅;ērglis;dzīvnieks|putns
+🦆;pīle;dzīvnieks|putns
+🦢;gulbis;dzīvnieks|jauns gulbis|neglītais pīlēns|putns
+🦉;pūce;dzīvnieks|gudrs|putns|vieds
+🦤;dodo;dzīvnieks|izmiršana|liels|Maurīcija|putns
+🪶;spalva;apspalvojums|putns|viegls
+🦩;flamingo;dzīvnieks|putns|spilgts|tropisks
+🦚;pāvs;ārišķīgs|dzīvnieks|iedomīgs|pāvu mātīte|putns
+🦜;papagailis;dzīvnieks|pirāts|putns|runāt
+🪽;spārns;aviācija|eņģelisks|lidojošs|mitoloģija|putns
+🐦‍⬛;melns putns;knābis|krauķis|krauklis|melns|putns|vārna|žagata
+🪿;zoss;dumjš|gāgināt|putns|vista
+🐦‍🔥;fēnikss;atdzimšana|dzīvnieks|fantastika|fantāzija|pasaka|reinkarnācija|ugunsputns
+🐸;varde;dzīvnieks|galva|princese|seja
+🐊;krokodils;aligators|dzīvnieks|florida|zoo
+🐢;bruņurupucis;dzīvnieks
+🦎;ķirzaka;dzīvnieks|rāpulis
+🐍;čūska;dzīvnieks|ziņnesis|zodiaks
+🐲;pūķa galva;briesmonis|galva|pasaka|pūķis
+🐉;pūķis;bruņinieki|dzīvnieks|ķīniešu|pasaka
+🦕;zauropods;brahiozaurs|brontozaurs|dinozaurs|diplodoks
+🦖;tiranozaurs;dinozaurs|dzīvnieks|tiranozaurs rekss
+🐳;valis šļāc ūdeni;dzīvnieks|šļakatas|ūdens|valis
+🐋;valis;dzīvnieks|okeāns|pludmale
+🐬;delfīns;dzīvnieks|okeāns|peldpleznas|pludmale
+🫍;zobenvalis;jūra|okeāns|valis
+🦭;ronis;dzīvnieks|jūras lauva|okeāns
+🐟;zivs;dzīvnieks|zivis|zodiaks
+🐠;tropu zivs;dzīvnieks|tropi|zivs
+🐡;balonzivs;dzīvnieks|zivs
+🦈;haizivs;dzīvnieks|zivs
+🐙;astoņkājis;dzīvnieks|okeāns|radījums
+🐚;gliemežvāks;gliemežnīca|pludmale|spārngliemezis|spirāle
+🪸;koraļļi;klimata izmaiņas|okeāns|rifs
+🪼;medūza;apdegt|bezmugurkaulnieks|dzelonis|jūras iemītnieks|sadzelt|sāpīgi|želeja
+🦀;krabis;vēzis|zodiaks
+🦞;omārs;bisks|dzīvnieks|jūras veltes|spīles
+🦐;garnele;ēdiens|jūras veltes|mazs|pārtika
+🦑;kalmārs;dzīvnieks|ēdiens|jūras veltes|molusks
+🦪;austere;niršana|pērle
+🐌;gliemezis;dārzs|dzīvnieks|gliemis|vīngliemezis
+🦋;taurenis;insekts|kukainis|skaists
+🐛;kukainis;blakts|dārzs|dzīvnieks|insekts|kāpurs
+🐜;skudra;dārzs|dzīvnieks|insekts|kukainis
+🐝;bite;dzīvnieks|insekts|kamene|kukainis
+🪲;vabole;dzīvnieks|insekts|kukainis
+🐞;mārīte;bizbizmārīte|insekts|kukainis|vabole
+🦗;circenis;dzīvnieks|insekts|kukainis|sienāzis
+🪳;tarakāns;insekts|kaitēklis|prusaks
+🕷️;zirneklis;insekts|kukainis
+🕸️;zirnekļa tīkls;tīkls|zirneklis
+🦂;skorpions;dzīvnieks|zodiaks
+🦟;ods;drudzis|insekts|malārija|slimība|vīruss
+🪰;muša;insekts|kaitēklis|kāpurs|pūšana|slimība
+🪱;tārps;dzīvnieks|parazīts|posmtārps|slieka
+🦠;mikrobs;amēba|baktērija|vīruss|zinātne
+💐;pušķis;dzimšanas diena|gadadiena|mīlestība|randiņš|romantika|ziedi
+🌸;ķiršu zieds;augs|ķirši|pavasaris|zieds
+💮;balts zieds;augs|balts|zieds
+🪷;lotoss;Budisms|Hinduisms|Indija|miers|skaistums|tīrība|Vjetnama|zieds
+🏵️;rozete;augs|puķe|zieds
+🌹;roze;augs|mīlestība|valentīndiena|zieds
+🥀;novītusi puķe;novītusi|puķe
+🌺;hibisks;augs|zieds
+🌻;saulespuķe;augs|daba|saule|zieds
+🌼;zieds;augs|gundega|pienene|puķe
+🌷;tulpe;augs|zieds
+🪻;hiacinte;lauvmutīte|lavanda|lupīna|zieds|zilie zvaniņi
+🌱;asns;augs|dēsts|jauns|stāds
+🪴;augs podiņā;audzēt|augs|augt|garlaicība|māja|nevajadzīgs|podiņš|telpaugs
+🌲;skujkoks;augs|egle|koks|mūžzaļš
+🌳;lapu koks;augs|koks|lapas|mežs
+🌴;palma;augs|koks|pludmale|tropi
+🌵;kaktuss;augs|daba|sausums|tuksnesis
+🌾;rīsa augs;augs|graudaugs|rīsi
+🌿;augs;lapa
+☘️;āboliņa lapa;āboliņš|lapa
+🍀;četrlapu āboliņš;4|āboliņš|augs|laimes simbols|lapa
+🍁;kļavas lapa;augs|kļava|lapa|rudens
+🍂;nokritusi lapa;augs|krist|lapa|rudens
+🍃;vējā plīvojoša lapa;augs|lapa|plīvot|pūst|vējš
+🪹;tukša ligzda;ligzda|ligzdošana|mājas
+🪺;ligzda ar olām;ligzda|ligzdošana|putns
+🍄;sēne;augs|mušmire
+🪾;koks bez lapām;bezlapu koks|neauglīgs|sausums|ziema
+🍇;vīnogas;auglis|augs|Dionīss|pārtika
+🍈;melone;auglis|augs
+🍉;arbūzs;auglis|augs|ēdiens|pārtika
+🍊;mandarīns;apelsīns|auglis|augs|citruss|oranžs|pārtika
+🍋;citrons;auglis|augs|citruss|pārtika
+🍋‍🟩;laims;auglis|citruss|mohito|skābs|tekila|tropisks
+🍌;banāns;auglis|augs|kālijs
+🍍;ananass;auglis|augs|pina colada|tropisks
+🥭;mango;auglis|pārtika|tropiskais
+🍎;sarkans ābols;ābols|auglis|augs|pārtika|sarkans
+🍏;zaļš ābols;ābols|auglis|augs|pārtika|zaļš
+🍐;bumbieris;auglis|augs|pārtika
+🍑;persiks;auglis|augs|pārtika
+🍒;ķirši;auglis|augs|ķirsis|oga|pārtika
+🍓;zemene;auglis|augs|oga|pārtika
+🫐;mellenes;mellene|oga|pārtika|zilene|zils
+🥝;kivi auglis;auglis|augs|kivi|pārtika
+🍅;tomāts;augs|dārzenis|pārtika
+🫒;olīva;ēdiens|olīvzars
+🥥;kokosrieksts;palma|pina colada
+🥑;avokado;auglis|ēdiens|pārtika
+🍆;baklažāns;augs|dārzenis|ēdiens|pārtika
+🥔;kartupelis;augs|dārzenis|pārtika
+🥕;burkāns;augs|dārzenis|pārtika
+🌽;kukurūzas vālīte;augs|dārzenis|kukurūza|pārtika
+🌶️;asais pipars;ass|augs|pārtika|pipars
+🫑;paprika;dārzenis|pipars|sarkanie pipari|zaļais pipars
+🥒;gurķis;dārzenis|marinēts|pārtika|skābēts
+🥬;lapu dārzenis;kacenkāposts|kāposts|Ķīnas kāposts|lapu kāposts|pakčojs|pārtika
+🥦;brokoļi;augs|dārza kāposts|dārzenis|ēdiens|pārtika
+🧄;ķiploks;garšaugs|garšviela
+🧅;sīpols;garšaugs|garšviela
+🥜;zemesrieksti;dārzenis|ēdiens|pārtika|rieksti
+🫘;pupiņas;nieres|pākšaugi|pārtika
+🌰;kastanis;augs|mandele|pārtika|rieksts
+🫚;ingvera sakne;alus|dabīgs|garšviela|ingveralus|ingvers
+🫛;zirņu pāksts;dārzenis|edamame|pākšaugi|pāksts|pupas|zirnis
+🍄‍🟫;brūna sēne;beka|daba|dārzenis|ēdiens|mežs|portobello|sēnes|sporas
+🫜;sakņu dārzenis;biete|dārzenis|dārzs|rāceņi|sakne
+🍞;maize;ēdiens|graudi|grauzdiņš|kukulis
+🥐;kruasāns;ēdiens|franču|maize|pārtika
+🥖;bagete;ēdiens|franču|maize|pārtika
+🫓;plācenis;arepa|lavašs|maize|nāanmaize|pārtika|pita
+🥨;kliņģeris;maize|maizīte|savīts
+🥯;beigelis;ēdiens|maize|maiznīca|smērējams
+🥞;pankūkas;bliņa|ēdiens|pankūka|pārtika
+🧇;vafele;brokastis|panna|pusgatavas
+🧀;siera šķēle;siers
+🍖;kauls ar gaļu;ēdiens|gaļa|kauls|pārtika
+🍗;putna kāja;ēdiens|gaļa|kāja|kauls|pārtika|putns
+🥩;gaļas gabals;cūkgaļas karbonāde|jēra karbonāde|karbonāde|pārtika|sarkanā gaļa|steiks
+🥓;bekons;ēdiens|gaļa|pārtika
+🍔;hamburgers;burgers|ēdiens|pārtika
+🍟;frī kartupeļi;ātrā ēdināšana|ēdiens|frī|kartupeļi|pārtika
+🍕;pica;izsalkums|peperoni|siers|šķēle
+🌭;hotdogs;desiņa|ēdiens|pārtika
+🥪;sendvičs;maize|sviesmaize
+🌮;tako;ēdiens|meksikāņu|pārtika
+🌯;burito;ēdiens|meksikāņu|pārtika
+🫔;tamale;ēdiens|meksikāņu|pārtika|satīts|uzkoda|vraps
+🥙;pildīts lavašs;ēdiens|giross|kebabs|lavašs|pārtika|pildīts
+🧆;felāfels;aunazirņi|aunazirņi / frikadele|falafels|frikadele
+🥚;ola;ēdiens|pārtika
+🍳;ēdiena gatavošana;brokastis|cept|ola|panna
+🥘;sautējums pannā;ēdiens|paelja|panna|pārtika|sautējums
+🍲;ēdiena bļodiņa;bļoda|ēdiens|pārtika|sautējums
+🫕;fondī;kausēts|podiņš|siers|šokolāde|šveiciešu
+🥣;bļoda ar karoti;auzu pārslu putra|brokastis|brokastu pārslas|ēdiens|graudaugi|pārtika|putra|rīsu putra|sausās brokastis
+🥗;zaļie salāti;ēdiens|pārtika|salāti|zaļi
+🍿;popkorns;kino|kukurūza
+🧈;sviests;piena produkti
+🧂;sāls;garša|garšviela|sāļš|trauciņš
+🥫;konservi;bundža|ēdiens|konservs|pārtika
+🍱;bento kastīte;bento|kastīte|pusdienu kastīte
+🍘;rīsu galete;ēdiens|galete|pārtika|rīsi
+🍙;rīsu bumbiņa;bumbiņa|ēdiens|japāņu|pārtika|rīsi
+🍚;vārīti rīsi;ēdiens|pārtika|rīsi|vārīts
+🍛;rīsu karijs;ēdiens|karijs|pārtika|rīsi
+🍜;kūpoša bļodiņa;bļoda|ēdiens|irbulīši|karsts|nūdeles|pārtika
+🍝;spageti;ēdiens|makaroni|pārtika|pasta
+🍠;cepti saldie kartupeļi;cepts|kartupeļi|pārtika|saldais kartupelis|salds
+🍢;ēdiens uz irbulīšiem;ēdiens|iesmiņš|irbulīši|kebabs
+🍣;suši;ēdiens|japāņu virtuve|pārtika
+🍤;cepta garnele;cepts|ēdiens|garnele|pārtika
+🍥;zivju pīrāgs ar rotājumu;ēdiens|pīrāgs|rotājums|zivs
+🥮;Mēness kūka;festivāls|rudens|rudens saulgrieži|rudens vidus svētki
+🍡;dango;deserts|irbulīši|japāņu|salds
+🥟;pelmeņi;gioza|gjoza|pārtika|pīrādziņi|vareņiki
+🥠;laimes cepumiņš;pravietojums
+🥡;kastīte līdzņemšanai;irbulīši|ķīniešu ēdiens|ķīniešu ēdienu kastīte līdzņemšanai
+🍦;saldējums vafeļu glāzītē;deserts|ēdiens|krēms|mīksts|pārtika|saldējums|salds
+🍧;smalcināts ledus ar sīrupu;deserts|ledus|restorāns|salds
+🍨;saldējums;deserts|krēms|pārtika|salds
+🍩;virtulis;deserts|ēdiens|pārtika|salds
+🍪;cepums;deserts|gardums|salds
+🎂;dzimšanas dienas kūka;deserts|dzimšanas diena|jubileja|kūka|svētki|svinības|torte
+🍰;kūka;deserts|salds|saldums|torte
+🧁;kēksiņš;deserts|gardums|maiznīca|salds
+🥧;pīrāgs;gaļas pīrāgs|ķirbju pīrāgs|mīkla|pildījums
+🍫;šokolādes tāfelīte;deserts|pārtika|salds|šokolāde|tāfelīte
+🍬;konfekte;gardums|pārtika|salds|saldumi
+🍭;konfekte uz kociņa;cukurgailītis|konfekte|pārtika|salds|saldumi
+🍮;olu krēms;deserts|ēdiens|pārtika|salds
+🍯;medus pods;medus|pārtika|pods|salds
+🍼;bērna pudelīte;bērns|dzert|piens|pudele|zīdainis
+🥛;piena glāze;dzēriens|dzert|glāze|pārtika|piens
+☕;karsts dzēriens;dzēriens|dzert|kafija|karsts|kofeīns|tēja
+🫖;tējkanna;dzēriens|kanna|tēja
+🍵;tējas tase bez osiņas;dzēriens|dzert|oolong|tase|tēja
+🍶;sakē;bārs|dzēriens|dzert|pudele
+🍾;pudele ar izšautu korķi;bārs|dzēriens|dzert|korķis|pudele|šampanietis
+🍷;vīna glāze;alkohols|bārs|dzēriens|dzert|glāze|vīns
+🍸;kokteiļa glāze;bārs|dzēriens|dzert|glāze|kokteilis|martini
+🍹;tropu kokteilis;bārs|dzēriens|dzert|glāze|kokteilis|tropisks
+🍺;alus kauss;alus|bārs|dzēriens|dzert|kauss
+🍻;saskandināti alus kausi;alus|bārs|dzēriens|dzert|kauss
+🥂;glāžu skandināšana;dzert|glāze|šampanietis|saskandināt|svinēt
+🥃;viskija glāze;dzēriens|glāze|liķieris|pārtika|šots|viskijs
+🫗;ielejot šķidrumu;dzēriens|glāze|izliet|noplūde|stikls|tukšs
+🥤;dzēriens ar salmiņu;bezalkoholisks dzēriens|dzēriens|gāzēts|limonāda|limonāde|sula
+🧋;burbuļtēja;burbulis|pērle|piens|tēja
+🧃;dzēriena kārba;dzēriens|salds|salmiņš|sulas kārba|sulas paka
+🧉;mate;dzēriens|tēja
+🧊;ledus gabaliņš;aisbergs|auksts|ledus|ledus kubs
+🥢;irbulīši;haši
+🍽️;nazis un dakša ar šķīvi;dakša|nazis|šķīvis
+🍴;nazis un dakša;dakša|galda piederumi|garšīgi|maltīte|nazis|restorāns|vakariņas
+🥄;karote;ēst|galda piederumi
+🔪;virtuves nazis;ēst|ierocis|nazis|rīks
+🫙;burka;garšviela|konteiners|mērce|tukšs|tvertne|veikalā
+🏺;amfora;dzert|trauks|Ūdensvīrs|zodiaks
+🌍;globuss ar Eiropu un Āfriku;Āfrika|Eiropa|globuss|pasaule|zemeslode
+🌎;globuss ar Ameriku;Dienvidamerika|globuss|pasaule|zemeslode|Ziemeļamerika
+🌏;globuss ar Āziju un Austrāliju;Austrālija|Āzija|globuss|pasaule|zemeslode
+🌐;globuss ar meridiāniem;globuss|meridiāni
+🗺️;pasaules karte;karte|pasaule
+🗾;Japānas karte;Japāna|karte
+🧭;kompass;magnētisks|navigācija|orientēšanās|virziens
+🏔️;sniegoti kalni;auksts|daba|kalni|sniegs
+⛰️;kalns;daba
+🛘;nogruvums;bīstamība|briesmas|dubļu nogruvums|kalns|klintis|lavīna|zemestrīce
+🌋;vulkāns;daba|izvirdums|kalns
+🗻;Fudzi kalns;daba|Fudzi|kalns
+🏕️;kempings;nometne|pārgājiens|telts
+🏖️;pludmale ar saulessargu;pludmale|saulessargs
+🏜️;tuksnesis;kaktuss|klints
+🏝️;vientuļa sala;neapdzīvota sala|sala|vientuļš
+🏞️;nacionālais parks;atpūta|daba|parks
+🏟️;stadions;sacensības|sacīkstes|spēle|sports
+🏛️;klasicisma stila ēka;ēka|klasicisms|māja
+🏗️;būvlaukums;būvniecība|celtniecība
+🧱;ķieģelis;kaļķu java|ķieģeļi|māls|siena
+🪨;akmens;ciets|iezis|klints|smags
+🪵;koks;baļķis|celms|kokmateriāls
+🛖;būda;apaļa māja|jurta|māja|patvērums
+🏘️;ēkas;ēka|māja
+🏚️;pamesta ēka;ēka|grausts|māja|nolaists|pamests
+🏠;ēka;māja|privātmāja
+🏡;māja ar dārzu;dārzs|ēka|māja|privātmāja
+🏢;biroju ēka;birojs|ēka|māja|pilsēta
+🏣;japāņu pasta nodaļa;ēka|japāņu|māja|pasts
+🏤;pasta nodaļa;ēka|māja|pasts
+🏥;slimnīca;ārsts|ēka|māja|medicīna
+🏦;banka;ēka|māja|nauda
+🏨;viesnīca;ēka|māja
+🏩;mīlas viesnīca;ēka|māja|viesnīca
+🏪;diennakts veikals;24|diennakts|ēka|māja|veikals
+🏫;skola;ēka|māja
+🏬;tirdzniecības centrs;ēka|māja|tirdzniecība|veikals
+🏭;rūpnīca;ēka|fabrika|māja
+🏯;japāņu pils;ēka|japāņu|māja|pils
+🏰;pils;Eiropas|eiropiešu|ēka|māja
+💒;kāzas;ēka|kapela|māja|romantika
+🗼;Tokijas tornis;Tokija|tornis
+🗽;Brīvības statuja;Brīvība|ņujorka|statuja
+⛪;baznīca;ēka|kristieši|krusts|lūgties|māja|reliģija
+🕌;mošeja;ēka|islams|lūgties|māja|musulmaņi|reliģija
+🛕;hinduistu templis;hinduistu|templis
+🕍;sinagoga;ebreji|ēka|lūgties|māja|reliģija|templis
+⛩️;sintoistu svētnīca;lūgties|reliģija|sintoisms|svētnīca
+🕋;kaaba;ēka|islams|islāms|lūgties|māja|musulmaņi|reliģija
+⛲;strūklaka;ūdens
+⛺;telts;kempings|pārgājiens
+🌁;miglains;laikapstākļi|laiks|migla
+🌃;zvaigžņota debess;nakts|pilsēta|zvaigzne
+🏙️;pilsētas panorāma;ēka|māja|panorāma|pilsēta
+🌄;saullēkts pār kalniem;ainava|daba|kalns|rīts|saule|saullēkts
+🌅;saullēkts;daba|rīts|saule
+🌆;pilsētas panorāma krēslā;ainava|ēka|krēsla|māja|panorāma|pilsēta
+🌇;saulriets;ēka|māja|saule
+🌉;tilts naktī;nakts|tilts
+♨️;karstie avoti;avots|karsts
+🎠;karuseļa zirdziņš;karuselis|zirgs
+🛝;rotaļu laukuma slidkalniņš;atrakciju parks|rotaļāties|rotaļu laukums|spēlēt|spēlēties
+🎡;panorāmas rats;atrakciju parks|karuselis|panorāma|rats
+🎢;amerikāņu kalniņi;atrakciju parks|karuselis
+💈;friziera izkārtne;bārddzinis|frizieris|izkārtne
+🎪;cirka telts;cirks|telts
+🚂;lokomotīve;dzelzceļš|dzinējs|transports|vilciens
+🚃;dzelzceļa vagons;dzelzceļš|tramvajs|transports|trolejbuss|vagons|vilciens
+🚄;ātrvilciens;ātrums|dzelzceļš|transports|vilciens
+🚅;ātrvilciens ar noapaļotu priekšgalu;ātrums|dzelzceļš|transports|vilciens
+🚆;vilciens;dzelzceļš|transports
+🚇;metro;transportlīdzeklis|transports
+🚈;piepilsētas vilciens;dzelzceļš|transports|viensliedes|vilciens
+🚉;stacija;dzelzceļš|transportlīdzeklis|transports|vilciens
+🚊;tramvajs;transportlīdzeklis|transports
+🚝;viensliedes dzelzceļš;dzelzceļš|transports|viensliedes|vilciens
+🚞;kalnu dzelzceļš;dzelzceļš|kalni|transportlīdzeklis|transports|vagons|vilciens
+🚋;tramvaja vagons;tramvajs|transports|trolejbuss|vagons
+🚌;autobuss;transports
+🚍;pretī braucošs autobuss;autobuss|pretī braucošs|transports
+🚎;trolejbuss;autobuss|tramvajs|transportlīdzeklis|transports
+🚐;mikroautobuss;autobuss|braukt|transportlīdzeklis|transports
+🚑;ātrās palīdzības mašīna;ārsts|medicīna|transports
+🚒;ugunsdzēsēju mašīna;transports|uguns|ugunsdzēsēji
+🚓;policijas mašīna;automašīna|mašīna|policija|transports
+🚔;pretī braucoša policijas mašīna;automašīna|mašīna|policija|pretī braucošs|transports
+🚕;taksometrs;automašīna|mašīna|transports
+🚖;pretī braucošs taksometrs;automašīna|mašīna|taksometrs|transports
+🚗;automašīna;mašīna|transports
+🚘;pretī braucoša automašīna;automašīna|mašīna|transports
+🚙;kemperis;apvidus auto|automašīna|mašīna|transports
+🛻;piegādes auto;mašīna|pārvadāt|piegāde|pikaps|transportlīdzeklis
+🚚;kravas automašīna;automašīna|krava|mašīna|piegāde|transports
+🚛;smagā automašīna;automašīna|krava|mašīna|pārvākšanās|transportlīdzeklis|transports
+🚜;traktors;transports
+🏎️;sacīkšu automašīna;formula|mašīna|paātrinājums|sacīkstes
+🏍️;motocikls;sacīkstes|transportlīdzeklis|transports
+🛵;motorollers;skūteris|transportlīdzeklis|transports
+🦽;manuāli darbināms ratiņkrēsls;pieejamība
+🦼;ar motoru darbināms ratiņkrēsls;motorizēts ratiņkrēsls|pieejamība
+🛺;autorikša;tuktuks
+🚲;velosipēds;divritenis|riteņbraukšana|ritenis|transports
+🛴;skuteris;skrejritenis|skuteris divritenis
+🛹;skrituļdēlis;dēlis|riteņi
+🛼;skrituļslida;skritulis|slida|slidot|sports
+🚏;autobusa pietura;autobuss|pietura
+🛣️;automaģistrāle;ceļš|šoseja
+🛤️;dzelzceļa sliedes;dzelzceļš|sliedes|vilciens
+🛢️;eļļas tvertne;eļļa|nafta|naftas tvertne|tvertne
+⛽;degvielas sūknis;benzīns|degviela|DUS|sūknis
+🛞;ritenis;aplis|auto|pagriezties|riepa
+🚨;policijas mašīnas bākuguns;bākuguns|mašīna|policija
+🚥;horizontāls luksofors;luksofors|signāls
+🚦;vertikāls luksofors;luksofors|signāls
+🛑;stopzīme;astoņstūris|astoņstūris zīme stop
+🚧;celtniecība;barjera|konstrukcija|remontdarbi|remonts
+⚓;enkurs;kuģis|rīks
+🛟;gredzenu boja;drošība|dzīvības glābējs|glābējs|glābšana|glābšanas riņķis|izglābt|pludiņš
+⛵;buru laiva;jahta|jūra|laiva|transports|ūdens
+🛶;kanoe;laiva|transports
+🚤;ātrlaiva;ceļošana|ezers|laiva|miljonārs|transportlīdzeklis|transports|ūdens|vasara
+🛳️;pasažieru kuģis;kuģis|pasažieri|transports|ūdens
+⛴️;prāmis;kuģis|pasažieri|transports|ūdens
+🛥️;motorlaiva;laiva|transports|ūdens
+🚢;kuģis;titāniks|transports|ūdens
+✈️;lidmašīna;ceļot|lidot|transports
+🛩️;maza lidmašīna;lidmašīna|transports
+🛫;lidmašīnas pacelšanās;aizlidot|izlidošana|lidmašīna|pacelties|transports
+🛬;lidmašīnas nosēšanās;atlidošana|atlidot|ierašanās|lidmašīna|nosēsties|transportlīdzeklis|transports
+🪂;izpletnis;lidošana|lidošana ar paraplānu|paraplāns
+💺;sēdeklis;krēsls|sēdvieta
+🚁;helikopters;ceļot|lidot|transportlīdzeklis|transports
+🚟;trošu vilciens;transports|trose|vagons|vilciens
+🚠;kalnu trošu ceļš;gondola|kalns|kalnu trošu vilciens|transports|trose|trošu vilciens
+🚡;gaisa tramvajs;gondola|kalns|transports|trose
+🛰️;satelīts;kosmoss|pētniecība|visums
+🚀;raķete;ceļošana|kosmoss|palaišana|visums
+🛸;lidojošais šķīvītis;NLO
+🛎️;galda zvans;viesnīca|zvaniņš|zvans
+🧳;bagāža;ceļojums|koferis|koferis uz ritenīšiem|pakošanās
+⌛;iztecējis smilšu pulstenis;iztecējis smilšu pulkstenis|laiks|smiltis|taimeris
+⏳;smilšu pulkstenis ar plūstošām smiltīm;pulkstenis|smiltis|taimeris
+⌚;rokaspulkstenis;laiks|pulkstenis
+⏰;modinātājpulkstenis;aizgulēties|gaidīt|kavēt|modināt|pulkstenis
+⏱️;hronometrs;laiks|pulkstenis
+⏲️;taimeris;pulkstenis
+🕰️;kamīna pulkstenis;laiks|pulkstenis
+🕛;pulksten divpadsmit;00|12|12:00|laiks|pulkstenis|pusdiena|pusnakts
+🕧;pusviens;00|12|12:30|30|laiks|pulksten pusviens|pulkstenis
+🕐;pulksten viens;00|1|1:00|laiks|pulkstenis|viens
+🕜;pulksten pusdivi;1|1:30|30|pulkstenis|pusdivi
+🕑;pulksten divi;00|2|2:00|divi|laiks|pulkstenis
+🕝;pustrīs;2|2:30|30|laiks|pulksten pustrīs|pulkstenis
+🕒;pulksten trīs;00|3|3:00|laiks|pulkstenis|trīs
+🕞;pusčetri;3|3:30|30|laiks|pulksten pusčetri|pulkstenis
+🕓;pulksten četri;00|4|4:00|četri|laiks|pulkstenis
+🕟;puspieci;30|4|4:30|laiks|pulksten puspieci|pulkstenis
+🕔;pulksten pieci;00|5|5:00|laiks|pieci|pulkstenis
+🕠;pusseši;30|5|5:30|laiks|pulksten pusseši|pulkstenis
+🕕;pulksten seši;00|6|6:00|laiks|pulkstenis|seši
+🕡;pusseptiņi;30|6|6:30|laiks|pulksten pusseptiņi|pulkstenis
+🕖;pulksten septiņi;00|7|7:00|laiks|pulkstenis|septiņi
+🕢;pusastoņi;30|7|7:30|laiks|pulksten pusastoņi|pulkstenis
+🕗;pulksten astoņi;00|8|8:00|astoņi|laiks|pulkstenis
+🕣;pusdeviņi;30|8|8:30|laiks|pulksten pusdeviņi|pulkstenis
+🕘;pulksten deviņi;00|9|9:00|deviņi|laiks|pulkstenis
+🕤;pusdesmit;30|9|9:30|laiks|pulksten pusdesmit|pulkstenis
+🕙;pulksten desmit;00|10|10:00|desmit|laiks|pulkstenis
+🕥;pusvienpadsmit;10|10:30|30|laiks|pulksten pusvienpadsmit|pulkstenis
+🕚;pulksten vienpadsmit;00|11|11:00|laiks|pulkstenis|vienpadsmit
+🕦;pusdivpadsmit;11|11:30|30|laiks|pulksten pusdivpadsmit|pulkstenis
+🌑;jauns mēness;kosmoss|mēness|tumšs
+🌒;augoša mēness sirpis;augošs|kosmoss|mēness|sirpis
+🌓;augošs pusmēness;augošs|mēness|pusmēness
+🌔;izliekts augošs mēness;augošs|izliekts|kosmoss|mēness
+🌕;pilnmēness;kosmoss|mēness
+🌖;izliekts dilstošs mēness;dilstošs|izliekts|kosmoss|mēness
+🌗;dilstošs pusmēness;dilstošs|mēness|pusmēness
+🌘;dilstoša mēness sirpis;dilstošs|kosmoss|mēness|sirpis
+🌙;mēness sirpis;mēness|ramadāns|sirpis
+🌚;jauna mēness seja;kosmoss|mēness|seja|visums
+🌛;augoša mēness sirpja seja;augošs|mēness|seja|sirpis
+🌜;dilstoša mēness sirpja seja;dilstošs|mēness|seja|sirpis
+🌡️;termometrs;temperatūra
+☀️;saule;gaišs|laikapstākļi|laiks|stari
+🌝;pilnmēness seja;mēness|pilnmēness|seja
+🌞;saules seja;diena|gaišs|laikapstākļi|pludmale|saulains|saule|seja|spīd
+🪐;gredzenota planēta;mīnijs|saturns
+⭐;zvaigzne;astronomija
+🌟;spīdoša zvaigzne;mirdzēt|mirdzoša zvaigzne|mirdzums|nakts|spīdēt|uzvara|zvaigzne
+🌠;krītoša zvaigzne;krist|zvaigzne
+🌌;Piena ceļš;debesis|kosmoss|visums
+☁️;mākonis;laikapstākļi|laiks
+⛅;saule aiz mākoņa;laikapstākļi|laiks|mākonis|saule
+⛈️;mākonis ar zibeni un lietu;laikapstākļi|laiks|lietus|mākonis|negaiss|zibens
+🌤️;saule aiz maza mākoņa;laikapstākļi|laiks|mākonis|saule
+🌥️;saule aiz liela mākoņa;apmācies|laikapstākļi|laiks|mākonis|saule
+🌦️;saule aiz lietus mākoņa;laikapstākļi|laiks|lietus|mākonis|saule
+🌧️;lietus mākonis;laikapstākļi|laiks|lietus|mākonis
+🌨️;sniega mākonis;laikapstākļi|laiks|mākonis|sniegs
+🌩️;mākonis ar zibeni;laikapstākļi|laiks|mākonis|pērkons|zibens
+🌪️;tornado;laikapstākļi|laiks|mākonis|viesulis|virpulis
+🌫️;migla;laikapstākļi|laiks|mākonis
+🌬️;pūš vējš;laikapstākļi|laiks|pūst|vējš
+🌀;ciklons;laikapstākļi|laiks|taifūns|virpulis
+🌈;varavīksne;laikapstākļi|laiks|lgbt|lietus
+🌂;aizvērts lietussargs;aizvērts|lietus|lietussargs
+☂️;lietussargs;lietus
+☔;lietussargs ar lietus lāsēm;laikapstākļi|laiks|lāses|lietus|lietussargs
+⛱️;saulessargs;lietus|pludmale|saule
+⚡;augstspriegums;bīstami|elektrība|spriegums|zibens
+❄️;sniegpārsla;auksts|laikapstākļi|laiks|sniegs
+☃️;sniegavīrs;auksts|laikapstākļi|laiks|sniegs
+⛄;sniegavīrs bez sniega;auksts|laikapstākļi|laiks|sniegavīrs|sniegs
+☄️;komēta;kosmoss|visums
+🔥;uguns;degt|liesma
+💧;lāse;sviedri|ūdens
+🌊;vilnis;daba|jūra|okeāns|ūdens
+🎃;izgrebts ķirbis;Helovīns|ķirbis|svētki|visu svēto dienas priekšvakars
+🎄;Ziemassvētku eglīte;eglīte|koks|svētki|Ziemassvētki
+🎆;salūts;izklaide|raķete|svētki|svinības
+🎇;brīnumsvecīte;mirdzēt|salūts
+🧨;petarde;dinamīts|dzirkstele|spridzeklis|uguņošana
+✨;zibšņi;*|maģija|zibsnis|zvaigzne
+🎈;balons;dzimšanas diena|svētki|svinības
+🎉;konfeti plaukšķene;ballīte|dzimšanas diena|konfeti|plaukšķene|superīgi|svētki|svinības
+🎊;konfeti bumbiņa;ballīte|konfeti|plaukšķene|svētki
+🎋;vēlmju koks;japāņu|karodziņš|koks|vēlēšanās
+🎍;priedes dekorācija;augs|bambuss|japāņu|priede|svētki
+🎎;japāņu lelles;japāņu|lelle|svētki
+🎏;zivju veida karodziņi;karodziņi|karpa|svētki|zivs
+🎐;vēja zvans;svētki|vējš|zvans
+🎑;mēness vērošanas ceremonija;ceremonija|japāņu|mēness|svētki
+🧧;sarkana aploksne;aploksne|dāvana|nauda|veiksme
+🎀;pušķītis;lente|pušķis|svētki
+🎁;iesaiņota dāvana;dāvana|iesaiņot|lente
+🎗️;atceres lentīte;atcere|atgādinājums|lente|piemiņa|svētki
+🎟️;ieejas biļetes;biļete|ieeja
+🎫;biļete;ieeja|pasaknis
+🎖️;militāra medaļa;armija|medaļa|militārs|ordenis
+🏆;kauss;balva|trofeja|uzvara
+🏅;sporta medaļa;medaļa|sports|uzvarētājs|zelts
+🥇;medaļa par 1. vietu;1. vieta|medaļa|pirmā|zelta
+🥈;medaļa par 2. vietu;2. vieta|medaļa|otrā|sudraba
+🥉;medaļa par 3. vietu;bronzas|medaļa|trešā
+⚽;futbola bumba;bumba|futbols|sports
+⚾;beisbola bumba;beisbols|bumba|sports
+🥎;softbols;bumba|cimds|paduse
+🏀;basketbola bumba;basketbols|bumba|sports
+🏐;volejbola bumba;bumba|sports|volejbols
+🏈;amerikāņu futbola bumba;amerikāņu futbols|bumba|futbols|sports|superkauss
+🏉;regbija bumba;bumba|regbijs|sports
+🎾;tenisa bumbiņa;bumba|rakete|sports|teniss
+🥏;lidojošais šķīvis;disks|galīgs
+🎳;boulings;bumba|spēle|sports
+🏏;krikets;bumba|nūja|spēle|sports
+🏑;lauka hokejs;bumba|hokejs|nūja|sports
+🏒;hokejs uz ledus;hokejs|nūja|ripa|spēle|sports
+🥍;lakross;bumba|mērķis|nūja|sports
+🏓;galda teniss;bumbiņa|pingpongs|rakete|sports
+🏸;badmintons;rakete|volāns
+🥊;boksa cimds;bokss|cimds|sports
+🥋;cīņu sporta tērps;cīņa|cīņas māksla|džudo|karatē|kimono|sports|taekvondo|tērps
+🥅;vārti ar tīklu;futbola vārti|sports|tīkls|vārti
+⛳;karodziņš bedrītē;bedrīte|golfs
+⛸️;slida;daiļslidošana|ledus
+🎣;makšķere;makšķerēšana|sports|zivs
+🤿;niršanas maska;elpošanas aparāts|niršana|snorkelēšana
+🎽;skriešanas krekls;krekls|skriet|vieglatlētika
+🎿;slēpes;sniegs|sports
+🛷;kamaniņas;kamanas|ragavas|ragaviņas|sniegs|ziema
+🥌;kērlinga akmens;akmens|kērlings|spēle
+🎯;šautriņa mērķī;mērķis|šautriņa|spēle|trāpījums
+🪀;jojo;rotaļlieta|svārstīgs
+🪁;gaisa pūķis;lidot|pacelties
+🔫;ūdens pistole;ierocis|pistole|revolveris|šaujamierocis
+🎱;biljarda bumbiņa;8|astoņi|biljards|bumbiņa|spēle
+🔮;kristāla lode;kristāls|lode|pareģot|zīlēt
+🪄;burvju nūjiņa;burvis|burvju|ragana|zizlis
+🎮;videospēle;konsole|playstation|spēle|xbox
+🕹️;kursorsvira;spēle|videospēle
+🎰;spēļu automāts;automāts|azartspēles|kazino|spēle
+🎲;metamais kauliņš;galda spēle|izklaide|kauliņš|spēle
+🧩;attēlu mīkla;gabaliņš|līme|puzle|puzles gabaliņš|savienošana
+🧸;lāčuks;manta|pildīts|plīšs|rotaļlieta
+🪅;pinjata;ballīte|meksikāņu|saldumi|svinības
+🪩;spoguļa bumba;ballīte|deja|diskotēka|mirdzēt
+🪆;matrjoškas;krievu|lelle|matrjoška
+♠️;pīķis;kārtis|spēle
+♥️;ercens;kārtis|sirds|spēle
+♦️;kāravs;kārtis|spēle
+♣️;kreicis;kārtis|spēle
+♟️;bandinieks;kopija|lietojams|šahs
+🃏;džokers;kārtis
+🀄;Mahjong kauliņš, sarkanais pūķis;ķīniešu šahs|mahjong|Mahjong kauliņš|sarkanais pūķis|sarkans|spēle
+🎴;ziedu kārtis;japāņu|kārtis|spēle
+🎭;skatuves māksla;māksla|maska|priekšnesums|šekspīrs|teātris
+🖼️;ierāmēta glezna;glezna|māksla|muzejs|rāmis
+🎨;gleznotāja palete;glezna|gleznot|māksla|palete
+🧵;pavediens;adata|spolīte|šūšana
+🪡;šujamadata;adata|izšūšana|pavediens|piegrieztne|šūšana|šūt|šuves
+🧶;dzija;adīt|kamoliņš|tamborēt|tambrorējums
+🪢;mezgls;mudžeklis|siet|striķis|virve
+👓;brilles;acis
+🕶️;saulesbrilles;acis|brilles
+🥽;aizsargbrilles;acu aizsardzība|metināšana|peldēšana|ūdenslīdējs
+🥼;laboratorijas halāts;apģērbs|ārsts|balts halāts|eksperiments|zinātnieks
+🦺;drošības veste;ārkārtas|drošība|veste
+👔;kaklasaite;apģērbs|drēbes|krekls|nopietns
+👕;T krekls;apģērbs|drēbes
+👖;džinsi;apģērbs|bikses|drēbes
+🧣;šalle;auksts|aukstums|kakls
+🧤;cimdi;aksesuārs|apģērbs|roka
+🧥;mētelis;auksts|aukstums|ietīties|jaka
+🧦;zeķes;zeķbikses
+👗;kleita;apģērbs|drēbes|iepirkšanās
+👘;kimono;apģērbs|ērts
+🥻;sari;apģērbs|kleita
+🩱;kopējais peldkostīms;peldkostīms
+🩲;peldbikses;apakšveļa|apģērbs|peldēšanās tērps|peldkostīms|viengabala
+🩳;šorti;apakšveļa|apģērbs|bikses|peldkostīms
+👙;bikini;apģērbs|peldēt|peldkostīms|pludmale
+👚;sieviešu drēbes;apģērbs|apkakle|blūze|krekls|sieviešu
+🪭;salokāms rokas vēdeklis;atvēsināties|dejot|karsts|kautrīgs|vēcināt|vēdeklis
+👛;naudasmaks;iepirkšanās|maks|monētas|nauda
+👜;rokassoma;apģērbs|drēbes|iepirkšanās|soma|somiņa
+👝;kosmētikas maciņš;apģērbs|maisiņš|soma|somiņa
+🛍️;iepirkumu maisiņi;iepirkumi|iepirkumu somas|maisiņš|soma
+🎒;mugursoma;izglītība|skola|skolas mugursoma|soma
+🩴;siksniņsandale;apavi|kurpe|pirkstiņsandales|pludmale|pludmales sandales|sandales|siksniņsandales|vasara
+👞;vīriešu kurpe;apavi|apģērbs|kurpes|vīriešu
+👟;skriešanas apavi;apavi|skriešanas kurpe|sports
+🥾;pārgājienu zābaks;apavi|brūni apavi|kempings|mugursoma|pārgājiens|zābaks
+🥿;baleta kurpe;apavi|balerīna|čība|ērts|iešļūcene|kurpe bez papēža
+👠;augstpapēžu kurpe;apavi|apģērbs|papēdis|sieviešu
+👡;sieviešu sandale;apavi|sandale|sieviešu
+🩰;baleta kurpes;balets|deja|puantes
+👢;sieviešu zābaks;apavi|garais zābaks|iepirkšanās|sieviešu|zābaks
+🪮;matu ķemme;Afro|ķemme|mati|saspraust
+👑;kronis;karaliene|karalis
+👒;sieviešu cepure;cepure|platmale
+🎩;cilindrs;apģērbs|cepure|iluzionists|linkolns|maģija|oficiāls
+🎓;izlaiduma cepure;absolventa cepure|absolvents|cepure|izlaidums|svinības
+🧢;cepure ar nagu;beisbola cepure
+🪖;militārā ķivere;armija|karavīrs|ķivere|militārā|zaldāts
+⛑️;glābēja ķivere;ķivere|krusts|palīdzība
+📿;lūgšanu krelles;kaklarota|krelles|lūgšana|reliģija
+💄;lūpukrāsa;kosmētika|lūpas|randiņš
+💍;gredzens;dārgakmens|dimants|kāzas|romantika|saderināšanās
+💎;dārgakmens;dārglieta|dimants|saderināšanās
+🔇;izslēgts skaļrunis;bez skaņas|izslēgts|kluss|klusums|skaļrunis|skaļums
+🔈;skaļrunis;kluss|mazs skaļruņa skaļums
+🔉;ieslēgts skaļrunis;vidējs|vidējs skaļruņa skaļums
+🔊;skaļš skaļrunis;skaļrunis|skaļš|skaļums|skaņa
+📢;pastiprinātājs;skaļrunis|skaļš
+📣;megafons;ovācijas|skaņa
+📯;pastnieka taure;pastnieks|pasts|taure
+🔔;zvans;baznīca|skaņa|starpbrīdis
+🔕;pārsvītrots zvaniņš;aizliegts|bez skaņas|klusums|zvaniņš
+🎼;nošu līnijas;mūzika|notis
+🎵;nots;mūzika|skaņa
+🎶;notis;mūzika|mūzikas notis|nots|skaņa
+🎙️;studijas mikrofons;mikrofons|studija
+🎚️;skaļuma slīdnis;mūzika|skaļums|slīdnis
+🎛️;slēdži;mūzika|pogas|vadība
+🎤;mikrofons;karaoke
+🎧;austiņas;ieauši|skaņa
+📻;radio;izklaide|video
+🎷;saksofons;instruments|mūzika
+🎺;trompete;instruments|mūzika|taure
+🪊;trombons;džezs|instruments|mūzika|pāreja|pūšamais instruments|skumjas
+🪗;akordeons;instruments|koncertīna|mūzika|mūzikas instruments|rokas armoņikas|rokas ermoņikas
+🎸;ģitāra;instruments|mūzika
+🎹;klavieru taustiņi;instruments|klaviatūra|klavieres|mūzika|taustiņi
+🎻;vijole;instruments|mūzika|Stradivāri
+🪕;bandžo;mūzika|stīgu
+🥁;bungas;bungu vālītes|mūzika
+🪘;garās bungas;bungas|konga|ritms|vālīte
+🪇;marakass;čača|grabulis|instruments|kratīt|mūzika|perkusijas
+🪈;flauta;ierakstītājs|instruments|koka pūšaminstrumenti|mūzika|orķestris|stabule
+🪉;arfa;instruments|kupidons|mīlestība|mūzika|orķestris
+📱;mobilais tālrunis;mobilais|saziņa|tālrunis|telefons
+📲;mobilais tālrunis ar bultiņu;bultiņa|mobilais|saņemt|tālrunis|telefons|zvans
+☎️;tālrunis;saziņa|telefons
+📞;tālruņa klausule;klausule|saziņa|tālrunis|telefons
+📟;peidžers;elektronika|saziņa
+📠;fakss;faksa aparāts|saziņa
+🔋;baterija;akumulators
+🪫;zems akumulatora līmenis;akumulators|baterija|elektroniska|izlādējies|zema enerģija
+🔌;kontaktdakša;elektrība|spraudnis
+💻;klēpjdators;birojs|dators|personālais
+🖥️;galddators;dators|monitors
+🖨️;printeris;dators
+⌨️;tastatūra;dators
+🖱️;datorpele;dators|pele
+🖲️;kursorbumba;dators
+💽;minidisks;dators|disks|optiskais
+💾;diskete;dators|disks
+💿;optiskais disks;CD|dators|disks|kompaktdisks
+📀;dvd;blu-ray|CD|dators|disks|kompaktdisks
+🧮;skaitīkļi;skaitīšana
+🎥;kinokamera;filma|holivuda|kamera|kino
+🎞️;filmas lente;filma|kadri|kino
+📽️;filmu projektors;filma|kino|projektors|video
+🎬;klapīte;filma|gatavība|sākam
+📺;televizors;TV|video
+📷;fotokamera;fotoaparāts|instagram|kamera
+📸;fotokamera ar zibspuldzi;fotoaparāts|fotokamera|kamera|zibspuldze
+📹;videokamera;kamera
+📼;videokasete;kasete|VHS
+🔍;pa kreisi vērsta lupa;lupa|meklēšana|palielināt|zinātne
+🔎;pa labi vērsta lupa;lupa|meklēšana|palielināt|rīks
+🕯️;svece;uguns
+💡;spuldze;elektrība|gaisma|ideja|komikss
+🔦;kabatas lukturītis;elektrība|gaisma
+🏮;sarkana papīra laterna;bārs|japāņu|laterna|papīrs|sarkans
+🪔;eļļas lampa;eļļa|lampa
+📔;bloknots ar dekoratīvu vāku;bloknots|dekoratīvs|grāmata|izglītība|piezīmes|vāks
+📕;aizvērta grāmata;aizvērta|grāmata|izglītība
+📖;atvērta grāmata;atvērta|bibliotēka|fantāzija|grāmata|izglītība|lasīšana|romāns|zināšanas
+📗;zaļa grāmata;bibliotēka|grāmata|izglītība|zaļa
+📘;zila grāmata;bibliotēka|grāmata|izglītība|lasīt|zila
+📙;oranža grāmata;bibliotēka|grāmata|izglītība|oranža
+📚;grāmatas;bibliotēka|grāmata|izglītība|mācības|romāni
+📓;piezīmju grāmata;izglītība|mācības|skola
+📒;grāmata ar spirāli;grāmata|klade|piezīmes|spirāle
+📃;lapa ar atliektu malu;atliekta mala|dokuments|lapa
+📜;papīra tīstoklis;papīrs|tīstoklis
+📄;papīra lapa;dokuments|papīrs
+📰;avīze;laikraksts|saziņa|ziņas
+🗞️;satīta avīze;avīze|laikraksts|satīts|ziņas
+📑;līmkarodziņi;grāmatzīme|zīme
+🔖;grāmatzīme;zīme
+🏷️;atzīme;birka|etiķete
+🪙;monēta;bagātība|eiro|metāls|nauda|sudrabs|zelts
+💰;naudas maiss;dolārs|maiss|miljons|nauda
+🪎;dārgumu lāde;bagātība|balva|dārgakmens|laupījums|nauda|rotaslietas|sudrabs|vērtslietas|zelts
+💴;jenas banknote;banknote|jena|nauda|valūta
+💵;dolāra banknote;banknote|dolārs|nauda|valūta
+💶;eiro banknote;100|banknote|eiro|nauda|valūta
+💷;sterliņu mārciņas banknote;banknote|mārciņa|nauda|sterliņu mārciņa|valūta
+💸;banknote ar spārniem;banknote|lidot|nauda|spārni
+💳;kredītkarte;banka|karte|maksāt|nauda
+🧾;kvīts;apstiprinājums|grāmatvedība|pierādījums|uzskaite
+💹;augšupejoša diagrammas līkne ar jenas simbolu;augšup|diagramma|jena|līkne|tirgus
+✉️;aploksne;e-pasts|vēstule
+📧;e-pasts;aploksne|pasts|vēstule
+📨;ienākoša aploksne;aploksne|e-pasts|saņemt|vēstule
+📩;aploksne ar bultiņu;aploksne|bultiņa|e-pasts|sūtīt|vēstule
+📤;izejošo dokumentu paliktnis;dokuments|izejošie|kaste|pasts|sūtīt
+📥;ienākošo dokumentu paliktnis;dokuments|ienākošie|kaste|pasts|saņemt
+📦;paciņa;kaste|paka|pārvadājumi|sūtījums
+📫;aizvērta pastkaste ar paceltu karodziņu;aizvērta|pastkaste|pasts|saziņa
+📪;aizvērta pastkaste ar nolaistu karodziņu;aizvērta|pastkaste|pasts
+📬;atvērta pastkaste ar paceltu karodziņu;atvērta|pastkaste|pasts
+📭;atvērta pastkaste ar nolaistu karodziņu;atvērta|pastkaste|pasts
+📮;pastkaste;pasts
+🗳️;vēlēšanu urna ar vēlēšanu zīmi;urna|vēlēšanas
+✏️;zīmulis;rakstāmpiederums|rakstīt|zīmēt
+✒️;melna rakstāmspalva;rakstāmspalva|spalva
+🖋️;tintes pildspalva;pildspalva|tinte
+🖊️;pildspalva;lodīšu pildspalva
+🖌️;ota;gleznot
+🖍️;krītiņš;
+📝;piezīme;saziņa|zīmulis
+💼;portfelis;birojs|soma
+📁;dokumentu mape;dokuments|mape
+📂;atvērta dokumentu mape;atvērts|dokuments|mape
+🗂️;dokumentu sadalītājs;dokuments|kartīte|sadalītājs
+📅;kalendārs;datums
+📆;noplēšamais kalendārs;datums|kalendārs
+🗒️;bloknots ar spirāli;bloknots|piezīmes|spirāle
+🗓️;kalendārs ar spirāli;kalendārs|spirāle
+📇;kartīšu rādītājs;kartīte|rādītājs
+📈;augšupejoša diagrammas līkne;augšup|diagramma|izaugsme|līkne
+📉;lejupejoša diagrammas līkne;diagramma|lejup|līkne|regress
+📊;joslu diagramma;dati|diagramma|grafiks|josla
+📋;dokumentu paliktnis;dokuments|paliktnis|saraksts
+📌;piespraude;spraudīte
+📍;apaļa spraudīte;apaļš|atrašanās vieta|karte|spraudīte
+📎;papīra saspraude;saspraude
+🖇️;savienotas saspraudes;kanceleja|saspraude
+📏;taisns lineāls;lineāls|matemātika|skola
+📐;trīsstūra lineāls;leņķis|lineāls|matemātika|trīsstūris
+✂️;šķēres;griešana|griezt|papīrs|rīks
+🗃️;dokumentu kaste;dokuments|kaste
+🗄️;dokumentu skapis;dokuments|skapis
+🗑️;atkritumu grozs;miskaste|papīrgrozs|papīrkurvis
+🔒;slēdzene;aizslēgts|privāts
+🔓;atvērta slēdzene;atslēgta|piekaramā atslēga|slēdzene
+🔏;slēdzene ar rakstāmspalvu;konfidencialitāte|privāti|rakstāmspalva|slēdzene|slepeni
+🔐;aizvērta slēdzene ar atslēgu;atslēga|drošs|slēdzene|slēgts
+🔑;atslēga;aizslēgt|atslēgt|parole|slēgt
+🗝️;veca atslēga;atrisinājums|atslēga|pavediens|slēgt
+🔨;āmurs;darbarīks|remonts
+🪓;cirvis;cirst|koks|skaida|skaldīt
+⛏️;cirtnis;cirst|rīks
+⚒️;āmurs un cirtnis;āmurs|cirtnis|darbarīki|instrumenti
+🛠️;āmurs un uzgriežņu atslēga;āmurs|cirtnis|darbarīks|uzgriežņu atslēga
+🗡️;duncis;ierocis|nazis
+⚔️;sakrustoti zobeni;ierocis|sakrustots|zobens
+💣;spridzeklis;bīstams|bumba|sprādziens|sprāgt|spridzināt
+🪃;bumerangs;atlēciens|atsitiens|Austrālija|ierocis
+🏹;loks un bulta;bulta|horoskops|ierocis|loks|strēlnieks
+🛡️;vairogs;ierocis
+🪚;vienrokas zāģis;darbarīks|galdnieks|kokmateriāli|zāģēt|zāģis
+🔧;uzgriežņu atslēga;darbarīks|remonts
+🪛;skrūvgriezis;darbarīks|skrūvēt
+🔩;skrūve un uzgrieznis;remonts|skrūve|tapa|uzgrieznis
+⚙️;zobrats;darbarīks
+🗜️;skrūvspīles;darbarīks|instruments|saspiest
+⚖️;svari;līdzsvars|svars|taisnīgums|zodiaks
+🦯;baltais atbalsta spieķis;akls|neredzīgs|pieejamība
+🔗;ķēdes posms;ķēde
+⛓️‍💥;saplēsta ķēde;brīvība|ķēde|plīstošs|rokudzelži|saplēst|sarauta ķēde
+⛓️;ķēdes;ķēde
+🪝;āķis;makšķerēšana|pārdošanas arguments|pievilināt|uzķeršanās
+🧰;darbarīku kaste;instrumenti|kaste|mehānisks|rīks
+🧲;magnēts;magnētisks|pakavs|pievilkšana|pievilkšanās
+🪜;kāpnes;kāpt|līdztekas|pakāpiens|šķērskoks
+🪏;lāpsta;caurums|liekšķere|rakt
+⚗️;destilēšanas aparāts;ķīmija|mēģene
+🧪;mēģene;eksperiments|ķīmija|ķīmiķis|laboratorija|zinātne
+🧫;Petri trauks;baktērija|bioloģija|biologs|kultūra|laboratorija|pipete
+🧬;DNS;biologs|dzīve|evolūcija|ģenētika|gēns
+🔬;mikroskops;eksperiments|laboratorija|rīks|zinātne
+🔭;teleskops;astronomija|rīks|zinātne
+📡;satelīta šķīvis;antena|satelīts|šķīvis
+💉;šļirce;adata|ārsts|medicīna|pote|slims
+🩸;asins pile;asins ziedošana|ievainojums|medicīna|menstruācija
+💊;zāļu kapsula;ārsts|medicīna|slims|vitamīns|zāles
+🩹;plāksteris;līpošs plāksteris
+🩼;kruķis;ievainots|invaliditāte|mobilitātes atbalsts|nūja|spieķis
+🩺;stetoskops;ārsts|medicīna|sirds
+🩻;rentgens;ārsts|kauli|krūškurvis|medicīnas|skelets
+🚪;durvis;ieeja|izeja|parādes durvis|skapis
+🛗;lifts;pacēlājs|pieejamība
+🪞;spogulis;atspīdums|kosmētika|reflektors
+🪟;logs;atvērums|caurspīdīgs|rāmis|skats|svaigs gaiss
+🛏️;gulta;gulēt|miegs|viesnīca
+🛋️;dīvāns un lampa;dīvāns|lampa|viesnīca|zils dīvāns
+🪑;krēsls;sēdeklis|sēdēt
+🚽;tualetes pods;pods|tualete
+🪠;vantūzs;aizsprostojums|kanalizācijas buča|santehniķis|sūkšana|tualete
+🚿;duša;ūdens
+🛁;vanna;ūdens
+🪤;peļu slazds;ēsma|lamatas|slazds
+🪒;bārdas nazis;ass|skūt|skuveklis
+🧴;losjona pudele;losjons|mitrinātājs|šampūns|sauļošanās krēms
+🧷;saspraude;autiņi|drošības adata|pankroks
+🧹;slota;ragana|slaucīšana|tīrīšana
+🧺;grozs;lauksaimniecība|pikniks|veļa|veļas mazgātuve
+🧻;papīra rullis;papīra dvieļi|tualetes papīrs
+🪣;spainis;toveris|tvertne
+🧼;ziepes;tīrīšana|vannošana|ziepju gabals|ziepju putas|ziepju trauks
+🫧;burbuļi;peldēt zem ūdens|pērles|tīrs|zem ūdens|ziepes
+🪥;zobu suka;higiēna|suka|tīrs|vannasistaba|zobi|zobu
+🧽;sūklis;absorbēšana|porains|tīrīšana|uzsūkšana
+🧯;ugunsdzēsības aparāts;apdzēst|dzēst|uguns
+🛒;iepirkumu ratiņi;iepirkšanās|ratiņi|veikals
+🚬;aizdegta cigarete;cigarete|smēķēt
+⚰️;zārks;bēres|miris|nāve|vampīrs
+🪦;kapakmens;bēres|kapa piemineklis|kapi|kaps|kapsēta|piemiņa
+⚱️;pelnu urna;bēres|nāve|pelni|urna
+🧿;amulets pret ļaunu aci;amulets|krelle|ļaunā acs|nazars|piekariņš|talismans
+🪬;hamsa;aizsardzība|amulets|Fatima|Marija|Mirjama|roka
+🗿;Lieldienu salu statuja;galva|Lieldienu sala|moai|statuja
+🪧;plakāts;demonstrācija|pikets|plāksne|protests|zīme
+🪪;identifikācijas karte;akreditācijas dati|apliecība|dokuments|drošība|ID|licence
+🏧;bankomāta zīme;ATM|bankomāts|nauda
+🚮;atkritumu urnas zīme;atkritumi|urna|zīme
+🚰;dzeramais ūdens;dzert|ūdens
+♿;ratiņkrēsls;invaliditāte|piekļūt|piekļuve
+🚹;vīriešu tualete;tualete|vīriešu|WC
+🚺;sieviešu tualete;sieviešu|tualete|WC
+🚻;tualete;WC
+🚼;zīdaiņa simbols;pārtīt|zīdainis
+🚾;ateja;tualete|WC
+🛂;pasu kontrole;kontrole|pase|robeža
+🛃;muita;iepakošana|pakošana
+🛄;bagāžas saņemšana;bagāža|ceļojums|lidosta|saņemšana
+🛅;bagāžas glabātava;bagāža|glabāt
+⚠️;brīdinājums;uzmanību
+🚸;bērni šķērso ielu;bērni|gājēji|pāreja|satiksme|zīme
+⛔;iebraukt aizliegts;aizliegts|ieeja|nē|nedrīkst|satiksme
+🚫;aizliegts;ieeja|nē|nedrīkst
+🚳;velosipēdiem braukt aizliegts;aizliegts|braukt aizliegts|nē|velosipēds
+🚭;smēķēt aizliegts;aizliegts|nē|nedrīkst|smēķēt
+🚯;atkritumus mest aizliegts;aizliegts|atkritumi|nē|nedrīkst
+🚱;nav dzeramais ūdens;aizliegts|dzert|nē|nedrīkst|ūdens
+🚷;gājējiem iet aizliegts;aizliegts|gājēji|kājāmgājēji|nē|nedrīkst
+📵;mobilie tālruņi aizliegti;aizliegts|mobilais|nē|nedrīkst|tālrunis|telefons
+🔞;tikai no 18 gadu vecuma;18|aizliegts|astoņpadsmit|nē|nedrīkst|nepilngadīgs
+☢️;radioaktīvs;bīstami
+☣️;bioloģiskais apdraudējums;bīstami
+⬆️;augšupbultiņa;augšupvērsta bultiņa|bultiņa|norāde|poga|uz augšu|ziemeļi
+↗️;uz augšējo labo stūri vērsta bultiņa;bultiņa|norāde|poga|ziemeļaustrumi
+➡️;labā bultiņa;austrumi|bultiņa|norāde|pa labi|pa labi vērsta bultiņa|poga
+↘️;uz apakšējo labo stūri vērsta bultiņa;bultiņa|dienvidaustrumi|norāde|poga
+⬇️;lejupbultiņa;bultiņa|dienvidi|lejup|lejupvērsta bultiņa|norāde|poga
+↙️;uz apakšējo kreiso stūri vērsta bultiņa;bultiņa|dienvidrietumi|norāde|poga
+⬅️;kreisā bultiņa;bultiņa|norāde|pa kreisi|pa kreisi vērsta bultiņa|poga|rietumi
+↖️;uz augšējo kreiso stūri vērsta bultiņa;bultiņa|norāde|poga|ziemeļrietumi
+↕️;augšup un lejup vērsta bultiņa;bultiņa|poga
+↔️;pa kreisi un pa labi vērsta bultiņa;bultiņa
+↩️;pa kreisi vērsta izliekta bultiņa;bultiņa|poga
+↪️;pa labi vērsta izliekta bultiņa;bultiņa|poga
+⤴️;augšup vērsta izliekta bultiņa;bultiņa|poga
+⤵️;lejup vērsta izliekta bultiņa;bultiņa|poga
+🔃;pulksteņrādītāja virzienā vērstas vertikālas bultiņas;atzvaidzināt|bultiņa|pārlādēt|poga|pulksteņrādītāja virzienā
+🔄;pretēji pulksteņrādītāja virzienam vērstas bultiņas;attīt|bultiņa|pretēji pulksteņrādītāja virzienam|vēlreiz
+🔙;bultiņa ar uzrakstu Back;atpakaļ|bultiņa
+🔚;bultiņa ar uzrakstu End;beigas|beigt|bultiņa
+🔛;bultiņa ar uzrakstu On!;bultiņa|ieslēgts
+🔜;bultiņa ar uzrakstu Soon;bultiņa|drīz
+🔝;bultiņa ar uzrakstu Top;augšup|bultiņa
+🛐;lūgšanu vieta;lūgšanas|reliģija
+⚛️;atoma simbols;ateisms|atoms
+🕉️;om simbols;hinduisms|reliģija
+✡️;Dāvida zvaigzne;Dāvids|ebreji|ebreju|jūdi|reliģija|zvaigzne
+☸️;darmas rats;budisms|darma|rats|reliģija
+☯️;iņ un jaņ;daoisms|iņ|jaņ|reliģija
+✝️;kristiešu krusts;kristietība|krusts|reliģija
+☦️;pareizticīgo krusts;kristietība|krusts|pareizticība|reliģija
+☪️;zvaigzne un pusmēness;islāms|musulmaņi|reliģija
+☮️;miera simbols;miers
+🕎;menora;Hanuka|jūdaisms|reliģija|svečturis
+🔯;sešstaru zvaigzne ar punktu vidū;jūdaisms|laime|sešstaru|zvaigzne
+🪯;khanda;reliģija|sikhi|ticība
+♈;zodiaka zīme Auns;auns|horoskops|zodiaks
+♉;zodiaka zīme Vērsis;horoskops|vērsis|zodiaks
+♊;zodiaka zīme Dvīņi;dvīņi|horoskops|zodiaks
+♋;zodiaka zīme Vēzis;horoskops|ūdens|vēzis|zodiaks
+♌;zodiaka zīme Lauva;horoskops|lauva|zodiaks
+♍;zodiaka zīme Jaunava;horoskops|jaunava|zodiaks
+♎;zodiaka zīme Svari;horoskops|līdzsvars|svari|zodiaks
+♏;zodiaka zīme Skorpions;horoskops|skorpions|zodiaks
+♐;zodiaka zīme Strēlnieks;horoskops|strēlnieks|zodiaks
+♑;zodiaka zīme Mežāzis;horoskops|mežāzis|zodiaks
+♒;zodiaka zīme Ūdensvīrs;horoskops|ūdens|ūdensvīrs|zodiaks
+♓;zodiaka zīme Zivis;horoskops|zivis|zodiaks
+⛎;zodiaka zīme Čūsknesis;čūska|čūsknesis|horoskops|zodiaks
+🔀;poga Jaukta secība;bultiņa|jaukta secība|poga|sakrustota
+🔁;poga Atkārtot;atkārtot|bultiņa|poga|pulksteņrādītāja virzienā
+🔂;poga Atkārtot vienu dziesmu;atkārtot vienu|bultiņa|pulksteņrādītāja virzienā|vienreiz
+▶️;poga Atskaņot;atskaņot|pa labi|trijstūris|trīsstūris
+⏩;poga Pārtīt uz priekšu;pa labi|paātrināt|pārtīt|poga|uz priekšu
+⏭️;poga Nākamā dziesma;nākamais|pa labi|pārtīt|poga|tālāk
+⏯️;poga Atskaņot vai apturēt;apturēt|atskaņot|pa labi|pārtraukt|pauze|poga
+◀️;poga Atpakaļ;atpakaļ|pa kreisi|trijstūris|trīsstūris
+⏪;poga Attīt atpakaļ;atpakaļ|attīt|pa kreisi|poga
+⏮️;poga Iepriekšējā dziesma;atpakaļ|attīt|iepriekšējais|pa kreisi|poga|trijstūris|trīsstūris
+🔼;poga Augšup;augšup|poga
+⏫;poga Ātri augšup;augšup|poga
+🔽;poga Lejup;lejup|poga
+⏬;poga Ātri lejup;lejup|poga
+⏸️;poga Pauze;apturēt|pārtraukt|pauze|poga
+⏹️;poga Pārtraukt;apturēt|kvadrāts|pārtraukt|poga|stop
+⏺️;poga Ierakstīt;aplis|ierakstīt|poga|riņķis
+⏏️;poga Izstumt;izstumt
+🎦;kino;filma|kamera
+🔅;samazināt spilgtumu;samazināt|spilgtums
+🔆;palielināt spilgtumu;gaisma|palielināt|spilgtums
+📶;signāla stipruma joslas;antena|mobilais|signāls|stiprums|tālrunis|telefons
+🛜;bezvadu internets;dators|internets|tīkls|wifi
+📳;vibrozvana režīms;mobilais|tālrunis|telefons|vibrozvans
+📴;izslēgts mobilais tālrunis;izslēgt|mobilais|tālrunis|telefons
+♀️;sieviešu simbols;sieviete
+♂️;vīriešu simbols;vīrietis
+⚧️;transdzimuma simbols;transdzimums
+✖️;reizināt;×|atcelt|krustiņš|matemātika|reizināšanas zīme|x
+➕;pluszīme;+|matemātika|plus|saskaitīt
+➖;mīnuss;-|–|atņemt|matemātika|mīnuszīme
+➗;dalīt;/|÷|dalīšanas zīme|matemātika
+🟰;smagā vienādības zīme;matemātika|vienādības zīme|vienāds ar|vienlīdzība
+♾️;bezgalība;bezgalīgs|mūžība|vispārīgs
+‼️;divas izsaukuma zīmes;!|!!|izsaukums|pieturzīme
+⁉️;izsaukuma un jautājuma zīme;!|!?|?|izsaukums|jautājums|pieturzīme
+❓;sarkana jautājuma zīme;?|jautājuma zīme|jautājums|pieturzīme
+❔;balta jautājuma zīme;?|jautājums|pieturzīme
+❕;balta izsaukuma zīme;!|izsaukums|pieturzīme
+❗;sarkana izsaukuma zīme;!|izsaukuma zīme|izsaukums|pieturzīme
+〰️;viļņota domuzīme;domuzīme|pieturzīme|viļņota
+💱;valūtas maiņa;banka|maiņa|nauda|valūta
+💲;dolāra zīme;dolārs|miljons|nauda|skaidra nauda
+⚕️;medicīnas simbols;eskulaps|medicīna|personāls
+♻️;atkritumu pārstrādes simbols;bultiņu trīsstūris|pārstrāde|zaļas bultiņas
+⚜️;lilijas simbols;bruņinieki|lilija
+🔱;trijzaris;enkurs|kuģis|poseidons|trijžuburis
+📛;vārda nozīmīte;nozīmīte|vārds
+🔰;japāņu simbols, kas apzīmē iesācēju;iesācējs|japāņu|japāņu apzīmējums iesācējam|kas apzīmē iesācēju|simbols|uzšuve
+⭕;liels aplis;aplis|liels|o|riņķis|sarkans
+✅;balta kontrolzīme;✓|atzīme|ķeksītis|kontrolzīme
+☑️;atzīmēta izvēles rūtiņa;✓|atzīme|ķeksītis|rūtiņa
+✔️;kontrolzīme;✓|atzīme|ķeksītis|pabeigts
+❌;krustiņš;×|atcelt|reizināt|x
+❎;krustiņa poga;atcelt|krustiņš|poga|reizināt|rūtiņa|x
+➰;cilpiņa;cilpa|sproga
+➿;dubulta cilpa;cilpa
+〽️;partijas sākuma zīme;mūzika|zīme
+✳️;astoņstaru zvaigznīte;*|zvaigznīte
+✴️;četrstaru zvaigzne;*|astoņstaru zvaigzne|zvaigzne
+❇️;dzirkstis;*
+©️;autortiesības;(C)|c
+®️;reģistrēta preču zīme;(R)|preču zīme|r|reģistrēts
+™️;preču zīme;TM
+🫟;šļakatas;krāsa|krāsains|noplūde|šļakatām|traipu
+*️⃣;taustiņš: *;taustiņš
+0️⃣;taustiņš: 0;0|nulle|taustiņš
+1️⃣;taustiņš: 1;1|taustiņš|viens
+2️⃣;taustiņš: 2;2|divi|taustiņš
+3️⃣;taustiņš: 3;3|taustiņš|trīs
+4️⃣;taustiņš: 4;4|četri|taustiņš
+5️⃣;taustiņš: 5;5|pieci|taustiņš
+6️⃣;taustiņš: 6;6|seši|taustiņš
+7️⃣;taustiņš: 7;7|septiņi|taustiņš
+8️⃣;taustiņš: 8;8|astoņi|taustiņš
+9️⃣;taustiņš: 9;9|deviņi|taustiņš
+🔟;taustiņš: 10;taustiņš
+🔠;lielie latīņu burti;ABCD|burti|ievade|latīņu|lielie
+🔡;mazie latīņu burti;burti|ievade|latīņu|mazie|poga
+🔢;cipari;1234|ievade|poga
+🔣;simboli;ievade|poga
+🔤;latīņu burti;abc|alfabēts|burti|ievade|latīņu
+🅰️;A poga (asinsgrupa);A|asinsgrupa|poga
+🆎;AB poga (asinsgrupa);AB|asinsgrupa|poga
+🅱️;B poga (asinsgrupa);asinsgrupa|B|poga
+🆑;poga CL;CL|notīrīt
+🆒;uzraksts Cool kvadrātveida ietvarā;cool|poga
+🆓;uzraksts Free kvadrātveida ietvarā;bezmaksas|free|poga
+ℹ️;informācijas simbols;i|informācija|poga
+🆔;uzraksts ID kvadrātveida ietvarā;ID|identitāte|poga
+Ⓜ️;burts M apļveida ietvarā;aplis|M
+🆕;uzraksts New kvadrātveida ietvarā;jauns|new|poga
+🆖;uzraksts NG kvadrātveida ietvarā;NG|poga
+🅾️;O poga (asinsgrupa);asinsgrupa|O|poga
+🆗;uzraksts OK kvadrātveida ietvarā;labi|ok|poga OK
+🅿️;poga P;P|poga|stāvvieta
+🆘;uzraksts SOS kvadrātveida ietvarā;palīdzība|poga SOS|SOS
+🆙;poga Up!;poga|up
+🆚;uzraksts VS kvadrātveida ietvarā;poga|versus|vs
+🈁;uzraksts Šeit katakanā kvadrātveida ietvarā;japāņu|katakana|šeit
+🈂️;uzraksts Pakalpojums katakanā kvadrātveida ietvarā;japāņu|katakana
+🈷️;ideogramma Mēness kvadrātveida ietvarā;ideogramma|ikmēneša apmērs|japāņu
+🈶;ideogramma Būt kvadrātveida ietvarā;ideogramma|japāņu|nav bezmaksas
+🈯;ideogramma Norāde kvadrātveida ietvarā;ideogramma|japāņu|rezervēts
+🉐;ideogramma Izdevīgi apļveida ietvarā;ideogramma|izdevīgi|japāņu
+🈹;ideogramma Atlaide kvadrātveida ietvarā;atlaide|ideogramma|japāņu
+🈚;ideogramma Bezmaksas kvadrātveida ietvarā;bezmaksas|ideogramma|japāņu
+🈲;ideogramma Aizliegt kvadrātveida ietvarā;aizliegts|ideogramma|japāņu
+🉑;ideogramma Piekrist apļveida ietvarā;ideogramma|japāņu|ķīniešu|pieņemams|poga
+🈸;ideogramma Pieprasīt kvadrātveida ietvarā;ideogramma|japāņu|ķīniešu|pieprasījums
+🈴;ideogramma Sekmīgi kvadrātveida ietvarā;ideogramma|japāņu|ķīniešu|nolikts
+🈳;ideogramma Brīvs kvadrātveida ietvarā;brīvs|ideogramma|japāņu|ķīniešu
+㊗️;ideogramma Apsveikums kvadrātveida ietvarā;apsveicu|ideogramma|japāņu|ķīniešu
+㊙️;ideogramma Slepens kvadrātveida ietvarā;ideogramma|japāņu|ķīniešu|slepens
+🈺;ideogramma Strādā kvadrātveida ietvarā;atvērts|ideogramma|japāņu|ķīniešu
+🈵;ideogramma Pilns kvadrātveida ietvarā;aizņemts|japāņu|ķīniešu
+🔴;sarkans aplis;aplis|ģeometrija|sarkans
+🟠;oranžs aplis;aplis|oranžs
+🟡;dzeltens aplis;aplis|dzeltens
+🟢;zaļš aplis;aplis|zaļš
+🔵;zils aplis;aplis|ģeometrija|zils
+🟣;violets aplis;aplis|lillā|violets
+🟤;brūns aplis;aplis|brūns
+⚫;melns aplis;aplis|ģeometrija|melns
+⚪;balts aplis;aplis|balts|ģeometrija
+🟥;sarkans kvadrāts;kvadrāts|sarkans
+🟧;oranžs kvadrāts;kvadrāts|oranžs
+🟨;dzeltens kvadrāts;dzeltens|kvadrāts
+🟩;zaļš kvadrāts;kvadrāts|zaļš
+🟦;zils kvadrāts;kvadrāts|zils
+🟪;violets kvadrāts;kvadrāts|lillā|violets
+🟫;brūns kvadrāts;brūns|kvadrāts
+⬛;liels melns kvadrāts;ģeometrija|kvadrāts|melns
+⬜;liels balts kvadrāts;balts|ģeometrija|kvadrāts
+◼️;vidējs melns kvadrāts;ģeometrija|kvadrāts
+◻️;vidējs balts kvadrāts;ģeometrija|kvadrāts
+◾;vidēji mazs melns kvadrāts;ģeometrija|kvadrāts
+◽;vidēji mazs balts kvadrāts;ģeometrija|kvadrāts
+▪️;mazs melns kvadrāts;ģeometrija|kvadrāts
+▫️;mazs balts kvadrāts;ģeometrija|kvadrāts
+🔶;liels oranžs rombs;ģeometrija|oranžs|rombs
+🔷;liels zils rombs;ģeometrija|rombs|zils
+🔸;mazs oranžs rombs;ģeometrija|oranžs|rombs
+🔹;mazs zils rombs;ģeometrija|rombs
+🔺;augšupvērsts sarkans trīsstūris;ģeometrija|sarkans|trīsstūris
+🔻;lejupvērsts sarkans trīsstūris;ģeometrija|lejupvērsts|trīsstūris
+💠;rombs ar punktu;ģeometrija|rombs
+🔘;radiopoga;ģeometrija|opcijas|poga
+🔳;balta kvadrātveida poga;ģeometrija|kvadrāts|melnbalta poga
+🔲;melna kvadrātveida poga;ģeometrija|kvadrāts|poga
+🏁;finiša karogs;finišs|melnbalts|rūtots|sacīkstes|sports
+🚩;trīsstūrveida karogs;golfa karogs|karogs
+🎌;sakrustoti karogi;japāņu|karogs|sakrustot|svētki
+🏴;melns karogs;karogs|plīvot
+🏳️;balts karogs;karogs|plīvot
+🏳️‍🌈;varavīksnes karogs;biseksuāls|geji|karogs|lesbietes|lgbt|praids|transdzimums|varavīksne
+🏳️‍⚧️;zils, rozā un balts karogs;balts|gaiši zils|karogs|rozā|rozā un balts karogs|transpersonu|zils
+🏴‍☠️;pirātu karogs;bagātības|laupījums|pirāts
+🇦🇨;karogs: Debesbraukšanas sala;karogs
+🇦🇩;karogs: Andora;karogs
+🇦🇪;karogs: Apvienotie Arābu Emirāti;karogs
+🇦🇫;karogs: Afganistāna;karogs
+🇦🇬;karogs: Antigva un Barbuda;karogs
+🇦🇮;karogs: Angilja;karogs
+🇦🇱;karogs: Albānija;karogs
+🇦🇲;karogs: Armēnija;karogs
+🇦🇴;karogs: Angola;karogs
+🇦🇶;karogs: Antarktika;karogs
+🇦🇷;karogs: Argentīna;karogs
+🇦🇸;karogs: ASV Samoa;karogs
+🇦🇹;karogs: Austrija;karogs
+🇦🇺;karogs: Austrālija;karogs
+🇦🇼;karogs: Aruba;karogs
+🇦🇽;karogs: Olandes salas;karogs
+🇦🇿;karogs: Azerbaidžāna;karogs
+🇧🇦;karogs: Bosnija un Hercegovina;karogs
+🇧🇧;karogs: Barbadosa;karogs
+🇧🇩;karogs: Bangladeša;karogs
+🇧🇪;karogs: Beļģija;karogs
+🇧🇫;karogs: Burkinafaso;karogs
+🇧🇬;karogs: Bulgārija;karogs
+🇧🇭;karogs: Bahreina;karogs
+🇧🇮;karogs: Burundija;karogs
+🇧🇯;karogs: Benina;karogs
+🇧🇱;karogs: Senbartelmī;karogs
+🇧🇲;karogs: Bermudu salas;karogs
+🇧🇳;karogs: Bruneja;karogs
+🇧🇴;karogs: Bolīvija;karogs
+🇧🇶;karogs: Nīderlandes Karību salas;karogs
+🇧🇷;karogs: Brazīlija;karogs
+🇧🇸;karogs: Bahamu salas;karogs
+🇧🇹;karogs: Butāna;karogs
+🇧🇻;karogs: Buvē sala;karogs
+🇧🇼;karogs: Botsvāna;karogs
+🇧🇾;karogs: Baltkrievija;karogs
+🇧🇿;karogs: Beliza;karogs
+🇨🇦;karogs: Kanāda;karogs
+🇨🇨;karogs: Kokosu (Kīlinga) salas;karogs
+🇨🇩;karogs: Kongo (Kinšasa);karogs
+🇨🇫;karogs: Centrālāfrikas Republika;karogs
+🇨🇬;karogs: Kongo (Brazavila);karogs
+🇨🇭;karogs: Šveice;karogs
+🇨🇮;karogs: Kotdivuāra;karogs
+🇨🇰;karogs: Kuka salas;karogs
+🇨🇱;karogs: Čīle;karogs
+🇨🇲;karogs: Kamerūna;karogs
+🇨🇳;karogs: Ķīna;karogs
+🇨🇴;karogs: Kolumbija;karogs
+🇨🇵;karogs: Klipertona sala;karogs
+🇨🇶;karogs: Sarka;karogs
+🇨🇷;karogs: Kostarika;karogs
+🇨🇺;karogs: Kuba;karogs
+🇨🇻;karogs: Kaboverde;karogs
+🇨🇼;karogs: Kirasao;karogs
+🇨🇽;karogs: Ziemsvētku sala;karogs
+🇨🇾;karogs: Kipra;karogs
+🇨🇿;karogs: Čehija;karogs
+🇩🇪;karogs: Vācija;karogs
+🇩🇬;karogs: Djego Garsijas atols;karogs
+🇩🇯;karogs: Džibutija;karogs
+🇩🇰;karogs: Dānija;karogs
+🇩🇲;karogs: Dominika;karogs
+🇩🇴;karogs: Dominikāna;karogs
+🇩🇿;karogs: Alžīrija;karogs
+🇪🇦;karogs: Seūta un Melilja;karogs
+🇪🇨;karogs: Ekvadora;karogs
+🇪🇪;karogs: Igaunija;karogs
+🇪🇬;karogs: Ēģipte;karogs
+🇪🇭;karogs: Rietumsahāra;karogs
+🇪🇷;karogs: Eritreja;karogs
+🇪🇸;karogs: Spānija;karogs
+🇪🇹;karogs: Etiopija;karogs
+🇪🇺;karogs: Eiropas Savienība;karogs
+🇫🇮;karogs: Somija;karogs
+🇫🇯;karogs: Fidži;karogs
+🇫🇰;karogs: Folklenda salas;karogs
+🇫🇲;karogs: Mikronēzija;karogs
+🇫🇴;karogs: Fēru salas;karogs
+🇫🇷;karogs: Francija;karogs
+🇬🇦;karogs: Gabona;karogs
+🇬🇧;karogs: Apvienotā Karaliste;karogs
+🇬🇩;karogs: Grenāda;karogs
+🇬🇪;karogs: Gruzija;karogs
+🇬🇫;karogs: Francijas Gviāna;karogs
+🇬🇬;karogs: Gērnsija;karogs
+🇬🇭;karogs: Gana;karogs
+🇬🇮;karogs: Gibraltārs;karogs
+🇬🇱;karogs: Grenlande;karogs
+🇬🇲;karogs: Gambija;karogs
+🇬🇳;karogs: Gvineja;karogs
+🇬🇵;karogs: Gvadelupa;karogs
+🇬🇶;karogs: Ekvatoriālā Gvineja;karogs
+🇬🇷;karogs: Grieķija;karogs
+🇬🇸;karogs: Dienviddžordžija un Dienvidsendviču salas;karogs
+🇬🇹;karogs: Gvatemala;karogs
+🇬🇺;karogs: Guama;karogs
+🇬🇼;karogs: Gvineja-Bisava;karogs
+🇬🇾;karogs: Gajāna;karogs
+🇭🇰;karogs: Ķīnas īpašās pārvaldes apgabals Honkonga;karogs
+🇭🇲;karogs: Hērda sala un Makdonalda salas;karogs
+🇭🇳;karogs: Hondurasa;karogs
+🇭🇷;karogs: Horvātija;karogs
+🇭🇹;karogs: Haiti;karogs
+🇭🇺;karogs: Ungārija;karogs
+🇮🇨;karogs: Kanāriju salas;karogs
+🇮🇩;karogs: Indonēzija;karogs
+🇮🇪;karogs: Īrija;karogs
+🇮🇱;karogs: Izraēla;karogs
+🇮🇲;karogs: Menas sala;karogs
+🇮🇳;karogs: Indija;karogs
+🇮🇴;karogs: Indijas okeāna Britu teritorija;karogs
+🇮🇶;karogs: Irāka;karogs
+🇮🇷;karogs: Irāna;karogs
+🇮🇸;karogs: Islande;karogs
+🇮🇹;karogs: Itālija;karogs
+🇯🇪;karogs: Džērsija;karogs
+🇯🇲;karogs: Jamaika;karogs
+🇯🇴;karogs: Jordānija;karogs
+🇯🇵;karogs: Japāna;karogs
+🇰🇪;karogs: Kenija;karogs
+🇰🇬;karogs: Kirgizstāna;karogs
+🇰🇭;karogs: Kambodža;karogs
+🇰🇮;karogs: Kiribati;karogs
+🇰🇲;karogs: Komoru salas;karogs
+🇰🇳;karogs: Sentkitsa un Nevisa;karogs
+🇰🇵;karogs: Ziemeļkoreja;karogs
+🇰🇷;karogs: Dienvidkoreja;karogs
+🇰🇼;karogs: Kuveita;karogs
+🇰🇾;karogs: Kaimanu salas;karogs
+🇰🇿;karogs: Kazahstāna;karogs
+🇱🇦;karogs: Laosa;karogs
+🇱🇧;karogs: Libāna;karogs
+🇱🇨;karogs: Sentlūsija;karogs
+🇱🇮;karogs: Lihtenšteina;karogs
+🇱🇰;karogs: Šrilanka;karogs
+🇱🇷;karogs: Libērija;karogs
+🇱🇸;karogs: Lesoto;karogs
+🇱🇹;karogs: Lietuva;karogs
+🇱🇺;karogs: Luksemburga;karogs
+🇱🇻;karogs: Latvija;karogs
+🇱🇾;karogs: Lībija;karogs
+🇲🇦;karogs: Maroka;karogs
+🇲🇨;karogs: Monako;karogs
+🇲🇩;karogs: Moldova;karogs
+🇲🇪;karogs: Melnkalne;karogs
+🇲🇫;karogs: Senmartēna;karogs
+🇲🇬;karogs: Madagaskara;karogs
+🇲🇭;karogs: Māršala salas;karogs
+🇲🇰;karogs: Ziemeļmaķedonija;karogs
+🇲🇱;karogs: Mali;karogs
+🇲🇲;karogs: Mjanma (Birma);karogs
+🇲🇳;karogs: Mongolija;karogs
+🇲🇴;karogs: ĶTR īpašais administratīvais reģions Makao;karogs
+🇲🇵;karogs: Ziemeļu Marianas salas;karogs
+🇲🇶;karogs: Martinika;karogs
+🇲🇷;karogs: Mauritānija;karogs
+🇲🇸;karogs: Montserrata;karogs
+🇲🇹;karogs: Malta;karogs
+🇲🇺;karogs: Maurīcija;karogs
+🇲🇻;karogs: Maldīvija;karogs
+🇲🇼;karogs: Malāvija;karogs
+🇲🇽;karogs: Meksika;karogs
+🇲🇾;karogs: Malaizija;karogs
+🇲🇿;karogs: Mozambika;karogs
+🇳🇦;karogs: Namībija;karogs
+🇳🇨;karogs: Jaunkaledonija;karogs
+🇳🇪;karogs: Nigēra;karogs
+🇳🇫;karogs: Norfolkas sala;karogs
+🇳🇬;karogs: Nigērija;karogs
+🇳🇮;karogs: Nikaragva;karogs
+🇳🇱;karogs: Nīderlande;karogs
+🇳🇴;karogs: Norvēģija;karogs
+🇳🇵;karogs: Nepāla;karogs
+🇳🇷;karogs: Nauru;karogs
+🇳🇺;karogs: Niue;karogs
+🇳🇿;karogs: Jaunzēlande;karogs
+🇴🇲;karogs: Omāna;karogs
+🇵🇦;karogs: Panama;karogs
+🇵🇪;karogs: Peru;karogs
+🇵🇫;karogs: Francijas Polinēzija;karogs
+🇵🇬;karogs: Papua-Jaungvineja;karogs
+🇵🇭;karogs: Filipīnas;karogs
+🇵🇰;karogs: Pakistāna;karogs
+🇵🇱;karogs: Polija;karogs
+🇵🇲;karogs: Senpjēra un Mikelona;karogs
+🇵🇳;karogs: Pitkērnas salas;karogs
+🇵🇷;karogs: Puertoriko;karogs
+🇵🇸;karogs: Palestīnas teritorijas;karogs
+🇵🇹;karogs: Portugāle;karogs
+🇵🇼;karogs: Palau;karogs
+🇵🇾;karogs: Paragvaja;karogs
+🇶🇦;karogs: Katara;karogs
+🇷🇪;karogs: Reinjona;karogs
+🇷🇴;karogs: Rumānija;karogs
+🇷🇸;karogs: Serbija;karogs
+🇷🇺;karogs: Krievija;karogs
+🇷🇼;karogs: Ruanda;karogs
+🇸🇦;karogs: Saūda Arābija;karogs
+🇸🇧;karogs: Zālamana salas;karogs
+🇸🇨;karogs: Seišelu salas;karogs
+🇸🇩;karogs: Sudāna;karogs
+🇸🇪;karogs: Zviedrija;karogs
+🇸🇬;karogs: Singapūra;karogs
+🇸🇭;karogs: Sv.Helēnas sala;karogs
+🇸🇮;karogs: Slovēnija;karogs
+🇸🇯;karogs: Svalbāra un Jana Majena sala;karogs
+🇸🇰;karogs: Slovākija;karogs
+🇸🇱;karogs: Sjerraleone;karogs
+🇸🇲;karogs: Sanmarīno;karogs
+🇸🇳;karogs: Senegāla;karogs
+🇸🇴;karogs: Somālija;karogs
+🇸🇷;karogs: Surinama;karogs
+🇸🇸;karogs: Dienvidsudāna;karogs
+🇸🇹;karogs: Santome un Prinsipi;karogs
+🇸🇻;karogs: Salvadora;karogs
+🇸🇽;karogs: Sintmārtena;karogs
+🇸🇾;karogs: Sīrija;karogs
+🇸🇿;karogs: Svatini;karogs
+🇹🇦;karogs: Tristana da Kuņjas salu teritorijas;karogs
+🇹🇨;karogs: Tērksas un Kaikosas salas;karogs
+🇹🇩;karogs: Čada;karogs
+🇹🇫;karogs: Francijas Dienvidjūru teritorija;karogs
+🇹🇬;karogs: Togo;karogs
+🇹🇭;karogs: Taizeme;karogs
+🇹🇯;karogs: Tadžikistāna;karogs
+🇹🇰;karogs: Tokelau;karogs
+🇹🇱;karogs: Austrumtimora;karogs
+🇹🇲;karogs: Turkmenistāna;karogs
+🇹🇳;karogs: Tunisija;karogs
+🇹🇴;karogs: Tonga;karogs
+🇹🇷;karogs: Turcija;karogs
+🇹🇹;karogs: Trinidāda un Tobāgo;karogs
+🇹🇻;karogs: Tuvalu;karogs
+🇹🇼;karogs: Taivāna;karogs
+🇹🇿;karogs: Tanzānija;karogs
+🇺🇦;karogs: Ukraina;karogs
+🇺🇬;karogs: Uganda;karogs
+🇺🇲;karogs: ASV Mazās Aizjūras salas;karogs
+🇺🇳;karogs: Apvienoto Nāciju Organizācija;karogs
+🇺🇸;karogs: Amerikas Savienotās Valstis;karogs
+🇺🇾;karogs: Urugvaja;karogs
+🇺🇿;karogs: Uzbekistāna;karogs
+🇻🇦;karogs: Vatikāns;karogs
+🇻🇨;karogs: Sentvinsenta un Grenadīnas;karogs
+🇻🇪;karogs: Venecuēla;karogs
+🇻🇬;karogs: Britu Virdžīnas;karogs
+🇻🇮;karogs: ASV Virdžīnas;karogs
+🇻🇳;karogs: Vjetnama;karogs
+🇻🇺;karogs: Vanuatu;karogs
+🇼🇫;karogs: Volisa un Futunas salas;karogs
+🇼🇸;karogs: Samoa;karogs
+🇽🇰;karogs: Kosova;karogs
+🇾🇪;karogs: Jemena;karogs
+🇾🇹;karogs: Majota;karogs
+🇿🇦;karogs: Dienvidāfrikas Republika;karogs
+🇿🇲;karogs: Zambija;karogs
+🇿🇼;karogs: Zimbabve;karogs
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;karogs: Anglija;karogs
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;karogs: Skotija;karogs
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;karogs: Velsa;karogs

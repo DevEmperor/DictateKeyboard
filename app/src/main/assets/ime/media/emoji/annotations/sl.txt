@@ -1,0 +1,1910 @@
+😀;režeči obraz;nasmeh|obraz|prijazen|režanje|smeh|vesel|zobje
+😃;smejoči obraz z odprtimi usti;nasmeh|obraz|odprto|usta
+😄;smejoči obraz z odprtimi usti in smejočimi očmi;nasmeh|obraz|oči|odprto|usta
+😁;režeči obraz s smejočimi očmi;lepo|nasmeh|obraz|oči|režanje|vesel
+😆;smejoči obraz z odprtimi usti in trdno zaprtimi očmi;haha|lol|nasmeh|obraz|odprt|odprto|smeh|usta|zadovoljen|zadovoljno
+😅;smejoči obraz z odprtimi usti in mrzlim potom;mrzlo|nasmeh|obraz|odprto|pot
+🤣;krohotanje;lol|rofl|smeh|smeh do solz|smejanje|smešno|solze|tla|valjanje po tleh
+😂;obraz s solzami veselja;haha|lol|obraz|rofl|smeh|smeh do solz|smeško|solze|veselje
+🙂;rahlo smejoči obraz;nasmeh|obraz|smehljanje|vesel
+🙃;na glavo obrnjen obraz;narobe obrnjeno|nasmeh|obraz
+🫠;taleči se obraz;haha|izginjanje|nerodno mi je|raztapljanje|sarkazem|taljenje|tekočina|topim se|topim se od vročine|vroče|vročina
+😉;obraz s pomežikom;obraz|pomežik|seksi|spogledovanje
+😊;smejoči obraz s smejočimi očmi;nasmeh|obraz|oči|zardevanje
+😇;smejoči obraz s svetniškim sijem;angel|avra|blagoslovljen|fantazija|nasmeh|nedolžno|obraz|pravljica
+🥰;smejoči obraz s srčki;3 srčki|ljubezen|oboževanje|RTM|simpatija|srčki|zaljubljenost
+😍;smejoči obraz z očmi v obliki srčka;ljubezen|nasmeh|obraz|oči|srce
+🤩;obraz z očmi v obliki zvezdic;nasmeh|navdušenje|uau|zvezdice
+😘;obraz, ki pošlje ljubčka;ki pošlje ljubčka|ljubčki|obraz|pogrešam te|poljub|romantično|srce|srček
+😗;obraz, ki poljublja;ki poljublja|ljubezen|obraz|poljub|poljubljanje
+☺️;smejoči obraz;nasmeh|obraz|obris|rdečica|sproščen|sproščeno|vesel
+😚;obraz z zaprtimi očmi, ki poljublja;ljubezen|objem|obraz|oči|oko|poljub|rdečica|spogledovanje|zaprto|zmenek
+😙;obraz s smejočimi očmi, ki poljublja;ljubezen|nasmeh|noč|obraz|oči|oko|poljub|spogledovanje|zaprto|zmenek
+🥲;smejoči obraz s solzo;ganjenost|hvaležnost|nasmeh|olajšanje|ponos|smeško|solza|veselje
+😋;obraz, ki z užitkom pomalica okusno hrano;hrana|jesti|lačen|nasmeh|njami|obraz|okusno|poln|slastno|zaužiti
+😛;obraz z molečim jezikom;jezik|kul|obraz|odlično
+😜;obraz z molečim jezikom in pomežikom;jezik|mežik|obraz|oči|šala
+🤪;nor obraz;majhen|nore oči|oči|oko|velik
+😝;obraz z molečim jezikom in zaprtimi očmi;grozno|jezik|obraz|obraz z molečim jezikom in trdno zaprtimi očmi|oči|ogabno|okus
+🤑;obraz z denarjem namesto ust;denar|obraz|plačilo|usta
+🤗;obraz, ki objema;nasmeh|objem|obraz|odprt|roki
+🤭;obraz z roko čez usta;hihitanje|skrivnost|šok|ups
+🫢;obraz z razprtimi očmi in roko pred usti;nejevera|osuplost|presenečen|presenečenost|prestrašenost|šokiran|šokiranost|sram|začuden|začudenje|začudenost
+🫣;obraz s pogledujočim očesom;kukanje|kuku|nerodno mi je|pogledovanje|prestrašenost|prevzetost|skrivanje|strmenje
+🤫;obraz s prstom čez usta;pššt|tiho|tišina|utihni
+🤔;razmišljujoči obraz;hmm|obraz|razmišljanje
+🫡;salutirajoč obraz;da|enote|razumem|salutiranje|seveda|sončno|spoštovanje|strinjanje|v redu
+🤐;obraz z usti v obliki zadrge;obraz|usta|zadrga|zapečateno|zaprto
+🤨;obraz z dvignjenimi obrvmi;hmm|neodobravanje|nezaupljivost|presenečenje
+😐;nevtralni obraz;brezizrazen|mrtvo hladno|nevtralno|obraz
+😑;brezizrazni obraz;brezizrazno|neprizadeto|obraz|prazno
+😶;obraz brez ust;molčeč|molčeče|obraz|tiho|usta
+🫥;obraz s črtkasto črto;brezvezno|depresivnost|introvertiranost|izginjanje|nevidnost|potrtost|skrivanje
+😶‍🌫️;obraz v oblakih;glava v oblakih|obraz v megli|odsoten
+😏;obraz s privoščljivim nasmeškom;nezaupljiv|obraz|prebrisan|privoščljiv nasmešek|samovšečen|spogledovanje
+😒;obraz s hladnim nasmeškom;čudno|jezen|kr neki|ljubosumen|nenaklonjeno|nezadovoljen|nezadovoljno|obraz
+🙄;obraz z zavijajočimi očmi;kr neki|obraz|oči|smeško|zavijanje|zavijanje z očmi
+😬;spačen obraz;grimasa|nerodno|obraz|zobozdravnik
+😮‍💨;obraz med izdihovanjem;godrnjanje|izdih|obraz, ki izdihne|olajšanje|pihanje|šepet|smeško|sopih|utrujen|žvižganje
+🤥;lažnivi obraz;laž|lažnivec|ostržek
+🫨;tresoči se obraz;noro|obraz|panika|potres|šok|tresenje|vau|vibriranje
+🙂‍↔️;vodoravno premikanje glave;ne|odkimavanje
+🙂‍↕️;navpično premikanje glave;da|prikimavanje
+😌;olajšan obraz;obraz|olajšano|spokoj
+😔;brezvoljen obraz;brezvoljno|dolgočasno|obraz|pobito|razočaranje
+😪;zaspan obraz;jok|obraz|spanje|utrujen
+🤤;obraz, ki se slini;ki se slini|obraz|slinjenje
+😴;speči obraz;lahko noč|obraz|smeško|spanje|utrujen|zaspan|zzz
+🫩;obraz s podočnjaki;izčrpanost|utrujenost|zaspanost
+😷;obraz z medicinsko masko;bolno|maska|obraz|prehlad|zdravilo|zdravnik
+🤒;obraz s termometrom;bolan|bolezen|bolno|obraz|slabotno|termometer
+🤕;obraz, obvezan s povojem;bolečina|obraz|poškodba|poškodovan|povita glava|povoj
+🤢;obraz, ki se počuti slabo;bolezen|bruhanje|obraz|ogabno|slabo počutje|slabost
+🤮;obraz, ki bruha;bljak|bolezen|bruhanje|obraz|ogabno
+🤧;obraz, ki kiha;bolezen|gripa|kihanje|na zdravje|obraz|prehlad|vročina
+🥵;vroč obraz;poten|rdeč obraz|vroče|vročina|vročinska kap
+🥶;mrzel obraz;ledene sveče|mrzel|ozebline|plav obraz|premražen
+🥴;okajen obraz;omotičen|različni očesi|v rožicah|valovita usta|vinjen
+😵;omotičen obraz;bolezen|obraz|omotično|slabost
+😵‍💫;obraz s spiralnimi očmi;hipnoza|omg|omotica|smeško|spirala|težave|vau|zmeden
+🤯;eksplozija v glavi;eksplozija|neverjetno|obraz|šokiran
+🤠;obraz s kavbojskim klobukom;kavboj|kavbojka|klobuk
+🥳;praznujoči obraz;hupa|hura|klobuček|obraz|praznovanje|rojstni dan|smeško|vse najboljše|zabava
+🥸;maska;brki|inkognito|nos|obraz|obrvi|očala|preobleka|smeško
+😎;smejoči obraz s sončnimi očali;frajersko|nasmeh|obraz|očala|plaža|sonce|sončna očala|svetlo|zmaga
+🤓;piflarski obraz;frik|obraz|piflar|znalec
+🧐;obraz z monoklom;bogat|premožen|vzvišen
+😕;zmeden obraz;ne vem|obraz|oprosti|žalosten|zmeden|zmedeno
+🫤;obraz s poševnimi usti;brezvezno|dvom|negotovost|razočaranost|skeptičnost|vzdih|zmedenost
+😟;zaskrbljen obraz;obraz|stres|zaskrbljen|zaskrbljeno|živčen
+🙁;nekoliko namrščen obraz;mrščenje|obraz|žalosten
+☹️;namrščen obraz;mrščenje|obraz|žalosten
+😮;obraz z odprtimi usti;ne morem verjeti|obraz|odprto|sočutje|šokiran|usta
+😯;osupljen obraz;obraz|osupel obraz|osuplo|presenečeno|tiho
+😲;začuden obraz;frapirano|obraz|osupel|popolnoma|presenečen|presenečeno|začuden|začudeno
+😳;zardeli obraz;nerodno|noro|obraz|vau|zardelo|zmedeno
+🥺;proseč obraz;kužkove oči|milost|moledovanje|obraz|pasje oči|zakaj
+🥹;obraz, ki zadržuje jok;hvaležnost|jeza|jok|ki zadržuje jok|občudovanje|obraz|ponos|solze sreče|upor|žalost
+😦;namrščen obraz z odprtimi usti;namrščenost|obraz|odprto|presenečenje|prestrašen|usta
+😧;trpeč obraz;nesrečen|obraz|presenečen|prestrašen|trpeče
+😨;bojazljiv obraz;obraz|preplašen|preplašeno|prestrašen|prestrašeno|strah
+😰;obraz z odprtimi usti in mrzlim potom;hladno|modro|obraz|odprto|pot|prestrašen|usta|živčen
+😥;razočaran, a olajšan obraz;ne|obraz|olajšan|pot|prestrašen|razočaran|skoraj|žalosten|zapleteno
+😢;jokajoči obraz;jokanje|obraz|solza|žalostno
+😭;cmerajoči obraz;ihtenje|jokanje|obraz|solze|žalosten|žalostno
+😱;obraz, ki kriči od strahu;izjemno|kričač|krik|obraz|presenečen|prestrašen|pretresen|strah
+😖;zbegan obraz;obraz|slaba volja|zbegan|zbegano|zmeden
+😣;vztrajen obraz;obraz|osredotočen|vztrajanje|zbran
+😞;razočaran obraz;neuspeh|obraz|razočarano|žalost
+😓;obraz z mrzlim potom;glavobol|mrzlo|obraz|pot
+😩;izčrpan obraz;izčrpan|izčrpano|lačen|obraz|utrujen|utrujeno|zaspano
+😫;utrujen obraz;obraz|utrujen|utrujeno|žalosten
+🥱;zehajoč obraz;dolgčas|lahko noč|počitek|smeško|utrujen|zehanje|zzz
+😤;obraz s paro skozi nos;bes|jeza|obraz|para|zmaga|zmagoslavje
+😡;obraz, ki kuha mulo;besen|besno|gnev|jezen|jezno|ki kuha mulo|kujanje|obraz|rdeče
+😠;jezen obraz;besen|besno|jezen|jezno|nesrečen|obraz
+🤬;obraz, ki kolne;cenzura|jeza|ki kolne|obraz|obraz s simboli prek ust|preklinjanje
+😈;smejoči obraz z rogovi;fantazija|nasmeh|obraz|pravljica|rogovi
+👿;vragec;demon|fantazija|hudič|obraz|pravljica
+💀;mrtvaška glava;lobanja|obraz|pošast|pravljica|smrt|telo
+☠️;mrtvaška glava s prekrižanima kostema;lobanja|mrtvaška glava|obraz|pošast|prekrižane kosti|smrt|telo
+💩;kup kakca;drekec|iztrebki|kakec|obraz|pošast|strip
+🤡;klovnovski obraz;klovn|klovnesa|obraz
+👹;pošastni velikan;bitje|fantazija|japonsko|obraz|pošast|pravljica
+👺;škratelj;bitje|fantazija|japonsko|obraz|pošast|pravljica
+👻;duh;bitje|fantazija|obraz|pošast|pravljica
+👽;vesoljec;bitje|fantazija|nezemljan|nlp|obraz|vesolje
+👾;vesoljska pošast;bitje|nezemljan|nlp|obraz|vesolje|vesoljec
+🤖;robot;obraz|pošast|robotski obraz
+😺;režeča se mačka;mačka|nasmeh|obraz|odprta|smeh|usta
+😸;režeča se mačka s smejočimi očmi;mačka|nasmeh|obraz|oko|režanje
+😹;mačka s solzami sreče;mačji obraz s solzami sreče|mačka|obraz|solze|veselje
+😻;smejoča se mačka z očmi v obliki srčka;ljubezen|mačka|nasmeh|obraz|oči|smejoči mačji obraz z očmi v obliki srčka|srce|žival
+😼;mačka s prifrknjenim nasmeškom;ironično|mačji obraz s prifrknjenim nasmeškom|mačka|nasmeh|obraz|porogljivo
+😽;mačka poljublja z zaprtimi očmi;ki poljublja|mačji obraz z zaprtimi očmi|mačji obraz z zaprtimi očmi, ki poljublja|mačka|obraz|oči|poljub
+🙀;presenečena mačka;mačka|naveličan|naveličano|obraz|odprta usta|presenečen|presenečeno
+😿;jokajoča mačka;jokajoči mačji obraz|jokanje|mačka|obraz|solza|žalostno
+😾;mačka kuha mulo;ki kuha mulo|kujanje|mačji obraz|mačji obraz, ki kuha mulo|mačka|obraz|žival
+🙈;opica, ki ne vidi ničesar;gesta|ki ne vidi ničesar|obraz|opica|prepovedano|videti|žival|zlobno
+🙉;opica, ki ne sliši ničesar;gesta|ki ne sliši ničesar|obraz|opica|prepovedano|slišati|zlobno
+🙊;opica, ki ničesar ne govori;gesta|govoriti|ki ničesar ne govori|obraz|opica|prepovedano|zlobno
+💌;ljubezensko pismo;ljubezen|pismo|pošta|romanca|srce
+💘;srce s puščico;kupid|puščica|romanca|srce
+💝;srce s pentljo;pentlja|poljub|RTM|srce|valentin
+💖;lesketajoče srce;lesketati se|poljubčki|srce|vznemirjeno
+💗;rastoče srce;rastoče|srce|srčni utrip|vznemirjeno|živčno
+💓;utripajoče srce;bitje|ljubezen|srce|srčni utrip|utripanje
+💞;vrteči se srci;čustvo|obletnica|srce|vrtenje
+💕;dve srci;čustvo|ljubezen|poljubi|RTM|srce|zmenek
+💟;okrasje s srcem;belo srce|čustvo|srce|vijolično srce
+❣️;klicaj v obliki srca;klicaj|ločilo|srce|znak
+💔;strto srce;osamljenost|počeno|srce|žalostno|zlomiti
+❤️‍🔥;goreče srce;ljubezen|ogenj|poželenje|srce|sveto srce
+❤️‍🩹;zakrpano srce;bolj zdravo|izboljšanje|okrevanje|ozdravljeno|zakrpano|zdravo
+❤️;rdeče srce;čustvo|ljubezen|srce
+🩷;rožnato srce;čustva|ljubezen|prisrčno|rožnato|RTM|srce|všeč|všeč si mi
+🧡;oranžno srce;oranžno|srce
+💛;rumeno srce;čustva|RTM|rumeno|srce
+💚;zeleno srce;ljubezen|romantično|srce|zeleno
+💙;modro srce;ljubezen|modro|romanca|srce
+🩵;svetlomodro srce;cijan|ljubezen|nebo|prisrčno|RTM|srce|svetlomodra|všeč si mi|zelenomodra
+💜;vijolično srce;ljubezen|srce|vijolično
+🤎;rjavo srce;rjavo|srce
+🖤;črno srce;črno|hudobno|podlo|srce|zlobno
+🩶;sivo srce;čustva|ljubezen|RTM|sivo|skrilasto|srce|srebrno|všeč si mi
+🤍;belo srce;belo|srce
+💋;sled šminke po poljubu;odtis|poljub|romanca|srce|ustnice
+💯;sto točk;100|popolna ocena|sto|zagotovo
+💢;simbol jeze;divje|jeza|jezno|strip
+🫯;spor v oblaku;borba|debata|nesporazum|pretep|razgrajanje|razprava|spopad
+💥;trk;bum|eksplozija|strip
+💫;omotica;omotično|planeti|strip|zvezda|zvezda repatica|zvezde
+💦;potne kapljice;kapljice|pljuskanje|pot|strip|vadba
+💨;švigniti;dim|prdec|strip|švigati|tek
+🕳️;luknja;odprtina
+💬;oblaček z govorom;balon|dialog|govor|oblaček|strip
+👁️‍🗨️;oko v oblačku z govorom;dialog|oblaček z govorom|oko|priča
+🗨️;levi oblaček z govorom;dialog|govor
+🗯️;desni oblaček z jeznim govorom;balon|divje|jezno|oblaček
+💭;oblaček z mislimi;balon|ideja|misel|oblaček|strip
+💤;spanec;lahko noč|noč|spanje|strip|utrujen|zzz
+👋;mahajoča dlan;adijo|dlan|mahanje|mahati|pozdrav|si tu?|telo|živjo
+🤚;dvignjena hrbtna stran dlani;dlan|dvignjena|hrbtna stran
+🖐️;dvignjena dlan z razprtimi prsti;dlan|prst|razprto|telo
+✋;dvignjena dlan;5|dlan|petka|stop
+🖖;vulkanski pozdrav;dlan|prst|spock|telo|vulkan
+🫱;roka, obrnjena v desno;desna roka|desno|obrnjena v desno|roka|stisk roke
+🫲;roka, obrnjena v levo;leva roka|levo|obrnjena v levo|roka|stisk roke
+🫳;roka z dlanjo navzdol;nehati|odslovitev|opustitev|pobiranje|roka
+🫴;roka z dlanjo navzgor;namig|ne vem|ponuditi|ponuditi roko|pridi|priti|ujeti
+🫷;dlan, ki potiska v levo;blokiranje|čakaj|levo|petka|potiskanje|premor|roka|stop|ustavitev|v levo|zavrnitev
+🫸;dlan, ki potiska v desno;blokiranje|čakaj|desno|petka|potiskanje|premor|roka|stop|ustavitev|v desno|zavrnitev
+👌;roka, ki kaže V REDU;dlan|ki kaže V REDU|odlično|OK|razumem|roka|seveda|super|telo|v redu
+🤌;prsti, stisnjeni skupaj;dlan|izpraševanje|kretnja z roko|počakaj|pomiri se|prsti|sarkastično|stisnjen|stisnjeni skupaj|utihni
+🤏;roka s ščepcem;majhna količina|malo
+✌️;dlan s prstoma, ki kažeta znak za zmago;dlan|mir|roka|v|zmaga
+🤞;prekrižani prsti;prsti|roka|sreča
+🫰;roka s prekrižanima kazalcem in palcem;denar|drago|ljubezen|pri srcu|priljubljeno|srce|tlesk
+🤟;znak za ljubim te;ljubim te|roka|RTM|trije prsti
+🤘;znak za rogove;dlan|metal|metalski pozdrav|prst|rock|rock za vedno|rogovi|telo
+🤙;pokliči me;pokliči|roka
+👈;hrbtna stran dlani s kazalcem, ki kaže levo;dlani|hrbtna|kazalec|kazati levo|levo|prst|roka|stran|v levo
+👉;hrbtna stran dlani s kazalcem, ki kaže desno;desno|dlani|hrbtna|kazalec|kazati desno|prst|roka|stran|v desno
+👆;hrbtna stran dlani s kazalcem, ki kaže gor;dlani|gor|hrbtna|kazalec|kazati navzgor|navzgor|prst|roka|stran
+🖕;sredinec;dlan|kazati|prst|telo
+👇;hrbtna stran dlani s kazalcem, ki kaže dol;dlani|dol|hrbtna|kazalec|kazati navzdol|navzdol|prst|roka|stran
+☝️;kazalec, ki kaže gor;dlan|gor|kazalec|kazati|navzgor|prst|roka|to
+🫵;kazalec, usmerjen v opazovalca;dregljaj|dregniti|kazalec|kazati|prst|ti|usmerjen v opazovalca
+👍;palec gor;+1|dlan|gor|ja|odlično|palec|seveda|super|telo|všeč mi je
+👎;palec dol;-1|dlan|dol|ni mi všeč|palec|telo
+✊;dvignjena pest;dlan|pest|pokrčeno|solidarnost|stisnjena pest|telo|udarec
+👊;bližajoča se pest;dlan|pest|pokrčeno|telo|udarec
+🤛;pest, obrnjena levo;levo|obrnjena levo|pest
+🤜;pest, obrnjena desno;desno|obrnjena desno|pest
+👏;ploskajoči dlani;aplavz|bravo|čestitam|dlan|dobro opravljeno|navdušenje|ploskati|telo
+🙌;oseba, ki dvigne roke;dlan|dlani|dvignjeno|hura|hvaljenje|kretnja|roka|slavje
+🫶;roki, sklenjeni v obliki srca;ljubezen|ljubim te|roki|sklenjeni v obliki srca|srce
+👐;odprti dlani;dlan|jazz|objem|odprto
+🤲;dvignjeni odprti dlani;dlani|molitev|skupaj|želja
+🤝;rokovanje;dogovor|roka|sporazum|srečanje
+🙏;staknjeni dlani;hvala|moliti|predklon|prosim|prositi|roka|sklenjeno
+✍️;pišoča dlan;dlan|pisanje|pisati|telo
+💅;lak za nohte;kozmetika|lak|manikira|nega|noht|telo
+🤳;selfi;fotoaparat|kamera|mobilni telefon
+💪;napeti bicepsi;biceps|mišica|napenjati|strip|telo
+🦾;mehanska roka;invalid|proteza|umetni ud
+🦿;mehanska noga;invalid|proteza|umetni ud
+🦵;noga;brca|del telesa|okončina|pokrčeno koleno
+🦶;stopalo;brca|gleženj|noga|topot
+👂;uho;poslušati|slišati|telo|zvok
+🦻;uho s slušnim aparatom;naglušni|okvara sluha|slušni aparat
+👃;nos;smrad|telo|vonj
+🧠;možgani;inteligenca|pamet
+🫀;človeško srce;anatomija|človeško|kardiologija|organ|srce|srčni utrip|telo|utrip
+🫁;pljuča;dih|dihanje|izdih|organ|telo|vdih
+🦷;zob;bel|zobje|zobozdravnik
+🦴;kost;kosti|okostje|pes
+👀;oči;gledam|obraz|pogled|telo
+👁️;oko;eno oko|telo
+👅;jezik;lizati|telo
+👄;usta;lepota|poljub|telo|ustnice
+🫦;grizenje ustnice;flirtanje|nelagodje|seksi|spogledovanje|strah|ustnice|vznemirjenost|zaskrbljenost|živčnost
+👶;dojenček;majhen|novorojenček|otrok
+🧒;otrok;mlajši|spolno nevtralen
+👦;fant;deček|mlad|otrok
+👧;dekle;dama|devica|hči|kitke|mlada|zodiak
+🧑;odrasla oseba;spolno nevtralen
+👱;oseba: svetli lasje;blond|človek|lasje|obraz|oseba|svetli lasje|svetlolasa oseba
+👨;moški;brat|fant|prijatelj
+🧔;oseba: brada;brada|moški|moški z brado|moški: brada|oseba
+🧔‍♂️;moški: brada;brada|moški
+🧔‍♀️;ženska: brada;brada|ženska
+👨‍🦰;moški: rdeči lasje;brat|fant|moški|prijatelj|rdeči lasje
+👨‍🦱;moški: kodrasti lasje;brat|fant|kodrasti lasje|moški|prijatelj
+👨‍🦳;moški: sivi lasje;brat|fant|moški|prijatelj|sivi lasje
+👨‍🦲;moški: plešast;brat|fant|moški|plešast|prijatelj
+👩;ženska;dekle|pričeska|svetlolaska
+👩‍🦰;ženska: rdeči lasje;dekle|pričeska|rdeči lasje|svetlolaska|ženska
+🧑‍🦰;odrasla oseba: rdeči lasje;odrasla oseba|rdeči lasje|spolno nevtralen
+👩‍🦱;ženska: kodrasti lasje;dekle|kodrasti lasje|pričeska|svetlolaska|ženska
+🧑‍🦱;odrasla oseba: kodrasti lasje;kodrasti lasje|odrasla oseba|spolno nevtralen
+👩‍🦳;ženska: sivi lasje;dekle|pričeska|sivi lasje|svetlolaska|ženska
+🧑‍🦳;odrasla oseba: sivi lasje;odrasla oseba|sivi lasje|spolno nevtralen
+👩‍🦲;ženska: plešast;dekle|plešast|pričeska|svetlolaska|ženska
+🧑‍🦲;odrasla oseba: plešast;odrasla oseba|plešast|spolno nevtralen
+👱‍♀️;ženska: blondinka;blondinka|dekle|lasje|ženska
+👱‍♂️;moški: blondinec;blondinec|fant|lasje|moški
+🧓;starejši odrasli;starejša oseba|starejši|stari starši
+👴;starec;dedek|izguba las|modrost|moški|star
+👵;starka;babica|modrost|stara mama|staro|ženska
+🙍;oseba, ki se mršči;čemerna|gesta|jezna|ki se mršči|mrščenje|namrščena oseba|nejevoljna|nezadovoljna|ni vesela|oseba|razburjena|razdražena|razočarana|slabe volje
+🙍‍♂️;moški z namrščenim obrazom;fant|moški|mrščiti se|neodobravanje|obraz|obrazna mimika
+🙍‍♀️;ženska z namrščenim obrazom;dekle|mrščiti se|neodobravanje|obraz|obrazna mimika|ženska
+🙎;oseba, ki kuha mulo;gesta|godrnjati|izraz|jezno|ki kuha mulo|kujanje|kujati se|mrščiti se|mulati se|oseba|oseba šobi usta|razočarano|spačiti|stokati|užaljeno
+🙎‍♂️;moški, ki kuha mulo;fant|ki kuha mulo|kujanje|moški|obrazna mimika
+🙎‍♀️;ženska, ki kuha mulo;dekle|ki kuha mulo|kujanje|obrazna mimika|ženska
+🙅;oseba, ki kaže NE;gesta|izključiti|ki kaže NE|ne|ni|ni dovoljeno|nikakor|niti pod razno|oseba|oseba kaže NE|prepovedano|prepovedati|roka
+🙅‍♂️;moški, ki s kretnjo izraža prepoved;fant|kretnja|moški|ne|neodobravanje|ni dovoljeno|ni v redu|prepovedano|roka
+🙅‍♀️;ženska, ki s kretnjo izraža prepoved;dekle|ki s kretnjo izraža prepoved|kretnja|ne|neodobravanje|ni dovoljeno|ni v redu|prepovedano|roka|ženska
+🙆;oseba, ki kaže V REDU;gesta|ki kaže V REDU|OK|omg|oseba|oseba kaže V REDU|roka|telovadba|v redu
+🙆‍♂️;moški, ki s kretnjo izraža odobravanje;izražati|kretnja|moški|odobravanje|roka|vaja
+🙆‍♀️;ženska, ki s kretnjo izraža odobravanje;dekle|ki s kretnjo izraža odobravanje|kretnja|ok|roka|v redu|ženska
+💁;oseba, ki dela na informacijah;govorice|informacije|jezikava|kakor koli|ki dela na informacijah|metati si lase nazaj|obveščati|oseba|oseba izda skrivnost|oseba s privzdignjeno roko|pomoč|resno|roka|sarkastična|sarkazem|vreči si lase nazaj|zgovorno|živahno
+💁‍♂️;uslužbenec na informacijah;diva|informacije|moški|obrekovanje|pomoč|roka|sarkazem|zgovoren
+💁‍♀️;uslužbenka na informacijah;informacije|pomoč|ženska|zgovorna
+🙋;vesela oseba, ki dvigne roko;dvignjena roka|dvignjeno|gesta|izberi mene|jaz|jaz vem|ki dvigne roko|lahko pomagam|oseba z dvignjeno roko|roka|roke|točno tukaj|tukaj sem|vesela oseba|veselo|vprašanje
+🙋‍♂️;moški, ki dviguje roko;dvigovanje roke|fant|ki dviguje roko|kretnje|moški|vprašanje
+🙋‍♀️;ženska, ki dviguje roko;dekle|dvigovanje roke|ki dviguje roko|kretnje|ženska
+🧏;gluha oseba;gluh|invalid|sluh|uho
+🧏‍♂️;gluh moški;gluh|moški
+🧏‍♀️;gluha ženska;gluha|ženska
+🙇;oseba, ki se prikloni;gesta|ki se prikloni|meditacija|meditirati|obžalovati|odpustiti|opravičilo|oprosti|oseba|oseba se priklanja|pomilovati|priklon|prositi
+🙇‍♂️;moški, ki se globoko priklanja;fant|gesta|ki se globoko priklanja|moški|opravičilo|oprosti|priklanjanje|priklon|usluga
+🙇‍♀️;ženska, ki se globoko priklanja;dekle|gesta|ki se globoko priklanja|meditacija|opravičilo|oprosti|priklanjanje|priklon|usluga|ženska
+🤦;oseba z dlanjo na obrazu;dvom|facepalm|joj|ne že spet|nejevera|odkimavati z glavo|ogorčenje|omg|oseba|prekriti obraz z dlanjo|skepsa|skomigniti|smh
+🤦‍♂️;moški, ki obraz prekriva z dlanjo;dvom|facepalm|fant|joj|ki obraz prekriva z dlanjo|moški|ne že spet|obup|odkimavati z glavo|ogorčenje|omg|prekriti obraz z dlanjo|smh|šok
+🤦‍♀️;ženska, ki obraz prekriva z dlanjo;dekle|dvom|facepalm|joj|ki obraz prekriva z dlanjo|ne že spet|obup|odkimavati z glavo|ogorčenje|omg|prekriti obraz z dlanjo|smh|šok|zbegati|ženska
+🤷;oseba, ki skomiga;brezbrižnost|dvom|idk|kakor koli|kdo bi vedel|ki skomiga|mogoče|ne vem|ne znam|nevednost|nezanimanje|oseba|skomigniti|verjetno
+🤷‍♂️;moški, ki skomiga z rameni;dvom|fant|idk|kakor koli|kdo bi vedel|ki skomiga z rameni|mogoče|moški|ne vem|ne znam|nevednost|nezanimanje|skomigniti|verjetno
+🤷‍♀️;ženska, ki skomiga z rameni;dekle|dvom|idk|kakor koli|kdo bi vedel|ki skomiga z rameni|mogoče|ne vem|ne znam|nevednost|nezanimanje|skomigniti|verjetno|ženska
+🧑‍⚕️;delavec v zdravstvu;medicinska sestra|terapevt|zdravnik|zdravstvo
+👨‍⚕️;zdravstveni delavec;fant|medicinski tehnik|moški|terapevt|zdravnik|zdravstvo
+👩‍⚕️;zdravstvena delavka;dekle|medicinska sestra|terapevtka|zdravnica|zdravstvo|ženska
+🧑‍🎓;diplomant;diplomantka|študent
+👨‍🎓;študent;diplomant|fant|maturant|moški
+👩‍🎓;študentka;dekle|diplomantka|maturantka|ženska
+🧑‍🏫;profesor;inštruktor|učitelj
+👨‍🏫;učitelj;fant|inštruktor|moški|profesor
+👩‍🏫;učiteljica;dekle|inštruktorica|profesorica|ženska
+🧑‍⚖️;varuh zakona;sodnik|tehtnica
+👨‍⚖️;sodnik;fant|moški|pravica|pravosodje|tehtnica
+👩‍⚖️;sodnica;dekle|pravica|tehtnica|ženska
+🧑‍🌾;kmet;vrtnar|živinorejec
+👨‍🌾;kmetovalec;fant|kavboj|kmet|moški|vrtnar|živinorejec
+👩‍🌾;kmetovalka;dekle|kmetica|vrtnarka|ženska|živinorejka
+🧑‍🍳;kuharski mojster;kuhar
+👨‍🍳;kuhar;chef|fant|moški|šef kuhinje
+👩‍🍳;kuharica;chef|dekle|šefinja kuhinje|ženska
+🧑‍🔧;serviser;električar|mehanik|trgovec|vodovodar
+👨‍🔧;mehanik;avtomehanik|električar|fant|mehanična delavnica|moški|orodje|prodajalec|vodovodar
+👩‍🔧;mehaničarka;avtomehaničarka|dekle|električarka|mehanična delavnica|orodje|prodajalka|vodovodarka|ženska
+🧑‍🏭;tovarniški delavec;delavec|industrijski|tekoči trak|tovarna
+👨‍🏭;delavec v tovarni;delavec|fant|industrijski|moški|proizvodnja|tekoči trak|tovarna|tovarnar
+👩‍🏭;delavka v tovarni;dekle|delavka|industrijski|proizvodnja|tekoči trak|tovarna|tovarnarka|ženska
+🧑‍💼;delavec v pisarni;arhitekt|direktor|pisarniški delavec|podjetje
+👨‍💼;pisarniški delavec;arhitekt|direktor|fant|moški|pisarna|pisarniški|podjetje|tajnik
+👩‍💼;pisarniška delavka;arhitektka|dekle|direktorica|pisarna|pisarniški|podjetje|tajnica|ženska
+🧑‍🔬;raziskovalec;biolog|fizik|inženir|kemik|matematik|znanstvenik
+👨‍🔬;znanstvenik;biolog|fant|fizik|inženir|kemik|matematik|moški
+👩‍🔬;znanstvenica;biologinja|dekle|fizika|inženirka|kemija|matematika|ženska
+🧑‍💻;strokovnjak za tehnologijo;izumitelj|programer|programska oprema|računalnik|razvijalec|tehnolog|tehnologija
+👨‍💻;tehnolog;fant|izumitelj|moški|programer|programska oprema|računalnik|razvijalec|tehnologija
+👩‍💻;tehnologinja;dekle|izumiteljica|programerka|programska oprema|računalnik|razvijalka|tehnologija|ženska
+🧑‍🎤;izvajalec;igralec|komik|pevec|roker|zabavljač|zvezdnik
+👨‍🎤;pevec;fant|igralec|komik|moški|roker|zabavljač|zvezdnik
+👩‍🎤;pevka;dekle|igralka|rokerica|zabavljačica|ženska|zvezdnica
+🧑‍🎨;slikar;paleta|umetnik
+👨‍🎨;umetnik;fant|moški|paleta|slikar|umetnost
+👩‍🎨;umetnica;dekle|paleta|slikarka|umetnost|ženska
+🧑‍✈️;pilot letala;letalo|pilot
+👨‍✈️;pilot;fant|letalo|moški|stevard
+👩‍✈️;pilotka;dekle|letalo|stevardesa|ženska
+🧑‍🚀;kozmonavt;astronavt|raketa
+👨‍🚀;astronavt;fant|moški|raketa|vesolje
+👩‍🚀;astronavtka;dekle|raketa|vesolje|ženska
+🧑‍🚒;poklicni gasilec;gasilec|gasilni avto
+👨‍🚒;gasilec;fant|gasilni avto|moški|ogenj
+👩‍🚒;gasilka;dekle|gasilni avto|ogenj|ženska
+👮;policaj;aretirati|policaj pod krinko|policija|policija ustavi|policist|poziv|prijeti|zakonito
+👮‍♂️;policist;fant|moški|policaj|policija
+👮‍♀️;policistka;aretirati|dekle|pod krinko|policajka|policija|policija ustavi|poziv|prijeti|zakonito|ženska
+🕵️;preiskovalec;detektiv|moški|vohljač|vohun
+🕵️‍♂️;detektiv;dokaz|fant|moški|vohun
+🕵️‍♀️;detektivka;detektiv|dokaz|preiskava|vohun|vohunka|ženska
+💂;stražar;buckinghamska palača|čelada|čuvaj|london
+💂‍♂️;varnostnik;fant|moški|paznik
+💂‍♀️;varnostnica;buckinghamska palača|čelada|dekle|london|paznica|ženska
+🥷;nindža;bojevnik|borba|morilec|oseba|prikrivanje|sablja|skrivanje|vojak
+👷;gradbenik;čelada|čepica|delavec|delo|gradbeništvo|gradbinec|gradnja|oseba|popravilo|popraviti|predelati|prenoviti|zaščitna čelada|zgraditi
+👷‍♂️;gradbeni delavec;delavec|fant|gradbinec|gradbišče|moški
+👷‍♀️;gradbena delavka;čelada|dekle|delavka|gradbinka|gradbišče|ženska
+🫅;oseba s krono;kralj|kraljev|kraljeva oseba|kraljica|krona|monarh|plemič
+🤴;princ;kraljev|kraljeva družina|kraljevič|krona|pravljica
+👸;princesa;fantazija|kraljica|kraljična|krona|pravljica
+👳;oseba s turbanom;moški|turban
+👳‍♂️;moški s turbanom;fant|moški|turban
+👳‍♀️;ženska s turbanom;dekle|turban|ženska
+👲;moški s kitajsko čepico;čepica|kitajska čepica|moški
+🧕;ženska z naglavno ruto;hidžab|mantilja|naglavna ruta
+🤵;oseba v smokingu;moški|moški v smokingu|oseba|smoking|ženin
+🤵‍♂️;moški v smokingu;moški|smoking
+🤵‍♀️;ženska v smokingu;smoking|ženska
+👰;oseba s pajčolanom;nevesta|nevesta s pajčolanom|oseba|pajčolan|poroka
+👰‍♂️;moški s pajčolanom;moški|pajčolan
+👰‍♀️;ženska s pajčolanom;pajčolan|ženska
+🤰;nosečnica;noseča ženska|ženska
+🫃;noseč moški;moški z nosečniškim trebuhom|napihnjen|noseč|poln|prenajedanje|trebuh
+🫄;noseča oseba;napihnjen|noseč|nosečniški trebuh|poln|prenajedanje|trebuh
+🤱;dojenje;dojenček|prsi
+👩‍🍼;ženska, ki doji dojenčka;dojenček|dojenje|hranjenje|ki doji dojenčka|ljubezen|mama|mamica|novorojenček|oseba|ženska
+👨‍🍼;moški, ki hrani dojenčka;ati|dojenček|dojenje|hranjenje|ki hrani dojenčka|ljubezen|moški|novorojenček|oče|oseba
+🧑‍🍼;oseba, ki hrani dojenčka;dojenček|dojenje|hranjenje|ki hrani dojenčka|mama|moški|oče|oseba|varuška|ženska
+👼;angelček;angel|dojenček|fantazija|obraz|pravljica
+🎅;Božiček;božič|fantazija|oče|pravljica|slavje
+🤶;gospa Božiček;božič|gospa|praznovanje
+🧑‍🎄;mx božiček;božič|božiček|božičkova kapa|kapa|oseba|oseba s kapo|praznik|vesel božič
+🦸;superjunak/superjunakinja;dober|dobra|junak|junakinja|nadnaravne moči|super moč|superjunakinja|supermoč|superženska
+🦸‍♂️;superjunak;dober|junak|moški|super moč
+🦸‍♀️;superjunakinja;dober|junak|junakinja|super moč
+🦹;super negativec;kriminalec|nadnaravne moči|negativec|oseba|super moč|supermoč|supernegativec|zloben|zločinec
+🦹‍♂️;moški super negativec;kriminalec|moški|negativec|super moč|zloben
+🦹‍♀️;super negativka;kriminalka|negativka|super moč|ženska|zlobna
+🧙;oseba, ki čara;čarovnica|čarovnija|čarovnik|fantazija|igra vlog|ki čara|mag|oseba|urok|zbor
+🧙‍♂️;čarovnik;čarodej|mag
+🧙‍♀️;čarovnica;čarodejka
+🧚;vilinsko bitje;fantazija|krila|mit|pravljica|škratovka|vila
+🧚‍♂️;vilinec;
+🧚‍♀️;vila;
+🧛;vampirji;Drakula|kostum|kri|nadnaravno|nesmrtnost|neživo|noč čarovnic|podočniki|strašno|vampir|zobje
+🧛‍♂️;vampir;Drakula|moški vampir|nesmrtnost
+🧛‍♀️;vampirka;nesmrtnost
+🧜;morska oseba;folklora|morska bitja|morska deklica|morska ženska|morski mož|pravljica|sirena|trizob|v morju
+🧜‍♂️;morski mož;Triton
+🧜‍♀️;morska deklica;
+🧝;škrati;čarobno|čarobnost|čarovnija|fantazija|folklora|mistično|mitično|vila|vilin
+🧝‍♂️;škrat;čarovnija|vilin
+🧝‍♀️;škratovka;vilinka
+🧞;duh iz steklenice;duh|džin|fantazija|jinn|mistično|mitično|podrgniti svetilko|želje
+🧞‍♂️;moški duh iz steklenice;
+🧞‍♀️;ženski duh iz steklenice;
+🧟;zombi;apokalipsa|groza|nemrtev|neživo|noč čarovnic|strašno|živi mrtvec
+🧟‍♂️;zombi moški;nemrtev|živi mrtvec
+🧟‍♀️;zombi ženska;nemrtev|živi mrtvec
+🧌;trol;domišljija|pošast|pravljica
+🫈;kosmato bitje;bigfoot|gozd|gozdni mož|jeti|kosmat|kriptid|sasquatch|velikan
+💆;masaža obraza;glavobol|masaža|napetost|obraz|oseba na masaži|salon|sproščanje|sprostitev|sprostiti se|terapija|toplice
+💆‍♂️;moški na masaži obraza;fant|masaža|moški|napetost|obraz|sprostitev
+💆‍♀️;ženska na masaži obraza;dekle|masaža|obraz|ženska
+💇;striženje;brivec|frizer|kozmetologija|lasje|oseba|pričeska|salon|slog|striči|urediti
+💇‍♂️;moški pri frizerju;fant|frizerski salon|frizura|moški|pričeska|striženje
+💇‍♀️;ženska pri frizerju;dekle|frizerski salon|frizura|pričeska|striženje|ženska
+🚶;pešec;hoditi|hoja|korak|korakanje|oseba se sprehaja|paradirati|pohajkovati|pohod|potep|sprehajati se|sprehod
+🚶‍♂️;moški, ki hodi;fant|hoja|ki hodi|moški|pešec|sprehod
+🚶‍♀️;ženska, ki hodi;dekle|hoja|korak|peška|sprehod|ženska
+🚶‍➡️;pešec: , obrnjen v desno;,|desno|hoditi|hoja|korak|korakanje|obrnjen|oseba se sprehaja|paradirati|pešec|pohajkovati|pohod|potep|sprehajati se|sprehod|v
+🚶‍♀️‍➡️;ženska, ki hodi: , obrnjen v desno;,|dekle|desno|hoja|korak|obrnjen|peška|sprehod|v|ženska
+🚶‍♂️‍➡️;moški, ki hodi: , obrnjen v desno;,|desno|fant|hoja|ki hodi|moški|moški, ki hodi|obrnjen|pešec|sprehod|v
+🧍;stoječa oseba;pokonci|stati
+🧍‍♂️;stoječ moški;moški|stoji
+🧍‍♀️;stoječa ženska;stoji|ženska
+🧎;klečeča oseba;klečanje|kolena|na kolenih
+🧎‍♂️;klečeč moški;klečanje|moški
+🧎‍♀️;klečeča ženska;klečanje|ženska
+🧎‍➡️;klečeča oseba: , obrnjen v desno;,|desno|klečanje|klečeča oseba|kolena|na kolenih|obrnjen|v
+🧎‍♀️‍➡️;klečeča ženska: , obrnjen v desno;,|desno|klečanje|klečeča ženska|obrnjen|v|ženska
+🧎‍♂️‍➡️;klečeč moški: , obrnjen v desno;,|desno|klečanje|klečeč moški|moški|obrnjen|v
+🧑‍🦯;oseba s palico za slepe;invalid|slep
+🧑‍🦯‍➡️;oseba s palico za slepe: , obrnjen v desno;,|desno|invalid|obrnjen|oseba s palico za slepe|slep|v
+👨‍🦯;moški s palico za slepe;invalid|moški|slep
+👨‍🦯‍➡️;moški s palico za slepe: , obrnjen v desno;,|desno|invalid|moški|moški s palico za slepe|obrnjen|slep|v
+👩‍🦯;ženska s palico za slepe;invalid|slepa|ženska
+👩‍🦯‍➡️;ženska s palico za slepe: , obrnjen v desno;,|desno|invalid|obrnjen|slepa|v|ženska|ženska s palico za slepe
+🧑‍🦼;oseba na motoriziranem invalidskem vozičku;invalid|voziček
+🧑‍🦼‍➡️;oseba na motoriziranem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|obrnjen|oseba na motoriziranem invalidskem vozičku|v|voziček
+👨‍🦼;moški na motoriziranem invalidskem vozičku;invalid|moški|voziček
+👨‍🦼‍➡️;moški na motoriziranem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|moški|moški na motoriziranem invalidskem vozičku|obrnjen|v|voziček
+👩‍🦼;ženska na motoriziranem invalidskem vozičku;invalid|voziček|ženska
+👩‍🦼‍➡️;ženska na motoriziranem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|obrnjen|v|voziček|ženska|ženska na motoriziranem invalidskem vozičku
+🧑‍🦽;oseba na ročnem invalidskem vozičku;invalid|voziček
+🧑‍🦽‍➡️;oseba na ročnem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|obrnjen|oseba na ročnem invalidskem vozičku|v|voziček
+👨‍🦽;moški na ročnem invalidskem vozičku;invalid|moški|voziček
+👨‍🦽‍➡️;moški na ročnem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|moški|moški na ročnem invalidskem vozičku|obrnjen|v|voziček
+👩‍🦽;ženska na ročnem invalidskem vozičku;invalid|voziček|ženska
+👩‍🦽‍➡️;ženska na ročnem invalidskem vozičku: , obrnjen v desno;,|desno|invalid|obrnjen|v|voziček|ženska|ženska na ročnem invalidskem vozičku
+🏃;tekač;dirka|hitro|hitrost|maraton|naglica|oseba teče|pohiti|premikati se|prihajam|tek
+🏃‍♂️;moški, ki teče;fant|ki teče|maraton|moški|šprint|tek|tekač
+🏃‍♀️;ženska, ki teče;dekle|hitenje|hitrost|maraton|šprint|tek|tekačica|ženska
+🏃‍➡️;tekač: , obrnjen v desno;,|desno|dirka|hitro|hitrost|maraton|naglica|obrnjen|oseba teče|pohiti|premikati se|prihajam|tek|tekač|v
+🏃‍♀️‍➡️;ženska, ki teče: , obrnjen v desno;,|dekle|desno|hitenje|hitrost|maraton|obrnjen|šprint|tek|tekačica|v|ženska
+🏃‍♂️‍➡️;moški, ki teče: , obrnjen v desno;,|desno|fant|ki teče|maraton|moški|moški, ki teče|obrnjen|šprint|tek|tekač|v
+🧑‍🩰;baletka;balerina|balet|baletna plesalka
+💃;ženska, ki pleše;ki pleše|ples|plesalka|tango|ženska
+🕺;plesalec;moški|ples|salsa|tango
+🕴️;moški v poslovni obleki, ki lebdi;ki lebdi|moški|moški v poslovni obleki|obleka|posli
+👯;žurerski ženski;bestica|dekle|dve osebi|dvojčici|dvojčka|dvojnici|identični|najboljša prijateljica|par|plesalka|prijateljica|sorodna duša|uho|zabava|zajčica|zajčja ušesa|ženska|žur
+👯‍♂️;moška zabava;fantje|moški|plesalec|zabava|žur
+👯‍♀️;ženska zabava;dekle|plesalec|zabava|ženska|žur
+🧖;oseba v parni savni;dnevni velnes|para|parna savna|razkošno|razvajanje|savna|sproščanje|sprostitev|toplice
+🧖‍♂️;moški v parni savni;parna savna|savna
+🧖‍♀️;ženska v parni savni;parna savna|savna
+🧗;oseba, ki pleza;gora|ki pleza|oseba|oseba pleza|plezalec|plezalka|plezanje|plezati|vzpon
+🧗‍♂️;plezalec;ki pleza|moški
+🧗‍♀️;plezalka;ki pleza|plezalec|ženska
+🤺;sabljanje;meč|sabljač|šport
+🏇;konjske dirke;dirkalni konj|dirkanje|džokej|konj
+⛷️;smučar;smučati|sneg|šport
+🏂;deskar na snegu;deskanje na snegu|smučanje|smučati|sneg|snežna deska
+🏌️;igralec golfa;birdie|golf|golfišče|klinček|nosač golfskih palic|oseba igra golf|patanje|pga|zelenica|žogica
+🏌️‍♂️;golfist;fant|golf|moški
+🏌️‍♀️;golfistka;dekle|golf|šport|ženska|žogica
+🏄;oseba deska;deskanje|deskar|ocean|plaža|šport|surfanje|valovanje|valovi
+🏄‍♂️;deskar;deskanje|fant|moški|surfanje|valovi
+🏄‍♀️;deskarka;dekle|deskanje|plaža|šport|surfanje|valovi|ženska
+🚣;oseba v čolnu na vesla;čoln|čoln na vesla|jezero|kanu|ladja|reka|ribolov|splav|vesla|veslanje|veslati|veslo|vozilo
+🚣‍♂️;veslač;čoln na vesla|fant|moški|veslanje
+🚣‍♀️;veslačica;čoln|čoln na vesla|dekle|veslanje|ženska
+🏊;oseba plava;plavalec|plavanje|plavati|prosti slog|šport|triatlon
+🏊‍♂️;plavalec;fant|moški|plavanje
+🏊‍♀️;plavalka;dekle|plavanje|šport|ženska
+⛹️;oseba z žogo;ciljati koš|košarka|košarkar|košarkarska žoga|oseba odbija žogo|preigravati|prosti met|prvenstvo|športno|žoga
+⛹️‍♂️;moški z žogo;fant|moški|žoga
+⛹️‍♀️;ženska z žogo;dekle|košarka|ženska|žoga
+🏋️;oseba dviga uteži;bodibilder|deadlift|drog za uteži|dvigalec|dvigalec uteži|mišičnjak|mrtvi dvig|powerlifting|telovadba|utež
+🏋️‍♂️;dvigovalec uteži;fant|moški
+🏋️‍♀️;dvigovalka uteži;dekle|ženska
+🚴;oseba na kolesu;bicikel|biciklist|kolesar|kolesariti|kolesarjenje|kolo|šport
+🚴‍♂️;kolesar;fant|kolesarjenje|kolo|moški
+🚴‍♀️;kolesarka;dekle|kolesarjenje|kolo|ženska
+🚵;gorski kolesar;bicikel|biciklist|gora|kolesar|kolesarjenje|kolo|oseba vozi gorsko kolo|šport|športno
+🚵‍♂️;moško gorsko kolesarjenje;fant|gora|gorsko|kolesar|kolo|moški
+🚵‍♀️;žensko gorsko kolesarjenje;dekle|gora|gorsko|kolesarka|kolo|ženska
+🤸;oseba izvaja kolo;aktivno|dejavno|gimnastika|kolo|navdušeno|oseba|premet vstran|salto|šport|veselo
+🤸‍♂️;moški, ki dela premet vstran;aktiven|dejaven|fant|gimnastika|ki dela premet vstran|kolo|moški|navdušen|oseba|premet vstran|salto|šport|vesel
+🤸‍♀️;ženska, ki dela premet vstran;aktivna|dejavna|dekle|gimnastika|ki dela premet vstran|kolo|navdušena|oseba|premet vstran|salto|šport|vesela|ženska
+🤼;rokoborba;borba|ljudje|spopad|šport|tekmovanje v rokoborbi|v ringu|wrestling
+🤼‍♂️;moška rokoborba;borba|fant|moški|oseba|rokoborba|spopad|šport|tekmovanje v rokoborbi|v ringu|wrestling
+🤼‍♀️;ženska rokoborba;borba|dekleta|oseba|rokoborba|spopad|spopasti se|šport|tekmovanje v rokoborbi|v ringu|wrestling|ženska|ženske
+🤽;vaterpolo;bazen|Marco|oseba|plavanje|šport|vodni šport|waterpolo|žoga
+🤽‍♂️;moški vaterpolo;fant|moški|plavanje|šport|vaterpolo|vodni šport|waterpolo
+🤽‍♀️;ženski vaterpolo;dekle|plavanje|šport|vaterpolo|vodni šport|waterpolo|ženska
+🤾;rokomet;lob|met|metati|oseba|šport|športno|ujeti|vreči|zalučati|žoga
+🤾‍♂️;rokometaš;fant|moški|rokomet|šport
+🤾‍♀️;rokometašica;dekle|lob|met|metati|rokomet|šport|ujeti|vreči|zalučati|ženska|ženske|žoga
+🤹;žongliranje;obvladati|oseba|ravnotežje|spretnost|večopravilnost|žonglirati
+🤹‍♂️;žongler;fant|moški|obvladati|ravnotežje|spretnost|uspeti|večopravilnost|žongliranje|žonglirati
+🤹‍♀️;žonglerka;dekle|spretnost|večopravilnost|ženska|žongliranje
+🧘;oseba v lotusovem položaju;joga|jogi|meditacija|mir|oseba v lotosovem položaju|prekrižane noge|sedenje po turško|sproščanje|sproščati se|sprostitev|zen
+🧘‍♂️;moški v lotusovem položaju;joga|meditacija
+🧘‍♀️;ženska v lotusovem položaju;joga|meditacija
+🛀;oseba, ki se kopa;kad|ki se kopa|kopalna kad|kopel|oseba
+🛌;oseba v postelji;čas za spanje|hotel|lahko noč|počitek|spanje|zzz
+🧑‍🤝‍🧑;osebi se držita za roke;držati|oseba|par|roka
+👭;ženski se držita za roke;držati|dvojčici|par|roka|ženska|ženski
+👫;moški in ženska se držita za roke;držati|ljubezen|moški|par|roka|ženska
+👬;moška se držita za roke;dvojčka|homoseksualni par|ljubezen|moški|par|prijatelja|zodiak
+💏;poljub;obletnica|par|romanca|srček
+👩‍❤️‍💋‍👨;poljub: ženska in moški;moški|obletnica|par|poljub|romanca|srček|ženska
+👨‍❤️‍💋‍👨;poljub: moški in moški;moški|obletnica|par|poljub|romanca|srček
+👩‍❤️‍💋‍👩;poljub: ženska in ženska;obletnica|par|poljub|romanca|srček|ženska
+💑;par s srčkom;ljubezen|par|romanca|srce
+👩‍❤️‍👨;par s srčkom: ženska in moški;ljubezen|moški|par|par s srčkom|romanca|srce|ženska
+👨‍❤️‍👨;par s srčkom: moški in moški;ljubezen|moški|par|par s srčkom|romanca|srce
+👩‍❤️‍👩;par s srčkom: ženska in ženska;ljubezen|par|par s srčkom|romanca|srce|ženska
+👨‍👩‍👦;družina: moški, ženska in fant;družina|fant|mati|moški|oče|otrok|ženska
+👨‍👩‍👧;družina: moški, ženska in dekle;dekle|družina|mati|moški|oče|otrok|ženska
+👨‍👩‍👧‍👦;družina: moški, ženska, dekle in fant;dekle|družina|fant|mati|moški|oče|otrok|ženska
+👨‍👩‍👦‍👦;družina: moški, ženska, fant in fant;družina|fant|mati|moški|oče|otrok|ženska
+👨‍👩‍👧‍👧;družina: moški, ženska, dekle in dekle;dekle|družina|mati|moški|oče|otrok|ženska
+👨‍👨‍👦;družina: moški, moški in fant;družina|fant|mati|moški|oče|otrok
+👨‍👨‍👧;družina: moški, moški in dekle;dekle|družina|mati|moški|oče|otrok
+👨‍👨‍👧‍👦;družina: moški, moški, dekle in fant;dekle|družina|fant|mati|moški|oče|otrok
+👨‍👨‍👦‍👦;družina: moški, moški, fant in fant;družina|fant|mati|moški|oče|otrok
+👨‍👨‍👧‍👧;družina: moški, moški, dekle in dekle;dekle|družina|mati|moški|oče|otrok
+👩‍👩‍👦;družina: ženska, ženska in fant;družina|fant|mati|oče|otrok|ženska
+👩‍👩‍👧;družina: ženska, ženska in dekle;dekle|družina|mati|oče|otrok|ženska
+👩‍👩‍👧‍👦;družina: ženska, ženska, dekle in fant;dekle|družina|fant|mati|oče|otrok|ženska
+👩‍👩‍👦‍👦;družina: ženska, ženska, fant in fant;družina|fant|mati|oče|otrok|ženska
+👩‍👩‍👧‍👧;družina: ženska, ženska, dekle in dekle;dekle|družina|mati|oče|otrok|ženska
+👨‍👦;družina: moški in fant;družina|fant|mati|moški|oče|otrok
+👨‍👦‍👦;družina: moški, fant in fant;družina|fant|mati|moški|oče|otrok
+👨‍👧;družina: moški in dekle;dekle|družina|mati|moški|oče|otrok
+👨‍👧‍👦;družina: moški, dekle in fant;dekle|družina|fant|mati|moški|oče|otrok
+👨‍👧‍👧;družina: moški, dekle in dekle;dekle|družina|mati|moški|oče|otrok
+👩‍👦;družina: ženska in fant;družina|fant|mati|oče|otrok|ženska
+👩‍👦‍👦;družina: ženska, fant in fant;družina|fant|mati|oče|otrok|ženska
+👩‍👧;družina: ženska in dekle;dekle|družina|mati|oče|otrok|ženska
+👩‍👧‍👦;družina: ženska, dekle in fant;dekle|družina|fant|mati|oče|otrok|ženska
+👩‍👧‍👧;družina: ženska, dekle in dekle;dekle|družina|mati|oče|otrok|ženska
+🗣️;govoreča glava;glava|govoriti|govorjenje|obraz|silhueta
+👤;silhueta doprsja;doprsje|senca|silhueta
+👥;silhueti doprsja;doprsje|prijatelja|silhueta
+🫂;osebi, ki se objemata;hvala|ki se objemata|nasvidenje|objem|oeba|osebi|prijateljstvo|tolažba|živijo
+👪;družina;mati|oče|otrok
+🧑‍🧑‍🧒;družina: odrasel, odrasel, otrok;družina: odrasla oseba|družina: odrasla oseba, odrasla oseba, otrok|odrasla oseba|otrok
+🧑‍🧑‍🧒‍🧒;družina: odrasel, odrasel, otrok, otrok;družina: odrasla oseba|družina: odrasla oseba, odrasla oseba, otrok, otrok|odrasla oseba|otrok
+🧑‍🧒;družina: odrasla oseba, otrok;družina: odrasla oseba|otrok
+🧑‍🧒‍🧒;družina: odrasla oseba, otrok, otrok;družina: odrasla oseba|otrok
+👣;stopinje;oblačila|odtis|stopinja|telo
+🫆;prstni odtis;forenzika|identiteta|varnost
+🐵;opičji obraz;banana|obraz|opica
+🐒;opica;banana|žival
+🦍;gorila;žival
+🦧;orangutan;opica|žival
+🐶;pasji obraz;domači ljubljenček|obraz|pes|žival
+🐕;pes;domači ljubljenček|psi|žival|živali
+🦮;pes vodnik;slepi|vodnik|žival
+🐕‍🦺;službeni pes;policijski|pomoč|reševalni|vojaški|žival
+🐩;pudelj;pes|puhast|žival
+🐺;volk;obraz|volčji obraz|žival
+🦊;lisica;obraz|žival
+🦝;rakun;radoveden|žival|zvijačen|zvit
+🐱;mačji obraz;domači ljubljenček|mačka|obraz|žival
+🐈;mačka;domači ljubljenček|mačke|žival|živali
+🐈‍⬛;črna mačka;črna|mačji|mačka|mjav|noč čarovnic|smola|žival
+🦁;lev;obraz|safari|žival|zodiak
+🐯;tigrov obraz;obraz|plenilec|tiger|žival
+🐅;tiger;plenilec|velika mačka|žival|živalski vrt
+🐆;leopard;plenilec|velika mačka|žival|živalski vrt
+🐴;konjev obraz;kmetija|konj|obraz|žival
+🫎;los;rogovje|sesalec|žival
+🫏;osel;mula|osliček|sesalec|trmast|žival
+🐎;konj;dirkanje|kmetija|konjske dirke|žival
+🦄;samorog;obraz
+🦓;zebra;progasta|proge|žival
+🦌;jelen;rogovi|žival
+🦬;bizon;bivol|čreda|močen|žival|zober
+🐮;kravji obraz;krava|mleko|obraz|žival
+🐂;vol;bik|kmetija|žival|zodiak
+🐃;vodni bivol;bivol|voda|žival|živalski vrt
+🐄;krava;kmetija|mleko|žival|živali
+🐷;prašičji obraz;kmetija|obraz|prašič|žival
+🐖;prašič;kmetija|slanina|svinja|žival
+🐗;divja svinja;divji|igra prestolov|prašič|žival
+🐽;prašičji rilec;obraz|prašič|rilec|žival
+🐏;oven;ovca|rogovi|žival|zodiak
+🐑;ovca;kmetija|ovčka|volna|žival
+🐐;koza;kmetija|kozorog|žival|zodiak
+🐪;kamela;dromedar|grba|puščava|žival
+🐫;dvogrba kamela;dvogrbo|grba|kamela|žival
+🦙;lama;alpaka|gvanako|vikunja|volna|žival
+🦒;žirafa;pike|žival
+🐘;slon;žival
+🦣;mamut;izumrtje|okel|velik|volnatost|žival
+🦏;nosorog;žival
+🦛;povodni konj;hipo|žival
+🐭;mišji obraz;miš|miška|obraz|žival
+🐁;miš;miška|žival
+🐀;podgana;žival
+🐹;hrček;domači ljubljenček|obraz|žival
+🐰;zajčji obraz;domači ljubljenček|obraz|zajček|zajec|žival
+🐇;zajec;domači ljubljenček|zajček|žival
+🐿️;progasta veverica;veverica|žival
+🦫;bober;glodavec|jez|sekalci|žival|zobje
+🦔;jež;ježek|žival
+🦇;netopir;žival
+🐻;medved;grizli|obraz|žival
+🐻‍❄️;severni medved;beli|medved|polarni
+🐨;koala;avstralija|medved|žival
+🐼;panda;bambus|obraz|žival
+🦥;lenivec;len|počasen|zaspan|žival
+🦦;vidra;igriva|lovi ribe|žival
+🦨;skunk;dihur|smrdi|žival
+🦘;kenguru;Avstralija|mlad kenguru|skok|vrečar|žival
+🦡;jazbec;medarski jazbec|nadloga|žival
+🐾;odtisi tac;odtis|šapa|tace
+🦃;puran;zahvalni dan|žival
+🐔;kokoš;kokoška|kura|žival
+🐓;petelin;ptiči|žival|živali
+🐣;pišče, ki se izvali;ki se izvali|mladič|piščanček|pišče|valjenje|žival
+🐤;piščanček;mladič|valjenje|žival
+🐥;piščanček, gleda naprej;gleda naprej|mladič|piščanček|žival
+🐦;ptica;ptič|ptiček|žival
+🐧;pingvin;antarktika|žival
+🕊️;golobica;leteti|mir|ptič|žival
+🦅;orel;ptica|žival
+🦆;raca;ptica|žival
+🦢;labod;grdi raček|mlad labod|ptica|žival
+🦉;sova;modra|pamet|ptica|žival
+🦤;dodo;izumrl|izumrtje|Mavricij|ptica|velik|velikan|žival
+🪶;pero;lahek|letenje|perje|pisanje|ptica
+🦩;flamingo;nastopaški|tropski|vpadljiv|žival
+🦚;pav;bahava|barvita|pavica|ponosna|ptica|žival
+🦜;papagaj;govor|pirat|ptič|žival
+🪽;krilo;angelsko|božansko|letalstvo|letenje|mitologija|ptica
+🐦‍⬛;kos;črn prič|črna|kljun|krokar|poljska vrana|ptič|ptica|sraka|vrana|žival
+🪿;gos;gaganje|goska|jata|neumno|perjad|perutnica|ptica
+🐦‍🔥;feniks;dvig|dvigniti se|fantazija|na novo odkriti|nesmrten|obnoviti|ognjeni ptič|oživeti|pojaviti se|preobraziti|preporod|reinkarnacija|reinkarnirati|veličastje|vnovično rojstvo|vstati
+🐸;žaba;obraz|princesa|žabji obraz|žival
+🐊;krokodil;florida|žival|živali|živalski vrt
+🐢;želva;želve|žival|živali
+🦎;kuščar;plazilec|žival
+🐍;kača;kačenosec|prinašalec|zodiak
+🐲;zmajski obraz;obraz|pravljica|žival|zmaj
+🐉;zmaj;igra prestolov|pravljica|vitezi|žival
+🦕;zavropod;brahiozaver|brontozaver|dinozaver|diplodok
+🦖;tiranozaver;dinozaver
+🐳;kit, ki brizga vodo;brizganje|ki brizga vodo|kit|obraz|ocean|žival
+🐋;kit;ocean|plaža|žival
+🐬;delfin;fliper|ocean|plaža|žival
+🫍;orka;kit|morje|ocean
+🦭;tjulenj;morje|morski lev|ocean|plavanje|žival
+🐟;riba;ribi|ribolov|žival|zodiak
+🐠;tropska riba;riba|tropsko|žival
+🐡;riba napihovalka;riba|tropsko|žival
+🦈;morski pes;riba|žival
+🐙;hobotnica;bitje|ocean|žival
+🐚;spiralna školjka;plaža|školjka|spiralno|žival
+🪸;korala;greben|ocean|podnebne spremembe
+🪼;meduza;akvarij|au|lovke|morje|morska|nevretenčar|ocean|opeklina|plankton|želo
+🦀;rakovica;rak|žival|zodiak
+🦞;jastog;klešče|kremna juha|morska hrana|žival
+🦐;morski rakec;hrana|kozica|rak|škamp
+🦑;ligenj;hrana|mehkužec|žival
+🦪;ostriga;biser|potapljanje|školjka
+🐌;polž;narava|vrt|žival
+🦋;metulj;insekt|lep|žival
+🐛;žuželka;vrt|žival
+🐜;mravlja;vrt|žival|žuželka
+🐝;čebela;med|pomlad|žival|žuželka
+🪲;hrošč;insekt|narava|žival|žužek|žuželka
+🐞;pikapolonica;hrošč|narava|žival|žuželka
+🦗;muren;čriček|kobilica|mrčes|žival|žuželka
+🪳;ščurek;insekt|narava|ogabno|žival|žuželka
+🕷️;pajek;žival|žuželka
+🕸️;pajkova mreža;mreža|pajek
+🦂;škorpijon;horoskop|žival|zodiak
+🦟;komar;bolezen|insekt|malarija|mrzlica|virus
+🪰;muha;bolezen|domača muha|gnitje|insekt|letenje|ličinka|muha cece|nadležen|obad|žival
+🪱;črv;deževnik|kolobarnik|zajedavec|zemlja|žival
+🦠;mikrob;ameba|bakterija|virus|znanost
+💐;šopek;obletnica|rastlina|romanca|roža
+🌸;češnjev cvet;češnja|cvet|rastlina|roža
+💮;bela cvetlica;cvetlica|roža
+🪷;lotos;budizem|čistost|cvet|hinduizem|lepota|pomirjenost
+🏵️;rozeta;rastlina
+🌹;vrtnica;cvetlica|rastlina|roža|valentinovo
+🥀;ovenela roža;ovenela|roža
+🌺;hibiskus;rastlina|roža
+🌻;sončnica;rastlina|roža|sonce
+🌼;cvet;rastlina|regrat|roža
+🌷;tulipan;cvet|rastlina|roža
+🪻;hijacinta;bob|cvet|cvetlica|odolina|roža|sivka|vijolična|volčji bob
+🌱;sadika;mlado|poganjek|rastlina
+🪴;lončnica;dolgčas|gojenje|hiša|neuporabno|okras|praprot|rasti|rastlina
+🌲;zimzeleno drevo;božično drevo|drevo|gozd|rastlina
+🌳;listnato drevo;drevo|listnato|odpadanje|rastlina
+🌴;palma;drevo|plaža|rastlina|tropsko
+🌵;kaktus;narava|puščava|rastlina
+🌾;snop riža;klas|rastlina|riž
+🌿;zelišče;list|rastlina
+☘️;deteljica;irsko|rastlina
+🍀;štiriperesna deteljica;4|detelja|list|rastlina|štiri
+🍁;javorov list;javor|list|padanje|rastlina
+🍂;padlo listje;jesen|list|padanje|rastlina
+🍃;listje, ki se vrtinči v vetru;ki se vrtinči v vetru|list|listje|pihati|rastlina|veter|vrtinčiti se
+🪹;prazno gnezdo;dom|gnezdenje
+🪺;gnezdo z jajcema;gnezdenje|ptice
+🍄;goba;mario|rastlina
+🪾;drevo brez listja;nerodovitnost|suša|zima
+🍇;grozdje;grozd|rastlina|sadje
+🍈;melona;rastlina|sadje
+🍉;lubenica;rastlina|sadje
+🍊;mandarina;agrum|pomaranča|rastlina|sadje|vitamin c
+🍋;limona;agrum|kislo|rastlina|sadje
+🍋‍🟩;limeta;citrus|grenko|kislo|kislost|koktajl|lupinica|margarita|mojito|okras|osvežujoče|sadež|salsa|tekila|tropsko
+🍌;banana;rastlina|sadje
+🍍;ananas;rastlina|sadje|tropsko
+🥭;mango;hrana|sadež|tropski
+🍎;rdeče jabolko;hrana|jabolko|rastlina|rdeče|sadje
+🍏;zeleno jabolko;jabolko|sadje|zeleno
+🍐;hruška;sadje
+🍑;breskev;sadje
+🍒;češnje;češnja|hrana|rastlina|sadje
+🍓;jagoda;rastina|rastlina|sadež|sadje
+🫐;borovnice;borovnica|črnica|hrana|jagoda|jagodičevje|modra|sadje
+🥝;kivi;hrana|sadje
+🍅;paradižnik;rastlina|zelenjava
+🫒;oliva;hrana|oljčno olje|oljka|rastlina
+🥥;kokos;palma|pina colada
+🥑;avokado;hrana|sadje
+🍆;jajčevec;rastlina|zelenjava
+🥔;krompir;hrana|zelenjava
+🥕;korenje;hrana|zelenjava
+🌽;koruzni storž;klas|koruza|rastlina
+🌶️;feferon;paprika|pekoče
+🫑;paprika;babura|capsicum|hrana|zelena|zelenjava
+🥒;kumara;hrana|kumarica|zelenjava
+🥬;listnata zelenjava;burgerji|hrana|kitajsko zelje|listnato zelena|listni ohrovt|solata|zelje
+🥦;brokoli;hrana|zelenjava
+🧄;česen;aromatično|dišavnica|hrana|začimba
+🧅;čebula;aroma|aromatično|hrana|solzenje
+🥜;arašidi;arašid|hrana|oreški|zelenjava
+🫘;fižol;majhen|stročnica|živilo
+🌰;kostanj;rastlina
+🫚;korenina ingverja;ingver|ingverjevo|korenina|naravno|pivo|začimba|zelišče
+🫛;strok graha;edamame|grah|seme|stročnice|strok|zelenjava
+🍄‍🟫;šampinjon;gliva|glive|goba|gobica|hrana|nadev|nadev za pico|narava|poganjek|rjava goba|šitaka|tartuf|tros|vegetarijansko|zelenjava
+🫜;korenasta zelenjava;korenina|pesa|repa|vrt|zelenjava
+🍞;kruh;hrana|restavracija|štruca
+🥐;rogljič;francoski|hrana|pecivo
+🥖;bageta;francoska|hrana|kruh
+🫓;indijski kruh;arepa|hrana|kruh|lavaš|naan|pita|ploščati kruh
+🥨;presta;hrana|zvita
+🥯;bagel;hrana|namaz|pekarna|zajtrk
+🥞;palačinke;hrana|večerja|zajtrk
+🧇;vafelj;hrana|oblat|pecivo|zajtrk
+🧀;kos sira;hrana|sir
+🍖;meso s kostjo;kost|meso
+🍗;piščančje bedro;bedro|kost|perutnina|piščanec
+🥩;kos mesa;meso|rdeče meso|svinjski kotlet|zrezek
+🥓;slanina;hrana|meso
+🍔;hamburger;burger|hitra hrana|lakota
+🍟;krompirček;ocvrt krompirček|pomfrit
+🍕;pica;hrana|kos pice|rezina|sir
+🌭;hot dog;hrana|hrenovka|klobasa
+🥪;sendvič;hrana|kruh
+🌮;taco;mehiški prigrizek|tako
+🌯;burito;mehiški prigrizek|tortilja
+🫔;tamale;hrana|mehiška|tortilja|zavitek
+🥙;kebab;falafel|gyros|hrana|nadev
+🧆;falafel;čičerika|hrana|kroglica
+🥚;jajce;hrana|jajca
+🍳;kuhanje;cvrtje|jajce|na oko|ponev|restavracija|zajtrk
+🥘;kozica s hrano;hrana|kozica|paella|ponev
+🍲;skodelica hrane;hrana|juha|lonec|obara|skodelica
+🫕;fondi;čokolada|hrana|lonček|pomakanje|posoda|sir|smučanje|stopljena|švicarski
+🥣;skodelica z žlico;kaša|kosmiči|ovsena kaša|zajtrk
+🥗;zelena solata;hrana|solata|zelena
+🍿;pokovka;film|kokice
+🧈;maslo;hrana|mlečni izdelek|mlečno
+🧂;sol;okus|solnica|začimba
+🥫;konzervirana hrana;hrana|konzerva
+🍱;posoda za malico bento;bento|japonsko|malica|posoda
+🍘;rižev kreker;hrana|kreker|riž
+🍙;riževa kroglica;japonsko|kroglica|riž
+🍚;kuhan riž;hrana|kuhano|riž
+🍛;riž s karijem;kari|riž
+🍜;skleda rezancev;ramen|rezanci|skleda|vrelo
+🍝;špageti;hrana|mesne kroglice|restavracija|testenine
+🍠;pečeni sladki krompir;hrana|krompir|pečeno|sladko
+🍢;oden;hrana|kebab|morska hrana|paličica|špila
+🍣;suši;hrana
+🍤;ocvrt rakec;kozica|ocvrto|rakec|tempura
+🍥;ribji kolač s spiralo;kolač|pecivo|riba|spirala
+🥮;lunina torta;festival|hrana|jesen|yuebing
+🍡;dango;japonsko|paličica|posladek|sladko|špila
+🥟;cmok;gyoza|zavitek|žlikrof
+🥠;piškotek sreče;prerokba
+🥡;embalaža za hrano;dostava hrane|jedilne paličice|kartonska embalaža za hrano
+🍦;rahel sladoled;krema|led|mehko|posladek|sladko|sladoled
+🍧;nastrgan led;led|nastrgano|posladek|sladko
+🍨;sladoled;krema|led|posladek|sladica|sladko
+🍩;krof;hrana|posladek|sladko
+🍪;piškot;koščki čokolade|posladek|sladko
+🎂;rojstnodnevna torta;hrana|pecivo|posladek|rojstni dan|sladko|slavje|torta|vse najboljše
+🍰;krhek kolač;pecivo|posladek|rezina|sladko|torta
+🧁;kolaček;hrana|pekarna|posladek|sladkor
+🥧;pita;jabolčna pita|pecivo
+🍫;tablica čokolade;čokolada|posladek|sladko|tablica
+🍬;bonbon;noč čarovnic|posladek|sladkarije|sladko
+🍭;lizika;posladek|sladkarija|sladko|slaščica
+🍮;vanilijev puding;posladek|puding|sladica|sladko
+🍯;vrč medu;kozarec za med|lonček|med|sladko
+🍼;steklenička;dojenček|mleko|piti|steklenica
+🥛;kozarec mleka;kozarec|mleko|pijača
+☕;vroč napitek;čaj|kava|napitek|piti|vrelo|vroče
+🫖;čajnik;čaj|hrana|pijača|vrč
+🍵;čajna skodelica brez ročaja;čaj|napitek|piti|skodelica|skodelica čaja
+🍶;sake;bar|napitek|pijača|skodelica|steklenica
+🍾;odpiranje penine;bar|odleteti|pijača|steklenica|zamašek
+🍷;vinski kozarec;bar|napitek|pijača|steklenica|vino
+🍸;kozarec za koktajl;bar|koktajl|kozarec|pijača
+🍹;tropska pijača;bar|koktalj|pijača|tropsko
+🍺;vrček za pivo;bar|pijača|pivo|vrček
+🍻;nazdravljanje z vrčkoma za pivo;bar|pijača|pivo|trkanje|vrček
+🥂;nazdravljanje;kozarca|pijača|praznovanje|trkanje
+🥃;kozarec žgane pijače;kozarec|merica|viski|žgane pijače
+🫗;zlivanje tekočine;kozarec|nesreča|pijača|polivanje|prazen
+🥤;kozarec s slamico;soda|sok|voda
+🧋;čaj s kroglicami;biser|boba|bubble tea|čaj|hrana|mleko|pena|pijača|tajvan
+🧃;tetrapak s pijačo;pijača|sok|tetrapak s sokom
+🧉;mate čaj;napitek|pijača
+🧊;ledena kocka;hladno|ledeno|ohladitev
+🥢;jedilne paličice;paličice
+🍽️;vilice, nož in krožnik;krožnik|kuhanje|nož|obrok|večerja|vilice
+🍴;vilice in nož;hrana|kosilo|kuhanje|nož|restavracija|vilice
+🥄;žlica;jedilni pribor|pribor
+🔪;kuhinjski nož;hocho|kuhanje|kuhar|nož|orodje|orožje
+🫙;kozarec za vlaganje;omaka|posoda|prazen kozarec|prazna|praznina|shramba|začimba
+🏺;amfora;kuhanje|orodje|orožje|pijača|vodnar|vrč|zodiak
+🌍;globus z Evropo in Afriko;afrika|evropa|globus|svet|zemlja
+🌎;globus s Severno in Južno Ameriko;ameriki|globus|svet|zemlja
+🌏;globus z Azijo in Avstralijo;avstralija|azija|globus|svet|zemlja
+🌐;globus s poldnevniki;globus|poldnevniki|splet|svet|zemlja
+🗺️;zemljevid sveta;svet|zemljevid
+🗾;zemljevid Japonske;japonska|zemljevid
+🧭;kompas;magnet|navigacija|orientacija|smer
+🏔️;zasnežena gora;gora|hladno|sneg
+⛰️;gora;plezanje|vrh
+🛘;zemeljski plaz;blatni plaz|gora|nesreča|nevarnost|plaz|potres|skale
+🌋;vulkan;gora|izbruh|vreme
+🗻;gora Fuji;fuji|gora|narava|vrh
+🏕️;kampiranje;narava|šotor
+🏖️;plaža s senčnikom;plaža|senčnik
+🏜️;puščava;suša|vročina
+🏝️;samotni otok;otok|puščava
+🏞️;nacionalni park;park
+🏟️;stadion;
+🏛️;klasična zgradba;klasično|zgradba
+🏗️;gradbišče;gradnja|žerjav|zgradba
+🧱;opeka;glina|malta|opeke|zid
+🪨;skala;kamen|kamenje|pečina|pesek|težek|trd
+🪵;les;bruna|debla|deblo|drevo|gozdar|klada
+🛖;koča;bivanje|dom|hiša|jurta|okrogla hiša|zavetišče
+🏘️;hiše;hiša|zgradba
+🏚️;zapuščena hiša;hiša|zapuščeno|zgradba
+🏠;hiša;dom|preprost dom|ranč|zgradba
+🏡;hiša z vrtom;dom|hiša|vrt|zgradba
+🏢;poslovna stavba;mesto|pisarna|služba|zgradba
+🏣;japonska pošta;japonsko|pošta|zgradba
+🏤;pošta;evropska|evropsko|zgradba
+🏥;bolnišnica;zdravilo|zdravnik|zgradba
+🏦;banka;zgradba
+🏨;hotel;zgradba
+🏩;ljubezenski hotel;hotel|ljubezen|zgradba
+🏪;trgovina z mešanim blagom;hotel|komfort|trgovina|zgradba
+🏫;šola;zgradba
+🏬;veleblagovnica;blago|trgovina|zgradba
+🏭;tovarna;industrija|zgradba
+🏯;japonski grad;grad|japonsko|zgradba
+🏰;grad;evropsko|zgradba
+💒;poročna kapela;kapela|poroka|romanca
+🗼;tokijski stolp;stolp|tokio
+🗽;kip svobode;kip|new york|nyc|svoboda
+⛪;cerkev;križ|krščansko|vera|zgradba
+🕌;mošeja;islam|muslimansko|vera
+🛕;hindujski tempelj;hindu|tempelj
+🕍;sinagoga;jud|judovsko|tempelj|vera
+⛩️;šintoistično svetišče;šinto|svetišče|vera
+🕋;kaaba;islam|muslimansko|vera
+⛲;fontana;vodnjak
+⛺;šotor;kampiranje|taborjenje
+🌁;megleno;megla|vreme
+🌃;zvezdnata noč;noč|vreme|zvezda
+🏙️;mestna pokrajina;mesto|zgradba
+🌄;sončni vzhod v gorah;gora|jutro|sonce|sončni vzhod|vreme
+🌅;sončni vzhod;jutro|narava|sonce|vreme
+🌆;mestna pokrajina v mraku;mesto|mrak|pokrajina|sonce|sončni zahod|večer|vreme|zgradba
+🌇;sončni zahod;mrak|sonce|vreme|zgradba
+🌉;most ponoči;most|noč|vreme
+♨️;termalni vrelec;izvir|vrelec|vrelo|vroče
+🎠;konj na vrtiljaku;konj|vrtiljak|zabava
+🛝;tobogan;igra|igrišče|zabaviščni park
+🎡;panoramsko kolo;kolo|lunapark
+🎢;vlakec smrti;lunapark|vlak smrti|zabaviščni park
+💈;brivski izvesek;brivec|izvesek|pričeska|striženje
+🎪;cirkuški šotor;cirkus|šotor
+🚂;lokomotiva;para|stroj|vlak|vozilo|železnica
+🚃;železniški vagon;avtomobil|električno|tramvaj|trolejbus|vlak|vozilo|železnica
+🚄;hitri vlak;hitrost|shinkansen|vlak|vozilo|železnica
+🚅;hitri vlak s koničastim nosom;hitrost|koničast nos|shinkansen|vlak|vozilo|železnica
+🚆;vlak;prihod|vozilo|železnica
+🚇;podzemni vlak;podzemna železnica|vozilo
+🚈;ozkotirna železnica;vlak|vozilo|železnica
+🚉;postaja;vlak|vozilo|železnica
+🚊;tramvaj;trolejbus|vozilo
+🚝;enotirna železnica;vozilo
+🚞;gorska železnica;avto|gora|vozilo|železnica
+🚋;vagon tramvaja;tramvaj|trolejbus|vagon|vozilo
+🚌;avtobus;šola|šolski avtobus|vozilo
+🚍;prihajajoči avtobus;avtobus|prihajajoče|vozila|vozilo
+🚎;trolejbus;avtobus|tramvaj|vozilo
+🚐;minibus;avtobus|vozilo|vožnja
+🚑;reševalno vozilo;prva pomoč|rešilec|vozilo
+🚒;gasilsko vozilo;avto|gasilsko|požar|vozilo
+🚓;policijsko vozilo;avto|patruljno|policija|vozilo
+🚔;prihajajoče policijsko vozilo;avto|policija|prihajajoče|vozilo
+🚕;taksi;taksist|vozilo|vožnja
+🚖;prihajajoči taksi;avtomobil|poklicati taksi|prihajajoče|taksi|vozilo
+🚗;avtomobil;avto|vozilo|vožnja
+🚘;prihajajoči avtomobil;avto|avtomobil|prihajajoče|vozilo|vožnja
+🚙;cestni terenec;avtomobil|prostočasno|vozilo|vožnja
+🛻;poltovornjak;avto|delovno vozilo|pick-up|pickup|tovornjak|transport|vozilo|vožnja
+🚚;dostavno vozilo;dostavno|poltovornjak|tovornjak|vozilo
+🚛;tovornjak s prikolico;kamion|polpriklopnik|tovornjak|vozilo
+🚜;traktor;vozilo
+🏎️;dirkalnik;avto|dirkanje|hitrost
+🏍️;motor;dirkanje
+🛵;skuter;motor|vozilo
+🦽;ročni invalidski voziček;invalid
+🦼;motoriziran invalidski voziček;invalid
+🛺;rikša z motorjem;tuk tuk|vozilo
+🚲;kolo;kolesarjenje|šport|vozilo
+🛴;skiro;poganjanje
+🛹;rolka;deska|kolesa|rolkanje
+🛼;kotalke;kotalka|kotalkanje|roler|šport
+🚏;avtobusna postaja;avtobus|avtobusno postajališče|postajališče
+🛣️;avtocesta;cesta
+🛤️;železniška proga;vlak|železnica
+🛢️;naftni sod;nafta|sod
+⛽;črpalka za gorivo;bencin|črpalka|gorivo|servis
+🛞;avtomobilsko kolo;avto|krog|pnevmatika|vozilo|vrtenje
+🚨;policijska luč;avto|luč|policija|rotacijska luč|vozilo|vrteče
+🚥;vodoravni semafor;križišče|luč|promet|semafor
+🚦;navpični semafor;križišče|luč|promet|semafor
+🛑;znak stop;osemkotnik|stop|znak
+🚧;zaprto zaradi gradnje;gradnja|ovira|prepreka
+⚓;sidro;ladja|orodje
+🛟;rešilni obroč;plavajoč|plavanje|reševanje|reševanje iz vode|rešilni jopič|rešilni pripomoček|varnost
+⛵;jadrnica;čoln|jadranje|jahta|letovišče|morje|vozilo
+🛶;kanu;čoln
+🚤;gliser;čoln|luksuz|poletje|vozilo
+🛳️;potniška ladja;ladja|potnik|vozilo
+⛴️;trajekt;ladja|potnik|vozilo
+🛥️;motorni čoln;čoln|ladja|vozilo
+🚢;ladja;potnik|potovanje|titanik|vozilo
+✈️;letalo;letenje|potovanje|vozilo
+🛩️;manjše letalo;letalo|vozilo
+🛫;odhod letala;letalo|odhod|odhodi|prijava|vozilo
+🛬;prihod letala;letalo|prihod|prihodi|pristanek|vozilo
+🪂;padalo;jadralni zmaj|jadralno padalo|parasailing|skok s padalom
+💺;sedež;stol
+🚁;helikopter;potovanje|vozilo
+🚟;viseča železnica;viseče|vozilo|železnica
+🚠;nihalka;gondola|gora|jeklena vrv|vozilo
+🚡;žičnica;gondola|jeklena vrv|tramvaj|vagon|vozilo|zračno
+🛰️;satelit;vesolje|vozilo
+🚀;raketa;potovanje|vesolje|vozilo
+🛸;leteči krožnik;nezemljani|neznani leteči predmet|NLP
+🛎️;hotelski zvonec;hotel|portir|zvonec
+🧳;prtljaga;kovček|pakiranje|potovanje
+⌛;peščena ura;čas|časovnik|pesek
+⏳;peščena ura, ki teče;čas|časovnik|ki teče|peščena ura|pesek
+⌚;ročna ura;čas|ura
+⏰;budilka;alarm|čas|ura
+⏱️;štoparica;čas|ura
+⏲️;časovnik;odštevalnik časa|ura
+🕰️;ura za na okvir kamina;čas|ura
+🕛;poldne;00|12|12.00|dvanajst|opoldan|ura
+🕧;pol enih;12|12.30|30|dvanajst|ena|pol|ura
+🕐;ura je ena;00|1|1.00|ena|ura
+🕜;pol dveh;1|1.30|30|dve|ena|pol|ura
+🕑;ura je dve;00|2|2.00|dve|ura
+🕝;pol treh;2|2.30|30|dve|pol|tri|ura
+🕒;ura je tri;00|3|3.00|tri|ura
+🕞;pol štirih;3|3.30|30|pol|štiri|tri|ura
+🕓;ura je štiri;00|4|4.00|štiri|ura
+🕟;pol petih;30|4|4.30|čas|pet|pol|štiri|ura
+🕔;ura je pet;00|5|5.00|pet|ura
+🕠;pol šestih;30|5|5.30|pet|pol|šest|ura
+🕕;ura je šest;00|6|6.00|šest|ura
+🕡;pol sedmih;30|6|6.30|pol|sedem|šest|ura
+🕖;ura je sedem;00|7|7.00|sedem|ura
+🕢;pol osmih;30|7|7.30|osem|pol|sedem|ura
+🕗;ura je osem;00|8|8.00|osem|ura
+🕣;pol devetih;30|8|8.30|devet|osem|pol|ura
+🕘;ura je devet;00|9|9.00|devet|ura
+🕤;pol desetih;30|9|9.30|deset|devet|pol|ura
+🕙;ura je deset;00|10|10.00|deset|ura
+🕥;pol enajstih;10|10.30|30|deset|enajst|pol|ura
+🕚;ura je enajst;00|11|11.00|enajst|ura
+🕦;pol dvanajstih;11|11.30|30|dvanajst|enajst|pol|ura
+🌑;mlada luna;luna|tema|vesolje|vreme
+🌒;prvi krajec;krajec|luna|prvi|vesolje|vreme
+🌓;polovično osvetljena luna v prvem krajcu;četrt|luna|vesolje|vreme
+🌔;več kot polovično osvetljen prvi krajec;luna|polovično|prvi|vesolje|vreme
+🌕;polna luna;luna|polno|vesolje|vreme
+🌖;več kot polovično osvetljen zadnji krajec;luna|polovično|vesolje|vreme|zadnji
+🌗;polovično osvetljena luna v zadnjem krajcu;četrt|luna|vesolje|vreme
+🌘;zadnji krajec;krajec|luna|vesolje|vreme|zadnji
+🌙;lunin srp;krajec|luna|vesolje|vreme
+🌚;mlada luna z obrazom;luna|obraz|vesolje|vreme
+🌛;polovično osvetljena luna v prvem krajcu z obrazom;četrt|luna|obraz|vesolje|vreme
+🌜;polovično osvetljena luna v zadnjem krajcu z obrazom;četrt|luna|obraz|vesolje|vreme
+🌡️;termometer;vreme|vročina
+☀️;sonce;sončno|svetlo|vesolje|vreme|žarki
+🌝;polna luna z obrazom;luna|obraz|polno|svetlo|vesolje|vreme
+🌞;sonce z obrazom;obraz|sonce|sončno|svetlo|vreme|vročina
+🪐;planet z obročem;saturn|saturnov obroč
+⭐;bela srednja zvezda;astronomija|zvezda|zvezde
+🌟;žareča zvezda;bleščeče|lesketanje|sijanje|žar|zvezda
+🌠;utrinek;padanje|repatica|vesolje|zvezda
+🌌;rimska cesta;vesolje|vreme
+☁️;oblak;vreme
+⛅;sonce za oblakom;oblačno|oblak|sonce|vreme
+⛈️;oblak s strelo in dežjem;dež|oblak|strela|vreme
+🌤️;sonce za oblačkom;oblak|sonce|vreme
+🌥️;sonce za velikim oblakom;oblak|sonce|vreme
+🌦️;sonce za oblakom z dežjem;dež|oblak|sonce|vreme
+🌧️;oblak z dežjem;dež|oblak|vreme
+🌨️;oblak s snegom;mrzlo|oblak|sneg|vreme
+🌩️;oblak s strelo;oblak|strela|vreme
+🌪️;tornado;oblak|vreme|vrtinec
+🌫️;megla;oblak|vreme
+🌬️;obraz, ki piha veter;ki piha veter|oblak|obraz|pihati|veter|vreme
+🌀;ciklon;tajfun|tornado|vreme|vrtoglavica
+🌈;mavrica;dež|homoseksualen|lezbično|lgbt|narava|ponos|trans|transspolnost|vreme
+🌂;zaprt dežnik;dež|dežnik|oblačila|vreme
+☂️;dežnik;dež|oblačila|vreme
+☔;dežnik z dežnimi kapljami;dež|dežnik|kaplja|oblačila|vreme
+⛱️;dežnik na tleh;dež|senčnik|sonce|tla
+⚡;visoka napetost;električno|elektrika|napetost|nevarnost|strela|sunek
+❄️;snežinka;mrzlo|sneg|vreme
+☃️;snežak;mraz|mrzlo|sneg|vreme
+⛄;snežak brez snega;mrzlo|sneg|snežak|vreme|zima
+☄️;komet;vesolje
+🔥;ogenj;orodje|plamen|vroče|vročina
+💧;kapljica;kaplja|mrzlo|pot|strip|vreme
+🌊;vodni val;morje|val|voda|vreme
+🎃;izrezljana buča;buča|laterna|noč čarovnic|slavje
+🎄;jelka;božič|božična jelka|božično drevo|drevešček|slavje
+🎆;ognjemet;bum|slavje|zabava
+🎇;sibirska lučka;bum|iskrenje|ognjemet|slavje
+🧨;petarda;dinamit|eksploziv|ognjemet|pok
+✨;iskrice;*|iskrenje|lesketanje|zvezda|zvezdice
+🎈;balon;praznovanje|rojstni dan|slavje
+🎉;pokalica za zabave;pokalica|rojstni dan|slavje|zabava
+🎊;konfeti;krogla|praznovanje|slavje
+🎋;drevo za tanabato;drevo|japonsko|pasica|slavje
+🎍;okrasitev bora;bambus|bor|japonsko|rastlina|slavje
+🎎;japonski lutki;festival|japonsko|lutka|slavje
+🎏;zastavni trak z ribama;barvno|krap|riba|slavje|trak
+🎐;vetrni zvončki;slavje|veter|zvonček|zvonec
+🎑;lunino slavje;luna|obred|slavje
+🧧;rdeča ovojnica;darilo|denar|hóngbāo|lai see|sreča
+🎀;pentlja;slavje
+🎁;zavito darilo;dar|darilo|škatla|slavje|zavito
+🎗️;simbolna pentlja;pentlja|simbol|slavje
+🎟️;vstopnice;vstopnica|vstopnina
+🎫;vstopnica;odrezek|vstopnina
+🎖️;vojaško odlikovanje;odlikovanje|slavje|vojaško
+🏆;trofeja;nagrada|prvaki|šport|zmaga
+🏅;športna medalja;medalja|zlato|zmaga|zmagovalec
+🥇;zlata medalja;medalja|prvo mesto|zlato|zmaga
+🥈;srebrna medalja;drugo mesto|medalja|srebro
+🥉;bronasta medalja;bron|medalja|tretje mesto
+⚽;nogometna žoga;messi|nogomet|šport|žoga
+⚾;žogica za baseball;baseball|šport|žoga
+🥎;žoga za softball;pod roko|rokavica|šport|žoga
+🏀;košarkarska žoga;koš|obroč|šport|žoga
+🏐;žoga za odbojko;igra|šport|žoga
+🏈;žoga za ameriški nogomet;ameriški nogomet|ameriško|nogomet|šport|žoga
+🏉;žoga za ragbi;nogomet|ragbi|šport|žoga
+🎾;tenis;lopar|šport|žoga
+🥏;frizbi;leteči disk|najboljši
+🎳;kegljanje;igra|krogla|šport
+🏏;kriket;igra|kij|šport|žogica
+🏑;hokej na travi;hokej|igra|palica|polje|žogica
+🏒;hokejska palica in plošček;hokej|igra|led|palica|plošček
+🥍;lacrosse;gol|palica|šport|žoga
+🏓;namizni tenis;igra|kij|lopar|šport|žogica
+🏸;badminton;igra|lopar|perjanica|žogica
+🥊;boksarska rokavica;boks|rokavica|šport
+🥋;kimono za borilne športe;borilne veščine|judo|karate|šport|taekwondo|uniforma
+🥅;gol;mreža|šport
+⛳;zastavica v luknji;golf|luknja|šport
+⛸️;drsalka;drsanje|drsati|led
+🎣;ribiška palica;palica|riba|šport
+🤿;potapljaška maska;na dah|potapljanje|snorkljanje
+🎽;tekaška majica;lenta|majica|šport|tek
+🎿;smučke;smučanje|smučati|sneg|šport
+🛷;sanke;sankanje|sneg
+🥌;curling;igra
+🎯;zadetek v polno;igra|pikado|središče|zadetek
+🪀;jojo;igrača|nihanje|proč sem
+🪁;zmaj (igrača);jadrati|leteti
+🔫;vodna pištola;orodje|orožje|pištola|revolver
+🎱;biljard;8|igra|krogla|osmica
+🔮;kristalna krogla;fantazija|kristalna|krogla|orodje|pravljica|prerokba
+🪄;čarobna palica;čaranje|čarovnica|čarovnija|čarovnik|magija|palica
+🎮;videoigra;igra|krmilnik|playstation|zabava
+🕹️;igralna palica;igra|videoigra
+🎰;igralni avtomat;avtomat|casino|igra|igre na srečo
+🎲;igralna kocka;igra|kocka|kockanje|zabava
+🧩;delček sestavljanke;delček|namig|prileganje|sestavljanka
+🧸;medvedek;igrača|lutka|plišast medvedek|plišasta|polnjena
+🪅;pinjata;mehiško|praznično|praznovanje|sladkarije|zabava
+🪩;disko krogla;bleščanje|disko|ples|zabava
+🪆;babuška;gnezdenje|igrača|lutka|punčka|rusija
+♠️;pik;barva|igra|karta
+♥️;srce;barva|igra|karta|srca
+♦️;karo;barva|kari igra|karta
+♣️;križ;barva|igra|karta|križi
+♟️;kmet pri šahu;pogrešljiv|šah|tepček
+🃏;joker;igra|igranje|karta
+🀄;rdeči zmaj v mahjongu;igra|madžong|mahjong|rdeče
+🎴;rožne igralne karte;igra|igranje|japonsko|karta|roža
+🎭;scenske umetnosti;gledališče|maska|nastopanje|umetnost
+🖼️;uokvirjena slika;muzej|okvir|risba|slika|umetnost
+🎨;slikarska paleta;muzej|paleta|slika|slikanje|umetnost
+🧵;sukanec;navitek|nit|šivanje|šivanka
+🪡;šivanka;igla|krojenje|šivanje|šivi|spoji|vezenje
+🧶;preja;klobčič|kvačkanje|pletenje
+🪢;vozel;sukanec|vrv|vrvica|zanka
+👓;očala;oblačila|oči|sončna očala
+🕶️;sončna očala;očala|oči|temno
+🥽;zaščitna očala;plavanje|potapljanje|varjenje|zaščita oči
+🥼;laboratorijska halja;eksperiment|oblačilo|zdravnik|znanstvenik
+🦺;varnostni jopič;jopič|reševalni|v sili
+👔;kravata;oblačila|resna|srajca
+👕;majica;kratka majica|nakupovanje|oblačila|srajca
+👖;kavbojke;hlače|oblačila|vikend|za prosti čas
+🧣;šal;mraz|toplina|vrat|zima
+🧤;rokavice;roka
+🧥;plašč;jakna|mraz|toplina|zima
+🧦;nogavice;oblačilo|obutev
+👗;ženska obleka;elegantno|nakupovanje|oblačila|obleka
+👘;kimono;oblačila|udobje
+🥻;sari;oblačilo|obleka|ogrinjalo
+🩱;enodelne kopalke;kopalke|kopalna obleka|obleka|ženske kopalke
+🩲;spodnje hlače;enodelno|kopalke|kopalno oblačilo|oblačilo|spodnje perilo
+🩳;kratke hlače;kopalke|kopalne hlače|oblačilo|spodnje perilo
+👙;bikini;bazen|kopalke|oblačila|plavanje|plavati
+👚;ženska oblačila;dama|nakupovanje|oblačila|ženska|ženske
+🪭;pahljača;flirtanje|hlajenje|pahljati|ples|sramežljiv|trepetati|vroče
+👛;drobižnica;kovanec|nakupovanje|oblačila|ročna torbica
+👜;ročna torbica;nakupovanje|oblačila|torbica
+👝;večerna torbica;dodatki|oblačila|ročna torbica|torbica
+🛍️;nakupovalni vrečki;hotel|nakupovanje|torbica
+🎒;šolski nahrbtnik;izobrazba|nahrbtnik|šola|torba
+🩴;japonke;obuvalo za plažo|plaža|sandali|sandali za plažo|zōri
+👞;moški čevelj;čevelj|moški|nakupovanje|oblačila
+👟;tekaški čevelj;čevelj|oblačila|športno|superga
+🥾;pohodniški čevelj;čevelj|kampiranje|planinarjenje|pohodništvo
+🥿;balerinke;balernike|brez pete|čevlji|natakniti|nizki čevlji
+👠;čevelj z visoko peto;čevelj|oblačila|peta|ženska
+👡;ženski sandali;čevelj|oblačila|sandal|ženska
+🩰;baletni čeveljci;balet|obutev|ples
+👢;ženski škorenj;čevelj|oblačila|škorenj|ženska
+🪮;glavnik za v lase;afro|česati|glavnik|lasje
+👑;krona;igra prestolov|kralj|kraljica|oblačila
+👒;ženski klobuk;klobuk|oblačila|ženska
+🎩;cilinder;elegantno|klobuk|oblačila
+🎓;maturantska kapa;kapa|klobuk|matura|oblačila|slavje
+🧢;kapa s ščitom;čepica|kapa|kapa s ščitnikom
+🪖;vojaška čelada;armada|bojevnik|čelada|vojak|vojna|vojska
+⛑️;čelada z belim križem;čelada|čepica|križ|obraz|pomoč
+📿;rožni venec;koralde|molitev|oblačila|ogrlica|vera
+💄;šminka;kozmetika|ličila|zmenek
+💍;prstan;diamant|poroka|romanca|zaroka
+💎;dragulj;diamant|dragi kamen|poroka|romanca
+🔇;ugasnjen zvočnik;brez zvoka|glasnost|tiho|zvočnik
+🔈;zvočnik pri nizki glasnosti;glasnost|potiho
+🔉;zvočnik pri zmerni glasnosti;glasnost|nizko|val|zmerno|zvočnik|zvok
+🔊;zvočnik na glas;glasba|glasno|zvočnik|zvok
+📢;javni zvočnik;glasnost|javna objava|komunikacija|zvok
+📣;megafon;skandiranje|zvok
+📯;poštni rog;pošta|poštno|rog
+🔔;zvonec;cerkev|odmor|zvok
+🔕;prečrtan zvonec;brez zvoka|molčeče|ne|ni dovoljeno|prepovedano|tiho|zvonec
+🎼;partitura;glasba|nota
+🎵;glasbena nota;glasba|nota
+🎶;glasbene note;glasba|nota|note
+🎙️;studijski mikrofon;glasba|mikrofon|studio
+🎚️;drsnik za raven;drsnik|glasba|raven
+🎛️;kontrolni gumbi;glasba|gumbi|kontrolnik
+🎤;mikrofon;glasba|karaoke|petje|zvok
+🎧;slušalka;glasba|ušesna slušalka|zvok
+📻;radio;glasba|video|zabava
+🎷;saksofon;glasba|glasbilo|instrument
+🎺;trobenta;glasba|glasbilo
+🪊;pozavna;glasba|glissando|inštrument|jazz|otožno|poteg|trobila|trombon|žalostno
+🪗;harmonika;glasba|igranje|inštrument|kromatična harmonika|meh|muzikant
+🎸;kitara;glasba|glasbilo|instrument
+🎹;klaviatura;glasba|glasbilo|klavir
+🎻;violina;glasba|glasbilo|instrument
+🪕;bendžo;brenkalo|glasba|glasbilo|strune
+🥁;boben;glasba|tolkalo
+🪘;visok boben;boben|glasba|igranje|inštrument|kongo|ritem|visoki boben
+🪇;marake;glasba|glasbilo|instrument|ropotulja|stresaj|tolkala
+🪈;flavta;flavtist|glasba|glasbilo|instrument|orkester|pihala|piščal|snemalnik
+🪉;harfa;glasba|glasbilo|kupido|ljubezen|orkester
+📱;mobilni telefon;komunikacija|mobilnik|mobilno|telefon
+📲;mobilni telefon s puščico;klic|mobilnik|mobilno|puščica|sprejeti|telefon
+☎️;telefon;klicanje
+📞;telefonska slušalka;komunikacija|sprejemnik|telefon
+📟;pozivnik;komunikacija
+📠;telefaks;faks|komunikacija
+🔋;baterija;energija
+🪫;skoraj prazna baterija;elektronsko|izčrpanost|nizka raven energije
+🔌;električni vtikač;električno|elektrika|vtikač
+💻;prenosnik;osebni računalnik|osebno|računalnik|sistem|windows
+🖥️;namizni računalnik;namizno|računalnik|zaslon
+🖨️;tiskalnik;računalnik
+⌨️;tipkovnica;računalnik
+🖱️;računalniška miška;računalnik
+🖲️;sledilna kroglica;računalnik
+💽;minidisk;disk|optično|računalnik|računalniški disk
+💾;disketa;disk|računalnik
+💿;optični disk;blu-ray|cd|disk|dvd|optično|računalnik
+📀;dvd;blu-ray|cd|disk|optično|računalnik
+🧮;abak;izračun|kalkulator
+🎥;filmska kamera;film|kamera|kino|snemanje
+🎞️;filmski trak;film|kino|sličice
+📽️;filmski projektor;film|kino|projektor|video
+🎬;klapa;akcija|film
+📺;televizija;tv|video
+📷;fotoaparat;instagram|kamera|selfi|video
+📸;fotoaparat z bliskavico;bliskavica|fotoaparat|slika|video
+📹;videokamera;kamera|snemanje|video
+📼;videokaseta;kaseta|vhs|video
+🔍;povečevalno steklo, usmerjeno v levo;iskanje|lupa|orodje|povečevalno|steklo|usmerjeno v levo
+🔎;povečevalno steklo, usmerjeno v desno;desno|iskanje|laboratorij|nagnjeno|orodje|povečevalno|steklo|v desno|znanost
+🕯️;sveča;luč
+💡;žarnica;električno|luč|strip|svetilka|zamisel
+🔦;svetilka;električno|luč|orodje
+🏮;rdeči lampijon;bar|japonsko|lampijon|luč|rdeče
+🪔;oljna lučka;dyja|lučka|olje|svetilka
+📔;zvezek z okrasno platnico;knjiga|okrašeno|pisanje|platnica|zvezek
+📕;zaprta knjiga;branje|izobrazba|knjiga|zaprto
+📖;odprta knjiga;branje|izobrazba|knjiga|odprto|znanje
+📗;zelena knjiga;branje|izobrazba|knjiga|knjižnica|zeleno
+📘;modra knjiga;branje|knjiga|knjižnica|modro
+📙;oranžna knjiga;branje|izobrazba|knjiga|oranžno|znanje
+📚;knjige;branje|izobraževanje|knjiga|šola
+📓;zvezek;beležnica
+📒;zvezek s spiralno vezavo;zvezek
+📃;zvita stran;dokument|nagrbančiti se|stran
+📜;zvitek;papir
+📄;list s prikazano popisano stranjo;dokument|stran
+📰;časopis;komunikacija|novice
+🗞️;zvit časopis;časopis|novice|zvito
+📑;zaznamki na straneh;marker|oznaka|zavihki|zaznamek
+🔖;zaznamek;oznaka
+🏷️;etiketa;nalepka|oznaka
+🪙;kovanec;bogat|denar|evro|kovina|srebro|zaklad|zlato
+💰;vreča denarja;bogat|denar|dolar|vreča
+🪎;skrinja z zakladom;bogastvo|denar|dragocenosti|dragulj|nagrada|nakit|plen|srebro|zlato
+💴;bankovec za jen;apoen|banka|bankovec|denar|jen|valuta
+💵;dolarski bankovec;apoen|banka|bankovec|denar|dolar|valuta
+💶;evrski bankovec;apoen|banka|bankovec|denar|evro|valuta
+💷;bankovec za funt;apoen|banka|bankovec|denar|funt|valuta
+💸;denar s krili;apoen|banka|bankovec|denar|dolar|krila|leteti|valuta
+💳;kreditna kartica;banka|denar|kartica|kreditno|plačilo
+🧾;račun;dokaz|dokazilo|knjigovodstvo|računovodstvo
+💹;grafikon rasti za jen;banka|denar|graf|grafikon|jen|navzgor|rast|rasti|trend|trg|valuta
+✉️;ovojnica;e-pošta|pismo|pošta
+📧;e-pošta;elektronska pošta|pismo|pošta
+📨;dohodna ovojnica;dohodno|e-pošta|elektronska pošta|pismo|pošta|prejeti
+📩;ovojnica s puščico;e-pošta|elektronska pošta|kuverta|navzdol|odhodno|pismo|poslano|pošta|puščica
+📤;pladenj za odhodno pošto;nabiralnik|odhodna pošta|pismo|pladenj|poslano|pošta
+📥;pladenj za dohodno pošto;dohodna pošta|nabiralnik|pismo|pladenj|pošta|prejeti
+📦;paket;dostava|nabiralnik|škatla
+📫;zaprt poštni nabiralnik z dvignjeno zastavico;komunikacija|pošta|poštni nabiralnik|zaprto
+📪;zaprt poštni nabiralnik s spuščeno zastavico;pošta|poštni nabiralnik|spuščeno|zaprto
+📬;odprt poštni nabiralnik z dvignjeno zastavico;odprto|pošta|poštni nabiralnik
+📭;odprt poštni nabiralnik s spuščeno zastavico;odprto|pošta|poštni nabiralnik|spuščeno
+📮;poštni nabiralnik;komunikacija|pošta
+🗳️;škatla za glasovanje z glasovnico;glasovnica|škatla
+✏️;svinčnik;pisalo
+✒️;črna konica peresa;konica|pero
+🖋️;nalivnik;nalivno pero|pero
+🖊️;nalivno pero;kemični svinčnik|nalivnik
+🖌️;čopič;barvanje|slikanje
+🖍️;voščenka;barvica
+📝;zapisek;beležnica|komunikacija|opomba|svinčnik
+💼;kovček;aktovka|pisarna
+📁;mapa za spise;mapa|spis
+📂;odprta mapa za spise;mapa|odprto|spis
+🗂️;kartoteke z vmesnimi listi;kartica|kartoteka|vmesni listi
+📅;koledar;datum
+📆;koledar z odstranljivimi listi;koledar
+🗒️;spiralna beležnica;beležka|beležnica|spirala
+🗓️;spiralni koledar;beležka|koledar|spirala
+📇;organizator vizitk;kartica|kartoteka|vizitka
+📈;grafikon rasti;graf|grafikon|navzgor|rast|trend
+📉;grafikon padca;graf|grafikon|navzdol|trend
+📊;črtni grafikon;črtno|graf|grafikon|podatki
+📋;podložna mapa;opombe|seznam opravil
+📌;risalni žebljiček;oznaka|žebljiček
+📍;okrogli risalni žebljiček;lokacija|oznaka|risalni žebljiček|zemljevid
+📎;sponka za papir;sponka
+🖇️;povezani sponki;povezano|sponka
+📏;ravnilo;kot|matematika|merilo
+📐;trikotno ravnilo;merilo|nastaviti|ravnilo|trikotnik
+✂️;škarje;orodje|rezanje
+🗃️;škatla z dokumenti;dokumenti|škatla|spis
+🗄️;predalnik za dokumente;predalnik|spis
+🗑️;koš za smeti;koš|smeti
+🔒;ključavnica;zaklenjena ključavnica|zaklenjeno|zaprto|zasebno
+🔓;odklenjena ključavnica;ključavnica|odkleniti|odprto|zakleniti
+🔏;ključavnica s peresom;črnilo|ključavnica|konica|pero|zasebnost
+🔐;zaprta ključavnica s ključem;ključ|ključavnica|varno|zaprto
+🔑;ključ;geslo|ključavnica|odkleniti|zakleniti
+🗝️;star ključ;ključ|ključavnica|namig|staro
+🔨;kladivo;orodje|popravila
+🪓;sekira;cepljenje|drva|les|sekanje
+⛏️;kramp;kladivo|orodje|rudarjenje
+⚒️;kladivo in kramp;kladivo|kramp|orodje
+🛠️;kladivo in ključ;kladivo|ključ|orodje
+🗡️;bodalo;nož|orožje
+⚔️;prekrižana meča;meča|meči|orožje|prekrižano
+💣;bomba;eksplozija|nevarno|strip|vroče
+🪃;bumerang;aborigini|avstralija|metanje|orožje|udarec nazaj|vračanje
+🏹;lok in puščica;lok|lokostrelec|orodje|orožje|puščica|strelec|zodiak
+🛡️;ščit;orožje
+🪚;lisičja žaga;lisičji rep|mizar|orodje|rezati|žaga|žagati
+🔧;ključ za matice;francoski ključ|orodje|vijačni ključ
+🪛;izvijač;delo|orodje|spreten|vijak
+🔩;matica in vijak;matica|orodje|vijak
+⚙️;zobnik;orodje
+🗜️;stiskanje;orodje|primež
+⚖️;tehtnica;orodje|pravičnost|ravnovesje|teža|zodiak
+🦯;palica za slepe;dostopnost|invalid|slepota
+🔗;člen;členi
+⛓️‍💥;strgana veriga;okovi|prelom|svoboda|veriga
+⛓️;verige;veriga
+🪝;kljuka;kavelj|krivuljnik|orodje|pirat|prednost|zanka|zaponka
+🧰;zaboj za orodje;mehanik|orodje|rdeč zaboj|zaboj
+🧲;magnet;magnetno|podkev|privlačnost
+🪜;lestev;dostop|klin|plezanje|prečka
+🪏;lopata;jama|kopanje
+⚗️;destilator;kemija|orodje
+🧪;epruveta;eksperiment|kemija|kemik|laboratorij|znanost
+🧫;petrijevka;bakterije|biolog|biologija|kultura|laboratorij
+🧬;dnk;biolog|evolucija|gen|genetika|življenje
+🔬;mikroskop;laboratorij|orodje|poskus|znanost
+🔭;teleskop;orodje|stik|znanost
+📡;satelitska antena;antena|krožnik|satelit|satelitsko
+💉;injekcija;bolezen|bolno|igla|medicina|orodje|zdravnik
+🩸;kaplja krvi;krvodajalstvo|medicina|menstruacija|zdravstvo
+💊;tableta;bolno|medicina|zdravilo|zdravnik
+🩹;samolepilni obliž;hanzaplast|obliž|rana
+🩼;bergla;invalidnost|opora|palica|poškodba|pripomoček za mobilnost
+🩺;stetoskop;medicina|pljuča|prsni koš|srce|zdravnik
+🩻;rentgen;kosti|okostje|rentgenski žarki|zdravnik|zdravniški
+🚪;vrata;omara|zadnja vrata
+🛗;dvigalo;dostopnost|elevator|lift|znak
+🪞;zrcalo;ličenje|odsev|ogledalo
+🪟;okno;odprtina|okvir|pogled|prosojno|svež zrak
+🛏️;postelja;hotel|spanje
+🛋️;kavč in svetilka;hotel|kavč|svetilka
+🪑;stol;pohištvo|sedeti|sedež
+🚽;straniščna školjka;stranišče
+🪠;odmaševalnik;kakec|sesalna skodela|sesanje|stranišče|vodoinštalater|WC
+🚿;tuš;prha|voda
+🛁;kad;banja|kopalna kad|kopanje
+🪤;mišolovka;miš|mišelovka|past za miši|sir|vaba
+🪒;britev;britje|britvica|ostro
+🧴;steklenička losjona;krema za sončenje|losjon|šampon|vlažilna krema
+🧷;varnostna zaponka;plenica|punk rock
+🧹;metla;čarovnica|čiščenje|pometanje
+🧺;košara;kmetovanje|perilo|piknik
+🧻;zvitek papirja;papirnate brisače|toaletni papir
+🪣;vedro;čeber|čiščenje|škaf|sod
+🧼;milo;čiščenje|kopanje|kos|pena|posodica za milo
+🫧;mehurčki;čisto|kupček|lebdenje|milo|podvodni
+🪥;zobna ščetka;čisto|higiena|kopalnica|potrebščine|ščetka|ščetkanje|zobje|zobna
+🧽;spužva;čiščenje|porozno|vpojno
+🧯;gasilni aparat;gašenje|ogenj|pogasiti
+🛒;nakupovalni voziček;košarica|nakupovanje|voziček
+🚬;kajenje;cigara|cigareta
+⚰️;krsta;smrt|vampir
+🪦;nagrobnik;grob|grobovi|mrtev|počivaj v miru|pokopališče|rip|spomenik
+⚱️;žara;pogreb|smrt
+🧿;amulet zlobno oko;amulet|koralda|nazar|talisman|zlobno oko
+🪬;roka Fatime;amulet|dlan|Fatima|Marija|Mirjam|roka|zaščita
+🗿;moai;kamnit obraz|kip|obraz|potovanje
+🪧;plakat;demonstracija|kol|obvestilo|protest|znak
+🪪;osebni dokument;dokument|dovoljenje|identifikacija|poverilnice|varnost
+🏧;znak za bankomat;avtomat|bankomat|denar
+🚮;znak za smeti v košu;koš|koš za smeti|smeti
+🚰;pitna voda;piti|pitno|voda
+♿;invalidski voziček;dostop|invalid
+🚹;stranišče za moške;moški|stranišče|wc
+🚺;stranišče za ženske;stranišče|wc|ženska
+🚻;javno stranišče;stranišče|wc
+🚼;simbol dojenčka;dojenček|previjanje
+🚾;wc;stranišče|voda
+🛂;pregled dokumentov;nadzor|potni list
+🛃;carina;carinik|pakiranje
+🛄;prevzem prtljage;letalo|potovanje|prevzem|prtljaga
+🛅;prtljaga v garderobi;garderoba|kovčki|omarica|prtljaga
+⚠️;opozorilo;pozor|previdno
+🚸;otroci prečkajo cesto;otrok|pešec|prehod|promet
+⛔;ni prehoda;ne|ni dovoljeno|ni vstopa|prepovedano|promet|vstop
+🚫;prepovedano;kajenje prepovedano|ne|ni vstopa|vstop
+🚳;prepovedano za kolesa;kolo|ne|ni dovoljeno|prepovedano|vozilo
+🚭;prepovedano kajenje;kajenje|ne|ni dovoljeno|prepovedano
+🚯;prepovedano odlaganje smeti;ne|ni dovoljeno|odlagati|prepovedano|smeti
+🚱;voda ni pitna;ne|ni dovoljeno|piti|pitno|prepovedati|voda
+🚷;prepovedano za pešce;ne|ni dovoljeno|pešec|prepovedano
+📵;mobilni telefoni prepovedani;mobilnik|mobilno|ne|ni dovoljeno|prepovedano|telefon
+🔞;prepovedano za mlajše od 18 let;18|mladoletno|ne|ni dovoljeno|omejitev starosti|osemnajst|prepovedano
+☢️;radioaktivno;nevarnost|znak
+☣️;bionevarnost;biološka nevarnost|biološki poskusi|tvegano|znak
+⬆️;puščica gor;glavno|puščica|sever|smer
+↗️;puščica desno gor;puščica|severovzhod|smer|stransko
+➡️;puščica desno;glavno|puščica|smer|vzhod
+↘️;puščica desno dol;jugovzhod|puščica|smer|stransko
+⬇️;puščica dol;glavno|jug|navzdol|puščica|smer
+↙️;puščica levo dol;jugozahod|puščica|smer|stransko
+⬅️;puščica levo;glavno|puščica|smer|zahod
+↖️;puščica levo gor;puščica|severozahodno|smer|stransko
+↕️;puščica gor dol;puščica
+↔️;puščica levo desno;puščica
+↩️;puščica desno, ki se ukrivlja v levo;ki se ukrivlja v levo|puščica|puščica desno
+↪️;puščica levo, ki se ukrivlja v desno;ki se ukrivlja v desno|puščica|puščica levo
+⤴️;puščica desno, ki se ukrivlja gor;ki se ukrivlja gor|puščica|puščica desno
+⤵️;puščica desno, ki se ukrivlja dol;ki se ukrivlja dol|navzdol|puščica|puščica desno
+🔃;navpični puščici, ki se ukrivljata v smeri urnega kazalca;ki se ukrivljata v smeri urnega kazalca|navpični puščici|navpični puščici, ki se ukrivljata v smeri urinega kazalca|osveži|puščica|smer urinega kazalca|smer urnega kazalca|vnovično nalaganje
+🔄;gumb s puščicama, ki se ukrivljata v obratni smeri urnega kazalca;gumb s puščicama|gumb s puščicama, ki se ukrivljata v obratni smeri urinega kazalca|ki se ukrivljata v obratni smeri urnega kazalca|nasprotna smer urinega kazalca|nasprotna smer urnega kazalca|nazaj|osveži|puščica
+🔙;puščica nazaj;nazaj|puščica
+🔚;puščica konec;konec|puščica
+🔛;puščica NAPREJ!;puščica|puščica ON|vklop|znak
+🔜;puščica kmalu;kmalu|puščica
+🔝;puščica na vrh;navzgor|puščica|zgoraj
+🛐;božji hram;čaščenje|vera
+⚛️;simbol za atom;ateist|atom
+🕉️;om;hinduistično|vera
+✡️;davidova zvezda;david|jud|judovsko|vera|zvezda
+☸️;kolo darme;budistično|darma|kolo|vera
+☯️;jin jang;jang|jin|tao|taoistično|vera
+✝️;krščanski križ;križ|krščansko|vera
+☦️;pravoslavni križ;križ|krščansko|vera
+☪️;zvezda in polmesec;islam|muslimansko|vera
+☮️;simbol za mir;mir|mirno
+🕎;menora;namizni svečnik|svečnik|vera
+🔯;šestkraka zvezda s piko;judovstvo|sreča|zvezda
+🪯;khanda;sikh|vera|veroizpoved
+♈;astrološki znak ovna;horoskop|oven|zodiak
+♉;bik;horoskop|vol|zodiak
+♊;dvojčka;horoskop|zodiak
+♋;rak;horoskop|zodiak
+♌;zodiak: lev;horoskop|lev|zodiak
+♍;devica;deva|horoskop|zodiak
+♎;tehnica;horoskop|pravičnost|ravnovesje|tehtnica|zodiak
+♏;astrološki znak škorpijona;horoskop|škorpijon|zodiak
+♐;strelec;horoskop|zodiak
+♑;kozorog;horoskop|koza|zodiak
+♒;vodnar;horoskop|nosec|voda|zodiak
+♓;ribi;horoskop|riba|zodiak
+⛎;kačenosec;kača|nosec|zodiak
+🔀;gumb za naključno predvajanje;prekrižano|puščica
+🔁;gumb za vnovično predvajanje;ponavljanje|puščica|smer urnega kazalca
+🔂;gumb za vnovično posamezno predvajanje;enkratno|puščica|smer urnega kazalca
+▶️;gumb za predvajanje;desno|predvajanje|puščica|trikotnik
+⏩;gumb za hitro previjanje naprej;dvojno|hitro|naprej|puščica
+⏭️;gumb za naslednjo skladbo;naslednja skladba|naslednji prizor|puščica|trikotnik
+⏯️;gumb za predvajanje ali zaustavitev;desno|predvajanje|puščica|trikotnik|zaustavitev
+◀️;gumb za predvajanje nazaj;levo|nazaj|puščica|trikotnik
+⏪;gumb za hitro previjanje nazaj;dvojno|previjanje nazaj|puščica
+⏮️;gumb za zadnjo skladbo;prejšnja skladba|prejšnji prizor|puščica|trikotnik
+🔼;gumb za gor;gor|gumb|puščica|rdeče
+⏫;gumb za hitro gor;dvojno|puščica
+🔽;gumb za dol;dol|gumb|navzdol|puščica|rdeče
+⏬;gumb za hitro dol;dvojno|navzdol|puščica
+⏸️;gumb za zaustavitev;dvojno|navpično|premor|stolpec|začasno ustavi|zaustavitev
+⏹️;gumb za ustavitev;kvadrat|ustavitev
+⏺️;gumb za snemanje;krog|snemanje
+⏏️;gumb za izvrženje;izvrženje
+🎦;kino;film|kamera
+🔅;gumb za zatemnitev;nizko|osvetlitev|svetlost|zatemnitev
+🔆;gumb za svetlost;osvetlitev|svetlo|svetlost
+📶;signal;antena|mobilnik|mobilno|stolpec|telefon
+🛜;brezžična povezava;dostopna točka|internet|omrežje|pametni telefon|povezava|računalnik|širokopasovno|usmerjevalnik|Wi-Fi|WLAN
+📳;način vibriranja;mobilnik|mobilno|način|telefon|vibriranje
+📴;mobilni telefon izklopljen;izklopljeno|mobilnik|mobilno|telefon
+♀️;znak za ženski spol;dekle|ženska
+♂️;znak za moški spol;fant|moški
+⚧️;simbol za transseksualnost;transseksualnost
+✖️;množi;×|množenje|množiti|prekliči|x|znak|znak za množenje
+➕;plus;+|matematika|znak|znak za plus
+➖;minus;-|−|matematika|odštevanje|znak|znak za minus
+➗;deli;÷|deljenje|matematika|znak|znak za deljenje
+🟰;znak za enakovrednost;enakovrednost|matematika|odgovor|znak za enakost
+♾️;neskončnost;neomejeno|univerzalno|večno
+‼️;dvojni klicaj;!|!!|dva klicaja|klicaj|ločilo|znak
+⁉️;klicaj in vprašaj;!|!?|?|klicaj|klicaj-vprašaj|ločilo|vprašaj|znak
+❓;rdeč vprašaj;?|ločilo|vprašaj|znak
+❔;bel vprašaj;?|ločilo|obrobljeno|oznaka|vprašaj|vprašanje
+❕;bel klicaj;!|klicaj|obrobljeno|znak
+❗;rdeč klicaj;!|klicaj|ločilo|znak
+〰️;valovit pomišljaj;ločilo|pomišljaj|valovit|valovito
+💱;menjava valut;banka|denar|menjava|valuta
+💲;znak za dolar;denar|dolar|plačilo|valuta
+⚕️;simbol zdravstva;eskulapova palica|medicina|osebje|zdravnik|zdravstvo
+♻️;simbol za recikliranje;reciklirati
+⚜️;lilija;vitezi
+🔱;trizobo znamenje;ladja|orodje|pozejdon|sidro|trizob|znamenje
+📛;značka za ime;ime|značka
+🔰;japonski simbol za začetnika;cik-cak|japonsko|list|orodje|puščica|rumeno|začetnik|zeleno
+⭕;velik prazen krog;krog|o|rdeč|velik
+✅;gumb s kljukico;✓|gumb|kljukica|opravljeno|potrditev
+☑️;potrditveno polje s kljukico;✓|kljukica|končano|opravljeno|polje|potrditveno polje s kjukico
+✔️;kljukica;✓|končano|znak
+❌;križec;×|množenje|množiti|oznaka|preklic|x
+❎;gumb s križcem;×|kvadrat|množenje|oznaka|x
+➰;zavita pentlja;pentlja|spirala|zanka
+➿;dvojna zavita pentlja;dvojno|pentlja|spirala|zanka
+〽️;znak za part;part|znak
+✳️;zvezdica z osmimi špicami;*|zvezdica
+✴️;osemkraka zvezda;*|zvezda
+❇️;iskra;*|iskrica
+©️;avtorske pravice;c
+®️;registrirano;r
+™️;blagovna znamka;TM|znak
+🫟;packa;barva|holi|madež|praznik barv|razlitje
+0️⃣;tipka: 0;0|nič|tipka
+1️⃣;tipka: 1;1|ena|tipka
+2️⃣;tipka: 2;2|dva|tipka
+3️⃣;tipka: 3;3|tipka|tri
+4️⃣;tipka: 4;4|štiri|tipka
+5️⃣;tipka: 5;5|pet|tipka
+6️⃣;tipka: 6;6|šest|tipka
+7️⃣;tipka: 7;7|sedem|tipka
+8️⃣;tipka: 8;8|osem|tipka
+9️⃣;tipka: 9;9|devet|tipka
+🔠;vnos velikih črk latinice;črke|latinica|velike črke|vnos
+🔡;vnos malih črk latinice;abcd|črke|latinica|male črke|vnos
+🔢;vnos številk;1234|številke|vnos
+🔣;vnos simbolov;simboli|vnos
+🔤;vnos črk latinice;abc|abeceda|črke|latinica|vnos
+🅰️;gumb s črko a (krvna skupina);a|gumb s črko a|kri|krvna skupina
+🆎;gumb AB (krvna skupina);ab|gumb AB|kri|krvna skupina
+🅱️;gumb s črko b (krvna skupina);b|gumb|gumb s črko b|kri|krvna skupina
+🆑;gumb CL;cl|gumb
+🆒;gumb COOL;frajersko|gumb|kul
+🆓;gumb FREE;gumb|prosto
+ℹ️;vir informacij;i|informacije
+🆔;gumb ID;gumb|id|identiteta
+Ⓜ️;črka m v krogu;krog|m
+🆕;gumb NEW;gumb|novo
+🆖;gumb NG;gumb|ng
+🅾️;gumb s črko O (krvna skupina);gumb|gumb s črko o|kri|krvna skupina|o
+🆗;gumb OK;gumb V REDU|v redu
+🅿️;gumb s črko p;gumb|p|parkiranje|parkirišče
+🆘;gumb SOS;na pomoč|pomoč|sos
+🆙;gumb z besedo up in klicajem;gumb|navzgor|znak
+🆚;gumb VS;gumb|proti
+🈁;gumb za »tukaj« v japonščini;japonsko|katakana|pisava|tukaj
+🈂️;japonski znak za "napitnino" v kvadratu;japonsko|katakana|napitnina|pisava|postrežnina
+🈷️;japonski znak za "mesečni znesek";ideogram|japonski znak za "mesečni znesek" v kvadratu|japonsko|mesečni znesek|pojmovni znak
+🈶;gumb za »ni brezplačno« v japonščini;ideogram|japonsko|ni brezplačno|plačljivo|pojmovni znak
+🈯;gumb za »rezervirano« v japonščini;ideogram|japonsko|pojmovni znak|rezervirano
+🉐;gumb za »ugodno« v japonščini;ideogram|japonsko|pojmovni znak|ugoden nakup
+🈹;gumb za »popust« v japonščini;ideogram|japonsko|pojmovni znak|popust
+🈚;gumb za »brezplačno« v japonščini;brezplačno|ideogram|japonsko|pojmovni znak
+🈲;gumb za »prepovedano« v japonščini;ideogram|japonsko|pojmovni znak|prepovedano
+🉑;gumb za »sprejemljivo« v japonščini;ideogram|japonsko|pojmovni znak|sprejemljivo
+🈸;gumb za »aplikacija« v japonščini;ideogram|japonsko|pojmovni znak|uporaba
+🈴;pojmovni znak za skupaj v kvadratu;ideogram|japonsko|pojmovni znak|zadostna ocena|zadostni uspeh
+🈳;gumb za »prosto« v japonščini;ideogram|japonsko|pojmovni znak|prazno|prosto
+㊗️;pojmovni znak za čestitanje v krogu;čestitka|čestitke|ideogram|japonsko
+㊙️;pojmovni znak za skrivnost v krogu;ideogram|japonsko|skrivnost
+🈺;gumb za »odprto« v japonščini;ideogram|japonsko|odprto za poslovanje|pojmovni znak
+🈵;gumb za »ni prosto« v japonščini;ideogram|japonsko|ni prosto|pojmovni znak|zasedeno
+🔴;rdeč krog;geometrično|krog|rdeče
+🟠;oranžen krog;krog|oblika|oranžen
+🟡;rumen krog;krog|oblika|rumen
+🟢;zelen krog;krog|oblika|zelen
+🔵;moder krog;geometrično|krog|modro
+🟣;škrlaten krog;krog|oblika|škrlaten|vijoličen
+🟤;rjav krog;krog|oblika|rjav
+⚫;črn krog;geometrično|krog
+⚪;bel krog;geometrično|krog
+🟥;rdeč kvadrat;kvadrat|oblika|rdeč
+🟧;oranžen kvadrat;kvadrat|oblika|oranžen
+🟨;rumen kvadrat;kvadrat|oblika|rumen
+🟩;zelen kvadrat;kvadrat|oblika|zelen
+🟦;moder kvadrat;kvadrat|moder|oblika
+🟪;škrlaten kvadrat;kvadrat|oblika|škrlaten|vijoličen
+🟫;rjav kvadrat;kvadrat|oblika|rjav
+⬛;velik črn kvadrat;geometrično|kvadrat
+⬜;velik bel kvadrat;geometrično|kvadrat
+◼️;srednji črn kvadrat;geometrično|kvadrat
+◻️;srednji bel kvadrat;geometrično|kvadrat
+◾;srednje majhen črn kvadrat;geometrično|kvadrat
+◽;srednje mali beli kvadrat;geometrično|kvadrat
+▪️;majhen črn kvadrat;geometrično|kvadrat
+▫️;majhen bel kvadrat;geometrično|kvadrat
+🔶;velik oranžen karo;geometrično|karo|oranžno
+🔷;velik moder karo;geometrično|karo|modro
+🔸;majhen oranžen karo;geometrično|karo|oranžno
+🔹;majhen moder karo;geometrično|karo|modro
+🔺;rdeč trikotnik gor;geometrično|rdeče
+🔻;rdeč trikotnik dol;geometrično|navzdol|rdeče|trikotnik dol
+💠;karo s piko;geometrično|karo|strip|znotraj
+🔘;izbirni gumb;geometrično|gumb|gumb za radio|izbirni|radio
+🔳;gumb z belim kvadratom;geometrično|gumb|kvadrat|obrobljeno
+🔲;gumb s črnim kvadratom;geometrično|gumb|kvadrat
+🏁;kockasta zastava;dirkanje|kockasto|šport|zastava|zmaga
+🚩;trikotna zastava;golf|gradnja|zastavica
+🎌;prekrižani zastavi;japonska zastava|japonsko|križ|prekrižano|slavje
+🏴;črna zastava;plapolanje
+🏳️;plapolajoča bela zastava;bela zastava|plapolanje
+🏳️‍🌈;mavrična zastava;lgbtq|mavrica|ponos|zastava
+🏳️‍⚧️;transspolna zastava;bela|rožnata|svetlo modra|transspolnost|zastava
+🏴‍☠️;piratska zastava;gusarska zastava|pirat|plenjenje|zaklad
+🇦🇨;zastava: Otok Ascension;zastava
+🇦🇩;zastava: Andora;zastava
+🇦🇪;zastava: Združeni arabski emirati;zastava
+🇦🇫;zastava: Afganistan;zastava
+🇦🇬;zastava: Antigva in Barbuda;zastava
+🇦🇮;zastava: Angvila;zastava
+🇦🇱;zastava: Albanija;zastava
+🇦🇲;zastava: Armenija;zastava
+🇦🇴;zastava: Angola;zastava
+🇦🇶;zastava: Antarktika;zastava
+🇦🇷;zastava: Argentina;zastava
+🇦🇸;zastava: Ameriška Samoa;zastava
+🇦🇹;zastava: Avstrija;zastava
+🇦🇺;zastava: Avstralija;zastava
+🇦🇼;zastava: Aruba;zastava
+🇦🇽;zastava: Alandski otoki;zastava
+🇦🇿;zastava: Azerbajdžan;zastava
+🇧🇦;zastava: Bosna in Hercegovina;zastava
+🇧🇧;zastava: Barbados;zastava
+🇧🇩;zastava: Bangladeš;zastava
+🇧🇪;zastava: Belgija;zastava
+🇧🇫;zastava: Burkina Faso;zastava
+🇧🇬;zastava: Bolgarija;zastava
+🇧🇭;zastava: Bahrajn;zastava
+🇧🇮;zastava: Burundi;zastava
+🇧🇯;zastava: Benin;zastava
+🇧🇱;zastava: Sveti Bartolomej;zastava
+🇧🇲;zastava: Bermudi;zastava
+🇧🇳;zastava: Brunej;zastava
+🇧🇴;zastava: Bolivija;zastava
+🇧🇶;zastava: Nizozemski Karibi;zastava
+🇧🇷;zastava: Brazilija;zastava
+🇧🇸;zastava: Bahami;zastava
+🇧🇹;zastava: Butan;zastava
+🇧🇻;zastava: Bouvetov otok;zastava
+🇧🇼;zastava: Bocvana;zastava
+🇧🇾;zastava: Belorusija;zastava
+🇧🇿;zastava: Belize;zastava
+🇨🇦;zastava: Kanada;zastava
+🇨🇨;zastava: Kokosovi otoki;zastava
+🇨🇩;zastava: Demokratična republika Kongo;zastava
+🇨🇫;zastava: Srednjeafriška republika;zastava
+🇨🇬;zastava: Kongo - Brazzaville;zastava
+🇨🇭;zastava: Švica;zastava
+🇨🇮;zastava: Slonokoščena obala;zastava
+🇨🇰;zastava: Cookovi otoki;zastava
+🇨🇱;zastava: Čile;zastava
+🇨🇲;zastava: Kamerun;zastava
+🇨🇳;zastava: Kitajska;zastava
+🇨🇴;zastava: Kolumbija;zastava
+🇨🇵;zastava: Otok Clipperton;zastava
+🇨🇶;zastava: Sark;zastava
+🇨🇷;zastava: Kostarika;zastava
+🇨🇺;zastava: Kuba;zastava
+🇨🇻;zastava: Zelenortski otoki;zastava
+🇨🇼;zastava: Curaçao;zastava
+🇨🇽;zastava: Božični otok;zastava
+🇨🇾;zastava: Ciper;zastava
+🇨🇿;zastava: Češka;zastava
+🇩🇪;zastava: Nemčija;zastava
+🇩🇬;zastava: Diego Garcia;zastava
+🇩🇯;zastava: Džibuti;zastava
+🇩🇰;zastava: Danska;zastava
+🇩🇲;zastava: Dominika;zastava
+🇩🇴;zastava: Dominikanska republika;zastava
+🇩🇿;zastava: Alžirija;zastava
+🇪🇦;zastava: Ceuta in Melilla;zastava
+🇪🇨;zastava: Ekvador;zastava
+🇪🇪;zastava: Estonija;zastava
+🇪🇬;zastava: Egipt;zastava
+🇪🇭;zastava: Zahodna Sahara;zastava
+🇪🇷;zastava: Eritreja;zastava
+🇪🇸;zastava: Španija;zastava
+🇪🇹;zastava: Etiopija;zastava
+🇪🇺;zastava: Evropska unija;zastava
+🇫🇮;zastava: Finska;zastava
+🇫🇯;zastava: Fidži;zastava
+🇫🇰;zastava: Falklandski otoki;zastava
+🇫🇲;zastava: Mikronezija;zastava
+🇫🇴;zastava: Ferski otoki;zastava
+🇫🇷;zastava: Francija;zastava
+🇬🇦;zastava: Gabon;zastava
+🇬🇧;zastava: Združeno kraljestvo;zastava
+🇬🇩;zastava: Grenada;zastava
+🇬🇪;zastava: Gruzija;zastava
+🇬🇫;zastava: Francoska Gvajana;zastava
+🇬🇬;zastava: Guernsey;zastava
+🇬🇭;zastava: Gana;zastava
+🇬🇮;zastava: Gibraltar;zastava
+🇬🇱;zastava: Grenlandija;zastava
+🇬🇲;zastava: Gambija;zastava
+🇬🇳;zastava: Gvineja;zastava
+🇬🇵;zastava: Gvadelup;zastava
+🇬🇶;zastava: Ekvatorialna Gvineja;zastava
+🇬🇷;zastava: Grčija;zastava
+🇬🇸;zastava: Južna Georgia in Južni Sandwichevi otoki;zastava
+🇬🇹;zastava: Gvatemala;zastava
+🇬🇺;zastava: Gvam;zastava
+🇬🇼;zastava: Gvineja Bissau;zastava
+🇬🇾;zastava: Gvajana;zastava
+🇭🇰;zastava: Posebno upravno območje Ljudske republike Kitajske Hongkong;zastava
+🇭🇲;zastava: Heardov otok in McDonaldovi otoki;zastava
+🇭🇳;zastava: Honduras;zastava
+🇭🇷;zastava: Hrvaška;zastava
+🇭🇹;zastava: Haiti;zastava
+🇭🇺;zastava: Madžarska;zastava
+🇮🇨;zastava: Kanarski otoki;zastava
+🇮🇩;zastava: Indonezija;zastava
+🇮🇪;zastava: Irska;zastava
+🇮🇱;zastava: Izrael;zastava
+🇮🇲;zastava: Otok Man;zastava
+🇮🇳;zastava: Indija;zastava
+🇮🇴;zastava: Britansko ozemlje v Indijskem oceanu;zastava
+🇮🇶;zastava: Irak;zastava
+🇮🇷;zastava: Iran;zastava
+🇮🇸;zastava: Islandija;zastava
+🇮🇹;zastava: Italija;zastava
+🇯🇪;zastava: Jersey;zastava
+🇯🇲;zastava: Jamajka;zastava
+🇯🇴;zastava: Jordanija;zastava
+🇯🇵;zastava: Japonska;zastava
+🇰🇪;zastava: Kenija;zastava
+🇰🇬;zastava: Kirgizistan;zastava
+🇰🇭;zastava: Kambodža;zastava
+🇰🇮;zastava: Kiribati;zastava
+🇰🇲;zastava: Komori;zastava
+🇰🇳;zastava: Sveti Krištof in Nevis;zastava
+🇰🇵;zastava: Severna Koreja;zastava
+🇰🇷;zastava: Južna Koreja;zastava
+🇰🇼;zastava: Kuvajt;zastava
+🇰🇾;zastava: Kajmanji otoki;zastava
+🇰🇿;zastava: Kazahstan;zastava
+🇱🇦;zastava: Laos;zastava
+🇱🇧;zastava: Libanon;zastava
+🇱🇨;zastava: Sveta Lucija;zastava
+🇱🇮;zastava: Lihtenštajn;zastava
+🇱🇰;zastava: Šrilanka;zastava
+🇱🇷;zastava: Liberija;zastava
+🇱🇸;zastava: Lesoto;zastava
+🇱🇹;zastava: Litva;zastava
+🇱🇺;zastava: Luksemburg;zastava
+🇱🇻;zastava: Latvija;zastava
+🇱🇾;zastava: Libija;zastava
+🇲🇦;zastava: Maroko;zastava
+🇲🇨;zastava: Monako;zastava
+🇲🇩;zastava: Moldavija;zastava
+🇲🇪;zastava: Črna gora;zastava
+🇲🇫;zastava: Francoski Sveti Martin;zastava
+🇲🇬;zastava: Madagaskar;zastava
+🇲🇭;zastava: Marshallovi otoki;zastava
+🇲🇰;zastava: Severna Makedonija;zastava
+🇲🇱;zastava: Mali;zastava
+🇲🇲;zastava: Mjanmar (Burma);zastava
+🇲🇳;zastava: Mongolija;zastava
+🇲🇴;zastava: Posebno upravno območje Kitajske Makav;zastava
+🇲🇵;zastava: Severni Marianski otoki;zastava
+🇲🇶;zastava: Martinik;zastava
+🇲🇷;zastava: Mavretanija;zastava
+🇲🇸;zastava: Montserrat;zastava
+🇲🇹;zastava: Malta;zastava
+🇲🇺;zastava: Mavricij;zastava
+🇲🇻;zastava: Maldivi;zastava
+🇲🇼;zastava: Malavi;zastava
+🇲🇽;zastava: Mehika;zastava
+🇲🇾;zastava: Malezija;zastava
+🇲🇿;zastava: Mozambik;zastava
+🇳🇦;zastava: Namibija;zastava
+🇳🇨;zastava: Nova Kaledonija;zastava
+🇳🇪;zastava: Niger;zastava
+🇳🇫;zastava: Norfolški otok;zastava
+🇳🇬;zastava: Nigerija;zastava
+🇳🇮;zastava: Nikaragva;zastava
+🇳🇱;zastava: Nizozemska;zastava
+🇳🇴;zastava: Norveška;zastava
+🇳🇵;zastava: Nepal;zastava
+🇳🇷;zastava: Nauru;zastava
+🇳🇺;zastava: Niue;zastava
+🇳🇿;zastava: Nova Zelandija;zastava
+🇴🇲;zastava: Oman;zastava
+🇵🇦;zastava: Panama;zastava
+🇵🇪;zastava: Peru;zastava
+🇵🇫;zastava: Francoska Polinezija;zastava
+🇵🇬;zastava: Papua Nova Gvineja;zastava
+🇵🇭;zastava: Filipini;zastava
+🇵🇰;zastava: Pakistan;zastava
+🇵🇱;zastava: Poljska;zastava
+🇵🇲;zastava: Sveta Peter in Mihael;zastava
+🇵🇳;zastava: Pitcairn;zastava
+🇵🇷;zastava: Portoriko;zastava
+🇵🇸;zastava: Palestinsko ozemlje;zastava
+🇵🇹;zastava: Portugalska;zastava
+🇵🇼;zastava: Palav;zastava
+🇵🇾;zastava: Paragvaj;zastava
+🇶🇦;zastava: Katar;zastava
+🇷🇪;zastava: Reunion;zastava
+🇷🇴;zastava: Romunija;zastava
+🇷🇸;zastava: Srbija;zastava
+🇷🇺;zastava: Rusija;zastava
+🇷🇼;zastava: Ruanda;zastava
+🇸🇦;zastava: Saudova Arabija;zastava
+🇸🇧;zastava: Salomonovi otoki;zastava
+🇸🇨;zastava: Sejšeli;zastava
+🇸🇩;zastava: Sudan;zastava
+🇸🇪;zastava: Švedska;zastava
+🇸🇬;zastava: Singapur;zastava
+🇸🇭;zastava: Sveta Helena;zastava
+🇸🇮;zastava: Slovenija;zastava
+🇸🇯;zastava: Svalbard in Jan Mayen;zastava
+🇸🇰;zastava: Slovaška;zastava
+🇸🇱;zastava: Sierra Leone;zastava
+🇸🇲;zastava: San Marino;zastava
+🇸🇳;zastava: Senegal;zastava
+🇸🇴;zastava: Somalija;zastava
+🇸🇷;zastava: Surinam;zastava
+🇸🇸;zastava: Južni Sudan;zastava
+🇸🇹;zastava: Sveti Tomaž in Princ;zastava
+🇸🇻;zastava: Salvador;zastava
+🇸🇽;zastava: Nizozemski Sveti Martin;zastava
+🇸🇾;zastava: Sirija;zastava
+🇸🇿;zastava: Esvatini;zastava
+🇹🇦;zastava: Tristan da Cunha;zastava
+🇹🇨;zastava: Otoki Turks in Caicos;zastava
+🇹🇩;zastava: Čad;zastava
+🇹🇫;zastava: Francosko južno ozemlje;zastava
+🇹🇬;zastava: Togo;zastava
+🇹🇭;zastava: Tajska;zastava
+🇹🇯;zastava: Tadžikistan;zastava
+🇹🇰;zastava: Tokelav;zastava
+🇹🇱;zastava: Timor-Leste;zastava
+🇹🇲;zastava: Turkmenistan;zastava
+🇹🇳;zastava: Tunizija;zastava
+🇹🇴;zastava: Tonga;zastava
+🇹🇷;zastava: Turčija;zastava
+🇹🇹;zastava: Trinidad in Tobago;zastava
+🇹🇻;zastava: Tuvalu;zastava
+🇹🇼;zastava: Tajvan;zastava
+🇹🇿;zastava: Tanzanija;zastava
+🇺🇦;zastava: Ukrajina;zastava
+🇺🇬;zastava: Uganda;zastava
+🇺🇲;zastava: Stranski zunanji otoki Združenih držav;zastava
+🇺🇳;zastava: Združeni narodi;zastava
+🇺🇸;zastava: Združene države Amerike;zastava
+🇺🇾;zastava: Urugvaj;zastava
+🇺🇿;zastava: Uzbekistan;zastava
+🇻🇦;zastava: Vatikan;zastava
+🇻🇨;zastava: Sveti Vincencij in Grenadine;zastava
+🇻🇪;zastava: Venezuela;zastava
+🇻🇬;zastava: Britanski Deviški otoki;zastava
+🇻🇮;zastava: Ameriški Deviški otoki;zastava
+🇻🇳;zastava: Vietnam;zastava
+🇻🇺;zastava: Vanuatu;zastava
+🇼🇫;zastava: Wallis in Futuna;zastava
+🇼🇸;zastava: Samoa;zastava
+🇽🇰;zastava: Kosovo;zastava
+🇾🇪;zastava: Jemen;zastava
+🇾🇹;zastava: Mayotte;zastava
+🇿🇦;zastava: Južnoafriška republika;zastava
+🇿🇲;zastava: Zambija;zastava
+🇿🇼;zastava: Zimbabve;zastava
+🏴󠁧󠁢󠁥󠁮󠁧󠁿;zastava: Anglija;zastava
+🏴󠁧󠁢󠁳󠁣󠁴󠁿;zastava: Škotska;zastava
+🏴󠁧󠁢󠁷󠁬󠁳󠁿;zastava: Wales;zastava

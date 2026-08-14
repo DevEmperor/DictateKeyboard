@@ -828,6 +828,7 @@
     <string name="action__apply">应用</string>
     <string name="action__back_up">备份</string>
     <string name="action__cancel">取消</string>
+    <string name="action__clear">清除</string>
     <string name="action__create">添加</string>
     <string name="action__default">默认</string>
     <string name="action__delete">删除</string>

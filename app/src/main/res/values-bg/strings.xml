@@ -827,6 +827,7 @@
     <string name="action__apply">Прилагане</string>
     <string name="action__back_up">Резервно копие</string>
     <string name="action__cancel">Отказ</string>
+    <string name="action__clear">Изчистване</string>
     <string name="action__create">Създаване</string>
     <string name="action__default">Стандартно</string>
     <string name="action__delete">Изтриване</string>

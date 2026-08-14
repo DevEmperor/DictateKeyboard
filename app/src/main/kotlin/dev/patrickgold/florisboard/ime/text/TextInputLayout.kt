@@ -64,25 +64,14 @@ fun TextInputLayout(
             .fillMaxWidth()
             .wrapContentHeight(),
     ) {
-        // While an emoji search is running (issue #110), the search panel takes the Smartbar's slot so the
-        // keyboard layout below stays available for typing the query.
+        // While a search is running (issues #110, #274), its panel takes the Smartbar's slot so the
+        // keyboard layout below stays available for typing the query. Both panels are taller than the
+        // Smartbar — results above the search bar for emoji, earlier terms for GIF — and size themselves,
+        // so the keyboard grows for the duration of the search the same way the GIF panel does.
         if (emojiSearchActive != null) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            ) {
-                EmojiSearchPanel()
-            }
+            EmojiSearchPanel()
         } else if (gifSearchActive != null) {
-            // GIF search: a results strip takes the Smartbar's slot; the keyboard below types the query.
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            ) {
-                GifSearchPanel()
-            }
+            GifSearchPanel()
         } else {
             Smartbar()
         }

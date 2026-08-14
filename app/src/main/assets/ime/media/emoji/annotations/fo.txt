@@ -1,0 +1,1902 @@
+😀;grínandi andlit;andlit|grín
+😃;grínandi andlit við stórum eygum;andlit|eygu|grín|munnur|opin|stór
+😄;grínandi andlit við brosandi eygum;andlit|grín|munnur|opin
+😁;strálandi andlit við brosandi eygum;andlit|bros|eyga|grín|smíl
+😆;grínandi andlit við krympaðum eygum;andlit|eygu|grín|krympa
+😅;grínandi andlit við sveitta;andlit|bros|grín|smíl|sveitti
+🤣;tárandi flennandi andlit;andlit|lofl|tár
+😂;andlit við gleðistárum;andlit|gleði|látur|tár
+🙂;andlit ið smílur eitt sindur;andlit|bros|smíl
+🙃;andlit ið vendur á høvdinum;andlit|upp og niður
+🫠;smelta andlit;heitt|smeltandi|speiorð
+😉;andlit við blunkandi eyga;andlit|blunk
+😊;brosandi andlit við brosandi eygum;andlit|bros|eyga|rodna
+😇;brosandi andlit við halgiboga;andlit|gloria|halgibogi|sakleys
+🥰;smílandi andlit við hjørtum;andlit|elska|hjarta|kærleikur
+😍;smílandi andlit við hjarta eygum;andlit|hjarta|kærleikur
+🤩;stjørnuandlit;andlit|stjørna
+😘;andlit ið sendur hjarta koss;andlit|koss|muss
+😗;mussandi andlit;andlit|koss|muss
+☺️;brosandi andlit;andlit|bros
+😚;mussandi andlit við afturlatnum eygum;afturlatin|andlit|eygu|koss|muss
+😙;mussandi andlit við brosandi eygum;andlit|bros|eyga|koss|muss
+🥲;smílandi andlit ið tárar;andlit|bros|errin|stolt|stoltur|takksamur|takksom
+😋;andlit við matarlystið;andlit|lekkurt|matarlystur|tunga
+😛;gálvandi andlit;andlit|gálva|tunga
+😜;gálvandi andlit við blunkandi eyga;andlit|blunka|eyga|gálva|tunga
+🤪;svakt andlit;andlit|eygu|ørt|svakt
+😝;gálvandi andlit við krympaðum eygum;andlit|eygu|gálva|krympa|tunga
+🤑;peningaandlit;andlit|munn|pengar
+🤗;klemmandi andlit;andlit|klemm
+🤭;andlit við hond yvir munnin;andlit|hond|munn|ups
+🫢;andlit við opnum eygum og við hond yvir munnin;bangin|omg|ræðsla
+🫣;lúrandi andlit;bangin|lúra|omg|ræðsla|rukka|smæðin
+🤫;hússjandi andlit;andlit|hússja
+🤔;hugsandi andlit;andlit|hugsandi
+🫡;heilsandi andlit;heilsan|hermaður|hermannakvøða|kvøða
+🤐;lýnlás andlit;andlit|lýnlás
+🤨;andlit við upplyftum eygnabrúni;andlit|eygnabrún|ivi|skeptisk|skeptiskur
+😐;nevtralt andlit;andlit|nevtralt|ópartískt
+😑;kensluleyst andlit;andlit|kensluleyst
+😶;andlit uttan munn;andlit|munn
+🫥;prikka andlit;strika|strikut
+😶‍🌫️;andlit í skýggjum;burtur í øðrum heimi|hugspjaddur
+😏;lúrt andlit;andlit|lúrin|snildur
+😒;ikki stuttligt andlit;andlit|ikki stuttligt
+🙄;andlit við rullandi eygum;andlit|eygu|rullandi
+😬;andlit ið vísur tenn;andlit|snerkja|tenn
+😮‍💨;andlit andar út;anda út|bríksla|floyta|suffa
+🤥;andlit sum lýgur;andlit|lygn|pinocchio
+🫨;skelvandi andlit;omg|ør|ørur|ristandi|skelva|svakur|svøk
+🙂‍↔️;ristandi andlit;nei|neiligt|rista
+🙂‍↕️;nikkandi andlit;ja|jaligt|nikka
+😌;lætna andlit;andlit|lætna
+😔;grundandi andlit;andlit|dapur|grundandi|kedd|keddur
+😪;lint andlit;andlit|grætur|lint
+🤤;slevandi andlit;andlit|slev
+😴;sovandi andlit;andlit|sovandi|zzz
+🫩;andlit við posum undir eygunum;móð|móður|sovna|troytt|troytt andlit|troyttur
+😷;andlit við masku;andlit|maska|sjúk
+🤒;andlit við fepurstokkið;andlit|fepurstokkur|sjúk
+🤕;andlit við bind um høvdið;andlit|bind|sár|skaði
+🤢;andlit ið vil spýggja;andlit|sjóverk|spýggj|vaml
+🤮;spýggjandi andlit;andlit|sjóverk|spýggj|vaml
+🤧;njósandi andlit;andlit|njós
+🥵;heitt andlit;fepur|heitt|hitasótt|sveitti
+🥶;kalt andlit;blátt andlit|frost|kalt
+🥴;í ørviti andlit;í ørviti|kenning|skít|svimbul
+😵;svimbult andlit;andlit|svimbul
+😵‍💫;andlit við snyril eygum;dulleiða|hypnotisera|í ørvitu
+🤯;andlit í brestur;andlit|brestur|skelkur
+🤠;andlit við cowboyhatti;andlit|cowboy|hattur|kovboy
+🥳;veitslu andlit;hattur|veitsla|veitslu horn
+🥸;grýlu andlit;andlit|brillur|grýla|nøs
+😎;smílandi andlit við sólbrillum;andlit|sólbrillur
+🤓;nørd andlit;andlit|nørd
+🧐;andlit við einglesi;andlit|einglesi|monokul
+😕;forvirra andlit;andlit|forvirra|ørviti
+🫤;ivingarsamt andlit;ivast|ivi|skeptisk|skeptiskur
+😟;stúrt andlit;andlit|bangin|stúrin
+🙁;eitt sindur illbrýnt andlit;andlit|harmur|illbrýnt|illfýsið|keddur|óglaður|ólukkulig|sorgarbundin
+☹️;illbrýnt andlit;andlit|harmur|illbrýnt|illfýsið|keddur|óglaður|ólukkulig|sorgarbundin
+😮;andlit við opnum munni;andlit|munn|opin
+😯;bilsi andlit;andlit|ovfari|undrandi
+😲;ovfari andlit;andlit|bilsi|undrandi
+😳;rodna andlit;andlit|rodna
+🥺;biðjandi andlit;bønandi|náði
+🥹;andlit við gleðitárum;gleði|takksamur|takksom|tár
+😦;skelka andlit;andlit|skelka
+😧;pínt andlit;andlit|pínt
+😨;bangi andlit;andlit|bangi|óttafult|óttast
+😰;bangi andlit við sveitta;andlit|bangi|óttafult|óttast|sveitti
+😥;sorgarbundi andlit og tár;andlit|dapur|sorgarbundin|tár
+😢;andlit ið grætur;andlit|grátur|kedd|keddur|tár
+😭;andlit sum grætur nógv;andlit|grátur|kedd|keddur|tár
+😱;skríggjandi andlit;andlit|angist|bangilsi|ótti|ræðsla|skríggjandi
+😖;sera illbrýnt andlit;andlit|harmur|illbrýnt|illfýsið|keddur|óglaður|ólukkulig|sorgarbundin
+😣;ágrýti andlit;ágrýtin|andlit
+😞;skuffa andlit;andlit|harmur|illbrýnt|illfýsið|keddur|óglaður|ólukkulig|sorgarbundin
+😓;sveittandi andlit ið hyggur niðureftir;andlit|niður|sveitti
+😩;pøst andlit;andlit|pøst|troytt|troyttur
+😫;troytt andlit;andlit|móð|móður|troytt|troyttur
+🥱;geispandi andlit;geisp|keða|keðsemi|troytt|troyttur
+😤;andlit við royki úr nøsuni;andlit|argur|ill|vreiður
+😡;sera hóttandi andlit;andlit|hóttandi|ill|illur
+😠;hóttandi andlit;andlit|hóttandi|ill|illur
+🤬;bannandi andlit;andlit|banna|blóta|svørja
+😈;brosandi andlit við hornum;ævint´yr|andlit|bros|horn|smíl
+👿;hóttandi andlit við hornum;ævint´yr|andlit|horn|hóttandi|illur
+💀;skøltur;andlit|deyði
+☠️;skøltur og krossleggir;deyði|krossleggir|skøltur|vandi
+💩;kukkur;bros|lortur|smíl
+🤡;klovn andlit;andlit|gekkur|klovn
+👹;skrímsl;ævintýr|andlit|trøll
+👺;vættur;ævintýr|andlit|skrímsl|trøll
+👻;gálvandi spøkilsi;ævintýr|gálva|spøkilsi
+👽;rúmdarvera;ævintýr|alien|andlit|ufo
+👾;rúmdarvera skrímsl;ævintýr|alien|andlit|rúmdarvera|skrímsl|ufo
+🤖;robottandlit;andlit|robottur|tólmenni
+😺;brosandi kettuandlit;andlit|brós|brosandi|ketta|smíl
+😸;brosandi kettuandlit við smílandi eygum;andlit|brós|ketta|smíl
+😹;kettuandlit sum fellur gleðist´´ár;andlit|bros|gleði|ketta|smíl|tár
+😻;brosandi kettuandlit við hjartaeygum;andlit|eygu|hjarta|ketta
+😼;kettuandlit við speiskum smíli;andlit|beiskt|ketta|speiskt
+😽;mussandi kettuandlit;andlit|ketta|muss
+🙀;bilsi kettuandlit;andlit|bilsi|ketta|skelkur|undran
+😿;grátandi kettuandlit;andlit|grætur|grátur|ketta|tár
+😾;kettuandlit við gron;andlit|gron|ketta
+🙈;apuandlit við hondunum yvir eygunum;andlit|apa|eygu|hond
+🙉;apuandlit við hondunum yvir oyrunum;andlit|apa|hond|oyru
+🙊;apuandlit við hondunum yvir munninum;andlit|apa|hond|munn
+💌;kærleiksbræv;bræv|kærleikur
+💘;pílur ígjøgnum hjarta;Amor|amorina|hjarta|kærleikstekin|pílur
+💝;hjarta við bandi;band|hjarta
+💖;glitrandi hjarta;glampandi|glitrandi|glógvandi|hjarta|ljómandi
+💗;glógvandi hjarta;glógvandi|hjarta
+💓;bankandi hjarta;bankar|hjarta|slær
+💞;hjørtu sum mela í klingur;hjarta|hjørtu|mala
+💕;tvey hjørtu;kærleiki
+💟;hjarta pynt;hjarta|prýði|pynt
+❣️;hjarta rópitekn;hjarta|rópitekn|teknseting
+💔;brotið hjarta;brotið|hjarta|sorgarbundin
+❤️‍🔥;hjarta sum brennur;brennur|girnd|hjarta|kærleiki
+❤️‍🩹;hjarta sum er lappa;hjarta|lappa|umvæling
+❤️;reytt hjarta;hjarta|reytt
+🩷;ljósareytt hjarta;hjarta|kærleiki|ljósareytt
+🧡;appilsingult hjarta;appilsingult|hjarta
+💛;gult hjarta;gult|hjarta
+💚;grønt hjarta;grønt|hjarta
+💙;blátt hjarta;blátt|hjarta
+🩵;ljósablátt hjarta;hjarta|ljósablátt
+💜;korkalitt hjarta;bláreytt|hjarta|korkalitt|lilla|lillafarva|purpurlitt|purpurreytt
+🤎;brúnt hjarta;brúnt|hjarta
+🖤;svart hjarta;hjarta|svart
+🩶;grátt hjarta;grátt|hjarta
+🤍;hvítt hjarta;hjarta|hvítt
+💋;muss merki;koss|muss|varrar|varrastift
+💯;hundrað stig;100|hundrað|stig|úrslit
+💢;vreiði tekin;tekin|vreiði
+💥;samanstoytur;bang|samanbrestur
+💫;svimbul;stjørna|stjørnuskot|tekin
+💦;dropar;sveitti|vatn
+💨;fok;renna|vindur
+🕳️;hol;
+💬;talubløðra;bløðra|samtala|tala
+👁️‍🗨️;eyga í talubløðru;eyga|talubløðra
+🗨️;svørt talubløðra;samtala|tala
+🗯️;átalandi talubløðra;ábreiðsla|átala|hartan|skeld|skelda|talubløðra
+💭;tankabløðra;hugskot|tanki|umsorgan
+💤;zzz;snorkar|svevur
+👋;veitrandi hond;hond|veitra|vinka
+🤚;handarbak;
+🖐️;fimm fingrar;fimm|fingrar|hond
+✋;hond;lógvi
+🖖;vulkan heilsan;heilsan|spock|vulcan|vulkan
+🫱;hond til høgru;høgra|høgra hond|lógvatak|taka í hond
+🫲;hond til vinstru;lógvatak|taka í hond|vinsta hond|vinstra
+🫳;lógvi niðureftir;hond|lógvi|missa|niður|sleppa|tak upp
+🫴;lógvi uppeftir;gev|hond|lofta|lógvi
+🫷;hond skumpar til vinstru;nei|stop|stoppa|vinstra
+🫸;hond skumpar til høgru;høgra|nei|stop|stoppa
+👌;ok tekin;gott|hond|ok|tekin|viðurkent
+🤌;samlaðir fingrar;fingrar|hond|hondtekin
+🤏;fingrar sum vísa ikki nógv;eitt sindur|fingrar|hond|hondtekin|ikki nógv|lítið
+✌️;sigurstekin;hond|sigur|tekin
+🤞;krossaðir fingrar;eydna|fingrar|hond
+🫰;krossa tummil og peikifingur;fingrar|hond|krossa|peikifingur|tummil
+🤟;kærleikshandabragd;hond|kærleiki
+🤘;horntekin;horn|rock|rokkur|tekin
+🤙;telefontekin;hond|tekin|telefon
+👈;fremstifingur peikar til vinstru;fingur|fremstifingur|hond|peikifingur|vinstru
+👉;fremstifingur peikar til høgru;fingur|fremstifingur|høgru|hond|peikifingur
+👆;fremstifingur peikar uppeftir;fingur|fremstifingur|hond|peikifingur|upp|uppeftir
+🖕;longutong peikar uppeftir;fingur|hond|longutong|upp|uppeftir
+👇;longutong peikar niðureftir;fingur|hond|longutong|niður|niðureftir
+☝️;lógvi og fremstifingur peikar uppeftir;fingur|fremstifingur|hond|lógvi|peikifingur|upp|uppeftir
+🫵;peikar eftir tær;hond|peikar|peikifingur|tú
+👍;tummil upp;gott|samdur|tummil
+👎;tummil niður;niður|ósamdur|tummil|vánaligt
+✊;knýttur nevi;knýttur|nevi
+👊;sláandi knýttur nevi;knýttur|nevi|slær
+🤛;nevi í vendur til vinstru;knýttur|nevi|vinstru
+🤜;nevi í vendur til høgru;høgru|knýttur|nevi
+👏;klappandi hendur;hendur|hond|klapp
+🙌;upplyftar hendur;hendur|hond|upp
+🫶;hjarta hendur;hendur|hjarta|hond|kærleiki
+👐;opnar hendur;hendur|hond|opin
+🤲;lógvar sum eru saman;bøn|hendur|hond|lógvar|lógvi|saman
+🤝;lógvatak;hendur|hond|taka í
+🙏;falda hendur;bøn|eggja saman hendur|falda|hendur
+✍️;skrivandi hond;hond|skriva
+💅;neglalakk;fríðkanarevni|negl|vakurleikarøkt
+🤳;sjálvsmynd;selfie
+💪;spentur biseps;biseps|spentur|tvíhøvdavøddi
+🦾;kunstigur armur;armur|maskinarmur|mekaniskur
+🦿;kunstigt bein;bein|maskinbein|mekaniskt
+🦵;bein;limur|sparka
+🦶;fótur;limur|sparka|trampa
+👂;oyra;kroppur
+🦻;oyra við hoyritólið;deyvur|hoyritól|oyra
+👃;nøs;kroppur
+🧠;heili;gløgg|gløggur|klók|klókur|kroppur
+🫀;hjarta;hjartasláttur|pulsur|yrkisgagn
+🫁;lungur;andadráttur|yrkisgagn
+🦷;tonn;tannlækni
+🦴;kjøtbein;bein|beinagrind
+👀;eygu;eyga
+👁️;eyga;kroppur
+👅;tunga;gálva|kroppur
+👄;munnur;kroppur|varrar
+🫦;bíta í vørruna;bíta|munnur|vørr
+👶;pinkubarn;barn
+🧒;barn;óviti
+👦;drongur;piltur|smádrongur
+👧;genta;smágenta
+🧑;persónur;vaksin
+👱;ljóshærdur persónur;fólk|ljóshærd|ljóshærdur
+👨;maður;mannfólk|vaksin
+🧔;persónur við skeggi;persónur|skegg
+🧔‍♂️;maður við skeggi;maður|skegg
+🧔‍♀️;kona við skeggi;kona|konufólk|kvinna|skegg
+👨‍🦰;maður: reytt hár;maður|mannfólk|reytt hár|vaksin
+👨‍🦱;maður: purlut hár;maður|mannfólk|purlut hár|vaksin
+👨‍🦳;maður: hvítt hár;hvítt hár|maður|mannfólk|vaksin
+👨‍🦲;maður: skallutur;maður|mannfólk|skallutur|vaksin
+👩;kona;konufólk|kvinna|vaksin
+👩‍🦰;kona: reytt hár;kona|konufólk|kvinna|reytt hár|vaksin
+🧑‍🦰;persónur: reytt hár;persónur|reytt hár|vaksin
+👩‍🦱;kona: purlut hár;kona|konufólk|kvinna|purlut hár|vaksin
+🧑‍🦱;persónur: purlut hár;persónur|purlut hár|vaksin
+👩‍🦳;kona: hvítt hár;hvítt hár|kona|konufólk|kvinna|vaksin
+🧑‍🦳;persónur: hvítt hár;hvítt hár|persónur|vaksin
+👩‍🦲;kona: skallutur;kona|konufólk|kvinna|skallutur|vaksin
+🧑‍🦲;persónur: skallutur;persónur|skallutur|vaksin
+👱‍♀️;ljóshærd kvinna;kona|kvinna|ljóshærd
+👱‍♂️;ljóshærdur maður;ljóshærdur|maður
+🧓;tilkomin;eldri
+👴;gamal maður;eldri|gamal|maður|mannfólk
+👵;gomul kona;eldri|gomul|kona|konufólk|kvinna
+🙍;illbrýntur persónur;fólk|illbrýnt|persónur
+🙍‍♂️;illbrýntur maður;illbrýntur|maður
+🙍‍♀️;illbrýnt kvinna;illbrýnt|kona|kvinna
+🙎;persónur við gron;fólk|gron|persónur
+🙎‍♂️;maður við gron;gron|maður
+🙎‍♀️;kvinna við gron;gron|kona|kvinna
+🙅;persónur sum veipar nei;fólk|nei|persónur|veipar
+🙅‍♂️;maður sum veipar nei;maður|nei|veipar
+🙅‍♀️;kvinna sum veipar nei;kona|kvinna|nei|veipar
+🙆;persónur sum veipar ok;fólk|ok|persónur|veipar
+🙆‍♂️;maður sum veipar ok;maður|ok|veipar
+🙆‍♀️;kvinna sum veipar ok;kona|kvinna|ok|veipar
+💁;persónur sum nertir við;fólk|nertir við|persónur
+💁‍♂️;maður sum nertir við;maður|nertir við
+💁‍♀️;kvinna sum nertir við;kona|kvinna|nertir við
+🙋;persónur sum lyftur hondina upp;fólk|hond|lyft|persónur|upp
+🙋‍♂️;maður sum lyftur hondina upp;hond|lyft|maður|upp
+🙋‍♀️;kvinna sum lyftur hondina upp;hond|kona|kvinna|lyft|upp
+🧏;deyvur persónur;deyvur|persónur
+🧏‍♂️;deyvur maður;deyvur|maður
+🧏‍♀️;deyv kvinna;deyv|kona|kvinna
+🙇;persónur sum bukkar;bukkar|fólk|persónur
+🙇‍♂️;maður sum bukkar;bukkar|maður
+🙇‍♀️;kvinna sum bukkar;bukkar|kona|kvinna
+🤦;vónbrotin persónur;facepalm|fólk|ørkymlan|persónur|vónbrot
+🤦‍♂️;vónbrotin maður;facepalm|maður|ørkymlan|ørkymlanfólk|persónur|vónbrot
+🤦‍♀️;vónbrotin kvinna;facepalm|kona|kvinna|ørkymlan|ørkymlanfólk|persónur|vónbrot
+🤷;persónur sum yppur øksl;akslaypp|fólk|ivast|ivi|persónur|veit ikki|yppa øksl
+🤷‍♂️;maður um yppur øksl;akslaypp|ivast|ivi|maður|veit ikki|yppa øksl
+🤷‍♀️;kvinna um yppur øksl;akslaypp|ivast|ivi|kona|kvinna|veit ikki|yppa øksl
+🧑‍⚕️;heilsuverkfrøðingur;lækni|lekifrøðingur|sjúkrarøktarfrøðingur|sjúkrasystir
+👨‍⚕️;mannligur lækni;heilsurøkt|lækni|maður|sjúkrarøktarfrøðingur|sjúkrasystir|terapevtur
+👩‍⚕️;kvinnuligur lækni;heilsurøkt|kona|kvinna|lækni|sjúkrarøktarfrøðingur|sjúkrasystir|terapevtur
+🧑‍🎓;studentur;lesandi|næmingur|prógv
+👨‍🎓;mannligur studentur;maður|studentur|útbúgvin
+👩‍🎓;kvinnuligur studentur;kona|kvinna|studentur|útbúgvin
+🧑‍🏫;lærari;professari|vegleiðari
+👨‍🏫;mannligur lærari;lærari|maður|professari|vegleiðari
+👩‍🏫;kvinnuligur lærari;kona|kvinna|lærari|lærarinna|professari|vegleiðari
+🧑‍⚖️;dómari;rættvísi
+👨‍⚖️;mannligur dómari;dómari|maður|rættvísi
+👩‍⚖️;kvinnuligur dómari;dómari|kona|kvinna|rættvísi
+🧑‍🌾;bóndi;urtagarðsmaður
+👨‍🌾;mannligur bóndi;bóndi|maður
+👩‍🌾;kvinnuligur bóndi;bóndi|kona|kvinna
+🧑‍🍳;kokkur;høvuðskokkur|matgera
+👨‍🍳;mannligur kokkur;kokkur|maður
+👩‍🍳;kvinnuligur kokkur;kokkur|kona|kvinna
+🧑‍🔧;mekanikari;maksinsmiður|rørsmiður|smiður
+👨‍🔧;mannligur mekanikari;elektrikari|maður|mekanikari|rørsmiður
+👩‍🔧;kvinnuligur mekanikari;elektrikari|kona|kvinna|mekanikari|rørsmiður
+🧑‍🏭;sveisari;arbeiðsfólk|sj´óðari
+👨‍🏭;mannligur sveisari;arbeiðsmaður|maður|sjóðari|sveisari
+👩‍🏭;kvinnuligur sveisari;arbeiðskvinna|kona|kvinna|sj´óðari|sveisari
+🧑‍💼;skrivstovufólk;embætisfólk|handilsfólk|starvsfólk
+👨‍💼;skrivstovumaður;arkitektur|deildarstjóri|løgfrøðingur|maður|skrivstova|stjóri
+👩‍💼;skrivstovukvinna;arkitektur|deildarstjóri|kona|kvinna|løgfrøðingur|skrivstova|stjóri
+🧑‍🔬;náttúruvísindafólk;alisfrøðingur|evnafrøðingur|lívsfrøðingur
+👨‍🔬;vísindamaður;maður|náttúruvísindi|vísind
+👩‍🔬;vísindakvinna;kona|kvinna|náttúruvísindi|vísind
+🧑‍💻;tøknifrøðingur;forritari|tøkni|uppfinnari
+👨‍💻;mannligur tøknifrøðingur;forritari|maður|tøkni|uppfinnari
+👩‍💻;kvinnuligur tøknifrøðingur;forritari|kona|kvinna|tøkni|uppfinnari
+🧑‍🎤;sangari;rokk|stjørna|undirhaldari
+👨‍🎤;mannligur sangari;maður|sangari|sjónleikari|skemtari|undirhaldari|vertur
+👩‍🎤;kvinnuligur sangari;kona|kvinna|sangari|sangarinna|sjónleikari|skemtari|songkvinna|undirhaldari|vertur
+🧑‍🎨;listafólk;list|listamálari
+👨‍🎨;listamaður;list|listamálari|maður
+👩‍🎨;listakona;kona|kvinna|list|listamálari
+🧑‍✈️;flogskipari;pilotur
+👨‍✈️;mannligur flogskipari;flogskipari|maður|pilotur
+👩‍✈️;kvinnuligur flogskipari;flogskipari|kona|kvinna|pilotur
+🧑‍🚀;astronautur;rúmdarskipari|rúmdin
+👨‍🚀;mannligur astronautur;astronautur|maður|rúmdarskipari|rúmdin
+👩‍🚀;kvinnuligur astronautur;astronautur|kona|kvinna|rúmdarskipari|rúmdin
+🧑‍🚒;sløkkiliðsfólk;sløkkilið
+👨‍🚒;sløkkiliðsmaður;maður|sløkkilið
+👩‍🚒;sløkkiliðskvinna;kona|kvinna|sløkkilið
+👮;politistur;løgregla
+👮‍♂️;løgreglumaður;løgregla|maður
+👮‍♀️;løgreglukvinna;kona|kvinna|løgregla
+🕵️;detektivur;løgregla|njósnari|uppdagari
+🕵️‍♂️;mannligur detektivur;løgregla|maður|njósnari|uppdagari
+🕵️‍♀️;kvinnuligur detektivur;kona|kvinna|løgregla|njósnari|uppdagari
+💂;vaktur;
+💂‍♂️;vaktarmaður;maður|vakt|vaktur
+💂‍♀️;vaktarkvinna;kona|kvinna|vakt|vaktur
+🥷;ninja andlit;fjaldur|ninja|sníkjandi|stríðsmaður
+👷;byggiverkfrøðingur;bygging|smíð
+👷‍♂️;mannligur byggiverkfrøðingur;bygging|byggiverkfrøðingur|maður|smíð
+👷‍♀️;kvinnuligur byggiverkfrøðingur;bygging|byggiverkfrøðingur|kona|kvinna|smíð
+🫅;persónur við krúnu;kongalig|krúna|persónur
+🤴;prinsur;fúrsti|kongssonur
+👸;prinsessa;fúrstakona|fúrstinna|kongsdóttir
+👳;persónur við turban;fólk|turban
+👳‍♂️;maður við turban;maður|turban
+👳‍♀️;kvinna við turban;kona|kvinna|turban
+👲;persónur við kinesiskari húgvu;fólk|húgva|kinesisk
+🧕;kvinna við turriklæði;hijab|kona|kvinna|kvinnuplagg|mantilla|turriklæði
+🤵;persónur í smoking;brúðgómur|persónur|smoking
+🤵‍♂️;maður í smoking;maður|smoking
+🤵‍♀️;kona í smoking;kona|konufólk|kvinna|smoking
+👰;persónur í sløri;brúdleyp|brúður|persónur|slør
+👰‍♂️;maður í sløri;maður|slør
+👰‍♀️;kona í sløri;kona|kvinna|slør
+🤰;kvinna við barn;kona|kvinna|upp á vegin|við barn
+🫃;maður við barn;búkur|eti ov nógv|maður|upp á vegin|við barn
+🫄;persónur við barn;búkur|eti ov nógv|persónur|upp á vegin|við barn
+🤱;geva bróst;bróstaføði|bróstageving|mamma|móður|móðurmjólk|pinkubarn
+👩‍🍼;kvinna gevur fløsku;fløska|geva fløsku|mamma|móður|pinkubarn
+👨‍🍼;maður gevur fløsku;babba|faðir|fløska|pinkubarn
+🧑‍🍼;persónur gevur fløsku;fløska|persónur|pinkubarn
+👼;pinkabarnaeingil;ævintýr|andlit|eingil|pinkubarn|trúgv
+🎅;jólamaðurin;jól|jólamaður|maður
+🤶;jólakonan;jól|jólakona|kona|kvinna
+🧑‍🎄;jólafólk;fólk|jól|persónur
+🦸;superhetja;góður|hetja|super|yvirnátúrligur
+🦸‍♂️;mannlig superhetja;góður|hetja|maður|super|yvirnát´úrligur
+🦸‍♀️;kvinnulig superhetja;góð|hetja|super|yvirnátúrlig
+🦹;superskálkur;bakbeist|illmenni|óndur|skálkur|super
+🦹‍♂️;mannligur superskálkur;bakbeist|illmenni|maður|óndur|skálkur|super
+🦹‍♀️;kvinnuligur superskálkur;bakbeist|illmenni|kona|kvinna|ónd|skálkur|super
+🧙;persónur sum dugir gand;ævintýr|fólk|galdur
+🧙‍♂️;gandakallur;ævintýr|gandur|kallur|maður|trøllmaður
+🧙‍♀️;gandakelling;ævintýr|gandakona|gandur|kelling|kona|kvinna
+🧚;álva;ævintýr|álvur
+🧚‍♂️;mannligur álvur;ævintýr|álvur|maður
+🧚‍♀️;kvinnulig álva;ævintýr|álva|álvadrotning|kona|kvinna
+🧛;vampýrur;blóðsúgvari|drakula
+🧛‍♂️;mannligur vampýrur;blóðsúgvari|drakula|maður
+🧛‍♀️;kvinnuligur vampýrur;blóðsúgvari|drakula|kona|kvinna
+🧜;havfólk;hav|havfrúgv|havmaður
+🧜‍♂️;havmaður;triton
+🧜‍♀️;havfrúgv;
+🧝;álvur;ævintýr|álva
+🧝‍♂️;mannfólka álvur;ævintýr|álvur|maður
+🧝‍♀️;konufólka álva;ævintýr|álva|maður
+🧞;andi;ævintýr
+🧞‍♂️;mannligur andi;ævintýr|andi|maður
+🧞‍♀️;kvinnuligur andi;ævintýr|andi|kona|kvinna
+🧟;sombi;uppvakningur|zombie
+🧟‍♂️;mannligur sombi;maður|sombi|uppvakningur|zombie
+🧟‍♀️;kvinnuligur sombi;kona|kvinna|sombi|uppvakna|zombie
+🧌;trøll;ævintýr|skrímsl|søgn
+💆;persónur sum fær massasju;fólk|massasja|persónur
+💆‍♂️;maður sum fær massasju;maður|massasja
+💆‍♀️;kvinna sum fær massasju;kona|kvinna|massasja
+💇;persónur sum fær klipt hári;fólk|hár|hárklipping|hársnið|klipp|persónur
+💇‍♂️;maður sum fær klipt hári;hár|hárklipping|hársnið|klipp|maður
+💇‍♀️;kvinna sum fær klipt hári;hár|hárklipping|hársnið|klipp|kona|kvinna
+🚶;persónur sum gongur;fólk|gongur|gongutúr|persónur|til gongu
+🚶‍♂️;maður sum gongur;gongur|gongutúr|maður|til gongu
+🚶‍♀️;kvinna sum gongur;gongur|gongutúr|kona|kvinna|til gongu
+🚶‍➡️;persónur sum gongur: til høgru;fólk|gongur|gongutúr|høgru|persónur|persónur sum gongur|til|til gongu
+🚶‍♀️‍➡️;kvinna sum gongur: til høgru;gongur|gongutúr|høgru|kona|kvinna|kvinna sum gongur|til|til gongu
+🚶‍♂️‍➡️;maður sum gongur: til høgru;gongur|gongutúr|høgru|maður|maður sum gongur|til|til gongu
+🧍;persónur ið stendur;persónur|stendur
+🧍‍♂️;maður ið stendur;maður|stendur
+🧍‍♀️;kvinna ið stendur;kona|kvinna|stendur
+🧎;persónur á knæ;á knæ|knæ|persónur
+🧎‍♂️;maður á knæ;á knæ|knæ|maður
+🧎‍♀️;kvinna á knæ;á knæ|knæ|kona|kvinna
+🧎‍➡️;persónur á knæ: til høgru;á knæ|høgru|knæ|persónur|persónur á knæ|til
+🧎‍♀️‍➡️;kvinna á knæ: til høgru;á knæ|høgru|knæ|kona|kvinna|kvinna á knæ|til
+🧎‍♂️‍➡️;maður á knæ: til høgru;á knæ|høgru|knæ|maður|maður á knæ|til
+🧑‍🦯;persónur við blindastavi;blind|blindastavur|blindur|persónur|stavur
+🧑‍🦯‍➡️;persónur við blindastavi: til høgru;blind|blindastavur|blindur|høgru|persónur|persónur við blindastavi|stavur|til
+👨‍🦯;maður við blindastavi;blindastavur|blindur|maður|stavur
+👨‍🦯‍➡️;maður við blindastavi: til høgru;blindastavur|blindur|høgru|maður|maður við blindastavi|stavur|til
+👩‍🦯;kvinna við blindastavi;blind|blindastavur|kona|kvinna|stavur
+👩‍🦯‍➡️;kvinna við blindastavi: til høgru;blind|blindastavur|høgru|kona|kvinna|kvinna við blindastavi|stavur|til
+🧑‍🦼;persónur í motorkoyristóli;koyristólur|motorkoyristólur|persónur
+🧑‍🦼‍➡️;persónur í motorkoyristóli: til høgru;høgru|koyristólur|motorkoyristólur|persónur|persónur í motorkoyristóli|til
+👨‍🦼;maður í motorkoyristóli;koyristólur|maður|motorkoyristólur
+👨‍🦼‍➡️;maður í motorkoyristóli: til høgru;høgru|koyristólur|maður|maður í motorkoyristóli|motorkoyristólur|til
+👩‍🦼;kvinna í motorkoyristóli;kona|koyristólur|kvinna|motorkoyristólur
+👩‍🦼‍➡️;kvinna í motorkoyristóli: til høgru;høgru|kona|koyristólur|kvinna|kvinna í motorkoyristóli|motorkoyristólur|til
+🧑‍🦽;persónur í koyristóli;koyristólur|persónur
+🧑‍🦽‍➡️;persónur í koyristóli: til høgru;høgru|koyristólur|persónur|persónur í koyristóli|til
+👨‍🦽;maður í koyristóli;koyristólur|maður
+👨‍🦽‍➡️;maður í koyristóli: til høgru;høgru|koyristólur|maður|maður í koyristóli|til
+👩‍🦽;kvinna í koyristóli;kona|koyristólur|kvinna
+👩‍🦽‍➡️;kvinna í koyristóli: til høgru;høgru|kona|koyristólur|kvinna|kvinna í koyristóli|til
+🏃;persónur sum rennur;fólk|maraton|persónur|renn|rennur
+🏃‍♂️;maður sum rennur;maður|maraton|renn|rennur
+🏃‍♀️;kvinna sum rennur;kvinna|maraton|renn|rennur
+🏃‍➡️;persónur sum rennur: til høgru;fólk|høgru|maraton|persónur|persónur sum rennur|renn|rennur|til
+🏃‍♀️‍➡️;kvinna sum rennur: til høgru;høgru|kvinna|kvinna sum rennur|maraton|renn|rennur|til
+🏃‍♂️‍➡️;maður sum rennur: til høgru;høgru|maður|maður sum rennur|maraton|renn|rennur|til
+💃;kvinna sum dansar;dansar|dansur|kona|kvinna
+🕺;maður sum dansar;dansar|dansur|maður
+🕴️;maður í klædningi sveimar;klædningur|maður|sveimar
+👯;fólk við haruoyrum;dansa|dansur|fólk|haruoyru|persónar
+👯‍♂️;menn við haruoyrum;dansa|dansur|haruoyru|menn
+👯‍♀️;kvinnur við haruoyrum;dansa|dansur|haruoyru|konur|kvinnur
+🧖;persónur í sauna;baðstova|fólk|persónur|sauna
+🧖‍♂️;maður í sauna;baðstova|maður|sauna
+🧖‍♀️;kvinna í sauna;baðstova|kona|kvinna|sauna
+🧗;persónur sum klatrar;fólk|klatra|klintra|klíva|klúgva|persónur
+🧗‍♂️;maður sum klatrar;klatra|klintra|klíva|klúgva|maður
+🧗‍♀️;kvinna sum klatrar;klatra|klintra|klíva|klúgva|kona|kvinna
+🤺;fektari;fiktar|fólk|persónur
+🏇;kappríðing;fólk|hestur|jockey|kappríðari|persónur|ross
+⛷️;skíðrennari;fólk|kavi|persónur|skíð
+🏂;persónur sum stendur á snjófjøl;fólk|persónur|snjófjøl|snowboard|snowboarder
+🏌️;persónur sum spælir golf;fólk|golf|persónur
+🏌️‍♂️;maður sum spælir golf;golf|maður
+🏌️‍♀️;kona sum spælir golf;golf|kona|kvinna
+🏄;persónur sum skreiður á brimfjøl;brimfjøl|fólk|persónur|surfa
+🏄‍♂️;maður sum skreiður á brimfjøl;brimfjøl|maður|surfa
+🏄‍♀️;kona sum skreiður á brimfjøl;brimfjøl|kona|kvinna|surfa
+🚣;persónur í árabáti;árabátur|fólk|persónur|rógva|rør
+🚣‍♂️;maður í árabáti;árabátur|maður|rógva|rør
+🚣‍♀️;kvinna í árabáti;
+🏊;persónur sum svimur;fólk|persónur|svimjari|svimur
+🏊‍♂️;maður sum svimur;maður|svimjari|svimur
+🏊‍♀️;kvinna sum svimur;kona|kvinna|svimjari|svimur
+⛹️;persónur sum spælir kurvabólt;fólk|kurvabóltur|persónur
+⛹️‍♂️;maður sum spælir kurvabólt;kurvabóltur|maður
+⛹️‍♀️;kvinna sum spælir kurvabólt;kona|kurvabóltur|kvinna
+🏋️;vektlyftari;fólk|lyftingarítrótt|persónur|vektlyfting
+🏋️‍♂️;mannligur vektlyftari;lyftingarítrótt|maður|vektlyftari|vektlyfting
+🏋️‍♀️;kvinnuligur vektlyftari;kona|kvinna|lyftingarítrótt|vektlyftari|vektlyfting
+🚴;persónur sum súkklar;fólk|persónur|súkkla|súkklar|súkklari
+🚴‍♂️;maður sum súkklar;maður|súkkla|súkklar|súkklari
+🚴‍♀️;kvinna sum súkklar;kona|kvinna|súkkla|súkklar|súkklari
+🚵;persónur á fjallasúkklu;fjallasúkkla|fólk|persónur|súkkla|súkklar|súkklari
+🚵‍♂️;maður á fjallasúkklu;fjallasúkkla|maður|súkkla|súkklar|súkklari
+🚵‍♀️;kvinna á fjallasúkklu;fjallasúkkla|kona|kvinna|súkkla|súkklar|súkklari
+🤸;persónur sum ger myllulop;fimleik|fimleikur|fólk|myllulop|persónur
+🤸‍♂️;maður sum ger myllulop;fimleik|fimleikur|maður|myllulop
+🤸‍♀️;kvinna sum ger myllulop;fimleik|fimleikur|kona|kvinna|myllulop
+🤼;glímingardystur;fólk|glíma|glíming|persónar
+🤼‍♂️;mannligur glímingardystur;glíma|glíming|glímingardystur|menn
+🤼‍♀️;kvinnuligur glímingardystur;glíma|glíming|glímingardystur|konur|kvinnur
+🤽;persónur sum spælir vatnpolo;fólk|persónur|vatnpolo
+🤽‍♂️;maður sum spælir vatnpolo;maður|vatnpolo
+🤽‍♀️;kona sum spælir vatnpolo;kona|kvinna|vatnpolo
+🤾;persónur sum spælir hondbólt;fólk|hondbólt|hondbóltur|persónur
+🤾‍♂️;maður sum spælir hondbólt;hondbólt|hondbóltur|maður
+🤾‍♀️;kvinna sum spælir hondbólt;hondbólt|hondbóltur|kona|kvinna
+🤹;persónur sum fimlar;fimla|fimlari|fólk|persónur
+🤹‍♂️;maður sum fimlar;fimla|fimlari|maður
+🤹‍♀️;kvinna sum fimlar;fimla|fimlari|kona|kvinna
+🧘;persónur í lotusstøðu;fólk|joga|lotus|lotusstøða|meditatión|persónur
+🧘‍♂️;maður í lotusstøðu;joga|lotus|lotusstøða|maður|meditatión
+🧘‍♀️;kvinna í lotusstøðu;joga|kona|kvinna|lotus|lotusstøða|meditatión
+🛀;persónur í baðikari;bað|baðikar|fólk|persónur
+🛌;persónur í song;fólk|persónur|song|svevur
+🧑‍🤝‍🧑;fólk leiðast;fólk|leiðast|par
+👭;kvinnur leiðast;konur|kvinnur|leiðast|par
+👫;kvinna or maður leiðast;kona|kvinna|leiðast|maður|par
+👬;menn leiðast;leiðast|maður|menn|par|stjørnutekin|tvíburar|Tvíburarnir
+💏;tvey íð mussast;hjarta|muss|par
+👩‍❤️‍💋‍👨;tvey íð mussast: kona, maður;hjarta|kona|maður|muss|par|tvey íð mussast
+👨‍❤️‍💋‍👨;tvey íð mussast: maður, maður;hjarta|maður|muss|par|tvey íð mussast
+👩‍❤️‍💋‍👩;tvey íð mussast: kona, kona;hjarta|kona|muss|par|tvey íð mussast
+💑;par og hjarta;hjarta|kærleiki|par
+👩‍❤️‍👨;par og hjarta: kona, maður;hjarta|kærleiki|kona|maður|par|par og hjarta
+👨‍❤️‍👨;par og hjarta: maður, maður;hjarta|kærleiki|maður|par|par og hjarta
+👩‍❤️‍👩;par og hjarta: kona, kona;hjarta|kærleiki|kona|par|par og hjarta
+👨‍👩‍👦;familja: maður, kona, drongur;barn|drongur|familja|foreldur|kona|maður
+👨‍👩‍👧;familja: maður, kona, genta;barn|familja|foreldur|genta|kona|maður
+👨‍👩‍👧‍👦;familja: maður, kona, genta, drongur;barn|drongur|familja|foreldur|genta|kona|maður
+👨‍👩‍👦‍👦;familja: maður, kona, drongur, drongur;barn|drongur|familja|foreldur|kona|maður
+👨‍👩‍👧‍👧;familja: maður, kona, genta, genta;barn|familja|foreldur|genta|kona|maður
+👨‍👨‍👦;familja: maður, maður, drongur;barn|drongur|familja|foreldur|maður
+👨‍👨‍👧;familja: maður, maður, genta;barn|familja|foreldur|genta|maður
+👨‍👨‍👧‍👦;familja: maður, maður, genta, drongur;barn|drongur|familja|foreldur|genta|maður
+👨‍👨‍👦‍👦;familja: maður, maður, drongur, drongur;barn|drongur|familja|foreldur|maður
+👨‍👨‍👧‍👧;familja: maður, maður, genta, genta;barn|familja|foreldur|genta|maður
+👩‍👩‍👦;familja: kona, kona, drongur;barn|drongur|familja|foreldur|kona
+👩‍👩‍👧;familja: kona, kona, genta;barn|familja|foreldur|genta|kona
+👩‍👩‍👧‍👦;familja: kona, kona, genta, drongur;barn|drongur|familja|foreldur|genta|kona
+👩‍👩‍👦‍👦;familja: kona, kona, drongur, drongur;barn|drongur|familja|foreldur|kona
+👩‍👩‍👧‍👧;familja: kona, kona, genta, genta;barn|familja|foreldur|genta|kona
+👨‍👦;familja: maður, drongur;barn|drongur|familja|foreldur|maður
+👨‍👦‍👦;familja: maður, drongur, drongur;barn|drongur|familja|foreldur|maður
+👨‍👧;familja: maður, genta;barn|familja|foreldur|genta|maður
+👨‍👧‍👦;familja: maður, genta, drongur;barn|drongur|familja|foreldur|genta|maður
+👨‍👧‍👧;familja: maður, genta, genta;barn|familja|foreldur|genta|maður
+👩‍👦;familja: kona, drongur;barn|drongur|familja|foreldur|kona
+👩‍👦‍👦;familja: kona, drongur, drongur;barn|drongur|familja|foreldur|kona
+👩‍👧;familja: kona, genta;barn|familja|foreldur|genta|kona
+👩‍👧‍👦;familja: kona, genta, drongur;barn|drongur|familja|foreldur|genta|kona
+👩‍👧‍👧;familja: kona, genta, genta;barn|familja|foreldur|genta|kona
+🗣️;høvd sum prátar;høvd|prát|prátar|skuggamynd|tosar
+👤;skuggamynd av bringumynd;bringumynd|skuggamynd
+👥;skuggamynd av bringumyndum;bringumynd|bryngumyndir|skuggamynd
+🫂;fólk sum klemmast;bei|hey|klemm|takk
+👪;familja;barn|foreldur
+🧑‍🧑‍🧒;familja: vaksin, vaksin, barn;barn|familja|vaksin
+🧑‍🧑‍🧒‍🧒;familja: vaksin, vaksin, barn, barn;barn|børn|familja|vaksin
+🧑‍🧒;familja: vaksin, barn;barn|familja|vaksin
+🧑‍🧒‍🧒;familja: vaksin, barn, barn;barn|børn|familja|vaksin
+👣;fótaspor;føtur|il|slóð|spor
+🫆;fingramerki;samleiki
+🐵;apuandlit;andlit|apa
+🐒;apa;dýr
+🦍;gorilla;apa|dýr
+🦧;orangutang;apa
+🐶;hundaandlit;andlit|hundur|kelidýr
+🐕;hundur;dýr|kelidýr
+🦮;førarahundur;blindur|hundur
+🐕‍🦺;tænastuhundur;hjálp|hundur|tænasta
+🐩;puddilhundur;dýr|hundur|kelidýr|puddil
+🐺;úlvur;andlit
+🦊;revaandlit;andlit|revur
+🦝;tváttarbjørn;forvitin
+🐱;kettuandlit;andlit|ketta
+🐈;ketta;dýr|kelidýr|køttur
+🐈‍⬛;svørt ketta;ketta|óeydna|óheppin|svørt
+🦁;leyvuandlit;andlit|leyva|stjørnumerki
+🐯;tikaraandlit;andlit|tikari
+🐅;tikari;dýr
+🐆;leopardur;dýr
+🐴;rossaandlit;andlit|hestur|ross
+🫎;elgsdýr;elgur|hjartarhorn
+🫏;esil;ásin|asni|dýr
+🐎;hestur;dýr|kappríðingarross|kelidýr|ross
+🦄;einhyrningaandlit;andlit|einhyrningur
+🦓;sebra;dýr|strípur
+🦌;hjørtur;dýr
+🦬;bisonur;fylgi|visundur
+🐮;kúgvaandlit;andlit|kúgv|neyt
+🐂;oksi;dýr|neyt|stjørnumerki
+🐃;búffil;bisonur|dýr|visundur
+🐄;kúgv;dýr|neyt
+🐷;grísaandlit;andlit|grísur|svín
+🐖;grísur;dýr|súgv|svín
+🐗;villsvínaandlit;andlit|gøltur|villsvín
+🐽;grísasnúti;grísur|snúti|svín
+🐏;veðrur;dýr|seyður|stjørnumerki
+🐑;ær;dýr|seyður
+🐐;geit;dýr|stjørnumerki
+🐪;dromedárur;bunga|dýr|kúla
+🐫;kamelur;bunga|dýr|kúla
+🦙;lama;alpaka
+🦒;giraffur;dýr|prikkar
+🐘;fílur;dýr
+🦣;mammuttur;loðfílur|útdeyður|útdeytt
+🦏;nashyrningur;dýr
+🦛;áarross;vatnhestur
+🐭;músaandlit;andlit|mús
+🐁;mús;dýr
+🐀;rotta;dýr
+🐹;hamstaraandlit;andlit|hamstari
+🐰;kaninandlit;andlit|kanin
+🐇;kanin;dýr|kelidýr
+🐿️;jarðaríkorn;dýr|íkorn
+🦫;bævur;
+🦔;tindasvín;dýr|tindar|tornutur
+🦇;flogmús;blóðsúgvari|dýr|vampýrur
+🐻;bjarnarandlit;andlit|bjørn
+🐻‍❄️;hvítabjørn;arktisk|bjørn|hvít|ísbjørn
+🐨;koalaandlit;andlit|koala|pokabjørn
+🐼;pandaandlit;andlit|panda
+🦥;letidýr;dovin|sein|seinur
+🦦;otur;
+🦨;stinkdýr;skunkur
+🦘;kenguru;Avstralia|posadýr
+🦡;grevlingur;
+🐾;labbaspor;labbar|slóð|spor
+🦃;kalkun;dýr|fuglur
+🐔;hønuandlit;andlit|høna|høsnarungi
+🐓;hani;dýr|fuglur
+🐣;høsnarungi í eggjaskali;eggjaskal|høsnarungi|klakt|kleking
+🐤;høsnarungaandlit;andlit|høsnarungi
+🐥;høsnarungi;dýr|fuglur
+🐦;fuglaandlit;andlit|fuglur
+🐧;pingvinandlit;andlit|pingvin
+🕊️;dúgva við oljugrein;dúgva|dýr|friður|fuglur|oljugrein
+🦅;ørn;dýr|fuglur
+🦆;dunna;dýr|fuglur|steggi
+🦢;svanur;fuglur|okn
+🦉;ugla;dýr|fuglur|gløgg|klók
+🦤;dronta;fuglur|Mauritius|útdeyður
+🪶;fjøður;fjaðurhamur|fjøðurhamur|flúgva|fuglur|lætt
+🦩;flamingo;fuglur|litfagur|tropiskur
+🦚;páfuglur;erpin|fuglur|p´´afuglahøna|páfuglahani|reyp
+🦜;pappageykur;fuglur|prát|sjórænari
+🪽;vongur;einglaligt|himmalskt
+🐦‍⬛;svartur fuglur;dýr|kráka|ravnur|stari
+🪿;gás;býtt|dýr|fuglur|gásasteggi|steggi
+🐦‍🔥;føniks;endurføðing|fuglur
+🐸;froskaandlit;andlit|froskur
+🐊;krokodilla;dýr
+🐢;skjaldbøka;dýr|havskjaldbøka|landskjaldbøka|mýriskjaldbøka
+🦎;oydla;dýr|edlur|ferføtlur
+🐍;slanga;dýr|serpentin|stjørnumerki
+🐲;andlit á dreka;ævintýr|andlit|dreki
+🐉;dreki;ævintýr
+🦕;Brontosaurus;apatosaurus|dinosaurur|dýr
+🦖;T-rex;dinosaurur|dýr|Tyrannosaurus rex
+🐳;hvalur sum sprænur;dýr|goysa|hvalur|spræna|vatn
+🐋;hvalur;dýr
+🐬;delfin;dýr
+🦭;kópur;sjóljón
+🐟;fiskur;dýr|stjørnumerki
+🐠;tropiskur fiskur;dýr|fiskur|tropiskur
+🐡;ígulfiskur;dýr|fiskur
+🦈;hávur;dýr
+🐙;høgguslokkur við átta ørmum;áttaarmaður|áttermdur|dýr|høgguslokkur
+🐚;skel;sniglahús|snyril
+🪸;korallur;hav|koral|riv
+🪼;hvalspýggja;dýr|hav|ryggleysur
+🦀;krabbi;dýr|havføði|sjógæti|stjørnumerki
+🦞;hummari;dýr|havføði|sjógæti
+🦐;rækja;dýr|havføði|matur|sjógæti
+🦑;høgguslokkur;dýr|høgguslokkur við tíggju ørmum|matur|tíggjuarmaður|tíggjuermdur
+🦪;ostra;dýr|perla
+🐌;snigil;
+🦋;firvaldur;skordýr|summarfuglur
+🐛;skordýr;
+🐜;meyra;skordýr
+🐝;býfluga;skordýr
+🪲;klukka;skordýr
+🐞;mariubjalla;klukka|mariuhøna|skordýr
+🦗;veggjasmiður;grashoppa
+🪳;kakkulakkur;farsótt|pest|skaðadýr|skaðakykt|skordýr
+🕷️;eiturkoppur;skordýr
+🕸️;eiturkoppanót;eiturkoppur|nót|vev
+🦂;skorpión;sporðdreki|stjørnumerki
+🦟;mýggjabiti;farsótt|fepur|malaria|moskito|pest
+🪰;fluga;pest|rot|sjúka|spilt
+🪱;maðkur;ormur|reyðmaðkur|skriðkykt|sníkur|snultidýr
+🦠;smávera;amøba|bakteria|skaploysingur|virus
+💐;blómutyssi;blóma|blomstur|buket
+🌸;kirsuberblóma;blóma|blomstur|kirsuber
+💮;hvít blóma;blóma|blomstur
+🪷;nyksblóma;blóma|buddatrúgv|buddisma|hinduatrúgv|hinduisma|lotus
+🏵️;rósuprýði;blóma|blomstur|planta|stovnhviril
+🌹;rósa;blóma|blomstur
+🥀;følna blóma;blóma|blomstur|følna
+🌺;hawaiiblóma;blóma|blomstur
+🌻;sólblóma;blóma|blomstur
+🌼;blóma;blomstur
+🌷;tulipán;blóma|blomstur
+🪻;hýasint;blóma|planta
+🌱;fræplanta;fræ|planta
+🪴;urtapottur;planta|pottaplanta|pottur|veksur
+🌲;veturgrønt træ;træ|veturgrønt
+🌳;træ sum fellir bløðini;bløð|fellir|træ
+🌴;plámatræ;pálmi|træ
+🌵;kaktus;planta
+🌾;ríshólgi;hólgi|rís
+🌿;urt;planta
+☘️;smæra;planta
+🍀;smæra við fýra;4|fýra|smæra
+🍁;ahornsblað;
+🍂;fallið blað;blað|falli
+🍃;flagsandi bløð;bløð|flagsandi|vindur
+🪹;tómt reiður;reiðrast|reiður|tómt
+🪺;reiður við eggum;egg|reiðrast|reiðringartíð|reiður
+🍄;soppur;hundaland
+🪾;blaðleyst træ;blaðleyst|træ|vetur
+🍇;víndrúvur;frukt|víndrúva
+🍈;melón;frukt
+🍉;vatnmelón;frukt
+🍊;mandarin;frukt
+🍋;sitrón;frukt|sitrus
+🍋‍🟩;súraldin;frukt|grønt|sitrón|súrt
+🍌;banan;frukt
+🍍;ananas;frukt
+🥭;mangofrukt;frukt|mango|tropisk
+🍎;reytt súrepli;frukt|reytt|súrepli
+🍏;grønt súrepli;frukt|grønt|súrepli
+🍐;pera;frukt
+🍑;ferska;frukt
+🍒;kirsuber;ber|frukt
+🍓;jarðber;ber|frukt
+🫐;bláber;ber|blá|frukt
+🥝;kivi;frukt
+🍅;tomat;frukt|grønmeti
+🫒;oljuber;matur|olja
+🥥;kokusnøt;pálmi
+🥑;avokado;frukt
+🍆;aubergina;grønmeti
+🥔;epli;grønmeti
+🥕;gularót;grønmeti
+🌽;maiskolba;aks|kolba|korn|mais|maisaks
+🌶️;sterkt pipar;pipar|sterkt
+🫑;piparfrukt;grønmeti|pipar
+🥒;agurk;agurka|grønmeti
+🥬;salatblað;blað|grønkál|grønmeti|salat
+🥦;brokkoli;spergilkál
+🧄;hvítleykur;matur|smakkur
+🧅;leykur;matur|smakkur
+🥜;jarðnøtur;matur|nøt
+🫘;bønur;bøn|bøna|matur
+🌰;kastanja;matur|nøt
+🫚;ingifer;krydd|kryddurt|øl|urt
+🫛;ertnabjølg;ertnabjølgur|ertur|grønmeti|matur
+🍄‍🟫;brúnur soppur;champignon|hundaland|matur|sjampinjon|soppur
+🫜;rótfrukt;grønmeti|hvítarót|matur|rót
+🍞;breyð;matur
+🥐;horn;croissant|franskbreyðshorn|matur
+🥖;flute;breyð|matur|smábreyð
+🫓;flatbreyð;breyð|naan|ósúrgað|pitabreyð
+🥨;saltkringla;matur|saltstong
+🥯;bagel;breyð|morgunbreyð
+🥞;pannukaka;eggjakøka|matur
+🧇;vafla;
+🧀;osta stykki;matur|ostur
+🍖;kjøt á beini;bein|kjøt|matur
+🍗;høsnaungalær;bein|høsnarungi|kjøt|lær|matur
+🥩;kotelett;búffur|kjøt|matur
+🥓;flesk;kjøt|matur
+🍔;burgari;búfftvíflís|búffur|hamborgari|hamburgari|matur
+🍟;kips;matur
+🍕;pitsaflís;flís|matur|pitsa|pizza
+🌭;hotdog;matur
+🥪;tvíflís;breyð|matur
+🌮;tako;matur|meksikanskur|taco
+🌯;burrito;matur|meksikanskur
+🫔;tamales;ball|matur|Meksiko
+🥙;fylt flatbreyð;falafel|flatbreyð|fylt|kebabb|matur
+🧆;falafel;kjøtfrikadella|matur
+🥚;egg;matur
+🍳;matgerð;egg|matur|panna|steikipanna|steikja
+🥘;grýturættur;fat|grýta|matur
+🍲;djúpur tallerkur við mati;borðiskur|djúpur|matur
+🫕;fondue;matur|sjokuláta|smelta|Sveis
+🥣;bolli við skeið;kornflykrur|matur|morgunmatur
+🥗;salat;grønmeti|matur
+🍿;poppkorn;matur
+🧈;smør;matur|mjólk|mjólkarvirki|rómi
+🧂;salt;krydd|saltílat
+🥫;dósamatur;dós|matur
+🍱;bento matpakki;bento|matpakki|matur
+🍘;ríssmákaka;kaka|matur|rís|smákaka
+🍙;rísbolli;bolli|matur|rís
+🍚;kókarís;kóka|matur|rís
+🍛;karryrís;karry|matur|rís
+🍜;nudlur;matur
+🍝;spaghetti;matur|pasta|spagetti|tomatsós
+🍠;søtt epli;epli|matur|søtt
+🍢;matpinnur;grillspjót|kjøtpinnur|matur|pinnur|sprita|teinur
+🍣;sushi;matur|susji
+🍤;steikt rækja;matur|rækja|steikt
+🍥;kamaboko;fiskur|japansk|kaka|matur
+🥮;mánakaka;hátíð|heyst|yuèbǐng
+🍡;dango;dessert|japansk|matur|pinnur|søtt
+🥟;hveitibolli;empanada|gyōza|jiaozi|matur|pierogi
+🥠;eydnukaka;lukkukaka|matur|spádómur|spákaka
+🥡;tak við heim boks;boks|matur|takeaway|takeout
+🍦;kramarhúsísur;ísur|kramarhús|matur
+🍧;ísur í skál;dessert|ísur|matur|skál
+🍨;rómaísur í skál;dessert|ísur|matur|skál
+🍩;berlinarbolli;donut|matur
+🍪;smákaka;matur
+🎂;føðingardagskaka;føðingardagur|kaka|ljós|matur
+🍰;kakustykki;dessert|kaka|matur|stykki
+🧁;koppakaka;formakaka|kaka|søtt
+🥧;pai;dessert|kaka|matur
+🍫;sjokulátapláta;matur|pláta|sjokuláta
+🍬;bomm;góðgæti|matur
+🍭;sleikisneis;matur|sleikipinnur|slikkipinnur
+🍮;lagkøka;budingur|dessert|krem|matur
+🍯;hunangur;matur|søtt
+🍼;boppufløska;drykkur|fløska|mjólk
+🥛;glas av mjólk;drykkur|glas|mjólk
+☕;heitur drykkur;drykkur|kaffi|te
+🫖;tekanna;drykkur|te
+🍵;koppur uttan handtak;drykkur|grønt|koppur|te
+🍶;sake;drykkur|japanskt|rísbrennivín
+🍾;fløska við tundurproppi;drykkur|fløska|tundurproppur
+🍷;vínglas;drykkur|glas|reytt|vín
+🍸;vínblandglas;barr|cocktail|drykkur|glas|vínbland
+🍹;tropiskurdrykkur;barr|drykkur|tropiskur
+🍺;ølkrúss;barr|drykkur|krúss|øl
+🍻;ølkrúss sum skála;barr|drykkur|krúss|øl|ølkrúss|skál
+🥂;gløs sum skála;barr|drykkur|glas|gløs|hátíðarhald|skál
+🥃;whiskyglas;barr|drykkur|glas|sjussur|viski|whisky
+🫗;stoyta niður;glas|skvøttur|stoyta|ups|væta|vatn
+🥤;koppur við súgvirøri;djús|drykkur|saft|sodavatn
+🧋;boba te;boba|Taivan|te
+🧃;sunkist;drykkur|saft|sevja|søtt
+🧉;mate;drykkur
+🧊;ísterningur;ísfjall|ísur|kalt|terningur
+🥢;etingarpinnar;pinnar
+🍽️;gaffil knívur og talerkur;borðbúnaður|borðiskur|gaffil|knívur|talerkur
+🍴;gaffil og knívur;borðbúnaður|gaffil|knívur
+🥄;skeið;borðbúnaður
+🔪;køksknívur;knívur|vápn
+🫙;glas;ílat|tómt
+🏺;amfora;krukka|stjørnumerki
+🌍;globus har Evropa og Afrika síggjast;Afrika|Evropa|globus|heimurin|jørðin|verðin
+🌎;globus har Amerika sæst;Amerika|globus|heimurin|jørðin|verðin
+🌏;globus har Asia og Avstralia síggjast;Asia|Avstralia|globus|heimurin|jørðin|verðin
+🌐;globus við longdarstigum;globus|heimurin|jørðin|longdarstig|meridianur|verðin
+🗺️;verðinskort;heimurin|jørðin|kort|verðin
+🗾;kort av Japan;Japan|kort
+🧭;kumpass;ætt|kós|tól
+🏔️;fjall við kava á toppinum;fjall|kavi
+⛰️;fjall;
+🌋;gosfjall;eldfjall|eldgos|gos|útbrot
+🗻;fuji;fjall
+🏕️;tjaldstaður;kampingpláss|legupláss|legutilvera|tjald|tjalding|tjaldlega
+🏖️;sólskjól á strond;sólskjól|strond
+🏜️;oyðimørk;
+🏝️;oyðin oyggj;oyðin|oyggj|plámatræ
+🏞️;tjóðarpark;friðað øki|park|tjóðgarður|tjóðlund
+🏟️;ítróttastaður;ítróttavøllur|leikvøllur
+🏛️;klassiskur bygningur;bygningur|klassiskur
+🏗️;byggipláss;bygg|byggiídnaður
+🧱;múrsteinur;leirur|mørtil|múrkálk|múrsteinar|veggur
+🪨;steinur;grót|klettur|tungt
+🪵;viður;bjálki|timbur|træ
+🛖;smátta;heim|hús
+🏘️;fleiri hús;hús
+🏚️;vanrøkt hús;hús|oyði|vanrøkt
+🏠;hús;heim
+🏡;hús við hava;havi|heim|hús
+🏢;skrivstovubygningur;bygningur|skrivstova
+🏣;japanskt posthús;japanskt|posthús|poststova|postverk
+🏤;posthús;poststova|postverk
+🏥;sjúkrahús;bygningur
+🏦;banki;bygningur
+🏨;hotell;bygningur|gistingarhús
+🏩;kærleikshotell;bygningur|gistingarhús|hotell|kærleiki
+🏪;nærhandil;bygningur|handil
+🏫;skúli;bygningur
+🏬;vøruhús;handil|stórhandil
+🏭;verksmiðja;bygningur|ídnaðarvirki|virki
+🏯;japanskt slott;borg|japan|slott
+🏰;slott;borg
+💒;brúdleypshús;brúdleyp|bygningur|kapel
+🗼;torn í Tokyo;Tokyo|torn
+🗽;Frælsisgudinnan;frælsi|standmynd
+⛪;kirkja;átrúnaður|átrúni|kristin|religión|trúgv
+🕌;moska;átrúnaður|átrúni|bønhús|islamskt|muslimur|religión|trúgv
+🛕;hinduitempul;hindui|tempul
+🕍;synagoga;átrúnaður|átrúni|gýðingur|jødi|jødiskur|religión|samkomuhús|trúgv
+⛩️;shinto altar;átrúnaður|átrúni|halgidómur|halgimannagrøv|halgiskrín|japan|religión|trúgv
+🕋;Kaaba;átrúnaður|átrúni|halgidómur|islam|islamskt|mekka|muslimur|religión|trúgv
+⛲;gosvatn;gosbrunnur
+⛺;tjald;kampingpláss|legupláss|legutilvera|tjalda|tjalding|tjaldlega|tjaldstaður
+🌁;fjallatoppur og mjørki;fjallatoppur|mjørki|toka
+🌃;nátt við stjørnum;kvøld|nátt|stjørnur
+🏙️;stórbýur;býur
+🌄;sólarris ímillum fjøll;fjall|fjøll|morgun|sól|sólarris
+🌅;sólarris;dagsbrún|lýsing|morgun|sól
+🌆;skýming í stórbýi;kvøld|myrkja|skýming|sólsetur|stórbýur
+🌇;sólsetur;kvøld|myrkja|skýming
+🌉;brúgv á nátt;brúgv|nátt
+♨️;heit kelda;heit|kelda
+🎠;karusellhestur;hestur|karusell|tivoli|undirhaldsgarður
+🛝;glíðibreyt;russjibani|spæl|spælipláss
+🎡;parísarhjól;tivoli|undirhaldsgarður
+🎢;russjibani;glíðibreyt|øka|tivoli|undirhaldsgarður
+💈;hárskeraskelti;hárklipping|hárskering
+🎪;sirkustjald;sirkus|tjald
+🚂;lokomotiv;tok
+🚃;jarnbreytarvognur;sporvognur|tokvognur|tráðbussur
+🚄;háferðartok;tok
+🚅;snartok;tok
+🚆;tok;jarnbreyt
+🚇;undirgrundarbreyt;metro
+🚈;nærtok;tok
+🚉;jarnbreytarstøð;jarnbreyt|støð|tok
+🚊;gron á sporvogni;sporvognur|tráðbussur
+🚝;einsporað jarnbreyt;tok
+🚞;fjallajarnbreyt;jarnbreyt|tok
+🚋;sporvognur;tráðbussur
+🚌;bussur;
+🚍;gron á bussi;bussur
+🚎;tráðbussur;sporvognur
+🚐;minibussur;bussur
+🚑;sjúkrabilur;bilur
+🚒;sløkkibilur;bilur|eldur|sløkkilið
+🚓;løgreglubilur;bilur|løgregla|politi
+🚔;gron á løgreglubili;bilur|løgregla|politi
+🚕;taxabilur;bilur|taxa
+🚖;gron á taxabili;bilur|taxa
+🚗;bilur;
+🚘;bilgron;bilur|gron
+🚙;húsbilur;bilur
+🛻;opin vørubilur;bilur|opin|pickup|vøruvognur
+🚚;vøruvognur;bilur|lastbilur|liðbussur|vørubilur
+🚛;liðlastbilur;bilur|lastbilur|liðbussur|vørubilur|vøruvognur
+🚜;traktorur;
+🏎️;rasarabilur;bilur|kappkoyring|kappkoyringarbilur|koyra kapp
+🏍️;motorsúkkla;kappkoyring|koyra kapp
+🛵;skutari;prutl
+🦽;koyristólur;hjólstólur|rullistólur
+🦼;motorkoyristólur;koyristólur|motorhjólstólur|motorrullistólur
+🛺;motor rickshaw;rickshaw|tuk tuk
+🚲;súkkla;
+🛴;rennihjól;løpihjul
+🛹;rennifjøl;akfjøl|rennibretti|rullibretti|skateboard|skíðifjøl|skoytufjøl
+🛼;rulluskoyta;
+🚏;busssteðgipláss;bussstopp|bussstoppistað|steðgipláss
+🛣️;motorvegur;høvuðsvegur|vegur
+🛤️;jarnbreyt;tok
+🛢️;oljutunna;brennievni|olja|tumma
+⛽;brennievnispumpa;bensinpumpa|dieselpumpa|pumpa
+🛞;hjól;akfar|bildekk|dekk|felga
+🚨;blunkljós;ljós|løgregla
+🚥;vatnrætt ferðsluljós;ferðsla|ferðsluljós|ljóskurv
+🚦;ferðsluljós;ferðsla|ljóskurv
+🛑;stoppskelti;áttakantaður|steðgingarmerki|steðgitekn|stopp
+🚧;byrging;bummur|hindur|stongsil
+⚓;akker;bátur|skip
+🛟;bjargingarringur;bjarging|flóta|reka|svimja|trygd
+⛵;seglbátur;bátur|segl|stuttleikabátur
+🛶;kano;bátur|eikja|holabátur|indiánabátur|kajakk
+🚤;rasarabátur;bátur|snarbátur
+🛳️;ferðamannaskip;ferðafólk|skip
+⛴️;ferja;bátur|ferðafólk
+🛥️;maskinbátur;bátur|motorbátur
+🚢;skip;ferðafólk
+✈️;flogfar;flúgvari
+🛩️;lítið flogfar;flogfar|flúgvari
+🛫;farandi flogfar;farandi|flogfar|flúgvari|fráferð|startur
+🛬;komandi flogfar;flogfar|flúgvari|koma|lending
+🪂;fallskíggi;fallskíggjalop|loftkavari
+💺;setur;stólur
+🚁;tyrla;
+🚟;heingijarnbreyt;jarnbreyt|tok
+🚠;fjallarennistrongur;gondol|strongur
+🚡;rennistrongur;gondol|strongur
+🛰️;fylgisveinur;rúmdin
+🚀;rakett;rúmdin
+🛸;flúgvandi diskur;ufo
+🛎️;piccoloklokka;hotell|klokka|piccolo
+🧳;viðføri;bagasja|ferðast|pakka
+⌛;runnið tímaglas;runnið|tímaglas
+⏳;hálvrunnið tímaglas;hálvrunnið|tímaglas
+⌚;ur;armbandsur|klokka
+⏰;vekjari;klokka|vekjaraklokka
+⏱️;stoppur;klokka|taka tíð|tíðartøka
+⏲️;eggjaur;klokka|køksur|stoppur|tíðarmálari|tíðartakari
+🕰️;eldstaðarhillklokka;eldstaðarhill|eldstaðarkarmur|kaminhill|kaminkarmur|kaminumgerð|klokka
+🕛;klokkan tólv;00:00|12|12:00|klokka|klokkan|tólv
+🕧;hálvgun eitt;00:30|12:30|eitt|hálvgun|klokka|klokkan
+🕐;klokkan eitt;01:00|1|13:00|eitt|klokka|klokkan
+🕜;hálvgun tvey;01:30|13:30|hálvgun|klokka|klokkan|tvey
+🕑;klokkan tvey;02:00|14:00|2|klokka|klokkan|tvey
+🕝;hálvgun trý;02:30|14:30|hálvgun|klokka|klokkan|trý
+🕒;klokkan trý;03:00|15:00|3|klokka|klokkan|trý
+🕞;hálvgun fýra;03:30|15:30|fýra|hálvgun|klokka|klokkan
+🕓;klokkan fýra;04:00|16:00|4|fýra|klokka|klokkan
+🕟;hálvgun fimm;04:30|16:30|fimm|hálvgun|klokka|klokkan
+🕔;klokkan fimm;05:00|17:00|5|fimm|klokka|klokkan
+🕠;hálvgun seks;05:30|17:30|hálvgun|klokka|klokkan|seks
+🕕;klokkan seks;06:00|18:00|6|klokka|klokkan|seks
+🕡;hálvgun sjey;06:30|18:30|hálvgun|klokka|klokkan|sjey
+🕖;klokkan sjey;07:00|19:00|7|klokka|klokkan|sjey
+🕢;hálvgun átta;07:30|19:30|átta|hálvgun|klokka|klokkan
+🕗;klokkan átta;08:00|20:00|8|átta|klokka|klokkan
+🕣;hálvgun níggju;08:30|20:30|hálvgun|klokka|klokkan|níggju
+🕘;klokkan níggju;09:00|21:00|9|klokka|klokkan|níggju
+🕤;hálvgun tíggju;09:30|21:30|hálvgun|klokka|klokkan|tíggju
+🕙;klokkan tíggju;10|10:00|22:00|klokka|klokkan|tíggju
+🕥;hálvgun ellivu;10:30|22:30|ellivu|hálvgun|klokka|klokkan
+🕚;klokkan ellivu;11|11:00|23:00|ellivu|klokka|klokkan
+🕦;hálvgun tólv;11:30|23:30|hálvgun|klokka|klokkan|tólv
+🌑;nýmáni;máni
+🌒;lítil vaksandi hálvmáni;hálvmáni|máni|vaksandi
+🌓;vaksandi hálvmáni;hálvmáni|máni|vaksandi
+🌔;stórur vaksandi hálvmáni;hálvmáni|máni|vaksandi
+🌕;fullmáni;máni
+🌖;stórur minkandi hálvmáni;hálvmáni|máni|minkandi
+🌗;minkandi hálvmáni;hálvmáni|máni|minkandi
+🌘;lítil minkandi hálvmáni;hálvmáni|máni|minkandi
+🌙;hálvmáni;máni
+🌚;andlit á nýmána;andlit|máni|nýmáni
+🌛;andlit á vaksandi mána;andlit|hálvmáni|máni|vaksandi
+🌜;andlit á minkandi mána;andlit|hálvmáni|máni|minkandi
+🌡️;termometur;fepurstokkur|hitamálari
+☀️;sól;sólskin
+🌝;andlit á fullmána;andlit|fullmáni|máni
+🌞;andlit á sól;andlit|sól
+🪐;gongustjørna við ringi;dapur|gongustjørna|saturn|tunglyntur
+⭐;hvit og gul stjørna;stjørna
+🌟;glógvandi stjørna;stjørna
+🌠;stjørnuskot;stjørna
+🌌;vetrarbreytin;mjólkarvegur|rúmdin|stjørnubreyt
+☁️;skýggj;veðrið|veður|yvirskýggja
+⛅;sólin aftanfyri skyggj;sól|sólarglottar|sólglottur|veðrið|veður|yvirskýggja
+⛈️;skýggj við regni og snarljósi;regn|skýggj|snarljós|tora|torusláttur|veðrið|veður
+🌤️;sólin aftanfyri eitt lítið skýggj;sól|sólarglottar|sólglottur|sólskinsveður|veðrið|veður
+🌥️;sólin aftanfyri eitt stórt skýggj;sól|sólarglottar|sólglottur|veðrið|veður|yvirskýggja
+🌦️;sólin aftanfyri eitt regnskýggj;æl|avfall|regn|sól|sólarglottar|sólglottur|veðrið|veður|yvirskýggja
+🌧️;skýggj og regn;æl|avfall|regn|veðrið|veður
+🌨️;skýggj og kavi;kavar|kavaveður|kavi|veðrið|veður
+🌩️;skýggj og snarljós;snarljós|tora|torusláttur|veðrið|veður
+🌪️;melduródn;hvirla|meldurhvirla
+🌫️;mjørki;toka
+🌬️;andlit sum blæsur vind;andlit|blás|skýggj|vind
+🌀;meldurhvirla;ódn|stormur|tropisk ódn|veðrið|veður
+🌈;ælabogi;
+🌂;afturlatin paraplý;paraplý|regnskjól
+☂️;paraplý;regnskjól
+☔;paraplý og regndropar;dropar|paraplý|regn|regnskjól
+⛱️;sólskjól;sólskermur|sóltjald
+⚡;snarljós;elektrisitet|ravmagn|spenningur|tora|torusláttur
+❄️;kavaflykra;flykra|frost|kavar|kavi|snjóflykra
+☃️;kavamaður;kavi|snjókelling
+⛄;kavamaður við hatti;kavamaður|kavi|snjókelling
+☄️;komet;halastjørna|rúmdin
+🔥;eldur;bál|eldsbruni|logi
+💧;dropi;smádropi|sveitti|vatn|vatndropi
+🌊;alda;brim|sjógvur
+🎃;graskarhøvd;allahalgannaaftan|graskar|halloween|høvd|lanterna
+🎄;jólatræ;jól|træ
+🎆;fýrverk;eldverk|skreyteldur
+🎇;stjørnukastari;stjørnuljós
+🧨;kinesari;dynamitt|eldverk|skreyteldur|spreingievni
+✨;neistafok;glampi|glansur|glitran|glógvan|ljómi|skyggjan
+🎈;ballón;reyð
+🎉;borðbumba;veitsla
+🎊;konfetti;
+🎋;tanabata træ;japanskt|tanabata|træ
+🎍;kadomatsu;furutræ|japanskt
+🎎;japanskar dukkur;dukkur|japanskar
+🎏;Koinobori;japanskt
+🎐;vindharpa;
+🎑;tsukimi;japanskt|jugoya|otsukimi
+🧧;reyður brævbjálvi;brævbjálvi|gáva|hóngbāo|lai see
+🎀;band;prýðisrósa
+🎁;gáva;
+🎗️;eftirtektarband;band|eftirtekt
+🎟️;atgongumerki;atgongd|atgongukort|kort|merki
+🎫;farseðil;atgongd|atgongumerki
+🎖️;hernaðarmedalja;hervald|medalja
+🏆;steyp;
+🏅;ítróttamedalja;ítróttur|medalja
+🥇;gullmedalja;gull|medalja
+🥈;silvurmedalja;medalja|silvur
+🥉;bronsumedalja;bronsa|medalja
+⚽;fótbóltur;bóltur|fótbólt
+⚾;baseball;hornabóltur
+🥎;softball;
+🏀;kurvabóltur;bóltur
+🏐;flogbóltur;bóltur
+🏈;amerikanskur fótbóltur;bóltur|nfl
+🏉;rugbybóltur;bóltur|rugby
+🎾;tennisbóltur;bóltur|tennis
+🥏;frisbee;diskur|flúgvandi diskur
+🎳;bowling;bowlingkúla|keyla
+🏏;krikket;batt|bólttræ|cricket|krikketbatt
+🏑;hokki;stavbóltur
+🏒;íshokki;pukkur|stavur
+🥍;lacrosse;
+🏓;borðtennis;batt|borðtennisbatt|ping pong
+🏸;badminton;ketsjari
+🥊;boksihandski;boxing
+🥋;stríðsítróttarbúni;bardagaítróttur|búni|judo|karate|stríðsítróttur|taekwondo
+🥅;mál;net
+⛳;golf;flagg|hol
+⛸️;skoyta;ísskoyta
+🎣;tráða;fiskur
+🤿;kavaramaska;andingarpípa|kava|kavari|luftpípa|maska|snorkul
+🎽;ítróttatroyggja;frælsur|ítróttur|troyggja
+🎿;skíð;
+🛷;sleta;skreiða
+🥌;curling;steinur
+🎯;dart;beinrakið|bullseye|kúgveyga
+🪀;jojo;leika|yo yo|yo-yo|yoyo
+🪁;flúgvandi dreki;dreki
+🔫;pistólur;handvápn|revolvari|skotvápn|vápn
+🎱;pul;billard|kúla|pool
+🔮;krystalkúla;ævintýr|krystal|kúla|lagna
+🪄;gandastavur;gandakallur|gandakelling|gandur|rúnakelvi
+🎮;kontrollari;controller|telduspæl|teldustýri
+🕹️;stýripinnur;joystick|telduspæl
+🎰;spæliautomat;kasino
+🎲;terningur;terningar
+🧩;putlispælbrot;brot|petti|puntur|putlispæl|spor
+🧸;bamsa;leikatoy|spælitoy
+🪅;pinata;piñata|veitsla
+🪩;diskokúla;bóltur|disko|kúla|veitsla
+🪆;babusjka;matrjosjka|russisk dukka|Russland
+♠️;spaðari;kort
+♥️;hjartari;kort
+♦️;rútari;kort
+♣️;kleyvari;kort
+♟️;finna;talv
+🃏;jokari;kort
+🀄;mah-jong;mahjong|spæl
+🎴;hanafuda;japanskt|kort|spæl
+🎭;útinnandi leiklistir;ballett|leikhús|list|sjónleikur
+🖼️;innrammað mynd;innrammað|list|málningur|mynd
+🎨;litafjøl;list|litaborð|mála|palett
+🧵;tráður;nál|seyma|spoli
+🪡;nál;baldýring|íseyming|lappa|seyminál|stingur
+🧶;tógv;garn|noða
+🪢;knútur;binda|knýta|reip|tog
+👓;brillur;eyga
+🕶️;sólbrillur;brillur|sól
+🥽;verjubrillur;brillur|froskmanna brillur|skíðbrillur
+🥼;kittil;lækni|náttúruvísind|roynd
+🦺;trygdarvestur;trygd|vestur
+👔;slips;klæði|skjúrta
+👕;t-shirt;klæði|skjúrta|tshirt
+👖;cowboybuksur;buksur|klæði
+🧣;hálsturriklæði;háls|klæði|turriklæði
+🧤;handskar;hond|klæði|vøttur
+🧥;jakki;frakki|klæði
+🧦;sokkar;hosur|klæði
+👗;kjóli;klæði
+👘;kimono;klæði
+🥻;sari;búni|India|konufólkabúni
+🩱;svimjibúni;svimjing
+🩲;trussur;svimjibuksir|undirklæðir
+🩳;shorts;brøkur|stuttar|svimjibrøkur
+👙;bikini;klæði|svimjiklæðir
+👚;konufólkaklæðir;klæði|kona|konufólk|kvinna|plagg
+🪭;vifta;handvifta|heitt|hondvifta|køling
+👛;pungur;klæði|myntir|pengar
+👜;handtaska;hondtaska|klæði|taska
+👝;taska;handtaska|hondtaska|klæði|pungur
+🛍️;keypstaskur;beriposar|beriposi|innkeyp|keyp|posar|posi|shoppa|shopping
+🎒;skúlataska;herðataska|skúli|taska
+🩴;sandála;thong
+👞;mannfólkaskógvur;klæði|mannfólk|skógvur
+👟;renniskógvur;ítrótt|klæði|skógvur|tennisskógvur
+🥾;gangistilvi;fjakka|ganga|gongutúr|stilvi|tjalding
+🥿;flatbotnaður skógvur;flatbotnaður|flatur|skógvur
+👠;høghælaður skógvur;klæði|kona|konufólk|kvinna|skógvur
+👡;konufólkasandála;klæði|kona|konufólk|kvinna|sandála|skógvur
+🩰;balletskógvar;ballet|dansa|dansiskógvar|skógvar
+👢;konufólkastilvi;klæði|kona|konufólk|kvinna|skógvur|stivli
+🪮;kambur;afrokambur|hár
+👑;krúna;drotning|kongur|prinsessa|prinsur
+👒;konufólkahattur;hattur|klæði|kona|konufólk|kvinna
+🎩;høgur hattur;hattur|høgur|klæði
+🎓;fráfaringarhúgva;fráfaring|hattur|húgva|klæði|próvtøka
+🧢;keppur;baseball|hattur|hornabóltur|kaskettur
+🪖;herhjálmur;hereind|hermaður|herur|hjálmur
+⛑️;bjargingarhjálmur;hjálmur|hjálp|krossur|reyði
+📿;biðikransur;átrúnaður|bøn|perlukransur|religión|rósukransur|trúgv
+💄;varrastift;fríðkanarevni|makeup|sminka
+💍;ringur;diamantur
+💎;gimsteinur;diamantur
+🔇;doyvdur hátalari;doyvdur|doyvt|einki ljóð|hátalari|ljóðleyst
+🔈;lág ljóðstyrki á hátalara;hátalari|lág|ljóðstyrki
+🔉;miðal ljóðstyrki á hátalara;hátalari|ljóðstyrki|miðal
+🔊;høg ljóðstyrki á hátalara;hátalari|høg|ljóðstyrki
+📢;rópari;megafon
+📣;megafon;rópari
+📯;posthorn;horn|post|postur
+🔔;klokka;ljóð
+🔕;klokka við skrástriku;doyvdur|doyvt|einki ljóð|klokka|ljóðleyst
+🎼;fjølrøddabók;partiturur|tónleikur
+🎵;nóti;tónleikur
+🎶;nótar;tónleikur
+🎙️;ljóðstovumikrofon;ljóðfatur|ljóðtak|mikrofon
+🎚️;dragil;dragistýrari|ljóðstyrki|ljóðstyrkidragil|stýring|tónleikur
+🎛️;stýringsknøttar;stýring|tónleikur
+🎤;mikrofon;karaoke|ljóðfatur|ljóðtak
+🎧;høvuðsett;høvuðtelefon|oyramikrofon
+📻;útvarp;
+🎷;saksofon;ljóðføri|tónleikur
+🎺;trompet;ljóðføri|tónleikur
+🪗;harmonika;dans|dansur|ljóðføri|tónleikur
+🎸;gittari;ljóðføri|tónleikur
+🎹;ljómborð;keyboard|ljóðføri|tónleikur
+🎻;violin;ljóðføri|tónleikur
+🪕;banjo;ljóðføri|tónleikur
+🥁;trumma;ljóðføri|tónleikur
+🪘;long trumma;ljóðføri|tónleikur|trumma
+🪇;marakas;djass|ljóðføri|ringla|ringliljóðfør|tónleikur
+🪈;floyta;ljóðføri|tónleikur
+🪉;harpa;Amor|ljóðføri|tónleikur
+📱;fartelefon;telefon
+📲;fartelefon við píli;fartelefon|kall|uppkall|uppringing
+☎️;telefon;
+📞;horn á telefon;telefonhorn|telefonrør
+📟;persónleitari;
+📠;telefaks;faks
+🔋;battarí;ravlað
+🪫;lágt battarí;battarí|lágt|næstan einki eftir
+🔌;stikkari;elektrisitet|ravmagn|stikkproppur
+💻;fartelda;telda
+🖥️;telda;borðtelda
+🖨️;prentari;
+⌨️;knappaborð;
+🖱️;teldumús;mús
+🖲️;stýrikúla;
+💽;teldudiskur;diskur
+💾;diskil;disketta
+💿;sjónbandsfløga;cd|diskur
+📀;margfløga;blu-ray|diskur|dvd
+🧮;kúluramma;abakus|roknibretti
+🎥;filmstól;biografur|filmur|upptøkutól
+🎞️;filmstrimmil;biografur|filmur|stakmynd
+📽️;ljósvørpa;biografur|filmur|myndatól
+🎬;klapptræ;filmur|upptøka
+📺;sjónvarp;sjónvarpsskíggi
+📷;myndatól;fotografi
+📸;myndatól við blits;blits|fotografi|myndatól
+📹;sjónupptøkutól;myndatól|upptøkutól|video
+📼;sjónband;band|sjónbandshúsi|video
+🔍;luppur á skák til vinstru;lesiglas|luppur|sjóneyka|størkingarglas
+🔎;luppur á skák til høgru;lesiglas|luppur|sjóneyka|størkingarglas
+🕯️;livandi ljós;kertiljós|ljós
+💡;ljóspera;hugskot|ljós|pera
+🔦;lummalykt;ljós|lykt|stavlykt
+🏮;reyð pappírlanterna;lanterna|ljós|pappírlanterna|reyð
+🪔;diyalampa;diya|lampa|olja
+📔;lummabók við prýðiligari perma;lummabók|perma|prýðilig|umslag
+📕;afturlatin bók;afturlatin|bók
+📖;opin bók;bók|opin
+📗;grøn bók;bók|grøn
+📘;blá bók;blá|bók
+📙;appilsingul bók;appilsingul|bók
+📚;bøkur;bók
+📓;lummabók;blokkur|bók|minnisbók|skriviblokkur|uppritsbók|uppskrivingarbók
+📒;høvuðsbók;lummabók
+📃;krúlla pappír;bræv|krúlla|pappír|prógv|skjal
+📜;skriftrulla;bókarrulla|rulla
+📄;pappír sum vendur uppeftir;bræv|pappír|prógv|skjal
+📰;tíðindablað;blað|nýggjheitir|tíðindi
+🗞️;samanrulla tíðindablað;blað|nýggjheitir|samanrulla|tíðindablað|tíðindi
+📑;bókamerkir;bókamerki
+🔖;bókamerki;bókamerkir
+🏷️;merkiseðil;navnaseðil|seðil|spjaldur
+🪙;myntur;gull|pengar|pengi|skattur
+💰;pengasekkur;dollarar|dollari|pengar|peningasekkur|peningur|sekkur
+💴;jenn pengaseðil;gjaldoyra|jenn|jennur|pengaseðil|seðil
+💵;dollari pengaseðil;dollarar|dollari|gjaldoyra|pengaseðil|seðil
+💶;evra pengaseðil;evra|evrur|gjaldoyra|pengaseðil|seðil
+💷;pund pengaseðil;gjaldoyra|pengaseðil|pund|seðil
+💸;pengar við veingjum;dollarar|dollari|gjaldoyra|pengaseðil|seðil|veingjar
+💳;kredittkort;keypskort|kontukort|kritkort|pengar|peningur
+🧾;kvittan;keyp|prógv|søla
+💹;strikumynd við jenn tekni;gjaldoyra|hækkadi|hækkan|jenn|jennur|marknaður|strikumynd
+✉️;brævbjálvi;bræv|t-postur|teldupostur
+📧;teldupostur;bræv|postur|t-postur
+📨;innkomandi brævbjálvi;bræv|brævbjálvi|innkomandi|komandi|postur|t-postur|teldupostur
+📩;brævbjálvi og pílur;bræv|brævbjálvi|postur|t-postur|teldupostur
+📤;útgangandi brævabakki;bræv|brævabakki|postur|t-postur|teldupostur|útgangandi
+📥;innkomandi brævabakki;bræv|brævabakki|innkomandi|postur|t-postur|teldupostur
+📦;pakki;boks|eskja|farmavøra|kolli|vøra
+📫;afturlatin postkassi við standandi flaggi;afturlatin|bræv|flagg|post|postkassi|postur|standandi
+📪;afturlatin postkassi við liggjandi flaggi;afturlatin|bræv|flagg|liggjandi|post|postkassi|postur
+📬;opin postkassi við standandi flaggi;bræv|flagg|opin|post|postkassi|postur|standandi
+📭;opin postkassi við liggjandi flaggi;bræv|flagg|liggjandi|opin|post|postkassi|postur
+📮;postkassi;bræv|post|postur
+🗳️;atkvøðukassi;atkvøða|kassi|stemma|val
+✏️;blýantur;skriva
+✒️;svarur oddur á penni;oddur|pennur
+🖋️;fyllipennur;pennur
+🖊️;pennur;kúlupennur
+🖌️;pensil;mála|málingarkustur
+🖍️;litblýantur;kolstift
+📝;skrivlig viðmerking;greinargerð|upprit|uppskrift
+💼;skjalamappa;mappa|taska
+📁;skjalalummi;faldari|fíl|lummi|mappa|skjalamappa
+📂;opin skjalalummi;faldari|fíl|lummi i skjalalummi|mappa|opin|skjalamappa
+🗂️;seðlaskrábókamerki;bókamerki|indeks|seðlaskrá
+📅;kalendari;álmanakki|dagfesting|dagseting|dato|tíðarfesting|tíðarmerking
+📆;kalendari sum kann skræðast úr;álmanakki|dagfesting|dagseting|dato|kalendari|skræða|tíðarfesting|tíðarmerking
+🗒️;spiralheftur skriviblokkur;blokkur|skriviblokkur|snyril|spiralheftur|spiralur
+🗓️;spiralheftur kalendari;álmanakki|dagfesting|dagseting|dato|kalendari|spiralheftur|tíðarfesting|tíðarmerking
+📇;kartotek;kortsavn|seðlasavn|seðlaskrá
+📈;strikumynd við vøkstri;diagramm|rásmynd|strikumynd|upp|veksur|vøkstur
+📉;strikumynd við lækking;diagramm|lækkar|lækking|minkar|minking|niður|rásmynd|strikumynd
+📊;stabbamynd;diagramm|rásmynd|strikumynd
+📋;klemmuspjald;setiborð
+📌;nipsnál;nál
+📍;rund nipsnál;nál|nipsnál
+📎;klips;pappírsklemma
+🖇️;klips sum hanga saman;klips|pappírsklemmur
+📏;lineal;strikfjøl
+📐;tríkanta lineal;lineal|strikfjøl|tríkantur
+✂️;saksur;klipp
+🗃️;savnskassi;kartotek|kortsavn|seðlasavn|seðlaskrá
+🗄️;savnsskáp;kartotek|kortsavn|savnskassi|savnsskipan|seðlasavn|seðlaskrá|skáp
+🗑️;pappírskurv;pappírsleypur|skrell
+🔒;læst heingilás;afturlati|heingilás|læst|lás|stongt
+🔓;opi heingilás;heingilás|lás|ólæst|opi
+🔏;lás og fyllipennur;afturlati|fyllipennur|heingilás|læst|lás|pennur|stongt
+🔐;heingilás og lykil;afturlati|ás|heingilás|læst|lykil|stongt
+🔑;lykil;lás|loyniorð
+🗝️;gamal lykil;lás|lykil
+🔨;hamari;amboð|smíða
+🪓;øks;amboð|høgg|høgga|hondøks
+⛏️;hakkari;amboð|nám|námídnaður|námvinna|námvirki
+⚒️;hamari og hakkari;amboð|hakkari|hamari
+🛠️;hamari og skrúvulykil;amboð|hamari|skiftilykil|skrúvulykil
+🗡️;stutt svørð;dolkur|knívur|svørð|vápn
+⚔️;krossa svørð;krossa|svørð|vápn
+💣;bumba;vopn
+🪃;boomerang;Avstralia|bomerang|kastivápn
+🏹;bogi of pílur;Bogamaður|bogaskjótari|bogaskjóting|bogi|ørvargarpur|pílur|stjørnumerki|vápn
+🛡️;skjøldur;vápn|verja|vernd
+🪚;sag;amboð|hondsag
+🔧;skrúvulykil;amboð|skiftilykil
+🪛;skrúvublað;amboð|skrúva
+🔩;møtrikkur og boltur;amboð|boltur|møtrikkur
+⚙️;tannhjól;amboð|gir
+🗜️;skrúvutvinga;amboð|skrúvustikka|spenniskrúva|tvinga
+⚖️;vágskál;amboð|rættvísi|stjørnumerki|Vágmerkið|vekt
+🦯;blindastavur;blind|blindur|brek|handikapp|stavur
+🔗;liður;leinkja|samband|sambinding|sambindingarliður
+⛓️‍💥;brotin keta;brotin|frælsi|keta
+⛓️;keta;leinkja|liður|samband|sambinding|sambindingarliður
+🪝;krókur;
+🧰;amboðskassi;amboð|kassi
+🧲;magnet;magnetisk|magnetiskur|sigul
+🪜;stigi;klatra|stig|upp
+🪏;spaki;amboð|grava|hol
+⚗️;dropadríva;amboð|evnafrøði|kemi
+🧪;royndarglas;evnafrøði|náttúruvísind|roynd
+🧫;petriskál;lívfrøði|náttúruvísind|tilbúningarglas|tilbúningsglas
+🧬;dna;arvaeind|ílega|lív|lívfrøði|lívmenning|náttúruvísind
+🔬;mikroskop;náttúruvísindi|sjóneyka|vísind
+🔭;stjørnukikari;kikari|náttúruvísindi|spegilskikari|teleskop|vísindfjarvísi
+📡;parabolur;antenna|skálkampur
+💉;sproyta;amboð|heilivágur|innspræning|lækni|medisin|nál|sjúka
+🩸;blóðdropi;blóð|blóðgáva|blóðgevi|dropi
+💊;pillari;heilivágur|lækni|medisin|sjúka
+🩹;heftiplástur;plástur
+🩼;høkja;avlami|skaddur|skaði|stuðli
+🩺;stetoskop;læknalurt|læknapípa|lurt
+🩻;røntgenmynd;beinagrind|heilsa|læknakanning|lækni|røntgen|viðger
+🚪;hurð;
+🛗;lyfta;elevatorur
+🪞;spegil;spegilsmynd|spegl|speglast|sýna|vísa
+🪟;vindeyga;gluggi|rútar|rútur
+🛏️;song;sova
+🛋️;sofa og lampa;lampa|sofa
+🪑;stólur;sæti|sessur|setur
+🚽;ves;kumma|toilett
+🪠;súgvari;kumma|toilett|typt|ves
+🚿;brúsubað;brúsa|vatn
+🛁;baðikar;bað
+🪤;músafella;fella|lokkingarmatur
+🪒;rakiknívur;barberblað|knívur|raka|rakiblað
+🧴;lotiónfløska;fløska|húðkrem|lotión|smyrsl
+🧷;trygdarnál;læsinál|nál
+🧹;kustur;gandakelling|kelling|sópa|vaska
+🧺;kurv;
+🧻;vesipappír;kukka|toilettpappír|ves
+🪣;spann;oysa|pøs
+🧼;hondsápa;hendur|hond|sápa|vaska
+🫧;bløðrur;bløðra|sápa|vaska
+🪥;tannbust;busta|tannrøkt|tenn
+🧽;svampur;holutur|vaska
+🧯;eldskøkkjari;eld|eldur|sløkkja|trygd
+🛒;innkeypsvognur;innkeyp|keypsvognur|vognur
+🚬;tendra sigarett;royking|roykja|roykur|sigarett|tubbak
+⚰️;líkkista;andlát|deyði|gravarferð|jarðarferð|kista|lík
+🪦;gravsteinur;deyði|grøv|kirkjugarður
+⚱️;øskukrukka;andlát|deyði|gravarferð|jarðarferð|krukka|øska
+🧿;nasaramulett;amulett|eydnulutur|kúla|nasar|nazar|verndargripur
+🪬;hamsa;amulett|eyga|Fatima|hond|lógvi|verndargripur
+🗿;moai;Páskaoyggin|standmynd
+🪧;skelti;kunnger|mótmæli|plakat|uppslag
+🪪;samleikakort;eyðkenniskort|fulltrúarváttan|id
+🏧;sjálvtøkuskeltið;automat|pengar|sjálvtøka|út
+🚮;ruskílatskelti;burturkast|órudd|rusk
+🚰;drekkivatn;drekkandi|drekkingarvatn|vatn
+♿;koyristólur symbol;atgongd|hjólstólur|rullistólur
+🚹;mannfólkaves;maður|ves|wc
+🚺;konufólkaves;kona|kvinna|ves|wc
+🚻;ves symbol;ves|wc
+🚼;pinkubarna symbol;skiftingarrúm|skiftirúm
+🚾;wc symbol;ves|vesi|wc
+🛂;passeftirlit;eftirlit|landamark|pass
+🛃;tolleftirlit;eftirlit|toll|tollur|tollverk
+🛄;viðførisútflýggjan;útflýggjan|viðføri
+🛅;gloymt viðføri;gloymt|viðføri
+⚠️;ávaring;
+🚸;barnagonguteigur;ávaring|børn|gonguteigur
+⛔;innkoyring forboðið;ávaring|forboð
+🚫;bannað;atgongd|forboð
+🚳;ongar súkklur;forboð|súkkla
+🚭;royking bannað;bannað|forboði|royking
+🚯;ikki tveita burturkast;bannað|blaka|burturkast|forboð|órudd|rusk|tveita
+🚱;ikki drekkandi vatn;drekkivatn|vatn
+🚷;bannað fyri gangandi fólki;bannað|forboð|ganga
+📵;fartelefon ikki loyvd;bannað|fartelefon|forboð
+🔞;átjanára aldursmark;18|aldursmark|átjan|bannað|forboð
+☢️;geislavirki;ávaring|geislavirkin
+☣️;lívfrøðiligur vandi;ávaring|lívfrøðili|vandi
+⬆️;pílur sum peikar uppeftir;ætt|k´ós|norður|pílur
+↗️;pílur sum peikar uppeftir og til høgru;ætt|k´ós|landnyrðingur|pílur
+➡️;pílur sum peikar til høgru;ætt|eystur|k´ós|pílur
+↘️;pílur sum peikar niðureftir og til høgru;ætt|k´ós|landsynningur|pílur
+⬇️;pílur sum peikar niðureftir;ætt|k´ós|niður|pílur|suður
+↙️;pílur sum peikar niðureftir og til vinstru;ætt|k´ós|pílur|útsynningur
+⬅️;pílur sum peikar til vinstru;ætt|k´ós|pílur|vestur
+↖️;pílur sum peikar uppeftir og til vinstru;ætt|k´ós|pílur|útnyrðingur
+↕️;pílur sum peikar upp og niður;pílur
+↔️;pílur sum peikar til høgru og vinstu;pílur
+↩️;bogin pílur sum peikar til vinstru;bogin|pílur
+↪️;bogin pílur sum peikar til høgru;bogin|pílur
+⤴️;bogin pílur sum peikar uppeftir;bogin|pílur
+⤵️;bogin pílur sum peikar niðureftir;bogin|pílur
+🔃;loddrættir pílar sum ganga við urinum;lodrættir|pílar|við urinum
+🔄;vatnrættir pílar sum ganga ímóti urinum;ímóti urinum|pílar|vatnrættir
+🔙;BACK pílur;back|pílur
+🔚;END pílur;end|pílur
+🔛;ON! pílur;on|pílur
+🔜;SOON pílur;pílur|soon
+🔝;TOP pílur;pílur top
+🛐;bønarstað;átrúnaður|bøn|religión|trúgv
+⚛️;atom symbol;ateistur|atom|gudloysingur|gudsnoktari
+🕉️;aúm;átrúnaður|hindui|om|religión|trúgv
+✡️;dávidsstjørna;gýðingastjørna|gýðingur|jødi|jødiskur|stjørna
+☸️;dharmahjól;átrúnaður|buddistur|religión|trúgv
+☯️;jin yang;yang taoisma|yin
+✝️;latínskur krossur;átrúnaður|kristin|krossur|religión|trúgv
+☦️;ortodoksur krossur;átrúnaður|kristin|krossur|religión|trúgv
+☪️;stjørna og hálvmáni;átrúnaður|islam|muslimur|religión|trúgv
+☮️;friðarsymbol;frið|friður
+🕎;menorah;átrúnaður|ljósastaki|religión|trúgv
+🔯;stjørna við seks spískum;eydna|lagna|stjørna
+🪯;khanda;sikki|sikkur|svørð
+♈;Veðrurin;stjørnumerki|veðramerki|veðrur
+♉;Tarvurin;oksi|stjørnumerki|tarvsmerkið|tarvur
+♊;Tvíburarnir;stjørnumerki|tvíburamerki|tvíburar
+♋;Krabbin;krabbamerkið|krabbi|stjørnumerki
+♌;Ljónið;leyva|ljónsmerkið|stjørnumerki
+♍;Moyggin;moyarmerkið|moyggj|stjørnumerki
+♎;Vágin;stjørnumerki|vágmerkið|vágskál|vekt
+♏;Sporðdrekin;skorpión|sporðdrekamerkið|stjørnumerki
+♐;Bogamaðurin;bogamaður|skotmaður|stjørnumerki
+♑;Steingeitin;geit|steingeitarmerki|stjørnumerki
+♒;Vatnberin;berari|stjørnumerki|vatn
+♓;Fiskarnir;fiskamerkið|fiskur|stjørnumerki
+⛎;Ormberin;berari|ormur|slanga|stjørnumerki
+🔀;blanda knappur;blanda
+🔁;endurtak knappur;endurtak|endurtøka|umaftur
+🔂;endurtak einaferð knappur;einaferð|endurtak|endurtøka|umaftur
+▶️;spæl knappur;spæl
+⏩;spola skjótt fram knappur;fram|skjótt|spola
+⏭️;næsta knappur;næsta|næsti
+⏯️;spæl ella pausa knappur;pausa|spæl
+◀️;spola aftur knappur;aftur|spola
+⏪;spola skjótt aftur knappur;aftur|skjótt|spola
+⏮️;undanfari knappur;undanfari|undanfarna|undanfarni
+🔼;upp knappur;upp
+⏫;skjótt upp knappur;skjótt|upp
+🔽;niður knappur;niður
+⏬;skjótt niður knappur;niður|skjótt
+⏸️;pausaknappur;hvíld|pausa
+⏹️;steðgiknappur;stopp|stoppknappur
+⏺️;upptøkuknappur;taka upp|upptøka
+⏏️;varpa út knappur;út|varpa út
+🎦;biograf;filmur|sjónbandsupptakari
+🔅;dimma knappur;dimma|káma|skýma
+🔆;ger ljósari knappur;klárna|ljósari|lýsa
+📶;antennstabbar;antenna|fartelefon|samband|stabbi
+🛜;tráðleyst;alnet|beinari|breiðband|hotspot|internet|sambinding|telda
+📳;vibratiónstøða;fartelefon|støða|vibratión
+📴;sløk fartelefonina;fartelefon|sløk
+♀️;konufólkatekin;kona|konufólk|kvinna
+♂️;mannfólkatekin;maður|mannfólk
+⚧️;tvørkyndtekin;tvørkynd|tvørkyndur
+✖️;falda;×|annullera|ganga|x
+➕;pluss;+|matematikk|plussmerki|rokning|støddfrøði
+➖;minus;-|−|matematikk|minusmerki|rokning|støddfrøði
+➗;deila;÷|býti|matematikk|rokning|støddfrøði
+🟰;tjúkt javnatekn;javnatekin|matematikk|rokning|støddfrøði
+♾️;óendaligt;endaleyst|í allar ævir|óendalig
+‼️;dupult rópitekn;dupult|rópitekn|teknseting
+⁉️;rópitekn og spurnartekn;rópitekn|spurnartekn|teknseting
+❓;reytt spurnartekn;spurnartekn|spurningur|teknseting
+❔;hvítt spurnartekn;greinarmerki|spurnartekn|teknseting
+❕;hvítt rópitekn;greinarmerki|rópitekn|teknseting
+❗;reytt rópitekn;greinarmerki|rópitekn|teknseting
+〰️;aldandi tankastrika;aldandi|greinarmerki|tankastrika|teknseting
+💱;gjaldoyraveksil;børs|gjaldoyra|veksil
+💲;stórt dollartekn;dollarar|dollari|dollartekn|gjaldoyra|pengar|peningur
+⚕️;læknavísind symbol;eskulápusarstavur|læknafrøði|læknavísindanna
+♻️;endurnýtslasymbol;endurnýtsla
+⚜️;liljumynd sum skjaldarmerki;liljumynd|skjaldarmerki|svørðlilja
+🔱;trítindað kvísl;kvísl|Poseidon|trítindakvísl|trítindur
+📛;navnaspjaldur;navn|spjaldur
+🔰;japanskt symbol fyri byrjandi;byrjandi|byrjari|japanskt
+⭕;innanopin reyður sirkul;o|reyður|reytt|ringur|sirkul
+✅;hvítt tjúkt flugubein;flugubein
+☑️;flugubein í fýrakanti;flugubein|fýrakantur
+✔️;tjúkt flugubein;flugubein
+❌;kross symbol;annullera|falda|ganga|kross|strika|x
+❎;kross symbol knappur;annullera|falda|ganga|kross|strika|x
+➰;bukt;lykkja|sloyfa|snar
+➿;dupult bukt;bukt|dupult|lykkja|sloyfa|snar
+〽️;umskiftistekn;broytin|frábregði|umskifti
+✳️;áttatinda stjørna;stjørna
+✴️;áttaspíska stjørna;stjørna
+❇️;glampi;glampa|glitra|glógva|ljóma|skyggja|stjørna
+©️;upphavsrættur;c|upphavsrætt
+®️;skrásett;r|skrásettur
+™️;virkisrættindi;fyritøkumerki|fyritøkurættindi|virkismerki|vøruheiti|vørumerki
+🫟;sprutt;máling|sletta|sprutta|stoyta
+*️⃣;Knappahetta: *;Knappahetta
+0️⃣;Knappahetta: 0;0|Knappahetta|null
+1️⃣;Knappahetta: 1;1|ein|Knappahetta
+2️⃣;Knappahetta: 2;2|Knappahetta|tveir
+3️⃣;Knappahetta: 3;3|Knappahetta|tríggir
+4️⃣;Knappahetta: 4;4|fýre|Knappahetta
+5️⃣;Knappahetta: 5;5|fimm|Knappahetta
+6️⃣;Knappahetta: 6;6|Knappahetta|seks
+7️⃣;Knappahetta: 7;7|Knappahetta|sjey
+8️⃣;Knappahetta: 8;8|átta|Knappahetta
+9️⃣;Knappahetta: 9;9|Knappahetta|níggju
+🔟;Knappahetta: 10;Knappahetta
+🔠;stórir bókstavir;ABCD
+🔡;smáir bókstavir;abcd
+🔢;tøl;1234
+🔣;symbol;〒♪&%
+🔤;bókstavir;abc|alfabet|bókstavarað|stavrað
+🅰️;A knappur (blóðflokkur);a|blóðflokkur|blóðtypa|knappur|knøttur
+🆎;AB knappur (blóðflokkur);ab|blóðflokkur|blóðtypa|knappur|knøttur
+🅱️;B knappur (blóðflokkur);b|blóðflokkur|blóðtypa|knappur|knøttur
+🆑;CL knappur;cl|knappur|knøttur
+🆒;COOL knappur;cool|knappur|knøttur
+🆓;FREE knappur;free|knappur|knøttur
+ℹ️;kunning;i|kunningarstova|leiðbeining|upplýsing
+🆔;ID knappur;id|identitetur|knappur|knøttur|samleiki
+Ⓜ️;M í sirkuli;m|sirkul
+🆕;NEW knappur;knappur|knøttur|new
+🆖;NG knappur;knappur|knøttur|ng
+🅾️;O knappur (blóðflokkur);blóðflokkur|blóðtypa|knappur|knøttur|o
+🆗;OK knappur;knappur|knøttur|ok
+🅿️;P knappur;knappur|knøttur|ok|parkering|parkeringarbásur|parkeringarpláss|parkeringarskiva
+🆘;SOS knappur;hjálp|knappur|knøttur|neyðarkall|neyðarróp|sos
+🆙;UP! knappur;knappur|knøttur|up!|upp
+🆚;VS knappur;ímóti|knappur|knøttur|vs
+🈁;japanskur "her" knappur;"her"|japanskur|katakana|ココ
+🈂️;japanskur "avgreiðslugjald" knappur;"avgreiðslugjald"|"borðreiðingargjald"|japanskur|katakana|サ
+🈷️;japanskur "mánaðarlig upphædd" knappur;"mánaðarlig upphædd"|hugtaksskrift|ideografi|japanskur|月
+🈶;japanskur "ikki ókeypis" knappur;"ikki ókeypis"|hugtaksskrift|ideografi|japanskur|有
+🈯;japanskur "bílagt" knappur;"bílagt"|hugtaksskrift|ideografi|japanskur|指
+🉐;japanskur "kvett" knappur;"gott keyp"|"kvett"|hugtaksskrift|ideografi|japanskur|得
+🈹;japanskur "avsláttur" knappur;"avsláttur"|hugtaksskrift|ideografi|japanskur|割
+🈚;japanskur "ókeypis" knappur;"ókeypis"|hugtaksskrift|ideografi|japanskur|無
+🈲;japanskur "bannað" knappur;"bannað"|"forboð"|hugtaksskrift|ideografi|japanskur|禁
+🉑;japanskur "hóskandi" knappur;"hóskandi"|"ok"|hugtaksskrift|ideografi|japanskur|可
+🈸;japanskur "umsókn" knappur;"áheitan"|"umsókn"|hugtaksskrift|ideografi|japanskur|申
+🈴;japanskur "nøktandi avrik" knappur;"nøktandi avrik"|hugtaksskrift|ideografi|japanskur|合
+🈳;japanskur "leyst" knappur;"leyst"|hugtaksskrift|ideografi|japanskur|空
+㊗️;japanskur "lukkuynsking" knappur;"lukkuynsking"|"til lukku"|"tillukku"|hugtaksskrift|ideografi|japanskur|祝
+㊙️;japanskur "loyndarmál" knappur;"loyndarmál"|hugtaksskrift|ideografi|japanskur|秘
+🈺;japanskur "opið" knappur;"opið"|"opin"|hugtaksskrift|ideografi|japanskur|営
+🈵;japanskur "einki leyst" knappur;"einki leyst"|hugtaksskrift|ideografi|japanskur|満
+🔴;reyður sirkul;reyður|reytt|sirkul
+🟠;appilsingulur sirkul;appilsingult|appilsingulur|sirkul
+🟡;gulur sirkul;gult|gulur|sirkul
+🟢;grønur sirkul;grønt|grønur|sirkul
+🔵;bláur sirkul;blátt|bláur|sirkul
+🟣;lillafarvaður sirkul;korkalitt|korkalittur|korkalitur|lillafarva|lillafarvaður|reyðblátt|reyðbláur|sirkul
+🟤;brúnur sirkul;brúnt|brúnur|sirkul
+⚫;svartur sirkul;mátingarfrøði|sirkul|svartur
+⚪;hvítur sirkul;hvítur|mátingarfrøði|sirkul
+🟥;reyður fýrakantur;fýrakantur|reyður|reytt
+🟧;appilsingulur fýrakantur;appilsingult|appilsingulur|fýrakantur
+🟨;gulur fýrakantur;fýrakantur|gult|gulur
+🟩;grønur fýrakantur;fýrakantur|grønt|grønur
+🟦;blaúr fýrakantur;blátt|bláur|fýrakantur
+🟪;lillafarvaður fýrakantur;fýrakantur|korkalitt|korkalittur|korkalitur|lillafarva|lillafarvaður|reyðblátt|reyðbláur
+🟫;brúnur fýrakantur;brúnt|brúnur|fýrakantur
+⬛;stórur svartur fýrakantur;fýrakantur|mátingarfrøðiligur
+⬜;stórur hvítur fýrakantur;fýrakantur|mátingarfrøðiligur
+◼️;svartur fýrakantur;fýrakantur|mátingarfrøðiligur
+◻️;hvítur fýrakantur;fýrakantur|mátingarfrøðiligur
+◾;svartur miðalstórur fýrakantur;fýrakantur|mátingarfrøðiligur
+◽;hvítur miðalstórur fýrakantur;fýrakantur|mátingarfrøðiligur
+▪️;lítil svartur fýrakantur;fýrakantur|mátingarfrøðiligur
+▫️;lítil hvítur fýrakantur;fýrakantur|mátingarfrøðiligur
+🔶;stórur appilsingulur diamantur;diamantur|mátingarfrøðiligur
+🔷;stórur bláur diamantur;diamantur|mátingarfrøðiligur
+🔸;lítil appilsingulur diamantur;diamantur|mátingarfrøðiligur
+🔹;lítil bláur diamantur;diamantur|mátingarfrøðiligur
+🔺;reyður tríkantur sum peikar uppeftir;mátingarfrøðiligur|tríkantur
+🔻;reyður tríkantur sum peikar niðureftir;mátingarfrøðiligur|tríkantur
+💠;krossaður diamantur;diamantur|mátingarfrøðiligur
+🔘;radioknappur;radioknøttur
+🔳;hvítur fýrakantaður karmur;fýrakantur|karmur|mátingarfrøðiligur|rútur
+🔲;svartur fýrakantaður karmur;fýrakantur|karmur|mátingarfrøðiligur|rútur
+🏁;puntut flagg;flagg|puntut|rútut
+🚩;tríkanta flagg;flagg|tríkanta
+🎌;krossa fløgg;fløgg|japan
+🏴;svart flagg;flagg
+🏳️;hvítt flagg;flagg
+🏳️‍🌈;ælaboga flagg;ælabogi|flagg
+🏳️‍⚧️;tvørkynd flagg;blátt|flagg|ljósareytt og hvítt flagg|tvørkyn|tvørkynd|tvørkyndur
+🏴‍☠️;sjórænaraflagg;Jolly Roger|rán|sjórænari|sjórán|skattur
+🇦🇨;Flagg: Ascension;Flagg
+🇦🇩;Flagg: Andorra;Flagg
+🇦🇪;Flagg: Sameindu Emirríkini;Flagg
+🇦🇫;Flagg: Afganistan;Flagg
+🇦🇬;Flagg: Antigua & Barbuda;Flagg
+🇦🇮;Flagg: Anguilla;Flagg
+🇦🇱;Flagg: Albania;Flagg
+🇦🇲;Flagg: Armenia;Flagg
+🇦🇴;Flagg: Angola;Flagg
+🇦🇶;Flagg: Antarktis;Flagg
+🇦🇷;Flagg: Argentina;Flagg
+🇦🇸;Flagg: Amerikanska Samoa;Flagg
+🇦🇹;Flagg: Eysturríki;Flagg
+🇦🇺;Flagg: Avstralia;Flagg
+🇦🇼;Flagg: Aruba;Flagg
+🇦🇽;Flagg: Áland;Flagg
+🇦🇿;Flagg: Aserbadjan;Flagg
+🇧🇦;Flagg: Bosnia-Hersegovina;Flagg
+🇧🇧;Flagg: Barbados;Flagg
+🇧🇩;Flagg: Bangladesj;Flagg
+🇧🇪;Flagg: Belgia;Flagg
+🇧🇫;Flagg: Burkina Faso;Flagg
+🇧🇬;Flagg: Bulgaria;Flagg
+🇧🇭;Flagg: Barein;Flagg
+🇧🇮;Flagg: Burundi;Flagg
+🇧🇯;Flagg: Benin;Flagg
+🇧🇱;Flagg: St. Barthélemy;Flagg
+🇧🇲;Flagg: Bermuda;Flagg
+🇧🇳;Flagg: Brunei;Flagg
+🇧🇴;Flagg: Bolivia;Flagg
+🇧🇶;Flagg: Niðurlonds Karibia;Flagg
+🇧🇷;Flagg: Brasil;Flagg
+🇧🇸;Flagg: Bahamaoyggjar;Flagg
+🇧🇹;Flagg: Butan;Flagg
+🇧🇻;Flagg: Bouvetoyggj;Flagg
+🇧🇼;Flagg: Botsvana;Flagg
+🇧🇾;Flagg: Hvítarussland;Flagg
+🇧🇿;Flagg: Belis;Flagg
+🇨🇦;Flagg: Kanada;Flagg
+🇨🇨;Flagg: Kokosoyggjar;Flagg
+🇨🇩;Flagg: Kongo, Dem. Lýðveldið;Flagg
+🇨🇫;Flagg: Miðafrikalýðveldið;Flagg
+🇨🇬;Flagg: Kongo;Flagg
+🇨🇭;Flagg: Sveis;Flagg
+🇨🇮;Flagg: Fílabeinsstrondin;Flagg
+🇨🇰;Flagg: Cooksoyggjar;Flagg
+🇨🇱;Flagg: Kili;Flagg
+🇨🇲;Flagg: Kamerun;Flagg
+🇨🇳;Flagg: Kina;Flagg
+🇨🇴;Flagg: Kolombia;Flagg
+🇨🇵;Flagg: Clipperton;Flagg
+🇨🇶;Flagg: Sark;Flagg
+🇨🇷;Flagg: Kosta Rika;Flagg
+🇨🇺;Flagg: Kuba;Flagg
+🇨🇻;Flagg: Grønhøvdaoyggjar;Flagg
+🇨🇼;Flagg: Curaçao;Flagg
+🇨🇽;Flagg: Jólaoyggjin;Flagg
+🇨🇾;Flagg: Kýpros;Flagg
+🇨🇿;Flagg: Kekkia;Flagg
+🇩🇪;Flagg: Týskland;Flagg
+🇩🇬;Flagg: Diego Garcia;Flagg
+🇩🇯;Flagg: Djibuti;Flagg
+🇩🇰;Flagg: Danmark;Flagg
+🇩🇲;Flagg: Dominika;Flagg
+🇩🇴;Flagg: Dominikalýðveldið;Flagg
+🇩🇿;Flagg: Algeria;Flagg
+🇪🇦;Flagg: Ceuta & Melilla;Flagg
+🇪🇨;Flagg: Ekvador;Flagg
+🇪🇪;Flagg: Estland;Flagg
+🇪🇬;Flagg: Egyptaland;Flagg
+🇪🇭;Flagg: Vestursahara;Flagg
+🇪🇷;Flagg: Eritrea;Flagg
+🇪🇸;Flagg: Spania;Flagg
+🇪🇹;Flagg: Etiopia;Flagg
+🇪🇺;Flagg: Evropasamveldið;Flagg
+🇫🇮;Flagg: Finnland;Flagg
+🇫🇯;Flagg: Fiji;Flagg
+🇫🇰;Flagg: Falklandsoyggjar;Flagg
+🇫🇲;Flagg: Mikronesiasamveldið;Flagg
+🇫🇴;Flagg: Føroyar;Flagg
+🇫🇷;Flagg: Frakland;Flagg
+🇬🇦;Flagg: Gabon;Flagg
+🇬🇧;Flagg: Stórabretland;Flagg
+🇬🇩;Flagg: Grenada;Flagg
+🇬🇪;Flagg: Georgia;Flagg
+🇬🇫;Flagg: Franska Gujana;Flagg
+🇬🇬;Flagg: Guernsey;Flagg
+🇬🇭;Flagg: Gana;Flagg
+🇬🇮;Flagg: Gibraltar;Flagg
+🇬🇱;Flagg: Grønland;Flagg
+🇬🇲;Flagg: Gambia;Flagg
+🇬🇳;Flagg: Guinea;Flagg
+🇬🇵;Flagg: Guadeloupe;Flagg
+🇬🇶;Flagg: Ekvatorguinea;Flagg
+🇬🇷;Flagg: Grikkaland;Flagg
+🇬🇸;Flagg: Suðurgeorgia og Suðursandwichoyggjar;Flagg
+🇬🇹;Flagg: Guatemala;Flagg
+🇬🇺;Flagg: Guam;Flagg
+🇬🇼;Flagg: Guinea-Bissau;Flagg
+🇬🇾;Flagg: Gujana;Flagg
+🇭🇰;Flagg: Hong Kong SAR Kina;Flagg
+🇭🇲;Flagg: Heard og McDonaldoyggjar;Flagg
+🇭🇳;Flagg: Honduras;Flagg
+🇭🇷;Flagg: Kroatia;Flagg
+🇭🇹;Flagg: Haiti;Flagg
+🇭🇺;Flagg: Ungarn;Flagg
+🇮🇨;Flagg: Kanariuoyggjar;Flagg
+🇮🇩;Flagg: Indonesia;Flagg
+🇮🇪;Flagg: Írland;Flagg
+🇮🇱;Flagg: Ísrael;Flagg
+🇮🇲;Flagg: Isle of Man;Flagg
+🇮🇳;Flagg: India;Flagg
+🇮🇴;Flagg: Stóra Bretlands Indiahavoyggjar;Flagg
+🇮🇶;Flagg: Irak;Flagg
+🇮🇷;Flagg: Iran;Flagg
+🇮🇸;Flagg: Ísland;Flagg
+🇮🇹;Flagg: Italia;Flagg
+🇯🇪;Flagg: Jersey;Flagg
+🇯🇲;Flagg: Jamaika;Flagg
+🇯🇴;Flagg: Jordan;Flagg
+🇯🇵;Flagg: Japan;Flagg
+🇰🇪;Flagg: Kenja;Flagg
+🇰🇬;Flagg: Kirgisia;Flagg
+🇰🇭;Flagg: Kambodja;Flagg
+🇰🇮;Flagg: Kiribati;Flagg
+🇰🇲;Flagg: Komoroyggjar;Flagg
+🇰🇳;Flagg: St. Kitts & Nevis;Flagg
+🇰🇵;Flagg: Norðurkorea;Flagg
+🇰🇷;Flagg: Suðurkorea;Flagg
+🇰🇼;Flagg: Kuvait;Flagg
+🇰🇾;Flagg: Caymanoyggjar;Flagg
+🇰🇿;Flagg: Kasakstan;Flagg
+🇱🇦;Flagg: Laos;Flagg
+🇱🇧;Flagg: Libanon;Flagg
+🇱🇨;Flagg: St. Lusia;Flagg
+🇱🇮;Flagg: Liktinstein;Flagg
+🇱🇰;Flagg: Sri Lanka;Flagg
+🇱🇷;Flagg: Liberia;Flagg
+🇱🇸;Flagg: Lesoto;Flagg
+🇱🇹;Flagg: Litava;Flagg
+🇱🇺;Flagg: Luksemborg;Flagg
+🇱🇻;Flagg: Lettland;Flagg
+🇱🇾;Flagg: Libya;Flagg
+🇲🇦;Flagg: Marokko;Flagg
+🇲🇨;Flagg: Monako;Flagg
+🇲🇩;Flagg: Moldova;Flagg
+🇲🇪;Flagg: Montenegro;Flagg
+🇲🇫;Flagg: St-Martin;Flagg
+🇲🇬;Flagg: Madagaskar;Flagg
+🇲🇭;Flagg: Marshalloyggjar;Flagg
+🇲🇰;Flagg: Norður Makedónia;Flagg
+🇲🇱;Flagg: Mali;Flagg
+🇲🇲;Flagg: Myanmar (Burma);Flagg
+🇲🇳;Flagg: Mongolia;Flagg
+🇲🇴;Flagg: Makao SAR Kina;Flagg
+🇲🇵;Flagg: Norðaru Mariuoyggjar;Flagg
+🇲🇶;Flagg: Martinique;Flagg
+🇲🇷;Flagg: Móritania;Flagg
+🇲🇸;Flagg: Montserrat;Flagg
+🇲🇹;Flagg: Malta;Flagg
+🇲🇺;Flagg: Móritius;Flagg
+🇲🇻;Flagg: Maldivoyggjar;Flagg
+🇲🇼;Flagg: Malavi;Flagg
+🇲🇽;Flagg: Meksiko;Flagg
+🇲🇾;Flagg: Malaisia;Flagg
+🇲🇿;Flagg: Mosambik;Flagg
+🇳🇦;Flagg: Namibia;Flagg
+🇳🇨;Flagg: Nýkaledónia;Flagg
+🇳🇪;Flagg: Niger;Flagg
+🇳🇫;Flagg: Norfolksoyggj;Flagg
+🇳🇬;Flagg: Nigeria;Flagg
+🇳🇮;Flagg: Nikaragua;Flagg
+🇳🇱;Flagg: Niðurlond;Flagg
+🇳🇴;Flagg: Noreg;Flagg
+🇳🇵;Flagg: Nepal;Flagg
+🇳🇷;Flagg: Nauru;Flagg
+🇳🇺;Flagg: Niue;Flagg
+🇳🇿;Flagg: Nýsæland;Flagg
+🇴🇲;Flagg: Oman;Flagg
+🇵🇦;Flagg: Panama;Flagg
+🇵🇪;Flagg: Peru;Flagg
+🇵🇫;Flagg: Franska Polynesia;Flagg
+🇵🇬;Flagg: Papua Nýguinea;Flagg
+🇵🇭;Flagg: Filipsoyggjar;Flagg
+🇵🇰;Flagg: Pakistan;Flagg
+🇵🇱;Flagg: Pólland;Flagg
+🇵🇲;Flagg: Saint Pierre & Miquelon;Flagg
+🇵🇳;Flagg: Pitcairnoyggjar;Flagg
+🇵🇷;Flagg: Puerto Riko;Flagg
+🇵🇸;Flagg: Palestinskt landøki;Flagg
+🇵🇹;Flagg: Portugal;Flagg
+🇵🇼;Flagg: Palau;Flagg
+🇵🇾;Flagg: Paraguai;Flagg
+🇶🇦;Flagg: Katar;Flagg
+🇷🇪;Flagg: Réunion;Flagg
+🇷🇴;Flagg: Rumenia;Flagg
+🇷🇸;Flagg: Serbia;Flagg
+🇷🇺;Flagg: Russland;Flagg
+🇷🇼;Flagg: Ruanda;Flagg
+🇸🇦;Flagg: Saudiarabia;Flagg
+🇸🇧;Flagg: Salomonoyggjar;Flagg
+🇸🇨;Flagg: Seyskelloyggjar;Flagg
+🇸🇩;Flagg: Sudan;Flagg
+🇸🇪;Flagg: Svøríki;Flagg
+🇸🇬;Flagg: Singapor;Flagg
+🇸🇭;Flagg: St. Helena;Flagg
+🇸🇮;Flagg: Slovenia;Flagg
+🇸🇯;Flagg: Svalbard & Jan Mayen;Flagg
+🇸🇰;Flagg: Slovakia;Flagg
+🇸🇱;Flagg: Sierra Leona;Flagg
+🇸🇲;Flagg: San Marino;Flagg
+🇸🇳;Flagg: Senegal;Flagg
+🇸🇴;Flagg: Somalia;Flagg
+🇸🇷;Flagg: Surinam;Flagg
+🇸🇸;Flagg: Suðursudan;Flagg
+🇸🇹;Flagg: Sao Tome & Prinsipi;Flagg
+🇸🇻;Flagg: El Salvador;Flagg
+🇸🇽;Flagg: Sint Maarten;Flagg
+🇸🇾;Flagg: Sýria;Flagg
+🇸🇿;Flagg: Esvatini;Flagg
+🇹🇦;Flagg: Tristan da Cunha;Flagg
+🇹🇨;Flagg: Turks- og Caicosoyggjar;Flagg
+🇹🇩;Flagg: Kjad;Flagg
+🇹🇫;Flagg: Fronsku sunnaru landaøki;Flagg
+🇹🇬;Flagg: Togo;Flagg
+🇹🇭;Flagg: Tailand;Flagg
+🇹🇯;Flagg: Tadsjikistan;Flagg
+🇹🇰;Flagg: Tokelau;Flagg
+🇹🇱;Flagg: Eysturtimor;Flagg
+🇹🇲;Flagg: Turkmenistan;Flagg
+🇹🇳;Flagg: Tunesia;Flagg
+🇹🇴;Flagg: Tonga;Flagg
+🇹🇷;Flagg: Turkaland;Flagg
+🇹🇹;Flagg: Trinidad & Tobago;Flagg
+🇹🇻;Flagg: Tuvalu;Flagg
+🇹🇼;Flagg: Taivan;Flagg
+🇹🇿;Flagg: Tansania;Flagg
+🇺🇦;Flagg: Ukraina;Flagg
+🇺🇬;Flagg: Uganda;Flagg
+🇺🇲;Flagg: Sambandsríki Amerikas fjarskotnu oyggjar;Flagg
+🇺🇳;Flagg: Sameindu Tjóðir;Flagg
+🇺🇸;Flagg: Sambandsríki Amerika;Flagg
+🇺🇾;Flagg: Uruguai;Flagg
+🇺🇿;Flagg: Usbekistan;Flagg
+🇻🇦;Flagg: Vatikanbýur;Flagg
+🇻🇨;Flagg: St. Vinsent & Grenadinoyggjar;Flagg
+🇻🇪;Flagg: Venesuela;Flagg
+🇻🇬;Flagg: Stóra Bretlands Jomfrúoyggjar;Flagg
+🇻🇮;Flagg: Sambandsríki Amerikas Jomfrúoyggjar;Flagg
+🇻🇳;Flagg: Vjetnam;Flagg
+🇻🇺;Flagg: Vanuatu;Flagg
+🇼🇫;Flagg: Wallis- og Futunaoyggjar;Flagg
+🇼🇸;Flagg: Samoa;Flagg
+🇽🇰;Flagg: Kosovo;Flagg
+🇾🇪;Flagg: Jemen;Flagg
+🇾🇹;Flagg: Mayotte;Flagg
+🇿🇦;Flagg: Suðurafrika;Flagg
+🇿🇲;Flagg: Sambia;Flagg
+🇿🇼;Flagg: Simbabvi;Flagg

@@ -799,6 +799,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         return true
     }
 
+    /** Empties the emoji query without leaving the search — the ✕ inside the search bar. */
+    fun clearEmojiSearch() {
+        if (emojiSearchQuery.value == null) return
+        emojiSearchQuery.value = ""
+    }
+
+    /** Empties the GIF query without leaving the search — the ✕ inside the search bar. */
+    fun clearGifSearch() {
+        if (gifSearchQuery.value == null) return
+        gifSearchQuery.value = ""
+    }
+
     /** Starts a GIF search: shows the text keyboard so the user can type the query. */
     fun activateGifSearch() {
         gifSearchQuery.value = ""
