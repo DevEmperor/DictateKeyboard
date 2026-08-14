@@ -940,13 +940,18 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 out[TYPED_WORD_KEY + key] = WordSuggestionCandidate(
                     text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
                 )
+                // Each spelling reports its own frequency, not the key's — they are ordered by it, so
+                // showing them all at the most frequent one's confidence would flatten that order away.
+                val data = wordDataFor(subtype)
                 forms.forEachIndexed { i, form ->
-                    val freq = index.freq[key] ?: 0
+                    val freq = data[form] ?: index.freq[key] ?: 0
                     out.putIfAbsent(
                         form.lowercase(),
                         WordSuggestionCandidate(
                             text = cased(form),
                             confidence = freq / 255.0,
+                            // Only the most frequent spelling may be swapped in silently, and only if it
+                            // is common enough to be worth overriding what was actually typed.
                             isEligibleForAutoCommit =
                                 i == 0 && autoCorrectOn && freq >= AUTOCORRECT_MIN_FREQ,
                             sourceProvider = this,
