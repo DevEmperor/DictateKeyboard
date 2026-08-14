@@ -39,7 +39,7 @@ which licence each one was taken under.
 """
 import sys, os, io, json, math, gzip, tarfile, hashlib, argparse, subprocess, tempfile, urllib.request
 
-from wordfilter import is_word, strip_arabic_marks
+from wordfilter import drop_foreign_scripts, is_word, strip_arabic_marks
 
 OPUS = "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2018/freq"
 LEIPZIG = "https://downloads.wortschatz-leipzig.de/corpora"
@@ -144,10 +144,11 @@ def load_opus_counts(opus_lang: str, top: int) -> dict:
 
 
 def rank(counts: dict, top: int) -> list:
-    """Return [(word, count), ...], most frequent first, capped at [top]."""
-    out = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:top]
-    sys.stderr.write(f"  frequencies: {len(counts)} distinct, keeping {len(out)}\n")
-    return out
+    """Return [(word, count), ...], most frequent first, in this language's own script, capped at [top]."""
+    ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+    kept = drop_foreign_scripts(ranked[: top * 2])[:top]
+    sys.stderr.write(f"  frequencies: {len(counts)} distinct, keeping {len(kept)}\n")
+    return kept
 
 
 def fetch_hunspell(dict_name: str, lo_dict: str) -> tuple:
