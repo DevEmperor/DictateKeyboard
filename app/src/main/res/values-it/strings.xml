@@ -1427,11 +1427,9 @@
     <string name="dictate__audio_save_failed">Impossibile salvare l\'audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Salta i campi numerici</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Non avviare automaticamente nei campi numerici, telefono o PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Digitazione con scorrimento pronta</string>
-    <string name="settings__localization__subtype_glide_available">Digitazione con scorrimento disponibile</string>
-    <string name="settings__localization__subtype_glide_downloading">Download digitazione con scorrimento… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Digitazione con scorrimento non disponibile</string>
-    <string name="settings__localization__subtype_status_glide">Scorrimento</string>
+    <string name="settings__localization__subtype_status_words">Suggerimenti</string>
+    <string name="settings__localization__subtype_no_word_list_title">Nessun elenco di parole per questa lingua</string>
+    <string name="settings__localization__subtype_no_word_list_message">I suggerimenti di parole, la correzione automatica e la scrittura con scorrimento restano disattivati per questa lingua finché non esiste un elenco di parole. Digitazione, dettatura e riformulazione non sono interessate.</string>
     <string name="settings__localization__subtype_status_context">Contesto</string>
     <string name="pref__suggestion__auto_correct__label">Correzione automatica</string>
     <string name="pref__suggestion__auto_correct__summary">Correggi i refusi automaticamente premendo spazio</string>

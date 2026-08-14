@@ -29,6 +29,22 @@ from wordfilter import is_word, strip_arabic_marks
 
 LEIPZIG = "https://downloads.wortschatz-leipzig.de/corpora"
 
+# Which Leipzig package each language was built from. Not used by the code — --pkg stays explicit — but
+# the record has to live somewhere, and until issue #265 it lived only in commit messages. Leipzig does
+# not offer the same source and year for every language: news where it exists, Wikipedia or a newscrawl
+# where it does not.
+KNOWN_PACKAGES = {
+    "ar": "ara_news_2022_1M",
+    "bn": "ben_wikipedia_2021_1M",
+    "de": "deu_news_2022_1M",
+    "fi": "fin_news_2022_1M",
+    "hi": "hin_news_2022_1M",
+    "id": "ind_news_2022_1M",
+    "nl": "nld_news_2023_1M",
+    "ta": "tam_wikipedia_2021_1M",
+    "ur": "urd_newscrawl_2016_1M",
+}
+
 
 def get(url: str) -> bytes:
     sys.stderr.write(f"  GET {url}\n")

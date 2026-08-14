@@ -1576,11 +1576,9 @@
     <string name="dictate__audio_save_failed">音声を保存できませんでした</string>
     <string name="dictate__instant_recording_skip_numeric_title">数字入力欄をスキップ</string>
     <string name="dictate__instant_recording_skip_numeric_summary">数字・電話・PIN入力欄では自動開始しない</string>
-    <string name="settings__localization__subtype_glide_ready">グライド入力の準備完了</string>
-    <string name="settings__localization__subtype_glide_available">グライド入力を利用可能</string>
-    <string name="settings__localization__subtype_glide_downloading">グライド入力をダウンロード中… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">グライド入力は利用できません</string>
-    <string name="settings__localization__subtype_status_glide">グライド</string>
+    <string name="settings__localization__subtype_status_words">予測変換</string>
+    <string name="settings__localization__subtype_no_word_list_title">この言語の単語リストはありません</string>
+    <string name="settings__localization__subtype_no_word_list_message">この言語に単語リストが用意されるまで、単語の予測、自動修正、グライド入力は無効のままです。入力、音声入力、言い換えには影響しません。</string>
     <string name="settings__localization__subtype_status_context">文脈</string>
     <string name="pref__suggestion__auto_correct__label">自動修正</string>
     <string name="pref__suggestion__auto_correct__summary">スペース入力時にタイプミスを自動修正</string>

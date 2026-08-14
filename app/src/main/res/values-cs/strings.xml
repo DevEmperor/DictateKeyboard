@@ -1658,11 +1658,9 @@
     <string name="dictate__audio_save_failed">Zvuk se nepodařilo uložit</string>
     <string name="dictate__instant_recording_skip_numeric_title">Přeskočit číselná pole</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Nespouštět automaticky u polí pro čísla, telefon nebo PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Psaní tahem připraveno</string>
-    <string name="settings__localization__subtype_glide_available">Psaní tahem dostupné</string>
-    <string name="settings__localization__subtype_glide_downloading">Stahování psaní tahem… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Psaní tahem není k dispozici</string>
-    <string name="settings__localization__subtype_status_glide">Tah</string>
+    <string name="settings__localization__subtype_status_words">Návrhy</string>
+    <string name="settings__localization__subtype_no_word_list_title">Pro tento jazyk není seznam slov</string>
+    <string name="settings__localization__subtype_no_word_list_message">Návrhy slov, automatické opravy a psaní tahem zůstávají pro tento jazyk vypnuté, dokud pro něj nebude seznam slov. Psaní, diktování a přeformulování to neovlivní.</string>
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Automatické opravy</string>
     <string name="pref__suggestion__auto_correct__summary">Automaticky opravit překlepy při stisku mezerníku</string>

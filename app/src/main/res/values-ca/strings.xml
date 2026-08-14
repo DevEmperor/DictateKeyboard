@@ -1519,11 +1519,9 @@
     <string name="dictate__audio_save_failed">No s\'ha pogut desar l\'àudio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Omet camps numèrics</string>
     <string name="dictate__instant_recording_skip_numeric_summary">No iniciïs automàticament en camps de números, telèfon o PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Escriptura lliscant a punt</string>
-    <string name="settings__localization__subtype_glide_available">Escriptura lliscant disponible</string>
-    <string name="settings__localization__subtype_glide_downloading">S\'està baixant l\'escriptura lliscant… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Escriptura lliscant no disponible</string>
-    <string name="settings__localization__subtype_status_glide">Lliscar</string>
+    <string name="settings__localization__subtype_status_words">Suggeriments</string>
+    <string name="settings__localization__subtype_no_word_list_title">No hi ha cap llista de paraules per a aquesta llengua</string>
+    <string name="settings__localization__subtype_no_word_list_message">Els suggeriments de paraules, la correcció automàtica i l\'escriptura lliscant es mantenen desactivats per a aquesta llengua fins que n\'hi hagi una llista de paraules. Escriure, dictar i reformular no es veuen afectats.</string>
     <string name="settings__localization__subtype_status_context">Context</string>
     <string name="pref__suggestion__auto_correct__label">Correcció automàtica</string>
     <string name="pref__suggestion__auto_correct__summary">Corregeix errades automàticament en prémer espai</string>

@@ -73,6 +73,7 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.keyboardManager
@@ -343,6 +344,42 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                         ) {
                             Text(stringRes(R.string.settings__localization__subtype_missing_language_pack_action))
                         }
+                    }
+                }
+            }
+            // No word list at all for this language (issue #265). Until then a missing dictionary meant
+            // the English one, so the strip looked merely empty rather than absent, and nothing anywhere
+            // said why — which is what turned a gap into a one-star review. Stated plainly, and without
+            // a download button, because there is nothing to download: the data does not exist yet.
+            //
+            // Informational, not an error card: typing, dictation and rewording are unaffected, and the
+            // user did nothing wrong by choosing this language.
+            val hasNoWordList = nlpProviders.suggestion == LatinLanguageProvider.ProviderId &&
+                primaryLocale != SelectLocale &&
+                !GlideDictionaryCatalog.isSupported(
+                    LatinLanguageProvider.normalizeLang(primaryLocale.language),
+                )
+            if (hasNoWordList) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = stringRes(R.string.settings__localization__subtype_no_word_list_title),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = stringRes(R.string.settings__localization__subtype_no_word_list_message),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
                     }
                 }
             }

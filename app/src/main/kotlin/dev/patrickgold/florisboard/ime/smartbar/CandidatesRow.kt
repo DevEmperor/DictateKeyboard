@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
+import android.text.TextUtils
+import android.view.View
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -26,6 +28,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +41,8 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.rememberCoroutineScope
 import dev.patrickgold.florisboard.FlorisImeService
@@ -81,6 +86,19 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     // (the candidates row recomposes on each character — issue: typing jank).
     val longPressDelay by prefs.keyboard.longPressDelay.collectAsState()
 
+    // The strip runs in the *typed* language's direction, not the phone's (issue #265). LocalLayoutDirection
+    // follows the system locale, so writing Arabic on a German phone laid the candidates out left to right
+    // while the words inside them ran right to left — the best suggestion ended up on the far side from
+    // where the writing does. Also fixes he, fa, ur and ckb, which had it too.
+    val activeSubtype by subtypeManager.activeSubtypeFlow.collectAsState()
+    val layoutDirection = remember(activeSubtype.primaryLocale) {
+        when (TextUtils.getLayoutDirectionFromLocale(activeSubtype.primaryLocale.base)) {
+            View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
+            else -> LayoutDirection.Ltr
+        }
+    }
+
+    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier
@@ -172,6 +190,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
     }
 }
 

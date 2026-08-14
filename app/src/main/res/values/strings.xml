@@ -197,11 +197,9 @@
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Could not find a language matching \"{search_term}\".</string>
     <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; select &#8210;</string>
     <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
-    <string name="settings__localization__subtype_glide_ready" comment="Shown on a subtype whose glide typing dictionary is ready">Glide typing ready</string>
-    <string name="settings__localization__subtype_glide_available" comment="Shown on a subtype whose glide typing dictionary downloads on first use">Glide typing available</string>
-    <string name="settings__localization__subtype_glide_downloading" comment="Shown while a subtype glide typing dictionary downloads; {v} is the percent">Downloading glide typing… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable" comment="Shown on a subtype that has no glide typing dictionary">Glide typing not available</string>
-    <string name="settings__localization__subtype_status_glide" comment="Compact label next to a status icon (✓/⤓/✕/⬇%) for the glide typing dictionary on a subtype">Glide</string>
+    <string name="settings__localization__subtype_status_words" comment="Compact label next to a status icon (✓/⤓/✕/⬇%) for the word list a language's suggestions, autocorrect and glide typing all come from">Suggestions</string>
+    <string name="settings__localization__subtype_no_word_list_title" comment="Title of the card shown when the chosen subtype language has no word list at all (issue #265)">No word list for this language</string>
+    <string name="settings__localization__subtype_no_word_list_message" comment="Explains that suggestions are absent rather than broken for a language without a word list">Word suggestions, autocorrect and glide typing stay off for this language until a word list exists for it. Typing, dictation and rewording are unaffected.</string>
     <string name="settings__localization__subtype_status_context" comment="Compact label next to a status icon (✓/⤓/✕) for the autocorrect context (bigram) data on a subtype">Context</string>
     <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Suggested subtype presets</string>
     <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">No suggested presets available. Use below button to view all subtype presets.</string>

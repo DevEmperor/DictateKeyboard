@@ -1625,11 +1625,9 @@
     <string name="dictate__audio_save_failed">No se pudo guardar el audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Omitir campos numéricos</string>
     <string name="dictate__instant_recording_skip_numeric_summary">No iniciar automáticamente en campos de números, teléfono o PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Escritura deslizante lista</string>
-    <string name="settings__localization__subtype_glide_available">Escritura deslizante disponible</string>
-    <string name="settings__localization__subtype_glide_downloading">Descargando escritura deslizante… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Escritura deslizante no disponible</string>
-    <string name="settings__localization__subtype_status_glide">Deslizar</string>
+    <string name="settings__localization__subtype_status_words">Sugerencias</string>
+    <string name="settings__localization__subtype_no_word_list_title">No hay lista de palabras para este idioma</string>
+    <string name="settings__localization__subtype_no_word_list_message">Las sugerencias de palabras, la autocorrección y la escritura deslizante permanecen desactivadas para este idioma mientras no exista una lista de palabras. Escribir, dictar y reformular no se ven afectados.</string>
     <string name="settings__localization__subtype_status_context">Contexto</string>
     <string name="pref__suggestion__auto_correct__label">Autocorrección</string>
     <string name="pref__suggestion__auto_correct__summary">Corregir erratas automáticamente al pulsar espacio</string>

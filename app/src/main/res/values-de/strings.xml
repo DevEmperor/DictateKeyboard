@@ -1579,11 +1579,9 @@
     <string name="dictate__audio_save_failed">Audio konnte nicht gespeichert werden</string>
     <string name="dictate__instant_recording_skip_numeric_title">Zahlenfelder überspringen</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Bei Zahlen-, Telefon- oder PIN-Feldern nicht automatisch starten</string>
-    <string name="settings__localization__subtype_glide_ready">Glide-Eingabe bereit</string>
-    <string name="settings__localization__subtype_glide_available">Glide-Eingabe verfügbar</string>
-    <string name="settings__localization__subtype_glide_downloading">Gleittipp-Wörterbuch wird geladen… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Gleittipp nicht verfügbar</string>
-    <string name="settings__localization__subtype_status_glide">Gleiten</string>
+    <string name="settings__localization__subtype_status_words">Vorschläge</string>
+    <string name="settings__localization__subtype_no_word_list_title">Keine Wortliste für diese Sprache</string>
+    <string name="settings__localization__subtype_no_word_list_message">Wortvorschläge, Autokorrektur und Wischen bleiben für diese Sprache aus, solange es dafür keine Wortliste gibt. Tippen, Diktat und Umformulieren sind nicht betroffen.</string>
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Autokorrektur</string>
     <string name="pref__suggestion__auto_correct__summary">Tippfehler beim Leerzeichen automatisch korrigieren</string>

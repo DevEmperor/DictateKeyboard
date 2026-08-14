@@ -1622,11 +1622,9 @@
     <string name="dictate__audio_save_failed">Ses kaydedilemedi</string>
     <string name="dictate__instant_recording_skip_numeric_title">Sayı alanlarını atla</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Sayı, telefon veya PIN alanlarında otomatik başlatma</string>
-    <string name="settings__localization__subtype_glide_ready">Kaydırarak yazma hazır</string>
-    <string name="settings__localization__subtype_glide_available">Kaydırarak yazma kullanılabilir</string>
-    <string name="settings__localization__subtype_glide_downloading">Kaydırarak yazma indiriliyor… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Kaydırarak yazma kullanılamıyor</string>
-    <string name="settings__localization__subtype_status_glide">Kaydırma</string>
+    <string name="settings__localization__subtype_status_words">Öneriler</string>
+    <string name="settings__localization__subtype_no_word_list_title">Bu dil için kelime listesi yok</string>
+    <string name="settings__localization__subtype_no_word_list_message">Kelime önerileri, otomatik düzeltme ve kaydırarak yazma, bu dil için bir kelime listesi olana kadar kapalı kalır. Yazma, dikte ve yeniden ifade etme bundan etkilenmez.</string>
     <string name="settings__localization__subtype_status_context">Bağlam</string>
     <string name="pref__suggestion__auto_correct__label">Otomatik düzeltme</string>
     <string name="pref__suggestion__auto_correct__summary">Boşlukta yazım hatalarını otomatik düzelt</string>

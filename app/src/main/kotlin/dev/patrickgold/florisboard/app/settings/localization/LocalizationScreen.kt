@@ -146,10 +146,15 @@ fun LocalizationScreen() = FlorisScreen {
                         "symbols_name" to (sMeta?.label ?: "null"),
                         "currency_set_name" to (currMeta?.label ?: "null"),
                     )
-                    // Data status (issue #127 + Tier 2): glide dictionary and autocorrect-context (bigram)
+                    // Data status (issue #127 + Tier 2): word list and autocorrect-context (bigram)
                     // download state, compact on ONE line (the summary is capped at ~2 lines, so two
                     // separate status lines would truncate). Icons: ✓ ready · ⤓ downloads on use · ✕ none ·
                     // ⬇N% downloading.
+                    //
+                    // Labelled "Suggestions" rather than "Glide" since issue #265. The same file drives
+                    // word suggestions, autocorrect and the spell checker, and a language without one now
+                    // gets none of them instead of quietly getting English — so this row is where a user
+                    // finds out that the feature is absent for their language rather than broken.
                     val glideLang = LatinLanguageProvider.normalizeLang(subtype.primaryLocale.language)
                     @Suppress("UNUSED_EXPRESSION") glideInstalledVersion // re-read installed state on change
                     val glideIcon = when {
@@ -166,7 +171,7 @@ fun LocalizationScreen() = FlorisScreen {
                         else -> "✕"
                     }
                     val summary = baseSummary + "\n" +
-                        "$glideIcon " + stringRes(R.string.settings__localization__subtype_status_glide) +
+                        "$glideIcon " + stringRes(R.string.settings__localization__subtype_status_words) +
                         "   $contextIcon " + stringRes(R.string.settings__localization__subtype_status_context)
                     Preference(
                         title = when (displayLanguageNamesIn) {

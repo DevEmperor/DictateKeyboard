@@ -1599,11 +1599,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__audio_save_failed">Tidak dapat menyimpan audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Lewati bidang angka</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Jangan mulai otomatis di bidang angka, telepon, atau PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Ketik geser siap</string>
-    <string name="settings__localization__subtype_glide_available">Ketik geser tersedia</string>
-    <string name="settings__localization__subtype_glide_downloading">Mengunduh ketik geser… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Ketik geser tidak tersedia</string>
-    <string name="settings__localization__subtype_status_glide">Geser</string>
+    <string name="settings__localization__subtype_status_words">Saran</string>
+    <string name="settings__localization__subtype_no_word_list_title">Tidak ada daftar kata untuk bahasa ini</string>
+    <string name="settings__localization__subtype_no_word_list_message">Saran kata, koreksi otomatis, dan pengetikan usap tetap nonaktif untuk bahasa ini selama belum ada daftar katanya. Mengetik, mendikte, dan menyusun ulang tidak terpengaruh.</string>
     <string name="settings__localization__subtype_status_context">Konteks</string>
     <string name="pref__suggestion__auto_correct__label">Koreksi otomatis</string>
     <string name="pref__suggestion__auto_correct__summary">Perbaiki salah ketik otomatis saat menekan spasi</string>

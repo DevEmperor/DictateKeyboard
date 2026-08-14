@@ -1519,11 +1519,9 @@
     <string name="dictate__audio_save_failed">Impossible d\'enregistrer l\'audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Ignorer les champs numériques</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Ne pas démarrer automatiquement sur les champs numériques, téléphone ou PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Saisie glissée prête</string>
-    <string name="settings__localization__subtype_glide_available">Saisie glissée disponible</string>
-    <string name="settings__localization__subtype_glide_downloading">Téléchargement de la saisie glissée… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Saisie glissée non disponible</string>
-    <string name="settings__localization__subtype_status_glide">Glissé</string>
+    <string name="settings__localization__subtype_status_words">Suggestions</string>
+    <string name="settings__localization__subtype_no_word_list_title">Aucune liste de mots pour cette langue</string>
+    <string name="settings__localization__subtype_no_word_list_message">Les suggestions de mots, la correction automatique et la saisie gestuelle restent désactivées pour cette langue tant qu\'il n\'existe pas de liste de mots. La saisie, la dictée et la reformulation ne sont pas concernées.</string>
     <string name="settings__localization__subtype_status_context">Contexte</string>
     <string name="pref__suggestion__auto_correct__label">Correction automatique</string>
     <string name="pref__suggestion__auto_correct__summary">Corriger les fautes de frappe automatiquement à l\'espace</string>

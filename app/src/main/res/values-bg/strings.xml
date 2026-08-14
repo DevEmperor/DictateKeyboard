@@ -1644,11 +1644,9 @@
     <string name="dictate__audio_save_failed">Аудиото не можа да се запази</string>
     <string name="dictate__instant_recording_skip_numeric_title">Пропускай полета с числа</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Не стартирай автоматично при полета за числа, телефон или PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Плъзгащо писане — готово</string>
-    <string name="settings__localization__subtype_glide_available">Плъзгащо писане — налично</string>
-    <string name="settings__localization__subtype_glide_downloading">Изтегляне на плъзгащо писане… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Плъзгащо писане не е налично</string>
-    <string name="settings__localization__subtype_status_glide">Плъзгане</string>
+    <string name="settings__localization__subtype_status_words">Предложения</string>
+    <string name="settings__localization__subtype_no_word_list_title">Няма списък с думи за този език</string>
+    <string name="settings__localization__subtype_no_word_list_message">Предложенията за думи, автокорекцията и плъзгащото писане остават изключени за този език, докато няма списък с думи за него. Писането, диктовката и преформулирането не са засегнати.</string>
     <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автокоригиране</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматично поправяне на печатни грешки при интервал</string>

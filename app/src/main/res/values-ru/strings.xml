@@ -1647,11 +1647,9 @@
     <string name="dictate__audio_save_failed">Не удалось сохранить аудио</string>
     <string name="dictate__instant_recording_skip_numeric_title">Пропускать числовые поля</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Не запускать автоматически в полях чисел, телефона или PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Свайп-ввод готов</string>
-    <string name="settings__localization__subtype_glide_available">Свайп-ввод доступен</string>
-    <string name="settings__localization__subtype_glide_downloading">Загрузка свайп-ввода… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Свайп-ввод недоступен</string>
-    <string name="settings__localization__subtype_status_glide">Свайп</string>
+    <string name="settings__localization__subtype_status_words">Подсказки</string>
+    <string name="settings__localization__subtype_no_word_list_title">Для этого языка нет словаря</string>
+    <string name="settings__localization__subtype_no_word_list_message">Подсказки слов, автозамена и ввод скольжением для этого языка отключены, пока для него нет словаря. На набор, диктовку и перефразирование это не влияет.</string>
     <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автоисправление</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматически исправлять опечатки при пробеле</string>

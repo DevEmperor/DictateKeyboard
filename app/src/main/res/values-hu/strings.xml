@@ -1642,11 +1642,9 @@
     <string name="dictate__audio_save_failed">Nem sikerült menteni a hangot</string>
     <string name="dictate__instant_recording_skip_numeric_title">Számmezők kihagyása</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Ne induljon automatikusan szám-, telefon- vagy PIN-mezőknél</string>
-    <string name="settings__localization__subtype_glide_ready">Csúsztatásos gépelés kész</string>
-    <string name="settings__localization__subtype_glide_available">Csúsztatásos gépelés elérhető</string>
-    <string name="settings__localization__subtype_glide_downloading">Csúsztatásos gépelés letöltése… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Csúsztatásos gépelés nem érhető el</string>
-    <string name="settings__localization__subtype_status_glide">Csúsztatás</string>
+    <string name="settings__localization__subtype_status_words">Javaslatok</string>
+    <string name="settings__localization__subtype_no_word_list_title">Nincs szólista ehhez a nyelvhez</string>
+    <string name="settings__localization__subtype_no_word_list_message">A szójavaslatok, az automatikus javítás és a csúsztatásos gépelés kikapcsolva marad ehhez a nyelvhez, amíg nincs hozzá szólista. A gépelést, a diktálást és az átfogalmazást ez nem érinti.</string>
     <string name="settings__localization__subtype_status_context">Kontextus</string>
     <string name="pref__suggestion__auto_correct__label">Automatikus javítás</string>
     <string name="pref__suggestion__auto_correct__summary">Elgépelések automatikus javítása szóköznél</string>

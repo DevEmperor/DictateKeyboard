@@ -1587,11 +1587,9 @@
     <string name="dictate__audio_save_failed">Neizdevās saglabāt audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Izlaist skaitļu laukus</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Nesākt automātiski skaitļu, tālruņa vai PIN laukos</string>
-    <string name="settings__localization__subtype_glide_ready">Slīdošā rakstīšana gatava</string>
-    <string name="settings__localization__subtype_glide_available">Slīdošā rakstīšana pieejama</string>
-    <string name="settings__localization__subtype_glide_downloading">Lejupielādē slīdošo rakstīšanu… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Slīdošā rakstīšana nav pieejama</string>
-    <string name="settings__localization__subtype_status_glide">Slīdēšana</string>
+    <string name="settings__localization__subtype_status_words">Ieteikumi</string>
+    <string name="settings__localization__subtype_no_word_list_title">Šai valodai nav vārdu saraksta</string>
+    <string name="settings__localization__subtype_no_word_list_message">Vārdu ieteikumi, automātiskā labošana un vilkšanas rakstīšana šai valodai paliek izslēgti, kamēr tai nav vārdu saraksta. Rakstīšanu, diktēšanu un pārfrāzēšanu tas neietekmē.</string>
     <string name="settings__localization__subtype_status_context">Konteksts</string>
     <string name="pref__suggestion__auto_correct__label">Automātiskā labošana</string>
     <string name="pref__suggestion__auto_correct__summary">Automātiski labot drukas kļūdas, nospiežot atstarpi</string>

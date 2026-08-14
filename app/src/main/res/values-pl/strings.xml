@@ -1659,11 +1659,9 @@
     <string name="dictate__audio_save_failed">Nie udało się zapisać audio</string>
     <string name="dictate__instant_recording_skip_numeric_title">Pomijaj pola liczbowe</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Nie uruchamiaj automatycznie w polach liczb, telefonu lub PIN</string>
-    <string name="settings__localization__subtype_glide_ready">Pisanie gestem gotowe</string>
-    <string name="settings__localization__subtype_glide_available">Pisanie gestem dostępne</string>
-    <string name="settings__localization__subtype_glide_downloading">Pobieranie pisania gestem… {v}%</string>
-    <string name="settings__localization__subtype_glide_unavailable">Pisanie gestem niedostępne</string>
-    <string name="settings__localization__subtype_status_glide">Gest</string>
+    <string name="settings__localization__subtype_status_words">Podpowiedzi</string>
+    <string name="settings__localization__subtype_no_word_list_title">Brak listy słów dla tego języka</string>
+    <string name="settings__localization__subtype_no_word_list_message">Podpowiedzi słów, autokorekta i pisanie gestem pozostają wyłączone dla tego języka, dopóki nie powstanie dla niego lista słów. Pisanie, dyktowanie i przeredagowanie działają normalnie.</string>
     <string name="settings__localization__subtype_status_context">Kontekst</string>
     <string name="pref__suggestion__auto_correct__label">Autokorekta</string>
     <string name="pref__suggestion__auto_correct__summary">Automatyczne poprawianie literówek po spacji</string>
