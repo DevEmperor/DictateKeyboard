@@ -9,31 +9,46 @@ stored form, so the dictionary must carry the correct case (German nouns capital
 Two reachable sources are combined:
   * Frequency — OPUS OpenSubtitles frequency lists (https://opus.nlpl.eu, hosted on CSC object storage).
     Case-insensitive there (fully lowercased), which is fine for *ranking*.
-  * Casing — the Hunspell dictionary for the language (github.com/wooorm/dictionaries), consulted through
-    the local `hunspell` binary as an oracle: a lowercase word that is only valid when capitalised (a noun)
-    is capitalised; words valid lowercase (function words, verbs) stay lowercase.
+  * Casing and spelling — the Hunspell dictionary for the language, consulted through the local
+    `hunspell` binary as an oracle: a lowercase word that is only valid when capitalised (a noun) is
+    capitalised; words valid lowercase (function words, verbs) stay lowercase; words rejected in both
+    cases are dropped as corpus noise. Two hosts are supported, wooorm/dictionaries (--dict) and
+    LibreOffice/dictionaries (--lo-dict), because neither covers every language.
+
+    The filter is not cosmetic for languages that write variant letter forms. Arabic subtitle text is
+    full of ان / الى / اخى where the correct spellings are أن / إلى / أخي; Hunspell rejects exactly
+    those, which is what leaves them *outside* the dictionary and therefore correctable at runtime.
 
 Requires the `hunspell` binary on PATH (sudo pacman -S hunspell / apt install hunspell). Without a Hunspell
 dictionary for the language the result is left lowercase (a warning is printed).
 
 Usage:
-    python3 generate.py <lang> [--opus LANG] [--dict NAME] [--top N] [--out DIR]
+    python3 generate.py <lang> [--opus LANG] [--dict NAME | --lo-dict PATH] [--top N] [--out DIR]
 
-    <lang>      output language code → writes <out>/<lang>.json (also the OPUS/dict default)
-    --opus L    OPUS language code (default: <lang>), e.g. de, en, fr, pt
-    --dict N    wooorm dictionary dir (default: <lang>), e.g. de, en-US, pt-BR
-    --top N     keep the top N words by frequency (default 50000)
-    --out DIR   output directory (default: current dir)
+    <lang>       output language code → writes <out>/<lang>.json (also the OPUS/dict default)
+    --opus L     OPUS language code (default: <lang>), e.g. de, en, fr, pt
+    --dict N     wooorm dictionary dir (default: <lang>), e.g. de, en-US, pt-BR
+    --lo-dict P  LibreOffice dictionary path "<dir>/<basename>", e.g. ar/ar, hi_IN/hi_IN, id/id_ID
+    --top N      keep the top N words by frequency (default 50000)
+    --out DIR    output directory (default: current dir)
 
 Licensing: OPUS OpenSubtitles data is freely redistributable; Hunspell dictionaries are used here only as a
 build-time casing oracle (their word lists are not redistributed — only OPUS-derived frequencies with
-restored case). Verify the per-language Hunspell licence (wooorm/dictionaries lists it) if concerned.
+restored case). Verify the per-language Hunspell licence before adding a language; ATTRIBUTION.md records
+which licence each one was taken under.
 """
-import sys, os, re, io, json, math, gzip, hashlib, argparse, subprocess, tempfile, urllib.request
+import sys, os, io, json, math, gzip, tarfile, hashlib, argparse, subprocess, tempfile, urllib.request
+
+from wordfilter import is_word, strip_arabic_marks
 
 OPUS = "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2018/freq"
+LEIPZIG = "https://downloads.wortschatz-leipzig.de/corpora"
 WOOORM = "https://raw.githubusercontent.com/wooorm/dictionaries/main/dictionaries"
-WORD_RE = re.compile(r"[^\W\d_]+(?:['’-][^\W\d_]+)*$", re.UNICODE)
+LIBREOFFICE = "https://raw.githubusercontent.com/LibreOffice/dictionaries/master"
+
+# The OPUS lists are frequency-sorted, so a word this far down can never merge its way into the top N.
+# Bounding the scan keeps peak memory sane on the big lists (Arabic 2.9 M words, Finnish 2.65 M).
+SCAN_LIMIT_FACTOR = 10
 
 
 def get(url: str) -> bytes:
@@ -42,10 +57,73 @@ def get(url: str) -> bytes:
         return r.read()
 
 
-def load_frequencies(opus_lang: str, top: int) -> list:
-    """Return [(word_lower, freq), ...] top-N, filtered to real words, frequency-desc."""
+def load_leipzig_counts(pkg: str) -> dict:
+    """word → count from a Leipzig Corpora Collection package's `*-words.txt` (id ⇥ word ⇥ count).
+
+    OPUS OpenSubtitles is the better register for a phone keyboard (people type the way they speak),
+    but it barely covers some languages: Tamil yields 18,926 word types against Leipzig's 100k+. Where
+    that is the case, the two are merged by relative frequency — see merge_counts.
+    """
+    url = f"{LEIPZIG}/{pkg}.tar.gz"
+    sys.stderr.write(f"  GET {url}\n")
+    req = urllib.request.Request(url, headers={"User-Agent": "dictate-dict-gen"})
+    tmp = tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False)
+    try:
+        with urllib.request.urlopen(req) as r:
+            while True:
+                chunk = r.read(1 << 20)
+                if not chunk:
+                    break
+                tmp.write(chunk)
+        tmp.close()
+        tar = tarfile.open(tmp.name, mode="r:gz")
+        name = next((m for m in tar.getnames() if m.endswith("-words.txt")), None)
+        if name is None:
+            raise SystemExit(f"error: -words.txt not found in {pkg}")
+        out: dict[str, int] = {}
+        for line in io.TextIOWrapper(tar.extractfile(name), encoding="utf-8", errors="replace"):
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) < 3 or not parts[0].isdigit() or not parts[2].isdigit():
+                continue
+            word = strip_arabic_marks(parts[1].strip().lower())
+            if not is_word(word):
+                continue
+            out[word] = out.get(word, 0) + int(parts[2])
+        sys.stderr.write(f"  leipzig {pkg}: {len(out)} distinct words\n")
+        return out
+    finally:
+        os.unlink(tmp.name)
+
+
+def merge_counts(*sources: dict) -> dict:
+    """Combine word→count maps from different corpora with equal weight.
+
+    Raw counts are not comparable across corpora of different sizes, so each source is converted to a
+    relative frequency first and the shares are added. The result is scaled back up because the caller
+    takes a logarithm of it.
+    """
+    sources = tuple(s for s in sources if s)
+    if len(sources) == 1:
+        return dict(sources[0])
+    combined: dict[str, float] = {}
+    for src in sources:
+        total = sum(src.values()) or 1
+        for word, count in src.items():
+            combined[word] = combined.get(word, 0.0) + count / total
+    return {w: max(1, round(share * 1e9)) for w, share in combined.items()}
+
+
+def load_opus_counts(opus_lang: str, top: int) -> dict:
+    """word → count from the OPUS OpenSubtitles frequency list, filtered to real words.
+
+    Arabic marks are stripped *before* counting and the surviving forms have their counts added
+    together, so مــن / مـن / من become one entry rather than three. Hunspell would not catch those:
+    ayaspell happily accepts tatweel-stretched spellings.
+    """
     raw = gzip.decompress(get(f"{OPUS}/{opus_lang}.freq.gz")).decode("utf-8", "replace")
-    out = []
+    merged: dict[str, int] = {}
+    scanned = 0
+    scan_limit = max(top * SCAN_LIMIT_FACTOR, 500_000)
     for line in raw.splitlines():
         # Counts are right-aligned with leading spaces, so split on any whitespace run.
         parts = line.split(None, 1)
@@ -54,27 +132,48 @@ def load_frequencies(opus_lang: str, top: int) -> list:
         cnt, word = parts
         if not cnt.isdigit():
             continue
-        word = word.strip().lower()
-        if len(word) < 1 or len(word) > 30 or not WORD_RE.match(word):
+        word = strip_arabic_marks(word.strip().lower())
+        if not is_word(word):
             continue
-        out.append((word, int(cnt)))
-        if len(out) >= top:
+        merged[word] = merged.get(word, 0) + int(cnt)
+        scanned += 1
+        if scanned >= scan_limit:
             break
+    sys.stderr.write(f"  opus {opus_lang}: {scanned} tokens scanned, {len(merged)} distinct\n")
+    return merged
+
+
+def rank(counts: dict, top: int) -> list:
+    """Return [(word, count), ...], most frequent first, capped at [top]."""
+    out = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:top]
+    sys.stderr.write(f"  frequencies: {len(counts)} distinct, keeping {len(out)}\n")
     return out
 
 
-def build_case_oracle(words: list, dict_name: str) -> dict:
+def fetch_hunspell(dict_name: str, lo_dict: str) -> tuple:
+    """Return (dic_bytes, aff_bytes) for the requested Hunspell dictionary.
+
+    wooorm names every dictionary index.dic/index.aff inside a per-language dir; LibreOffice uses the
+    language code as the basename and does not follow one convention for the dir (ar/ar, hi_IN/hi_IN,
+    id/id_ID), so that source takes the full "<dir>/<basename>" path.
+    """
+    if lo_dict:
+        return get(f"{LIBREOFFICE}/{lo_dict}.dic"), get(f"{LIBREOFFICE}/{lo_dict}.aff")
+    return get(f"{WOOORM}/{dict_name}/index.dic"), get(f"{WOOORM}/{dict_name}/index.aff")
+
+
+def build_case_oracle(words: list, dict_name: str, lo_dict: str = "") -> dict:
     """
     Map each lowercase word to its correct case via hunspell (word→cased). Words that hunspell rejects in
     *both* cases are omitted (they are OPUS subtitle noise: typos, foreign/Swiss spellings like "gross",
     names) — the caller drops any word not in the returned map. Falls back to keeping everything lowercase
     if no Hunspell dictionary is available.
     """
+    source = lo_dict or dict_name
     try:
-        dic = get(f"{WOOORM}/{dict_name}/index.dic")
-        aff = get(f"{WOOORM}/{dict_name}/index.aff")
+        dic, aff = fetch_hunspell(dict_name, lo_dict)
     except Exception as e:
-        sys.stderr.write(f"  WARN no Hunspell dict '{dict_name}' ({e}); keeping all words lowercase\n")
+        sys.stderr.write(f"  WARN no Hunspell dict '{source}' ({e}); keeping all words lowercase\n")
         return {w: w for w, _ in words}
     tmp = tempfile.mkdtemp()
     open(os.path.join(tmp, "d.dic"), "wb").write(dic)
@@ -103,6 +202,10 @@ def build_case_oracle(words: list, dict_name: str) -> dict:
         elif cap not in bad_cap:
             oracle[w] = cap            # only valid capitalised → noun/proper, capitalise
         # else: rejected in both cases → drop (OPUS noise)
+    sys.stderr.write(
+        f"  hunspell '{source}': {len(oracle)} of {len(lowers)} words kept "
+        f"({len(lowers) - len(oracle)} rejected as noise/misspellings)\n"
+    )
     return oracle
 
 
@@ -125,23 +228,34 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("lang")
     ap.add_argument("--opus", default=None)
+    ap.add_argument("--leipzig", default="",
+                    help="Leipzig Corpora package basename (e.g. tam_wikipedia_2021_1M) to merge into the "
+                         "OPUS frequencies; use where OpenSubtitles barely covers the language")
+    ap.add_argument("--no-opus", action="store_true",
+                    help="use only --leipzig as the frequency source")
     ap.add_argument("--dict", default=None)
+    ap.add_argument("--lo-dict", default="",
+                    help="LibreOffice dictionary path '<dir>/<basename>' (e.g. ar/ar, hi_IN/hi_IN, id/id_ID); "
+                         "takes precedence over --dict, for languages wooorm does not cover")
     ap.add_argument("--name", default="<DisplayName>")
     ap.add_argument("--top", type=int, default=50000)
     ap.add_argument("--out", default=".")
     ap.add_argument("--no-hunspell", action="store_true",
                     help="skip the Hunspell casing/filter (OPUS frequencies only, all lowercase) — use for "
-                         "languages whose Hunspell dictionary has an incompatible licence (e.g. AGPL/CC-BY-SA)")
+                         "languages whose Hunspell dictionary has an incompatible licence (e.g. AGPL/CC-BY-SA) "
+                         "or that have none at all")
     args = ap.parse_args()
 
-    words = load_frequencies(args.opus or args.lang, args.top)
+    opus = {} if args.no_opus else load_opus_counts(args.opus or args.lang, args.top)
+    leipzig = load_leipzig_counts(args.leipzig) if args.leipzig else {}
+    words = rank(merge_counts(opus, leipzig), args.top)
     if not words:
-        raise SystemExit("no frequency data (wrong --opus code?)")
+        raise SystemExit("no frequency data (wrong --opus code / --leipzig package?)")
     if args.no_hunspell:
         sys.stderr.write("  (Hunspell skipped: OPUS-only, lowercase)\n")
         oracle = {w: w for w, _ in words}
     else:
-        oracle = build_case_oracle(words, args.dict or args.lang)
+        oracle = build_case_oracle(words, args.dict or args.lang, args.lo_dict)
     data = to_json(words, oracle)
 
     os.makedirs(args.out, exist_ok=True)
