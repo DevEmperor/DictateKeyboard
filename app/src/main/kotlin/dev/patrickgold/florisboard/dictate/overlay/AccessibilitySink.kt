@@ -42,9 +42,8 @@ class AccessibilitySink : DictationSink {
         DictateAccessibilityService.setPreview(newText)
     }
 
-    override fun commitDictationFinal(finalText: String, prevText: String) {
+    override fun commitDictationFinal(finalText: String, prevText: String): Boolean =
         DictateAccessibilityService.commitPreviewFinal(finalText)
-    }
 
     override fun clearDictationPreview(prevText: String) {
         DictateAccessibilityService.clearPreview()

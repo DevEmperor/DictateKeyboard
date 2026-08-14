@@ -65,8 +65,12 @@ interface DictationSink {
      */
     fun setDictationPreview(newText: String, prevText: String)
 
-    /** Finalize: replace the [prevText] preview with the finished/reworded [finalText] (minimal diff). */
-    fun commitDictationFinal(finalText: String, prevText: String)
+    /**
+     * Finalize: replace the [prevText] preview with the finished/reworded [finalText] (minimal diff).
+     * Returns whether the field took it — the realtime path used to skip the insert-failure check
+     * entirely, so a swallowed write ended in a green check (issue #277).
+     */
+    fun commitDictationFinal(finalText: String, prevText: String): Boolean
 
     /** Remove the [prevText] preview entirely (a realtime recording was cancelled / fell back to batch). */
     fun clearDictationPreview(prevText: String)
@@ -115,12 +119,13 @@ class ImeDictationSink(context: Context) : DictationSink {
 
     override fun setDictationPreview(newText: String, prevText: String) = applyDictationDiff(prevText, newText)
 
-    override fun commitDictationFinal(finalText: String, prevText: String) {
+    override fun commitDictationFinal(finalText: String, prevText: String): Boolean {
         // Atomic swap of the streamed preview for the finished/reworded text (keeps the common prefix,
         // replaces only the divergent tail in one batch → no character-by-character flicker).
-        if (prevText == finalText) return
+        if (prevText == finalText) return true
         val cp = prevText.commonPrefixWith(finalText).length
         editorInstance.replaceDictationTail(prevText.length - cp, finalText.substring(cp))
+        return true
     }
 
     override fun clearDictationPreview(prevText: String) {

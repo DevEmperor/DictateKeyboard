@@ -459,26 +459,31 @@ class DictateAccessibilityService : AccessibilityService() {
     private var previewShown = ""
     private var lastPreviewMs = 0L
 
-    private fun applyPreviewDiff(old: String, new: String) {
-        if (old == new) return
+    /** Returns whether the field took the new tail, so callers only advance [previewShown] when it did. */
+    private fun applyPreviewDiff(old: String, new: String): Boolean {
+        if (old == new) return true
         val cp = old.commonPrefixWith(new).length
         if (cp < old.length) deleteLastTextFromFocused(old.substring(cp))
-        if (cp < new.length) commitTextIntoFocused(new.substring(cp))
+        if (cp >= new.length) return true
+        return commitTextIntoFocused(new.substring(cp))
     }
 
     private fun setPreviewThrottled(full: String) {
         if (full == previewShown) return
         val now = SystemClock.uptimeMillis()
         if (now - lastPreviewMs < PREVIEW_THROTTLE_MS) return   // skip; a later update catches up via the diff
-        applyPreviewDiff(previewShown, full)
-        previewShown = full
+        // Only move the diff base when the write landed (issue #277). Advancing it regardless left the
+        // base describing text that was never inserted, and every later diff was computed against that
+        // fiction — so one refused write desynchronised the whole rest of the streaming session.
+        if (applyPreviewDiff(previewShown, full)) previewShown = full
         lastPreviewMs = now
     }
 
-    private fun commitPreviewFinalOnFocused(finalText: String) {
-        applyPreviewDiff(previewShown, finalText)   // no throttle — final result always lands
+    private fun commitPreviewFinalOnFocused(finalText: String): Boolean {
+        val landed = applyPreviewDiff(previewShown, finalText)   // no throttle — final result always lands
         previewShown = ""
         lastPreviewMs = 0L
+        return landed
     }
 
     private fun clearPreviewOnFocused() {
@@ -729,7 +734,8 @@ class DictateAccessibilityService : AccessibilityService() {
         fun setPreview(full: String) { instance?.setPreviewThrottled(full) }
 
         /** Replace the live preview with the finished/reworded [finalText] (unthrottled). */
-        fun commitPreviewFinal(finalText: String) { instance?.commitPreviewFinalOnFocused(finalText) }
+        fun commitPreviewFinal(finalText: String): Boolean =
+            instance?.commitPreviewFinalOnFocused(finalText) ?: false
 
         /** Remove the live preview entirely (recording cancelled). */
         fun clearPreview() { instance?.clearPreviewOnFocused() }

@@ -1614,8 +1614,16 @@ object DictateController {
             // Realtime (#128): replace the live-streamed preview with the finished (reworded) result via the
             // minimal diff, then honor auto-enter — instead of committing on top of the preview.
             val outSink = sink(appContext)
-            outSink.commitDictationFinal(outputText, realtimeShown.toString())
+            val landed = outSink.commitDictationFinal(outputText, realtimeShown.toString())
             realtimeShown.setLength(0)
+            // This branch never went through commitOutput, so it never saw the insert-failure check
+            // either (issue #277) — a swallowed write finished as Idle, i.e. a green check.
+            if (reportOverlayInsertFailure(appContext, landed, outputText)) {
+                rememberLastDictation(outputText)
+                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
+                discardRetainedAudio()
+                return
+            }
             if (prefs.dictate.autoEnter.get() && outputText.isNotEmpty()) outSink.performEnter()
         } else {
             // Safety net (#214): for the floating button, optionally copy every dictation to the system
@@ -1635,21 +1643,18 @@ object DictateController {
             // put the text somewhere the user can actually reach.
             if (!committed && outputTarget == OutputTarget.OVERLAY && outputText.isNotEmpty()) {
                 rememberLastDictation(outputText)
-                // The clipboard is the recovery route, and only here (issue #277). The old message sent
-                // people to "Reinsert", which lives in the Dictate keyboard — unreachable for exactly the
-                // people who hit this, since they are using the floating button with another keyboard.
-                // Copying on failure alone keeps the clipboard (and the Samsung toast) out of the way of
-                // everyone whose insert works; the always-copy setting (#214) stays what it is.
-                copyToSystemClipboard(appContext, outputText)
                 if (capture?.isReplay != true) {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
                     if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
                 }
                 recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
                 discardRetainedAudio()
-                _state.value = UiState.Error(
-                    message = appContext.getString(R.string.dictate__error_overlay_insert_clipboard),
-                )
+                // The clipboard is the recovery route, and only here (issue #277). The old message sent
+                // people to "Reinsert", which lives in the Dictate keyboard — unreachable for exactly the
+                // people who hit this, since they are using the floating button with another keyboard.
+                // Copying on failure alone keeps the clipboard (and the Samsung toast) out of the way of
+                // everyone whose insert works; the always-copy setting (#214) stays what it is.
+                reportOverlayInsertFailure(appContext, committed, outputText)
                 return
             }
         }
@@ -1668,6 +1673,23 @@ object DictateController {
     }
 
     /** Copies [text] to the system clipboard — the floating-button always-copy safety net (issue #214). */
+    /**
+     * A floating-button write the field refused: put the text on the clipboard and say so, instead of
+     * flashing a green check over nothing (issue #277).
+     *
+     * Returns whether it handled a failure, so callers can `if (reportOverlayInsertFailure(...)) return`.
+     * Only ever true for [OutputTarget.OVERLAY] — the keyboard writes through its own InputConnection
+     * and cannot silently no-op, and the recognition service has no field of its own.
+     */
+    private fun reportOverlayInsertFailure(context: Context, committed: Boolean, text: String): Boolean {
+        if (committed || outputTarget != OutputTarget.OVERLAY || text.isEmpty()) return false
+        copyToSystemClipboard(context, text)
+        _state.value = UiState.Error(
+            message = context.getString(R.string.dictate__error_overlay_insert_clipboard),
+        )
+        return true
+    }
+
     private fun copyToSystemClipboard(context: Context, text: String) {
         val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
         runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
@@ -2953,7 +2975,9 @@ object DictateController {
 
         // Snippet shortcut: text wrapped in [...] is inserted literally (no network call).
         if (raw.length >= 2 && raw.startsWith("[") && raw.endsWith("]")) {
-            sink.commitText(raw.substring(1, raw.length - 1))
+            val snippet = raw.substring(1, raw.length - 1)
+            // A refused write here used to end in a green check as well (issue #277).
+            reportOverlayInsertFailure(appContext, sink.commitText(snippet), snippet)
             return
         }
 
@@ -2991,8 +3015,10 @@ object DictateController {
             try {
                 val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
-                sink.commitText(text)
-                _state.value = UiState.Idle
+                val committed = sink.commitText(text)
+                // Don't declare success over a write the field refused (issue #277) — the reworded text
+                // is the expensive part, and it goes to the clipboard rather than nowhere.
+                if (!reportOverlayInsertFailure(appContext, committed, text)) _state.value = UiState.Idle
             } catch (e: CancellationException) {
                 throw e // stop button pressed: cancelRewording already reset the state, leave the field as-is
             } catch (e: DictateApiException) {

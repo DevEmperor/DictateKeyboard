@@ -42,8 +42,9 @@ class RecognitionSink : DictationSink {
         RecognitionBridge.deliverPartial(newText)
     }
 
-    override fun commitDictationFinal(finalText: String, prevText: String) {
+    override fun commitDictationFinal(finalText: String, prevText: String): Boolean {
         RecognitionBridge.appendResult(finalText)
+        return true
     }
 
     override fun clearDictationPreview(prevText: String) = Unit
