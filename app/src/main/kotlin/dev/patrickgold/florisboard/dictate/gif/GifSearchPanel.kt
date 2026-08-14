@@ -48,11 +48,14 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSearchIndex
+import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
@@ -62,8 +65,12 @@ import org.florisboard.lib.snygg.ui.SnyggText
  * does the typing; keystrokes are folded into
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.gifSearchQuery]). Unlike emoji search, GIFs
  * are too small for an inline results strip — so this bar only captures the query; pressing Enter (or the
- * search button) opens a full large-thumbnail results page (see [GifPanel]). While the query is empty the
- * bar offers the recent search terms as chips (tap to search, long-press to delete).
+ * search button) opens a full large-thumbnail results page (see [GifPanel]).
+ *
+ * Above the bar sits a row of earlier search terms, narrowed down as the query is typed (tap to search,
+ * long-press to delete). It used to *replace* the query text and vanish on the first keystroke, which
+ * both hid the term being typed and made the bar jump; keeping the row for as long as there is a history
+ * holds the height steady and turns the chips into completions.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -78,80 +85,93 @@ fun GifSearchPanel(
     val history by prefs.gif.history.collectPrefAsState()
     var confirmDeleteTerm by remember { mutableStateOf<String?>(null) }
 
-    SnyggRow(
-        elementName = FlorisImeUi.MediaBottomRow.elementName,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(FlorisImeSizing.smartbarHeight),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        SnyggIconButton(
-            elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-            onClick = { keyboardManager.closeGifSearch() },
-            modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-        ) {
-            Icon(imageVector = Icons.Default.Close, contentDescription = null, modifier = Modifier.size(28.dp))
+    // Match the way the emoji search matches: ignoring case and accents, so "cat" still offers "Cät".
+    val suggestions = remember(history.recentSearches, query) {
+        val needle = EmojiSearchIndex.normalize(query)
+        if (needle.isEmpty()) {
+            history.recentSearches
+        } else {
+            history.recentSearches.filter { EmojiSearchIndex.normalize(it).contains(needle) }
         }
-        if (query.isBlank() && history.recentSearches.isNotEmpty()) {
-            // Nothing typed yet: offer recent searches as chips.
-            LazyRow(
+    }
+
+    SnyggColumn(
+        elementName = FlorisImeUi.MediaBottomRow.elementName,
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        if (history.recentSearches.isNotEmpty()) {
+            SnyggRow(
+                elementName = FlorisImeUi.MediaBottomRow.elementName,
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                contentPadding = PaddingValues(horizontal = 4.dp),
+                    .fillMaxWidth()
+                    .height(FlorisImeSizing.smartbarHeight),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(history.recentSearches, key = { it }) { term ->
-                    Box {
-                        SnyggText(
-                            elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
-                            text = term,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier
-                                .padding(horizontal = 3.dp)
-                                .clip(RoundedCornerShape(50))
-                                .background(Color(0x22808080))
-                                .combinedClickable(
-                                    onClick = { keyboardManager.submitGifSearch(term) },
-                                    onLongClick = { confirmDeleteTerm = term },
-                                )
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                        )
-                        DropdownMenu(
-                            expanded = confirmDeleteTerm == term,
-                            onDismissRequest = { confirmDeleteTerm = null },
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text(stringRes(R.string.action__delete)) },
-                                leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
-                                onClick = {
-                                    scope.launch { GifHistoryHelper.removeSearch(prefs, term) }
-                                    confirmDeleteTerm = null
-                                },
+                LazyRow(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    contentPadding = PaddingValues(horizontal = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    items(suggestions, key = { it }) { term ->
+                        Box {
+                            SnyggText(
+                                elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                                text = term,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier
+                                    .padding(horizontal = 3.dp)
+                                    .clip(RoundedCornerShape(50))
+                                    .background(Color(0x22808080))
+                                    .combinedClickable(
+                                        onClick = { keyboardManager.submitGifSearch(term) },
+                                        onLongClick = { confirmDeleteTerm = term },
+                                    )
+                                    .padding(horizontal = 12.dp, vertical = 6.dp),
                             )
+                            DropdownMenu(
+                                expanded = confirmDeleteTerm == term,
+                                onDismissRequest = { confirmDeleteTerm = null },
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text(stringRes(R.string.action__delete)) },
+                                    leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                                    onClick = {
+                                        scope.launch { GifHistoryHelper.removeSearch(prefs, term) }
+                                        confirmDeleteTerm = null
+                                    },
+                                )
+                            }
                         }
                     }
                 }
             }
-        } else {
-            SnyggText(
-                elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
-                text = query.ifBlank { stringRes(R.string.gif__search_placeholder) },
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 8.dp),
-            )
         }
-        SnyggIconButton(
-            elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-            onClick = { keyboardManager.submitGifSearch(query) },
-            enabled = query.isNotBlank(),
-            modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-        ) {
-            Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(28.dp))
-        }
+        KeyboardSearchBar(
+            query = query,
+            placeholder = stringRes(R.string.gif__search_placeholder),
+            onClear = { keyboardManager.clearGifSearch() },
+            leading = {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { keyboardManager.closeGifSearch() },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(imageVector = Icons.Default.Close, contentDescription = null, modifier = Modifier.size(24.dp))
+                }
+            },
+            trailing = {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { keyboardManager.submitGifSearch(query) },
+                    enabled = query.isNotBlank(),
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(24.dp))
+                }
+            },
+        )
     }
 }
