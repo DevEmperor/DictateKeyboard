@@ -288,7 +288,7 @@ class DictateAccessibilityService : AccessibilityService() {
      * Falls back to appending at the end when the field reports no usable selection. Returns true when
      * the field accepted the change — some custom/legacy views do not support `ACTION_SET_TEXT`.
      */
-    private fun commitTextIntoFocused(text: String): Boolean {
+    private fun commitTextIntoFocused(text: String, verify: Boolean = true): Boolean {
         if (text.isEmpty()) return true // silence: nothing to insert — a no-op is a success, not a failure.
 
         // Insert exactly like a normal keyboard: through the accessibility input connection's commitText,
@@ -310,9 +310,20 @@ class DictateAccessibilityService : AccessibilityService() {
             }
 
             // 1. The keyboard-style path: commit through the input connection (no clipboard, no toast).
+            //    Its API returns void, so "it did not throw" is all the call itself tells us — hence the
+            //    read-back below (issue #277).
+            val before = if (verify) readBeforeCursor(text.length) else null
             if (commitViaInputConnection(text)) {
-                flogDebug { "commit via inputConnection len=${text.length}" }
-                return true
+                if (!verify || insertLanded(before, text.length)) {
+                    flogDebug { "commit via inputConnection len=${text.length}" }
+                    return true
+                }
+                // The field demonstrably did not change. Deliberately NOT falling through to the other
+                // two mechanisms: if this verdict were wrong, writing again would leave the text in the
+                // field twice, and duplicated text is worse than a wrong error message. The caller puts
+                // it on the clipboard instead.
+                flogDebug { "commit swallowed by the field len=${text.length}" }
+                return false
             }
             // 2. Fallback: write straight into the visible node (older OS without the a11y input method, or
             //    fields that expose no editor connection). Placeholder-safe via editableText().
@@ -346,6 +357,38 @@ class DictateAccessibilityService : AccessibilityService() {
         }
         if (root.isLikelyEditable()) return root
         return findEditableDescendant(root, 0)
+    }
+
+    /**
+     * The text immediately before the cursor, read back through the *same* input connection the write
+     * goes through, or null when it cannot be read.
+     *
+     * Deliberately not the accessibility node: reading the node means `refresh()` plus [editableText]'s
+     * placeholder heuristic, which reports a hint-showing field as empty — unreliable enough that an
+     * earlier attempt at verifying writes that way produced false "couldn't insert" errors and was
+     * abandoned. `getSurroundingText` asks the app's own editor instead, and arrived with API 33, which
+     * is the same floor the write path already has.
+     */
+    private fun readBeforeCursor(sentLength: Int): String? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
+        val connection = inputMethod?.currentInputConnection ?: return null
+        return runCatching {
+            val window = connection.getSurroundingText(sentLength + VERIFY_WINDOW_PAD, 0, 0) ?: return null
+            val text = window.text ?: return null
+            val end = window.selectionStart.coerceIn(0, text.length)
+            text.subSequence(0, end).toString()
+        }.getOrNull()
+    }
+
+    /**
+     * Whether the write reached the field. Reads back once, and — only if nothing changed — once more
+     * after a short settle, because an app applies a commit on its own UI thread and may not have got
+     * to it yet.
+     */
+    private fun insertLanded(before: String?, sentLength: Int): Boolean {
+        if (insertLandedFrom(before, readBeforeCursor(sentLength))) return true
+        SystemClock.sleep(VERIFY_SETTLE_MS)
+        return insertLandedFrom(before, readBeforeCursor(sentLength))
     }
 
     /**
@@ -465,7 +508,9 @@ class DictateAccessibilityService : AccessibilityService() {
         val cp = old.commonPrefixWith(new).length
         if (cp < old.length) deleteLastTextFromFocused(old.substring(cp))
         if (cp >= new.length) return true
-        return commitTextIntoFocused(new.substring(cp))
+        // Streaming writes a tail many times a second; a read-back per update would double the IPC and
+        // fight the app's own rendering. The final commit is verified instead.
+        return commitTextIntoFocused(new.substring(cp), verify = false)
     }
 
     private fun setPreviewThrottled(full: String) {
@@ -667,6 +712,27 @@ class DictateAccessibilityService : AccessibilityService() {
         private const val COMMIT_ATTEMPTS = 2
         private const val COMMIT_RETRY_DELAY_MS = 60L
         private const val FOCUS_SETTLE_MS = 40L
+        // Read-back verification of the input-connection write (#277). The window is a little wider than
+        // what was sent so a field that reformats around it still reads as changed; the settle covers an
+        // app that applies the commit on its own UI thread a moment later.
+        private const val VERIFY_WINDOW_PAD = 16
+        private const val VERIFY_SETTLE_MS = 50L
+
+        /**
+         * Whether a write is judged to have reached the field, given the text before the cursor as it was
+         * [before] the write and as it reads [after] it.
+         *
+         * **Only a demonstrably unchanged field counts as a failure.** Anything else — either read
+         * unavailable, an exception, text that grew, shrank, or was reformatted by the app — counts as
+         * landed and leaves the behaviour exactly as it was before verification existed.
+         *
+         * Checking that the field now *ends with what we sent* would be the obvious rule and the wrong
+         * one: apps capitalise, trim and reflow what they are given, and every one of those would read as
+         * a failure. "Did anything change at all" survives all of it, and still catches the case this is
+         * for — the write that is silently dropped, where nothing changes because nothing happened.
+         */
+        internal fun insertLandedFrom(before: String?, after: String?): Boolean =
+            before == null || after == null || before != after
         // Debounce window for focus re-checks so a typing burst triggers at most one focused-node fetch.
         private const val FOCUS_UPDATE_DEBOUNCE_MS = 150L
         // Real-time overlay preview (#128): min gap between accessibility writes while streaming, so live
@@ -713,7 +779,8 @@ class DictateAccessibilityService : AccessibilityService() {
          * Inserts [text] into the focused editable field via the running service, returning true on
          * success. Returns false when the service is not running or no editable field is focused.
          */
-        fun injectText(text: String): Boolean = instance?.commitTextIntoFocused(text) ?: false
+        fun injectText(text: String, verify: Boolean = true): Boolean =
+            instance?.commitTextIntoFocused(text, verify) ?: false
 
         /** The selection in the focused field, or empty when the service is unavailable. */
         fun selectedText(): String = instance?.selectedTextOfFocused() ?: ""

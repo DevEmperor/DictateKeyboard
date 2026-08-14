@@ -23,7 +23,7 @@ import dev.patrickgold.florisboard.dictate.DictationSink
  */
 class RecognitionSink : DictationSink {
 
-    override fun commitText(text: String): Boolean {
+    override fun commitText(text: String, verify: Boolean): Boolean {
         RecognitionBridge.appendResult(text)
         return true
     }

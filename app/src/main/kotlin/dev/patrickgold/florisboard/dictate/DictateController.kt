@@ -2236,8 +2236,10 @@ object DictateController {
         } else {
             val perChar = perCharDelayMs(prefs.dictate.outputSpeed.get())
             val results = ArrayList<Boolean>(text.length)
-            text.forEach { ch ->
-                results.add(sink.commitText(ch.toString()))
+            // Verify the first character only: it is the one [typedCommitLanded] judges, and a read-back
+            // per character would be hundreds of extra round trips into the host app (issue #277).
+            text.forEachIndexed { i, ch ->
+                results.add(sink.commitText(ch.toString(), verify = i == 0))
                 delay(perChar)
             }
             committed = typedCommitLanded(results)
