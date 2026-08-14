@@ -1198,7 +1198,7 @@
     <string name="dictate__error_transcription_failed">转录失败。</string>
     <string name="dictate__error_unknown">转录时发生未知错误。</string>
     <string name="dictate__error_rewording_failed">改写失败。</string>
-    <string name="dictate__error_overlay_insert_failed">无法插入到此应用。您的录音已保留 —— 使用「重新插入」即可恢复。</string>
+    <string name="dictate__error_overlay_insert_clipboard">该应用没有接受这段文字。它已复制到剪贴板——长按输入框粘贴即可。</string>
     <string name="dictate__error_invalid_api_key">请检查您的 API 密钥</string>
     <string name="dictate__error_quota_exceeded">已达到配额或限额</string>
     <string name="dictate__error_content_size_limit">录音过长或过大</string>

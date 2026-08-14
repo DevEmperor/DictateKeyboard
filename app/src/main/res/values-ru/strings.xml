@@ -1206,7 +1206,7 @@
     <string name="dictate__error_transcription_failed">Не удалось выполнить транскрибирование.</string>
     <string name="dictate__error_unknown">Неизвестная ошибка при транскрибировании.</string>
     <string name="dictate__error_rewording_failed">Не удалось переформулировать.</string>
-    <string name="dictate__error_overlay_insert_failed">Не удалось вставить в это приложение. Ваша запись сохранена — используйте «Вставить снова», чтобы восстановить её.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Это приложение не приняло текст. Он в буфере обмена — нажмите и удерживайте поле, затем вставьте.</string>
     <string name="dictate__error_invalid_api_key">Проверьте свой ключ API</string>
     <string name="dictate__error_quota_exceeded">Достигнута квота или лимит</string>
     <string name="dictate__error_content_size_limit">Запись слишком длинная или большая</string>

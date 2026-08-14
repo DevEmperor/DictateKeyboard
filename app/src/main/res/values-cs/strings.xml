@@ -1217,7 +1217,7 @@
     <string name="dictate__error_transcription_failed">Přepis selhal.</string>
     <string name="dictate__error_unknown">Neznámá chyba při přepisu.</string>
     <string name="dictate__error_rewording_failed">Přeformulování selhalo.</string>
-    <string name="dictate__error_overlay_insert_failed">Nepodařilo se vložit do této aplikace. Vaše nahrávka je zachována — pro obnovení použijte „Vložit znovu“.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Tato aplikace text nepřijala. Je ve schránce — podržte pole a vložte ho.</string>
     <string name="dictate__error_invalid_api_key">Zkontrolujte svůj klíč API</string>
     <string name="dictate__error_quota_exceeded">Dosažen limit nebo kvóta</string>
     <string name="dictate__error_content_size_limit">Nahrávka je příliš dlouhá nebo velká</string>

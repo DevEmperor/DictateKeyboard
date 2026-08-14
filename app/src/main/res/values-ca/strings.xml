@@ -1078,7 +1078,7 @@
     <string name="dictate__error_transcription_failed">Ha fallat la transcripció.</string>
     <string name="dictate__error_unknown">Error desconegut durant la transcripció.</string>
     <string name="dictate__error_rewording_failed">Ha fallat la reformulació.</string>
-    <string name="dictate__error_overlay_insert_failed">No s\'ha pogut inserir en aquesta aplicació. La teva gravació s\'ha conservat: fes servir «Torna a inserir» per recuperar-la.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Aquesta aplicació no ha acceptat el text. És al porta-retalls: manteniu premut el camp i enganxeu-lo.</string>
     <string name="dictate__error_invalid_api_key">Comprova la teva clau d\'API</string>
     <string name="dictate__error_quota_exceeded">Quota o límit assolit</string>
     <string name="dictate__error_content_size_limit">Gravació massa llarga o massa gran</string>

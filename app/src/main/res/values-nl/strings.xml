@@ -1102,7 +1102,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_transcription_failed">Transcriptie mislukt.</string>
     <string name="dictate__error_unknown">Onbekende fout tijdens de transcriptie.</string>
     <string name="dictate__error_rewording_failed">Herformulering mislukt.</string>
-    <string name="dictate__error_overlay_insert_failed">Kan niet invoegen in deze app. Je opname is bewaard — gebruik „Opnieuw invoegen” om deze te herstellen.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Deze app accepteerde de tekst niet. Hij staat op het klembord — houd het veld ingedrukt en plak.</string>
     <string name="dictate__error_invalid_api_key">Controleer je API-sleutel</string>
     <string name="dictate__error_quota_exceeded">Quotum of limiet bereikt</string>
     <string name="dictate__error_content_size_limit">Opname te lang of te groot</string>

@@ -1080,7 +1080,7 @@
     <string name="dictate__error_transcription_failed">Échec de la transcription.</string>
     <string name="dictate__error_unknown">Erreur inconnue lors de la transcription.</string>
     <string name="dictate__error_rewording_failed">Échec de la reformulation.</string>
-    <string name="dictate__error_overlay_insert_failed">Impossible d\'insérer dans cette application. Votre enregistrement est conservé — utilisez « Réinsérer » pour le récupérer.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Cette application n\'a pas accepté le texte. Il est dans le presse-papiers : appuyez longuement sur le champ et collez.</string>
     <string name="dictate__error_invalid_api_key">Vérifiez votre clé d\'API</string>
     <string name="dictate__error_quota_exceeded">Quota ou limite atteint</string>
     <string name="dictate__error_content_size_limit">Enregistrement trop long ou trop volumineux</string>

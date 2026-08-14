@@ -1135,7 +1135,7 @@
     <string name="dictate__error_transcription_failed">文字起こしに失敗しました。</string>
     <string name="dictate__error_unknown">文字起こし中に不明なエラーが発生しました。</string>
     <string name="dictate__error_rewording_failed">言い換えに失敗しました。</string>
-    <string name="dictate__error_overlay_insert_failed">このアプリに挿入できませんでした。録音は保持されています。「再挿入」で復元してください。</string>
+    <string name="dictate__error_overlay_insert_clipboard">このアプリはテキストを受け付けませんでした。クリップボードにあります — 入力欄を長押しして貼り付けてください。</string>
     <string name="dictate__error_invalid_api_key">APIキーを確認してください</string>
     <string name="dictate__error_quota_exceeded">クォータまたは上限に達しました</string>
     <string name="dictate__error_content_size_limit">録音が長すぎるか大きすぎます</string>

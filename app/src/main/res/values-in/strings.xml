@@ -1158,7 +1158,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_transcription_failed">Transkripsi gagal.</string>
     <string name="dictate__error_unknown">Kesalahan tidak diketahui saat transkripsi.</string>
     <string name="dictate__error_rewording_failed">Penyusunan ulang gagal.</string>
-    <string name="dictate__error_overlay_insert_failed">Tidak dapat menyisipkan ke aplikasi ini. Rekaman Anda tetap tersimpan — gunakan „Sisipkan ulang” untuk memulihkannya.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Aplikasi ini tidak menerima teksnya. Teks ada di papan klip — tekan lama kolomnya lalu tempel.</string>
     <string name="dictate__error_invalid_api_key">Periksa kunci API Anda</string>
     <string name="dictate__error_quota_exceeded">Kuota atau batas tercapai</string>
     <string name="dictate__error_content_size_limit">Rekaman terlalu panjang atau terlalu besar</string>

@@ -1538,7 +1538,7 @@
     <string name="dictate__error_transcription_failed" comment="Generic transcription failure">Transcription failed.</string>
     <string name="dictate__error_unknown" comment="Unknown transcription error">Unknown error during transcription.</string>
     <string name="dictate__error_rewording_failed" comment="Generic rewording (GPT) failure">Rewording failed.</string>
-    <string name="dictate__error_overlay_insert_failed" comment="Floating-button error: the app's text field didn't accept the dictation; the text is kept for Reinsert">Couldn\'t insert into this app. Your recording is kept — use Reinsert to recover it.</string>
+    <string name="dictate__error_overlay_insert_clipboard" comment="Floating-button error: the app's text field didn't accept the dictation, so it was put on the clipboard to paste manually">This app wouldn\'t take the text. It\'s on your clipboard — long-press the field and paste.</string>
 
     <!-- Dictate specific provider errors (roadmap 1.12). Kept short to fit the Smartbar; tap shows the full provider detail. -->
     <string name="dictate__error_invalid_api_key" comment="Short error: the API key is missing, wrong or rejected">Check your API key</string>

@@ -1631,10 +1631,16 @@ object DictateController {
             val committed = commitOutput(appContext, outputText)
             if (committed) latencyTrace?.let { logLatency(it, "outputCommitted") }
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
-            // (Gemini's Compose box, WebViews). Don't flash a false green check — stash the text so the
-            // user can recover it via Reinsert, and surface an error instead of "success".
+            // (Gemini's Compose box, WebViews). Don't flash a false green check — surface an error, and
+            // put the text somewhere the user can actually reach.
             if (!committed && outputTarget == OutputTarget.OVERLAY && outputText.isNotEmpty()) {
                 rememberLastDictation(outputText)
+                // The clipboard is the recovery route, and only here (issue #277). The old message sent
+                // people to "Reinsert", which lives in the Dictate keyboard — unreachable for exactly the
+                // people who hit this, since they are using the floating button with another keyboard.
+                // Copying on failure alone keeps the clipboard (and the Samsung toast) out of the way of
+                // everyone whose insert works; the always-copy setting (#214) stays what it is.
+                copyToSystemClipboard(appContext, outputText)
                 if (capture?.isReplay != true) {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
                     if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
@@ -1642,7 +1648,7 @@ object DictateController {
                 recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
                 discardRetainedAudio()
                 _state.value = UiState.Error(
-                    message = appContext.getString(R.string.dictate__error_overlay_insert_failed),
+                    message = appContext.getString(R.string.dictate__error_overlay_insert_clipboard),
                 )
                 return
             }
@@ -2207,18 +2213,35 @@ object DictateController {
             committed = sink.commitText(text)
         } else {
             val perChar = perCharDelayMs(prefs.dictate.outputSpeed.get())
-            committed = true
+            val results = ArrayList<Boolean>(text.length)
             text.forEach { ch ->
-                if (!sink.commitText(ch.toString())) committed = false
+                results.add(sink.commitText(ch.toString()))
                 delay(perChar)
             }
+            committed = typedCommitLanded(results)
         }
-        // No auto-enter on an empty result (e.g. silence): don't fire a stray newline into the field (#124).
-        if (prefs.dictate.autoEnter.get()) {
+        // No auto-enter on an empty result (e.g. silence): don't fire a stray newline into the field (#124),
+        // and none when nothing landed either (#278) — an Enter on a swallowed insert sends an empty message.
+        if (committed && prefs.dictate.autoEnter.get()) {
             sink.performEnter()
         }
         return committed
     }
+
+    /**
+     * Whether a character-by-character commit counts as having landed. **The first write decides.**
+     *
+     * Latching on any single refusal (issue #277) turned one flake out of hundreds into a total failure:
+     * a 400-character dictation makes 400 separate calls into the accessibility service, and a scroll, a
+     * recomposition or the host app rebuilding its field is enough for one of them to come back false —
+     * whereupon the user was told "Couldn't insert into this app" while the text sat visibly in the field.
+     * Those false alarms are the reason read-back verification was ruled out for the insert path, so they
+     * are worth removing at the source.
+     *
+     * If the field took the *first* character it accepts our writes; what follows is the app's business.
+     * An empty result cannot fail, hence true.
+     */
+    internal fun typedCommitLanded(writeResults: List<Boolean>): Boolean = writeResults.firstOrNull() ?: true
 
     /** Per-character delay for the typewriter output: speed 1 → 100 ms … 5 → 20 ms … 10 → 10 ms (legacy mapping). */
     private fun perCharDelayMs(speed: Int): Long = (100L / speed.coerceIn(1, 10)).coerceAtLeast(1L)

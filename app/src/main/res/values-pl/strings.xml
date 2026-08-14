@@ -1218,7 +1218,7 @@
     <string name="dictate__error_transcription_failed">Transkrypcja nie powiodła się.</string>
     <string name="dictate__error_unknown">Nieznany błąd podczas transkrypcji.</string>
     <string name="dictate__error_rewording_failed">Przeformułowanie nie powiodło się.</string>
-    <string name="dictate__error_overlay_insert_failed">Nie udało się wstawić do tej aplikacji. Twoje nagranie zostało zachowane — użyj „Wstaw ponownie”, aby je odzyskać.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Ta aplikacja nie przyjęła tekstu. Jest w schowku — przytrzymaj pole i wklej.</string>
     <string name="dictate__error_invalid_api_key">Sprawdź swój klucz API</string>
     <string name="dictate__error_quota_exceeded">Osiągnięto limit lub przydział</string>
     <string name="dictate__error_content_size_limit">Nagranie zbyt długie lub zbyt duże</string>

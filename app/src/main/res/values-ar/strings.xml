@@ -1061,7 +1061,7 @@
     <string name="dictate__error_transcription_failed">فشل التفريغ النصي.</string>
     <string name="dictate__error_unknown">خطأ غير معروف أثناء التفريغ النصي.</string>
     <string name="dictate__error_rewording_failed">فشلت إعادة الصياغة.</string>
-    <string name="dictate__error_overlay_insert_failed">تعذّر الإدراج في هذا التطبيق. تم الاحتفاظ بتسجيلك — استخدم «إعادة الإدراج» لاستعادته.</string>
+    <string name="dictate__error_overlay_insert_clipboard">لم يقبل هذا التطبيق النص. تم نسخه إلى الحافظة — اضغط مطولاً على الحقل والصقه.</string>
     <string name="dictate__error_invalid_api_key">تحقّق من مفتاح API الخاص بك</string>
     <string name="dictate__error_quota_exceeded">تم بلوغ الحصة أو الحد</string>
     <string name="dictate__error_content_size_limit">التسجيل طويل جدًا أو كبير جدًا</string>

@@ -1146,7 +1146,7 @@
     <string name="dictate__error_transcription_failed">Transkribēšana neizdevās.</string>
     <string name="dictate__error_unknown">Nezināma kļūda transkribēšanas laikā.</string>
     <string name="dictate__error_rewording_failed">Pārformulēšana neizdevās.</string>
-    <string name="dictate__error_overlay_insert_failed">Neizdevās ievietot šajā lietotnē. Jūsu ieraksts ir saglabāts — izmantojiet “Ievietot atkārtoti”, lai to atgūtu.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Šī lietotne tekstu nepieņēma. Tas ir starpliktuvē — turiet lauku un ielīmējiet.</string>
     <string name="dictate__error_invalid_api_key">Pārbaudiet savu API atslēgu</string>
     <string name="dictate__error_quota_exceeded">Sasniegta kvota vai ierobežojums</string>
     <string name="dictate__error_content_size_limit">Ieraksts ir pārāk garš vai liels</string>

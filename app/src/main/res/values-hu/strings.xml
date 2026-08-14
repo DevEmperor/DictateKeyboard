@@ -1201,7 +1201,7 @@
     <string name="dictate__error_transcription_failed">Az átírás sikertelen.</string>
     <string name="dictate__error_unknown">Ismeretlen hiba az átírás során.</string>
     <string name="dictate__error_rewording_failed">Az átfogalmazás sikertelen.</string>
-    <string name="dictate__error_overlay_insert_failed">Nem sikerült beszúrni ebbe az alkalmazásba. A felvételed megmarad — használd az „Újrabeillesztés” funkciót a visszaállításához.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Ez az alkalmazás nem fogadta el a szöveget. A vágólapon van — tartsa nyomva a mezőt és illessze be.</string>
     <string name="dictate__error_invalid_api_key">Ellenőrizze az API-kulcsát</string>
     <string name="dictate__error_quota_exceeded">Kvóta vagy korlát elérve</string>
     <string name="dictate__error_content_size_limit">A felvétel túl hosszú vagy túl nagy</string>

@@ -1050,7 +1050,7 @@
     <string name="dictate__error_transcription_failed">Не вдалося виконати транскрибування.</string>
     <string name="dictate__error_unknown">Невідома помилка під час транскрибування.</string>
     <string name="dictate__error_rewording_failed">Не вдалося переформулювати.</string>
-    <string name="dictate__error_overlay_insert_failed">Не вдалося вставити в цей застосунок. Ваш запис збережено — скористайтеся «Вставити знову», щоб відновити його.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Цей застосунок не прийняв текст. Він у буфері обміну — утримуйте поле й вставте.</string>
     <string name="dictate__error_invalid_api_key">Перевірте свій ключ API</string>
     <string name="dictate__error_quota_exceeded">Досягнуто квоту або ліміт</string>
     <string name="dictate__error_content_size_limit">Запис занадто довгий або великий</string>

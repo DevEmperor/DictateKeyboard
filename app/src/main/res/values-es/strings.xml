@@ -1184,7 +1184,7 @@
     <string name="dictate__error_transcription_failed">Error en la transcripción.</string>
     <string name="dictate__error_unknown">Error desconocido durante la transcripción.</string>
     <string name="dictate__error_rewording_failed">Error en la reformulación.</string>
-    <string name="dictate__error_overlay_insert_failed">No se pudo insertar en esta app. Tu grabación se conserva: usa «Reinsertar» para recuperarla.</string>
+    <string name="dictate__error_overlay_insert_clipboard">Esta aplicación no aceptó el texto. Está en el portapapeles: mantén pulsado el campo y pégalo.</string>
     <string name="dictate__error_invalid_api_key">Comprueba tu clave de API</string>
     <string name="dictate__error_quota_exceeded">Cuota o límite alcanzado</string>
     <string name="dictate__error_content_size_limit">Grabación demasiado larga o grande</string>
