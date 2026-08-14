@@ -31,6 +31,7 @@ import android.os.Bundle
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
+import android.view.inputmethod.EditorInfo
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -546,14 +547,43 @@ class DictateAccessibilityService : AccessibilityService() {
      * Presses the editor action / Enter on the focused field (auto-enter). Uses the proper IME-enter
      * action on Android 11+; on older releases there is no editor-action equivalent, so it falls back
      * to inserting a newline.
+     *
+     * Unlike the keyboard, which dispatches a real key event, this can only *ask* — and an app that
+     * implements no editor action refuses. Returns whether it was accepted (issue #278); the caller
+     * reports rather than pretends.
+     *
+     * The field is resolved the same way [commitTextIntoFocused] resolves it, freshly from the active
+     * window: the plain input-focus lookup used before could return a different node than the one the
+     * text just went into, which is the staleness #161 fixed for the insert but not for Enter.
      */
     private fun performEnterOnFocused(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val node = focusedEditableNode() ?: return false
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return commitTextIntoFocused("\n")
+        val node = activeWindowEditable() ?: focusedEditableNode()
+        if (node != null &&
             node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_IME_ENTER.id)
-        } else {
-            commitTextIntoFocused("\n")
+        ) {
+            return true
         }
+        // Second try through the input connection we already hold — the same call the keyboard path
+        // makes (EditorInstance.performEnterAction). Some fields accept the editor action while
+        // refusing the node action. The action is the one the field itself declares in its imeOptions
+        // (Send in a chat box, Search in a search bar, …); a field declaring none gets nothing, since
+        // guessing one would send a message the writer had not finished.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val method = inputMethod
+            val connection = method?.currentInputConnection
+            val action = method?.currentInputEditorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
+            if (connection != null && action != null &&
+                action != EditorInfo.IME_ACTION_NONE && action != EditorInfo.IME_ACTION_UNSPECIFIED
+            ) {
+                return runCatching {
+                    connection.performEditorAction(action)
+                    true
+                }.getOrDefault(false)
+            }
+        }
+        flogDebug { "auto-enter refused by the focused field" }
+        return false
     }
 
     /** Clamps a selection index into [0, length]; a missing index (-1) maps to the end (append). */

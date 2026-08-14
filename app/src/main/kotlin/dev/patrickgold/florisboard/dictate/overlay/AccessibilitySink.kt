@@ -30,9 +30,7 @@ class AccessibilitySink : DictationSink {
         DictateAccessibilityService.selectAll()
     }
 
-    override fun performEnter() {
-        DictateAccessibilityService.performEnter()
-    }
+    override fun performEnter(): Boolean = DictateAccessibilityService.performEnter()
 
     override fun deleteLastText(text: String): Boolean =
         DictateAccessibilityService.deleteLastText(text)

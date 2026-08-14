@@ -43,8 +43,12 @@ interface DictationSink {
     /** Selects the whole field so a subsequent [commitText] replaces its content. */
     fun selectAll()
 
-    /** Presses Enter / triggers the editor action (auto-enter, roadmap 10.1). */
-    fun performEnter()
+    /**
+     * Presses Enter / triggers the editor action (auto-enter, roadmap 10.1). Returns whether the field
+     * accepted it — the keyboard dispatches a real key event and always does, while the overlay can only
+     * *ask* the field, and an app that implements no editor action simply refuses (issue #278).
+     */
+    fun performEnter(): Boolean
 
     /**
      * Removes the last inserted [text] from the field again (undo, issue #133). Only deletes when the
@@ -90,11 +94,13 @@ class ImeDictationSink(context: Context) : DictationSink {
         editorInstance.performClipboardSelectAll()
     }
 
-    override fun performEnter() {
+    override fun performEnter(): Boolean {
         val keyboardManager by appContext.keyboardManager()
         // Dispatches a real Enter key event so it reuses the keyboard's full enter logic (editor action,
-        // newline, …) rather than committing a literal "\n".
+        // newline, …) rather than committing a literal "\n". A key event is delivered unconditionally,
+        // so unlike the overlay there is nothing here that can refuse it.
         keyboardManager.inputEventDispatcher.sendDownUp(EnterKeyData)
+        return true
     }
 
     override fun deleteLastText(text: String): Boolean {

@@ -34,7 +34,7 @@ class RecognitionSink : DictationSink {
 
     override fun selectAll() = Unit
 
-    override fun performEnter() = Unit
+    override fun performEnter(): Boolean = true
 
     override fun deleteLastText(text: String): Boolean = false
 
