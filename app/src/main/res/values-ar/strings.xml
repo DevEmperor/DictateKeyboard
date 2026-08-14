@@ -1235,6 +1235,7 @@
     <string name="dictate__style_prompt_custom_placeholder">مثلاً: مرحباً. شكراً جزيلاً.</string>
     <string name="dictate__style_prompt_info_title">عرض المثال الافتراضي</string>
     <string name="dictate__style_prompt_info_description">تُرسَل هذه الجملة النموذجية مع كل عملية تفريغ نصي لتوجيه النموذج نحو الأحرف الكبيرة وعلامات الترقيم الصحيحة. وتتكيّف تلقائيًا مع اللغة التي تُملي بها.</string>
+    <string name="dictate__style_prompt_info_none">لا توجد بعد جملة مثال لهذه اللغة، لذا لا يتم إرسال أي جملة. وتظل عملية التفريغ تتبع اللغة التي اخترتها.</string>
     <string name="dictate__custom_words_title">كلمات مخصّصة</string>
     <string name="dictate__custom_words_summary_empty">أضِف أسماء أو مصطلحات تقنية لكتابتها بشكل صحيح</string>
     <string name="dictate__custom_words_placeholder">مثال: FlorisBoard، Kubernetes، Renée، OAuth، Anthropic</string>

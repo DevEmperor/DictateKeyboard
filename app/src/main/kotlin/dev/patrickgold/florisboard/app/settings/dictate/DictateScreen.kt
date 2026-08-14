@@ -279,7 +279,10 @@ fun DictateFormattingScreen() = FlorisScreen {
             entries = promptSelectionEntries(),
             infoTitle = stringRes(R.string.dictate__style_prompt_info_title),
             infoDescription = stringRes(R.string.dictate__style_prompt_info_description),
-            infoPromptText = DictatePromptDefaults.punctuationPromptFor(activeLang),
+            // Null for a language that has no example sentence: since issue #275 none is sent at all
+            // rather than an English one, and the info box should say so instead of showing nothing.
+            infoPromptText = DictatePromptDefaults.punctuationPromptFor(activeLang)
+                ?: stringRes(R.string.dictate__style_prompt_info_none),
         )
         if (styleSelection == DictatePromptDefaults.SELECTION_CUSTOM) {
             TextInputPreference(

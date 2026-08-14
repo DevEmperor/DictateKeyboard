@@ -1160,6 +1160,7 @@
     <string name="dictate__style_prompt_custom_placeholder">es. Ciao. Grazie mille.</string>
     <string name="dictate__style_prompt_info_title">Vedi esempio predefinito</string>
     <string name="dictate__style_prompt_info_description">Questa frase di esempio viene inviata con ogni trascrizione per orientare il modello verso un uso corretto di maiuscole e punteggiatura. Si adatta automaticamente alla lingua in cui detti.</string>
+    <string name="dictate__style_prompt_info_none">Questa lingua non ha ancora una frase di esempio, quindi non ne viene inviata alcuna. La trascrizione segue comunque la lingua che hai scelto.</string>
     <string name="dictate__custom_words_title">Parole personalizzate</string>
     <string name="dictate__custom_words_summary_empty">Aggiungi nomi o termini tecnici da scrivere correttamente</string>
     <string name="dictate__custom_words_placeholder">es. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

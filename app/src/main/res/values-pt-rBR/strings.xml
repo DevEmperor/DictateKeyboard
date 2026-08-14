@@ -1185,6 +1185,7 @@
     <string name="dictate__style_prompt_custom_placeholder">ex.: Olá. Muito obrigado.</string>
     <string name="dictate__style_prompt_info_title">Ver exemplo padrão</string>
     <string name="dictate__style_prompt_info_description">Esta frase de exemplo é enviada com cada transcrição para orientar o modelo ao uso correto de maiúsculas e pontuação. Ela se adapta automaticamente ao idioma em que você dita.</string>
+    <string name="dictate__style_prompt_info_none">Este idioma ainda não tem uma frase de exemplo, então nenhuma é enviada. A transcrição continua seguindo o idioma que você selecionou.</string>
     <string name="dictate__custom_words_title">Palavras personalizadas</string>
     <string name="dictate__custom_words_summary_empty">Adicione nomes ou termos técnicos para escrevê-los corretamente</string>
     <string name="dictate__custom_words_placeholder">ex.: FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

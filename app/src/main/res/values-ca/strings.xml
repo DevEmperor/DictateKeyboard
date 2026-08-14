@@ -1252,6 +1252,7 @@
     <string name="dictate__style_prompt_custom_placeholder">p. ex. Hola. Moltes gràcies.</string>
     <string name="dictate__style_prompt_info_title">Mostra l\'exemple per defecte</string>
     <string name="dictate__style_prompt_info_description">Aquesta frase d\'exemple s\'envia amb cada transcripció per orientar el model cap a un ús correcte de majúscules i puntuació. S\'adapta automàticament a l\'idioma en què dictes.</string>
+    <string name="dictate__style_prompt_info_none">Aquesta llengua encara no té cap frase d\'exemple, així que no se n\'envia cap. La transcripció continua seguint la llengua que heu triat.</string>
     <string name="dictate__custom_words_title">Paraules personalitzades</string>
     <string name="dictate__custom_words_summary_empty">Afegeix noms o termes tècnics perquè s\'escriguin correctament</string>
     <string name="dictate__custom_words_placeholder">p. ex. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

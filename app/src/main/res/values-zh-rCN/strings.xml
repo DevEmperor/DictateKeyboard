@@ -1372,6 +1372,7 @@
     <string name="dictate__style_prompt_custom_placeholder">例如：你好。非常感谢。</string>
     <string name="dictate__style_prompt_info_title">查看默认示例</string>
     <string name="dictate__style_prompt_info_description">该示例句会随每次转录一起发送，以引导模型使用正确的大小写和标点。它会自动适应您听写所用的语言。</string>
+    <string name="dictate__style_prompt_info_none">该语言还没有示例句子，因此不会发送任何示例。转写仍会遵循你选择的语言。</string>
     <string name="dictate__custom_words_title">自定义词汇</string>
     <string name="dictate__custom_words_summary_empty">添加姓名或专业术语以正确拼写</string>
     <string name="dictate__custom_words_placeholder">例如：FlorisBoard、Kubernetes、Renée、OAuth、Anthropic</string>

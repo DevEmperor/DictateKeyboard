@@ -1332,6 +1332,7 @@
     <string name="dictate__style_prompt_custom_placeholder">z. B. Hallo. Vielen Dank.</string>
     <string name="dictate__style_prompt_info_title">Standardbeispiel ansehen</string>
     <string name="dictate__style_prompt_info_description">Dieser Beispielsatz wird mit jeder Transkription gesendet, um das Modell zu korrekter Groß- und Kleinschreibung sowie Zeichensetzung zu bewegen. Er passt sich automatisch an die Sprache an, in der du diktierst.</string>
+    <string name="dictate__style_prompt_info_none">Für diese Sprache gibt es noch keinen Beispielsatz, deshalb wird keiner mitgesendet. Die Transkription richtet sich weiterhin nach der gewählten Sprache.</string>
     <string name="dictate__custom_words_title">Eigene Wörter</string>
     <string name="dictate__custom_words_summary_empty">Namen oder Fachbegriffe hinzufügen, die korrekt geschrieben werden sollen</string>
     <string name="dictate__custom_words_placeholder">z. B. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

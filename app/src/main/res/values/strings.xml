@@ -1871,6 +1871,7 @@
     <string name="dictate__style_prompt_custom_placeholder" comment="Placeholder for the custom style prompt field">e.g. Hello. Thank you very much.</string>
     <string name="dictate__style_prompt_info_title" comment="Row that reveals the built-in default style prompt">View default example</string>
     <string name="dictate__style_prompt_info_description" comment="Explanation shown above the default style prompt example">This example sentence is sent with each transcription to nudge the model towards correct capitalization and punctuation. It adapts automatically to the language you dictate in.</string>
+    <string name="dictate__style_prompt_info_none" comment="Shown in the style-prompt info box for a language that has no example sentence, so none is sent (issue #275)">This language has no example sentence yet, so none is sent. The transcription still follows the language you selected.</string>
 
     <!-- Dictate custom words / vocabulary (appended to the transcription prompt, roadmap 11.12) -->
     <string name="dictate__custom_words_title" comment="Setting: custom vocabulary added to the transcription prompt so names/jargon are spelled correctly">Custom words</string>

@@ -1375,6 +1375,7 @@
     <string name="dictate__style_prompt_custom_placeholder">pl. Jó napot. Nagyon köszönöm.</string>
     <string name="dictate__style_prompt_info_title">Alapértelmezett példa megtekintése</string>
     <string name="dictate__style_prompt_info_description">Ezt a példamondatot minden átírással elküldjük, hogy a modellt a helyes nagybetűk és írásjelek felé terelje. Automatikusan alkalmazkodik ahhoz a nyelvhez, amelyen diktál.</string>
+    <string name="dictate__style_prompt_info_none">Ehhez a nyelvhez még nincs mintamondat, ezért nem kerül elküldésre. Az átirat továbbra is a kiválasztott nyelvet követi.</string>
     <string name="dictate__custom_words_title">Egyéni szavak</string>
     <string name="dictate__custom_words_summary_empty">Adjon hozzá neveket vagy szakkifejezéseket a helyes írásmódhoz</string>
     <string name="dictate__custom_words_placeholder">pl. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

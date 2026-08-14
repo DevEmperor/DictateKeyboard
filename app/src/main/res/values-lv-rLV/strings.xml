@@ -1320,6 +1320,7 @@
     <string name="dictate__style_prompt_custom_placeholder">piem. Sveiki. Liels paldies.</string>
     <string name="dictate__style_prompt_info_title">Skatīt noklusējuma piemēru</string>
     <string name="dictate__style_prompt_info_description">Šis teikuma piemērs tiek nosūtīts ar katru transkripciju, lai pamudinātu modeli pareizi lietot lielos burtus un pieturzīmes. Tas automātiski pielāgojas valodai, kurā diktējat.</string>
+    <string name="dictate__style_prompt_info_none">Šai valodai vēl nav parauga teikuma, tāpēc neviens netiek nosūtīts. Transkripcija joprojām seko jūsu izvēlētajai valodai.</string>
     <string name="dictate__custom_words_title">Pielāgoti vārdi</string>
     <string name="dictate__custom_words_summary_empty">Pievienojiet vārdus vai tehniskos terminus, lai tie tiktu pareizi uzrakstīti</string>
     <string name="dictate__custom_words_placeholder">piem. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

@@ -1224,6 +1224,7 @@
     <string name="dictate__style_prompt_custom_placeholder">напр. Вітаю. Щиро дякую.</string>
     <string name="dictate__style_prompt_info_title">Показати приклад за замовчуванням</string>
     <string name="dictate__style_prompt_info_description">Це зразкове речення надсилається з кожною транскрипцією, щоб спрямувати модель до правильного вживання великих літер і пунктуації. Воно автоматично підлаштовується під мову, якою ви диктуєте.</string>
+    <string name="dictate__style_prompt_info_none">Для цієї мови ще немає прикладу речення, тому жодне не надсилається. Транскрипція й далі керується обраною вами мовою.</string>
     <string name="dictate__custom_words_title">Власні слова</string>
     <string name="dictate__custom_words_summary_empty">Додайте імена або технічні терміни для правильного написання</string>
     <string name="dictate__custom_words_placeholder">напр. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

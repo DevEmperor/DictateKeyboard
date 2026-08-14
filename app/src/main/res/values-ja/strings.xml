@@ -1309,6 +1309,7 @@
     <string name="dictate__style_prompt_custom_placeholder">例：こんにちは。どうもありがとうございます。</string>
     <string name="dictate__style_prompt_info_title">既定の例を表示</string>
     <string name="dictate__style_prompt_info_description">この例文は、正しい大文字使用と句読点へモデルを導くために、文字起こしごとに送信されます。音声入力する言語に自動的に適応します。</string>
+    <string name="dictate__style_prompt_info_none">この言語にはまだ例文がないため、何も送信されません。文字起こしは選択した言語に従います。</string>
     <string name="dictate__custom_words_title">カスタム単語</string>
     <string name="dictate__custom_words_summary_empty">正しく表記するために名前や専門用語を追加します</string>
     <string name="dictate__custom_words_placeholder">例: FlorisBoard、Kubernetes、Renée、OAuth、Anthropic</string>

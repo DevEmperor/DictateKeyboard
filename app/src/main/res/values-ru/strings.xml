@@ -1380,6 +1380,7 @@
     <string name="dictate__style_prompt_custom_placeholder">напр. Здравствуйте. Большое спасибо.</string>
     <string name="dictate__style_prompt_info_title">Показать пример по умолчанию</string>
     <string name="dictate__style_prompt_info_description">Это образцовое предложение отправляется с каждой транскрипцией, чтобы направить модель к правильному использованию заглавных букв и пунктуации. Оно автоматически подстраивается под язык, на котором вы диктуете.</string>
+    <string name="dictate__style_prompt_info_none">Для этого языка пока нет примера предложения, поэтому он не отправляется. Расшифровка по-прежнему следует выбранному вами языку.</string>
     <string name="dictate__custom_words_title">Пользовательские слова</string>
     <string name="dictate__custom_words_summary_empty">Добавьте имена или технические термины для правильного написания</string>
     <string name="dictate__custom_words_placeholder">напр. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

@@ -171,25 +171,76 @@ object DictatePromptDefaults {
     }
 
     /**
-     * Returns a short example sentence (in [languageCode]) that demonstrates capitalization and
-     * punctuation. Sent as the transcription `prompt` so the model mirrors that style. Falls back to
-     * the English sentence for unknown / "detect" codes (and tries the base language for `xx-YY`).
+     * A short example sentence in [languageCode] demonstrating capitalization and punctuation, or null
+     * when there is none for that language.
+     *
+     * Sent to the transcription model as the `prompt`, which Whisper treats as *preceding context* — it
+     * biases not only the punctuation style but the output language itself, most strongly on short audio.
+     * So a sentence in the wrong language is not a small miss: it argues against the `language` parameter
+     * sent alongside it, and on a two-second clip it can win.
+     *
+     * That is what issue #275 was. Croatian was added to the language catalog by #252 and to nothing
+     * else, so `hr` missed here and fell through to the English sentence — a Croatian dictation went out
+     * as `language=hr` with "Hello. Thank you very much." for context, and came back partly in English.
+     *
+     * Hence null rather than an English fallback: no prompt costs a little punctuation bias, the wrong
+     * prompt costs the language. "detect" gets none either — with no known language there is nothing to
+     * give an example in, and the English one would bias auto-detection towards English.
      */
-    fun punctuationPromptFor(languageCode: String?): String {
-        if (languageCode.isNullOrEmpty() || languageCode == "detect") return PUNCTUATION_CAPITALIZATION
+    fun punctuationPromptFor(languageCode: String?): String? {
+        if (languageCode.isNullOrEmpty() || languageCode == "detect") return null
         val normalized = languageCode.lowercase(Locale.ROOT)
         PUNCTUATION_BY_LANGUAGE[normalized]?.let { return it }
         val sep = normalized.indexOf('-')
         if (sep > 0) {
             PUNCTUATION_BY_LANGUAGE[normalized.substring(0, sep)]?.let { return it }
         }
-        return PUNCTUATION_CAPITALIZATION
+        return null
     }
 
     // Per-language equivalents of [PUNCTUATION_CAPITALIZATION] — a plain greeting + thanks, demonstrating
     // capitalization and sentence punctuation in each script (see the #77 note above). English uses the
     // constant so the two stay in sync.
     private val PUNCTUATION_BY_LANGUAGE: Map<String, String> = mapOf(
+        "yo" to "Bawo. Ẹ ṣeun púpọ̀.",
+        "yi" to "שלום עליכם. אַ גרויסן דאַנק.",
+        "uz" to "Salom. Katta rahmat.",
+        "tk" to "Salam. Köp sag boluň.",
+        "te" to "నమస్కారం. చాలా ధన్యవాదాలు.",
+        "tt" to "Исәнмесез. Зур рәхмәт.",
+        "tg" to "Салом. Ташаккури зиёд.",
+        "tl" to "Kumusta. Maraming salamat.",
+        "su" to "Halo. Hatur nuhun pisan.",
+        "so" to "Salaan. Aad baad u mahadsan tahay.",
+        "si" to "ආයුබෝවන්. බොහොම ස්තූතියි.",
+        "ps" to "سلام. ډېره مننه.",
+        "oc" to "Bonjorn. Mercé plan.",
+        "no" to "Hei. Tusen takk.",
+        "mn" to "Сайн байна уу. Маш их баярлалаа.",
+        "mi" to "Kia ora. Ngā mihi nui.",
+        "mt" to "Bonġu. Grazzi ħafna.",
+        "ml" to "നമസ്കാരം. വളരെ നന്ദി.",
+        "ms" to "Helo. Terima kasih banyak.",
+        "mg" to "Salama. Misaotra betsaka.",
+        "lb" to "Moien. Villmools merci.",
+        "la" to "Salve. Gratias tibi ago.",
+        "lo" to "ສະບາຍດີ. ຂອບໃຈຫຼາຍ.",
+        "km" to "សួស្តី។ អរគុណច្រើន។",
+        "kn" to "ನಮಸ್ಕಾರ. ತುಂಬಾ ಧನ್ಯವಾದಗಳು.",
+        "jw" to "Halo. Matur nuwun sanget.",
+        "is" to "Halló. Kærar þakkir.",
+        "haw" to "Aloha. Mahalo nui loa.",
+        "ha" to "Sannu. Na gode sosai.",
+        "ht" to "Bonjou. Mèsi anpil.",
+        "gu" to "નમસ્તે. ખૂબ ખૂબ આભાર.",
+        "ka" to "გამარჯობა. დიდი მადლობა.",
+        "fo" to "Hey. Túsund takk.",
+        "hr" to "Bok. Hvala lijepa.",
+        "my" to "မင်္ဂလာပါ။ ကျေးဇူးအများကြီးတင်ပါတယ်။",
+        "br" to "Demat. Trugarez vras.",
+        "bs" to "Zdravo. Hvala vam puno.",
+        "as" to "নমস্কাৰ। বহুত ধন্যবাদ।",
+        "am" to "ሰላም። በጣም አመሰግናለሁ።",
         "af" to "Hallo. Baie dankie.",
         "sq" to "Përshëndetje. Shumë faleminderit.",
         "ar" to "مرحباً. شكراً جزيلاً.",

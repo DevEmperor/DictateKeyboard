@@ -33,7 +33,7 @@ class StylePromptEchoTest : FunSpec({
     }
 
     test("works for a non-English prompt (compared against the sent sentence)") {
-        val de = DictatePromptDefaults.punctuationPromptFor("de")
+        val de = requireNotNull(DictatePromptDefaults.punctuationPromptFor("de"))
         DictatePromptDefaults.looksLikeStylePromptEcho(de, de) shouldBe true
     }
 

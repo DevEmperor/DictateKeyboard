@@ -1332,6 +1332,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__style_prompt_custom_placeholder">mis. Halo. Terima kasih banyak.</string>
     <string name="dictate__style_prompt_info_title">Lihat contoh bawaan</string>
     <string name="dictate__style_prompt_info_description">Contoh kalimat ini dikirim bersama setiap transkripsi untuk mengarahkan model ke huruf kapital dan tanda baca yang benar. Ini menyesuaikan secara otomatis dengan bahasa yang Anda gunakan untuk mendikte.</string>
+    <string name="dictate__style_prompt_info_none">Bahasa ini belum memiliki kalimat contoh, jadi tidak ada yang dikirim. Transkripsi tetap mengikuti bahasa yang Anda pilih.</string>
     <string name="dictate__custom_words_title">Kata kustom</string>
     <string name="dictate__custom_words_summary_empty">Tambahkan nama atau istilah teknis agar dieja dengan benar</string>
     <string name="dictate__custom_words_placeholder">mis. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

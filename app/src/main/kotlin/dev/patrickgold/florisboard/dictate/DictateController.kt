@@ -3237,6 +3237,9 @@ object DictateController {
             DictateLanguages.englishNameFor(langCode)?.takeIf { it.isNotBlank() }
                 ?.let { parts.add("The audio is spoken in $it.") }
         }
+        // Everything from here on is an *instruction*, and the wrapper this ends up inside tells the
+        // model they "may change the wording or even the language".
+        val instructionsFrom = parts.size
         transcriptionStylePrompt()?.takeIf { it.isNotBlank() }?.let { parts.add(it) }
         // Formatting/rewording is folded in only when the user has rewording enabled (mirrors
         // postProcessTranscript's gating), so single-call output matches the two-call output.
@@ -3248,12 +3251,17 @@ object DictateController {
                 promptsDb(context).getAll().filter { it.autoApply }
             }
             autoApply.forEach { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { parts.add(it) } }
-            // The same anchor the two-call path gets from REWORDING_BE_PRECISE (issue #268). The
-            // prompts folded in above are seeded in the device's locale, so on a Ukrainian phone a
-            // "fix my grammar" instruction is a Ukrainian sentence — and without this line the model
-            // answers in the language it was addressed in rather than the one that was spoken.
-            if (autoApply.isNotEmpty()) parts.add(DictatePromptDefaults.KEEP_SPOKEN_LANGUAGE)
         }
+        // The same anchor the two-call path gets from REWORDING_BE_PRECISE (issue #268). The prompts
+        // folded in above are seeded in the device's locale, so on a Ukrainian phone a "fix my grammar"
+        // instruction is a Ukrainian sentence — and without this line the model answers in the language
+        // it was addressed in rather than the one that was spoken.
+        //
+        // Anchored for *any* folded instruction, not just auto-apply prompts (issue #275): the style
+        // prompt is one too, and given a wrapper that invites changing the language, an example sentence
+        // is enough to pull the output towards its own. It does not fight an explicit "translate to X" —
+        // the anchor defers to one that asks.
+        if (parts.size > instructionsFrom) parts.add(DictatePromptDefaults.KEEP_SPOKEN_LANGUAGE)
         return parts.joinToString("\n\n")
     }
 

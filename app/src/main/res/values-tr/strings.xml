@@ -1355,6 +1355,7 @@
     <string name="dictate__style_prompt_custom_placeholder">örn. Merhaba. Çok teşekkür ederim.</string>
     <string name="dictate__style_prompt_info_title">Varsayılan örneği görüntüle</string>
     <string name="dictate__style_prompt_info_description">Bu örnek cümle, modeli doğru büyük harf ve noktalamaya yönlendirmek için her yazıya dökme ile birlikte gönderilir. Dikte ettiğiniz dile otomatik olarak uyum sağlar.</string>
+    <string name="dictate__style_prompt_info_none">Bu dil için henüz örnek cümle yok, bu yüzden hiçbiri gönderilmiyor. Deşifre yine seçtiğiniz dili izler.</string>
     <string name="dictate__custom_words_title">Özel sözcükler</string>
     <string name="dictate__custom_words_summary_empty">Doğru yazılması için adlar veya teknik terimler ekleyin</string>
     <string name="dictate__custom_words_placeholder">örn. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>

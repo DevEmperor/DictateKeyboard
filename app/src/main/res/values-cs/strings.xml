@@ -1391,6 +1391,7 @@
     <string name="dictate__style_prompt_custom_placeholder">např. Dobrý den. Mnohokrát děkuji.</string>
     <string name="dictate__style_prompt_info_title">Zobrazit výchozí příklad</string>
     <string name="dictate__style_prompt_info_description">Tato vzorová věta se odesílá s každým přepisem, aby model nasměrovala ke správnému psaní velkých písmen a interpunkce. Automaticky se přizpůsobuje jazyku, ve kterém diktujete.</string>
+    <string name="dictate__style_prompt_info_none">Pro tento jazyk zatím není ukázková věta, proto se žádná neodesílá. Přepis se stále řídí jazykem, který jste zvolili.</string>
     <string name="dictate__custom_words_title">Vlastní slova</string>
     <string name="dictate__custom_words_summary_empty">Přidejte jména nebo odborné termíny, které se mají psát správně</string>
     <string name="dictate__custom_words_placeholder">např. FlorisBoard, Kubernetes, Renée, OAuth, Anthropic</string>
