@@ -361,11 +361,14 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * with what they typed. Precomputed once per language because folding 79,000 words on every keystroke
      * is not an option.
      */
-    private suspend fun rankedFoldKeysFor(subtype: Subtype): List<String>? {
+    private suspend fun rankedFoldKeysFor(subtype: Subtype, ranked: List<String>): List<String>? {
         val lang = dictLangFor(subtype)?.takeIf { DictFold.hasNonTrivialFold(it) } ?: return null
-        val ranked = rankedWordsFor(subtype)
         return rankedFoldKeysByLang.withLock { cache ->
-            cache[lang] ?: ranked.map { DictFold.foldKey(lang, it) }.also { cache[lang] = it }
+            // Takes the very list it will be indexed alongside, and rebuilds on a length mismatch: a
+            // dictionary finishing its download between the two lookups would otherwise leave the caller
+            // indexing one list by the other's positions.
+            cache[lang]?.takeIf { it.size == ranked.size }
+                ?: ranked.map { DictFold.foldKey(lang, it) }.also { cache[lang] = it }
         }
     }
 
@@ -1041,12 +1044,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // nothing — أنا does not start with it. Where the fold merges spellings, compare the precomputed
         // fold keys instead; everywhere else this is the same comparison it always was.
         val ranked = rankedWordsFor(subtype)
-        val rankedKeys = rankedFoldKeysFor(subtype)
-        val foldedPrefix = rankedKeys?.let { index.fold(word) }
+        val rankedKeys = rankedFoldKeysFor(subtype, ranked)
+        val foldedPrefix = if (rankedKeys != null) index.fold(word) else ""
         for ((rank, dictWord) in ranked.withIndex()) {
             if (out.size >= completionCap) break
             val matches = if (rankedKeys != null) {
-                rankedKeys[rank].startsWith(foldedPrefix!!)
+                rankedKeys[rank].startsWith(foldedPrefix)
             } else {
                 dictWord.startsWith(word, ignoreCase = true)
             }
