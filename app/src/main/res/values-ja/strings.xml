@@ -779,6 +779,7 @@
     <string name="action__apply">適用</string>
     <string name="action__back_up">バックアップ</string>
     <string name="action__cancel">キャンセル</string>
+    <string name="action__back">戻る</string>
     <string name="action__clear">消去</string>
     <string name="action__create">作成</string>
     <string name="action__default">デフォルト</string>

@@ -829,6 +829,7 @@
     <string name="action__apply">Použít</string>
     <string name="action__back_up">Zálohovat</string>
     <string name="action__cancel">Zrušit</string>
+    <string name="action__back">Zpět</string>
     <string name="action__clear">Vymazat</string>
     <string name="action__create">Vytořit</string>
     <string name="action__default">Výchozí</string>

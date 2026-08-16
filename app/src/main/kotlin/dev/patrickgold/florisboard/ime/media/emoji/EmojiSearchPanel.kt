@@ -24,7 +24,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -120,11 +120,27 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
         value = if (current == null) null else withContext(Dispatchers.Default) { current.search(query) }
     }
 
+    // Until something is typed the grid shows what the palette's "recently used" tab shows, so the
+    // space is filled with something worth tapping instead of standing empty. Read once when the
+    // search opens, like the palette does: tapping an emoji marks it used, and a live list would
+    // reorder itself under the user's finger.
+    val historyEnabled by prefs.emoji.historyEnabled.collectAsState()
+    val recentlyUsed = remember(historyEnabled) {
+        if (!historyEnabled) {
+            emptyList()
+        } else {
+            val history = prefs.emoji.historyData.get()
+            (history.pinned + history.recent).map { EmojiSet(listOf(it)) }
+        }
+    }
+
+    val shown = if (query.isBlank()) recentlyUsed else results
+
     // Every new letter is a new result set, so start it at the top instead of wherever the previous
     // one had been scrolled to.
     val gridState = rememberLazyGridState()
-    LaunchedEffect(results) {
-        if (!results.isNullOrEmpty()) gridState.scrollToItem(0)
+    LaunchedEffect(shown) {
+        if (!shown.isNullOrEmpty()) gridState.scrollToItem(0)
     }
 
     SnyggColumn(
@@ -137,9 +153,10 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                 .height(FlorisImeSizing.smartbarHeight * ResultRows),
             contentAlignment = Alignment.Center,
         ) {
-            val current = results
+            val current = shown
             when {
-                query.isBlank() || current == null -> Unit
+                // Still computing, or nothing typed and no history to offer.
+                current == null || (query.isBlank() && current.isEmpty()) -> Unit
                 current.isEmpty() -> {
                     val style = rememberSnyggThemeQuery(FlorisImeUi.SmartbarCandidatesRow.elementName)
                     Text(
@@ -178,13 +195,19 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
             query = query,
             placeholder = stringRes(R.string.emoji__search__hint),
             onClear = { keyboardManager.clearEmojiSearch() },
-            trailing = {
+            leading = {
+                // Back, not a second ✕: the ✕ in the field empties the query, and two crosses next to
+                // each other look like the same button drawn twice.
                 SnyggIconButton(
                     elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     onClick = { keyboardManager.closeEmojiSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
-                    SnyggIcon(imageVector = Icons.Default.Close, modifier = Modifier.size(22.dp))
+                    SnyggIcon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringRes(R.string.action__back),
+                        modifier = Modifier.size(22.dp),
+                    )
                 }
             },
         )

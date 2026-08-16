@@ -774,6 +774,7 @@
     <string name="action__apply">Pielietot</string>
     <string name="action__back_up">Veikt rezerves kopēšanu</string>
     <string name="action__cancel">Atcelt</string>
+    <string name="action__back">Atpakaļ</string>
     <string name="action__clear">Notīrīt</string>
     <string name="action__create">Izveidot</string>
     <string name="action__default">Noklusējums</string>

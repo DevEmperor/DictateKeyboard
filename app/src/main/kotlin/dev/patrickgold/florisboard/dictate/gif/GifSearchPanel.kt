@@ -24,7 +24,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
@@ -159,7 +159,11 @@ fun GifSearchPanel(
                     onClick = { keyboardManager.closeGifSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
-                    Icon(imageVector = Icons.Default.Close, contentDescription = null, modifier = Modifier.size(24.dp))
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringRes(R.string.action__back),
+                        modifier = Modifier.size(24.dp),
+                    )
                 }
             },
             trailing = {

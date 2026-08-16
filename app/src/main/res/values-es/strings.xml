@@ -812,6 +812,7 @@
     <string name="action__apply">Aplicar</string>
     <string name="action__back_up">Respaldar</string>
     <string name="action__cancel">Cancelar</string>
+    <string name="action__back">Atrás</string>
     <string name="action__clear">Borrar</string>
     <string name="action__create">Crear</string>
     <string name="action__default">Por defecto</string>

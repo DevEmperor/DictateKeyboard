@@ -816,6 +816,7 @@
     <string name="action__apply">Применить</string>
     <string name="action__back_up">Резервирование</string>
     <string name="action__cancel">Отмена</string>
+    <string name="action__back">Назад</string>
     <string name="action__clear">Очистить</string>
     <string name="action__create">Создать</string>
     <string name="action__default">Сбросить</string>

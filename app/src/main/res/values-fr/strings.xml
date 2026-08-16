@@ -734,6 +734,7 @@
     <string name="action__apply">Appliquer</string>
     <string name="action__back_up">Sauvegarder</string>
     <string name="action__cancel">Annuler</string>
+    <string name="action__back">Retour</string>
     <string name="action__clear">Effacer</string>
     <string name="action__create">Créer</string>
     <string name="action__default">Par défaut</string>

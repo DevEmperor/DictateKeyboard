@@ -691,6 +691,7 @@
     <string name="action__apply">تطبيق</string>
     <string name="action__back_up">نسخ احتياطي</string>
     <string name="action__cancel">إلغاء</string>
+    <string name="action__back">رجوع</string>
     <string name="action__clear">مسح</string>
     <string name="action__create">إنشاء</string>
     <string name="action__default">الإفتراضي</string>

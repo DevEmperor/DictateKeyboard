@@ -1119,6 +1119,7 @@
     <!-- Action strings -->
     <string name="action__add">Add</string>
     <string name="action__apply">Apply</string>
+    <string name="action__back" comment="Screen reader label for the button that leaves a search and returns to where it was opened from">Back</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
     <string name="action__clear" comment="Screen reader label for the button that empties a search field">Clear</string>

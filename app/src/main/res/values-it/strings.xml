@@ -662,6 +662,7 @@
     <string name="action__apply">Applica</string>
     <string name="action__back_up">Backup</string>
     <string name="action__cancel">Annulla</string>
+    <string name="action__back">Indietro</string>
     <string name="action__clear">Cancella</string>
     <string name="action__create">Crea</string>
     <string name="action__default">Predefinito</string>
