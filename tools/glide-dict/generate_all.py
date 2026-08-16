@@ -39,7 +39,22 @@ LEIPZIG = {
     "hi": "hin_news_2022_1M",
     "ta": "tam_wikipedia_2021_1M",
     "ur": "urd_newscrawl_2016_1M",
+    # Not thin but broken: the OPUS Georgian list is not Georgian. Its most frequent entries are
+    # `ეა ვ ნვ ჟვ ჱა` — single letters, fragments and obsolete characters (ჲ in 41 % of entries,
+    # ჱ in 15 %), where real Georgian starts `და რომ არ ეს`. Unlike Icelandic the damage is not an
+    # invertible substitution, so the source is replaced rather than repaired; OPUS is switched off
+    # for Georgian below.
+    "ka": "kat-ge_web_2019_300K",
 }
+
+# OPUS lists that arrive mojibaked, as out_code -> "STORED:READ" for --fix-opus-encoding. Icelandic's
+# was written as Latin-1 and read as ISO-8859-4, so þ→ū, ð→đ and ó→ķ: 20 % of the entries were
+# misspelled, including every one of the most frequent words (`ađ`, `ūađ`, `viđ`). Autocorrect then
+# held the corrupt spelling to be the right one.
+FIX_OPUS_ENCODING = {"is": "iso8859_4:latin1"}
+
+# Languages built from Leipzig alone, because their OPUS list is unusable rather than merely small.
+LEIPZIG_ONLY = {"ka"}
 
 # out_code, opus_code, hunspell_dict, display_name
 LANGS = [
@@ -98,6 +113,10 @@ def main():
         cmd += ["--lo-dict", dic[3:]] if dic.startswith("lo:") else ["--dict", dic]
         if out_code in LEIPZIG:
             cmd += ["--leipzig", LEIPZIG[out_code]]
+        if out_code in LEIPZIG_ONLY:
+            cmd.append("--no-opus")
+        if out_code in FIX_OPUS_ENCODING:
+            cmd += ["--fix-opus-encoding", FIX_OPUS_ENCODING[out_code]]
         if out_code in NO_HUNSPELL:
             cmd.append("--no-hunspell")
         proc = subprocess.run(cmd, capture_output=True, text=True)

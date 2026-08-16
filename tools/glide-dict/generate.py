@@ -37,7 +37,7 @@ build-time casing oracle (their word lists are not redistributed — only OPUS-d
 restored case). Verify the per-language Hunspell licence before adding a language; ATTRIBUTION.md records
 which licence each one was taken under.
 """
-import sys, os, io, json, math, gzip, tarfile, hashlib, argparse, subprocess, tempfile, urllib.request
+import sys, os, io, json, math, gzip, tarfile, hashlib, argparse, subprocess, tempfile, unicodedata, urllib.request
 
 from wordfilter import drop_foreign_scripts, is_word, strip_arabic_marks
 
@@ -113,12 +113,33 @@ def merge_counts(*sources: dict) -> dict:
     return {w: max(1, round(share * 1e9)) for w, share in combined.items()}
 
 
-def load_opus_counts(opus_lang: str, top: int) -> dict:
+def repair_mojibake(word: str, recode: tuple) -> str:
+    """Undo a text that was stored in one single-byte encoding and read as another.
+
+    Some OPUS frequency lists are damaged at the source. Icelandic is the clear case: its list has
+    `ađ`, `ūađ`, `viđ` where Icelandic writes `að`, `það`, `við` — the text was Latin-1 and was read
+    as ISO-8859-4, turning þ→ū, ð→đ and ó→ķ. Because the damage is a single-byte substitution it is
+    exactly invertible, and re-encoding restores the real words (verified against the top of the
+    list: `ađ er í ekki ūađ` → `að er í ekki það`).
+
+    This must not be applied blindly — it is configured per language, because a word that survives
+    the round trip unchanged in one language may be a legitimate spelling in another.
+    """
+    try:
+        return word.encode(recode[0]).decode(recode[1])
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        # Not representable in the damaged encoding, so it was never damaged: leave it alone.
+        return word
+
+
+def load_opus_counts(opus_lang: str, top: int, recode: tuple = None) -> dict:
     """word → count from the OPUS OpenSubtitles frequency list, filtered to real words.
 
     Arabic marks are stripped *before* counting and the surviving forms have their counts added
     together, so مــن / مـن / من become one entry rather than three. Hunspell would not catch those:
     ayaspell happily accepts tatweel-stretched spellings.
+
+    [recode] repairs a list that arrives mojibaked — see repair_mojibake.
     """
     raw = gzip.decompress(get(f"{OPUS}/{opus_lang}.freq.gz")).decode("utf-8", "replace")
     merged: dict[str, int] = {}
@@ -132,7 +153,10 @@ def load_opus_counts(opus_lang: str, top: int) -> dict:
         cnt, word = parts
         if not cnt.isdigit():
             continue
-        word = strip_arabic_marks(word.strip().lower())
+        word = word.strip()
+        if recode:
+            word = repair_mojibake(word, recode)
+        word = strip_arabic_marks(word.lower())
         if not is_word(word):
             continue
         merged[word] = merged.get(word, 0) + int(cnt)
@@ -163,6 +187,25 @@ def fetch_hunspell(dict_name: str, lo_dict: str) -> tuple:
     return get(f"{WOOORM}/{dict_name}/index.dic"), get(f"{WOOORM}/{dict_name}/index.aff")
 
 
+def uses_title_case(words: list) -> bool:
+    """Whether this language's script capitalises the first letter of a word at all.
+
+    Most caseless scripts (Arabic, Hebrew, the Indic ones) have no uppercase mappings, so title-casing
+    them is a harmless no-op. Georgian is the trap: Unicode *does* give Mkhedruli letters an uppercase
+    form (Mtavruli), but Georgian has no capitalisation — Mtavruli is for setting a whole word in caps,
+    never for one leading letter. Title-casing it produced 22,832 entries like `Ქირავდება`, a shape that
+    does not occur in written Georgian.
+    """
+    sample = "".join(w for w, _ in words[:500])
+    letters = [c for c in sample if c.isalpha()]
+    if not letters:
+        return True
+    # A script whose letters have a distinct uppercase form, yet whose corpus never uses it in the
+    # middle of running text, does not title-case. Georgian Mkhedruli is exactly that.
+    scripts = {unicodedata.name(c, "").split(" LETTER ")[0] for c in letters}
+    return not any("GEORGIAN" in s for s in scripts)
+
+
 def build_case_oracle(words: list, dict_name: str, lo_dict: str = "") -> dict:
     """
     Map each lowercase word to its correct case via hunspell (word→cased). Words that hunspell rejects in
@@ -170,6 +213,9 @@ def build_case_oracle(words: list, dict_name: str, lo_dict: str = "") -> dict:
     names) — the caller drops any word not in the returned map. Falls back to keeping everything lowercase
     if no Hunspell dictionary is available.
     """
+    if not uses_title_case(words):
+        sys.stderr.write("  (script has no title case: keeping every word lowercase)\n")
+        return {w: w for w, _ in words}
     source = lo_dict or dict_name
     try:
         dic, aff = fetch_hunspell(dict_name, lo_dict)
@@ -234,6 +280,9 @@ def main():
                          "OPUS frequencies; use where OpenSubtitles barely covers the language")
     ap.add_argument("--no-opus", action="store_true",
                     help="use only --leipzig as the frequency source")
+    ap.add_argument("--fix-opus-encoding", default="",
+                    help="repair a mojibaked OPUS list, as 'STORED:READ' (e.g. iso8859_4:latin1 for "
+                         "Icelandic, whose list has ađ/ūađ where Icelandic writes að/það)")
     ap.add_argument("--dict", default=None)
     ap.add_argument("--lo-dict", default="",
                     help="LibreOffice dictionary path '<dir>/<basename>' (e.g. ar/ar, hi_IN/hi_IN, id/id_ID); "
@@ -247,7 +296,10 @@ def main():
                          "or that have none at all")
     args = ap.parse_args()
 
-    opus = {} if args.no_opus else load_opus_counts(args.opus or args.lang, args.top)
+    recode = tuple(args.fix_opus_encoding.split(":", 1)) if args.fix_opus_encoding else None
+    if recode and len(recode) != 2:
+        raise SystemExit("--fix-opus-encoding takes 'STORED:READ', e.g. iso8859_4:latin1")
+    opus = {} if args.no_opus else load_opus_counts(args.opus or args.lang, args.top, recode)
     leipzig = load_leipzig_counts(args.leipzig) if args.leipzig else {}
     words = rank(merge_counts(opus, leipzig), args.top)
     if not words:
