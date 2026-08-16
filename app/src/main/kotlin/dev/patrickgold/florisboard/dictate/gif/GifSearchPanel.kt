@@ -26,7 +26,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -48,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiSearchIndex
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -64,13 +62,12 @@ import org.florisboard.lib.snygg.ui.SnyggText
  * The GIF search bar shown in the Smartbar's slot while the user is typing a query (the keyboard below
  * does the typing; keystrokes are folded into
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.gifSearchQuery]). Unlike emoji search, GIFs
- * are too small for an inline results strip — so this bar only captures the query; pressing Enter (or the
- * search button) opens a full large-thumbnail results page (see [GifPanel]).
+ * are too small for an inline results strip — so this bar only captures the query; Enter opens a full
+ * large-thumbnail results page (see [GifPanel]).
  *
- * Above the bar sits a row of earlier search terms, narrowed down as the query is typed (tap to search,
- * long-press to delete). It used to *replace* the query text and vanish on the first keystroke, which
- * both hid the term being typed and made the bar jump; keeping the row for as long as there is a history
- * holds the height steady and turns the chips into completions.
+ * Above the bar sits the row of earlier search terms, which stays put for the whole time the bar is open
+ * (tap to search, long-press to delete). It used to *replace* the query text and vanish on the first
+ * keystroke, which both hid the term being typed and made the bar jump.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -84,16 +81,6 @@ fun GifSearchPanel(
     val query = keyboardManager.gifSearchQuery.collectAsState().value ?: return
     val history by prefs.gif.history.collectPrefAsState()
     var confirmDeleteTerm by remember { mutableStateOf<String?>(null) }
-
-    // Match the way the emoji search matches: ignoring case and accents, so "cat" still offers "Cät".
-    val suggestions = remember(history.recentSearches, query) {
-        val needle = EmojiSearchIndex.normalize(query)
-        if (needle.isEmpty()) {
-            history.recentSearches
-        } else {
-            history.recentSearches.filter { EmojiSearchIndex.normalize(it).contains(needle) }
-        }
-    }
 
     SnyggColumn(
         elementName = FlorisImeUi.MediaBottomRow.elementName,
@@ -114,7 +101,7 @@ fun GifSearchPanel(
                     contentPadding = PaddingValues(horizontal = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    items(suggestions, key = { it }) { term ->
+                    items(history.recentSearches, key = { it }) { term ->
                         Box {
                             SnyggText(
                                 elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
@@ -164,16 +151,6 @@ fun GifSearchPanel(
                         contentDescription = stringRes(R.string.action__back),
                         modifier = Modifier.size(24.dp),
                     )
-                }
-            },
-            trailing = {
-                SnyggIconButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                    onClick = { keyboardManager.submitGifSearch(query) },
-                    enabled = query.isNotBlank(),
-                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-                ) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null, modifier = Modifier.size(24.dp))
                 }
             },
         )

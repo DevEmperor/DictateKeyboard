@@ -316,7 +316,27 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun commitGesture(word: String) {
         // A glide produces a whole word at once, so there are no per-character taps to reason about (#242).
         TouchTrace.reset()
-        editorInstance.commitGesture(fixCase(word))
+        val text = fixCase(word)
+        // A glide never passes through onInputKeyDown, so the emoji/GIF search interception there never
+        // sees it — swiping a word while searching used to drop it into the app's text field instead of
+        // the search box. Route it to the query the same way a typed character goes.
+        if (appendToActiveSearch(text)) return
+        editorInstance.commitGesture(text)
+    }
+
+    /**
+     * Appends [text] to whichever search is currently taking the keyboard's input, returning `true` when
+     * one was. Words are separated by a space, so two glides in a row read as two terms.
+     */
+    private fun appendToActiveSearch(text: String): Boolean {
+        fun joined(current: String) = if (current.isEmpty() || current.endsWith(' ')) {
+            current + text
+        } else {
+            "$current $text"
+        }
+        emojiSearchQuery.value?.let { emojiSearchQuery.value = joined(it); return true }
+        gifSearchQuery.value?.let { gifSearchQuery.value = joined(it); return true }
+        return false
     }
 
     /**
