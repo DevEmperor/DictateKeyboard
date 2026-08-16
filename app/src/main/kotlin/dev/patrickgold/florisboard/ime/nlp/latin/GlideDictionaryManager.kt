@@ -111,13 +111,30 @@ object GlideDictionaryManager {
     fun bigramFile(context: Context, lang: String): File =
         File(dictsRoot(context), "${lang.lowercase()}_bigrams.txt")
 
-    /** True if a downloaded dictionary for [lang] is present on disk. */
-    fun isInstalled(context: Context, lang: String): Boolean =
-        dictFile(context, lang).let { it.isFile && it.length() > 0 }
+    /**
+     * True if a downloaded dictionary for [lang] is present on disk **and matches the catalog**.
+     *
+     * The size is checked, not just the presence: when a dictionary is corrected the file on the
+     * release changes, but a device that already has the old one would otherwise never fetch it
+     * again and keep the bad words forever. That is not hypothetical — the Icelandic list was
+     * shipped with `ađ`/`ūađ` where Icelandic writes `að`/`það`, and Georgian with fragments instead
+     * of words. Comparing `length()` costs a stat call and catches a truncated download too; the
+     * SHA-256 is verified when the file is fetched, so a size match is enough here.
+     */
+    fun isInstalled(context: Context, lang: String): Boolean {
+        val file = dictFile(context, lang)
+        if (!file.isFile || file.length() <= 0) return false
+        val expected = GlideDictionaryCatalog.forLang(lang)?.sizeBytes ?: return true
+        return file.length() == expected
+    }
 
-    /** True if a downloaded bigram file for [lang] is present on disk. */
-    fun bigramInstalled(context: Context, lang: String): Boolean =
-        bigramFile(context, lang).let { it.isFile && it.length() > 0 }
+    /** True if a downloaded bigram file for [lang] is present on disk and matches the catalog. */
+    fun bigramInstalled(context: Context, lang: String): Boolean {
+        val file = bigramFile(context, lang)
+        if (!file.isFile || file.length() <= 0) return false
+        val expected = BigramCatalog.forLang(lang)?.sizeBytes ?: return true
+        return file.length() == expected
+    }
 
     /** Language codes of all downloaded dictionaries currently on disk. */
     fun installedLangs(context: Context): List<String> =
