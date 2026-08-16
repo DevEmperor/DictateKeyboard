@@ -1,13 +1,13 @@
 {
   "all": {
     "е": {
+      "main": { "$": "auto_text_key", "code":  1105, "label": "ё" },
       "relevant": [
-        { "$": "auto_text_key", "code":  1105, "label": "ё" }
       ]
     },
     "ь": {
+      "main": { "$": "auto_text_key", "code":  1098, "label": "ъ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  1098, "label": "ъ" }
       ]
     },
     "~right": {

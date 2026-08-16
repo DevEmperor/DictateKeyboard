@@ -1,53 +1,53 @@
 {
   "all": {
     "c": {
+      "main": { "$": "auto_text_key", "code":  265, "label": "ĉ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  265, "label": "ĉ" }
       ]
     },
     "g": {
+      "main": { "$": "auto_text_key", "code":  285, "label": "ĝ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  285, "label": "ĝ" }
       ]
     },
     "h": {
+      "main": { "$": "auto_text_key", "code":  293, "label": "ĥ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  293, "label": "ĥ" }
       ]
     },
     "j": {
+      "main": { "$": "auto_text_key", "code":  309, "label": "ĵ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  309, "label": "ĵ" }
       ]
     },
     "s": {
+      "main": { "$": "auto_text_key", "code":  349, "label": "ŝ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  349, "label": "ŝ" }
       ]
     },
     "u": {
+      "main": { "$": "auto_text_key", "code":  365, "label": "ŭ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  365, "label": "ŭ" }
       ]
     },
     "q": {
+      "main": { "$": "auto_text_key", "code":  349, "label": "ŝ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  349, "label": "ŝ" }
       ]
     },
     "w": {
+      "main": { "$": "auto_text_key", "code":  285, "label": "ĝ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  285, "label": "ĝ" }
       ]
     },
     "x": {
+      "main": { "$": "auto_text_key", "code":  265, "label": "ĉ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  265, "label": "ĉ" }
       ]
     },
     "y": {
+      "main": { "$": "auto_text_key", "code":  365, "label": "ŭ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  365, "label": "ŭ" }
       ]
     },
     "~right": {

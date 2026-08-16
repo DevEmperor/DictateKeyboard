@@ -1,8 +1,8 @@
 {
   "all": {
     "a": {
+      "main": { "$": "auto_text_key", "code":  228, "label": "ä" },
       "relevant": [
-        { "$": "auto_text_key", "code":  228, "label": "ä" },
         { "$": "auto_text_key", "code":  224, "label": "à" },
         { "$": "auto_text_key", "code":  226, "label": "â" },
         { "$": "auto_text_key", "code":  261, "label": "ą" },
@@ -26,8 +26,8 @@
       ]
     },
     "e": {
+      "main": { "$": "auto_text_key", "code":  233, "label": "é" },
       "relevant": [
-        { "$": "auto_text_key", "code":  233, "label": "é" },
         { "$": "auto_text_key", "code":  234, "label": "ê" },
         { "$": "auto_text_key", "code":  232, "label": "è" },
         { "$": "auto_text_key", "code":  235, "label": "ë" },
@@ -57,8 +57,8 @@
       ]
     },
     "o": {
+      "main": { "$": "auto_text_key", "code":  246, "label": "ö" },
       "relevant": [
-        { "$": "auto_text_key", "code":  246, "label": "ö" },
         { "$": "auto_text_key", "code":  333, "label": "ō" },
         { "$": "auto_text_key", "code":  245, "label": "õ" },
         { "$": "auto_text_key", "code":  242, "label": "ò" },

@@ -1,8 +1,8 @@
 {
   "all": {
     "a": {
+      "main": { "$": "auto_text_key", "code":  228, "label": "ä" },
       "relevant": [
-        { "$": "auto_text_key", "code":  228, "label": "ä" },
         { "$": "auto_text_key", "code":  225, "label": "á" },
         { "$": "auto_text_key", "code":  226, "label": "â" },
         { "$": "auto_text_key", "code":  227, "label": "ã" },
@@ -34,8 +34,8 @@
       ]
     },
     "o": {
+      "main": { "$": "auto_text_key", "code":  246, "label": "ö" },
       "relevant": [
-        { "$": "auto_text_key", "code":  246, "label": "ö" },
         { "$": "auto_text_key", "code":  333, "label": "ō" },
         { "$": "auto_text_key", "code":  339, "label": "œ" },
         { "$": "auto_text_key", "code":  243, "label": "ó" },

@@ -6,8 +6,8 @@
       ]
     },
     "і": {
+      "main": { "$": "auto_text_key", "code":  1111, "label": "ї" },
       "relevant": [
-        { "$": "auto_text_key", "code":  1111, "label": "ї" }
       ]
     },
     "є": {

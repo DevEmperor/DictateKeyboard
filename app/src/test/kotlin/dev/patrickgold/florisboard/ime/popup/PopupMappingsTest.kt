@@ -66,6 +66,37 @@ class PopupMappingsTest {
         "a" to "á", "c" to "ç", "e" to "é", "i" to "í", "o" to "ó", "u" to "ú",
     )
 
+    /**
+     * Every language whose long-press defaults were set from its own word list, via
+     * `tools/popup-main/measure.py`. Keys deliberately left without a default are absent: Latvian `o`
+     * and `r` (ō and ŗ were dropped from the orthography), Vietnamese `a` (â against ă is a coin toss
+     * on a thin corpus), English and Danish `i`, and everything in a language that simply does not
+     * write the character on offer.
+     */
+    private val measuredDefaults = mapOf(
+        "cs" to "a á, c č, d ď, e ě, i í, n ň, o ó, r ř, s š, t ť, u ů, y ý, z ž",
+        "da" to "a æ, e é, o ø",
+        "eo" to "c ĉ, g ĝ, h ĥ, j ĵ, q ŝ, s ŝ, u ŭ, w ĝ, x ĉ, y ŭ",
+        "et" to "a ä, o õ, u ü",
+        "fi" to "a ä, o ö",
+        "hr" to "c č, d đ, s š, z ž",
+        "is" to "a á, d ð, e é, i í, o ó, t þ, u ú, y ý",
+        "lv" to "a ā, c č, e ē, g ģ, i ī, k ķ, l ļ, n ņ, s š, u ū, z ž",
+        "nb" to "a å, o ø",
+        "nn" to "a å, o ø",
+        "pl" to "a ą, c ć, e ę, l ł, n ń, o ó, s ś, x ź, z ż",
+        "ro" to "a ă, i î, s ș, t ț",
+        "ru" to "е ё, ь ъ",
+        "sk" to "a á, c č, d ď, e é, i í, l ľ, n ň, o ô, s š, t ť, u ú, y ý, z ž",
+        "sl-SI" to "c č, s š, z ž",
+        "sv" to "a ä, e é, o ö",
+        "uk" to "і ї",
+        "uk-cyr-ext" to "і ї",
+        "vi-VN" to "d đ, e ê, o ô, u ư",
+    ).mapValues { (_, spec) ->
+        spec.split(", ").associate { it.split(" ").let { (key, char) -> key to char } }
+    }
+
     @Test
     fun `portuguese long-press defaults are the accented characters the language actually uses`() {
         for (name in listOf("pt", "pt-BR")) {
@@ -96,6 +127,16 @@ class PopupMappingsTest {
                     (underTheFinger as? TextKeyData)?.label ?: (underTheFinger as? AutoTextKeyData)?.label,
                     "$name: long-pressing '$key' and releasing",
                 )
+            }
+        }
+    }
+
+    @Test
+    fun `every measured language long-presses to the character its own words use most`() {
+        for ((name, defaults) in measuredDefaults) {
+            val mapping = mapping(name)
+            for ((key, expected) in defaults) {
+                assertEquals(expected, mainLabelOf(mapping, key), "$name: long-pressing '$key'")
             }
         }
     }

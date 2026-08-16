@@ -7,24 +7,24 @@
       ]
     },
     "e": {
+      "main": { "$": "auto_text_key", "code": 234, "label": "ê" },
       "relevant": [
-        { "$": "auto_text_key", "code": 234, "label": "ê" }
       ]
     },
     "o": {
+      "main": { "$": "auto_text_key", "code": 244, "label": "ô" },
       "relevant": [
-        { "$": "auto_text_key", "code": 244, "label": "ô" },
         { "$": "auto_text_key", "code": 417, "label": "ơ" }
       ]
     },
     "u": {
+      "main": { "$": "auto_text_key", "code": 432, "label": "ư" },
       "relevant": [
-        { "$": "auto_text_key", "code": 432, "label": "ư" }
       ]
     },
     "d": {
+      "main": { "$":  "auto_text_key", "code": 273, "label": "đ" },
       "relevant": [
-        { "$":  "auto_text_key", "code": 273, "label": "đ" }
       ]
     },
     "~right": {
