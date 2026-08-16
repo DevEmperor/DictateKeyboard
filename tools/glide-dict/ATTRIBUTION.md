@@ -12,7 +12,12 @@ themselves (they are consulted only at build time to decide casing and to filter
   downloadable packages, **CC BY** — © Universität Leipzig / Sächsische Akademie der Wissenschaften / InfAI;
   Goldhahn, Eckart & Quasthoff, *Building Large Monolingual Dictionaries at the Leipzig Corpora Collection*
   (LREC 2012). Merged with OPUS by relative share for `hi`, `ta` and `ur`, where OpenSubtitles alone yields
-  too few words to correct against. (The same collection is the sole source of the bigram files.)
+  too few words to correct against, and the **sole** source for `ka`, whose OPUS list is not Georgian
+  (its most frequent entries are single letters and obsolete characters). (The same collection is also
+  the sole source of the bigram files.)
+- `is` is built from OPUS with `--fix-opus-encoding iso8859_4:latin1`: that list was written as Latin-1
+  and read as ISO-8859-4 at the source, turning þ→ū, ð→đ and ó→ķ. The substitution is single-byte and
+  exactly invertible, so the words are repaired rather than dropped.
 
 ## Casing / spell-filter (build-time only)
 - **Hunspell** (<https://hunspell.github.io>) — the `hunspell` binary.
