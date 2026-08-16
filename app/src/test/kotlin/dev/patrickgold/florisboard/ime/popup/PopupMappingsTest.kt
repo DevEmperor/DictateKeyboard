@@ -10,6 +10,11 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
@@ -67,6 +72,30 @@ class PopupMappingsTest {
             val mapping = mapping(name)
             for ((key, expected) in portugueseDefaults) {
                 assertEquals(expected, mainLabelOf(mapping, key), "$name: long-pressing '$key'")
+            }
+        }
+    }
+
+    @Test
+    fun `the key under the finger really is that character, through the app's own loader`() {
+        // Not the JSON but the runtime answer: deserialized with the app's DefaultJsonConfig and asked
+        // through PopupSet.getPopupKeys, exactly as TextKeyboardLayout does. `prioritized.first()` is
+        // the key PopupUiController places at the press position, so this is the character a long press
+        // inserts. Touch injection cannot be used to check this — neither Genymotion nor an instrumented
+        // test delivers synthetic touches to the keyboard window.
+        for (name in listOf("pt", "pt-BR")) {
+            val json = File(mappingsDir, "$name.json").readText()
+            val mapping: PopupMapping = DefaultJsonConfig.decodeFromString(json)
+            val all = mapping[KeyVariation.ALL] ?: error("$name has no ALL variation")
+            for ((key, expected) in portugueseDefaults) {
+                val popupSet = all[key] ?: error("$name has no popup set for '$key'")
+                val keys = popupSet.getPopupKeys(KeyHintConfiguration.HINTS_DISABLED)
+                val underTheFinger = keys.prioritized.firstOrNull()
+                assertEquals(
+                    expected,
+                    (underTheFinger as? TextKeyData)?.label ?: (underTheFinger as? AutoTextKeyData)?.label,
+                    "$name: long-pressing '$key' and releasing",
+                )
             }
         }
     }
