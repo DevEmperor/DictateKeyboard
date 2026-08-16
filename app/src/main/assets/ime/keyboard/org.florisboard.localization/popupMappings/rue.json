@@ -16,9 +16,8 @@
       "main": { "$": "auto_text_key", "code":  1169, "label": "ґ" }
     },
     "і": {
-      "main": { "$": "auto_text_key", "code":  1123, "label": "î" },
+      "main": { "$": "auto_text_key", "code":  1123, "label": "ѣ" },
       "relevant": [
-        { "$": "auto_text_key", "code":  1123, "label": "ѣ" },
         { "$": "auto_text_key", "code":  1111, "label": "ї" }
       ]
     },
