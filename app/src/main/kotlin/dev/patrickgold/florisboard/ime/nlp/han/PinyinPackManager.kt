@@ -52,8 +52,16 @@ object PinyinPackManager {
     const val EXTENSION_ID = "net.devemperor.dictate.pinyin"
 
     private const val FILE_NAME = "$EXTENSION_ID.flex"
-    private const val URL =
-        "https://github.com/DevEmperor/DictateKeyboard/releases/download/pinyin-pack-v1/$FILE_NAME"
+
+    /**
+     * Project-hosted release holding downloadable keyboard language packs — named for the category, not
+     * for this one file, so a traditional-Chinese or Japanese pack later joins it instead of adding
+     * another tag. Bump the `-v1` when a pack is rebuilt rather than replacing an asset in place: an
+     * installed app verifies against the size and hash baked in below, and would reject a changed file.
+     */
+    private const val RELEASE =
+        "https://github.com/DevEmperor/DictateKeyboard/releases/download/language-packs-v1"
+    private const val URL = "$RELEASE/$FILE_NAME"
     private const val SIZE_BYTES = 3_030_654L
     private const val SHA256 = "861309d3c2f5461808b3f1dcb28eeb284e9a67c27b2130d03233d927b0eb0159"
 

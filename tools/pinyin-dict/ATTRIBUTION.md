@@ -1,6 +1,6 @@
 # Chinese Pinyin language pack — sources & attribution
 
-The pack (`net.devemperor.dictate.pinyin.flex`, hosted on the `pinyin-pack-v1` GitHub release) is generated
+The pack (`net.devemperor.dictate.pinyin.flex`, hosted on the `language-packs-v1` GitHub release) is generated
 by `generate.py` from the two sources below. It contains a single table of `code / text / weight` rows —
 a pinyin spelling, the characters it produces, and a ranking number — and no source text of any kind.
 
