@@ -152,6 +152,11 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
 
         // The subtype we get here contains a lot of data, however we are only interested in subtype.primaryLocale and
         // subtype.secondaryLocales.
+
+        // The Pinyin reading table is downloaded rather than shipped (issue #262). Adding the subtype
+        // already starts that, but a download can fail — and a Pinyin keyboard with no table produces
+        // nothing at all — so switching to the subtype is a second chance to fetch it.
+        PinyinPackManager.ensureDownloaded(context, subtype.primaryLocale)
     }
 
     override suspend fun spell(

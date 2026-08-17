@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
+import dev.patrickgold.florisboard.ime.nlp.han.PinyinPackManager
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryManager
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -111,6 +112,9 @@ class SubtypeManager(context: Context) {
         // Start fetching the glide-typing dictionary for the new language right away (issue #127) instead
         // of waiting until the keyboard is first switched to it.
         GlideDictionaryManager.ensureDownloaded(appContext, subtypeToAdd.primaryLocale.language)
+        // Same for the Pinyin reading table (issue #262), without which the Chinese Pinyin subtype would
+        // be a QWERTY layout that produces no characters at all.
+        PinyinPackManager.ensureDownloaded(appContext, subtypeToAdd.primaryLocale)
         return true
     }
 

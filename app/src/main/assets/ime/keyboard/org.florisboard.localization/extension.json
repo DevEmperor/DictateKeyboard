@@ -701,7 +701,52 @@
       }
     },
     {
+      "languageTag": "zh-CN-pinyin",
+      "composer": "org.florisboard.composers:appender",
+      "nlpProviders": {
+        "spelling": "org.florisboard.nlp.providers.han.shape",
+        "suggestion": "org.florisboard.nlp.providers.han.shape"
+      },
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:cjk",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk"
+      }
+    },
+    {
       "languageTag": "zh-CN-zhengma",
+      "composer": "org.florisboard.composers:appender",
+      "nlpProviders": {
+        "spelling": "org.florisboard.nlp.providers.han.shape",
+        "suggestion": "org.florisboard.nlp.providers.han.shape"
+      },
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:cjk",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk"
+      }
+    },
+    {
+      "languageTag": "zh-TW-boshiamy",
+      "composer": "org.florisboard.composers:appender",
+      "nlpProviders": {
+        "spelling": "org.florisboard.nlp.providers.han.shape",
+        "suggestion": "org.florisboard.nlp.providers.han.shape"
+      },
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:cjk",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk"
+      }
+    },
+    {
+      "languageTag": "zh-TW-cangjielarge",
       "composer": "org.florisboard.composers:appender",
       "nlpProviders": {
         "spelling": "org.florisboard.nlp.providers.han.shape",

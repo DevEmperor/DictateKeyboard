@@ -95,7 +95,21 @@ Locale Data Repository (CLDR v48), both the curated and the derived annotation s
     https://github.com/unicode-org/cldr-json — https://www.unicode.org/license.txt
   - Regenerate with tools/emoji-annotations/generate.py
 
-7. Provider logos
+7. Chinese Pinyin reading table (the Chinese Pinyin keyboard)
+-------------------------------------------------------------
+File: net.devemperor.dictate.pinyin.flex  (downloaded when the subtype is added)
+
+Which characters a pinyin spelling produces, and how they are ranked.
+
+  - Readings from CC-CEDICT, published by MDBG, licensed CC BY-SA 4.0.
+    Referenced work: CEDICT, © 1997, 1998 Paul Andrew Denisowski.
+    https://www.mdbg.net/chinese/dictionary?page=cc-cedict
+    The generated table is a derivative and carries the same CC BY-SA 4.0 license.
+  - Ranking from the OPUS OpenSubtitles zh_cn frequency list (cited in section 1 above);
+    only aggregate word counts are used.
+  - Regenerate with tools/pinyin-dict/generate.py — see its ATTRIBUTION.md.
+
+8. Provider logos
 ------------------
 
 The settings list marks each AI provider with its own logo, so a row can be found by its mark rather
