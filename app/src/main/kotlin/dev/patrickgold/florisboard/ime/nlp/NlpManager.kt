@@ -233,10 +233,11 @@ class NlpManager(context: Context) {
                     emptyList()
                 }
                 else -> {
-                    getSuggestionProvider(subtype).suggest(
+                    val provider = getSuggestionProvider(subtype)
+                    provider.suggest(
                         subtype = subtype,
                         content = content,
-                        maxCandidateCount = 8,
+                        maxCandidateCount = provider.maxCandidates,
                         allowPossiblyOffensive = true,
                         isPrivateSession = keyboardManager.activeState.isIncognitoMode,
                     )

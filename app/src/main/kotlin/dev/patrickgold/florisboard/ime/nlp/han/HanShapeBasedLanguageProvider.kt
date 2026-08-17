@@ -48,6 +48,22 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         const val ProviderId = "org.florisboard.nlp.providers.han.shape"
 
         const val DB_PATH = "han.sqlite3";
+
+        /**
+         * Exclusive upper bound for a prefix scan: the prefix with its last character incremented, so
+         * that `code >= prefix AND code < upper` selects exactly the rows `code LIKE prefix || '%'`
+         * would — but as an indexed range instead of a full table scan (issue #262).
+         *
+         * SQLite compares TEXT with the BINARY collation, and UTF-8 preserves code point order, so
+         * incrementing the last code point is a valid bound for any prefix. Two cases have no such
+         * bound and return null, on which the caller falls back to LIKE: an empty prefix, and one
+         * ending in a surrogate, where +1 could produce an unpaired half.
+         */
+        internal fun prefixUpperBound(prefix: String): String? {
+            val last = prefix.lastOrNull() ?: return null
+            if (last.isSurrogate() || last == Char.MAX_VALUE) return null
+            return prefix.dropLast(1) + (last + 1)
+        }
     }
 
 
@@ -176,23 +192,34 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         val layout: String = languagePackItem.hanShapeBasedTable
         try {
             val database = languagePackExtension.hanShapeBasedSQLiteDatabase
-            val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
-            cur.moveToFirst();
-            val rowCount = cur.getCount();
-            flogDebug { "Query was '${content.composingText}'" }
-            val suggestions = buildList {
-                for (n in 0 until rowCount) {
-                    val code = cur.getString(0);
-                    val word = cur.getString(1);
-                    cur.moveToNext();
-                    add(WordSuggestionCandidate(
-                        text = "$word",
-                        secondaryText = code,
-                        confidence = 0.5,
-                        isEligibleForAutoCommit = n == 0,
-                        // We set ourselves as the source provider so we can get notify events for our candidate
-                        sourceProvider = this@HanShapeBasedLanguageProvider,
-                    ))
+            // Prefix lookup as an indexed range rather than LIKE. Both select the same rows, but only the
+            // range can use the index [LanguagePackExtension] creates — LIKE degrades to a full scan of a
+            // six-figure table on every single keystroke. Lowercased because LIKE is ASCII-case-insensitive
+            // in SQLite and a BINARY range is not, and the old behaviour should not change here.
+            val prefix = content.composingText.toString().lowercase()
+            val upperBound = prefixUpperBound(prefix)
+            val cur = if (upperBound != null) {
+                database.query(layout, arrayOf("code", "text"), "code >= ? AND code < ?",
+                    arrayOf(prefix, upperBound), "", "", "code ASC, weight DESC", "$maxCandidateCount")
+            } else {
+                database.query(layout, arrayOf("code", "text"), "code LIKE ? || '%'",
+                    arrayOf(prefix), "", "", "code ASC, weight DESC", "$maxCandidateCount")
+            }
+            flogDebug { "Query was '$prefix'" }
+            val suggestions = cur.use {
+                buildList {
+                    var n = 0
+                    while (cur.moveToNext()) {
+                        add(WordSuggestionCandidate(
+                            text = cur.getString(1),
+                            secondaryText = cur.getString(0),
+                            confidence = 0.5,
+                            isEligibleForAutoCommit = n == 0,
+                            // We set ourselves as the source provider so we can get notify events for our candidate
+                            sourceProvider = this@HanShapeBasedLanguageProvider,
+                        ))
+                        n++
+                    }
                 }
             }
             return suggestions
@@ -303,4 +330,13 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
 
     override val forcesSuggestionOn
         get() = true
+
+    /**
+     * Chinese input picks a character out of a list rather than correcting a word, and a syllable maps to
+     * far more than eight of them — with only eight, common characters fall off the end and the method
+     * stops being usable (issue #262). The candidates row scrolls by default, so the extra ones are
+     * reachable rather than merely rendered off-screen.
+     */
+    override val maxCandidates: Int
+        get() = 32
 }

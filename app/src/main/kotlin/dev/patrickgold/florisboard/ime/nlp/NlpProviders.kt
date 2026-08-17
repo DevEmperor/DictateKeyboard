@@ -233,6 +233,15 @@ interface SuggestionProvider : NlpProvider {
 
     val forcesSuggestionOn
         get() = false
+
+    /**
+     * How many candidates [suggest] is asked for. Eight is right for an alphabet, where the composing text
+     * usually resolves to one intended word and the rest are near-misses. A Chinese input method is the
+     * opposite case: a syllable legitimately maps to dozens of characters and picking from that list *is*
+     * the act of typing, so those providers ask for more and the candidates row scrolls (issue #262).
+     */
+    val maxCandidates: Int
+        get() = 8
 }
 
 /**

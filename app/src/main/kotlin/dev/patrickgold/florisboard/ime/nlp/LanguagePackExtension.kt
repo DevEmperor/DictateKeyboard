@@ -80,10 +80,53 @@ class LanguagePackExtension( // FIXME: how to make this support multiple types o
         } else try {
             // TODO: use lock on database?
             hanShapeBasedSQLiteDatabase.takeIf { it.isOpen }?.close()
+            createCodeIndexes(databasePath)
             hanShapeBasedSQLiteDatabase =
                 SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (e: SQLiteException) {
             flogError { "SQLiteException in openDatabase: path=$databasePath, error='${e}'" }
+        }
+    }
+
+    /**
+     * Indexes every code table for the prefix lookup the suggestion provider runs on each keystroke
+     * (issue #262). The shipped databases carry no indexes at all, which turns that lookup into a full
+     * scan plus a sort of a six-figure table — measurably the most expensive thing that happens while
+     * typing Chinese.
+     *
+     * Built here rather than shipped pre-indexed because [load] deletes and re-unzips the cache copy
+     * anyway: the index would have to travel inside the archive on every install and download, roughly
+     * doubling it, to save work that costs well under a second once per process — and this runs on the
+     * provider's background scope, before the first lookup can reach it.
+     *
+     * Failure is not fatal: a database that cannot be opened for writing simply stays unindexed and the
+     * provider falls back to the slow-but-correct path.
+     */
+    private fun createCodeIndexes(databasePath: String) {
+        try {
+            SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READWRITE).use { db ->
+                val tables = db.rawQuery(
+                    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'",
+                    null,
+                ).use { cursor ->
+                    buildList { while (cursor.moveToNext()) add(cursor.getString(0)) }
+                }
+                for (table in tables) {
+                    // Ordered exactly like the query's ORDER BY, so the index satisfies the sort as well
+                    // as the range and SQLite can stop at the LIMIT instead of collecting every match.
+                    // A table without these columns (nothing ships one) just throws and is skipped.
+                    try {
+                        db.execSQL(
+                            "CREATE INDEX IF NOT EXISTS `idx_${table}_code` " +
+                                "ON `$table`(`code` ASC, `weight` DESC)"
+                        )
+                    } catch (e: SQLiteException) {
+                        flogError { "Could not index table '$table': $e" }
+                    }
+                }
+            }
+        } catch (e: SQLiteException) {
+            flogError { "Could not open $databasePath for indexing: $e" }
         }
     }
 
