@@ -375,6 +375,48 @@ object ProviderRegistry {
     )
 
     /**
+     * SiliconFlow (硅基流动) — the one transcription provider reachable from mainland China (issue #262).
+     *
+     * Everything else in this list is blocked or unreachable there without a VPN, which left users in
+     * China with no dictation at all unless they found the on-device engine or typed a custom endpoint
+     * in by hand. SiliconFlow hosts open models on domestic infrastructure and speaks plain OpenAI
+     * multipart at `POST {baseUrl}audio/transcriptions`, so it needs nothing new in the upload path.
+     * Rewording was already covered: DeepSeek above is domestically reachable too.
+     *
+     * `.cn` is the mainland domain and the reason this entry exists; `.com` serves the same API
+     * internationally, so the base URL is left editable (#136) rather than forcing the wrong one.
+     *
+     * Model ids verified against SiliconFlow's own pages on 2026-08-17: the two ASR ids from the
+     * transcription API reference, the chat ids from the DeepSeek model page. Their catalog is far
+     * larger — the live `/models` list is merged on top of these.
+     *
+     * One thing that could not be verified without an account: their reference documents only `model`
+     * and `file`, while [OpenAiCompatibleClient.buildMultipartTranscriptionRequest] also sends
+     * `response_format`, and `language`/`prompt` when set. Servers normally ignore fields they do not
+     * know. If this one rejects them instead, the symptom is a 400 on every dictation and the fix is to
+     * drop the extras for this id — not a reason to guess at it now.
+     */
+    val SILICONFLOW = ProviderPreset(
+        id = "siliconflow",
+        displayName = "SiliconFlow",
+        baseUrl = "https://api.siliconflow.cn/v1/",
+        capabilities = CHAT_AND_STT,
+        supportsDynamicModels = true,
+        apiKeyUrl = "https://cloud.siliconflow.cn/account/ak",
+        allowsCustomBaseUrl = true,
+        defaultChatModel = "deepseek-ai/DeepSeek-V3.2",
+        // SenseVoice is the better of the two for dictation: it covers Mandarin, Cantonese, English,
+        // Japanese and Korean, where TeleSpeech is Mandarin and Chinese dialects only.
+        defaultTranscriptionModel = "FunAudioLLM/SenseVoiceSmall",
+        curatedChatModels = listOf(
+            "deepseek-ai/DeepSeek-V3.2", "deepseek-ai/DeepSeek-V3.1", "deepseek-ai/DeepSeek-V3",
+        ),
+        curatedTranscriptionModels = listOf(
+            "FunAudioLLM/SenseVoiceSmall", "TeleAI/TeleSpeechASR",
+        ),
+    )
+
+    /**
      * Ollama server (OpenAI-compatible). No API key required by default. The base URL is user-editable
      * (issue #136) and defaults to localhost — point it at `http://<lan-ip>:11434/v1/` for a server on
      * another machine (localhost resolves to the phone itself).
@@ -412,7 +454,7 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, XAI, DEEPSEEK, OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, XAI, DEEPSEEK, SILICONFLOW, OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
@@ -437,12 +479,14 @@ object ProviderRegistry {
      *    threshold does.
      *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
      *    anything a keyboard produces; recorded so the number is not looked up twice.
+     *  - SiliconFlow 50 MB (and one hour), from its transcription API reference.
      *  - Mistral and Soniox document a *duration* (3 hours, 300 minutes) but no size, so they stay 0.
      *    Do not translate a duration into bytes here: the encoding is not theirs to assume.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
         "openai", "cloud", "groq" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
+        "siliconflow" -> 50L * 1024 * 1024
         "elevenlabs" -> 3L * 1024 * 1024 * 1024
         "deepgram" -> 2L * 1024 * 1024 * 1024
         "assemblyai" -> 2252L * 1024 * 1024

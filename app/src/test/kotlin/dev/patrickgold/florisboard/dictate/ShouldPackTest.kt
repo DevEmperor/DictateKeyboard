@@ -98,6 +98,16 @@ class ShouldPackTest {
     }
 
     @Test
+    fun `the provider reachable from mainland china carries its own ceiling`() {
+        // SiliconFlow (#262) documents 50 MB. Three quarters of that is 37.5 MiB, well above the general
+        // threshold, so the 16 MiB rule keeps deciding — the limit clause may only ever add cases.
+        val siliconflow = ProviderRegistry.maxUploadBytes("siliconflow")
+        assertTrue(siliconflow == mib(50), "expected a documented 50 MiB ceiling, got $siliconflow")
+        assertFalse(pack(mib(10), siliconflow))
+        assertTrue(pack(mib(20), siliconflow))
+    }
+
+    @Test
     fun `a provider without a documented size stays unknown rather than unlimited`() {
         // Mistral and Soniox document a duration, not a size. Guessing bytes from hours would be
         // inventing a number; 0 keeps the general threshold in charge.

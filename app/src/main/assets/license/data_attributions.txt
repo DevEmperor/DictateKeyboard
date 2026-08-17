@@ -96,7 +96,8 @@ The monochrome outlines come from two collections, both freely licensed:
 
   - Simple Icons, CC0-1.0 — OpenAI, OpenRouter, Google Gemini, Anthropic, Mistral AI, ElevenLabs,
     Deepgram, DeepSeek, Ollama. https://github.com/simple-icons/simple-icons
-  - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI.
+  - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI, SiliconFlow (filed
+    there under SiliconCloud, the name of their platform).
     https://github.com/lobehub/lobe-icons
 
 Soniox publish no vector mark, so theirs was traced from their own app icon and fitted to the same
