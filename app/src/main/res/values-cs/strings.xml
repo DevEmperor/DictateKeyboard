@@ -130,7 +130,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Přidat podtyp</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Spravovat nainstalované jazykové balíčky</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentální: rozšíření přidávající konkrétní jazyky (zatím čínština podle tvarů).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Rozšíření přidávající vstupní metodu: čínský pinyin a metody podle tvarů.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upravit podtyp</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Hlavní jazyk</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapování vyskakovacích nabídek</string>
@@ -159,7 +159,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Minimálně jedno pole nemá vybranou hodnotu. Vyberte ji prosím.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nenainstalováno)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Vyžadován slovník</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Tento jazyk vyžaduje stažitelný slovník pro návrhy slov a převod (např. Rómadži → Kana). Dokud není nainstalován, psaní funguje, ale převod nic nedělá.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Tato vstupní metoda potřebuje stažitelnou tabulku, aby psaný text převedla na znaky. Dokud není nainstalována, klávesy fungují, ale nic se nepřevádí.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Tabulka se stáhne sama</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Tato vstupní metoda převádí psaný text na znaky pomocí tabulky o velikosti asi 3 MB. Stáhne se jednou, hned po uložení tohoto podtypu.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Stáhnout slovník</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rozložení</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Potvrzení odstranění</string>

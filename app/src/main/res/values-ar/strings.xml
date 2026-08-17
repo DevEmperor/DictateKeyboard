@@ -123,7 +123,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">أدارة حزم اللغات المثبتة</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">تجريبي: إضافات تضيف لغات معينة (الصينية القائمة على الشكل حاليًا).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">إضافات تضيف طريقة إدخال: البينيين الصيني والطرق القائمة على الشكل.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل النوع الفرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة الأساسية</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">تخصيص المنبثقة</string>
@@ -152,7 +152,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">حقل واحد على الأقل ليس له قيمة محددة. الرجاء اختيار قيمة للحقل (الحقول).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (غير مثبت)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">قاموس مطلوب</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">تحتاج هذه اللغة إلى قاموس قابل للتنزيل لاقتراحات الكلمات والتحويل (مثل Romaji → Kana). إلى أن يتم تثبيته، تعمل الكتابة لكن التحويل لا يفعل شيئًا.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">تحتاج طريقة الإدخال هذه إلى جدول قابل للتنزيل لتحويل ما تكتبه إلى أحرف. إلى أن يتم تثبيته، تعمل المفاتيح لكن لا يُحوَّل شيء.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">الجدول يُنزَّل تلقائيًا</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">تحوّل طريقة الإدخال هذه ما تكتبه إلى أحرف باستخدام جدول بحجم 3 ميغابايت تقريبًا. يُنزَّل مرة واحدة، مباشرة بعد حفظ هذا النوع الفرعي.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">تنزيل القاموس</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">التخطيطات</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">تأكيد الحذف</string>

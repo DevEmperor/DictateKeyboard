@@ -124,7 +124,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">サブタイプ</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">サブタイプを追加</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">インストール済み言語パックの管理</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">実験的：特定の言語を追加する拡張機能（現在は形状ベースの中国語）。</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">入力方式を追加する拡張機能：中国語ピンインと形状ベースの方式。</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">サブタイプを編集</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">ロケール</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">ポップアップマッピング</string>
@@ -153,7 +153,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">少なくとも1つのフィールドで値が選択されていません。フィールドの値を選択してください。</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (未インストール)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">辞書が必要です</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">この言語では、単語の候補や変換（例: ローマ字 → かな）のためにダウンロード可能な辞書が必要です。インストールされるまでは、入力はできますが変換は機能しません。</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">この入力方式では、入力した文字を漢字に変換するためにダウンロード可能な変換表が必要です。インストールされるまでは、キーは使えますが変換は行われません。</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">変換表は自動で入手されます</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">この入力方式は約 3 MB の変換表を使って、入力した文字を漢字に変換します。このサブタイプを保存した直後に一度だけダウンロードされます。</string>
     <string name="settings__localization__subtype_missing_language_pack_action">辞書をダウンロード</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">レイアウト</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">削除の確認</string>

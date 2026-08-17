@@ -128,7 +128,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alt türler</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Alt tür ekle</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Yüklü dil paketlerini yönet</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Deneysel: belirli diller ekleyen uzantılar (şimdilik şekil tabanlı Çince).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Bir giriş yöntemi ekleyen uzantılar: Çince pinyin ve şekil tabanlı yöntemler.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Alt türü düzenle</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Birincil dil</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Açılır pencere eşlemesi</string>
@@ -157,7 +157,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">En az bir alan için değer seçilmemiş. Lütfen alan(lar) için bir değer seçin.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (yüklü değil)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Sözlük gerekli</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Bu dil, kelime önerileri ve dönüştürme için indirilebilir bir sözlük gerektirir (ör. Romaji → Kana). Yüklenene kadar yazma çalışır ancak dönüştürme hiçbir şey yapmaz.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Bu giriş yöntemi, yazdıklarınızı karakterlere dönüştürmek için indirilebilir bir tabloya ihtiyaç duyar. Yüklenene kadar tuşlar çalışır ama hiçbir şey dönüştürülmez.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Tablo kendiliğinden iniyor</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Bu giriş yöntemi, yazdıklarınızı yaklaşık 3 MB\'lık bir tabloyla karakterlere dönüştürür. Tablo, bu alt türü kaydettikten hemen sonra bir kez indirilir.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Sözlük indir</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Düzenler</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Silme Onayı</string>

@@ -177,7 +177,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Add subtype</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Manage installed language packs</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimental: extensions that add specific languages (shape-based Chinese for now).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensions that add an input method: Chinese Pinyin and the stroke-based methods.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtype</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primary language</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup mapping</string>
@@ -210,7 +210,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__subtype_missing_language_pack_title" comment="Title of a warning banner in the subtype editor when the required dictionary is not installed">Dictionary required</string>
-    <string name="settings__localization__subtype_missing_language_pack_message" comment="Body of the missing-dictionary warning; explains why conversion appears to do nothing">This language needs a downloadable dictionary for word suggestions and conversion (e.g. Romaji → Kana). Until it is installed, typing works but conversion does nothing.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message" comment="Body of the missing-dictionary warning; explains why conversion appears to do nothing">This input method needs a downloadable table to turn what you type into characters. Until it is installed, the keys work but nothing is ever converted.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title" comment="Title of a neutral note in the subtype editor for an input method whose table the app fetches by itself">Table downloads by itself</string>
+    <string name="settings__localization__subtype_language_pack_auto_message" comment="Body of that note: nothing for the user to do, it explains what will happen after saving">This input method turns what you type into characters using a table of about 3 MB. It is fetched once, right after you save this subtype.</string>
     <string name="settings__localization__subtype_missing_language_pack_action" comment="Button that opens the language-pack download screen">Download dictionary</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete Confirmation</string>

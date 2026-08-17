@@ -122,7 +122,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Підтипи</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Додати підтип</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Керування встановленими мовними пакетами</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Експериментально: розширення, що додають певні мови (поки китайська за формою).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Розширення, що додають метод введення: китайський піньїнь і методи за формою.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редагувати підтип</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основна мова</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Показ спливаючих вікон</string>
@@ -151,7 +151,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Принаймні одне поле не має вибраного значення. Виберіть значення для поля або полів.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не встановлено)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Потрібен словник</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Для цієї мови потрібен завантажуваний словник для підказок слів і перетворення (напр. Ромадзі → Кана). Поки він не встановлений, введення працює, але перетворення нічого не робить.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Цьому методу введення потрібна завантажувана таблиця, щоб перетворювати набране на ієрогліфи. Поки її не встановлено, клавіші працюють, але нічого не перетворюється.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Таблиця завантажиться сама</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Цей метод введення перетворює набране на ієрогліфи за допомогою таблиці розміром близько 3 МБ. Вона завантажується один раз, одразу після збереження цього підтипу.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Завантажити словник</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Розкладки</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Підтвердження видалення</string>

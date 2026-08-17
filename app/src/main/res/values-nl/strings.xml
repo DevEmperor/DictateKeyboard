@@ -124,7 +124,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Indelingen</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Geïnstalleerde taalpakketten beheren</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimenteel: extensies die specifieke talen toevoegen (voorlopig vormgebaseerd Chinees).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensies die een invoermethode toevoegen: Chinees pinyin en de vormgebaseerde methoden.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Voorkeurstaal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup-indeling</string>
@@ -153,7 +153,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Één of meer velden zijn nog niet ingevuld. Kies een optie voor deze velden.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (niet geïnstalleerd)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Woordenboek vereist</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Deze taal heeft een downloadbaar woordenboek nodig voor woordsuggesties en conversie (bijv. Romaji → Kana). Totdat het is geïnstalleerd, werkt typen wel, maar doet conversie niets.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Deze invoermethode heeft een downloadbare tabel nodig om wat je typt in tekens om te zetten. Totdat die is geïnstalleerd, werken de toetsen wel, maar wordt er niets omgezet.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Tabel wordt vanzelf opgehaald</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Deze invoermethode zet wat je typt om in tekens met een tabel van ongeveer 3 MB. Die wordt één keer opgehaald, meteen nadat je dit subtype opslaat.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Woordenboek downloaden</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Indelingen</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Bevestiging verwijderen</string>

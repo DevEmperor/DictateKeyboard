@@ -131,7 +131,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подредби</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Управление на инсталираните езикови пакети</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Експериментално: разширения, добавящи определени езици (засега китайски по форма).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Разширения, добавящи метод на въвеждане: китайски пинин и методите по форма.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основен език</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Подсказки</string>
@@ -160,7 +160,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Има поле е без стойност. Изберете стойност за всички полета.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не е инсталирано)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Изисква се речник</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Този език се нуждае от речник за изтегляне за предложения на думи и преобразуване (напр. Ромаджи → Кана). Докато не бъде инсталиран, писането работи, но преобразуването не прави нищо.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Този метод на въвеждане се нуждае от таблица за изтегляне, за да превръща написаното в йероглифи. Докато не бъде инсталирана, клавишите работят, но нищо не се преобразува.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Таблицата се изтегля сама</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Този метод на въвеждане превръща написаното в йероглифи с помощта на таблица от около 3 MB. Тя се изтегля веднъж, веднага след като запазите този подтип.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Изтегляне на речник</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Подредби</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Потвърждение при премахване</string>

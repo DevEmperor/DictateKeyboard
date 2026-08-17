@@ -124,7 +124,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Stili di input</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestisci pacchetti di lingua installati</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Sperimentale: estensioni che aggiungono lingue specifiche (per ora cinese basato sulla forma).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Estensioni che aggiungono un metodo di input: pinyin cinese e i metodi basati sulla forma.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lingua principale</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mappatura popup</string>
@@ -153,7 +153,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almeno un campo non ha un valore selezionato. Scegli un valore per il campo(i campi).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (non installato)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Dizionario richiesto</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Questa lingua richiede un dizionario scaricabile per i suggerimenti delle parole e la conversione (ad es. Romaji → Kana). Finché non è installato, la digitazione funziona ma la conversione non fa nulla.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Questo metodo di input richiede una tabella scaricabile per trasformare ciò che digiti in caratteri. Finché non è installata, i tasti funzionano ma non viene convertito nulla.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">La tabella si scarica da sola</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Questo metodo di input trasforma ciò che digiti in caratteri usando una tabella di circa 3 MB. Viene scaricata una sola volta, subito dopo aver salvato questo sottotipo.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Scarica dizionario</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layout</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Conferma eliminazione</string>

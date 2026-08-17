@@ -129,7 +129,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подвиды</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Установленные языковые пакеты</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Экспериментально: расширения, добавляющие определённые языки (пока китайский по форме).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Расширения, добавляющие метод ввода: китайский пиньинь и методы по форме.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Отображение всплывающих окон</string>
@@ -158,7 +158,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">По крайней мере, для одного поля не выбрано значение. Пожалуйста, выберите значение для этого поля (полей).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не установлен)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Требуется словарь</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Для этого языка нужен загружаемый словарь для подсказок слов и преобразования (напр. Ромадзи → Кана). Пока он не установлен, ввод работает, но преобразование ничего не делает.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Этому методу ввода нужна загружаемая таблица, чтобы превращать набранное в иероглифы. Пока она не установлена, клавиши работают, но ничего не преобразуется.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Таблица загрузится сама</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Этот метод ввода превращает набранное в иероглифы с помощью таблицы размером около 3 МБ. Она загружается один раз, сразу после сохранения этого подтипа.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Загрузить словарь</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Раскладки</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Подтверждение удаления</string>

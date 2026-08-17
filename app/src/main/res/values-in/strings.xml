@@ -127,7 +127,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipe</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Atur paket bahasa yang terinstal</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Eksperimental: ekstensi yang menambahkan bahasa tertentu (untuk saat ini Tionghoa berbasis bentuk).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Ekstensi yang menambahkan metode masukan: pinyin Tionghoa dan metode berbasis bentuk.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtipe</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Bahasa utama</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pemetaan munculan</string>
@@ -156,7 +156,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Setidaknya satu bidang tidak memiliki nilai yang dipilih. Harap pilih sebuah nilai untuk bidangnya.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (tidak terpasang)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Kamus diperlukan</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Bahasa ini memerlukan kamus yang dapat diunduh untuk saran kata dan konversi (mis. Romaji → Kana). Sampai terpasang, pengetikan berfungsi tetapi konversi tidak melakukan apa pun.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Metode masukan ini memerlukan tabel yang dapat diunduh untuk mengubah ketikan Anda menjadi aksara. Sampai terpasang, tombol berfungsi tetapi tidak ada yang diubah.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">Tabel diunduh sendiri</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Metode masukan ini mengubah ketikan Anda menjadi aksara dengan tabel sekitar 3 MB. Tabel diunduh sekali, tepat setelah Anda menyimpan subjenis ini.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Unduh kamus</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tata Letak</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Konfirmasi Hapus</string>

@@ -73,6 +73,7 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.han.PinyinPackManager
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.extensionManager
@@ -303,50 +304,77 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
     content {
         Column(modifier = Modifier.padding(8.dp)) {
-            // Missing-dictionary warning (issue #123): some subtypes (e.g. Japanese/CJK) rely on the
-            // shape-based NLP provider, whose word suggestion / Romaji→Kana conversion silently does
-            // nothing until the matching downloadable dictionary (a language pack) is installed. Detect
-            // that state and offer a one-tap jump to the download screen, so it no longer looks broken.
-            // Matched on the full locale tag, not just the language: each of these subtypes names one
-            // specific table by its variant — zh-CN-pinyin reads `pinyin`, zh-CN-zhengma reads `zhengma`
-            // (issue #262). Comparing only "zh" made any Chinese pack look like every Chinese pack, so a
-            // missing table produced a keyboard that typed nothing and a screen that said nothing.
-            val needsMissingLanguagePack = nlpProviders.suggestion == HanShapeBasedLanguageProvider.ProviderId &&
-                primaryLocale != SelectLocale &&
-                installedLanguagePacks.none { pack ->
-                    pack.items.any { it.locale.localeTag() == primaryLocale.localeTag() }
-                }
-            if (needsMissingLanguagePack) {
+            // Missing-table notice (issue #123): these subtypes rely on the shape-based NLP provider,
+            // which turns what you type into characters using a table shipped as a language pack. Without
+            // it the keys work and nothing is ever converted, with no explanation anywhere.
+            //
+            // Matched on the full locale tag, not just the language: each subtype names one specific table
+            // by its variant — zh-CN-pinyin reads `pinyin`, zh-CN-zhengma reads `zhengma` (issue #262).
+            // Comparing only "zh" made any Chinese pack look like every Chinese pack.
+            val hasLanguagePack = installedLanguagePacks.any { pack ->
+                pack.items.any { it.locale.localeTag() == primaryLocale.localeTag() }
+            }
+            val usesHanProvider = nlpProviders.suggestion == HanShapeBasedLanguageProvider.ProviderId &&
+                primaryLocale != SelectLocale
+            // Pinyin's table is fetched automatically on save (see PinyinPackManager), so "required" and
+            // a button into the pack manager would both be wrong here — there is nothing to do and nothing
+            // to fix. Saying what will happen is the whole job.
+            val packArrivesOnSave = usesHanProvider && !hasLanguagePack &&
+                PinyinPackManager.handles(primaryLocale)
+            if (usesHanProvider && !hasLanguagePack) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        containerColor = if (packArrivesOnSave) {
+                            MaterialTheme.colorScheme.surfaceVariant
+                        } else {
+                            MaterialTheme.colorScheme.errorContainer
+                        },
                     ),
                 ) {
+                    val contentColor = if (packArrivesOnSave) {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    } else {
+                        MaterialTheme.colorScheme.onErrorContainer
+                    }
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = stringRes(R.string.settings__localization__subtype_missing_language_pack_title),
-                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            text = stringRes(
+                                if (packArrivesOnSave) {
+                                    R.string.settings__localization__subtype_language_pack_auto_title
+                                } else {
+                                    R.string.settings__localization__subtype_missing_language_pack_title
+                                },
+                            ),
+                            color = contentColor,
                             fontWeight = FontWeight.Bold,
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = stringRes(R.string.settings__localization__subtype_missing_language_pack_message),
-                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            text = stringRes(
+                                if (packArrivesOnSave) {
+                                    R.string.settings__localization__subtype_language_pack_auto_message
+                                } else {
+                                    R.string.settings__localization__subtype_missing_language_pack_message
+                                },
+                            ),
+                            color = contentColor,
                             style = MaterialTheme.typography.bodySmall,
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Button(
-                            modifier = Modifier.align(Alignment.End),
-                            onClick = {
-                                navController.navigate(
-                                    Routes.Settings.LanguagePackManager(LanguagePackManagerScreenAction.MANAGE),
-                                )
-                            },
-                        ) {
-                            Text(stringRes(R.string.settings__localization__subtype_missing_language_pack_action))
+                        if (!packArrivesOnSave) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Button(
+                                modifier = Modifier.align(Alignment.End),
+                                onClick = {
+                                    navController.navigate(
+                                        Routes.Settings.LanguagePackManager(LanguagePackManagerScreenAction.MANAGE),
+                                    )
+                                },
+                            ) {
+                                Text(stringRes(R.string.settings__localization__subtype_missing_language_pack_action))
+                            }
                         }
                     }
                 }

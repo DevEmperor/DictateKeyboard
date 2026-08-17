@@ -124,7 +124,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipus</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestiona els paquets de llengua instal·lats</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimental: extensions que afegeixen llengües específiques (de moment, xinès basat en formes).</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensions que afegeixen un mètode d\'entrada: xinès pinyin i els mètodes basats en formes.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edita el subtipus</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Llengua principal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapatge emergent</string>
@@ -153,7 +153,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almenys un camp no té cap valor seleccionat. Trieu un valor per al(s) camp(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (no instal·lat)</string>
     <string name="settings__localization__subtype_missing_language_pack_title">Cal un diccionari</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">Aquest idioma necessita un diccionari descarregable per als suggeriments de paraules i la conversió (p. ex. Romaji → Kana). Fins que no s\'instal·li, es pot escriure, però la conversió no fa res.</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">Aquest mètode d\'entrada necessita una taula descarregable per convertir el que escrius en caràcters. Fins que no s\'instal·li, les tecles funcionen però no es converteix res.</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">La taula es baixa sola</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">Aquest mètode d\'entrada converteix el que escrius en caràcters amb una taula d\'uns 3 MB. Es baixa un sol cop, just després de desar aquest subtipus.</string>
     <string name="settings__localization__subtype_missing_language_pack_action">Baixa el diccionari</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Dissenys</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmació de la supressió</string>

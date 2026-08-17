@@ -131,7 +131,7 @@
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">键盘子类型</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">添加键盘子类型</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">管理已安装的语言包</string>
-    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">试验功能：添加特定语言的扩展（目前为中文形码）。</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">添加输入法的扩展：中文拼音以及形码输入法。</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">编辑键盘子类型</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要语言</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">弹出键映射表</string>
@@ -160,7 +160,9 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">至少有一个字段没有选择一个值。请为这些字段选择一个值。</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} （未安装）</string>
     <string name="settings__localization__subtype_missing_language_pack_title">需要词典</string>
-    <string name="settings__localization__subtype_missing_language_pack_message">此语言需要下载词典以提供词语建议和转换（例如 罗马字 → 假名）。在安装之前，可以打字，但转换不会有任何作用。</string>
+    <string name="settings__localization__subtype_missing_language_pack_message">此输入法需要下载一个码表，才能把你键入的内容转换成汉字。在安装之前，按键可以用，但不会有任何转换。</string>
+    <string name="settings__localization__subtype_language_pack_auto_title">码表会自动下载</string>
+    <string name="settings__localization__subtype_language_pack_auto_message">此输入法使用一个约 3 MB 的码表把你键入的内容转换成汉字。保存此子类型后会自动下载一次。</string>
     <string name="settings__localization__subtype_missing_language_pack_action">下载词典</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">键盘布局</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">删除前确认</string>
