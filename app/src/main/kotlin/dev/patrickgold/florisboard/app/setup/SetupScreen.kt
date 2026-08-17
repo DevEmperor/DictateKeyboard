@@ -140,10 +140,13 @@ fun SetupScreen() = FlorisScreen {
     val accounts by prefs.dictate.providerAccounts.collectAsState()
     val activeProviderId by prefs.dictate.transcriptionProviderId.collectAsState()
     // The on-device engine needs no credential but is useless without a model, so what counts as set up
-    // depends on what is on disk — recomputed whenever a background download lands (issue #273).
+    // depends on what is on disk — re-asked whenever a background download lands (issue #273). Asking
+    // per model id rather than listing the catalog keeps this to a couple of stat calls for the one
+    // model that matters, and to none at all for a cloud provider: it runs during composition.
     val installedTick by LocalModelDownloads.installedTick.collectAsState()
-    val installedModels = remember(installedTick) { LocalModelManager.installedIds(context).toSet() }
-    val isProviderConfigured = isProviderConfigured(accounts, activeProviderId, installedModels)
+    val isProviderConfigured = remember(accounts, activeProviderId, installedTick) {
+        isProviderConfigured(accounts, activeProviderId) { LocalModelManager.isInstalled(context, it) }
+    }
     var providerSkipped by rememberSaveable { mutableStateOf(false) }
     // The floating-button step is optional and has no completion signal of its own, so (like the
     // provider step) a flag lets the user move past it to the final page once they've decided.
@@ -213,20 +216,21 @@ private fun maskKey(key: String): String =
  * [ProviderRegistry.byId], which returns null for a `custom:<uuid>` id, and fell through to false (#273).
  *
  * On-device is the one case the runtime rule cannot answer on its own. It needs no credential at all,
- * but with no model on disk there is nothing to dictate with, so [installedModelIds] decides — passed in
- * rather than read from a Context so this can be tested without Android.
+ * but with no model on disk there is nothing to dictate with, so [isModelInstalled] decides. It is a
+ * parameter rather than a Context lookup for two reasons: this can then be tested without Android, and
+ * the caller runs it during composition — so it is asked about one model id, never about the catalog.
  */
 internal fun isProviderConfigured(
     accounts: ProviderAccounts,
     providerId: String,
-    installedModelIds: Set<String>,
+    isModelInstalled: (String) -> Boolean,
 ): Boolean {
     val account = accounts.getOrEmpty(providerId)
     if (ProviderRegistry.byId(providerId)?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
         // Same resolution as the dictation path: a blank pick means the preset's default model.
         val model = account.transcriptionModel
             .ifBlank { ProviderRegistry.LOCAL.defaultTranscriptionModel.orEmpty() }
-        return model.isNotBlank() && model in installedModelIds
+        return model.isNotBlank() && isModelInstalled(model)
     }
     if (account.hasKey) return true
     return !account.requiresCredential
@@ -942,19 +946,29 @@ private fun FlorisStepLayoutScope.OnDeviceChoice(
     onBack: () -> Unit,
 ) {
     val context = LocalContext.current
+    val prefs by FlorisPreferenceStore
     val picks = remember { LocalModelCatalog.onboardingPicks(deviceLanguage(context)) }
     val downloads by LocalModelDownloads.state.collectAsState()
     val installedTick by LocalModelDownloads.installedTick.collectAsState()
-    val installed = remember(installedTick) { LocalModelManager.installedIds(context).toSet() }
+    // Only the two on offer, not the whole catalog: this runs during composition.
+    val installed = remember(installedTick) {
+        picks.filter { LocalModelManager.isInstalled(context, it.id) }.map { it.id }.toSet()
+    }
+    // Which model is actually dictating, so a card that is already in use says so instead of offering
+    // to be switched on again.
+    val accounts by prefs.dictate.providerAccounts.collectAsState()
+    val activeProviderId by prefs.dictate.transcriptionProviderId.collectAsState()
+    val activeModelId = accounts.getOrEmpty(ProviderRegistry.LOCAL.id).transcriptionModel
+        .takeIf { activeProviderId == ProviderRegistry.LOCAL.id }
 
     // A model that lands while this page is open is the one the user asked for, so it becomes the
     // active engine the moment it is on disk — not when the download starts, which would let the
     // wizard declare itself finished and move on while several hundred megabytes were still coming.
-    var known by remember { mutableStateOf(LocalModelManager.installedIds(context).toSet()) }
-    LaunchedEffect(installedTick) {
-        val now = LocalModelManager.installedIds(context).toSet()
-        (now - known).firstOrNull()?.let(onActivateModel)
-        known = now
+    // Seeding from what is installed right now is what makes merely opening this page change nothing.
+    var known by remember { mutableStateOf(installed) }
+    LaunchedEffect(installed) {
+        (installed - known).firstOrNull()?.let(onActivateModel)
+        known = installed
     }
 
     TextButton(
@@ -980,6 +994,7 @@ private fun FlorisStepLayoutScope.OnDeviceChoice(
                 },
             ),
             isInstalled = spec.id in installed,
+            isActive = spec.id == activeModelId,
             percent = download?.takeIf { it.error == null }?.percent,
             error = if (download?.error != null) downloadFailed else null,
             onInstall = {
@@ -1007,6 +1022,7 @@ private fun SetupModelCard(
     spec: LocalModelSpec,
     note: String,
     isInstalled: Boolean,
+    isActive: Boolean,
     percent: Int?,
     error: String?,
     onInstall: () -> Unit,
@@ -1064,6 +1080,14 @@ private fun SetupModelCard(
                         }
                     }
                 }
+                // Already dictating with this one — offering "use this model" here would suggest it
+                // wasn't, which is exactly what the download just changed.
+                isActive -> Text(
+                    text = stringRes(R.string.dictate__local_model_status_active),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Medium,
+                )
                 isInstalled -> FilledTonalButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = onUse,

@@ -29,12 +29,15 @@ class ProviderConfiguredTest {
     private fun accountsOf(vararg accounts: ProviderAccount) =
         ProviderAccounts(accounts.associateBy { it.providerId })
 
+    /** Stands in for the on-disk check the real caller passes. */
+    private fun installed(vararg modelIds: String): (String) -> Boolean = { it in modelIds }
+
     @Test
     fun `a keyless server of the user's own counts as set up`() {
         val id = ProviderAccount.newCustomId()
         val account = ProviderAccount(providerId = id, customBaseUrl = "http://192.168.1.5:8000/v1/")
         assertFalse(account.requiresCredential, "a custom endpoint must not be asked for a key")
-        assertTrue(isProviderConfigured(accountsOf(account), id, emptySet()))
+        assertTrue(isProviderConfigured(accountsOf(account), id, installed()))
     }
 
     @Test
@@ -43,16 +46,16 @@ class ProviderConfiguredTest {
             providerId = ProviderAccount.LEGACY_CUSTOM_ID,
             customBaseUrl = "http://localhost:8000/v1/",
         )
-        assertTrue(isProviderConfigured(accountsOf(account), ProviderAccount.LEGACY_CUSTOM_ID, emptySet()))
+        assertTrue(isProviderConfigured(accountsOf(account), ProviderAccount.LEGACY_CUSTOM_ID, installed()))
     }
 
     @Test
     fun `a provider with a key page is not set up until it has one`() {
         val groq = ProviderRegistry.GROQ.id
         assertTrue(ProviderAccount(providerId = groq).requiresCredential)
-        assertFalse(isProviderConfigured(accountsOf(), groq, emptySet()))
+        assertFalse(isProviderConfigured(accountsOf(), groq, installed()))
         assertTrue(
-            isProviderConfigured(accountsOf(ProviderAccount(providerId = groq, apiKey = "gsk_x")), groq, emptySet()),
+            isProviderConfigured(accountsOf(ProviderAccount(providerId = groq, apiKey = "gsk_x")), groq, installed()),
         )
     }
 
@@ -60,7 +63,7 @@ class ProviderConfiguredTest {
     fun `Ollama needs no key`() {
         val ollama = ProviderRegistry.OLLAMA.id
         assertFalse(ProviderAccount(providerId = ollama).requiresCredential)
-        assertTrue(isProviderConfigured(accountsOf(), ollama, emptySet()))
+        assertTrue(isProviderConfigured(accountsOf(), ollama, installed()))
     }
 
     /**
@@ -71,9 +74,9 @@ class ProviderConfiguredTest {
     fun `Dictate Cloud without a wallet is not set up`() {
         val cloud = ProviderRegistry.CLOUD.id
         assertTrue(ProviderAccount(providerId = cloud).requiresCredential)
-        assertFalse(isProviderConfigured(accountsOf(), cloud, emptySet()))
+        assertFalse(isProviderConfigured(accountsOf(), cloud, installed()))
         assertTrue(
-            isProviderConfigured(accountsOf(ProviderAccount(providerId = cloud, apiKey = "token")), cloud, emptySet()),
+            isProviderConfigured(accountsOf(ProviderAccount(providerId = cloud, apiKey = "token")), cloud, installed()),
         )
     }
 
@@ -85,13 +88,13 @@ class ProviderConfiguredTest {
     fun `on-device counts only once a model is on disk`() {
         val local = ProviderRegistry.LOCAL.id
         val default = ProviderRegistry.LOCAL.defaultTranscriptionModel!!
-        assertFalse(isProviderConfigured(accountsOf(), local, emptySet()))
-        assertTrue(isProviderConfigured(accountsOf(), local, setOf(default)))
+        assertFalse(isProviderConfigured(accountsOf(), local, installed()))
+        assertTrue(isProviderConfigured(accountsOf(), local, installed(default)))
 
         // A deliberate pick is what counts, not just "something is installed": the dictation path would
         // load exactly this model and fail if it is gone.
         val picked = ProviderAccount(providerId = local, transcriptionModel = "sense-voice-small")
-        assertFalse(isProviderConfigured(accountsOf(picked), local, setOf(default)))
-        assertTrue(isProviderConfigured(accountsOf(picked), local, setOf("sense-voice-small")))
+        assertFalse(isProviderConfigured(accountsOf(picked), local, installed(default)))
+        assertTrue(isProviderConfigured(accountsOf(picked), local, installed("sense-voice-small")))
     }
 }
