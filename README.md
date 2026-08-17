@@ -157,6 +157,37 @@ dictate straight into apps while another keyboard is open.
 
 <br>
 
+## 🖥️ Using your own server
+
+Dictate speaks the plain OpenAI API, so any server that does too can handle your dictation —
+[Speaches](https://github.com/speaches-ai/speaches), faster-whisper-server, `whisper.cpp`'s server,
+vLLM, or something you wrote yourself. Nothing is hardcoded about it:
+
+1. **Settings → AI providers → Add your own server**
+2. **Base URL** — the address of your server *including the trailing `/v1/`*, e.g.
+   `http://192.168.1.20:8000/v1/`. Dictate appends `audio/transcriptions` and `chat/completions`
+   to it. Plain `http://` on your own network is fine.
+3. **API key** — leave it empty if your server does not ask for one. No `Authorization` header is
+   sent then.
+4. **Transcription model** — browse your server's `/v1/models`, or just type the model id by hand.
+   Servers that expose no catalog, or a non-standard one, work fine that way.
+5. Pick it as the active provider for transcription, rewording, or both.
+
+Two things worth knowing: **`localhost` means the phone, not the machine your server runs on** —
+use its address on your network. And if your server also speaks the OpenAI *realtime* protocol
+under `/v1/realtime`, switch on **Realtime** in the same editor to dictate live.
+
+**Ollama is a special case.** It serves no `/v1/audio/transcriptions`, so it can only reword. Run a
+speech server next to it for dictation — or use the on-device engine below and skip servers
+entirely.
+
+**No server at all:** Dictate can also transcribe **fully on your device** with a downloadable
+model (Whisper, Parakeet, Canary, GigaAM, SenseVoice, or a live-typing Kroko model). No account, no
+network, no audio leaving the phone — offered right in the setup wizard, and under
+*Settings → AI providers → On-device (offline)*.
+
+<br>
+
 ## 🧱 Built on FlorisBoard
 
 Dictate Keyboard is a fork of [**FlorisBoard**](https://github.com/florisboard/florisboard),

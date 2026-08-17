@@ -113,6 +113,24 @@ data class ProviderAccount(
     val isCustom: Boolean
         get() = providerId == LEGACY_CUSTOM_ID || providerId.startsWith(CUSTOM_PREFIX)
 
+    /**
+     * Whether this account needs a credential before it can be used at all.
+     *
+     * A server of the user's own does not, and neither do Ollama or the on-device engine — the
+     * `Authorization` header is simply left off. Dictate Cloud has to be named separately: it has no key
+     * page, so its `apiKeyUrl` is null and it looks exactly like a keyless endpoint, but its credential
+     * is the wallet token and without one there is nothing to dictate with.
+     *
+     * One rule for one question (issue #273). The setup wizard used to derive its own by resolving the
+     * provider through [ProviderRegistry.byId], which returns null for a `custom:<uuid>` id — so a
+     * working keyless self-hosted endpoint was reported as "not set up" while the runtime happily
+     * dictated through it.
+     */
+    val requiresCredential: Boolean
+        get() = !isCustom &&
+            (ProviderRegistry.byId(providerId)?.apiKeyUrl != null ||
+                providerId == ProviderRegistry.CLOUD.id)
+
     companion object {
         const val CUSTOM_PREFIX = "custom:"
 

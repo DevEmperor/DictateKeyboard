@@ -92,6 +92,26 @@ import org.florisboard.lib.compose.persistentVerticalScrollbar
 import org.florisboard.lib.compose.stringRes
 
 /**
+ * What the setup wizard asked this screen to open as it appears (issue #273).
+ *
+ * Two of the four ways out of the provider step already have a screen here — a server of the user's own
+ * and the full on-device model list — and rebuilding either inside the wizard would mean a second editor
+ * to keep working. A flag rather than a route argument, for the same reason [DictateCloud.openedFromSetup]
+ * is one: the route is also a deep link, and a deep link carrying an onboarding flag would be a way to
+ * reach a half-state from outside the app.
+ */
+object ProviderSetupHandoff {
+    /** Provider id whose editor to open, [ADD_CUSTOM] for a fresh endpoint, or null for nothing. */
+    var openEditorFor: String? = null
+
+    /** Sentinel for [openEditorFor]: mint a new custom endpoint instead of editing an existing provider. */
+    const val ADD_CUSTOM = "+add-custom"
+}
+
+/** Which active-provider pointer a newly created endpoint should be handed to once it is saved. */
+private enum class ActivateAs { TRANSCRIPTION, REWORDING, BOTH }
+
+/**
  * The central "AI providers" manager: configure an API key and model(s) for any number of providers
  * (the built-in [ProviderRegistry] presets plus user-defined custom endpoints) and choose which one is
  * active for transcription and which for rewording. Each provider keeps its own credentials in the
@@ -113,9 +133,29 @@ fun DictateProvidersScreen() = FlorisScreen {
 
         // The provider currently being edited in the dialog (null = closed).
         var editingId by remember { mutableStateOf<String?>(null) }
+        // Set when the editor was opened to *create* an endpoint from somewhere that already knows what
+        // it is for — the setup wizard, or one of the two active-provider pickers. Without this, adding a
+        // server from the transcription picker would leave the user to go back and select it by hand.
+        var activateAs by remember { mutableStateOf<ActivateAs?>(null) }
 
         fun writeKeyring(updated: ProviderAccounts) {
             scope.launch { prefs.dictate.providerAccounts.set(updated) }
+        }
+
+        fun addCustomEndpoint(target: ActivateAs) {
+            activateAs = target
+            editingId = ProviderAccount.newCustomId()
+        }
+
+        // Arriving from the setup wizard: open the requested editor straight away, and consume the
+        // request so a later visit to this screen is an ordinary one.
+        LaunchedEffect(Unit) {
+            when (val target = ProviderSetupHandoff.openEditorFor) {
+                null -> Unit
+                ProviderSetupHandoff.ADD_CUSTOM -> addCustomEndpoint(ActivateAs.BOTH)
+                else -> editingId = target
+            }
+            ProviderSetupHandoff.openEditorFor = null
         }
 
         // All custom endpoints stored in the keyring (built-ins are taken from the registry).
@@ -136,6 +176,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                         .forEach { add(it.id to it.displayName) }
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
+                onAddCustom = { addCustomEndpoint(ActivateAs.TRANSCRIPTION) },
             )
             // When the active transcription provider runs single-call multimodal (#130), rewording happens
             // inside that one call, so the rewording provider here is currently unused — surfaced as a
@@ -148,6 +189,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
                 showInfo = accounts.getOrEmpty(activeTranscriptionId).transcriptionViaChat,
+                onAddCustom = { addCustomEndpoint(ActivateAs.REWORDING) },
             )
         }
 
@@ -235,15 +277,35 @@ fun DictateProvidersScreen() = FlorisScreen {
             ProviderEditorDialog(
                 preset = preset,
                 account = accounts.getOrEmpty(id),
-                onDismiss = { editingId = null },
+                onDismiss = {
+                    editingId = null
+                    activateAs = null
+                },
                 onSave = { updated ->
                     writeKeyring(accounts.put(updated))
+                    when (activateAs) {
+                        ActivateAs.TRANSCRIPTION -> scope.launch {
+                            prefs.dictate.transcriptionProviderId.set(id)
+                        }
+                        ActivateAs.REWORDING -> scope.launch {
+                            prefs.dictate.rewordingProviderId.set(id)
+                        }
+                        // A server of the user's own speaks both halves of the OpenAI API, and someone who
+                        // added one during setup meant it to be the way the app works from now on.
+                        ActivateAs.BOTH -> scope.launch {
+                            prefs.dictate.transcriptionProviderId.set(id)
+                            prefs.dictate.rewordingProviderId.set(id)
+                        }
+                        null -> Unit
+                    }
                     editingId = null
+                    activateAs = null
                 },
                 onDelete = if (preset == null) {
                     {
                         writeKeyring(accounts.remove(id))
                         editingId = null
+                        activateAs = null
                     }
                 } else {
                     null
@@ -256,7 +318,11 @@ fun DictateProvidersScreen() = FlorisScreen {
 
 
 @Composable
-private fun RewordingProviderPreference(entries: List<Pair<String, String>>, showInfo: Boolean) {
+private fun RewordingProviderPreference(
+    entries: List<Pair<String, String>>,
+    showInfo: Boolean,
+    onAddCustom: () -> Unit,
+) {
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val selectedId by prefs.dictate.rewordingProviderId.collectAsState()
@@ -298,24 +364,30 @@ private fun RewordingProviderPreference(entries: List<Pair<String, String>>, sho
         ) {
             val scrollState = rememberScrollState()
             val scrollbarColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-            Column(
-                modifier = Modifier
-                    .heightIn(max = 320.dp)
-                    .persistentVerticalScrollbar(scrollState, scrollbarColor)
-                    .verticalScroll(scrollState)
-                    .padding(end = 6.dp),
-            ) {
-                entries.forEach { (id, label) ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { sel = id },
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(selected = sel == id, onClick = { sel = id })
-                        Text(label, modifier = Modifier.padding(start = 8.dp))
+            Column {
+                Column(
+                    modifier = Modifier
+                        .heightIn(max = 320.dp)
+                        .persistentVerticalScrollbar(scrollState, scrollbarColor)
+                        .verticalScroll(scrollState)
+                        .padding(end = 6.dp),
+                ) {
+                    entries.forEach { (id, label) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { sel = id },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            RadioButton(selected = sel == id, onClick = { sel = id })
+                            Text(label, modifier = Modifier.padding(start = 8.dp))
+                        }
                     }
                 }
+                AddOwnServerRow(onClick = {
+                    open = false
+                    onAddCustom()
+                })
             }
         }
     }
@@ -340,7 +412,10 @@ private fun RewordingProviderPreference(entries: List<Pair<String, String>>, sho
  * local fallback is meaningless there). Both the selection and the toggle are committed on confirm.
  */
 @Composable
-private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>) {
+private fun TranscriptionProviderPreference(
+    entries: List<Pair<String, String>>,
+    onAddCustom: () -> Unit,
+) {
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val selectedId by prefs.dictate.transcriptionProviderId.collectAsState()
@@ -395,6 +470,10 @@ private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>)
                         }
                     }
                 }
+                AddOwnServerRow(onClick = {
+                    open = false
+                    onAddCustom()
+                })
                 // Extra item at the bottom: offline fallback (only when the choice isn't already local).
                 if (!selectionIsLocal) {
                     HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
@@ -418,6 +497,36 @@ private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>)
                 }
             }
         }
+    }
+}
+
+/**
+ * The way out of the chicken-and-egg at the bottom of both provider pickers (issue #273): the list only
+ * ever contained the endpoints that already exist, so a new user saw the built-ins and concluded those
+ * were the only ones the app supports — which is exactly what a paying self-hoster reported. Offering it
+ * here answers the question where it is actually being asked.
+ */
+@Composable
+private fun AddOwnServerRow(onClick: () -> Unit) {
+    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = null,
+            modifier = Modifier.size(20.dp),
+            tint = MaterialTheme.colorScheme.primary,
+        )
+        Text(
+            text = stringRes(R.string.dictate__providers_add_custom),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(start = 12.dp),
+        )
     }
 }
 
@@ -610,6 +719,18 @@ private fun ProviderEditorDialog(
             )
         } else {
         Column {
+            // Ollama is chat-only, and correctly so — it serves no /v1/audio/transcriptions. But someone
+            // who already has a local host answering for rewording reasonably expects dictation to follow,
+            // and the reporter of #273 read the dead end as "the app cannot do self-hosted transcription".
+            // The answer is a second server, or no server at all, and it belongs where the confusion is.
+            if (preset?.id == ProviderRegistry.OLLAMA.id) {
+                Text(
+                    text = stringRes(R.string.dictate__providers_ollama_no_stt),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 12.dp),
+                )
+            }
             if (isCustom) {
                 EditorField(
                     label = stringRes(R.string.dictate__providers_field_name),

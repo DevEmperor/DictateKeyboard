@@ -831,14 +831,27 @@
     <string name="setup__provider__title">Choose how Dictate transcribes</string>
     <!-- The two-track choice shown first: buy credit in the app, or bring your own provider key.
          Both are fully supported and the wording must not push either way. -->
-    <string name="setup__provider__choose_intro">Dictate turns your speech into text with an AI service. There are two ways to set that up, and both are fully supported — take whichever suits you.</string>
+    <string name="setup__provider__choose_intro">Dictate turns your speech into text with an AI service. Two ways suit most people — and if you\'d rather not use a cloud service at all, there are two more below.</string>
     <string name="setup__provider__choice_cloud_title">Buy credit in the app</string>
     <string name="setup__provider__choice_cloud_body">Dictate Cloud: no account anywhere, no API key. You buy dictation minutes through Google Play and they never expire. The convenient way — and somewhat more expensive than going to a provider directly.</string>
     <string name="setup__provider__choice_cloud_btn">Show credit packs</string>
     <string name="setup__provider__choice_own_title">Use your own AI provider</string>
     <string name="setup__provider__choice_own_body">Create a key with a provider of your choice — Groq is free for everyday dictation. You keep your own account and pay the provider directly at their prices. Takes about two minutes.</string>
     <string name="setup__provider__choice_own_btn">Set up my own key</string>
-    <string name="setup__provider__back_to_choice">Back to both options</string>
+    <string name="setup__provider__back_to_choice">Back to all options</string>
+    <!-- The two quieter ways below the cards: on-device and a server of the user's own. Both have
+         worked for releases but were invisible here, which is what issue #273 is about. -->
+    <string name="setup__provider__more_ways" comment="Small heading above the two quieter setup options">Rather not use a cloud service?</string>
+    <string name="setup__provider__choice_local_title">On your device, offline</string>
+    <string name="setup__provider__choice_local_body">Download a speech model once. No account, no costs, and no audio ever leaves your phone.</string>
+    <string name="setup__provider__choice_server_title">Your own server</string>
+    <string name="setup__provider__choice_server_body">Point Dictate at a speech server you run yourself, or any OpenAI-compatible endpoint.</string>
+    <string name="setup__provider__local_intro">Speech recognition then runs on your phone: nothing is sent anywhere, and it works without a connection. Pick one model to download now — you can add or change models later.</string>
+    <string name="setup__provider__local_recommended" comment="Note under the first offered on-device model">Recommended for your language</string>
+    <string name="setup__provider__local_bigger" comment="Note under the second offered on-device model">More accurate, but a much bigger download</string>
+    <string name="setup__provider__local_download_btn">Download model</string>
+    <string name="setup__provider__local_use_btn" comment="Button on an on-device model that is already downloaded">Use this model</string>
+    <string name="setup__provider__local_all_models">Show all models</string>
     <string name="setup__provider__intro">Dictate turns your speech into text with the help of an online AI service. To use it, you need your own personal key for such a service.</string>
     <string name="setup__provider__what_is_key">An API key is like a personal password that lets Dictate use the service for you. Creating one is free and takes about two minutes.</string>
     <string name="setup__provider__recommended">We recommend <b>Groq</b> — it\'s fast and free for everyday dictation.</string>
@@ -1625,8 +1638,11 @@
     <string name="dictate__providers_status_unconfigured" comment="Status for a custom endpoint without key or URL">Not configured</string>
     <string name="dictate__providers_cap_stt" comment="Short label: provider can do speech-to-text">Transcription</string>
     <string name="dictate__providers_cap_chat" comment="Short label: provider can do chat/rewording">Rewording</string>
-    <string name="dictate__providers_add_custom" comment="Button to add a user-defined OpenAI-compatible endpoint">Add custom server</string>
-    <string name="dictate__providers_add_custom_summary" comment="Summary under the add-custom-server button">Any OpenAI-compatible endpoint</string>
+    <!-- Named after what it is for, not after how it works: someone looking for a way to change where
+         their speech goes has no reason to open something called "custom endpoint" (issue #273). -->
+    <string name="dictate__providers_add_custom" comment="Button to add a user-defined OpenAI-compatible endpoint">Add your own server</string>
+    <string name="dictate__providers_add_custom_summary" comment="Summary under the add-your-own-server button">Self-hosted or any OpenAI-compatible endpoint — for speech-to-text and rewording</string>
+    <string name="dictate__providers_ollama_no_stt" comment="Note at the top of the Ollama provider editor; Ollama serves no transcription endpoint">Ollama has no speech-to-text endpoint, so it can only reword. To dictate through a server of your own, run a speech server (such as Speaches, faster-whisper-server or whisper.cpp) and add it under “Add your own server” — or use the on-device engine, which needs no server at all.</string>
     <string name="dictate__providers_custom_title" comment="Dialog title when editing a custom endpoint">Custom server</string>
     <string name="dictate__providers_field_name" comment="Label for the custom endpoint display name field">Name</string>
     <string name="dictate__providers_field_transcription_model" comment="Label for the transcription model field in the provider editor">Transcription model</string>

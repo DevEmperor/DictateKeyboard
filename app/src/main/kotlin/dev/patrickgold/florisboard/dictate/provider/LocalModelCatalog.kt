@@ -473,6 +473,34 @@ object LocalModelCatalog {
         KROKO_IT, KROKO_NL, KROKO_PT, KROKO_SV, KROKO_TR, KROKO_HE,
     )
 
+    /**
+     * The two models the setup wizard offers for [language] (issue #273): the one that fits, and the
+     * bigger one for anyone willing to trade storage for accuracy. Everything else stays one tap away
+     * behind "show all models" — a first-run screen that lists twenty-one downloads is not a choice, it
+     * is an obstacle.
+     *
+     * [language] is a plain ISO code (`de`, `zh`); region and script are ignored.
+     *
+     * **Canary is deliberately absent**, although for English, German, French and Spanish it is the best
+     * accuracy-per-megabyte in the catalog. It is *told* its language rather than detecting it
+     * (`LocalTranscriptionProvider.canaryLanguage`), and during setup the input language is still on
+     * auto-detect — so it would be handed "en" and would transcribe German as English. Every model
+     * offered here either detects its own language (Whisper, SenseVoice) or is language-agnostic while
+     * decoding (the transducers).
+     */
+    fun onboardingPicks(language: String): List<LocalModelSpec> =
+        when (language.lowercase().substringBefore('-').substringBefore('_')) {
+            // SenseVoice was trained for these; Whisper only ever treated them as languages number
+            // seventy-something. Its fallback is the multilingual Whisper, not the English one.
+            "zh", "yue", "ja", "ko" -> listOf(SENSE_VOICE_SMALL, WHISPER_SMALL)
+            "ru" -> listOf(GIGAAM_V2_RU, WHISPER_SMALL)
+            // German is the one language with a specialized model that is also cheap to recommend
+            // against: same architecture, far better German, but 670 MB — an offer, not a default.
+            "de" -> listOf(WHISPER_BASE, PARAKEET_PRIMELINE_DE)
+            "en" -> listOf(WHISPER_BASE_EN, WHISPER_SMALL_EN)
+            else -> listOf(WHISPER_BASE, WHISPER_SMALL)
+        }
+
     /** Which recognizer [id] needs; unknown ids (a leftover pref) fall back to the Whisper shape. */
     fun kindOf(id: String): LocalModelKind = byId(id)?.kind ?: LocalModelKind.WHISPER
 

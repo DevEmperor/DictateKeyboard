@@ -3605,16 +3605,10 @@ object DictateController {
     /**
      * Whether [account] needs a credential: built-in cloud providers do; custom/local servers may not.
      *
-     * Dictate Cloud has to be named separately. It has no key page, so `apiKeyUrl` is null and it
-     * looked exactly like Ollama or the on-device engine — keyless, nothing to check. It is not: its
-     * credential is the wallet token, and without one there is nothing to dictate with. The check
-     * was therefore skipped for the one provider whose credential can vanish while the app is
-     * running, and a deleted account got as far as recording, uploading and a 401 before anyone
-     * said so. `SetupScreen.isProviderConfigured` already draws the same distinction.
+     * The rule itself lives on [ProviderAccount.requiresCredential], because the setup wizard has to
+     * answer the same question and used to answer it differently (#273).
      */
-    private fun requiresKey(account: ProviderAccount): Boolean =
-        !account.isCustom &&
-            (presetFor(account).apiKeyUrl != null || account.providerId == ProviderRegistry.CLOUD.id)
+    private fun requiresKey(account: ProviderAccount): Boolean = account.requiresCredential
 
     /**
      * The on-device provider to retry [error] on as an offline fallback (#104), or null when it doesn't

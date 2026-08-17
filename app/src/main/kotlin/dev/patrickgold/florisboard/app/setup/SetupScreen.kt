@@ -24,6 +24,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,8 +37,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Dns
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.NotificationsActive
@@ -48,6 +52,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Icon
@@ -72,6 +78,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
@@ -80,10 +87,16 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
+import dev.patrickgold.florisboard.app.settings.dictate.ProviderSetupHandoff
 import dev.patrickgold.florisboard.app.settings.dictate.providerIcon
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.LocalModelDownloads
+import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
+import dev.patrickgold.florisboard.dictate.provider.LocalModelSpec
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
+import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
@@ -101,6 +114,7 @@ import org.florisboard.lib.compose.FlorisStepLayout
 import org.florisboard.lib.compose.FlorisStepLayoutScope
 import org.florisboard.lib.compose.FlorisStepState
 import org.florisboard.lib.compose.stringRes
+import java.util.Locale
 
 /** The provider recommended to new (non-technical) users: fast and free for everyday dictation. */
 private const val RECOMMENDED_PROVIDER_ID = "groq"
@@ -125,7 +139,11 @@ fun SetupScreen() = FlorisScreen {
     // before the user can dictate. This drives the new "Connect a free AI service" step.
     val accounts by prefs.dictate.providerAccounts.collectAsState()
     val activeProviderId by prefs.dictate.transcriptionProviderId.collectAsState()
-    val isProviderConfigured = isProviderConfigured(accounts, activeProviderId)
+    // The on-device engine needs no credential but is useless without a model, so what counts as set up
+    // depends on what is on disk — recomputed whenever a background download lands (issue #273).
+    val installedTick by LocalModelDownloads.installedTick.collectAsState()
+    val installedModels = remember(installedTick) { LocalModelManager.installedIds(context).toSet() }
+    val isProviderConfigured = isProviderConfigured(accounts, activeProviderId, installedModels)
     var providerSkipped by rememberSaveable { mutableStateOf(false) }
     // The floating-button step is optional and has no completion signal of its own, so (like the
     // provider step) a flag lets the user move past it to the final page once they've decided.
@@ -186,14 +204,32 @@ private fun readClipboardText(context: Context): String? {
 private fun maskKey(key: String): String =
     if (key.length > 8) "${key.take(4)}…${key.takeLast(4)}" else "•".repeat(key.length)
 
-/** True once the active transcription provider has a saved key, or is a keyless endpoint (Ollama). */
-private fun isProviderConfigured(accounts: ProviderAccounts, providerId: String): Boolean {
-    if (accounts.getOrEmpty(providerId).hasKey) return true
-    // Dictate Cloud has no key page either, but it is not a keyless endpoint: without credit
-    // there is nothing to dictate with, so it must not pass as set up the way Ollama does.
-    if (providerId == ProviderRegistry.CLOUD.id) return false
-    val preset = ProviderRegistry.byId(providerId)
-    return preset != null && preset.apiKeyUrl == null
+/**
+ * True once the active transcription provider can actually be used.
+ *
+ * The credential question is answered by [ProviderAccount.requiresCredential] — the same rule the
+ * dictation flow applies — rather than by a second one derived here. Deriving it locally is what made a
+ * working keyless self-hosted endpoint read as "not set up": the lookup went through
+ * [ProviderRegistry.byId], which returns null for a `custom:<uuid>` id, and fell through to false (#273).
+ *
+ * On-device is the one case the runtime rule cannot answer on its own. It needs no credential at all,
+ * but with no model on disk there is nothing to dictate with, so [installedModelIds] decides — passed in
+ * rather than read from a Context so this can be tested without Android.
+ */
+internal fun isProviderConfigured(
+    accounts: ProviderAccounts,
+    providerId: String,
+    installedModelIds: Set<String>,
+): Boolean {
+    val account = accounts.getOrEmpty(providerId)
+    if (ProviderRegistry.byId(providerId)?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
+        // Same resolution as the dictation path: a blank pick means the preset's default model.
+        val model = account.transcriptionModel
+            .ifBlank { ProviderRegistry.LOCAL.defaultTranscriptionModel.orEmpty() }
+        return model.isNotBlank() && model in installedModelIds
+    }
+    if (account.hasKey) return true
+    return !account.requiresCredential
 }
 
 @Composable
@@ -332,6 +368,27 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
         }
     }
 
+    /** Points the on-device engine at [modelId] and makes it the active transcription provider. */
+    fun activateLocalModel(modelId: String) {
+        scope.launch {
+            this@steps.prefs.dictate.providerAccounts.set(
+                accounts.edit(ProviderRegistry.LOCAL.id) { it.copy(transcriptionModel = modelId) }
+            )
+            this@steps.prefs.dictate.transcriptionProviderId.set(ProviderRegistry.LOCAL.id)
+        }
+    }
+
+    /**
+     * Opens the provider settings on a particular editor. Used for the two ways that already have a
+     * screen of their own — a server of the user's own, and the full on-device model list — rather than
+     * rebuilding either inside the wizard. Leaving the flow and coming back is what the credit screen
+     * does too, so the movement is not a new one for the user.
+     */
+    fun openProviderEditor(target: String) {
+        ProviderSetupHandoff.openEditorFor = target
+        navController.navigate(Routes.Settings.DictateProviders)
+    }
+
     return listOfNotNull(
         FlorisStep(
             id = Steps.EnableIme.id,
@@ -388,6 +445,9 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
                     DictateCloud.openedFromSetup = true
                     navController.navigate(Routes.Settings.DictateCloud)
                 },
+                onActivateLocalModel = ::activateLocalModel,
+                onOpenAllModels = { openProviderEditor(ProviderRegistry.LOCAL.id) },
+                onOpenServerEditor = { openProviderEditor(ProviderSetupHandoff.ADD_CUSTOM) },
             )
         },
         FlorisStep(
@@ -464,6 +524,9 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     onSaveKey: (providerId: String, key: String) -> Unit,
     onSkip: () -> Unit,
     onOpenCloud: () -> Unit,
+    onActivateLocalModel: (modelId: String) -> Unit,
+    onOpenAllModels: () -> Unit,
+    onOpenServerEditor: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -473,43 +536,56 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     var showManualEntry by rememberSaveable { mutableStateOf(false) }
     var pasteHint by remember { mutableStateOf<String?>(null) }
     var providerMenuExpanded by remember { mutableStateOf(false) }
-    // Which of the two ways the user has picked. Starts undecided on purpose: presenting the
-    // API-key flow first and mentioning credit afterwards would be a recommendation dressed up
-    // as an order, and both ways are meant to be equal here.
-    var choseOwnKey by rememberSaveable { mutableStateOf(false) }
+    // Which way the user has picked. Starts undecided on purpose: presenting the API-key flow first
+    // and mentioning credit afterwards would be a recommendation dressed up as an order, and the two
+    // headline ways are meant to be equal here.
+    var branch by rememberSaveable { mutableStateOf(ProviderBranch.CHOICE) }
 
     // Coming back from the credit screen via "use my own provider" lands here, and must land on the
     // key flow rather than on the fork the user has already answered.
     val ownKeyRequested by DictateCloud.ownKeyRequested.collectAsState()
     LaunchedEffect(ownKeyRequested) {
         if (ownKeyRequested) {
-            choseOwnKey = true
+            branch = ProviderBranch.OWN_KEY
             DictateCloud.ownKeyRequested.value = false
         }
     }
 
-    // Both sides of the fork are long enough to scroll, and to the layout this is one step
+    // Every side of the fork is long enough to scroll, and to the layout this is one step
     // throughout — so without this, answering the fork from halfway down the page lands the key
     // flow halfway down as well, past its own heading.
-    ScrollToTopOn(choseOwnKey)
+    ScrollToTopOn(branch)
 
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
 
     // No plate on this step, deliberately. Its content is two cards that each already carry a mark;
     // a third illustration above them competes rather than orients.
-    if (!choseOwnKey) {
-        ProviderChoice(
-            onChooseCloud = onOpenCloud,
-            onChooseOwnKey = { choseOwnKey = true },
-            onSkip = onSkip,
-        )
-        return
+    when (branch) {
+        ProviderBranch.CHOICE -> {
+            ProviderChoice(
+                onChooseCloud = onOpenCloud,
+                onChooseOwnKey = { branch = ProviderBranch.OWN_KEY },
+                onChooseOnDevice = { branch = ProviderBranch.ON_DEVICE },
+                onChooseServer = onOpenServerEditor,
+                onSkip = onSkip,
+            )
+            return
+        }
+        ProviderBranch.ON_DEVICE -> {
+            OnDeviceChoice(
+                onActivateModel = onActivateLocalModel,
+                onOpenAllModels = onOpenAllModels,
+                onBack = { branch = ProviderBranch.CHOICE },
+            )
+            return
+        }
+        ProviderBranch.OWN_KEY -> Unit // the rest of this composable
     }
 
     TextButton(
         modifier = Modifier.align(Alignment.CenterHorizontally),
-        onClick = { choseOwnKey = false },
+        onClick = { branch = ProviderBranch.CHOICE },
     ) {
         Text(stringRes(R.string.setup__provider__back_to_choice))
     }
@@ -728,15 +804,24 @@ private fun SetupWelcomeWave() {
 /**
  * The fork in the road, shown before anything else in the provider step.
  *
- * Both ways get the same space, the same shape and the same tone — including the sentence that
- * credit costs more than going to a provider directly. Someone who finds that out after paying
- * has been steered, and the whole point of Dictate Cloud is that it is a convenience, not a
- * funnel. "Set up later" stays available underneath, as it always was.
+ * The two headline ways get the same space, the same shape and the same tone — including the
+ * sentence that credit costs more than going to a provider directly. Someone who finds that out
+ * after paying has been steered, and the whole point of Dictate Cloud is that it is a convenience,
+ * not a funnel. "Set up later" stays available underneath, as it always was.
+ *
+ * Below them, two quieter rows for the ways that need no account anywhere: the on-device engine and
+ * a server of the user's own. Both have worked for releases, and both were invisible here — and this
+ * screen is where people form their idea of what the app can do, so a paying self-hoster went looking
+ * for the second one, did not find it, and concluded it did not exist (issue #273). Deliberately not
+ * a third and fourth card: for most people the answer really is one of the two above, and four equal
+ * offers would be a menu rather than a recommendation.
  */
 @Composable
 private fun FlorisStepLayoutScope.ProviderChoice(
     onChooseCloud: () -> Unit,
     onChooseOwnKey: () -> Unit,
+    onChooseOnDevice: () -> Unit,
+    onChooseServer: () -> Unit,
     onSkip: () -> Unit,
 ) {
     StepText(stringRes(R.string.setup__provider__choose_intro))
@@ -761,6 +846,33 @@ private fun FlorisStepLayoutScope.ProviderChoice(
         marks = listOf("groq", "openai", "gemini", "anthropic", "mistral", "deepgram", "elevenlabs"),
     )
 
+    Spacer(modifier = Modifier.height(20.dp))
+    Text(
+        text = stringRes(R.string.setup__provider__more_ways),
+        style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(bottom = 8.dp),
+    )
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column {
+            MoreWayRow(
+                icon = Icons.Default.Download,
+                title = stringRes(R.string.setup__provider__choice_local_title),
+                body = stringRes(R.string.setup__provider__choice_local_body),
+                onClick = onChooseOnDevice,
+            )
+            HorizontalDivider()
+            MoreWayRow(
+                // The same mark the settings list gives a server of the user's own, so the two read as
+                // the same thing in both places.
+                icon = Icons.Default.Dns,
+                title = stringRes(R.string.setup__provider__choice_server_title),
+                body = stringRes(R.string.setup__provider__choice_server_body),
+                onClick = onChooseServer,
+            )
+        }
+    }
+
     TextButton(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
@@ -773,6 +885,212 @@ private fun FlorisStepLayoutScope.ProviderChoice(
         )
     }
 }
+
+/** One of the two quieter ways: a whole-width row, so the tap target is the row and not a small link. */
+@Composable
+private fun MoreWayRow(
+    icon: ImageVector,
+    title: String,
+    body: String,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(22.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Column(modifier = Modifier.weight(1f).padding(horizontal = 12.dp)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/**
+ * The on-device branch: two models rather than the catalog's twenty-one.
+ *
+ * A first-run screen listing every download is not a choice, it is an obstacle — so the wizard offers
+ * the one that fits the phone's language and the bigger one for anyone willing to trade storage for
+ * accuracy (see [LocalModelCatalog.onboardingPicks]), and leaves the rest one tap away in the settings
+ * list, which is built for browsing and already exists.
+ */
+@Composable
+private fun FlorisStepLayoutScope.OnDeviceChoice(
+    onActivateModel: (modelId: String) -> Unit,
+    onOpenAllModels: () -> Unit,
+    onBack: () -> Unit,
+) {
+    val context = LocalContext.current
+    val picks = remember { LocalModelCatalog.onboardingPicks(deviceLanguage(context)) }
+    val downloads by LocalModelDownloads.state.collectAsState()
+    val installedTick by LocalModelDownloads.installedTick.collectAsState()
+    val installed = remember(installedTick) { LocalModelManager.installedIds(context).toSet() }
+
+    // A model that lands while this page is open is the one the user asked for, so it becomes the
+    // active engine the moment it is on disk — not when the download starts, which would let the
+    // wizard declare itself finished and move on while several hundred megabytes were still coming.
+    var known by remember { mutableStateOf(LocalModelManager.installedIds(context).toSet()) }
+    LaunchedEffect(installedTick) {
+        val now = LocalModelManager.installedIds(context).toSet()
+        (now - known).firstOrNull()?.let(onActivateModel)
+        known = now
+    }
+
+    TextButton(
+        modifier = Modifier.align(Alignment.CenterHorizontally),
+        onClick = onBack,
+    ) {
+        Text(stringRes(R.string.setup__provider__back_to_choice))
+    }
+    StepText(stringRes(R.string.setup__provider__local_intro))
+    Spacer(modifier = Modifier.height(12.dp))
+
+    val downloadFailed = stringRes(R.string.dictate__local_model_download_failed)
+    picks.forEachIndexed { index, spec ->
+        if (index > 0) Spacer(modifier = Modifier.height(12.dp))
+        val download = downloads[spec.id]
+        SetupModelCard(
+            spec = spec,
+            note = stringRes(
+                if (index == 0) {
+                    R.string.setup__provider__local_recommended
+                } else {
+                    R.string.setup__provider__local_bigger
+                },
+            ),
+            isInstalled = spec.id in installed,
+            percent = download?.takeIf { it.error == null }?.percent,
+            error = if (download?.error != null) downloadFailed else null,
+            onInstall = {
+                LocalModelDownloads.clearError(spec.id)
+                LocalModelDownloads.start(context, spec)
+            },
+            onCancel = { LocalModelDownloads.cancel(spec.id) },
+            onUse = { onActivateModel(spec.id) },
+        )
+    }
+
+    TextButton(
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 6.dp),
+        onClick = onOpenAllModels,
+    ) {
+        Text(stringRes(R.string.setup__provider__local_all_models))
+    }
+}
+
+/** One offered model: name, what it covers and how big it is, and the single action it currently has. */
+@Composable
+private fun SetupModelCard(
+    spec: LocalModelSpec,
+    note: String,
+    isInstalled: Boolean,
+    percent: Int?,
+    error: String?,
+    onInstall: () -> Unit,
+    onCancel: () -> Unit,
+    onUse: () -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = spec.displayName,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                // The catalog's own one-liner, e.g. "Multilingual · ~153 MB" — the size is the number
+                // that decides this, so it is on screen before the button is.
+                text = spec.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = note,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = 4.dp),
+            )
+            error?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            when {
+                percent != null -> {
+                    LinearProgressIndicator(
+                        progress = { percent / 100f },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = stringRes(R.string.dictate__local_model_downloading)
+                                .replace("{percent}", percent.toString()),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.weight(1f),
+                        )
+                        TextButton(onClick = onCancel) {
+                            Text(stringRes(R.string.dictate__local_model_action_cancel))
+                        }
+                    }
+                }
+                isInstalled -> FilledTonalButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onUse,
+                ) {
+                    Text(stringRes(R.string.setup__provider__local_use_btn))
+                }
+                else -> FilledTonalButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onInstall,
+                ) {
+                    Text(stringRes(R.string.setup__provider__local_download_btn))
+                }
+            }
+        }
+    }
+}
+
+/**
+ * The phone's own language — the only thing the wizard knows about what is going to be spoken, since
+ * the keyboard's subtypes have not been chosen at this point either.
+ */
+private fun deviceLanguage(context: Context): String =
+    ConfigurationCompat.getLocales(context.resources.configuration)[0]?.language
+        ?: Locale.getDefault().language
+
+/** Which way through the provider step the user is currently on. */
+private enum class ProviderBranch { CHOICE, OWN_KEY, ON_DEVICE }
 
 /**
  * One of the two ways in, with the marks of what it actually connects to.

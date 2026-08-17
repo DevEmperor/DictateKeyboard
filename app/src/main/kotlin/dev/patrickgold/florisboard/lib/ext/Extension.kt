@@ -99,13 +99,15 @@ abstract class Extension {
         /* Empty */
     }
 
-    fun unload(context: Context) = synchronized(loadLock) {
-        val cacheDir = workingDir ?: FsDir(context.cacheDir, meta.id)
-        if (!cacheDir.exists()) return
-        onBeforeUnload(context, cacheDir)
-        cacheDir.deleteRecursively()
-        workingDir = null
-        onAfterUnload(context, cacheDir)
+    fun unload(context: Context) {
+        synchronized(loadLock) {
+            val cacheDir = workingDir ?: FsDir(context.cacheDir, meta.id)
+            if (!cacheDir.exists()) return
+            onBeforeUnload(context, cacheDir)
+            cacheDir.deleteRecursively()
+            workingDir = null
+            onAfterUnload(context, cacheDir)
+        }
     }
 
     fun readExtensionFile(context: Context, relPath: String): String? {
