@@ -1229,6 +1229,8 @@
     <string name="dictate__error_timeout">Przekroczono limit czasu żądania</string>
     <string name="dictate__error_network">Brak połączenia z internetem</string>
     <string name="dictate__error_server">Dostawca niedostępny – spróbuj ponownie</string>
+    <string name="dictate__error_try_on_device">Brak połączenia – spróbuj lokalnie</string>
+    <string name="dictate__error_try_on_device_detail">Transkrypcja na urządzeniu nie potrzebuje żadnego połączenia — pomaga zarówno wtedy, gdy dostawca jest zablokowany, jak i wtedy, gdy nie ma zasięgu. Skonfiguruj ją w sekcji Dostawcy AI i włącz Tryb offline awaryjny, aby przejmowała pracę sama.</string>
     <string name="dictate__action_settings">Otwórz ustawienia</string>
     <string name="dictate__action_error_details">Pokaż szczegóły błędu</string>
     <string name="dictate__error_details_title">Szczegóły błędu</string>

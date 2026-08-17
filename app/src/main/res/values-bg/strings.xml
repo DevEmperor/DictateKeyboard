@@ -1214,6 +1214,8 @@
     <string name="dictate__error_timeout">Времето на заявката изтече</string>
     <string name="dictate__error_network">Няма интернет връзка</string>
     <string name="dictate__error_server">Доставчикът е недостъпен – опитайте отново</string>
+    <string name="dictate__error_try_on_device">Няма връзка – опитайте локално</string>
+    <string name="dictate__error_try_on_device_detail">Транскрибирането на устройството не се нуждае от никаква връзка — помага както когато доставчикът е блокиран, така и когато няма сигнал. Настройте го от ИИ доставчици и включете Офлайн резервен режим, за да се задейства само.</string>
     <string name="dictate__action_settings">Отвори настройките</string>
     <string name="dictate__action_error_details">Покажи подробности за грешката</string>
     <string name="dictate__error_details_title">Подробности за грешката</string>

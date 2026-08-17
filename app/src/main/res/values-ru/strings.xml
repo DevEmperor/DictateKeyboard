@@ -1217,6 +1217,8 @@
     <string name="dictate__error_timeout">Истекло время ожидания запроса</string>
     <string name="dictate__error_network">Нет подключения к интернету</string>
     <string name="dictate__error_server">Поставщик недоступен — повторите попытку</string>
+    <string name="dictate__error_try_on_device">Нет связи — попробуйте на устройстве</string>
+    <string name="dictate__error_try_on_device_detail">Расшифровке на устройстве связь не нужна вообще — это помогает и когда поставщик заблокирован, и когда нет сети. Настройте её в разделе Поставщики ИИ и включите Офлайн-резерв, чтобы она подключалась сама.</string>
     <string name="dictate__action_settings">Открыть настройки</string>
     <string name="dictate__action_error_details">Показать сведения об ошибке</string>
     <string name="dictate__error_details_title">Сведения об ошибке</string>

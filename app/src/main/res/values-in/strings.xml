@@ -1169,6 +1169,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_timeout">Waktu permintaan habis</string>
     <string name="dictate__error_network">Tidak ada koneksi internet</string>
     <string name="dictate__error_server">Penyedia tidak tersedia – coba lagi</string>
+    <string name="dictate__error_try_on_device">Tidak ada koneksi – coba di perangkat</string>
+    <string name="dictate__error_try_on_device_detail">Transkripsi di perangkat sama sekali tidak memerlukan koneksi — berguna saat penyedia diblokir maupun saat tidak ada sinyal. Siapkan di Penyedia AI, lalu aktifkan Cadangan luring agar mengambil alih dengan sendirinya.</string>
     <string name="dictate__action_settings">Buka pengaturan</string>
     <string name="dictate__action_error_details">Tampilkan detail kesalahan</string>
     <string name="dictate__error_details_title">Detail kesalahan</string>

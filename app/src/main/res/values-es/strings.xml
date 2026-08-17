@@ -1195,6 +1195,8 @@
     <string name="dictate__error_timeout">Tiempo de espera agotado</string>
     <string name="dictate__error_network">Sin conexión a internet</string>
     <string name="dictate__error_server">Proveedor no disponible: inténtalo de nuevo</string>
+    <string name="dictate__error_try_on_device">Sin conexión: prueba en el dispositivo</string>
+    <string name="dictate__error_try_on_device_detail">La transcripción en el dispositivo no necesita ninguna conexión: sirve tanto si un proveedor está bloqueado como si no hay cobertura. Configúrala en Proveedores de IA y activa Alternativa sin conexión para que actúe por sí sola.</string>
     <string name="dictate__action_settings">Abrir ajustes</string>
     <string name="dictate__action_error_details">Mostrar detalles del error</string>
     <string name="dictate__error_details_title">Detalles del error</string>

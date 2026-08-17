@@ -821,7 +821,39 @@ object DictateController {
         DictateApiException.Kind.FORMAT_NOT_SUPPORTED,
     )
 
-    private fun apiError(e: DictateApiException, context: Context, canResend: Boolean): UiState.Error {
+    /**
+     * Whether a failed *transcription* should be answered with "the on-device engine needs no network"
+     * (issue #262).
+     *
+     * The reporter there is in mainland China, where every cloud provider is blocked and the app said
+     * nothing more useful than "request timed out" — while the one path that does work was sitting in
+     * the settings, undiscovered. Rather than guessing at censorship from the device region, this asks a
+     * question that is worth answering in every case where it is true: the recording did not reach a
+     * provider, and this phone is not set up to fall back to transcribing it itself. Whether the cause
+     * is a firewall, a tunnel or an airplane, the advice is the same and it is correct.
+     *
+     * False once the fallback is armed *and* a model is installed, because then it already took over
+     * silently and the failure the user is looking at is something else.
+     */
+    private fun shouldSuggestOnDevice(
+        context: Context,
+        kind: DictateApiException.Kind,
+        preset: ProviderPreset,
+    ): Boolean {
+        if (kind != DictateApiException.Kind.NETWORK && kind != DictateApiException.Kind.TIMEOUT) return false
+        if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) return false
+        val localAccount = prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.LOCAL.id)
+        val localModel = transcriptionModelFor(context, localAccount, ProviderRegistry.LOCAL)
+        val ready = localModel.isNotBlank() && LocalModelManager.isInstalled(context, localModel)
+        return !(ready && prefs.dictate.localFallbackEnabled.get())
+    }
+
+    private fun apiError(
+        e: DictateApiException,
+        context: Context,
+        canResend: Boolean,
+        suggestOnDevice: Boolean = false,
+    ): UiState.Error {
         // Dictate Cloud running out of credit is checked first, and before the resend branches: it is
         // classified as QUOTA_EXCEEDED like every other provider's rate limit, but unlike those it is
         // neither worth retrying nor something to go and fix at a provider. Buying more is a button.
@@ -833,15 +865,26 @@ object DictateController {
             e.kind == DictateApiException.Kind.INVALID_API_KEY -> ErrorAction.OPEN_SETTINGS
             else -> ErrorAction.NONE
         }
+        // The chip fits one short line, so the hint replaces the headline rather than being appended to
+        // it — "try on-device" is more use than repeating that there is no connection. The full sentence
+        // goes into the detail popup, where there is room and where the raw provider text for a network
+        // failure ("timeout") is next to useless on its own.
+        val hint = suggestOnDevice && !outOfCredit
+        val detail = e.message?.takeIf { it.isNotBlank() }
         return UiState.Error(
-            message = if (outOfCredit) {
-                context.getString(R.string.dictate__error_out_of_credit)
-            } else {
-                context.getString(errorMessageRes(e.kind))
+            message = when {
+                outOfCredit -> context.getString(R.string.dictate__error_out_of_credit)
+                hint -> context.getString(R.string.dictate__error_try_on_device)
+                else -> context.getString(errorMessageRes(e.kind))
             },
             kind = e.kind,
             action = action,
-            detail = e.message?.takeIf { it.isNotBlank() },
+            detail = if (hint) {
+                listOfNotNull(detail, context.getString(R.string.dictate__error_try_on_device_detail))
+                    .joinToString("\n\n")
+            } else {
+                detail
+            },
         )
     }
 
@@ -1593,7 +1636,10 @@ object DictateController {
                 if (replayHistoryId == null) {
                     recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
                 }
-                _state.value = apiError(e, appContext, canResend = keepAudio)
+                _state.value = apiError(
+                    e, appContext, canResend = keepAudio,
+                    suggestOnDevice = shouldSuggestOnDevice(appContext, e.kind, preset),
+                )
             } catch (t: Throwable) {
                 outcome = "unexpectedError"
                 _pendingPrompts.value = emptyList()

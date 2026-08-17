@@ -997,6 +997,8 @@
     <string name="dictate__error_timeout">Richiesta scaduta</string>
     <string name="dictate__error_network">Nessuna connessione a internet</string>
     <string name="dictate__error_server">Fornitore non disponibile – riprova</string>
+    <string name="dictate__error_try_on_device">Nessuna connessione – prova in locale</string>
+    <string name="dictate__error_try_on_device_detail">La trascrizione sul dispositivo non richiede alcuna connessione: è utile sia quando un fornitore è bloccato sia quando manca il segnale. Impostala in Fornitori IA e attiva Ripiego offline perché intervenga da sola.</string>
     <string name="dictate__action_settings">Apri impostazioni</string>
     <string name="dictate__action_error_details">Mostra dettagli dell\'errore</string>
     <string name="dictate__error_details_title">Dettagli dell\'errore</string>

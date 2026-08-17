@@ -1228,6 +1228,8 @@
     <string name="dictate__error_timeout">Vypršel časový limit požadavku</string>
     <string name="dictate__error_network">Žádné připojení k internetu</string>
     <string name="dictate__error_server">Poskytovatel není dostupný – zkuste to znovu</string>
+    <string name="dictate__error_try_on_device">Bez připojení – zkuste v zařízení</string>
+    <string name="dictate__error_try_on_device_detail">Přepis v zařízení nepotřebuje vůbec žádné připojení — pomůže, když je poskytovatel blokovaný, i když není signál. Nastavte jej v sekci Poskytovatelé AI a zapněte Offline záloha, aby se spustil sám.</string>
     <string name="dictate__action_settings">Otevřít nastavení</string>
     <string name="dictate__action_error_details">Zobrazit podrobnosti chyby</string>
     <string name="dictate__error_details_title">Podrobnosti chyby</string>

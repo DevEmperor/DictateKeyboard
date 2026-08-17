@@ -1061,6 +1061,8 @@
     <string name="dictate__error_timeout">Час очікування запиту вичерпано</string>
     <string name="dictate__error_network">Немає підключення до інтернету</string>
     <string name="dictate__error_server">Постачальник недоступний — повторіть спробу</string>
+    <string name="dictate__error_try_on_device">Немає зв\'язку — спробуйте на пристрої</string>
+    <string name="dictate__error_try_on_device_detail">Розшифруванню на пристрої зв\'язок не потрібен узагалі — це допомагає і коли постачальника заблоковано, і коли немає мережі. Налаштуйте його в розділі Постачальники ШІ та ввімкніть Офлайн-резерв, щоб воно вмикалося саме.</string>
     <string name="dictate__action_settings">Відкрити налаштування</string>
     <string name="dictate__action_error_details">Показати деталі помилки</string>
     <string name="dictate__error_details_title">Деталі помилки</string>

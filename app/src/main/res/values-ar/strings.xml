@@ -1072,6 +1072,8 @@
     <string name="dictate__error_timeout">انتهت مهلة الطلب</string>
     <string name="dictate__error_network">لا يوجد اتصال بالإنترنت</string>
     <string name="dictate__error_server">المزوّد غير متاح – أعد المحاولة</string>
+    <string name="dictate__error_try_on_device">لا يوجد اتصال – جرّب على الجهاز</string>
+    <string name="dictate__error_try_on_device_detail">لا يحتاج التفريغ على الجهاز إلى أي اتصال — وهذا مفيد عندما يكون المزوّد محجوبًا، ومفيد كذلك عند انقطاع الشبكة. أعدّه من مزوّدو الذكاء الاصطناعي، ثم فعّل احتياطي دون اتصال ليتولى المهمة من تلقاء نفسه.</string>
     <string name="dictate__action_settings">فتح الإعدادات</string>
     <string name="dictate__action_error_details">إظهار تفاصيل الخطأ</string>
     <string name="dictate__error_details_title">تفاصيل الخطأ</string>

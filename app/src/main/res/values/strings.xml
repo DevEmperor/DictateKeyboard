@@ -1551,6 +1551,8 @@
     <string name="dictate__error_timeout" comment="Short error: the request timed out">Request timed out</string>
     <string name="dictate__error_network" comment="Short error: no network connection reached the provider">No internet connection</string>
     <string name="dictate__error_server" comment="Short error: the provider returned a 5xx server error">Provider unavailable – try again</string>
+    <string name="dictate__error_try_on_device" comment="Short error replacing the timeout/no-connection headline when the recording never reached the provider and on-device transcription is not set up yet. Keep it short – it has one line on the keyboard.">No connection – try on-device</string>
+    <string name="dictate__error_try_on_device_detail" comment="Longer explanation in the error details popup, shown under the raw provider error. Match the wording of the settings screens: 'AI providers' and 'Offline fallback'.">On-device transcription needs no connection at all — useful where a provider is blocked as well as where there is no signal. Set it up under AI providers, then turn on Offline fallback so it takes over by itself.</string>
     <string name="dictate__action_settings" comment="Button on a fixable error that opens the Dictate provider settings">Open settings</string>
     <string name="dictate__action_error_details" comment="Accessibility label: tapping the error shows the full provider error text">Show error details</string>
     <string name="dictate__error_details_title" comment="Title of the popup that shows the full provider error text">Error details</string>

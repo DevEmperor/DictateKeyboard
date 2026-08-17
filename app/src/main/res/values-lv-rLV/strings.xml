@@ -1157,6 +1157,8 @@
     <string name="dictate__error_timeout">Pieprasījuma noildze</string>
     <string name="dictate__error_network">Nav interneta savienojuma</string>
     <string name="dictate__error_server">Pakalpojuma sniedzējs nav pieejams – mēģiniet vēlreiz</string>
+    <string name="dictate__error_try_on_device">Nav savienojuma – mēģiniet ierīcē</string>
+    <string name="dictate__error_try_on_device_detail">Transkripcijai ierīcē savienojums nav vajadzīgs nemaz — tas palīdz gan tad, ja pakalpojums ir bloķēts, gan tad, ja nav signāla. Iestatiet to sadaļā MI pakalpojumu sniedzēji un ieslēdziet Bezsaistes rezerve, lai tā pārņemtu darbu pati.</string>
     <string name="dictate__action_settings">Atvērt iestatījumus</string>
     <string name="dictate__action_error_details">Rādīt kļūdas detaļas</string>
     <string name="dictate__error_details_title">Kļūdas detaļas</string>

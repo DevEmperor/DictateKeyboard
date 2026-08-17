@@ -1212,6 +1212,8 @@
     <string name="dictate__error_timeout">A kérés időtúllépést okozott</string>
     <string name="dictate__error_network">Nincs internetkapcsolat</string>
     <string name="dictate__error_server">A szolgáltató nem érhető el – próbálja újra</string>
+    <string name="dictate__error_try_on_device">Nincs kapcsolat – próbálja eszközön</string>
+    <string name="dictate__error_try_on_device_detail">Az eszközön futó átíráshoz egyáltalán nem kell kapcsolat — akkor is segít, ha a szolgáltató blokkolva van, és akkor is, ha nincs térerő. Állítsa be az MI-szolgáltatók alatt, majd kapcsolja be az Offline tartalék funkciót, hogy magától átvegye a munkát.</string>
     <string name="dictate__action_settings">Beállítások megnyitása</string>
     <string name="dictate__action_error_details">Hiba részleteinek megjelenítése</string>
     <string name="dictate__error_details_title">Hiba részletei</string>

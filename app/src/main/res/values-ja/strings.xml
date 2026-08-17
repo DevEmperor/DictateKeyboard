@@ -1146,6 +1146,8 @@
     <string name="dictate__error_timeout">リクエストがタイムアウトしました</string>
     <string name="dictate__error_network">インターネット接続がありません</string>
     <string name="dictate__error_server">プロバイダーが利用できません – もう一度お試しください</string>
+    <string name="dictate__error_try_on_device">接続なし – 端末内で試す</string>
+    <string name="dictate__error_try_on_device_detail">端末内の文字起こしは接続をまったく必要としません。プロバイダーがブロックされている場合にも、電波がない場合にも役立ちます。「AIプロバイダー」で設定し、「オフライン時のフォールバック」をオンにすると、自動的に引き継ぎます。</string>
     <string name="dictate__action_settings">設定を開く</string>
     <string name="dictate__action_error_details">エラーの詳細を表示</string>
     <string name="dictate__error_details_title">エラーの詳細</string>

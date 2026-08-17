@@ -1209,6 +1209,8 @@
     <string name="dictate__error_timeout">请求超时</string>
     <string name="dictate__error_network">无网络连接</string>
     <string name="dictate__error_server">服务商不可用——请重试</string>
+    <string name="dictate__error_try_on_device">无法连接——试试本机转写</string>
+    <string name="dictate__error_try_on_device_detail">本机转写完全不需要联网——无论是服务商被屏蔽，还是根本没有信号，都用得上。请在 AI 服务商 中设置，并打开 离线回退，让它自动接管。</string>
     <string name="dictate__action_settings">打开设置</string>
     <string name="dictate__action_error_details">显示错误详情</string>
     <string name="dictate__error_details_title">错误详情</string>

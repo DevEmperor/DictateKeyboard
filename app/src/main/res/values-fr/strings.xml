@@ -1091,6 +1091,8 @@
     <string name="dictate__error_timeout">Délai d\'attente dépassé</string>
     <string name="dictate__error_network">Pas de connexion internet</string>
     <string name="dictate__error_server">Fournisseur indisponible – réessayez</string>
+    <string name="dictate__error_try_on_device">Pas de connexion – essayez en local</string>
+    <string name="dictate__error_try_on_device_detail">La transcription sur l\'appareil ne nécessite aucune connexion — utile quand un fournisseur est bloqué comme quand il n\'y a pas de réseau. Configurez-la dans Fournisseurs d\'IA, puis activez Repli hors ligne pour qu\'elle prenne le relais toute seule.</string>
     <string name="dictate__action_settings">Ouvrir les paramètres</string>
     <string name="dictate__action_error_details">Afficher les détails de l\'erreur</string>
     <string name="dictate__error_details_title">Détails de l\'erreur</string>

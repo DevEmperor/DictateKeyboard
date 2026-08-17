@@ -1089,6 +1089,8 @@
     <string name="dictate__error_timeout">La sol·licitud ha excedit el temps d\'espera</string>
     <string name="dictate__error_network">Sense connexió a internet</string>
     <string name="dictate__error_server">Proveïdor no disponible – torna-ho a provar</string>
+    <string name="dictate__error_try_on_device">Sense connexió – prova al dispositiu</string>
+    <string name="dictate__error_try_on_device_detail">La transcripció al dispositiu no necessita cap connexió: ajuda tant si un proveïdor està bloquejat com si no hi ha cobertura. Configura-la a Proveïdors d\'IA i activa Alternativa fora de línia perquè se n\'encarregui tota sola.</string>
     <string name="dictate__action_settings">Obre la configuració</string>
     <string name="dictate__action_error_details">Mostra els detalls de l\'error</string>
     <string name="dictate__error_details_title">Detalls de l\'error</string>

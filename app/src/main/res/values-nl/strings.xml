@@ -1113,6 +1113,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_timeout">Time-out van verzoek</string>
     <string name="dictate__error_network">Geen internetverbinding</string>
     <string name="dictate__error_server">Aanbieder niet beschikbaar – probeer het opnieuw</string>
+    <string name="dictate__error_try_on_device">Geen verbinding – probeer op apparaat</string>
+    <string name="dictate__error_try_on_device_detail">Transcriptie op het apparaat heeft helemaal geen verbinding nodig — handig als een aanbieder geblokkeerd is én als er geen bereik is. Stel het in bij AI-aanbieders en zet Offline terugval aan, zodat het vanzelf overneemt.</string>
     <string name="dictate__action_settings">Instellingen openen</string>
     <string name="dictate__action_error_details">Foutdetails tonen</string>
     <string name="dictate__error_details_title">Foutdetails</string>

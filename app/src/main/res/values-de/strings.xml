@@ -1104,6 +1104,8 @@
     <string name="dictate__error_timeout">Zeitüberschreitung der Anfrage</string>
     <string name="dictate__error_network">Keine Internetverbindung</string>
     <string name="dictate__error_server">Anbieter nicht erreichbar – versuche es erneut</string>
+    <string name="dictate__error_try_on_device">Keine Verbindung – On-Device nutzen</string>
+    <string name="dictate__error_try_on_device_detail">Die Transkription auf dem Gerät braucht überhaupt keine Verbindung — das hilft, wenn ein Anbieter gesperrt ist, genauso wie ohne Empfang. Unter „KI-Anbieter“ einrichten und danach „Offline-Fallback“ einschalten, damit sie von selbst übernimmt.</string>
     <string name="dictate__action_settings">Einstellungen öffnen</string>
     <string name="dictate__action_error_details">Fehlerdetails anzeigen</string>
     <string name="dictate__error_details_title">Fehlerdetails</string>

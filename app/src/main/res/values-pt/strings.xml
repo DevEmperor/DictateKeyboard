@@ -1193,6 +1193,8 @@
     <string name="dictate__error_timeout">Tempo limite da solicitação esgotado</string>
     <string name="dictate__error_network">Sem ligação à internet</string>
     <string name="dictate__error_server">Fornecedor indisponível – tente novamente</string>
+    <string name="dictate__error_try_on_device">Sem ligação – tente no dispositivo</string>
+    <string name="dictate__error_try_on_device_detail">A transcrição no dispositivo não precisa de ligação nenhuma — ajuda tanto quando um fornecedor está bloqueado como quando não há rede. Configure-a em Fornecedores de IA e ative a Alternativa offline para que assuma sozinha.</string>
     <string name="dictate__action_settings">Abrir definições</string>
     <string name="dictate__action_error_details">Mostrar detalhes do erro</string>
     <string name="dictate__error_details_title">Detalhes do erro</string>
