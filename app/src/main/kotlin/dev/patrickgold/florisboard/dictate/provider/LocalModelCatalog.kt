@@ -36,6 +36,12 @@ enum class LocalModelKind {
 
     /** NVIDIA Canary: an attention encoder/decoder that is *told* its language rather than detecting it. */
     CANARY,
+
+    /**
+     * SenseVoice: a single-file non-autoregressive recognizer. Unlike every other kind here it has no
+     * encoder/decoder pair at all — just one model file next to the tokens.
+     */
+    SENSE_VOICE,
 }
 
 /**
@@ -394,6 +400,39 @@ object LocalModelCatalog {
         6_331, "be979c5715abf12e88a88318e60b33e744fffd83f47b562e5d9964539d46ada1",
     )
 
+    /**
+     * ~240 MB. SenseVoice Small (issue #262) — Mandarin, Cantonese, English, Japanese and Korean, and by
+     * a wide margin the best Chinese this app can do without a network. Whisper only ever treated Chinese
+     * as one language among a hundred; this one was trained for it. It matters most where none of the
+     * cloud providers are reachable, which is the situation the reporter of #262 is in, but it is the
+     * better pick for Chinese, Japanese or Korean anywhere.
+     *
+     * Architecturally it is neither Whisper nor a transducer: one non-autoregressive model file, no
+     * decoder, which is why [LocalModelKind.SENSE_VOICE] exists and why [LocalModelSpec.files] is the
+     * authority on what a model needs on disk rather than a hardcoded encoder/decoder/tokens triple.
+     *
+     * **Provenance.** The int8 export dated 2024-07-17, which is the original FunAudioLLM model. Note the
+     * trap: sherpa-onnx also publishes a *newer-dated* 2025-09-09 build under a near-identical name, and
+     * that one is not a newer version of this model but a Cantonese fine-tune (ASLP-lab/WSYue-ASR) —
+     * a downgrade for the Mandarin this entry is mainly here for.
+     *
+     * **Licensing:** SenseVoice weights are under the FunASR Model License v1.1 (© Alibaba Group), which
+     * permits commercial use as long as source, author and model name are attributed — hence the entry in
+     * NOTICE and on the attributions screen, and hence "SenseVoice" in the display name. The sherpa-onnx
+     * ONNX export is Apache-2.0.
+     */
+    val SENSE_VOICE_SMALL = LocalModelSpec(
+        id = "sense-voice-small",
+        displayName = "SenseVoice Small",
+        description = "Chinese, Cantonese, English, Japanese, Korean · ~240 MB",
+        kind = LocalModelKind.SENSE_VOICE,
+        files = listOf(
+            LocalModelFile("$REL/sense-voice-small-model.int8.onnx", LocalTranscriptionProvider.MODEL, 239_233_841, "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"),
+            LocalModelFile("$REL/sense-voice-small-tokens.txt", LocalTranscriptionProvider.TOKENS, 315_894, "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"),
+            VAD_FILE,
+        ),
+    )
+
     /** Install-dir id of the on-device Smart Turn v3 classifier (issue #191). */
     const val SMART_TURN_ID = "smart-turn-v3"
 
@@ -427,6 +466,7 @@ object LocalModelCatalog {
         CANARY_180M_FLASH,
         PARAKEET_PRIMELINE_DE,
         GIGAAM_V2_RU,
+        SENSE_VOICE_SMALL,
         WHISPER_TINY, WHISPER_BASE, WHISPER_SMALL,
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
         KROKO_EN, KROKO_DE, KROKO_ES, KROKO_FR,

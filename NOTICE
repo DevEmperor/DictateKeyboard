@@ -43,6 +43,14 @@ distribution. They are mirrored unmodified on the project's GitHub releases.
     NVIDIA Canary 180M Flash — https://huggingface.co/nvidia/canary-180m-flash
     (CC-BY-4.0)
     GigaAM v2 Russian — https://github.com/salute-developers/GigaAM (MIT)
+
+    SenseVoice Small (Chinese, Cantonese, English, Japanese, Korean)
+    Copyright Alibaba Group — https://github.com/FunAudioLLM/SenseVoice
+    Licensed under the FunASR Model Open Source License Agreement v1.1
+    (https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE), which permits
+    use, modification and sharing with attribution of source, author and model
+    name. Mirrored unmodified; the model name is retained as required.
+
     Silero VAD — https://github.com/snakers4/silero-vad (MIT)
     Smart Turn v3 — https://github.com/pipecat-ai/smart-turn (BSD-2-Clause)
 

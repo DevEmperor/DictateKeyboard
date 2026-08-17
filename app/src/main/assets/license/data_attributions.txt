@@ -48,6 +48,16 @@ One-shot models — these transcribe after you stop speaking:
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
   - Parakeet German (primeline) — a German-specialized fine-tune of NVIDIA Parakeet TDT 0.6B v3,
     © primeline, licensed CC BY 4.0. https://huggingface.co/primeline/parakeet-primeline
+  - Canary 180M Flash — © NVIDIA, licensed CC BY 4.0.
+    https://huggingface.co/nvidia/canary-180m-flash
+  - GigaAM v2 Russian — © Salute Devices, MIT License.
+    https://github.com/salute-developers/GigaAM
+  - SenseVoice Small (Chinese, Cantonese, English, Japanese, Korean) — © Alibaba Group,
+    licensed under the FunASR Model Open Source License Agreement v1.1, which permits use,
+    modification and sharing with attribution of the source, the author and the model name.
+    https://github.com/FunAudioLLM/SenseVoice
+    License text: https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE
+    Redistributed unmodified, under its own name.
 
 Streaming models — these transcribe live, while you are still speaking:
 

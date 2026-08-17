@@ -16,6 +16,7 @@ import com.k2fsa.sherpa.onnx.OfflineCanaryModelConfig
 import com.k2fsa.sherpa.onnx.OfflineModelConfig
 import com.k2fsa.sherpa.onnx.OfflineRecognizer
 import com.k2fsa.sherpa.onnx.OfflineRecognizerConfig
+import com.k2fsa.sherpa.onnx.OfflineSenseVoiceModelConfig
 import com.k2fsa.sherpa.onnx.OfflineTransducerModelConfig
 import com.k2fsa.sherpa.onnx.OfflineWhisperModelConfig
 import com.k2fsa.sherpa.onnx.SileroVadModelConfig
@@ -34,12 +35,16 @@ import java.util.concurrent.TimeUnit
  * No audio ever leaves the device. This is the offline counterpart to [OpenAiCompatibleClient] and plugs
  * into the same [TranscriptionProvider] seam the dictation flow already uses.
  *
- * A model is a directory under [modelsRoot] containing three fixed-name files (so this class stays
- * agnostic of the specific Whisper variant):
+ * A model is a directory under [modelsRoot] holding fixed-name files, so this class stays agnostic of
+ * the specific variant:
  *
  *   <filesDir>/dictate-models/<modelId>/encoder.onnx
  *                                       /decoder.onnx
  *                                       /tokens.txt
+ *
+ * Which of them a given model actually needs is the catalog entry's business, not this class's — a
+ * transducer adds `joiner.onnx`, and SenseVoice has neither encoder nor decoder but a single
+ * `model.onnx`. See [requiredFiles].
  *
  * The native [OfflineRecognizer] is expensive to construct (it loads the model into memory), so it is
  * cached process-wide in [RecognizerCache] and reused across transcriptions; switching models releases
@@ -52,13 +57,13 @@ class LocalTranscriptionProvider(
 
     override suspend fun transcribe(request: TranscriptionRequest): TranscriptionResult =
         withContext(Dispatchers.Default) {
-            val encoder = File(modelDir, ENCODER)
-            val decoder = File(modelDir, DECODER)
-            val tokens = File(modelDir, TOKENS)
-            if (!encoder.exists() || !decoder.exists() || !tokens.exists()) {
+            // What "installed" means depends on the model: Whisper wants an encoder/decoder pair, a
+            // transducer adds a joiner, SenseVoice has a single model file. The catalog entry says which.
+            val missing = requiredFiles(modelDir.name).filterNot { File(modelDir, it).exists() }
+            if (missing.isNotEmpty()) {
                 throw DictateApiException(
                     DictateApiException.Kind.UNKNOWN,
-                    "On-device model '${modelDir.name}' is not installed",
+                    "On-device model '${modelDir.name}' is not installed (missing ${missing.joinToString()})",
                 )
             }
             // A streaming model (#233) is normally driven live by [LocalRealtimeSession], but it must
@@ -265,6 +270,12 @@ class LocalTranscriptionProvider(
         const val TOKENS = "tokens.txt"
 
         /**
+         * The single model file of a one-piece recognizer (SenseVoice, issue #262), which has no
+         * encoder/decoder split at all.
+         */
+        const val MODEL = "model.onnx"
+
+        /**
          * Optional joiner for transducer models (e.g. NeMo Parakeet, issue #154). Its presence in a model
          * directory is what makes [RecognizerCache] build a transducer recognizer instead of a Whisper one.
          */
@@ -279,15 +290,25 @@ class LocalTranscriptionProvider(
         /** Directory for a single model id (its `encoder.onnx`/`decoder.onnx`/`tokens.txt` live here). */
         fun modelDir(context: Context, modelId: String): File = File(modelsRoot(context), modelId)
 
+        /**
+         * The file names [modelId] must have on disk, taken from its own catalog entry rather than
+         * assumed. A hardcoded encoder/decoder/tokens triple was only ever right for Whisper: it let a
+         * transducer missing its joiner pass as installed and then fail natively at load time, and it
+         * cannot describe SenseVoice at all, which has one model file and no decoder (issue #262).
+         *
+         * The VAD is excluded on purpose — it only enables segmenting of long audio, and the code
+         * already checks for it where it is used. An id with no catalog entry (a leftover preference)
+         * falls back to the Whisper shape.
+         */
+        private fun requiredFiles(modelId: String): List<String> =
+            LocalModelCatalog.byId(modelId)?.files
+                ?.map { it.destName }?.filter { it != VAD }?.distinct()
+                ?: listOf(ENCODER, DECODER, TOKENS)
+
         /** True if [modelId] has all required files present on disk. */
         fun isInstalled(context: Context, modelId: String): Boolean {
             val dir = modelDir(context, modelId)
-            if (!File(dir, ENCODER).exists() || !File(dir, DECODER).exists() ||
-                !File(dir, TOKENS).exists()
-            ) return false
-            // Streaming models (#233) are transducers, so a missing joiner means a broken install rather
-            // than a Whisper-style model — reporting it as installed would fail natively at load time.
-            return !LocalModelCatalog.isStreaming(modelId) || File(dir, JOINER).exists()
+            return requiredFiles(modelId).all { File(dir, it).exists() }
         }
 
         /**
@@ -344,6 +365,7 @@ private object RecognizerCache {
         val decoder = File(modelDir, LocalTranscriptionProvider.DECODER)
         val tokens = File(modelDir, LocalTranscriptionProvider.TOKENS)
         val joiner = File(modelDir, LocalTranscriptionProvider.JOINER)
+        val model = File(modelDir, LocalTranscriptionProvider.MODEL)
         // The model says which recognizer it needs (#255). A joiner used to be the tell, but Canary has
         // Whisper's file shape and neither config; the directory name is the model id.
         val kind = LocalModelCatalog.kindOf(modelDir.name)
@@ -360,7 +382,7 @@ private object RecognizerCache {
             existing?.release()
             recognizer = null
             key = null
-            buildRecognizer(encoder, decoder, tokens, joiner, kind, numThreads, language).also {
+            buildRecognizer(encoder, decoder, tokens, joiner, model, kind, numThreads, language).also {
                 recognizer = it
                 key = cacheKey
             }
@@ -414,6 +436,7 @@ private object RecognizerCache {
         decoder: File,
         tokens: File,
         joiner: File,
+        model: File,
         kind: LocalModelKind,
         numThreads: Int,
         language: String,
@@ -451,6 +474,20 @@ private object RecognizerCache {
                     modelType = "canary",
                 )
             }
+            // SenseVoice (issue #262): one non-autoregressive model file, no encoder/decoder pair. Like
+            // Canary it is told its language, but unlike Canary it accepts "auto" and detects — so an
+            // unset or unsupported input language stays on detection rather than being forced to a guess.
+            LocalModelKind.SENSE_VOICE -> OfflineModelConfig(
+                senseVoice = OfflineSenseVoiceModelConfig(
+                    model = model.absolutePath,
+                    language = senseVoiceLanguage(language),
+                    // Writes numbers and dates as digits instead of spelled-out words, which is what a
+                    // keyboard should paste into a text field.
+                    useInverseTextNormalization = true,
+                ),
+                tokens = tokens.absolutePath,
+                numThreads = numThreads,
+            )
             LocalModelKind.WHISPER -> OfflineModelConfig(
                 whisper = OfflineWhisperModelConfig(
                     encoder = encoder.absolutePath,
@@ -481,4 +518,19 @@ private object RecognizerCache {
         language.lowercase().takeIf { it in CANARY_LANGUAGES } ?: "en"
 
     private val CANARY_LANGUAGES = setOf("en", "de", "fr", "es")
+
+    /**
+     * The language tag to hand SenseVoice. It speaks five and, unlike Canary, has a real "auto" mode, so
+     * anything it does not know falls back to detection instead of to a wrong-but-known language.
+     *
+     * Cantonese is `yue` to sherpa-onnx. The app can also carry it as `zh-HK` / `zh-yue`, but the region
+     * is already stripped by the caller, so only the tag itself is mapped here.
+     */
+    private fun senseVoiceLanguage(language: String): String = when (val lang = language.lowercase()) {
+        in SENSE_VOICE_LANGUAGES -> lang
+        "yue", "zh_yue", "cantonese" -> "yue"
+        else -> "auto"
+    }
+
+    private val SENSE_VOICE_LANGUAGES = setOf("zh", "en", "ja", "ko", "yue")
 }
