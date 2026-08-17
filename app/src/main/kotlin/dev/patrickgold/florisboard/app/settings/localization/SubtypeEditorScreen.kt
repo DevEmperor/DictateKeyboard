@@ -307,10 +307,14 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             // shape-based NLP provider, whose word suggestion / Romaji→Kana conversion silently does
             // nothing until the matching downloadable dictionary (a language pack) is installed. Detect
             // that state and offer a one-tap jump to the download screen, so it no longer looks broken.
+            // Matched on the full locale tag, not just the language: each of these subtypes names one
+            // specific table by its variant — zh-CN-pinyin reads `pinyin`, zh-CN-zhengma reads `zhengma`
+            // (issue #262). Comparing only "zh" made any Chinese pack look like every Chinese pack, so a
+            // missing table produced a keyboard that typed nothing and a screen that said nothing.
             val needsMissingLanguagePack = nlpProviders.suggestion == HanShapeBasedLanguageProvider.ProviderId &&
                 primaryLocale != SelectLocale &&
                 installedLanguagePacks.none { pack ->
-                    pack.items.any { it.locale.language == primaryLocale.language }
+                    pack.items.any { it.locale.localeTag() == primaryLocale.localeTag() }
                 }
             if (needsMissingLanguagePack) {
                 Card(
