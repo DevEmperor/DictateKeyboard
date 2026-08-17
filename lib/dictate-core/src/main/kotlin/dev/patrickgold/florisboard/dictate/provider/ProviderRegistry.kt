@@ -417,6 +417,20 @@ object ProviderRegistry {
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
 
+    /**
+     * The largest audio upload [providerId] accepts, or 0 when we do not know.
+     *
+     * Only OpenAI and Groq document a figure, and 0 means "no idea" rather than "no limit" — a caller
+     * must treat it as unknown, not as permission. Kept here rather than in the file-import screen
+     * (where it started) because the recording path needs it too: 16 kHz mono WAV is 32 kB per second,
+     * so 25 MB is reached after 13 minutes 39 seconds, which is what made a 14-minute dictation fail
+     * outright (#281).
+     */
+    fun maxUploadBytes(providerId: String): Long = when (providerId) {
+        "openai", "groq" -> 25L * 1024 * 1024
+        else -> 0L
+    }
+
     /** Builds a preset for a user-defined OpenAI-compatible endpoint. */
     /**
      * [realtime] marks a server the user has told us speaks the OpenAI realtime protocol under

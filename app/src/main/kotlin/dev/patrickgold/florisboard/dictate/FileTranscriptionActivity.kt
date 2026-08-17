@@ -89,10 +89,8 @@ class FileTranscriptionActivity : ComponentActivity() {
         }
     }
 
-    private fun maxUploadBytesFor(providerId: String): Long = when (providerId) {
-        "openai", "groq" -> 25L * 1024 * 1024
-        else -> 0L
-    }
+    private fun maxUploadBytesFor(providerId: String): Long =
+        dev.patrickgold.florisboard.dictate.provider.ProviderRegistry.maxUploadBytes(providerId)
 
     companion object {
         private val MIME_TYPES = arrayOf("audio/*", "video/*")

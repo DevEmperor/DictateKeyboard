@@ -485,6 +485,30 @@ object DictateController {
     /** Cache file for the sped-up upload copy (issue #272); the recording itself is never overwritten. */
     private const val SPED_UP_AUDIO_NAME = "dictate_speedup.wav"
     private const val PACKED_AUDIO_NAME = "dictate_upload.m4a"
+
+    /**
+     * From which recording size on the upload is packed into AAC (#281). 16 MiB of 16 kHz mono WAV is
+     * about 8 minutes 45 seconds of speech.
+     *
+     * Measured on a Galaxy A55: packing runs at 73–83× realtime and shrinks the file by 3.96×, so at
+     * this size it costs ~7 s and removes ~12 MB from the upload. Below it the sums invert — a 2.5 s
+     * dictation spent 113 ms encoding to save 58 kB, which on a fast connection is 15 ms of upload —
+     * so short dictations are left exactly as they were.
+     *
+     * Deliberately well under the 25 MiB that OpenAI and Groq allow, because [ProviderRegistry
+     * .maxUploadBytes] returns 0 for every other provider and 0 means "unknown", not "unlimited". A
+     * threshold sitting on the known limit would never rescue a provider whose real limit is lower.
+     */
+    private const val PACK_ABOVE_BYTES = 16L * 1024 * 1024
+
+    /**
+     * Whether a [wavBytes] upload is worth packing for a provider that allows [limitBytes] (0 =
+     * unknown). Above [PACK_ABOVE_BYTES] always; below it only when the provider's own limit is close
+     * enough that the WAV would otherwise be refused — three quarters of it, so the decision is made
+     * before the edge rather than at it.
+     */
+    internal fun shouldPack(wavBytes: Long, limitBytes: Long): Boolean =
+        wavBytes > PACK_ABOVE_BYTES || (limitBytes > 0L && wavBytes > limitBytes / 4 * 3)
     /** Cache file for a recording taken back from a hanging cloud request to finish on-device (#270). */
     private const val RESCUED_AUDIO_NAME = "dictate_rescued.wav"
     // Realtime (#128): after finish(), how long to wait for the provider to flush the last words before we
@@ -1437,7 +1461,8 @@ object DictateController {
                 // uploaded (on-device), and for picked files, which are the user's own and stay untouched.
                 if (!chatAudio &&
                     preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
-                    source != DictateHistorySource.IMPORT
+                    source != DictateHistorySource.IMPORT &&
+                    shouldPack(uploadFile.length(), ProviderRegistry.maxUploadBytes(preset.id))
                 ) {
                     val packed = AudioEncode.toM4a(uploadFile, File(appContext.cacheDir, PACKED_AUDIO_NAME))
                     if (packed != null) {
@@ -2213,7 +2238,9 @@ object DictateController {
         // Pack it for the wire (issue #281), same rule as the single-shot path — a long dictation is
         // exactly where the segments add up. The WAV stays on disk: it is merged into the history audio.
         val toUpload = spedUp ?: wav
-        val packed = if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
+        val packed = if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
+            shouldPack(toUpload.length(), ProviderRegistry.maxUploadBytes(preset.id))
+        ) {
             AudioEncode.toM4a(toUpload, File(appContext.cacheDir, "pak_${wav.nameWithoutExtension}.m4a"))
         } else {
             null
