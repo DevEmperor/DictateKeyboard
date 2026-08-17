@@ -418,16 +418,34 @@ object ProviderRegistry {
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
 
     /**
-     * The largest audio upload [providerId] accepts, or 0 when we do not know.
+     * The largest audio upload [providerId] accepts, or 0 when the provider does not document one.
      *
-     * Only OpenAI and Groq document a figure, and 0 means "no idea" rather than "no limit" — a caller
-     * must treat it as unknown, not as permission. Kept here rather than in the file-import screen
-     * (where it started) because the recording path needs it too: 16 kHz mono WAV is 32 kB per second,
-     * so 25 MB is reached after 13 minutes 39 seconds, which is what made a 14-minute dictation fail
-     * outright (#281).
+     * **0 means unknown, never unlimited.** Callers must treat it as "no figure to check against", not
+     * as permission to send anything.
+     *
+     * Kept here rather than in the file-import screen (where it started) because the recording path
+     * needs it too: 16 kHz mono WAV is 32 kB per second, so 25 MB is reached after 13 minutes
+     * 39 seconds — which is what made a 14-minute dictation fail outright (#281).
+     *
+     * Figures read from each provider's own documentation on 2026-08-17:
+     *  - OpenAI 25 MB. Dictate Cloud proxies to OpenAI, so it inherits the same ceiling.
+     *  - Groq 25 MB on the free tier, 100 MB on the dev tier. The key does not say which tier it is
+     *    on, so the lower one is assumed.
+     *  - Gemini caps the whole request at 20 MB, and its audio travels **base64-inline**
+     *    (`transcribeGeminiGenerateContent`), which inflates it by 4/3 — so the audio itself may not
+     *    exceed about 15 MB. This is the one provider whose limit bites before the general packing
+     *    threshold does.
+     *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
+     *    anything a keyboard produces; recorded so the number is not looked up twice.
+     *  - Mistral and Soniox document a *duration* (3 hours, 300 minutes) but no size, so they stay 0.
+     *    Do not translate a duration into bytes here: the encoding is not theirs to assume.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
-        "openai", "groq" -> 25L * 1024 * 1024
+        "openai", "cloud", "groq" -> 25L * 1024 * 1024
+        "gemini" -> 15L * 1024 * 1024
+        "elevenlabs" -> 3L * 1024 * 1024 * 1024
+        "deepgram" -> 2L * 1024 * 1024 * 1024
+        "assemblyai" -> 2252L * 1024 * 1024
         else -> 0L
     }
 

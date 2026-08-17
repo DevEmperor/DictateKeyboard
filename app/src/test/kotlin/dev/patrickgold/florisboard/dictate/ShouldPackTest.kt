@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate
 
+import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -72,6 +73,39 @@ class ShouldPackTest {
         // 0 means "no figure documented", not "no ceiling". A big recording is packed either way.
         assertTrue(pack(mib(20), unknown))
         assertEqualsDecision(pack(mib(20), unknown), pack(mib(20), known))
+    }
+
+    @Test
+    fun `gemini is the provider whose own limit decides before the general rule`() {
+        // Gemini caps the whole request at 20 MB and carries the audio base64-inline, so the audio may
+        // not pass ~15 MB — under the 16 MiB rule. Three quarters of that is 11.25 MiB, about six
+        // minutes of speech, and packing has to start there rather than at nine.
+        val gemini = ProviderRegistry.maxUploadBytes("gemini")
+        assertTrue(gemini in 1 until mib(16), "gemini limit $gemini is not below the general threshold")
+        assertTrue(pack(mib(12), gemini))
+        assertFalse(pack(mib(12)), "without a limit this size is left alone")
+    }
+
+    @Test
+    fun `providers with room to spare never trip the limit clause`() {
+        // Their ceilings are in gigabytes, so only the general threshold can ever decide for them.
+        for (id in listOf("elevenlabs", "deepgram", "assemblyai")) {
+            val limit = ProviderRegistry.maxUploadBytes(id)
+            assertTrue(limit > mib(1024), "$id should have a documented ceiling far above a dictation")
+            assertFalse(pack(mib(10), limit), "$id packed a 10 MiB recording it had no trouble with")
+            assertTrue(pack(mib(20), limit), "$id must still follow the general threshold")
+        }
+    }
+
+    @Test
+    fun `a provider without a documented size stays unknown rather than unlimited`() {
+        // Mistral and Soniox document a duration, not a size. Guessing bytes from hours would be
+        // inventing a number; 0 keeps the general threshold in charge.
+        for (id in listOf("mistral", "soniox")) {
+            assertTrue(ProviderRegistry.maxUploadBytes(id) == 0L, "$id should report an unknown limit")
+        }
+        assertTrue(pack(mib(20), 0L))
+        assertFalse(pack(mib(10), 0L))
     }
 
     @Test
