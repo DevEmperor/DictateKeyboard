@@ -40,6 +40,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.atomic.AtomicBoolean
 
 class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -90,6 +91,9 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         }
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())  // same as NlpManager's preload()
 
+    /** True while a [refreshLanguagePacks] is in flight; keeps it to one at a time (issue #282). */
+    private val refreshing = AtomicBoolean(false)
+
     override val providerId = ProviderId
 
 //    init {
@@ -97,8 +101,26 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
 //        extensionManager.languagePacks.observeForever { refreshLanguagePacks() }
 //    }
 
+    /**
+     * Starts one refresh, and only one.
+     *
+     * [suggest] compares its cached set of active packs against a freshly built one on *every*
+     * keystroke, so while the two disagree — right after a process start, or after a pack is
+     * installed — every single keypress used to launch another `create()`, each of which unpacks the
+     * language packs again. That is what had several unpacks racing over one directory (issue #282).
+     *
+     * The retry survives: if loading fails the sets stay unequal and the next keystroke starts a new
+     * refresh. Only the pile-up is gone.
+     */
     private fun refreshLanguagePacks() {
-        scope.launch { create() }
+        if (!refreshing.compareAndSet(false, true)) return
+        scope.launch {
+            try {
+                create()
+            } finally {
+                refreshing.set(false)
+            }
+        }
     }
 
     override suspend fun create() {

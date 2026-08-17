@@ -28,6 +28,7 @@ import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.FsFile
 import org.florisboard.lib.kotlin.resultErr
 import org.florisboard.lib.kotlin.resultOk
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * An extension container holding a parsed config, a working directory file
@@ -53,6 +54,16 @@ abstract class Extension {
 
     fun isLoaded() = workingDir != null
 
+    /**
+     * Serializes [load] and [unload] against each other (issue #282).
+     *
+     * Keyed by [ExtensionMeta.id] rather than held per instance, because what needs protecting is the
+     * *directory* — `cacheDir/<id>` — and not this object. [ExtensionManager.ExtensionIndex] builds
+     * fresh extension objects on every reindex, so two instances routinely share one directory while
+     * sharing no state; a field on the instance would guard nothing.
+     */
+    private val loadLock: Any get() = loadLocks.computeIfAbsent(meta.id) { Any() }
+
     open fun onBeforeLoad(context: Context, cacheDir: FsDir) {
         /* Empty */
     }
@@ -61,15 +72,15 @@ abstract class Extension {
         /* Empty */
     }
 
-    fun load(context: Context, force: Boolean = false): Result<Unit> {
+    fun load(context: Context, force: Boolean = false): Result<Unit> = synchronized(loadLock) {
+        // Already unpacked and nobody asked for a fresh copy: leave it alone. Without this a second
+        // caller would delete what the first one just wrote — the working directory of an extension
+        // that is in use right now — and unpack it all over again (issue #282).
+        if (!force && isLoaded()) return resultOk()
         val cacheDir = FsDir(context.cacheDir, meta.id)
         if (cacheDir.exists()) {
-            if (force) {
-                cacheDir.deleteRecursively()
-            } else {
-                // TODO: check if extension loaded should be kept as is
-                cacheDir.deleteRecursively()
-            }
+            // TODO: check if extension loaded should be kept as is
+            cacheDir.deleteRecursively()
         }
         cacheDir.mkdirs()
         val sourceRef = sourceRef ?: return resultOk()
@@ -88,7 +99,7 @@ abstract class Extension {
         /* Empty */
     }
 
-    fun unload(context: Context) {
+    fun unload(context: Context) = synchronized(loadLock) {
         val cacheDir = workingDir ?: FsDir(context.cacheDir, meta.id)
         if (!cacheDir.exists()) return
         onBeforeUnload(context, cacheDir)
@@ -113,6 +124,11 @@ abstract class Extension {
     }
 
     abstract fun edit(): ExtensionEditor
+
+    companion object {
+        /** One lock per extension id, for the lifetime of the process. See [loadLock]. */
+        private val loadLocks = ConcurrentHashMap<String, Any>()
+    }
 }
 
 /**
