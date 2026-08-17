@@ -112,9 +112,16 @@ class LanguagePackExtension( // FIXME: how to make this support multiple types o
                     buildList { while (cursor.moveToNext()) add(cursor.getString(0)) }
                 }
                 for (table in tables) {
+                    // Not every table here is a code table: opening the database for writing makes Android
+                    // add an `android_metadata` table of its own, and a future pack may carry something
+                    // else. Ask what the columns are rather than trying and logging a failure each time.
+                    val columns = db.rawQuery("PRAGMA table_info(`$table`)", null).use { cursor ->
+                        val nameColumn = cursor.getColumnIndex("name")
+                        buildSet { while (cursor.moveToNext()) add(cursor.getString(nameColumn)) }
+                    }
+                    if (!columns.containsAll(listOf("code", "weight"))) continue
                     // Ordered exactly like the query's ORDER BY, so the index satisfies the sort as well
                     // as the range and SQLite can stop at the LIMIT instead of collecting every match.
-                    // A table without these columns (nothing ships one) just throws and is skipped.
                     try {
                         db.execSQL(
                             "CREATE INDEX IF NOT EXISTS `idx_${table}_code` " +
