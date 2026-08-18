@@ -783,6 +783,35 @@
     <string name="apptour53__outro_eyebrow">That\'s 5.3</string>
     <string name="apptour53__outro_title">Happy dictating</string>
     <string name="apptour53__outro_body">Plus plenty of smaller things: every provider now carries its own logo, the recording indicator can be still, pulsing or voice-reactive, prompt output can keep the original transcript beside it, and paragraphs stop breaking after abbreviations. You can revisit any tour under Settings › About.</string>
+
+    <!-- What's new tour for 6.0 -->
+    <string name="apptour60__cta_try" comment="Button on a what's-new page that opens the settings screen for the feature just described">Try it</string>
+    <string name="apptour60__art_minutes" comment="Label next to a counting number in the credit-pack illustration, e.g. \u201c2200 minutes\u201d">minutes</string>
+    <string name="apptour60__art_speed" comment="Playback-speed badge in the illustration showing a recording being shortened. Uses the local decimal separator.">1.5×</string>
+    <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
+    <string name="apptour60__intro_title">Credit, Chinese, cheaper dictation</string>
+    <string name="apptour60__intro_body">This release adds a second way in — buy credit instead of bringing your own API key — along with Pinyin for Chinese, seven languages that gained a dictionary, and recordings that cost less to transcribe.</string>
+    <string name="apptour60__cloud_eyebrow">New: Dictate Cloud</string>
+    <string name="apptour60__cloud_title">Buy minutes instead of finding a key</string>
+    <string name="apptour60__cloud_body">If you would rather not sign up with a provider, you can now simply buy credit. Yes, that runs through our server — but neither your recordings nor your text are stored there, they are passed straight on. The entire server source is public and can be read. Your own key keeps working exactly as before.</string>
+    <string name="apptour60__speedup_eyebrow">Spend less on the API</string>
+    <string name="apptour60__speedup_title">The same words, fewer minutes</string>
+    <string name="apptour60__speedup_body">Recordings can be sped up before they are uploaded, without your voice going higher. Most providers bill by audio length, so a recording a third shorter costs a third less. Long dictations are packed as well, instead of being turned away.</string>
+    <string name="apptour60__chinese_eyebrow">New: Pinyin</string>
+    <string name="apptour60__chinese_title">Type Chinese the way it is typed</string>
+    <string name="apptour60__chinese_body">Pinyin with a candidate row — until now the only option was Zhengma, which hardly anyone uses. There is also an on-device model genuinely trained on Chinese, and a provider that is reachable from the mainland.</string>
+    <string name="apptour60__emoji_eyebrow">Emoji</string>
+    <string name="apptour60__emoji_title">Search emojis in your own language</string>
+    <string name="apptour60__emoji_body">Emoji search knew six languages. Now it knows over forty — look for \u201cheart\u201d, \u201c心\u201d or \u201cقلب\u201d and you land on the same emoji. The search follows your keyboard\u2019s language.</string>
+    <string name="apptour60__languages_eyebrow">Dictionaries</string>
+    <string name="apptour60__languages_title">Seven languages that had no suggestions</string>
+    <string name="apptour60__languages_body">Arabic, Bengali, Finnish, Hindi, Indonesian, Tamil and Urdu now get word suggestions and autocorrect. Icelandic and Georgian held the wrong languages entirely and were rebuilt. And the long-press characters of 19 layouts now follow what the language actually writes.</string>
+    <string name="apptour60__more_eyebrow">Also</string>
+    <string name="apptour60__more_title">Plenty of small things</string>
+    <string name="apptour60__more_body">Holding stop takes back a transcription that is hanging. The floating button no longer reports a success it could not verify, and goes down with the screen. Glide typing now knows the words you added yourself. And the crash right after updating is fixed.</string>
+    <string name="apptour60__outro_eyebrow">That is 6.0</string>
+    <string name="apptour60__outro_title">Have fun with it</string>
+    <string name="apptour60__outro_body">Whichever way you use Dictate — your own key, your own server, a model on the device, or credit — nothing about the other ways has changed. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
