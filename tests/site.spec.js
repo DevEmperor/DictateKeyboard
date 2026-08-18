@@ -208,5 +208,15 @@ for (const width of [1440, 1100, 900, 700, 480]) {
     for (const { title, gap } of gaps) {
       expect(gap, `"${title}" leaves only ${gap}px between its visual and its copy`).toBeGreaterThanOrEqual(16);
     }
+
+    // Long-form and history used to be their own section, and folding them into this block cost them the
+    // padding that kept them clear of the cards above — close enough that the card shadows fell across
+    // them. Anything under ~40px reads as one block running into the next.
+    const groupGap = await page.evaluate(() => {
+      const cards = document.querySelector(".capability-grid").getBoundingClientRect();
+      const depth = document.querySelector(".depth-grid").getBoundingClientRect();
+      return Math.round(depth.top - cards.bottom);
+    });
+    expect(groupGap, `only ${groupGap}px between the capability cards and the long-form block`).toBeGreaterThanOrEqual(40);
   });
 }

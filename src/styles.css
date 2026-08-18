@@ -583,7 +583,6 @@ p {
 .benefits,
 .modes,
 .features,
-.depth-section,
 .install,
 .faq,
 .final-cta {
@@ -1830,12 +1829,14 @@ p {
   transform: scale(0.9);
 }
 
-.depth-section {
-  padding-top: 90px;
-}
-
+/* Long-form and history used to be their own <section>, which is where their breathing room came from
+   (`padding-top: 90px`). Folding them into the features block dropped the wrapper and the space with it,
+   so these two large cards sat flush against the capability row above — close enough that its drop shadow
+   fell across them, which is what it looked like from a distance: an overlap. The margin belongs on the
+   grid now, because the grid is what has to stand apart. */
 .depth-grid {
   display: grid;
+  margin-top: 90px;
   grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
   gap: 16px;
 }
@@ -3137,7 +3138,6 @@ p {
   .modes,
   .model-buffet-section,
   .features,
-  .depth-section,
   .install,
   .faq,
   .final-cta {
@@ -5413,10 +5413,6 @@ p {
 
   .capability-card {
     min-height: 330px;
-  }
-
-  .depth-section {
-    padding-block: 70px 110px;
   }
 
   .depth-primary,
