@@ -108,9 +108,6 @@ object ProviderSetupHandoff {
     const val ADD_CUSTOM = "+add-custom"
 }
 
-/** Which active-provider pointer a newly created endpoint should be handed to once it is saved. */
-private enum class ActivateAs { TRANSCRIPTION, REWORDING, BOTH }
-
 /**
  * The central "AI providers" manager: configure an API key and model(s) for any number of providers
  * (the built-in [ProviderRegistry] presets plus user-defined custom endpoints) and choose which one is
@@ -133,18 +130,13 @@ fun DictateProvidersScreen() = FlorisScreen {
 
         // The provider currently being edited in the dialog (null = closed).
         var editingId by remember { mutableStateOf<String?>(null) }
-        // Set when the editor was opened to *create* an endpoint from somewhere that already knows what
-        // it is for — the setup wizard, or one of the two active-provider pickers. Without this, adding a
-        // server from the transcription picker would leave the user to go back and select it by hand.
-        var activateAs by remember { mutableStateOf<ActivateAs?>(null) }
+        // Set when the editor was opened by the setup wizard to *create* an endpoint. Someone who adds a
+        // server while being asked how the app should transcribe means to use it, so saving it makes it
+        // active instead of leaving them to go and select it by hand.
+        var activateOnSave by remember { mutableStateOf(false) }
 
         fun writeKeyring(updated: ProviderAccounts) {
             scope.launch { prefs.dictate.providerAccounts.set(updated) }
-        }
-
-        fun addCustomEndpoint(target: ActivateAs) {
-            activateAs = target
-            editingId = ProviderAccount.newCustomId()
         }
 
         // Arriving from the setup wizard: open the requested editor straight away, and consume the
@@ -152,7 +144,10 @@ fun DictateProvidersScreen() = FlorisScreen {
         LaunchedEffect(Unit) {
             when (val target = ProviderSetupHandoff.openEditorFor) {
                 null -> Unit
-                ProviderSetupHandoff.ADD_CUSTOM -> addCustomEndpoint(ActivateAs.BOTH)
+                ProviderSetupHandoff.ADD_CUSTOM -> {
+                    activateOnSave = true
+                    editingId = ProviderAccount.newCustomId()
+                }
                 else -> editingId = target
             }
             ProviderSetupHandoff.openEditorFor = null
@@ -176,7 +171,6 @@ fun DictateProvidersScreen() = FlorisScreen {
                         .forEach { add(it.id to it.displayName) }
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
-                onAddCustom = { addCustomEndpoint(ActivateAs.TRANSCRIPTION) },
             )
             // When the active transcription provider runs single-call multimodal (#130), rewording happens
             // inside that one call, so the rewording provider here is currently unused — surfaced as a
@@ -189,7 +183,6 @@ fun DictateProvidersScreen() = FlorisScreen {
                     customAccounts.forEach { add(it.providerId to customLabel(it)) }
                 },
                 showInfo = accounts.getOrEmpty(activeTranscriptionId).transcriptionViaChat,
-                onAddCustom = { addCustomEndpoint(ActivateAs.REWORDING) },
             )
         }
 
@@ -279,33 +272,26 @@ fun DictateProvidersScreen() = FlorisScreen {
                 account = accounts.getOrEmpty(id),
                 onDismiss = {
                     editingId = null
-                    activateAs = null
+                    activateOnSave = false
                 },
                 onSave = { updated ->
                     writeKeyring(accounts.put(updated))
-                    when (activateAs) {
-                        ActivateAs.TRANSCRIPTION -> scope.launch {
-                            prefs.dictate.transcriptionProviderId.set(id)
-                        }
-                        ActivateAs.REWORDING -> scope.launch {
-                            prefs.dictate.rewordingProviderId.set(id)
-                        }
-                        // A server of the user's own speaks both halves of the OpenAI API, and someone who
-                        // added one during setup meant it to be the way the app works from now on.
-                        ActivateAs.BOTH -> scope.launch {
+                    // A server of the user's own speaks both halves of the OpenAI API, and someone who
+                    // added one during setup meant it to be the way the app works from now on.
+                    if (activateOnSave) {
+                        scope.launch {
                             prefs.dictate.transcriptionProviderId.set(id)
                             prefs.dictate.rewordingProviderId.set(id)
                         }
-                        null -> Unit
                     }
                     editingId = null
-                    activateAs = null
+                    activateOnSave = false
                 },
                 onDelete = if (preset == null) {
                     {
                         writeKeyring(accounts.remove(id))
                         editingId = null
-                        activateAs = null
+                        activateOnSave = false
                     }
                 } else {
                     null
@@ -318,11 +304,7 @@ fun DictateProvidersScreen() = FlorisScreen {
 
 
 @Composable
-private fun RewordingProviderPreference(
-    entries: List<Pair<String, String>>,
-    showInfo: Boolean,
-    onAddCustom: () -> Unit,
-) {
+private fun RewordingProviderPreference(entries: List<Pair<String, String>>, showInfo: Boolean) {
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val selectedId by prefs.dictate.rewordingProviderId.collectAsState()
@@ -364,30 +346,24 @@ private fun RewordingProviderPreference(
         ) {
             val scrollState = rememberScrollState()
             val scrollbarColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-            Column {
-                Column(
-                    modifier = Modifier
-                        .heightIn(max = 320.dp)
-                        .persistentVerticalScrollbar(scrollState, scrollbarColor)
-                        .verticalScroll(scrollState)
-                        .padding(end = 6.dp),
-                ) {
-                    entries.forEach { (id, label) ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { sel = id },
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            RadioButton(selected = sel == id, onClick = { sel = id })
-                            Text(label, modifier = Modifier.padding(start = 8.dp))
-                        }
+            Column(
+                modifier = Modifier
+                    .heightIn(max = 320.dp)
+                    .persistentVerticalScrollbar(scrollState, scrollbarColor)
+                    .verticalScroll(scrollState)
+                    .padding(end = 6.dp),
+            ) {
+                entries.forEach { (id, label) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { sel = id },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = sel == id, onClick = { sel = id })
+                        Text(label, modifier = Modifier.padding(start = 8.dp))
                     }
                 }
-                AddOwnServerRow(onClick = {
-                    open = false
-                    onAddCustom()
-                })
             }
         }
     }
@@ -412,10 +388,7 @@ private fun RewordingProviderPreference(
  * local fallback is meaningless there). Both the selection and the toggle are committed on confirm.
  */
 @Composable
-private fun TranscriptionProviderPreference(
-    entries: List<Pair<String, String>>,
-    onAddCustom: () -> Unit,
-) {
+private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>) {
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val selectedId by prefs.dictate.transcriptionProviderId.collectAsState()
@@ -470,10 +443,6 @@ private fun TranscriptionProviderPreference(
                         }
                     }
                 }
-                AddOwnServerRow(onClick = {
-                    open = false
-                    onAddCustom()
-                })
                 // Extra item at the bottom: offline fallback (only when the choice isn't already local).
                 if (!selectionIsLocal) {
                     HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
@@ -497,36 +466,6 @@ private fun TranscriptionProviderPreference(
                 }
             }
         }
-    }
-}
-
-/**
- * The way out of the chicken-and-egg at the bottom of both provider pickers (issue #273): the list only
- * ever contained the endpoints that already exist, so a new user saw the built-ins and concluded those
- * were the only ones the app supports — which is exactly what a paying self-hoster reported. Offering it
- * here answers the question where it is actually being asked.
- */
-@Composable
-private fun AddOwnServerRow(onClick: () -> Unit) {
-    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = null,
-            modifier = Modifier.size(20.dp),
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Text(
-            text = stringRes(R.string.dictate__providers_add_custom),
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 12.dp),
-        )
     }
 }
 
