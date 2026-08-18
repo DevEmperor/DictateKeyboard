@@ -1826,6 +1826,7 @@
     <string name="dictate__cloud_packs_title">クレジットパック</string>
     <string name="dictate__cloud_topup_title">チャージ</string>
     <string name="dictate__cloud_pack_minutes">音声入力 {minutes} 分</string>
+    <string name="dictate__cloud_pack_savings">{percent}% お得</string>
     <string name="dictate__cloud_shop_unavailable">ここではクレジットパックを表示できません。多くの場合、アプリが Google Play 経由でインストールされていないか、この端末に Play アカウントでログインしていないことが原因です。ご自身の API キーはどちらの場合でも使えます。</string>
     <string name="dictate__cloud_activate_title">クレジットの準備ができました</string>
     <string name="dictate__cloud_activate_body">クレジットはありますが、音声入力は現在ほかのプロバイダー経由で動いています。いつでも切り替えられます。あなたが操作しない限り何も変わりません。</string>

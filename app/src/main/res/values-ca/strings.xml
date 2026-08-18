@@ -1769,6 +1769,7 @@
     <string name="dictate__cloud_packs_title">Paquets de saldo</string>
     <string name="dictate__cloud_topup_title">Recarrega</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minuts de dictat</string>
+    <string name="dictate__cloud_pack_savings">{percent}% més barat</string>
     <string name="dictate__cloud_shop_unavailable">Aquí no es poden mostrar els paquets de saldo. Normalment vol dir que l\'aplicació no s\'ha instal·lat des de Google Play, o que en aquest dispositiu no hi ha cap compte de Play iniciat. La teva clau API funciona en tots dos casos.</string>
     <string name="dictate__cloud_activate_title">El saldo és a punt</string>
     <string name="dictate__cloud_activate_body">Tens saldo, però el dictat passa ara mateix per un altre proveïdor. Canvia quan vulguis: sense tu no canvia res.</string>

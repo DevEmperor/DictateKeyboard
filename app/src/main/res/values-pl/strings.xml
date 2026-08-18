@@ -1909,6 +1909,7 @@
     <string name="dictate__cloud_packs_title">Pakiety środków</string>
     <string name="dictate__cloud_topup_title">Doładuj</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minut dyktowania</string>
+    <string name="dictate__cloud_pack_savings">{percent}% taniej</string>
     <string name="dictate__cloud_shop_unavailable">Nie można tu pokazać pakietów środków. Zwykle oznacza to, że aplikacja nie została zainstalowana z Google Play albo że na tym urządzeniu nie ma zalogowanego konta Play. Twój własny klucz API działa w obu przypadkach.</string>
     <string name="dictate__cloud_activate_title">Środki są gotowe</string>
     <string name="dictate__cloud_activate_body">Masz środki, ale dyktowanie idzie w tej chwili przez innego dostawcę. Przełącz się, kiedy zechcesz — bez ciebie nic się nie zmieni.</string>

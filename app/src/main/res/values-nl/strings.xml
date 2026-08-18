@@ -1793,6 +1793,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__cloud_packs_title">Tegoedpakketten</string>
     <string name="dictate__cloud_topup_title">Opwaarderen</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minuten dicteren</string>
+    <string name="dictate__cloud_pack_savings">{percent}% goedkoper</string>
     <string name="dictate__cloud_shop_unavailable">De tegoedpakketten kunnen hier niet worden getoond. Meestal betekent dat dat de app niet via Google Play is geïnstalleerd, of dat er op dit apparaat geen Play-account is aangemeld. Je eigen API-sleutel werkt in beide gevallen.</string>
     <string name="dictate__cloud_activate_title">Tegoed staat klaar</string>
     <string name="dictate__cloud_activate_body">Je hebt tegoed, maar het dicteren loopt op dit moment via een andere aanbieder. Wissel wanneer je wilt — zonder jou verandert er niets.</string>

@@ -1892,6 +1892,7 @@
     <string name="dictate__cloud_packs_title">Egyenlegcsomagok</string>
     <string name="dictate__cloud_topup_title">Feltöltés</string>
     <string name="dictate__cloud_pack_minutes">{minutes} perc diktálás</string>
+    <string name="dictate__cloud_pack_savings">{percent}%-kal olcsóbb</string>
     <string name="dictate__cloud_shop_unavailable">Az egyenlegcsomagok itt nem jeleníthetők meg. Ez általában azt jelenti, hogy az alkalmazás nem a Google Play-ből lett telepítve, vagy nincs bejelentkezve Play-fiók ezen az eszközön. A saját API-kulcsa mindkét esetben működik.</string>
     <string name="dictate__cloud_activate_title">Az egyenleg készen áll</string>
     <string name="dictate__cloud_activate_body">Van egyenlege, de a diktálás jelenleg másik szolgáltatón keresztül fut. Váltson, amikor akar — ön nélkül semmi nem változik.</string>

@@ -93,7 +93,15 @@ export interface Package {
   id: string;
   name: string;
   minutes: number;
-  /** Gross price in euro, for the dashboard's revenue view only. */
+  /**
+   * The list price in euro as it is entered in the Play Console, for the dashboard's model view
+   * and as the fallback figure written onto a purchase whose order Google would not hand over.
+   *
+   * **Net, not gross.** Google adds the buyer's local tax on top of this and remits it — a pack
+   * entered at 1.99 is shown to a German buyer as about 2.39. What reaches you is therefore this
+   * figure minus [PLAY_SERVICE_FEE], and not that again minus tax. Getting this backwards
+   * understates every margin on the dashboard by roughly a fifth.
+   */
   priceEur: number;
 }
 
@@ -101,12 +109,47 @@ function pack(id: string, name: string, minutes: number, priceEur: number): Pack
   return { id, name, minutes, priceEur };
 }
 
+/**
+ * Google's share of a sale.
+ *
+ * 15 % applies to the first $1M a developer account takes in a year; above that it becomes 30 %
+ * and this number turns wrong without anything failing. Named rather than written as a bare 0.85
+ * where it is used, because a rate that appears in three places is a rate that will one day be
+ * updated in two.
+ */
+export const PLAY_SERVICE_FEE = 0.15;
+
 export const PACKAGES: Record<string, Package> = {
-  credits_notes: pack('credits_notes', 'Notes', 150, 2.99),
-  credits_daily: pack('credits_daily', 'Daily', 400, 6.99),
-  credits_writer: pack('credits_writer', 'Writer', 1000, 14.99),
-  credits_pro: pack('credits_pro', 'Pro', 2200, 29.99),
+  credits_notes: pack('credits_notes', 'Notes', 150, 1.99),
+  credits_daily: pack('credits_daily', 'Daily', 400, 4.99),
+  credits_writer: pack('credits_writer', 'Writer', 1000, 9.99),
+  credits_pro: pack('credits_pro', 'Pro', 2200, 19.99),
 };
+
+/**
+ * The pack every "cheaper per minute" figure is measured against — the smallest one on offer.
+ *
+ * Derived rather than named, so that adding or removing a pack cannot leave a stale baseline
+ * behind. The app makes the same comparison against Play's own prices; this one exists so the
+ * dashboard shows what the shop shows.
+ */
+export function baselinePackage(): Package {
+  return Object.values(PACKAGES).reduce((a, b) => (a.minutes <= b.minutes ? a : b));
+}
+
+/**
+ * How much cheaper a minute is in [pack] than in the smallest pack, or null when there is nothing
+ * worth claiming. Rounded down: an advertised saving must never exceed the real one.
+ */
+export function savingsPercent(pack: Package): number | null {
+  const baseline = baselinePackage();
+  if (pack.id === baseline.id) return null;
+  if (baseline.priceEur <= 0 || baseline.minutes <= 0 || pack.minutes <= 0) return null;
+  const basePerMinute = baseline.priceEur / baseline.minutes;
+  const perMinute = pack.priceEur / pack.minutes;
+  if (perMinute >= basePerMinute) return null;
+  return Math.floor((1 - perMinute / basePerMinute) * 100);
+}
 
 /**
  * Upstream prices in **nano-dollars** (1e-9 $), so everything stays integer and nothing

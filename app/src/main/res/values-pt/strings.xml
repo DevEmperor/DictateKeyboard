@@ -1873,6 +1873,7 @@
     <string name="dictate__cloud_packs_title">Pacotes de saldo</string>
     <string name="dictate__cloud_topup_title">Carregar</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minutos de ditado</string>
+    <string name="dictate__cloud_pack_savings">{percent}% mais barato</string>
     <string name="dictate__cloud_shop_unavailable">Os pacotes de saldo não podem ser mostrados aqui. Normalmente isso significa que a aplicação não foi instalada a partir do Google Play ou que não há nenhuma conta Play com sessão iniciada neste dispositivo. A tua própria chave API funciona em ambos os casos.</string>
     <string name="dictate__cloud_activate_title">O saldo está pronto</string>
     <string name="dictate__cloud_activate_body">Tens saldo, mas o ditado passa neste momento por outro fornecedor. Muda quando quiseres — sem ti nada muda.</string>

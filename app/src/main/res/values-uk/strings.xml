@@ -1741,6 +1741,7 @@
     <string name="dictate__cloud_packs_title">Пакети балансу</string>
     <string name="dictate__cloud_topup_title">Поповнити</string>
     <string name="dictate__cloud_pack_minutes">{minutes} хвилин диктування</string>
+    <string name="dictate__cloud_pack_savings">На {percent}% дешевше</string>
     <string name="dictate__cloud_shop_unavailable">Пакети тут показати не вдалося. Зазвичай це означає, що застосунок встановлено не з Google Play або на пристрої немає входу в обліковий запис Play. Ваш власний ключ API працює в обох випадках.</string>
     <string name="dictate__cloud_activate_title">Баланс готовий</string>
     <string name="dictate__cloud_activate_body">У вас є баланс, але диктування зараз іде через іншого постачальника. Перемкніться, коли захочете — без вас нічого не змінюється.</string>

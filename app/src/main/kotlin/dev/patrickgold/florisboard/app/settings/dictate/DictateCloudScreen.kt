@@ -15,6 +15,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDone
@@ -44,6 +46,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -238,6 +241,7 @@ fun DictateCloudScreen() = FlorisScreen {
                         price = offer.formattedPrice,
                         minutes = offer.pack.minutes,
                         rewords = offer.pack.rewords,
+                        savingsPercent = offer.savingsPercent,
                         busy = buying == offer.pack.productId,
                         anyBusy = buying != null,
                         onBuy = { buy(offer.pack) },
@@ -608,12 +612,21 @@ private fun NoticeCard(text: String, onDismiss: () -> Unit) {
     }
 }
 
+/**
+ * One pack in the shop.
+ *
+ * [savingsPercent] is how much cheaper a minute is here than in the smallest pack — set only where
+ * that is worth saying, so the smallest pack and anything barely below it simply carry no badge.
+ * Deliberately no price-per-minute line beside it: the card already answers "what do I get and what
+ * does it cost", and a fourth number would make the cheapest pack the hardest one to read.
+ */
 @Composable
 private fun PackCard(
     title: String,
     price: String,
     minutes: Int,
     rewords: Int,
+    savingsPercent: Int?,
     busy: Boolean,
     anyBusy: Boolean,
     onBuy: () -> Unit,
@@ -624,11 +637,17 @@ private fun PackCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    if (savingsPercent != null) {
+                        Spacer(Modifier.width(8.dp))
+                        SavingsPill(percent = savingsPercent)
+                    }
+                }
                 Text(
                     text = stringRes(
                         R.string.dictate__cloud_pack_minutes,
@@ -654,6 +673,30 @@ private fun PackCard(
                 }
             }
         }
+    }
+}
+
+/**
+ * "31 % cheaper" — how much less a minute costs in this pack than in the smallest one.
+ *
+ * Same shape as the category pill in the prompt library, so the two read as the same kind of
+ * marking rather than as two designers passing through.
+ */
+@Composable
+private fun SavingsPill(percent: Int) {
+    Surface(
+        shape = RoundedCornerShape(50),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+            text = stringRes(
+                R.string.dictate__cloud_pack_savings,
+                "percent" to percent.toString(),
+            ),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
     }
 }
 

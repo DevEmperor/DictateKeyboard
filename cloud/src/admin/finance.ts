@@ -1,4 +1,7 @@
-import { COST, PACKAGES, TYPICAL_REWORD_SECONDS, chatCostNano, limitsFrom, type Env } from '../config';
+import {
+  COST, PACKAGES, PLAY_SERVICE_FEE, TYPICAL_REWORD_SECONDS, chatCostNano, limitsFrom,
+  savingsPercent, type Env,
+} from '../config';
 import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
 
@@ -297,9 +300,13 @@ export async function plans(env: Env) {
     // beside the minutes because "150 minutes" and "or about 4500 rewordings" are the same pack.
     const rewordsIfOnly = Math.floor((pack.minutes * 60) / TYPICAL_REWORD_SECONDS);
 
-    // What the plan assumed: Google keeps 15 %, the rest is yours. Kept as the yardstick the
+    // What the plan assumed: Google keeps its share, the rest is yours. Kept as the yardstick the
     // actual figure is judged against, not as a claim about what happens.
-    const modelRevenue = pack.priceEur * 0.85;
+    //
+    // Tax is deliberately not subtracted. The list price is entered net and Google adds the local
+    // rate on top of it, so the buyer pays more than this and you are never handed the difference
+    // in the first place — deducting it here would take the same money away twice.
+    const modelRevenue = pack.priceEur * (1 - PLAY_SERVICE_FEE);
     const real = actual.get(pack.id);
     // The converted figure where there is one — comparing a franc revenue against a euro cost
     // would produce a margin that is simply wrong.
@@ -343,6 +350,10 @@ export async function plans(env: Env) {
       // volume discount across packs is actually paid for by the margin.
       pricePerMinuteCents: (pack.priceEur / pack.minutes) * 100,
       marginPerMinuteCents: (margin / pack.minutes) * 100,
+      // The badge the shop puts on this pack, computed by the same rule. Null on the baseline and
+      // wherever there is nothing to claim — the app additionally hides anything under 10 %, so a
+      // figure here is not a promise that the pill appears.
+      savingsPercent: savingsPercent(pack),
     };
   });
 
@@ -354,6 +365,8 @@ export async function plans(env: Env) {
     chatModel: limits.chatModel,
     transcribeUsdPerMinute,
     rewordUsd,
+    /** So the page can work back from a target margin to a price without a second copy of it. */
+    playServiceFee: PLAY_SERVICE_FEE,
     packs,
   };
 }

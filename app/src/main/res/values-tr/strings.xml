@@ -1872,6 +1872,7 @@
     <string name="dictate__cloud_packs_title">Kontör paketleri</string>
     <string name="dictate__cloud_topup_title">Yükle</string>
     <string name="dictate__cloud_pack_minutes">{minutes} dakika dikte</string>
+    <string name="dictate__cloud_pack_savings">%{percent} daha ucuz</string>
     <string name="dictate__cloud_shop_unavailable">Kontör paketleri burada gösterilemiyor. Bu genellikle uygulamanın Google Play üzerinden kurulmadığı ya da bu cihazda oturum açmış bir Play hesabı olmadığı anlamına gelir. Kendi API anahtarınız her iki durumda da çalışır.</string>
     <string name="dictate__cloud_activate_title">Kontör hazır</string>
     <string name="dictate__cloud_activate_body">Kontörünüz var ama dikte şu anda başka bir sağlayıcı üzerinden gidiyor. İstediğiniz zaman geçin — siz yapmadan hiçbir şey değişmez.</string>

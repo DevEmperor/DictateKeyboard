@@ -1769,6 +1769,7 @@
     <string name="dictate__cloud_packs_title">Packs de crédit</string>
     <string name="dictate__cloud_topup_title">Recharger</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minutes de dictée</string>
+    <string name="dictate__cloud_pack_savings">{percent} % moins cher</string>
     <string name="dictate__cloud_shop_unavailable">Les packs de crédit ne peuvent pas être affichés ici. En général, cela signifie que l\'application n\'a pas été installée depuis Google Play, ou qu\'aucun compte Play n\'est connecté sur cet appareil. Votre propre clé API fonctionne dans les deux cas.</string>
     <string name="dictate__cloud_activate_title">Le crédit est prêt</string>
     <string name="dictate__cloud_activate_body">Vous avez du crédit, mais la dictée passe actuellement par un autre fournisseur. Changez quand vous voulez — rien ne change sans vous.</string>

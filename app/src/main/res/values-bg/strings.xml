@@ -1894,6 +1894,7 @@
     <string name="dictate__cloud_packs_title">Пакети кредит</string>
     <string name="dictate__cloud_topup_title">Захранване</string>
     <string name="dictate__cloud_pack_minutes">{minutes} минути диктовка</string>
+    <string name="dictate__cloud_pack_savings">{percent}% по-евтино</string>
     <string name="dictate__cloud_shop_unavailable">Пакетите не могат да се покажат тук. Обикновено това означава, че приложението не е инсталирано от Google Play или че на това устройство няма влязъл Play акаунт. Собственият ви API ключ работи и в двата случая.</string>
     <string name="dictate__cloud_activate_title">Кредитът е готов</string>
     <string name="dictate__cloud_activate_body">Имате кредит, но диктовката в момента минава през друг доставчик. Превключете, когато поискате — без вас нищо не се променя.</string>

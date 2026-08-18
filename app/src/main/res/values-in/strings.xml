@@ -1849,6 +1849,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__cloud_packs_title">Paket saldo</string>
     <string name="dictate__cloud_topup_title">Isi ulang</string>
     <string name="dictate__cloud_pack_minutes">{minutes} menit pendiktean</string>
+    <string name="dictate__cloud_pack_savings">{percent}% lebih murah</string>
     <string name="dictate__cloud_shop_unavailable">Paket saldo tidak dapat ditampilkan di sini. Biasanya itu berarti aplikasi tidak dipasang dari Google Play, atau tidak ada akun Play yang masuk di perangkat ini. Kunci API milikmu tetap berfungsi pada kedua kasus tersebut.</string>
     <string name="dictate__cloud_activate_title">Saldo sudah siap</string>
     <string name="dictate__cloud_activate_body">Kamu punya saldo, tetapi pendiktean saat ini berjalan lewat penyedia lain. Pindah kapan saja — tanpa kamu, tidak ada yang berubah.</string>

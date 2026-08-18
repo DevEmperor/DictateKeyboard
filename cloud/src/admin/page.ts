@@ -1677,12 +1677,18 @@ var GRAPH = ${GRAPH_JSON};
 
   function renderPlans(p) {
     var cur = p.homeCurrency;
+    // Aus der Antwort statt hier hartkodiert: die Zahl steht im Server, und zwei Kopien einer Rate
+    // sind eine Kopie zu viel.
+    var fee = typeof p.playServiceFee === 'number' ? p.playServiceFee : 0.15;
 
     $('planCards').innerHTML = p.packs.map(function (k) {
       var a = k.actual;
       var shown = a || k.model;
       var pct = Math.round(shown.marginPercent);
-      var cls = pct >= 55 ? 'ok' : pct >= 35 ? 'warn' : 'crit';
+      // 45 % ist die Untergrenze, auf die die Preisliste gerechnet wurde; unter 35 % trägt ein
+      // Paket seine eigenen Fixkosten nicht mehr. Beides ist kein Naturgesetz, sondern das Band,
+      // in dem die Preise gewählt wurden — wer die Preise ändert, ändert auch diese Zeile.
+      var cls = pct >= 45 ? 'ok' : pct >= 35 ? 'warn' : 'crit';
 
       // Every line of the sum, in the order it happens: the customer pays, tax and Google come
       // off, OpenAI is bought, what is left is yours.
@@ -1697,11 +1703,21 @@ var GRAPH = ${GRAPH_JSON};
            (k.currency !== cur ? ['umgerechnet', money(a.revenueHome, cur)] : null),
            ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
            ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
-        : [['Listenpreis', money(k.listPrice, cur)],
-           ['Google-Anteil (15 % angenommen)', '− ' + money(k.listPrice * 0.15, cur)],
+        : [['Listenpreis (netto)', money(k.listPrice, cur)],
+           ['Google-Anteil (' + Math.round(fee * 100) + ' % angenommen)', '− ' + money(k.listPrice * fee, cur)],
            ['<strong>Erlös laut Modell</strong>', '<strong>' + money(k.model.revenue, cur) + '</strong>'],
            ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
            ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']];
+
+      // Vom Ziel zurück auf den Preis: der Erlös muss Einkauf / (1 − Marge) sein, und der
+      // Listenpreis ist dieser Erlös vor Googles Anteil. Steht hier, damit die nächste Preisrunde
+      // eine Ablesung ist und keine Rechnung auf einem Zettel — besonders dann, wenn OpenAI seine
+      // Preisliste bewegt und der Einkauf unter jedem Paket ein anderer wird.
+      var targets = [45, 50, 55, 60].map(function (m) {
+        var price = k.cost.totalHome / ((1 - m / 100) * (1 - fee));
+        return '<tr><td class="muted" style="border:0;padding:2px 0">' + m + ' % Marge</td>' +
+          '<td class="num" style="border:0;padding:2px 0">' + money(price, cur) + '</td></tr>';
+      }).join('');
 
       return '<div class="card"><div class="row" style="align-items:flex-start">' +
         '<div style="flex:1;min-width:min(100%,190px)">' +
@@ -1710,6 +1726,8 @@ var GRAPH = ${GRAPH_JSON};
           '<div class="sub">' + k.minutes.toLocaleString('de-DE') + ' Minuten <span class="muted">oder ~' + k.rewords.toLocaleString('de-DE') + ' Umformulierungen</span><br>' +
             k.pricePerMinuteCents.toFixed(2) + ' ct/Min. Preis · ' + k.marginPerMinuteCents.toFixed(2) + ' ct/Min. Marge</div>' +
           '<div style="margin-top:8px"><span class="pill ' + cls + '">' + pct + ' % Marge</span> ' +
+            (k.savingsPercent === null || k.savingsPercent === undefined ? ''
+              : '<span class="pill info">' + k.savingsPercent + ' % günstiger je Min.</span> ') +
             (a ? '<span class="pill info">' + a.orders + ' Verkauf/Verkäufe</span>'
                : '<span class="pill">nur Modell</span>') + '</div>' +
         '</div>' +
@@ -1717,17 +1735,23 @@ var GRAPH = ${GRAPH_JSON};
           steps.map(function (s) {
             return '<tr><td style="border:0;padding:3px 0">' + s[0] + '</td>' +
               '<td class="num" style="border:0;padding:3px 0">' + s[1] + '</td></tr>';
-          }).join('') + '</table></div>' +
+          }).join('') + '</table>' +
+          '<div class="sub" style="margin-top:10px">Listenpreis für eine Zielmarge</div>' +
+          '<table style="font-size:13px">' + targets + '</table></div>' +
       '</div></div>';
     }).join('');
 
     $('planTable').innerHTML = '<table><thead><tr><th>Paket</th><th class="num">Preis</th>' +
-      '<th class="num">Minuten</th><th class="num">ct/Min.</th><th class="num">OpenAI</th>' +
+      '<th class="num">Minuten</th><th class="num">ct/Min.</th><th class="num">günstiger</th>' +
+      '<th class="num">OpenAI</th>' +
       '<th class="num">Erlös</th><th class="num">Marge</th><th class="num">%</th><th>Quelle</th></tr></thead><tbody>' +
       p.packs.map(function (k) {
         var s = k.actual || k.model;
+        var save = k.savingsPercent === null || k.savingsPercent === undefined
+          ? '<span class="muted">—</span>' : k.savingsPercent + ' %';
         return '<tr><td>' + esc(k.name) + '</td><td class="num">' + money(k.listPrice, cur) +
           '</td><td class="num">' + k.minutes.toLocaleString('de-DE') + '</td><td class="num">' + k.pricePerMinuteCents.toFixed(2) +
+          '</td><td class="num">' + save +
           '</td><td class="num">' + fmtUsd4(k.cost.totalUsd) + '</td><td class="num">' + money(k.actual ? s.revenueHome : s.revenue, cur) +
           '</td><td class="num">' + money(s.margin, cur) + '</td><td class="num">' + Math.round(s.marginPercent) +
           ' %</td><td>' + (k.actual ? '<span class="pill ok">gemessen</span>' : '<span class="pill">Modell</span>') + '</td></tr>';
@@ -1739,6 +1763,12 @@ var GRAPH = ${GRAPH_JSON};
       '<dt>Abrechnung</dt><dd>Alles kostet Sekunden: eine typische Umformulierung 2, eine maximale 16</dd>' +
       '<dt>Umrechnung</dt><dd>USD → ' + cur + ' mit ' + n(p.rate).toFixed(4) +
         (p.rateSource === 'ecb' ? ' <span class="muted">(EZB-Tageskurs)</span>' : ' <span class="muted">(Annahme, noch kein EZB-Kurs geholt)</span>') + '</dd>' +
+      '<dt>Steuer</dt><dd>Der Listenpreis ist ein <strong>Nettopreis</strong>. Google schlägt den ' +
+        'Satz des Käuferlandes oben drauf und führt ihn ab — 1,99 € werden für eine deutsche ' +
+        'Kundschaft zu etwa 2,39 €. Der Erlös ist deshalb der Listenpreis minus Googles Anteil und ' +
+        '<em>nicht</em> noch einmal minus Steuer.</dd>' +
+      '<dt>„günstiger"</dt><dd>Preis je Minute gegenüber dem kleinsten Paket, abgerundet. Die App ' +
+        'blendet alles unter 10 % aus, zeigt also nicht zwingend jede Zahl, die hier steht.</dd>' +
       '</div>' +
       '<p class="sub" style="margin-top:10px">Die OpenAI-Zeile ist eine <strong>Obergrenze</strong>, keine Schätzung: ' +
       'jede Leistung wird in dieselben Sekunden eingepreist, also sind die verkauften Sekunden zugleich der ' +

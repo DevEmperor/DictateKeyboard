@@ -1888,6 +1888,7 @@
     <string name="dictate__cloud_packs_title">额度套餐</string>
     <string name="dictate__cloud_topup_title">充值</string>
     <string name="dictate__cloud_pack_minutes">{minutes} 分钟听写</string>
+    <string name="dictate__cloud_pack_savings">便宜 {percent}%</string>
     <string name="dictate__cloud_shop_unavailable">这里无法显示额度套餐。通常是因为应用不是从 Google Play 安装的，或者此设备上没有登录 Play 账号。这两种情况下，你自己的 API 密钥都能正常使用。</string>
     <string name="dictate__cloud_activate_title">额度已就绪</string>
     <string name="dictate__cloud_activate_body">你有额度，但听写目前走的是另一个服务商。随时可以切换——你不动手就什么都不会变。</string>

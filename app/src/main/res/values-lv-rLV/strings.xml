@@ -1837,6 +1837,7 @@
     <string name="dictate__cloud_packs_title">Kredīta paketes</string>
     <string name="dictate__cloud_topup_title">Papildināt</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minūtes diktēšanas</string>
+    <string name="dictate__cloud_pack_savings">Par {percent}% lētāk</string>
     <string name="dictate__cloud_shop_unavailable">Kredīta paketes šeit nevar parādīt. Parasti tas nozīmē, ka lietotne nav instalēta no Google Play vai ka šajā ierīcē nav pieteikts Play konts. Jūsu paša API atslēga darbojas abos gadījumos.</string>
     <string name="dictate__cloud_activate_title">Kredīts ir gatavs</string>
     <string name="dictate__cloud_activate_body">Jums ir kredīts, taču diktēšana pašlaik notiek caur citu pakalpojuma sniedzēju. Pārslēdzieties, kad vien vēlaties — bez jums nekas nemainās.</string>

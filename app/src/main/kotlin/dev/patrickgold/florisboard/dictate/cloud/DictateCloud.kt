@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
+import kotlin.math.floor
 
 /**
  * Dictate Cloud, from the app's side: buying a pack, turning purchases into credit, and keeping the
@@ -123,6 +124,14 @@ object DictateCloud {
         val description: String,
         /** Already in the buyer's own currency and formatting, straight from Play. */
         val formattedPrice: String,
+        /**
+         * The same price as a number, for comparing packs against each other. Micros of
+         * [priceCurrency] — never formatted for display, which is what [formattedPrice] is for.
+         */
+        val priceMicros: Long = 0L,
+        val priceCurrency: String = "",
+        /** See [savingsPercent]. Null when there is nothing worth putting on the card. */
+        val savingsPercent: Int? = null,
     )
 
     sealed interface Shop {
@@ -201,9 +210,16 @@ object DictateCloud {
                     title = details.name.ifBlank { details.title },
                     description = details.description,
                     formattedPrice = offer.formattedPrice,
+                    priceMicros = offer.priceAmountMicros,
+                    priceCurrency = offer.priceCurrencyCode,
                 )
             }
-            return if (offers.isEmpty()) Shop.Unavailable(products.code) else Shop.Ready(offers)
+            if (offers.isEmpty()) return Shop.Unavailable(products.code)
+            // The baseline is whatever is actually first, not a named pack: if Play omits the
+            // smallest one, the comparison moves up with it and the badges get smaller rather
+            // than wrong.
+            val baseline = offers.first()
+            return Shop.Ready(offers.map { it.copy(savingsPercent = savingsPercent(baseline, it)) })
         } finally {
             billing.close()
         }
@@ -504,4 +520,35 @@ object DictateCloud {
         val accounts = prefs.dictate.providerAccounts.get()
         prefs.dictate.providerAccounts.set(accounts.edit(ProviderRegistry.CLOUD.id, block))
     }
+}
+
+/**
+ * Below this, an advertised saving reads as a rounding artefact rather than a reason to buy.
+ *
+ * The threshold is a judgement about the shop, not about the arithmetic: "5 % cheaper" standing
+ * next to "31 % cheaper" makes the smaller pack look considered rather than the larger one look
+ * good, and a badge nobody is moved by is a badge that teaches people to ignore badges.
+ */
+private const val MIN_SAVINGS_PERCENT = 10
+
+/**
+ * How much cheaper a minute is in [offer] than in [baseline], as a whole percentage.
+ *
+ * Computed from Play's own amounts rather than from a price table in the app, because Play's
+ * per-country list is not a conversion of the euro one — a badge derived from our numbers would be
+ * wrong in every currency but ours, and wrong in the direction that gets noticed.
+ *
+ * Rounded **down**, so an advertised saving is never larger than the real one, and null wherever
+ * the claim would not hold up: a different currency on the two sides, a missing amount, a pack that
+ * is not actually cheaper, or a difference too small to be worth printing.
+ */
+internal fun savingsPercent(baseline: DictateCloud.Offer, offer: DictateCloud.Offer): Int? {
+    if (baseline.priceCurrency != offer.priceCurrency) return null
+    if (baseline.priceMicros <= 0L || offer.priceMicros <= 0L) return null
+    if (baseline.pack.minutes <= 0 || offer.pack.minutes <= 0) return null
+    val basePerMinute = baseline.priceMicros.toDouble() / baseline.pack.minutes
+    val perMinute = offer.priceMicros.toDouble() / offer.pack.minutes
+    if (perMinute >= basePerMinute) return null
+    val percent = floor((1.0 - perMinute / basePerMinute) * 100).toInt()
+    return percent.takeIf { it >= MIN_SAVINGS_PERCENT }
 }

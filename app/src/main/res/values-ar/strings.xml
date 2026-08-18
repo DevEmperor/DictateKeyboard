@@ -1752,6 +1752,7 @@
     <string name="dictate__cloud_packs_title">باقات الرصيد</string>
     <string name="dictate__cloud_topup_title">شحن</string>
     <string name="dictate__cloud_pack_minutes">{minutes} دقيقة إملاء</string>
+    <string name="dictate__cloud_pack_savings">أرخص بنسبة {percent}%</string>
     <string name="dictate__cloud_shop_unavailable">تعذّر عرض باقات الرصيد هنا. عادةً يعني ذلك أن التطبيق لم يُثبَّت من Google Play، أو أنه لا يوجد حساب Play مسجَّل على هذا الجهاز. مفتاح API الخاص بك يعمل في الحالتين.</string>
     <string name="dictate__cloud_activate_title">الرصيد جاهز</string>
     <string name="dictate__cloud_activate_body">لديك رصيد، لكن الإملاء يمرّ حاليًا عبر مزوّد آخر. بدِّل متى شئت — لا شيء يتغيّر من دونك.</string>

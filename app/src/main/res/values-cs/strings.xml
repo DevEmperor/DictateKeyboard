@@ -1908,6 +1908,7 @@
     <string name="dictate__cloud_packs_title">Balíčky kreditu</string>
     <string name="dictate__cloud_topup_title">Dobít</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minut diktování</string>
+    <string name="dictate__cloud_pack_savings">O {percent} % levnější</string>
     <string name="dictate__cloud_shop_unavailable">Balíčky kreditu tu nelze zobrazit. Obvykle to znamená, že aplikace nebyla nainstalována z Google Play nebo že na tomto zařízení není přihlášený účet Play. Váš vlastní klíč API funguje v obou případech.</string>
     <string name="dictate__cloud_activate_title">Kredit je připravený</string>
     <string name="dictate__cloud_activate_body">Máte kredit, ale diktování teď běží přes jiného poskytovatele. Přepněte, kdykoli budete chtít — bez vás se nic nezmění.</string>

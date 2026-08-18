@@ -1677,6 +1677,7 @@
     <string name="dictate__cloud_packs_title">Pacchetti di credito</string>
     <string name="dictate__cloud_topup_title">Ricarica</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minuti di dettatura</string>
+    <string name="dictate__cloud_pack_savings">{percent}% più economico</string>
     <string name="dictate__cloud_shop_unavailable">I pacchetti di credito non si possono mostrare qui. Di solito significa che l\'app non è stata installata da Google Play, oppure che su questo dispositivo non è connesso alcun account Play. La tua chiave API funziona in entrambi i casi.</string>
     <string name="dictate__cloud_activate_title">Il credito è pronto</string>
     <string name="dictate__cloud_activate_body">Hai del credito, ma la dettatura passa al momento da un altro fornitore. Cambia quando vuoi: senza di te non cambia nulla.</string>

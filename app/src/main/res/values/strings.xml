@@ -1671,6 +1671,7 @@
     <string name="dictate__cloud_packs_title">Credit packs</string>
     <string name="dictate__cloud_topup_title">Top up</string>
     <string name="dictate__cloud_pack_minutes" comment="{minutes} is a number">{minutes} minutes of dictation</string>
+    <string name="dictate__cloud_pack_savings" comment="{percent} is a number, e.g. 31. A small badge next to the name of a larger credit pack, saying how much less a minute of dictation costs in it than in the smallest pack.">{percent}% cheaper</string>
     <string name="dictate__cloud_shop_unavailable">The credit packs can\'t be shown here. Usually that means the app wasn\'t installed from Google Play, or no Play account is signed in on this device. Your own API key works either way.</string>
     <string name="dictate__cloud_activate_title">Credit is ready</string>
     <string name="dictate__cloud_activate_body">You have credit, but dictation currently runs through a different provider. Switch whenever you like — nothing changes without you.</string>

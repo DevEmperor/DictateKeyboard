@@ -1702,6 +1702,7 @@
     <string name="dictate__cloud_packs_title">Pacotes de créditos</string>
     <string name="dictate__cloud_topup_title">Recarregar</string>
     <string name="dictate__cloud_pack_minutes">{minutes} minutos de ditado</string>
+    <string name="dictate__cloud_pack_savings">{percent}% mais barato</string>
     <string name="dictate__cloud_shop_unavailable">Não dá para mostrar os pacotes aqui. Em geral isso significa que o app não foi instalado pelo Google Play ou que não há conta do Play conectada neste aparelho. Sua própria chave de API funciona nos dois casos.</string>
     <string name="dictate__cloud_activate_title">O crédito está pronto</string>
     <string name="dictate__cloud_activate_body">Você tem crédito, mas o ditado passa no momento por outro provedor. Troque quando quiser — nada muda sem você.</string>

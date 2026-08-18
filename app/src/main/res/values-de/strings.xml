@@ -1195,6 +1195,7 @@
     <string name="dictate__cloud_packs_title">Guthaben-Pakete</string>
     <string name="dictate__cloud_topup_title">Aufladen</string>
     <string name="dictate__cloud_pack_minutes">{minutes} Minuten Diktat</string>
+    <string name="dictate__cloud_pack_savings">{percent} % günstiger</string>
     <string name="dictate__cloud_shop_unavailable">Die Guthaben-Pakete lassen sich hier nicht anzeigen. Meist heißt das, dass die App nicht über Google Play installiert wurde oder auf diesem Gerät kein Play-Konto angemeldet ist. Ein eigener API-Schlüssel funktioniert in beiden Fällen.</string>
     <string name="dictate__cloud_activate_title">Guthaben ist bereit</string>
     <string name="dictate__cloud_activate_body">Du hast Guthaben, aber das Diktat läuft gerade über einen anderen Anbieter. Wechsle, wann immer du willst — ohne dich ändert sich nichts.</string>
