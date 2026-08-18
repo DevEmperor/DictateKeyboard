@@ -25,7 +25,7 @@ A powerful Whisper AI keyboard for dictation, real-time transcription and typing
 
 <table align="center">
   <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=net.devemperor.dictate"><img alt="Get it on Google Play" width="300" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dbadge%26utm_campaign%3Dreadme"><img alt="Get it on Google Play" width="300" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a></td>
     <td valign="middle"><a href="https://paypal.me/DevEmperor"><img alt="Donate with PayPal" width="200" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png"/></a></td>
   </tr>
 </table>
@@ -80,9 +80,9 @@ A powerful Whisper AI keyboard for dictation, real-time transcription and typing
 
 ## 📲 Installation
 
-**The app is available on [Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate)**
+**The app is available on [Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro%26utm_campaign%3Dreadme)**
 (for a small fee that supports continued development), giving you easy installation and free
-lifetime updates. Just tap the badge above or [this link](https://play.google.com/store/apps/details?id=net.devemperor.dictate).
+lifetime updates. Just tap the badge above or [this link](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro_link%26utm_campaign%3Dreadme).
 
 > **Existing users:** the new keyboard keeps the same app identity and signing key, so your
 > settings carry over on update — no reinstall, no lost configuration.
@@ -278,7 +278,7 @@ Dictate Keyboard is released under the terms of the
 
 Dictate is free and open source, built in my spare time. If it makes your day a little
 easier, you can support development by
-[buying the app on Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate),
+[buying the app on Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dsupport%26utm_campaign%3Dreadme),
 [sponsoring me on GitHub](https://github.com/sponsors/DevEmperor),
 or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — thank you! 🙏
 
