@@ -1362,6 +1362,13 @@ var GRAPH = ${GRAPH_JSON};
       $('dBody').innerHTML = html;
       wireDetail(w);
       if (!$('detail').open) $('detail').showModal();
+    }).catch(function (e) {
+      // Without this the dialog simply never appeared and the page looked idle: the failure was a
+      // rejected promise nobody was listening to. Show the reason in the dialog instead — an account
+      // that cannot be opened is something to see, not something to guess at.
+      $('dTitle').textContent = id;
+      $('dBody').innerHTML = '<div class="empty">Konto nicht ladbar: ' + esc(e.message) + '</div>';
+      if (!$('detail').open) $('detail').showModal();
     });
   }
   function sect(title, table, empty) {
@@ -1967,7 +1974,7 @@ var GRAPH = ${GRAPH_JSON};
     if (links.length) html += '<div class="label" style="margin-top:10px">Verbindungen</div><div class="links" style="margin-top:6px">' + links.join('') + '</div>';
     if (n.source) html += '<p class="sub" style="margin-top:10px">Quelle: <code>' + esc(n.source) + '</code></p>';
     $('ndetail').innerHTML = html;
-    wireDetail($('ndetail'));
+    wireExplainers($('ndetail'));
   }
 
   function selectEdge(i) {
@@ -1983,7 +1990,7 @@ var GRAPH = ${GRAPH_JSON};
     if (e.token) html += '<div class="label" style="margin-top:10px">Trägt</div><div class="taglist"><span class="tag key">' + esc(e.token) + '</span></div>';
     if (e.guard) html += '<div class="label" style="margin-top:10px">Absicherung</div><div class="taglist"><span class="tag guard">' + esc(e.guard) + '</span></div>';
     $('ndetail').innerHTML = html;
-    wireDetail($('ndetail'));
+    wireExplainers($('ndetail'));
   }
 
   function clearSelection() {
@@ -2026,7 +2033,16 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   /** One wiring routine for both the panel and the list — the same buttons appear in both. */
-  function wireDetail(root) {
+  /**
+   * Wires the "?" explainer buttons inside a rendered block of the network diagram.
+   *
+   * Named apart from wireDetail() deliberately: both are plain function declarations in the same
+   * scope, so sharing a name is not an overload but a silent overwrite — the later declaration
+   * hoists over the earlier one and takes over its call sites too. That is exactly what happened
+   * here, and the account dialog stopped opening because it was handing a wallet object to a
+   * function expecting a DOM node.
+   */
+  function wireExplainers(root) {
     Array.prototype.forEach.call(root.querySelectorAll('[data-explain-node]'), function (b) {
       b.onclick = function (ev) { ev.stopPropagation(); explainNode(b.getAttribute('data-explain-node')); };
     });
@@ -2079,7 +2095,7 @@ var GRAPH = ${GRAPH_JSON};
         '</header>' + cards + '</section>';
     }).join('');
     $('glist').innerHTML = html;
-    wireDetail($('glist'));
+    wireExplainers($('glist'));
   }
 
   function setGraphMode(mode) {
