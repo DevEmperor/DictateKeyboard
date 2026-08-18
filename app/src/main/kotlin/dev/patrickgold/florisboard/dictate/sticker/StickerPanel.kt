@@ -41,6 +41,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.HistoryToggleOff
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.DriveFileMove
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.FolderOff
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -51,6 +54,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -77,6 +81,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -119,10 +124,12 @@ fun StickerPanel(
     // is open, since anything added from elsewhere arrives with the panel closed.
     var reloadToken by remember { mutableIntStateOf(0) }
     val canWrite = remember(folderUri) { StickerWriter.canWrite(context, folderUri) }
+    // An import started from the settings screen finishes while this panel may already be composed.
+    val importedTick by StickerImports.importedTick.collectAsState()
 
     // Show whatever was scanned last straight away, then re-read the folder in the background: a
     // collection that has not changed costs nothing visible, one that has corrects itself a moment later.
-    LaunchedEffect(folderUri, reloadToken) {
+    LaunchedEffect(folderUri, reloadToken, importedTick) {
         accessLost = false
         if (folderUri.isBlank()) {
             index = null
@@ -166,11 +173,33 @@ fun StickerPanel(
                 EditorInstance.MediaCommitResult.COMMITTED ->
                     keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
                 EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD -> {
-                    context.showShortToast(R.string.sticker__copied_to_clipboard)
+                    // Name the reason rather than "this app does not accept stickers": which formats
+                    // the app will take is the one fact that makes the failure actionable.
+                    context.showLongToast(StickerManager.refusalReason(context, item))
                     keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
                 }
                 EditorInstance.MediaCommitResult.FAILED ->
                     context.showShortToast(R.string.sticker__insert_failed)
+            }
+        }
+    }
+
+    fun moveToPack(item: StickerItem, targetPackId: String) {
+        val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
+        val currentIndex = index ?: return
+        val sourceCategory = currentIndex.categoryOf(item.docId) ?: return
+        scope.launch {
+            val rootDocId = StickerScanner.rootDocumentId(treeUri) ?: return@launch
+            val from = sourceCategory.ifEmpty { rootDocId }
+            val to = targetPackId.ifEmpty { rootDocId }
+            if (StickerWriter.moveToPack(context, treeUri, item.docId, from, to)) {
+                // A move can hand the file a new document id, so the old one has to go from the
+                // favourites and recents or it would leave a hole nobody can explain.
+                StickerHistoryHelper.forget(prefs, item.docId)
+                StickerScanner.clearCached(context)
+                reloadToken++
+            } else {
+                context.showShortToast(R.string.sticker__move_failed)
             }
         }
     }
@@ -308,8 +337,11 @@ fun StickerPanel(
                             treeUri = treeUri,
                             restLabel = restLabel,
                             canDelete = canWrite,
+                            packs = if (canWrite) categories.filter { it.id != StickerCategory.ROOT_ID } else emptyList(),
+                            packOf = { docId -> currentIndex!!.categoryOf(docId) },
                             onInsert = { item -> insert(item, category.id) },
                             onDelete = { item -> deleteFile(item) },
+                            onMoveToPack = { item, packId -> moveToPack(item, packId) },
                             onPin = { item ->
                                 scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
                             },
@@ -338,8 +370,11 @@ private fun StickerCategoryPage(
     treeUri: Uri,
     restLabel: String,
     canDelete: Boolean,
+    packs: List<StickerCategory>,
+    packOf: (String) -> String?,
     onInsert: (StickerItem) -> Unit,
     onDelete: (StickerItem) -> Unit,
+    onMoveToPack: (StickerItem, String) -> Unit,
     onPin: (StickerItem) -> Unit,
     onUnpin: (StickerItem) -> Unit,
     onForget: (StickerItem) -> Unit,
@@ -349,6 +384,9 @@ private fun StickerCategoryPage(
     // Deleting removes the user's own file, so it takes a second tap. Held per menu rather than per
     // sticker so closing the menu also cancels the armed confirmation.
     var deleteArmed by remember { mutableStateOf(false) }
+    // The same menu, second page: which pack to move into. A submenu would need somewhere to hang,
+    // and a long-pressed grid cell has no room for one.
+    var packPickerOpen by remember { mutableStateOf(false) }
 
     val byId = remember(pool) { pool.associateBy { it.docId } }
     val pinned = if (historyEnabled) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
@@ -370,12 +408,39 @@ private fun StickerCategoryPage(
                 item = item,
                 treeUri = treeUri,
                 onClick = { onInsert(item) },
-                onLongClick = { menuFor = menuKey; deleteArmed = false },
+                onLongClick = { menuFor = menuKey; deleteArmed = false; packPickerOpen = false },
             )
             DropdownMenu(
                 expanded = menuFor == menuKey,
-                onDismissRequest = { menuFor = null; deleteArmed = false },
+                onDismissRequest = { menuFor = null; deleteArmed = false; packPickerOpen = false },
             ) {
+                if (packPickerOpen) {
+                    val currentPack = packOf(item.docId)
+                    if (!currentPack.isNullOrEmpty()) {
+                        DropdownMenuItem(
+                            text = { Text(stringRes(R.string.sticker__pack_none)) },
+                            leadingIcon = { Icon(Icons.Outlined.FolderOff, contentDescription = null) },
+                            onClick = {
+                                onMoveToPack(item, StickerCategory.ROOT_ID)
+                                menuFor = null
+                                packPickerOpen = false
+                            },
+                        )
+                    }
+                    for (pack in packs) {
+                        if (pack.id == currentPack) continue
+                        DropdownMenuItem(
+                            text = { Text(pack.name) },
+                            leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) },
+                            onClick = {
+                                onMoveToPack(item, pack.id)
+                                menuFor = null
+                                packPickerOpen = false
+                            },
+                        )
+                    }
+                    return@DropdownMenu
+                }
                 DropdownMenuItem(
                     text = {
                         Text(stringRes(if (isPinned) R.string.sticker__unpin else R.string.sticker__pin))
@@ -391,6 +456,13 @@ private fun StickerCategoryPage(
                         menuFor = null
                     },
                 )
+                if (packs.isNotEmpty()) {
+                    DropdownMenuItem(
+                        text = { Text(stringRes(R.string.sticker__move_to_pack)) },
+                        leadingIcon = { Icon(Icons.Outlined.DriveFileMove, contentDescription = null) },
+                        onClick = { packPickerOpen = true },
+                    )
+                }
                 if (section == "recent") {
                     DropdownMenuItem(
                         text = { Text(stringRes(R.string.sticker__forget_recent)) },

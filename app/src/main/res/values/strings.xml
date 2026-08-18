@@ -82,6 +82,33 @@
     <string name="sticker__delete_file" comment="Long-press action, deletes the image file itself">Delete file</string>
     <string name="sticker__delete_confirm" comment="Second tap of the delete action, shown in red">Really delete?</string>
     <string name="sticker__delete_failed" comment="Toast when the file could not be deleted">Could not delete the file</string>
+    <string name="prefs__media__emoji__title" comment="Settings group title">Emojis</string>
+    <string name="prefs__media__sticker_import_source" comment="Preference title, opens a list of places stickers are often kept">Fetch from an app</string>
+    <string name="prefs__media__sticker_import_source__summary" comment="Preference summary">Open the file picker straight in a folder another app writes to</string>
+    <string name="prefs__media__sticker_packs" comment="Preference title, opens the pack manager">Sticker packs</string>
+    <string name="prefs__media__sticker_packs__summary" comment="Preference summary; packs are the subfolders of the chosen folder">Create, rename and delete the folders your stickers are sorted into</string>
+    <string name="sticker__source_whatsapp" comment="Entry in the list of places to fetch stickers from">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business" comment="Entry in the list of places to fetch stickers from">WhatsApp Business</string>
+    <string name="sticker__source_telegram" comment="Entry in the list of places to fetch stickers from">Telegram</string>
+    <string name="sticker__source_downloads" comment="Entry in the list of places to fetch stickers from">Downloads</string>
+    <string name="sticker__source_pictures" comment="Entry in the list of places to fetch stickers from">Pictures</string>
+    <string name="sticker__source_dcim" comment="Entry in the list of places to fetch stickers from">Camera</string>
+    <string name="sticker__source_hint" comment="Note under the list; explains why some apps are missing from it">These are starting points, not guarantees — if a folder is not there, the picker opens as usual. Apps that keep their stickers to themselves, such as the Samsung keyboard, can only be shared to Dictate.</string>
+    <string name="sticker__import_progress" comment="Preference title while copying; {done} of {total} files handled">Copying {done} of {total}</string>
+    <string name="sticker__import_cancel" comment="Preference summary while copying; tapping stops it">Tap to stop. What has been copied stays.</string>
+    <string name="sticker__refused_declares_nothing" comment="Toast when the target app accepts no rich content at all">This app takes no images from the keyboard — copied to clipboard, long-press to paste</string>
+    <string name="sticker__refused_accepts_only" comment="Toast naming the formats the app accepts; {accepted} is a list of types, {own} the sticker\'s own">This app only takes {accepted}, this sticker is {own} — copied to clipboard, long-press to paste</string>
+    <string name="sticker__move_to_pack" comment="Long-press action, moves a sticker into another pack">Move to pack</string>
+    <string name="sticker__pack_none" comment="Entry that moves a sticker out of every pack, back into the main folder">No pack</string>
+    <string name="sticker__move_failed" comment="Toast when a sticker could not be moved">Could not move the sticker</string>
+    <string name="sticker__pack_new" comment="Button that creates a pack">Create pack</string>
+    <string name="sticker__pack_name" comment="Text field label for the pack name">Pack name</string>
+    <string name="sticker__pack_rename" comment="Button and icon label for renaming a pack">Rename</string>
+    <string name="sticker__pack_delete" comment="Icon label and title of the delete confirmation">Delete pack</string>
+    <string name="sticker__pack_delete_confirm" comment="Delete confirmation; {name} is the pack, {n} how many stickers go with it">Delete the pack \"{name}\" and the {n} stickers in it?</string>
+    <string name="sticker__pack_failed" comment="Toast when creating, renaming or deleting a pack did not work">That did not work — the folder may be write-protected</string>
+    <string name="sticker__packs_loading" comment="Shown while the folder is being read">Reading the folder…</string>
+    <string name="sticker__packs_empty" comment="Shown when the folder has no subfolders yet">No packs yet. A pack is a subfolder of your sticker folder.</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>

@@ -13,7 +13,9 @@ package dev.patrickgold.florisboard.dictate.sticker
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.media.MediaCache
+import dev.patrickgold.florisboard.dictate.media.MediaFormat
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -21,6 +23,7 @@ import java.io.File
 import kotlin.math.absoluteValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.florisboard.lib.android.stringRes
 
 /**
  * Inserts a sticker from the user's own folder into the current editor (issue #280).
@@ -81,14 +84,58 @@ object StickerManager {
     ): EditorInstance.MediaCommitResult {
         val file = materialize(context, treeUri, item) ?: return EditorInstance.MediaCommitResult.FAILED
         val editorInstance by context.editorInstance()
+        val description = item.name.ifBlank { "Sticker" }
+
         // Committing rich content talks to the InputConnection — do it on the main thread.
-        val result = withContext(Dispatchers.Main) {
-            editorInstance.commitMedia(file, item.mime, item.name.ifBlank { "Sticker" })
+        var result = withContext(Dispatchers.Main) {
+            editorInstance.commitMedia(file, item.mime, description)
         }
+
+        // Refused. Before giving up on the editor, offer it a format it named itself — a still WebP
+        // re-encoded as PNG is the same picture, and it is the difference between a sticker landing
+        // in the chat and landing in the clipboard.
+        if (result == EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD) {
+            val accepted = withContext(Dispatchers.Main) { editorInstance.acceptedMediaMimeTypes() }
+            val animated = withContext(Dispatchers.IO) {
+                MediaFormat.isAnimated(item.mime, MediaFormat.readHeader(file))
+            }
+            val target = MediaFormat.negotiate(item.mime, animated, accepted)
+            if (target != null && target != item.mime) {
+                val converted = withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
+                if (converted != null) {
+                    val retry = withContext(Dispatchers.Main) {
+                        editorInstance.commitMedia(converted, target, description)
+                    }
+                    if (retry == EditorInstance.MediaCommitResult.COMMITTED) result = retry
+                }
+            }
+        }
+
         if (result != EditorInstance.MediaCommitResult.FAILED) {
             StickerHistoryHelper.markUsed(prefs, categoryId, item.docId)
         }
         withContext(Dispatchers.IO) { MediaCache.prune(context) }
         return result
+    }
+
+    /**
+     * Why an insert ended up on the clipboard, in the words of the app that refused it.
+     *
+     * Worth saying out loud rather than hiding behind "this app does not accept stickers": the reason
+     * is almost always a format the app never listed, and knowing which one turns a mystery into a
+     * fact — for the user and for the next bug report.
+     */
+    fun refusalReason(context: Context, item: StickerItem): String {
+        val editorInstance by context.editorInstance()
+        val accepted = editorInstance.acceptedMediaMimeTypes()
+        return if (accepted.isEmpty()) {
+            context.stringRes(R.string.sticker__refused_declares_nothing)
+        } else {
+            context.stringRes(
+                R.string.sticker__refused_accepts_only,
+                "accepted" to accepted.joinToString(", "),
+                "own" to item.mime,
+            )
+        }
     }
 }

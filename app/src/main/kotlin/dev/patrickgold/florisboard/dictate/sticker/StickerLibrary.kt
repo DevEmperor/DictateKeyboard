@@ -73,6 +73,15 @@ data class StickerIndex(
     val isEmpty: Boolean
         get() = categories.all { it.items.isEmpty() }
 
+    /**
+     * Which category a sticker actually lives in — not the tab it happens to be shown on.
+     *
+     * The first tab aggregates favourites and recents from every folder, so a sticker visible there
+     * may belong to any pack. Moving it needs its real parent, and this is where that is known.
+     */
+    fun categoryOf(docId: String): String? =
+        categories.firstOrNull { category -> category.items.any { it.docId == docId } }?.id
+
     fun findItem(docId: String): StickerItem? {
         for (category in categories) {
             val hit = category.items.firstOrNull { it.docId == docId }

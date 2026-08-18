@@ -18,6 +18,7 @@ import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.stringRes
 
@@ -82,6 +83,7 @@ object StickerWriter {
         context: Context,
         treeUri: Uri,
         sources: List<Uri>,
+        onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
     ): ImportResult = withContext(Dispatchers.IO) {
         val resolver = context.contentResolver
         val rootDocId = try {
@@ -97,7 +99,10 @@ object StickerWriter {
         var unsupported = 0
         var failed = 0
 
-        for (source in sources) {
+        for ((index, source) in sources.withIndex()) {
+            // Cancelling an import has to stop the copying, not just hide the bar.
+            ensureActive()
+            onProgress(index, sources.size)
             val meta = describe(context, source)
             val mime = meta.mime
             val extension = ExtensionForMime[mime]
@@ -133,9 +138,125 @@ object StickerWriter {
             }
         }
 
+        onProgress(sources.size, sources.size)
         if (imported > 0) StickerScanner.clearCached(context)
         ImportResult(imported, duplicate, unsupported, failed)
     }
+
+    /**
+     * Creates a pack — which is to say a subfolder, because that is what the panel already shows as a
+     * tab. Returns the new folder's document id, or null if the name was taken or refused.
+     */
+    suspend fun createPack(context: Context, treeUri: Uri, name: String): String? =
+        withContext(Dispatchers.IO) {
+            try {
+                val rootDocId = DocumentsContract.getTreeDocumentId(treeUri)
+                val rootUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, rootDocId)
+                val created = DocumentsContract.createDocument(
+                    context.contentResolver,
+                    rootUri,
+                    DocumentsContract.Document.MIME_TYPE_DIR,
+                    packName(name),
+                ) ?: return@withContext null
+                StickerScanner.clearCached(context)
+                DocumentsContract.getDocumentId(created)
+            } catch (e: Exception) {
+                flogError { "Failed to create pack $name: ${e.message}" }
+                null
+            }
+        }
+
+    /**
+     * Renames a pack.
+     *
+     * The documents provider for shared storage derives ids from the path, so renaming a folder
+     * changes the id of everything inside it. The index is therefore thrown away rather than patched,
+     * and stale favourites simply stop resolving — the panel skips ids it cannot find.
+     */
+    suspend fun renamePack(context: Context, treeUri: Uri, docId: String, name: String): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+                val renamed = DocumentsContract.renameDocument(
+                    context.contentResolver, uri, packName(name),
+                ) != null
+                if (renamed) StickerScanner.clearCached(context)
+                renamed
+            } catch (e: Exception) {
+                flogError { "Failed to rename pack $docId: ${e.message}" }
+                false
+            }
+        }
+
+    /** Deletes a pack **and the stickers in it** — the caller must have asked first. */
+    suspend fun deletePack(context: Context, treeUri: Uri, docId: String): Boolean =
+        withContext(Dispatchers.IO) {
+            val deleted = delete(context, treeUri, docId)
+            if (deleted) StickerScanner.clearCached(context)
+            deleted
+        }
+
+    /**
+     * Moves a sticker into a pack.
+     *
+     * Prefers the provider's own move, which is instant and keeps the document id. Not every provider
+     * offers it, so a copy followed by a delete stands behind it — slower, and the sticker comes out
+     * with a new id, which is why the caller drops it from the favourites and recents afterwards.
+     */
+    suspend fun moveToPack(
+        context: Context,
+        treeUri: Uri,
+        docId: String,
+        sourceParentDocId: String,
+        targetParentDocId: String,
+    ): Boolean = withContext(Dispatchers.IO) {
+        if (sourceParentDocId == targetParentDocId) return@withContext true
+        val resolver = context.contentResolver
+        val sourceUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+        val sourceParentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, sourceParentDocId)
+        val targetParentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, targetParentDocId)
+        val moved = try {
+            DocumentsContract.moveDocument(resolver, sourceUri, sourceParentUri, targetParentUri) != null
+        } catch (e: Exception) {
+            flogError { "Move unsupported for $docId, copying instead: ${e.message}" }
+            false
+        }
+        val ok = moved || copyThenDelete(context, sourceUri, targetParentUri)
+        if (ok) StickerScanner.clearCached(context)
+        ok
+    }
+
+    private fun copyThenDelete(context: Context, sourceUri: Uri, targetParentUri: Uri): Boolean {
+        val resolver = context.contentResolver
+        return try {
+            val mime = resolver.getType(sourceUri) ?: return false
+            val name = resolver.query(
+                sourceUri,
+                arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME),
+                null, null, null,
+            )?.use { if (it.moveToFirst()) it.getString(0) else null } ?: return false
+            val target = DocumentsContract.createDocument(resolver, targetParentUri, mime, name)
+                ?: return false
+            val copied = resolver.openInputStream(sourceUri)?.use { input ->
+                resolver.openOutputStream(target)?.use { output -> input.copyTo(output) }
+            }
+            if (copied == null) {
+                runCatching { DocumentsContract.deleteDocument(resolver, target) }
+                return false
+            }
+            DocumentsContract.deleteDocument(resolver, sourceUri)
+        } catch (e: Exception) {
+            flogError { "Failed to copy into pack: ${e.message}" }
+            false
+        }
+    }
+
+    /** Folder names have to survive a file system, so the same characters go as for a sticker file. */
+    internal fun packName(name: String): String = name
+        .replace(Regex("""[/\\:*?"<>|]"""), "_")
+        .trim()
+        .take(64)
+        .ifBlank { "Pack" }
 
     /** Deletes one sticker from the folder. Returns false when the provider refuses. */
     suspend fun delete(context: Context, treeUri: Uri, docId: String): Boolean = withContext(Dispatchers.IO) {
@@ -210,16 +331,23 @@ object StickerWriter {
     }
 
     /**
-     * A best-effort starting point for the file picker: WhatsApp's own sticker folder.
+     * A best-effort starting point for the file picker, inside another app's media folder.
      *
      * Since Android 11 `Android/data` is closed to the picker but `Android/media` is not, and that is
-     * where WhatsApp keeps the stickers it has written to storage. The value is only a hint — if the
-     * path does not exist, or this is WhatsApp Business, or the stickers never left the app's private
-     * database, the picker simply opens where it always does. Nothing depends on it being right.
+     * where apps like WhatsApp keep what they have written to shared storage. The value is only a
+     * hint — if the path does not exist, or the stickers never left the app's private database, the
+     * picker simply opens where it always does. Nothing depends on it being right, which is what
+     * makes it safe to offer several of them in a list.
      */
-    fun whatsAppStickersHint(): Uri = DocumentsContract.buildDocumentUri(
+    fun mediaFolderHint(packageName: String, relativePath: String): Uri = DocumentsContract.buildDocumentUri(
         "com.android.externalstorage.documents",
-        "primary:Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Stickers",
+        "primary:Android/media/$packageName/$relativePath",
+    )
+
+    /** The same, for the ordinary shared folders: `Download`, `Pictures`, `DCIM`. */
+    fun publicFolderHint(name: String): Uri = DocumentsContract.buildDocumentUri(
+        "com.android.externalstorage.documents",
+        "primary:$name",
     )
 
     /** The URIs carried by a share, whether it was one image or several. */

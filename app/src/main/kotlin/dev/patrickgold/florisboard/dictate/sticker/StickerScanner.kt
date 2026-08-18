@@ -78,6 +78,19 @@ object StickerScanner {
         DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
 
     /**
+     * The document id of the picked folder itself.
+     *
+     * The root category carries [StickerCategory.ROOT_ID] (an empty string) rather than this, because
+     * the index has to stay readable after the tree URI changes. Anything that talks to the documents
+     * provider — moving a sticker out of a pack, creating one — needs the real id, and gets it here.
+     */
+    fun rootDocumentId(treeUri: Uri): String? = try {
+        DocumentsContract.getTreeDocumentId(treeUri)
+    } catch (e: Exception) {
+        null
+    }
+
+    /**
      * The folder's own name, so settings can say which folder is in use without re-reading the tree
      * every time the screen opens. Falls back to the last path segment, which is ugly but never empty.
      */

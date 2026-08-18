@@ -372,10 +372,23 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
-     * Inserts an already-downloaded media [file] (e.g. a GIF) of the given [mimeType] into the
-     * current editor. When the editor supports the Commit Content API for [mimeType], the file is
-     * committed inline (the way Gboard inserts GIFs); otherwise it is copied to the clipboard as a
-     * fallback so the user can paste it manually. The file is served via the app's FileProvider, so
+     * The content types the current editor says it accepts, empty when it says nothing.
+     *
+     * Exposed so a caller can pick a format the editor named instead of only offering the file's own
+     * (see [dev.patrickgold.florisboard.dictate.media.MediaFormat.negotiate]). Treat it as a hint,
+     * not a contract — plenty of apps accept more than they declare, and some declare nothing at all.
+     */
+    fun acceptedMediaMimeTypes(): List<String> = activeInfo.contentMimeTypes.toList()
+
+    /** The package the current editor belongs to, for messages that name the app. */
+    fun activeEditorPackage(): String? = activeInfo.packageName
+
+    /**
+     * Inserts an already-staged media [file] of the given [mimeType] into the current editor.
+     *
+     * The insert is attempted first and judged afterwards: if the editor takes the content it is
+     * committed inline (the way Gboard inserts GIFs), and only a genuine refusal falls back to the
+     * clipboard so the user can paste it manually. The file is served via the app's FileProvider, so
      * it must live under a path declared in `res/xml/file_paths.xml` (e.g. `cacheDir/gif-media/`).
      *
      * @return the outcome, so the caller can inform the user (inserted vs. copied vs. failed).
@@ -388,15 +401,23 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             flogError { "Cannot expose media file via FileProvider: ${e.message}" }
             return MediaCommitResult.FAILED
         }
-        if (supportsMediaCommit(mimeType)) {
-            val ic = currentInputConnection()
-            if (ic != null) {
-                ic.finishComposingText()
-                val info = InputContentInfoCompat(uri, ClipDescription(description, arrayOf(mimeType)), null)
-                val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
-                if (InputConnectionCompat.commitContent(ic, activeInfo.base, info, flags, null)) {
-                    return MediaCommitResult.COMMITTED
-                }
+        // Try, rather than ask first. Whether the editor takes the content is something commitContent
+        // answers by itself, and it answers more truthfully than the declaration does: apps routinely
+        // accept types they never listed, and the declaration is missing entirely whenever the editor
+        // info has just been reset (which also made isRawInputEditor briefly true and blocked every
+        // insert). The clipboard paste path has always worked this way, which is precisely why an
+        // image could be pasted into apps a sticker could not be inserted into.
+        val ic = currentInputConnection()
+        if (ic != null) {
+            ic.finishComposingText()
+            val info = InputContentInfoCompat(uri, ClipDescription(description, arrayOf(mimeType)), null)
+            val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+            if (InputConnectionCompat.commitContent(ic, activeInfo.base, info, flags, null)) {
+                return MediaCommitResult.COMMITTED
+            }
+            flogError {
+                "Editor ${activeInfo.packageName} refused $mimeType " +
+                    "(declares ${activeInfo.contentMimeTypes.joinToString().ifBlank { "nothing" }})"
             }
         }
         // Fallback: copy to the clipboard (+ system primary clip) for manual pasting.

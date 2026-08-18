@@ -275,7 +275,7 @@
 
         <!-- Default file provider to share files from the "files" or "cache" dir -->
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="dev.patrickgold.florisboard.dictate.media.MediaFileProvider"
             android:authorities="${applicationId}.provider.file"
             android:grantUriPermissions="true"
             android:exported="false">

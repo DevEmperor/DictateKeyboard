@@ -22,14 +22,33 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
+import androidx.compose.material.icons.outlined.Apps
+import androidx.compose.material.icons.outlined.Brush
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Downloading
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.HistoryToggleOff
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.LinkOff
+import androidx.compose.material.icons.outlined.Numbers
+import androidx.compose.material.icons.outlined.PhotoSizeSelectLarge
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.ShortText
+import androidx.compose.material.icons.outlined.Sort
+import androidx.compose.material.icons.outlined.StarBorder
+import androidx.compose.material.icons.outlined.TextFields
 import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Gif
@@ -37,6 +56,7 @@ import androidx.compose.material.icons.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +65,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState as collectFlowAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,11 +84,15 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.dictate.sticker.StickerCategory
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistoryHelper
+import dev.patrickgold.florisboard.dictate.sticker.StickerImports
+import dev.patrickgold.florisboard.dictate.sticker.StickerIndex
 import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
 import dev.patrickgold.florisboard.dictate.sticker.StickerWriter
 import dev.patrickgold.florisboard.dictate.sticker.stickerImportSummary
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
@@ -79,11 +105,11 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.compose.pluralsRes
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
@@ -103,25 +129,180 @@ fun MediaScreen() = FlorisScreen {
     val context = LocalContext.current
 
     content {
-        // Single GIF row (no group heading — there is only one option); the on/off switch and the
-        // setup walkthrough both live inside the dialog it opens.
-        val gifKey by prefs.gif.klipyApiKey.collectAsState()
-        val gifEnabled by prefs.gif.enabled.collectAsState()
-        Preference(
-            icon = Icons.Outlined.Gif,
-            modifier = Modifier.settingsSearchAnchor("prefs__media__gif_setup__title"),
-            title = stringRes(R.string.prefs__media__gif_setup__title),
-            summary = when {
-                !gifEnabled -> stringRes(R.string.state__disabled)
-                gifKey.isBlank() -> stringRes(R.string.prefs__media__gif_setup__summary_unset)
-                else -> stringRes(R.string.prefs__media__gif_setup__summary_set)
-            },
-            onClick = { gifSetupOpen = true },
-        )
+        // Emojis first, then GIFs, then stickers — the order the screen title promises.
+        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji__title)) {
+            ListPreference(
+                prefs.emoji.preferredSkinTone,
+                icon = Icons.Outlined.Face,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_preferred_skin_tone"),
+                title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
+                entries = enumDisplayEntriesOf(EmojiSkinTone::class),
+            )
+            ListPreference(
+                prefs.emoji.preferredHairStyle,
+                icon = Icons.Outlined.Brush,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_preferred_hair_style"),
+                title = stringRes(R.string.prefs__media__emoji_preferred_hair_style),
+                entries = enumDisplayEntriesOf(EmojiHairStyle::class),
+            )
+        }
 
-        // Local stickers (issue #280): one row to pick a folder, the rest only matters once one is set.
+        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_history__title)) {
+            SwitchPreference(
+                prefs.emoji.historyEnabled,
+                icon = Icons.Outlined.Schedule,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_enabled"),
+                title = stringRes(R.string.prefs__media__emoji_history_enabled),
+                summary = stringRes(R.string.prefs__media__emoji_history_enabled__summary),
+            )
+            ListPreference(
+                prefs.emoji.historyPinnedUpdateStrategy,
+                icon = Icons.Outlined.Sort,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_update_strategy"),
+                title = stringRes(R.string.prefs__media__emoji_history_pinned_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            ListPreference(
+                prefs.emoji.historyRecentUpdateStrategy,
+                icon = Icons.Outlined.Sort,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_recent_update_strategy"),
+                title = stringRes(R.string.prefs__media__emoji_history_recent_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                primaryPref = prefs.emoji.historyPinnedMaxSize,
+                secondaryPref = prefs.emoji.historyRecentMaxSize,
+                icon = Icons.Outlined.Numbers,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_max_size"),
+                title = stringRes(R.string.prefs__media__emoji_history_max_size),
+                primaryLabel = stringRes(R.string.emoji__history__pinned),
+                secondaryLabel = stringRes(R.string.emoji__history__recent),
+                valueLabel = { maxSize ->
+                    if (maxSize == EmojiHistory.MaxSizeUnlimited) {
+                        stringRes(R.string.general__unlimited)
+                    } else {
+                        pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
+                    }
+                },
+                min = 0,
+                max = 120,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            Preference(
+                icon = Icons.Outlined.StarBorder,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_reset"),
+                title = stringRes(R.string.prefs__media__emoji_history_pinned_reset),
+                onClick = {
+                    shouldDelete = ShouldDelete(true)
+                },
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            Preference(
+                icon = Icons.Outlined.HistoryToggleOff,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_reset"),
+                title = stringRes(R.string.prefs__media__emoji_history_reset),
+                onClick = {
+                    shouldDelete = ShouldDelete(false)
+                },
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+
+        }
+
+        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_suggestion__title)) {
+            SwitchPreference(
+                prefs.emoji.suggestionEnabled,
+                icon = Icons.Outlined.EmojiSymbols,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_enabled"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_enabled),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_enabled__summary),
+            )
+            ListPreference(
+                prefs.emoji.suggestionType,
+                icon = Icons.Outlined.Keyboard,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_type"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_type),
+                entries = enumDisplayEntriesOf(EmojiSuggestionType::class),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            SwitchPreference(
+                prefs.emoji.suggestionUpdateHistory,
+                icon = Icons.Outlined.Schedule,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_update_history"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
+                enabledIf = {
+                    prefs.emoji.suggestionEnabled.isTrue() && prefs.emoji.historyEnabled.isTrue()
+                },
+            )
+            SwitchPreference(
+                prefs.emoji.suggestionCandidateShowName,
+                icon = Icons.Outlined.TextFields,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_show_name"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                prefs.emoji.suggestionQueryMinLength,
+                icon = Icons.Outlined.ShortText,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_query_min_length"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_query_min_length),
+                valueLabel = { length ->
+                    pluralsRes(R.plurals.unit__characters__written, length, "v" to length)
+                },
+                min = 1,
+                max = 5,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                prefs.emoji.suggestionCandidateMaxCount,
+                icon = Icons.Outlined.Numbers,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_max_count"),
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_max_count),
+                valueLabel = { count ->
+                    pluralsRes(R.plurals.unit__candidates__written, count, "v" to count)
+                },
+                min = 1,
+                max = 10,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+        }
+
+        // ----------------------------------------------------------------- GIFs
+        PreferenceGroup(title = stringRes(R.string.prefs__media__gif__title)) {
+            // One row: the on/off switch and the setup walkthrough both live inside the dialog.
+            val gifKey by prefs.gif.klipyApiKey.collectAsState()
+            val gifEnabled by prefs.gif.enabled.collectAsState()
+            Preference(
+                icon = Icons.Outlined.Gif,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__gif_setup__title"),
+                title = stringRes(R.string.prefs__media__gif_setup__title),
+                summary = when {
+                    !gifEnabled -> stringRes(R.string.state__disabled)
+                    gifKey.isBlank() -> stringRes(R.string.prefs__media__gif_setup__summary_unset)
+                    else -> stringRes(R.string.prefs__media__gif_setup__summary_set)
+                },
+                onClick = { gifSetupOpen = true },
+            )
+        }
+
+        // ------------------------------------------------------------- Stickers
+        // Local stickers (issue #280). Everything below the folder row only matters once one is set.
         val stickerFolderUri by prefs.sticker.folderUri.collectAsState()
         val stickerFolderName by prefs.sticker.folderName.collectAsState()
+        val importState by StickerImports.state.collectFlowAsState()
+        var sourcePickerOpen by remember { mutableStateOf(false) }
+        var packManagerOpen by remember { mutableStateOf(false) }
+        // Which folder the picker should open in. Read at launch time rather than baked into the
+        // contract, so one launcher serves every source in the list.
+        var pendingSource by remember { mutableStateOf<Uri?>(null) }
+
         val stickerFolderPicker = rememberLauncherForActivityResult(
             ActivityResultContracts.OpenDocumentTree()
         ) { uri ->
@@ -148,38 +329,70 @@ fun MediaScreen() = FlorisScreen {
                 prefs.sticker.folderName.set(name)
             }
         }
-        val stickerFolderUnset = stringRes(R.string.prefs__media__sticker_folder__summary_unset)
-        Preference(
-            icon = Icons.Outlined.Collections,
-            modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder__title"),
-            title = stringRes(R.string.prefs__media__sticker_folder__title),
-            summary = stickerFolderName.ifBlank { stickerFolderUnset },
-            onClick = { stickerFolderPicker.launch(null) },
-        )
-        if (stickerFolderUri.isNotBlank()) {
-            PreferenceGroup(title = stringRes(R.string.prefs__media__sticker__title)) {
-                // Adding images. Two launchers rather than one, because the only difference between
-                // them is the folder the picker opens in and that is fixed when the contract is built.
-                val addPicker = rememberLauncherForActivityResult(
-                    ActivityResultContracts.OpenMultipleDocuments()
-                ) { uris -> importStickers(context, scope, stickerFolderUri, uris) }
-                val whatsAppPicker = rememberLauncherForActivityResult(
-                    OpenImagesStartingAt(StickerWriter.whatsAppStickersHint())
-                ) { uris -> importStickers(context, scope, stickerFolderUri, uris) }
+        val imagePicker = rememberLauncherForActivityResult(
+            remember { OpenImagesStartingAt { pendingSource } }
+        ) { uris -> importStickers(context, stickerFolderUri, uris) }
+
+        PreferenceGroup(title = stringRes(R.string.prefs__media__sticker__title)) {
+            val stickerFolderUnset = stringRes(R.string.prefs__media__sticker_folder__summary_unset)
+            Preference(
+                icon = Icons.Outlined.Collections,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder__title"),
+                title = stringRes(R.string.prefs__media__sticker_folder__title),
+                summary = stickerFolderName.ifBlank { stickerFolderUnset },
+                onClick = { stickerFolderPicker.launch(null) },
+            )
+            if (stickerFolderUri.isNotBlank()) {
+                val running = importState
+                if (running != null) {
+                    // While copying, the two "add" rows become one that reports and cancels. A count
+                    // rather than a bare bar: with several hundred files, "84 / 412" is the only form
+                    // that says whether it is worth waiting for.
+                    Preference(
+                        icon = Icons.Outlined.Downloading,
+                        title = stringRes(
+                            R.string.sticker__import_progress,
+                            "done" to running.done,
+                            "total" to running.total,
+                        ),
+                        summary = stringRes(R.string.sticker__import_cancel),
+                        onClick = { StickerImports.cancel() },
+                        trailing = {
+                            CircularProgressIndicator(
+                                progress = { running.percent / 100f },
+                                modifier = Modifier.size(24.dp),
+                                strokeWidth = 2.dp,
+                            )
+                        },
+                    )
+                } else {
+                    Preference(
+                        icon = Icons.Outlined.AddPhotoAlternate,
+                        modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_add"),
+                        title = stringRes(R.string.prefs__media__sticker_add),
+                        summary = stringRes(R.string.prefs__media__sticker_add__summary),
+                        onClick = {
+                            pendingSource = null
+                            imagePicker.launch(StickerImportMimeTypes)
+                        },
+                    )
+                    Preference(
+                        icon = Icons.Outlined.Apps,
+                        modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_import_source"),
+                        title = stringRes(R.string.prefs__media__sticker_import_source),
+                        summary = stringRes(R.string.prefs__media__sticker_import_source__summary),
+                        onClick = { sourcePickerOpen = true },
+                    )
+                }
                 Preference(
-                    icon = Icons.Outlined.AddPhotoAlternate,
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_add"),
-                    title = stringRes(R.string.prefs__media__sticker_add),
-                    summary = stringRes(R.string.prefs__media__sticker_add__summary),
-                    onClick = { addPicker.launch(StickerImportMimeTypes) },
+                    icon = Icons.Outlined.Folder,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_packs"),
+                    title = stringRes(R.string.prefs__media__sticker_packs),
+                    summary = stringRes(R.string.prefs__media__sticker_packs__summary),
+                    onClick = { packManagerOpen = true },
                 )
                 Preference(
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_import_whatsapp"),
-                    title = stringRes(R.string.prefs__media__sticker_import_whatsapp),
-                    summary = stringRes(R.string.prefs__media__sticker_import_whatsapp__summary),
-                    onClick = { whatsAppPicker.launch(StickerImportMimeTypes) },
-                )
-                Preference(
+                    icon = Icons.Outlined.Refresh,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
                     title = stringRes(R.string.prefs__media__sticker_rescan),
                     summary = stringRes(R.string.prefs__media__sticker_rescan__summary),
@@ -198,20 +411,9 @@ fun MediaScreen() = FlorisScreen {
                         }
                     },
                 )
-                Preference(
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder_clear"),
-                    title = stringRes(R.string.prefs__media__sticker_folder_clear),
-                    onClick = {
-                        scope.launch {
-                            releaseStickerFolder(context, stickerFolderUri, keep = "")
-                            withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
-                            prefs.sticker.folderUri.set("")
-                            prefs.sticker.folderName.set("")
-                        }
-                    },
-                )
                 DialogSliderPreference(
                     prefs.sticker.thumbnailSize,
+                    icon = Icons.Outlined.PhotoSizeSelectLarge,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_thumbnail_size"),
                     title = stringRes(R.string.prefs__media__sticker_thumbnail_size),
                     valueLabel = { size -> "$size dp" },
@@ -228,6 +430,7 @@ fun MediaScreen() = FlorisScreen {
                 )
                 DialogSliderPreference(
                     prefs.sticker.historyRecentMaxSize,
+                    icon = Icons.Outlined.Numbers,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_recent_max_size"),
                     title = stringRes(R.string.prefs__media__sticker_history_recent_max_size),
                     valueLabel = { maxSize ->
@@ -239,139 +442,47 @@ fun MediaScreen() = FlorisScreen {
                     enabledIf = { prefs.sticker.historyEnabled.isTrue() },
                 )
                 Preference(
+                    icon = Icons.Outlined.StarBorder,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_pinned_reset"),
                     title = stringRes(R.string.prefs__media__sticker_pinned_reset),
                     onClick = { scope.launch { StickerHistoryHelper.clearPinned(prefs) } },
                 )
                 Preference(
+                    icon = Icons.Outlined.HistoryToggleOff,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_reset"),
                     title = stringRes(R.string.prefs__media__sticker_history_reset),
                     onClick = { scope.launch { StickerHistoryHelper.clearRecent(prefs) } },
                 )
+                Preference(
+                    icon = Icons.Outlined.LinkOff,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder_clear"),
+                    title = stringRes(R.string.prefs__media__sticker_folder_clear),
+                    onClick = {
+                        scope.launch {
+                            releaseStickerFolder(context, stickerFolderUri, keep = "")
+                            withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
+                            prefs.sticker.folderUri.set("")
+                            prefs.sticker.folderName.set("")
+                        }
+                    },
+                )
             }
         }
 
-        ListPreference(
-            prefs.emoji.preferredSkinTone,
-            modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_preferred_skin_tone"),
-            title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
-            entries = enumDisplayEntriesOf(EmojiSkinTone::class),
-        )
-
-        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_history__title)) {
-            SwitchPreference(
-                prefs.emoji.historyEnabled,
-                icon = Icons.Outlined.Schedule,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_enabled"),
-                title = stringRes(R.string.prefs__media__emoji_history_enabled),
-                summary = stringRes(R.string.prefs__media__emoji_history_enabled__summary),
-            )
-            ListPreference(
-                prefs.emoji.historyPinnedUpdateStrategy,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_update_strategy"),
-                title = stringRes(R.string.prefs__media__emoji_history_pinned_update_strategy),
-                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
-                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
-            )
-            ListPreference(
-                prefs.emoji.historyRecentUpdateStrategy,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_recent_update_strategy"),
-                title = stringRes(R.string.prefs__media__emoji_history_recent_update_strategy),
-                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
-                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
-            )
-            DialogSliderPreference(
-                primaryPref = prefs.emoji.historyPinnedMaxSize,
-                secondaryPref = prefs.emoji.historyRecentMaxSize,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_max_size"),
-                title = stringRes(R.string.prefs__media__emoji_history_max_size),
-                primaryLabel = stringRes(R.string.emoji__history__pinned),
-                secondaryLabel = stringRes(R.string.emoji__history__recent),
-                valueLabel = { maxSize ->
-                    if (maxSize == EmojiHistory.MaxSizeUnlimited) {
-                        stringRes(R.string.general__unlimited)
-                    } else {
-                        pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
-                    }
+        if (sourcePickerOpen) {
+            StickerSourceDialog(
+                onPick = { source ->
+                    sourcePickerOpen = false
+                    pendingSource = source
+                    imagePicker.launch(StickerImportMimeTypes)
                 },
-                min = 0,
-                max = 120,
-                stepIncrement = 1,
-                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+                onDismiss = { sourcePickerOpen = false },
             )
-            Preference(
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_reset"),
-                title = stringRes(R.string.prefs__media__emoji_history_pinned_reset),
-                onClick = {
-                    shouldDelete = ShouldDelete(true)
-                },
-                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
-            )
-            Preference(
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_reset"),
-                title = stringRes(R.string.prefs__media__emoji_history_reset),
-                onClick = {
-                    shouldDelete = ShouldDelete(false)
-                },
-                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
-            )
-
         }
-
-        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_suggestion__title)) {
-            SwitchPreference(
-                prefs.emoji.suggestionEnabled,
-                icon = Icons.Outlined.EmojiSymbols,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_enabled"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_enabled),
-                summary = stringRes(R.string.prefs__media__emoji_suggestion_enabled__summary),
-            )
-            ListPreference(
-                prefs.emoji.suggestionType,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_type"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_type),
-                entries = enumDisplayEntriesOf(EmojiSuggestionType::class),
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
-            )
-            SwitchPreference(
-                prefs.emoji.suggestionUpdateHistory,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_update_history"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
-                summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
-                enabledIf = {
-                    prefs.emoji.suggestionEnabled.isTrue() && prefs.emoji.historyEnabled.isTrue()
-                },
-            )
-            SwitchPreference(
-                prefs.emoji.suggestionCandidateShowName,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_show_name"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
-                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
-            )
-            DialogSliderPreference(
-                prefs.emoji.suggestionQueryMinLength,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_query_min_length"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_query_min_length),
-                valueLabel = { length ->
-                    pluralsRes(R.plurals.unit__characters__written, length, "v" to length)
-                },
-                min = 1,
-                max = 5,
-                stepIncrement = 1,
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
-            )
-            DialogSliderPreference(
-                prefs.emoji.suggestionCandidateMaxCount,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_max_count"),
-                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_max_count),
-                valueLabel = { count ->
-                    pluralsRes(R.plurals.unit__candidates__written, count, "v" to count)
-                },
-                min = 1,
-                max = 10,
-                stepIncrement = 1,
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+        if (packManagerOpen) {
+            StickerPackDialog(
+                folderUri = stickerFolderUri,
+                onDismiss = { packManagerOpen = false },
             )
         }
     }
@@ -542,10 +653,14 @@ private val StickerImportMimeTypes =
  * it costs nothing.
  */
 private class OpenImagesStartingAt(
-    private val initial: Uri,
+    private val initial: () -> Uri?,
 ) : ActivityResultContracts.OpenMultipleDocuments() {
     override fun createIntent(context: Context, input: Array<String>): Intent =
-        super.createIntent(context, input).putExtra(DocumentsContract.EXTRA_INITIAL_URI, initial)
+        super.createIntent(context, input).also { intent ->
+            // Read at launch time, not at construction: one launcher then serves every source in the
+            // list, instead of one launcher per entry that all do the same thing.
+            initial()?.let { intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, it) }
+        }
 }
 
 /**
@@ -556,18 +671,18 @@ private class OpenImagesStartingAt(
  */
 private fun importStickers(
     context: Context,
-    scope: CoroutineScope,
     folderUri: String,
     sources: List<Uri>,
 ) {
     if (sources.isEmpty() || folderUri.isBlank()) return
-    scope.launch {
-        if (!StickerWriter.canWrite(context, folderUri)) {
-            context.showLongToast(R.string.sticker__import_needs_write)
-            return@launch
-        }
-        val result = StickerWriter.importInto(context, folderUri.toUri(), sources)
-        context.showLongToast(stickerImportSummary(context, result))
+    if (!StickerWriter.canWrite(context, folderUri)) {
+        context.showLongToastSync(R.string.sticker__import_needs_write)
+        return
+    }
+    // Handed to an application-scoped object rather than run in the screen's own scope: copying a few
+    // hundred stickers takes minutes, and leaving the screen in the middle should not throw that away.
+    StickerImports.start(context, folderUri.toUri(), sources) { result ->
+        context.showLongToastSync(stickerImportSummary(context, result))
     }
 }
 
@@ -588,5 +703,201 @@ private fun releaseStickerFolder(context: Context, previous: String, keep: Strin
         )
     } catch (e: SecurityException) {
         // Already gone — the user revoked it, or the folder was removed. Nothing to release.
+    }
+}
+
+/**
+ * Where stickers can be fetched from, as far as Android allows.
+ *
+ * Every entry is a *hint* for the file picker, never a promise: if the folder is not there the picker
+ * opens where it normally would, which is exactly what "Add stickers" does anyway. That is why the
+ * list can name places that may not exist without misleading anyone.
+ */
+private data class StickerSource(val labelRes: Int, val uri: Uri)
+
+@Composable
+private fun StickerSourceDialog(
+    onPick: (Uri) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val sources = remember {
+        listOf(
+            StickerSource(R.string.sticker__source_whatsapp, StickerWriter.mediaFolderHint("com.whatsapp", "WhatsApp/Media/WhatsApp Stickers")),
+            StickerSource(R.string.sticker__source_whatsapp_business, StickerWriter.mediaFolderHint("com.whatsapp.w4b", "WhatsApp Business/Media/WhatsApp Business Stickers")),
+            StickerSource(R.string.sticker__source_telegram, StickerWriter.mediaFolderHint("org.telegram.messenger", "Telegram")),
+            StickerSource(R.string.sticker__source_downloads, StickerWriter.publicFolderHint("Download")),
+            StickerSource(R.string.sticker__source_pictures, StickerWriter.publicFolderHint("Pictures")),
+            StickerSource(R.string.sticker__source_dcim, StickerWriter.publicFolderHint("DCIM")),
+        )
+    }
+    JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
+        title = stringRes(R.string.prefs__media__sticker_import_source),
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            for (source in sources) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onPick(source.uri) }
+                        .padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Outlined.Folder, contentDescription = null)
+                    Text(
+                        text = stringRes(source.labelRes),
+                        modifier = Modifier.padding(start = 12.dp),
+                    )
+                }
+            }
+            Text(
+                text = stringRes(R.string.sticker__source_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 12.dp),
+            )
+        }
+    }
+}
+
+/**
+ * Creating, renaming and deleting sticker packs — which are the subfolders of the chosen folder.
+ *
+ * Lives in settings rather than in the keyboard panel for one practical reason: naming a pack means
+ * typing, and the panel *is* the keyboard. Moving a sticker into an existing pack needs no text and
+ * stays where it belongs, on the sticker's own long-press menu.
+ */
+@Composable
+private fun StickerPackDialog(
+    folderUri: String,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var index by remember { mutableStateOf<StickerIndex?>(null) }
+    var reload by remember { mutableStateOf(0) }
+    var newName by remember { mutableStateOf("") }
+    var renaming by remember { mutableStateOf<StickerCategory?>(null) }
+    var deleting by remember { mutableStateOf<StickerCategory?>(null) }
+    val treeUri = remember(folderUri) { folderUri.toUri() }
+
+    LaunchedEffect(folderUri, reload) {
+        index = withContext(Dispatchers.IO) {
+            runCatching { StickerScanner.scan(context, treeUri) }.getOrNull()
+        }
+        index?.let { withContext(Dispatchers.IO) { StickerScanner.saveCached(context, it) } }
+    }
+
+    val packs = index?.categories.orEmpty().filter { it.id != StickerCategory.ROOT_ID }
+
+    JetPrefAlertDialog(
+        scrollModifier = florisDialogScroll(),
+        title = stringRes(R.string.prefs__media__sticker_packs),
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            if (index == null) {
+                Text(text = stringRes(R.string.sticker__packs_loading))
+            } else if (packs.isEmpty()) {
+                Text(
+                    text = stringRes(R.string.sticker__packs_empty),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            for (pack in packs) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Outlined.Folder, contentDescription = null)
+                    Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
+                        Text(text = pack.name)
+                        Text(
+                            text = pluralsRes(R.plurals.unit__items__written, pack.items.size, "v" to pack.items.size),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    IconButton(onClick = { renaming = pack; newName = pack.name }) {
+                        Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
+                    }
+                    IconButton(onClick = { deleting = pack }) {
+                        Icon(Icons.Outlined.Delete, contentDescription = stringRes(R.string.sticker__pack_delete))
+                    }
+                }
+            }
+            OutlinedTextField(
+                value = newName,
+                onValueChange = { newName = it },
+                label = { Text(stringRes(R.string.sticker__pack_name)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                val editing = renaming
+                if (editing != null) {
+                    OutlinedButton(onClick = { renaming = null; newName = "" }) {
+                        Text(stringRes(R.string.action__cancel))
+                    }
+                }
+                OutlinedButton(
+                    enabled = newName.isNotBlank(),
+                    onClick = {
+                        val name = newName.trim()
+                        val target = renaming
+                        scope.launch {
+                            val ok = if (target != null) {
+                                StickerWriter.renamePack(context, treeUri, target.id, name)
+                            } else {
+                                StickerWriter.createPack(context, treeUri, name) != null
+                            }
+                            if (!ok) context.showLongToast(R.string.sticker__pack_failed)
+                            newName = ""
+                            renaming = null
+                            reload++
+                        }
+                    },
+                    modifier = Modifier.padding(start = 8.dp),
+                ) {
+                    Text(stringRes(if (renaming != null) R.string.sticker__pack_rename else R.string.sticker__pack_new))
+                }
+            }
+        }
+    }
+
+    deleting?.let { pack ->
+        JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
+            title = stringRes(R.string.sticker__pack_delete),
+            confirmLabel = stringRes(R.string.action__yes),
+            dismissLabel = stringRes(R.string.action__no),
+            onDismiss = { deleting = null },
+            onConfirm = {
+                scope.launch {
+                    // Deleting a pack deletes a real folder, and the stickers in it go with it — hence
+                    // the count in the question rather than a bare "are you sure".
+                    if (!StickerWriter.deletePack(context, treeUri, pack.id)) {
+                        context.showLongToast(R.string.sticker__pack_failed)
+                    }
+                    deleting = null
+                    reload++
+                }
+            },
+        ) {
+            Text(
+                stringRes(
+                    R.string.sticker__pack_delete_confirm,
+                    "name" to pack.name,
+                    "n" to pack.items.size,
+                )
+            )
+        }
     }
 }

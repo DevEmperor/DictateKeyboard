@@ -132,6 +132,15 @@ private fun DevtoolsInputStateOverlay() {
         DevtoolsSubGroup(title = "EditorInfo") {
             DevtoolsText(text = "Type=${info.inputAttributes.type} Variation=${info.inputAttributes.variation} IsRich=${info.isRichInputEditor}")
             DevtoolsText(text = "InitialSelection: ${info.initialSelection}")
+            // What the focused app says it accepts as rich content. The single most useful line when a
+            // GIF or sticker will not go in: it is the difference between "the app refused it" and
+            // "the app never advertised the format", and it cannot be read from a log in a release
+            // build (flog is compiled out there).
+            DevtoolsText(text = "Package: ${info.packageName ?: "—"}")
+            DevtoolsText(
+                text = "ContentMimeTypes: " +
+                    info.contentMimeTypes.joinToString().ifBlank { "(none declared)" },
+            )
         }
         DevtoolsSubGroup(title = "EditorContent") {
             DevtoolsText(text = "Selection: { start=${selection.start}, end=${selection.end} }")
