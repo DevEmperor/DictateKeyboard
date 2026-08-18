@@ -106,6 +106,11 @@ your typos. Need the text more formal, translated, summarised, or fixed-up? Hand
 rewording prompt and let the model do the work. With the floating button you can even
 dictate straight into apps while another keyboard is open.
 
+There are four ways to power it, and you pick one during setup: **your own API key** with the
+provider of your choice, **a server of your own**, **a model on the device** with no network at
+all, or **prepaid credit** if you would rather not deal with any of that. The first three cost
+Dictate nothing and are not going anywhere.
+
 <br>
 
 ## 🎤 Features
@@ -117,27 +122,29 @@ dictate straight into apps while another keyboard is open.
 - **On-device transcription — now live, too** — dictate completely offline with a downloadable model: no internet needed and nothing ever leaves your phone. Streaming models write as you speak in ten languages, and for one-shot accuracy there is Whisper, NVIDIA Parakeet (25 European languages), Canary (English, German, French and Spanish in a third of the space) and models specialised in German or Russian. Hold the send button to run just one dictation locally without switching providers, and models free their memory again when idle. Models keep downloading in the background even if you leave the app.
 - **Transcription history** — every dictation is saved to a searchable history you can re-insert, replay, re-transcribe or pin, with full control over how long audio is kept.
 - **Long-form dictation** — speak for as long as you like: long recordings are transcribed in the background in segments, so you get your text sooner and never hit a length limit. An optional on-device Smart Turn model cuts at finished thoughts instead of at every pause.
-- **Glide typing, suggestions & autocorrect** — Dictate is a complete typing keyboard too: swipe across the keys to type whole words, with per-language dictionaries, spell check and an autocorrect that decides from where your fingers actually landed rather than from the finished word. It offers the next word before you type it, and any word can be added to your dictionary with a long press.
+- **Glide typing, suggestions & autocorrect** — Dictate is a complete typing keyboard too: swipe across the keys to type whole words, with dictionaries for over forty languages — Arabic, Bengali, Finnish, Hindi, Indonesian, Tamil and Urdu among them — spell check and an autocorrect that decides from where your fingers actually landed rather than from the finished word. It offers the next word before you type it, and any word can be added to your dictionary with a long press.
 - **Classic keyboard-free dictation layout** — bring back the pure, voice-first screen from Dictate 3: lock it in, or keep it just a swipe away from the full keyboard — now with a fully customizable action row (drag & drop), an Enter-key symbol popup and long-form controls.
 - **Wear OS keyboard** — dictate straight from your watch, tethered through your phone or fully standalone.
 - **Floating dictation button** — dictate straight into **any** app, even when another keyboard is active. Pick from six styles (Pill, Ring, Orb, the audio-reactive Cloud and the new Aurora and Lattice orbs), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press for rewording — or for a **freeform voice command**: just say what you want and the AI does it, using any selected text as context.
 - **AI rewording & rewriting** — turn a selection into something more formal, casual, translated, summarised, or anything you define with custom prompts, with adjustable reasoning effort.
 - **Community prompt library** — browse rewording prompts shared by others and install them in a tap, or publish your own.
 - **Dictation statistics** — track how much you've dictated and typed, with milestones and a home-screen overview.
-- **Cleaner transcripts, cheaper uploads** — long silences are trimmed out of a recording before it is sent, and long dictations can be split into paragraphs automatically at sentence boundaries.
+- **Cleaner transcripts, cheaper uploads** — long silences are trimmed out of a recording before it is sent, and it can be sped up without your voice going higher: providers bill by audio length, so a recording a third shorter costs a third less. Long dictations are packed rather than refused, and can be split into paragraphs automatically at sentence boundaries.
 - **Find & replace rules** — automatically fix recurring words, names or phrases in every transcript.
 - **Single-call multimodal mode** — let one audio-capable AI model transcribe *and* format in a single request, for lower latency and cost.
 - **Custom prompts & snippets** — build your own reword actions; reusable text snippets are inserted instantly without an API call.
 - **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
+- **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
 - **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost.
 - **Self-hosting friendly** — point Dictate at a server of your own for transcription, rewording and even live streaming, and let it wake a sleeping GPU machine before the first request arrives.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
   - Huge variety of keyboard layouts and easy language/subtype switching
+  - **Chinese input** with Pinyin and a candidate row, alongside the Zhengma shape-based method
   - Full theme customization with day/night presets, automatic switching and a high-contrast E-Reader theme
-  - Emoji keyboard, clipboard manager & cursor tools
+  - Emoji keyboard with search in **51 languages** — look for "heart", "心" or "قلب" and land on the same emoji — plus clipboard manager & cursor tools
   - One-handed / compact mode, gesture actions, customizable key sound & haptic feedback
-- **Privacy-respecting by design** — no tracking; your audio goes only to the AI provider you configure.
+- **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Choose a key, a server of your own or an on-device model and Dictate never talks to us at all; choose Dictate Cloud and nothing you say or write is stored on the way through.
 
 <p align="center"><i>Bring your own API key — Dictate works with:</i></p>
 <p align="center">
@@ -188,6 +195,35 @@ network, no audio leaving the phone — offered right in the setup wizard, and u
 
 <br>
 
+## ☁️ Dictate Cloud
+
+Everything above needs you to bring *something* — a key, a server, or the patience to download a
+model. **Dictate Cloud** is for the people who would rather not: buy prepaid minutes through Google
+Play and start dictating. It is one option among four, it is off unless you choose it, and the rest
+of the app does not depend on it in any way.
+
+Because it is the one path where your words pass through a machine of ours, here is exactly what
+that machine does:
+
+- **Nothing of yours is written to disk.** Your audio and your text are forwarded to the provider
+  and the answer comes straight back. What is stored is numbers — wallet id, timestamp, duration,
+  token counts, status code, milliseconds.
+- **It has no idea who you are.** An account is a wallet and a recovery code; no name, no email
+  address, no sign-in. You can delete it from inside the app, and the app says what deletion leaves
+  behind before you do.
+- **The source is right here**, in [`cloud/`](cloud/) — a single Cloudflare Worker. The privacy
+  policy makes claims about this server, and [`cloud/src/meter.ts`](cloud/src/meter.ts) is the only
+  file in it that writes anything. That is the point of publishing it: a claim you can read the
+  source of is worth more than one you have to take on trust.
+- **Credit is seconds**, and every service prices itself into them. So a pack's price is a hard
+  ceiling on what it can cost to serve, whatever you spend it on — which is why there is no fair-use
+  clause anywhere.
+
+Larger packs cost less per minute, and the shop says by how much. If you already have an API key,
+keep using it — it is the cheaper way and it is not going to stop working.
+
+<br>
+
 ## 🧱 Built on FlorisBoard
 
 Dictate Keyboard is a fork of [**FlorisBoard**](https://github.com/florisboard/florisboard),
@@ -208,6 +244,10 @@ see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for full attribution.
 The best way to help right now is to **[open an issue](https://github.com/DevEmperor/DictateKeyboard/issues)**
 with bug reports, ideas or feedback. Full contribution and community guidelines will be
 published as the project matures. Thank you! 🙏
+
+**Found a security problem?** Please don't open a public issue for it — use
+[GitHub's private advisory form](https://github.com/DevEmperor/DictateKeyboard/security/advisories/new).
+[`SECURITY.md`](SECURITY.md) says what is in scope, what isn't, and what to expect.
 
 <br>
 
