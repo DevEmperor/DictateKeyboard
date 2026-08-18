@@ -1,8 +1,8 @@
 import { ArrowUpRight, Lightning, MagicWand, Microphone } from "@phosphor-icons/react";
 import { Reveal } from "./Reveal";
 import { GooglePlayGlyph } from "./GooglePlayBadge";
+import { playLink } from "../lib/playLink";
 
-const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 
 const points = [
   [Microphone, "Tap the mic in any field", "No app-switching — dictate right where you’re already typing."],
@@ -26,7 +26,7 @@ export function VideoShowcase() {
               </li>
             ))}
           </ul>
-          <a className="button button-accent" href={PLAY_URL} target="_blank" rel="noreferrer">
+          <a className="button button-accent" href={playLink("video")} target="_blank" rel="noreferrer">
             <GooglePlayGlyph size={17} />
             Try it yourself
             <ArrowUpRight size={16} weight="bold" aria-hidden="true" />

@@ -3,7 +3,7 @@ import { CaretDown } from "@phosphor-icons/react";
 const questions = [
   {
     question: "Does Dictate Keyboard require a subscription?",
-    answer: "No. Dictate Keyboard has no monthly subscription. Its source is available under Apache 2.0, offline transcription uses no cloud API, and any optional cloud provider bills its own API usage directly.",
+    answer: "No. Dictate Keyboard has no monthly subscription and never has. Its source is available under Apache 2.0, offline transcription uses no cloud API, and any cloud provider you configure bills its own API usage directly. Optional Dictate Cloud credit is prepaid and one-off — you buy a pack of minutes, nothing renews.",
   },
   {
     question: "Does Dictate Keyboard work offline?",
@@ -15,7 +15,11 @@ const questions = [
   },
   {
     question: "Where does my audio go?",
-    answer: "In offline mode, audio stays on the device. In cloud mode, it goes to the provider you selected—not through a Dictate Keyboard developer server—unless you deliberately configure an HTTP/SOCKS proxy. Provider policies apply. Local history and audio retention are configurable inside the app.",
+    answer: "In offline mode, audio stays on the device. With your own provider key or your own server, it goes straight to that endpoint and through no machine of ours, unless you deliberately configure an HTTP/SOCKS proxy. The one exception is the optional prepaid credit route, which passes through the Dictate Cloud server — it stores neither the audio nor the transcript, and its source is in the same public repository. Provider policies apply. Local history and audio retention are configurable inside the app.",
+  },
+  {
+    question: "What is Dictate Cloud, and what does it store?",
+    answer: "An optional way in for people who would rather not open a provider account: buy prepaid minutes on Google Play and dictate straight away. It is the only route that passes through a server we run, and that server writes neither your audio nor your text to disk — it forwards them and returns the answer, keeping only figures like duration, token counts and a status code. An account holds a wallet and a recovery code, no name or email address, and you can delete it from inside the app. The server is one Cloudflare Worker whose source sits in the app repository under cloud/.",
   },
   {
     question: "Can I keep my current keyboard?",
@@ -23,7 +27,7 @@ const questions = [
   },
   {
     question: "How is this different from subscription dictation apps?",
-    answer: "Dictate Keyboard is Android-first and open source, offers downloaded offline models, works as a complete keyboard, and lets you choose the provider behind it. It trades a hosted cross-platform account for more local control and Android-native flexibility.",
+    answer: "Dictate Keyboard is Android-first and open source, offers downloaded offline models, works as a complete keyboard, and lets you choose the provider behind it — including none at all. There is no monthly plan: you either pay a provider for what you use, buy a one-off pack of minutes, or run a model on the device for nothing.",
   },
   {
     question: "Can I dictate long recordings and use Wear OS?",

@@ -40,9 +40,11 @@
 }
 
 html {
-  /* Lenis handles wheel + anchor smoothing (see SmoothScroll); native smooth here would fight it.
-     Reduced-motion users get instant native jumps, which is the correct behaviour for them. */
-  scroll-behavior: auto;
+  /* Anchor jumps glide natively. The wheel is left alone on purpose: momentum smoothing (Lenis, until 6.0)
+     puts a tenth of a second between the wheel and the page, which reads as lag no matter how well it is
+     tuned. The reduced-motion block below turns even this off. */
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
   background: var(--paper);
 }
 
@@ -546,52 +548,13 @@ p {
   50% { transform: translate3d(0, 4px, 0); }
 }
 
-.proof-strip {
-  position: relative;
-  z-index: 4;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-bright);
-}
 
-.proof-strip-inner {
-  display: grid;
-  width: min(1400px, calc(100% - 64px));
-  grid-template-columns: repeat(5, 1fr);
-  margin-inline: auto;
-}
 
-.proof-item {
-  display: flex;
-  min-height: 110px;
-  align-items: center;
-  gap: 14px;
-  padding: 24px;
-  border-right: 1px solid var(--line);
-}
 
-.proof-item:first-child {
-  border-left: 1px solid var(--line);
-}
 
-.proof-item svg {
-  flex: 0 0 auto;
-  color: var(--accent-dark);
-}
 
-.proof-item div {
-  display: grid;
-  gap: 2px;
-}
 
-.proof-item strong {
-  font-size: 0.9rem;
-  letter-spacing: -0.02em;
-}
 
-.proof-item span {
-  color: var(--muted);
-  font-size: 0.74rem;
-}
 
 @media (hover: hover) and (pointer: fine) {
   .desktop-nav a:hover {
@@ -858,7 +821,10 @@ p {
 .mode-tabs {
   display: grid;
   width: fit-content;
-  grid-template-columns: repeat(3, 1fr);
+  /* Auto-flow rather than a fixed three, so adding a route (credit, in 6.0) does not drop the last
+     tab onto a second line. */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 3px;
   margin: 22px 22px 0;
   padding: 4px;
@@ -2902,9 +2868,6 @@ p {
   .demo-orbit::before { width: 480px; height: 480px; }
   .demo-orbit::after { width: 390px; height: 390px; }
 
-  .proof-item {
-    padding-inline: 16px;
-  }
 
   .mode-panel {
     gap: 48px;
@@ -2970,26 +2933,10 @@ p {
     display: none;
   }
 
-  .proof-strip-inner {
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-  }
 
-  .proof-item:first-child {
-    border-left: 0;
-  }
 
-  .proof-item:nth-child(3) {
-    border-right: 0;
-  }
 
-  .proof-item:nth-child(n + 4) {
-    border-top: 1px solid var(--line);
-  }
 
-  .proof-item:nth-child(6) {
-    border-right: 0;
-  }
 
   .section-intro,
   .control-heading,
@@ -3184,15 +3131,7 @@ p {
   .provider-tag-top { top: 50px; right: 0; }
   .provider-tag-bottom { bottom: 40px; left: 0; }
 
-  .proof-strip-inner {
-    display: grid;
-    width: 100%;
-  }
 
-  .proof-item {
-    min-width: 0;
-    padding: 18px 14px;
-  }
 
   .benefits,
   .modes,
@@ -4121,9 +4060,6 @@ p {
   to { transform: scaleX(1) rotate(-2deg); }
 }
 
-.proof-strip-inner {
-  grid-template-columns: repeat(6, 1fr);
-}
 
 .freedom-section {
   padding-block: 160px;
@@ -4771,17 +4707,8 @@ p {
 }
 
 @media (max-width: 1020px) {
-  .proof-strip-inner {
-    grid-template-columns: repeat(3, 1fr);
-  }
 
-  .proof-item:nth-child(3n) {
-    border-right: 0;
-  }
 
-  .proof-item:nth-child(n + 4) {
-    grid-column: auto;
-  }
 
   .freedom-heading,
   .capability-heading {
@@ -6468,31 +6395,6 @@ p {
    ============================================================================ */
 
 /* Signature load intro */
-.intro {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: grid;
-  place-items: center;
-  background: var(--surface-ink);
-  animation: intro-out 0.5s var(--ease-out) 0.72s forwards;
-}
-.intro-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-  animation: intro-in 0.5s var(--ease-out) both;
-}
-.intro-logo { border-radius: 15px; box-shadow: 0 12px 44px rgba(0, 0, 0, 0.45); }
-.intro-wave { display: flex; align-items: center; gap: 5px; height: 28px; }
-.intro-wave span {
-  width: 5px;
-  height: 8px;
-  border-radius: 4px;
-  background: var(--accent);
-  animation: intro-bounce 1s var(--ease-in-out) infinite;
-}
 @keyframes intro-in { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: none; } }
 @keyframes intro-out { to { opacity: 0; transform: translateY(-2%); visibility: hidden; } }
 @keyframes intro-bounce { 0%, 100% { height: 8px; opacity: 0.5; } 50% { height: 28px; opacity: 1; } }
@@ -6576,144 +6478,339 @@ p {
 /* ============================================================================
    SPEED STAT — voice-vs-typing band (Wispr-style wpm comparison)
    ============================================================================ */
-.speed-stat { padding-block: 40px; }
-.speed-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 470px);
-  align-items: center;
-  gap: clamp(40px, 6vw, 92px);
-}
-.speed-copy h2 {
-  margin: 16px 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
-  font-weight: 540;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
-}
-.speed-copy h2 span { color: var(--accent-dark); }
-.speed-copy p { max-width: 46ch; margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
 
-.speed-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  padding: clamp(28px, 3vw, 40px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-large);
-  background: var(--card-veil);
-}
-.speed-bar {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "head val" "track track";
-  align-items: center;
-  gap: 12px 14px;
-}
-.speed-bar-head { grid-area: head; display: flex; align-items: center; gap: 9px; font-weight: 600; }
-.speed-bar-icon {
-  display: grid;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  border-radius: 8px;
-  background: rgba(13, 17, 23, 0.05);
-  color: var(--muted);
-}
-.speed-bar-icon-voice { background: var(--accent-soft); color: var(--accent-dark); }
-.speed-bar strong { grid-area: val; font-family: var(--font-display); font-size: 1.7rem; font-weight: 560; letter-spacing: -0.02em; }
-.speed-bar strong em { font-style: normal; font-size: 0.86rem; font-weight: 400; color: var(--muted); }
-.speed-bar-track {
-  grid-area: track;
-  height: 12px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(13, 17, 23, 0.06);
-}
-.speed-bar-fill {
-  display: block;
-  width: 0;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--muted-light);
-  transition: width 1.1s var(--ease-out);
-}
-.speed-bar-fill-voice { background: linear-gradient(90deg, var(--accent), var(--accent-dark)); }
-.speed-bars.is-in .speed-bar-fill { width: var(--w); }
 .speed-note { color: var(--muted-light); font-size: 0.78rem; }
 
 @media (max-width: 1020px) {
-  .speed-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .speed-bar-fill { transition: none; }
 }
 
 /* Reword before/after promoted to its own section (was nested in the features block) */
 .reword-section { padding-block: 30px; }
 .reword-section .reword-playground { margin-top: 0; }
 
-/* ============================================================================
-   PERSONAS — "Made for how you work" tabbed use-cases
-   ============================================================================ */
-.personas { padding-block: 130px; }
-.persona-shell {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-large);
-  background: var(--paper-bright);
-  box-shadow: 0 26px 65px rgba(13, 17, 23, 0.06), inset 0 1px 0 #fff;
-}
-.persona-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 12px;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-soft);
-}
-.persona-tabs button {
-  position: relative;
+/* ==========================================================================================
+   6.0 — Dictate Cloud, the merged fact row, and the hero's speed line
+   ========================================================================================== */
+
+/* The speed claim used to be a section of its own; as a line it earns its place without a scroll. */
+.hero-speed {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 18px;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: #7b8289;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: color 180ms ease, transform 120ms var(--ease-out);
+  margin: 14px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--muted-light);
 }
-.persona-tabs button:active { transform: scale(0.98); }
-.persona-tabs button > svg,
-.persona-tabs button > span { position: relative; z-index: 2; }
-.persona-tabs button.is-active { color: var(--ink); }
-.persona-tab-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: 12px;
-  background: var(--paper-bright);
-  box-shadow: 0 6px 18px rgba(13, 17, 23, 0.08), inset 0 1px 0 #fff;
-}
-.persona-panel { padding: clamp(34px, 5vw, 64px); }
-.persona-panel h3 {
-  margin-bottom: 14px;
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.4vw, 3rem);
-  font-weight: 550;
-  letter-spacing: -0.045em;
-  line-height: 1.02;
-}
-.persona-panel p { max-width: 60ch; margin-bottom: 26px; color: var(--muted); font-size: 1.08rem; line-height: 1.65; }
-.persona-points { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.persona-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 1rem; letter-spacing: -0.01em; }
-.persona-points li svg { flex-shrink: 0; margin-top: 4px; color: var(--accent-dark); }
 
-@media (max-width: 760px) {
-  .personas { padding-block: 90px; }
-  .persona-tabs button { padding: 10px 13px; font-size: 0.84rem; }
+.hero-speed svg {
+  flex: none;
+  color: var(--accent);
+}
+
+.hero-speed strong {
+  color: var(--on-dark);
+  font-weight: 700;
+}
+
+/* The product facts, now sitting with the numbers they were repeating. */
+.social-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin-top: 26px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-medium);
+  background: var(--paper-bright);
+}
+
+.social-fact {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.social-fact svg {
+  flex: none;
+  color: var(--accent-dark);
+}
+
+.social-fact strong {
+  display: block;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+.social-fact span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ---- Dictate Cloud ---------------------------------------------------------------------- */
+
+/* A dark slab like #compare and #privacy: this is one of the pages's "read this carefully" moments,
+   and the ink ground is what the site already uses to mark those. */
+.cloud-section {
+  padding-block: 150px;
+  background:
+    radial-gradient(circle at 12% 6%, rgba(48, 183, 230, 0.16), transparent 30%),
+    var(--surface-ink-2);
+  color: var(--on-dark);
+  scroll-margin-top: 80px;
+}
+
+.cloud-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  align-items: end;
+  gap: 32px;
+}
+
+.cloud-heading h2 {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.cloud-heading p {
+  margin: 0;
+  color: var(--muted-light);
+  line-height: 1.65;
+}
+
+/* The admission comes before the promises, and is styled to be read rather than skimmed past. */
+.cloud-admission {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 44px;
+  padding: 22px 24px;
+  border: 1px solid rgba(48, 183, 230, 0.34);
+  border-radius: var(--radius-medium);
+  background: rgba(48, 183, 230, 0.08);
+}
+
+.cloud-admission-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(48, 183, 230, 0.16);
+  color: var(--accent);
+}
+
+.cloud-admission p {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--muted-light);
+}
+
+.cloud-admission strong {
+  color: var(--on-dark);
+}
+
+.cloud-promises {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cloud-promise {
+  padding: 24px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-medium);
+  background: rgba(255, 253, 248, 0.035);
+}
+
+.cloud-promise-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(48, 183, 230, 0.14);
+  color: var(--accent);
+}
+
+.cloud-promise strong {
+  display: block;
+  margin: 14px 0 8px;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+
+.cloud-promise p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.62;
+  color: var(--muted-light);
+}
+
+.cloud-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.cloud-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 17px;
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
+  color: var(--on-dark);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.cloud-links a:hover {
+  border-color: rgba(48, 183, 230, 0.6);
+  background: rgba(48, 183, 230, 0.1);
+}
+
+.cloud-footnote p {
+  max-width: 62ch;
+  margin: 26px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted-light);
+}
+
+@media (max-width: 860px) {
+  .cloud-section {
+    padding-block: 96px;
+  }
+
+  .cloud-heading {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 18px;
+  }
+}
+
+/* ---- the credit route inside the mode switcher ------------------------------------------- */
+
+.mv-credit {
+  display: grid;
+  gap: 12px;
+  align-content: center;
+}
+
+.mv-wallet {
+  padding: 16px 18px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-small);
+  background: rgba(255, 253, 248, 0.05);
+}
+
+.mv-wallet-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.mv-wallet-top svg {
+  color: var(--accent);
+}
+
+.mv-wallet-figure {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.mv-wallet-figure small {
+  margin-left: 6px;
+  font-size: 0.72rem;
+  color: var(--muted-light);
+}
+
+.mv-wallet-bar {
+  height: 5px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.12);
+  overflow: hidden;
+}
+
+.mv-wallet-bar span {
+  display: block;
+  width: 72%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.mv-wallet-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted-light);
+}
+
+.mv-wallet-foot span {
+  margin-left: auto;
+  color: var(--accent);
+}
+
+/* The receipt is the point of this visual: it names what the server keeps, in the same breath as
+   the balance. Selling the convenience without it would be the dishonest version. */
+.mv-receipt {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 14px;
+  padding: 14px 18px;
+  border: 1px dashed var(--line-dark);
+  border-radius: var(--radius-small);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+}
+
+.mv-receipt span {
+  color: var(--muted-light);
+}
+
+.mv-receipt em {
+  font-style: normal;
+  text-align: right;
+  color: var(--on-dark);
+}
+
+/* Nothing is in the field yet — which is exactly what a batch dictation looks like. */
+.demo-placeholder {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Sections nobody is looking at hold still. See lib/pauseOffscreen.js for the measurement that prompted
+   this; the short version is 92 animations running at once with 49 of them off screen. */
+[data-offscreen],
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
 }

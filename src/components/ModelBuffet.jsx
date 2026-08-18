@@ -20,6 +20,10 @@ const sttModels = [
   { provider: "On-device", model: "Whisper Small.en", route: "offline", cost: "$0", unit: "API usage", quality: "Best local Whisper", languages: "English", detail: "~358 MB · highest local Whisper accuracy" },
   { provider: "On-device", model: "Parakeet TDT 0.6B v3", route: "offline", cost: "$0", unit: "API usage", quality: "High local", languages: "25 European languages", detail: "~670 MB · fast multilingual specialist" },
   { provider: "On-device", model: "Parakeet German / primeline", route: "offline", cost: "$0", unit: "API usage", quality: "German specialist", languages: "German", detail: "~670 MB · tuned for German speech" },
+  { provider: "On-device", model: "Canary 180M Flash", route: "offline", cost: "$0", unit: "API usage", quality: "Best size-to-accuracy", languages: "English, German, French, Spanish", detail: "~207 MB · a third of Parakeet at comparable accuracy" },
+  { provider: "On-device", model: "GigaAM v2", route: "offline", cost: "$0", unit: "API usage", quality: "Russian specialist", languages: "Russian", detail: "~241 MB · tuned for Russian speech" },
+  { provider: "On-device", model: "SenseVoice Small", route: "offline", cost: "$0", unit: "API usage", quality: "CJK specialist", languages: "Chinese, Cantonese, Japanese, Korean", detail: "~240 MB · actually trained on these languages" },
+  { provider: "On-device", model: "Kroko streaming", route: "realtime", cost: "$0", unit: "API usage", quality: "Writes while you speak", languages: "10 languages", detail: "On-device streaming · no network at all" },
 
   { provider: "OpenAI", model: "gpt-4o-mini-transcribe", route: "async", cost: "$3.00", unit: "/ 1k min", wer: 4.47, languages: "Multilingual", detail: "Default OpenAI batch model" },
   { provider: "OpenAI", model: "gpt-4o-transcribe", route: "async", cost: "$6.00", unit: "/ 1k min", wer: 3.96, languages: "Multilingual", detail: "Lower AA-WER than the mini model" },
@@ -30,7 +34,6 @@ const sttModels = [
 
   { provider: "Groq", model: "whisper-large-v3-turbo", route: "async", cost: "$0.67", unit: "/ 1k min", wer: 4.62, languages: "Multilingual", detail: "Lowest tested batch cost in AA snapshot" },
   { provider: "Groq", model: "whisper-large-v3", route: "async", cost: "$1.85", unit: "/ 1k min", quality: "Not AA-tested", languages: "Multilingual", detail: "Dynamic Groq catalog" },
-  { provider: "Groq", model: "distil-whisper-large-v3-en", route: "async", cost: "Legacy", unit: "provider-retired", quality: "Not current", languages: "English", detail: "ID remains in Dictate Keyboard; retired by provider" },
 
   { provider: "OpenRouter", model: "Whisper Large v3 Turbo", route: "async", cost: "$0.67", unit: "/ 1k min", quality: "4.62% family WER*", languages: "Multilingual", detail: "Live catalog · exact host not AA-tested" },
   { provider: "OpenRouter", model: "NVIDIA Parakeet TDT v3", route: "async", cost: "$1.50", unit: "/ 1k min", quality: "4.55% hosted proxy*", languages: "25 European languages", detail: "Live catalog · not an on-device result" },
@@ -60,6 +63,7 @@ const sttModels = [
   { provider: "AssemblyAI", model: "universal-3-pro", route: "async", cost: "$3.50", unit: "/ 1k min", wer: 3.12, languages: "6 languages", detail: "Accuracy-focused batch default" },
   { provider: "AssemblyAI", model: "universal-2", route: "async", cost: "~$2.50", unit: "/ 1k min", quality: "3.82% alias proxy*", languages: "99 languages", detail: "Wider language coverage" },
   { provider: "AssemblyAI", model: "universal-streaming", route: "realtime", cost: "~$2.50", unit: "/ 1k min", quality: "Not AA-tested", languages: "Endpoint-dependent", detail: "Dictate Keyboard realtime default" },
+  { provider: "SiliconFlow", model: "SenseVoice Small", route: "async", cost: "Live", unit: "provider pricing", quality: "CJK specialist", languages: "Chinese, Cantonese, Japanese, Korean", detail: "Reachable from mainland China" },
   { provider: "Custom", model: "OpenAI-compatible STT endpoint", route: "async", cost: "Your server", unit: "your model", quality: "Model-dependent", languages: "Model-dependent", detail: "Dynamic model ID or manual entry" },
 ];
 
@@ -149,6 +153,9 @@ const sttHighlightIds = {
     "Google Gemini|gemini-2.5-pro|async",
   ],
   realtime: [
+    // Leads the row on purpose: streaming transcription that needs no network at all is the one
+    // realtime option no hosted service can offer.
+    "On-device|Kroko streaming|realtime",
     "Soniox|stt-rt-v5|realtime",
     "ElevenLabs|scribe_v2_realtime|realtime",
     "Deepgram|nova-3|realtime",
@@ -297,7 +304,7 @@ export function ModelBuffet() {
 
             <div className="buffet-notes">
               <p><strong>Accuracy:</strong> AA-WER is Artificial Analysis’ independent English benchmark; lower is better. It is an edit rate, not a conventional “accuracy %,” and does not score every local or dynamic route. *Family or alias evidence is not an exact route result. †Batch WER does not measure streaming behavior.</p>
-              <p><strong>Third-party API pricing:</strong> Dictate Keyboard adds no provider markup. These USD provider list-price snapshots are normalized per 1,000 audio minutes as of July 2026; token-priced Gemini rows use an observed effective cost. Rows cover every fixed Dictate Keyboard ID plus OpenRouter’s current STT snapshot. Observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
+              <p><strong>Third-party API pricing:</strong> Every route on this page bills you directly at the provider’s own price — Dictate Keyboard adds nothing to it. (The optional Dictate Cloud credit is a separate, prepaid route and is not listed here.) These USD provider list-price snapshots are normalized per 1,000 audio minutes as of July 2026; token-priced Gemini rows use an observed effective cost. Rows cover every fixed Dictate Keyboard ID plus OpenRouter’s current STT snapshot. Observed costs, live catalogs, rates, free tiers, and promotions can differ or change.</p>
               <div><a href="https://artificialanalysis.ai/speech-to-text/non-streaming" target="_blank" rel="noreferrer">Async benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/streaming" target="_blank" rel="noreferrer">Realtime benchmark <ArrowUpRight size={13} weight="bold" /></a><a href="https://artificialanalysis.ai/speech-to-text/methodology" target="_blank" rel="noreferrer">Methodology <ArrowUpRight size={13} weight="bold" /></a><a href="https://deepgram.com/pricing" target="_blank" rel="noreferrer">Deepgram billing <ArrowUpRight size={13} weight="bold" /></a></div>
             </div>
           </motion.div>
@@ -326,7 +333,7 @@ export function ModelBuffet() {
               {llmExpanded ? "Back to the major rewrite providers" : `Show all ${llmRoutes.length} rewrite providers`}
             </button>
             <div className="buffet-notes">
-              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. Dictate Keyboard adds no subscription or provider markup; the USD public API-price snapshots shown here belong to external providers and are dated July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
+              <p><strong>Dynamic by design:</strong> Except for the curated starting IDs shown above, each provider can load its current model catalog and accepts manual compatible IDs. There is no subscription, and these routes carry no markup from us; the USD public API-price snapshots shown here belong to external providers and are dated July 2026. Prices are per 1M input/output tokens unless marked otherwise.</p>
               <p><strong>Local LLM caveat:</strong> Ollama points to your own server or LAN machine; it is not an on-phone model. Validate the current credential setup before relying on a blank-key configuration.</p>
               <div>
                 <a href="https://github.com/DevEmperor/DictateKeyboard/blob/c3bf0fe34ae0308490ff6c1572bf77ec825b0454/lib/dictate-core/src/main/kotlin/dev/patrickgold/florisboard/dictate/provider/ProviderRegistry.kt" target="_blank" rel="noreferrer">Dictate model registry <ArrowUpRight size={13} weight="bold" /></a>

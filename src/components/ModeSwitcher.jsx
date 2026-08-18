@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CloudArrowUp, Cpu, DeviceMobile, Microphone, WifiSlash } from "@phosphor-icons/react";
+import { CloudArrowUp, Coins, Cpu, DeviceMobile, Microphone, WifiSlash } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { Waveform } from "./Waveform";
 
@@ -17,6 +17,13 @@ const modes = [
     title: "Keep the audio on your phone.",
     copy: "Download a Whisper or Parakeet model once, then transcribe on-device without an internet connection or cloud API call.",
     icon: WifiSlash,
+  },
+  {
+    id: "credit",
+    label: "Credit",
+    title: "No provider account at all.",
+    copy: "Buy prepaid minutes on Google Play and dictate straight away. This route runs through our server, which keeps neither your audio nor your text — and whose source sits in the same repository.",
+    icon: Coins,
   },
   {
     id: "floating",
@@ -80,7 +87,27 @@ function FloatingViz() {
   );
 }
 
-const VIZ = { live: LiveViz, offline: OfflineViz, floating: FloatingViz };
+// CREDIT: a prepaid balance that ticks down as you speak. No key, no account form — and a receipt line
+// that names what the server keeps, because that is the question this route actually raises.
+function CreditViz() {
+  return (
+    <div className="mv mv-credit" aria-hidden="true">
+      <div className="mv-wallet">
+        <div className="mv-wallet-top"><Coins size={17} weight="bold" /><em>Credit</em></div>
+        <strong className="mv-wallet-figure">1,842<small>min</small></strong>
+        <div className="mv-wallet-bar"><span /></div>
+        <div className="mv-wallet-foot"><Microphone size={13} weight="fill" /><Waveform active compact /><span>−0:12</span></div>
+      </div>
+      <div className="mv-receipt">
+        <span>audio</span><em>not stored</em>
+        <span>text</span><em>not stored</em>
+        <span>kept</span><em>duration · tokens · status</em>
+      </div>
+    </div>
+  );
+}
+
+const VIZ = { live: LiveViz, offline: OfflineViz, credit: CreditViz, floating: FloatingViz };
 
 export function ModeSwitcher() {
   const [activeMode, setActiveMode] = useState("live");
@@ -92,7 +119,7 @@ export function ModeSwitcher() {
   const Icon = mode.icon;
   const Viz = VIZ[mode.id];
 
-  // Auto-advance through the three routes while the section is on screen — until the visitor takes over.
+  // Auto-advance through the routes while the section is on screen — until the visitor takes over.
   useEffect(() => {
     if (reduceMotion || manual || !inView) return undefined;
     const id = setInterval(() => {

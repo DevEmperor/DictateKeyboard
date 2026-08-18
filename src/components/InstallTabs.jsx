@@ -1,7 +1,7 @@
 import { ArrowUpRight, Check, DownloadSimple, Key, Microphone, ShieldCheck } from "@phosphor-icons/react";
 import { GooglePlayBadge } from "./GooglePlayBadge";
+import { playLink } from "../lib/playLink";
 
-const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 
 const steps = [
   { icon: DownloadSimple, label: "Install", copy: "Get the app from Google Play — one tap, automatic updates." },
@@ -30,7 +30,7 @@ export function InstallTabs() {
 
           <div className="install-cta">
             <span className="install-cta-kicker">Ready in a minute</span>
-            <GooglePlayBadge href={PLAY_URL} target="_blank" rel="noreferrer" className="install-cta-badge" />
+            <GooglePlayBadge href={playLink("install")} target="_blank" rel="noreferrer" className="install-cta-badge" />
             <p className="install-cta-fine">Android 8.0+ · No subscription</p>
           </div>
         </div>

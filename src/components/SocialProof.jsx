@@ -1,17 +1,41 @@
-import { DownloadSimple, GithubLogo, Lock, Star } from "@phosphor-icons/react";
+import {
+  BracketsCurly,
+  DownloadSimple,
+  GithubLogo,
+  Lightning,
+  Lock,
+  ShieldCheck,
+  Star,
+  Watch,
+  WifiSlash,
+} from "@phosphor-icons/react";
 import { Reveal } from "./Reveal";
 import { CountUp } from "./CountUp";
+import { playLink } from "../lib/playLink";
 
-const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 
-// Verifiable proof points, pulled live from Google Play + the GitHub API (2026-07-16). Re-check before big
-// pushes — Play figures drift over time.
+// Maintained by hand — checked 18 August 2026. Play publishes the rating and the rating count on the
+// listing; the install figure is the Play Console total, which is higher than the public "1K+" bracket
+// because Google rounds that one down hard. Re-check before a push that matters: the page once carried
+// 4.8 for weeks after Play had settled at 4.7, and a number drifting upwards is the one kind that costs
+// trust when someone checks.
 const stats = [
-  { icon: Star, value: "4.8", label: "Google Play rating", href: PLAY_URL, note: "603 ratings" },
-  { icon: GithubLogo, value: "254", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
-  { icon: DownloadSimple, value: "3K+", label: "installs", href: PLAY_URL, note: "on Google Play" },
+  { icon: Star, value: "4.7", label: "Google Play rating", href: playLink("proof"), note: "643 ratings" },
+  { icon: GithubLogo, value: "267", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
+  { icon: DownloadSimple, value: "3K+", label: "installs", href: playLink("proof"), note: "on Google Play" },
   { icon: Lock, value: "€0", label: "subscription", href: `${GITHUB_URL}/blob/main/LICENSE`, note: "Apache 2.0" },
+];
+
+// The product facts that used to sit in their own strip near the top of the page. They belong here, beside
+// the numbers they were repeating: "Apache 2.0 / open source" and "no monthly fee / no subscription" were
+// each being made twice, a few hundred pixels apart.
+const facts = [
+  [BracketsCurly, "Apache 2.0", "Source you can read"],
+  [Lightning, "Realtime cloud", "Streaming providers"],
+  [WifiSlash, "On-device", "Works with no network"],
+  [ShieldCheck, "No tracking", "No ads, no telemetry"],
+  [Watch, "Wear OS 3+", "Tethered or standalone"],
 ];
 
 // Real, verbatim excerpts from featured 5★ Google Play reviews (2026). Contiguous quotes, nothing altered.
@@ -46,7 +70,7 @@ export function SocialProof() {
           <h2>Real code. Real users.<br /><span>No lock-in to take on faith.</span></h2>
         </Reveal>
         <Reveal delay={0.08}>
-          <p>Everything that matters is verifiable: the source is public, the rating is on Google Play, and there is no account or subscription to walk away from.</p>
+          <p>Everything that matters is verifiable: the source is public — the app and the optional credit server both — and the rating sits on Google Play where anyone can read it. There is no subscription, and unless you choose credit, no account either.</p>
         </Reveal>
       </div>
 
@@ -64,6 +88,15 @@ export function SocialProof() {
             </Reveal>
           );
         })}
+      </div>
+
+      <div className="social-facts">
+        {facts.map(([Icon, title, copy]) => (
+          <div className="social-fact" key={title}>
+            <Icon size={18} weight="bold" aria-hidden="true" />
+            <div><strong>{title}</strong><span>{copy}</span></div>
+          </div>
+        ))}
       </div>
 
       {reviews.length > 0 && (

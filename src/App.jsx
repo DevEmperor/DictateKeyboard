@@ -11,6 +11,7 @@ import {
   Lightning,
   LockKey,
   MagicWand,
+  Microphone,
   ShieldCheck,
   Sparkle,
   Translate,
@@ -23,6 +24,7 @@ import { DictationDemo } from "./components/DictationDemo";
 import { Faq } from "./components/Faq";
 import { CapabilityDeck } from "./components/CapabilityDeck";
 import { FeatureStory } from "./components/FeatureStory";
+import { CloudSection } from "./components/CloudSection";
 import { FreedomComparison } from "./components/FreedomComparison";
 import { Header } from "./components/Header";
 import { InstallTabs } from "./components/InstallTabs";
@@ -36,16 +38,13 @@ import { Waveform } from "./components/Waveform";
 import { ProviderIcon } from "./components/ProviderIcon";
 import { GooglePlayGlyph } from "./components/GooglePlayBadge";
 import { VideoShowcase } from "./components/VideoShowcase";
-import { SpeedStat } from "./components/SpeedStat";
 import { Languages } from "./components/Languages";
-import { Personas } from "./components/Personas";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
-import { Intro } from "./components/Intro";
-import { SmoothScroll } from "./components/SmoothScroll";
 import { useMarqueeScroll, useTilt } from "./lib/interactions";
+import { usePauseOffscreenAnimations } from "./lib/pauseOffscreen";
+import { playLink } from "./lib/playLink";
 
-const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 const DEVELOPER_URL = "https://github.com/DevEmperor";
 
@@ -81,7 +80,7 @@ const benefits = [
   {
     icon: Gift,
     title: "Open source. No subscription.",
-    copy: "Inspect the Apache-2.0 code or build it yourself. Offline models add no API usage; optional cloud providers bill you directly, with no markup from us.",
+    copy: "Inspect the Apache-2.0 code or build it yourself. There is no subscription, ever. Offline models add no API usage, and a provider key of your own bills you directly at cost.",
     visual: (
       <div className="free-visual" aria-hidden="true">
         <span><GithubLogo size={54} weight="fill" /></span>
@@ -150,11 +149,10 @@ function App() {
   const heroVisualRef = useRef(null);
   const heroTiltRef = useRef(null);
   useTilt(heroVisualRef, heroTiltRef, 7);
+  usePauseOffscreenAnimations();
 
   return (
     <>
-      <Intro />
-      <SmoothScroll />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <ScrollProgress />
       <Header />
@@ -209,7 +207,7 @@ function App() {
                 animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
                 transition={{ delay: 0.7, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
               >
-                <MagneticLink className="button button-accent" href={PLAY_URL} target="_blank" rel="noreferrer">
+                <MagneticLink className="button button-accent" href={playLink("hero")} target="_blank" rel="noreferrer">
                   <GooglePlayGlyph size={18} />
                   Get it on Google Play
                 </MagneticLink>
@@ -226,6 +224,16 @@ function App() {
                 transition={{ delay: 0.92, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
               >
                 No subscription · Android 8.0+ · Offline models use no API · Optional provider APIs charge for usage only
+              </motion.p>
+
+              <motion.p
+                className="hero-speed"
+                initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 6px, 0)" }}
+                animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
+                transition={{ delay: 1.02, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <Microphone size={15} weight="fill" aria-hidden="true" />
+                Most people speak around <strong>150 words a minute</strong> and thumb-type closer to 40.
               </motion.p>
             </div>
 
@@ -248,27 +256,7 @@ function App() {
           </motion.a>
         </section>
 
-        <section className="proof-strip" aria-label="Dictate Keyboard product facts">
-          <div className="proof-strip-inner">
-            {[
-              [BracketsCurly, "Apache 2.0", "Open source"],
-              [Gift, "No monthly fee", "No subscription"],
-              [Lightning, "Realtime cloud", "Streaming providers"],
-              [WifiSlash, "On-device", "Offline option"],
-              [ShieldCheck, "No tracking", "No hosted backend"],
-              [Watch, "Wear OS 3+", "Tethered or standalone"],
-            ].map(([Icon, title, copy]) => (
-              <div className="proof-item" key={title}>
-                <Icon size={19} weight="bold" aria-hidden="true" />
-                <div><strong>{title}</strong><span>{copy}</span></div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <VideoShowcase />
-
-        <SpeedStat />
 
         <SocialProof />
 
@@ -297,11 +285,11 @@ function App() {
         <section className="modes section-shell">
           <div className="section-intro mode-intro">
             <Reveal>
-              <span className="eyebrow">ONE KEYBOARD. THREE ROUTES.</span>
+              <span className="eyebrow">ONE KEYBOARD. FOUR ROUTES.</span>
               <h2>Use the path that fits the moment.</h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p>Fast cloud streaming when you want speed. On-device transcription when you want privacy. A floating mic when you want to keep another keyboard. All in the same app.</p>
+              <p>Stream from a cloud provider when you want speed. Transcribe on-device when you want privacy. Buy prepaid credit when you would rather not set anything up. Or keep the keyboard you already use and dictate through the floating mic. Same app, switch whenever.</p>
             </Reveal>
           </div>
           <Reveal delay={0.1}><ModeSwitcher /></Reveal>
@@ -334,9 +322,7 @@ function App() {
           </div>
           <FeatureStory />
           <CapabilityDeck />
-        </section>
 
-        <section className="depth-section section-shell">
           <div className="depth-grid">
             <Reveal className="depth-primary">
               <span className="eyebrow">LONG-FORM MODE</span>
@@ -365,11 +351,11 @@ function App() {
           </div>
         </section>
 
-        <Personas />
-
         <Languages />
 
         <Accessibility />
+
+        <CloudSection />
 
         <section className="control-section" id="privacy">
           <div className="control-inner section-shell">
@@ -379,7 +365,7 @@ function App() {
                 <h2>Verify the route.<br />Don’t just trust the promise.</h2>
               </Reveal>
               <Reveal delay={0.08}>
-                <p>A closed-source service asks you to trust its privacy promise. Dictate Keyboard gives you code to inspect, an offline route that keeps transcription audio on-device, and explicit control over any provider or proxy you configure.</p>
+                <p>A closed-source service asks you to trust its privacy promise. Dictate Keyboard gives you code to inspect — all of it, including the credit server — an offline route that keeps transcription audio on-device, and explicit control over any provider or proxy you configure.</p>
               </Reveal>
             </div>
 
@@ -387,8 +373,8 @@ function App() {
               <Reveal className="privacy-statement">
                 <span className="privacy-lock"><LockKey size={27} weight="bold" /></span>
                 <span className="eyebrow eyebrow-light">PRIVACY, MADE LEGIBLE</span>
-                <h2>No server between your voice and the route you chose.</h2>
-                <p>Dictate Keyboard has no developer-operated backend or remote database, no ads, analytics, tracking, telemetry, or crash-reporting SDK. Offline audio stays on your device. By default, cloud audio goes directly to the provider you configure; an optional HTTP/SOCKS proxy follows your own routing settings.</p>
+                <h2>You pick the route. Nothing sits in it uninvited.</h2>
+                <p>No ads, analytics, tracking, telemetry, or crash-reporting SDK — on any route. With your own key, your own server or an on-device model, nothing of yours ever reaches a machine of ours: offline audio stays on the device, and cloud audio goes straight to the provider you configured. The one exception is deliberate and optional: if you buy credit, that traffic passes through our server, which stores neither your audio nor your text and whose source is in the same repository.</p>
                 <a href="https://github.com/DevEmperor/DictateKeyboard/blob/main/PRIVACY_POLICY.md" target="_blank" rel="noreferrer">
                   Read the repository privacy policy
                   <ArrowUpRight size={16} weight="bold" />
@@ -398,7 +384,7 @@ function App() {
 
               <div className="privacy-facts">
                 {[
-                  ["01", "No account", "Start without creating another identity."],
+                  ["01", "No account needed", "Only prepaid credit uses one, and it holds no name or address."],
                   ["02", "No keystroke logging", "General typing is not recorded or transmitted."],
                   ["03", "Keys stay local", "Provider credentials live in app-private storage."],
                   ["04", "Offline is real", "Downloaded models transcribe directly on-device."],
@@ -447,7 +433,7 @@ function App() {
               <h2>Skip the subscription.<br />Start talking.</h2>
               <p>No subscription. No account. Use an offline model with no API usage, or connect a provider that bills you directly.</p>
               <div className="final-actions">
-                <MagneticLink className="button button-accent" href={PLAY_URL} target="_blank" rel="noreferrer">
+                <MagneticLink className="button button-accent" href={playLink("hero")} target="_blank" rel="noreferrer">
                   <GooglePlayGlyph size={17} />
                   Get it on Google Play
                 </MagneticLink>

@@ -3,14 +3,15 @@ import { GithubLogo, List, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MagneticLink } from "./MagneticLink";
 import { GooglePlayGlyph } from "./GooglePlayBadge";
+import { playLink } from "../lib/playLink";
 
-const PLAY_URL = "https://play.google.com/store/apps/details?id=net.devemperor.dictate";
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 
 const navItems = [
   ["Compare", "#compare"],
   ["Features", "#features"],
   ["Models", "#models"],
+  ["Cloud", "#cloud"],
   ["Privacy", "#privacy"],
   ["Install", "#install"],
 ];
@@ -42,7 +43,7 @@ export function Header() {
         </a>
         <MagneticLink
           className="button button-small button-dark header-cta"
-          href={PLAY_URL}
+          href={playLink("header")}
           target="_blank"
           rel="noreferrer"
         >
@@ -80,7 +81,7 @@ export function Header() {
             ))}
             <a
               className="mobile-nav-cta"
-              href={PLAY_URL}
+              href={playLink("header")}
               target="_blank"
               rel="noreferrer"
               onClick={() => setMenuOpen(false)}

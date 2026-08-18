@@ -11,10 +11,10 @@ import { Reveal } from "./Reveal";
 import { SavingsCalculator } from "./SavingsCalculator";
 
 const comparisonRows = [
-  [Repeat, "Recurring fee", "None — no subscription", "$15/mo · $144/yr Pro plan"],
-  [UserCircleMinus, "Account", "Not required", "Wispr account required"],
-  [Key, "Provider & keys", "Your key, your account, your choice", "One bundled cloud engine"],
-  [CloudSlash, "Offline route", "Whisper or Parakeet, on-device", "Cloud only — no offline mode"],
+  [Repeat, "Recurring fee", "None — nothing renews, ever", "$15/mo · $144/yr Pro plan"],
+  [UserCircleMinus, "Account", "Not required (only prepaid credit uses one)", "Wispr account required"],
+  [Key, "Provider & keys", "Your key, your server, or none at all", "One bundled cloud engine"],
+  [CloudSlash, "Offline route", "Whisper, Parakeet, Canary and more, on-device", "Cloud only — no offline mode"],
   [BracketsCurly, "Source code", "Open, Apache 2.0", "Closed source"],
 ];
 

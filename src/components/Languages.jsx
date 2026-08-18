@@ -6,7 +6,7 @@ import { useMarqueeScroll } from "../lib/interactions";
 
 const stats = [
   [Translate, "99", "languages to speak", "Whisper, Parakeet and cloud providers transcribe a huge range of languages."],
-  [Keyboard, "40+", "languages to type", "Glide typing, suggestions and autocorrect ship per-language dictionaries."],
+  [Keyboard, "41", "languages to type", "Glide typing, suggestions and autocorrect ship a real dictionary per language — Arabic, Bengali, Tamil and Urdu among the newest."],
   [GlobeHemisphereWest, "20+", "languages in the app", "The interface itself is translated, so the whole keyboard speaks your language."],
 ];
 
@@ -16,6 +16,7 @@ const languageNames = [
   "Polski", "Русский", "Українська", "Čeština", "Svenska", "Norsk", "Dansk", "Suomi",
   "Magyar", "Română", "Türkçe", "Ελληνικά", "Български", "Català", "Hrvatski",
   "中文", "日本語", "한국어", "Tiếng Việt", "ไทย", "العربية", "עברית", "हिन्दी", "فارسی",
+  "বাংলা", "தமிழ்", "اردو", "Bahasa Indonesia",
 ];
 
 export function Languages() {

@@ -32,7 +32,7 @@ test("desktop conversion path, model buffet, and install", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Get it on Google Play/i }).first()).toHaveAttribute("href", /play\.google\.com/);
   await expect(page.locator(".hero-fineprint")).toContainText("No subscription");
   await page.locator(".prompt-strip").getByRole("button", { name: "Translate" }).click();
-  await expect(page.locator(".demo-editor p").last()).toContainText("Pouvez-vous déplacer notre réunion");
+  await expect(page.locator(".demo-editor p").last()).toContainText("Pouvez-vous déplacer notre réunion", { timeout: 8000 });
 
   await revealFullPage(page);
 
@@ -61,17 +61,28 @@ test("desktop conversion path, model buffet, and install", async ({ page }) => {
   await page.locator(".buffet-filters").getByRole("button", { name: "Free offline" }).click();
   await expect(page.locator(".buffet-row")).toHaveCount(3);
   await expect(page.locator(".buffet-price.is-free")).toHaveCount(3);
-  await page.getByRole("button", { name: "Show all 8 free offline options" }).click();
-  await expect(page.locator(".buffet-row")).toHaveCount(8);
+  await page.getByRole("button", { name: /Show all \d+ free offline options/ }).click();
+  await expect(page.locator(".buffet-row")).toHaveCount(11);
 
   await page.locator(".buffet-filters").getByRole("button", { name: "All routes" }).click();
-  await expect(page.locator(".buffet-row")).toHaveCount(12);
+  await expect(page.locator(".buffet-row")).toHaveCount(13);
   await page.getByRole("button", { name: /Explore all \d+ mapped STT options/ }).click();
-  await expect(page.locator(".buffet-row")).toHaveCount(44);
+  await expect(page.locator(".buffet-row")).toHaveCount(48);
 
   await page.locator(".modes").scrollIntoViewIfNeeded();
+  await expect(page.locator(".mode-tabs button")).toHaveCount(4);
   await page.getByRole("tab", { name: "Offline", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Keep the audio on your phone." })).toBeVisible();
+  await page.getByRole("tab", { name: "Credit", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "No provider account at all." })).toBeVisible();
+
+  // Dictate Cloud must say what it keeps in the same breath as what it sells.
+  await page.locator("#cloud").scrollIntoViewIfNeeded();
+  await expect(page.getByRole("heading", { name: /Just buy the minutes/i })).toBeVisible();
+  await expect(page.locator(".cloud-admission")).toContainText("runs through a server of ours");
+  await expect(page.locator(".cloud-promises")).toContainText("Nothing is written down");
+  await expect(page.locator(".cloud-links").getByRole("link", { name: /Read the server source/i }))
+    .toHaveAttribute("href", /github\.com\/DevEmperor\/DictateKeyboard\/tree\/main\/cloud/);
 
   await page.locator("#install").scrollIntoViewIfNeeded();
   await expect(page.getByRole("heading", { name: "The shortest route to your first sentence." })).toBeVisible();
@@ -101,11 +112,15 @@ test("mobile navigation and responsive model buffet", async ({ page }) => {
 
   await page.locator("#models").scrollIntoViewIfNeeded();
   await page.locator(".buffet-filters").getByRole("button", { name: "Realtime" }).click();
-  await expect(page.locator(".buffet-row")).toHaveCount(4);
+  await expect(page.locator(".buffet-row")).toHaveCount(5);
   await expect(page.locator(".buffet-row").first()).toBeVisible();
 
   await page.locator(".savings-calculator").scrollIntoViewIfNeeded();
   await expect(page.locator(".savings-card-dictate")).toContainText("$2.40");
+
+  await expect(page.locator(".personas")).toHaveCount(0);
+  await expect(page.locator(".speed-stat")).toHaveCount(0);
+  await expect(page.locator(".intro")).toHaveCount(0);
 
   await revealFullPage(page);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -133,4 +148,36 @@ test("animated feature visuals switch with the dots", async ({ page }) => {
   await expect(stage).toHaveClass(/stage-wear/);
 
   expect(runtimeErrors).toEqual([]);
+});
+
+/**
+ * The claim this release had to retract.
+ *
+ * Until 6.0 the page said in five places that there is no server of ours between your voice and the
+ * provider. Dictate Cloud makes that untrue for one optional route, and one of the five sat in the FAQ,
+ * which feeds FAQPage structured data — so the sentence was reaching Google's rich results too. It came
+ * out; this keeps it out. A regression here is not a styling slip, it is the page overstating its privacy.
+ */
+test("the page never claims there is no server of ours", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  // Open every FAQ answer, otherwise the collapsed copy escapes the sweep.
+  const faqButtons = page.locator(".faq-item button");
+  for (let i = 0; i < await faqButtons.count(); i += 1) await faqButtons.nth(i).click();
+
+  const text = (await page.locator("body").innerText()).replace(/\s+/g, " ");
+  for (const claim of [
+    /no hosted backend/i,
+    /no developer[- ]operated backend/i,
+    /not through a Dictate Keyboard developer server/i,
+    /no server between your voice/i,
+    /no developer backend/i,
+    /with no markup from us/i,
+  ]) {
+    expect(text, `retracted claim is back on the page: ${claim}`).not.toMatch(claim);
+  }
+
+  // And the honest replacement is actually there.
+  expect(text).toMatch(/nothing of yours ever reaches a machine of ours/i);
 });

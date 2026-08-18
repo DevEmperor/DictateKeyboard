@@ -7,6 +7,11 @@ const reduceMotion = () =>
  * Drive a duplicated marquee track (`[...items, ...items]`) by requestAnimationFrame so its speed can react
  * to scroll velocity. Replaces the element's CSS animation while active; on reduced-motion it bows out and
  * leaves the stylesheet in charge.
+ *
+ * Two things are deliberately restrained. The scroll coupling used to multiply velocity by 14, turning
+ * 38 px/s into over 1100 px/s on a flick — that reads as a glitch rather than as a response, so the factor
+ * is now small enough to be felt and not seen. And the loop only runs while the track is on screen: a
+ * marquee nobody can see has no business holding a frame callback open, and there are two on the page.
  */
 export function useMarqueeScroll(ref, basePxPerSec = 42) {
   useEffect(() => {
@@ -21,6 +26,7 @@ export function useMarqueeScroll(ref, basePxPerSec = 42) {
     let velocity = 0;
     let lastScrollY = window.scrollY;
     let raf = 0;
+    let visible = true;
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -32,7 +38,7 @@ export function useMarqueeScroll(ref, basePxPerSec = 42) {
     const tick = (now) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      const speed = basePxPerSec + velocity * 14; // scroll velocity boosts the marquee
+      const speed = basePxPerSec + velocity * 1.5; // scroll nudges the marquee; it must not whip
       offset -= speed * dt;
       const half = el.scrollWidth / 2;
       if (half > 0) {
@@ -42,9 +48,27 @@ export function useMarqueeScroll(ref, basePxPerSec = 42) {
       velocity *= 0.9; // decay back to base
       raf = requestAnimationFrame(tick);
     };
+    // Restarting sets `last` first: otherwise the first frame after a pause carries the whole gap as
+    // elapsed time and the track jumps.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting === visible) return;
+        visible = entry.isIntersecting;
+        if (visible) {
+          last = performance.now();
+          raf = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(raf);
+        }
+      },
+      { rootMargin: "120px" },
+    );
+    observer.observe(el);
+
     raf = requestAnimationFrame(tick);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       el.style.animation = "";

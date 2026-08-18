@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -11,10 +11,41 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Waveform } from "./Waveform";
 
+/**
+ * The hero preview — and it has to be honest about *how* the text arrives, because that is the product.
+ *
+ * The earlier version typed the sentence out letter by letter while the bar read LISTENING. Dictate never
+ * does that. On an ordinary dictation nothing appears until you stop, and then the whole transcript lands at
+ * once; only in realtime mode does text show up early, and then it arrives in word groups from the provider,
+ * never character by character. So this cycles through the two behaviours the app actually has:
+ *
+ *   BATCH     mic open, field empty → you stop → the sentence appears whole
+ *   REALTIME  mic open → words arrive in groups while it is still recording
+ *
+ * The timer counts real elapsed time instead of being derived from how much text is on screen, and the whole
+ * thing advances on one interval rather than a timeout per character — which also stops the hero
+ * re-rendering thirty times a second for as long as somebody is looking at it.
+ */
+
 const phrases = [
-  { label: "Polish", text: "Move tomorrow’s review to 3:00 PM and add Mia to the invitation.", completion: "Tone polished" },
-  { label: "Translate", text: "Pouvez-vous déplacer notre réunion à demain matin ?", completion: "French translation" },
-  { label: "Shorten", text: "Review moved to three. Mia added.", completion: "Shortened" },
+  {
+    label: "Polish",
+    text: "Move tomorrow’s review to 3:00 PM and add Mia to the invitation.",
+    completion: "Tone polished",
+    mode: "batch",
+  },
+  {
+    label: "Translate",
+    text: "Pouvez-vous déplacer notre réunion à demain matin ?",
+    completion: "French translation",
+    mode: "realtime",
+  },
+  {
+    label: "Shorten",
+    text: "Review moved to three. Mia added.",
+    completion: "Shortened",
+    mode: "batch",
+  },
 ];
 
 const promptOptions = [
@@ -25,46 +56,68 @@ const promptOptions = [
 
 const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
+const TICK = 120;
+const RECORD_MS = 2400; // mic open
+const SETTLE_MS = 2600; // transcript on screen before the next phrase
+
+/** Realtime arrives in word groups, so the boundaries here are words — never characters. */
+function chunksOf(text) {
+  const words = text.split(" ");
+  const out = [];
+  for (let i = 0; i < words.length; i += 3) out.push(words.slice(0, i + 3).join(" "));
+  if (out[out.length - 1] !== text) out.push(text);
+  return out;
+}
+
 export function DictationDemo() {
   const reduceMotion = useReducedMotion();
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [characterIndex, setCharacterIndex] = useState(reduceMotion ? phrases[0].text.length : 0);
-  const [recording, setRecording] = useState(true);
-  const phrase = phrases[phraseIndex].text;
-  const visibleText = phrase.slice(0, characterIndex);
-  const done = characterIndex === phrase.length;
+  const [index, setIndex] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const phrase = phrases[index];
+
+  const recording = !reduceMotion && !paused && elapsed < RECORD_MS;
+  const settled = reduceMotion || elapsed >= RECORD_MS;
+
+  // What is in the field right now. Batch shows nothing until the recording ends; realtime fills in while
+  // the mic is still open.
+  let visibleText = "";
+  if (settled) {
+    visibleText = phrase.text;
+  } else if (phrase.mode === "realtime") {
+    const chunks = chunksOf(phrase.text);
+    const step = Math.floor((elapsed / RECORD_MS) * chunks.length);
+    visibleText = chunks[Math.min(step, chunks.length - 1)] ?? "";
+  }
 
   useEffect(() => {
-    if (reduceMotion || !recording) return undefined;
-
-    if (characterIndex < phrase.length) {
-      const timer = window.setTimeout(() => setCharacterIndex((value) => value + 1), 34);
-      return () => window.clearTimeout(timer);
-    }
-
-    const pause = window.setTimeout(() => {
-      setPhraseIndex((value) => (value + 1) % phrases.length);
-      setCharacterIndex(0);
-    }, 2300);
-
-    return () => window.clearTimeout(pause);
-  }, [characterIndex, phrase, recording, reduceMotion]);
+    if (reduceMotion || paused) return undefined;
+    const id = window.setInterval(() => {
+      setElapsed((value) => {
+        const next = value + TICK;
+        if (next >= RECORD_MS + SETTLE_MS) {
+          setIndex((current) => (current + 1) % phrases.length);
+          return 0;
+        }
+        return next;
+      });
+    }, TICK);
+    return () => window.clearInterval(id);
+  }, [reduceMotion, paused]);
 
   function toggleRecording() {
-    if (!recording && done) {
-      setPhraseIndex((value) => (value + 1) % phrases.length);
-      setCharacterIndex(0);
-    }
-    setRecording((value) => !value);
+    setPaused((value) => !value);
   }
 
-  function selectPrompt(index) {
-    setPhraseIndex(index);
-    setCharacterIndex(reduceMotion ? phrases[index].text.length : 0);
-    setRecording(true);
+  function selectPrompt(next) {
+    setIndex(next);
+    setElapsed(0);
+    setPaused(false);
   }
 
-  const duration = useMemo(() => `0:${String(Math.max(1, Math.ceil(characterIndex / 9))).padStart(2, "0")}`, [characterIndex]);
+  const seconds = Math.min(Math.floor(elapsed / 1000), Math.floor(RECORD_MS / 1000));
+  const duration = `0:${String(seconds).padStart(2, "0")}`;
+  const status = paused ? "PAUSED" : settled ? "TRANSCRIBED" : phrase.mode === "realtime" ? "LIVE" : "LISTENING";
 
   return (
     <div className="demo-orbit" aria-label="Interactive Dictate Keyboard product preview">
@@ -107,36 +160,36 @@ export function DictationDemo() {
           <div className="demo-editor">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.p
-                key={phraseIndex}
-                initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 3px, 0)" }}
+                key={`${index}-${visibleText.length > 0 ? "text" : "empty"}`}
+                initial={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, 4px, 0)" }}
                 animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
-                exit={{ opacity: 0, transform: reduceMotion ? "none" : "translate3d(0, -2px, 0)", transition: { duration: 0.1, ease: [0.23, 1, 0.32, 1] } }}
-                transition={{ duration: reduceMotion ? 0.12 : 0.16, ease: [0.23, 1, 0.32, 1] }}
+                exit={{ opacity: 0, transition: { duration: 0.09 } }}
+                transition={{ duration: reduceMotion ? 0.12 : 0.22, ease: [0.23, 1, 0.32, 1] }}
               >
-                {visibleText}
+                {visibleText || <span className="demo-placeholder">Speak — the text lands when you stop.</span>}
                 <span className={`typing-cursor ${recording ? "is-active" : ""}`} aria-hidden="true" />
               </motion.p>
             </AnimatePresence>
             <motion.div
               className="completion-chip"
-              animate={{ opacity: done ? 1 : 0, transform: done ? "translate3d(0, 0, 0)" : "translate3d(0, 5px, 0)" }}
+              animate={{ opacity: settled ? 1 : 0, transform: settled ? "translate3d(0, 0, 0)" : "translate3d(0, 5px, 0)" }}
               transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
             >
               <Check size={13} weight="bold" aria-hidden="true" />
-              {phrases[phraseIndex].completion}
+              {phrase.completion}
             </motion.div>
           </div>
 
           <div className="prompt-strip" role="group" aria-label="Rewording shortcuts">
-            {promptOptions.map((option, index) => {
+            {promptOptions.map((option, position) => {
               const Icon = option.icon;
               return (
                 <button
                   type="button"
-                  className={phraseIndex === index ? "is-active" : ""}
-                  aria-pressed={phraseIndex === index}
+                  className={index === position ? "is-active" : ""}
+                  aria-pressed={index === position}
                   key={option.label}
-                  onClick={() => selectPrompt(index)}
+                  onClick={() => selectPrompt(position)}
                 >
                   <Icon size={14} weight={option.weight} aria-hidden="true" />
                   {option.label}
@@ -148,7 +201,7 @@ export function DictationDemo() {
           <div className="recording-bar">
             <div className="recording-state">
               <span className={`record-dot ${recording ? "is-active" : ""}`} />
-              <span>{recording ? "LISTENING" : "PAUSED"}</span>
+              <span>{status}</span>
               <strong>{duration}</strong>
             </div>
             <Waveform active={recording} />
@@ -156,8 +209,8 @@ export function DictationDemo() {
               type="button"
               className="record-button"
               onClick={toggleRecording}
-              aria-label={recording ? "Pause dictation preview" : "Resume dictation preview"}
-              aria-pressed={recording}
+              aria-label={paused ? "Resume dictation preview" : "Pause dictation preview"}
+              aria-pressed={!paused}
             >
               <Microphone size={22} weight="fill" aria-hidden="true" />
             </button>

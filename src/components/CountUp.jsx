@@ -31,13 +31,17 @@ export function CountUp({ value, duration = 1200, className }) {
     if (reduce) { setDisplay(parsed.target); return undefined; }
     if (!inView) return undefined;
 
+    // The frames are written straight into the node rather than through state: nine of these run on the
+    // page, and a React render per frame per counter buys nothing that the DOM write does not.
     let raf = 0;
     let start = 0;
+    const node = ref.current;
     const step = (now) => {
       if (!start) start = now;
       const t = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-      setDisplay(parsed.target * eased);
+      const value = (parsed.target * eased).toFixed(parsed.decimals);
+      if (node) node.textContent = `${parsed.prefix}${value}${parsed.suffix}`;
       if (t < 1) raf = requestAnimationFrame(step);
       else setDisplay(parsed.target);
     };
