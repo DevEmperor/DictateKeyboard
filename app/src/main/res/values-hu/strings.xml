@@ -1999,4 +1999,20 @@
     <string name="sticker__insert_failed">A matricát nem sikerült beszúrni</string>
     <string name="quick_action__ime_ui_mode_sticker">Matrica</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Saját matricák beszúrása</string>
+    <string name="prefs__media__sticker_add">Matricák hozzáadása</string>
+    <string name="prefs__media__sticker_add__summary">Másolj képeket a mappába. Bármelyik alkalmazásból is megoszthatsz egy képet a Dictate-tel.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Behozás WhatsAppból</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">A fájlválasztót a WhatsApp matricamappájában nyitja meg. Az olyan billentyűzetek, mint a Samsungé, oda mentik a matricáikat, ahová más alkalmazás nem láthat — azokat oszd meg a Dictate-tel.</string>
+    <string name="sticker__import_share_label">Mentés matricaként</string>
+    <string name="sticker__import_added">{n} hozzáadva</string>
+    <string name="sticker__import_duplicate">{n} már megvolt</string>
+    <string name="sticker__import_unsupported">{n} nem használható</string>
+    <string name="sticker__import_failed">{n} sikertelen</string>
+    <string name="sticker__import_nothing">Nincs mit hozzáadni</string>
+    <string name="sticker__import_no_folder">Előbb válassz matricamappát</string>
+    <string name="sticker__import_needs_write">Válaszd ki újra a matricamappát, hogy a hozzáadás és a törlés engedélyezett legyen</string>
+    <string name="sticker__forget_recent">Eltávolítás a nemrég használtak közül</string>
+    <string name="sticker__delete_file">Fájl törlése</string>
+    <string name="sticker__delete_confirm">Biztosan törlöd?</string>
+    <string name="sticker__delete_failed">A fájlt nem sikerült törölni</string>
 </resources>

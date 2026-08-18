@@ -1933,4 +1933,20 @@
     <string name="sticker__insert_failed">ステッカーを挿入できませんでした</string>
     <string name="quick_action__ime_ui_mode_sticker">ステッカー</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">自分のステッカーを挿入</string>
+    <string name="prefs__media__sticker_add">ステッカーを追加</string>
+    <string name="prefs__media__sticker_add__summary">画像をフォルダにコピーします。どのアプリからでも画像を Dictate に共有できます。</string>
+    <string name="prefs__media__sticker_import_whatsapp">WhatsApp から取り込む</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">WhatsApp のステッカーフォルダでファイル選択を開きます。Samsung のキーボードなどは他のアプリが読めない場所にステッカーを保存しているため、そちらは Dictate に共有してください。</string>
+    <string name="sticker__import_share_label">ステッカーとして保存</string>
+    <string name="sticker__import_added">{n} 件追加</string>
+    <string name="sticker__import_duplicate">{n} 件は既存</string>
+    <string name="sticker__import_unsupported">{n} 件は使用不可</string>
+    <string name="sticker__import_failed">{n} 件失敗</string>
+    <string name="sticker__import_nothing">追加するものがありません</string>
+    <string name="sticker__import_no_folder">先にステッカーのフォルダを選んでください</string>
+    <string name="sticker__import_needs_write">追加と削除を許可するには、ステッカーのフォルダをもう一度選んでください</string>
+    <string name="sticker__forget_recent">最近使ったものから削除</string>
+    <string name="sticker__delete_file">ファイルを削除</string>
+    <string name="sticker__delete_confirm">本当に削除しますか？</string>
+    <string name="sticker__delete_failed">ファイルを削除できませんでした</string>
 </resources>

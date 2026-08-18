@@ -1900,4 +1900,20 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__insert_failed">Sticker kon niet worden ingevoegd</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Je eigen stickers invoegen</string>
+    <string name="prefs__media__sticker_add">Stickers toevoegen</string>
+    <string name="prefs__media__sticker_add__summary">Kopieer afbeeldingen naar de map. Je kunt een afbeelding ook vanuit elke app naar Dictate delen.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Uit WhatsApp halen</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Opent de bestandskiezer in de stickermap van WhatsApp. Toetsenborden zoals dat van Samsung bewaren hun stickers waar geen andere app mag lezen — die deel je naar Dictate.</string>
+    <string name="sticker__import_share_label">Opslaan als sticker</string>
+    <string name="sticker__import_added">{n} toegevoegd</string>
+    <string name="sticker__import_duplicate">{n} stonden er al</string>
+    <string name="sticker__import_unsupported">{n} onbruikbaar</string>
+    <string name="sticker__import_failed">{n} mislukt</string>
+    <string name="sticker__import_nothing">Niets toe te voegen</string>
+    <string name="sticker__import_no_folder">Kies eerst een stickermap</string>
+    <string name="sticker__import_needs_write">Kies de stickermap opnieuw om toevoegen en verwijderen toe te staan</string>
+    <string name="sticker__forget_recent">Uit onlangs gebruikt halen</string>
+    <string name="sticker__delete_file">Bestand verwijderen</string>
+    <string name="sticker__delete_confirm">Echt verwijderen?</string>
+    <string name="sticker__delete_failed">Bestand kon niet worden verwijderd</string>
 </resources>

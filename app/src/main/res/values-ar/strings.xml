@@ -1859,4 +1859,20 @@
     <string name="sticker__insert_failed">تعذّر إدراج الملصق</string>
     <string name="quick_action__ime_ui_mode_sticker">ملصق</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">إدراج ملصقاتك الخاصة</string>
+    <string name="prefs__media__sticker_add">إضافة ملصقات</string>
+    <string name="prefs__media__sticker_add__summary">انسخ الصور إلى المجلد. يمكنك أيضًا مشاركة أي صورة مع Dictate من أي تطبيق.</string>
+    <string name="prefs__media__sticker_import_whatsapp">الجلب من واتساب</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">يفتح منتقي الملفات عند مجلد ملصقات واتساب. لوحات المفاتيح مثل لوحة سامسونج تحفظ ملصقاتها في مكان لا يمكن لأي تطبيق آخر قراءته — شاركها مع Dictate بدلًا من ذلك.</string>
+    <string name="sticker__import_share_label">حفظ كملصق</string>
+    <string name="sticker__import_added">تمت إضافة {n}</string>
+    <string name="sticker__import_duplicate">{n} موجودة بالفعل</string>
+    <string name="sticker__import_unsupported">{n} غير قابلة للاستخدام</string>
+    <string name="sticker__import_failed">فشل {n}</string>
+    <string name="sticker__import_nothing">لا شيء لإضافته</string>
+    <string name="sticker__import_no_folder">اختر مجلد الملصقات أولًا</string>
+    <string name="sticker__import_needs_write">اختر مجلد الملصقات مرة أخرى للسماح بالإضافة والحذف</string>
+    <string name="sticker__forget_recent">إزالة من المستخدمة مؤخرًا</string>
+    <string name="sticker__delete_file">حذف الملف</string>
+    <string name="sticker__delete_confirm">هل تريد الحذف فعلًا؟</string>
+    <string name="sticker__delete_failed">تعذّر حذف الملف</string>
 </resources>

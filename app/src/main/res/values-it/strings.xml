@@ -1784,4 +1784,20 @@
     <string name="sticker__insert_failed">Non è stato possibile inserire l\'adesivo</string>
     <string name="quick_action__ime_ui_mode_sticker">Adesivo</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserisci i tuoi adesivi</string>
+    <string name="prefs__media__sticker_add">Aggiungi adesivi</string>
+    <string name="prefs__media__sticker_add__summary">Copia immagini nella cartella. Puoi anche condividere un\'immagine con Dictate da qualsiasi app.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Prendi da WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Apre il selettore file nella cartella degli adesivi di WhatsApp. Tastiere come quella di Samsung tengono i propri dove nessun\'altra app può leggere: quelli condividili con Dictate.</string>
+    <string name="sticker__import_share_label">Salva come adesivo</string>
+    <string name="sticker__import_added">{n} aggiunti</string>
+    <string name="sticker__import_duplicate">{n} già presenti</string>
+    <string name="sticker__import_unsupported">{n} non utilizzabili</string>
+    <string name="sticker__import_failed">{n} non riusciti</string>
+    <string name="sticker__import_nothing">Niente da aggiungere</string>
+    <string name="sticker__import_no_folder">Scegli prima una cartella degli adesivi</string>
+    <string name="sticker__import_needs_write">Scegli di nuovo la cartella degli adesivi per consentire aggiunta ed eliminazione</string>
+    <string name="sticker__forget_recent">Togli dagli usati di recente</string>
+    <string name="sticker__delete_file">Elimina il file</string>
+    <string name="sticker__delete_confirm">Eliminare davvero?</string>
+    <string name="sticker__delete_failed">Non è stato possibile eliminare il file</string>
 </resources>

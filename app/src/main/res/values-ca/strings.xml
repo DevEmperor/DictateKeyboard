@@ -1876,4 +1876,20 @@
     <string name="sticker__insert_failed">No s\'ha pogut inserir l\'adhesiu</string>
     <string name="quick_action__ime_ui_mode_sticker">Adhesiu</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Insereix els teus adhesius</string>
+    <string name="prefs__media__sticker_add">Afegeix adhesius</string>
+    <string name="prefs__media__sticker_add__summary">Copieu imatges a la carpeta. També podeu compartir una imatge amb Dictate des de qualsevol aplicació.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Porta\'ls del WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Obre el selector de fitxers a la carpeta d\'adhesius del WhatsApp. Teclats com el de Samsung guarden els seus adhesius on cap altra aplicació pot llegir-los: aquells compartiu-los amb Dictate.</string>
+    <string name="sticker__import_share_label">Desa com a adhesiu</string>
+    <string name="sticker__import_added">{n} afegits</string>
+    <string name="sticker__import_duplicate">{n} ja hi eren</string>
+    <string name="sticker__import_unsupported">{n} no utilitzables</string>
+    <string name="sticker__import_failed">{n} han fallat</string>
+    <string name="sticker__import_nothing">No hi ha res a afegir</string>
+    <string name="sticker__import_no_folder">Primer trieu una carpeta d\'adhesius</string>
+    <string name="sticker__import_needs_write">Torneu a triar la carpeta d\'adhesius per permetre afegir-hi i esborrar-hi</string>
+    <string name="sticker__forget_recent">Treu dels recents</string>
+    <string name="sticker__delete_file">Esborra el fitxer</string>
+    <string name="sticker__delete_confirm">Segur que voleu esborrar-lo?</string>
+    <string name="sticker__delete_failed">No s\'ha pogut esborrar el fitxer</string>
 </resources>

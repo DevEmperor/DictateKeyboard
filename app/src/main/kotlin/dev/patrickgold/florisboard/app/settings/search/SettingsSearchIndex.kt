@@ -257,6 +257,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.prefs__media__gif_setup__title, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__gif_setup__title"),
         SettingsSearchEntry(R.string.prefs__media__sticker_folder__title, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_folder__title"),
         SettingsSearchEntry(R.string.prefs__media__sticker__title, R.string.settings__media__title, Routes.Settings.Media),
+        SettingsSearchEntry(R.string.prefs__media__sticker_add, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_add"),
+        SettingsSearchEntry(R.string.prefs__media__sticker_import_whatsapp, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_import_whatsapp"),
         SettingsSearchEntry(R.string.prefs__media__sticker_rescan, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_rescan"),
         SettingsSearchEntry(R.string.prefs__media__sticker_folder_clear, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_folder_clear"),
         SettingsSearchEntry(R.string.prefs__media__sticker_thumbnail_size, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_thumbnail_size"),

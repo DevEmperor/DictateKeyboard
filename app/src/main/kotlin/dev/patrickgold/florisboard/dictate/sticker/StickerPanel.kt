@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.HistoryToggleOff
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.PushPin
@@ -45,10 +46,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -111,10 +115,14 @@ fun StickerPanel(
     var index by remember { mutableStateOf<StickerIndex?>(null) }
     var loading by remember { mutableStateOf(true) }
     var accessLost by remember { mutableStateOf(false) }
+    // Bumped after a deletion so the folder is read again; nothing else invalidates while the panel
+    // is open, since anything added from elsewhere arrives with the panel closed.
+    var reloadToken by remember { mutableIntStateOf(0) }
+    val canWrite = remember(folderUri) { StickerWriter.canWrite(context, folderUri) }
 
     // Show whatever was scanned last straight away, then re-read the folder in the background: a
     // collection that has not changed costs nothing visible, one that has corrects itself a moment later.
-    LaunchedEffect(folderUri) {
+    LaunchedEffect(folderUri, reloadToken) {
         accessLost = false
         if (folderUri.isBlank()) {
             index = null
@@ -134,6 +142,21 @@ fun StickerPanel(
             if (cached == null) accessLost = true
         }
         loading = false
+    }
+
+    fun deleteFile(item: StickerItem) {
+        val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
+        scope.launch {
+            if (StickerWriter.delete(context, treeUri, item.docId)) {
+                // The sticker is gone from disk, so its entries would otherwise linger as gaps in the
+                // favourites and recents rows.
+                StickerHistoryHelper.forget(prefs, item.docId)
+                StickerScanner.clearCached(context)
+                reloadToken++
+            } else {
+                context.showShortToast(R.string.sticker__delete_failed)
+            }
+        }
     }
 
     fun insert(item: StickerItem, categoryId: String) {
@@ -284,7 +307,9 @@ fun StickerPanel(
                             thumbnailSize = thumbnailSize,
                             treeUri = treeUri,
                             restLabel = restLabel,
+                            canDelete = canWrite,
                             onInsert = { item -> insert(item, category.id) },
+                            onDelete = { item -> deleteFile(item) },
                             onPin = { item ->
                                 scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
                             },
@@ -312,13 +337,18 @@ private fun StickerCategoryPage(
     thumbnailSize: Int,
     treeUri: Uri,
     restLabel: String,
+    canDelete: Boolean,
     onInsert: (StickerItem) -> Unit,
+    onDelete: (StickerItem) -> Unit,
     onPin: (StickerItem) -> Unit,
     onUnpin: (StickerItem) -> Unit,
     onForget: (StickerItem) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
     var menuFor by remember { mutableStateOf<String?>(null) }
+    // Deleting removes the user's own file, so it takes a second tap. Held per menu rather than per
+    // sticker so closing the menu also cancels the armed confirmation.
+    var deleteArmed by remember { mutableStateOf(false) }
 
     val byId = remember(pool) { pool.associateBy { it.docId } }
     val pinned = if (historyEnabled) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
@@ -340,11 +370,11 @@ private fun StickerCategoryPage(
                 item = item,
                 treeUri = treeUri,
                 onClick = { onInsert(item) },
-                onLongClick = { menuFor = menuKey },
+                onLongClick = { menuFor = menuKey; deleteArmed = false },
             )
             DropdownMenu(
                 expanded = menuFor == menuKey,
-                onDismissRequest = { menuFor = null },
+                onDismissRequest = { menuFor = null; deleteArmed = false },
             ) {
                 DropdownMenuItem(
                     text = {
@@ -363,11 +393,40 @@ private fun StickerCategoryPage(
                 )
                 if (section == "recent") {
                     DropdownMenuItem(
-                        text = { Text(stringRes(R.string.action__delete)) },
-                        leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                        text = { Text(stringRes(R.string.sticker__forget_recent)) },
+                        leadingIcon = { Icon(Icons.Default.HistoryToggleOff, contentDescription = null) },
                         onClick = {
                             onForget(item)
                             menuFor = null
+                        },
+                    )
+                }
+                if (canDelete) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringRes(
+                                    if (deleteArmed) R.string.sticker__delete_confirm
+                                    else R.string.sticker__delete_file
+                                ),
+                                color = if (deleteArmed) MaterialTheme.colorScheme.error else Color.Unspecified,
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = null,
+                                tint = if (deleteArmed) MaterialTheme.colorScheme.error else LocalContentColor.current,
+                            )
+                        },
+                        onClick = {
+                            if (deleteArmed) {
+                                onDelete(item)
+                                menuFor = null
+                                deleteArmed = false
+                            } else {
+                                deleteArmed = true
+                            }
                         },
                     )
                 }

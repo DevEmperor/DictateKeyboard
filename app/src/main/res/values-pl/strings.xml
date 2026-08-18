@@ -2016,4 +2016,20 @@
     <string name="sticker__insert_failed">Nie udało się wstawić naklejki</string>
     <string name="quick_action__ime_ui_mode_sticker">Naklejka</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Wstaw własne naklejki</string>
+    <string name="prefs__media__sticker_add">Dodaj naklejki</string>
+    <string name="prefs__media__sticker_add__summary">Skopiuj obrazy do folderu. Możesz też udostępnić obraz do Dictate z dowolnej aplikacji.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Pobierz z WhatsAppa</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Otwiera wybór plików w folderze naklejek WhatsAppa. Klawiatury takie jak Samsunga trzymają swoje naklejki tam, gdzie żadna inna aplikacja nie może czytać — te udostępnij do Dictate.</string>
+    <string name="sticker__import_share_label">Zapisz jako naklejkę</string>
+    <string name="sticker__import_added">Dodano: {n}</string>
+    <string name="sticker__import_duplicate">{n} już było</string>
+    <string name="sticker__import_unsupported">{n} nie do użycia</string>
+    <string name="sticker__import_failed">{n} nie powiodło się</string>
+    <string name="sticker__import_nothing">Nie ma czego dodać</string>
+    <string name="sticker__import_no_folder">Najpierw wybierz folder z naklejkami</string>
+    <string name="sticker__import_needs_write">Wybierz folder z naklejkami ponownie, aby zezwolić na dodawanie i usuwanie</string>
+    <string name="sticker__forget_recent">Usuń z ostatnio używanych</string>
+    <string name="sticker__delete_file">Usuń plik</string>
+    <string name="sticker__delete_confirm">Na pewno usunąć?</string>
+    <string name="sticker__delete_failed">Nie udało się usunąć pliku</string>
 </resources>

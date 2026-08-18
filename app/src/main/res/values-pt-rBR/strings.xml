@@ -1809,4 +1809,20 @@
     <string name="sticker__insert_failed">Não foi possível inserir a figurinha</string>
     <string name="quick_action__ime_ui_mode_sticker">Figurinha</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserir suas próprias figurinhas</string>
+    <string name="prefs__media__sticker_add">Adicionar figurinhas</string>
+    <string name="prefs__media__sticker_add__summary">Copie imagens para a pasta. Você também pode compartilhar uma imagem com o Dictate de qualquer app.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Trazer do WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Abre o seletor de arquivos na pasta de figurinhas do WhatsApp. Teclados como o da Samsung guardam as suas onde nenhum outro app pode ler — essas, compartilhe com o Dictate.</string>
+    <string name="sticker__import_share_label">Salvar como figurinha</string>
+    <string name="sticker__import_added">{n} adicionadas</string>
+    <string name="sticker__import_duplicate">{n} já estavam lá</string>
+    <string name="sticker__import_unsupported">{n} inutilizáveis</string>
+    <string name="sticker__import_failed">{n} falharam</string>
+    <string name="sticker__import_nothing">Nada a adicionar</string>
+    <string name="sticker__import_no_folder">Escolha primeiro uma pasta de figurinhas</string>
+    <string name="sticker__import_needs_write">Escolha a pasta de figurinhas novamente para permitir adicionar e excluir</string>
+    <string name="sticker__forget_recent">Remover das usadas recentemente</string>
+    <string name="sticker__delete_file">Excluir arquivo</string>
+    <string name="sticker__delete_confirm">Excluir mesmo?</string>
+    <string name="sticker__delete_failed">Não foi possível excluir o arquivo</string>
 </resources>

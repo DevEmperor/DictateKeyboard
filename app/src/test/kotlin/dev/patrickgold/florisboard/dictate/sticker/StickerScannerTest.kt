@@ -78,6 +78,19 @@ class StickerScannerTest {
     }
 
     @Test
+    fun `an imported file gets a usable name whatever the sharing app sends`() {
+        assertEquals("pepe.webp", StickerWriter.fileName("pepe.webp", "webp"))
+        // A share often carries no display name at all; the fallback has to be stable rather than
+        // unique, or the duplicate check would never match the second time the same sticker arrives.
+        assertEquals("sticker.png", StickerWriter.fileName("", "png"))
+        assertEquals("sticker.png", StickerWriter.fileName("   ", "png"))
+        // Path separators and the characters no file system wants, replaced rather than dropped.
+        assertEquals("a_b_c.gif", StickerWriter.fileName("a/b:c.gif", "gif"))
+        // The extension follows the type actually written, not the one the sender claimed.
+        assertEquals("photo.jpg", StickerWriter.fileName("photo.png", "jpg"))
+    }
+
+    @Test
     fun `sorting ignores case, so Apple and apple stay together`() {
         val items = listOf("banana", "Apple", "apricot", "Cherry").map {
             StickerItem(docId = it, name = it, mime = "image/png", lastModified = 0L)

@@ -1995,4 +1995,20 @@
     <string name="sticker__insert_failed">无法插入贴纸</string>
     <string name="quick_action__ime_ui_mode_sticker">贴纸</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">插入你自己的贴纸</string>
+    <string name="prefs__media__sticker_add">添加贴纸</string>
+    <string name="prefs__media__sticker_add__summary">把图片复制到文件夹。你也可以从任意应用把图片分享到 Dictate。</string>
+    <string name="prefs__media__sticker_import_whatsapp">从 WhatsApp 获取</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">在 WhatsApp 的贴纸文件夹中打开文件选择器。三星键盘等把自己的贴纸存放在其他应用无法读取的位置 — 那些请分享到 Dictate。</string>
+    <string name="sticker__import_share_label">保存为贴纸</string>
+    <string name="sticker__import_added">已添加 {n} 个</string>
+    <string name="sticker__import_duplicate">{n} 个已存在</string>
+    <string name="sticker__import_unsupported">{n} 个不可用</string>
+    <string name="sticker__import_failed">{n} 个失败</string>
+    <string name="sticker__import_nothing">没有可添加的内容</string>
+    <string name="sticker__import_no_folder">请先选择贴纸文件夹</string>
+    <string name="sticker__import_needs_write">请重新选择贴纸文件夹，以允许添加和删除</string>
+    <string name="sticker__forget_recent">从最近使用中移除</string>
+    <string name="sticker__delete_file">删除文件</string>
+    <string name="sticker__delete_confirm">确定删除？</string>
+    <string name="sticker__delete_failed">无法删除该文件</string>
 </resources>

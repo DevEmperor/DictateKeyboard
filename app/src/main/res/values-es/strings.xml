@@ -1982,4 +1982,20 @@
     <string name="sticker__insert_failed">No se pudo insertar el adhesivo</string>
     <string name="quick_action__ime_ui_mode_sticker">Adhesivo</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Insertar tus propios adhesivos</string>
+    <string name="prefs__media__sticker_add">Añadir adhesivos</string>
+    <string name="prefs__media__sticker_add__summary">Copia imágenes a la carpeta. También puedes compartir una imagen con Dictate desde cualquier aplicación.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Traer de WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Abre el selector de archivos en la carpeta de adhesivos de WhatsApp. Teclados como el de Samsung guardan los suyos donde ninguna otra aplicación puede leerlos: esos compártelos con Dictate.</string>
+    <string name="sticker__import_share_label">Guardar como adhesivo</string>
+    <string name="sticker__import_added">{n} añadidos</string>
+    <string name="sticker__import_duplicate">{n} ya estaban</string>
+    <string name="sticker__import_unsupported">{n} no utilizables</string>
+    <string name="sticker__import_failed">{n} fallaron</string>
+    <string name="sticker__import_nothing">Nada que añadir</string>
+    <string name="sticker__import_no_folder">Elige primero una carpeta de adhesivos</string>
+    <string name="sticker__import_needs_write">Vuelve a elegir la carpeta de adhesivos para permitir añadir y borrar</string>
+    <string name="sticker__forget_recent">Quitar de usados recientemente</string>
+    <string name="sticker__delete_file">Borrar archivo</string>
+    <string name="sticker__delete_confirm">¿Borrar de verdad?</string>
+    <string name="sticker__delete_failed">No se pudo borrar el archivo</string>
 </resources>

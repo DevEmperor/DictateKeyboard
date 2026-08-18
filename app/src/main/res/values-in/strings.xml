@@ -1956,4 +1956,20 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__insert_failed">Stiker tidak dapat disisipkan</string>
     <string name="quick_action__ime_ui_mode_sticker">Stiker</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Sisipkan stiker milikmu sendiri</string>
+    <string name="prefs__media__sticker_add">Tambah stiker</string>
+    <string name="prefs__media__sticker_add__summary">Salin gambar ke folder. Kamu juga bisa membagikan gambar ke Dictate dari aplikasi mana pun.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Ambil dari WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Membuka pemilih berkas di folder stiker WhatsApp. Papan ketik seperti milik Samsung menyimpan stikernya di tempat yang tidak boleh dibaca aplikasi lain — bagikan yang itu ke Dictate.</string>
+    <string name="sticker__import_share_label">Simpan sebagai stiker</string>
+    <string name="sticker__import_added">{n} ditambahkan</string>
+    <string name="sticker__import_duplicate">{n} sudah ada</string>
+    <string name="sticker__import_unsupported">{n} tidak bisa dipakai</string>
+    <string name="sticker__import_failed">{n} gagal</string>
+    <string name="sticker__import_nothing">Tidak ada yang ditambahkan</string>
+    <string name="sticker__import_no_folder">Pilih folder stiker dulu</string>
+    <string name="sticker__import_needs_write">Pilih lagi folder stiker agar menambah dan menghapus diizinkan</string>
+    <string name="sticker__forget_recent">Hapus dari baru digunakan</string>
+    <string name="sticker__delete_file">Hapus berkas</string>
+    <string name="sticker__delete_confirm">Yakin mau dihapus?</string>
+    <string name="sticker__delete_failed">Berkas tidak dapat dihapus</string>
 </resources>

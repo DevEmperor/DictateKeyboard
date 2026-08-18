@@ -143,6 +143,18 @@ object StickerHistoryHelper {
         recent[StickerHistory.GLOBAL]?.remove(docId)
     }
 
+    /**
+     * Drops a sticker from every list it appears in, whatever the category.
+     *
+     * Used when the file itself is deleted: the panel skips ids it cannot resolve, so leaving them
+     * behind would not show a broken image, but it would silently shorten the favourites row and make
+     * "keep 16 recents" mean something else.
+     */
+    suspend fun forget(prefs: FlorisPreferenceModel, docId: String) = edit(prefs) { pinned, recent ->
+        for (list in pinned.values) list.remove(docId)
+        for (list in recent.values) list.remove(docId)
+    }
+
     suspend fun clearRecent(prefs: FlorisPreferenceModel) = edit(prefs) { _, recent ->
         recent.clear()
     }

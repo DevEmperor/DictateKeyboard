@@ -2015,4 +2015,20 @@
     <string name="sticker__insert_failed">Samolepku se nepodařilo vložit</string>
     <string name="quick_action__ime_ui_mode_sticker">Samolepka</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Vložit vlastní samolepky</string>
+    <string name="prefs__media__sticker_add">Přidat samolepky</string>
+    <string name="prefs__media__sticker_add__summary">Zkopírujte obrázky do složky. Obrázek můžete také sdílet do Dictate z libovolné aplikace.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Načíst z WhatsAppu</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Otevře výběr souborů ve složce se samolepkami WhatsAppu. Klávesnice jako ta od Samsungu si samolepky ukládají tam, kam žádná jiná aplikace nevidí — ty sdílejte do Dictate.</string>
+    <string name="sticker__import_share_label">Uložit jako samolepku</string>
+    <string name="sticker__import_added">Přidáno: {n}</string>
+    <string name="sticker__import_duplicate">{n} už tam bylo</string>
+    <string name="sticker__import_unsupported">{n} nepoužitelných</string>
+    <string name="sticker__import_failed">{n} se nezdařilo</string>
+    <string name="sticker__import_nothing">Není co přidat</string>
+    <string name="sticker__import_no_folder">Nejdřív vyberte složku se samolepkami</string>
+    <string name="sticker__import_needs_write">Vyberte složku se samolepkami znovu, aby šlo přidávat a mazat</string>
+    <string name="sticker__forget_recent">Odebrat z naposledy použitých</string>
+    <string name="sticker__delete_file">Smazat soubor</string>
+    <string name="sticker__delete_confirm">Opravdu smazat?</string>
+    <string name="sticker__delete_failed">Soubor se nepodařilo smazat</string>
 </resources>

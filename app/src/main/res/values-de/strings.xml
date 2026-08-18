@@ -1876,4 +1876,20 @@
     <string name="sticker__insert_failed">Sticker konnte nicht eingefügt werden</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Eigene Sticker einfügen</string>
+    <string name="prefs__media__sticker_add">Sticker hinzufügen</string>
+    <string name="prefs__media__sticker_add__summary">Bilder in den Ordner kopieren. Du kannst ein Bild auch aus jeder App zu Dictate teilen.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Aus WhatsApp holen</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Öffnet die Dateiauswahl im Sticker-Ordner von WhatsApp. Tastaturen wie die von Samsung legen ihre Sticker dort ab, wo keine andere App lesen darf — die teilst du stattdessen zu Dictate.</string>
+    <string name="sticker__import_share_label">Als Sticker speichern</string>
+    <string name="sticker__import_added">{n} hinzugefügt</string>
+    <string name="sticker__import_duplicate">{n} schon vorhanden</string>
+    <string name="sticker__import_unsupported">{n} nicht verwendbar</string>
+    <string name="sticker__import_failed">{n} fehlgeschlagen</string>
+    <string name="sticker__import_nothing">Nichts hinzuzufügen</string>
+    <string name="sticker__import_no_folder">Wähle zuerst einen Sticker-Ordner</string>
+    <string name="sticker__import_needs_write">Wähle den Sticker-Ordner erneut, damit Hinzufügen und Löschen erlaubt ist</string>
+    <string name="sticker__forget_recent">Aus „Zuletzt verwendet“ entfernen</string>
+    <string name="sticker__delete_file">Datei löschen</string>
+    <string name="sticker__delete_confirm">Wirklich löschen?</string>
+    <string name="sticker__delete_failed">Datei konnte nicht gelöscht werden</string>
 </resources>

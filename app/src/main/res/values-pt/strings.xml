@@ -1980,4 +1980,20 @@
     <string name="sticker__insert_failed">Não foi possível inserir o autocolante</string>
     <string name="quick_action__ime_ui_mode_sticker">Autocol.</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserir os seus autocolantes</string>
+    <string name="prefs__media__sticker_add">Adicionar autocolantes</string>
+    <string name="prefs__media__sticker_add__summary">Copie imagens para a pasta. Também pode partilhar uma imagem com o Dictate a partir de qualquer aplicação.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Trazer do WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Abre o seletor de ficheiros na pasta de autocolantes do WhatsApp. Teclados como o da Samsung guardam os seus onde nenhuma outra aplicação pode ler — esses, partilhe-os com o Dictate.</string>
+    <string name="sticker__import_share_label">Guardar como autocolante</string>
+    <string name="sticker__import_added">{n} adicionados</string>
+    <string name="sticker__import_duplicate">{n} já lá estavam</string>
+    <string name="sticker__import_unsupported">{n} inutilizáveis</string>
+    <string name="sticker__import_failed">{n} falharam</string>
+    <string name="sticker__import_nothing">Nada a adicionar</string>
+    <string name="sticker__import_no_folder">Escolha primeiro uma pasta de autocolantes</string>
+    <string name="sticker__import_needs_write">Escolha a pasta de autocolantes novamente para permitir adicionar e apagar</string>
+    <string name="sticker__forget_recent">Remover dos usados recentemente</string>
+    <string name="sticker__delete_file">Apagar ficheiro</string>
+    <string name="sticker__delete_confirm">Apagar mesmo?</string>
+    <string name="sticker__delete_failed">Não foi possível apagar o ficheiro</string>
 </resources>

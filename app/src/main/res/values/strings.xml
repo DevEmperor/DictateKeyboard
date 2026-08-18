@@ -66,6 +66,22 @@
     <string name="sticker__rescan_done" comment="Toast after a manual rescan; {n} is the number of stickers found">{n} stickers found</string>
     <string name="sticker__copied_to_clipboard" comment="Toast when the target app refuses images and the sticker is copied instead">This app does not accept stickers — copied to clipboard, long-press to paste</string>
     <string name="sticker__insert_failed" comment="Toast when a sticker could not be inserted or copied">Couldn\'t insert the sticker</string>
+    <string name="prefs__media__sticker_add" comment="Preference title, opens a picker to copy images into the sticker folder">Add stickers</string>
+    <string name="prefs__media__sticker_add__summary" comment="Preference summary; mentions the share sheet as the other way in">Copy images into the folder. You can also share an image to Dictate from any app.</string>
+    <string name="prefs__media__sticker_import_whatsapp" comment="Preference title, opens the picker at WhatsApp\'s sticker folder">Fetch from WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary" comment="Preference summary explaining what other apps allow">Opens the file picker at WhatsApp\'s sticker folder. Keyboards such as Samsung\'s keep their stickers where no other app may read them — share those to Dictate instead.</string>
+    <string name="sticker__import_share_label" comment="Label of the app in the Android share sheet">Save as sticker</string>
+    <string name="sticker__import_added" comment="Toast after importing; {n} is the number of stickers added">{n} added</string>
+    <string name="sticker__import_duplicate" comment="Toast part; {n} images were already in the folder">{n} already there</string>
+    <string name="sticker__import_unsupported" comment="Toast part; {n} files were not usable images">{n} not usable</string>
+    <string name="sticker__import_failed" comment="Toast part; {n} images could not be copied">{n} failed</string>
+    <string name="sticker__import_nothing" comment="Toast when a share carried nothing to import">Nothing to add</string>
+    <string name="sticker__import_no_folder" comment="Toast when a sticker is shared before a folder was chosen">Choose a sticker folder first</string>
+    <string name="sticker__import_needs_write" comment="Toast when the folder was granted read-only access">Choose the sticker folder again to allow adding and deleting</string>
+    <string name="sticker__forget_recent" comment="Long-press action, drops a sticker from the recently used row">Remove from recents</string>
+    <string name="sticker__delete_file" comment="Long-press action, deletes the image file itself">Delete file</string>
+    <string name="sticker__delete_confirm" comment="Second tap of the delete action, shown in red">Really delete?</string>
+    <string name="sticker__delete_failed" comment="Toast when the file could not be deleted">Could not delete the file</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>

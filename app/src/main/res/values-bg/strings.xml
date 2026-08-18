@@ -2001,4 +2001,20 @@
     <string name="sticker__insert_failed">Стикерът не можа да бъде вмъкнат</string>
     <string name="quick_action__ime_ui_mode_sticker">Стикер</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Вмъкване на собствени стикери</string>
+    <string name="prefs__media__sticker_add">Добавяне на стикери</string>
+    <string name="prefs__media__sticker_add__summary">Копирайте изображения в папката. Можете и да споделите изображение към Dictate от всяко приложение.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Вземи от WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Отваря файловия избор в папката със стикери на WhatsApp. Клавиатури като тази на Samsung пазят стикерите си там, където никое друго приложение не може да чете — тях споделяйте към Dictate.</string>
+    <string name="sticker__import_share_label">Запази като стикер</string>
+    <string name="sticker__import_added">Добавени: {n}</string>
+    <string name="sticker__import_duplicate">{n} вече ги има</string>
+    <string name="sticker__import_unsupported">{n} неизползваеми</string>
+    <string name="sticker__import_failed">{n} неуспешни</string>
+    <string name="sticker__import_nothing">Няма какво да се добави</string>
+    <string name="sticker__import_no_folder">Първо изберете папка със стикери</string>
+    <string name="sticker__import_needs_write">Изберете папката със стикери отново, за да е разрешено добавяне и изтриване</string>
+    <string name="sticker__forget_recent">Премахни от наскоро използваните</string>
+    <string name="sticker__delete_file">Изтрий файла</string>
+    <string name="sticker__delete_confirm">Наистина ли да се изтрие?</string>
+    <string name="sticker__delete_failed">Файлът не можа да бъде изтрит</string>
 </resources>

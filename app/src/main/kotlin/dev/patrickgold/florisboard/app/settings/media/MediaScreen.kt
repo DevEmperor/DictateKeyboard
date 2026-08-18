@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.app.settings.media
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Gif
@@ -61,6 +64,8 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistoryHelper
 import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
+import dev.patrickgold.florisboard.dictate.sticker.StickerWriter
+import dev.patrickgold.florisboard.dictate.sticker.stickerImportSummary
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -74,6 +79,7 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -122,10 +128,11 @@ fun MediaScreen() = FlorisScreen {
             if (uri == null) return@rememberLauncherForActivityResult
             try {
                 // Without the persisted grant the folder would be unreadable again after a reboot, and
-                // the panel would show "access lost" for a folder the user just picked.
+                // the panel would show "access lost" for a folder the user just picked. Write is taken
+                // as well so stickers can be added and deleted from inside the app.
                 context.contentResolver.takePersistableUriPermission(
                     uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
                 )
             } catch (e: SecurityException) {
                 scope.launch { context.showLongToast(R.string.sticker__folder_pick_failed) }
@@ -151,6 +158,27 @@ fun MediaScreen() = FlorisScreen {
         )
         if (stickerFolderUri.isNotBlank()) {
             PreferenceGroup(title = stringRes(R.string.prefs__media__sticker__title)) {
+                // Adding images. Two launchers rather than one, because the only difference between
+                // them is the folder the picker opens in and that is fixed when the contract is built.
+                val addPicker = rememberLauncherForActivityResult(
+                    ActivityResultContracts.OpenMultipleDocuments()
+                ) { uris -> importStickers(context, scope, stickerFolderUri, uris) }
+                val whatsAppPicker = rememberLauncherForActivityResult(
+                    OpenImagesStartingAt(StickerWriter.whatsAppStickersHint())
+                ) { uris -> importStickers(context, scope, stickerFolderUri, uris) }
+                Preference(
+                    icon = Icons.Outlined.AddPhotoAlternate,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_add"),
+                    title = stringRes(R.string.prefs__media__sticker_add),
+                    summary = stringRes(R.string.prefs__media__sticker_add__summary),
+                    onClick = { addPicker.launch(StickerImportMimeTypes) },
+                )
+                Preference(
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_import_whatsapp"),
+                    title = stringRes(R.string.prefs__media__sticker_import_whatsapp),
+                    summary = stringRes(R.string.prefs__media__sticker_import_whatsapp__summary),
+                    onClick = { whatsAppPicker.launch(StickerImportMimeTypes) },
+                )
                 Preference(
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
                     title = stringRes(R.string.prefs__media__sticker_rescan),
@@ -501,6 +529,48 @@ fun DeleteEmojiHistoryConfirmDialog(
 
 data class ShouldDelete(val pinned: Boolean)
 
+/** The image types the sticker panel can render, as the file picker wants them. */
+private val StickerImportMimeTypes =
+    arrayOf("image/png", "image/webp", "image/gif", "image/jpeg")
+
+/**
+ * A multi-select image picker that opens somewhere specific.
+ *
+ * `EXTRA_INITIAL_URI` is a hint and nothing more: if the folder is not there — no WhatsApp, WhatsApp
+ * Business, stickers that never left the app's own database — the picker opens where it normally
+ * would. That is the whole reason this is worth doing: at best it saves the user four taps, at worst
+ * it costs nothing.
+ */
+private class OpenImagesStartingAt(
+    private val initial: Uri,
+) : ActivityResultContracts.OpenMultipleDocuments() {
+    override fun createIntent(context: Context, input: Array<String>): Intent =
+        super.createIntent(context, input).putExtra(DocumentsContract.EXTRA_INITIAL_URI, initial)
+}
+
+/**
+ * Copies picked images into the sticker folder and says what happened.
+ *
+ * The picker grants read access for this call only, which is exactly enough: the files are copied
+ * immediately and never referred to again by their original URI.
+ */
+private fun importStickers(
+    context: Context,
+    scope: CoroutineScope,
+    folderUri: String,
+    sources: List<Uri>,
+) {
+    if (sources.isEmpty() || folderUri.isBlank()) return
+    scope.launch {
+        if (!StickerWriter.canWrite(context, folderUri)) {
+            context.showLongToast(R.string.sticker__import_needs_write)
+            return@launch
+        }
+        val result = StickerWriter.importInto(context, folderUri.toUri(), sources)
+        context.showLongToast(stickerImportSummary(context, result))
+    }
+}
+
 /**
  * Gives back the persisted read permission on a sticker folder that is no longer in use.
  *
@@ -514,7 +584,7 @@ private fun releaseStickerFolder(context: Context, previous: String, keep: Strin
     try {
         context.contentResolver.releasePersistableUriPermission(
             previous.toUri(),
-            Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
         )
     } catch (e: SecurityException) {
         // Already gone — the user revoked it, or the folder was removed. Nothing to release.

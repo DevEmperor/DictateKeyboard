@@ -1979,4 +1979,20 @@
     <string name="sticker__insert_failed">Çıkartma eklenemedi</string>
     <string name="quick_action__ime_ui_mode_sticker">Çıkartma</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Kendi çıkartmalarınızı ekleyin</string>
+    <string name="prefs__media__sticker_add">Çıkartma ekle</string>
+    <string name="prefs__media__sticker_add__summary">Görselleri klasöre kopyalayın. Herhangi bir uygulamadan bir görseli Dictate ile de paylaşabilirsiniz.</string>
+    <string name="prefs__media__sticker_import_whatsapp">WhatsApp\'tan getir</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Dosya seçiciyi WhatsApp\'ın çıkartma klasöründe açar. Samsung\'unki gibi klavyeler çıkartmalarını başka hiçbir uygulamanın okuyamayacağı yerde tutar — onları Dictate ile paylaşın.</string>
+    <string name="sticker__import_share_label">Çıkartma olarak kaydet</string>
+    <string name="sticker__import_added">{n} eklendi</string>
+    <string name="sticker__import_duplicate">{n} zaten vardı</string>
+    <string name="sticker__import_unsupported">{n} kullanılamaz</string>
+    <string name="sticker__import_failed">{n} başarısız</string>
+    <string name="sticker__import_nothing">Eklenecek bir şey yok</string>
+    <string name="sticker__import_no_folder">Önce bir çıkartma klasörü seçin</string>
+    <string name="sticker__import_needs_write">Ekleme ve silmeye izin vermek için çıkartma klasörünü yeniden seçin</string>
+    <string name="sticker__forget_recent">Son kullanılanlardan çıkar</string>
+    <string name="sticker__delete_file">Dosyayı sil</string>
+    <string name="sticker__delete_confirm">Gerçekten silinsin mi?</string>
+    <string name="sticker__delete_failed">Dosya silinemedi</string>
 </resources>

@@ -1848,4 +1848,20 @@
     <string name="sticker__insert_failed">Не вдалося вставити стікер</string>
     <string name="quick_action__ime_ui_mode_sticker">Стікер</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Вставити власні стікери</string>
+    <string name="prefs__media__sticker_add">Додати стікери</string>
+    <string name="prefs__media__sticker_add__summary">Скопіюйте зображення до теки. Зображення також можна надіслати до Dictate через «Поділитися» з будь-якого застосунку.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Забрати з WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Відкриває вибір файлів у теці стікерів WhatsApp. Клавіатури на кшталт самсунгівської тримають свої стікери там, куди іншим застосункам читати не дозволено — такі надсилайте до Dictate через «Поділитися».</string>
+    <string name="sticker__import_share_label">Зберегти як стікер</string>
+    <string name="sticker__import_added">Додано: {n}</string>
+    <string name="sticker__import_duplicate">{n} вже були</string>
+    <string name="sticker__import_unsupported">{n} непридатні</string>
+    <string name="sticker__import_failed">Не вдалося: {n}</string>
+    <string name="sticker__import_nothing">Немає чого додавати</string>
+    <string name="sticker__import_no_folder">Спершу виберіть теку зі стікерами</string>
+    <string name="sticker__import_needs_write">Виберіть теку зі стікерами знову, щоб дозволити додавання та видалення</string>
+    <string name="sticker__forget_recent">Прибрати з нещодавніх</string>
+    <string name="sticker__delete_file">Видалити файл</string>
+    <string name="sticker__delete_confirm">Справді видалити?</string>
+    <string name="sticker__delete_failed">Не вдалося видалити файл</string>
 </resources>

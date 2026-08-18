@@ -1944,4 +1944,20 @@
     <string name="sticker__insert_failed">Uzlīmi neizdevās ievietot</string>
     <string name="quick_action__ime_ui_mode_sticker">Uzlīme</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Ievietot savas uzlīmes</string>
+    <string name="prefs__media__sticker_add">Pievienot uzlīmes</string>
+    <string name="prefs__media__sticker_add__summary">Kopējiet attēlus mapē. Attēlu var arī kopīgot ar Dictate no jebkuras lietotnes.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Paņemt no WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Atver failu izvēli WhatsApp uzlīmju mapē. Tādas tastatūras kā Samsung glabā savas uzlīmes tur, kur neviena cita lietotne nedrīkst lasīt — tās kopīgojiet ar Dictate.</string>
+    <string name="sticker__import_share_label">Saglabāt kā uzlīmi</string>
+    <string name="sticker__import_added">Pievienotas: {n}</string>
+    <string name="sticker__import_duplicate">{n} jau bija</string>
+    <string name="sticker__import_unsupported">{n} nederīgas</string>
+    <string name="sticker__import_failed">{n} neizdevās</string>
+    <string name="sticker__import_nothing">Nav ko pievienot</string>
+    <string name="sticker__import_no_folder">Vispirms izvēlieties uzlīmju mapi</string>
+    <string name="sticker__import_needs_write">Izvēlieties uzlīmju mapi vēlreiz, lai atļautu pievienošanu un dzēšanu</string>
+    <string name="sticker__forget_recent">Noņemt no nesen lietotajām</string>
+    <string name="sticker__delete_file">Dzēst failu</string>
+    <string name="sticker__delete_confirm">Tiešām dzēst?</string>
+    <string name="sticker__delete_failed">Failu neizdevās izdzēst</string>
 </resources>

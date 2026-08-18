@@ -1876,4 +1876,20 @@
     <string name="sticker__insert_failed">Impossible d\'insérer l\'autocollant</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
     <string name="quick_action__ime_ui_mode_sticker__tooltip">Insérer vos propres autocollants</string>
+    <string name="prefs__media__sticker_add">Ajouter des autocollants</string>
+    <string name="prefs__media__sticker_add__summary">Copiez des images dans le dossier. Vous pouvez aussi partager une image vers Dictate depuis n\'importe quelle application.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Récupérer depuis WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Ouvre le sélecteur de fichiers dans le dossier d\'autocollants de WhatsApp. Des claviers comme celui de Samsung rangent les leurs là où aucune autre application ne peut lire — partagez ceux-là vers Dictate.</string>
+    <string name="sticker__import_share_label">Enregistrer comme autocollant</string>
+    <string name="sticker__import_added">{n} ajoutés</string>
+    <string name="sticker__import_duplicate">{n} déjà présents</string>
+    <string name="sticker__import_unsupported">{n} inutilisables</string>
+    <string name="sticker__import_failed">{n} en échec</string>
+    <string name="sticker__import_nothing">Rien à ajouter</string>
+    <string name="sticker__import_no_folder">Choisissez d\'abord un dossier d\'autocollants</string>
+    <string name="sticker__import_needs_write">Choisissez à nouveau le dossier d\'autocollants pour autoriser l\'ajout et la suppression</string>
+    <string name="sticker__forget_recent">Retirer des récents</string>
+    <string name="sticker__delete_file">Supprimer le fichier</string>
+    <string name="sticker__delete_confirm">Vraiment supprimer ?</string>
+    <string name="sticker__delete_failed">Impossible de supprimer le fichier</string>
 </resources>
