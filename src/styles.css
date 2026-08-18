@@ -4401,7 +4401,12 @@ p {
   display: grid;
   min-height: 390px;
   grid-column: span 5;
-  grid-template-rows: auto 1fr auto;
+  /* `minmax(0, 1fr)` rather than `1fr`: the shorthand means `minmax(auto, 1fr)`, and an `auto` minimum is
+     "never smaller than the content" — which is how a visual taller than its row ended up printed over the
+     copy beneath it instead of fitting. The row-gap then guarantees the same breathing room on every card,
+     whatever height its visual happens to want. */
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  row-gap: 24px;
   padding: 25px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -4442,6 +4447,13 @@ p {
   background: var(--paper-bright);
   color: var(--accent-dark);
   transition: color 180ms ease, background-color 180ms ease, transform 190ms var(--ease-out);
+}
+
+/* Every visual, whatever it is: centred in its row, and unable to grow the row it sits in. */
+.capability-card > :not(.capability-card-top):not(.capability-copy) {
+  min-height: 0;
+  max-height: 100%;
+  align-self: center;
 }
 
 .capability-copy {

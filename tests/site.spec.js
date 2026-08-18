@@ -181,3 +181,32 @@ test("the page never claims there is no server of ours", async ({ page }) => {
   // And the honest replacement is actually there.
   expect(text).toMatch(/nothing of yours ever reaches a machine of ours/i);
 });
+
+/**
+ * Capability cards: the visual must never crowd the copy beneath it.
+ *
+ * The GIF tiles sized themselves off the card width, so in the narrow cards the grid grew taller than the
+ * row it sits in and printed over the eyebrow below. The first fix stopped them strictly overlapping, and
+ * that was not enough — a one-pixel gap looks exactly as broken as a one-pixel overlap. So this asserts
+ * *breathing room*, at the widths where the grid actually changes shape.
+ */
+for (const width of [1440, 1100, 900, 700, 480]) {
+  test(`capability cards keep their spacing at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/");
+    await page.locator(".capability-grid").scrollIntoViewIfNeeded();
+
+    const gaps = await page.evaluate(() =>
+      [...document.querySelectorAll(".capability-card")].map((card) => {
+        const visual = card.children[1].getBoundingClientRect();
+        const copy = card.querySelector(".capability-copy").getBoundingClientRect();
+        return { title: card.querySelector("h4").textContent, gap: Math.round(copy.top - visual.bottom) };
+      }),
+    );
+
+    expect(gaps.length).toBe(7);
+    for (const { title, gap } of gaps) {
+      expect(gap, `"${title}" leaves only ${gap}px between its visual and its copy`).toBeGreaterThanOrEqual(16);
+    }
+  });
+}
