@@ -6342,7 +6342,19 @@ p {
 .social-review-meta small { color: var(--muted); font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.03em; text-transform: uppercase; }
 
 /* --- GIF capability visual --- */
-.cap-gifs { display: flex; flex-direction: column; gap: 8px; }
+/* The visual lives in the card's `1fr` row. `min-height: 0` is the part that matters: without it a grid
+   item refuses to shrink below its content, so this tile grid — sized off the card width by aspect-ratio —
+   grew taller than its row and printed straight over the copy beneath it in the narrow third-row cards. */
+.cap-gifs {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-self: center;
+  justify-self: center;
+  gap: 9px;
+  width: 100%;
+  max-width: 286px;
+}
 .cap-gif-bar {
   align-self: flex-start;
   padding: 6px 13px 6px 12px;
@@ -6355,10 +6367,17 @@ p {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.cap-gif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+/* Height first, tiles second — the same way .cap-stats is built. Sizing the tiles from the card width
+   instead is what made this visual the only one whose height nobody could predict. */
+.cap-gif-grid {
+  display: grid;
+  height: 116px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6px;
+}
 .cap-gif-grid i {
-  aspect-ratio: 4 / 3;
-  border-radius: 6px;
+  border-radius: 7px;
   background: linear-gradient(115deg, rgba(48, 183, 230, 0.35), rgba(42, 109, 244, 0.18));
   animation: cap-gif-shimmer 2.6s ease-in-out infinite;
 }
@@ -6552,8 +6571,8 @@ p {
 
 /* ---- Dictate Cloud ---------------------------------------------------------------------- */
 
-/* A dark slab like #compare and #privacy: this is one of the pages's "read this carefully" moments,
-   and the ink ground is what the site already uses to mark those. */
+/* A dark slab like #compare and #privacy: this is one of the page's "read this carefully" moments, and
+   the ink ground is what the site already uses to mark those. */
 .cloud-section {
   padding-block: 150px;
   background:
@@ -6585,82 +6604,61 @@ p {
   line-height: 1.65;
 }
 
-/* The admission comes before the promises, and is styled to be read rather than skimmed past. */
-.cloud-admission {
+/* Left column is what we say, right column is what can be checked. The split is the argument. */
+.cloud-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: start;
+  gap: 26px;
+  margin-top: 52px;
+}
+
+.cloud-say {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 44px;
-  padding: 22px 24px;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cloud-admission {
+  padding: 30px;
   border: 1px solid rgba(48, 183, 230, 0.34);
   border-radius: var(--radius-medium);
-  background: rgba(48, 183, 230, 0.08);
+  background:
+    radial-gradient(circle at 88% -10%, rgba(48, 183, 230, 0.16), transparent 55%),
+    rgba(48, 183, 230, 0.07);
 }
 
 .cloud-admission-mark {
-  flex: none;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
   background: rgba(48, 183, 230, 0.16);
   color: var(--accent);
 }
 
+.cloud-admission h3 {
+  margin: 20px 0 10px;
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.1vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
 .cloud-admission p {
   margin: 0;
-  line-height: 1.65;
-  color: var(--muted-light);
-}
-
-.cloud-admission strong {
-  color: var(--on-dark);
-}
-
-.cloud-promises {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.cloud-promise {
-  padding: 24px;
-  border: 1px solid var(--line-dark);
-  border-radius: var(--radius-medium);
-  background: rgba(255, 253, 248, 0.035);
-}
-
-.cloud-promise-icon {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: rgba(48, 183, 230, 0.14);
-  color: var(--accent);
-}
-
-.cloud-promise strong {
-  display: block;
-  margin: 14px 0 8px;
-  font-size: 1.02rem;
-  letter-spacing: -0.01em;
-}
-
-.cloud-promise p {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.62;
+  font-size: 0.92rem;
+  line-height: 1.66;
   color: var(--muted-light);
 }
 
 .cloud-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: 9px;
 }
 
 .cloud-links a {
@@ -6671,7 +6669,7 @@ p {
   border: 1px solid var(--line-dark);
   border-radius: 999px;
   color: var(--on-dark);
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
@@ -6683,11 +6681,62 @@ p {
 }
 
 .cloud-footnote p {
-  max-width: 62ch;
-  margin: 26px 0 0;
-  font-size: 0.88rem;
-  line-height: 1.65;
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.66;
   color: var(--muted-light);
+}
+
+/* Numbered, like the privacy facts further down: a list of things that can be checked reads differently
+   from three marketing cards, and this argument has to be made in that register. */
+.cloud-promises {
+  display: grid;
+  margin: 0;
+  padding: 8px 30px;
+  list-style: none;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-medium);
+  background: rgba(255, 253, 248, 0.035);
+}
+
+.cloud-promise {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  padding: 26px 0;
+}
+
+.cloud-promise + .cloud-promise {
+  border-top: 1px solid var(--line-dark);
+}
+
+.cloud-promise-number {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.7;
+  color: var(--accent);
+}
+
+.cloud-promise strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+
+.cloud-promise p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.62;
+  color: var(--muted-light);
+}
+
+@media (max-width: 1020px) {
+  .cloud-body {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -6699,6 +6748,11 @@ p {
     grid-template-columns: 1fr;
     align-items: start;
     gap: 18px;
+  }
+
+  .cloud-admission,
+  .cloud-promises {
+    padding-inline: 22px;
   }
 }
 
