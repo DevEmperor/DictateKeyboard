@@ -969,6 +969,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 gifSearchSubmit.value = null
                 activeState.imeUiMode = ImeUiMode.GIF
             }
+            // Opens the local sticker panel (issue #280) — the user's own folder, no network involved.
+            KeyCode.IME_UI_MODE_STICKER -> {
+                closeEmojiSearch(returnToMedia = false)
+                activeState.imeUiMode = ImeUiMode.STICKER
+            }
             KeyCode.IME_UI_MODE_DICTATE -> dev.patrickgold.florisboard.dictate.DictateController.onMicClick(appContext)
             KeyCode.DICTATE_LIVE_PROMPT -> dev.patrickgold.florisboard.dictate.DictateController.startLivePrompt(appContext)
             KeyCode.DICTATE_PROMPTS -> {

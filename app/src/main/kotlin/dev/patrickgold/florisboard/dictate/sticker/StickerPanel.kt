@@ -1,0 +1,474 @@
+/*
+ * Copyright (C) 2026 DevEmperor (Dictate)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+package dev.patrickgold.florisboard.dictate.sticker
+
+import android.net.Uri
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PushPin
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.PushPin
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import coil3.compose.AsyncImage
+import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
+import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
+
+/**
+ * The user's own stickers, read from a folder they picked (issue #280) — its own [ImeUiMode.STICKER]
+ * next to the typing keyboard, opened from the Smartbar action.
+ *
+ * The layout follows the variant the requester ranked highest in his own mockup: categories along the
+ * top, grid below, favourites and recently used as sections above the rest. Subfolders are the
+ * categories; the first tab holds the loose files of the picked folder and, above them, the combined
+ * favourites and recents from every folder.
+ *
+ * Cells are square rather than staggered like the GIF panel: the documents provider reports no image
+ * dimensions, so a staggered grid could only learn each sticker's shape by decoding it, and the whole
+ * grid would visibly re-flow as images arrived.
+ */
+@Composable
+fun StickerPanel(
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+    val prefs by FlorisPreferenceStore
+    val accent by prefs.theme.accentColor.collectPrefAsState()
+    val folderUri by prefs.sticker.folderUri.collectPrefAsState()
+    val thumbnailSize by prefs.sticker.thumbnailSize.collectPrefAsState()
+    val historyEnabled by prefs.sticker.historyEnabled.collectPrefAsState()
+    val history by prefs.sticker.historyData.collectPrefAsState()
+    val scope = rememberCoroutineScope()
+
+    var index by remember { mutableStateOf<StickerIndex?>(null) }
+    var loading by remember { mutableStateOf(true) }
+    var accessLost by remember { mutableStateOf(false) }
+
+    // Show whatever was scanned last straight away, then re-read the folder in the background: a
+    // collection that has not changed costs nothing visible, one that has corrects itself a moment later.
+    LaunchedEffect(folderUri) {
+        accessLost = false
+        if (folderUri.isBlank()) {
+            index = null
+            loading = false
+            return@LaunchedEffect
+        }
+        val cached = StickerScanner.loadCached(context, folderUri)
+        index = cached
+        loading = cached == null
+        try {
+            val scanned = StickerScanner.scan(context, folderUri.toUri())
+            StickerScanner.saveCached(context, scanned)
+            index = scanned
+        } catch (e: StickerScanner.AccessLostException) {
+            accessLost = true
+        } catch (e: Exception) {
+            if (cached == null) accessLost = true
+        }
+        loading = false
+    }
+
+    fun insert(item: StickerItem, categoryId: String) {
+        val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
+        scope.launch {
+            when (StickerManager.insert(context, treeUri, item, categoryId)) {
+                EditorInstance.MediaCommitResult.COMMITTED ->
+                    keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+                EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD -> {
+                    context.showShortToast(R.string.sticker__copied_to_clipboard)
+                    keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+                }
+                EditorInstance.MediaCommitResult.FAILED ->
+                    context.showShortToast(R.string.sticker__insert_failed)
+            }
+        }
+    }
+
+    SnyggColumn(
+        elementName = FlorisImeUi.Media.elementName,
+        modifier = modifier
+            .fillMaxWidth()
+            // Taller than a normal keyboard, like the GIF panel, so a row of stickers stays readable.
+            .height(FlorisImeSizing.imeUiHeight() + FlorisImeSizing.keyboardRowBaseHeight * 2),
+    ) {
+        SnyggRow(
+            elementName = FlorisImeUi.MediaBottomRow.elementName,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(FlorisImeSizing.smartbarHeight),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SnyggIconButton(
+                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                )
+            }
+            SnyggText(
+                elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                text = stringRes(R.string.sticker__title),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 8.dp),
+            )
+            SnyggIconButton(
+                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                onClick = { FlorisImeService.launchSettings("settings/media") },
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                )
+            }
+        }
+
+        val currentIndex = index
+        val categories = remember(currentIndex) {
+            currentIndex?.categories.orEmpty().filter { it.items.isNotEmpty() }
+        }
+        val openSettings: () -> Unit = { FlorisImeService.launchSettings("settings/media") }
+
+        Column(modifier = Modifier.fillMaxWidth().weight(1f)) {
+            when {
+                folderUri.isBlank() -> StickerNotice(
+                    message = stringRes(R.string.sticker__setup_needed),
+                    action = stringRes(R.string.sticker__setup_needed_action),
+                    onAction = openSettings,
+                )
+                accessLost && currentIndex == null -> StickerNotice(
+                    message = stringRes(R.string.sticker__access_lost),
+                    action = stringRes(R.string.sticker__setup_needed_action),
+                    onAction = openSettings,
+                )
+                loading -> StickerCentered { CircularProgressIndicator(color = accent) }
+                categories.isEmpty() -> StickerNotice(
+                    message = stringRes(R.string.sticker__folder_empty),
+                    action = stringRes(R.string.sticker__setup_needed_action),
+                    onAction = openSettings,
+                )
+                else -> {
+                    val pagerState = rememberPagerState(pageCount = { categories.size })
+                    val rootLabel = stringRes(R.string.sticker__category_all)
+                    val restLabel = stringRes(R.string.sticker__section_rest)
+                    val treeUri = remember(folderUri) { folderUri.toUri() }
+
+                    if (categories.size > 1) {
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(FlorisImeSizing.smartbarHeight),
+                            contentPadding = PaddingValues(horizontal = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            itemsIndexed(categories, key = { _, category -> category.id }) { position, category ->
+                                val selected = pagerState.currentPage == position
+                                SnyggText(
+                                    elementName = if (selected) {
+                                        FlorisImeUi.SmartbarCandidateWordText.elementName
+                                    } else {
+                                        FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName
+                                    },
+                                    text = category.name.ifBlank { rootLabel },
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier
+                                        .padding(horizontal = 3.dp)
+                                        .clip(RoundedCornerShape(50))
+                                        .background(if (selected) Color(0x33808080) else Color(0x18808080))
+                                        .clickable {
+                                            scope.launch { pagerState.animateScrollToPage(position) }
+                                        }
+                                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                                )
+                            }
+                        }
+                    }
+
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        beyondViewportPageCount = 1,
+                    ) { page ->
+                        val category = categories[page]
+                        val isRoot = category.id == StickerCategory.ROOT_ID
+                        // The first tab aggregates: its favourites and recents span every folder, while
+                        // the plain grid below stays the loose files of the picked folder itself.
+                        val historyKey = if (isRoot) StickerHistory.GLOBAL else category.id
+                        val pool = if (isRoot) currentIndex!!.allItems else category.items
+
+                        StickerCategoryPage(
+                            category = category,
+                            pool = pool,
+                            historyKey = historyKey,
+                            history = history,
+                            historyEnabled = historyEnabled,
+                            thumbnailSize = thumbnailSize,
+                            treeUri = treeUri,
+                            restLabel = restLabel,
+                            onInsert = { item -> insert(item, category.id) },
+                            onPin = { item ->
+                                scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
+                            },
+                            onUnpin = { item ->
+                                scope.launch { StickerHistoryHelper.unpin(prefs, historyKey, item.docId) }
+                            },
+                            onForget = { item ->
+                                scope.launch { StickerHistoryHelper.removeRecent(prefs, historyKey, item.docId) }
+                            },
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun StickerCategoryPage(
+    category: StickerCategory,
+    pool: List<StickerItem>,
+    historyKey: String,
+    history: StickerHistory,
+    historyEnabled: Boolean,
+    thumbnailSize: Int,
+    treeUri: Uri,
+    restLabel: String,
+    onInsert: (StickerItem) -> Unit,
+    onPin: (StickerItem) -> Unit,
+    onUnpin: (StickerItem) -> Unit,
+    onForget: (StickerItem) -> Unit,
+) {
+    val gridState = rememberLazyGridState()
+    var menuFor by remember { mutableStateOf<String?>(null) }
+
+    val byId = remember(pool) { pool.associateBy { it.docId } }
+    val pinned = if (historyEnabled) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
+    val recent = if (historyEnabled) history.recentIn(historyKey).mapNotNull { byId[it] } else emptyList()
+    val shown = remember(pinned, recent, category.items) {
+        val used = HashSet<String>(pinned.size + recent.size)
+        pinned.mapTo(used) { it.docId }
+        recent.mapTo(used) { it.docId }
+        category.items.filterNot { it.docId in used }
+    }
+    val sectionLabel = category.name.ifBlank { restLabel }
+
+    @Composable
+    fun Cell(item: StickerItem, section: String) {
+        val menuKey = "$section/${item.docId}"
+        val isPinned = history.isPinned(historyKey, item.docId)
+        Box {
+            StickerThumb(
+                item = item,
+                treeUri = treeUri,
+                onClick = { onInsert(item) },
+                onLongClick = { menuFor = menuKey },
+            )
+            DropdownMenu(
+                expanded = menuFor == menuKey,
+                onDismissRequest = { menuFor = null },
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Text(stringRes(if (isPinned) R.string.sticker__unpin else R.string.sticker__pin))
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = if (isPinned) Icons.Outlined.PushPin else Icons.Default.PushPin,
+                            contentDescription = null,
+                        )
+                    },
+                    onClick = {
+                        if (isPinned) onUnpin(item) else onPin(item)
+                        menuFor = null
+                    },
+                )
+                if (section == "recent") {
+                    DropdownMenuItem(
+                        text = { Text(stringRes(R.string.action__delete)) },
+                        leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                        onClick = {
+                            onForget(item)
+                            menuFor = null
+                        },
+                    )
+                }
+            }
+        }
+    }
+
+    LazyVerticalGrid(
+        state = gridState,
+        columns = GridCells.Adaptive(minSize = thumbnailSize.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        if (pinned.isNotEmpty()) {
+            item(key = "header-pinned", span = { GridItemSpan(maxLineSpan) }) {
+                StickerSectionHeader(stringRes(R.string.sticker__section_favorites))
+            }
+            items(pinned, key = { "pinned-${it.docId}" }) { item -> Cell(item, "pinned") }
+        }
+        if (recent.isNotEmpty()) {
+            item(key = "header-recent", span = { GridItemSpan(maxLineSpan) }) {
+                StickerSectionHeader(stringRes(R.string.sticker__section_recent))
+            }
+            items(recent, key = { "recent-${it.docId}" }) { item -> Cell(item, "recent") }
+        }
+        if (shown.isNotEmpty()) {
+            if (pinned.isNotEmpty() || recent.isNotEmpty()) {
+                item(key = "header-all", span = { GridItemSpan(maxLineSpan) }) {
+                    StickerSectionHeader(sectionLabel)
+                }
+            }
+            items(shown, key = { "all-${it.docId}" }) { item -> Cell(item, "all") }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun StickerThumb(
+    item: StickerItem,
+    treeUri: Uri,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+) {
+    AsyncImage(
+        model = StickerScanner.documentUri(treeUri, item.docId),
+        contentDescription = item.name,
+        // Fit, not Crop: a sticker cropped to a square loses exactly the part that makes it readable.
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0x14808080))
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .padding(3.dp),
+    )
+}
+
+@Composable
+private fun StickerSectionHeader(text: String) {
+    SnyggText(
+        elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
+        text = text,
+        modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
+    )
+}
+
+@Composable
+private fun StickerCentered(content: @Composable () -> Unit) {
+    SnyggBox(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+    ) { content() }
+}
+
+@Composable
+private fun StickerNotice(message: String, action: String, onAction: () -> Unit) {
+    SnyggBox(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = message)
+            SnyggText(
+                elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                text = action,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .clickable { onAction() }
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+    }
+}

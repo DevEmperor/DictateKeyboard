@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Преместване на клавиатурата отляво.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Преместване на клавиатурата отдясно.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Емоции и GIFs</string>
+    <string name="settings__media__title">Емоджита, GIF файлове и стикери</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоции</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Емоции</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомоджи</string>
@@ -1972,4 +1972,33 @@
     <string name="dictate__action_top_up">Захрани кредита</string>
     <string name="dictate__promo_low_credit_message">Кредитът е на изчерпване.</string>
     <string name="dictate__promo_low_credit_action">Захрани</string>
+    <string name="prefs__media__sticker__title">Стикери</string>
+    <string name="prefs__media__sticker_folder__title">Папка със стикери</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Изберете папка със свои изображения</string>
+    <string name="prefs__media__sticker_folder_clear">Забрави тази папка</string>
+    <string name="prefs__media__sticker_rescan">Прочети папката отново</string>
+    <string name="prefs__media__sticker_rescan__summary">Използвайте след добавяне или премахване на файлове</string>
+    <string name="prefs__media__sticker_thumbnail_size">Размер на стикерите</string>
+    <string name="prefs__media__sticker_history_enabled">Любими и наскоро използвани</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Показвай закачените и наскоро използваните стикери над всяка папка</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Брой запазени наскоро използвани стикери</string>
+    <string name="prefs__media__sticker_pinned_reset">Изчисти любимите стикери</string>
+    <string name="prefs__media__sticker_history_reset">Изчисти наскоро използваните стикери</string>
+    <string name="sticker__title">Стикери</string>
+    <string name="sticker__category_all">Всички</string>
+    <string name="sticker__section_favorites">Любими</string>
+    <string name="sticker__section_recent">Наскоро използвани</string>
+    <string name="sticker__section_rest">Всички стикери</string>
+    <string name="sticker__pin">Закачи</string>
+    <string name="sticker__unpin">Откачи</string>
+    <string name="sticker__setup_needed">Изберете папка, за да използвате собствените си стикери</string>
+    <string name="sticker__setup_needed_action">Отвори настройките</string>
+    <string name="sticker__folder_empty">В тази папка няма изображения</string>
+    <string name="sticker__access_lost">Папката със стикери вече не може да бъде прочетена. Изберете я отново.</string>
+    <string name="sticker__folder_pick_failed">Достъпът до тази папка не можа да бъде запазен</string>
+    <string name="sticker__rescan_done">Намерени са {n} стикера</string>
+    <string name="sticker__copied_to_clipboard">Това приложение не приема стикери — копирано в клипборда, задръжте за поставяне</string>
+    <string name="sticker__insert_failed">Стикерът не можа да бъде вмъкнат</string>
+    <string name="quick_action__ime_ui_mode_sticker">Стикер</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Вмъкване на собствени стикери</string>
 </resources>

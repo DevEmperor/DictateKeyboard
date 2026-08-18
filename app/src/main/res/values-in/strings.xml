@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji &amp; GIF</string>
+    <string name="settings__media__title">Emoji, GIF, dan stiker</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1927,4 +1927,33 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__action_top_up">Isi ulang saldo</string>
     <string name="dictate__promo_low_credit_message">Saldo hampir habis.</string>
     <string name="dictate__promo_low_credit_action">Isi ulang</string>
+    <string name="prefs__media__sticker__title">Stiker</string>
+    <string name="prefs__media__sticker_folder__title">Folder stiker</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Pilih folder berisi gambar milikmu sendiri</string>
+    <string name="prefs__media__sticker_folder_clear">Lupakan folder ini</string>
+    <string name="prefs__media__sticker_rescan">Baca ulang folder</string>
+    <string name="prefs__media__sticker_rescan__summary">Gunakan setelah menambah atau menghapus berkas</string>
+    <string name="prefs__media__sticker_thumbnail_size">Ukuran stiker</string>
+    <string name="prefs__media__sticker_history_enabled">Favorit dan baru digunakan</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Tampilkan stiker yang disematkan dan baru digunakan di atas setiap folder</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Jumlah stiker terbaru yang disimpan</string>
+    <string name="prefs__media__sticker_pinned_reset">Hapus stiker favorit</string>
+    <string name="prefs__media__sticker_history_reset">Hapus stiker yang baru digunakan</string>
+    <string name="sticker__title">Stiker</string>
+    <string name="sticker__category_all">Semua</string>
+    <string name="sticker__section_favorites">Favorit</string>
+    <string name="sticker__section_recent">Baru digunakan</string>
+    <string name="sticker__section_rest">Semua stiker</string>
+    <string name="sticker__pin">Sematkan</string>
+    <string name="sticker__unpin">Lepas sematan</string>
+    <string name="sticker__setup_needed">Pilih folder untuk memakai stiker milikmu sendiri</string>
+    <string name="sticker__setup_needed_action">Buka pengaturan</string>
+    <string name="sticker__folder_empty">Tidak ada gambar di folder ini</string>
+    <string name="sticker__access_lost">Folder stiker tidak dapat dibaca lagi. Pilih kembali.</string>
+    <string name="sticker__folder_pick_failed">Akses ke folder itu tidak dapat dipertahankan</string>
+    <string name="sticker__rescan_done">{n} stiker ditemukan</string>
+    <string name="sticker__copied_to_clipboard">Aplikasi ini tidak menerima stiker — disalin ke papan klip, tekan lama untuk menempel</string>
+    <string name="sticker__insert_failed">Stiker tidak dapat disisipkan</string>
+    <string name="quick_action__ime_ui_mode_sticker">Stiker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Sisipkan stiker milikmu sendiri</string>
 </resources>

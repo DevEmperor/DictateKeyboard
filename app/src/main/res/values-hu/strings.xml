@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Billentyűzet balra helyezése.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Billentyűzet jobbra helyezése.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emodzsik &amp; GIF-ek</string>
+    <string name="settings__media__title">Emodzsik, GIF-ek és matricák</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emodzsik</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomodzsi</string>
@@ -1970,4 +1970,33 @@
     <string name="dictate__action_top_up">Egyenleg feltöltése</string>
     <string name="dictate__promo_low_credit_message">Az egyenleg fogytán.</string>
     <string name="dictate__promo_low_credit_action">Feltöltés</string>
+    <string name="prefs__media__sticker__title">Matricák</string>
+    <string name="prefs__media__sticker_folder__title">Matricamappa</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Válassz egy mappát a saját képeiddel</string>
+    <string name="prefs__media__sticker_folder_clear">Mappa elfelejtése</string>
+    <string name="prefs__media__sticker_rescan">Mappa újraolvasása</string>
+    <string name="prefs__media__sticker_rescan__summary">Fájlok hozzáadása vagy törlése után használd</string>
+    <string name="prefs__media__sticker_thumbnail_size">Matricák mérete</string>
+    <string name="prefs__media__sticker_history_enabled">Kedvencek és nemrég használtak</string>
+    <string name="prefs__media__sticker_history_enabled__summary">A kitűzött és nemrég használt matricák megjelenítése minden mappa fölött</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Megőrzött nemrég használt matricák száma</string>
+    <string name="prefs__media__sticker_pinned_reset">Kedvenc matricák törlése</string>
+    <string name="prefs__media__sticker_history_reset">Nemrég használt matricák törlése</string>
+    <string name="sticker__title">Matricák</string>
+    <string name="sticker__category_all">Összes</string>
+    <string name="sticker__section_favorites">Kedvencek</string>
+    <string name="sticker__section_recent">Nemrég használt</string>
+    <string name="sticker__section_rest">Minden matrica</string>
+    <string name="sticker__pin">Kitűzés</string>
+    <string name="sticker__unpin">Kitűzés megszüntetése</string>
+    <string name="sticker__setup_needed">Válassz egy mappát a saját matricáid használatához</string>
+    <string name="sticker__setup_needed_action">Beállítások megnyitása</string>
+    <string name="sticker__folder_empty">Nincs kép ebben a mappában</string>
+    <string name="sticker__access_lost">A matricamappa már nem olvasható. Válaszd ki újra.</string>
+    <string name="sticker__folder_pick_failed">A mappához való hozzáférést nem sikerült megtartani</string>
+    <string name="sticker__rescan_done">{n} matrica található</string>
+    <string name="sticker__copied_to_clipboard">Ez az alkalmazás nem fogad matricákat — a vágólapra másolva, hosszan nyomd meg a beillesztéshez</string>
+    <string name="sticker__insert_failed">A matricát nem sikerült beszúrni</string>
+    <string name="quick_action__ime_ui_mode_sticker">Matrica</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Saját matricák beszúrása</string>
 </resources>

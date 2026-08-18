@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">キーボードを左に移動。</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">キーボードを右に移動</string>
     <!-- Media strings -->
-    <string name="settings__media__title">絵文字と GIF</string>
+    <string name="settings__media__title">絵文字・GIF・ステッカー</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">絵文字</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">顔文字</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">カオモジ</string>
@@ -1904,4 +1904,33 @@
     <string name="dictate__action_top_up">クレジットをチャージ</string>
     <string name="dictate__promo_low_credit_message">クレジット残りわずか。</string>
     <string name="dictate__promo_low_credit_action">チャージ</string>
+    <string name="prefs__media__sticker__title">ステッカー</string>
+    <string name="prefs__media__sticker_folder__title">ステッカーのフォルダ</string>
+    <string name="prefs__media__sticker_folder__summary_unset">自分の画像が入ったフォルダを選択</string>
+    <string name="prefs__media__sticker_folder_clear">このフォルダを解除</string>
+    <string name="prefs__media__sticker_rescan">フォルダを読み直す</string>
+    <string name="prefs__media__sticker_rescan__summary">ファイルを追加・削除した後に使用します</string>
+    <string name="prefs__media__sticker_thumbnail_size">ステッカーの大きさ</string>
+    <string name="prefs__media__sticker_history_enabled">お気に入りと最近使ったもの</string>
+    <string name="prefs__media__sticker_history_enabled__summary">固定したステッカーと最近使ったステッカーを各フォルダの上に表示</string>
+    <string name="prefs__media__sticker_history_recent_max_size">保存する最近使ったステッカーの数</string>
+    <string name="prefs__media__sticker_pinned_reset">お気に入りのステッカーを消去</string>
+    <string name="prefs__media__sticker_history_reset">最近使ったステッカーを消去</string>
+    <string name="sticker__title">ステッカー</string>
+    <string name="sticker__category_all">すべて</string>
+    <string name="sticker__section_favorites">お気に入り</string>
+    <string name="sticker__section_recent">最近使ったもの</string>
+    <string name="sticker__section_rest">すべてのステッカー</string>
+    <string name="sticker__pin">固定</string>
+    <string name="sticker__unpin">固定を解除</string>
+    <string name="sticker__setup_needed">自分のステッカーを使うにはフォルダを選択してください</string>
+    <string name="sticker__setup_needed_action">設定を開く</string>
+    <string name="sticker__folder_empty">このフォルダに画像がありません</string>
+    <string name="sticker__access_lost">ステッカーのフォルダを読み取れなくなりました。もう一度選択してください。</string>
+    <string name="sticker__folder_pick_failed">このフォルダへのアクセスを保持できませんでした</string>
+    <string name="sticker__rescan_done">ステッカーが {n} 件見つかりました</string>
+    <string name="sticker__copied_to_clipboard">このアプリはステッカーを受け付けません — クリップボードにコピーしました。長押しで貼り付けられます</string>
+    <string name="sticker__insert_failed">ステッカーを挿入できませんでした</string>
+    <string name="quick_action__ime_ui_mode_sticker">ステッカー</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">自分のステッカーを挿入</string>
 </resources>

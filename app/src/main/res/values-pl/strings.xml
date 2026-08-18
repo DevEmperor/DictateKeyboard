@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Przesuń klawiaturę w lewo.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Przesuń klawiaturę w prawo.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji i GIFs</string>
+    <string name="settings__media__title">Emoji, GIF-y i naklejki</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1987,4 +1987,33 @@
     <string name="dictate__action_top_up">Doładuj środki</string>
     <string name="dictate__promo_low_credit_message">Środki na wyczerpaniu.</string>
     <string name="dictate__promo_low_credit_action">Doładuj</string>
+    <string name="prefs__media__sticker__title">Naklejki</string>
+    <string name="prefs__media__sticker_folder__title">Folder z naklejkami</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Wybierz folder z własnymi obrazami</string>
+    <string name="prefs__media__sticker_folder_clear">Zapomnij ten folder</string>
+    <string name="prefs__media__sticker_rescan">Wczytaj folder ponownie</string>
+    <string name="prefs__media__sticker_rescan__summary">Użyj po dodaniu lub usunięciu plików</string>
+    <string name="prefs__media__sticker_thumbnail_size">Rozmiar naklejek</string>
+    <string name="prefs__media__sticker_history_enabled">Ulubione i ostatnio używane</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Pokazuj przypięte i ostatnio używane naklejki nad każdym folderem</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Liczba zapamiętanych ostatnio używanych naklejek</string>
+    <string name="prefs__media__sticker_pinned_reset">Wyczyść ulubione naklejki</string>
+    <string name="prefs__media__sticker_history_reset">Wyczyść ostatnio używane naklejki</string>
+    <string name="sticker__title">Naklejki</string>
+    <string name="sticker__category_all">Wszystkie</string>
+    <string name="sticker__section_favorites">Ulubione</string>
+    <string name="sticker__section_recent">Ostatnio używane</string>
+    <string name="sticker__section_rest">Wszystkie naklejki</string>
+    <string name="sticker__pin">Przypnij</string>
+    <string name="sticker__unpin">Odepnij</string>
+    <string name="sticker__setup_needed">Wybierz folder, aby używać własnych naklejek</string>
+    <string name="sticker__setup_needed_action">Otwórz ustawienia</string>
+    <string name="sticker__folder_empty">Brak obrazów w tym folderze</string>
+    <string name="sticker__access_lost">Nie można już odczytać folderu z naklejkami. Wybierz go ponownie.</string>
+    <string name="sticker__folder_pick_failed">Nie udało się zachować dostępu do tego folderu</string>
+    <string name="sticker__rescan_done">Znaleziono {n} naklejek</string>
+    <string name="sticker__copied_to_clipboard">Ta aplikacja nie przyjmuje naklejek — skopiowano do schowka, przytrzymaj, aby wkleić</string>
+    <string name="sticker__insert_failed">Nie udało się wstawić naklejki</string>
+    <string name="quick_action__ime_ui_mode_sticker">Naklejka</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Wstaw własne naklejki</string>
 </resources>

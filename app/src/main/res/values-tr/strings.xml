@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyi sola taşı.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyi sağa taşı.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojiler &amp; GIFs</string>
+    <string name="settings__media__title">Emojiler, GIF\'ler ve çıkartmalar</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojiler</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emojiler</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1950,4 +1950,33 @@
     <string name="dictate__action_top_up">Kontör yükle</string>
     <string name="dictate__promo_low_credit_message">Kontör bitmek üzere.</string>
     <string name="dictate__promo_low_credit_action">Yükle</string>
+    <string name="prefs__media__sticker__title">Çıkartmalar</string>
+    <string name="prefs__media__sticker_folder__title">Çıkartma klasörü</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Kendi görsellerinizin bulunduğu bir klasör seçin</string>
+    <string name="prefs__media__sticker_folder_clear">Bu klasörü unut</string>
+    <string name="prefs__media__sticker_rescan">Klasörü yeniden oku</string>
+    <string name="prefs__media__sticker_rescan__summary">Dosya ekledikten veya sildikten sonra kullanın</string>
+    <string name="prefs__media__sticker_thumbnail_size">Çıkartma boyutu</string>
+    <string name="prefs__media__sticker_history_enabled">Favoriler ve son kullanılanlar</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Sabitlenmiş ve son kullanılan çıkartmaları her klasörün üstünde göster</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Saklanacak son kullanılan çıkartma sayısı</string>
+    <string name="prefs__media__sticker_pinned_reset">Favori çıkartmaları temizle</string>
+    <string name="prefs__media__sticker_history_reset">Son kullanılan çıkartmaları temizle</string>
+    <string name="sticker__title">Çıkartmalar</string>
+    <string name="sticker__category_all">Tümü</string>
+    <string name="sticker__section_favorites">Favoriler</string>
+    <string name="sticker__section_recent">Son kullanılanlar</string>
+    <string name="sticker__section_rest">Tüm çıkartmalar</string>
+    <string name="sticker__pin">Sabitle</string>
+    <string name="sticker__unpin">Sabitlemeyi kaldır</string>
+    <string name="sticker__setup_needed">Kendi çıkartmalarınızı kullanmak için bir klasör seçin</string>
+    <string name="sticker__setup_needed_action">Ayarları aç</string>
+    <string name="sticker__folder_empty">Bu klasörde görsel yok</string>
+    <string name="sticker__access_lost">Çıkartma klasörü artık okunamıyor. Yeniden seçin.</string>
+    <string name="sticker__folder_pick_failed">Bu klasöre erişim korunamadı</string>
+    <string name="sticker__rescan_done">{n} çıkartma bulundu</string>
+    <string name="sticker__copied_to_clipboard">Bu uygulama çıkartma kabul etmiyor — panoya kopyalandı, yapıştırmak için uzun basın</string>
+    <string name="sticker__insert_failed">Çıkartma eklenemedi</string>
+    <string name="quick_action__ime_ui_mode_sticker">Çıkartma</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Kendi çıkartmalarınızı ekleyin</string>
 </resources>

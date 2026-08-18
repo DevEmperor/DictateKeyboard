@@ -134,6 +134,7 @@ Dictate nothing and are not going anywhere.
 - **Single-call multimodal mode** — let one audio-capable AI model transcribe *and* format in a single request, for lower latency and cost.
 - **Custom prompts & snippets** — build your own reword actions; reusable text snippets are inserted instantly without an API call.
 - **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
+- **Your own stickers** — point the keyboard at a folder of your own images and insert them straight into a chat. Subfolders become tabs, long-press pins a favourite, and nothing leaves the device.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
 - **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
 - **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost.

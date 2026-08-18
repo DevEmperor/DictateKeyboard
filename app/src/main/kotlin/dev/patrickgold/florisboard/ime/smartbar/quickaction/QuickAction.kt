@@ -91,6 +91,7 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard
             KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media
             KeyCode.IME_UI_MODE_GIF -> R.string.quick_action__ime_ui_mode_gif
+            KeyCode.IME_UI_MODE_STICKER -> R.string.quick_action__ime_ui_mode_sticker
             KeyCode.IME_UI_MODE_DICTATE -> R.string.quick_action__ime_ui_mode_dictate
             KeyCode.DICTATE_LIVE_PROMPT -> R.string.quick_action__dictate_live_prompt
             KeyCode.DICTATE_PROMPTS -> R.string.quick_action__dictate_prompts
@@ -136,6 +137,7 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
             KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media__tooltip
             KeyCode.IME_UI_MODE_GIF -> R.string.quick_action__ime_ui_mode_gif__tooltip
+            KeyCode.IME_UI_MODE_STICKER -> R.string.quick_action__ime_ui_mode_sticker__tooltip
             KeyCode.IME_UI_MODE_DICTATE -> R.string.quick_action__ime_ui_mode_dictate__tooltip
             KeyCode.DICTATE_LIVE_PROMPT -> R.string.quick_action__dictate_live_prompt__tooltip
             KeyCode.DICTATE_PROMPTS -> R.string.quick_action__dictate_prompts__tooltip

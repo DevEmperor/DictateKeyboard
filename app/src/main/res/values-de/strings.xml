@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Tastatur nach links verschieben.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Tastatur nach rechts verschieben.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis &amp; GIFs</string>
+    <string name="settings__media__title">Emojis, GIFs &amp; Sticker</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1847,4 +1847,33 @@
     <string name="dictate__action_top_up">Guthaben aufladen</string>
     <string name="dictate__promo_low_credit_message">Guthaben fast leer.</string>
     <string name="dictate__promo_low_credit_action">Aufladen</string>
+    <string name="prefs__media__sticker__title">Sticker</string>
+    <string name="prefs__media__sticker_folder__title">Sticker-Ordner</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Ordner mit eigenen Bildern auswählen</string>
+    <string name="prefs__media__sticker_folder_clear">Ordner vergessen</string>
+    <string name="prefs__media__sticker_rescan">Ordner neu einlesen</string>
+    <string name="prefs__media__sticker_rescan__summary">Nach dem Hinzufügen oder Löschen von Dateien verwenden</string>
+    <string name="prefs__media__sticker_thumbnail_size">Stickergröße</string>
+    <string name="prefs__media__sticker_history_enabled">Favoriten und zuletzt verwendet</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Angeheftete und zuletzt verwendete Sticker über jedem Ordner anzeigen</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Anzahl gemerkter zuletzt verwendeter Sticker</string>
+    <string name="prefs__media__sticker_pinned_reset">Lieblingssticker löschen</string>
+    <string name="prefs__media__sticker_history_reset">Zuletzt verwendete Sticker löschen</string>
+    <string name="sticker__title">Sticker</string>
+    <string name="sticker__category_all">Alle</string>
+    <string name="sticker__section_favorites">Favoriten</string>
+    <string name="sticker__section_recent">Zuletzt verwendet</string>
+    <string name="sticker__section_rest">Alle Sticker</string>
+    <string name="sticker__pin">Anheften</string>
+    <string name="sticker__unpin">Lösen</string>
+    <string name="sticker__setup_needed">Wähle einen Ordner, um eigene Sticker zu verwenden</string>
+    <string name="sticker__setup_needed_action">Einstellungen öffnen</string>
+    <string name="sticker__folder_empty">Keine Bilder in diesem Ordner</string>
+    <string name="sticker__access_lost">Der Sticker-Ordner kann nicht mehr gelesen werden. Wähle ihn erneut aus.</string>
+    <string name="sticker__folder_pick_failed">Der Zugriff auf diesen Ordner konnte nicht behalten werden</string>
+    <string name="sticker__rescan_done">{n} Sticker gefunden</string>
+    <string name="sticker__copied_to_clipboard">Diese App nimmt keine Sticker an — in die Zwischenablage kopiert, zum Einfügen lange drücken</string>
+    <string name="sticker__insert_failed">Sticker konnte nicht eingefügt werden</string>
+    <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Eigene Sticker einfügen</string>
 </resources>

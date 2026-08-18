@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muovi tastiera a sinistra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muovi tastiera a destra.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji &amp; GIF</string>
+    <string name="settings__media__title">Emoji, GIF e adesivi</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1755,4 +1755,33 @@
     <string name="dictate__action_top_up">Ricarica il credito</string>
     <string name="dictate__promo_low_credit_message">Credito quasi esaurito.</string>
     <string name="dictate__promo_low_credit_action">Ricarica</string>
+    <string name="prefs__media__sticker__title">Adesivi</string>
+    <string name="prefs__media__sticker_folder__title">Cartella degli adesivi</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Scegli una cartella con immagini tue</string>
+    <string name="prefs__media__sticker_folder_clear">Dimentica questa cartella</string>
+    <string name="prefs__media__sticker_rescan">Rileggi la cartella</string>
+    <string name="prefs__media__sticker_rescan__summary">Da usare dopo aver aggiunto o rimosso file</string>
+    <string name="prefs__media__sticker_thumbnail_size">Dimensione degli adesivi</string>
+    <string name="prefs__media__sticker_history_enabled">Preferiti e usati di recente</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Mostra gli adesivi fissati e usati di recente sopra ogni cartella</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Adesivi recenti da conservare</string>
+    <string name="prefs__media__sticker_pinned_reset">Cancella gli adesivi preferiti</string>
+    <string name="prefs__media__sticker_history_reset">Cancella gli adesivi usati di recente</string>
+    <string name="sticker__title">Adesivi</string>
+    <string name="sticker__category_all">Tutti</string>
+    <string name="sticker__section_favorites">Preferiti</string>
+    <string name="sticker__section_recent">Usati di recente</string>
+    <string name="sticker__section_rest">Tutti gli adesivi</string>
+    <string name="sticker__pin">Fissa</string>
+    <string name="sticker__unpin">Non fissare più</string>
+    <string name="sticker__setup_needed">Scegli una cartella per usare i tuoi adesivi</string>
+    <string name="sticker__setup_needed_action">Apri le impostazioni</string>
+    <string name="sticker__folder_empty">Nessuna immagine in questa cartella</string>
+    <string name="sticker__access_lost">La cartella degli adesivi non è più leggibile. Scegliela di nuovo.</string>
+    <string name="sticker__folder_pick_failed">Non è stato possibile mantenere l\'accesso a quella cartella</string>
+    <string name="sticker__rescan_done">Trovati {n} adesivi</string>
+    <string name="sticker__copied_to_clipboard">Questa app non accetta adesivi: copiato negli appunti, tieni premuto per incollare</string>
+    <string name="sticker__insert_failed">Non è stato possibile inserire l\'adesivo</string>
+    <string name="quick_action__ime_ui_mode_sticker">Adesivo</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserisci i tuoi adesivi</string>
 </resources>

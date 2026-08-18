@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Toetsenbord naar links verplaatsen.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Toetsenbord naar rechts verplaatsen.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji\'s &amp; GIFs</string>
+    <string name="settings__media__title">Emoji, gifs en stickers</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji\'s</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1871,4 +1871,33 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__action_top_up">Tegoed opwaarderen</string>
     <string name="dictate__promo_low_credit_message">Tegoed bijna op.</string>
     <string name="dictate__promo_low_credit_action">Opwaarderen</string>
+    <string name="prefs__media__sticker__title">Stickers</string>
+    <string name="prefs__media__sticker_folder__title">Stickermap</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Kies een map met je eigen afbeeldingen</string>
+    <string name="prefs__media__sticker_folder_clear">Deze map vergeten</string>
+    <string name="prefs__media__sticker_rescan">Map opnieuw inlezen</string>
+    <string name="prefs__media__sticker_rescan__summary">Gebruik dit na het toevoegen of verwijderen van bestanden</string>
+    <string name="prefs__media__sticker_thumbnail_size">Stickergrootte</string>
+    <string name="prefs__media__sticker_history_enabled">Favorieten en onlangs gebruikt</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Vastgezette en onlangs gebruikte stickers boven elke map tonen</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Aantal bewaarde onlangs gebruikte stickers</string>
+    <string name="prefs__media__sticker_pinned_reset">Favoriete stickers wissen</string>
+    <string name="prefs__media__sticker_history_reset">Onlangs gebruikte stickers wissen</string>
+    <string name="sticker__title">Stickers</string>
+    <string name="sticker__category_all">Alles</string>
+    <string name="sticker__section_favorites">Favorieten</string>
+    <string name="sticker__section_recent">Onlangs gebruikt</string>
+    <string name="sticker__section_rest">Alle stickers</string>
+    <string name="sticker__pin">Vastzetten</string>
+    <string name="sticker__unpin">Losmaken</string>
+    <string name="sticker__setup_needed">Kies een map om je eigen stickers te gebruiken</string>
+    <string name="sticker__setup_needed_action">Instellingen openen</string>
+    <string name="sticker__folder_empty">Geen afbeeldingen in deze map</string>
+    <string name="sticker__access_lost">De stickermap kan niet meer worden gelezen. Kies hem opnieuw.</string>
+    <string name="sticker__folder_pick_failed">Toegang tot die map kon niet worden behouden</string>
+    <string name="sticker__rescan_done">{n} stickers gevonden</string>
+    <string name="sticker__copied_to_clipboard">Deze app accepteert geen stickers — gekopieerd naar het klembord, lang indrukken om te plakken</string>
+    <string name="sticker__insert_failed">Sticker kon niet worden ingevoegd</string>
+    <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Je eigen stickers invoegen</string>
 </resources>

@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.app.settings.media
 
+import android.content.Context
 import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Gif
 import androidx.compose.material.icons.outlined.OpenInNew
@@ -55,6 +59,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.dictate.sticker.StickerHistoryHelper
+import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -68,7 +74,10 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.pluralsRes
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
@@ -85,6 +94,7 @@ fun MediaScreen() = FlorisScreen {
     var shouldDelete by remember { mutableStateOf<ShouldDelete?>(null) }
     var gifSetupOpen by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     content {
         // Single GIF row (no group heading — there is only one option); the on/off switch and the
@@ -102,6 +112,116 @@ fun MediaScreen() = FlorisScreen {
             },
             onClick = { gifSetupOpen = true },
         )
+
+        // Local stickers (issue #280): one row to pick a folder, the rest only matters once one is set.
+        val stickerFolderUri by prefs.sticker.folderUri.collectAsState()
+        val stickerFolderName by prefs.sticker.folderName.collectAsState()
+        val stickerFolderPicker = rememberLauncherForActivityResult(
+            ActivityResultContracts.OpenDocumentTree()
+        ) { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            try {
+                // Without the persisted grant the folder would be unreadable again after a reboot, and
+                // the panel would show "access lost" for a folder the user just picked.
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                )
+            } catch (e: SecurityException) {
+                scope.launch { context.showLongToast(R.string.sticker__folder_pick_failed) }
+                return@rememberLauncherForActivityResult
+            }
+            scope.launch {
+                releaseStickerFolder(context, prefs.sticker.folderUri.get(), keep = uri.toString())
+                val name = withContext(Dispatchers.IO) {
+                    StickerScanner.clearCached(context)
+                    StickerScanner.folderName(context, uri)
+                }
+                prefs.sticker.folderUri.set(uri.toString())
+                prefs.sticker.folderName.set(name)
+            }
+        }
+        val stickerFolderUnset = stringRes(R.string.prefs__media__sticker_folder__summary_unset)
+        Preference(
+            icon = Icons.Outlined.Collections,
+            modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder__title"),
+            title = stringRes(R.string.prefs__media__sticker_folder__title),
+            summary = stickerFolderName.ifBlank { stickerFolderUnset },
+            onClick = { stickerFolderPicker.launch(null) },
+        )
+        if (stickerFolderUri.isNotBlank()) {
+            PreferenceGroup(title = stringRes(R.string.prefs__media__sticker__title)) {
+                Preference(
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
+                    title = stringRes(R.string.prefs__media__sticker_rescan),
+                    summary = stringRes(R.string.prefs__media__sticker_rescan__summary),
+                    onClick = {
+                        scope.launch {
+                            try {
+                                val index = StickerScanner.scan(context, stickerFolderUri.toUri())
+                                StickerScanner.saveCached(context, index)
+                                context.showLongToast(
+                                    R.string.sticker__rescan_done,
+                                    "n" to index.allItems.size,
+                                )
+                            } catch (e: Exception) {
+                                context.showLongToast(R.string.sticker__access_lost)
+                            }
+                        }
+                    },
+                )
+                Preference(
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder_clear"),
+                    title = stringRes(R.string.prefs__media__sticker_folder_clear),
+                    onClick = {
+                        scope.launch {
+                            releaseStickerFolder(context, stickerFolderUri, keep = "")
+                            withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
+                            prefs.sticker.folderUri.set("")
+                            prefs.sticker.folderName.set("")
+                        }
+                    },
+                )
+                DialogSliderPreference(
+                    prefs.sticker.thumbnailSize,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_thumbnail_size"),
+                    title = stringRes(R.string.prefs__media__sticker_thumbnail_size),
+                    valueLabel = { size -> "$size dp" },
+                    min = 56,
+                    max = 160,
+                    stepIncrement = 4,
+                )
+                SwitchPreference(
+                    prefs.sticker.historyEnabled,
+                    icon = Icons.Outlined.Schedule,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_enabled"),
+                    title = stringRes(R.string.prefs__media__sticker_history_enabled),
+                    summary = stringRes(R.string.prefs__media__sticker_history_enabled__summary),
+                )
+                DialogSliderPreference(
+                    prefs.sticker.historyRecentMaxSize,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_recent_max_size"),
+                    title = stringRes(R.string.prefs__media__sticker_history_recent_max_size),
+                    valueLabel = { maxSize ->
+                        pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
+                    },
+                    min = 1,
+                    max = 50,
+                    stepIncrement = 1,
+                    enabledIf = { prefs.sticker.historyEnabled.isTrue() },
+                )
+                Preference(
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_pinned_reset"),
+                    title = stringRes(R.string.prefs__media__sticker_pinned_reset),
+                    onClick = { scope.launch { StickerHistoryHelper.clearPinned(prefs) } },
+                )
+                Preference(
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_reset"),
+                    title = stringRes(R.string.prefs__media__sticker_history_reset),
+                    onClick = { scope.launch { StickerHistoryHelper.clearRecent(prefs) } },
+                )
+            }
+        }
 
         ListPreference(
             prefs.emoji.preferredSkinTone,
@@ -380,3 +500,23 @@ fun DeleteEmojiHistoryConfirmDialog(
 }
 
 data class ShouldDelete(val pinned: Boolean)
+
+/**
+ * Gives back the persisted read permission on a sticker folder that is no longer in use.
+ *
+ * Persisted URI grants are a limited, system-wide resource and they survive until released, so picking a
+ * new folder half a dozen times would otherwise leave half a dozen folders permanently readable by this
+ * app. [keep] is the URI that must stay — passing the newly picked one covers re-picking the same folder,
+ * where releasing first would revoke the grant that was just taken.
+ */
+private fun releaseStickerFolder(context: Context, previous: String, keep: String) {
+    if (previous.isBlank() || previous == keep) return
+    try {
+        context.contentResolver.releasePersistableUriPermission(
+            previous.toUri(),
+            Intent.FLAG_GRANT_READ_URI_PERMISSION,
+        )
+    } catch (e: SecurityException) {
+        // Already gone — the user revoked it, or the folder was removed. Nothing to release.
+    }
+}

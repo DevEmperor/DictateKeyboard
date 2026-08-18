@@ -11,7 +11,7 @@
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Move keyboard to the right.</string>
 
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis &amp; GIFs</string>
+    <string name="settings__media__title">Emojis, GIFs &amp; Stickers</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -38,6 +38,34 @@
     <string name="gif__setup_needed_action" comment="Button to open settings">Set up GIF search</string>
     <string name="gif__copied_to_clipboard" comment="Toast when a GIF is copied as a fallback">GIF copied to clipboard — long-press to paste</string>
     <string name="gif__insert_failed" comment="Toast when a GIF could not be inserted or copied">Couldn\'t insert the GIF</string>
+    <!-- Local stickers (issue #280) -->
+    <string name="prefs__media__sticker__title" comment="Settings group title">Stickers</string>
+    <string name="prefs__media__sticker_folder__title" comment="Preference title, opens the folder picker">Sticker folder</string>
+    <string name="prefs__media__sticker_folder__summary_unset" comment="Preference summary when no folder is chosen">Choose a folder of your own images</string>
+    <string name="prefs__media__sticker_folder_clear" comment="Preference title, gives up access to the chosen folder">Forget this folder</string>
+    <string name="prefs__media__sticker_rescan" comment="Preference title">Read the folder again</string>
+    <string name="prefs__media__sticker_rescan__summary" comment="Preference summary">Use after adding or removing files</string>
+    <string name="prefs__media__sticker_thumbnail_size" comment="Preference title, slider for the grid cell size">Sticker size</string>
+    <string name="prefs__media__sticker_history_enabled" comment="Preference title">Favourites and recently used</string>
+    <string name="prefs__media__sticker_history_enabled__summary" comment="Preference summary">Show pinned and recently used stickers above each folder</string>
+    <string name="prefs__media__sticker_history_recent_max_size" comment="Preference title, slider for how many recents to keep">Recently used stickers to keep</string>
+    <string name="prefs__media__sticker_pinned_reset" comment="Preference title">Clear favourite stickers</string>
+    <string name="prefs__media__sticker_history_reset" comment="Preference title">Clear recently used stickers</string>
+    <string name="sticker__title" comment="Title of the sticker panel">Stickers</string>
+    <string name="sticker__category_all" comment="Tab holding the files that are not in a subfolder">All</string>
+    <string name="sticker__section_favorites" comment="Section heading above pinned stickers">Favourites</string>
+    <string name="sticker__section_recent" comment="Section heading above recently used stickers">Recently used</string>
+    <string name="sticker__section_rest" comment="Section heading above the remaining stickers of a folder">All stickers</string>
+    <string name="sticker__pin" comment="Long-press action, adds a sticker to the favourites">Pin</string>
+    <string name="sticker__unpin" comment="Long-press action, removes a sticker from the favourites">Unpin</string>
+    <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>
+    <string name="sticker__setup_needed_action" comment="Button that opens the settings screen">Open settings</string>
+    <string name="sticker__folder_empty" comment="Empty state when the chosen folder holds no usable images">No images in this folder</string>
+    <string name="sticker__access_lost" comment="Empty state when the folder can no longer be read">The sticker folder can no longer be read. Choose it again.</string>
+    <string name="sticker__folder_pick_failed" comment="Toast when the folder permission could not be kept">Could not keep access to that folder</string>
+    <string name="sticker__rescan_done" comment="Toast after a manual rescan; {n} is the number of stickers found">{n} stickers found</string>
+    <string name="sticker__copied_to_clipboard" comment="Toast when the target app refuses images and the sticker is copied instead">This app does not accept stickers — copied to clipboard, long-press to paste</string>
+    <string name="sticker__insert_failed" comment="Toast when a sticker could not be inserted or copied">Couldn\'t insert the sticker</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>
@@ -106,6 +134,8 @@
     <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
     <string name="quick_action__ime_ui_mode_gif" comment="Please mind the limited available space for the quick action strings">GIF</string>
     <string name="quick_action__ime_ui_mode_gif__tooltip">Search GIFs</string>
+    <string name="quick_action__ime_ui_mode_sticker" comment="Please mind the limited available space for the quick action strings">Sticker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Insert your own stickers</string>
     <string name="quick_action__ime_ui_mode_dictate" comment="Please mind the limited available space for the quick action strings">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Tap to dictate, tap again to transcribe</string>
     <string name="quick_action__dictate_live_prompt" comment="Please mind the limited available space for the quick action strings">Live prompt</string>

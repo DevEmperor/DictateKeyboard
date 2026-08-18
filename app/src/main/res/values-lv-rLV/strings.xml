@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pārvietot tastatūru uz kreiso pusi.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pārvietot tastatūru uz labo pusi.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Sajūtu rakstzīmes un GIF</string>
+    <string name="settings__media__title">Emocijzīmes, GIF un uzlīmes</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
@@ -1915,4 +1915,33 @@
     <string name="dictate__action_top_up">Papildināt kredītu</string>
     <string name="dictate__promo_low_credit_message">Kredīts gandrīz beidzies.</string>
     <string name="dictate__promo_low_credit_action">Papildināt</string>
+    <string name="prefs__media__sticker__title">Uzlīmes</string>
+    <string name="prefs__media__sticker_folder__title">Uzlīmju mape</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Izvēlieties mapi ar saviem attēliem</string>
+    <string name="prefs__media__sticker_folder_clear">Aizmirst šo mapi</string>
+    <string name="prefs__media__sticker_rescan">Nolasīt mapi vēlreiz</string>
+    <string name="prefs__media__sticker_rescan__summary">Izmantojiet pēc failu pievienošanas vai noņemšanas</string>
+    <string name="prefs__media__sticker_thumbnail_size">Uzlīmju izmērs</string>
+    <string name="prefs__media__sticker_history_enabled">Izlase un nesen lietotās</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Rādīt piespraustās un nesen lietotās uzlīmes virs katras mapes</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Saglabājamo nesen lietoto uzlīmju skaits</string>
+    <string name="prefs__media__sticker_pinned_reset">Notīrīt izlases uzlīmes</string>
+    <string name="prefs__media__sticker_history_reset">Notīrīt nesen lietotās uzlīmes</string>
+    <string name="sticker__title">Uzlīmes</string>
+    <string name="sticker__category_all">Visas</string>
+    <string name="sticker__section_favorites">Izlase</string>
+    <string name="sticker__section_recent">Nesen lietotās</string>
+    <string name="sticker__section_rest">Visas uzlīmes</string>
+    <string name="sticker__pin">Piespraust</string>
+    <string name="sticker__unpin">Atspraust</string>
+    <string name="sticker__setup_needed">Izvēlieties mapi, lai lietotu savas uzlīmes</string>
+    <string name="sticker__setup_needed_action">Atvērt iestatījumus</string>
+    <string name="sticker__folder_empty">Šajā mapē nav attēlu</string>
+    <string name="sticker__access_lost">Uzlīmju mapi vairs nevar nolasīt. Izvēlieties to vēlreiz.</string>
+    <string name="sticker__folder_pick_failed">Neizdevās saglabāt piekļuvi šai mapei</string>
+    <string name="sticker__rescan_done">Atrastas {n} uzlīmes</string>
+    <string name="sticker__copied_to_clipboard">Šī lietotne nepieņem uzlīmes — nokopēts starpliktuvē, turiet nospiestu, lai ielīmētu</string>
+    <string name="sticker__insert_failed">Uzlīmi neizdevās ievietot</string>
+    <string name="quick_action__ime_ui_mode_sticker">Uzlīme</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Ievietot savas uzlīmes</string>
 </resources>

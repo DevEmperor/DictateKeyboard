@@ -100,6 +100,8 @@ object KeyCode {
     const val DICTATE_REINSERT =            -217
     // Opens the GIF search panel (KLIPY).
     const val IME_UI_MODE_GIF =             -218
+    // Opens the local sticker panel (a folder the user picked, issue #280).
+    const val IME_UI_MODE_STICKER =         -219
 
     const val SYSTEM_INPUT_METHOD_PICKER =  -221
     const val SYSTEM_PREV_INPUT_METHOD =    -222
