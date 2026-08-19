@@ -60,6 +60,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import coil3.compose.AsyncImage
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -277,6 +278,9 @@ fun GifPanel(
                                         DropdownMenu(
                                             expanded = confirmDeleteGifId == item.id,
                                             onDismissRequest = { confirmDeleteGifId = null },
+                                            // See StickerPanel: a focusable popup makes the IME lose
+                                            // window focus and the panel closes itself.
+                                            properties = PopupProperties(focusable = false),
                                         ) {
                                             DropdownMenuItem(
                                                 text = { Text(stringRes(R.string.action__delete)) },

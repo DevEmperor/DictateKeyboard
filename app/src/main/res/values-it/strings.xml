@@ -1827,4 +1827,5 @@
     <string name="sticker__pack_failed">Non ha funzionato: la cartella potrebbe essere protetta da scrittura</string>
     <string name="sticker__packs_loading">Lettura della cartella…</string>
     <string name="sticker__packs_empty">Ancora nessun pacchetto. Un pacchetto è una sottocartella della tua cartella di adesivi.</string>
+    <string name="sticker__share">Invia con la condivisione</string>
 </resources>

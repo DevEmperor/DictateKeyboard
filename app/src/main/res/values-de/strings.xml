@@ -1919,4 +1919,5 @@
     <string name="sticker__pack_failed">Hat nicht geklappt — der Ordner ist womöglich schreibgeschützt</string>
     <string name="sticker__packs_loading">Ordner wird gelesen…</string>
     <string name="sticker__packs_empty">Noch keine Packs. Ein Pack ist ein Unterordner deines Sticker-Ordners.</string>
+    <string name="sticker__share">Über Teilen senden</string>
 </resources>

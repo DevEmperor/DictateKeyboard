@@ -51,6 +51,105 @@ object MediaFormat {
         else -> false
     }
 
+    /** What a file is, as far as the decision needs to know. */
+    data class ImageInfo(
+        val mime: String,
+        val animated: Boolean,
+        val width: Int,
+        val height: Int,
+        val bytes: Long,
+    )
+
+    /**
+     * WhatsApp's private sticker type, which it declares instead of plain `image/webp`.
+     *
+     * Named here rather than inferred, because the rules attached to it are its own and are checked
+     * in [qualifiesAsWhatsAppSticker].
+     */
+    const val WA_STICKER = "image/webp.wasticker"
+
+    /**
+     * Whether a file may be handed over as a WhatsApp sticker.
+     *
+     * WhatsApp publishes hard limits for third-party stickers — WebP, exactly 512×512, at most 100 KB
+     * still or 500 KB animated — and enforces them on arrival, with an error dialog rather than a
+     * silent refusal. Offering a file that breaks them therefore *looks* worse than not offering it
+     * at all, which is what happened when every WebP was passed on under this name.
+     *
+     * Measured on a real collection: stickers received in WhatsApp are frequently 900 KB and sized
+     * 256×256 or 498×498. WhatsApp displays them happily — it simply will not take them back.
+     */
+    internal fun qualifiesAsWhatsAppSticker(info: ImageInfo): Boolean {
+        if (info.mime != "image/webp") return false
+        if (info.width != 512 || info.height != 512) return false
+        val limit = if (info.animated) 500L * 1024L else 100L * 1024L
+        return info.bytes in 1..limit
+    }
+
+    /**
+     * Whether the file may be handed over under a vendor sticker name at all.
+     *
+     * Deliberately looser than [qualifiesAsWhatsAppSticker], and the distinction is the whole lesson
+     * of this feature: the published 512×512 / 500 KB limits govern *sticker packs*, not what
+     * `commitContent` accepts. Gboard and the Samsung keyboard insert oversized animated stickers into
+     * WhatsApp perfectly well — WhatsApp simply asks the user afterwards whether to send it as a
+     * sticker or as a GIF. Refusing those files, as an earlier version of this did, threw away the
+     * case that works.
+     */
+    internal fun mayUseVendorStickerType(info: ImageInfo): Boolean = info.mime == "image/webp"
+
+    /**
+     * Reads type, animation, size and dimensions out of a WebP header.
+     *
+     * Three container forms carry the dimensions in three different places: the extended `VP8X`
+     * (24-bit canvas size), lossy `VP8 ` and lossless `VP8L`. Anything unreadable comes back as 0×0,
+     * which simply means no vendor sticker type is offered for it.
+     */
+    internal fun webpDimensions(header: ByteArray): Pair<Int, Int> {
+        if (header.size < 30) return 0 to 0
+        if (!header.startsWith(0, "RIFF") || !header.startsWith(8, "WEBP")) return 0 to 0
+        return when {
+            header.startsWith(12, "VP8X") -> {
+                val w = le(header, 24, 3) + 1
+                val h = le(header, 27, 3) + 1
+                w to h
+            }
+            header.startsWith(12, "VP8 ") -> {
+                val w = le(header, 26, 2) and 0x3FFF
+                val h = le(header, 28, 2) and 0x3FFF
+                w to h
+            }
+            header.startsWith(12, "VP8L") -> {
+                val bits = le(header, 21, 4)
+                val w = (bits and 0x3FFF) + 1
+                val h = ((bits shr 14) and 0x3FFF) + 1
+                w to h
+            }
+            else -> 0 to 0
+        }
+    }
+
+    private fun le(bytes: ByteArray, offset: Int, count: Int): Int {
+        var value = 0
+        for (i in 0 until count) {
+            value = value or ((bytes[offset + i].toInt() and 0xFF) shl (8 * i))
+        }
+        return value
+    }
+
+    /** Everything the decision needs about a staged file. */
+    fun inspect(file: File, mime: String): ImageInfo {
+        val header = readHeader(file)
+        val (width, height) = if (mime == "image/webp") webpDimensions(header) else 0 to 0
+        return ImageInfo(
+            mime = mime,
+            animated = isAnimated(mime, header),
+            width = width,
+            height = height,
+            bytes = file.length(),
+        )
+    }
+
     /**
      * Reads the animation flag out of a WebP header.
      *
@@ -87,10 +186,15 @@ object MediaFormat {
      * An editor that declares nothing gets [own]: the declaration is not a promise, and trying costs
      * one call that answers for itself.
      */
-    fun negotiate(own: String, animated: Boolean, accepted: List<String>): String? {
+    fun negotiate(info: ImageInfo, accepted: List<String>): String? {
+        val own = info.mime
         if (accepted.isEmpty()) return own
+        // WhatsApp's sticker type for any WebP it will take. Not gated on its published sticker
+        // dimensions: those govern sticker packs, and gating on them refused exactly the animated
+        // files that other keyboards insert without trouble.
+        if (accepted.contains(WA_STICKER) && mayUseVendorStickerType(info)) return WA_STICKER
         if (accepted.any { matches(own, it) }) return own
-        if (animated) return null
+        if (info.animated) return null
         return ConvertibleTargets.firstOrNull { target ->
             target != own && accepted.any { matches(target, it) }
         }

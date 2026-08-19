@@ -2042,4 +2042,5 @@
     <string name="sticker__pack_failed">Nem sikerült — a mappa lehet, hogy írásvédett</string>
     <string name="sticker__packs_loading">Mappa beolvasása…</string>
     <string name="sticker__packs_empty">Még nincs csomag. A csomag a matricamappád egy almappája.</string>
+    <string name="sticker__share">Küldés a megosztás menüvel</string>
 </resources>

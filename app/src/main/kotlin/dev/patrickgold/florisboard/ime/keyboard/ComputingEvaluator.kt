@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.Gif
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -70,6 +69,7 @@ import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.vectorResource
 import org.florisboard.lib.compose.icons.ForwardDelete
+import org.florisboard.lib.compose.icons.Sticker
 
 interface ComputingEvaluator {
     val version: Int
@@ -280,7 +280,7 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Outlined.Gif
         }
         KeyCode.IME_UI_MODE_STICKER -> {
-            Icons.Outlined.Collections
+            Icons.Outlined.Sticker
         }
         KeyCode.IME_UI_MODE_DICTATE -> {
             when (dev.patrickgold.florisboard.dictate.DictateController.state.value) {

@@ -2058,4 +2058,5 @@
     <string name="sticker__pack_failed">Nepovedlo se — složka může být chráněná proti zápisu</string>
     <string name="sticker__packs_loading">Načítá se složka…</string>
     <string name="sticker__packs_empty">Zatím žádné balíčky. Balíček je podsložka vaší složky se samolepkami.</string>
+    <string name="sticker__share">Odeslat přes sdílení</string>
 </resources>

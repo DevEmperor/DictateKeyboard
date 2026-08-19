@@ -11,8 +11,10 @@
 package dev.patrickgold.florisboard.dictate.sticker
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.media.MediaCache
 import dev.patrickgold.florisboard.dictate.media.MediaFormat
@@ -91,20 +93,25 @@ object StickerManager {
             editorInstance.commitMedia(file, item.mime, description)
         }
 
-        // Refused. Before giving up on the editor, offer it a format it named itself — a still WebP
-        // re-encoded as PNG is the same picture, and it is the difference between a sticker landing
-        // in the chat and landing in the clipboard.
+        // Refused. Before giving up on the editor, offer it a format it named itself — either the same
+        // bytes under the app's own name for them, or a still image re-encoded as PNG. Both are the
+        // difference between a sticker landing in the chat and landing in the clipboard.
         if (result == EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD) {
             val accepted = withContext(Dispatchers.Main) { editorInstance.acceptedMediaMimeTypes() }
-            val animated = withContext(Dispatchers.IO) {
-                MediaFormat.isAnimated(item.mime, MediaFormat.readHeader(file))
-            }
-            val target = MediaFormat.negotiate(item.mime, animated, accepted)
+            val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, item.mime) }
+            val target = MediaFormat.negotiate(info, accepted)
             if (target != null && target != item.mime) {
-                val converted = withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
-                if (converted != null) {
+                // A vendor name for our own format is a relabelling, not a conversion: the file is
+                // already exactly what the app asked for, and re-encoding it would be the one way to
+                // break an animated sticker.
+                val payload = if (target == MediaFormat.WA_STICKER) {
+                    file
+                } else {
+                    withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
+                }
+                if (payload != null) {
                     val retry = withContext(Dispatchers.Main) {
-                        editorInstance.commitMedia(converted, target, description)
+                        editorInstance.commitMedia(payload, target, description)
                     }
                     if (retry == EditorInstance.MediaCommitResult.COMMITTED) result = retry
                 }
@@ -116,6 +123,39 @@ object StickerManager {
         }
         withContext(Dispatchers.IO) { MediaCache.prune(context) }
         return result
+    }
+
+    /**
+     * Hands the sticker to the system share sheet instead of to the editor.
+     *
+     * The way out when an app will not take rich content from a keyboard at all: the share sheet goes
+     * through that app's ordinary import path, which is usually far more forgiving than what it
+     * declares to an input method. EweSticker, the established open-source sticker keyboard, uses the
+     * same route as its last resort.
+     *
+     * Costs the user the chat picker, so it is an explicit choice in the long-press menu rather than
+     * an automatic fallback.
+     */
+    suspend fun share(context: Context, treeUri: Uri, item: StickerItem): Boolean {
+        val file = materialize(context, treeUri, item) ?: return false
+        return try {
+            val uri = FileProvider.getUriForFile(
+                context, "${context.packageName}.provider.file", file,
+            )
+            val send = Intent(Intent.ACTION_SEND).apply {
+                type = item.mime
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            val chooser = Intent.createChooser(send, null).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            withContext(Dispatchers.Main) { context.startActivity(chooser) }
+            true
+        } catch (e: Exception) {
+            flogError { "Failed to share sticker ${item.docId}: ${e.message}" }
+            false
+        }
     }
 
     /**

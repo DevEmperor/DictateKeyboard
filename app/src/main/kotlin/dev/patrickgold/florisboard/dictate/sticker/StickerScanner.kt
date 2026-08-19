@@ -186,10 +186,10 @@ object StickerScanner {
                     budget--
                 }
             }
-            // A subfolder holding nothing we can show would be an empty tab — leave it out.
-            if (items.isNotEmpty()) {
-                categories += StickerCategory(id = folderId, name = folderName, items = sorted(items))
-            }
+            // Empty subfolders stay in the index. A pack the user has just created has nothing in it
+            // yet, and dropping it here would make it invisible in the pack manager and impossible to
+            // move a sticker into — the panel is the one that hides empty tabs, not the scan.
+            categories += StickerCategory(id = folderId, name = folderName, items = sorted(items))
         }
 
         StickerIndex(treeUri = treeUri.toString(), categories = categories)

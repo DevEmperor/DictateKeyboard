@@ -79,6 +79,7 @@
     <string name="sticker__import_no_folder" comment="Toast when a sticker is shared before a folder was chosen">Choose a sticker folder first</string>
     <string name="sticker__import_needs_write" comment="Toast when the folder was granted read-only access">Choose the sticker folder again to allow adding and deleting</string>
     <string name="sticker__forget_recent" comment="Long-press action, drops a sticker from the recently used row">Remove from recents</string>
+    <string name="sticker__share" comment="Long-press action, hands the sticker to the Android share sheet">Send via share sheet</string>
     <string name="sticker__delete_file" comment="Long-press action, deletes the image file itself">Delete file</string>
     <string name="sticker__delete_confirm" comment="Second tap of the delete action, shown in red">Really delete?</string>
     <string name="sticker__delete_failed" comment="Toast when the file could not be deleted">Could not delete the file</string>

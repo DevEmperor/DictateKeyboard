@@ -2038,4 +2038,5 @@
     <string name="sticker__pack_failed">没有成功 — 该文件夹可能是只读的</string>
     <string name="sticker__packs_loading">正在读取文件夹…</string>
     <string name="sticker__packs_empty">还没有贴纸包。贴纸包就是贴纸文件夹下的子文件夹。</string>
+    <string name="sticker__share">通过分享菜单发送</string>
 </resources>

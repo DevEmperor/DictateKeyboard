@@ -2059,4 +2059,5 @@
     <string name="sticker__pack_failed">Nie udało się — folder może być chroniony przed zapisem</string>
     <string name="sticker__packs_loading">Odczytywanie folderu…</string>
     <string name="sticker__packs_empty">Jeszcze nie ma pakietów. Pakiet to podfolder twojego folderu z naklejkami.</string>
+    <string name="sticker__share">Wyślij przez udostępnianie</string>
 </resources>

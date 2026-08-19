@@ -1919,4 +1919,5 @@
     <string name="sticker__pack_failed">Cela n\'a pas fonctionné — le dossier est peut-être en lecture seule</string>
     <string name="sticker__packs_loading">Lecture du dossier…</string>
     <string name="sticker__packs_empty">Aucun pack pour l\'instant. Un pack est un sous-dossier de votre dossier d\'autocollants.</string>
+    <string name="sticker__share">Envoyer via le partage</string>
 </resources>

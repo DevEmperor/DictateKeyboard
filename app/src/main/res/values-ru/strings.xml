@@ -2047,4 +2047,5 @@
     <string name="sticker__pack_failed">Не получилось — возможно, папка защищена от записи</string>
     <string name="sticker__packs_loading">Чтение папки…</string>
     <string name="sticker__packs_empty">Наборов пока нет. Набор — это подпапка вашей папки со стикерами.</string>
+    <string name="sticker__share">Отправить через «Поделиться»</string>
 </resources>

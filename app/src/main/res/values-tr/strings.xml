@@ -2022,4 +2022,5 @@
     <string name="sticker__pack_failed">Olmadı — klasör yazmaya karşı korumalı olabilir</string>
     <string name="sticker__packs_loading">Klasör okunuyor…</string>
     <string name="sticker__packs_empty">Henüz paket yok. Paket, çıkartma klasörünüzün bir alt klasörüdür.</string>
+    <string name="sticker__share">Paylaşım menüsüyle gönder</string>
 </resources>

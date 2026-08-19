@@ -2025,4 +2025,5 @@
     <string name="sticker__pack_failed">No funcionó: puede que la carpeta esté protegida contra escritura</string>
     <string name="sticker__packs_loading">Leyendo la carpeta…</string>
     <string name="sticker__packs_empty">Aún no hay paquetes. Un paquete es una subcarpeta de tu carpeta de adhesivos.</string>
+    <string name="sticker__share">Enviar con el diálogo de compartir</string>
 </resources>

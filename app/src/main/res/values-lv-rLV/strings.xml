@@ -1987,4 +1987,5 @@
     <string name="sticker__pack_failed">Neizdevās — mape var būt aizsargāta pret rakstīšanu</string>
     <string name="sticker__packs_loading">Notiek mapes lasīšana…</string>
     <string name="sticker__packs_empty">Pagaidām nav neviena pakas. Paka ir jūsu uzlīmju mapes apakšmape.</string>
+    <string name="sticker__share">Sūtīt ar kopīgošanas izvēlni</string>
 </resources>

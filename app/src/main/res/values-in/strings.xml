@@ -1999,4 +1999,5 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__pack_failed">Tidak berhasil — folder mungkin dilindungi dari penulisan</string>
     <string name="sticker__packs_loading">Membaca folder…</string>
     <string name="sticker__packs_empty">Belum ada paket. Paket adalah subfolder dari folder stikermu.</string>
+    <string name="sticker__share">Kirim lewat menu bagikan</string>
 </resources>

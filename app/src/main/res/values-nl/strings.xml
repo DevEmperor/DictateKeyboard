@@ -1943,4 +1943,5 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__pack_failed">Dat lukte niet — de map is mogelijk schrijfbeveiligd</string>
     <string name="sticker__packs_loading">Map wordt gelezen…</string>
     <string name="sticker__packs_empty">Nog geen pakketten. Een pakket is een submap van je stickermap.</string>
+    <string name="sticker__share">Versturen via delen</string>
 </resources>

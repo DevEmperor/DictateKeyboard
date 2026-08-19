@@ -38,6 +38,15 @@ class MediaFileProvider : FileProvider() {
      */
     override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
         val type = getType(uri) ?: return null
-        return if (ClipDescription.compareMimeTypes(type, mimeTypeFilter)) arrayOf(type) else null
+        // Every WebP is also offered under WhatsApp's own name for that format, so the answer here
+        // matches the type the file was committed under. Narrowing this to WhatsApp's published
+        // sticker dimensions would break the handover for exactly the animated files that work.
+        val types = if (type == "image/webp") {
+            arrayOf(type, MediaFormat.WA_STICKER)
+        } else {
+            arrayOf(type)
+        }
+        val matching = types.filter { ClipDescription.compareMimeTypes(it, mimeTypeFilter) }
+        return matching.takeIf { it.isNotEmpty() }?.toTypedArray()
     }
 }

@@ -1902,4 +1902,5 @@
     <string name="sticker__pack_failed">لم ينجح ذلك — قد يكون المجلد محميًا ضد الكتابة</string>
     <string name="sticker__packs_loading">جارٍ قراءة المجلد…</string>
     <string name="sticker__packs_empty">لا توجد حزم بعد. الحزمة هي مجلد فرعي داخل مجلد الملصقات.</string>
+    <string name="sticker__share">الإرسال عبر قائمة المشاركة</string>
 </resources>

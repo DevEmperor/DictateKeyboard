@@ -33,23 +33,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Apps
-import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Downloading
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.HistoryToggleOff
-import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.LinkOff
-import androidx.compose.material.icons.outlined.Numbers
-import androidx.compose.material.icons.outlined.PhotoSizeSelectLarge
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.ShortText
-import androidx.compose.material.icons.outlined.Sort
-import androidx.compose.material.icons.outlined.StarBorder
-import androidx.compose.material.icons.outlined.TextFields
-import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Gif
 import androidx.compose.material.icons.outlined.OpenInNew
@@ -92,11 +82,11 @@ import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
 import dev.patrickgold.florisboard.dictate.sticker.StickerWriter
 import dev.patrickgold.florisboard.dictate.sticker.stickerImportSummary
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import org.florisboard.lib.compose.icons.Sticker
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
@@ -138,13 +128,6 @@ fun MediaScreen() = FlorisScreen {
                 title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
                 entries = enumDisplayEntriesOf(EmojiSkinTone::class),
             )
-            ListPreference(
-                prefs.emoji.preferredHairStyle,
-                icon = Icons.Outlined.Brush,
-                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_preferred_hair_style"),
-                title = stringRes(R.string.prefs__media__emoji_preferred_hair_style),
-                entries = enumDisplayEntriesOf(EmojiHairStyle::class),
-            )
         }
 
         PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_history__title)) {
@@ -157,7 +140,6 @@ fun MediaScreen() = FlorisScreen {
             )
             ListPreference(
                 prefs.emoji.historyPinnedUpdateStrategy,
-                icon = Icons.Outlined.Sort,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_update_strategy"),
                 title = stringRes(R.string.prefs__media__emoji_history_pinned_update_strategy),
                 entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
@@ -165,7 +147,6 @@ fun MediaScreen() = FlorisScreen {
             )
             ListPreference(
                 prefs.emoji.historyRecentUpdateStrategy,
-                icon = Icons.Outlined.Sort,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_recent_update_strategy"),
                 title = stringRes(R.string.prefs__media__emoji_history_recent_update_strategy),
                 entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
@@ -174,7 +155,6 @@ fun MediaScreen() = FlorisScreen {
             DialogSliderPreference(
                 primaryPref = prefs.emoji.historyPinnedMaxSize,
                 secondaryPref = prefs.emoji.historyRecentMaxSize,
-                icon = Icons.Outlined.Numbers,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_max_size"),
                 title = stringRes(R.string.prefs__media__emoji_history_max_size),
                 primaryLabel = stringRes(R.string.emoji__history__pinned),
@@ -192,7 +172,6 @@ fun MediaScreen() = FlorisScreen {
                 enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
             Preference(
-                icon = Icons.Outlined.StarBorder,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_pinned_reset"),
                 title = stringRes(R.string.prefs__media__emoji_history_pinned_reset),
                 onClick = {
@@ -201,7 +180,6 @@ fun MediaScreen() = FlorisScreen {
                 enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
             Preference(
-                icon = Icons.Outlined.HistoryToggleOff,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_reset"),
                 title = stringRes(R.string.prefs__media__emoji_history_reset),
                 onClick = {
@@ -222,7 +200,6 @@ fun MediaScreen() = FlorisScreen {
             )
             ListPreference(
                 prefs.emoji.suggestionType,
-                icon = Icons.Outlined.Keyboard,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_type"),
                 title = stringRes(R.string.prefs__media__emoji_suggestion_type),
                 entries = enumDisplayEntriesOf(EmojiSuggestionType::class),
@@ -230,7 +207,6 @@ fun MediaScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.emoji.suggestionUpdateHistory,
-                icon = Icons.Outlined.Schedule,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_update_history"),
                 title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
                 summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
@@ -240,7 +216,6 @@ fun MediaScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.emoji.suggestionCandidateShowName,
-                icon = Icons.Outlined.TextFields,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_show_name"),
                 title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
                 summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
@@ -248,7 +223,6 @@ fun MediaScreen() = FlorisScreen {
             )
             DialogSliderPreference(
                 prefs.emoji.suggestionQueryMinLength,
-                icon = Icons.Outlined.ShortText,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_query_min_length"),
                 title = stringRes(R.string.prefs__media__emoji_suggestion_query_min_length),
                 valueLabel = { length ->
@@ -261,7 +235,6 @@ fun MediaScreen() = FlorisScreen {
             )
             DialogSliderPreference(
                 prefs.emoji.suggestionCandidateMaxCount,
-                icon = Icons.Outlined.Numbers,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_suggestion_candidate_max_count"),
                 title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_max_count),
                 valueLabel = { count ->
@@ -336,7 +309,7 @@ fun MediaScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.prefs__media__sticker__title)) {
             val stickerFolderUnset = stringRes(R.string.prefs__media__sticker_folder__summary_unset)
             Preference(
-                icon = Icons.Outlined.Collections,
+                icon = Icons.Outlined.Sticker,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder__title"),
                 title = stringRes(R.string.prefs__media__sticker_folder__title),
                 summary = stickerFolderName.ifBlank { stickerFolderUnset },
@@ -413,7 +386,6 @@ fun MediaScreen() = FlorisScreen {
                 )
                 DialogSliderPreference(
                     prefs.sticker.thumbnailSize,
-                    icon = Icons.Outlined.PhotoSizeSelectLarge,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_thumbnail_size"),
                     title = stringRes(R.string.prefs__media__sticker_thumbnail_size),
                     valueLabel = { size -> "$size dp" },
@@ -430,7 +402,6 @@ fun MediaScreen() = FlorisScreen {
                 )
                 DialogSliderPreference(
                     prefs.sticker.historyRecentMaxSize,
-                    icon = Icons.Outlined.Numbers,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_recent_max_size"),
                     title = stringRes(R.string.prefs__media__sticker_history_recent_max_size),
                     valueLabel = { maxSize ->
@@ -442,13 +413,11 @@ fun MediaScreen() = FlorisScreen {
                     enabledIf = { prefs.sticker.historyEnabled.isTrue() },
                 )
                 Preference(
-                    icon = Icons.Outlined.StarBorder,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_pinned_reset"),
                     title = stringRes(R.string.prefs__media__sticker_pinned_reset),
                     onClick = { scope.launch { StickerHistoryHelper.clearPinned(prefs) } },
                 )
                 Preference(
-                    icon = Icons.Outlined.HistoryToggleOff,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_reset"),
                     title = stringRes(R.string.prefs__media__sticker_history_reset),
                     onClick = { scope.launch { StickerHistoryHelper.clearRecent(prefs) } },
@@ -792,9 +761,28 @@ private fun StickerPackDialog(
 
     val packs = index?.categories.orEmpty().filter { it.id != StickerCategory.ROOT_ID }
 
+    // The create/rename button belongs where every other dialog puts its action: on the button row at
+    // the bottom, beside Cancel. It doubles as "rename" while a pack is being edited.
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
         title = stringRes(R.string.prefs__media__sticker_packs),
+        confirmLabel = stringRes(if (renaming != null) R.string.sticker__pack_rename else R.string.sticker__pack_new),
+        confirmEnabled = newName.isNotBlank(),
+        onConfirm = {
+            val name = newName.trim()
+            val target = renaming
+            scope.launch {
+                val ok = if (target != null) {
+                    StickerWriter.renamePack(context, treeUri, target.id, name)
+                } else {
+                    StickerWriter.createPack(context, treeUri, name) != null
+                }
+                if (!ok) context.showLongToast(R.string.sticker__pack_failed)
+                newName = ""
+                renaming = null
+                reload++
+            }
+        },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
     ) {
@@ -833,42 +821,12 @@ private fun StickerPackDialog(
             OutlinedTextField(
                 value = newName,
                 onValueChange = { newName = it },
-                label = { Text(stringRes(R.string.sticker__pack_name)) },
+                label = {
+                    Text(stringRes(if (renaming != null) R.string.sticker__pack_rename else R.string.sticker__pack_name))
+                },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
             )
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                val editing = renaming
-                if (editing != null) {
-                    OutlinedButton(onClick = { renaming = null; newName = "" }) {
-                        Text(stringRes(R.string.action__cancel))
-                    }
-                }
-                OutlinedButton(
-                    enabled = newName.isNotBlank(),
-                    onClick = {
-                        val name = newName.trim()
-                        val target = renaming
-                        scope.launch {
-                            val ok = if (target != null) {
-                                StickerWriter.renamePack(context, treeUri, target.id, name)
-                            } else {
-                                StickerWriter.createPack(context, treeUri, name) != null
-                            }
-                            if (!ok) context.showLongToast(R.string.sticker__pack_failed)
-                            newName = ""
-                            renaming = null
-                            reload++
-                        }
-                    },
-                    modifier = Modifier.padding(start = 8.dp),
-                ) {
-                    Text(stringRes(if (renaming != null) R.string.sticker__pack_rename else R.string.sticker__pack_new))
-                }
-            }
         }
     }
 

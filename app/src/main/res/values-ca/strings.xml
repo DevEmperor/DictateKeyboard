@@ -1919,4 +1919,5 @@
     <string name="sticker__pack_failed">No ha funcionat: pot ser que la carpeta estigui protegida contra escriptura</string>
     <string name="sticker__packs_loading">S\'està llegint la carpeta…</string>
     <string name="sticker__packs_empty">Encara no hi ha paquets. Un paquet és una subcarpeta de la carpeta d\'adhesius.</string>
+    <string name="sticker__share">Envia amb el diàleg de compartir</string>
 </resources>

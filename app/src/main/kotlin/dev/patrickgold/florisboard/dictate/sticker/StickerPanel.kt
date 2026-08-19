@@ -45,6 +45,7 @@ import androidx.compose.material.icons.outlined.DriveFileMove
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FolderOff
 import androidx.compose.material.icons.outlined.PushPin
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -68,6 +69,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil3.compose.AsyncImage
@@ -180,6 +182,17 @@ fun StickerPanel(
                 }
                 EditorInstance.MediaCommitResult.FAILED ->
                     context.showShortToast(R.string.sticker__insert_failed)
+            }
+        }
+    }
+
+    fun shareSticker(item: StickerItem) {
+        val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
+        scope.launch {
+            if (StickerManager.share(context, treeUri, item)) {
+                keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+            } else {
+                context.showShortToast(R.string.sticker__insert_failed)
             }
         }
     }
@@ -337,10 +350,17 @@ fun StickerPanel(
                             treeUri = treeUri,
                             restLabel = restLabel,
                             canDelete = canWrite,
-                            packs = if (canWrite) categories.filter { it.id != StickerCategory.ROOT_ID } else emptyList(),
+                            // Every pack, not just the ones with something in them: moving a sticker
+                            // into a pack you just created is the whole point of having created it.
+                            packs = if (canWrite) {
+                                currentIndex!!.categories.filter { it.id != StickerCategory.ROOT_ID }
+                            } else {
+                                emptyList()
+                            },
                             packOf = { docId -> currentIndex!!.categoryOf(docId) },
                             onInsert = { item -> insert(item, category.id) },
                             onDelete = { item -> deleteFile(item) },
+                            onShare = { item -> shareSticker(item) },
                             onMoveToPack = { item, packId -> moveToPack(item, packId) },
                             onPin = { item ->
                                 scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
@@ -374,6 +394,7 @@ private fun StickerCategoryPage(
     packOf: (String) -> String?,
     onInsert: (StickerItem) -> Unit,
     onDelete: (StickerItem) -> Unit,
+    onShare: (StickerItem) -> Unit,
     onMoveToPack: (StickerItem, String) -> Unit,
     onPin: (StickerItem) -> Unit,
     onUnpin: (StickerItem) -> Unit,
@@ -389,8 +410,13 @@ private fun StickerCategoryPage(
     var packPickerOpen by remember { mutableStateOf(false) }
 
     val byId = remember(pool) { pool.associateBy { it.docId } }
-    val pinned = if (historyEnabled) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
-    val recent = if (historyEnabled) history.recentIn(historyKey).mapNotNull { byId[it] } else emptyList()
+    // Favourites and recents live on the first tab only. Inside a pack every sticker is equal — the
+    // pack *is* the sorting, and repeating a sticker at the top under a second heading only made it
+    // harder to find the one you came for.
+    val isRoot = category.id == StickerCategory.ROOT_ID
+    val showHistory = historyEnabled && isRoot
+    val pinned = if (showHistory) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
+    val recent = if (showHistory) history.recentIn(historyKey).mapNotNull { byId[it] } else emptyList()
     val shown = remember(pinned, recent, category.items) {
         val used = HashSet<String>(pinned.size + recent.size)
         pinned.mapTo(used) { it.docId }
@@ -413,6 +439,11 @@ private fun StickerCategoryPage(
             DropdownMenu(
                 expanded = menuFor == menuKey,
                 onDismissRequest = { menuFor = null; deleteArmed = false; packPickerOpen = false },
+                // Not focusable, and that is load-bearing. A focusable popup takes window focus off
+                // the keyboard, the target app re-attaches its editor, and onStartInputView resets
+                // imeUiMode to TEXT — which looked like the menu flashing and the panel closing by
+                // itself.
+                properties = PopupProperties(focusable = false),
             ) {
                 if (packPickerOpen) {
                     val currentPack = packOf(item.docId)
@@ -473,6 +504,14 @@ private fun StickerCategoryPage(
                         },
                     )
                 }
+                DropdownMenuItem(
+                    text = { Text(stringRes(R.string.sticker__share)) },
+                    leadingIcon = { Icon(Icons.Outlined.Share, contentDescription = null) },
+                    onClick = {
+                        onShare(item)
+                        menuFor = null
+                    },
+                )
                 if (canDelete) {
                     DropdownMenuItem(
                         text = {

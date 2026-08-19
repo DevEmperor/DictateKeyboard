@@ -1852,4 +1852,5 @@
     <string name="sticker__pack_failed">Não deu certo — a pasta pode estar protegida contra gravação</string>
     <string name="sticker__packs_loading">Lendo a pasta…</string>
     <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de figurinhas.</string>
+    <string name="sticker__share">Enviar pelo compartilhamento</string>
 </resources>

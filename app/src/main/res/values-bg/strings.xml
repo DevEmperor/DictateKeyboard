@@ -2044,4 +2044,5 @@
     <string name="sticker__pack_failed">Не се получи — папката може да е защитена от запис</string>
     <string name="sticker__packs_loading">Папката се чете…</string>
     <string name="sticker__packs_empty">Още няма пакети. Пакетът е подпапка в папката ви със стикери.</string>
+    <string name="sticker__share">Изпращане чрез споделяне</string>
 </resources>
