@@ -85,6 +85,7 @@ import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsSt
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -548,7 +549,11 @@ private fun StickerCategoryPage(
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Adaptive(minSize = thumbnailSize.dp),
-        modifier = Modifier.fillMaxSize(),
+        // The same fading scrollbar the emoji palette uses. A folder of several hundred stickers is a
+        // long scroll with no other clue about where in it you are.
+        modifier = Modifier
+            .fillMaxSize()
+            .florisScrollbar(gridState),
         contentPadding = PaddingValues(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),

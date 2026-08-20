@@ -18,6 +18,7 @@ import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.media.MediaCache
 import dev.patrickgold.florisboard.dictate.media.MediaFormat
+import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -101,13 +102,17 @@ object StickerManager {
             val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, item.mime) }
             val target = MediaFormat.negotiate(info, accepted)
             if (target != null && target != item.mime) {
-                // A vendor name for our own format is a relabelling, not a conversion: the file is
-                // already exactly what the app asked for, and re-encoding it would be the one way to
-                // break an animated sticker.
-                val payload = if (target == MediaFormat.WA_STICKER) {
-                    file
-                } else {
-                    withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
+                val payload = when {
+                    // A vendor name for our own format is a relabelling, not a conversion — except
+                    // when the file misses the receiving app's sticker bounds. WhatsApp takes an
+                    // oversized animation and then refuses it with an empty frame and "Couldn't
+                    // share", so it is re-encoded to 512×512 under 500 KB first. Measured: inside
+                    // those bounds the same sticker goes straight into the chat, animated.
+                    target == MediaFormat.WA_STICKER && MediaFormat.qualifiesAsWhatsAppSticker(info) -> file
+                    target == MediaFormat.WA_STICKER && info.animated ->
+                        withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(file) }
+                    target == MediaFormat.WA_STICKER -> file
+                    else -> withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
                 }
                 if (payload != null) {
                     val retry = withContext(Dispatchers.Main) {
