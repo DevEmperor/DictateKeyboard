@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.smartbar
 
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,32 +83,42 @@ fun InlineSuggestionsUi(
             ),
     ) {
         for (inlineSuggestion in inlineSuggestions) {
-            if (inlineSuggestion.view == null) {
-                continue
+            val suggestionView = inlineSuggestion.view ?: continue
+            // Keyed on the view itself, because that is the thing being placed. Without a key Compose
+            // may reuse this slot for a different suggestion when the autofill service refreshes its
+            // list, and then hand a still-attached view to a second holder (issue #287).
+            key(suggestionView) {
+                var chipPos by remember { mutableStateOf(IntOffset.Zero) }
+                val corderRadius = dimensionResource(R.dimen.suggestions_chip_corner_radius)
+                val shape = remember(corderRadius) { RoundedCornerShape(corderRadius) }
+                AndroidView(
+                    modifier = Modifier
+                        .onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() }
+                        .padding(InlineSuggestionsChipMargin)
+                        .clip(shape),
+                    factory = {
+                        // These views are made by the autofill service, not here, so this factory
+                        // hands back one that already exists — and it may still be sitting in the
+                        // holder built for the previous list. ViewGroup.addView throws outright in
+                        // that case and takes the keyboard with it, so detach it first.
+                        (suggestionView.parent as? ViewGroup)?.removeView(suggestionView)
+                        suggestionView
+                    },
+                    update = { view ->
+                        view.isZOrderedOnTop = isZOrderedOnTop
+                        // TODO scroll clip can probably also be done in Jetpack Compose
+                        val xMin = scrollState.value
+                        val xMax = scrollState.value + scrollState.viewportSize
+                        view.clipBounds = android.graphics.Rect(
+                            (xMin - chipPos.x).coerceAtLeast(0),
+                            0,
+                            (xMax - chipPos.x).coerceAtMost(view.width),
+                            view.height,
+                        )
+                        view.visibility = if (view.clipBounds.isEmpty) View.INVISIBLE else View.VISIBLE
+                    },
+                )
             }
-            var chipPos by remember { mutableStateOf(IntOffset.Zero) }
-            val corderRadius = dimensionResource(R.dimen.suggestions_chip_corner_radius)
-            val shape = remember(corderRadius) { RoundedCornerShape(corderRadius) }
-            AndroidView(
-                modifier = Modifier
-                    .onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() }
-                    .padding(InlineSuggestionsChipMargin)
-                    .clip(shape),
-                factory = { inlineSuggestion.view },
-                update = { view ->
-                    view.isZOrderedOnTop = isZOrderedOnTop
-                    // TODO scroll clip can probably also be done in Jetpack Compose
-                    val xMin = scrollState.value
-                    val xMax = scrollState.value + scrollState.viewportSize
-                    view.clipBounds = android.graphics.Rect(
-                        (xMin - chipPos.x).coerceAtLeast(0),
-                        0,
-                        (xMax - chipPos.x).coerceAtMost(view.width),
-                        view.height,
-                    )
-                    view.visibility = if (view.clipBounds.isEmpty) View.INVISIBLE else View.VISIBLE
-                }
-            )
         }
     }
 }
