@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.media
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -225,14 +226,14 @@ object MediaFormat {
      * nothing. Returns null if the image cannot be decoded, in which case the caller still has the
      * original and the clipboard.
      */
-    fun convert(source: File, targetMime: String): File? {
+    fun convert(context: Context, source: File, targetMime: String): File? {
         val extension = when (targetMime) {
             "image/png" -> "png"
             "image/webp" -> "webp"
             "image/jpeg" -> "jpg"
             else -> return null
         }
-        val target = File(source.parentFile, "${source.nameWithoutExtension}$ConvertedSuffix.$extension")
+        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}$ConvertedSuffix.$extension")
         if (target.exists() && target.length() > 0L) return target
         return try {
             val bitmap = decode(source) ?: return null

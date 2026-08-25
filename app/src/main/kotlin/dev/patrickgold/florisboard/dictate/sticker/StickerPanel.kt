@@ -450,7 +450,14 @@ private fun StickerCategoryPage(
                     modifier = Modifier.matchParentSize().background(Color(0x66000000)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                    // Accent, not the default: with no MaterialTheme in the IME, an untinted
+                    // indicator comes out in Compose's built-in purple — the same reason the shared
+                    // scrollbar was invisible here.
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = accent,
+                    )
                 }
             }
             DropdownMenu(

@@ -109,7 +109,7 @@ object StickerManager {
             val needsWork = target != item.mime
             if (needsWork) onPreparing(true)
             val payload = try {
-                prepare(file, info, target)
+                prepare(context, file, info, target)
             } finally {
                 if (needsWork) onPreparing(false)
             }
@@ -138,7 +138,10 @@ object StickerManager {
         if (result != EditorInstance.MediaCommitResult.FAILED) {
             StickerHistoryHelper.markUsed(prefs, categoryId, item.docId)
         }
-        withContext(Dispatchers.IO) { MediaCache.prune(context) }
+        withContext(Dispatchers.IO) {
+            MediaCache.prune(context)
+            MediaCache.pruneConverted(context)
+        }
         return result
     }
 
@@ -146,6 +149,7 @@ object StickerManager {
      * The bytes to hand over for [target]: the file itself, a relabelling, a re-encode, or a PNG.
      */
     private suspend fun prepare(
+        context: Context,
         file: File,
         info: MediaFormat.ImageInfo,
         target: String,
@@ -157,9 +161,9 @@ object StickerManager {
         // 500 KB first. Measured: inside those bounds the same sticker goes straight into the chat.
         target == MediaFormat.WA_STICKER && MediaFormat.qualifiesAsWhatsAppSticker(info) -> file
         target == MediaFormat.WA_STICKER && info.animated ->
-            withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(file) }
+            withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(context, file) }
         target == MediaFormat.WA_STICKER -> file
-        else -> withContext(Dispatchers.IO) { MediaFormat.convert(file, target) }
+        else -> withContext(Dispatchers.IO) { MediaFormat.convert(context, file, target) }
     }
 
     /**

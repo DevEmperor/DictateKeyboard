@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.media
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -58,8 +59,8 @@ object WebPTranscoder {
      * The result is cached under a name of its own, so the second insert of the same sticker costs
      * nothing.
      */
-    fun toStickerSpec(source: File): File? {
-        val target = File(source.parentFile, "${source.nameWithoutExtension}-wa.webp")
+    fun toStickerSpec(context: Context, source: File): File? {
+        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
         if (target.exists() && target.length() in 1..MAX_BYTES) return target
         return try {
             val bytes = source.readBytes()

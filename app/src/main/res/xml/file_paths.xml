@@ -7,4 +7,9 @@
     <cache-path
         name="gif_media"
         path="gif-media/"/>
+    <!-- Converted/re-encoded stickers. In filesDir rather than the cache: re-encoding an animated
+         sticker costs about a second, and a cache eviction would make the user pay it again. -->
+    <files-path
+        name="sticker_converted"
+        path="sticker-converted/"/>
 </paths>

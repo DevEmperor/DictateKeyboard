@@ -40,9 +40,8 @@ import androidx.compose.ui.unit.dp
  *  - **A track behind the thumb.** A lone thumb on a busy grid is hard to find; a faint full-height
  *    track says at a glance how far down the content reaches.
  *
- * The thumb is sized from *rows*, not items. Dividing by the item count treats an N-column grid as if
- * every cell were its own row, which makes the thumb N times too short and its travel N times too
- * long — the defect the shared grid overload still has.
+ * Geometry is measured in pixels rather than in items — see [ScrollbarMetrics] for why that is what
+ * makes it glide instead of stutter.
  */
 private fun Modifier.panelScrollbar(
     accent: Color,
@@ -51,12 +50,12 @@ private fun Modifier.panelScrollbar(
 ): Modifier = drawWithContent {
     drawContent()
     val m = metrics() ?: return@drawWithContent
-    if (m.totalRows <= 0 || m.visibleRows <= 0 || m.visibleRows >= m.totalRows) return@drawWithContent
-    val barWidth = width.toPx()
     val viewport = size.height
-    val thumbHeight = (viewport * m.visibleRows / m.totalRows).coerceAtLeast(barWidth * 5f)
-    val maxScroll = (m.totalRows - m.visibleRows).toFloat()
-    val progress = if (maxScroll <= 0f) 0f else (m.firstVisibleRow / maxScroll).coerceIn(0f, 1f)
+    if (m.contentHeight <= viewport || viewport <= 0f) return@drawWithContent
+    val barWidth = width.toPx()
+    val thumbHeight = (viewport * viewport / m.contentHeight).coerceAtLeast(barWidth * 5f)
+    val travel = viewport - thumbHeight
+    val progress = (m.scrolled / (m.contentHeight - viewport)).coerceIn(0f, 1f)
     val x = size.width - barWidth
     val radius = CornerRadius(barWidth / 2f, barWidth / 2f)
     drawRoundRect(
@@ -67,75 +66,92 @@ private fun Modifier.panelScrollbar(
     )
     drawRoundRect(
         color = accent.copy(alpha = 0.85f),
-        topLeft = Offset(x, (viewport - thumbHeight) * progress),
+        topLeft = Offset(x, travel * progress),
         size = Size(barWidth, thumbHeight),
         cornerRadius = radius,
     )
 }
 
-/** What the bar needs to know, in rows rather than items. */
+/**
+ * The bar's geometry in pixels, not in items.
+ *
+ * Counting items is what made the first version stutter. Progress from `firstVisibleItemIndex` alone
+ * is integer division: the thumb stands still until a whole row has passed and then jumps, which
+ * reads as lag even though the scroll itself is smooth. And sizing the thumb from the *count* of
+ * visible items makes it grow and shrink by a row as rows edge into view. Measuring in pixels — how
+ * far the content has scrolled, how tall it is in total — gives a thumb that keeps its size and
+ * glides.
+ */
 internal data class ScrollbarMetrics(
-    val totalRows: Int,
-    val visibleRows: Int,
-    val firstVisibleRow: Int,
+    val contentHeight: Float,
+    val scrolled: Float,
 )
 
 /**
- * Rows from items, given how many cells sit side by side.
- *
- * [columns] is derived from the laid-out items rather than from the grid's configuration, because an
- * adaptive grid only knows its column count once it has measured itself.
+ * Row pitch from the laid-out items: the distance between the tops of two consecutive rows, which
+ * includes the spacing between them. Falls back to an item's own height when only one row is visible.
  */
-internal fun rowMetrics(total: Int, visible: Int, first: Int, columns: Int): ScrollbarMetrics? {
-    if (total <= 0 || visible <= 0) return null
+private fun pitchOf(offsets: List<Int>, sizes: List<Int>): Float {
+    val distinct = offsets.distinct().sorted()
+    if (distinct.size >= 2) return (distinct[1] - distinct[0]).toFloat()
+    return sizes.maxOrNull()?.toFloat() ?: 0f
+}
+
+private fun metricsFrom(
+    totalItems: Int,
+    columns: Int,
+    firstIndex: Int,
+    firstOffset: Int,
+    pitch: Float,
+): ScrollbarMetrics? {
+    if (totalItems <= 0 || pitch <= 0f) return null
     val cols = columns.coerceAtLeast(1)
-    fun rows(items: Int) = (items + cols - 1) / cols
-    return ScrollbarMetrics(
-        totalRows = rows(total),
-        visibleRows = rows(visible),
-        firstVisibleRow = first / cols,
-    )
+    val totalRows = (totalItems + cols - 1) / cols
+    val scrolled = (firstIndex / cols) * pitch + firstOffset
+    return ScrollbarMetrics(contentHeight = totalRows * pitch, scrolled = scrolled)
 }
 
 fun Modifier.panelScrollbar(state: LazyListState, accent: Color, width: Dp = 5.dp): Modifier =
     panelScrollbar(accent, width) {
-        val info = state.layoutInfo
-        rowMetrics(
-            total = info.totalItemsCount,
-            visible = info.visibleItemsInfo.size,
-            first = state.firstVisibleItemIndex,
+        val visible = state.layoutInfo.visibleItemsInfo
+        metricsFrom(
+            totalItems = state.layoutInfo.totalItemsCount,
             columns = 1,
+            firstIndex = state.firstVisibleItemIndex,
+            firstOffset = state.firstVisibleItemScrollOffset,
+            pitch = pitchOf(visible.map { it.offset }, visible.map { it.size }),
         )
     }
 
 fun Modifier.panelScrollbar(state: LazyGridState, accent: Color, width: Dp = 5.dp): Modifier =
     panelScrollbar(accent, width) {
-        val info = state.layoutInfo
-        val visible = info.visibleItemsInfo
-        // Cells sharing the topmost row give the column count of the current layout.
-        val columns = visible.firstOrNull()?.let { top ->
-            visible.count { it.offset.y == top.offset.y }
-        } ?: 1
-        rowMetrics(
-            total = info.totalItemsCount,
-            visible = visible.size,
-            first = state.firstVisibleItemIndex,
+        val visible = state.layoutInfo.visibleItemsInfo
+        // Cells sharing the topmost row give the column count of the current layout, which an
+        // adaptive grid only knows once it has measured itself.
+        val columns = visible.firstOrNull()?.let { top -> visible.count { it.offset.y == top.offset.y } } ?: 1
+        metricsFrom(
+            totalItems = state.layoutInfo.totalItemsCount,
             columns = columns,
+            firstIndex = state.firstVisibleItemIndex,
+            firstOffset = state.firstVisibleItemScrollOffset,
+            pitch = pitchOf(visible.map { it.offset.y }, visible.map { it.size.height }),
         )
     }
 
 fun Modifier.panelScrollbar(state: LazyStaggeredGridState, accent: Color, width: Dp = 5.dp): Modifier =
     panelScrollbar(accent, width) {
-        val info = state.layoutInfo
-        val visible = info.visibleItemsInfo
-        // A staggered grid has no rows to speak of — items of different heights sit in lanes. Counting
-        // the lanes and treating each as a column is close enough for a scrollbar, and it is the only
-        // reading available: the layout info exposes no row index.
+        val visible = state.layoutInfo.visibleItemsInfo
+        // A staggered grid has no rows: items of different heights sit in lanes. The average visible
+        // height stands in for a row pitch, which is an estimate — but a scrollbar is an estimate.
         val lanes = visible.map { it.lane }.distinct().size.coerceAtLeast(1)
-        rowMetrics(
-            total = info.totalItemsCount,
-            visible = visible.size,
-            first = state.firstVisibleItemIndex,
+        val averageHeight = if (visible.isEmpty()) 0f else {
+            visible.sumOf { it.size.height }.toFloat() / visible.size
+        }
+        metricsFrom(
+            totalItems = state.layoutInfo.totalItemsCount,
             columns = lanes,
+            firstIndex = state.firstVisibleItemIndex,
+            firstOffset = state.firstVisibleItemScrollOffset,
+            pitch = averageHeight,
         )
     }
