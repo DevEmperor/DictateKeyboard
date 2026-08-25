@@ -1847,8 +1847,8 @@
     <string name="sticker__section_favorites">المفضلة</string>
     <string name="sticker__section_recent">المستخدمة مؤخرًا</string>
     <string name="sticker__section_rest">كل الملصقات</string>
-    <string name="sticker__pin">تثبيت</string>
-    <string name="sticker__unpin">إلغاء التثبيت</string>
+    <string name="sticker__pin">إضافة إلى المفضلة</string>
+    <string name="sticker__unpin">إزالة من المفضلة</string>
     <string name="sticker__setup_needed">اختر مجلدًا لاستخدام ملصقاتك الخاصة</string>
     <string name="sticker__setup_needed_action">فتح الإعدادات</string>
     <string name="sticker__folder_empty">لا توجد صور في هذا المجلد</string>
@@ -1903,4 +1903,8 @@
     <string name="sticker__packs_loading">جارٍ قراءة المجلد…</string>
     <string name="sticker__packs_empty">لا توجد حزم بعد. الحزمة هي مجلد فرعي داخل مجلد الملصقات.</string>
     <string name="sticker__share">الإرسال عبر قائمة المشاركة</string>
+    <string name="sticker__source_browse">تصفح الملفات…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">مجلد الملصقات</string>
 </resources>

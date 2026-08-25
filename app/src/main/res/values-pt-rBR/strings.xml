@@ -1797,8 +1797,8 @@
     <string name="sticker__section_favorites">Favoritas</string>
     <string name="sticker__section_recent">Usadas recentemente</string>
     <string name="sticker__section_rest">Todas as figurinhas</string>
-    <string name="sticker__pin">Fixar</string>
-    <string name="sticker__unpin">Desafixar</string>
+    <string name="sticker__pin">Adicionar aos favoritos</string>
+    <string name="sticker__unpin">Remover dos favoritos</string>
     <string name="sticker__setup_needed">Escolha uma pasta para usar suas próprias figurinhas</string>
     <string name="sticker__setup_needed_action">Abrir configurações</string>
     <string name="sticker__folder_empty">Nenhuma imagem nesta pasta</string>
@@ -1853,4 +1853,8 @@
     <string name="sticker__packs_loading">Lendo a pasta…</string>
     <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de figurinhas.</string>
     <string name="sticker__share">Enviar pelo compartilhamento</string>
+    <string name="sticker__source_browse">Procurar arquivos…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Pasta de figurinhas</string>
 </resources>

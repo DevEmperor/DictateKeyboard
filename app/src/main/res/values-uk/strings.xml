@@ -1836,8 +1836,8 @@
     <string name="sticker__section_favorites">Улюблені</string>
     <string name="sticker__section_recent">Нещодавні</string>
     <string name="sticker__section_rest">Усі стікери</string>
-    <string name="sticker__pin">Закріпити</string>
-    <string name="sticker__unpin">Відкріпити</string>
+    <string name="sticker__pin">До обраного</string>
+    <string name="sticker__unpin">Прибрати з обраного</string>
     <string name="sticker__setup_needed">Виберіть теку, щоб використовувати власні стікери</string>
     <string name="sticker__setup_needed_action">Відкрити налаштування</string>
     <string name="sticker__folder_empty">У цій теці немає зображень</string>
@@ -1892,4 +1892,8 @@
     <string name="sticker__packs_loading">Читання теки…</string>
     <string name="sticker__packs_empty">Наборів поки немає. Набір — це підтека вашої теки зі стікерами.</string>
     <string name="sticker__share">Надіслати через «Поділитися»</string>
+    <string name="sticker__source_browse">Вибрати файли…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Тека зі стікерами</string>
 </resources>

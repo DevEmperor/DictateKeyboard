@@ -1864,8 +1864,8 @@
     <string name="sticker__section_favorites">Preferits</string>
     <string name="sticker__section_recent">Utilitzats recentment</string>
     <string name="sticker__section_rest">Tots els adhesius</string>
-    <string name="sticker__pin">Fixa</string>
-    <string name="sticker__unpin">Deixa de fixar</string>
+    <string name="sticker__pin">Afegeix a preferits</string>
+    <string name="sticker__unpin">Treu dels preferits</string>
     <string name="sticker__setup_needed">Trieu una carpeta per fer servir els vostres adhesius</string>
     <string name="sticker__setup_needed_action">Obre la configuració</string>
     <string name="sticker__folder_empty">No hi ha imatges en aquesta carpeta</string>
@@ -1920,4 +1920,8 @@
     <string name="sticker__packs_loading">S\'està llegint la carpeta…</string>
     <string name="sticker__packs_empty">Encara no hi ha paquets. Un paquet és una subcarpeta de la carpeta d\'adhesius.</string>
     <string name="sticker__share">Envia amb el diàleg de compartir</string>
+    <string name="sticker__source_browse">Explora els fitxers…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Carpeta d\'adhesius</string>
 </resources>

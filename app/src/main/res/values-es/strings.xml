@@ -1970,8 +1970,8 @@
     <string name="sticker__section_favorites">Favoritos</string>
     <string name="sticker__section_recent">Usados recientemente</string>
     <string name="sticker__section_rest">Todos los adhesivos</string>
-    <string name="sticker__pin">Fijar</string>
-    <string name="sticker__unpin">Dejar de fijar</string>
+    <string name="sticker__pin">Añadir a favoritos</string>
+    <string name="sticker__unpin">Quitar de favoritos</string>
     <string name="sticker__setup_needed">Elige una carpeta para usar tus propios adhesivos</string>
     <string name="sticker__setup_needed_action">Abrir ajustes</string>
     <string name="sticker__folder_empty">No hay imágenes en esta carpeta</string>
@@ -2026,4 +2026,8 @@
     <string name="sticker__packs_loading">Leyendo la carpeta…</string>
     <string name="sticker__packs_empty">Aún no hay paquetes. Un paquete es una subcarpeta de tu carpeta de adhesivos.</string>
     <string name="sticker__share">Enviar con el diálogo de compartir</string>
+    <string name="sticker__source_browse">Explorar archivos…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Carpeta de adhesivos</string>
 </resources>

@@ -272,6 +272,7 @@ fun MediaScreen() = FlorisScreen {
         val importState by StickerImports.state.collectFlowAsState()
         var sourcePickerOpen by remember { mutableStateOf(false) }
         var packManagerOpen by remember { mutableStateOf(false) }
+        var rescanning by remember { mutableStateOf(false) }
         // Which folder the picker should open in. Read at launch time rather than baked into the
         // contract, so one launcher serves every source in the list.
         var pendingSource by remember { mutableStateOf<Uri?>(null) }
@@ -314,6 +315,40 @@ fun MediaScreen() = FlorisScreen {
                 title = stringRes(R.string.prefs__media__sticker_folder__title),
                 summary = stickerFolderName.ifBlank { stickerFolderUnset },
                 onClick = { stickerFolderPicker.launch(null) },
+                trailing = {
+                    // Re-reading the folder belongs to the folder, not to a row of its own — and it
+                    // has to show that it is working, or a long scan looks like a dead tap.
+                    if (stickerFolderUri.isNotBlank()) {
+                        if (rescanning) {
+                            CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                        } else {
+                            IconButton(
+                                modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
+                                onClick = {
+                                    rescanning = true
+                                    scope.launch {
+                                        try {
+                                            val index = StickerScanner.scan(context, stickerFolderUri.toUri())
+                                            StickerScanner.saveCached(context, index)
+                                            context.showLongToast(
+                                                R.string.sticker__rescan_done,
+                                                "n" to index.allItems.size,
+                                            )
+                                        } catch (e: Exception) {
+                                            context.showLongToast(R.string.sticker__access_lost)
+                                        }
+                                        rescanning = false
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Refresh,
+                                    contentDescription = stringRes(R.string.prefs__media__sticker_rescan),
+                                )
+                            }
+                        }
+                    }
+                },
             )
             if (stickerFolderUri.isNotBlank()) {
                 val running = importState
@@ -339,21 +374,13 @@ fun MediaScreen() = FlorisScreen {
                         },
                     )
                 } else {
+                    // One row, one dialog. Browsing for files and starting in another app's folder
+                    // are the same act with a different starting point, so they are one list now.
                     Preference(
                         icon = Icons.Outlined.AddPhotoAlternate,
                         modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_add"),
                         title = stringRes(R.string.prefs__media__sticker_add),
                         summary = stringRes(R.string.prefs__media__sticker_add__summary),
-                        onClick = {
-                            pendingSource = null
-                            imagePicker.launch(StickerImportMimeTypes)
-                        },
-                    )
-                    Preference(
-                        icon = Icons.Outlined.Apps,
-                        modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_import_source"),
-                        title = stringRes(R.string.prefs__media__sticker_import_source),
-                        summary = stringRes(R.string.prefs__media__sticker_import_source__summary),
                         onClick = { sourcePickerOpen = true },
                     )
                 }
@@ -364,26 +391,6 @@ fun MediaScreen() = FlorisScreen {
                     summary = stringRes(R.string.prefs__media__sticker_packs__summary),
                     onClick = { packManagerOpen = true },
                 )
-                Preference(
-                    icon = Icons.Outlined.Refresh,
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
-                    title = stringRes(R.string.prefs__media__sticker_rescan),
-                    summary = stringRes(R.string.prefs__media__sticker_rescan__summary),
-                    onClick = {
-                        scope.launch {
-                            try {
-                                val index = StickerScanner.scan(context, stickerFolderUri.toUri())
-                                StickerScanner.saveCached(context, index)
-                                context.showLongToast(
-                                    R.string.sticker__rescan_done,
-                                    "n" to index.allItems.size,
-                                )
-                            } catch (e: Exception) {
-                                context.showLongToast(R.string.sticker__access_lost)
-                            }
-                        }
-                    },
-                )
                 DialogSliderPreference(
                     prefs.sticker.thumbnailSize,
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_thumbnail_size"),
@@ -392,13 +399,6 @@ fun MediaScreen() = FlorisScreen {
                     min = 56,
                     max = 160,
                     stepIncrement = 4,
-                )
-                SwitchPreference(
-                    prefs.sticker.historyEnabled,
-                    icon = Icons.Outlined.Schedule,
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_history_enabled"),
-                    title = stringRes(R.string.prefs__media__sticker_history_enabled),
-                    summary = stringRes(R.string.prefs__media__sticker_history_enabled__summary),
                 )
                 DialogSliderPreference(
                     prefs.sticker.historyRecentMaxSize,
@@ -410,7 +410,6 @@ fun MediaScreen() = FlorisScreen {
                     min = 1,
                     max = 50,
                     stepIncrement = 1,
-                    enabledIf = { prefs.sticker.historyEnabled.isTrue() },
                 )
                 Preference(
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_pinned_reset"),
@@ -443,6 +442,11 @@ fun MediaScreen() = FlorisScreen {
                 onPick = { source ->
                     sourcePickerOpen = false
                     pendingSource = source
+                    imagePicker.launch(StickerImportMimeTypes)
+                },
+                onBrowse = {
+                    sourcePickerOpen = false
+                    pendingSource = null
                     imagePicker.launch(StickerImportMimeTypes)
                 },
                 onDismiss = { sourcePickerOpen = false },
@@ -687,6 +691,7 @@ private data class StickerSource(val labelRes: Int, val uri: Uri)
 @Composable
 private fun StickerSourceDialog(
     onPick: (Uri) -> Unit,
+    onBrowse: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     val sources = remember {
@@ -694,6 +699,9 @@ private fun StickerSourceDialog(
             StickerSource(R.string.sticker__source_whatsapp, StickerWriter.mediaFolderHint("com.whatsapp", "WhatsApp/Media/WhatsApp Stickers")),
             StickerSource(R.string.sticker__source_whatsapp_business, StickerWriter.mediaFolderHint("com.whatsapp.w4b", "WhatsApp Business/Media/WhatsApp Business Stickers")),
             StickerSource(R.string.sticker__source_telegram, StickerWriter.mediaFolderHint("org.telegram.messenger", "Telegram")),
+            StickerSource(R.string.sticker__source_threema, StickerWriter.mediaFolderHint("ch.threema.app", "Threema")),
+            StickerSource(R.string.sticker__source_signal, StickerWriter.mediaFolderHint("org.thoughtcrime.securesms", "Signal/Media")),
+            StickerSource(R.string.sticker__source_stickers_folder, StickerWriter.publicFolderHint("Pictures/Stickers")),
             StickerSource(R.string.sticker__source_downloads, StickerWriter.publicFolderHint("Download")),
             StickerSource(R.string.sticker__source_pictures, StickerWriter.publicFolderHint("Pictures")),
             StickerSource(R.string.sticker__source_dcim, StickerWriter.publicFolderHint("DCIM")),
@@ -701,11 +709,24 @@ private fun StickerSourceDialog(
     }
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
-        title = stringRes(R.string.prefs__media__sticker_import_source),
+        title = stringRes(R.string.prefs__media__sticker_add),
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
     ) {
         Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onBrowse() }
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null)
+                Text(
+                    text = stringRes(R.string.sticker__source_browse),
+                    modifier = Modifier.padding(start = 12.dp),
+                )
+            }
             for (source in sources) {
                 Row(
                     modifier = Modifier

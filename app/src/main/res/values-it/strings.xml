@@ -1772,8 +1772,8 @@
     <string name="sticker__section_favorites">Preferiti</string>
     <string name="sticker__section_recent">Usati di recente</string>
     <string name="sticker__section_rest">Tutti gli adesivi</string>
-    <string name="sticker__pin">Fissa</string>
-    <string name="sticker__unpin">Non fissare più</string>
+    <string name="sticker__pin">Aggiungi ai preferiti</string>
+    <string name="sticker__unpin">Rimuovi dai preferiti</string>
     <string name="sticker__setup_needed">Scegli una cartella per usare i tuoi adesivi</string>
     <string name="sticker__setup_needed_action">Apri le impostazioni</string>
     <string name="sticker__folder_empty">Nessuna immagine in questa cartella</string>
@@ -1828,4 +1828,8 @@
     <string name="sticker__packs_loading">Lettura della cartella…</string>
     <string name="sticker__packs_empty">Ancora nessun pacchetto. Un pacchetto è una sottocartella della tua cartella di adesivi.</string>
     <string name="sticker__share">Invia con la condivisione</string>
+    <string name="sticker__source_browse">Sfoglia i file…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Cartella degli adesivi</string>
 </resources>

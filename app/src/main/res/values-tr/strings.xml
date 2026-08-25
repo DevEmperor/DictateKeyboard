@@ -1967,8 +1967,8 @@
     <string name="sticker__section_favorites">Favoriler</string>
     <string name="sticker__section_recent">Son kullanılanlar</string>
     <string name="sticker__section_rest">Tüm çıkartmalar</string>
-    <string name="sticker__pin">Sabitle</string>
-    <string name="sticker__unpin">Sabitlemeyi kaldır</string>
+    <string name="sticker__pin">Favorilere ekle</string>
+    <string name="sticker__unpin">Favorilerden çıkar</string>
     <string name="sticker__setup_needed">Kendi çıkartmalarınızı kullanmak için bir klasör seçin</string>
     <string name="sticker__setup_needed_action">Ayarları aç</string>
     <string name="sticker__folder_empty">Bu klasörde görsel yok</string>
@@ -2023,4 +2023,8 @@
     <string name="sticker__packs_loading">Klasör okunuyor…</string>
     <string name="sticker__packs_empty">Henüz paket yok. Paket, çıkartma klasörünüzün bir alt klasörüdür.</string>
     <string name="sticker__share">Paylaşım menüsüyle gönder</string>
+    <string name="sticker__source_browse">Dosyalara göz at…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Çıkartma klasörü</string>
 </resources>

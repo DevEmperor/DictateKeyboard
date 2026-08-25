@@ -1864,8 +1864,8 @@
     <string name="sticker__section_favorites">Favoris</string>
     <string name="sticker__section_recent">Récemment utilisés</string>
     <string name="sticker__section_rest">Tous les autocollants</string>
-    <string name="sticker__pin">Épingler</string>
-    <string name="sticker__unpin">Désépingler</string>
+    <string name="sticker__pin">Ajouter aux favoris</string>
+    <string name="sticker__unpin">Retirer des favoris</string>
     <string name="sticker__setup_needed">Choisissez un dossier pour utiliser vos propres autocollants</string>
     <string name="sticker__setup_needed_action">Ouvrir les paramètres</string>
     <string name="sticker__folder_empty">Aucune image dans ce dossier</string>
@@ -1920,4 +1920,8 @@
     <string name="sticker__packs_loading">Lecture du dossier…</string>
     <string name="sticker__packs_empty">Aucun pack pour l\'instant. Un pack est un sous-dossier de votre dossier d\'autocollants.</string>
     <string name="sticker__share">Envoyer via le partage</string>
+    <string name="sticker__source_browse">Parcourir les fichiers…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Dossier d\'autocollants</string>
 </resources>

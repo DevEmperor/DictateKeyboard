@@ -1888,8 +1888,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__section_favorites">Favorieten</string>
     <string name="sticker__section_recent">Onlangs gebruikt</string>
     <string name="sticker__section_rest">Alle stickers</string>
-    <string name="sticker__pin">Vastzetten</string>
-    <string name="sticker__unpin">Losmaken</string>
+    <string name="sticker__pin">Aan favorieten toevoegen</string>
+    <string name="sticker__unpin">Uit favorieten verwijderen</string>
     <string name="sticker__setup_needed">Kies een map om je eigen stickers te gebruiken</string>
     <string name="sticker__setup_needed_action">Instellingen openen</string>
     <string name="sticker__folder_empty">Geen afbeeldingen in deze map</string>
@@ -1944,4 +1944,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__packs_loading">Map wordt gelezen…</string>
     <string name="sticker__packs_empty">Nog geen pakketten. Een pakket is een submap van je stickermap.</string>
     <string name="sticker__share">Versturen via delen</string>
+    <string name="sticker__source_browse">Bestanden bladeren…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Stickermap</string>
 </resources>

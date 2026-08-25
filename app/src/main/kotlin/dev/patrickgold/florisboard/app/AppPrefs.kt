@@ -978,11 +978,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // Smallest thumbnail width in dp; the grid fits as many columns as this allows.
         val thumbnailSize = int(
             key = "sticker__thumbnail_size",
-            default = 96,
-        )
-        val historyEnabled = boolean(
-            key = "sticker__history_enabled",
-            default = true,
+            default = 72,
         )
         val historyRecentMaxSize = int(
             key = "sticker__history_recent_max_size",

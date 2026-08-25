@@ -1944,8 +1944,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__section_favorites">Favorit</string>
     <string name="sticker__section_recent">Baru digunakan</string>
     <string name="sticker__section_rest">Semua stiker</string>
-    <string name="sticker__pin">Sematkan</string>
-    <string name="sticker__unpin">Lepas sematan</string>
+    <string name="sticker__pin">Tambahkan ke favorit</string>
+    <string name="sticker__unpin">Hapus dari favorit</string>
     <string name="sticker__setup_needed">Pilih folder untuk memakai stiker milikmu sendiri</string>
     <string name="sticker__setup_needed_action">Buka pengaturan</string>
     <string name="sticker__folder_empty">Tidak ada gambar di folder ini</string>
@@ -2000,4 +2000,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__packs_loading">Membaca folder…</string>
     <string name="sticker__packs_empty">Belum ada paket. Paket adalah subfolder dari folder stikermu.</string>
     <string name="sticker__share">Kirim lewat menu bagikan</string>
+    <string name="sticker__source_browse">Telusuri berkas…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Folder stiker</string>
 </resources>

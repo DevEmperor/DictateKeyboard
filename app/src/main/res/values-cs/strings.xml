@@ -2003,8 +2003,8 @@
     <string name="sticker__section_favorites">Oblíbené</string>
     <string name="sticker__section_recent">Naposledy použité</string>
     <string name="sticker__section_rest">Všechny samolepky</string>
-    <string name="sticker__pin">Připnout</string>
-    <string name="sticker__unpin">Odepnout</string>
+    <string name="sticker__pin">Přidat k oblíbeným</string>
+    <string name="sticker__unpin">Odebrat z oblíbených</string>
     <string name="sticker__setup_needed">Vyberte složku, abyste mohli používat vlastní samolepky</string>
     <string name="sticker__setup_needed_action">Otevřít nastavení</string>
     <string name="sticker__folder_empty">V této složce nejsou žádné obrázky</string>
@@ -2059,4 +2059,8 @@
     <string name="sticker__packs_loading">Načítá se složka…</string>
     <string name="sticker__packs_empty">Zatím žádné balíčky. Balíček je podsložka vaší složky se samolepkami.</string>
     <string name="sticker__share">Odeslat přes sdílení</string>
+    <string name="sticker__source_browse">Procházet soubory…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Složka se samolepkami</string>
 </resources>

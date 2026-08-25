@@ -1983,8 +1983,8 @@
     <string name="sticker__section_favorites">收藏</string>
     <string name="sticker__section_recent">最近使用</string>
     <string name="sticker__section_rest">所有贴纸</string>
-    <string name="sticker__pin">固定</string>
-    <string name="sticker__unpin">取消固定</string>
+    <string name="sticker__pin">添加到收藏</string>
+    <string name="sticker__unpin">从收藏中移除</string>
     <string name="sticker__setup_needed">选择一个文件夹以使用你自己的贴纸</string>
     <string name="sticker__setup_needed_action">打开设置</string>
     <string name="sticker__folder_empty">此文件夹中没有图片</string>
@@ -2039,4 +2039,8 @@
     <string name="sticker__packs_loading">正在读取文件夹…</string>
     <string name="sticker__packs_empty">还没有贴纸包。贴纸包就是贴纸文件夹下的子文件夹。</string>
     <string name="sticker__share">通过分享菜单发送</string>
+    <string name="sticker__source_browse">浏览文件…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">贴纸文件夹</string>
 </resources>

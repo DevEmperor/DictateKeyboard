@@ -113,7 +113,6 @@ object StickerHistoryHelper {
 
     /** Records a use in [categoryId] and in the combined list. Pinned stickers stay where they are. */
     suspend fun markUsed(prefs: FlorisPreferenceModel, categoryId: String, docId: String) {
-        if (!prefs.sticker.historyEnabled.get()) return
         val maxSize = prefs.sticker.historyRecentMaxSize.get()
         edit(prefs) { pinned, recent ->
             if (docId !in pinned[categoryId].orEmpty()) {

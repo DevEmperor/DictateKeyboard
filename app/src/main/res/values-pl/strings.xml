@@ -2004,8 +2004,8 @@
     <string name="sticker__section_favorites">Ulubione</string>
     <string name="sticker__section_recent">Ostatnio używane</string>
     <string name="sticker__section_rest">Wszystkie naklejki</string>
-    <string name="sticker__pin">Przypnij</string>
-    <string name="sticker__unpin">Odepnij</string>
+    <string name="sticker__pin">Dodaj do ulubionych</string>
+    <string name="sticker__unpin">Usuń z ulubionych</string>
     <string name="sticker__setup_needed">Wybierz folder, aby używać własnych naklejek</string>
     <string name="sticker__setup_needed_action">Otwórz ustawienia</string>
     <string name="sticker__folder_empty">Brak obrazów w tym folderze</string>
@@ -2060,4 +2060,8 @@
     <string name="sticker__packs_loading">Odczytywanie folderu…</string>
     <string name="sticker__packs_empty">Jeszcze nie ma pakietów. Pakiet to podfolder twojego folderu z naklejkami.</string>
     <string name="sticker__share">Wyślij przez udostępnianie</string>
+    <string name="sticker__source_browse">Przeglądaj pliki…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Folder z naklejkami</string>
 </resources>

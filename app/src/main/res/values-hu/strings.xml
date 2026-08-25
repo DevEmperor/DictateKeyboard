@@ -1987,8 +1987,8 @@
     <string name="sticker__section_favorites">Kedvencek</string>
     <string name="sticker__section_recent">Nemrég használt</string>
     <string name="sticker__section_rest">Minden matrica</string>
-    <string name="sticker__pin">Kitűzés</string>
-    <string name="sticker__unpin">Kitűzés megszüntetése</string>
+    <string name="sticker__pin">Hozzáadás a kedvencekhez</string>
+    <string name="sticker__unpin">Eltávolítás a kedvencekből</string>
     <string name="sticker__setup_needed">Válassz egy mappát a saját matricáid használatához</string>
     <string name="sticker__setup_needed_action">Beállítások megnyitása</string>
     <string name="sticker__folder_empty">Nincs kép ebben a mappában</string>
@@ -2043,4 +2043,8 @@
     <string name="sticker__packs_loading">Mappa beolvasása…</string>
     <string name="sticker__packs_empty">Még nincs csomag. A csomag a matricamappád egy almappája.</string>
     <string name="sticker__share">Küldés a megosztás menüvel</string>
+    <string name="sticker__source_browse">Fájlok tallózása…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Matricamappa</string>
 </resources>

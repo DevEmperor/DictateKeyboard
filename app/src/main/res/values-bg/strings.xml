@@ -1989,8 +1989,8 @@
     <string name="sticker__section_favorites">Любими</string>
     <string name="sticker__section_recent">Наскоро използвани</string>
     <string name="sticker__section_rest">Всички стикери</string>
-    <string name="sticker__pin">Закачи</string>
-    <string name="sticker__unpin">Откачи</string>
+    <string name="sticker__pin">Добави в любими</string>
+    <string name="sticker__unpin">Премахни от любими</string>
     <string name="sticker__setup_needed">Изберете папка, за да използвате собствените си стикери</string>
     <string name="sticker__setup_needed_action">Отвори настройките</string>
     <string name="sticker__folder_empty">В тази папка няма изображения</string>
@@ -2045,4 +2045,8 @@
     <string name="sticker__packs_loading">Папката се чете…</string>
     <string name="sticker__packs_empty">Още няма пакети. Пакетът е подпапка в папката ви със стикери.</string>
     <string name="sticker__share">Изпращане чрез споделяне</string>
+    <string name="sticker__source_browse">Преглед на файлове…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Папка със стикери</string>
 </resources>

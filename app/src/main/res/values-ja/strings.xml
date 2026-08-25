@@ -1921,8 +1921,8 @@
     <string name="sticker__section_favorites">お気に入り</string>
     <string name="sticker__section_recent">最近使ったもの</string>
     <string name="sticker__section_rest">すべてのステッカー</string>
-    <string name="sticker__pin">固定</string>
-    <string name="sticker__unpin">固定を解除</string>
+    <string name="sticker__pin">お気に入りに追加</string>
+    <string name="sticker__unpin">お気に入りから削除</string>
     <string name="sticker__setup_needed">自分のステッカーを使うにはフォルダを選択してください</string>
     <string name="sticker__setup_needed_action">設定を開く</string>
     <string name="sticker__folder_empty">このフォルダに画像がありません</string>
@@ -1977,4 +1977,8 @@
     <string name="sticker__packs_loading">フォルダを読み込んでいます…</string>
     <string name="sticker__packs_empty">まだパックがありません。パックはステッカーフォルダのサブフォルダです。</string>
     <string name="sticker__share">共有メニューから送る</string>
+    <string name="sticker__source_browse">ファイルを参照…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">ステッカーのフォルダ</string>
 </resources>

@@ -1968,8 +1968,8 @@
     <string name="sticker__section_favorites">Favoritos</string>
     <string name="sticker__section_recent">Usados recentemente</string>
     <string name="sticker__section_rest">Todos os autocolantes</string>
-    <string name="sticker__pin">Fixar</string>
-    <string name="sticker__unpin">Desafixar</string>
+    <string name="sticker__pin">Adicionar aos favoritos</string>
+    <string name="sticker__unpin">Remover dos favoritos</string>
     <string name="sticker__setup_needed">Escolha uma pasta para usar os seus autocolantes</string>
     <string name="sticker__setup_needed_action">Abrir definições</string>
     <string name="sticker__folder_empty">Não há imagens nesta pasta</string>
@@ -2024,4 +2024,8 @@
     <string name="sticker__packs_loading">A ler a pasta…</string>
     <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de autocolantes.</string>
     <string name="sticker__share">Enviar pela partilha</string>
+    <string name="sticker__source_browse">Procurar ficheiros…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Pasta de autocolantes</string>
 </resources>

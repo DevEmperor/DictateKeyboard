@@ -74,6 +74,7 @@ import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsSt
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -307,7 +308,8 @@ fun GifPanel(
                                 columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(1f),
+                                    .weight(1f)
+                                    .panelScrollbar(gridState, accent),
                                 contentPadding = PaddingValues(4.dp),
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                                 verticalItemSpacing = 4.dp,

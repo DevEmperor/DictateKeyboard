@@ -1864,8 +1864,8 @@
     <string name="sticker__section_favorites">Favoriten</string>
     <string name="sticker__section_recent">Zuletzt verwendet</string>
     <string name="sticker__section_rest">Alle Sticker</string>
-    <string name="sticker__pin">Anheften</string>
-    <string name="sticker__unpin">Lösen</string>
+    <string name="sticker__pin">Zu Favoriten hinzufügen</string>
+    <string name="sticker__unpin">Aus Favoriten entfernen</string>
     <string name="sticker__setup_needed">Wähle einen Ordner, um eigene Sticker zu verwenden</string>
     <string name="sticker__setup_needed_action">Einstellungen öffnen</string>
     <string name="sticker__folder_empty">Keine Bilder in diesem Ordner</string>
@@ -1920,4 +1920,8 @@
     <string name="sticker__packs_loading">Ordner wird gelesen…</string>
     <string name="sticker__packs_empty">Noch keine Packs. Ein Pack ist ein Unterordner deines Sticker-Ordners.</string>
     <string name="sticker__share">Über Teilen senden</string>
+    <string name="sticker__source_browse">Dateien durchsuchen…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Sticker-Ordner</string>
 </resources>

@@ -1992,8 +1992,8 @@
     <string name="sticker__section_favorites">Избранные</string>
     <string name="sticker__section_recent">Недавние</string>
     <string name="sticker__section_rest">Все стикеры</string>
-    <string name="sticker__pin">Закрепить</string>
-    <string name="sticker__unpin">Открепить</string>
+    <string name="sticker__pin">В избранное</string>
+    <string name="sticker__unpin">Убрать из избранного</string>
     <string name="sticker__setup_needed">Выберите папку, чтобы использовать свои стикеры</string>
     <string name="sticker__setup_needed_action">Открыть настройки</string>
     <string name="sticker__folder_empty">В этой папке нет изображений</string>
@@ -2048,4 +2048,8 @@
     <string name="sticker__packs_loading">Чтение папки…</string>
     <string name="sticker__packs_empty">Наборов пока нет. Набор — это подпапка вашей папки со стикерами.</string>
     <string name="sticker__share">Отправить через «Поделиться»</string>
+    <string name="sticker__source_browse">Выбрать файлы…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Папка со стикерами</string>
 </resources>

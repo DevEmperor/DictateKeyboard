@@ -56,8 +56,8 @@
     <string name="sticker__section_favorites" comment="Section heading above pinned stickers">Favourites</string>
     <string name="sticker__section_recent" comment="Section heading above recently used stickers">Recently used</string>
     <string name="sticker__section_rest" comment="Section heading above the remaining stickers of a folder">All stickers</string>
-    <string name="sticker__pin" comment="Long-press action, adds a sticker to the favourites">Pin</string>
-    <string name="sticker__unpin" comment="Long-press action, removes a sticker from the favourites">Unpin</string>
+    <string name="sticker__pin" comment="Long-press action, adds a sticker to the favourites">Add to favourites</string>
+    <string name="sticker__unpin" comment="Long-press action, removes a sticker from the favourites">Remove from favourites</string>
     <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>
     <string name="sticker__setup_needed_action" comment="Button that opens the settings screen">Open settings</string>
     <string name="sticker__folder_empty" comment="Empty state when the chosen folder holds no usable images">No images in this folder</string>
@@ -88,6 +88,10 @@
     <string name="prefs__media__sticker_import_source__summary" comment="Preference summary">Open the file picker straight in a folder another app writes to</string>
     <string name="prefs__media__sticker_packs" comment="Preference title, opens the pack manager">Sticker packs</string>
     <string name="prefs__media__sticker_packs__summary" comment="Preference summary; packs are the subfolders of the chosen folder">Create, rename and delete the folders your stickers are sorted into</string>
+    <string name="sticker__source_browse" comment="First entry in the sticker source list: pick files from anywhere">Browse files…</string>
+    <string name="sticker__source_threema" comment="Entry in the list of places to fetch stickers from">Threema</string>
+    <string name="sticker__source_signal" comment="Entry in the list of places to fetch stickers from">Signal</string>
+    <string name="sticker__source_stickers_folder" comment="Entry in the list of places to fetch stickers from; a plain Pictures/Stickers folder">Stickers folder</string>
     <string name="sticker__source_whatsapp" comment="Entry in the list of places to fetch stickers from">WhatsApp</string>
     <string name="sticker__source_whatsapp_business" comment="Entry in the list of places to fetch stickers from">WhatsApp Business</string>
     <string name="sticker__source_telegram" comment="Entry in the list of places to fetch stickers from">Telegram</string>

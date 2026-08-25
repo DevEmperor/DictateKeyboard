@@ -1932,8 +1932,8 @@
     <string name="sticker__section_favorites">Izlase</string>
     <string name="sticker__section_recent">Nesen lietotās</string>
     <string name="sticker__section_rest">Visas uzlīmes</string>
-    <string name="sticker__pin">Piespraust</string>
-    <string name="sticker__unpin">Atspraust</string>
+    <string name="sticker__pin">Pievienot izlasei</string>
+    <string name="sticker__unpin">Noņemt no izlases</string>
     <string name="sticker__setup_needed">Izvēlieties mapi, lai lietotu savas uzlīmes</string>
     <string name="sticker__setup_needed_action">Atvērt iestatījumus</string>
     <string name="sticker__folder_empty">Šajā mapē nav attēlu</string>
@@ -1988,4 +1988,8 @@
     <string name="sticker__packs_loading">Notiek mapes lasīšana…</string>
     <string name="sticker__packs_empty">Pagaidām nav neviena pakas. Paka ir jūsu uzlīmju mapes apakšmape.</string>
     <string name="sticker__share">Sūtīt ar kopīgošanas izvēlni</string>
+    <string name="sticker__source_browse">Pārlūkot failus…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Uzlīmju mape</string>
 </resources>

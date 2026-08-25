@@ -86,6 +86,7 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -116,7 +117,6 @@ fun StickerPanel(
     val accent by prefs.theme.accentColor.collectPrefAsState()
     val folderUri by prefs.sticker.folderUri.collectPrefAsState()
     val thumbnailSize by prefs.sticker.thumbnailSize.collectPrefAsState()
-    val historyEnabled by prefs.sticker.historyEnabled.collectPrefAsState()
     val history by prefs.sticker.historyData.collectPrefAsState()
     val scope = rememberCoroutineScope()
 
@@ -126,6 +126,9 @@ fun StickerPanel(
     // Bumped after a deletion so the folder is read again; nothing else invalidates while the panel
     // is open, since anything added from elsewhere arrives with the panel closed.
     var reloadToken by remember { mutableIntStateOf(0) }
+    // The sticker whose file is being re-encoded right now. A second of silence reads as a broken
+    // tap; a second with a ring on the cell reads as work.
+    var preparingDocId by remember { mutableStateOf<String?>(null) }
     val canWrite = remember(folderUri) { StickerWriter.canWrite(context, folderUri) }
     // An import started from the settings screen finishes while this panel may already be composed.
     val importedTick by StickerImports.importedTick.collectAsState()
@@ -172,7 +175,10 @@ fun StickerPanel(
     fun insert(item: StickerItem, categoryId: String) {
         val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
         scope.launch {
-            when (StickerManager.insert(context, treeUri, item, categoryId)) {
+            val outcome = StickerManager.insert(context, treeUri, item, categoryId) { preparing ->
+                preparingDocId = if (preparing) item.docId else null
+            }
+            when (outcome) {
                 EditorInstance.MediaCommitResult.COMMITTED ->
                     keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
                 EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD -> {
@@ -346,10 +352,11 @@ fun StickerPanel(
                             pool = pool,
                             historyKey = historyKey,
                             history = history,
-                            historyEnabled = historyEnabled,
+                            preparingDocId = preparingDocId,
                             thumbnailSize = thumbnailSize,
                             treeUri = treeUri,
                             restLabel = restLabel,
+                            accent = accent,
                             canDelete = canWrite,
                             // Every pack, not just the ones with something in them: moving a sticker
                             // into a pack you just created is the whole point of having created it.
@@ -386,10 +393,11 @@ private fun StickerCategoryPage(
     pool: List<StickerItem>,
     historyKey: String,
     history: StickerHistory,
-    historyEnabled: Boolean,
+    preparingDocId: String?,
     thumbnailSize: Int,
     treeUri: Uri,
     restLabel: String,
+    accent: Color,
     canDelete: Boolean,
     packs: List<StickerCategory>,
     packOf: (String) -> String?,
@@ -414,8 +422,7 @@ private fun StickerCategoryPage(
     // Favourites and recents live on the first tab only. Inside a pack every sticker is equal — the
     // pack *is* the sorting, and repeating a sticker at the top under a second heading only made it
     // harder to find the one you came for.
-    val isRoot = category.id == StickerCategory.ROOT_ID
-    val showHistory = historyEnabled && isRoot
+    val showHistory = category.id == StickerCategory.ROOT_ID
     val pinned = if (showHistory) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
     val recent = if (showHistory) history.recentIn(historyKey).mapNotNull { byId[it] } else emptyList()
     val shown = remember(pinned, recent, category.items) {
@@ -437,6 +444,15 @@ private fun StickerCategoryPage(
                 onClick = { onInsert(item) },
                 onLongClick = { menuFor = menuKey; deleteArmed = false; packPickerOpen = false },
             )
+            if (preparingDocId == item.docId) {
+                // Sized to the cell so it reads as "this one is busy" rather than "the panel is busy".
+                Box(
+                    modifier = Modifier.matchParentSize().background(Color(0x66000000)),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                }
+            }
             DropdownMenu(
                 expanded = menuFor == menuKey,
                 onDismissRequest = { menuFor = null; deleteArmed = false; packPickerOpen = false },
@@ -553,7 +569,7 @@ private fun StickerCategoryPage(
         // long scroll with no other clue about where in it you are.
         modifier = Modifier
             .fillMaxSize()
-            .florisScrollbar(gridState),
+            .panelScrollbar(gridState, accent),
         contentPadding = PaddingValues(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
