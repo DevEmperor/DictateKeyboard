@@ -274,6 +274,10 @@ object StickerWriter {
     suspend fun overwrite(context: Context, treeUri: Uri, docId: String, source: File): Boolean =
         withContext(Dispatchers.IO) {
             val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+            // The staged copy and the index still describe the sticker as it was before the first
+            // write-back, so without this the same bytes would be written again on every insert
+            // until the folder is scanned afresh. Equal size means the work is already done.
+            if (describe(context, uri).size == source.length()) return@withContext true
             for (mode in arrayOf("wt", "w")) {
                 try {
                     val written = context.contentResolver.openOutputStream(uri, mode)?.use { out ->
