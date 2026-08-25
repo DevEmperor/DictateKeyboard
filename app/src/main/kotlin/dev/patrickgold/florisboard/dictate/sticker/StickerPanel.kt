@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.DriveFileMove
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FolderOff
+import androidx.compose.material.icons.outlined.Gif
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CircularProgressIndicator
@@ -186,10 +187,10 @@ fun StickerPanel(
         }
     }
 
-    fun insert(item: StickerItem, categoryId: String) {
+    fun insert(item: StickerItem, categoryId: String, asGif: Boolean = false) {
         val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
         scope.launch {
-            val outcome = StickerManager.insert(context, treeUri, item, categoryId) { preparing ->
+            val outcome = StickerManager.insert(context, treeUri, item, categoryId, asGif) { preparing ->
                 preparingDocId = if (preparing) item.docId else null
             }
             when (outcome) {
@@ -383,6 +384,7 @@ fun StickerPanel(
                             onInsert = { item -> insert(item, category.id) },
                             onDelete = { item -> deleteFile(item) },
                             onShare = { item -> shareSticker(item) },
+                            onInsertAsGif = { item -> insert(item, category.id, asGif = true) },
                             onMoveToPack = { item, packId -> moveToPack(item, packId) },
                             onPin = { item ->
                                 scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
@@ -418,6 +420,7 @@ private fun StickerCategoryPage(
     onInsert: (StickerItem) -> Unit,
     onDelete: (StickerItem) -> Unit,
     onShare: (StickerItem) -> Unit,
+    onInsertAsGif: (StickerItem) -> Unit,
     onMoveToPack: (StickerItem, String) -> Unit,
     onPin: (StickerItem) -> Unit,
     onUnpin: (StickerItem) -> Unit,
@@ -542,6 +545,17 @@ private fun StickerCategoryPage(
                         },
                     )
                 }
+                // Offered for WebP only: a GIF is already one, and a PNG has nothing to animate.
+                // Whether this particular WebP moves is not in the index, so the entry shows and the
+                // insert falls back to the ordinary route if there is no animation in the file.
+                if (item.mime == "image/webp") DropdownMenuItem(
+                    text = { Text(stringRes(R.string.sticker__insert_as_gif)) },
+                    leadingIcon = { Icon(Icons.Outlined.Gif, contentDescription = null) },
+                    onClick = {
+                        onInsertAsGif(item)
+                        menuFor = null
+                    },
+                )
                 DropdownMenuItem(
                     text = { Text(stringRes(R.string.sticker__share)) },
                     leadingIcon = { Icon(Icons.Outlined.Share, contentDescription = null) },

@@ -71,6 +71,9 @@ object WebPTranscoder {
     /** Below this many frames the animation stops reading as motion, so frame dropping stops here. */
     private const val MIN_FRAMES = 6
 
+    /** No chat shows a sticker larger than this, and a GIF pays for every pixel twice over. */
+    private const val GIF_MAX_SIZE = 512
+
     /** How many frames are compressed to estimate what the whole animation will weigh. */
     private const val PROBE_FRAMES = 3
 
@@ -121,6 +124,76 @@ object WebPTranscoder {
             runCatching { target.delete() }
             null
         }
+    }
+
+    /**
+     * Rewrites an animated WebP as an animated GIF, or returns null if it is not animated.
+     *
+     * For apps that take a moving picture and show one frame of it. Measured: Signal accepts
+     * `image/webp`, and what arrives in the chat is a still. GIF is the only format in the list it
+     * declares that is guaranteed to move, and Android cannot write one — hence [GifEncoder], and
+     * hence the cost that comes with it: 256 colours and transparency that is either on or off, so a
+     * soft outline gains a hard edge.
+     *
+     * Kept at the sticker's own size rather than enlarged to 512×512. That requirement is WhatsApp's,
+     * and WhatsApp is not who this is for; a GIF of a 240×240 sticker is a quarter of the pixels and
+     * a small fraction of the bytes.
+     */
+    suspend fun toAnimatedGif(context: Context, source: File): File? {
+        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-anim.gif")
+        if (target.exists() && target.length() > 0L) {
+            MediaLog.log("gif: reusing ${target.name} (${target.length()} bytes)")
+            return target
+        }
+        return try {
+            val started = System.currentTimeMillis()
+            val animation = WebPContainer.demux(source.readBytes()) ?: return null
+            val frames = decodeFrames(animation) { bitmap -> withinGifBounds(bitmap) } ?: return null
+            val width = frames[0].bitmap.width
+            val height = frames[0].bitmap.height
+            // Each frame becomes pixels and gives up its bitmap straight away: an animation held
+            // twice over, once as bitmaps and once as integers, is how an IME process runs out of room.
+            val encodable = frames.map { frame ->
+                val pixels = IntArray(width * height)
+                frame.bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+                frame.bitmap.recycle()
+                GifEncoder.Frame(pixels, frame.durationMs)
+            }
+            val bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
+            if (bytes == null) {
+                MediaLog.log("gif: failed for ${source.name}")
+                return null
+            }
+            target.writeBytes(bytes)
+            MediaLog.log(
+                "gif: ${source.name} -> ${bytes.size} bytes, ${width}x$height, " +
+                    "${encodable.size} frames in ${System.currentTimeMillis() - started} ms"
+            )
+            target.takeIf { it.length() > 0L }
+        } catch (e: Exception) {
+            flogError { "Failed to write a GIF of ${source.name}: ${e.message}" }
+            MediaLog.log("gif: ${source.name} threw ${e.javaClass.simpleName}: ${e.message}")
+            runCatching { target.delete() }
+            null
+        } catch (e: OutOfMemoryError) {
+            flogError { "Out of memory writing a GIF of ${source.name}" }
+            MediaLog.log("gif: out of memory on ${source.name}")
+            runCatching { target.delete() }
+            null
+        }
+    }
+
+    /** A copy at its own size, or shrunk if it is larger than a chat is ever going to show. */
+    private fun withinGifBounds(source: Bitmap): Bitmap {
+        val longest = maxOf(source.width, source.height)
+        if (longest <= GIF_MAX_SIZE) return source.copy(Bitmap.Config.ARGB_8888, false)
+        val scale = GIF_MAX_SIZE.toFloat() / longest
+        return Bitmap.createScaledBitmap(
+            source,
+            (source.width * scale).roundToInt().coerceAtLeast(1),
+            (source.height * scale).roundToInt().coerceAtLeast(1),
+            true,
+        )
     }
 
     /**
@@ -181,7 +254,10 @@ object WebPTranscoder {
      * quality ladder instead, which meant every frame was scaled again for each of the six quality
      * attempts — most of the wait went into doing the same work six times.
      */
-    private fun decodeFrames(animation: WebPContainer.Animation): List<DecodedFrame>? {
+    private fun decodeFrames(
+        animation: WebPContainer.Animation,
+        transform: (Bitmap) -> Bitmap = ::fitOnStickerCanvas,
+    ): List<DecodedFrame>? {
         val canvasBitmap = Bitmap.createBitmap(
             animation.canvasWidth, animation.canvasHeight, Bitmap.Config.ARGB_8888,
         )
@@ -196,7 +272,7 @@ object WebPTranscoder {
             // "Do not blend" means the frame's own pixels win outright, transparency included.
             canvas.drawBitmap(piece, null, destination, if (frame.doNotBlend) clearPaint else null)
             piece.recycle()
-            out += DecodedFrame(fitOnStickerCanvas(canvasBitmap), frame.durationMs)
+            out += DecodedFrame(transform(canvasBitmap), frame.durationMs)
             if (frame.disposeToBackground) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             }

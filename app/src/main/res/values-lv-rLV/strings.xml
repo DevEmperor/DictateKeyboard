@@ -1988,6 +1988,7 @@
     <string name="sticker__packs_loading">Notiek mapes lasīšana…</string>
     <string name="sticker__packs_empty">Pagaidām nav neviena pakas. Paka ir jūsu uzlīmju mapes apakšmape.</string>
     <string name="sticker__share">Sūtīt ar kopīgošanas izvēlni</string>
+    <string name="sticker__insert_as_gif">Ievietot kā GIF</string>
     <string name="sticker__source_browse">Pārlūkot failus…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

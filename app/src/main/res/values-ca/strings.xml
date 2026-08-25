@@ -1920,6 +1920,7 @@
     <string name="sticker__packs_loading">S\'està llegint la carpeta…</string>
     <string name="sticker__packs_empty">Encara no hi ha paquets. Un paquet és una subcarpeta de la carpeta d\'adhesius.</string>
     <string name="sticker__share">Envia amb el diàleg de compartir</string>
+    <string name="sticker__insert_as_gif">Insereix com a GIF</string>
     <string name="sticker__source_browse">Explora els fitxers…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

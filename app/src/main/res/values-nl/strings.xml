@@ -1944,6 +1944,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__packs_loading">Map wordt gelezen…</string>
     <string name="sticker__packs_empty">Nog geen pakketten. Een pakket is een submap van je stickermap.</string>
     <string name="sticker__share">Versturen via delen</string>
+    <string name="sticker__insert_as_gif">Als gif invoegen</string>
     <string name="sticker__source_browse">Bestanden bladeren…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

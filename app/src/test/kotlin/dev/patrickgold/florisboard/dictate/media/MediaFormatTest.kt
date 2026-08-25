@@ -136,6 +136,34 @@ class MediaFormatTest {
     }
 
     @Test
+    fun `an app that flattens animation is offered a GIF instead`() {
+        // Measured on the device: Signal declares image/webp, takes an animated one, and puts a still
+        // in the chat. GIF is the only format it declares that is certain to move.
+        val signal = listOf("image/jpeg", "image/png", "image/gif", "image/webp", "image/heic")
+        assertEquals(
+            "image/gif",
+            MediaFormat.negotiate(info("image/webp", animated = true), signal, "org.thoughtcrime.securesms"),
+        )
+        // A still has nothing to gain from it and would only lose colours.
+        assertEquals(
+            "image/webp",
+            MediaFormat.negotiate(info("image/webp", animated = false), signal, "org.thoughtcrime.securesms"),
+        )
+        // Every other app keeps the better format; the list is observations, not a policy.
+        assertEquals(
+            "image/webp",
+            MediaFormat.negotiate(info("image/webp", animated = true), signal, "org.telegram.messenger"),
+        )
+        assertEquals("image/webp", MediaFormat.negotiate(info("image/webp", animated = true), signal))
+        // A vendor sticker type still wins: WhatsApp animates its own stickers properly.
+        val whatsApp = listOf("image/gif", "image/webp.wasticker")
+        assertEquals(
+            "image/webp.wasticker",
+            MediaFormat.negotiate(info("image/webp", animated = true), whatsApp, "com.whatsapp"),
+        )
+    }
+
+    @Test
     fun `an editor that declares nothing is tried with the original`() {
         // The declaration is not a promise, and the attempt answers for itself.
         assertEquals("image/webp", MediaFormat.negotiate(info("image/webp", animated = false), accepted = emptyList()))

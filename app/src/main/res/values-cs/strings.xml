@@ -2059,6 +2059,7 @@
     <string name="sticker__packs_loading">Načítá se složka…</string>
     <string name="sticker__packs_empty">Zatím žádné balíčky. Balíček je podsložka vaší složky se samolepkami.</string>
     <string name="sticker__share">Odeslat přes sdílení</string>
+    <string name="sticker__insert_as_gif">Vložit jako GIF</string>
     <string name="sticker__source_browse">Procházet soubory…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

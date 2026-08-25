@@ -2024,6 +2024,7 @@
     <string name="sticker__packs_loading">A ler a pasta…</string>
     <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de autocolantes.</string>
     <string name="sticker__share">Enviar pela partilha</string>
+    <string name="sticker__insert_as_gif">Inserir como GIF</string>
     <string name="sticker__source_browse">Procurar ficheiros…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

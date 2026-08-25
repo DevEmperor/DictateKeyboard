@@ -194,13 +194,36 @@ object MediaFormat {
      * An editor that declares nothing gets [own]: the declaration is not a promise, and trying costs
      * one call that answers for itself.
      */
-    fun negotiate(info: ImageInfo, accepted: List<String>): String? {
+    /**
+     * Apps that accept a moving picture and then show one frame of it.
+     *
+     * Measured, not guessed, and that is the only thing that may put an entry here: Signal declares
+     * `image/webp`, takes an animated one without complaint, and puts a still into the chat. Its
+     * declaration cannot say that, and no rule derived from the declaration can either — an app that
+     * lists `image/webp` may animate it (a sticker keyboard's main audience does) or may not.
+     *
+     * So this is a list of observations rather than a policy, it is allowed to be incomplete, and
+     * being wrong about an app costs only a little colour depth. For anything not on it there is the
+     * long-press menu, which offers the same conversion by hand.
+     */
+    private val FlattensAnimation = setOf("org.thoughtcrime.securesms")
+
+    /** The animated interchange format: an app that takes a GIF at all is expecting it to move. */
+    const val GIF = "image/gif"
+
+    fun negotiate(info: ImageInfo, accepted: List<String>, editorPackage: String? = null): String? {
         val own = info.mime
         if (accepted.isEmpty()) return own
         // WhatsApp's sticker type for any WebP it will take. Not gated on its published sticker
         // dimensions: those govern sticker packs, and gating on them refused exactly the animated
         // files that other keyboards insert without trouble.
         if (accepted.contains(WA_STICKER) && mayUseVendorStickerType(info)) return WA_STICKER
+        if (
+            info.animated && own != GIF && editorPackage in FlattensAnimation &&
+            accepted.any { matches(GIF, it) }
+        ) {
+            return GIF
+        }
         if (accepted.any { matches(own, it) }) return own
         if (info.animated) return null
         return ConvertibleTargets.firstOrNull { target ->

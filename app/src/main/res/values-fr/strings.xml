@@ -1920,6 +1920,7 @@
     <string name="sticker__packs_loading">Lecture du dossier…</string>
     <string name="sticker__packs_empty">Aucun pack pour l\'instant. Un pack est un sous-dossier de votre dossier d\'autocollants.</string>
     <string name="sticker__share">Envoyer via le partage</string>
+    <string name="sticker__insert_as_gif">Insérer en GIF</string>
     <string name="sticker__source_browse">Parcourir les fichiers…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

@@ -2039,6 +2039,7 @@
     <string name="sticker__packs_loading">正在读取文件夹…</string>
     <string name="sticker__packs_empty">还没有贴纸包。贴纸包就是贴纸文件夹下的子文件夹。</string>
     <string name="sticker__share">通过分享菜单发送</string>
+    <string name="sticker__insert_as_gif">以 GIF 插入</string>
     <string name="sticker__source_browse">浏览文件…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

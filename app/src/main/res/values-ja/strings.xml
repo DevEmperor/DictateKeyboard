@@ -1977,6 +1977,7 @@
     <string name="sticker__packs_loading">フォルダを読み込んでいます…</string>
     <string name="sticker__packs_empty">まだパックがありません。パックはステッカーフォルダのサブフォルダです。</string>
     <string name="sticker__share">共有メニューから送る</string>
+    <string name="sticker__insert_as_gif">GIF として挿入</string>
     <string name="sticker__source_browse">ファイルを参照…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

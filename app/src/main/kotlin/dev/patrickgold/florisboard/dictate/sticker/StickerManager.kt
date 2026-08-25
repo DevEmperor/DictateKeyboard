@@ -113,11 +113,12 @@ object StickerManager {
         treeUri: Uri,
         item: StickerItem,
         categoryId: String,
+        asGif: Boolean = false,
         onPreparing: (Boolean) -> Unit = {},
     ): EditorInstance.MediaCommitResult {
         inserting = true
         try {
-            return insertNow(context, treeUri, item, categoryId, onPreparing)
+            return insertNow(context, treeUri, item, categoryId, asGif, onPreparing)
         } finally {
             inserting = false
         }
@@ -128,6 +129,7 @@ object StickerManager {
         treeUri: Uri,
         item: StickerItem,
         categoryId: String,
+        asGif: Boolean,
         onPreparing: (Boolean) -> Unit,
     ): EditorInstance.MediaCommitResult {
         val file = materialize(context, treeUri, item) ?: return EditorInstance.MediaCommitResult.FAILED
@@ -137,7 +139,13 @@ object StickerManager {
         val accepted = withContext(Dispatchers.Main) { editorInstance.acceptedMediaMimeTypes() }
         val appPackage = withContext(Dispatchers.Main) { editorInstance.activeEditorPackage() }
         val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, item.mime) }
-        val target = MediaFormat.negotiate(info, accepted)
+        // Asked for by hand from the long-press menu, for an app whose habit of flattening animation
+        // nobody has measured yet. The automatic route knows about the ones that have been.
+        val target = if (asGif && info.animated) {
+            MediaFormat.GIF
+        } else {
+            MediaFormat.negotiate(info, accepted, appPackage)
+        }
         MediaLog.log(
             "insert \"${item.name}\": ${info.mime} ${info.width}x${info.height} ${info.bytes} B " +
                 "animated=${info.animated} | app=$appPackage " +
@@ -306,6 +314,9 @@ object StickerManager {
         target == MediaFormat.WA_STICKER && MediaFormat.qualifiesAsWhatsAppSticker(info) -> file
         target == MediaFormat.WA_STICKER ->
             withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(context, file, info.animated) }
+        // The one way to keep a sticker moving in an app that flattens everything else.
+        target == MediaFormat.GIF && info.animated ->
+            withContext(Dispatchers.IO) { WebPTranscoder.toAnimatedGif(context, file) }
         else -> withContext(Dispatchers.IO) { MediaFormat.convert(context, file, target) }
     }
 

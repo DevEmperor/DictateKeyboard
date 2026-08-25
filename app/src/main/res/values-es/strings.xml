@@ -2026,6 +2026,7 @@
     <string name="sticker__packs_loading">Leyendo la carpeta…</string>
     <string name="sticker__packs_empty">Aún no hay paquetes. Un paquete es una subcarpeta de tu carpeta de adhesivos.</string>
     <string name="sticker__share">Enviar con el diálogo de compartir</string>
+    <string name="sticker__insert_as_gif">Insertar como GIF</string>
     <string name="sticker__source_browse">Explorar archivos…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

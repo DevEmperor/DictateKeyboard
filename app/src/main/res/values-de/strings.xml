@@ -1920,6 +1920,7 @@
     <string name="sticker__packs_loading">Ordner wird gelesen…</string>
     <string name="sticker__packs_empty">Noch keine Packs. Ein Pack ist ein Unterordner deines Sticker-Ordners.</string>
     <string name="sticker__share">Über Teilen senden</string>
+    <string name="sticker__insert_as_gif">Als GIF einfügen</string>
     <string name="sticker__source_browse">Dateien durchsuchen…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

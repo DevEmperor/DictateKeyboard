@@ -1903,6 +1903,7 @@
     <string name="sticker__packs_loading">جارٍ قراءة المجلد…</string>
     <string name="sticker__packs_empty">لا توجد حزم بعد. الحزمة هي مجلد فرعي داخل مجلد الملصقات.</string>
     <string name="sticker__share">الإرسال عبر قائمة المشاركة</string>
+    <string name="sticker__insert_as_gif">إدراج كصورة GIF</string>
     <string name="sticker__source_browse">تصفح الملفات…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

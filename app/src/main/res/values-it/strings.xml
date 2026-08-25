@@ -1828,6 +1828,7 @@
     <string name="sticker__packs_loading">Lettura della cartella…</string>
     <string name="sticker__packs_empty">Ancora nessun pacchetto. Un pacchetto è una sottocartella della tua cartella di adesivi.</string>
     <string name="sticker__share">Invia con la condivisione</string>
+    <string name="sticker__insert_as_gif">Inserisci come GIF</string>
     <string name="sticker__source_browse">Sfoglia i file…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

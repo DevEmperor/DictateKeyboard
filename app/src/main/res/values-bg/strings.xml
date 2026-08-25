@@ -2045,6 +2045,7 @@
     <string name="sticker__packs_loading">Папката се чете…</string>
     <string name="sticker__packs_empty">Още няма пакети. Пакетът е подпапка в папката ви със стикери.</string>
     <string name="sticker__share">Изпращане чрез споделяне</string>
+    <string name="sticker__insert_as_gif">Вмъкване като GIF</string>
     <string name="sticker__source_browse">Преглед на файлове…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

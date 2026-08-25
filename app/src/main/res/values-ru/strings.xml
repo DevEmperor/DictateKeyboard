@@ -2048,6 +2048,7 @@
     <string name="sticker__packs_loading">Чтение папки…</string>
     <string name="sticker__packs_empty">Наборов пока нет. Набор — это подпапка вашей папки со стикерами.</string>
     <string name="sticker__share">Отправить через «Поделиться»</string>
+    <string name="sticker__insert_as_gif">Вставить как GIF</string>
     <string name="sticker__source_browse">Выбрать файлы…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

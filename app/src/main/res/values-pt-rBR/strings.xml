@@ -1853,6 +1853,7 @@
     <string name="sticker__packs_loading">Lendo a pasta…</string>
     <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de figurinhas.</string>
     <string name="sticker__share">Enviar pelo compartilhamento</string>
+    <string name="sticker__insert_as_gif">Inserir como GIF</string>
     <string name="sticker__source_browse">Procurar arquivos…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

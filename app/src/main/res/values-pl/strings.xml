@@ -2060,6 +2060,7 @@
     <string name="sticker__packs_loading">Odczytywanie folderu…</string>
     <string name="sticker__packs_empty">Jeszcze nie ma pakietów. Pakiet to podfolder twojego folderu z naklejkami.</string>
     <string name="sticker__share">Wyślij przez udostępnianie</string>
+    <string name="sticker__insert_as_gif">Wstaw jako GIF</string>
     <string name="sticker__source_browse">Przeglądaj pliki…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>

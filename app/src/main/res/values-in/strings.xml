@@ -2000,6 +2000,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__packs_loading">Membaca folder…</string>
     <string name="sticker__packs_empty">Belum ada paket. Paket adalah subfolder dari folder stikermu.</string>
     <string name="sticker__share">Kirim lewat menu bagikan</string>
+    <string name="sticker__insert_as_gif">Sisipkan sebagai GIF</string>
     <string name="sticker__source_browse">Telusuri berkas…</string>
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>
