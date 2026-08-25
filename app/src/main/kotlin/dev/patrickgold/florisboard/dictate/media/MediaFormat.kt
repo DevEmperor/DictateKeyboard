@@ -69,22 +69,29 @@ object MediaFormat {
      */
     const val WA_STICKER = "image/webp.wasticker"
 
+    /** The edge length WhatsApp insists on, exactly, for anything sent under [WA_STICKER]. */
+    const val WA_STICKER_SIZE = 512
+
     /**
-     * Whether a file may be handed over as a WhatsApp sticker.
+     * How large a sticker may be, still and animated.
      *
-     * WhatsApp publishes hard limits for third-party stickers — WebP, exactly 512×512, at most 100 KB
-     * still or 500 KB animated — and enforces them on arrival, with an error dialog rather than a
-     * silent refusal. Offering a file that breaks them therefore *looks* worse than not offering it
-     * at all, which is what happened when every WebP was passed on under this name.
+     * WhatsApp publishes these and enforces them on arrival, with an error dialog rather than a
+     * silent refusal — so a file that breaks them *looks* worse than one that was never offered.
+     */
+    fun waStickerBudget(animated: Boolean): Long =
+        if (animated) 500L * 1024L else 100L * 1024L
+
+    /**
+     * Whether a file is already within WhatsApp's sticker bounds and can be handed over untouched.
      *
      * Measured on a real collection: stickers received in WhatsApp are frequently 900 KB and sized
-     * 256×256 or 498×498. WhatsApp displays them happily — it simply will not take them back.
+     * 256×256 or 498×498. WhatsApp displays them happily — it simply will not take them back, which
+     * is why anything outside these bounds is re-encoded before it is offered under [WA_STICKER].
      */
     internal fun qualifiesAsWhatsAppSticker(info: ImageInfo): Boolean {
         if (info.mime != "image/webp") return false
-        if (info.width != 512 || info.height != 512) return false
-        val limit = if (info.animated) 500L * 1024L else 100L * 1024L
-        return info.bytes in 1..limit
+        if (info.width != WA_STICKER_SIZE || info.height != WA_STICKER_SIZE) return false
+        return info.bytes in 1..waStickerBudget(info.animated)
     }
 
     /**
@@ -257,7 +264,7 @@ object MediaFormat {
         }
     }
 
-    private fun decode(source: File): Bitmap? = if (AndroidVersion.ATLEAST_API28_P) {
+    internal fun decode(source: File): Bitmap? = if (AndroidVersion.ATLEAST_API28_P) {
         // Software bitmap on purpose: a hardware one cannot be read back for compression.
         ImageDecoder.decodeBitmap(ImageDecoder.createSource(source)) { decoder, _, _ ->
             decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE

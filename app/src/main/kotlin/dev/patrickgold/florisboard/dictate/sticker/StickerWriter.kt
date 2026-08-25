@@ -17,6 +17,7 @@ import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -257,6 +258,35 @@ object StickerWriter {
         .trim()
         .take(64)
         .ifBlank { "Pack" }
+
+    /**
+     * Replaces the contents of one sticker in the folder with [source].
+     *
+     * Used after a sticker had to be re-encoded to be insertable: rather than keep the usable version
+     * in a private directory the user cannot see and re-derive it forever, the usable version becomes
+     * the sticker. The folder is the user's, so what is in it should be what gets sent.
+     *
+     * `wt` truncates, which matters because the new file is smaller than the old one — a provider
+     * that only honours `w` would leave the tail of the previous file behind and the size on disk
+     * would still be the old one. Both modes are tried; a provider supporting neither keeps its file
+     * unchanged, which costs nothing but the re-encode.
+     */
+    suspend fun overwrite(context: Context, treeUri: Uri, docId: String, source: File): Boolean =
+        withContext(Dispatchers.IO) {
+            val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+            for (mode in arrayOf("wt", "w")) {
+                try {
+                    val written = context.contentResolver.openOutputStream(uri, mode)?.use { out ->
+                        source.inputStream().use { it.copyTo(out) }
+                        true
+                    } ?: false
+                    if (written) return@withContext true
+                } catch (e: Exception) {
+                    flogError { "Failed to overwrite sticker $docId in mode $mode: ${e.message}" }
+                }
+            }
+            false
+        }
 
     /** Deletes one sticker from the folder. Returns false when the provider refuses. */
     suspend fun delete(context: Context, treeUri: Uri, docId: String): Boolean = withContext(Dispatchers.IO) {

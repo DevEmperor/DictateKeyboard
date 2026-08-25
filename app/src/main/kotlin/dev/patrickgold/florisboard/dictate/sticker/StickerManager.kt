@@ -18,6 +18,7 @@ import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.media.MediaCache
 import dev.patrickgold.florisboard.dictate.media.MediaFormat
+import dev.patrickgold.florisboard.dictate.media.MediaLog
 import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
@@ -101,15 +102,22 @@ object StickerManager {
         val description = item.name.ifBlank { "Sticker" }
 
         val accepted = withContext(Dispatchers.Main) { editorInstance.acceptedMediaMimeTypes() }
+        val appPackage = withContext(Dispatchers.Main) { editorInstance.activeEditorPackage() }
         val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, item.mime) }
         val target = MediaFormat.negotiate(info, accepted)
+        MediaLog.log(
+            "insert \"${item.name}\": ${info.mime} ${info.width}x${info.height} ${info.bytes} B " +
+                "animated=${info.animated} | app=$appPackage " +
+                "accepts=[${accepted.joinToString()}] | offering=$target"
+        )
 
         var committed = false
+        var payload: File? = null
         if (target != null) {
             val needsWork = target != item.mime
             if (needsWork) onPreparing(true)
-            val payload = try {
-                prepare(context, file, info, target)
+            payload = try {
+                MediaLog.timed("insert: preparing $target") { prepare(context, file, info, target) }
             } finally {
                 if (needsWork) onPreparing(false)
             }
@@ -117,15 +125,23 @@ object StickerManager {
                 committed = withContext(Dispatchers.Main) {
                     editorInstance.tryCommitMedia(payload, target, description)
                 }
+                MediaLog.log("insert: commit as $target (${payload.length()} B) -> $committed")
+            } else {
+                MediaLog.log("insert: could not prepare $target")
             }
         }
 
-        // Nothing was negotiated, or the negotiated form was refused after all. The declaration is a
-        // hint, not a contract, so the file's own type still deserves one attempt.
-        if (!committed && target != item.mime) {
+        // A declaration is a hint rather than a contract, so a file's own type still deserves an
+        // attempt — but only where that is a hint and not a contradiction. An app that listed its
+        // types and left this one out was not being coy: handing it the bytes anyway is how a sticker
+        // ends up as an empty frame with "Couldn't share" beside it, which is a worse answer than the
+        // clipboard. So the retry is for apps that declared nothing, or that named this type already.
+        val ownTypeIsPlausible = accepted.isEmpty() || accepted.any { MediaFormat.matches(item.mime, it) }
+        if (!committed && target != item.mime && ownTypeIsPlausible) {
             committed = withContext(Dispatchers.Main) {
                 editorInstance.tryCommitMedia(file, item.mime, description)
             }
+            MediaLog.log("insert: retry as ${item.mime} -> $committed")
         }
 
         val result = when {
@@ -134,15 +150,50 @@ object StickerManager {
                 EditorInstance.MediaCommitResult.COPIED_TO_CLIPBOARD
             else -> EditorInstance.MediaCommitResult.FAILED
         }
+        MediaLog.log("insert: result=$result")
 
         if (result != EditorInstance.MediaCommitResult.FAILED) {
             StickerHistoryHelper.markUsed(prefs, categoryId, item.docId)
+        }
+        if (committed && payload != null && payload != file && target == MediaFormat.WA_STICKER) {
+            keepConversion(context, treeUri, item, payload, info)
         }
         withContext(Dispatchers.IO) {
             MediaCache.prune(context)
             MediaCache.pruneConverted(context)
         }
         return result
+    }
+
+    /**
+     * Writes a re-encoded sticker back over the original in the user's folder.
+     *
+     * The conversion has to happen at least once per sticker, and the first version of this kept the
+     * result in a private directory — which works, but hides from the user the fact that the file
+     * they see in their folder is not the file that gets sent. Writing it back makes the two the
+     * same thing: the sticker becomes one WhatsApp accepts, permanently, visible in any file manager,
+     * and every later insert is instant because nothing is left to convert.
+     *
+     * Only ever narrows the gap: this runs when the original was outside the receiving app's sticker
+     * bounds and the re-encoded copy is inside them. A failure is logged and otherwise ignored — the
+     * sticker was already inserted, and the private copy still stands in for the next attempt.
+     */
+    private suspend fun keepConversion(
+        context: Context,
+        treeUri: Uri,
+        item: StickerItem,
+        converted: File,
+        original: MediaFormat.ImageInfo,
+    ) {
+        val ok = StickerWriter.overwrite(context, treeUri, item.docId, converted)
+        MediaLog.log(
+            "insert: rewrote \"${item.name}\" in place, " +
+                "${original.bytes} B -> ${converted.length()} B: $ok"
+        )
+        // The folder no longer matches what was scanned, so the next open re-reads it and picks up
+        // the new size and stamp — after which the sticker qualifies outright and is never converted
+        // again.
+        if (ok) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
     }
 
     /**
@@ -155,14 +206,14 @@ object StickerManager {
         target: String,
     ): File? = when {
         target == info.mime -> file
-        // A vendor name for our own format is a relabelling, not a conversion — except when the file
-        // misses the receiving app's sticker bounds. WhatsApp takes an oversized animation and then
-        // refuses it with an empty frame and "Couldn't share", so it is re-encoded to 512×512 under
-        // 500 KB first. Measured: inside those bounds the same sticker goes straight into the chat.
+        // A vendor name for our own format is a relabelling — but only for a file already shaped like
+        // a sticker. WhatsApp takes one that is not, and then refuses it with an empty frame and
+        // "Couldn't share", so anything outside its bounds is re-encoded to 512×512 within budget
+        // first. This holds for still stickers as much as for animated ones: letting stills through
+        // untouched, as this did at first, is exactly what made an ordinary 256×256 sticker bounce.
         target == MediaFormat.WA_STICKER && MediaFormat.qualifiesAsWhatsAppSticker(info) -> file
-        target == MediaFormat.WA_STICKER && info.animated ->
-            withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(context, file) }
-        target == MediaFormat.WA_STICKER -> file
+        target == MediaFormat.WA_STICKER ->
+            withContext(Dispatchers.IO) { WebPTranscoder.toStickerSpec(context, file, info.animated) }
         else -> withContext(Dispatchers.IO) { MediaFormat.convert(context, file, target) }
     }
 

@@ -120,6 +120,22 @@ class MediaFormatTest {
     }
 
     @Test
+    fun `a still sticker has to be shaped like one too`() {
+        // The bug this pins down: stills were let through untouched while animations were re-encoded,
+        // so an ordinary 256x256 sticker went to WhatsApp under its own sticker type and came back as
+        // an empty frame with "Couldn't share". Nothing is sticker-shaped unless it is 512x512.
+        assertFalse(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", false, 256, 256, 40_000L)))
+        assertFalse(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", false, 498, 498, 40_000L)))
+        // A still may weigh a fifth of what an animation may.
+        assertTrue(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", false, 512, 512, 100L * 1024L)))
+        assertFalse(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", false, 512, 512, 100L * 1024L + 1L)))
+        assertTrue(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", true, 512, 512, 500L * 1024L)))
+        assertFalse(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", true, 512, 512, 500L * 1024L + 1L)))
+        assertEquals(100L * 1024L, MediaFormat.waStickerBudget(animated = false))
+        assertEquals(500L * 1024L, MediaFormat.waStickerBudget(animated = true))
+    }
+
+    @Test
     fun `an editor that declares nothing is tried with the original`() {
         // The declaration is not a promise, and the attempt answers for itself.
         assertEquals("image/webp", MediaFormat.negotiate(info("image/webp", animated = false), accepted = emptyList()))
