@@ -71,8 +71,17 @@ object WebPTranscoder {
     /** Below this many frames the animation stops reading as motion, so frame dropping stops here. */
     private const val MIN_FRAMES = 6
 
-    /** No chat shows a sticker larger than this, and a GIF pays for every pixel twice over. */
-    private const val GIF_MAX_SIZE = 512
+    /**
+     * How large a GIF is allowed to get.
+     *
+     * Measured: a 17-frame sticker came out at 1.35 MB from a 181 KB WebP, because a GIF stores every
+     * frame whole and cannot describe one in terms of the last. No chat shows a sticker anywhere near
+     * 512 px, so the picture is capped well below that first, and frames are dropped only if even
+     * that is not enough — the last thing to give up is the motion this format exists for.
+     */
+    private const val GIF_MAX_SIZE = 384
+    private const val GIF_MAX_BYTES = 1024 * 1024
+    private const val GIF_MIN_FRAMES = 8
 
     /** How many frames are compressed to estimate what the whole animation will weigh. */
     private const val PROBE_FRAMES = 3
@@ -153,13 +162,19 @@ object WebPTranscoder {
             val height = frames[0].bitmap.height
             // Each frame becomes pixels and gives up its bitmap straight away: an animation held
             // twice over, once as bitmaps and once as integers, is how an IME process runs out of room.
-            val encodable = frames.map { frame ->
+            var encodable = frames.map { frame ->
                 val pixels = IntArray(width * height)
                 frame.bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
                 frame.bitmap.recycle()
                 GifEncoder.Frame(pixels, frame.durationMs)
             }
-            val bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
+            var bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
+            while (bytes != null && bytes.size > GIF_MAX_BYTES && encodable.size > GIF_MIN_FRAMES) {
+                encodable = encodable.filterIndexed { index, _ -> index % 2 == 0 }
+                    .map { GifEncoder.Frame(it.pixels, it.delayMs * 2) }
+                MediaLog.log("gif: halving to ${encodable.size} frames to fit $GIF_MAX_BYTES bytes")
+                bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
+            }
             if (bytes == null) {
                 MediaLog.log("gif: failed for ${source.name}")
                 return null

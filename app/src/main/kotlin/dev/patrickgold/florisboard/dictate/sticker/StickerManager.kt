@@ -281,15 +281,20 @@ object StickerManager {
                 WebPTranscoder.toStickerSpec(context, file, info.animated)
             } ?: continue
             prepared++
-            if (converted.length() <= info.bytes) {
+            // Reported per sticker rather than as a total at the end. The loop ends when the panel
+            // closes, which is to say it is cancelled rather than finished — a summary after it would
+            // almost never be written, and the folder's own copy would never be refreshed either.
+            val rewritten = converted.length() <= info.bytes &&
                 StickerWriter.overwrite(context, treeUri, item.docId, converted)
-            }
+            MediaLog.log(
+                "prewarm ($prepared/$PrewarmLimit): \"${item.name}\" " +
+                    "${info.bytes} B -> ${converted.length()} B, rewritten=$rewritten"
+            )
+            withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
             delay(PrewarmPauseMs)
         }
         if (prepared > 0) {
-            MediaLog.log("prewarm: prepared $prepared sticker(s) for the app in front")
             withContext(Dispatchers.IO) {
-                StickerScanner.clearCached(context)
                 MediaCache.prune(context)
                 MediaCache.pruneConverted(context)
             }
