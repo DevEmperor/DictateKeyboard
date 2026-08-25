@@ -82,6 +82,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
@@ -155,6 +156,19 @@ fun StickerPanel(
             if (cached == null) accessLost = true
         }
         loading = false
+    }
+
+    // Convert ahead of the finger. Favourites first, then recents, then the rest of the folder: the
+    // sticker most likely to be tapped is the one most worth having ready before it is.
+    LaunchedEffect(index, folderUri) {
+        val current = index ?: return@LaunchedEffect
+        if (folderUri.isBlank()) return@LaunchedEffect
+        // Let the panel finish drawing before spending any cores on this.
+        delay(600)
+        val byDocId = current.allItems.associateBy { it.docId }
+        val likely = (history.pinnedIn(StickerHistory.GLOBAL) + history.recentIn(StickerHistory.GLOBAL))
+            .mapNotNull { byDocId[it] }
+        StickerManager.prewarm(context, folderUri.toUri(), (likely + current.allItems).distinct())
     }
 
     fun deleteFile(item: StickerItem) {

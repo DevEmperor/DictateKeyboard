@@ -26,6 +26,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlin.math.absoluteValue
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.stringRes
 
@@ -40,6 +43,21 @@ import org.florisboard.lib.android.stringRes
  */
 object StickerManager {
     private val prefs by FlorisPreferenceStore
+
+    /** How many stickers one opening of the panel prepares ahead of the user. */
+    private const val PrewarmLimit = 48
+
+    /** A breath between two conversions, so browsing a folder does not read as a batch job. */
+    private const val PrewarmPauseMs = 120L
+
+    /**
+     * True while a tap is being served.
+     *
+     * The background pass must never be the reason a tap is slow, and both compress frames on the
+     * same cores. So it stands aside for the one piece of work the user is actually waiting on.
+     */
+    @Volatile
+    private var inserting = false
 
     private fun extensionFor(mime: String): String = when (mime) {
         "image/png" -> "png"
@@ -96,6 +114,21 @@ object StickerManager {
         item: StickerItem,
         categoryId: String,
         onPreparing: (Boolean) -> Unit = {},
+    ): EditorInstance.MediaCommitResult {
+        inserting = true
+        try {
+            return insertNow(context, treeUri, item, categoryId, onPreparing)
+        } finally {
+            inserting = false
+        }
+    }
+
+    private suspend fun insertNow(
+        context: Context,
+        treeUri: Uri,
+        item: StickerItem,
+        categoryId: String,
+        onPreparing: (Boolean) -> Unit,
     ): EditorInstance.MediaCommitResult {
         val file = materialize(context, treeUri, item) ?: return EditorInstance.MediaCommitResult.FAILED
         val editorInstance by context.editorInstance()
@@ -185,6 +218,19 @@ object StickerManager {
         converted: File,
         original: MediaFormat.ImageInfo,
     ) {
+        // Never trade a smaller file for a larger one. Enlarging a 240×240 sticker to the 512×512 a
+        // sticker has to be invents pixels, and those invented pixels cost bytes: measured on the
+        // device, one 197 KB sticker came back out at 412 KB. It is still the version that gets
+        // inserted — it is the only one WhatsApp takes — but it stays in the app's own store rather
+        // than doubling the size of the file in the user's folder. Nothing is lost by that: the
+        // store lives in `filesDir`, so the conversion survives and later inserts are still instant.
+        if (converted.length() > original.bytes) {
+            MediaLog.log(
+                "insert: keeping \"${item.name}\" as it was, " +
+                    "the converted copy is larger (${original.bytes} B -> ${converted.length()} B)"
+            )
+            return
+        }
         val ok = StickerWriter.overwrite(context, treeUri, item.docId, converted)
         MediaLog.log(
             "insert: rewrote \"${item.name}\" in place, " +
@@ -194,6 +240,52 @@ object StickerManager {
         // the new size and stamp — after which the sticker qualifies outright and is never converted
         // again.
         if (ok) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
+    }
+
+    /**
+     * Prepares stickers for the app in front of us before anyone taps them.
+     *
+     * Re-encoding an animation takes a moment, and the moment falls exactly where it is least
+     * welcome: after the tap, with the chat waiting. But the panel spends most of its life being
+     * looked at rather than used, and the work does not depend on which sticker is chosen — so it can
+     * be done during the looking. What is left after that is a file copy.
+     *
+     * Only for an app that asks for a vendor sticker type, since that is the only case where a file
+     * needs changing at all; ordered by what is most likely to be tapped; capped, paced, and yielding
+     * to any insert that starts meanwhile. It ends when the panel closes, because the caller's scope
+     * ends with it.
+     */
+    suspend fun prewarm(context: Context, treeUri: Uri, items: List<StickerItem>) {
+        val editorInstance by context.editorInstance()
+        val accepted = withContext(Dispatchers.Main) { editorInstance.acceptedMediaMimeTypes() }
+        if (!accepted.contains(MediaFormat.WA_STICKER)) return
+        var prepared = 0
+        for (item in items) {
+            if (prepared >= PrewarmLimit) break
+            currentCoroutineContext().ensureActive()
+            if (item.mime != "image/webp") continue
+            while (inserting) delay(50)
+            val file = materialize(context, treeUri, item) ?: continue
+            val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, item.mime) }
+            if (MediaFormat.qualifiesAsWhatsAppSticker(info)) continue
+            if (WebPTranscoder.conversionOf(context, file, info.animated) != null) continue
+            val converted = withContext(Dispatchers.IO) {
+                WebPTranscoder.toStickerSpec(context, file, info.animated)
+            } ?: continue
+            prepared++
+            if (converted.length() <= info.bytes) {
+                StickerWriter.overwrite(context, treeUri, item.docId, converted)
+            }
+            delay(PrewarmPauseMs)
+        }
+        if (prepared > 0) {
+            MediaLog.log("prewarm: prepared $prepared sticker(s) for the app in front")
+            withContext(Dispatchers.IO) {
+                StickerScanner.clearCached(context)
+                MediaCache.prune(context)
+                MediaCache.pruneConverted(context)
+            }
+        }
     }
 
     /**

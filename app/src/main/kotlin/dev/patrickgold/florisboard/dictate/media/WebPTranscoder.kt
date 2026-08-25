@@ -23,6 +23,10 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.math.roundToInt
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 /**
  * Re-encodes a WebP into one WhatsApp will accept as a sticker (issue #280).
@@ -52,25 +56,41 @@ object WebPTranscoder {
     /** WhatsApp's rules for a sticker, which are the whole point of this class. */
     private const val TARGET_SIZE = MediaFormat.WA_STICKER_SIZE
 
-    /** Tried in order until the result fits. 80 already looks clean on a sticker. */
+    /** The qualities worth trying, highest first. 80 already looks clean on a sticker. */
     private val QUALITY_STEPS = intArrayOf(80, 70, 60, 50, 40, 30)
+
+    /**
+     * Where the ladder starts when the source is smaller than a sticker.
+     *
+     * Enlarging a 240×240 sticker to 512×512 invents every second pixel, and spending quality 80 on
+     * invented detail is how a 197 KB file came back out at 412 KB — larger than the original and no
+     * better to look at. Interpolated pixels are smooth, so they compress well and lose little.
+     */
+    private const val UPSCALE_QUALITY = 65
 
     /** Below this many frames the animation stops reading as motion, so frame dropping stops here. */
     private const val MIN_FRAMES = 6
 
+    /** How many frames are compressed to estimate what the whole animation will weigh. */
+    private const val PROBE_FRAMES = 3
+
+    /** Aim a little under the limit, since the estimate is an estimate. */
+    private const val ESTIMATE_MARGIN = 0.92
+
     /**
      * Produces a sticker-shaped copy of [source], or null if that is not possible.
      *
-     * The result is kept in [MediaCache.convertedDir], so a second insert of the same sticker costs
-     * nothing even before the copy in the user's own folder has been written back.
+     * The result is kept in [MediaCache.convertedDir] — which lives in `filesDir`, not the cache — so
+     * a sticker is re-encoded at most once on a device, whether or not the copy in the user's own
+     * folder could be written back.
      */
-    fun toStickerSpec(context: Context, source: File, animated: Boolean): File? {
+    suspend fun toStickerSpec(context: Context, source: File, animated: Boolean): File? {
         val budget = MediaFormat.waStickerBudget(animated)
-        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
-        if (target.exists() && target.length() in 1..budget) {
-            MediaLog.log("transcode: reusing ${target.name} (${target.length()} bytes)")
-            return target
+        conversionOf(context, source, animated)?.let { existing ->
+            MediaLog.log("transcode: reusing ${existing.name} (${existing.length()} bytes)")
+            return existing
         }
+        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
         return try {
             val started = System.currentTimeMillis()
             val encoded = if (animated) {
@@ -103,19 +123,33 @@ object WebPTranscoder {
         }
     }
 
+    /**
+     * The conversion of [source] that has already been made, if there is one.
+     *
+     * Lets a caller tell "this is ready" from "this needs a second of work" without doing the work —
+     * which is what the background pass ahead of the user's finger needs in order to know what is
+     * left to do.
+     */
+    fun conversionOf(context: Context, source: File, animated: Boolean): File? =
+        File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
+            .takeIf { it.exists() && it.length() in 1..MediaFormat.waStickerBudget(animated) }
+
     private class DecodedFrame(val bitmap: Bitmap, val durationMs: Int)
+
+    /** The quality to start from, given how the source compares to a sticker. */
+    private fun startQuality(sourceWidth: Int, sourceHeight: Int): Int =
+        if (maxOf(sourceWidth, sourceHeight) < TARGET_SIZE) UPSCALE_QUALITY else QUALITY_STEPS[0]
 
     /** A single picture, fitted onto the sticker canvas and compressed until it fits [budget]. */
     private fun encodeStill(source: File, budget: Long): ByteArray? {
         val decoded = MediaFormat.decode(source) ?: return null
+        val start = startQuality(decoded.width, decoded.height)
         val canvas = fitOnStickerCanvas(decoded)
         decoded.recycle()
         try {
             for (quality in QUALITY_STEPS) {
-                val out = ByteArrayOutputStream(64 * 1024)
-                @Suppress("DEPRECATION")
-                if (!canvas.compress(Bitmap.CompressFormat.WEBP, quality, out)) continue
-                val bytes = out.toByteArray()
+                if (quality > start) continue
+                val bytes = compress(canvas, quality) ?: continue
                 if (bytes.size <= budget) return bytes
             }
             return null
@@ -124,11 +158,12 @@ object WebPTranscoder {
         }
     }
 
-    private fun encodeAnimated(source: File, budget: Long): ByteArray? {
+    private suspend fun encodeAnimated(source: File, budget: Long): ByteArray? {
         val animation = WebPContainer.demux(source.readBytes()) ?: return null
+        val start = startQuality(animation.canvasWidth, animation.canvasHeight)
         val frames = decodeFrames(animation) ?: return null
         try {
-            return encodeWithinBudget(frames, animation.loopCount, budget)
+            return encodeWithinBudget(frames, animation.loopCount, budget, start)
         } finally {
             frames.forEach { it.bitmap.recycle() }
         }
@@ -144,7 +179,7 @@ object WebPTranscoder {
      *
      * The scaling happens in the same step as the composing, on purpose. It used to happen inside the
      * quality ladder instead, which meant every frame was scaled again for each of the six quality
-     * attempts — most of the second the user was waiting went into doing the same work six times.
+     * attempts — most of the wait went into doing the same work six times.
      */
     private fun decodeFrames(animation: WebPContainer.Animation): List<DecodedFrame>? {
         val canvasBitmap = Bitmap.createBitmap(
@@ -222,44 +257,77 @@ object WebPTranscoder {
     }
 
     /**
-     * Encodes the frames, lowering quality and finally dropping frames until it fits [budget].
+     * Finds a quality that fits [budget] and encodes the animation at it.
      *
-     * Quality first, because a slightly softer sticker is far less noticeable than a jerky one.
+     * The obvious way — encode everything at 80, then everything at 70, and so on — is what made a
+     * 20-frame sticker take five seconds: each rung of the ladder compresses every frame again, so
+     * the search costs six full encodes and only the last one is kept. Measured on the device, that
+     * was almost all of the wait.
+     *
+     * So the search is done on [PROBE_FRAMES] frames instead. Three frames compress in a tenth of the
+     * time of twenty and predict the whole animation closely enough, because every frame here is the
+     * same size and comes from the same picture. The full encode then happens once, at the quality
+     * the probe chose; if the estimate was optimistic the next rung down is tried, and only when
+     * even the lowest quality will not fit does the frame rate get halved.
      */
-    private fun encodeWithinBudget(
+    private suspend fun encodeWithinBudget(
         frames: List<DecodedFrame>,
         loopCount: Int,
         budget: Long,
+        startQuality: Int,
     ): ByteArray? {
         var working = frames
         while (true) {
-            for (quality in QUALITY_STEPS) {
-                val encoded = encode(working, quality, loopCount) ?: continue
-                if (encoded.size <= budget) return encoded
+            val ladder = QUALITY_STEPS.filter { it <= startQuality }
+            var next = probeQuality(working, budget, ladder)
+            while (next != null) {
+                val quality = next
+                val encoded = encode(working, quality, loopCount)
+                if (encoded != null && encoded.size <= budget) return encoded
+                next = ladder.firstOrNull { it < quality }
             }
             if (working.size <= MIN_FRAMES) return null
             // Halve the frame rate and keep the total running time by doubling each duration. The
             // bitmaps are shared with [frames], which is what recycles them.
             working = working.filterIndexed { index, _ -> index % 2 == 0 }
                 .map { DecodedFrame(it.bitmap, it.durationMs * 2) }
+            MediaLog.log("transcode: halving to ${working.size} frames to fit $budget bytes")
         }
     }
 
-    private fun encode(frames: List<DecodedFrame>, quality: Int, loopCount: Int): ByteArray? {
+    /** The highest quality on [ladder] whose estimated size fits [budget], from a handful of frames. */
+    private suspend fun probeQuality(
+        frames: List<DecodedFrame>,
+        budget: Long,
+        ladder: List<Int>,
+    ): Int? {
+        if (frames.size <= PROBE_FRAMES) return ladder.firstOrNull()
+        // First, middle and last: an animation usually starts and ends quieter than its middle.
+        val samples = listOf(0, frames.size / 2, frames.size - 1).map { frames[it] }
+        for (quality in ladder) {
+            val compressed = compressAll(samples, quality) ?: continue
+            val estimate = compressed.sumOf { it.size }.toLong() * frames.size / samples.size
+            if (estimate <= budget * ESTIMATE_MARGIN) return quality
+        }
+        return ladder.lastOrNull()
+    }
+
+    private suspend fun encode(
+        frames: List<DecodedFrame>,
+        quality: Int,
+        loopCount: Int,
+    ): ByteArray? {
+        val compressed = compressAll(frames, quality) ?: return null
         val out = ArrayList<WebPContainer.Frame>(frames.size)
-        for (frame in frames) {
-            val still = ByteArrayOutputStream(64 * 1024)
-            @Suppress("DEPRECATION")
-            val ok = frame.bitmap.compress(Bitmap.CompressFormat.WEBP, quality, still)
-            if (!ok) return null
-            val bitstream = WebPContainer.frameBitstreamOf(still.toByteArray()) ?: return null
+        for ((index, still) in compressed.withIndex()) {
+            val bitstream = WebPContainer.frameBitstreamOf(still) ?: return null
             out += WebPContainer.Frame(
                 x = 0,
                 y = 0,
                 width = TARGET_SIZE,
                 height = TARGET_SIZE,
                 // WhatsApp refuses a frame that claims to last no time at all.
-                durationMs = frame.durationMs.coerceAtLeast(20),
+                durationMs = frames[index].durationMs.coerceAtLeast(20),
                 disposeToBackground = false,
                 doNotBlend = true,
                 bitstream = bitstream,
@@ -275,6 +343,29 @@ object WebPTranscoder {
                 frames = out,
             )
         )
+    }
+
+    /**
+     * Compresses frames across all cores.
+     *
+     * Frame compression is the one part of this that is both the bulk of the work and completely
+     * independent per frame — each one is its own picture and knows nothing of its neighbours. The
+     * encoder is native code that does not hold a lock anyone else wants, so handing the frames to
+     * the default dispatcher divides the wait by roughly the number of cores.
+     */
+    private suspend fun compressAll(frames: List<DecodedFrame>, quality: Int): List<ByteArray>? =
+        coroutineScope {
+            val results = frames
+                .map { frame -> async(Dispatchers.Default) { compress(frame.bitmap, quality) } }
+                .awaitAll()
+            if (results.any { it == null }) null else results.filterNotNull()
+        }
+
+    private fun compress(bitmap: Bitmap, quality: Int): ByteArray? {
+        val out = ByteArrayOutputStream(64 * 1024)
+        @Suppress("DEPRECATION")
+        val ok = bitmap.compress(Bitmap.CompressFormat.WEBP, quality, out)
+        return if (ok) out.toByteArray() else null
     }
 
     private fun writeLe(out: ByteArrayOutputStream, value: Int, count: Int) {
