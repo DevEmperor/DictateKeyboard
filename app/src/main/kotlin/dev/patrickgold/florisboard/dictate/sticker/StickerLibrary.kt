@@ -32,6 +32,15 @@ data class StickerItem(
     val mime: String,
     /** Last-modified stamp, part of the cache file name so a replaced file is not served from cache. */
     val lastModified: Long,
+    /**
+     * File size in bytes, as the provider reported it while listing the folder.
+     *
+     * Comes free with the listing query and saves asking the file itself, which over the Storage
+     * Access Framework is a call into another process. Zero means the provider did not say — an
+     * index written before this field existed reads back that way too — and zero simply means the
+     * sticker cannot be judged by size alone.
+     */
+    val size: Long = 0L,
 )
 
 /**

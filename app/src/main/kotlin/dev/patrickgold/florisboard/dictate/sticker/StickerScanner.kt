@@ -65,6 +65,7 @@ object StickerScanner {
         DocumentsContract.Document.COLUMN_DISPLAY_NAME,
         DocumentsContract.Document.COLUMN_MIME_TYPE,
         DocumentsContract.Document.COLUMN_LAST_MODIFIED,
+        DocumentsContract.Document.COLUMN_SIZE,
     )
 
     /** Thrown when the tree can no longer be read — the user revoked access, or the folder is gone. */
@@ -125,7 +126,13 @@ object StickerScanner {
         return withoutExtension.ifBlank { fileName }
     }
 
-    internal fun toItem(docId: String, displayName: String, reportedMime: String?, lastModified: Long): StickerItem? {
+    internal fun toItem(
+        docId: String,
+        displayName: String,
+        reportedMime: String?,
+        lastModified: Long,
+        size: Long = 0L,
+    ): StickerItem? {
         if (displayName.isBlank()) return null
         val mime = mimeFor(displayName, reportedMime) ?: return null
         return StickerItem(
@@ -133,6 +140,7 @@ object StickerScanner {
             name = displayLabel(displayName),
             mime = mime,
             lastModified = lastModified,
+            size = size,
         )
     }
 
@@ -161,7 +169,7 @@ object StickerScanner {
             if (row.isDirectory) {
                 folders += row.docId to row.displayName
             } else if (budget > 0) {
-                toItem(row.docId, row.displayName, row.mimeType, row.lastModified)?.let {
+                toItem(row.docId, row.displayName, row.mimeType, row.lastModified, row.size)?.let {
                     rootItems += it
                     budget--
                 }
@@ -181,7 +189,7 @@ object StickerScanner {
             val items = ArrayList<StickerItem>()
             for (row in queryChildren(context, treeUri, folderId)) {
                 if (row.isDirectory || budget <= 0) continue
-                toItem(row.docId, row.displayName, row.mimeType, row.lastModified)?.let {
+                toItem(row.docId, row.displayName, row.mimeType, row.lastModified, row.size)?.let {
                     items += it
                     budget--
                 }
@@ -200,6 +208,7 @@ object StickerScanner {
         val displayName: String,
         val mimeType: String?,
         val lastModified: Long,
+        val size: Long,
         val isDirectory: Boolean,
     )
 
@@ -215,6 +224,7 @@ object StickerScanner {
                         displayName = cursor.getString(1) ?: "",
                         mimeType = mime,
                         lastModified = if (cursor.isNull(3)) 0L else cursor.getLong(3),
+                        size = if (cursor.columnCount <= 4 || cursor.isNull(4)) 0L else cursor.getLong(4),
                         isDirectory = mime == DocumentsContract.Document.MIME_TYPE_DIR,
                     )
                 }

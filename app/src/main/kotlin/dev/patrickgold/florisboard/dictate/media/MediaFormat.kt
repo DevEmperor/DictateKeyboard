@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
+import java.io.InputStream
 import org.florisboard.lib.android.AndroidVersion
 
 /**
@@ -297,12 +298,27 @@ object MediaFormat {
 
     /** The first bytes of a file, enough for every header check above. */
     fun readHeader(file: File, count: Int = 32): ByteArray = try {
-        file.inputStream().use { input ->
-            val buffer = ByteArray(count)
-            val read = input.read(buffer)
-            if (read <= 0) ByteArray(0) else buffer.copyOf(read)
-        }
+        file.inputStream().use { input -> readHeader(input, count) }
     } catch (e: Exception) {
         ByteArray(0)
+    }
+
+    /**
+     * The same, from a stream, and it keeps reading until it has what it asked for.
+     *
+     * A single `read` is allowed to hand back fewer bytes than the buffer holds, and over a
+     * `content://` stream — often a pipe rather than a file — it regularly does. Trusting one call
+     * cost a whole round of this feature: a short header made every sticker in the folder look like
+     * it was the wrong shape, and a pass that should have done nothing copied eight hundred files.
+     */
+    fun readHeader(input: InputStream, count: Int = 32): ByteArray {
+        val buffer = ByteArray(count)
+        var filled = 0
+        while (filled < count) {
+            val read = input.read(buffer, filled, count - filled)
+            if (read <= 0) break
+            filled += read
+        }
+        return if (filled <= 0) ByteArray(0) else buffer.copyOf(filled)
     }
 }

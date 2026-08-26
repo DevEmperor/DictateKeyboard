@@ -64,17 +64,21 @@ class StickerScannerTest {
     }
 
     @Test
-    fun `a usable row keeps the id, the label, the type and the stamp`() {
-        val item = StickerScanner.toItem("tree%3Astickers%2Fpepe.png", "pepe.png", "image/png", 1234L)
+    fun `a usable row keeps the id, the label, the type, the stamp and the size`() {
+        val item = StickerScanner.toItem("tree%3Astickers%2Fpepe.png", "pepe.png", "image/png", 1234L, 4096L)
         assertEquals(
             StickerItem(
                 docId = "tree%3Astickers%2Fpepe.png",
                 name = "pepe",
                 mime = "image/png",
                 lastModified = 1234L,
+                size = 4096L,
             ),
             item,
         )
+        // A provider that will not say how large a file is leaves it at zero, which reads as "unknown"
+        // rather than "empty" — the sticker simply cannot be judged by its size alone.
+        assertEquals(0L, StickerScanner.toItem("doc", "pepe.png", "image/png", 0L)?.size)
     }
 
     @Test

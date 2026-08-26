@@ -105,6 +105,31 @@ class MediaFormatTest {
     }
 
     @Test
+    fun `a header is read in full even when the stream answers in dribs`() {
+        // The bug this pins down: a single read on a content stream is allowed to hand back fewer
+        // bytes than were asked for, and over a documents provider it regularly does. Trusting one
+        // call made every sticker in the folder look like the wrong shape, and a pass that should
+        // have done nothing copied eight hundred files out of it.
+        val bytes = ByteArray(64) { (it and 0xFF).toByte() }
+        val stingy = object : java.io.InputStream() {
+            private val source = java.io.ByteArrayInputStream(bytes)
+            override fun read(): Int = source.read()
+            // Never more than four at a time, which is legal and which the old code could not survive.
+            override fun read(b: ByteArray, off: Int, len: Int): Int = source.read(b, off, minOf(len, 4))
+        }
+        val header = MediaFormat.readHeader(stingy, count = 32)
+        assertEquals(32, header.size)
+        for (i in 0 until 32) assertEquals(bytes[i], header[i])
+    }
+
+    @Test
+    fun `a stream shorter than the header gives back what there was`() {
+        val header = MediaFormat.readHeader(java.io.ByteArrayInputStream(ByteArray(5)), count = 32)
+        assertEquals(5, header.size)
+        assertEquals(0, MediaFormat.readHeader(java.io.ByteArrayInputStream(ByteArray(0))).size)
+    }
+
+    @Test
     fun `only a sticker-shaped file is offered as a sticker`() {
         val whatsApp = listOf("image/gif", "image/jpeg", "image/png", "image/webp.wasticker")
         // In shape: goes straight into the chat as a sticker.

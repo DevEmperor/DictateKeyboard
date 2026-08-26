@@ -17,12 +17,15 @@ import dev.patrickgold.florisboard.dictate.media.MediaLog
 import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 
 /**
@@ -75,10 +78,11 @@ object StickerNormalizer {
      * somewhere — is exactly the file that is not yet a sticker, and "read the folder again" is when
      * the user is asking about such files.
      *
-     * The checking runs [ParallelChecks] at a time, and that is where the time went: every file is a
-     * separate call across to the documents provider, and such a call spends nearly all of its life
-     * waiting for an answer rather than doing anything. Measured on a folder with nothing left to
-     * convert, one at a time took about half a minute for a few hundred stickers.
+     * One pass over the folder, [ParallelChecks] files at a time. That number is about waiting, not
+     * about work: every file is a separate call across to the documents provider, and such a call
+     * spends nearly all of its life waiting for an answer. Converting, which is the opposite — all
+     * processor, and the encoder already uses every core — happens under [converting], one sticker at
+     * a time, so eight encoders never fight over the same cores.
      *
      * A file that has to change its type also has to change its name, or the next app is told it is
      * a PNG and treats it as a photograph. The rename goes first, so the bytes land under the name
@@ -91,71 +95,89 @@ object StickerNormalizer {
         onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
     ): Int {
         val items = index.allItems
-        val outOfShape = ArrayList<StickerItem>()
-        var checked = 0
-        for (batch in items.chunked(ParallelChecks)) {
-            currentCoroutineContext().ensureActive()
-            val verdicts = coroutineScope {
-                batch.map { item ->
-                    async(Dispatchers.IO) { item to isAlreadyInShape(context, treeUri, item) }
-                }.awaitAll()
-            }
-            verdicts.filterNot { it.second }.mapTo(outOfShape) { it.first }
-            checked += batch.size
-            onProgress(checked, items.size)
-        }
-        if (outOfShape.isEmpty()) return 0
+        val gate = Semaphore(ParallelChecks)
+        val converting = Mutex()
+        val done = AtomicInteger()
+        // Eight coroutines finish in whatever order the provider answers them, so a later count can
+        // arrive before an earlier one. Reporting only what moves the number forward keeps the bar
+        // from twitching backwards.
+        val reported = AtomicInteger()
+        val outOfShape = AtomicInteger()
+        val changed = AtomicInteger()
 
-        // Converting is the opposite kind of work — all processor, no waiting — and it already uses
-        // every core inside the encoder, so it goes one sticker at a time.
-        var changed = 0
-        for ((position, item) in outOfShape.withIndex()) {
-            currentCoroutineContext().ensureActive()
-            onProgress(position, outOfShape.size)
-            val staged = StickerManager.materialize(context, treeUri, item) ?: continue
-            val normalized = try {
-                normalize(staged, item.mime)
-            } catch (e: Exception) {
-                flogError { "Failed to normalize ${item.name}: ${e.message}" }
-                null
-            } ?: continue
-
-            var docId = item.docId
-            if (item.mime != "image/webp") {
-                docId = StickerWriter.renameTo(context, treeUri, docId, "${item.name}.webp") ?: run {
-                    MediaLog.log("normalize: could not rename \"${item.name}\" to .webp, left as is")
-                    continue
+        coroutineScope {
+            items.map { item ->
+                async(Dispatchers.IO) {
+                    gate.withPermit {
+                        if (!isAlreadyInShape(context, treeUri, item)) {
+                            outOfShape.incrementAndGet()
+                            if (converting.withLock { convert(context, treeUri, item) }) {
+                                changed.incrementAndGet()
+                            }
+                        }
+                    }
+                    val count = done.incrementAndGet()
+                    if (reported.getAndUpdate { maxOf(it, count) } < count) {
+                        onProgress(count, items.size)
+                    }
                 }
-            }
-            if (StickerWriter.overwrite(context, treeUri, docId, normalized)) {
-                changed++
-                MediaLog.log(
-                    "normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.size} B"
-                )
+            }.awaitAll()
+        }
+
+        MediaLog.log(
+            "rescan: ${items.size} checked, ${outOfShape.get()} out of shape, " +
+                "${changed.get()} converted"
+        )
+        if (changed.get() > 0) StickerScanner.clearCached(context)
+        return changed.get()
+    }
+
+    /** Re-encodes one sticker in place. Returns whether the folder actually changed. */
+    private suspend fun convert(context: Context, treeUri: Uri, item: StickerItem): Boolean {
+        val staged = StickerManager.materialize(context, treeUri, item) ?: return false
+        val normalized = try {
+            normalize(staged, item.mime)
+        } catch (e: Exception) {
+            flogError { "Failed to normalize ${item.name}: ${e.message}" }
+            null
+        } ?: return false
+
+        var docId = item.docId
+        if (item.mime != "image/webp") {
+            docId = StickerWriter.renameTo(context, treeUri, docId, "${item.name}.webp") ?: run {
+                MediaLog.log("normalize: could not rename \"${item.name}\" to .webp, left as is")
+                return false
             }
         }
-        onProgress(outOfShape.size, outOfShape.size)
-        if (changed > 0) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
-        return changed
+        if (!StickerWriter.overwrite(context, treeUri, docId, normalized)) return false
+        MediaLog.log("normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.size} B")
+        return true
     }
 
     /**
-     * Whether [item] can be left alone, decided from its header and its length alone.
+     * Whether [item] can be left alone.
      *
-     * A GIF is always left alone. Anything unreadable answers "no" and falls through to the ordinary
-     * path, which will fail there in its own way rather than here in a way nobody can see.
+     * The size comes from the folder listing, which the scan already asked for — the file itself is
+     * only opened for its header, and only when the size does not already rule it out. Both of those
+     * details were wrong once and cost a round: the size was taken from the file descriptor, which
+     * may honestly answer "unknown", and the header from a single `read`, which over a provider
+     * stream may honestly answer with four bytes. Either one made every sticker look misshapen.
+     *
+     * A GIF is always left alone. Anything unreadable answers "no" and goes down the ordinary path,
+     * which will fail there in its own way rather than here in a way nobody can see.
      */
     private fun isAlreadyInShape(context: Context, treeUri: Uri, item: StickerItem): Boolean {
         if (item.mime == "image/gif") return true
+        if (item.mime != "image/webp") return false
+        // Too large for even an animation is too large full stop, and needs no reading to know.
+        if (item.size > MediaFormat.waStickerBudget(animated = true)) return false
         return try {
             val uri = StickerScanner.documentUri(treeUri, item.docId)
-            context.contentResolver.openAssetFileDescriptor(uri, "r")?.use { descriptor ->
-                val header = ByteArray(32)
-                val read = descriptor.createInputStream().use { it.read(header) }
-                if (read <= 0) return false
-                val info = MediaFormat.inspect(header.copyOf(read), descriptor.length, item.mime)
-                MediaFormat.qualifiesAsWhatsAppSticker(info)
-            } ?: false
+            val header = context.contentResolver.openInputStream(uri)?.use { input ->
+                MediaFormat.readHeader(input)
+            } ?: return false
+            val size = if (item.size > 0L) item.size else header.size.toLong()
+            MediaFormat.qualifiesAsWhatsAppSticker(MediaFormat.inspect(header, size, item.mime))
         } catch (e: Exception) {
             false
         }
