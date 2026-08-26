@@ -425,12 +425,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Woord bewerken</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Woord</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Voer een woord in</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Voer een woord in dat overeenkomt met {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Dit veld accepteert één woord — geen spaties, komma\'s of puntkomma\'s. Maak voor een hele zin of een tekst met meerdere regels een fragment aan onder Prompts.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequentie (tussen {f_min} en {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Voer een frequentiewaarde in</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Voer een geldig nummer in binnen de opgegeven grenzen</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Afkorting (optioneel)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Voer een afkorting in die overeenkomt met {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Een snelkoppeling is één woord — geen spaties, komma\'s of puntkomma\'s.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Taalcode (optioneel)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Deze taalcode komt niet overeen met de verwachte syntax. De code moet ofwel enkel de taal (bv. \"en\"), een taal en een land (bv. \"en_US\") of een taal, land en script (bv. \"en_US-script\") bevatten.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gebaren &amp; Typen met gebaren</string>
@@ -1335,7 +1335,14 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__prompt_name_title">Naam</string>
     <string name="dictate__prompt_name_placeholder">bv. Grammatica corrigeren</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Instructie die naar het AI-model wordt gestuurd</string>
+    <string name="dictate__prompt_text_placeholder">Instructie voor de AI — of [tekst tussen haken] om die letterlijk in te voegen</string>
+    <string name="dictate__prompt_snippet_hint">Fragment: deze tekst wordt precies zo ingevoegd, zonder AI en zonder internet.</string>
+    <string name="dictate__prompt_ai_hint">Gaat naar het AI-model. Tip: zet tekst tussen [rechte haken] en die wordt letterlijk ingevoegd.</string>
+    <string name="dictate__prompt_trigger_title">Typsnelkoppeling (optioneel)</string>
+    <string name="dictate__prompt_trigger_placeholder">bijv. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Typ het als woord en dan een spatie: het wordt het fragment. Een backspace direct erna maakt het ongedaan.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Een snelkoppeling is één woord zonder spaties, maximaal 32 tekens.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Al in gebruik door ‘{name}’.</string>
     <string name="dictate__prompt_requires_selection_title">Vereist selectie</string>
     <string name="dictate__prompt_requires_selection_summary">Werkt op de geselecteerde tekst en vervangt deze</string>
     <string name="dictate__prompt_auto_apply_title">Automatisch toepassen</string>

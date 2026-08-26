@@ -494,12 +494,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Kelimeyi düzenle</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Kelime</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lütfen bir kelime girin</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Lütfen {regex} ile eşleşen bir kelime girin</string>
+    <string name="settings__udm__dialog__word_error_invalid">Bu alan tek bir sözcük alır — boşluk, virgül veya noktalı virgül olmadan. Tam bir cümle ya da çok satırlı metin için Komutlar altında bir metin parçası oluşturun.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Sıklık ({f_min} ile {f_max} arasında)</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen bir sıklık değeri girin</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen belirtilen sınırlar içinde geçerli bir sayı girin</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Kısayol (isteğe bağlı)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Lütfen {regex} ile eşleşen bir kısayol girin</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Kısayol tek bir sözcüktür — boşluk, virgül veya noktalı virgül olmadan.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Dil kodu (isteğe bağlı)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Bu dil kodu beklenen sözdizimine uymuyor. Kod ya sadece bir dil (ör. en), ya bir dil ve ülke (ör. en_US) ya da bir dil, ülke ve betik (ör. en_US-script) olmalıdır.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Hareketler ve Kaydırarak Yazma</string>
@@ -1414,7 +1414,14 @@
     <string name="dictate__prompt_name_title">Ad</string>
     <string name="dictate__prompt_name_placeholder">örn. Dil bilgisini düzelt</string>
     <string name="dictate__prompt_text_title">Komut</string>
-    <string name="dictate__prompt_text_placeholder">Yapay zekâ modeline gönderilen talimat</string>
+    <string name="dictate__prompt_text_placeholder">Yapay zekâya verilecek yönerge — ya da olduğu gibi eklemek için [köşeli parantez içinde metin]</string>
+    <string name="dictate__prompt_snippet_hint">Metin parçası: bu metin tam yazıldığı gibi eklenir, yapay zekâ ve internet olmadan.</string>
+    <string name="dictate__prompt_ai_hint">Yapay zekâ modeline gönderilir. İpucu: metni [köşeli parantez] içine alırsanız olduğu gibi eklenir.</string>
+    <string name="dictate__prompt_trigger_title">Yazım kısayolu (isteğe bağlı)</string>
+    <string name="dictate__prompt_trigger_placeholder">ör. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Bir sözcük gibi yazıp boşluğa basın: metin parçasına dönüşür. Hemen ardından geri silme tuşu bunu geri alır.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Kısayol, boşluk içermeyen tek bir sözcüktür, en fazla 32 karakter.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">“{name}” bunu zaten kullanıyor.</string>
     <string name="dictate__prompt_requires_selection_title">Seçim gerektirir</string>
     <string name="dictate__prompt_requires_selection_summary">Seçili metin üzerinde çalışır ve onu değiştirir</string>
     <string name="dictate__prompt_auto_apply_title">Otomatik uygula</string>

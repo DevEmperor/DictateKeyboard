@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
@@ -52,6 +53,7 @@ import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
@@ -85,6 +87,9 @@ import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
+
+/** How much of an expanded snippet must still stand before the cursor for the backspace undo (issue #283). */
+private const val TAIL_MATCH_LENGTH = 120
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by FlorisPreferenceStore
@@ -301,6 +306,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun commitCandidate(candidate: SuggestionCandidate) {
+        pendingExpansion = null // this write does not come through onInputKeyUp (issue #283)
         scope.launch {
             candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
         }
@@ -314,6 +320,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun commitGesture(word: String) {
+        pendingExpansion = null // same as above: a glide never passes through onInputKeyUp (issue #283)
         // A glide produces a whole word at once, so there are no per-character taps to reason about (#242).
         TouchTrace.reset()
         val text = fixCase(word)
@@ -441,6 +448,62 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    /**
+     * A snippet that has just been expanded, kept for exactly one keystroke so the next backspace can
+     * put the shortcut back (issue #283). [inserted] is what stands in the editor now, [replaced] what
+     * the user had typed — both including the boundary character that triggered the expansion.
+     */
+    private data class SnippetExpansion(val inserted: String, val replaced: String)
+
+    private var pendingExpansion: SnippetExpansion? = null
+
+    /**
+     * Expands a typed snippet trigger (issue #283): if the word right before the cursor is a shortcut
+     * of a `[snippet]` prompt, it is replaced by that snippet plus [boundary] — the space, punctuation
+     * mark or line break that ended the word. Returns true when that happened, in which case the caller
+     * is done: the boundary character has already been written.
+     *
+     * Writing the boundary here rather than letting the normal path append it afterwards is deliberate.
+     * The replacement goes straight to the InputConnection, so the cached editor content is one step
+     * behind for a moment, and `commitChar`'s auto-space logic would decide on stale text.
+     */
+    private fun expandSnippet(boundary: String): Boolean {
+        if (SnippetTriggers.isEmpty) return false
+        // Never in a password field, and never while something is selected (the selection is what the
+        // user means to replace, not the word before it).
+        if (activeState.keyVariation == KeyVariation.PASSWORD) return false
+        val content = editorInstance.activeContent
+        if (content.selection.isSelectionMode) return false
+        val token = SnippetTriggers.triggerCandidate(content.textBeforeSelection) ?: return false
+        val body = SnippetTriggers.bodyFor(token) ?: return false
+
+        val inserted = body + boundary
+        val replaced = token + boundary
+        TouchTrace.reset() // the word is gone, and with it its tap evidence (issue #242)
+        editorInstance.autoSpace.setInactive()
+        editorInstance.phantomSpace.setInactive()
+        editorInstance.replaceTextBeforeCursor(token.length, inserted)
+        pendingExpansion = SnippetExpansion(inserted = inserted, replaced = replaced)
+        return true
+    }
+
+    /**
+     * Undoes the snippet expansion of the previous keystroke, if the editor still ends exactly in what
+     * was inserted. Returns true when the backspace was consumed by putting the shortcut back.
+     */
+    private fun undoSnippetExpansion(): Boolean {
+        val expansion = pendingExpansion ?: return false
+        pendingExpansion = null
+        val content = editorInstance.activeContent
+        if (content.selection.isSelectionMode) return false
+        // Only the last stretch is compared: the cached text before the cursor is capped, so a snippet
+        // longer than that would never match in full. Deleting past the cache is fine, that goes to the
+        // editor itself.
+        if (!content.textBeforeSelection.endsWith(expansion.inserted.takeLast(TAIL_MATCH_LENGTH))) return false
+        editorInstance.replaceTextBeforeCursor(expansion.inserted.length, expansion.replaced)
+        return true
+    }
+
     private fun revertPreviouslyAcceptedCandidate() {
         editorInstance.phantomSpace.candidateForRevert?.let { candidateForRevert ->
             candidateForRevert.sourceProvider?.let { sourceProvider ->
@@ -467,6 +530,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeEnd = false
         }
         revertPreviouslyAcceptedCandidate()
+        // A backspace straight after a snippet expanded puts the shortcut back instead of deleting
+        // (issue #283). A second one then deletes normally.
+        if (undoSnippetExpansion()) {
+            TouchTrace.reset()
+            return
+        }
         // Keep the tap evidence aligned with the word: a single-character backspace drops the last tap,
         // anything coarser (a whole word) invalidates the trace entirely (issue #242).
         if (unit == OperationUnit.CHARACTERS) TouchTrace.pop() else TouchTrace.reset()
@@ -497,6 +566,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             return
         }
         if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
+            if (expandSnippet("\n")) return
             editorInstance.performEnter()
         } else {
             when (val action = info.imeOptions.action) {
@@ -506,9 +576,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 ImeOptions.Action.PREVIOUS,
                 ImeOptions.Action.SEARCH,
                 ImeOptions.Action.SEND -> {
+                    // Deliberately no snippet expansion here (issue #283): this Enter submits the field,
+                    // so expanding would insert the block and send it in the same keystroke, unread.
                     editorInstance.performEnterAction(action)
                 }
-                else -> editorInstance.performEnter()
+                else -> {
+                    if (expandSnippet("\n")) return
+                    editorInstance.performEnter()
+                }
             }
         }
     }
@@ -661,6 +736,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * enabled by the user.
      */
     private fun handleSpace(data: KeyData) {
+        // Before the auto-commit candidate: otherwise autocorrect replaces the shortcut with a "better"
+        // word and there is nothing left to recognise (issue #283).
+        if (expandSnippet(KeyCode.SPACE.toChar().toString())) return
         val candidate = nlpManager.getAutoCommitCandidate()
         candidate?.let { commitCandidate(it) }
         TouchTrace.reset() // word boundary (issue #242)
@@ -901,6 +979,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
+        // The snippet undo lasts exactly one keystroke: anything but a plain backspace lets it go, and
+        // the expansion itself re-arms it further down (issue #283).
+        if (data.code != KeyCode.DELETE) pendingExpansion = null
         val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
         if (emojiSearchQuery.value != null && handleEmojiSearchKey(data)) {
             return@batchEdit
@@ -1044,13 +1125,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
                             if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
-                                nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
-                                // Punctuation ends the word — drop the tap evidence for it (issue #242).
-                                TouchTrace.reset()
+                                // A punctuation mark ends the word too, so it can expand a snippet
+                                // trigger (issue #283) — and then it has already written itself.
+                                if (!expandSnippet(text)) {
+                                    nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                                    // Punctuation ends the word — drop the tap evidence (issue #242).
+                                    TouchTrace.reset()
+                                    editorInstance.commitChar(text)
+                                }
                             } else {
                                 TouchTrace.commit(text)
+                                editorInstance.commitChar(text)
                             }
-                            editorInstance.commitChar(text)
                         }
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }

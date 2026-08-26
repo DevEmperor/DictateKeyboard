@@ -455,12 +455,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Labot vārdu</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vārds</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu, kas atbilst {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Šajā laukā var ievadīt vienu vārdu — bez atstarpēm, komatiem un semikoliem. Veselam teikumam vai vairāku rindu tekstam izveido fragmentu sadaļā Uzvednes.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Biežums (starp {f_min} un {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt biežuma vērtību</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt derīgu skaitli, kas ir norādītajās robežās</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Saīsne (pēc izvēles)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Lūgums ievadīt saīsni, kas atbilst {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Saīsne ir viens vārds — bez atstarpēm, komatiem un semikoliem.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Valodas kods (pēc izvēles)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Šis valodas kods neatbilst vēlamajam veidolam. Kodam ir vai nu jāborāda tikai valoda (piemēram, en), vai valoda un valsts (piemēram, en_US), vai arī valoda, valsts un raksts (piemēram, en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Kustību un slīdošā rakstīšana</string>
@@ -1379,7 +1379,14 @@
     <string name="dictate__prompt_name_title">Nosaukums</string>
     <string name="dictate__prompt_name_placeholder">piem. Labot gramatiku</string>
     <string name="dictate__prompt_text_title">Uzvedne</string>
-    <string name="dictate__prompt_text_placeholder">Norādījums, kas tiek nosūtīts MI modelim</string>
+    <string name="dictate__prompt_text_placeholder">Norādījums MI — vai [teksts kvadrātiekavās], lai ievietotu to bez izmaiņām</string>
+    <string name="dictate__prompt_snippet_hint">Fragments: šis teksts tiek ievietots tieši tā, kā uzrakstīts, bez MI un bez interneta.</string>
+    <string name="dictate__prompt_ai_hint">Tiek nosūtīts MI modelim. Padoms: ieliec tekstu [kvadrātiekavās], un tas tiks ievietots bez izmaiņām.</string>
+    <string name="dictate__prompt_trigger_title">Rakstīšanas saīsne (neobligāti)</string>
+    <string name="dictate__prompt_trigger_placeholder">piem. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Ieraksti to kā vārdu un nospied atstarpi: tas kļūst par fragmentu. Atpakaļatkāpe uzreiz pēc tam atsauc darbību.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Saīsne ir viens vārds bez atstarpēm, ne garāks par 32 rakstzīmēm.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">To jau izmanto “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Nepieciešama atlase</string>
     <string name="dictate__prompt_requires_selection_summary">Darbojas ar atlasīto tekstu un aizstāj to</string>
     <string name="dictate__prompt_auto_apply_title">Lietot automātiski</string>

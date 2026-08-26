@@ -504,12 +504,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Промяна на дума</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Дума</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Въведете дума</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Въведете дума удовлетворяваща регулярния израз {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Това поле приема една дума — без интервали, запетаи и точка и запетая. За цял израз или текст на няколко реда добавете откъс в „Подкани“.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Честота (между {f_min} и {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете стойност за честота</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете число в посочения диапазон</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Ключова дума (по избор)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Въведете ключова дума удовлетворяваща регулярния израз {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Прекият път е една дума — без интервали, запетаи и точка и запетая.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код на езика (по избор)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Кодът на езика не отговаря на синтаксиса. Трябва да бъде или само език (bg), или език и държава (bg_BG), или език, държава и азбука (bg_BG-cyrillic).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Жестове и въвеждане чрез плъзгане</string>
@@ -1436,7 +1436,14 @@
     <string name="dictate__prompt_name_title">Име</string>
     <string name="dictate__prompt_name_placeholder">напр. Поправи граматиката</string>
     <string name="dictate__prompt_text_title">Подкана</string>
-    <string name="dictate__prompt_text_placeholder">Инструкция, изпращана към ИИ модела</string>
+    <string name="dictate__prompt_text_placeholder">Инструкция за ИИ — или [текст в квадратни скоби], който се вмъква без промяна</string>
+    <string name="dictate__prompt_snippet_hint">Откъс: този текст се вмъква точно както е написан, без ИИ и без интернет.</string>
+    <string name="dictate__prompt_ai_hint">Изпраща се към модела с ИИ. Съвет: сложете текста в [квадратни скоби] и той ще се вмъкне без промяна.</string>
+    <string name="dictate__prompt_trigger_title">Пряк път при писане (незадължително)</string>
+    <string name="dictate__prompt_trigger_placeholder">напр. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Напишете го като дума и натиснете интервал: превръща се в откъса. Backspace веднага след това го отменя.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Прекият път е една дума без интервали, най-много 32 знака.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Вече се използва от „{name}“.</string>
     <string name="dictate__prompt_requires_selection_title">Изисква селекция</string>
     <string name="dictate__prompt_requires_selection_summary">Работи върху избрания текст и го заменя</string>
     <string name="dictate__prompt_auto_apply_title">Прилагай автоматично</string>

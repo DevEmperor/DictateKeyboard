@@ -492,12 +492,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar palavra</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Palavra</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, introduza uma palavra</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, introduza uma palavra correspondente a {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Este campo aceita uma única palavra — sem espaços, vírgulas ou ponto e vírgula. Para uma frase inteira ou um texto com várias linhas, crie antes um excerto em Prompts.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequência (entre {f_min} e {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, introduza um valor de frequência</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, introduza um número válido entre os limites especificados</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Atalho (opcional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Por favor, introduza um atalho correspondente a {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Um atalho é uma única palavra — sem espaços, vírgulas ou ponto e vírgula.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código do idioma (opcional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">O código de idioma indicado não é coincidente com a sintaxe esperada. O código deve um idioma (pt), um idioma e um país (pt_PT) ou um idioma, um país e um script (pt_PT-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestos e deslize</string>
@@ -1415,7 +1415,14 @@
     <string name="dictate__prompt_name_title">Nome</string>
     <string name="dictate__prompt_name_placeholder">p. ex. Corrigir gramática</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Instrução enviada ao modelo de IA</string>
+    <string name="dictate__prompt_text_placeholder">Instrução para a IA — ou [texto entre parênteses retos] para inserir tal e qual</string>
+    <string name="dictate__prompt_snippet_hint">Excerto: este texto é inserido exatamente como está, sem IA e sem internet.</string>
+    <string name="dictate__prompt_ai_hint">Enviado ao modelo de IA. Dica: coloque o texto entre [parênteses retos] e será inserido tal e qual.</string>
+    <string name="dictate__prompt_trigger_title">Atalho de escrita (opcional)</string>
+    <string name="dictate__prompt_trigger_placeholder">p. ex. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Escreva-o como palavra e prima espaço: transforma-se no excerto. Um retrocesso logo a seguir anula.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Um atalho é uma palavra sem espaços, até 32 caracteres.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Já usado por «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Requer seleção</string>
     <string name="dictate__prompt_requires_selection_summary">Atua sobre o texto selecionado e substitui-o</string>
     <string name="dictate__prompt_auto_apply_title">Aplicar automaticamente</string>

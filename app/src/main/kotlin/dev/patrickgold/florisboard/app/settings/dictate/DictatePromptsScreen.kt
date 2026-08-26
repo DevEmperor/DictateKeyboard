@@ -86,6 +86,8 @@ import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryContribution
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.data.prompts.snippetBodyOf
+import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import org.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -308,7 +310,11 @@ fun DictatePromptsScreen(
                                     .weight(1f)
                                     .clickable { editorTarget = prompt.copy() },
                                 text = prompt.name.orEmpty(),
-                                secondaryText = prompt.prompt.orEmpty(),
+                                // A typed trigger goes in front of the text, so it is readable without
+                                // opening the prompt which snippet has a shortcut (issue #283).
+                                secondaryText = prompt.trigger?.trim()?.takeIf { it.isNotEmpty() }
+                                    ?.let { "$it · ${prompt.prompt.orEmpty()}" }
+                                    ?: prompt.prompt.orEmpty(),
                                 singleLineSecondaryText = true,
                             )
                             // Two status indicators, mirroring the legacy app: select-all = "needs a
@@ -342,15 +348,21 @@ fun DictatePromptsScreen(
             PromptEditorDialog(
                 initial = target,
                 onDismiss = { editorTarget = null },
+                triggerOwner = { typed ->
+                    prompts.firstOrNull {
+                        it.id != target.id && it.trigger?.trim().orEmpty().equals(typed, ignoreCase = true)
+                    }?.name
+                },
                 onShare = { name, text, requiresSelection, autoApply ->
-                    // No reasoning here on purpose — shared prompts stay reasoning-agnostic.
+                    // No reasoning here on purpose — shared prompts stay reasoning-agnostic, and no
+                    // trigger either: a shared prompt must not claim a shortcut in someone else's typing.
                     pendingShare = PromptModel(0, 0, name, text, requiresSelection, autoApply)
                 },
-                onSave = { name, text, requiresSelection, autoApply, reasoning, reasoningCustom ->
+                onSave = { name, text, requiresSelection, autoApply, reasoning, reasoningCustom, trigger ->
                     scope.launch {
                         withContext(Dispatchers.IO) {
                             if (target.id < 0) {
-                                db.add(PromptModel(0, db.count(), name, text, requiresSelection, autoApply, reasoning, reasoningCustom))
+                                db.add(PromptModel(0, db.count(), name, text, requiresSelection, autoApply, reasoning, reasoningCustom, trigger))
                             } else {
                                 db.update(
                                     target.copy(
@@ -360,6 +372,7 @@ fun DictatePromptsScreen(
                                         autoApply = autoApply,
                                         reasoningEffort = reasoning,
                                         reasoningEffortCustom = reasoningCustom,
+                                        trigger = trigger,
                                     ),
                                 )
                             }
@@ -493,7 +506,10 @@ private fun exportPrompts(context: android.content.Context, uri: Uri, prompts: L
                     .put("autoApply", p.autoApply)
                     // Only written when set (null = use the global reasoning setting); issue #155.
                     .apply { p.reasoningEffort?.let { put("reasoningEffort", it.name) } }
-                    .apply { p.reasoningEffortCustom?.takeIf { it.isNotBlank() }?.let { put("reasoningEffortCustom", it) } },
+                    .apply { p.reasoningEffortCustom?.takeIf { it.isNotBlank() }?.let { put("reasoningEffortCustom", it) } }
+                    // The typed trigger travels with the user's own export (issue #283) — unlike a
+                    // shared community prompt, this file is their own backup.
+                    .apply { p.trigger?.takeIf { it.isNotBlank() }?.let { put("trigger", it) } },
             )
         }
         val root = JSONObject().put("version", 1).put("prompts", array)
@@ -533,6 +549,9 @@ private fun importPrompts(context: android.content.Context, uri: Uri): List<Prom
                     reasoningEffort = obj.optString("reasoningEffort", "").takeIf { it.isNotEmpty() }
                         ?.let { runCatching { DictateReasoningEffort.valueOf(it) }.getOrNull() },
                     reasoningEffortCustom = obj.optString("reasoningEffortCustom", "").takeIf { it.isNotEmpty() },
+                    // Only kept if it is actually usable as a trigger — an old file may hold anything.
+                    trigger = obj.optString("trigger", "").trim()
+                        .takeIf { SnippetTriggers.isValidTrigger(it) },
                 ),
             )
         }
@@ -565,10 +584,14 @@ private fun ImportModeDialog(
 private fun PromptEditorDialog(
     initial: PromptModel,
     onDismiss: () -> Unit,
+    // Given a typed trigger, the name of the OTHER prompt already using it (or null if it is free).
+    triggerOwner: (String) -> String?,
     // Reasoning effort is intentionally NOT part of sharing — it's a local, per-user/per-server choice,
     // so community contributions never carry it (recipients decide their own). Only onSave gets it.
+    // The typed trigger stays out of sharing for the same reason, plus a stronger one: a prompt from a
+    // stranger must never quietly claim a shortcut in someone else's typing.
     onShare: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean) -> Unit,
-    onSave: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean, reasoning: DictateReasoningEffort?, reasoningCustom: String?) -> Unit,
+    onSave: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean, reasoning: DictateReasoningEffort?, reasoningCustom: String?, trigger: String?) -> Unit,
     onDelete: (() -> Unit)?,
 ) {
     var name by remember { mutableStateOf(initial.name.orEmpty()) }
@@ -577,7 +600,15 @@ private fun PromptEditorDialog(
     var autoApply by remember { mutableStateOf(initial.autoApply) }
     var reasoning by remember { mutableStateOf(initial.reasoningEffort) }
     var reasoningCustom by remember { mutableStateOf(initial.reasoningEffortCustom.orEmpty()) }
+    var trigger by remember { mutableStateOf(initial.trigger.orEmpty()) }
     var showError by remember { mutableStateOf(false) }
+    // Set on save when the trigger itself is the problem, so the field can say which of the two it is.
+    var triggerError by remember { mutableStateOf<Int?>(null) }
+    var triggerErrorOwner by remember { mutableStateOf("") }
+
+    // A prompt wrapped in [brackets] is inserted literally — that is what makes it a snippet, and only
+    // a snippet can carry a typed trigger (issue #283).
+    val isSnippet = snippetBodyOf(text.trim()) != null
 
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
@@ -586,10 +617,26 @@ private fun PromptEditorDialog(
         ),
         confirmLabel = stringRes(R.string.action__save),
         onConfirm = {
-            if (name.isBlank() || text.isBlank()) {
-                showError = true
-            } else {
-                onSave(name.trim(), text.trim(), requiresSelection, autoApply, reasoning, reasoningCustom.trim().ifBlank { null })
+            val cleanTrigger = trigger.trim()
+            val owner = if (cleanTrigger.isEmpty()) null else triggerOwner(cleanTrigger)
+            when {
+                name.isBlank() || text.isBlank() -> showError = true
+                cleanTrigger.isNotEmpty() && !SnippetTriggers.isValidTrigger(cleanTrigger) -> {
+                    triggerError = R.string.dictate__prompt_trigger_error_invalid
+                }
+                owner != null -> {
+                    triggerErrorOwner = owner
+                    triggerError = R.string.dictate__prompt_trigger_error_duplicate
+                }
+                else -> onSave(
+                    name.trim(),
+                    text.trim(),
+                    requiresSelection,
+                    autoApply,
+                    reasoning,
+                    reasoningCustom.trim().ifBlank { null },
+                    cleanTrigger.ifBlank { null },
+                )
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
@@ -621,6 +668,43 @@ private fun PromptEditorDialog(
                 placeholder = { Text(stringRes(R.string.dictate__prompt_text_placeholder)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 isError = showError && text.isBlank(),
+            )
+            Spacer(Modifier.height(6.dp))
+            // The one line that says what the brackets do. Without it the snippet mechanism is invisible
+            // — people looked for text expansion in the dictionary and concluded it did not exist (#283).
+            Text(
+                text = stringRes(
+                    if (isSnippet) {
+                        R.string.dictate__prompt_snippet_hint
+                    } else {
+                        R.string.dictate__prompt_ai_hint
+                    },
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(8.dp))
+            // The typed shortcut, only meaningful for a snippet: type it, and the next space, punctuation
+            // mark or line break swaps it for the text above.
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = trigger,
+                onValueChange = { trigger = it; triggerError = null },
+                enabled = isSnippet,
+                label = { Text(stringRes(R.string.dictate__prompt_trigger_title)) },
+                placeholder = { Text(stringRes(R.string.dictate__prompt_trigger_placeholder)) },
+                singleLine = true,
+                isError = triggerError != null,
+                supportingText = {
+                    val error = triggerError
+                    Text(
+                        text = if (error != null) {
+                            stringRes(error, "name" to triggerErrorOwner)
+                        } else {
+                            stringRes(R.string.dictate__prompt_trigger_summary)
+                        },
+                    )
+                },
             )
             Spacer(Modifier.height(12.dp))
             // The two toggles keep only their title inline; the longer description now shows on a

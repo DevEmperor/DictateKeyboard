@@ -213,12 +213,10 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Muokkaa sanaa</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sana</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Syötä sana</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Syötä sana, joka vastaa \"{regex}\"</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Esiintymistiheys ({f_min} ja {f_max} välillä)</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Syötä esiintymistiheyden arvo</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Syötä kelvollinen numero määritellyissä rajoissa</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Pikavalinta (vapaavalintainen)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Syötä pikavalinta, joka vastaa \"{regex}\"</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kielen koodi (valinnainen)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Kielen koodi ei ole kelvollinen. Koodin tulee vastata joko pelkkää kieltä (kuten en), kieltä ja maata (kuten en_US) tai kieltä, maata ja scriptiä (kuten en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Eleet &amp; liukukirjoitus</string>

@@ -390,12 +390,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Редагувати слово</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Слово</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Введіть слово</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Введіть слово, що відповідає {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">У це поле вводиться одне слово — без пробілів, ком і крапок з комою. Для цілої фрази або тексту з кількох рядків створіть сніпет у розділі «Промпти».</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Частота (між {f_min} та {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Введіть значення частоти</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Введіть дійсне число в зазначених межах</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Коротка назва (необов\'зково)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Введіть коротку назву, що відповідає {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Скорочення — це одне слово: без пробілів, ком і крапок з комою.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код мови (необов\'язково)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Цей мовний код не відповідає очікуваному синтаксису. Код має бути або тільки мовою (як uk), або мовою і країною (як uk_UA), або мовою, країною і абеткою (як uk-Ua-cyrrilic).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Жести та безперервний ввід</string>
@@ -1283,7 +1283,14 @@
     <string name="dictate__prompt_name_title">Назва</string>
     <string name="dictate__prompt_name_placeholder">напр. Виправити граматику</string>
     <string name="dictate__prompt_text_title">Промпт</string>
-    <string name="dictate__prompt_text_placeholder">Інструкція, що надсилається моделі ШІ</string>
+    <string name="dictate__prompt_text_placeholder">Інструкція для ШІ — або [текст у квадратних дужках], щоб вставити його як є</string>
+    <string name="dictate__prompt_snippet_hint">Сніпет: цей текст вставляється точно так, як написано, без ШІ та без інтернету.</string>
+    <string name="dictate__prompt_ai_hint">Надсилається до моделі ШІ. Порада: візьміть текст у [квадратні дужки], і його буде вставлено як є.</string>
+    <string name="dictate__prompt_trigger_title">Скорочення під час набору (необов’язково)</string>
+    <string name="dictate__prompt_trigger_placeholder">напр. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Наберіть його як слово й натисніть пробіл: воно стане сніпетом. Backspace одразу після цього скасовує заміну.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Скорочення — одне слово без пробілів, щонайбільше 32 символи.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Уже використовує «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Потребує виділення</string>
     <string name="dictate__prompt_requires_selection_summary">Діє на виділений текст і замінює його</string>
     <string name="dictate__prompt_auto_apply_title">Застосовувати автоматично</string>

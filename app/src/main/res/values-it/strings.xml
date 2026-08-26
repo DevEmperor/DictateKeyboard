@@ -408,12 +408,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Modifica parola</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Parola</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Si prega di inserire una parola</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Si prega di inserire una parola che corrisponda a {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Questo campo accetta una sola parola: niente spazi, virgole o punti e virgola. Per una frase intera o un testo su più righe crea invece uno snippet in Prompt.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequenza (tra {f_min} e {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Si prega di inserire un valore di frequenza</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Si prega di inserire un numero valido entro i limiti specificati</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Scorciatoia (facoltativo)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Si prega di inserire una scorciatoia che corrisponda a {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Una scorciatoia è una sola parola: niente spazi, virgole o punti e virgola.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Codice lingua (facoltativo)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Questo codice di lingua non rispetta la sintassi richiesta. Il codice deve contenere solo la lingua (come it), la lingua e il paese (come it_IT) oppure la lingua, il paese e lo script (come it_IT-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesti &amp; Digitazione a scorrimento</string>
@@ -1219,7 +1219,14 @@
     <string name="dictate__prompt_name_title">Nome</string>
     <string name="dictate__prompt_name_placeholder">es. Correggi grammatica</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Istruzione inviata al modello IA</string>
+    <string name="dictate__prompt_text_placeholder">Istruzione per l\'IA — oppure [testo tra parentesi quadre] per inserirlo così com\'è</string>
+    <string name="dictate__prompt_snippet_hint">Snippet: questo testo viene inserito esattamente com\'è, senza IA e senza internet.</string>
+    <string name="dictate__prompt_ai_hint">Inviato al modello di IA. Suggerimento: metti il testo tra [parentesi quadre] e verrà inserito così com\'è.</string>
+    <string name="dictate__prompt_trigger_title">Scorciatoia di digitazione (facoltativa)</string>
+    <string name="dictate__prompt_trigger_placeholder">es. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Digitala come parola, poi uno spazio: diventa lo snippet. Un backspace subito dopo annulla.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Una scorciatoia è una parola senza spazi, al massimo 32 caratteri.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Già usata da «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Richiede una selezione</string>
     <string name="dictate__prompt_requires_selection_summary">Agisce sul testo selezionato e lo sostituisce</string>
     <string name="dictate__prompt_auto_apply_title">Applica automaticamente</string>

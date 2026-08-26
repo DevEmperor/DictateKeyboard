@@ -140,9 +140,7 @@
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frecuencia: {freq} | Atayu: {shortcut}</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Pallabra</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Introduz una pallabra</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Introduz una pallabra que concase con «{regex}»</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introduz un númberu válidu que tea dientro de les llendes especificaes</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Introduz un atayu que concase con «{regex}»</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Xestos y escritura eslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Escritura eslizante</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Activar la escritura eslizante</string>

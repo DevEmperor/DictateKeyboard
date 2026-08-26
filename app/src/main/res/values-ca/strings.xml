@@ -406,12 +406,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edita la paraula</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Introdueix una paraula</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Introdueix una paraula que coincideixi amb {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Aquest camp admet una sola paraula: sense espais, comes ni punts i coma. Per a una frase sencera o un text de diverses línies, crea un fragment a Prompts.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Freqüència (entre {f_min} i {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Introdueix un valor de freqüència</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introdueix una xifra vàlida entre els límits especificats</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Drecera (opcional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Introdueix una drecera que coincideixi amb {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Una drecera és una sola paraula: sense espais, comes ni punts i coma.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Codi d\'idioma (opcional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Aquest codi d\'idioma no té la sintaxi esperada. El codi ha de ser només un idioma (com ara ca), un idioma i país (com ara ca_AD) o un idioma, país i script (com ara ca_AD-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestos &amp; Escriure lliscant</string>
@@ -1311,7 +1311,14 @@
     <string name="dictate__prompt_name_title">Nom</string>
     <string name="dictate__prompt_name_placeholder">p. ex. Corregeix la gramàtica</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Instrucció enviada al model d\'IA</string>
+    <string name="dictate__prompt_text_placeholder">Instrucció per a la IA — o [text entre claudàtors] per inserir-lo tal qual</string>
+    <string name="dictate__prompt_snippet_hint">Fragment: aquest text s\'insereix exactament tal com està, sense IA ni internet.</string>
+    <string name="dictate__prompt_ai_hint">S\'envia al model d\'IA. Consell: posa el text entre [claudàtors] i s\'inserirà tal qual.</string>
+    <string name="dictate__prompt_trigger_title">Drecera d\'escriptura (opcional)</string>
+    <string name="dictate__prompt_trigger_placeholder">p. ex. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Escriu-la com una paraula i prem espai: es converteix en el fragment. Un retrocés just després ho desfà.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Una drecera és una paraula sense espais, com a màxim 32 caràcters.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Ja l\'utilitza «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Requereix una selecció</string>
     <string name="dictate__prompt_requires_selection_summary">Actua sobre el text seleccionat i el substitueix</string>
     <string name="dictate__prompt_auto_apply_title">Aplica automàticament</string>

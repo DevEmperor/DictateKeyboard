@@ -503,12 +503,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upravit slovo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Prosím, zadejte slovo</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Prosím, zadejte slovo shodující se s {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Toto pole přijímá jedno slovo — bez mezer, čárek a středníků. Pro celou větu nebo víceřádkový text vytvořte úryvek v sekci Prompty.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi {f_min} a {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím, zadejte hodnotu frekvence</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím, zadejte platné číslo v zadaných rozmezích</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Prosím, zadejte zkratku shodující se s {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Zkratka je jedno slovo — bez mezer, čárek a středníků.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Tento kód jazyka neodpovídá očekávané syntaxi. Kód musí být buď pouze jazyk (jako cs), jazyk a země (jako cs_CZ), nebo jazyk, země a skript (jako cs_CZ-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta a psaní tahem</string>
@@ -1450,7 +1450,14 @@
     <string name="dictate__prompt_name_title">Název</string>
     <string name="dictate__prompt_name_placeholder">např. Opravit gramatiku</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Pokyn odeslaný modelu AI</string>
+    <string name="dictate__prompt_text_placeholder">Pokyn pro AI — nebo [text v hranatých závorkách], který se vloží beze změny</string>
+    <string name="dictate__prompt_snippet_hint">Úryvek: tento text se vloží přesně tak, jak je napsaný, bez AI a bez internetu.</string>
+    <string name="dictate__prompt_ai_hint">Odesílá se modelu AI. Tip: text v [hranatých závorkách] se vloží beze změny.</string>
+    <string name="dictate__prompt_trigger_title">Zkratka při psaní (volitelné)</string>
+    <string name="dictate__prompt_trigger_placeholder">např. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Napište ji jako slovo a stiskněte mezerník: promění se v úryvek. Backspace hned poté akci vrátí zpět.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Zkratka je jedno slovo bez mezer, nejvýše 32 znaků.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Už ji používá „{name}“.</string>
     <string name="dictate__prompt_requires_selection_title">Vyžaduje výběr</string>
     <string name="dictate__prompt_requires_selection_summary">Pracuje s vybraným textem a nahradí jej</string>
     <string name="dictate__prompt_auto_apply_title">Použít automaticky</string>

@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.data.prompts.snippetBody
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistorySource
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
@@ -70,6 +71,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.overlay.AccessibilitySink
 import dev.patrickgold.florisboard.dictate.recognition.RecognitionSink
+import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
@@ -760,7 +762,11 @@ object DictateController {
     fun refreshPrompts(context: Context) {
         val appContext = context.applicationContext
         scope.launch {
-            _prompts.value = withContext(Dispatchers.IO) { promptsDb(appContext).getAll() }
+            val loaded = withContext(Dispatchers.IO) { promptsDb(appContext).getAll() }
+            _prompts.value = loaded
+            // The same read also feeds the typed snippet triggers (issue #283), so an edit made in the
+            // settings is live on the very next keystroke.
+            SnippetTriggers.update(loaded)
         }
     }
 
@@ -3154,8 +3160,8 @@ object DictateController {
         val raw = prompt.prompt.orEmpty()
 
         // Snippet shortcut: text wrapped in [...] is inserted literally (no network call).
-        if (raw.length >= 2 && raw.startsWith("[") && raw.endsWith("]")) {
-            val snippet = raw.substring(1, raw.length - 1)
+        val snippet = prompt.snippetBody()
+        if (snippet != null) {
             // A refused write here used to end in a green check as well (issue #277).
             reportOverlayInsertFailure(appContext, sink.commitText(snippet), snippet)
             return

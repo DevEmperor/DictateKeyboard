@@ -380,6 +380,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
         }
 
+        // Typed snippet triggers (issue #283) are plain local text and must work without rewording ever
+        // being switched on — so they get their own refresh here rather than riding on the prompt strip's.
+        dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers.refresh(this)
+
         // File transcription: if the user picked a file via the long-press mic trampoline, transcribe
         // it now that we are back on the field. Skips instant-recording when it kicks in.
         val startedFileTranscription =

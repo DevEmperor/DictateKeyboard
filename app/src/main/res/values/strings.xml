@@ -673,12 +673,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit word</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Word</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word matching {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog. Shown when the input is more than a single word.">This field takes a single word — no spaces, commas or semicolons. For a whole phrase or a multi-line text, add a snippet under Prompts instead.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequency (between {f_min} and {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a frequency value</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a valid number within the specified bounds</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Shortcut (optional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Please enter a shortcut matching {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog. Shown when the input is more than a single word.">A shortcut is a single word — no spaces, commas or semicolons.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
@@ -2139,7 +2139,14 @@
     <string name="dictate__prompt_name_title" comment="Label for the prompt name field">Name</string>
     <string name="dictate__prompt_name_placeholder" comment="Placeholder for the prompt name field">e.g. Fix grammar</string>
     <string name="dictate__prompt_text_title" comment="Label for the prompt instruction field">Prompt</string>
-    <string name="dictate__prompt_text_placeholder" comment="Placeholder for the prompt instruction field">Instruction sent to the AI model</string>
+    <string name="dictate__prompt_text_placeholder" comment="Placeholder for the prompt instruction field. The brackets are the literal snippet syntax and must stay.">Instruction for the AI — or [text in brackets] to insert it as-is</string>
+    <string name="dictate__prompt_snippet_hint" comment="Shown under the prompt field when the text is wrapped in square brackets">Snippet: this text is inserted exactly as written, with no AI and no internet.</string>
+    <string name="dictate__prompt_ai_hint" comment="Shown under the prompt field when the text is an AI instruction. The brackets are the literal snippet syntax and must stay.">Sent to the AI model. Tip: wrap text in [square brackets] and it is inserted as-is instead.</string>
+    <string name="dictate__prompt_trigger_title" comment="Label for the typed shortcut field in the prompt editor">Typing shortcut (optional)</string>
+    <string name="dictate__prompt_trigger_placeholder" comment="Placeholder for the typed shortcut field, an example shortcut">e.g. ;sig</string>
+    <string name="dictate__prompt_trigger_summary" comment="Helper text under the typing shortcut field">Type it as a word, then a space: it turns into the snippet. A backspace right after undoes it.</string>
+    <string name="dictate__prompt_trigger_error_invalid" comment="Error under the typing shortcut field when it contains spaces or is too long">A shortcut is one word without spaces, up to 32 characters.</string>
+    <string name="dictate__prompt_trigger_error_duplicate" comment="Error under the typing shortcut field when another prompt already uses it. {name} is that prompt’s name.">Already used by “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title" comment="Switch: prompt operates on the selected text">Requires selection</string>
     <string name="dictate__prompt_requires_selection_summary" comment="Summary for the requires-selection switch">Operates on the selected text and replaces it</string>
     <string name="dictate__prompt_auto_apply_title" comment="Switch: run the prompt automatically after each transcription">Apply automatically</string>

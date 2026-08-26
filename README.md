@@ -132,7 +132,7 @@ Dictate nothing and are not going anywhere.
 - **Cleaner transcripts, cheaper uploads** — long silences are trimmed out of a recording before it is sent, and it can be sped up without your voice going higher: providers bill by audio length, so a recording a third shorter costs a third less. Long dictations are packed rather than refused, and can be split into paragraphs automatically at sentence boundaries.
 - **Find & replace rules** — automatically fix recurring words, names or phrases in every transcript.
 - **Single-call multimodal mode** — let one audio-capable AI model transcribe *and* format in a single request, for lower latency and cost.
-- **Custom prompts & snippets** — build your own reword actions; reusable text snippets are inserted instantly without an API call.
+- **Custom prompts & snippets** — build your own reword actions; reusable text snippets (a prompt written in `[square brackets]`) are inserted instantly without an API call. Give a snippet a typing shortcut and it expands as you type: `r5` plus a space becomes the whole block, and one backspace puts the shortcut back.
 - **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
 - **Your own stickers** — point the keyboard at a folder of your own images and insert them straight into a chat. Subfolders become tabs, long-press pins a favourite or deletes the file, and nothing leaves the device. Share a sticker to Dictate from WhatsApp, Telegram or anywhere else and it lands in the folder.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.

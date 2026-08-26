@@ -124,14 +124,14 @@ class ImeDictationSink(context: Context) : DictationSink {
         // replaces only the divergent tail in one batch → no character-by-character flicker).
         if (prevText == finalText) return true
         val cp = prevText.commonPrefixWith(finalText).length
-        editorInstance.replaceDictationTail(prevText.length - cp, finalText.substring(cp))
+        editorInstance.replaceTextBeforeCursor(prevText.length - cp, finalText.substring(cp))
         return true
     }
 
     override fun clearDictationPreview(prevText: String) {
         // Atomic delete of the whole streamed preview in one batch. Doing this per-character (backspaces)
         // ANRs and can kill the keyboard when a long dictation is cancelled mid-recording.
-        if (prevText.isNotEmpty()) editorInstance.replaceDictationTail(prevText.length, "")
+        if (prevText.isNotEmpty()) editorInstance.replaceTextBeforeCursor(prevText.length, "")
     }
 
     /**
@@ -150,7 +150,7 @@ class ImeDictationSink(context: Context) : DictationSink {
             editorInstance.commitTextRaw(new.substring(cp))
         } else {
             // A revision (provider rewrote the tail): replace it in one atomic batch, never per-character.
-            editorInstance.replaceDictationTail(deleteLen, new.substring(cp))
+            editorInstance.replaceTextBeforeCursor(deleteLen, new.substring(cp))
         }
     }
 

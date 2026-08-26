@@ -489,12 +489,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit kata</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Kata</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata yang cocok dengan {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Kolom ini menerima satu kata saja — tanpa spasi, koma, atau titik koma. Untuk satu kalimat penuh atau teks beberapa baris, buat cuplikan di Perintah.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekuensi (antara {f_min} dan {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nilai frekuensi</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nomor yang valid dalam batas yang ditentukan</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Pintasan (opsional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Harap masukkan sebuah pintasan yang cocok dengan {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Pintasan berupa satu kata — tanpa spasi, koma, atau titik koma.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kode bahasa (opsional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Kode bahasa ini tidak sesuai dengan sintaks yang diharapkan. Kode harus berupa bahasa (seperti en), bahasa dan negara (seperti en_US) atau bahasa, negara, dan skrip (seperti en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestur &amp; Ketik geser</string>
@@ -1391,7 +1391,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_name_title">Nama</string>
     <string name="dictate__prompt_name_placeholder">mis. Perbaiki tata bahasa</string>
     <string name="dictate__prompt_text_title">Perintah</string>
-    <string name="dictate__prompt_text_placeholder">Instruksi yang dikirim ke model AI</string>
+    <string name="dictate__prompt_text_placeholder">Instruksi untuk AI — atau [teks dalam kurung siku] untuk disisipkan apa adanya</string>
+    <string name="dictate__prompt_snippet_hint">Cuplikan: teks ini disisipkan persis seperti tertulis, tanpa AI dan tanpa internet.</string>
+    <string name="dictate__prompt_ai_hint">Dikirim ke model AI. Tip: apit teks dengan [kurung siku] agar disisipkan apa adanya.</string>
+    <string name="dictate__prompt_trigger_title">Pintasan pengetikan (opsional)</string>
+    <string name="dictate__prompt_trigger_placeholder">mis. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Ketik sebagai kata lalu spasi: berubah menjadi cuplikan. Tekan hapus tepat setelahnya untuk membatalkan.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Pintasan adalah satu kata tanpa spasi, maksimal 32 karakter.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Sudah dipakai oleh “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Memerlukan pilihan</string>
     <string name="dictate__prompt_requires_selection_summary">Bekerja pada teks yang dipilih dan menggantinya</string>
     <string name="dictate__prompt_auto_apply_title">Terapkan otomatis</string>

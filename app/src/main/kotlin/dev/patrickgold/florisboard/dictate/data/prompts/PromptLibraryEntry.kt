@@ -45,6 +45,9 @@ data class PromptLibraryEntry(
     /**
      * Converts this library entry into a persistable [PromptModel]. [pos] is the target list position;
      * [id]/[category]/[language]/[author]/[description] are dropped — they are catalog metadata only.
+     *
+     * No typed trigger either (issue #283), deliberately: a prompt from the community library must
+     * never arrive holding a shortcut that starts rewriting what the recipient types.
      */
     fun toPromptModel(pos: Int): PromptModel = PromptModel(
         id = 0,

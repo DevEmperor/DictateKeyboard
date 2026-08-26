@@ -504,12 +504,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edytuj słowo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Słowo</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Proszę wpisać słowo</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Proszę wpisać słowo pasujące do {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">To pole przyjmuje jedno słowo — bez spacji, przecinków i średników. Dla całego zdania lub tekstu wielowierszowego utwórz wstawkę w sekcji Prompty.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Częstotliwość (pomiędzy {f_min}, a {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wpisać wartość częstotliwości</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wprowadzić prawidłową liczbę w określonych granicach</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Skrót (opcjonalny)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Proszę wpisać skrót pasujący do {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Skrót to jedno słowo — bez spacji, przecinków i średników.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kod języka (opcjonalny)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ten kod języka nie jest zgodny z oczekiwaną składnią. Kod musi być tylko językiem (np. en), językiem i krajem (np. en_US) lub językiem, krajem i skryptem (np. en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesty &amp; Glide pisanie</string>
@@ -1451,7 +1451,14 @@
     <string name="dictate__prompt_name_title">Nazwa</string>
     <string name="dictate__prompt_name_placeholder">np. Popraw gramatykę</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Instrukcja wysyłana do modelu AI</string>
+    <string name="dictate__prompt_text_placeholder">Instrukcja dla AI — albo [tekst w nawiasach kwadratowych], aby wstawić go dosłownie</string>
+    <string name="dictate__prompt_snippet_hint">Wstawka: ten tekst jest wstawiany dokładnie tak, jak go zapisano, bez AI i bez internetu.</string>
+    <string name="dictate__prompt_ai_hint">Wysyłane do modelu AI. Wskazówka: ujmij tekst w [nawiasy kwadratowe], a zostanie wstawiony dosłownie.</string>
+    <string name="dictate__prompt_trigger_title">Skrót przy pisaniu (opcjonalnie)</string>
+    <string name="dictate__prompt_trigger_placeholder">np. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Wpisz go jako słowo, potem spacja: zamieni się we wstawkę. Backspace zaraz potem cofa zmianę.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Skrót to jedno słowo bez spacji, maksymalnie 32 znaki.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Używa go już „{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Wymaga zaznaczenia</string>
     <string name="dictate__prompt_requires_selection_summary">Działa na zaznaczonym tekście i zastępuje go</string>
     <string name="dictate__prompt_auto_apply_title">Stosuj automatycznie</string>

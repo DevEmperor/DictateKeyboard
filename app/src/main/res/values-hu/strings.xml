@@ -502,12 +502,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Szó szerkesztése</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Szó</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Kérjük adjon meg egy szót a következőhöz: {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">Ebbe a mezőbe egyetlen szó írható — szóköz, vessző és pontosvessző nélkül. Teljes mondathoz vagy több soros szöveghez hozz létre egy szövegdarabot az Utasítások alatt.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Gyakoriság ({f_min} és {f_max} között)</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Kérjük adjon meg egy gyakoriság értéket</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Kérjük adjon meg egy helyes számot a megadott intervallumon belül</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Parancsikon (opcionális)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Kérjük adjon meg egy egyező szót: {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">A rövidítés egyetlen szó — szóköz, vessző és pontosvessző nélkül.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">A nyelvkód nem illeszkedik az elvárt formátumhoz. A kód vagy csak nyelv (pl. hu), nyelv és ország (pl. hu_HU), vagy nyelv és ország majd szkript (pl. hu_HU-script) formátumú kell legyen.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesztusok és csúsztatott gépelés</string>
@@ -1434,7 +1434,14 @@
     <string name="dictate__prompt_name_title">Név</string>
     <string name="dictate__prompt_name_placeholder">pl. Nyelvtan javítása</string>
     <string name="dictate__prompt_text_title">Utasítás</string>
-    <string name="dictate__prompt_text_placeholder">Az MI-modellnek küldött utasítás</string>
+    <string name="dictate__prompt_text_placeholder">Utasítás az MI-nek — vagy [szögletes zárójelbe tett szöveg] a változatlan beszúráshoz</string>
+    <string name="dictate__prompt_snippet_hint">Szövegdarab: ez a szöveg pontosan így kerül be, MI és internet nélkül.</string>
+    <string name="dictate__prompt_ai_hint">Az MI-modellnek megy. Tipp: tedd a szöveget [szögletes zárójelbe], és változatlanul kerül be.</string>
+    <string name="dictate__prompt_trigger_title">Gépelési rövidítés (nem kötelező)</string>
+    <string name="dictate__prompt_trigger_placeholder">pl. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Írd be szóként, majd nyomj szóközt: átalakul a szövegdarabbá. A közvetlenül utána nyomott visszatörlés visszavonja.</string>
+    <string name="dictate__prompt_trigger_error_invalid">A rövidítés egy szó szóköz nélkül, legfeljebb 32 karakter.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Már használja: „{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Kijelölést igényel</string>
     <string name="dictate__prompt_requires_selection_summary">A kijelölt szövegen működik, és lecseréli azt</string>
     <string name="dictate__prompt_auto_apply_title">Automatikus alkalmazás</string>

@@ -390,12 +390,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">تعديل كلمة</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">كلمة</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">الرجاء إدخال كلمة</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">يرجى ادخال كلمة مطابقة {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid">يقبل هذا الحقل كلمة واحدة فقط — بدون مسافات أو فواصل أو فواصل منقوطة. لعبارة كاملة أو نص متعدد الأسطر، أضف مقتطفًا في المطالبات بدلاً من ذلك.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">التكرار (من {f_min} الى {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء ادخال قيمة معدل التكرار</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء إدخال رقم صحيح ضمن الحدود المذكورة</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">الاختصار (اختياري)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">يرجى ادخال اختصار مطابق {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">الاختصار كلمة واحدة — بدون مسافات أو فواصل أو فواصل منقوطة.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">رمز اللغة(اختياري)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">رمز اللغة هذا لا يتوافق مع بناء الجملة المتوقع. يجب أن يكون الرمز إما لغة فقط (مثل en) أو لغة وبلد (مثل en_US) أو لغة وبلد ونص (مثل en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">الإيماءات و الكتابة بالتمرير</string>
@@ -1294,7 +1294,14 @@
     <string name="dictate__prompt_name_title">الاسم</string>
     <string name="dictate__prompt_name_placeholder">مثال: تصحيح القواعد</string>
     <string name="dictate__prompt_text_title">المطالبة</string>
-    <string name="dictate__prompt_text_placeholder">التعليمات المُرسَلة إلى نموذج الذكاء الاصطناعي</string>
+    <string name="dictate__prompt_text_placeholder">تعليمات للذكاء الاصطناعي — أو [نص بين قوسين مربعين] لإدراجه كما هو</string>
+    <string name="dictate__prompt_snippet_hint">مقتطف: يُدرج هذا النص كما هو تمامًا، بدون ذكاء اصطناعي وبدون إنترنت.</string>
+    <string name="dictate__prompt_ai_hint">يُرسَل إلى نموذج الذكاء الاصطناعي. نصيحة: ضع النص بين [قوسين مربعين] ليُدرج كما هو.</string>
+    <string name="dictate__prompt_trigger_title">اختصار الكتابة (اختياري)</string>
+    <string name="dictate__prompt_trigger_placeholder">مثال: ;sig</string>
+    <string name="dictate__prompt_trigger_summary">اكتبه ككلمة ثم اضغط مسافة: يتحول إلى المقتطف. الضغط على مفتاح المسح مباشرة بعده يتراجع عن ذلك.</string>
+    <string name="dictate__prompt_trigger_error_invalid">الاختصار كلمة واحدة بدون مسافات، بحد أقصى 32 حرفًا.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">مستخدَم بالفعل في «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">يتطلّب تحديدًا</string>
     <string name="dictate__prompt_requires_selection_summary">يعمل على النص المحدّد ويستبدله</string>
     <string name="dictate__prompt_auto_apply_title">تطبيق تلقائي</string>

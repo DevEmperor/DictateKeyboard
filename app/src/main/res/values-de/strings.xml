@@ -414,12 +414,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Wort bearbeiten</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Wort</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Bitte ein Wort eingeben</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Bitte ein Wort eingeben, das zu {regex} passt</string>
+    <string name="settings__udm__dialog__word_error_invalid">Dieses Feld nimmt ein einzelnes Wort — keine Leerzeichen, Kommas oder Semikolons. Für einen ganzen Satz oder mehrzeiligen Text lege stattdessen einen Textbaustein unter Prompts an.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Häufigkeit (zwischen {f_min} und {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Bitte einen Häufigkeitswert eingeben</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Bitte eine gültige Zahl aus den angegebenen Grenzen eingeben</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Abkürzung (optional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Bitte einen Shortcut eingeben, der zu {regex} passt</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">Ein Kürzel ist ein einzelnes Wort — keine Leerzeichen, Kommas oder Semikolons.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Sprachcode (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Dieser Sprachcode entspricht nicht der Syntax. Der Code muss entweder ein Land (wie en), Land und Region (wie en_US) oder Land, Region und Script (wie en_US-script) sein.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesten</string>
@@ -1392,7 +1392,14 @@
     <string name="dictate__prompt_name_title">Name</string>
     <string name="dictate__prompt_name_placeholder">z. B. Grammatik korrigieren</string>
     <string name="dictate__prompt_text_title">Prompt</string>
-    <string name="dictate__prompt_text_placeholder">Anweisung, die an das KI-Modell gesendet wird</string>
+    <string name="dictate__prompt_text_placeholder">Anweisung an die KI — oder [Text in Klammern], um ihn unverändert einzufügen</string>
+    <string name="dictate__prompt_snippet_hint">Textbaustein: Dieser Text wird genau so eingefügt, ohne KI und ohne Internet.</string>
+    <string name="dictate__prompt_ai_hint">Geht an das KI-Modell. Tipp: Text in [eckige Klammern] setzen, dann wird er unverändert eingefügt.</string>
+    <string name="dictate__prompt_trigger_title">Tippkürzel (optional)</string>
+    <string name="dictate__prompt_trigger_placeholder">z. B. ;sig</string>
+    <string name="dictate__prompt_trigger_summary">Als Wort tippen, dann Leerzeichen: Es wird zum Textbaustein. Ein Rückschritt direkt danach macht es rückgängig.</string>
+    <string name="dictate__prompt_trigger_error_invalid">Ein Kürzel ist ein Wort ohne Leerzeichen, höchstens 32 Zeichen.</string>
+    <string name="dictate__prompt_trigger_error_duplicate">Wird bereits von „{name}“ verwendet.</string>
     <string name="dictate__prompt_requires_selection_title">Erfordert Auswahl</string>
     <string name="dictate__prompt_requires_selection_summary">Wirkt auf den ausgewählten Text und ersetzt ihn</string>
     <string name="dictate__prompt_auto_apply_title">Automatisch anwenden</string>

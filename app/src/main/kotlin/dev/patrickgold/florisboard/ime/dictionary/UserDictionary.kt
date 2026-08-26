@@ -494,6 +494,12 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
 }
 
 object UserDictionaryValidation {
+    /**
+     * One token, no whitespace and no list separators. The cap is deliberate: an entry here feeds
+     * autocorrect, glide typing and the suggestion strip, all of which index single words — a whole
+     * phrase would misbehave in all three. Users who arrive here wanting a multi-line text block are
+     * pointed at the snippets in Dictate ▸ Prompts by the error message instead (issue #283).
+     */
     private val WordRegex = """^[^\s;,]+${'$'}""".toRegex()
 
     val Word = ValidationRule<String> {
@@ -503,7 +509,7 @@ object UserDictionaryValidation {
             val str = input.trim()
             when {
                 input.isBlank() -> resultInvalid(error = R.string.settings__udm__dialog__word_error_empty)
-                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__word_error_invalid, "regex" to WordRegex)
+                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__word_error_invalid)
                 else -> resultValid()
             }
         }
@@ -530,7 +536,7 @@ object UserDictionaryValidation {
             val str = input.trim()
             when {
                 input.isBlank() -> resultValid() // Is optional
-                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__shortcut_error_invalid, "regex" to WordRegex)
+                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__shortcut_error_invalid)
                 else -> resultValid()
             }
         }

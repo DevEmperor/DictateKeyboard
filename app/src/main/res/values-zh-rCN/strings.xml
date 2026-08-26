@@ -503,12 +503,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">编辑词条</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">词条</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">请输入一个词条</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">请输入一个匹配正则表达式 {regex} 的词条</string>
+    <string name="settings__udm__dialog__word_error_invalid">此处只能填一个词，不能包含空格、逗号或分号。若要插入整句或多行文本，请在提示词中添加一个片段。</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">频率（在 {f_min} 和 {f_max} 之间）</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">请输入频率值</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">请输入指定范围内的有效数字</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">快捷键（可选）</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">请输入一个匹配正则表达式 {regex} 的快捷键</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid">快捷词只能是一个词，不能包含空格、逗号或分号。</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">语言代码（可选）</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">此语言代码不符合预期的语法。代码必须是一种语言（如 en）、一种语言和国家（如 en_US）或一种语言、国家和文字（如 en_US-script）。</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">手势 &amp; 滑动输入</string>
@@ -1431,7 +1431,14 @@
     <string name="dictate__prompt_name_title">名称</string>
     <string name="dictate__prompt_name_placeholder">例如：修正语法</string>
     <string name="dictate__prompt_text_title">提示词</string>
-    <string name="dictate__prompt_text_placeholder">发送给 AI 模型的指令</string>
+    <string name="dictate__prompt_text_placeholder">给 AI 的指令 —— 或用[方括号]括起来的文本，原样插入</string>
+    <string name="dictate__prompt_snippet_hint">片段：这段文本会原样插入，不经过 AI，也不联网。</string>
+    <string name="dictate__prompt_ai_hint">将发送给 AI 模型。提示：把文本放进[方括号]，就会原样插入。</string>
+    <string name="dictate__prompt_trigger_title">输入快捷词（可选）</string>
+    <string name="dictate__prompt_trigger_placeholder">例如 ;sig</string>
+    <string name="dictate__prompt_trigger_summary">把它当作一个词输入，再按空格，就会变成该片段。紧接着按退格可撤销。</string>
+    <string name="dictate__prompt_trigger_error_invalid">快捷词是一个不含空格的词，最多 32 个字符。</string>
+    <string name="dictate__prompt_trigger_error_duplicate">“{name}”已在使用该快捷词。</string>
     <string name="dictate__prompt_requires_selection_title">需要选中文本</string>
     <string name="dictate__prompt_requires_selection_summary">对选中的文本进行操作并替换它</string>
     <string name="dictate__prompt_auto_apply_title">自动应用</string>

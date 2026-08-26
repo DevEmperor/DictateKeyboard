@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
+import dev.patrickgold.florisboard.dictate.data.prompts.snippetBody
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -302,10 +303,8 @@ internal fun DictateLivePromptChip(
  *  - free prompt (generates from the instruction) → sparkle glyph
  */
 internal fun dictatePromptIcon(prompt: PromptModel): ImageVector {
-    val raw = prompt.prompt.orEmpty()
-    val isSnippet = raw.length >= 2 && raw.startsWith("[") && raw.endsWith("]")
     return when {
-        isSnippet -> Icons.AutoMirrored.Filled.ShortText
+        prompt.snippetBody() != null -> Icons.AutoMirrored.Filled.ShortText
         prompt.requiresSelection -> Icons.Default.SelectAll
         else -> Icons.Default.AutoAwesome
     }
