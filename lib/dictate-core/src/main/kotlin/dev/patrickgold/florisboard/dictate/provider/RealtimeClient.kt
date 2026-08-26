@@ -794,10 +794,18 @@ private class MistralRealtimeSession(
 }
 
 /**
- * Deepgram streaming transcription over `wss://api.deepgram.com/v1/listen`. Streams raw 16 kHz mono PCM16
- * as binary WebSocket frames and parses `Results` messages: each interim revises the current segment
- * ([RealtimeCallbacks.onPartial]), `is_final` finalizes it ([onFinalSegment]). `finish()` sends
- * `CloseStream` so the server flushes the last segment before closing.
+ * Deepgram streaming transcription. Streams raw 16 kHz mono PCM16 as binary WebSocket frames, and speaks
+ * whichever of Deepgram's two wire versions the chosen model belongs to — the framing around them (`Token`
+ * auth, binary audio, `CloseStream` to flush) is the same:
+ *
+ *  - **Nova/Whisper** on `wss://api.deepgram.com/v1/listen`, reporting `Results`: each interim revises the
+ *    current segment ([RealtimeCallbacks.onPartial]), `is_final` settles it ([onFinalSegment]).
+ *  - **Flux** on `/v2/listen`, reporting `TurnInfo` (issue #291). Flux is Deepgram's conversational model:
+ *    it decides itself when a turn has ended instead of waiting out a silence timer, and every event
+ *    carries the whole turn so far — so each one is a partial until `EndOfTurn` settles it.
+ *
+ * Text that is still unsettled when the socket closes is emitted as a final segment, so the tail of a
+ * dictation survives a close that arrives before the last `is_final`/`EndOfTurn`.
  */
 private class DeepgramRealtimeSession(
     private val client: OkHttpClient,
@@ -809,31 +817,54 @@ private class DeepgramRealtimeSession(
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
+    /** Latest partial, cleared when it is settled — emitted at close if nothing ever settled it. */
+    @Volatile private var pending = ""
     @Volatile private var done = false
 
+    /** The dictation language the user pinned, or null when they left auto-detection on. */
+    private val pinnedLanguage = language?.takeIf { it.isNotBlank() && it != "detect" }
+
     fun connect() {
-        val lang = if (!language.isNullOrBlank() && language != "detect") "&language=$language" else ""
-        val url = "wss://api.deepgram.com/v1/listen?model=$model" +
-            "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang"
         val request = Request.Builder()
-            .url(url)
+            .url(if (model.startsWith("flux")) fluxUrl() else listenUrl())
             .header("Authorization", "Token $apiKey")
             .build()
         ws = client.newWebSocket(request, listener)
+    }
+
+    private fun listenUrl(): String {
+        val lang = pinnedLanguage?.let { "&language=$it" }.orEmpty()
+        return "wss://api.deepgram.com/v1/listen?model=$model" +
+            "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang"
+    }
+
+    /**
+     * Flux takes neither `interim_results` nor `punctuate` — the turn is its unit, and its transcript comes
+     * formatted. Its language parameter is a *hint* that biases detection, which only the multilingual
+     * model does at all; the single-language models reject the parameter, and no variant knows regions.
+     */
+    private fun fluxUrl(): String {
+        val hint = pinnedLanguage
+            ?.takeIf { model.endsWith("multi") }
+            ?.let { "&language_hint=${it.substringBefore('-')}" }
+            .orEmpty()
+        return "wss://api.deepgram.com/v2/listen?model=$model&encoding=linear16&sample_rate=16000$hint"
     }
 
     private val listener = object : WebSocketListener() {
         override fun onMessage(webSocket: WebSocket, text: String) {
             val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
             when (obj["type"]?.jsonPrimitive?.content) {
-                "Results" -> {
-                    val transcript = obj["channel"]?.jsonObject
+                "Results" -> emit(
+                    transcript = obj["channel"]?.jsonObject
                         ?.get("alternatives")?.jsonArray?.firstOrNull()?.jsonObject
-                        ?.get("transcript")?.jsonPrimitive?.content.orEmpty()
-                    if (transcript.isBlank()) return
-                    val isFinal = obj["is_final"]?.jsonPrimitive?.booleanOrNull ?: false
-                    if (isFinal) callbacks.onFinalSegment(transcript) else callbacks.onPartial(transcript)
-                }
+                        ?.get("transcript")?.jsonPrimitive?.content.orEmpty(),
+                    settled = obj["is_final"]?.jsonPrimitive?.booleanOrNull ?: false,
+                )
+                "TurnInfo" -> emit(
+                    transcript = obj["transcript"]?.jsonPrimitive?.content.orEmpty(),
+                    settled = obj["event"]?.jsonPrimitive?.content == "EndOfTurn",
+                )
             }
         }
 
@@ -850,7 +881,7 @@ private class DeepgramRealtimeSession(
 
     override fun finish() {
         val socket = ws ?: return finishClosed(null)
-        // Ask Deepgram to flush the final segment; it then emits the last Results and closes.
+        // Ask Deepgram to flush the last segment; it then emits it and closes.
         runCatching { socket.send("""{"type":"CloseStream"}""") }
     }
 
@@ -858,6 +889,18 @@ private class DeepgramRealtimeSession(
         done = true
         runCatching { ws?.close(1000, null) }
         callbacks.onClosed()
+    }
+
+    /** Hands one message's transcript to the right callback and tracks what is still unsettled. */
+    private fun emit(transcript: String, settled: Boolean) {
+        if (transcript.isBlank()) return
+        if (settled) {
+            pending = ""
+            callbacks.onFinalSegment(transcript)
+        } else {
+            pending = transcript
+            callbacks.onPartial(transcript)
+        }
     }
 
     private fun emitError(t: Throwable) {
@@ -871,6 +914,8 @@ private class DeepgramRealtimeSession(
     private fun finishClosed(webSocket: WebSocket?) {
         if (done) return
         done = true
+        pending.takeIf { it.isNotEmpty() }?.let { callbacks.onFinalSegment(it) }
+        pending = ""
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
     }

@@ -240,4 +240,32 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             audio.delete()
         }
     }
+
+    test("Deepgram offers only models the file endpoint can serve") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """
+                    {"stt":[
+                      {"canonical_name":"nova-3","batch":true,"streaming":true},
+                      {"canonical_name":"flux-general-en","batch":false,"streaming":true},
+                      {"canonical_name":"whisper-large"}
+                    ]}
+                    """.trimIndent(),
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(
+                    baseUrl = server.url("/v1/").toString(),
+                    apiKey = "test",
+                    transcriptionApi = TranscriptionApi.DEEPGRAM,
+                ),
+            )
+
+            // flux is streaming-only (#291) and would fail every upload; an entry that says nothing about
+            // its endpoints is kept, so a changed catalog leaves the user with a list rather than none.
+            client.listModels().map { it.id } shouldBe listOf("nova-3", "whisper-large")
+            server.takeRequest().getHeader("Authorization") shouldBe "Token test"
+        }
+    }
 })

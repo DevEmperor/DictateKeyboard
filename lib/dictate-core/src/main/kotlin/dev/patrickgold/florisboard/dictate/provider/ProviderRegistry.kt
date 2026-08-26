@@ -328,10 +328,12 @@ object ProviderRegistry {
         defaultTranscriptionModel = "nova-3",
         curatedTranscriptionModels = listOf("nova-3", "nova-2"),
         // Realtime (#128): wss /v1/listen?encoding=linear16&sample_rate=16000&interim_results=true.
+        // The flux models (#291) are streaming-only and speak /v2/listen instead — offered here but not
+        // as the default, since they cost more, cover one or ten languages, and end turns on their own.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.DEEPGRAM,
         defaultRealtimeModel = "nova-3",
-        curatedRealtimeModels = listOf("nova-3", "nova-2"),
+        curatedRealtimeModels = listOf("nova-3", "nova-2", "flux-general-en", "flux-general-multi"),
     )
 
     /**

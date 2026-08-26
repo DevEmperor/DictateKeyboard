@@ -666,7 +666,9 @@ class OpenAiCompatibleClient(
             return config.curatedModels.map { ModelInfo(it) }
         }
         // Deepgram has its own catalog: GET /v1/models with a `Token` header returns `{ stt: [...] }`;
-        // the `canonical_name` is the value for the listen `?model=` param (issue #143).
+        // the `canonical_name` is the value for the listen `?model=` param (issue #143). Each entry also
+        // says which endpoints serve it, and only file uploads are picked here — a streaming-only model
+        // (Deepgram's flux generation, #291) would fail every transcription it was chosen for.
         if (config.transcriptionApi == TranscriptionApi.DEEPGRAM) {
             val request = Request.Builder()
                 .url(config.normalizedBaseUrl + "models")
@@ -676,6 +678,7 @@ class OpenAiCompatibleClient(
             val body = executeForBody(request, maxRetries = 1)
             return json.decodeFromString(DeepgramModelsDto.serializer(), body)
                 .stt
+                .filter { it.batch }
                 .map { ModelInfo(it.canonicalName) }
                 .filter { it.id.isNotBlank() }
                 .sortedBy { it.id.lowercase() }
@@ -1089,7 +1092,11 @@ class OpenAiCompatibleClient(
     private data class DeepgramModelsDto(val stt: List<DeepgramModelDto> = emptyList())
 
     @Serializable
-    private data class DeepgramModelDto(@SerialName("canonical_name") val canonicalName: String = "")
+    private data class DeepgramModelDto(
+        @SerialName("canonical_name") val canonicalName: String = "",
+        /** Whether the model serves file uploads. Defaults to true so a changed catalog can't empty the list. */
+        val batch: Boolean = true,
+    )
 
     @Serializable
     private data class AssemblyUploadDto(@SerialName("upload_url") val uploadUrl: String)
