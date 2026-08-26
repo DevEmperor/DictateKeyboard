@@ -90,19 +90,16 @@ object WebPTranscoder {
     private const val ESTIMATE_MARGIN = 0.92
 
     /**
-     * Produces a sticker-shaped copy of [source], or null if that is not possible.
+     * The sticker-shaped bytes of [source], or null if that is not possible.
      *
-     * The result is kept in [MediaCache.convertedDir] — which lives in `filesDir`, not the cache — so
-     * a sticker is re-encoded at most once on a device, whether or not the copy in the user's own
-     * folder could be written back.
+     * Returns bytes rather than a file, and keeps nothing. It used to write the result into a store
+     * in `filesDir` so a sticker would never be re-encoded twice — which made sense while the
+     * conversion happened at insert time and could be asked for again at any moment. It does not any
+     * more: this runs once, when a sticker enters the folder, and what it produces goes straight into
+     * the folder. A second copy of every sticker in app storage would be exactly that, a second copy.
      */
-    suspend fun toStickerSpec(context: Context, source: File, animated: Boolean): File? {
+    suspend fun toStickerSpec(source: File, animated: Boolean): ByteArray? {
         val budget = MediaFormat.waStickerBudget(animated)
-        conversionOf(context, source, animated)?.let { existing ->
-            MediaLog.log("transcode: reusing ${existing.name} (${existing.length()} bytes)")
-            return existing
-        }
-        val target = File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
         return try {
             val started = System.currentTimeMillis()
             val encoded = if (animated) {
@@ -110,27 +107,24 @@ object WebPTranscoder {
             } else {
                 encodeStill(source, budget)
             }
-            if (encoded == null) {
+            if (encoded == null || encoded.size.toLong() !in 1..budget) {
                 MediaLog.log("transcode: failed for ${source.name} (animated=$animated)")
                 return null
             }
-            target.writeBytes(encoded)
             MediaLog.log(
                 "transcode: ${source.name} -> ${encoded.size} bytes in " +
                     "${System.currentTimeMillis() - started} ms (animated=$animated)"
             )
-            target.takeIf { it.length() in 1..budget }
+            encoded
         } catch (e: Exception) {
             flogError { "Failed to transcode ${source.name}: ${e.message}" }
             MediaLog.log("transcode: ${source.name} threw ${e.javaClass.simpleName}: ${e.message}")
-            runCatching { target.delete() }
             null
         } catch (e: OutOfMemoryError) {
             // A long animation at full canvas size is the one realistic way to run out of memory in
             // an IME process. Losing the conversion is fine; taking the keyboard down is not.
             flogError { "Out of memory transcoding ${source.name}" }
             MediaLog.log("transcode: out of memory on ${source.name}")
-            runCatching { target.delete() }
             null
         }
     }
@@ -210,17 +204,6 @@ object WebPTranscoder {
             true,
         )
     }
-
-    /**
-     * The conversion of [source] that has already been made, if there is one.
-     *
-     * Lets a caller tell "this is ready" from "this needs a second of work" without doing the work —
-     * which is what the background pass ahead of the user's finger needs in order to know what is
-     * left to do.
-     */
-    fun conversionOf(context: Context, source: File, animated: Boolean): File? =
-        File(MediaCache.convertedDir(context), "${source.nameWithoutExtension}-wa.webp")
-            .takeIf { it.exists() && it.length() in 1..MediaFormat.waStickerBudget(animated) }
 
     private class DecodedFrame(val bitmap: Bitmap, val durationMs: Int)
 

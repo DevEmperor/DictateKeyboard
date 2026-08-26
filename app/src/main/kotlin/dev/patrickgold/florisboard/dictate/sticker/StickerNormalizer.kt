@@ -18,6 +18,9 @@ import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -41,6 +44,15 @@ import kotlinx.coroutines.withContext
 object StickerNormalizer {
 
     /**
+     * How many files are asked about at once.
+     *
+     * Eight is enough to keep the documents provider busy without flooding the binder threads it
+     * answers on; the calls are waiting, not working, so there is nothing here that competes for a
+     * processor.
+     */
+    private const val ParallelChecks = 8
+
+    /**
      * The normalized form of [file], or null when there is nothing to do or nothing can be done.
      *
      * Null is the common and cheap answer: a sticker that is already in shape stays exactly as it is,
@@ -48,13 +60,11 @@ object StickerNormalizer {
      * file. Works for PNG and JPEG as much as for WebP — the transcoder decodes whatever the platform
      * can decode and always writes WebP.
      */
-    suspend fun normalize(context: Context, file: File, mime: String): File? {
-        if (mime == "image/gif") return null
-        val info = withContext(Dispatchers.IO) { MediaFormat.inspect(file, mime) }
-        if (MediaFormat.qualifiesAsWhatsAppSticker(info)) return null
-        return withContext(Dispatchers.IO) {
-            WebPTranscoder.toStickerSpec(context, file, info.animated)
-        }
+    suspend fun normalize(file: File, mime: String): ByteArray? = withContext(Dispatchers.IO) {
+        if (mime == "image/gif") return@withContext null
+        val info = MediaFormat.inspect(file, mime)
+        if (MediaFormat.qualifiesAsWhatsAppSticker(info)) return@withContext null
+        WebPTranscoder.toStickerSpec(file, info.animated)
     }
 
     /**
@@ -63,8 +73,12 @@ object StickerNormalizer {
      * Hangs off re-reading the folder, because the two questions are the same question: a file that
      * appeared without going through the import — dropped in with a file manager, synced in from
      * somewhere — is exactly the file that is not yet a sticker, and "read the folder again" is when
-     * the user is asking about such files. A folder that is already in shape costs one header read
-     * per file and changes nothing.
+     * the user is asking about such files.
+     *
+     * The checking runs [ParallelChecks] at a time, and that is where the time went: every file is a
+     * separate call across to the documents provider, and such a call spends nearly all of its life
+     * waiting for an answer rather than doing anything. Measured on a folder with nothing left to
+     * convert, one at a time took about half a minute for a few hundred stickers.
      *
      * A file that has to change its type also has to change its name, or the next app is told it is
      * a PNG and treats it as a photograph. The rename goes first, so the bytes land under the name
@@ -76,19 +90,31 @@ object StickerNormalizer {
         index: StickerIndex,
         onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
     ): Int {
-        var changed = 0
-        val total = index.allItems.size
-        for ((position, item) in index.allItems.withIndex()) {
+        val items = index.allItems
+        val outOfShape = ArrayList<StickerItem>()
+        var checked = 0
+        for (batch in items.chunked(ParallelChecks)) {
             currentCoroutineContext().ensureActive()
-            onProgress(position, total)
-            // Asked of the file where it lies, not of a copy. Whether a sticker is already in shape
-            // follows from thirty-two header bytes and a length, and both come out of a single open —
-            // whereas copying it out first, which is what this did at first, moves the whole file
-            // across an IPC boundary for a question that is almost always answered "nothing to do".
-            if (isAlreadyInShape(context, treeUri, item)) continue
+            val verdicts = coroutineScope {
+                batch.map { item ->
+                    async(Dispatchers.IO) { item to isAlreadyInShape(context, treeUri, item) }
+                }.awaitAll()
+            }
+            verdicts.filterNot { it.second }.mapTo(outOfShape) { it.first }
+            checked += batch.size
+            onProgress(checked, items.size)
+        }
+        if (outOfShape.isEmpty()) return 0
+
+        // Converting is the opposite kind of work — all processor, no waiting — and it already uses
+        // every core inside the encoder, so it goes one sticker at a time.
+        var changed = 0
+        for ((position, item) in outOfShape.withIndex()) {
+            currentCoroutineContext().ensureActive()
+            onProgress(position, outOfShape.size)
             val staged = StickerManager.materialize(context, treeUri, item) ?: continue
             val normalized = try {
-                normalize(context, staged, item.mime)
+                normalize(staged, item.mime)
             } catch (e: Exception) {
                 flogError { "Failed to normalize ${item.name}: ${e.message}" }
                 null
@@ -104,11 +130,11 @@ object StickerNormalizer {
             if (StickerWriter.overwrite(context, treeUri, docId, normalized)) {
                 changed++
                 MediaLog.log(
-                    "normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.length()} B"
+                    "normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.size} B"
                 )
             }
         }
-        onProgress(total, total)
+        onProgress(outOfShape.size, outOfShape.size)
         if (changed > 0) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
         return changed
     }
@@ -119,20 +145,19 @@ object StickerNormalizer {
      * A GIF is always left alone. Anything unreadable answers "no" and falls through to the ordinary
      * path, which will fail there in its own way rather than here in a way nobody can see.
      */
-    private suspend fun isAlreadyInShape(context: Context, treeUri: Uri, item: StickerItem): Boolean =
-        withContext(Dispatchers.IO) {
-            if (item.mime == "image/gif") return@withContext true
-            try {
-                val uri = StickerScanner.documentUri(treeUri, item.docId)
-                context.contentResolver.openAssetFileDescriptor(uri, "r")?.use { descriptor ->
-                    val header = ByteArray(32)
-                    val read = descriptor.createInputStream().use { it.read(header) }
-                    if (read <= 0) return@withContext false
-                    val info = MediaFormat.inspect(header.copyOf(read), descriptor.length, item.mime)
-                    MediaFormat.qualifiesAsWhatsAppSticker(info)
-                } ?: false
-            } catch (e: Exception) {
-                false
-            }
+    private fun isAlreadyInShape(context: Context, treeUri: Uri, item: StickerItem): Boolean {
+        if (item.mime == "image/gif") return true
+        return try {
+            val uri = StickerScanner.documentUri(treeUri, item.docId)
+            context.contentResolver.openAssetFileDescriptor(uri, "r")?.use { descriptor ->
+                val header = ByteArray(32)
+                val read = descriptor.createInputStream().use { it.read(header) }
+                if (read <= 0) return false
+                val info = MediaFormat.inspect(header.copyOf(read), descriptor.length, item.mime)
+                MediaFormat.qualifiesAsWhatsAppSticker(info)
+            } ?: false
+        } catch (e: Exception) {
+            false
         }
+    }
 }

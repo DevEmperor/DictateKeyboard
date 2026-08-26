@@ -184,11 +184,16 @@ object StickerWriter {
             resolver.openInputStream(source)?.use { input ->
                 staged.outputStream().use { output -> input.copyTo(output) }
             } ?: return false
-            val normalized = StickerNormalizer.normalize(context, staged, mime) ?: staged
+            val normalized = StickerNormalizer.normalize(staged, mime)
             val written = resolver.openOutputStream(target)?.use { output ->
-                normalized.inputStream().use { it.copyTo(output) }
+                if (normalized != null) {
+                    output.write(normalized)
+                } else {
+                    staged.inputStream().use { it.copyTo(output) }
+                }
+                true
             }
-            return written != null
+            return written == true
         } finally {
             runCatching { staged.delete() }
         }
@@ -321,17 +326,13 @@ object StickerWriter {
      * would still be the old one. Both modes are tried; a provider supporting neither keeps its file
      * unchanged, which costs nothing but the re-encode.
      */
-    suspend fun overwrite(context: Context, treeUri: Uri, docId: String, source: File): Boolean =
+    suspend fun overwrite(context: Context, treeUri: Uri, docId: String, bytes: ByteArray): Boolean =
         withContext(Dispatchers.IO) {
             val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
-            // The staged copy and the index still describe the sticker as it was before the first
-            // write-back, so without this the same bytes would be written again on every insert
-            // until the folder is scanned afresh. Equal size means the work is already done.
-            if (describe(context, uri).size == source.length()) return@withContext true
             for (mode in arrayOf("wt", "w")) {
                 try {
                     val written = context.contentResolver.openOutputStream(uri, mode)?.use { out ->
-                        source.inputStream().use { it.copyTo(out) }
+                        out.write(bytes)
                         true
                     } ?: false
                     if (written) return@withContext true
