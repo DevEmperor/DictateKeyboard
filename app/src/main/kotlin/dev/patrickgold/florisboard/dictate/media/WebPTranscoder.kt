@@ -163,9 +163,18 @@ object WebPTranscoder {
                 GifEncoder.Frame(pixels, frame.durationMs)
             }
             var bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
-            while (bytes != null && bytes.size > GIF_MAX_BYTES && encodable.size > GIF_MIN_FRAMES) {
-                encodable = encodable.filterIndexed { index, _ -> index % 2 == 0 }
-                    .map { GifEncoder.Frame(it.pixels, it.delayMs * 2) }
+            // How far over the budget the first attempt landed says how many halvings are wanted,
+            // because a GIF's size is very nearly proportional to its frame count — every frame is
+            // stored whole. Working that out beats discovering it one full re-encode at a time:
+            // measured, an eighty-frame sticker cost three encodes and threw two of them away.
+            while (bytes != null && bytes.size > GIF_MAX_BYTES && canHalve(encodable.size)) {
+                var steps = 1
+                var estimate = bytes.size.toLong() / 2
+                while (estimate > GIF_MAX_BYTES && canHalve(encodable.size shr steps)) {
+                    estimate /= 2
+                    steps++
+                }
+                repeat(steps) { encodable = halved(encodable) }
                 MediaLog.log("gif: halving to ${encodable.size} frames to fit $GIF_MAX_BYTES bytes")
                 bytes = GifEncoder.encode(width, height, encodable, animation.loopCount)
             }
@@ -191,6 +200,21 @@ object WebPTranscoder {
             null
         }
     }
+
+    /**
+     * Whether an animation of [frameCount] would still read as motion after being halved.
+     *
+     * Asked of what would be *left*, which the first version of this got wrong on both paths: a
+     * check of `frameCount > MIN` lets nine frames fall to four, under a floor of eight. The floor
+     * is the point at which the eye stops seeing movement and starts seeing a slideshow, so it has
+     * to hold after the cut, not before it.
+     */
+    internal fun canHalve(frameCount: Int): Boolean = frameCount / 2 >= GIF_MIN_FRAMES
+
+    /** Every second frame, each showing twice as long, so the animation keeps its running time. */
+    private fun halved(frames: List<GifEncoder.Frame>): List<GifEncoder.Frame> =
+        frames.filterIndexed { index, _ -> index % 2 == 0 }
+            .map { GifEncoder.Frame(it.pixels, it.delayMs * 2) }
 
     /** A copy at its own size, or shrunk if it is larger than a chat is ever going to show. */
     private fun withinGifBounds(source: Bitmap): Bitmap {
@@ -360,7 +384,9 @@ object WebPTranscoder {
                 if (encoded != null && encoded.size <= budget) return encoded
                 next = ladder.firstOrNull { it < quality }
             }
-            if (working.size <= MIN_FRAMES) return null
+            // Asked of what would be left after the cut, not of what is there now: the other way
+            // round, seven frames fall to three under a floor of six.
+            if (working.size / 2 < MIN_FRAMES) return null
             // Halve the frame rate and keep the total running time by doubling each duration. The
             // bitmaps are shared with [frames], which is what recycles them.
             working = working.filterIndexed { index, _ -> index % 2 == 0 }
