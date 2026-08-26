@@ -15,14 +15,18 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 
 /**
- * The one directory whose files may be handed to another app.
+ * The directories whose files may be handed to another app.
  *
  * Rich content is inserted by URI, not by bytes: the target app receives a `content://` URI backed by
  * this app's FileProvider and reads it afterwards, so the file has to outlive the insert and has to sit
  * under a path declared in `res/xml/file_paths.xml`. Both the GIF search and the local sticker panel
  * therefore stage their file here first.
  *
- * The name is historical — the path was introduced for GIFs and is spelled `gif-media` in
+ * Two of them, both under `cacheDir`: [dir] for the copy of whatever is being inserted, [convertedDir]
+ * for a PNG or GIF made out of it. Nothing here is anything but a copy of something else, so clearing
+ * the app's cache costs a little time and nothing at all.
+ *
+ * The first name is historical — the path was introduced for GIFs and is spelled `gif-media` in
  * `file_paths.xml`. Renaming it would mean touching a declared FileProvider path for cosmetic reasons,
  * which is not worth doing to a mechanism other apps hold URIs into.
  */
@@ -34,27 +38,25 @@ object MediaCache {
     private const val MaxBytes = 150L * 1024L * 1024L
 
     /**
-     * A far larger budget for converted files, because throwing one away costs a second to rebuild
-     * rather than a file copy — but a budget all the same. A folder of a thousand animated stickers,
-     * all of them inserted once, would otherwise sit in app storage forever at half a gigabyte, and
-     * that is the kind of number people notice in the system settings and blame the app for.
+     * A smaller budget for the derived files, since only apps that refuse WebP ever need one.
      */
-    private const val MaxConvertedBytes = 300L * 1024L * 1024L
+    private const val MaxConvertedBytes = 100L * 1024L * 1024L
 
     fun dir(context: Context): File = File(context.cacheDir, DirName).apply { mkdirs() }
 
     /**
-     * Where a converted or re-encoded file is kept, and deliberately **not** the cache.
+     * Where a PNG or GIF made from a sticker is kept.
      *
-     * Staging a sticker is a file copy and costs milliseconds; re-encoding an animated one costs
-     * about a second of decoding, scaling and compression. Losing that to a cache eviction — Android
-     * clears `cacheDir` whenever it feels the need, and [prune] does so on purpose — would mean
-     * paying it again for a sticker the user sends every day. So the result lives in `filesDir`,
-     * survives until the sticker itself changes, and is served through the same FileProvider (see the
-     * `sticker_converted` path in `file_paths.xml`).
+     * In the cache, and that is the point: these are derived files, wanted only by apps that will not
+     * take a WebP, and losing one costs a second to make again. Somebody short of storage should be
+     * able to clear the app's cache and have that space back, without the keyboard quietly holding a
+     * second copy of their sticker collection somewhere they cannot reach it.
+     *
+     * Served through the FileProvider, so the matching `sticker_converted` path in `file_paths.xml`
+     * has to be a `cache-path` and not a `files-path`.
      */
     fun convertedDir(context: Context): File =
-        File(context.filesDir, ConvertedDirName).apply { mkdirs() }
+        File(context.cacheDir, ConvertedDirName).apply { mkdirs() }
 
     /**
      * Drops the least recently modified files until the directory fits in [MaxBytes].
@@ -65,8 +67,30 @@ object MediaCache {
      */
     fun prune(context: Context) = pruneDir(dir(context), MaxBytes)
 
-    /** The same, for the durable conversion store. */
-    fun pruneConverted(context: Context) = pruneDir(convertedDir(context), MaxConvertedBytes)
+    /** The same, for the derived files. */
+    fun pruneConverted(context: Context) {
+        pruneDir(convertedDir(context), MaxConvertedBytes)
+        dropLegacyConvertedStore(context)
+    }
+
+    /**
+     * Removes the copy of this directory that older versions kept in `filesDir`.
+     *
+     * It lived there so a conversion would never have to be paid for twice, back when converting
+     * happened at insert time. It does not any more, and a directory in `filesDir` is one the user
+     * cannot clear from the system settings — so whatever is left of it goes. Can be deleted from
+     * here once nobody is upgrading from a version that had it.
+     */
+    private fun dropLegacyConvertedStore(context: Context) {
+        try {
+            val legacy = File(context.filesDir, ConvertedDirName)
+            if (!legacy.isDirectory) return
+            legacy.listFiles()?.forEach { it.delete() }
+            legacy.delete()
+        } catch (e: Exception) {
+            flogError { "Failed to remove the old converted-sticker store: ${e.message}" }
+        }
+    }
 
     private fun pruneDir(directory: File, budget: Long) {
         try {
