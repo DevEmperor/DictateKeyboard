@@ -108,16 +108,17 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // prefix, a NUL character that no dictionary word can contain.
         private const val TYPED_WORD_KEY = "\u0000"
 
-        // How frequent a word the user added counts as when glide ranks candidates (issue #263), on the
-        // dictionary's own 128..255 scale. Measured against the bundled English dictionary, 212 is its 90th
-        // percentile: a personal word beats nine tenths of the vocabulary, which is what it takes for a name
-        // to win against the similar-shaped rarities it actually competes with, while the words everybody
-        // writes still come first.
+        // How frequent a word the user added counts as when it is ranked against the dictionary — for glide
+        // candidates (issue #263) and for prefix completions in the strip (issue #264) — on the dictionary's
+        // own 128..255 scale. Measured against the bundled English dictionary, 212 is its 90th percentile: a
+        // personal word beats nine tenths of the vocabulary, which is what it takes for a name to win against
+        // the similar-shaped rarities it actually competes with, while the words everybody writes still come
+        // first. That is what keeps a single typed letter from putting a contact's name in front of "and".
         //
         // Deliberately not the frequency stored on the entry. Every word added through this app is saved at
         // the maximum (NlpManager's USER_DICTIONARY_FREQ, 255), so honouring it would put a nickname above
         // "the" — and that number was chosen to protect words from autocorrect, a different question.
-        private const val USER_DICTIONARY_GLIDE_FREQ = 212
+        private const val USER_DICTIONARY_RANK_FREQ = 212
 
         // German umlaut/ß restoration (issue #219): bound the variant generation so a long word with many
         // a/o/u doesn't explode combinatorially (2^sites). Words needing more than this are left alone.
@@ -1033,14 +1034,33 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             maxCandidateCount
         }
 
-        runCatching {
+        // The user's own words that extend what is being typed. They used to go into the strip right here,
+        // ahead of everything the dictionary had to offer, so a single typed letter put a contact's surname
+        // in front of the word everybody writes (issue #264). They are merged into the ranked walk below
+        // instead, at USER_DICTIONARY_RANK_FREQ — which means they surface exactly when the prefix has
+        // narrowed the common words away, and never before.
+        val personal = runCatching {
             val dm = DictionaryManager.default()
             dm.loadUserDictionariesIfNecessary()
             dm.queryUserDictionary(word, subtype.primaryLocale)
-        }.getOrNull()?.forEach { candidate ->
-            val text = candidate.text.toString()
-            if (text.startsWith(word, ignoreCase = true)) {
-                out.putIfAbsent(text.lowercase(), candidate)
+        }.getOrNull().orEmpty()
+            .map { it.text.toString() }
+            .filter { it.startsWith(word, ignoreCase = true) }
+            .distinctBy { it.lowercase() }
+        var personalTaken = 0
+
+        /** Puts the personal words in as soon as the dictionary walk has dropped to [freq] or below. */
+        fun addPersonalDownTo(freq: Int) {
+            while (personalTaken < personal.size && USER_DICTIONARY_RANK_FREQ >= freq && out.size < completionCap) {
+                val text = personal[personalTaken++]
+                out.putIfAbsent(
+                    text.lowercase(),
+                    WordSuggestionCandidate(
+                        text = text,
+                        confidence = USER_DICTIONARY_RANK_FREQ / 255.0,
+                        sourceProvider = this,
+                    ),
+                )
             }
         }
 
@@ -1059,16 +1079,22 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 dictWord.startsWith(word, ignoreCase = true)
             }
             if (!matches) continue
+            val freq = data[dictWord] ?: 0
+            addPersonalDownTo(freq)
+            if (out.size >= completionCap) break
             val text = cased(dictWord)
             out.putIfAbsent(
                 text.lowercase(),
                 WordSuggestionCandidate(
                     text = text,
-                    confidence = (data[dictWord] ?: 0) / 255.0,
+                    confidence = freq / 255.0,
                     sourceProvider = this,
                 ),
             )
         }
+        // Nothing (or too little) in the dictionary extends this prefix: the personal words are all that is
+        // left to offer, so they go in rather than being dropped for want of a rank to sit at.
+        addPersonalDownTo(0)
 
         // Spelling fixes for an unknown word — now surfaced even when there are prefix completions of the
         // typo (issue #212), so a missing apostrophe/hyphen or other slip is offered (whats → what's)
@@ -1180,7 +1206,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     /**
-     * The user's own words for [subtype], each at [USER_DICTIONARY_GLIDE_FREQ].
+     * The user's own words for [subtype], each at [USER_DICTIONARY_RANK_FREQ].
      *
      * Blank entries are dropped: the glide pruner indexes a word by its first and last character and would
      * throw on an empty one, and the system dictionary is not ours to trust for that.
@@ -1191,7 +1217,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         buildMap {
             for (entry in dm.queryAllUserWords(subtype.primaryLocale)) {
                 val word = entry.word.trim()
-                if (word.isNotEmpty()) put(word, USER_DICTIONARY_GLIDE_FREQ)
+                if (word.isNotEmpty()) put(word, USER_DICTIONARY_RANK_FREQ)
             }
         }
     }.getOrDefault(emptyMap())
