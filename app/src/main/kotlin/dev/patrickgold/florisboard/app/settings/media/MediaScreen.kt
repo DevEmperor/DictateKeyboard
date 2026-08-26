@@ -274,6 +274,8 @@ fun MediaScreen() = FlorisScreen {
         var sourcePickerOpen by remember { mutableStateOf(false) }
         var packManagerOpen by remember { mutableStateOf(false) }
         var rescanning by remember { mutableStateOf(false) }
+        // How far the pass has got, so the wait is a number rather than a spinning circle.
+        var rescanProgress by remember { mutableStateOf<Pair<Int, Int>?>(null) }
         // Which folder the picker should open in. Read at launch time rather than baked into the
         // contract, so one launcher serves every source in the list.
         var pendingSource by remember { mutableStateOf<Uri?>(null) }
@@ -314,7 +316,8 @@ fun MediaScreen() = FlorisScreen {
                 icon = Icons.Outlined.Sticker,
                 modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_folder__title"),
                 title = stringRes(R.string.prefs__media__sticker_folder__title),
-                summary = stickerFolderName.ifBlank { stickerFolderUnset },
+                summary = rescanProgress?.let { (done, total) -> "$done / $total" }
+                    ?: stickerFolderName.ifBlank { stickerFolderUnset },
                 onClick = { stickerFolderPicker.launch(null) },
                 trailing = {
                     // Re-reading the folder belongs to the folder, not to a row of its own — and it
@@ -323,7 +326,29 @@ fun MediaScreen() = FlorisScreen {
                     // going through the import is exactly the file this button is tapped about.
                     if (stickerFolderUri.isNotBlank()) {
                         if (rescanning) {
-                            CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                            // Determinate as soon as the folder has been counted. Reading a few
+                            // hundred stickers takes half a minute — every one of them is a separate
+                            // call across to the documents provider — and half a minute of a circle
+                            // going round says nothing about whether it is nearly done.
+                            val progress = rescanProgress
+                            if (progress == null) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    strokeWidth = 2.dp,
+                                )
+                            } else {
+                                CircularProgressIndicator(
+                                    progress = {
+                                        if (progress.second > 0) {
+                                            progress.first.toFloat() / progress.second
+                                        } else {
+                                            0f
+                                        }
+                                    },
+                                    modifier = Modifier.size(24.dp),
+                                    strokeWidth = 2.dp,
+                                )
+                            }
                         } else {
                             IconButton(
                                 modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_rescan"),
@@ -334,7 +359,9 @@ fun MediaScreen() = FlorisScreen {
                                             val treeUri = stickerFolderUri.toUri()
                                             var index = StickerScanner.scan(context, treeUri)
                                             val converted = if (StickerWriter.canWrite(context, stickerFolderUri)) {
-                                                StickerNormalizer.normalizeFolder(context, treeUri, index)
+                                                StickerNormalizer.normalizeFolder(
+                                                    context, treeUri, index,
+                                                ) { done, total -> rescanProgress = done to total }
                                             } else {
                                                 0
                                             }
@@ -358,6 +385,7 @@ fun MediaScreen() = FlorisScreen {
                                         } catch (e: Exception) {
                                             context.showLongToast(R.string.sticker__access_lost)
                                         }
+                                        rescanProgress = null
                                         rescanning = false
                                     }
                                 },

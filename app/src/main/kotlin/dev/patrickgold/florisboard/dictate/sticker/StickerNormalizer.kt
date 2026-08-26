@@ -70,10 +70,17 @@ object StickerNormalizer {
      * a PNG and treats it as a photograph. The rename goes first, so the bytes land under the name
      * they belong to; a rename the provider refuses leaves that file alone rather than mislabelled.
      */
-    suspend fun normalizeFolder(context: Context, treeUri: Uri, index: StickerIndex): Int {
+    suspend fun normalizeFolder(
+        context: Context,
+        treeUri: Uri,
+        index: StickerIndex,
+        onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
+    ): Int {
         var changed = 0
-        for (item in index.allItems) {
+        val total = index.allItems.size
+        for ((position, item) in index.allItems.withIndex()) {
             currentCoroutineContext().ensureActive()
+            onProgress(position, total)
             // Asked of the file where it lies, not of a copy. Whether a sticker is already in shape
             // follows from thirty-two header bytes and a length, and both come out of a single open —
             // whereas copying it out first, which is what this did at first, moves the whole file
@@ -101,6 +108,7 @@ object StickerNormalizer {
                 )
             }
         }
+        onProgress(total, total)
         if (changed > 0) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
         return changed
     }
