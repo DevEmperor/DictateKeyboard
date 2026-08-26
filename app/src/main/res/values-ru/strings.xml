@@ -1440,11 +1440,8 @@
     <string name="dictate__prompt_name_placeholder">напр. Исправить грамматику</string>
     <string name="dictate__prompt_text_title">Промпт</string>
     <string name="dictate__prompt_text_placeholder">Инструкция для ИИ — или [текст в квадратных скобках], чтобы вставить его как есть</string>
-    <string name="dictate__prompt_snippet_hint">Сниппет: этот текст вставляется в точности как написан, без ИИ и без интернета.</string>
-    <string name="dictate__prompt_ai_hint">Отправляется в модель ИИ. Совет: заключите текст в [квадратные скобки], и он будет вставлен как есть.</string>
     <string name="dictate__prompt_trigger_title">Сокращение при наборе (необязательно)</string>
     <string name="dictate__prompt_trigger_placeholder">напр. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Наберите его как слово и нажмите пробел: оно превратится в сниппет. Backspace сразу после этого отменяет замену.</string>
     <string name="dictate__prompt_trigger_error_invalid">Сокращение — одно слово без пробелов, не длиннее 32 символов.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Уже используется в «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Требует выделения</string>

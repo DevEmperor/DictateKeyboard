@@ -1392,11 +1392,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_name_placeholder">mis. Perbaiki tata bahasa</string>
     <string name="dictate__prompt_text_title">Perintah</string>
     <string name="dictate__prompt_text_placeholder">Instruksi untuk AI — atau [teks dalam kurung siku] untuk disisipkan apa adanya</string>
-    <string name="dictate__prompt_snippet_hint">Cuplikan: teks ini disisipkan persis seperti tertulis, tanpa AI dan tanpa internet.</string>
-    <string name="dictate__prompt_ai_hint">Dikirim ke model AI. Tip: apit teks dengan [kurung siku] agar disisipkan apa adanya.</string>
     <string name="dictate__prompt_trigger_title">Pintasan pengetikan (opsional)</string>
     <string name="dictate__prompt_trigger_placeholder">mis. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Ketik sebagai kata lalu spasi: berubah menjadi cuplikan. Tekan hapus tepat setelahnya untuk membatalkan.</string>
     <string name="dictate__prompt_trigger_error_invalid">Pintasan adalah satu kata tanpa spasi, maksimal 32 karakter.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Sudah dipakai oleh “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Memerlukan pilihan</string>

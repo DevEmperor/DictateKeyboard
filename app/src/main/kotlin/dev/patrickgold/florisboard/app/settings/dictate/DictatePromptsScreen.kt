@@ -72,6 +72,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -605,6 +606,8 @@ private fun PromptEditorDialog(
     // Set on save when the trigger itself is the problem, so the field can say which of the two it is.
     var triggerError by remember { mutableStateOf<Int?>(null) }
     var triggerErrorOwner by remember { mutableStateOf("") }
+    // Whether the prompt field has focus — decides whether its label carries the bracket tip.
+    var textFocused by remember { mutableStateOf(false) }
 
     // A prompt wrapped in [brackets] is inserted literally — that is what makes it a snippet, and only
     // a snippet can carry a typed trigger (issue #283).
@@ -661,51 +664,49 @@ private fun PromptEditorDialog(
                     .fillMaxWidth()
                     // Cap the height so a long prompt scrolls inside the field instead of stretching the
                     // whole dialog into a scroll (issue #149).
-                    .heightIn(min = 110.dp, max = 220.dp),
+                    .heightIn(min = 110.dp, max = 220.dp)
+                    .onFocusChanged { textFocused = it.isFocused },
                 value = text,
                 onValueChange = { text = it; showError = false },
-                label = { Text(stringRes(R.string.dictate__prompt_text_title)) },
+                // An empty, untouched field carries the tip about the brackets in place of the bare
+                // "Prompt" label — that sentence is the whole answer to issue #283, and inside the field
+                // it costs no extra height. As soon as the field is used, the label shrinks back to
+                // "Prompt" and the tip moves into the placeholder.
+                label = {
+                    Text(
+                        text = stringRes(
+                            if (text.isEmpty() && !textFocused) {
+                                R.string.dictate__prompt_text_placeholder
+                            } else {
+                                R.string.dictate__prompt_text_title
+                            },
+                        ),
+                        maxLines = 2,
+                    )
+                },
                 placeholder = { Text(stringRes(R.string.dictate__prompt_text_placeholder)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 isError = showError && text.isBlank(),
             )
-            Spacer(Modifier.height(6.dp))
-            // The one line that says what the brackets do. Without it the snippet mechanism is invisible
-            // — people looked for text expansion in the dictionary and concluded it did not exist (#283).
-            Text(
-                text = stringRes(
-                    if (isSnippet) {
-                        R.string.dictate__prompt_snippet_hint
-                    } else {
-                        R.string.dictate__prompt_ai_hint
+            // The typed shortcut appears only once the text is wrapped in brackets — a shortcut on an
+            // AI prompt would do nothing anyway, and the field's arrival is itself the hint that the
+            // brackets turned this into a snippet (issue #283).
+            if (isSnippet) {
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = trigger,
+                    onValueChange = { trigger = it; triggerError = null },
+                    label = { Text(stringRes(R.string.dictate__prompt_trigger_title)) },
+                    placeholder = { Text(stringRes(R.string.dictate__prompt_trigger_placeholder)) },
+                    singleLine = true,
+                    isError = triggerError != null,
+                    // Only an error takes space under the field; there is no standing help line.
+                    supportingText = triggerError?.let { error ->
+                        { Text(text = stringRes(error, "name" to triggerErrorOwner)) }
                     },
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(8.dp))
-            // The typed shortcut, only meaningful for a snippet: type it, and the next space, punctuation
-            // mark or line break swaps it for the text above.
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = trigger,
-                onValueChange = { trigger = it; triggerError = null },
-                enabled = isSnippet,
-                label = { Text(stringRes(R.string.dictate__prompt_trigger_title)) },
-                placeholder = { Text(stringRes(R.string.dictate__prompt_trigger_placeholder)) },
-                singleLine = true,
-                isError = triggerError != null,
-                supportingText = {
-                    val error = triggerError
-                    Text(
-                        text = if (error != null) {
-                            stringRes(error, "name" to triggerErrorOwner)
-                        } else {
-                            stringRes(R.string.dictate__prompt_trigger_summary)
-                        },
-                    )
-                },
-            )
+                )
+            }
             Spacer(Modifier.height(12.dp))
             // The two toggles keep only their title inline; the longer description now shows on a
             // long-press as a tooltip, so the (already tall) editor dialog stays compact.

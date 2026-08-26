@@ -1312,11 +1312,8 @@
     <string name="dictate__prompt_name_placeholder">p. ex. Corregeix la gramàtica</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Instrucció per a la IA — o [text entre claudàtors] per inserir-lo tal qual</string>
-    <string name="dictate__prompt_snippet_hint">Fragment: aquest text s\'insereix exactament tal com està, sense IA ni internet.</string>
-    <string name="dictate__prompt_ai_hint">S\'envia al model d\'IA. Consell: posa el text entre [claudàtors] i s\'inserirà tal qual.</string>
     <string name="dictate__prompt_trigger_title">Drecera d\'escriptura (opcional)</string>
     <string name="dictate__prompt_trigger_placeholder">p. ex. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Escriu-la com una paraula i prem espai: es converteix en el fragment. Un retrocés just després ho desfà.</string>
     <string name="dictate__prompt_trigger_error_invalid">Una drecera és una paraula sense espais, com a màxim 32 caràcters.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Ja l\'utilitza «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Requereix una selecció</string>

@@ -1369,11 +1369,8 @@
     <string name="dictate__prompt_name_placeholder">例: 文法を修正</string>
     <string name="dictate__prompt_text_title">プロンプト</string>
     <string name="dictate__prompt_text_placeholder">AIへの指示 — または [角かっこ内のテキスト] でそのまま挿入</string>
-    <string name="dictate__prompt_snippet_hint">スニペット: このテキストは、AIもインターネットも使わず、書いたとおりに挿入されます。</string>
-    <string name="dictate__prompt_ai_hint">AIモデルに送信されます。ヒント: テキストを[角かっこ]で囲むと、そのまま挿入されます。</string>
     <string name="dictate__prompt_trigger_title">入力ショートカット（任意）</string>
     <string name="dictate__prompt_trigger_placeholder">例: ;sig</string>
-    <string name="dictate__prompt_trigger_summary">単語として入力してスペースを押すとスニペットに変わります。直後にバックスペースを押すと元に戻ります。</string>
     <string name="dictate__prompt_trigger_error_invalid">ショートカットはスペースを含まない1単語で、32文字までです。</string>
     <string name="dictate__prompt_trigger_error_duplicate">「{name}」がすでに使用しています。</string>
     <string name="dictate__prompt_requires_selection_title">選択が必要</string>

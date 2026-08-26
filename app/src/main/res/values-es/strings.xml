@@ -1418,11 +1418,8 @@
     <string name="dictate__prompt_name_placeholder">p. ej. Corregir gramática</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Instrucción para la IA — o [texto entre corchetes] para insertarlo tal cual</string>
-    <string name="dictate__prompt_snippet_hint">Fragmento: este texto se inserta exactamente como está, sin IA y sin internet.</string>
-    <string name="dictate__prompt_ai_hint">Se envía al modelo de IA. Consejo: pon el texto entre [corchetes] y se insertará tal cual.</string>
     <string name="dictate__prompt_trigger_title">Atajo de escritura (opcional)</string>
     <string name="dictate__prompt_trigger_placeholder">p. ej. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Escríbelo como una palabra y pulsa espacio: se convierte en el fragmento. Un retroceso justo después lo deshace.</string>
     <string name="dictate__prompt_trigger_error_invalid">Un atajo es una palabra sin espacios, de hasta 32 caracteres.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Ya lo usa «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Requiere selección</string>

@@ -1393,11 +1393,8 @@
     <string name="dictate__prompt_name_placeholder">z. B. Grammatik korrigieren</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Anweisung an die KI — oder [Text in Klammern], um ihn unverändert einzufügen</string>
-    <string name="dictate__prompt_snippet_hint">Textbaustein: Dieser Text wird genau so eingefügt, ohne KI und ohne Internet.</string>
-    <string name="dictate__prompt_ai_hint">Geht an das KI-Modell. Tipp: Text in [eckige Klammern] setzen, dann wird er unverändert eingefügt.</string>
     <string name="dictate__prompt_trigger_title">Tippkürzel (optional)</string>
     <string name="dictate__prompt_trigger_placeholder">z. B. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Als Wort tippen, dann Leerzeichen: Es wird zum Textbaustein. Ein Rückschritt direkt danach macht es rückgängig.</string>
     <string name="dictate__prompt_trigger_error_invalid">Ein Kürzel ist ein Wort ohne Leerzeichen, höchstens 32 Zeichen.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Wird bereits von „{name}“ verwendet.</string>
     <string name="dictate__prompt_requires_selection_title">Erfordert Auswahl</string>

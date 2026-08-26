@@ -1284,11 +1284,8 @@
     <string name="dictate__prompt_name_placeholder">напр. Виправити граматику</string>
     <string name="dictate__prompt_text_title">Промпт</string>
     <string name="dictate__prompt_text_placeholder">Інструкція для ШІ — або [текст у квадратних дужках], щоб вставити його як є</string>
-    <string name="dictate__prompt_snippet_hint">Сніпет: цей текст вставляється точно так, як написано, без ШІ та без інтернету.</string>
-    <string name="dictate__prompt_ai_hint">Надсилається до моделі ШІ. Порада: візьміть текст у [квадратні дужки], і його буде вставлено як є.</string>
     <string name="dictate__prompt_trigger_title">Скорочення під час набору (необов’язково)</string>
     <string name="dictate__prompt_trigger_placeholder">напр. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Наберіть його як слово й натисніть пробіл: воно стане сніпетом. Backspace одразу після цього скасовує заміну.</string>
     <string name="dictate__prompt_trigger_error_invalid">Скорочення — одне слово без пробілів, щонайбільше 32 символи.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Уже використовує «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Потребує виділення</string>

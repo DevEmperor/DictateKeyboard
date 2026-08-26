@@ -1295,11 +1295,8 @@
     <string name="dictate__prompt_name_placeholder">مثال: تصحيح القواعد</string>
     <string name="dictate__prompt_text_title">المطالبة</string>
     <string name="dictate__prompt_text_placeholder">تعليمات للذكاء الاصطناعي — أو [نص بين قوسين مربعين] لإدراجه كما هو</string>
-    <string name="dictate__prompt_snippet_hint">مقتطف: يُدرج هذا النص كما هو تمامًا، بدون ذكاء اصطناعي وبدون إنترنت.</string>
-    <string name="dictate__prompt_ai_hint">يُرسَل إلى نموذج الذكاء الاصطناعي. نصيحة: ضع النص بين [قوسين مربعين] ليُدرج كما هو.</string>
     <string name="dictate__prompt_trigger_title">اختصار الكتابة (اختياري)</string>
     <string name="dictate__prompt_trigger_placeholder">مثال: ;sig</string>
-    <string name="dictate__prompt_trigger_summary">اكتبه ككلمة ثم اضغط مسافة: يتحول إلى المقتطف. الضغط على مفتاح المسح مباشرة بعده يتراجع عن ذلك.</string>
     <string name="dictate__prompt_trigger_error_invalid">الاختصار كلمة واحدة بدون مسافات، بحد أقصى 32 حرفًا.</string>
     <string name="dictate__prompt_trigger_error_duplicate">مستخدَم بالفعل في «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">يتطلّب تحديدًا</string>

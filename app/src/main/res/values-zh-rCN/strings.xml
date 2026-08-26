@@ -1432,11 +1432,8 @@
     <string name="dictate__prompt_name_placeholder">例如：修正语法</string>
     <string name="dictate__prompt_text_title">提示词</string>
     <string name="dictate__prompt_text_placeholder">给 AI 的指令 —— 或用[方括号]括起来的文本，原样插入</string>
-    <string name="dictate__prompt_snippet_hint">片段：这段文本会原样插入，不经过 AI，也不联网。</string>
-    <string name="dictate__prompt_ai_hint">将发送给 AI 模型。提示：把文本放进[方括号]，就会原样插入。</string>
     <string name="dictate__prompt_trigger_title">输入快捷词（可选）</string>
     <string name="dictate__prompt_trigger_placeholder">例如 ;sig</string>
-    <string name="dictate__prompt_trigger_summary">把它当作一个词输入，再按空格，就会变成该片段。紧接着按退格可撤销。</string>
     <string name="dictate__prompt_trigger_error_invalid">快捷词是一个不含空格的词，最多 32 个字符。</string>
     <string name="dictate__prompt_trigger_error_duplicate">“{name}”已在使用该快捷词。</string>
     <string name="dictate__prompt_requires_selection_title">需要选中文本</string>

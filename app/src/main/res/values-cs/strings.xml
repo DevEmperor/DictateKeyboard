@@ -1451,11 +1451,8 @@
     <string name="dictate__prompt_name_placeholder">např. Opravit gramatiku</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Pokyn pro AI — nebo [text v hranatých závorkách], který se vloží beze změny</string>
-    <string name="dictate__prompt_snippet_hint">Úryvek: tento text se vloží přesně tak, jak je napsaný, bez AI a bez internetu.</string>
-    <string name="dictate__prompt_ai_hint">Odesílá se modelu AI. Tip: text v [hranatých závorkách] se vloží beze změny.</string>
     <string name="dictate__prompt_trigger_title">Zkratka při psaní (volitelné)</string>
     <string name="dictate__prompt_trigger_placeholder">např. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Napište ji jako slovo a stiskněte mezerník: promění se v úryvek. Backspace hned poté akci vrátí zpět.</string>
     <string name="dictate__prompt_trigger_error_invalid">Zkratka je jedno slovo bez mezer, nejvýše 32 znaků.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Už ji používá „{name}“.</string>
     <string name="dictate__prompt_requires_selection_title">Vyžaduje výběr</string>

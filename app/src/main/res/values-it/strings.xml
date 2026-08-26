@@ -1220,11 +1220,8 @@
     <string name="dictate__prompt_name_placeholder">es. Correggi grammatica</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Istruzione per l\'IA — oppure [testo tra parentesi quadre] per inserirlo così com\'è</string>
-    <string name="dictate__prompt_snippet_hint">Snippet: questo testo viene inserito esattamente com\'è, senza IA e senza internet.</string>
-    <string name="dictate__prompt_ai_hint">Inviato al modello di IA. Suggerimento: metti il testo tra [parentesi quadre] e verrà inserito così com\'è.</string>
     <string name="dictate__prompt_trigger_title">Scorciatoia di digitazione (facoltativa)</string>
     <string name="dictate__prompt_trigger_placeholder">es. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Digitala come parola, poi uno spazio: diventa lo snippet. Un backspace subito dopo annulla.</string>
     <string name="dictate__prompt_trigger_error_invalid">Una scorciatoia è una parola senza spazi, al massimo 32 caratteri.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Già usata da «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Richiede una selezione</string>

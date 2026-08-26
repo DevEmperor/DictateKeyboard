@@ -1435,11 +1435,8 @@
     <string name="dictate__prompt_name_placeholder">pl. Nyelvtan javítása</string>
     <string name="dictate__prompt_text_title">Utasítás</string>
     <string name="dictate__prompt_text_placeholder">Utasítás az MI-nek — vagy [szögletes zárójelbe tett szöveg] a változatlan beszúráshoz</string>
-    <string name="dictate__prompt_snippet_hint">Szövegdarab: ez a szöveg pontosan így kerül be, MI és internet nélkül.</string>
-    <string name="dictate__prompt_ai_hint">Az MI-modellnek megy. Tipp: tedd a szöveget [szögletes zárójelbe], és változatlanul kerül be.</string>
     <string name="dictate__prompt_trigger_title">Gépelési rövidítés (nem kötelező)</string>
     <string name="dictate__prompt_trigger_placeholder">pl. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Írd be szóként, majd nyomj szóközt: átalakul a szövegdarabbá. A közvetlenül utána nyomott visszatörlés visszavonja.</string>
     <string name="dictate__prompt_trigger_error_invalid">A rövidítés egy szó szóköz nélkül, legfeljebb 32 karakter.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Már használja: „{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Kijelölést igényel</string>

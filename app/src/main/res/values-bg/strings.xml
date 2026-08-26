@@ -1437,11 +1437,8 @@
     <string name="dictate__prompt_name_placeholder">напр. Поправи граматиката</string>
     <string name="dictate__prompt_text_title">Подкана</string>
     <string name="dictate__prompt_text_placeholder">Инструкция за ИИ — или [текст в квадратни скоби], който се вмъква без промяна</string>
-    <string name="dictate__prompt_snippet_hint">Откъс: този текст се вмъква точно както е написан, без ИИ и без интернет.</string>
-    <string name="dictate__prompt_ai_hint">Изпраща се към модела с ИИ. Съвет: сложете текста в [квадратни скоби] и той ще се вмъкне без промяна.</string>
     <string name="dictate__prompt_trigger_title">Пряк път при писане (незадължително)</string>
     <string name="dictate__prompt_trigger_placeholder">напр. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Напишете го като дума и натиснете интервал: превръща се в откъса. Backspace веднага след това го отменя.</string>
     <string name="dictate__prompt_trigger_error_invalid">Прекият път е една дума без интервали, най-много 32 знака.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Вече се използва от „{name}“.</string>
     <string name="dictate__prompt_requires_selection_title">Изисква селекция</string>

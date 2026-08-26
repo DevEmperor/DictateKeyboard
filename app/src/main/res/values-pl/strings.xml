@@ -1452,11 +1452,8 @@
     <string name="dictate__prompt_name_placeholder">np. Popraw gramatykę</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Instrukcja dla AI — albo [tekst w nawiasach kwadratowych], aby wstawić go dosłownie</string>
-    <string name="dictate__prompt_snippet_hint">Wstawka: ten tekst jest wstawiany dokładnie tak, jak go zapisano, bez AI i bez internetu.</string>
-    <string name="dictate__prompt_ai_hint">Wysyłane do modelu AI. Wskazówka: ujmij tekst w [nawiasy kwadratowe], a zostanie wstawiony dosłownie.</string>
     <string name="dictate__prompt_trigger_title">Skrót przy pisaniu (opcjonalnie)</string>
     <string name="dictate__prompt_trigger_placeholder">np. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Wpisz go jako słowo, potem spacja: zamieni się we wstawkę. Backspace zaraz potem cofa zmianę.</string>
     <string name="dictate__prompt_trigger_error_invalid">Skrót to jedno słowo bez spacji, maksymalnie 32 znaki.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Używa go już „{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Wymaga zaznaczenia</string>

@@ -1245,11 +1245,8 @@
     <string name="dictate__prompt_name_placeholder">ex.: Corrigir gramática</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Instrução para a IA — ou [texto entre colchetes] para inserir do jeito que está</string>
-    <string name="dictate__prompt_snippet_hint">Trecho: este texto é inserido exatamente como está, sem IA e sem internet.</string>
-    <string name="dictate__prompt_ai_hint">Enviado ao modelo de IA. Dica: coloque o texto entre [colchetes] e ele será inserido como está.</string>
     <string name="dictate__prompt_trigger_title">Atalho de digitação (opcional)</string>
     <string name="dictate__prompt_trigger_placeholder">ex.: ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Digite como palavra e dê um espaço: vira o trecho. Um backspace logo depois desfaz.</string>
     <string name="dictate__prompt_trigger_error_invalid">Um atalho é uma palavra sem espaços, com até 32 caracteres.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Já usado por “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Requer seleção</string>

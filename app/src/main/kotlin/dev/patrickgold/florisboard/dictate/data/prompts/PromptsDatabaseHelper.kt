@@ -210,7 +210,9 @@ class PromptsDatabaseHelper private constructor(
 
     companion object {
         const val DATABASE_NAME = "prompts.db"
-        const val DATABASE_VERSION = 4
+        // Bump this with EVERY new column, or onUpgrade never runs and the very next write dies with
+        // "no such column" on an existing user's database (that is exactly what v5 shipped broken as).
+        const val DATABASE_VERSION = 5
 
         @Volatile
         private var instance: PromptsDatabaseHelper? = null

@@ -1415,11 +1415,8 @@
     <string name="dictate__prompt_name_placeholder">örn. Dil bilgisini düzelt</string>
     <string name="dictate__prompt_text_title">Komut</string>
     <string name="dictate__prompt_text_placeholder">Yapay zekâya verilecek yönerge — ya da olduğu gibi eklemek için [köşeli parantez içinde metin]</string>
-    <string name="dictate__prompt_snippet_hint">Metin parçası: bu metin tam yazıldığı gibi eklenir, yapay zekâ ve internet olmadan.</string>
-    <string name="dictate__prompt_ai_hint">Yapay zekâ modeline gönderilir. İpucu: metni [köşeli parantez] içine alırsanız olduğu gibi eklenir.</string>
     <string name="dictate__prompt_trigger_title">Yazım kısayolu (isteğe bağlı)</string>
     <string name="dictate__prompt_trigger_placeholder">ör. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Bir sözcük gibi yazıp boşluğa basın: metin parçasına dönüşür. Hemen ardından geri silme tuşu bunu geri alır.</string>
     <string name="dictate__prompt_trigger_error_invalid">Kısayol, boşluk içermeyen tek bir sözcüktür, en fazla 32 karakter.</string>
     <string name="dictate__prompt_trigger_error_duplicate">“{name}” bunu zaten kullanıyor.</string>
     <string name="dictate__prompt_requires_selection_title">Seçim gerektirir</string>

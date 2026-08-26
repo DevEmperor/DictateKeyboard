@@ -1380,11 +1380,8 @@
     <string name="dictate__prompt_name_placeholder">piem. Labot gramatiku</string>
     <string name="dictate__prompt_text_title">Uzvedne</string>
     <string name="dictate__prompt_text_placeholder">Norādījums MI — vai [teksts kvadrātiekavās], lai ievietotu to bez izmaiņām</string>
-    <string name="dictate__prompt_snippet_hint">Fragments: šis teksts tiek ievietots tieši tā, kā uzrakstīts, bez MI un bez interneta.</string>
-    <string name="dictate__prompt_ai_hint">Tiek nosūtīts MI modelim. Padoms: ieliec tekstu [kvadrātiekavās], un tas tiks ievietots bez izmaiņām.</string>
     <string name="dictate__prompt_trigger_title">Rakstīšanas saīsne (neobligāti)</string>
     <string name="dictate__prompt_trigger_placeholder">piem. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Ieraksti to kā vārdu un nospied atstarpi: tas kļūst par fragmentu. Atpakaļatkāpe uzreiz pēc tam atsauc darbību.</string>
     <string name="dictate__prompt_trigger_error_invalid">Saīsne ir viens vārds bez atstarpēm, ne garāks par 32 rakstzīmēm.</string>
     <string name="dictate__prompt_trigger_error_duplicate">To jau izmanto “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title">Nepieciešama atlase</string>

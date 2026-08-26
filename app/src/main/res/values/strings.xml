@@ -2139,12 +2139,9 @@
     <string name="dictate__prompt_name_title" comment="Label for the prompt name field">Name</string>
     <string name="dictate__prompt_name_placeholder" comment="Placeholder for the prompt name field">e.g. Fix grammar</string>
     <string name="dictate__prompt_text_title" comment="Label for the prompt instruction field">Prompt</string>
-    <string name="dictate__prompt_text_placeholder" comment="Placeholder for the prompt instruction field. The brackets are the literal snippet syntax and must stay.">Instruction for the AI — or [text in brackets] to insert it as-is</string>
-    <string name="dictate__prompt_snippet_hint" comment="Shown under the prompt field when the text is wrapped in square brackets">Snippet: this text is inserted exactly as written, with no AI and no internet.</string>
-    <string name="dictate__prompt_ai_hint" comment="Shown under the prompt field when the text is an AI instruction. The brackets are the literal snippet syntax and must stay.">Sent to the AI model. Tip: wrap text in [square brackets] and it is inserted as-is instead.</string>
+    <string name="dictate__prompt_text_placeholder" comment="Hint inside the prompt field: shown in place of the label while the field is empty and untouched, and as the placeholder afterwards. The brackets are the literal snippet syntax and must stay.">Instruction for the AI — or [text in brackets] to insert it as-is</string>
     <string name="dictate__prompt_trigger_title" comment="Label for the typed shortcut field in the prompt editor">Typing shortcut (optional)</string>
     <string name="dictate__prompt_trigger_placeholder" comment="Placeholder for the typed shortcut field, an example shortcut">e.g. ;sig</string>
-    <string name="dictate__prompt_trigger_summary" comment="Helper text under the typing shortcut field">Type it as a word, then a space: it turns into the snippet. A backspace right after undoes it.</string>
     <string name="dictate__prompt_trigger_error_invalid" comment="Error under the typing shortcut field when it contains spaces or is too long">A shortcut is one word without spaces, up to 32 characters.</string>
     <string name="dictate__prompt_trigger_error_duplicate" comment="Error under the typing shortcut field when another prompt already uses it. {name} is that prompt’s name.">Already used by “{name}”.</string>
     <string name="dictate__prompt_requires_selection_title" comment="Switch: prompt operates on the selected text">Requires selection</string>

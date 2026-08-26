@@ -1416,11 +1416,8 @@
     <string name="dictate__prompt_name_placeholder">p. ex. Corrigir gramática</string>
     <string name="dictate__prompt_text_title">Prompt</string>
     <string name="dictate__prompt_text_placeholder">Instrução para a IA — ou [texto entre parênteses retos] para inserir tal e qual</string>
-    <string name="dictate__prompt_snippet_hint">Excerto: este texto é inserido exatamente como está, sem IA e sem internet.</string>
-    <string name="dictate__prompt_ai_hint">Enviado ao modelo de IA. Dica: coloque o texto entre [parênteses retos] e será inserido tal e qual.</string>
     <string name="dictate__prompt_trigger_title">Atalho de escrita (opcional)</string>
     <string name="dictate__prompt_trigger_placeholder">p. ex. ;sig</string>
-    <string name="dictate__prompt_trigger_summary">Escreva-o como palavra e prima espaço: transforma-se no excerto. Um retrocesso logo a seguir anula.</string>
     <string name="dictate__prompt_trigger_error_invalid">Um atalho é uma palavra sem espaços, até 32 caracteres.</string>
     <string name="dictate__prompt_trigger_error_duplicate">Já usado por «{name}».</string>
     <string name="dictate__prompt_requires_selection_title">Requer seleção</string>
