@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pārvietot tastatūru uz kreiso pusi.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pārvietot tastatūru uz labo pusi.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Sajūtu rakstzīmes un GIF</string>
+    <string name="settings__media__title">Emocijzīmes, GIF un uzlīmes</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
@@ -1915,4 +1915,83 @@
     <string name="dictate__action_top_up">Papildināt kredītu</string>
     <string name="dictate__promo_low_credit_message">Kredīts gandrīz beidzies.</string>
     <string name="dictate__promo_low_credit_action">Papildināt</string>
+    <string name="prefs__media__sticker__title">Uzlīmes</string>
+    <string name="prefs__media__sticker_folder__title">Uzlīmju mape</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Izvēlieties mapi ar saviem attēliem</string>
+    <string name="prefs__media__sticker_folder_clear">Aizmirst šo mapi</string>
+    <string name="prefs__media__sticker_rescan">Nolasīt mapi vēlreiz</string>
+    <string name="prefs__media__sticker_rescan__summary">Izmantojiet pēc failu pievienošanas vai noņemšanas</string>
+    <string name="prefs__media__sticker_thumbnail_size">Uzlīmju izmērs</string>
+    <string name="prefs__media__sticker_history_enabled">Izlase un nesen lietotās</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Rādīt piespraustās un nesen lietotās uzlīmes virs katras mapes</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Saglabājamo nesen lietoto uzlīmju skaits</string>
+    <string name="prefs__media__sticker_pinned_reset">Notīrīt izlases uzlīmes</string>
+    <string name="prefs__media__sticker_history_reset">Notīrīt nesen lietotās uzlīmes</string>
+    <string name="sticker__title">Uzlīmes</string>
+    <string name="sticker__category_all">Visas</string>
+    <string name="sticker__section_favorites">Izlase</string>
+    <string name="sticker__section_recent">Nesen lietotās</string>
+    <string name="sticker__section_rest">Visas uzlīmes</string>
+    <string name="sticker__pin">Pievienot izlasei</string>
+    <string name="sticker__unpin">Noņemt no izlases</string>
+    <string name="sticker__setup_needed">Izvēlieties mapi, lai lietotu savas uzlīmes</string>
+    <string name="sticker__setup_needed_action">Atvērt iestatījumus</string>
+    <string name="sticker__folder_empty">Šajā mapē nav attēlu</string>
+    <string name="sticker__access_lost">Uzlīmju mapi vairs nevar nolasīt. Izvēlieties to vēlreiz.</string>
+    <string name="sticker__folder_pick_failed">Neizdevās saglabāt piekļuvi šai mapei</string>
+    <string name="sticker__rescan_done">Atrastas {n} uzlīmes</string>
+    <string name="sticker__rescan_done_converted">Atrastas {n} uzlīmes, {converted} pārveidotas</string>
+    <string name="sticker__copied_to_clipboard">Šī lietotne nepieņem uzlīmes — nokopēts starpliktuvē, turiet nospiestu, lai ielīmētu</string>
+    <string name="sticker__insert_failed">Uzlīmi neizdevās ievietot</string>
+    <string name="quick_action__ime_ui_mode_sticker">Uzlīme</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Ievietot savas uzlīmes</string>
+    <string name="prefs__media__sticker_add">Pievienot uzlīmes</string>
+    <string name="prefs__media__sticker_add__summary">Kopējiet attēlus mapē. Attēlu var arī kopīgot ar Dictate no jebkuras lietotnes.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Paņemt no WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Atver failu izvēli WhatsApp uzlīmju mapē. Tādas tastatūras kā Samsung glabā savas uzlīmes tur, kur neviena cita lietotne nedrīkst lasīt — tās kopīgojiet ar Dictate.</string>
+    <string name="sticker__import_share_label">Saglabāt kā uzlīmi</string>
+    <string name="sticker__import_added">Pievienotas: {n}</string>
+    <string name="sticker__import_duplicate">{n} jau bija</string>
+    <string name="sticker__import_unsupported">{n} nederīgas</string>
+    <string name="sticker__import_failed">{n} neizdevās</string>
+    <string name="sticker__import_nothing">Nav ko pievienot</string>
+    <string name="sticker__import_no_folder">Vispirms izvēlieties uzlīmju mapi</string>
+    <string name="sticker__import_needs_write">Izvēlieties uzlīmju mapi vēlreiz, lai atļautu pievienošanu un dzēšanu</string>
+    <string name="sticker__forget_recent">Noņemt no nesen lietotajām</string>
+    <string name="sticker__delete_file">Dzēst failu</string>
+    <string name="sticker__delete_confirm">Tiešām dzēst?</string>
+    <string name="sticker__delete_failed">Failu neizdevās izdzēst</string>
+    <string name="prefs__media__emoji__title">Emocijzīmes</string>
+    <string name="prefs__media__sticker_import_source">Paņemt no lietotnes</string>
+    <string name="prefs__media__sticker_import_source__summary">Atver failu izvēli uzreiz mapē, kurā raksta cita lietotne</string>
+    <string name="prefs__media__sticker_packs">Uzlīmju pakas</string>
+    <string name="prefs__media__sticker_packs__summary">Izveidojiet, pārdēvējiet un dzēsiet mapes, kurās sakārtotas jūsu uzlīmes</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Lejupielādes</string>
+    <string name="sticker__source_pictures">Attēli</string>
+    <string name="sticker__source_dcim">Kamera</string>
+    <string name="sticker__source_hint">Tie ir sākumpunkti, nevis garantijas — ja mapes nav, izvēle atveras kā parasti. Lietotnes, kas savas uzlīmes patur sev, piemēram, Samsung tastatūra, tās var tikai kopīgot ar Dictate.</string>
+    <string name="sticker__import_progress">Kopē {done} no {total}</string>
+    <string name="sticker__import_cancel">Pieskarieties, lai apturētu. Nokopētais paliek.</string>
+    <string name="sticker__refused_declares_nothing">Šī lietotne nepieņem attēlus no tastatūras — nokopēts starpliktuvē, turiet nospiestu, lai ielīmētu</string>
+    <string name="sticker__refused_accepts_only">Šī lietotne pieņem tikai {accepted}, bet šī uzlīme ir {own} — nokopēts starpliktuvē, turiet nospiestu, lai ielīmētu</string>
+    <string name="sticker__move_to_pack">Pārvietot uz paku</string>
+    <string name="sticker__pack_none">Bez pakas</string>
+    <string name="sticker__move_failed">Uzlīmi neizdevās pārvietot</string>
+    <string name="sticker__pack_new">Izveidot paku</string>
+    <string name="sticker__pack_name">Pakas nosaukums</string>
+    <string name="sticker__pack_rename">Pārdēvēt</string>
+    <string name="sticker__pack_delete">Dzēst paku</string>
+    <string name="sticker__pack_delete_confirm">Vai dzēst paku \"{name}\" un tajā esošās {n} uzlīmes?</string>
+    <string name="sticker__pack_failed">Neizdevās — mape var būt aizsargāta pret rakstīšanu</string>
+    <string name="sticker__packs_loading">Notiek mapes lasīšana…</string>
+    <string name="sticker__packs_empty">Pagaidām nav neviena pakas. Paka ir jūsu uzlīmju mapes apakšmape.</string>
+    <string name="sticker__share">Sūtīt ar kopīgošanas izvēlni</string>
+    <string name="sticker__insert_as_gif">Ievietot kā GIF</string>
+    <string name="sticker__source_browse">Pārlūkot failus…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Uzlīmju mape</string>
 </resources>

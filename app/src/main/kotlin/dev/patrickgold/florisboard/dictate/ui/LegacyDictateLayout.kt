@@ -462,6 +462,12 @@ private fun LegacyActionKey(
         LegacyEditAction.GIF -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
             keyboardManager.activeState.imeUiMode = ImeUiMode.GIF
         }
+        LegacyEditAction.STICKER -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
+            keyboardManager.activeState.imeUiMode = ImeUiMode.STICKER
+        }
+        LegacyEditAction.CLIPBOARD -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
+            keyboardManager.activeState.imeUiMode = ImeUiMode.CLIPBOARD
+        }
         LegacyEditAction.REINSERT -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
             DictateController.reinsertLastDictation(context)
         }

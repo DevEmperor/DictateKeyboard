@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis i GIFs</string>
+    <string name="settings__media__title">Emojis, GIF i adhesius</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1847,4 +1847,83 @@
     <string name="dictate__action_top_up">Recarrega el saldo</string>
     <string name="dictate__promo_low_credit_message">Saldo gairebé esgotat.</string>
     <string name="dictate__promo_low_credit_action">Recarrega</string>
+    <string name="prefs__media__sticker__title">Adhesius</string>
+    <string name="prefs__media__sticker_folder__title">Carpeta d\'adhesius</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Trieu una carpeta amb imatges vostres</string>
+    <string name="prefs__media__sticker_folder_clear">Oblida aquesta carpeta</string>
+    <string name="prefs__media__sticker_rescan">Torna a llegir la carpeta</string>
+    <string name="prefs__media__sticker_rescan__summary">Feu-ho servir després d\'afegir o eliminar fitxers</string>
+    <string name="prefs__media__sticker_thumbnail_size">Mida dels adhesius</string>
+    <string name="prefs__media__sticker_history_enabled">Preferits i utilitzats recentment</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Mostra els adhesius fixats i utilitzats recentment a dalt de cada carpeta</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Adhesius recents que cal conservar</string>
+    <string name="prefs__media__sticker_pinned_reset">Esborra els adhesius preferits</string>
+    <string name="prefs__media__sticker_history_reset">Esborra els adhesius utilitzats recentment</string>
+    <string name="sticker__title">Adhesius</string>
+    <string name="sticker__category_all">Tot</string>
+    <string name="sticker__section_favorites">Preferits</string>
+    <string name="sticker__section_recent">Utilitzats recentment</string>
+    <string name="sticker__section_rest">Tots els adhesius</string>
+    <string name="sticker__pin">Afegeix a preferits</string>
+    <string name="sticker__unpin">Treu dels preferits</string>
+    <string name="sticker__setup_needed">Trieu una carpeta per fer servir els vostres adhesius</string>
+    <string name="sticker__setup_needed_action">Obre la configuració</string>
+    <string name="sticker__folder_empty">No hi ha imatges en aquesta carpeta</string>
+    <string name="sticker__access_lost">Ja no es pot llegir la carpeta d\'adhesius. Torneu a triar-la.</string>
+    <string name="sticker__folder_pick_failed">No s\'ha pogut mantenir l\'accés a aquesta carpeta</string>
+    <string name="sticker__rescan_done">S\'han trobat {n} adhesius</string>
+    <string name="sticker__rescan_done_converted">S\'han trobat {n} adhesius, {converted} convertits</string>
+    <string name="sticker__copied_to_clipboard">Aquesta aplicació no accepta adhesius: s\'ha copiat al porta-retalls, manteniu premut per enganxar</string>
+    <string name="sticker__insert_failed">No s\'ha pogut inserir l\'adhesiu</string>
+    <string name="quick_action__ime_ui_mode_sticker">Adhesiu</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Insereix els teus adhesius</string>
+    <string name="prefs__media__sticker_add">Afegeix adhesius</string>
+    <string name="prefs__media__sticker_add__summary">Copieu imatges a la carpeta. També podeu compartir una imatge amb Dictate des de qualsevol aplicació.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Porta\'ls del WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Obre el selector de fitxers a la carpeta d\'adhesius del WhatsApp. Teclats com el de Samsung guarden els seus adhesius on cap altra aplicació pot llegir-los: aquells compartiu-los amb Dictate.</string>
+    <string name="sticker__import_share_label">Desa com a adhesiu</string>
+    <string name="sticker__import_added">{n} afegits</string>
+    <string name="sticker__import_duplicate">{n} ja hi eren</string>
+    <string name="sticker__import_unsupported">{n} no utilitzables</string>
+    <string name="sticker__import_failed">{n} han fallat</string>
+    <string name="sticker__import_nothing">No hi ha res a afegir</string>
+    <string name="sticker__import_no_folder">Primer trieu una carpeta d\'adhesius</string>
+    <string name="sticker__import_needs_write">Torneu a triar la carpeta d\'adhesius per permetre afegir-hi i esborrar-hi</string>
+    <string name="sticker__forget_recent">Treu dels recents</string>
+    <string name="sticker__delete_file">Esborra el fitxer</string>
+    <string name="sticker__delete_confirm">Segur que voleu esborrar-lo?</string>
+    <string name="sticker__delete_failed">No s\'ha pogut esborrar el fitxer</string>
+    <string name="prefs__media__emoji__title">Emojis</string>
+    <string name="prefs__media__sticker_import_source">Porta d\'una aplicació</string>
+    <string name="prefs__media__sticker_import_source__summary">Obre el selector de fitxers directament en una carpeta on escriu una altra aplicació</string>
+    <string name="prefs__media__sticker_packs">Paquets d\'adhesius</string>
+    <string name="prefs__media__sticker_packs__summary">Creeu, reanomeneu i esborreu les carpetes on s\'ordenen els vostres adhesius</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Baixades</string>
+    <string name="sticker__source_pictures">Imatges</string>
+    <string name="sticker__source_dcim">Càmera</string>
+    <string name="sticker__source_hint">Són punts de partida, no garanties: si la carpeta no hi és, el selector s\'obre com sempre. Les aplicacions que es guarden els adhesius per a elles, com el teclat de Samsung, només els poden compartir amb Dictate.</string>
+    <string name="sticker__import_progress">Copiant {done} de {total}</string>
+    <string name="sticker__import_cancel">Toqueu per aturar. El que s\'ha copiat es queda.</string>
+    <string name="sticker__refused_declares_nothing">Aquesta aplicació no accepta imatges del teclat: s\'ha copiat al porta-retalls, manteniu premut per enganxar</string>
+    <string name="sticker__refused_accepts_only">Aquesta aplicació només accepta {accepted} i aquest adhesiu és {own}: s\'ha copiat al porta-retalls, manteniu premut per enganxar</string>
+    <string name="sticker__move_to_pack">Mou a un paquet</string>
+    <string name="sticker__pack_none">Sense paquet</string>
+    <string name="sticker__move_failed">No s\'ha pogut moure l\'adhesiu</string>
+    <string name="sticker__pack_new">Crea un paquet</string>
+    <string name="sticker__pack_name">Nom del paquet</string>
+    <string name="sticker__pack_rename">Reanomena</string>
+    <string name="sticker__pack_delete">Esborra el paquet</string>
+    <string name="sticker__pack_delete_confirm">Voleu esborrar el paquet \"{name}\" i els {n} adhesius que conté?</string>
+    <string name="sticker__pack_failed">No ha funcionat: pot ser que la carpeta estigui protegida contra escriptura</string>
+    <string name="sticker__packs_loading">S\'està llegint la carpeta…</string>
+    <string name="sticker__packs_empty">Encara no hi ha paquets. Un paquet és una subcarpeta de la carpeta d\'adhesius.</string>
+    <string name="sticker__share">Envia amb el diàleg de compartir</string>
+    <string name="sticker__insert_as_gif">Insereix com a GIF</string>
+    <string name="sticker__source_browse">Explora els fitxers…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Carpeta d\'adhesius</string>
 </resources>

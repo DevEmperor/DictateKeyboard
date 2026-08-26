@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Преместване на клавиатурата отляво.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Преместване на клавиатурата отдясно.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Емоции и GIFs</string>
+    <string name="settings__media__title">Емоджита, GIF файлове и стикери</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоции</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Емоции</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомоджи</string>
@@ -1972,4 +1972,83 @@
     <string name="dictate__action_top_up">Захрани кредита</string>
     <string name="dictate__promo_low_credit_message">Кредитът е на изчерпване.</string>
     <string name="dictate__promo_low_credit_action">Захрани</string>
+    <string name="prefs__media__sticker__title">Стикери</string>
+    <string name="prefs__media__sticker_folder__title">Папка със стикери</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Изберете папка със свои изображения</string>
+    <string name="prefs__media__sticker_folder_clear">Забрави тази папка</string>
+    <string name="prefs__media__sticker_rescan">Прочети папката отново</string>
+    <string name="prefs__media__sticker_rescan__summary">Използвайте след добавяне или премахване на файлове</string>
+    <string name="prefs__media__sticker_thumbnail_size">Размер на стикерите</string>
+    <string name="prefs__media__sticker_history_enabled">Любими и наскоро използвани</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Показвай закачените и наскоро използваните стикери над всяка папка</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Брой запазени наскоро използвани стикери</string>
+    <string name="prefs__media__sticker_pinned_reset">Изчисти любимите стикери</string>
+    <string name="prefs__media__sticker_history_reset">Изчисти наскоро използваните стикери</string>
+    <string name="sticker__title">Стикери</string>
+    <string name="sticker__category_all">Всички</string>
+    <string name="sticker__section_favorites">Любими</string>
+    <string name="sticker__section_recent">Наскоро използвани</string>
+    <string name="sticker__section_rest">Всички стикери</string>
+    <string name="sticker__pin">Добави в любими</string>
+    <string name="sticker__unpin">Премахни от любими</string>
+    <string name="sticker__setup_needed">Изберете папка, за да използвате собствените си стикери</string>
+    <string name="sticker__setup_needed_action">Отвори настройките</string>
+    <string name="sticker__folder_empty">В тази папка няма изображения</string>
+    <string name="sticker__access_lost">Папката със стикери вече не може да бъде прочетена. Изберете я отново.</string>
+    <string name="sticker__folder_pick_failed">Достъпът до тази папка не можа да бъде запазен</string>
+    <string name="sticker__rescan_done">Намерени са {n} стикера</string>
+    <string name="sticker__rescan_done_converted">Намерени са {n} стикера, {converted} преобразувани</string>
+    <string name="sticker__copied_to_clipboard">Това приложение не приема стикери — копирано в клипборда, задръжте за поставяне</string>
+    <string name="sticker__insert_failed">Стикерът не можа да бъде вмъкнат</string>
+    <string name="quick_action__ime_ui_mode_sticker">Стикер</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Вмъкване на собствени стикери</string>
+    <string name="prefs__media__sticker_add">Добавяне на стикери</string>
+    <string name="prefs__media__sticker_add__summary">Копирайте изображения в папката. Можете и да споделите изображение към Dictate от всяко приложение.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Вземи от WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Отваря файловия избор в папката със стикери на WhatsApp. Клавиатури като тази на Samsung пазят стикерите си там, където никое друго приложение не може да чете — тях споделяйте към Dictate.</string>
+    <string name="sticker__import_share_label">Запази като стикер</string>
+    <string name="sticker__import_added">Добавени: {n}</string>
+    <string name="sticker__import_duplicate">{n} вече ги има</string>
+    <string name="sticker__import_unsupported">{n} неизползваеми</string>
+    <string name="sticker__import_failed">{n} неуспешни</string>
+    <string name="sticker__import_nothing">Няма какво да се добави</string>
+    <string name="sticker__import_no_folder">Първо изберете папка със стикери</string>
+    <string name="sticker__import_needs_write">Изберете папката със стикери отново, за да е разрешено добавяне и изтриване</string>
+    <string name="sticker__forget_recent">Премахни от наскоро използваните</string>
+    <string name="sticker__delete_file">Изтрий файла</string>
+    <string name="sticker__delete_confirm">Наистина ли да се изтрие?</string>
+    <string name="sticker__delete_failed">Файлът не можа да бъде изтрит</string>
+    <string name="prefs__media__emoji__title">Емоджита</string>
+    <string name="prefs__media__sticker_import_source">Вземи от приложение</string>
+    <string name="prefs__media__sticker_import_source__summary">Отваря файловия избор направо в папка, в която пише друго приложение</string>
+    <string name="prefs__media__sticker_packs">Пакети със стикери</string>
+    <string name="prefs__media__sticker_packs__summary">Създавайте, преименувайте и изтривайте папките, в които са подредени стикерите ви</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Изтегляния</string>
+    <string name="sticker__source_pictures">Снимки</string>
+    <string name="sticker__source_dcim">Камера</string>
+    <string name="sticker__source_hint">Това са отправни точки, не гаранции — ако папката я няма, изборът се отваря както обикновено. Приложения, които пазят стикерите си за себе си, като клавиатурата на Samsung, могат само да ги споделят към Dictate.</string>
+    <string name="sticker__import_progress">Копира се {done} от {total}</string>
+    <string name="sticker__import_cancel">Докоснете за спиране. Копираното остава.</string>
+    <string name="sticker__refused_declares_nothing">Това приложение не приема изображения от клавиатурата — копирано в клипборда, задръжте за поставяне</string>
+    <string name="sticker__refused_accepts_only">Това приложение приема само {accepted}, а този стикер е {own} — копирано в клипборда, задръжте за поставяне</string>
+    <string name="sticker__move_to_pack">Премести в пакет</string>
+    <string name="sticker__pack_none">Без пакет</string>
+    <string name="sticker__move_failed">Стикерът не можа да бъде преместен</string>
+    <string name="sticker__pack_new">Създай пакет</string>
+    <string name="sticker__pack_name">Име на пакета</string>
+    <string name="sticker__pack_rename">Преименувай</string>
+    <string name="sticker__pack_delete">Изтрий пакета</string>
+    <string name="sticker__pack_delete_confirm">Да се изтрие ли пакетът \"{name}\" и {n} стикера в него?</string>
+    <string name="sticker__pack_failed">Не се получи — папката може да е защитена от запис</string>
+    <string name="sticker__packs_loading">Папката се чете…</string>
+    <string name="sticker__packs_empty">Още няма пакети. Пакетът е подпапка в папката ви със стикери.</string>
+    <string name="sticker__share">Изпращане чрез споделяне</string>
+    <string name="sticker__insert_as_gif">Вмъкване като GIF</string>
+    <string name="sticker__source_browse">Преглед на файлове…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Папка със стикери</string>
 </resources>

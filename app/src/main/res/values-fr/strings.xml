@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Déplacez le clavier vers la gauche.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Déplacez le clavier vers la droite.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Émojis &amp; GIFs</string>
+    <string name="settings__media__title">Émojis, GIF et autocollants</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Émojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Émoticônes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1847,4 +1847,83 @@
     <string name="dictate__action_top_up">Recharger le crédit</string>
     <string name="dictate__promo_low_credit_message">Crédit presque épuisé.</string>
     <string name="dictate__promo_low_credit_action">Recharger</string>
+    <string name="prefs__media__sticker__title">Autocollants</string>
+    <string name="prefs__media__sticker_folder__title">Dossier d\'autocollants</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Choisissez un dossier contenant vos propres images</string>
+    <string name="prefs__media__sticker_folder_clear">Oublier ce dossier</string>
+    <string name="prefs__media__sticker_rescan">Relire le dossier</string>
+    <string name="prefs__media__sticker_rescan__summary">À utiliser après avoir ajouté ou supprimé des fichiers</string>
+    <string name="prefs__media__sticker_thumbnail_size">Taille des autocollants</string>
+    <string name="prefs__media__sticker_history_enabled">Favoris et récemment utilisés</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Afficher les autocollants épinglés et récemment utilisés au-dessus de chaque dossier</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Nombre d\'autocollants récents conservés</string>
+    <string name="prefs__media__sticker_pinned_reset">Effacer les autocollants favoris</string>
+    <string name="prefs__media__sticker_history_reset">Effacer les autocollants récemment utilisés</string>
+    <string name="sticker__title">Autocollants</string>
+    <string name="sticker__category_all">Tout</string>
+    <string name="sticker__section_favorites">Favoris</string>
+    <string name="sticker__section_recent">Récemment utilisés</string>
+    <string name="sticker__section_rest">Tous les autocollants</string>
+    <string name="sticker__pin">Ajouter aux favoris</string>
+    <string name="sticker__unpin">Retirer des favoris</string>
+    <string name="sticker__setup_needed">Choisissez un dossier pour utiliser vos propres autocollants</string>
+    <string name="sticker__setup_needed_action">Ouvrir les paramètres</string>
+    <string name="sticker__folder_empty">Aucune image dans ce dossier</string>
+    <string name="sticker__access_lost">Le dossier d\'autocollants n\'est plus lisible. Choisissez-le à nouveau.</string>
+    <string name="sticker__folder_pick_failed">Impossible de conserver l\'accès à ce dossier</string>
+    <string name="sticker__rescan_done">{n} autocollants trouvés</string>
+    <string name="sticker__rescan_done_converted">{n} autocollants trouvés, {converted} convertis</string>
+    <string name="sticker__copied_to_clipboard">Cette application n\'accepte pas les autocollants — copié dans le presse-papiers, appuyez longuement pour coller</string>
+    <string name="sticker__insert_failed">Impossible d\'insérer l\'autocollant</string>
+    <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Insérer vos propres autocollants</string>
+    <string name="prefs__media__sticker_add">Ajouter des autocollants</string>
+    <string name="prefs__media__sticker_add__summary">Copiez des images dans le dossier. Vous pouvez aussi partager une image vers Dictate depuis n\'importe quelle application.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Récupérer depuis WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Ouvre le sélecteur de fichiers dans le dossier d\'autocollants de WhatsApp. Des claviers comme celui de Samsung rangent les leurs là où aucune autre application ne peut lire — partagez ceux-là vers Dictate.</string>
+    <string name="sticker__import_share_label">Enregistrer comme autocollant</string>
+    <string name="sticker__import_added">{n} ajoutés</string>
+    <string name="sticker__import_duplicate">{n} déjà présents</string>
+    <string name="sticker__import_unsupported">{n} inutilisables</string>
+    <string name="sticker__import_failed">{n} en échec</string>
+    <string name="sticker__import_nothing">Rien à ajouter</string>
+    <string name="sticker__import_no_folder">Choisissez d\'abord un dossier d\'autocollants</string>
+    <string name="sticker__import_needs_write">Choisissez à nouveau le dossier d\'autocollants pour autoriser l\'ajout et la suppression</string>
+    <string name="sticker__forget_recent">Retirer des récents</string>
+    <string name="sticker__delete_file">Supprimer le fichier</string>
+    <string name="sticker__delete_confirm">Vraiment supprimer ?</string>
+    <string name="sticker__delete_failed">Impossible de supprimer le fichier</string>
+    <string name="prefs__media__emoji__title">Émojis</string>
+    <string name="prefs__media__sticker_import_source">Récupérer depuis une application</string>
+    <string name="prefs__media__sticker_import_source__summary">Ouvre le sélecteur de fichiers directement dans un dossier où écrit une autre application</string>
+    <string name="prefs__media__sticker_packs">Packs d\'autocollants</string>
+    <string name="prefs__media__sticker_packs__summary">Créez, renommez et supprimez les dossiers dans lesquels vos autocollants sont rangés</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Téléchargements</string>
+    <string name="sticker__source_pictures">Images</string>
+    <string name="sticker__source_dcim">Appareil photo</string>
+    <string name="sticker__source_hint">Ce sont des points de départ, pas des garanties — si le dossier n\'existe pas, le sélecteur s\'ouvre comme d\'habitude. Les applications qui gardent leurs autocollants pour elles, comme le clavier Samsung, ne peuvent que les partager vers Dictate.</string>
+    <string name="sticker__import_progress">Copie {done} sur {total}</string>
+    <string name="sticker__import_cancel">Appuyez pour arrêter. Ce qui est copié reste.</string>
+    <string name="sticker__refused_declares_nothing">Cette application n\'accepte pas d\'images du clavier — copié dans le presse-papiers, appuyez longuement pour coller</string>
+    <string name="sticker__refused_accepts_only">Cette application n\'accepte que {accepted}, cet autocollant est {own} — copié dans le presse-papiers, appuyez longuement pour coller</string>
+    <string name="sticker__move_to_pack">Déplacer vers un pack</string>
+    <string name="sticker__pack_none">Aucun pack</string>
+    <string name="sticker__move_failed">Impossible de déplacer l\'autocollant</string>
+    <string name="sticker__pack_new">Créer un pack</string>
+    <string name="sticker__pack_name">Nom du pack</string>
+    <string name="sticker__pack_rename">Renommer</string>
+    <string name="sticker__pack_delete">Supprimer le pack</string>
+    <string name="sticker__pack_delete_confirm">Supprimer le pack \"{name}\" et les {n} autocollants qu\'il contient ?</string>
+    <string name="sticker__pack_failed">Cela n\'a pas fonctionné — le dossier est peut-être en lecture seule</string>
+    <string name="sticker__packs_loading">Lecture du dossier…</string>
+    <string name="sticker__packs_empty">Aucun pack pour l\'instant. Un pack est un sous-dossier de votre dossier d\'autocollants.</string>
+    <string name="sticker__share">Envoyer via le partage</string>
+    <string name="sticker__insert_as_gif">Insérer en GIF</string>
+    <string name="sticker__source_browse">Parcourir les fichiers…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Dossier d\'autocollants</string>
 </resources>

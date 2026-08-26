@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">نقل لوحة المفاتيح إلى اليسار.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">نقل لوحة المفاتيح إلى اليمين.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">الرموز التعبيرية وGIFs</string>
+    <string name="settings__media__title">الإيموجي وصور GIF والملصقات</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">الرموز التعبيرية</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">وجوه تعبيرية</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">كاوموجي</string>
@@ -1830,4 +1830,83 @@
     <string name="dictate__action_top_up">شحن الرصيد</string>
     <string name="dictate__promo_low_credit_message">الرصيد شارف على النفاد.</string>
     <string name="dictate__promo_low_credit_action">شحن</string>
+    <string name="prefs__media__sticker__title">الملصقات</string>
+    <string name="prefs__media__sticker_folder__title">مجلد الملصقات</string>
+    <string name="prefs__media__sticker_folder__summary_unset">اختر مجلدًا يحتوي على صورك الخاصة</string>
+    <string name="prefs__media__sticker_folder_clear">نسيان هذا المجلد</string>
+    <string name="prefs__media__sticker_rescan">إعادة قراءة المجلد</string>
+    <string name="prefs__media__sticker_rescan__summary">استخدمه بعد إضافة ملفات أو حذفها</string>
+    <string name="prefs__media__sticker_thumbnail_size">حجم الملصق</string>
+    <string name="prefs__media__sticker_history_enabled">المفضلة والمستخدمة مؤخرًا</string>
+    <string name="prefs__media__sticker_history_enabled__summary">إظهار الملصقات المثبتة والمستخدمة مؤخرًا أعلى كل مجلد</string>
+    <string name="prefs__media__sticker_history_recent_max_size">عدد الملصقات المستخدمة مؤخرًا المحفوظة</string>
+    <string name="prefs__media__sticker_pinned_reset">مسح الملصقات المفضلة</string>
+    <string name="prefs__media__sticker_history_reset">مسح الملصقات المستخدمة مؤخرًا</string>
+    <string name="sticker__title">الملصقات</string>
+    <string name="sticker__category_all">الكل</string>
+    <string name="sticker__section_favorites">المفضلة</string>
+    <string name="sticker__section_recent">المستخدمة مؤخرًا</string>
+    <string name="sticker__section_rest">كل الملصقات</string>
+    <string name="sticker__pin">إضافة إلى المفضلة</string>
+    <string name="sticker__unpin">إزالة من المفضلة</string>
+    <string name="sticker__setup_needed">اختر مجلدًا لاستخدام ملصقاتك الخاصة</string>
+    <string name="sticker__setup_needed_action">فتح الإعدادات</string>
+    <string name="sticker__folder_empty">لا توجد صور في هذا المجلد</string>
+    <string name="sticker__access_lost">لم يعد بالإمكان قراءة مجلد الملصقات. اختره مرة أخرى.</string>
+    <string name="sticker__folder_pick_failed">تعذّر الاحتفاظ بحق الوصول إلى ذلك المجلد</string>
+    <string name="sticker__rescan_done">تم العثور على {n} ملصق</string>
+    <string name="sticker__rescan_done_converted">تم العثور على {n} ملصقًا، وتم تحويل {converted} منها</string>
+    <string name="sticker__copied_to_clipboard">هذا التطبيق لا يقبل الملصقات — تم النسخ إلى الحافظة، اضغط مطولًا للصق</string>
+    <string name="sticker__insert_failed">تعذّر إدراج الملصق</string>
+    <string name="quick_action__ime_ui_mode_sticker">ملصق</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">إدراج ملصقاتك الخاصة</string>
+    <string name="prefs__media__sticker_add">إضافة ملصقات</string>
+    <string name="prefs__media__sticker_add__summary">انسخ الصور إلى المجلد. يمكنك أيضًا مشاركة أي صورة مع Dictate من أي تطبيق.</string>
+    <string name="prefs__media__sticker_import_whatsapp">الجلب من واتساب</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">يفتح منتقي الملفات عند مجلد ملصقات واتساب. لوحات المفاتيح مثل لوحة سامسونج تحفظ ملصقاتها في مكان لا يمكن لأي تطبيق آخر قراءته — شاركها مع Dictate بدلًا من ذلك.</string>
+    <string name="sticker__import_share_label">حفظ كملصق</string>
+    <string name="sticker__import_added">تمت إضافة {n}</string>
+    <string name="sticker__import_duplicate">{n} موجودة بالفعل</string>
+    <string name="sticker__import_unsupported">{n} غير قابلة للاستخدام</string>
+    <string name="sticker__import_failed">فشل {n}</string>
+    <string name="sticker__import_nothing">لا شيء لإضافته</string>
+    <string name="sticker__import_no_folder">اختر مجلد الملصقات أولًا</string>
+    <string name="sticker__import_needs_write">اختر مجلد الملصقات مرة أخرى للسماح بالإضافة والحذف</string>
+    <string name="sticker__forget_recent">إزالة من المستخدمة مؤخرًا</string>
+    <string name="sticker__delete_file">حذف الملف</string>
+    <string name="sticker__delete_confirm">هل تريد الحذف فعلًا؟</string>
+    <string name="sticker__delete_failed">تعذّر حذف الملف</string>
+    <string name="prefs__media__emoji__title">الإيموجي</string>
+    <string name="prefs__media__sticker_import_source">الجلب من تطبيق</string>
+    <string name="prefs__media__sticker_import_source__summary">افتح منتقي الملفات مباشرة في مجلد يكتب إليه تطبيق آخر</string>
+    <string name="prefs__media__sticker_packs">حزم الملصقات</string>
+    <string name="prefs__media__sticker_packs__summary">أنشئ المجلدات التي تُرتَّب فيها ملصقاتك وأعد تسميتها واحذفها</string>
+    <string name="sticker__source_whatsapp">واتساب</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">تيليجرام</string>
+    <string name="sticker__source_downloads">التنزيلات</string>
+    <string name="sticker__source_pictures">الصور</string>
+    <string name="sticker__source_dcim">الكاميرا</string>
+    <string name="sticker__source_hint">هذه نقاط بداية وليست ضمانات — إن لم يكن المجلد موجودًا، يُفتح المنتقي كالمعتاد. التطبيقات التي تحتفظ بملصقاتها لنفسها، مثل لوحة مفاتيح سامسونج، لا يمكن إلا مشاركتها مع Dictate.</string>
+    <string name="sticker__import_progress">جارٍ النسخ {done} من {total}</string>
+    <string name="sticker__import_cancel">اضغط للإيقاف. ما تم نسخه يبقى.</string>
+    <string name="sticker__refused_declares_nothing">هذا التطبيق لا يقبل صورًا من لوحة المفاتيح — تم النسخ إلى الحافظة، اضغط مطولًا للصق</string>
+    <string name="sticker__refused_accepts_only">هذا التطبيق يقبل {accepted} فقط، وهذا الملصق {own} — تم النسخ إلى الحافظة، اضغط مطولًا للصق</string>
+    <string name="sticker__move_to_pack">نقل إلى حزمة</string>
+    <string name="sticker__pack_none">بدون حزمة</string>
+    <string name="sticker__move_failed">تعذّر نقل الملصق</string>
+    <string name="sticker__pack_new">إنشاء حزمة</string>
+    <string name="sticker__pack_name">اسم الحزمة</string>
+    <string name="sticker__pack_rename">إعادة تسمية</string>
+    <string name="sticker__pack_delete">حذف الحزمة</string>
+    <string name="sticker__pack_delete_confirm">هل تريد حذف الحزمة \"{name}\" و{n} ملصقًا فيها؟</string>
+    <string name="sticker__pack_failed">لم ينجح ذلك — قد يكون المجلد محميًا ضد الكتابة</string>
+    <string name="sticker__packs_loading">جارٍ قراءة المجلد…</string>
+    <string name="sticker__packs_empty">لا توجد حزم بعد. الحزمة هي مجلد فرعي داخل مجلد الملصقات.</string>
+    <string name="sticker__share">الإرسال عبر قائمة المشاركة</string>
+    <string name="sticker__insert_as_gif">إدراج كصورة GIF</string>
+    <string name="sticker__source_browse">تصفح الملفات…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">مجلد الملصقات</string>
 </resources>

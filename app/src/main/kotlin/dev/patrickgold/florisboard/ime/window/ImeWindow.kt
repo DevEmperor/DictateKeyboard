@@ -64,6 +64,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.dictate.DictateLegacyLayout
 import dev.patrickgold.florisboard.dictate.gif.GifPanel
+import dev.patrickgold.florisboard.dictate.sticker.StickerPanel
 import dev.patrickgold.florisboard.dictate.ui.DictateHistoryLayout
 import dev.patrickgold.florisboard.dictate.ui.DictateInputLayout
 import dev.patrickgold.florisboard.dictate.ui.LegacyDictateLayout
@@ -281,6 +282,7 @@ private fun ImeInnerWindow() {
                 ImeUiMode.DICTATE -> ProvideActualLayoutDirection { DictateInputLayout() }
                 ImeUiMode.HISTORY -> ProvideActualLayoutDirection { DictateHistoryLayout() }
                 ImeUiMode.GIF -> ProvideActualLayoutDirection { GifPanel() }
+                ImeUiMode.STICKER -> ProvideActualLayoutDirection { StickerPanel() }
             }
             ImeSystemUiFloating()
         }

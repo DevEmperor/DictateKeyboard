@@ -37,6 +37,7 @@ import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
 import dev.patrickgold.florisboard.dictate.gif.GifHistory
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
+import dev.patrickgold.florisboard.dictate.sticker.StickerHistory
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
@@ -958,6 +959,36 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "gif__history",
             default = GifHistory.Empty,
             serializer = GifHistory.Serializer,
+        )
+    }
+
+    val sticker = Sticker()
+    inner class Sticker {
+        // The folder the user picked, as a SAF tree URI we hold a persisted read permission on.
+        // Empty = the sticker panel is off, which is also what an revoked permission falls back to.
+        val folderUri = string(
+            key = "sticker__folder_uri",
+            default = "",
+        )
+        // Display name of that folder, kept so the settings row can name it without touching SAF.
+        val folderName = string(
+            key = "sticker__folder_name",
+            default = "",
+        )
+        // Smallest thumbnail width in dp; the grid fits as many columns as this allows.
+        val thumbnailSize = int(
+            key = "sticker__thumbnail_size",
+            default = 72,
+        )
+        val historyRecentMaxSize = int(
+            key = "sticker__history_recent_max_size",
+            default = 16,
+        )
+        // Favourites and recently used, per category (see StickerHistory).
+        val historyData = custom(
+            key = "sticker__history_data",
+            default = StickerHistory.Empty,
+            serializer = StickerHistory.Serializer,
         )
     }
 

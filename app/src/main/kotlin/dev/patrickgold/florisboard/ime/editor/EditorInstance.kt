@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.editor
 
 import android.content.ClipDescription
+import android.net.Uri
 import android.content.ContentUris
 import android.content.Context
 import android.view.KeyEvent
@@ -372,39 +373,77 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
-     * Inserts an already-downloaded media [file] (e.g. a GIF) of the given [mimeType] into the
-     * current editor. When the editor supports the Commit Content API for [mimeType], the file is
-     * committed inline (the way Gboard inserts GIFs); otherwise it is copied to the clipboard as a
-     * fallback so the user can paste it manually. The file is served via the app's FileProvider, so
-     * it must live under a path declared in `res/xml/file_paths.xml` (e.g. `cacheDir/gif-media/`).
+     * The content types the current editor says it accepts, empty when it says nothing.
      *
-     * @return the outcome, so the caller can inform the user (inserted vs. copied vs. failed).
+     * Exposed so a caller can pick a format the editor named instead of only offering the file's own
+     * (see [dev.patrickgold.florisboard.dictate.media.MediaFormat.negotiate]). Treat it as a hint,
+     * not a contract — plenty of apps accept more than they declare, and some declare nothing at all.
      */
-    fun commitMedia(file: File, mimeType: String, description: CharSequence): MediaCommitResult {
-        if (!file.exists()) return MediaCommitResult.FAILED
-        val uri = try {
+    fun acceptedMediaMimeTypes(): List<String> = activeInfo.contentMimeTypes.toList()
+
+    /** The package the current editor belongs to, for messages that name the app. */
+    fun activeEditorPackage(): String? = activeInfo.packageName
+
+    /**
+     * Offers an already-staged media [file] of the given [mimeType] to the current editor.
+     *
+     * Attempts the commit and reports whether it was taken — nothing else. In particular it does
+     * **not** touch the clipboard, because a caller that has more formats to try would then have
+     * announced a failure it is about to recover from: on Android 13+ every clipboard write raises a
+     * system toast, so a silent retry is not silent at all.
+     *
+     * The file is served via the app's FileProvider, so it must live under a path declared in
+     * `res/xml/file_paths.xml` (e.g. `cacheDir/gif-media/`).
+     */
+    fun tryCommitMedia(file: File, mimeType: String, description: CharSequence): Boolean {
+        val uri = mediaUriOf(file) ?: return false
+        // Try, rather than ask first. Whether the editor takes the content is something commitContent
+        // answers by itself, and it answers more truthfully than the declaration does: apps routinely
+        // accept types they never listed, and the declaration is missing entirely whenever the editor
+        // info has just been reset (which also made isRawInputEditor briefly true and blocked every
+        // insert). The clipboard paste path has always worked this way, which is precisely why an
+        // image could be pasted into apps a sticker could not be inserted into.
+        val ic = currentInputConnection() ?: return false
+        ic.finishComposingText()
+        val info = InputContentInfoCompat(uri, ClipDescription(description, arrayOf(mimeType)), null)
+        val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+        if (InputConnectionCompat.commitContent(ic, activeInfo.base, info, flags, null)) return true
+        flogError {
+            "Editor ${activeInfo.packageName} refused $mimeType " +
+                "(declares ${activeInfo.contentMimeTypes.joinToString().ifBlank { "nothing" }})"
+        }
+        return false
+    }
+
+    /** Puts a staged media file on the clipboard, for when no editor would take it. */
+    fun copyMediaToClipboard(file: File, mimeType: String): Boolean {
+        val uri = mediaUriOf(file) ?: return false
+        return clipboardManager.copyMediaToClipboard(uri, mimeType)
+    }
+
+    private fun mediaUriOf(file: File): Uri? {
+        if (!file.exists()) return null
+        return try {
             FileProvider.getUriForFile(appContext, "${appContext.packageName}.provider.file", file)
         } catch (e: IllegalArgumentException) {
             flogError { "Cannot expose media file via FileProvider: ${e.message}" }
-            return MediaCommitResult.FAILED
+            null
         }
-        if (supportsMediaCommit(mimeType)) {
-            val ic = currentInputConnection()
-            if (ic != null) {
-                ic.finishComposingText()
-                val info = InputContentInfoCompat(uri, ClipDescription(description, arrayOf(mimeType)), null)
-                val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
-                if (InputConnectionCompat.commitContent(ic, activeInfo.base, info, flags, null)) {
-                    return MediaCommitResult.COMMITTED
-                }
-            }
-        }
-        // Fallback: copy to the clipboard (+ system primary clip) for manual pasting.
-        return if (clipboardManager.copyMediaToClipboard(uri, mimeType)) {
-            MediaCommitResult.COPIED_TO_CLIPBOARD
-        } else {
-            MediaCommitResult.FAILED
-        }
+    }
+
+    /**
+     * Inserts a media file, falling back to the clipboard when the editor refuses it.
+     *
+     * The single-shot form, for callers with only one format to offer — the GIF panel. A caller that
+     * can convert should use [tryCommitMedia] and reach for [copyMediaToClipboard] only once it has
+     * run out of formats.
+     *
+     * @return the outcome, so the caller can inform the user (inserted vs. copied vs. failed).
+     */
+    fun commitMedia(file: File, mimeType: String, description: CharSequence): MediaCommitResult = when {
+        tryCommitMedia(file, mimeType, description) -> MediaCommitResult.COMMITTED
+        copyMediaToClipboard(file, mimeType) -> MediaCommitResult.COPIED_TO_CLIPBOARD
+        else -> MediaCommitResult.FAILED
     }
 
     /** Outcome of [commitMedia]. */

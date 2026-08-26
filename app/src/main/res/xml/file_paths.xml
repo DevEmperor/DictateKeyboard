@@ -7,4 +7,10 @@
     <cache-path
         name="gif_media"
         path="gif-media/"/>
+    <!-- PNG and GIF versions of a sticker, made for apps that will not take a WebP. In the cache, so
+         that clearing it frees the space: losing one costs a second to make again, and the choice
+         belongs to whoever is short of storage. -->
+    <cache-path
+        name="sticker_converted"
+        path="sticker-converted/"/>
 </paths>

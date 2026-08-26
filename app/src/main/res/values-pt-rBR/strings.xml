@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis &amp; GIFs</string>
+    <string name="settings__media__title">Emojis, GIFs e figurinhas</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1780,4 +1780,83 @@
     <string name="dictate__action_top_up">Recarregar crédito</string>
     <string name="dictate__promo_low_credit_message">Crédito quase no fim.</string>
     <string name="dictate__promo_low_credit_action">Recarregar</string>
+    <string name="prefs__media__sticker__title">Figurinhas</string>
+    <string name="prefs__media__sticker_folder__title">Pasta de figurinhas</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Escolha uma pasta com imagens suas</string>
+    <string name="prefs__media__sticker_folder_clear">Esquecer esta pasta</string>
+    <string name="prefs__media__sticker_rescan">Ler a pasta de novo</string>
+    <string name="prefs__media__sticker_rescan__summary">Use depois de adicionar ou remover arquivos</string>
+    <string name="prefs__media__sticker_thumbnail_size">Tamanho das figurinhas</string>
+    <string name="prefs__media__sticker_history_enabled">Favoritas e usadas recentemente</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Mostrar as figurinhas fixadas e usadas recentemente acima de cada pasta</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Figurinhas recentes a manter</string>
+    <string name="prefs__media__sticker_pinned_reset">Limpar figurinhas favoritas</string>
+    <string name="prefs__media__sticker_history_reset">Limpar figurinhas usadas recentemente</string>
+    <string name="sticker__title">Figurinhas</string>
+    <string name="sticker__category_all">Todas</string>
+    <string name="sticker__section_favorites">Favoritas</string>
+    <string name="sticker__section_recent">Usadas recentemente</string>
+    <string name="sticker__section_rest">Todas as figurinhas</string>
+    <string name="sticker__pin">Adicionar aos favoritos</string>
+    <string name="sticker__unpin">Remover dos favoritos</string>
+    <string name="sticker__setup_needed">Escolha uma pasta para usar suas próprias figurinhas</string>
+    <string name="sticker__setup_needed_action">Abrir configurações</string>
+    <string name="sticker__folder_empty">Nenhuma imagem nesta pasta</string>
+    <string name="sticker__access_lost">Não é mais possível ler a pasta de figurinhas. Escolha-a novamente.</string>
+    <string name="sticker__folder_pick_failed">Não foi possível manter o acesso a essa pasta</string>
+    <string name="sticker__rescan_done">{n} figurinhas encontradas</string>
+    <string name="sticker__rescan_done_converted">{n} figurinhas encontradas, {converted} convertidas</string>
+    <string name="sticker__copied_to_clipboard">Este app não aceita figurinhas — copiado para a área de transferência, toque e segure para colar</string>
+    <string name="sticker__insert_failed">Não foi possível inserir a figurinha</string>
+    <string name="quick_action__ime_ui_mode_sticker">Figurinha</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserir suas próprias figurinhas</string>
+    <string name="prefs__media__sticker_add">Adicionar figurinhas</string>
+    <string name="prefs__media__sticker_add__summary">Copie imagens para a pasta. Você também pode compartilhar uma imagem com o Dictate de qualquer app.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Trazer do WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Abre o seletor de arquivos na pasta de figurinhas do WhatsApp. Teclados como o da Samsung guardam as suas onde nenhum outro app pode ler — essas, compartilhe com o Dictate.</string>
+    <string name="sticker__import_share_label">Salvar como figurinha</string>
+    <string name="sticker__import_added">{n} adicionadas</string>
+    <string name="sticker__import_duplicate">{n} já estavam lá</string>
+    <string name="sticker__import_unsupported">{n} inutilizáveis</string>
+    <string name="sticker__import_failed">{n} falharam</string>
+    <string name="sticker__import_nothing">Nada a adicionar</string>
+    <string name="sticker__import_no_folder">Escolha primeiro uma pasta de figurinhas</string>
+    <string name="sticker__import_needs_write">Escolha a pasta de figurinhas novamente para permitir adicionar e excluir</string>
+    <string name="sticker__forget_recent">Remover das usadas recentemente</string>
+    <string name="sticker__delete_file">Excluir arquivo</string>
+    <string name="sticker__delete_confirm">Excluir mesmo?</string>
+    <string name="sticker__delete_failed">Não foi possível excluir o arquivo</string>
+    <string name="prefs__media__emoji__title">Emojis</string>
+    <string name="prefs__media__sticker_import_source">Trazer de um app</string>
+    <string name="prefs__media__sticker_import_source__summary">Abre o seletor de arquivos direto em uma pasta onde outro app escreve</string>
+    <string name="prefs__media__sticker_packs">Pacotes de figurinhas</string>
+    <string name="prefs__media__sticker_packs__summary">Crie, renomeie e exclua as pastas em que suas figurinhas estão organizadas</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Downloads</string>
+    <string name="sticker__source_pictures">Imagens</string>
+    <string name="sticker__source_dcim">Câmera</string>
+    <string name="sticker__source_hint">São pontos de partida, não garantias — se a pasta não existir, o seletor abre como sempre. Apps que guardam as figurinhas para si, como o teclado da Samsung, só conseguem compartilhá-las com o Dictate.</string>
+    <string name="sticker__import_progress">Copiando {done} de {total}</string>
+    <string name="sticker__import_cancel">Toque para parar. O que já foi copiado fica.</string>
+    <string name="sticker__refused_declares_nothing">Este app não aceita imagens do teclado — copiado para a área de transferência, toque e segure para colar</string>
+    <string name="sticker__refused_accepts_only">Este app só aceita {accepted}, esta figurinha é {own} — copiado para a área de transferência, toque e segure para colar</string>
+    <string name="sticker__move_to_pack">Mover para um pacote</string>
+    <string name="sticker__pack_none">Sem pacote</string>
+    <string name="sticker__move_failed">Não foi possível mover a figurinha</string>
+    <string name="sticker__pack_new">Criar pacote</string>
+    <string name="sticker__pack_name">Nome do pacote</string>
+    <string name="sticker__pack_rename">Renomear</string>
+    <string name="sticker__pack_delete">Excluir pacote</string>
+    <string name="sticker__pack_delete_confirm">Excluir o pacote \"{name}\" e as {n} figurinhas dentro dele?</string>
+    <string name="sticker__pack_failed">Não deu certo — a pasta pode estar protegida contra gravação</string>
+    <string name="sticker__packs_loading">Lendo a pasta…</string>
+    <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de figurinhas.</string>
+    <string name="sticker__share">Enviar pelo compartilhamento</string>
+    <string name="sticker__insert_as_gif">Inserir como GIF</string>
+    <string name="sticker__source_browse">Procurar arquivos…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Pasta de figurinhas</string>
 </resources>

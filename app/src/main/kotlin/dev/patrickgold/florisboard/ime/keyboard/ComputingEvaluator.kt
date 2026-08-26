@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.vectorResource
 import org.florisboard.lib.compose.icons.ForwardDelete
+import org.florisboard.lib.compose.icons.Sticker
 
 interface ComputingEvaluator {
     val version: Int
@@ -277,6 +278,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.IME_UI_MODE_GIF -> {
             Icons.Outlined.Gif
+        }
+        KeyCode.IME_UI_MODE_STICKER -> {
+            Icons.Outlined.Sticker
         }
         KeyCode.IME_UI_MODE_DICTATE -> {
             when (dev.patrickgold.florisboard.dictate.DictateController.state.value) {

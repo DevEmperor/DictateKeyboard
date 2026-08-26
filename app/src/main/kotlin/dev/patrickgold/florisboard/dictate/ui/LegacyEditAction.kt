@@ -25,7 +25,9 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Numbers
 import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.SelectAll
+import androidx.compose.material.icons.automirrored.outlined.Assignment
 import androidx.compose.material.icons.outlined.Gif
+import org.florisboard.lib.compose.icons.Sticker
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.R
 
@@ -48,6 +50,8 @@ enum class LegacyEditAction {
     HISTORY,
     REINSERT,
     GIF,
+    STICKER,
+    CLIPBOARD,
     SWITCH,
     BACKSPACE;
 
@@ -65,6 +69,8 @@ enum class LegacyEditAction {
             HISTORY -> Icons.Default.History
             REINSERT -> Icons.Default.Replay
             GIF -> Icons.Outlined.Gif
+            STICKER -> Icons.Outlined.Sticker
+            CLIPBOARD -> Icons.AutoMirrored.Outlined.Assignment
             SWITCH -> Icons.Default.KeyboardHide
             BACKSPACE -> Icons.Default.Backspace
         }
@@ -84,6 +90,8 @@ enum class LegacyEditAction {
             HISTORY -> R.string.dictate__legacy_action_history
             REINSERT -> R.string.dictate__legacy_action_reinsert
             GIF -> R.string.dictate__legacy_action_gif
+            STICKER -> R.string.sticker__title
+            CLIPBOARD -> R.string.clipboard__header_title
             SWITCH -> R.string.dictate__legacy_action_switch
             // Reuses the existing backspace content-description string (already localised everywhere).
             BACKSPACE -> R.string.dictate__legacy_backspace
@@ -95,7 +103,10 @@ enum class LegacyEditAction {
             listOf(SELECT_ALL, UNDO, REDO, CUT, COPY, PASTE, EMOJI, NUMBERS)
 
         /** Most action rows fit about this many keys comfortably across a phone; the editor caps here. */
-        const val MAX_ROW = 8
+        // Raised from 8 when stickers and the clipboard joined: the default row already held
+        // eight, so at the old limit both new buttons were greyed out for everyone who had
+        // never edited the row — which is most people.
+        const val MAX_ROW = 10
 
         /** Serialises [actions] for the pref (comma-separated enum names). */
         fun serialize(actions: List<LegacyEditAction>): String = actions.joinToString(",") { it.name }

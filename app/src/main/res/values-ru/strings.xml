@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Переместить клавиатуру влево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Переместить клавиатуру вправо.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Эмодзи &amp; GIFs</string>
+    <string name="settings__media__title">Эмодзи, GIF и стикеры</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомодзи</string>
@@ -1975,4 +1975,83 @@
     <string name="dictate__action_top_up">Пополнить баланс</string>
     <string name="dictate__promo_low_credit_message">Баланс на исходе.</string>
     <string name="dictate__promo_low_credit_action">Пополнить</string>
+    <string name="prefs__media__sticker__title">Стикеры</string>
+    <string name="prefs__media__sticker_folder__title">Папка со стикерами</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Выберите папку со своими изображениями</string>
+    <string name="prefs__media__sticker_folder_clear">Забыть эту папку</string>
+    <string name="prefs__media__sticker_rescan">Прочитать папку заново</string>
+    <string name="prefs__media__sticker_rescan__summary">Используйте после добавления или удаления файлов</string>
+    <string name="prefs__media__sticker_thumbnail_size">Размер стикеров</string>
+    <string name="prefs__media__sticker_history_enabled">Избранные и недавние</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Показывать закреплённые и недавние стикеры над каждой папкой</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Сколько недавних стикеров хранить</string>
+    <string name="prefs__media__sticker_pinned_reset">Очистить избранные стикеры</string>
+    <string name="prefs__media__sticker_history_reset">Очистить недавние стикеры</string>
+    <string name="sticker__title">Стикеры</string>
+    <string name="sticker__category_all">Все</string>
+    <string name="sticker__section_favorites">Избранные</string>
+    <string name="sticker__section_recent">Недавние</string>
+    <string name="sticker__section_rest">Все стикеры</string>
+    <string name="sticker__pin">В избранное</string>
+    <string name="sticker__unpin">Убрать из избранного</string>
+    <string name="sticker__setup_needed">Выберите папку, чтобы использовать свои стикеры</string>
+    <string name="sticker__setup_needed_action">Открыть настройки</string>
+    <string name="sticker__folder_empty">В этой папке нет изображений</string>
+    <string name="sticker__access_lost">Папку со стикерами больше не удаётся прочитать. Выберите её заново.</string>
+    <string name="sticker__folder_pick_failed">Не удалось сохранить доступ к этой папке</string>
+    <string name="sticker__rescan_done">Найдено стикеров: {n}</string>
+    <string name="sticker__rescan_done_converted">Найдено {n} стикеров, преобразовано {converted}</string>
+    <string name="sticker__copied_to_clipboard">Это приложение не принимает стикеры — скопировано в буфер обмена, удерживайте для вставки</string>
+    <string name="sticker__insert_failed">Не удалось вставить стикер</string>
+    <string name="quick_action__ime_ui_mode_sticker">Стикер</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Вставить свои стикеры</string>
+    <string name="prefs__media__sticker_add">Добавить стикеры</string>
+    <string name="prefs__media__sticker_add__summary">Скопируйте изображения в папку. Изображение также можно отправить в Dictate через «Поделиться» из любого приложения.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Забрать из WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Открывает выбор файлов в папке стикеров WhatsApp. Клавиатуры вроде самсунговской хранят свои стикеры там, куда другим приложениям читать нельзя — такие отправляйте в Dictate через «Поделиться».</string>
+    <string name="sticker__import_share_label">Сохранить как стикер</string>
+    <string name="sticker__import_added">Добавлено: {n}</string>
+    <string name="sticker__import_duplicate">{n} уже были</string>
+    <string name="sticker__import_unsupported">{n} непригодны</string>
+    <string name="sticker__import_failed">Не удалось: {n}</string>
+    <string name="sticker__import_nothing">Добавлять нечего</string>
+    <string name="sticker__import_no_folder">Сначала выберите папку со стикерами</string>
+    <string name="sticker__import_needs_write">Выберите папку со стикерами заново, чтобы разрешить добавление и удаление</string>
+    <string name="sticker__forget_recent">Убрать из недавних</string>
+    <string name="sticker__delete_file">Удалить файл</string>
+    <string name="sticker__delete_confirm">Точно удалить?</string>
+    <string name="sticker__delete_failed">Не удалось удалить файл</string>
+    <string name="prefs__media__emoji__title">Эмодзи</string>
+    <string name="prefs__media__sticker_import_source">Забрать из приложения</string>
+    <string name="prefs__media__sticker_import_source__summary">Открывает выбор файлов сразу в папке, куда пишет другое приложение</string>
+    <string name="prefs__media__sticker_packs">Наборы стикеров</string>
+    <string name="prefs__media__sticker_packs__summary">Создавайте, переименовывайте и удаляйте папки, по которым разложены ваши стикеры</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Загрузки</string>
+    <string name="sticker__source_pictures">Изображения</string>
+    <string name="sticker__source_dcim">Камера</string>
+    <string name="sticker__source_hint">Это отправные точки, а не гарантии: если папки нет, выбор откроется как обычно. Приложения, которые держат стикеры при себе — например, клавиатура Samsung, — могут только отправить их в Dictate через «Поделиться».</string>
+    <string name="sticker__import_progress">Копирование {done} из {total}</string>
+    <string name="sticker__import_cancel">Нажмите, чтобы остановить. Скопированное останется.</string>
+    <string name="sticker__refused_declares_nothing">Это приложение не принимает изображения с клавиатуры — скопировано в буфер обмена, удерживайте для вставки</string>
+    <string name="sticker__refused_accepts_only">Это приложение принимает только {accepted}, а этот стикер — {own}. Скопировано в буфер обмена, удерживайте для вставки</string>
+    <string name="sticker__move_to_pack">Переместить в набор</string>
+    <string name="sticker__pack_none">Без набора</string>
+    <string name="sticker__move_failed">Не удалось переместить стикер</string>
+    <string name="sticker__pack_new">Создать набор</string>
+    <string name="sticker__pack_name">Название набора</string>
+    <string name="sticker__pack_rename">Переименовать</string>
+    <string name="sticker__pack_delete">Удалить набор</string>
+    <string name="sticker__pack_delete_confirm">Удалить набор «{name}» и {n} стикеров в нём?</string>
+    <string name="sticker__pack_failed">Не получилось — возможно, папка защищена от записи</string>
+    <string name="sticker__packs_loading">Чтение папки…</string>
+    <string name="sticker__packs_empty">Наборов пока нет. Набор — это подпапка вашей папки со стикерами.</string>
+    <string name="sticker__share">Отправить через «Поделиться»</string>
+    <string name="sticker__insert_as_gif">Вставить как GIF</string>
+    <string name="sticker__source_browse">Выбрать файлы…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Папка со стикерами</string>
 </resources>

@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">キーボードを左に移動。</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">キーボードを右に移動</string>
     <!-- Media strings -->
-    <string name="settings__media__title">絵文字と GIF</string>
+    <string name="settings__media__title">絵文字・GIF・ステッカー</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">絵文字</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">顔文字</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">カオモジ</string>
@@ -1904,4 +1904,83 @@
     <string name="dictate__action_top_up">クレジットをチャージ</string>
     <string name="dictate__promo_low_credit_message">クレジット残りわずか。</string>
     <string name="dictate__promo_low_credit_action">チャージ</string>
+    <string name="prefs__media__sticker__title">ステッカー</string>
+    <string name="prefs__media__sticker_folder__title">ステッカーのフォルダ</string>
+    <string name="prefs__media__sticker_folder__summary_unset">自分の画像が入ったフォルダを選択</string>
+    <string name="prefs__media__sticker_folder_clear">このフォルダを解除</string>
+    <string name="prefs__media__sticker_rescan">フォルダを読み直す</string>
+    <string name="prefs__media__sticker_rescan__summary">ファイルを追加・削除した後に使用します</string>
+    <string name="prefs__media__sticker_thumbnail_size">ステッカーの大きさ</string>
+    <string name="prefs__media__sticker_history_enabled">お気に入りと最近使ったもの</string>
+    <string name="prefs__media__sticker_history_enabled__summary">固定したステッカーと最近使ったステッカーを各フォルダの上に表示</string>
+    <string name="prefs__media__sticker_history_recent_max_size">保存する最近使ったステッカーの数</string>
+    <string name="prefs__media__sticker_pinned_reset">お気に入りのステッカーを消去</string>
+    <string name="prefs__media__sticker_history_reset">最近使ったステッカーを消去</string>
+    <string name="sticker__title">ステッカー</string>
+    <string name="sticker__category_all">すべて</string>
+    <string name="sticker__section_favorites">お気に入り</string>
+    <string name="sticker__section_recent">最近使ったもの</string>
+    <string name="sticker__section_rest">すべてのステッカー</string>
+    <string name="sticker__pin">お気に入りに追加</string>
+    <string name="sticker__unpin">お気に入りから削除</string>
+    <string name="sticker__setup_needed">自分のステッカーを使うにはフォルダを選択してください</string>
+    <string name="sticker__setup_needed_action">設定を開く</string>
+    <string name="sticker__folder_empty">このフォルダに画像がありません</string>
+    <string name="sticker__access_lost">ステッカーのフォルダを読み取れなくなりました。もう一度選択してください。</string>
+    <string name="sticker__folder_pick_failed">このフォルダへのアクセスを保持できませんでした</string>
+    <string name="sticker__rescan_done">ステッカーが {n} 件見つかりました</string>
+    <string name="sticker__rescan_done_converted">{n} 件のステッカーが見つかり、{converted} 件を変換しました</string>
+    <string name="sticker__copied_to_clipboard">このアプリはステッカーを受け付けません — クリップボードにコピーしました。長押しで貼り付けられます</string>
+    <string name="sticker__insert_failed">ステッカーを挿入できませんでした</string>
+    <string name="quick_action__ime_ui_mode_sticker">ステッカー</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">自分のステッカーを挿入</string>
+    <string name="prefs__media__sticker_add">ステッカーを追加</string>
+    <string name="prefs__media__sticker_add__summary">画像をフォルダにコピーします。どのアプリからでも画像を Dictate に共有できます。</string>
+    <string name="prefs__media__sticker_import_whatsapp">WhatsApp から取り込む</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">WhatsApp のステッカーフォルダでファイル選択を開きます。Samsung のキーボードなどは他のアプリが読めない場所にステッカーを保存しているため、そちらは Dictate に共有してください。</string>
+    <string name="sticker__import_share_label">ステッカーとして保存</string>
+    <string name="sticker__import_added">{n} 件追加</string>
+    <string name="sticker__import_duplicate">{n} 件は既存</string>
+    <string name="sticker__import_unsupported">{n} 件は使用不可</string>
+    <string name="sticker__import_failed">{n} 件失敗</string>
+    <string name="sticker__import_nothing">追加するものがありません</string>
+    <string name="sticker__import_no_folder">先にステッカーのフォルダを選んでください</string>
+    <string name="sticker__import_needs_write">追加と削除を許可するには、ステッカーのフォルダをもう一度選んでください</string>
+    <string name="sticker__forget_recent">最近使ったものから削除</string>
+    <string name="sticker__delete_file">ファイルを削除</string>
+    <string name="sticker__delete_confirm">本当に削除しますか？</string>
+    <string name="sticker__delete_failed">ファイルを削除できませんでした</string>
+    <string name="prefs__media__emoji__title">絵文字</string>
+    <string name="prefs__media__sticker_import_source">アプリから取り込む</string>
+    <string name="prefs__media__sticker_import_source__summary">他のアプリが書き込むフォルダで、そのままファイル選択を開きます</string>
+    <string name="prefs__media__sticker_packs">ステッカーパック</string>
+    <string name="prefs__media__sticker_packs__summary">ステッカーを仕分けるフォルダを作成・名前変更・削除します</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">ダウンロード</string>
+    <string name="sticker__source_pictures">画像</string>
+    <string name="sticker__source_dcim">カメラ</string>
+    <string name="sticker__source_hint">これは出発点であって保証ではありません — フォルダがなければ、選択画面はいつもの場所で開きます。Samsung のキーボードのようにステッカーを外に出さないアプリは、Dictate に共有するしかありません。</string>
+    <string name="sticker__import_progress">コピー中 {done} / {total}</string>
+    <string name="sticker__import_cancel">タップで停止します。コピー済みのものは残ります。</string>
+    <string name="sticker__refused_declares_nothing">このアプリはキーボードからの画像を受け付けません — クリップボードにコピーしました。長押しで貼り付けられます</string>
+    <string name="sticker__refused_accepts_only">このアプリは {accepted} のみ受け付けます。このステッカーは {own} です — クリップボードにコピーしました。長押しで貼り付けられます</string>
+    <string name="sticker__move_to_pack">パックに移動</string>
+    <string name="sticker__pack_none">パックなし</string>
+    <string name="sticker__move_failed">ステッカーを移動できませんでした</string>
+    <string name="sticker__pack_new">パックを作成</string>
+    <string name="sticker__pack_name">パック名</string>
+    <string name="sticker__pack_rename">名前を変更</string>
+    <string name="sticker__pack_delete">パックを削除</string>
+    <string name="sticker__pack_delete_confirm">パック「{name}」と、その中の {n} 件のステッカーを削除しますか？</string>
+    <string name="sticker__pack_failed">うまくいきませんでした — フォルダが書き込み禁止かもしれません</string>
+    <string name="sticker__packs_loading">フォルダを読み込んでいます…</string>
+    <string name="sticker__packs_empty">まだパックがありません。パックはステッカーフォルダのサブフォルダです。</string>
+    <string name="sticker__share">共有メニューから送る</string>
+    <string name="sticker__insert_as_gif">GIF として挿入</string>
+    <string name="sticker__source_browse">ファイルを参照…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">ステッカーのフォルダ</string>
 </resources>

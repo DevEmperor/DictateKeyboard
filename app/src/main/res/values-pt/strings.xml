@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emojis e GIFs</string>
+    <string name="settings__media__title">Emojis, GIF e autocolantes</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1951,4 +1951,83 @@
     <string name="dictate__action_top_up">Carregar saldo</string>
     <string name="dictate__promo_low_credit_message">Saldo quase esgotado.</string>
     <string name="dictate__promo_low_credit_action">Carregar</string>
+    <string name="prefs__media__sticker__title">Autocolantes</string>
+    <string name="prefs__media__sticker_folder__title">Pasta de autocolantes</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Escolha uma pasta com imagens suas</string>
+    <string name="prefs__media__sticker_folder_clear">Esquecer esta pasta</string>
+    <string name="prefs__media__sticker_rescan">Ler a pasta de novo</string>
+    <string name="prefs__media__sticker_rescan__summary">Use depois de adicionar ou remover ficheiros</string>
+    <string name="prefs__media__sticker_thumbnail_size">Tamanho dos autocolantes</string>
+    <string name="prefs__media__sticker_history_enabled">Favoritos e usados recentemente</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Mostrar os autocolantes fixados e usados recentemente acima de cada pasta</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Autocolantes recentes a guardar</string>
+    <string name="prefs__media__sticker_pinned_reset">Limpar autocolantes favoritos</string>
+    <string name="prefs__media__sticker_history_reset">Limpar autocolantes usados recentemente</string>
+    <string name="sticker__title">Autocolantes</string>
+    <string name="sticker__category_all">Todos</string>
+    <string name="sticker__section_favorites">Favoritos</string>
+    <string name="sticker__section_recent">Usados recentemente</string>
+    <string name="sticker__section_rest">Todos os autocolantes</string>
+    <string name="sticker__pin">Adicionar aos favoritos</string>
+    <string name="sticker__unpin">Remover dos favoritos</string>
+    <string name="sticker__setup_needed">Escolha uma pasta para usar os seus autocolantes</string>
+    <string name="sticker__setup_needed_action">Abrir definições</string>
+    <string name="sticker__folder_empty">Não há imagens nesta pasta</string>
+    <string name="sticker__access_lost">Já não é possível ler a pasta de autocolantes. Escolha-a novamente.</string>
+    <string name="sticker__folder_pick_failed">Não foi possível manter o acesso a essa pasta</string>
+    <string name="sticker__rescan_done">{n} autocolantes encontrados</string>
+    <string name="sticker__rescan_done_converted">{n} autocolantes encontrados, {converted} convertidos</string>
+    <string name="sticker__copied_to_clipboard">Esta aplicação não aceita autocolantes — copiado para a área de transferência, prima sem soltar para colar</string>
+    <string name="sticker__insert_failed">Não foi possível inserir o autocolante</string>
+    <string name="quick_action__ime_ui_mode_sticker">Autocol.</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserir os seus autocolantes</string>
+    <string name="prefs__media__sticker_add">Adicionar autocolantes</string>
+    <string name="prefs__media__sticker_add__summary">Copie imagens para a pasta. Também pode partilhar uma imagem com o Dictate a partir de qualquer aplicação.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Trazer do WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Abre o seletor de ficheiros na pasta de autocolantes do WhatsApp. Teclados como o da Samsung guardam os seus onde nenhuma outra aplicação pode ler — esses, partilhe-os com o Dictate.</string>
+    <string name="sticker__import_share_label">Guardar como autocolante</string>
+    <string name="sticker__import_added">{n} adicionados</string>
+    <string name="sticker__import_duplicate">{n} já lá estavam</string>
+    <string name="sticker__import_unsupported">{n} inutilizáveis</string>
+    <string name="sticker__import_failed">{n} falharam</string>
+    <string name="sticker__import_nothing">Nada a adicionar</string>
+    <string name="sticker__import_no_folder">Escolha primeiro uma pasta de autocolantes</string>
+    <string name="sticker__import_needs_write">Escolha a pasta de autocolantes novamente para permitir adicionar e apagar</string>
+    <string name="sticker__forget_recent">Remover dos usados recentemente</string>
+    <string name="sticker__delete_file">Apagar ficheiro</string>
+    <string name="sticker__delete_confirm">Apagar mesmo?</string>
+    <string name="sticker__delete_failed">Não foi possível apagar o ficheiro</string>
+    <string name="prefs__media__emoji__title">Emojis</string>
+    <string name="prefs__media__sticker_import_source">Trazer de uma aplicação</string>
+    <string name="prefs__media__sticker_import_source__summary">Abre o seletor de ficheiros diretamente numa pasta onde outra aplicação escreve</string>
+    <string name="prefs__media__sticker_packs">Pacotes de autocolantes</string>
+    <string name="prefs__media__sticker_packs__summary">Crie, mude o nome e apague as pastas em que os seus autocolantes estão organizados</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Transferências</string>
+    <string name="sticker__source_pictures">Imagens</string>
+    <string name="sticker__source_dcim">Câmara</string>
+    <string name="sticker__source_hint">São pontos de partida, não garantias — se a pasta não existir, o seletor abre como de costume. Aplicações que guardam os autocolantes para si, como o teclado da Samsung, só os podem partilhar com o Dictate.</string>
+    <string name="sticker__import_progress">A copiar {done} de {total}</string>
+    <string name="sticker__import_cancel">Toque para parar. O que foi copiado fica.</string>
+    <string name="sticker__refused_declares_nothing">Esta aplicação não aceita imagens do teclado — copiado para a área de transferência, prima sem soltar para colar</string>
+    <string name="sticker__refused_accepts_only">Esta aplicação só aceita {accepted}, este autocolante é {own} — copiado para a área de transferência, prima sem soltar para colar</string>
+    <string name="sticker__move_to_pack">Mover para um pacote</string>
+    <string name="sticker__pack_none">Sem pacote</string>
+    <string name="sticker__move_failed">Não foi possível mover o autocolante</string>
+    <string name="sticker__pack_new">Criar pacote</string>
+    <string name="sticker__pack_name">Nome do pacote</string>
+    <string name="sticker__pack_rename">Mudar o nome</string>
+    <string name="sticker__pack_delete">Apagar pacote</string>
+    <string name="sticker__pack_delete_confirm">Apagar o pacote \"{name}\" e os {n} autocolantes que contém?</string>
+    <string name="sticker__pack_failed">Não resultou — a pasta pode estar protegida contra escrita</string>
+    <string name="sticker__packs_loading">A ler a pasta…</string>
+    <string name="sticker__packs_empty">Ainda não há pacotes. Um pacote é uma subpasta da sua pasta de autocolantes.</string>
+    <string name="sticker__share">Enviar pela partilha</string>
+    <string name="sticker__insert_as_gif">Inserir como GIF</string>
+    <string name="sticker__source_browse">Procurar ficheiros…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Pasta de autocolantes</string>
 </resources>

@@ -235,6 +235,26 @@
             </intent-filter>
         </activity>
 
+        <!-- "Share → Dictate" for stickers (issue #280). Carries its own label because the clipboard
+             activity above already answers ACTION_SEND for images, and two identically named entries
+             in the share sheet would be a riddle rather than a choice. -->
+        <activity
+            android:name="dev.patrickgold.florisboard.dictate.sticker.StickerImportActivity"
+            android:label="@string/sticker__import_share_label"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:excludeFromRecents="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/png"/>
+                <data android:mimeType="image/webp"/>
+                <data android:mimeType="image/gif"/>
+                <data android:mimeType="image/jpeg"/>
+            </intent-filter>
+        </activity>
+
         <!-- Dictate File Transcription trampoline (long-press mic → system file picker) -->
         <!-- NB: no android:noHistory here – a noHistory activity is destroyed when the document
              picker comes to the foreground, so its OpenDocument result would never be delivered.
@@ -255,7 +275,7 @@
 
         <!-- Default file provider to share files from the "files" or "cache" dir -->
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="dev.patrickgold.florisboard.dictate.media.MediaFileProvider"
             android:authorities="${applicationId}.provider.file"
             android:grantUriPermissions="true"
             android:exported="false">

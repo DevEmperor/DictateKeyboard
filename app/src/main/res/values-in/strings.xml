@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji &amp; GIF</string>
+    <string name="settings__media__title">Emoji, GIF, dan stiker</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1927,4 +1927,83 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__action_top_up">Isi ulang saldo</string>
     <string name="dictate__promo_low_credit_message">Saldo hampir habis.</string>
     <string name="dictate__promo_low_credit_action">Isi ulang</string>
+    <string name="prefs__media__sticker__title">Stiker</string>
+    <string name="prefs__media__sticker_folder__title">Folder stiker</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Pilih folder berisi gambar milikmu sendiri</string>
+    <string name="prefs__media__sticker_folder_clear">Lupakan folder ini</string>
+    <string name="prefs__media__sticker_rescan">Baca ulang folder</string>
+    <string name="prefs__media__sticker_rescan__summary">Gunakan setelah menambah atau menghapus berkas</string>
+    <string name="prefs__media__sticker_thumbnail_size">Ukuran stiker</string>
+    <string name="prefs__media__sticker_history_enabled">Favorit dan baru digunakan</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Tampilkan stiker yang disematkan dan baru digunakan di atas setiap folder</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Jumlah stiker terbaru yang disimpan</string>
+    <string name="prefs__media__sticker_pinned_reset">Hapus stiker favorit</string>
+    <string name="prefs__media__sticker_history_reset">Hapus stiker yang baru digunakan</string>
+    <string name="sticker__title">Stiker</string>
+    <string name="sticker__category_all">Semua</string>
+    <string name="sticker__section_favorites">Favorit</string>
+    <string name="sticker__section_recent">Baru digunakan</string>
+    <string name="sticker__section_rest">Semua stiker</string>
+    <string name="sticker__pin">Tambahkan ke favorit</string>
+    <string name="sticker__unpin">Hapus dari favorit</string>
+    <string name="sticker__setup_needed">Pilih folder untuk memakai stiker milikmu sendiri</string>
+    <string name="sticker__setup_needed_action">Buka pengaturan</string>
+    <string name="sticker__folder_empty">Tidak ada gambar di folder ini</string>
+    <string name="sticker__access_lost">Folder stiker tidak dapat dibaca lagi. Pilih kembali.</string>
+    <string name="sticker__folder_pick_failed">Akses ke folder itu tidak dapat dipertahankan</string>
+    <string name="sticker__rescan_done">{n} stiker ditemukan</string>
+    <string name="sticker__rescan_done_converted">{n} stiker ditemukan, {converted} diubah</string>
+    <string name="sticker__copied_to_clipboard">Aplikasi ini tidak menerima stiker — disalin ke papan klip, tekan lama untuk menempel</string>
+    <string name="sticker__insert_failed">Stiker tidak dapat disisipkan</string>
+    <string name="quick_action__ime_ui_mode_sticker">Stiker</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Sisipkan stiker milikmu sendiri</string>
+    <string name="prefs__media__sticker_add">Tambah stiker</string>
+    <string name="prefs__media__sticker_add__summary">Salin gambar ke folder. Kamu juga bisa membagikan gambar ke Dictate dari aplikasi mana pun.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Ambil dari WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Membuka pemilih berkas di folder stiker WhatsApp. Papan ketik seperti milik Samsung menyimpan stikernya di tempat yang tidak boleh dibaca aplikasi lain — bagikan yang itu ke Dictate.</string>
+    <string name="sticker__import_share_label">Simpan sebagai stiker</string>
+    <string name="sticker__import_added">{n} ditambahkan</string>
+    <string name="sticker__import_duplicate">{n} sudah ada</string>
+    <string name="sticker__import_unsupported">{n} tidak bisa dipakai</string>
+    <string name="sticker__import_failed">{n} gagal</string>
+    <string name="sticker__import_nothing">Tidak ada yang ditambahkan</string>
+    <string name="sticker__import_no_folder">Pilih folder stiker dulu</string>
+    <string name="sticker__import_needs_write">Pilih lagi folder stiker agar menambah dan menghapus diizinkan</string>
+    <string name="sticker__forget_recent">Hapus dari baru digunakan</string>
+    <string name="sticker__delete_file">Hapus berkas</string>
+    <string name="sticker__delete_confirm">Yakin mau dihapus?</string>
+    <string name="sticker__delete_failed">Berkas tidak dapat dihapus</string>
+    <string name="prefs__media__emoji__title">Emoji</string>
+    <string name="prefs__media__sticker_import_source">Ambil dari aplikasi</string>
+    <string name="prefs__media__sticker_import_source__summary">Membuka pemilih berkas langsung di folder yang ditulisi aplikasi lain</string>
+    <string name="prefs__media__sticker_packs">Paket stiker</string>
+    <string name="prefs__media__sticker_packs__summary">Buat, ganti nama, dan hapus folder tempat stikermu ditata</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Unduhan</string>
+    <string name="sticker__source_pictures">Gambar</string>
+    <string name="sticker__source_dcim">Kamera</string>
+    <string name="sticker__source_hint">Ini titik awal, bukan jaminan — kalau foldernya tidak ada, pemilih terbuka seperti biasa. Aplikasi yang menyimpan stikernya sendiri, seperti papan ketik Samsung, hanya bisa dibagikan ke Dictate.</string>
+    <string name="sticker__import_progress">Menyalin {done} dari {total}</string>
+    <string name="sticker__import_cancel">Ketuk untuk berhenti. Yang sudah tersalin tetap ada.</string>
+    <string name="sticker__refused_declares_nothing">Aplikasi ini tidak menerima gambar dari papan ketik — disalin ke papan klip, tekan lama untuk menempel</string>
+    <string name="sticker__refused_accepts_only">Aplikasi ini hanya menerima {accepted}, stiker ini {own} — disalin ke papan klip, tekan lama untuk menempel</string>
+    <string name="sticker__move_to_pack">Pindahkan ke paket</string>
+    <string name="sticker__pack_none">Tanpa paket</string>
+    <string name="sticker__move_failed">Stiker tidak dapat dipindahkan</string>
+    <string name="sticker__pack_new">Buat paket</string>
+    <string name="sticker__pack_name">Nama paket</string>
+    <string name="sticker__pack_rename">Ganti nama</string>
+    <string name="sticker__pack_delete">Hapus paket</string>
+    <string name="sticker__pack_delete_confirm">Hapus paket \"{name}\" beserta {n} stiker di dalamnya?</string>
+    <string name="sticker__pack_failed">Tidak berhasil — folder mungkin dilindungi dari penulisan</string>
+    <string name="sticker__packs_loading">Membaca folder…</string>
+    <string name="sticker__packs_empty">Belum ada paket. Paket adalah subfolder dari folder stikermu.</string>
+    <string name="sticker__share">Kirim lewat menu bagikan</string>
+    <string name="sticker__insert_as_gif">Sisipkan sebagai GIF</string>
+    <string name="sticker__source_browse">Telusuri berkas…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Folder stiker</string>
 </resources>

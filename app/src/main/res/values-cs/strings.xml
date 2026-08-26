@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Posunout klávesnici doleva.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Posunout klávesnici doprava.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emotikony a GIFs</string>
+    <string name="settings__media__title">Emoji, GIFy a samolepky</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikony</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1986,4 +1986,83 @@
     <string name="dictate__action_top_up">Dobít kredit</string>
     <string name="dictate__promo_low_credit_message">Kredit skoro došel.</string>
     <string name="dictate__promo_low_credit_action">Dobít</string>
+    <string name="prefs__media__sticker__title">Samolepky</string>
+    <string name="prefs__media__sticker_folder__title">Složka se samolepkami</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Vyberte složku s vlastními obrázky</string>
+    <string name="prefs__media__sticker_folder_clear">Zapomenout tuto složku</string>
+    <string name="prefs__media__sticker_rescan">Načíst složku znovu</string>
+    <string name="prefs__media__sticker_rescan__summary">Použijte po přidání nebo odebrání souborů</string>
+    <string name="prefs__media__sticker_thumbnail_size">Velikost samolepek</string>
+    <string name="prefs__media__sticker_history_enabled">Oblíbené a naposledy použité</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Zobrazovat připnuté a naposledy použité samolepky nad každou složkou</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Počet uchovaných naposledy použitých samolepek</string>
+    <string name="prefs__media__sticker_pinned_reset">Vymazat oblíbené samolepky</string>
+    <string name="prefs__media__sticker_history_reset">Vymazat naposledy použité samolepky</string>
+    <string name="sticker__title">Samolepky</string>
+    <string name="sticker__category_all">Vše</string>
+    <string name="sticker__section_favorites">Oblíbené</string>
+    <string name="sticker__section_recent">Naposledy použité</string>
+    <string name="sticker__section_rest">Všechny samolepky</string>
+    <string name="sticker__pin">Přidat k oblíbeným</string>
+    <string name="sticker__unpin">Odebrat z oblíbených</string>
+    <string name="sticker__setup_needed">Vyberte složku, abyste mohli používat vlastní samolepky</string>
+    <string name="sticker__setup_needed_action">Otevřít nastavení</string>
+    <string name="sticker__folder_empty">V této složce nejsou žádné obrázky</string>
+    <string name="sticker__access_lost">Složku se samolepkami už nelze číst. Vyberte ji znovu.</string>
+    <string name="sticker__folder_pick_failed">Přístup k této složce se nepodařilo zachovat</string>
+    <string name="sticker__rescan_done">Nalezeno {n} samolepek</string>
+    <string name="sticker__rescan_done_converted">Nalezeno {n} samolepek, {converted} převedeno</string>
+    <string name="sticker__copied_to_clipboard">Tato aplikace samolepky nepřijímá — zkopírováno do schránky, dlouhým stiskem vložíte</string>
+    <string name="sticker__insert_failed">Samolepku se nepodařilo vložit</string>
+    <string name="quick_action__ime_ui_mode_sticker">Samolepka</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Vložit vlastní samolepky</string>
+    <string name="prefs__media__sticker_add">Přidat samolepky</string>
+    <string name="prefs__media__sticker_add__summary">Zkopírujte obrázky do složky. Obrázek můžete také sdílet do Dictate z libovolné aplikace.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Načíst z WhatsAppu</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Otevře výběr souborů ve složce se samolepkami WhatsAppu. Klávesnice jako ta od Samsungu si samolepky ukládají tam, kam žádná jiná aplikace nevidí — ty sdílejte do Dictate.</string>
+    <string name="sticker__import_share_label">Uložit jako samolepku</string>
+    <string name="sticker__import_added">Přidáno: {n}</string>
+    <string name="sticker__import_duplicate">{n} už tam bylo</string>
+    <string name="sticker__import_unsupported">{n} nepoužitelných</string>
+    <string name="sticker__import_failed">{n} se nezdařilo</string>
+    <string name="sticker__import_nothing">Není co přidat</string>
+    <string name="sticker__import_no_folder">Nejdřív vyberte složku se samolepkami</string>
+    <string name="sticker__import_needs_write">Vyberte složku se samolepkami znovu, aby šlo přidávat a mazat</string>
+    <string name="sticker__forget_recent">Odebrat z naposledy použitých</string>
+    <string name="sticker__delete_file">Smazat soubor</string>
+    <string name="sticker__delete_confirm">Opravdu smazat?</string>
+    <string name="sticker__delete_failed">Soubor se nepodařilo smazat</string>
+    <string name="prefs__media__emoji__title">Emoji</string>
+    <string name="prefs__media__sticker_import_source">Načíst z aplikace</string>
+    <string name="prefs__media__sticker_import_source__summary">Otevře výběr souborů rovnou ve složce, do které zapisuje jiná aplikace</string>
+    <string name="prefs__media__sticker_packs">Balíčky samolepek</string>
+    <string name="prefs__media__sticker_packs__summary">Vytvářejte, přejmenovávejte a mažte složky, do kterých jsou samolepky roztříděné</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Stažené</string>
+    <string name="sticker__source_pictures">Obrázky</string>
+    <string name="sticker__source_dcim">Fotoaparát</string>
+    <string name="sticker__source_hint">Jsou to výchozí body, ne záruky — pokud složka neexistuje, výběr se otevře jako obvykle. Aplikace, které si samolepky nechávají pro sebe, třeba klávesnice Samsungu, je umí jen sdílet do Dictate.</string>
+    <string name="sticker__import_progress">Kopíruje se {done} z {total}</string>
+    <string name="sticker__import_cancel">Klepnutím zastavíte. Co je zkopírované, zůstává.</string>
+    <string name="sticker__refused_declares_nothing">Tato aplikace nepřijímá obrázky z klávesnice — zkopírováno do schránky, dlouhým stiskem vložíte</string>
+    <string name="sticker__refused_accepts_only">Tato aplikace přijímá jen {accepted}, tato samolepka je {own} — zkopírováno do schránky, dlouhým stiskem vložíte</string>
+    <string name="sticker__move_to_pack">Přesunout do balíčku</string>
+    <string name="sticker__pack_none">Bez balíčku</string>
+    <string name="sticker__move_failed">Samolepku se nepodařilo přesunout</string>
+    <string name="sticker__pack_new">Vytvořit balíček</string>
+    <string name="sticker__pack_name">Název balíčku</string>
+    <string name="sticker__pack_rename">Přejmenovat</string>
+    <string name="sticker__pack_delete">Smazat balíček</string>
+    <string name="sticker__pack_delete_confirm">Smazat balíček \"{name}\" a {n} samolepek v něm?</string>
+    <string name="sticker__pack_failed">Nepovedlo se — složka může být chráněná proti zápisu</string>
+    <string name="sticker__packs_loading">Načítá se složka…</string>
+    <string name="sticker__packs_empty">Zatím žádné balíčky. Balíček je podsložka vaší složky se samolepkami.</string>
+    <string name="sticker__share">Odeslat přes sdílení</string>
+    <string name="sticker__insert_as_gif">Vložit jako GIF</string>
+    <string name="sticker__source_browse">Procházet soubory…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Složka se samolepkami</string>
 </resources>

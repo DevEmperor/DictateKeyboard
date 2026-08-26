@@ -9,7 +9,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muovi tastiera a sinistra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muovi tastiera a destra.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji &amp; GIF</string>
+    <string name="settings__media__title">Emoji, GIF e adesivi</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -1755,4 +1755,83 @@
     <string name="dictate__action_top_up">Ricarica il credito</string>
     <string name="dictate__promo_low_credit_message">Credito quasi esaurito.</string>
     <string name="dictate__promo_low_credit_action">Ricarica</string>
+    <string name="prefs__media__sticker__title">Adesivi</string>
+    <string name="prefs__media__sticker_folder__title">Cartella degli adesivi</string>
+    <string name="prefs__media__sticker_folder__summary_unset">Scegli una cartella con immagini tue</string>
+    <string name="prefs__media__sticker_folder_clear">Dimentica questa cartella</string>
+    <string name="prefs__media__sticker_rescan">Rileggi la cartella</string>
+    <string name="prefs__media__sticker_rescan__summary">Da usare dopo aver aggiunto o rimosso file</string>
+    <string name="prefs__media__sticker_thumbnail_size">Dimensione degli adesivi</string>
+    <string name="prefs__media__sticker_history_enabled">Preferiti e usati di recente</string>
+    <string name="prefs__media__sticker_history_enabled__summary">Mostra gli adesivi fissati e usati di recente sopra ogni cartella</string>
+    <string name="prefs__media__sticker_history_recent_max_size">Adesivi recenti da conservare</string>
+    <string name="prefs__media__sticker_pinned_reset">Cancella gli adesivi preferiti</string>
+    <string name="prefs__media__sticker_history_reset">Cancella gli adesivi usati di recente</string>
+    <string name="sticker__title">Adesivi</string>
+    <string name="sticker__category_all">Tutti</string>
+    <string name="sticker__section_favorites">Preferiti</string>
+    <string name="sticker__section_recent">Usati di recente</string>
+    <string name="sticker__section_rest">Tutti gli adesivi</string>
+    <string name="sticker__pin">Aggiungi ai preferiti</string>
+    <string name="sticker__unpin">Rimuovi dai preferiti</string>
+    <string name="sticker__setup_needed">Scegli una cartella per usare i tuoi adesivi</string>
+    <string name="sticker__setup_needed_action">Apri le impostazioni</string>
+    <string name="sticker__folder_empty">Nessuna immagine in questa cartella</string>
+    <string name="sticker__access_lost">La cartella degli adesivi non è più leggibile. Scegliela di nuovo.</string>
+    <string name="sticker__folder_pick_failed">Non è stato possibile mantenere l\'accesso a quella cartella</string>
+    <string name="sticker__rescan_done">Trovati {n} adesivi</string>
+    <string name="sticker__rescan_done_converted">{n} adesivi trovati, {converted} convertiti</string>
+    <string name="sticker__copied_to_clipboard">Questa app non accetta adesivi: copiato negli appunti, tieni premuto per incollare</string>
+    <string name="sticker__insert_failed">Non è stato possibile inserire l\'adesivo</string>
+    <string name="quick_action__ime_ui_mode_sticker">Adesivo</string>
+    <string name="quick_action__ime_ui_mode_sticker__tooltip">Inserisci i tuoi adesivi</string>
+    <string name="prefs__media__sticker_add">Aggiungi adesivi</string>
+    <string name="prefs__media__sticker_add__summary">Copia immagini nella cartella. Puoi anche condividere un\'immagine con Dictate da qualsiasi app.</string>
+    <string name="prefs__media__sticker_import_whatsapp">Prendi da WhatsApp</string>
+    <string name="prefs__media__sticker_import_whatsapp__summary">Apre il selettore file nella cartella degli adesivi di WhatsApp. Tastiere come quella di Samsung tengono i propri dove nessun\'altra app può leggere: quelli condividili con Dictate.</string>
+    <string name="sticker__import_share_label">Salva come adesivo</string>
+    <string name="sticker__import_added">{n} aggiunti</string>
+    <string name="sticker__import_duplicate">{n} già presenti</string>
+    <string name="sticker__import_unsupported">{n} non utilizzabili</string>
+    <string name="sticker__import_failed">{n} non riusciti</string>
+    <string name="sticker__import_nothing">Niente da aggiungere</string>
+    <string name="sticker__import_no_folder">Scegli prima una cartella degli adesivi</string>
+    <string name="sticker__import_needs_write">Scegli di nuovo la cartella degli adesivi per consentire aggiunta ed eliminazione</string>
+    <string name="sticker__forget_recent">Togli dagli usati di recente</string>
+    <string name="sticker__delete_file">Elimina il file</string>
+    <string name="sticker__delete_confirm">Eliminare davvero?</string>
+    <string name="sticker__delete_failed">Non è stato possibile eliminare il file</string>
+    <string name="prefs__media__emoji__title">Emoji</string>
+    <string name="prefs__media__sticker_import_source">Prendi da un\'app</string>
+    <string name="prefs__media__sticker_import_source__summary">Apre il selettore file direttamente in una cartella in cui scrive un\'altra app</string>
+    <string name="prefs__media__sticker_packs">Pacchetti di adesivi</string>
+    <string name="prefs__media__sticker_packs__summary">Crea, rinomina ed elimina le cartelle in cui sono ordinati i tuoi adesivi</string>
+    <string name="sticker__source_whatsapp">WhatsApp</string>
+    <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
+    <string name="sticker__source_telegram">Telegram</string>
+    <string name="sticker__source_downloads">Download</string>
+    <string name="sticker__source_pictures">Immagini</string>
+    <string name="sticker__source_dcim">Fotocamera</string>
+    <string name="sticker__source_hint">Sono punti di partenza, non garanzie: se la cartella non c\'è, il selettore si apre come sempre. Le app che tengono per sé i propri adesivi, come la tastiera Samsung, possono solo condividerli con Dictate.</string>
+    <string name="sticker__import_progress">Copia {done} di {total}</string>
+    <string name="sticker__import_cancel">Tocca per fermare. Ciò che è stato copiato resta.</string>
+    <string name="sticker__refused_declares_nothing">Questa app non accetta immagini dalla tastiera: copiato negli appunti, tieni premuto per incollare</string>
+    <string name="sticker__refused_accepts_only">Questa app accetta solo {accepted}, questo adesivo è {own}: copiato negli appunti, tieni premuto per incollare</string>
+    <string name="sticker__move_to_pack">Sposta in un pacchetto</string>
+    <string name="sticker__pack_none">Nessun pacchetto</string>
+    <string name="sticker__move_failed">Non è stato possibile spostare l\'adesivo</string>
+    <string name="sticker__pack_new">Crea pacchetto</string>
+    <string name="sticker__pack_name">Nome del pacchetto</string>
+    <string name="sticker__pack_rename">Rinomina</string>
+    <string name="sticker__pack_delete">Elimina pacchetto</string>
+    <string name="sticker__pack_delete_confirm">Eliminare il pacchetto \"{name}\" e i {n} adesivi al suo interno?</string>
+    <string name="sticker__pack_failed">Non ha funzionato: la cartella potrebbe essere protetta da scrittura</string>
+    <string name="sticker__packs_loading">Lettura della cartella…</string>
+    <string name="sticker__packs_empty">Ancora nessun pacchetto. Un pacchetto è una sottocartella della tua cartella di adesivi.</string>
+    <string name="sticker__share">Invia con la condivisione</string>
+    <string name="sticker__insert_as_gif">Inserisci come GIF</string>
+    <string name="sticker__source_browse">Sfoglia i file…</string>
+    <string name="sticker__source_threema">Threema</string>
+    <string name="sticker__source_signal">Signal</string>
+    <string name="sticker__source_stickers_folder">Cartella degli adesivi</string>
 </resources>

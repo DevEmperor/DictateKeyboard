@@ -113,6 +113,7 @@ import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
 import org.florisboard.lib.compose.autoMirrorForRtl
 import org.florisboard.lib.compose.florisHorizontalScroll
@@ -139,6 +140,7 @@ fun ClipboardInputLayout(
     modifier: Modifier = Modifier,
 ) {
     val prefs by FlorisPreferenceStore
+    val accentColor by prefs.theme.accentColor.collectAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
@@ -462,7 +464,9 @@ fun ClipboardInputLayout(
                         .weight(1f),
                 ) {
                     LazyVerticalStaggeredGrid(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .panelScrollbar(gridState, accentColor),
                         state = gridState,
                         columns = staggeredGridCells,
                     ) {

@@ -95,6 +95,7 @@ import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.compose.header
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggSelector
@@ -163,6 +164,7 @@ fun EmojiPaletteView(
 
     val preferredSkinTone by prefs.emoji.preferredSkinTone.collectAsState()
     val emojiHistoryEnabled by prefs.emoji.historyEnabled.collectAsState()
+    val accentColor by prefs.theme.accentColor.collectAsState()
 
     var activeCategory by remember(emojiHistoryEnabled) {
         if (emojiHistoryEnabled) {
@@ -362,7 +364,7 @@ fun EmojiPaletteView(
                     LazyVerticalGrid(
                         modifier = Modifier
                             .fillMaxSize()
-                            .florisScrollbar(lazyGridState),
+                            .panelScrollbar(lazyGridState, accentColor),
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyGridState,
                     ) {

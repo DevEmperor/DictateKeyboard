@@ -60,6 +60,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import coil3.compose.AsyncImage
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -73,6 +74,7 @@ import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsSt
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -277,6 +279,9 @@ fun GifPanel(
                                         DropdownMenu(
                                             expanded = confirmDeleteGifId == item.id,
                                             onDismissRequest = { confirmDeleteGifId = null },
+                                            // See StickerPanel: a focusable popup makes the IME lose
+                                            // window focus and the panel closes itself.
+                                            properties = PopupProperties(focusable = false),
                                         ) {
                                             DropdownMenuItem(
                                                 text = { Text(stringRes(R.string.action__delete)) },
@@ -303,7 +308,8 @@ fun GifPanel(
                                 columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(1f),
+                                    .weight(1f)
+                                    .panelScrollbar(gridState, accent),
                                 contentPadding = PaddingValues(4.dp),
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                                 verticalItemSpacing = 4.dp,
