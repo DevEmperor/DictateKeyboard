@@ -394,6 +394,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Obre la interfície d\'usuari de l\'administrador del sistema</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">El diccionari d\'usuari s\'ha importat correctament!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">El diccionari d\'usuari s\'ha exportat correctament!</string>
+    <string name="settings__udm__add_from_contacts">Afegeix un nom dels teus contactes</string>
+    <string name="settings__udm__import_from_contacts_file">Importa noms d\'un fitxer de contactes</string>
+    <string name="settings__udm__contacts_confirm_message">S\'han trobat {count} noms en aquest fitxer. Vols afegir-los al diccionari?</string>
+    <string name="settings__udm__contacts_added_one">S\'ha afegit {name} al diccionari</string>
+    <string name="settings__udm__contacts_added_many">S\'han afegit {count} noms al diccionari</string>
+    <string name="settings__udm__contacts_added_none">No s\'ha trobat cap nom nou</string>
+    <string name="settings__udm__contacts_file_unreadable">No s\'ha pogut llegir aquest fitxer</string>
+    <string name="settings__udm__contacts_no_picker">No s\'ha trobat cap aplicació de contactes</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Afegeix una paraula</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edita la paraula</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>

@@ -492,6 +492,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Отваряне на системни настройки</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Потребителският речник е изнесен!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Потребителският речник е внесен!</string>
+    <string name="settings__udm__add_from_contacts">Добавяне на име от контактите</string>
+    <string name="settings__udm__import_from_contacts_file">Импортиране на имена от файл с контакти</string>
+    <string name="settings__udm__contacts_confirm_message">В този файл са намерени {count} имена. Да бъдат ли добавени в речника?</string>
+    <string name="settings__udm__contacts_added_one">{name} е добавено в речника</string>
+    <string name="settings__udm__contacts_added_many">{count} имена са добавени в речника</string>
+    <string name="settings__udm__contacts_added_none">Не са намерени нови имена</string>
+    <string name="settings__udm__contacts_file_unreadable">Файлът не можа да бъде прочетен</string>
+    <string name="settings__udm__contacts_no_picker">Не е намерено приложение за контакти</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Добавяне на дума</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Промяна на дума</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Дума</string>

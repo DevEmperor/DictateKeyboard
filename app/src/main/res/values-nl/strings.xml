@@ -413,6 +413,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open systeembeheer UI</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Persoonlijk woordenboek met succes geïmporteerd!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Persoonlijk woordenboek met succces geëxporteerd!</string>
+    <string name="settings__udm__add_from_contacts">Een naam uit je contacten toevoegen</string>
+    <string name="settings__udm__import_from_contacts_file">Namen uit een contactenbestand importeren</string>
+    <string name="settings__udm__contacts_confirm_message">{count} namen in dit bestand gevonden. Toevoegen aan je woordenboek?</string>
+    <string name="settings__udm__contacts_added_one">{name} toegevoegd aan je woordenboek</string>
+    <string name="settings__udm__contacts_added_many">{count} namen toegevoegd aan je woordenboek</string>
+    <string name="settings__udm__contacts_added_none">Geen nieuwe namen gevonden</string>
+    <string name="settings__udm__contacts_file_unreadable">Dat bestand kon niet worden gelezen</string>
+    <string name="settings__udm__contacts_no_picker">Geen contactenapp gevonden</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Woord toevoegen</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Woord bewerken</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Woord</string>

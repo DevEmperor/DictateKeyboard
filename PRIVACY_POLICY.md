@@ -292,6 +292,14 @@ The App requests the microphone permission only for dictation and uses it only
 while you are actively recording. **The App does not request access to your
 contacts.**
 
+You can teach the App a contact's name so it stops autocorrecting it, and that
+works without giving it your address book: you either pick a single contact in
+the system's own contact picker — which hands over that one contact and nothing
+else — or select a contacts file you exported yourself. Only the name is taken
+from it, never numbers, addresses or anything else, and it is stored in your
+personal dictionary on the device, exactly like any other word you add there.
+You can see and delete these names in the App's dictionary settings.
+
 ---
 
 ## 6. Data storage and retention

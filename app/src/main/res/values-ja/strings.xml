@@ -463,6 +463,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">システムマネージャーUIを開く</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">ユーザー辞書が正常にインポートされました！</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">ユーザー辞書が正常にエクスポートされました！</string>
+    <string name="settings__udm__add_from_contacts">連絡先から名前を追加</string>
+    <string name="settings__udm__import_from_contacts_file">連絡先ファイルから名前をインポート</string>
+    <string name="settings__udm__contacts_confirm_message">このファイルに {count} 件の名前が見つかりました。辞書に追加しますか？</string>
+    <string name="settings__udm__contacts_added_one">{name} を辞書に追加しました</string>
+    <string name="settings__udm__contacts_added_many">{count} 件の名前を辞書に追加しました</string>
+    <string name="settings__udm__contacts_added_none">新しい名前は見つかりませんでした</string>
+    <string name="settings__udm__contacts_file_unreadable">このファイルを読み取れませんでした</string>
+    <string name="settings__udm__contacts_no_picker">連絡先アプリが見つかりません</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">単語を追加</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">単語を編集</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">単語</string>

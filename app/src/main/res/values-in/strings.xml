@@ -477,6 +477,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Buka antarmuka pengelola sistem</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kamus pengguna berhasil diimpor!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kamus pengguna berhasil diekspor!</string>
+    <string name="settings__udm__add_from_contacts">Tambahkan nama dari kontak</string>
+    <string name="settings__udm__import_from_contacts_file">Impor nama dari berkas kontak</string>
+    <string name="settings__udm__contacts_confirm_message">Ditemukan {count} nama dalam berkas ini. Tambahkan ke kamus Anda?</string>
+    <string name="settings__udm__contacts_added_one">{name} ditambahkan ke kamus Anda</string>
+    <string name="settings__udm__contacts_added_many">{count} nama ditambahkan ke kamus Anda</string>
+    <string name="settings__udm__contacts_added_none">Tidak ada nama baru yang ditemukan</string>
+    <string name="settings__udm__contacts_file_unreadable">Berkas itu tidak dapat dibaca</string>
+    <string name="settings__udm__contacts_no_picker">Aplikasi kontak tidak ditemukan</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Tambahkan kata</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit kata</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Kata</string>

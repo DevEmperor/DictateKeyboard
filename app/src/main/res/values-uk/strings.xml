@@ -378,6 +378,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Відкрити системний менеджер</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Словник користувача успішно імпортовано!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Словник користувача успішно експортовано!</string>
+    <string name="settings__udm__add_from_contacts">Додати ім’я з контактів</string>
+    <string name="settings__udm__import_from_contacts_file">Імпортувати імена з файлу контактів</string>
+    <string name="settings__udm__contacts_confirm_message">У цьому файлі знайдено імен: {count}. Додати їх до словника?</string>
+    <string name="settings__udm__contacts_added_one">{name} додано до словника</string>
+    <string name="settings__udm__contacts_added_many">Імен додано до словника: {count}</string>
+    <string name="settings__udm__contacts_added_none">Нових імен не знайдено</string>
+    <string name="settings__udm__contacts_file_unreadable">Не вдалося прочитати цей файл</string>
+    <string name="settings__udm__contacts_no_picker">Застосунок «Контакти» не знайдено</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Додати слово</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Редагувати слово</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Слово</string>

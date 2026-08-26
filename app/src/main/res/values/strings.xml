@@ -661,6 +661,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open system manager UI</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">User dictionary imported successfully!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">User dictionary exported successfully!</string>
+    <string name="settings__udm__add_from_contacts" comment="Menu option that opens the system contact picker so the chosen contact\'s name is added to the personal dictionary. No permission is involved – the user picks the one contact.">Add a name from your contacts</string>
+    <string name="settings__udm__import_from_contacts_file" comment="Menu option that reads the names out of a contacts file (.vcf) the user exported from their contacts app.">Import names from a contacts file</string>
+    <string name="settings__udm__contacts_confirm_message" comment="Dialog message before names from a contacts file are written to the dictionary. The placeholder inserts how many names were found.">Found {count} names in this file. Add them to your dictionary?</string>
+    <string name="settings__udm__contacts_added_one" comment="Toast after exactly one name was added. The placeholder inserts that name.">Added {name} to your dictionary</string>
+    <string name="settings__udm__contacts_added_many" comment="Toast after several names were added. The placeholder inserts how many.">Added {count} names to your dictionary</string>
+    <string name="settings__udm__contacts_added_none" comment="Toast when a contact or file yielded no name that was not already in the dictionary.">No new names found</string>
+    <string name="settings__udm__contacts_file_unreadable" comment="Toast when the chosen file could not be read at all.">That file could not be read</string>
+    <string name="settings__udm__contacts_no_picker" comment="Toast when the device has no app that can show a contact picker.">No contacts app found</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Add word</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit word</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Word</string>

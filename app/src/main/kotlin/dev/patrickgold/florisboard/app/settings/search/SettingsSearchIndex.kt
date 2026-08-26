@@ -13,6 +13,7 @@ package dev.patrickgold.florisboard.app.settings.search
 import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
 
 /**
  * One searchable settings entry (issue #187). GENERATED from the settings screens by
@@ -195,6 +196,9 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__dictionary__manage_system_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__manage_system_user_dictionary__label"),
         SettingsSearchEntry(R.string.pref__dictionary__enable_internal_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__enable_internal_user_dictionary__label"),
         SettingsSearchEntry(R.string.pref__dictionary__manage_floris_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__manage_floris_user_dictionary__label"),
+        // Hand-added (issue #264): the contact import lives in the personal dictionary's ⋮ menu, which the
+        // generator cannot see — searching for "contacts" would otherwise find nothing at all.
+        SettingsSearchEntry(R.string.settings__udm__add_from_contacts, R.string.settings__dictionary__title, Routes.Settings.UserDictionary(UserDictionaryType.FLORIS)),
         SettingsSearchEntry(R.string.pref__glide__enabled__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__glide__enabled__label"),
         SettingsSearchEntry(R.string.pref__glide__show_trail__label, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__glide__show_trail__label"),
         SettingsSearchEntry(R.string.pref__glide_trail_fade_duration, R.string.settings__gestures__title, Routes.Settings.Gestures, anchor = "pref__glide_trail_fade_duration"),

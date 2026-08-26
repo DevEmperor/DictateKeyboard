@@ -49,6 +49,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
+import dev.patrickgold.florisboard.ime.dictionary.ContactNameImport
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MIN
@@ -63,8 +64,10 @@ import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
@@ -195,6 +198,60 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         },
     )
 
+    // Contact names (issue #264). Neither way in needs a permission, because the user does the
+    // choosing in a system dialog: the picker hands over the one contact they tapped, and the file is
+    // one they exported and selected themselves.
+    var contactNamesForDialog by remember { mutableStateOf<List<String>?>(null) }
+
+    fun reportNamesAdded(added: List<String>) {
+        onDictionaryChanged()
+        when (added.size) {
+            0 -> context.showLongToastSync(R.string.settings__udm__contacts_added_none)
+            1 -> context.showLongToastSync(R.string.settings__udm__contacts_added_one, "name" to added.first())
+            else -> context.showLongToastSync(R.string.settings__udm__contacts_added_many, "count" to added.size)
+        }
+    }
+
+    val addNameFromContacts = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickContact(),
+        onResult = { uri ->
+            // Null means the picker was cancelled, which needs no comment.
+            if (uri != null) {
+                val dao = userDictionaryDao()
+                if (dao == null) {
+                    context.showLongToastSync("Database handle is null, failed to import")
+                } else {
+                    val name = ContactNameImport.displayName(context, uri)
+                    reportNamesAdded(
+                        ContactNameImport.addToDictionary(dao, ContactNameImport.tokensFromDisplayName(name)),
+                    )
+                }
+            }
+        },
+    )
+
+    val importNamesFromFile = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            if (uri != null) {
+                scope.launch {
+                    // A whole address book can be in here, so reading and parsing stay off the main
+                    // thread — and nothing is written before the user has seen how much it is.
+                    val names = withContext(Dispatchers.IO) {
+                        runCatching {
+                            context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+                        }.getOrNull()?.let { ContactNameImport.tokensFromVCard(it) }
+                    }
+                    when {
+                        names == null -> context.showLongToast(R.string.settings__udm__contacts_file_unreadable)
+                        names.isEmpty() -> context.showLongToast(R.string.settings__udm__contacts_added_none)
+                        else -> contactNamesForDialog = names
+                    }
+                }
+            }
+        },
+    )
+
     navigationIcon {
         FlorisIconButton(
             onClick = {
@@ -236,6 +293,23 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                     expanded = false
                 },
                 text = { Text(text = stringRes(R.string.action__export)) },
+            )
+            DropdownMenuItem(
+                onClick = {
+                    // A device without any contacts app has nothing to answer this intent with.
+                    runCatching { addNameFromContacts.launch(null) }.onFailure {
+                        context.showLongToastSync(R.string.settings__udm__contacts_no_picker)
+                    }
+                    expanded = false
+                },
+                text = { Text(text = stringRes(R.string.settings__udm__add_from_contacts)) },
+            )
+            DropdownMenuItem(
+                onClick = {
+                    importNamesFromFile.launch("*/*")
+                    expanded = false
+                },
+                text = { Text(text = stringRes(R.string.settings__udm__import_from_contacts_file)) },
             )
             if (type == UserDictionaryType.SYSTEM) {
                 DropdownMenuItem(
@@ -412,6 +486,44 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                         )
                         Validation(showValidationErrors, localeValidation)
                     }
+                }
+            }
+        }
+
+        val contactNames = contactNamesForDialog
+        if (contactNames != null) {
+            JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
+                title = stringRes(R.string.settings__udm__import_from_contacts_file),
+                confirmLabel = stringRes(R.string.action__add),
+                onConfirm = {
+                    val dao = userDictionaryDao()
+                    contactNamesForDialog = null
+                    if (dao == null) {
+                        context.showLongToastSync("Database handle is null, failed to import")
+                    } else {
+                        scope.launch {
+                            val added = withContext(Dispatchers.IO) {
+                                ContactNameImport.addToDictionary(dao, contactNames)
+                            }
+                            reportNamesAdded(added)
+                        }
+                    }
+                },
+                dismissLabel = stringRes(R.string.action__cancel),
+                onDismiss = { contactNamesForDialog = null },
+            ) {
+                Column {
+                    Text(text = stringRes(
+                        R.string.settings__udm__contacts_confirm_message,
+                        "count" to contactNames.size,
+                    ))
+                    Text(
+                        modifier = Modifier.padding(top = 8.dp),
+                        text = contactNames.take(8).joinToString(", ") +
+                            if (contactNames.size > 8) ", …" else "",
+                        fontStyle = FontStyle.Italic,
+                    )
                 }
             }
         }

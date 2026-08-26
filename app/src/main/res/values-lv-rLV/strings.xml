@@ -443,6 +443,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Atvērt sistēmas pārvaldnieka lietotāja saskarni</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Lietotāja vārdnīca tika veiksmīgi ievietota.</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Lietotāja vārdnīca tika veiksmīgi izdota.</string>
+    <string name="settings__udm__add_from_contacts">Pievienot vārdu no kontaktpersonām</string>
+    <string name="settings__udm__import_from_contacts_file">Importēt vārdus no kontaktpersonu faila</string>
+    <string name="settings__udm__contacts_confirm_message">Šajā failā atrasti {count} vārdi. Pievienot tos vārdnīcai?</string>
+    <string name="settings__udm__contacts_added_one">{name} pievienots vārdnīcai</string>
+    <string name="settings__udm__contacts_added_many">Vārdnīcai pievienoti {count} vārdi</string>
+    <string name="settings__udm__contacts_added_none">Nav atrasts neviens jauns vārds</string>
+    <string name="settings__udm__contacts_file_unreadable">Šo failu nevarēja nolasīt</string>
+    <string name="settings__udm__contacts_no_picker">Nav atrasta neviena kontaktpersonu lietotne</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Pievienot vārdu</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Labot vārdu</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vārds</string>

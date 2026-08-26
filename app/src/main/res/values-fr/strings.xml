@@ -419,6 +419,14 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Ouvrir l\'interface de gestion du système</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dictionnaire utilisateur importé avec succès !</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dictionnaire utilisateur exporté avec succès !</string>
+    <string name="settings__udm__add_from_contacts">Ajouter un nom depuis vos contacts</string>
+    <string name="settings__udm__import_from_contacts_file">Importer des noms depuis un fichier de contacts</string>
+    <string name="settings__udm__contacts_confirm_message">{count} noms trouvés dans ce fichier. Les ajouter à votre dictionnaire ?</string>
+    <string name="settings__udm__contacts_added_one">{name} ajouté à votre dictionnaire</string>
+    <string name="settings__udm__contacts_added_many">{count} noms ajoutés à votre dictionnaire</string>
+    <string name="settings__udm__contacts_added_none">Aucun nouveau nom trouvé</string>
+    <string name="settings__udm__contacts_file_unreadable">Ce fichier n\'a pas pu être lu</string>
+    <string name="settings__udm__contacts_no_picker">Aucune application Contacts trouvée</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Ajouter un mot</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Modifier le mot</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Mot</string>
