@@ -2001,6 +2001,9 @@
     <string name="prefs__media__sticker_import_source__summary">Abre o seletor de ficheiros diretamente numa pasta onde outra aplicação escreve</string>
     <string name="prefs__media__sticker_packs">Pacotes de autocolantes</string>
     <string name="prefs__media__sticker_packs__summary">Crie, mude o nome e apague as pastas em que os seus autocolantes estão organizados</string>
+    <string name="prefs__media__sticker_normalize">Uniformizar autocolantes</string>
+    <string name="prefs__media__sticker_normalize__summary">Converte cada autocolante da pasta para WebP 512×512, para que as apps os enviem como autocolantes</string>
+    <string name="sticker__normalize_done">{changed} de {total} autocolantes convertidos</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

@@ -95,18 +95,6 @@ object MediaFormat {
     }
 
     /**
-     * Whether the file may be handed over under a vendor sticker name at all.
-     *
-     * Deliberately looser than [qualifiesAsWhatsAppSticker], and the distinction is the whole lesson
-     * of this feature: the published 512×512 / 500 KB limits govern *sticker packs*, not what
-     * `commitContent` accepts. Gboard and the Samsung keyboard insert oversized animated stickers into
-     * WhatsApp perfectly well — WhatsApp simply asks the user afterwards whether to send it as a
-     * sticker or as a GIF. Refusing those files, as an earlier version of this did, threw away the
-     * case that works.
-     */
-    internal fun mayUseVendorStickerType(info: ImageInfo): Boolean = info.mime == "image/webp"
-
-    /**
      * Reads type, animation, size and dimensions out of a WebP header.
      *
      * Three container forms carry the dimensions in three different places: the extended `VP8X`
@@ -214,10 +202,12 @@ object MediaFormat {
     fun negotiate(info: ImageInfo, accepted: List<String>, editorPackage: String? = null): String? {
         val own = info.mime
         if (accepted.isEmpty()) return own
-        // WhatsApp's sticker type for any WebP it will take. Not gated on its published sticker
-        // dimensions: those govern sticker packs, and gating on them refused exactly the animated
-        // files that other keyboards insert without trouble.
-        if (accepted.contains(WA_STICKER) && mayUseVendorStickerType(info)) return WA_STICKER
+        // WhatsApp's own sticker type, and only for a file already shaped like a sticker. Offering it
+        // for anything else is what produced an empty frame and "Couldn't share" — WhatsApp validates
+        // what it is handed under this name. Nothing is re-encoded here to make it fit: the folder is
+        // brought into shape once, on import, by StickerNormalizer. A file that missed that pass goes
+        // the ordinary image route below, which works, just without arriving as a sticker.
+        if (accepted.contains(WA_STICKER) && qualifiesAsWhatsAppSticker(info)) return WA_STICKER
         if (
             info.animated && own != GIF && editorPackage in FlattensAnimation &&
             accepted.any { matches(GIF, it) }

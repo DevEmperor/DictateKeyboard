@@ -280,6 +280,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.prefs__media__sticker_add, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_add"),
         SettingsSearchEntry(R.string.prefs__media__sticker_import_source, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_import_source"),
         SettingsSearchEntry(R.string.prefs__media__sticker_packs, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_packs"),
+        SettingsSearchEntry(R.string.prefs__media__sticker_normalize, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_normalize"),
         SettingsSearchEntry(R.string.prefs__media__sticker_rescan, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_rescan"),
         SettingsSearchEntry(R.string.prefs__media__sticker_thumbnail_size, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_thumbnail_size"),
         SettingsSearchEntry(R.string.prefs__media__sticker_history_recent_max_size, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__sticker_history_recent_max_size"),

@@ -16,6 +16,7 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.dictate.media.MediaCache
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,17 @@ object StickerWriter {
         "image/gif" to "gif",
         "image/jpeg" to "jpg",
     )
+
+    /**
+     * The type a sticker has once it is in the folder.
+     *
+     * Everything the platform can decode leaves as a WebP, because that is the one shape a sticker
+     * has — and the name has to follow, or the next app is told the file is a PNG and treats it as a
+     * photograph. GIFs are the exception on purpose: stepping an animated one frame by frame is
+     * awkward on Android, and every app that takes stickers takes `image/gif` anyway.
+     */
+    internal fun normalizedMimeFor(sourceMime: String): String =
+        if (sourceMime == "image/gif") sourceMime else "image/webp"
 
     /** A single sticker larger than this is a photo, not a sticker, and would slow the grid down. */
     private const val MaxBytes = 12L * 1024L * 1024L
@@ -75,10 +87,14 @@ object StickerWriter {
     /**
      * Copies [sources] into the root of [treeUri].
      *
-     * Files whose type the panel cannot show are skipped rather than converted, and a file already
-     * there under the same name and size is skipped too — sharing the same sticker twice is a normal
-     * accident and should not leave two of it. Naming collisions between *different* files are left to
-     * the documents provider, which appends its own suffix.
+     * Everything lands in one shape: [StickerNormalizer] converts each file on the way in, so what the
+     * folder holds afterwards is a sticker and not merely a picture. Doing it here rather than when
+     * someone taps one is the whole design — the wait belongs to an import, which is watched, not to
+     * an insert, which is not.
+     *
+     * Files whose type the panel cannot show are skipped rather than converted, and a name already in
+     * the folder is skipped too: sharing the same sticker twice is a normal accident and should not
+     * leave two of it.
      */
     suspend fun importInto(
         context: Context,
@@ -111,21 +127,23 @@ object StickerWriter {
                 unsupported++
                 continue
             }
-            val name = fileName(meta.displayName, extension)
-            if (existing[name] == meta.size && meta.size > 0L) {
+            val targetMime = normalizedMimeFor(mime)
+            val name = fileName(meta.displayName, ExtensionForMime.getValue(targetMime))
+            // Matched on the name alone. It used to compare the source's size against the size of the
+            // file already in the folder, which worked only while the two were copies of each other —
+            // now that what lands here is re-encoded, those sizes never agree and every import would
+            // pile up another copy.
+            if (name in existing) {
                 duplicate++
                 continue
             }
             try {
-                val target = DocumentsContract.createDocument(resolver, rootUri, mime, name)
+                val target = DocumentsContract.createDocument(resolver, rootUri, targetMime, name)
                 if (target == null) {
                     failed++
                     continue
                 }
-                val copied = resolver.openInputStream(source)?.use { input ->
-                    resolver.openOutputStream(target)?.use { output -> input.copyTo(output) }
-                }
-                if (copied == null) {
+                if (!normalizedCopy(context, source, mime, target)) {
                     // Nothing was written, so the empty document it created would show as a blank cell.
                     runCatching { DocumentsContract.deleteDocument(resolver, target) }
                     failed++
@@ -142,6 +160,38 @@ object StickerWriter {
         onProgress(sources.size, sources.size)
         if (imported > 0) StickerScanner.clearCached(context)
         ImportResult(imported, duplicate, unsupported, failed)
+    }
+
+    /**
+     * Copies one source into [target], in the shape a sticker has.
+     *
+     * The conversion happens here, on the way in, rather than later when someone taps the sticker in
+     * a hurry. Staging it as a file first is not a detour: the normalizer decodes and re-encodes, and
+     * neither the platform decoder nor the WebP container reader work on a stream they cannot seek.
+     *
+     * A source that cannot be converted is copied through untouched — a folder is better off with a
+     * sticker that inserts as a plain image than without it.
+     */
+    private suspend fun normalizedCopy(
+        context: Context,
+        source: Uri,
+        mime: String,
+        target: Uri,
+    ): Boolean {
+        val resolver = context.contentResolver
+        val staged = File(MediaCache.dir(context), "import-${System.nanoTime()}")
+        try {
+            resolver.openInputStream(source)?.use { input ->
+                staged.outputStream().use { output -> input.copyTo(output) }
+            } ?: return false
+            val normalized = StickerNormalizer.normalize(context, staged, mime) ?: staged
+            val written = resolver.openOutputStream(target)?.use { output ->
+                normalized.inputStream().use { it.copyTo(output) }
+            }
+            return written != null
+        } finally {
+            runCatching { staged.delete() }
+        }
     }
 
     /**
@@ -290,6 +340,26 @@ object StickerWriter {
                 }
             }
             false
+        }
+
+    /**
+     * Renames one sticker and returns its document id afterwards, or null if the provider refused.
+     *
+     * A rename can hand back a different id — some providers build ids out of the path — which is why
+     * the new one is returned rather than assumed. Used when a file changes type and its name has to
+     * follow; a name already taken makes this fail, and the caller leaves that file alone.
+     */
+    suspend fun renameTo(context: Context, treeUri: Uri, docId: String, name: String): String? =
+        withContext(Dispatchers.IO) {
+            try {
+                val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+                val renamed = DocumentsContract.renameDocument(context.contentResolver, uri, name)
+                    ?: return@withContext null
+                DocumentsContract.getDocumentId(renamed)
+            } catch (e: Exception) {
+                flogError { "Failed to rename $docId to $name: ${e.message}" }
+                null
+            }
         }
 
     /** Deletes one sticker from the folder. Returns false when the provider refuses. */

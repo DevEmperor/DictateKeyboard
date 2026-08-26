@@ -89,6 +89,9 @@
     <string name="prefs__media__sticker_import_source__summary" comment="Preference summary">Open the file picker straight in a folder another app writes to</string>
     <string name="prefs__media__sticker_packs" comment="Preference title, opens the pack manager">Sticker packs</string>
     <string name="prefs__media__sticker_packs__summary" comment="Preference summary; packs are the subfolders of the chosen folder">Create, rename and delete the folders your stickers are sorted into</string>
+    <string name="prefs__media__sticker_normalize" comment="Preference title, converts every sticker in the folder to the one shape chat apps accept">Unify stickers</string>
+    <string name="prefs__media__sticker_normalize__summary" comment="Preference summary for the same row">Convert every sticker in the folder to 512×512 WebP, so chat apps send them as stickers</string>
+    <string name="sticker__normalize_done" comment="Toast when the pass is done; {changed} of {total} files were rewritten">{changed} of {total} stickers converted</string>
     <string name="sticker__source_browse" comment="First entry in the sticker source list: pick files from anywhere">Browse files…</string>
     <string name="sticker__source_threema" comment="Entry in the list of places to fetch stickers from">Threema</string>
     <string name="sticker__source_signal" comment="Entry in the list of places to fetch stickers from">Signal</string>

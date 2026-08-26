@@ -2000,6 +2000,9 @@
     <string name="prefs__media__sticker_import_source__summary">Dosya seçiciyi doğrudan başka bir uygulamanın yazdığı klasörde açar</string>
     <string name="prefs__media__sticker_packs">Çıkartma paketleri</string>
     <string name="prefs__media__sticker_packs__summary">Çıkartmalarınızın ayrıldığı klasörleri oluşturun, yeniden adlandırın ve silin</string>
+    <string name="prefs__media__sticker_normalize">Çıkartmaları aynı biçime getir</string>
+    <string name="prefs__media__sticker_normalize__summary">Klasördeki her çıkartmayı 512×512 WebP biçimine dönüştürür, böylece uygulamalar onları çıkartma olarak gönderir</string>
+    <string name="sticker__normalize_done">{total} çıkartmadan {changed} tanesi dönüştürüldü</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

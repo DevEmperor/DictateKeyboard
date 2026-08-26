@@ -105,18 +105,27 @@ class MediaFormatTest {
     }
 
     @Test
-    fun `an oversized animated sticker is still offered as a sticker`() {
+    fun `only a sticker-shaped file is offered as a sticker`() {
         val whatsApp = listOf("image/gif", "image/jpeg", "image/png", "image/webp.wasticker")
-        // Measured on a real collection: received animated stickers are routinely ~950 KB and not
-        // square, which breaks WhatsApp's *sticker pack* rules. They are inserted by Gboard and the
-        // Samsung keyboard all the same — WhatsApp just asks afterwards whether to send them as a
-        // sticker or a GIF. An earlier version refused them here and threw the working case away.
-        assertEquals("image/webp.wasticker", MediaFormat.negotiate(info("image/webp", true, 256, 256, 997_102L), whatsApp))
-        assertEquals("image/webp.wasticker", MediaFormat.negotiate(info("image/webp", true, 512, 512, 958_784L), whatsApp))
-        assertEquals("image/webp.wasticker", MediaFormat.negotiate(info("image/webp", false, 498, 498, 40_000L), whatsApp))
-        // The prediction of whether WhatsApp will ask is kept, but it no longer vetoes anything.
-        assertTrue(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", false, 512, 512, 40_000L)))
-        assertFalse(MediaFormat.qualifiesAsWhatsAppSticker(info("image/webp", true, 256, 256, 997_102L)))
+        // In shape: goes straight into the chat as a sticker.
+        assertEquals(
+            "image/webp.wasticker",
+            MediaFormat.negotiate(info("image/webp", false, 512, 512, 40_000L), whatsApp),
+        )
+        assertEquals(
+            "image/webp.wasticker",
+            MediaFormat.negotiate(info("image/webp", true, 512, 512, 400_000L), whatsApp),
+        )
+        // Out of shape: never under WhatsApp's own name, because WhatsApp validates what it is handed
+        // under it and answers with an empty frame. Nothing is re-encoded here to make it fit — the
+        // folder is brought into shape once, on import.
+        assertNull(MediaFormat.negotiate(info("image/webp", true, 256, 256, 997_102L), whatsApp))
+        assertNull(MediaFormat.negotiate(info("image/webp", true, 512, 512, 958_784L), whatsApp))
+        // A still that misses the shape still has the ordinary image route open to it.
+        assertEquals(
+            "image/png",
+            MediaFormat.negotiate(info("image/webp", false, 498, 498, 40_000L), whatsApp),
+        )
     }
 
     @Test

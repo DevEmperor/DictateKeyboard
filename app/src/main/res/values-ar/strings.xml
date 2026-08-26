@@ -1880,6 +1880,9 @@
     <string name="prefs__media__sticker_import_source__summary">افتح منتقي الملفات مباشرة في مجلد يكتب إليه تطبيق آخر</string>
     <string name="prefs__media__sticker_packs">حزم الملصقات</string>
     <string name="prefs__media__sticker_packs__summary">أنشئ المجلدات التي تُرتَّب فيها ملصقاتك وأعد تسميتها واحذفها</string>
+    <string name="prefs__media__sticker_normalize">توحيد الملصقات</string>
+    <string name="prefs__media__sticker_normalize__summary">تحويل كل ملصق في المجلد إلى WebP بحجم 512×512، لترسله التطبيقات كملصقات</string>
+    <string name="sticker__normalize_done">تم تحويل {changed} من {total} ملصقًا</string>
     <string name="sticker__source_whatsapp">واتساب</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">تيليجرام</string>

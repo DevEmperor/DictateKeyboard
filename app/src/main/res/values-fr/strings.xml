@@ -1897,6 +1897,9 @@
     <string name="prefs__media__sticker_import_source__summary">Ouvre le sélecteur de fichiers directement dans un dossier où écrit une autre application</string>
     <string name="prefs__media__sticker_packs">Packs d\'autocollants</string>
     <string name="prefs__media__sticker_packs__summary">Créez, renommez et supprimez les dossiers dans lesquels vos autocollants sont rangés</string>
+    <string name="prefs__media__sticker_normalize">Uniformiser les autocollants</string>
+    <string name="prefs__media__sticker_normalize__summary">Convertit chaque autocollant du dossier en WebP 512×512, pour que les applis les envoient comme autocollants</string>
+    <string name="sticker__normalize_done">{changed} autocollants sur {total} convertis</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

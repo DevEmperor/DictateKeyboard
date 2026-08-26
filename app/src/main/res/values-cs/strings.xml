@@ -2036,6 +2036,9 @@
     <string name="prefs__media__sticker_import_source__summary">Otevře výběr souborů rovnou ve složce, do které zapisuje jiná aplikace</string>
     <string name="prefs__media__sticker_packs">Balíčky samolepek</string>
     <string name="prefs__media__sticker_packs__summary">Vytvářejte, přejmenovávejte a mažte složky, do kterých jsou samolepky roztříděné</string>
+    <string name="prefs__media__sticker_normalize">Sjednotit samolepky</string>
+    <string name="prefs__media__sticker_normalize__summary">Převede každou samolepku ve složce na WebP 512×512, aby je aplikace posílaly jako samolepky</string>
+    <string name="sticker__normalize_done">Převedeno {changed} z {total} samolepek</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

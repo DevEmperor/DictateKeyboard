@@ -1921,6 +1921,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="prefs__media__sticker_import_source__summary">Opent de bestandskiezer meteen in een map waar een andere app naartoe schrijft</string>
     <string name="prefs__media__sticker_packs">Stickerpakketten</string>
     <string name="prefs__media__sticker_packs__summary">Maak, hernoem en verwijder de mappen waarin je stickers zijn gesorteerd</string>
+    <string name="prefs__media__sticker_normalize">Stickers gelijktrekken</string>
+    <string name="prefs__media__sticker_normalize__summary">Zet elke sticker in de map om naar 512×512-webp, zodat apps ze als sticker versturen</string>
+    <string name="sticker__normalize_done">{changed} van {total} stickers omgezet</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

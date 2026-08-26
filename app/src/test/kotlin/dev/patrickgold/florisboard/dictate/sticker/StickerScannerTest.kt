@@ -91,6 +91,18 @@ class StickerScannerTest {
     }
 
     @Test
+    fun `everything but a GIF leaves the import as a WebP`() {
+        // The one shape a sticker has. A PNG that stayed a PNG would be offered to the next app as a
+        // photograph, which is exactly what it looks like when it arrives.
+        assertEquals("image/webp", StickerWriter.normalizedMimeFor("image/png"))
+        assertEquals("image/webp", StickerWriter.normalizedMimeFor("image/jpeg"))
+        assertEquals("image/webp", StickerWriter.normalizedMimeFor("image/webp"))
+        // Deliberately left alone: stepping an animated GIF frame by frame is awkward on Android, and
+        // every app that takes stickers takes image/gif anyway.
+        assertEquals("image/gif", StickerWriter.normalizedMimeFor("image/gif"))
+    }
+
+    @Test
     fun `sorting ignores case, so Apple and apple stay together`() {
         val items = listOf("banana", "Apple", "apricot", "Cherry").map {
             StickerItem(docId = it, name = it, mime = "image/png", lastModified = 0L)

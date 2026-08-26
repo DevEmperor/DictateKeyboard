@@ -2020,6 +2020,9 @@
     <string name="prefs__media__sticker_import_source__summary">A fájlválasztót egyenesen abban a mappában nyitja meg, ahová egy másik alkalmazás ír</string>
     <string name="prefs__media__sticker_packs">Matricacsomagok</string>
     <string name="prefs__media__sticker_packs__summary">Hozd létre, nevezd át és töröld a mappákat, amelyekbe a matricáid vannak rendezve</string>
+    <string name="prefs__media__sticker_normalize">Matricák egységesítése</string>
+    <string name="prefs__media__sticker_normalize__summary">A mappa minden matricáját 512×512-es WebP formátumra alakítja, hogy az alkalmazások matricaként küldjék</string>
+    <string name="sticker__normalize_done">{total} matricából {changed} átalakítva</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>
