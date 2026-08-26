@@ -289,5 +289,6 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
 <p>
   <a href="https://github.com/cnfatman"><img src="https://github.com/cnfatman.png" width="72" alt="Codename: Fatman" title="Codename: Fatman — Dictate's first sponsor 💖"></a>
   <a href="https://github.com/george1612"><img src="https://github.com/george1612.png" width="72" alt="george1612" title="george1612"></a>
+  <a href="https://github.com/nichu42"><img src="https://github.com/nichu42.png" width="72" alt="nichu42" title="nichu42"></a>
 </p>
 <!-- SPONSORS:END -->
