@@ -134,15 +134,23 @@ object MediaFormat {
     }
 
     /** Everything the decision needs about a staged file. */
-    fun inspect(file: File, mime: String): ImageInfo {
-        val header = readHeader(file)
+    fun inspect(file: File, mime: String): ImageInfo = inspect(readHeader(file), file.length(), mime)
+
+    /**
+     * The same, from bytes already in hand.
+     *
+     * Everything decided here comes out of the first thirty-two bytes and the length, which is what
+     * makes it possible to ask "is this already a sticker?" of a file in the user's folder without
+     * copying it out first — a copy costs a whole file over an IPC boundary, this costs one read.
+     */
+    fun inspect(header: ByteArray, bytes: Long, mime: String): ImageInfo {
         val (width, height) = if (mime == "image/webp") webpDimensions(header) else 0 to 0
         return ImageInfo(
             mime = mime,
             animated = isAnimated(mime, header),
             width = width,
             height = height,
-            bytes = file.length(),
+            bytes = bytes,
         )
     }
 

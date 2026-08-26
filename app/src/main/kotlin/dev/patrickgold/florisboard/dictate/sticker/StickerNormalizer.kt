@@ -74,6 +74,11 @@ object StickerNormalizer {
         var changed = 0
         for (item in index.allItems) {
             currentCoroutineContext().ensureActive()
+            // Asked of the file where it lies, not of a copy. Whether a sticker is already in shape
+            // follows from thirty-two header bytes and a length, and both come out of a single open —
+            // whereas copying it out first, which is what this did at first, moves the whole file
+            // across an IPC boundary for a question that is almost always answered "nothing to do".
+            if (isAlreadyInShape(context, treeUri, item)) continue
             val staged = StickerManager.materialize(context, treeUri, item) ?: continue
             val normalized = try {
                 normalize(context, staged, item.mime)
@@ -99,4 +104,27 @@ object StickerNormalizer {
         if (changed > 0) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
         return changed
     }
+
+    /**
+     * Whether [item] can be left alone, decided from its header and its length alone.
+     *
+     * A GIF is always left alone. Anything unreadable answers "no" and falls through to the ordinary
+     * path, which will fail there in its own way rather than here in a way nobody can see.
+     */
+    private suspend fun isAlreadyInShape(context: Context, treeUri: Uri, item: StickerItem): Boolean =
+        withContext(Dispatchers.IO) {
+            if (item.mime == "image/gif") return@withContext true
+            try {
+                val uri = StickerScanner.documentUri(treeUri, item.docId)
+                context.contentResolver.openAssetFileDescriptor(uri, "r")?.use { descriptor ->
+                    val header = ByteArray(32)
+                    val read = descriptor.createInputStream().use { it.read(header) }
+                    if (read <= 0) return@withContext false
+                    val info = MediaFormat.inspect(header.copyOf(read), descriptor.length, item.mime)
+                    MediaFormat.qualifiesAsWhatsAppSticker(info)
+                } ?: false
+            } catch (e: Exception) {
+                false
+            }
+        }
 }
