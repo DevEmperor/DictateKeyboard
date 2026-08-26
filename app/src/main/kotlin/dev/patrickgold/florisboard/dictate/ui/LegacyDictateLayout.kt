@@ -185,9 +185,13 @@ private fun keyAttributes(code: Int) = mapOf(
  * keyboard (SWIPE mode, issue #125). A clearly horizontal drag past the threshold calls [onToggle].
  *
  * @param intercept when true the gesture is handled on the Initial pass and consumed, so it wins over
- *   the keys below (used on the modern keyboard – a horizontal swipe anywhere returns to the dictation
- *   UI). When false (legacy side) it runs on the Main pass and bails the moment a child gesture (space
- *   cursor, backspace select, prompt-strip scroll) consumes the event, so those never trigger a switch.
+ *   the keys below – they answer a touch stream of their own and would otherwise swallow it. When false
+ *   it runs on the Main pass and bails the moment a child gesture (space cursor, backspace select, a
+ *   sideways-scrolling strip) consumes the event, so whoever really wants the drag keeps it.
+ *
+ * The modern keyboard uses both, one per zone: Initial over the keys, Main over everything above them.
+ * That row is full of strips that scroll sideways – rewording prompts, candidates, autofill chips – and
+ * a single intercepting detector over the whole keyboard took every one of those drags for itself (#290).
  *
  * A live push-to-talk press always wins, whichever pass this runs on – see the check inside.
  */
@@ -213,8 +217,9 @@ fun Modifier.legacySwipeToggle(
             if (!intercept && change.isConsumed) break
             // On the modern keyboard, let a key that owns its swipe keep it — space/backspace cursor+delete
             // gestures (#188), or an open long-press popup for picking an accent/umlaut (#221): step aside
-            // instead of flipping keyboards.
-            if (intercept && LegacyLayoutState.keyOwnsSwipe.value) break
+            // instead of flipping keyboards. Asked on either pass: those keys run on the keyboard's own
+            // touch stream and consume nothing Compose can see, so the check above never covers them.
+            if (LegacyLayoutState.keyOwnsSwipe.value) break
             totalDx += change.position.x - change.previousPosition.x
             totalDy += change.position.y - change.previousPosition.y
             if (abs(totalDx) > thresholdPx && abs(totalDx) > abs(totalDy) * 1.5f) {

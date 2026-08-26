@@ -261,19 +261,27 @@ private fun ImeInnerWindow() {
                             )
                         }
                     // Swipe mode, showing the modern keyboard: a horizontal swipe anywhere returns to the
-                    // dictation UI (intercepted before the keys). Glide typing is suppressed only while
-                    // this exact branch is composed – a DisposableEffect flips it back on the way out, so
-                    // it can never get stuck off on the normal keyboard.
+                    // dictation UI. Two detectors, one per zone (#290): over the keys it has to be
+                    // intercepted, because they answer their own touch stream and give nothing away; over
+                    // everything above them it must not be, because that row scrolls sideways — rewording
+                    // prompts, candidates, autofill chips — and whoever takes the drag should keep it.
+                    // Glide typing is suppressed only while this exact branch is composed – a
+                    // DisposableEffect flips it back on the way out, so it can never get stuck off on the
+                    // normal keyboard.
                     legacyLayout == DictateLegacyLayout.SWIPE && showModernKeyboard -> {
                         DisposableEffect(Unit) {
                             LegacyLayoutState.suppressGlide.value = true
                             onDispose { LegacyLayoutState.suppressGlide.value = false }
                         }
                         Column(
-                            modifier = Modifier.legacySwipeToggle(intercept = true) {
-                                showModernKeyboard = false
-                            },
-                        ) { TextInputLayout() }
+                            modifier = Modifier.legacySwipeToggle { showModernKeyboard = false },
+                        ) {
+                            TextInputLayout(
+                                keyboardModifier = Modifier.legacySwipeToggle(intercept = true) {
+                                    showModernKeyboard = false
+                                },
+                            )
+                        }
                     }
                     else -> TextInputLayout()
                 }

@@ -46,6 +46,11 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 @Composable
 fun TextInputLayout(
     modifier: Modifier = Modifier,
+    // Applied to the key area alone. The legacy SWIPE mode (#125) hangs its swipe-back gesture here
+    // rather than around the whole layout: it has to win over the keys, so it runs ahead of them on the
+    // Initial pass, and everything above the keys scrolls sideways — rewording prompts, candidates,
+    // autofill chips — and would never get a drag of its own if that reached up here (#290).
+    keyboardModifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
@@ -78,7 +83,7 @@ fun TextInputLayout(
         if (state.isActionsOverflowVisible) {
             QuickActionsOverflowPanel()
         } else {
-            Box {
+            Box(modifier = keyboardModifier) {
                 val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.collectAsState()
                 val showIncognitoIcon = evaluator.state.isIncognitoMode &&
                     incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
