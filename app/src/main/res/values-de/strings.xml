@@ -1108,6 +1108,7 @@
     <string name="dictate__error_transcription_failed">Transkription fehlgeschlagen.</string>
     <string name="dictate__error_unknown">Unbekannter Fehler bei der Transkription.</string>
     <string name="dictate__error_rewording_failed">Umformulierung fehlgeschlagen.</string>
+    <string name="dictate__notice_rewording_failed">Umformulierung fehlgeschlagen – Rohtext eingefügt</string>
     <string name="dictate__error_overlay_insert_clipboard">Diese App hat den Text nicht angenommen. Er liegt in der Zwischenablage — Feld gedrückt halten und einfügen.</string>
     <string name="dictate__error_invalid_api_key">Überprüfe deinen API-Schlüssel</string>
     <string name="dictate__error_quota_exceeded">Kontingent oder Limit erreicht</string>

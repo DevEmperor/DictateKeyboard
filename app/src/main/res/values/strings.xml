@@ -1664,6 +1664,7 @@
     <string name="dictate__error_transcription_failed" comment="Generic transcription failure">Transcription failed.</string>
     <string name="dictate__error_unknown" comment="Unknown transcription error">Unknown error during transcription.</string>
     <string name="dictate__error_rewording_failed" comment="Generic rewording (GPT) failure">Rewording failed.</string>
+    <string name="dictate__notice_rewording_failed" comment="Neutral notice (not a failure) shown after the raw transcript was inserted because the rewording step failed. The text is safely in the field – this only says why it was not polished. One line on the keyboard, so keep it short.">Rewording failed – raw text inserted</string>
     <string name="dictate__error_overlay_insert_clipboard" comment="Floating-button error: the app's text field didn't accept the dictation, so it was put on the clipboard to paste manually">This app wouldn\'t take the text. It\'s on your clipboard — long-press the field and paste.</string>
 
     <!-- Dictate specific provider errors (roadmap 1.12). Kept short to fit the Smartbar; tap shows the full provider detail. -->

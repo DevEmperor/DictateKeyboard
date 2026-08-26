@@ -1218,6 +1218,7 @@
     <string name="dictate__error_transcription_failed">Транскрибирането е неуспешно.</string>
     <string name="dictate__error_unknown">Неизвестна грешка при транскрибиране.</string>
     <string name="dictate__error_rewording_failed">Преформулирането е неуспешно.</string>
+    <string name="dictate__notice_rewording_failed">Преформулирането е неуспешно – вмъкнат е необработеният текст</string>
     <string name="dictate__error_overlay_insert_clipboard">Това приложение не прие текста. Той е в клипборда — задръжте полето и поставете.</string>
     <string name="dictate__error_invalid_api_key">Проверете API ключа си</string>
     <string name="dictate__error_quota_exceeded">Достигнат лимит или квота</string>

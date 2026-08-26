@@ -382,6 +382,12 @@ object DictateController {
     /** When true, the next finished recording is fed to the rewording model instead of committed. */
     private var livePromptArmed = false
 
+    /**
+     * The first rewording failure this dictation swallowed, reported once the text has landed (#284).
+     * Set by [rewordOrKeep], cleared at the top of [finalizeAndCommit], read by [reportSwallowedRewording].
+     */
+    private var swallowedRewording: Throwable? = null
+
     /** Output destination of the in-flight dictation; see [OutputTarget]. Reset to IME when idle. */
     private var outputTarget = OutputTarget.IME
 
@@ -797,8 +803,23 @@ object DictateController {
         clearError()
     }
 
+    /**
+     * Which half of a dictation a failure came from. The messages have to name the right one: a rewording
+     * that died used to report "Unknown error during transcription", which cost a reporter the time to
+     * rule out his key, his model and his reasoning setting before writing in (issue #284).
+     */
+    private enum class Stage { TRANSCRIPTION, REWORDING }
+
+    /**
+     * The stage a failure belongs to, read from what was running when it was thrown: only the code that
+     * starts a rewording sets [UiState.Rewording], so the state *is* the record of which half was busy.
+     * Deliberately not a field of its own — one left set by a previous dictation would mislabel the next.
+     */
+    private fun stageOf(state: UiState): Stage =
+        if (state is UiState.Rewording) Stage.REWORDING else Stage.TRANSCRIPTION
+
     /** Localized one-line headline for an API error [kind] (roadmap 1.12 specific error messages). */
-    private fun errorMessageRes(kind: DictateApiException.Kind): Int = when (kind) {
+    private fun errorMessageRes(kind: DictateApiException.Kind, stage: Stage): Int = when (kind) {
         DictateApiException.Kind.INVALID_API_KEY -> R.string.dictate__error_invalid_api_key
         DictateApiException.Kind.QUOTA_EXCEEDED -> R.string.dictate__error_quota_exceeded
         DictateApiException.Kind.CONTENT_SIZE_LIMIT -> R.string.dictate__error_content_size_limit
@@ -807,7 +828,13 @@ object DictateController {
         DictateApiException.Kind.TIMEOUT -> R.string.dictate__error_timeout
         DictateApiException.Kind.NETWORK -> R.string.dictate__error_network
         DictateApiException.Kind.SERVER_ERROR -> R.string.dictate__error_server
-        DictateApiException.Kind.UNKNOWN -> R.string.dictate__error_unknown
+        // Only the catch-all needs to know the stage. Every other kind either reads correctly for both
+        // ("Check your API key", "Request timed out") or can only happen in one of them at all — an
+        // over-long recording is never a rewording, a text too long to reword is never a transcription.
+        DictateApiException.Kind.UNKNOWN -> when (stage) {
+            Stage.TRANSCRIPTION -> R.string.dictate__error_unknown
+            Stage.REWORDING -> R.string.dictate__error_rewording_failed
+        }
     }
 
     /**
@@ -853,6 +880,7 @@ object DictateController {
         context: Context,
         canResend: Boolean,
         suggestOnDevice: Boolean = false,
+        stage: Stage = Stage.TRANSCRIPTION,
     ): UiState.Error {
         // Dictate Cloud running out of credit is checked first, and before the resend branches: it is
         // classified as QUOTA_EXCEEDED like every other provider's rate limit, but unlike those it is
@@ -875,7 +903,7 @@ object DictateController {
             message = when {
                 outOfCredit -> context.getString(R.string.dictate__error_out_of_credit)
                 hint -> context.getString(R.string.dictate__error_try_on_device)
-                else -> context.getString(errorMessageRes(e.kind))
+                else -> context.getString(errorMessageRes(e.kind, stage))
             },
             kind = e.kind,
             action = action,
@@ -1627,6 +1655,9 @@ object DictateController {
                 throw c
             } catch (e: DictateApiException) {
                 outcome = "apiError"
+                // Read before anything below touches the state: this block catches the provider call as
+                // well as the live prompt's rewording inside finalizeAndCommit (issue #284).
+                val stage = stageOf(_state.value)
                 _pendingPrompts.value = emptyList()
                 // Exportable failures (too large / bad format) keep the audio regardless of the resend
                 // pref, so it can be saved instead of lost (issue #144).
@@ -1639,16 +1670,18 @@ object DictateController {
                 _state.value = apiError(
                     e, appContext, canResend = keepAudio,
                     suggestOnDevice = shouldSuggestOnDevice(appContext, e.kind, preset),
+                    stage = stage,
                 )
             } catch (t: Throwable) {
                 outcome = "unexpectedError"
+                val stage = stageOf(_state.value)
                 _pendingPrompts.value = emptyList()
                 keepAudio = retainFailedAudio(audioFile, live, recordedSeconds)
                 if (replayHistoryId == null) {
                     recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
                 }
                 _state.value = UiState.Error(
-                    message = appContext.getString(R.string.dictate__error_unknown),
+                    message = appContext.getString(errorMessageRes(DictateApiException.Kind.UNKNOWN, stage)),
                     kind = DictateApiException.Kind.UNKNOWN,
                     action = if (keepAudio) ErrorAction.RESEND else ErrorAction.NONE,
                     detail = t.message?.takeIf { it.isNotBlank() },
@@ -1693,9 +1726,15 @@ object DictateController {
         capture: HistoryCapture? = null,
         latencyTrace: BatchLatencyTrace? = null,
     ) {
+        swallowedRewording = null // this dictation's own slate (issue #284)
         val finalText = if (live) {
             // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
             // selection) and insert the answer instead of the transcript.
+            //
+            // Deliberately unguarded, unlike the chain below (issue #284): there is no raw text worth
+            // committing here — the words were "make this a list", not something to write down. So the
+            // failure stays fatal and travels to [transcribe]'s catch, which keeps the audio for a resend
+            // and, since this ran as UiState.Rewording, now names the rewording rather than transcription.
             _pendingPrompts.value = emptyList() // a live prompt ignores any queued prompts
             _state.value = UiState.Rewording(appContext.getString(R.string.dictate__status_rewording))
             val selection = sink(appContext).selectedText().takeIf { it.isNotEmpty() }
@@ -1781,6 +1820,7 @@ object DictateController {
         }
         recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
         discardRetainedAudio()
+        if (reportSwallowedRewording(appContext)) return
         _state.value = UiState.Idle
         if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
             maybePromptForReview()
@@ -3162,7 +3202,7 @@ object DictateController {
             } catch (e: CancellationException) {
                 throw e // stop button pressed: cancelRewording already reset the state, leave the field as-is
             } catch (e: DictateApiException) {
-                _state.value = apiError(e, appContext, canResend = false)
+                _state.value = apiError(e, appContext, canResend = false, stage = Stage.REWORDING)
             } catch (t: Throwable) {
                 _state.value = UiState.Error(
                     message = appContext.getString(R.string.dictate__error_rewording_failed),
@@ -3197,6 +3237,49 @@ object DictateController {
     }
 
     /**
+     * One best-effort step of the rewording chain: if [block] fails, the text so far is kept, so a user
+     * never loses their dictation to a rewording that did not work out.
+     *
+     * The failure itself is remembered rather than dropped (issue #284). Keeping the raw text is right;
+     * doing it without a word is what made the report this comes from unreportable — the raw transcript
+     * appeared with no hint that the AI pass had been attempted at all, and the reporter read that as
+     * "rewording is being skipped entirely". [reportSwallowedRewording] says so once the text has landed.
+     */
+    private suspend fun rewordOrKeep(text: String, block: suspend () -> String): String =
+        try {
+            block()
+        } catch (c: CancellationException) {
+            throw c // the stop button (issue #192) is not a failure and has nothing to report
+        } catch (t: Throwable) {
+            if (swallowedRewording == null) swallowedRewording = t
+            text
+        }
+
+    /**
+     * Surfaces a rewording failure that [rewordOrKeep] swallowed, *after* the text was committed — the
+     * dictation is safe in the field, so this is a notice and not a failure: themed rather than red, no
+     * action, gone by itself after a moment, and carrying the provider's own message for anyone who taps
+     * it. Returns whether it took over the state (the caller then skips the idle nudges: a dictation that
+     * half-worked is not the moment to ask for a Play rating).
+     *
+     * Not shown for the system voice input (issue #67): there is no Smartbar in front of that user, and
+     * the calling app already has its text.
+     */
+    private fun reportSwallowedRewording(context: Context): Boolean {
+        val failure = swallowedRewording ?: return false
+        swallowedRewording = null
+        if (outputTarget == OutputTarget.RECOGNITION_SERVICE) return false
+        _state.value = UiState.Error(
+            message = context.getString(R.string.dictate__notice_rewording_failed),
+            kind = (failure as? DictateApiException)?.kind,
+            action = ErrorAction.NONE,
+            detail = failure.message?.takeIf { it.isNotBlank() },
+            neutral = true,
+        )
+        return true
+    }
+
+    /**
      * Runs the post-transcription rewording chain on [transcript]: optional auto-formatting, then the
      * user's auto-apply prompts in order. Each step is best-effort – a failing step keeps the text so
      * far so the user never loses their dictation. Returns the text to commit.
@@ -3214,7 +3297,7 @@ object DictateController {
             // Hint the model with the readable language name ("German"), or "unknown" for auto-detect.
             val languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get())
             val formatPrompt = DictatePromptDefaults.buildAutoFormattingPrompt(languageName, text)
-            val formatted = runCatching { requestRewordRaw(formatPrompt) }.getOrDefault(text)
+            val formatted = rewordOrKeep(text) { requestRewordRaw(formatPrompt) }
             // Safety net (#124): on (near-)empty input the model sometimes echoes the formatting prompt
             // itself instead of returning nothing. If the result looks like that prompt, discard it and keep
             // the original text — the master prompt must never land in the field.
@@ -3233,9 +3316,9 @@ object DictateController {
             val instruction = p.prompt.orEmpty()
             if (instruction.isBlank()) continue
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
-            text = runCatching {
+            text = rewordOrKeep(text) {
                 requestReword(instruction, if (p.requiresSelection) text else null, p.reasoningEffort, p.reasoningEffortCustom)
-            }.getOrDefault(text)
+            }
         }
         return text
     }
@@ -3262,9 +3345,9 @@ object DictateController {
                 continue
             }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
-            result = runCatching {
+            result = rewordOrKeep(result) {
                 requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
-            }.getOrDefault(result)
+            }
         }
         return result
     }

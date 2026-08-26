@@ -950,8 +950,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     /**
      * Reacts to a finished bubble dictation. On [DictateController.UiState.Error] it flashes the error
      * indicator on the button and shows the message as a toast (there is no inline text), then clears the
-     * error so the keyboard's own chip does not also fire. A clean finish (a busy state returning to idle)
-     * flashes a brief success check; a plain cancel just resets the flag.
+     * error — unless it offers an action — so the keyboard's own chip does not also fire. A clean finish
+     * (a busy state returning to idle) flashes a brief success check; a plain cancel just resets the flag.
      */
     private fun reportTerminalState(state: DictateController.UiState) {
         when (state) {
@@ -965,6 +965,13 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 }
                 Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                 holdVisual(ERROR_HOLD_MS, FlashKind.ERROR)
+                // Nothing to react to → don't leave the state machine parked in Error. The four-second
+                // auto-clear lives in the Smartbar, which is not on screen when the floating button is
+                // used with another keyboard, so the state would sit there until the next dictation — and
+                // the next tap, seeing something other than Idle, would skip promoting the microphone
+                // foreground service. Since #284 this also covers the notice after a *successful*
+                // dictation whose rewording failed. The RESEND error stays: a tap re-sends it (#160).
+                if (state.action == DictateController.ErrorAction.NONE) DictateController.clearError()
             }
             is DictateController.UiState.Idle -> {
                 val finishedWork = prevState is DictateController.UiState.Transcribing ||

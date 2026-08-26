@@ -241,6 +241,47 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Issue #284: a rewording that answers with nothing used to come back as "" — and the auto-apply
+    // chain then committed that empty string over the user's dictation without a word being said.
+    test("an empty completion is a failure, not an answer") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"choices":[{"message":{"content":""},"finish_reason":"length"}]}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            val error = shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser("some-reasoning-model", "Fix my typos"))
+            }
+            error.kind shouldBe DictateApiException.Kind.UNKNOWN
+            error.message.orEmpty() shouldContain "finish_reason=length"
+        }
+    }
+
+    // Issue #284: decoding runs outside executeForBody's catch, so an unexpected shape escaped as a raw
+    // SerializationException — "unknown error" with a kotlinx message that never showed what came back.
+    test("a response that cannot be read says what the provider sent") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200)
+                    .setBody("<html><body>502 Bad Gateway (proxy)</body></html>"),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            val error = shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser("gpt-4o-mini", "Fix my typos"))
+            }
+            error.kind shouldBe DictateApiException.Kind.UNKNOWN
+            error.message.orEmpty() shouldContain "502 Bad Gateway (proxy)"
+        }
+    }
+
     test("Deepgram offers only models the file endpoint can serve") {
         MockWebServer().use { server ->
             server.enqueue(

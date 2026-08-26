@@ -1232,6 +1232,7 @@
     <string name="dictate__error_transcription_failed">Přepis selhal.</string>
     <string name="dictate__error_unknown">Neznámá chyba při přepisu.</string>
     <string name="dictate__error_rewording_failed">Přeformulování selhalo.</string>
+    <string name="dictate__notice_rewording_failed">Přeformulování selhalo – vložen původní text</string>
     <string name="dictate__error_overlay_insert_clipboard">Tato aplikace text nepřijala. Je ve schránce — podržte pole a vložte ho.</string>
     <string name="dictate__error_invalid_api_key">Zkontrolujte svůj klíč API</string>
     <string name="dictate__error_quota_exceeded">Dosažen limit nebo kvóta</string>

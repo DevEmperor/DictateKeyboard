@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -120,13 +121,19 @@ class OpenAiCompatibleClient(
             .post(payload.toRequestBody(JSON_MEDIA_TYPE))
             .build()
         val body = executeForBody(httpRequest)
-        val response = json.decodeFromString(ChatCompletionResponseDto.serializer(), body)
+        val response = decode(ChatCompletionResponseDto.serializer(), body)
         val text = response.choices.firstOrNull()?.message?.content.orEmpty()
-        // Some OpenAI-compatible gateways (notably OpenRouter) report errors as HTTP 200 with an empty
-        // `choices` array and an `{ "error": { ... } }` envelope. Surface that instead of returning "".
-        if (text.isBlank() && response.choices.isEmpty()) {
-            val message = extractErrorMessage(body)
-            throw DictateApiException(DictateApiException.Kind.UNKNOWN, message ?: "Empty response from provider")
+        // No text is never an answer here — this endpoint only ever runs a rewording, and "" is not one.
+        // Two ways to arrive: some OpenAI-compatible gateways (notably OpenRouter) report errors as HTTP
+        // 200 with an empty `choices` array and an `{ "error": { ... } }` envelope; and a reasoning model
+        // can answer with a choice whose `content` is empty because the thinking used up the whole output
+        // budget, or because it only spoke in a `reasoning` field we don't read. That second case used to
+        // return "" quietly — which in the auto-apply chain *replaced the dictation with nothing* (#284).
+        // `finish_reason` is the provider's own word for which of the two happened, so it goes along.
+        if (text.isBlank()) {
+            val reason = response.choices.firstOrNull()?.finishReason?.let { " (finish_reason=$it)" }.orEmpty()
+            val message = extractErrorMessage(body) ?: "Empty response from provider$reason"
+            throw DictateApiException(DictateApiException.Kind.UNKNOWN, message)
         }
         val usage = response.usage?.let { TokenUsage(it.promptTokens, it.completionTokens) }
         return ChatResult(text, usage)
@@ -173,7 +180,7 @@ class OpenAiCompatibleClient(
     ): TranscriptionResult {
         val httpRequest = buildMultipartTranscriptionRequest(request)
         val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
+        val response = decode(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
 
@@ -246,7 +253,7 @@ class OpenAiCompatibleClient(
                 diagnosticLabel = label.replace("wire=multipart", "wire=json-fallback"),
             )
         }
-        val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
+        val response = decode(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
 
@@ -330,7 +337,7 @@ class OpenAiCompatibleClient(
             .post(payload.toRequestBody(JSON_MEDIA_TYPE))
             .build()
         val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(ChatCompletionResponseDto.serializer(), body)
+        val response = decode(ChatCompletionResponseDto.serializer(), body)
         val text = response.choices.firstOrNull()?.message?.content.orEmpty()
         if (text.isBlank() && response.choices.isEmpty()) {
             val message = extractErrorMessage(body)
@@ -367,7 +374,7 @@ class OpenAiCompatibleClient(
             .headers(authHeaders())
             .post(uploadBody)
             .build()
-        val fileId = json.decodeFromString(
+        val fileId = decode(
             SonioxFileDto.serializer(),
             executeForBody(uploadRequest, onRetry = onRetry),
         ).id
@@ -388,7 +395,7 @@ class OpenAiCompatibleClient(
                 .headers(authHeaders())
                 .post(json.encodeToString(SonioxCreateDto.serializer(), createDto).toRequestBody(JSON_MEDIA_TYPE))
                 .build()
-            val id = json.decodeFromString(
+            val id = decode(
                 SonioxTranscriptionDto.serializer(),
                 executeForBody(createRequest, onRetry = onRetry),
             ).id
@@ -403,7 +410,7 @@ class OpenAiCompatibleClient(
                     .headers(authHeaders())
                     .get()
                     .build()
-                val status = json.decodeFromString(
+                val status = decode(
                     SonioxTranscriptionDto.serializer(),
                     executeForBody(statusRequest, maxRetries = 2, onRetry = onRetry),
                 )
@@ -439,7 +446,7 @@ class OpenAiCompatibleClient(
                 .headers(authHeaders())
                 .get()
                 .build()
-            val transcript = json.decodeFromString(
+            val transcript = decode(
                 SonioxTranscriptDto.serializer(),
                 executeForBody(transcriptRequest, onRetry = onRetry),
             )
@@ -485,7 +492,7 @@ class OpenAiCompatibleClient(
             .post(multipart)
             .build()
         val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(TranscriptionResponseDto.serializer(), body)
+        val response = decode(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
 
@@ -510,7 +517,7 @@ class OpenAiCompatibleClient(
             .post(audioBody)
             .build()
         val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(DeepgramResponseDto.serializer(), body)
+        val response = decode(DeepgramResponseDto.serializer(), body)
         val text = response.results?.channels?.firstOrNull()?.alternatives?.firstOrNull()?.transcript.orEmpty()
         return TranscriptionResult(text.trim())
     }
@@ -532,7 +539,7 @@ class OpenAiCompatibleClient(
             .header("authorization", authHeader)
             .post(request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile)))
             .build()
-        val uploadUrl = json.decodeFromString(
+        val uploadUrl = decode(
             AssemblyUploadDto.serializer(),
             executeForBody(uploadRequest, onRetry = onRetry),
         ).uploadUrl
@@ -550,7 +557,7 @@ class OpenAiCompatibleClient(
             .header("authorization", authHeader)
             .post(json.encodeToString(AssemblyCreateDto.serializer(), createDto).toRequestBody(JSON_MEDIA_TYPE))
             .build()
-        val id = json.decodeFromString(
+        val id = decode(
             AssemblyTranscriptDto.serializer(),
             executeForBody(createRequest, onRetry = onRetry),
         ).id
@@ -564,7 +571,7 @@ class OpenAiCompatibleClient(
                 .header("authorization", authHeader)
                 .get()
                 .build()
-            val dto = json.decodeFromString(
+            val dto = decode(
                 AssemblyTranscriptDto.serializer(),
                 executeForBody(pollRequest, maxRetries = 2, onRetry = onRetry),
             )
@@ -624,7 +631,7 @@ class OpenAiCompatibleClient(
             .post(payload.toRequestBody(JSON_MEDIA_TYPE))
             .build()
         val body = executeForBody(httpRequest, onRetry = onRetry)
-        val response = json.decodeFromString(GeminiGenerateResponseDto.serializer(), body)
+        val response = decode(GeminiGenerateResponseDto.serializer(), body)
         val text = response.candidates.firstOrNull()?.content?.parts.orEmpty()
             .mapNotNull { it.text }
             .joinToString("")
@@ -676,7 +683,7 @@ class OpenAiCompatibleClient(
                 .get()
                 .build()
             val body = executeForBody(request, maxRetries = 1)
-            return json.decodeFromString(DeepgramModelsDto.serializer(), body)
+            return decode(DeepgramModelsDto.serializer(), body)
                 .stt
                 .filter { it.batch }
                 .map { ModelInfo(it.canonicalName) }
@@ -696,7 +703,7 @@ class OpenAiCompatibleClient(
                 .get()
                 .build()
             val body = executeForBody(request, maxRetries = 1)
-            return json.decodeFromString(ModelsResponseDto.serializer(), body)
+            return decode(ModelsResponseDto.serializer(), body)
                 .data
                 .map { ModelInfo(it.id) }
                 .filter { it.id.isNotBlank() }
@@ -719,13 +726,13 @@ class OpenAiCompatibleClient(
         // Soniox returns `{ models: [ { id, transcription_mode, … } ] }` instead of OpenAI's `{ data: [...] }`,
         // and lists both async and real-time models; only the async ones work with our SONIOX_ASYNC flow.
         if (config.transcriptionApi == TranscriptionApi.SONIOX_ASYNC) {
-            val response = json.decodeFromString(SonioxModelsDto.serializer(), body)
+            val response = decode(SonioxModelsDto.serializer(), body)
             return response.models
                 .filter { it.transcriptionMode == "async" }
                 .map { ModelInfo(it.id) }
                 .sortedBy { it.id.lowercase() }
         }
-        val response = json.decodeFromString(ModelsResponseDto.serializer(), body)
+        val response = decode(ModelsResponseDto.serializer(), body)
         // Gemini's catalog reports ids as `models/gemini-…`; strip that prefix so the picker shows clean
         // ids that also work directly as the `model` field in both chat and generateContent calls.
         val stripPrefix = config.transcriptionApi == TranscriptionApi.GEMINI_GENERATE_CONTENT
@@ -870,6 +877,25 @@ class OpenAiCompatibleClient(
             }
         })
     }
+
+    /**
+     * Reads a response that succeeded. Decoding happens *after* [executeForBody], outside the catch that
+     * maps everything else onto [DictateApiException] — so an answer in an unexpected shape (a gateway's
+     * HTML, a field that is suddenly an array) used to leave this client as a raw `SerializationException`
+     * and reach the user as "unknown error" with a kotlinx message that never mentions what actually came
+     * back (issue #284). Now it says so, and carries the beginning of the body as the detail.
+     *
+     * Only for bodies we expect to parse; [parseError] keeps its `runCatching`, since probing a body for
+     * an error envelope is allowed to come up empty.
+     */
+    private fun <T> decode(serializer: DeserializationStrategy<T>, body: String): T =
+        runCatching { json.decodeFromString(serializer, body) }.getOrElse { cause ->
+            throw DictateApiException(
+                DictateApiException.Kind.UNKNOWN,
+                "Unreadable response from provider: ${body.take(300)}",
+                cause,
+            )
+        }
 
     /**
      * Extracts the error detail from a non-2xx body. Tries the OpenAI-style `{ "error": { … } }` envelope
@@ -1025,7 +1051,11 @@ class OpenAiCompatibleClient(
     )
 
     @Serializable
-    private data class ChoiceDto(val message: ResponseMessageDto? = null)
+    private data class ChoiceDto(
+        val message: ResponseMessageDto? = null,
+        /** Why the model stopped — `length` names a truncated (and therefore empty) answer (#284). */
+        @SerialName("finish_reason") val finishReason: String? = null,
+    )
 
     @Serializable
     private data class ResponseMessageDto(val content: String? = null)

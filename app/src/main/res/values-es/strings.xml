@@ -1199,6 +1199,7 @@
     <string name="dictate__error_transcription_failed">Error en la transcripción.</string>
     <string name="dictate__error_unknown">Error desconocido durante la transcripción.</string>
     <string name="dictate__error_rewording_failed">Error en la reformulación.</string>
+    <string name="dictate__notice_rewording_failed">Error en la reformulación – se insertó el texto original</string>
     <string name="dictate__error_overlay_insert_clipboard">Esta aplicación no aceptó el texto. Está en el portapapeles: mantén pulsado el campo y pégalo.</string>
     <string name="dictate__error_invalid_api_key">Comprueba tu clave de API</string>
     <string name="dictate__error_quota_exceeded">Cuota o límite alcanzado</string>

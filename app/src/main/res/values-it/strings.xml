@@ -1001,6 +1001,7 @@
     <string name="dictate__error_transcription_failed">Trascrizione non riuscita.</string>
     <string name="dictate__error_unknown">Errore sconosciuto durante la trascrizione.</string>
     <string name="dictate__error_rewording_failed">Riformulazione non riuscita.</string>
+    <string name="dictate__notice_rewording_failed">Riformulazione non riuscita – inserito il testo grezzo</string>
     <string name="dictate__error_overlay_insert_clipboard">Questa app non ha accettato il testo. È negli appunti: tieni premuto il campo e incollalo.</string>
     <string name="dictate__error_invalid_api_key">Controlla la tua chiave API</string>
     <string name="dictate__error_quota_exceeded">Quota o limite raggiunto</string>

@@ -1197,6 +1197,7 @@
     <string name="dictate__error_transcription_failed">Falha na transcrição.</string>
     <string name="dictate__error_unknown">Erro desconhecido durante a transcrição.</string>
     <string name="dictate__error_rewording_failed">Falha na reformulação.</string>
+    <string name="dictate__notice_rewording_failed">Falha na reformulação – texto bruto inserido</string>
     <string name="dictate__error_overlay_insert_clipboard">Esta aplicação não aceitou o texto. Está na área de transferência — mantenha o campo premido e cole.</string>
     <string name="dictate__error_invalid_api_key">Verifique a sua chave de API</string>
     <string name="dictate__error_quota_exceeded">Quota ou limite atingido</string>
