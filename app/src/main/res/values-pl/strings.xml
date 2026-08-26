@@ -2012,6 +2012,7 @@
     <string name="sticker__access_lost">Nie można już odczytać folderu z naklejkami. Wybierz go ponownie.</string>
     <string name="sticker__folder_pick_failed">Nie udało się zachować dostępu do tego folderu</string>
     <string name="sticker__rescan_done">Znaleziono {n} naklejek</string>
+    <string name="sticker__rescan_done_converted">Znaleziono {n} naklejek, przekształcono {converted}</string>
     <string name="sticker__copied_to_clipboard">Ta aplikacja nie przyjmuje naklejek — skopiowano do schowka, przytrzymaj, aby wkleić</string>
     <string name="sticker__insert_failed">Nie udało się wstawić naklejki</string>
     <string name="quick_action__ime_ui_mode_sticker">Naklejka</string>

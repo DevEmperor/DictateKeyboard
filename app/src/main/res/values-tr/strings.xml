@@ -1975,6 +1975,7 @@
     <string name="sticker__access_lost">Çıkartma klasörü artık okunamıyor. Yeniden seçin.</string>
     <string name="sticker__folder_pick_failed">Bu klasöre erişim korunamadı</string>
     <string name="sticker__rescan_done">{n} çıkartma bulundu</string>
+    <string name="sticker__rescan_done_converted">{n} çıkartma bulundu, {converted} tanesi dönüştürüldü</string>
     <string name="sticker__copied_to_clipboard">Bu uygulama çıkartma kabul etmiyor — panoya kopyalandı, yapıştırmak için uzun basın</string>
     <string name="sticker__insert_failed">Çıkartma eklenemedi</string>
     <string name="quick_action__ime_ui_mode_sticker">Çıkartma</string>

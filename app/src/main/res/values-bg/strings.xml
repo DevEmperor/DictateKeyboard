@@ -1997,6 +1997,7 @@
     <string name="sticker__access_lost">Папката със стикери вече не може да бъде прочетена. Изберете я отново.</string>
     <string name="sticker__folder_pick_failed">Достъпът до тази папка не можа да бъде запазен</string>
     <string name="sticker__rescan_done">Намерени са {n} стикера</string>
+    <string name="sticker__rescan_done_converted">Намерени са {n} стикера, {converted} преобразувани</string>
     <string name="sticker__copied_to_clipboard">Това приложение не приема стикери — копирано в клипборда, задръжте за поставяне</string>
     <string name="sticker__insert_failed">Стикерът не можа да бъде вмъкнат</string>
     <string name="quick_action__ime_ui_mode_sticker">Стикер</string>

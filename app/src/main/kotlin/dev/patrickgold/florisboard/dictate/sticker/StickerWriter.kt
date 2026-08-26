@@ -342,6 +342,26 @@ object StickerWriter {
             false
         }
 
+    /**
+     * Renames one sticker and returns its document id afterwards, or null if the provider refused.
+     *
+     * A rename can hand back a different id — some providers build ids out of the path — which is why
+     * the new one is returned rather than assumed. Used when a file changes type and its name has to
+     * follow; a name already taken makes this fail, and the caller leaves that file alone.
+     */
+    suspend fun renameTo(context: Context, treeUri: Uri, docId: String, name: String): String? =
+        withContext(Dispatchers.IO) {
+            try {
+                val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+                val renamed = DocumentsContract.renameDocument(context.contentResolver, uri, name)
+                    ?: return@withContext null
+                DocumentsContract.getDocumentId(renamed)
+            } catch (e: Exception) {
+                flogError { "Failed to rename $docId to $name: ${e.message}" }
+                null
+            }
+        }
+
     /** Deletes one sticker from the folder. Returns false when the provider refuses. */
     suspend fun delete(context: Context, treeUri: Uri, docId: String): Boolean = withContext(Dispatchers.IO) {
         try {

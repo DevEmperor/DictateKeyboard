@@ -1995,6 +1995,7 @@
     <string name="sticker__access_lost">A matricamappa már nem olvasható. Válaszd ki újra.</string>
     <string name="sticker__folder_pick_failed">A mappához való hozzáférést nem sikerült megtartani</string>
     <string name="sticker__rescan_done">{n} matrica található</string>
+    <string name="sticker__rescan_done_converted">{n} matrica található, {converted} átalakítva</string>
     <string name="sticker__copied_to_clipboard">Ez az alkalmazás nem fogad matricákat — a vágólapra másolva, hosszan nyomd meg a beillesztéshez</string>
     <string name="sticker__insert_failed">A matricát nem sikerült beszúrni</string>
     <string name="quick_action__ime_ui_mode_sticker">Matrica</string>

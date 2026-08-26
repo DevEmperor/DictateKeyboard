@@ -1844,6 +1844,7 @@
     <string name="sticker__access_lost">Теку зі стікерами більше не вдається прочитати. Виберіть її знову.</string>
     <string name="sticker__folder_pick_failed">Не вдалося зберегти доступ до цієї теки</string>
     <string name="sticker__rescan_done">Знайдено стікерів: {n}</string>
+    <string name="sticker__rescan_done_converted">Знайдено {n} стікерів, перетворено {converted}</string>
     <string name="sticker__copied_to_clipboard">Цей застосунок не приймає стікери — скопійовано в буфер обміну, утримуйте, щоб вставити</string>
     <string name="sticker__insert_failed">Не вдалося вставити стікер</string>
     <string name="quick_action__ime_ui_mode_sticker">Стікер</string>

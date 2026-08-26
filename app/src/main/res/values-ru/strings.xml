@@ -2000,6 +2000,7 @@
     <string name="sticker__access_lost">Папку со стикерами больше не удаётся прочитать. Выберите её заново.</string>
     <string name="sticker__folder_pick_failed">Не удалось сохранить доступ к этой папке</string>
     <string name="sticker__rescan_done">Найдено стикеров: {n}</string>
+    <string name="sticker__rescan_done_converted">Найдено {n} стикеров, преобразовано {converted}</string>
     <string name="sticker__copied_to_clipboard">Это приложение не принимает стикеры — скопировано в буфер обмена, удерживайте для вставки</string>
     <string name="sticker__insert_failed">Не удалось вставить стикер</string>
     <string name="quick_action__ime_ui_mode_sticker">Стикер</string>

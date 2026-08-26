@@ -77,6 +77,7 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.dictate.sticker.StickerCategory
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistoryHelper
 import dev.patrickgold.florisboard.dictate.sticker.StickerImports
+import dev.patrickgold.florisboard.dictate.sticker.StickerNormalizer
 import dev.patrickgold.florisboard.dictate.sticker.StickerIndex
 import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
 import dev.patrickgold.florisboard.dictate.sticker.StickerWriter
@@ -317,7 +318,9 @@ fun MediaScreen() = FlorisScreen {
                 onClick = { stickerFolderPicker.launch(null) },
                 trailing = {
                     // Re-reading the folder belongs to the folder, not to a row of its own — and it
-                    // has to show that it is working, or a long scan looks like a dead tap.
+                    // has to show that it is working, or a long scan looks like a dead tap. It also
+                    // brings anything it finds out of shape into it: a file that arrived without
+                    // going through the import is exactly the file this button is tapped about.
                     if (stickerFolderUri.isNotBlank()) {
                         if (rescanning) {
                             CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
@@ -328,12 +331,30 @@ fun MediaScreen() = FlorisScreen {
                                     rescanning = true
                                     scope.launch {
                                         try {
-                                            val index = StickerScanner.scan(context, stickerFolderUri.toUri())
+                                            val treeUri = stickerFolderUri.toUri()
+                                            var index = StickerScanner.scan(context, treeUri)
+                                            val converted = if (StickerWriter.canWrite(context, stickerFolderUri)) {
+                                                StickerNormalizer.normalizeFolder(context, treeUri, index)
+                                            } else {
+                                                0
+                                            }
+                                            // Anything rewritten carries a new size and stamp, and one
+                                            // that changed type carries a new name and id, so the index
+                                            // just built no longer describes the folder.
+                                            if (converted > 0) index = StickerScanner.scan(context, treeUri)
                                             StickerScanner.saveCached(context, index)
-                                            context.showLongToast(
-                                                R.string.sticker__rescan_done,
-                                                "n" to index.allItems.size,
-                                            )
+                                            if (converted > 0) {
+                                                context.showLongToast(
+                                                    R.string.sticker__rescan_done_converted,
+                                                    "n" to index.allItems.size,
+                                                    "converted" to converted,
+                                                )
+                                            } else {
+                                                context.showLongToast(
+                                                    R.string.sticker__rescan_done,
+                                                    "n" to index.allItems.size,
+                                                )
+                                            }
                                         } catch (e: Exception) {
                                             context.showLongToast(R.string.sticker__access_lost)
                                         }

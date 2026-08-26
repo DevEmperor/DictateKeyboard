@@ -1940,6 +1940,7 @@
     <string name="sticker__access_lost">Uzlīmju mapi vairs nevar nolasīt. Izvēlieties to vēlreiz.</string>
     <string name="sticker__folder_pick_failed">Neizdevās saglabāt piekļuvi šai mapei</string>
     <string name="sticker__rescan_done">Atrastas {n} uzlīmes</string>
+    <string name="sticker__rescan_done_converted">Atrastas {n} uzlīmes, {converted} pārveidotas</string>
     <string name="sticker__copied_to_clipboard">Šī lietotne nepieņem uzlīmes — nokopēts starpliktuvē, turiet nospiestu, lai ielīmētu</string>
     <string name="sticker__insert_failed">Uzlīmi neizdevās ievietot</string>
     <string name="quick_action__ime_ui_mode_sticker">Uzlīme</string>

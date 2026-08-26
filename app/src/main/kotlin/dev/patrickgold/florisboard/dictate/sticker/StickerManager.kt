@@ -55,7 +55,7 @@ object StickerManager {
      * The cache name carries the modification stamp, so replacing a sticker with a new file of the same
      * name inserts the new one instead of silently re-sending the copy made before the edit.
      */
-    private suspend fun materialize(context: Context, treeUri: Uri, item: StickerItem): File? =
+    internal suspend fun materialize(context: Context, treeUri: Uri, item: StickerItem): File? =
         withContext(Dispatchers.IO) {
             try {
                 val stamp = item.lastModified.toString()

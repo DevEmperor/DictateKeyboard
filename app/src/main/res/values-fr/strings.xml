@@ -1872,6 +1872,7 @@
     <string name="sticker__access_lost">Le dossier d\'autocollants n\'est plus lisible. Choisissez-le à nouveau.</string>
     <string name="sticker__folder_pick_failed">Impossible de conserver l\'accès à ce dossier</string>
     <string name="sticker__rescan_done">{n} autocollants trouvés</string>
+    <string name="sticker__rescan_done_converted">{n} autocollants trouvés, {converted} convertis</string>
     <string name="sticker__copied_to_clipboard">Cette application n\'accepte pas les autocollants — copié dans le presse-papiers, appuyez longuement pour coller</string>
     <string name="sticker__insert_failed">Impossible d\'insérer l\'autocollant</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>

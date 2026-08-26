@@ -1952,6 +1952,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__access_lost">Folder stiker tidak dapat dibaca lagi. Pilih kembali.</string>
     <string name="sticker__folder_pick_failed">Akses ke folder itu tidak dapat dipertahankan</string>
     <string name="sticker__rescan_done">{n} stiker ditemukan</string>
+    <string name="sticker__rescan_done_converted">{n} stiker ditemukan, {converted} diubah</string>
     <string name="sticker__copied_to_clipboard">Aplikasi ini tidak menerima stiker — disalin ke papan klip, tekan lama untuk menempel</string>
     <string name="sticker__insert_failed">Stiker tidak dapat disisipkan</string>
     <string name="quick_action__ime_ui_mode_sticker">Stiker</string>

@@ -2011,6 +2011,7 @@
     <string name="sticker__access_lost">Složku se samolepkami už nelze číst. Vyberte ji znovu.</string>
     <string name="sticker__folder_pick_failed">Přístup k této složce se nepodařilo zachovat</string>
     <string name="sticker__rescan_done">Nalezeno {n} samolepek</string>
+    <string name="sticker__rescan_done_converted">Nalezeno {n} samolepek, {converted} převedeno</string>
     <string name="sticker__copied_to_clipboard">Tato aplikace samolepky nepřijímá — zkopírováno do schránky, dlouhým stiskem vložíte</string>
     <string name="sticker__insert_failed">Samolepku se nepodařilo vložit</string>
     <string name="quick_action__ime_ui_mode_sticker">Samolepka</string>

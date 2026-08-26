@@ -1976,6 +1976,7 @@
     <string name="sticker__access_lost">Já não é possível ler a pasta de autocolantes. Escolha-a novamente.</string>
     <string name="sticker__folder_pick_failed">Não foi possível manter o acesso a essa pasta</string>
     <string name="sticker__rescan_done">{n} autocolantes encontrados</string>
+    <string name="sticker__rescan_done_converted">{n} autocolantes encontrados, {converted} convertidos</string>
     <string name="sticker__copied_to_clipboard">Esta aplicação não aceita autocolantes — copiado para a área de transferência, prima sem soltar para colar</string>
     <string name="sticker__insert_failed">Não foi possível inserir o autocolante</string>
     <string name="quick_action__ime_ui_mode_sticker">Autocol.</string>

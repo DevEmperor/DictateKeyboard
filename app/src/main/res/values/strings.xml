@@ -64,6 +64,7 @@
     <string name="sticker__access_lost" comment="Empty state when the folder can no longer be read">The sticker folder can no longer be read. Choose it again.</string>
     <string name="sticker__folder_pick_failed" comment="Toast when the folder permission could not be kept">Could not keep access to that folder</string>
     <string name="sticker__rescan_done" comment="Toast after a manual rescan; {n} is the number of stickers found">{n} stickers found</string>
+    <string name="sticker__rescan_done_converted" comment="Toast after a rescan that also converted files; {n} stickers found, {converted} of them brought into the sticker shape">{n} stickers found, {converted} converted</string>
     <string name="sticker__copied_to_clipboard" comment="Toast when the target app refuses images and the sticker is copied instead">This app does not accept stickers — copied to clipboard, long-press to paste</string>
     <string name="sticker__insert_failed" comment="Toast when a sticker could not be inserted or copied">Couldn\'t insert the sticker</string>
     <string name="prefs__media__sticker_add" comment="Preference title, opens a picker to copy images into the sticker folder">Add stickers</string>

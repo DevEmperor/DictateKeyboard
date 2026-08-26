@@ -1929,6 +1929,7 @@
     <string name="sticker__access_lost">ステッカーのフォルダを読み取れなくなりました。もう一度選択してください。</string>
     <string name="sticker__folder_pick_failed">このフォルダへのアクセスを保持できませんでした</string>
     <string name="sticker__rescan_done">ステッカーが {n} 件見つかりました</string>
+    <string name="sticker__rescan_done_converted">{n} 件のステッカーが見つかり、{converted} 件を変換しました</string>
     <string name="sticker__copied_to_clipboard">このアプリはステッカーを受け付けません — クリップボードにコピーしました。長押しで貼り付けられます</string>
     <string name="sticker__insert_failed">ステッカーを挿入できませんでした</string>
     <string name="quick_action__ime_ui_mode_sticker">ステッカー</string>

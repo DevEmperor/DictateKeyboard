@@ -1978,6 +1978,7 @@
     <string name="sticker__access_lost">Ya no se puede leer la carpeta de adhesivos. Vuelve a elegirla.</string>
     <string name="sticker__folder_pick_failed">No se pudo mantener el acceso a esa carpeta</string>
     <string name="sticker__rescan_done">{n} adhesivos encontrados</string>
+    <string name="sticker__rescan_done_converted">{n} adhesivos encontrados, {converted} convertidos</string>
     <string name="sticker__copied_to_clipboard">Esta aplicación no acepta adhesivos: copiado al portapapeles, mantén pulsado para pegar</string>
     <string name="sticker__insert_failed">No se pudo insertar el adhesivo</string>
     <string name="quick_action__ime_ui_mode_sticker">Adhesivo</string>

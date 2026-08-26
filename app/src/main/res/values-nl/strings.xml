@@ -1896,6 +1896,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__access_lost">De stickermap kan niet meer worden gelezen. Kies hem opnieuw.</string>
     <string name="sticker__folder_pick_failed">Toegang tot die map kon niet worden behouden</string>
     <string name="sticker__rescan_done">{n} stickers gevonden</string>
+    <string name="sticker__rescan_done_converted">{n} stickers gevonden, {converted} omgezet</string>
     <string name="sticker__copied_to_clipboard">Deze app accepteert geen stickers — gekopieerd naar het klembord, lang indrukken om te plakken</string>
     <string name="sticker__insert_failed">Sticker kon niet worden ingevoegd</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>

@@ -1991,6 +1991,7 @@
     <string name="sticker__access_lost">已无法读取贴纸文件夹，请重新选择。</string>
     <string name="sticker__folder_pick_failed">无法保留对该文件夹的访问权限</string>
     <string name="sticker__rescan_done">找到 {n} 个贴纸</string>
+    <string name="sticker__rescan_done_converted">找到 {n} 个贴纸，已转换 {converted} 个</string>
     <string name="sticker__copied_to_clipboard">此应用不接受贴纸 — 已复制到剪贴板，长按即可粘贴</string>
     <string name="sticker__insert_failed">无法插入贴纸</string>
     <string name="quick_action__ime_ui_mode_sticker">贴纸</string>

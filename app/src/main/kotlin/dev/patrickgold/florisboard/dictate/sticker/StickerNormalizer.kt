@@ -11,10 +11,15 @@
 package dev.patrickgold.florisboard.dictate.sticker
 
 import android.content.Context
+import android.net.Uri
 import dev.patrickgold.florisboard.dictate.media.MediaFormat
+import dev.patrickgold.florisboard.dictate.media.MediaLog
 import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 /**
@@ -50,5 +55,48 @@ object StickerNormalizer {
         return withContext(Dispatchers.IO) {
             WebPTranscoder.toStickerSpec(context, file, info.animated)
         }
+    }
+
+    /**
+     * Brings anything in [index] that is out of shape into it, and answers how many that was.
+     *
+     * Hangs off re-reading the folder, because the two questions are the same question: a file that
+     * appeared without going through the import — dropped in with a file manager, synced in from
+     * somewhere — is exactly the file that is not yet a sticker, and "read the folder again" is when
+     * the user is asking about such files. A folder that is already in shape costs one header read
+     * per file and changes nothing.
+     *
+     * A file that has to change its type also has to change its name, or the next app is told it is
+     * a PNG and treats it as a photograph. The rename goes first, so the bytes land under the name
+     * they belong to; a rename the provider refuses leaves that file alone rather than mislabelled.
+     */
+    suspend fun normalizeFolder(context: Context, treeUri: Uri, index: StickerIndex): Int {
+        var changed = 0
+        for (item in index.allItems) {
+            currentCoroutineContext().ensureActive()
+            val staged = StickerManager.materialize(context, treeUri, item) ?: continue
+            val normalized = try {
+                normalize(context, staged, item.mime)
+            } catch (e: Exception) {
+                flogError { "Failed to normalize ${item.name}: ${e.message}" }
+                null
+            } ?: continue
+
+            var docId = item.docId
+            if (item.mime != "image/webp") {
+                docId = StickerWriter.renameTo(context, treeUri, docId, "${item.name}.webp") ?: run {
+                    MediaLog.log("normalize: could not rename \"${item.name}\" to .webp, left as is")
+                    continue
+                }
+            }
+            if (StickerWriter.overwrite(context, treeUri, docId, normalized)) {
+                changed++
+                MediaLog.log(
+                    "normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.length()} B"
+                )
+            }
+        }
+        if (changed > 0) withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
+        return changed
     }
 }

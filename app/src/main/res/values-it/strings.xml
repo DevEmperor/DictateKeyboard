@@ -1780,6 +1780,7 @@
     <string name="sticker__access_lost">La cartella degli adesivi non è più leggibile. Scegliela di nuovo.</string>
     <string name="sticker__folder_pick_failed">Non è stato possibile mantenere l\'accesso a quella cartella</string>
     <string name="sticker__rescan_done">Trovati {n} adesivi</string>
+    <string name="sticker__rescan_done_converted">{n} adesivi trovati, {converted} convertiti</string>
     <string name="sticker__copied_to_clipboard">Questa app non accetta adesivi: copiato negli appunti, tieni premuto per incollare</string>
     <string name="sticker__insert_failed">Non è stato possibile inserire l\'adesivo</string>
     <string name="quick_action__ime_ui_mode_sticker">Adesivo</string>

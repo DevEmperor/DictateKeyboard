@@ -1805,6 +1805,7 @@
     <string name="sticker__access_lost">Não é mais possível ler a pasta de figurinhas. Escolha-a novamente.</string>
     <string name="sticker__folder_pick_failed">Não foi possível manter o acesso a essa pasta</string>
     <string name="sticker__rescan_done">{n} figurinhas encontradas</string>
+    <string name="sticker__rescan_done_converted">{n} figurinhas encontradas, {converted} convertidas</string>
     <string name="sticker__copied_to_clipboard">Este app não aceita figurinhas — copiado para a área de transferência, toque e segure para colar</string>
     <string name="sticker__insert_failed">Não foi possível inserir a figurinha</string>
     <string name="quick_action__ime_ui_mode_sticker">Figurinha</string>

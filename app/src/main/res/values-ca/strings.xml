@@ -1872,6 +1872,7 @@
     <string name="sticker__access_lost">Ja no es pot llegir la carpeta d\'adhesius. Torneu a triar-la.</string>
     <string name="sticker__folder_pick_failed">No s\'ha pogut mantenir l\'accés a aquesta carpeta</string>
     <string name="sticker__rescan_done">S\'han trobat {n} adhesius</string>
+    <string name="sticker__rescan_done_converted">S\'han trobat {n} adhesius, {converted} convertits</string>
     <string name="sticker__copied_to_clipboard">Aquesta aplicació no accepta adhesius: s\'ha copiat al porta-retalls, manteniu premut per enganxar</string>
     <string name="sticker__insert_failed">No s\'ha pogut inserir l\'adhesiu</string>
     <string name="quick_action__ime_ui_mode_sticker">Adhesiu</string>

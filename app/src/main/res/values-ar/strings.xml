@@ -1855,6 +1855,7 @@
     <string name="sticker__access_lost">لم يعد بالإمكان قراءة مجلد الملصقات. اختره مرة أخرى.</string>
     <string name="sticker__folder_pick_failed">تعذّر الاحتفاظ بحق الوصول إلى ذلك المجلد</string>
     <string name="sticker__rescan_done">تم العثور على {n} ملصق</string>
+    <string name="sticker__rescan_done_converted">تم العثور على {n} ملصقًا، وتم تحويل {converted} منها</string>
     <string name="sticker__copied_to_clipboard">هذا التطبيق لا يقبل الملصقات — تم النسخ إلى الحافظة، اضغط مطولًا للصق</string>
     <string name="sticker__insert_failed">تعذّر إدراج الملصق</string>
     <string name="quick_action__ime_ui_mode_sticker">ملصق</string>

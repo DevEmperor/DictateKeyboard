@@ -1872,6 +1872,7 @@
     <string name="sticker__access_lost">Der Sticker-Ordner kann nicht mehr gelesen werden. Wähle ihn erneut aus.</string>
     <string name="sticker__folder_pick_failed">Der Zugriff auf diesen Ordner konnte nicht behalten werden</string>
     <string name="sticker__rescan_done">{n} Sticker gefunden</string>
+    <string name="sticker__rescan_done_converted">{n} Sticker gefunden, {converted} umgewandelt</string>
     <string name="sticker__copied_to_clipboard">Diese App nimmt keine Sticker an — in die Zwischenablage kopiert, zum Einfügen lange drücken</string>
     <string name="sticker__insert_failed">Sticker konnte nicht eingefügt werden</string>
     <string name="quick_action__ime_ui_mode_sticker">Sticker</string>
