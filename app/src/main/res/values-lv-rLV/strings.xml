@@ -1965,9 +1965,6 @@
     <string name="prefs__media__sticker_import_source__summary">Atver failu izvēli uzreiz mapē, kurā raksta cita lietotne</string>
     <string name="prefs__media__sticker_packs">Uzlīmju pakas</string>
     <string name="prefs__media__sticker_packs__summary">Izveidojiet, pārdēvējiet un dzēsiet mapes, kurās sakārtotas jūsu uzlīmes</string>
-    <string name="prefs__media__sticker_normalize">Vienādot uzlīmes</string>
-    <string name="prefs__media__sticker_normalize__summary">Pārveido katru mapes uzlīmi par 512×512 WebP, lai lietotnes tās sūtītu kā uzlīmes</string>
-    <string name="sticker__normalize_done">Pārveidotas {changed} no {total} uzlīmēm</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

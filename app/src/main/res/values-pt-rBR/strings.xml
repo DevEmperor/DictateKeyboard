@@ -1830,9 +1830,6 @@
     <string name="prefs__media__sticker_import_source__summary">Abre o seletor de arquivos direto em uma pasta onde outro app escreve</string>
     <string name="prefs__media__sticker_packs">Pacotes de figurinhas</string>
     <string name="prefs__media__sticker_packs__summary">Crie, renomeie e exclua as pastas em que suas figurinhas estão organizadas</string>
-    <string name="prefs__media__sticker_normalize">Uniformizar figurinhas</string>
-    <string name="prefs__media__sticker_normalize__summary">Converte cada figurinha da pasta para WebP 512×512, para que os apps as enviem como figurinhas</string>
-    <string name="sticker__normalize_done">{changed} de {total} figurinhas convertidas</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

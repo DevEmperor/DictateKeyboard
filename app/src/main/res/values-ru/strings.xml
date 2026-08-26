@@ -2025,9 +2025,6 @@
     <string name="prefs__media__sticker_import_source__summary">Открывает выбор файлов сразу в папке, куда пишет другое приложение</string>
     <string name="prefs__media__sticker_packs">Наборы стикеров</string>
     <string name="prefs__media__sticker_packs__summary">Создавайте, переименовывайте и удаляйте папки, по которым разложены ваши стикеры</string>
-    <string name="prefs__media__sticker_normalize">Привести стикеры к одному виду</string>
-    <string name="prefs__media__sticker_normalize__summary">Преобразует каждый стикер в папке в WebP 512×512, чтобы приложения отправляли их как стикеры</string>
-    <string name="sticker__normalize_done">Преобразовано {changed} из {total} стикеров</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

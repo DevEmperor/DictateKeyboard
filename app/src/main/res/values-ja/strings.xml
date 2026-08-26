@@ -1954,9 +1954,6 @@
     <string name="prefs__media__sticker_import_source__summary">他のアプリが書き込むフォルダで、そのままファイル選択を開きます</string>
     <string name="prefs__media__sticker_packs">ステッカーパック</string>
     <string name="prefs__media__sticker_packs__summary">ステッカーを仕分けるフォルダを作成・名前変更・削除します</string>
-    <string name="prefs__media__sticker_normalize">ステッカーを統一</string>
-    <string name="prefs__media__sticker_normalize__summary">フォルダ内のすべてのステッカーを 512×512 の WebP に変換し、アプリがステッカーとして送れるようにします</string>
-    <string name="sticker__normalize_done">{total} 件中 {changed} 件を変換しました</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

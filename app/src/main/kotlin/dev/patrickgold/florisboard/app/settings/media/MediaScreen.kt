@@ -31,7 +31,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AutoFixHigh
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.Delete
@@ -391,29 +390,6 @@ fun MediaScreen() = FlorisScreen {
                     title = stringRes(R.string.prefs__media__sticker_packs),
                     summary = stringRes(R.string.prefs__media__sticker_packs__summary),
                     onClick = { packManagerOpen = true },
-                )
-                // Catching up on what the import already does for anything new: a folder from before
-                // this existed, or files dropped in from a file manager, still hold whatever shape
-                // they were saved in, and only a sticker-shaped file can be sent as a sticker.
-                Preference(
-                    icon = Icons.Outlined.AutoFixHigh,
-                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_normalize"),
-                    title = stringRes(R.string.prefs__media__sticker_normalize),
-                    summary = stringRes(R.string.prefs__media__sticker_normalize__summary),
-                    enabledIf = { stickerFolderUri.isNotBlank() && running == null },
-                    onClick = {
-                        if (!StickerWriter.canWrite(context, stickerFolderUri)) {
-                            context.showLongToastSync(R.string.sticker__import_needs_write)
-                        } else {
-                            StickerImports.startNormalize(context, stickerFolderUri.toUri()) { result ->
-                                context.showLongToastSync(
-                                    R.string.sticker__normalize_done,
-                                    "changed" to result.changed,
-                                    "total" to result.total,
-                                )
-                            }
-                        }
-                    },
                 )
                 DialogSliderPreference(
                     prefs.sticker.thumbnailSize,

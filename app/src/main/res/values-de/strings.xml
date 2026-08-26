@@ -1897,9 +1897,6 @@
     <string name="prefs__media__sticker_import_source__summary">Öffnet die Dateiauswahl direkt in einem Ordner, in den eine andere App schreibt</string>
     <string name="prefs__media__sticker_packs">Sticker-Packs</string>
     <string name="prefs__media__sticker_packs__summary">Die Ordner anlegen, umbenennen und löschen, in die deine Sticker einsortiert sind</string>
-    <string name="prefs__media__sticker_normalize">Sticker vereinheitlichen</string>
-    <string name="prefs__media__sticker_normalize__summary">Wandelt jeden Sticker im Ordner in 512×512-WebP um, damit Apps sie als Sticker senden</string>
-    <string name="sticker__normalize_done">{changed} von {total} Stickern umgewandelt</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

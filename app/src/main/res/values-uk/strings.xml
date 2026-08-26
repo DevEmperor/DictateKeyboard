@@ -1869,9 +1869,6 @@
     <string name="prefs__media__sticker_import_source__summary">Відкриває вибір файлів одразу в теці, куди пише інший застосунок</string>
     <string name="prefs__media__sticker_packs">Набори стікерів</string>
     <string name="prefs__media__sticker_packs__summary">Створюйте, перейменовуйте та видаляйте теки, за якими розкладені ваші стікери</string>
-    <string name="prefs__media__sticker_normalize">Звести стікери до одного вигляду</string>
-    <string name="prefs__media__sticker_normalize__summary">Перетворює кожен стікер у теці на WebP 512×512, щоб застосунки надсилали їх як стікери</string>
-    <string name="sticker__normalize_done">Перетворено {changed} з {total} стікерів</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

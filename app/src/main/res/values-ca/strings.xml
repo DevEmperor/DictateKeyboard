@@ -1897,9 +1897,6 @@
     <string name="prefs__media__sticker_import_source__summary">Obre el selector de fitxers directament en una carpeta on escriu una altra aplicació</string>
     <string name="prefs__media__sticker_packs">Paquets d\'adhesius</string>
     <string name="prefs__media__sticker_packs__summary">Creeu, reanomeneu i esborreu les carpetes on s\'ordenen els vostres adhesius</string>
-    <string name="prefs__media__sticker_normalize">Unifica els adhesius</string>
-    <string name="prefs__media__sticker_normalize__summary">Converteix cada adhesiu de la carpeta a WebP de 512×512, perquè les aplicacions els enviïn com a adhesius</string>
-    <string name="sticker__normalize_done">S\'han convertit {changed} de {total} adhesius</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

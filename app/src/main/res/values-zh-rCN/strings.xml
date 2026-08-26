@@ -2016,9 +2016,6 @@
     <string name="prefs__media__sticker_import_source__summary">直接在其他应用写入的文件夹中打开文件选择器</string>
     <string name="prefs__media__sticker_packs">贴纸包</string>
     <string name="prefs__media__sticker_packs__summary">创建、重命名和删除用来整理贴纸的文件夹</string>
-    <string name="prefs__media__sticker_normalize">统一贴纸格式</string>
-    <string name="prefs__media__sticker_normalize__summary">把文件夹里的每个贴纸转换为 512×512 的 WebP，这样应用才会按贴纸发送</string>
-    <string name="sticker__normalize_done">已转换 {total} 个贴纸中的 {changed} 个</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

@@ -11,15 +11,10 @@
 package dev.patrickgold.florisboard.dictate.sticker
 
 import android.content.Context
-import android.net.Uri
 import dev.patrickgold.florisboard.dictate.media.MediaFormat
-import dev.patrickgold.florisboard.dictate.media.MediaLog
 import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
-import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 
 /**
@@ -40,15 +35,6 @@ import kotlinx.coroutines.withContext
  */
 object StickerNormalizer {
 
-    /** What a pass over a folder did. */
-    data class Result(
-        val changed: Int,
-        val alreadyFine: Int,
-        val failed: Int,
-    ) {
-        val total: Int get() = changed + alreadyFine + failed
-    }
-
     /**
      * The normalized form of [file], or null when there is nothing to do or nothing can be done.
      *
@@ -64,74 +50,5 @@ object StickerNormalizer {
         return withContext(Dispatchers.IO) {
             WebPTranscoder.toStickerSpec(context, file, info.animated)
         }
-    }
-
-    /**
-     * Walks the whole folder and rewrites what is not yet in shape.
-     *
-     * A file that has to change its type also has to change its name — a WebP called `.png` would be
-     * offered to the next app as a PNG, and the whole point is that the folder says what it holds. The
-     * rename happens first, so the bytes are written to the document under the name they belong to; a
-     * rename the provider refuses leaves that file untouched rather than mislabelled.
-     */
-    suspend fun normalizeFolder(
-        context: Context,
-        treeUri: Uri,
-        onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
-    ): Result {
-        val index = try {
-            StickerScanner.scan(context, treeUri)
-        } catch (e: Exception) {
-            flogError { "Cannot normalize, the folder could not be read: ${e.message}" }
-            return Result(0, 0, 0)
-        }
-        val items = index.allItems
-        var changed = 0
-        var alreadyFine = 0
-        var failed = 0
-
-        for ((position, item) in items.withIndex()) {
-            currentCoroutineContext().ensureActive()
-            onProgress(position, items.size)
-            val staged = StickerManager.materialize(context, treeUri, item)
-            if (staged == null) {
-                failed++
-                continue
-            }
-            val normalized = try {
-                normalize(context, staged, item.mime)
-            } catch (e: Exception) {
-                flogError { "Failed to normalize ${item.name}: ${e.message}" }
-                null
-            }
-            if (normalized == null) {
-                // Either it was already in shape, or it is something the platform cannot decode. The
-                // difference matters to no one here: in both cases the file stays as it is.
-                alreadyFine++
-                continue
-            }
-            var docId = item.docId
-            if (item.mime != "image/webp") {
-                val renamed = StickerWriter.renameTo(context, treeUri, docId, "${item.name}.webp")
-                if (renamed == null) {
-                    MediaLog.log("normalize: could not rename \"${item.name}\" to .webp, left as is")
-                    failed++
-                    continue
-                }
-                docId = renamed
-            }
-            if (StickerWriter.overwrite(context, treeUri, docId, normalized)) {
-                changed++
-                MediaLog.log(
-                    "normalize: \"${item.name}\" ${item.mime} -> image/webp, ${normalized.length()} B"
-                )
-            } else {
-                failed++
-            }
-        }
-        onProgress(items.size, items.size)
-        withContext(Dispatchers.IO) { StickerScanner.clearCached(context) }
-        MediaLog.log("normalize: $changed changed, $alreadyFine already fine, $failed failed")
-        return Result(changed, alreadyFine, failed)
     }
 }

@@ -1805,9 +1805,6 @@
     <string name="prefs__media__sticker_import_source__summary">Apre il selettore file direttamente in una cartella in cui scrive un\'altra app</string>
     <string name="prefs__media__sticker_packs">Pacchetti di adesivi</string>
     <string name="prefs__media__sticker_packs__summary">Crea, rinomina ed elimina le cartelle in cui sono ordinati i tuoi adesivi</string>
-    <string name="prefs__media__sticker_normalize">Uniforma gli adesivi</string>
-    <string name="prefs__media__sticker_normalize__summary">Converte ogni adesivo della cartella in WebP 512×512, così le app li inviano come adesivi</string>
-    <string name="sticker__normalize_done">{changed} di {total} adesivi convertiti</string>
     <string name="sticker__source_whatsapp">WhatsApp</string>
     <string name="sticker__source_whatsapp_business">WhatsApp Business</string>
     <string name="sticker__source_telegram">Telegram</string>

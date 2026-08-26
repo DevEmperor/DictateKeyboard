@@ -94,43 +94,6 @@ object StickerImports {
         }
     }
 
-    /**
-     * Brings every sticker already in [treeUri] into shape, reporting the same progress an import does.
-     *
-     * The catching-up counterpart to normalizing on import: for the folder someone had before this
-     * existed, and for anything dropped into it from outside the app. Idempotent — a second run over
-     * a folder that is already in shape reads one header per file and changes nothing.
-     */
-    fun startNormalize(
-        context: Context,
-        treeUri: Uri,
-        onFinished: (StickerNormalizer.Result) -> Unit,
-    ) {
-        if (isRunning) return
-        val appContext = context.applicationContext
-        _state.value = State(done = 0, total = 0)
-        job = scope.launch {
-            try {
-                val result = StickerNormalizer.normalizeFolder(appContext, treeUri) { done, total ->
-                    val current = _state.value
-                    if (current == null || current.done != done || current.total != total) {
-                        _state.value = State(done = done, total = total)
-                    }
-                }
-                _state.value = null
-                _importedTick.update { it + 1 }
-                onFinished(result)
-            } catch (e: CancellationException) {
-                // What was already rewritten stays rewritten; the rest is simply not done yet.
-                _state.value = null
-                _importedTick.update { it + 1 }
-                throw e
-            } finally {
-                job = null
-            }
-        }
-    }
-
     /** Stops the running import. What has already been copied stays in the folder. */
     fun cancel() {
         job?.cancel()
