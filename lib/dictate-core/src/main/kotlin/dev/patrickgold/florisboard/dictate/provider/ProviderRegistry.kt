@@ -185,26 +185,32 @@ object ProviderRegistry {
         supportsDynamicModels = true,
         apiKeyUrl = "https://aistudio.google.com/app/apikey",
         defaultChatModel = "gemini-2.5-flash",
-        defaultTranscriptionModel = "gemini-2.5-flash",
+        // gemini-3.5-transcribe (2026-08) is Google's first dedicated speech-to-text model: ~$0.005/min
+        // against chat-model token pricing, 2.6% word error rate, 85+ languages (issue #292). It does not
+        // speak generateContent — see TranscriptionApi.GEMINI_GENERATE_CONTENT and [isGeminiTranscribeModel].
+        // Everyone who never picked a model stores an empty string and resolves through here on every call,
+        // so existing installs move to it too; an explicit choice is stored verbatim and untouched.
+        defaultTranscriptionModel = "gemini-3.5-transcribe",
         // Stable, audio-capable Gemini models (verified June 2026; 2.0-flash was retired 2026-06-01). The
         // live picker merges any newer ones on top.
         curatedChatModels = listOf(
             "gemini-2.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-2.5-pro", "gemini-2.5-flash-lite",
         ),
-        // Gemini has no dedicated STT model – its multimodal chat models double as transcription models, so
-        // the curated STT set mirrors the (cheaper, faster) flash chat models.
+        // The dedicated STT model first, then the multimodal chat models that doubled as transcription
+        // models before it existed — they still work and travel a different endpoint, so both belong here.
         curatedTranscriptionModels = listOf(
+            "gemini-3.5-transcribe",
             "gemini-2.5-flash", "gemini-3.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-pro",
         ),
-        // Realtime (#128): Live API (BidiGenerateContent) with input_audio_transcription. Live models are
-        // a distinct family — the exact id is verified when the Gemini Live session is built (later phase).
-        // Realtime disabled: the Live API connects but never acks `setup` (no setupComplete) with our
-        // config — the bidirectional Live protocol needs verified model id + setup shape (#128). Keep the
-        // wiring so it can be re-enabled once confirmed; until then Gemini uses batch transcription.
-        supportsRealtime = false,
+        // Realtime (#128/#292): Live API (BidiGenerateContent) with inputAudioTranscription. This was off
+        // until Google shipped a streaming model built for it — the conversational live models connect but
+        // never ack `setup`, so the session died before a word was spoken. gemini-3.5-transcribe-live is a
+        // dedicated streaming STT model at ~$0.009/min, about half of OpenAI's, and emits both speculative
+        // and finalized text.
+        supportsRealtime = true,
         realtimeApi = RealtimeApi.GEMINI,
-        defaultRealtimeModel = "gemini-live-2.5-flash-preview",
-        curatedRealtimeModels = listOf("gemini-live-2.5-flash-preview"),
+        defaultRealtimeModel = "gemini-3.5-transcribe-live",
+        curatedRealtimeModels = listOf("gemini-3.5-transcribe-live"),
     )
 
     /**
@@ -478,7 +484,8 @@ object ProviderRegistry {
      *  - Gemini caps the whole request at 20 MB, and its audio travels **base64-inline**
      *    (`transcribeGeminiGenerateContent`), which inflates it by 4/3 — so the audio itself may not
      *    exceed about 15 MB. This is the one provider whose limit bites before the general packing
-     *    threshold does.
+     *    threshold does. The Interactions path taken by the dedicated STT model (#292) documents the
+     *    same 20 MB request ceiling and encodes the same way, so the figure covers both.
      *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
      *    anything a keyboard produces; recorded so the number is not looked up twice.
      *  - SiliconFlow 50 MB (and one hour), from its transcription API reference.
@@ -494,6 +501,21 @@ object ProviderRegistry {
         "assemblyai" -> 2252L * 1024 * 1024
         else -> 0L
     }
+
+    /**
+     * True for Google's dedicated speech-to-text models (`gemini-3.5-transcribe`, `-transcribe-live`,
+     * issue #292) as opposed to the multimodal chat models that transcribe as a side job.
+     *
+     * The distinction is not cosmetic: a dedicated model is reached over the **Interactions API**
+     * (`POST /v1beta/interactions`, its own request and response shape), not over `generateContent`,
+     * and it cannot serve single-call multimodal (#130) at all, because that route posts audio to
+     * `chat/completions`. Both callers ask this one question, so it is asked in one place.
+     *
+     * Matched by name rather than a list, so a later `gemini-4-transcribe` needs no app update — the
+     * same bet the model picker's own heuristic already makes.
+     */
+    fun isGeminiTranscribeModel(model: String): Boolean =
+        model.removePrefix("models/").lowercase().contains("transcribe")
 
     /** Builds a preset for a user-defined OpenAI-compatible endpoint. */
     /**

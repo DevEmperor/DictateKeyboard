@@ -596,16 +596,25 @@ class OpenAiCompatibleClient(
     }
 
     /**
-     * Google Gemini transcription. Gemini exposes no speech-to-text endpoint; its multimodal models
-     * transcribe audio sent as base64 `inline_data` to the native `generateContent` endpoint (the
-     * OpenAI-compatible layer used for chat does not accept audio). We give the model a strict instruction
-     * to emit only the verbatim transcript – and nothing at all for silence – so the output can be used
-     * directly and won't echo the style hint or hallucinate on empty audio.
+     * Google Gemini transcription, which since 2026-08 comes in two shapes and picks by model (#292).
+     *
+     * A dedicated speech-to-text model (`gemini-3.5-transcribe`) is reached over the Interactions API and
+     * is handled by [transcribeGeminiInteractions]. Everything else is a multimodal *chat* model doing
+     * transcription as a side job: audio goes as base64 `inline_data` to the native `generateContent`
+     * endpoint (the OpenAI-compatible layer used for chat does not accept audio), with a strict
+     * instruction to emit only the verbatim transcript – and nothing at all for silence – so the output
+     * can be used directly and won't echo the style hint or hallucinate on empty audio.
+     *
+     * The split is by model rather than by [TranscriptionApi] because both remain valid for this one
+     * provider: which endpoint applies follows from what the user picked in the model field.
      */
     private suspend fun transcribeGeminiGenerateContent(
         request: TranscriptionRequest,
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult {
+        if (ProviderRegistry.isGeminiTranscribeModel(request.model)) {
+            return transcribeGeminiInteractions(request, onRetry)
+        }
         val base64 = withContext(Dispatchers.IO) {
             base64EncodeFile(request.audioFile)
         }
@@ -636,6 +645,102 @@ class OpenAiCompatibleClient(
             .mapNotNull { it.text }
             .joinToString("")
         return TranscriptionResult(text.trim())
+    }
+
+    /**
+     * Google's dedicated speech-to-text models over the Interactions API (`POST {native}/interactions`,
+     * issue #292) — `gemini-3.5-transcribe` and its family.
+     *
+     * Not a chat call in disguise: there is no prompt and no temperature, the audio is the whole input,
+     * and what would be an instruction elsewhere is a `transcription_config` here. Audio travels inline as
+     * base64 like the `generateContent` path, so the same ~15 MB ceiling applies
+     * ([ProviderRegistry.maxUploadBytes]); the Files API would mean a second round trip and a copy of the
+     * dictation living on Google's servers, which is the opposite of what inline audio is for.
+     */
+    private suspend fun transcribeGeminiInteractions(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult {
+        val base64 = withContext(Dispatchers.IO) {
+            base64EncodeFile(request.audioFile)
+        }
+        val dto = GeminiInteractionRequestDto(
+            // The Interactions body names the model itself, without the `models/` prefix the native URL
+            // path carries — strip any the catalog or the user brought along.
+            model = request.model.removePrefix("models/"),
+            input = listOf(
+                GeminiInteractionInputDto(
+                    type = "audio",
+                    data = base64,
+                    mimeType = interactionsAudioMimeType(request.audioFile),
+                ),
+            ),
+            generationConfig = GeminiInteractionConfigDto(
+                transcriptionConfig = GeminiTranscriptionConfigDto(
+                    // "smart" removes fillers, folds spoken self-corrections into the sentence and
+                    // punctuates; "verbatim" would leave all of that to the rewording step.
+                    mode = GeminiTranscriptionModeDto(type = "smart"),
+                    // Omitted entirely for auto-detection — an empty list is not the same request.
+                    languageCodes = request.language
+                        ?.takeIf { it.isNotEmpty() && it != "detect" }
+                        ?.let { listOf(it) },
+                    customVocabulary = vocabularyFromPrompt(request.prompt),
+                ),
+            ),
+        )
+        val payload = json.encodeToString(GeminiInteractionRequestDto.serializer(), dto)
+        val httpRequest = Request.Builder()
+            .url(geminiNativeBaseUrl() + "interactions")
+            .headers(geminiNativeHeaders())
+            .post(payload.toRequestBody(JSON_MEDIA_TYPE))
+            .build()
+        val body = executeForBody(httpRequest, onRetry = onRetry)
+        return TranscriptionResult(transcriptOf(decode(GeminiInteractionResponseDto.serializer(), body)).trim())
+    }
+
+    /**
+     * Digs the transcript out of an Interaction. `output_text` is documented as a *convenience field the
+     * SDKs add*, so it may not be in the raw REST body at all — the steps are what is always there. The
+     * `user_input` step carries the request back, hence the skip: joining every text block would prepend
+     * whatever was sent in.
+     */
+    private fun transcriptOf(response: GeminiInteractionResponseDto): String {
+        val fromSteps = response.steps
+            .filter { it.type != "user_input" }
+            .lastOrNull { step -> step.content.any { !it.text.isNullOrBlank() } }
+            ?.content.orEmpty()
+            .mapNotNull { it.text }
+            .joinToString("")
+        return fromSteps.ifBlank { response.outputText.orEmpty() }
+    }
+
+    /**
+     * The Interactions audio block takes `audio/m4a` where [guessAudioMediaType] answers `audio/mp4` —
+     * same container, and only one of the two names is in Google's accepted list. Recordings are WAV
+     * (#130); m4a shows up when a long dictation was packed for the wire (#281) or a file was imported.
+     */
+    private fun interactionsAudioMimeType(file: File): String = when (file.extension.lowercase()) {
+        "m4a", "mp4" -> "audio/m4a"
+        else -> guessAudioMediaType(file).toString().substringBefore(";").trim()
+    }
+
+    /**
+     * Turns the transcription style hint into `custom_vocabulary` terms, or nothing.
+     *
+     * A dedicated STT model has nowhere to put prose — it takes no instruction. The one part of a hint
+     * that still does something here is the names and jargon in it, which is exactly what custom
+     * vocabulary biases towards. So the hint is read as a list (commas, semicolons, line breaks) and
+     * anything longer than four words is dropped as a sentence rather than a term. Google caps the field
+     * at 1000 entries but recommends staying near 100, which is also far more than a hint ever holds.
+     */
+    private fun vocabularyFromPrompt(prompt: String?): List<String>? {
+        val terms = prompt.orEmpty()
+            .split(',', ';', '\n')
+            .map { it.trim() }
+            .filter { term -> term.isNotEmpty() && term.count { it == ' ' } < 4 }
+            .distinct()
+            .take(100)
+        return terms.ifEmpty { null }
     }
 
     /** Strict transcription prompt for [transcribeGeminiGenerateContent]; folds in the language and style hints. */
@@ -1186,6 +1291,57 @@ class OpenAiCompatibleClient(
 
     @Serializable
     private data class GeminiCandidateDto(val content: GeminiContentDto? = null)
+
+    // --- Gemini Interactions DTOs (dedicated STT models, see transcribeGeminiInteractions) ---
+    // REST speaks snake_case in both directions here, unlike the camelCase generateContent surface above.
+
+    @Serializable
+    private data class GeminiInteractionRequestDto(
+        val model: String,
+        val input: List<GeminiInteractionInputDto>,
+        @SerialName("generation_config") val generationConfig: GeminiInteractionConfigDto? = null,
+    )
+
+    @Serializable
+    private data class GeminiInteractionInputDto(
+        val type: String,
+        val data: String,
+        @SerialName("mime_type") val mimeType: String,
+    )
+
+    @Serializable
+    private data class GeminiInteractionConfigDto(
+        @SerialName("transcription_config") val transcriptionConfig: GeminiTranscriptionConfigDto,
+    )
+
+    @Serializable
+    private data class GeminiTranscriptionConfigDto(
+        val mode: GeminiTranscriptionModeDto,
+        @SerialName("language_codes") val languageCodes: List<String>? = null,
+        @SerialName("custom_vocabulary") val customVocabulary: List<String>? = null,
+    )
+
+    @Serializable
+    private data class GeminiTranscriptionModeDto(val type: String)
+
+    @Serializable
+    private data class GeminiInteractionResponseDto(
+        val steps: List<GeminiInteractionStepDto> = emptyList(),
+        // Convenience field the SDKs synthesize; treated as a bonus, never as the source (see [transcriptOf]).
+        @SerialName("output_text") val outputText: String? = null,
+    )
+
+    @Serializable
+    private data class GeminiInteractionStepDto(
+        val type: String? = null,
+        val content: List<GeminiInteractionContentDto> = emptyList(),
+    )
+
+    @Serializable
+    private data class GeminiInteractionContentDto(
+        val type: String? = null,
+        val text: String? = null,
+    )
 
     @Serializable
     private data class ModelsResponseDto(val data: List<ModelEntryDto> = emptyList())

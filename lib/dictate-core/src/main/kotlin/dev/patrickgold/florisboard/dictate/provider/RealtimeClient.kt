@@ -571,10 +571,17 @@ private class ElevenLabsRealtimeSession(
 }
 
 /**
- * Google Gemini Live over the BidiGenerateContent WebSocket (`?key=` auth). A `setup` message enables
- * input-audio transcription (TEXT response modality); 16 kHz mono PCM16 is sent base64 as `realtimeInput`.
- * Input transcript chunks arrive in `serverContent.inputTranscription.text` and are concatenated. `finish()`
- * sends `audioStreamEnd`; the last chunks flush and `turnComplete`/`generationComplete` closes the session.
+ * Google Gemini Live over the BidiGenerateContent WebSocket (`?key=` auth), driving the dedicated
+ * streaming model `gemini-3.5-transcribe-live` (issue #292). A `setup` message enables input-audio
+ * transcription (TEXT response modality); 16 kHz mono PCM16 is sent base64 as `realtimeInput`.
+ * `finish()` sends `audioStreamEnd`; the last chunks flush and `turnComplete`/`generationComplete`
+ * closes the session.
+ *
+ * The transcription model answers in two fields where the conversational live models had one:
+ * `interimInputTranscription` is a speculative hypothesis that keeps changing while someone speaks,
+ * `inputTranscription` is what stands once they pause. That maps exactly onto the
+ * [RealtimeCallbacks] contract — interim replaces the partial, final appends a segment — so text
+ * settles as it is spoken instead of all at once when the session ends.
  */
 private class GeminiRealtimeSession(
     private val client: OkHttpClient,
@@ -587,6 +594,8 @@ private class GeminiRealtimeSession(
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
     private val transcript = StringBuilder()
+    /** The latest speculative text, cleared by every final. What is left at close was heard but never settled. */
+    @Volatile private var pendingInterim = ""
     private val audioGate = RealtimeAudioGate()
     @Volatile private var finishing = false
     @Volatile private var done = false
@@ -623,15 +632,34 @@ private class GeminiRealtimeSession(
             )
         }
         val server = obj["serverContent"]?.jsonObject
-        server?.get("inputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { chunk ->
-            if (chunk.isNotEmpty()) {
-                transcript.append(chunk)
-                callbacks.onPartial(transcript.toString())
+        // Speculative text: show it, never keep it. The next interim replaces this one outright.
+        server?.get("interimInputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { text ->
+            if (text.isNotEmpty()) {
+                pendingInterim = text
+                callbacks.onPartial(text)
             }
+        }
+        server?.get("inputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { chunk ->
+            if (chunk.isNotEmpty()) emitFinal(chunk)
         }
         val ended = server?.get("turnComplete")?.jsonPrimitive?.booleanOrNull == true ||
             server?.get("generationComplete")?.jsonPrimitive?.booleanOrNull == true
         if (ended && finishing) finalizeAndClose(webSocket)
+    }
+
+    /**
+     * Appends one finalized chunk, guarding against the one thing the protocol does not state: whether
+     * `inputTranscription` carries just the settled segment or everything settled so far. If it repeats
+     * what we already have, only the growth is passed on — otherwise every pause would duplicate the
+     * whole dictation.
+     */
+    private fun emitFinal(chunk: String) {
+        val seen = transcript.toString()
+        val addition = if (seen.isNotEmpty() && chunk.startsWith(seen)) chunk.substring(seen.length) else chunk
+        pendingInterim = ""
+        if (addition.isEmpty()) return
+        transcript.append(addition)
+        callbacks.onFinalSegment(addition)
     }
 
     private fun setup(): String = buildJsonObject {
@@ -640,7 +668,17 @@ private class GeminiRealtimeSession(
             putJsonObject("generationConfig") {
                 put("responseModalities", buildJsonArray { add("TEXT") })
             }
-            putJsonObject("inputAudioTranscription") { }
+            putJsonObject("inputAudioTranscription") {
+                // An empty list is Google's own way of asking for automatic detection, so the user's
+                // chosen language reaches Gemini for the first time — it used to be accepted and dropped.
+                put("languageCodes", buildJsonArray {
+                    language?.takeIf { it.isNotEmpty() && it != "detect" }?.let { add(it) }
+                })
+                // SMART drops "um"/"uh", folds spoken self-corrections into the sentence and punctuates.
+                // VERBATIM would hand all of that to the rewording step instead — for a keyboard, clean
+                // text on arrival is worth more than a faithful record of the stumbles.
+                put("mode", "SMART")
+            }
         }
     }.toString()
 
@@ -693,7 +731,13 @@ private class GeminiRealtimeSession(
         if (done) return
         done = true
         audioGate.close()
-        if (transcript.isNotEmpty()) callbacks.onFinalSegment(transcript.toString())
+        // Settled text was already handed over segment by segment, so nothing is repeated here. What can
+        // still be outstanding is a hypothesis the server never got to confirm — the last words of a
+        // dictation that ended on the closing socket. Keep them: heard-but-unconfirmed beats dropped.
+        if (pendingInterim.isNotEmpty()) {
+            callbacks.onFinalSegment(pendingInterim)
+            pendingInterim = ""
+        }
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
     }
