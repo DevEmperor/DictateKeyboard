@@ -16,6 +16,7 @@
     "db:migrate3:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/003_refund_tracking_settings_expenses.sql",
     "db:migrate5": "wrangler d1 execute dictate-cloud --local --file=migrations/005_order_revenue_sync.sql",
     "db:migrate5:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/005_order_revenue_sync.sql",
+    "db:backup": "wrangler d1 export dictate-cloud --remote --output=../private/dictate-cloud/backups/d1-$(date +%F).sql",
     "check:graph": "node tools/check-graph.mjs",
     "check:page": "node tools/check-page.mjs"
   },
