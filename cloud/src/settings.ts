@@ -59,6 +59,7 @@ export const RULE_KEYS = [
   'cost_drift',
   'overall_loss',
   'error_rate',
+  'revenue_unreported',
 ] as const;
 
 async function overrides(env: Env): Promise<Record<string, string>> {

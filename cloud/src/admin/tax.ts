@@ -134,7 +134,11 @@ export async function taxReport(env: Env, ctx?: ExecutionContext) {
               COALESCE(SUM(p.tax_micros), 0)             AS taxMicros,
               COALESCE(SUM(p.revenue_home_micros), 0)    AS revenueHomeMicros,
               COALESCE(SUM(CASE WHEN p.currency = ? THEN 0 ELSE 1 END), 0) AS foreignOrders,
-              COALESCE(SUM(CASE WHEN p.revenue_micros IS NOT NULL AND p.revenue_home_micros IS NULL THEN 1 ELSE 0 END), 0) AS unconverted
+              COALESCE(SUM(CASE WHEN p.revenue_micros IS NOT NULL AND p.revenue_home_micros IS NULL THEN 1 ELSE 0 END), 0) AS unconverted,
+              -- Sales Google has taken money for but not yet stated a share of. Counted here rather
+              -- than left to be noticed, because a year that is short by a sale is the one figure on
+              -- this page that must never look complete when it is not.
+              COALESCE(SUM(CASE WHEN p.revenue_micros IS NULL THEN 1 ELSE 0 END), 0) AS unreported
          FROM purchases p
         WHERE p.state = 'granted' AND (p.purchase_type IS NULL OR p.purchase_type != 0)
           AND EXISTS (SELECT 1 FROM wallets w WHERE w.id = p.wallet_id AND w.is_test = 0)
@@ -197,6 +201,7 @@ export async function taxReport(env: Env, ctx?: ExecutionContext) {
       orders: num(r.orders),
       foreignOrders: num(r.foreignOrders),
       unconverted: num(r.unconverted),
+      unreported: num(r.unreported),
       /** What buyers paid in total, tax included. Informational — never your income. */
       paidGross: num(r.paidMicros) / MICROS,
       /** Collected and remitted by Google. Never touches your account. */
@@ -219,7 +224,7 @@ export async function taxReport(env: Env, ctx?: ExecutionContext) {
     if (rows.some((r) => r.year === year)) continue;
     const spend = spendByYear[year]!;
     rows.push({
-      year, orders: 0, foreignOrders: 0, unconverted: 0, paidGross: 0, taxCollected: 0,
+      year, orders: 0, foreignOrders: 0, unconverted: 0, unreported: 0, paidGross: 0, taxCollected: 0,
       revenue: 0, refundedOrders: 0, refunded: 0, revenueNet: 0,
       spend: spend.total, spendUnconverted: spend.unconverted, spendByKind: spend.byKind,
       profit: -spend.total,

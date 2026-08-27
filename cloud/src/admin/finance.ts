@@ -35,25 +35,47 @@ const REAL_SALES = `p.state = 'granted' AND (p.purchase_type IS NULL OR p.purcha
 export interface CurrencyTotals {
   currency: string;
   paid: number;      // what customers paid, incl. tax
+  paidHome: number;  // the same, converted with the rate of the purchase day
   tax: number;
   revenue: number;   // what reaches you after Google's cut, in the buyer's currency
   revenueHome: number; // the same, converted with the rate of the purchase day
   orders: number;
+  /** Orders Google has taken payment for but not yet stated your share of. */
+  unreported: number;
+  /** What those orders are worth if the usual arithmetic holds. An estimate, kept apart. */
+  estimatedHome: number;
 }
 
 export async function playRevenue(env: Env, sinceMs = 0) {
+  const home = homeCurrency(env);
+
+  // The rate is read from the purchase rather than from today's table, and a sale in the payout
+  // currency needs none — that is the `CASE`. Everything else is summed off it, so the gross figure
+  // no longer borrows the revenue's conversion: it used to be derived from the ratio
+  // `revenueHome / revenue`, which quietly became zero the moment a revenue figure was missing, and
+  // the overview then claimed the customer had paid nothing at all.
   const rows = await env.DB.prepare(
-    `SELECT p.currency,
-            SUM(p.paid_micros)          AS paid,
-            SUM(p.tax_micros)           AS tax,
-            SUM(p.revenue_micros)       AS revenue,
-            SUM(p.revenue_home_micros)  AS revenueHome,
-            COUNT(*)                    AS orders
-       FROM purchases p
-      WHERE ${REAL_SALES} AND p.purchased_at >= ? AND p.currency IS NOT NULL
-      GROUP BY p.currency ORDER BY revenue DESC`,
-  ).bind(sinceMs).all<{
-    currency: string; paid: number; tax: number; revenue: number; revenueHome: number; orders: number;
+    `WITH sales AS (
+       SELECT p.currency AS currency, p.paid_micros AS paid, p.tax_micros AS tax,
+              p.revenue_micros AS revenue, p.revenue_home_micros AS revenueHome,
+              COALESCE(p.fx_rate, CASE WHEN p.currency = ? THEN 1.0 END) AS rate
+         FROM purchases p
+        WHERE ${REAL_SALES} AND p.purchased_at >= ? AND p.currency IS NOT NULL
+     )
+     SELECT currency,
+            SUM(paid)        AS paid,
+            SUM(tax)         AS tax,
+            SUM(revenue)     AS revenue,
+            SUM(revenueHome) AS revenueHome,
+            COALESCE(SUM(CASE WHEN rate IS NULL THEN 0 ELSE paid * rate END), 0) AS paidHome,
+            COUNT(*)         AS orders,
+            SUM(CASE WHEN revenue IS NULL THEN 1 ELSE 0 END) AS unreported,
+            COALESCE(SUM(CASE WHEN revenue IS NULL AND rate IS NOT NULL
+                              THEN (paid - COALESCE(tax, 0)) * ? * rate ELSE 0 END), 0) AS estimatedHome
+       FROM sales GROUP BY currency ORDER BY revenueHome DESC`,
+  ).bind(home, sinceMs, 1 - PLAY_SERVICE_FEE).all<{
+    currency: string; paid: number; paidHome: number; tax: number; revenue: number;
+    revenueHome: number; orders: number; unreported: number; estimatedHome: number;
   }>();
 
   const [testOrders, missing, unconverted] = await Promise.all([
@@ -77,18 +99,30 @@ export async function playRevenue(env: Env, sinceMs = 0) {
   const byCurrency: CurrencyTotals[] = (rows.results ?? []).map((r) => ({
     currency: r.currency,
     paid: num(r.paid) / MICROS,
+    paidHome: num(r.paidHome) / MICROS,
     tax: num(r.tax) / MICROS,
     revenue: num(r.revenue) / MICROS,
     revenueHome: num(r.revenueHome) / MICROS,
     orders: num(r.orders),
+    unreported: num(r.unreported),
+    estimatedHome: num(r.estimatedHome) / MICROS,
   }));
 
   return {
     byCurrency,
-    homeCurrency: homeCurrency(env),
+    homeCurrency: home,
     /** Every currency brought into one figure — the only total that is a total. */
     revenueHomeTotal: byCurrency.reduce((sum, c) => sum + c.revenueHome, 0),
+    paidHomeTotal: byCurrency.reduce((sum, c) => sum + c.paidHome, 0),
     orders: byCurrency.reduce((sum, c) => sum + c.orders, 0),
+    /**
+     * Sales Google has taken money for but not yet stated a developer share of, and what they would
+     * come to. Deliberately its own pair of figures: added into the revenue it would be a guess
+     * wearing the clothes of a measurement, and left out entirely it would read as nothing earned —
+     * which is exactly the mistake this whole path exists to undo.
+     */
+    unreportedOrders: byCurrency.reduce((sum, c) => sum + c.unreported, 0),
+    revenueEstimatedHome: byCurrency.reduce((sum, c) => sum + c.estimatedHome, 0),
     withoutFigures: num(missing?.n),
     withoutRate: num(unconverted?.n),
     testOrders: num(testOrders?.n),
@@ -111,12 +145,8 @@ export async function summary(env: Env, ctx?: ExecutionContext) {
   ]);
 
   const revenueHome = play.revenueHomeTotal;
-  const paidHome = play.byCurrency.reduce(
-    // Paid is only converted where a rate exists for that purchase; using the revenue ratio keeps
-    // the two figures on the same basis instead of mixing a converted total with an unconverted one.
-    (sum, c) => sum + (c.revenue > 0 ? c.paid * (c.revenueHome / c.revenue) : 0),
-    0,
-  );
+  // Converted per purchase with its own stored rate — see the query in [playRevenue].
+  const paidHome = play.paidHomeTotal;
 
   const costUsd = openai.connected ? openai.serviceUsd : null;
   const costHome = costUsd === null ? null : costUsd * fx.rate;
@@ -131,6 +161,14 @@ export async function summary(env: Env, ctx?: ExecutionContext) {
     costUsd,
     costHome,
     profitHome,
+    /**
+     * The same bottom line with the unaccounted sales counted in at the usual rate. Never shown as
+     * *the* figure — shown beside it, so a red month that is only waiting on Google's arithmetic is
+     * recognisable as such.
+     */
+    revenueEstimatedHome: play.revenueEstimatedHome,
+    profitWithEstimateHome: costHome === null ? null : revenueHome + play.revenueEstimatedHome - costHome,
+    unreportedOrders: play.unreportedOrders,
     orders: play.orders,
     testOrders: play.testOrders,
     withoutFigures: play.withoutFigures,
@@ -262,25 +300,31 @@ export async function plans(env: Env) {
 
   const rows = await env.DB.prepare(
     `SELECT p.product_id AS productId, COUNT(*) AS orders,
+            COUNT(p.revenue_micros) AS reported,
             AVG(p.paid_micros) AS avgPaid, AVG(p.revenue_micros) AS avgRevenue,
             AVG(p.revenue_home_micros) AS avgRevenueHome,
             AVG(p.tax_micros) AS avgTax, MAX(p.currency) AS currency
        FROM purchases p WHERE ${REAL_SALES} AND p.currency IS NOT NULL
       GROUP BY p.product_id`,
   ).all<{
-    productId: string; orders: number; avgPaid: number; avgRevenue: number;
+    productId: string; orders: number; reported: number; avgPaid: number; avgRevenue: number;
     avgRevenueHome: number; avgTax: number; currency: string;
   }>();
 
   const actual = new Map<string, {
-    orders: number; paid: number; revenue: number; revenueHome: number; tax: number; currency: string;
+    orders: number; unreported: number; paid: number; revenue: number; revenueHome: number;
+    tax: number; currency: string;
   }>();
   for (const r of rows.results ?? []) {
+    // `COUNT(column)` counts the rows that have one, and `AVG` averages only those — so a pack whose
+    // only sale is still unaccounted for has no measured revenue at all. Recorded as such: averaging
+    // it as zero would put a loss next to a pack that has in fact been paid for.
     actual.set(r.productId, {
       orders: num(r.orders),
+      unreported: num(r.orders) - num(r.reported),
       paid: num(r.avgPaid) / MICROS,
-      revenue: num(r.avgRevenue) / MICROS,
-      revenueHome: num(r.avgRevenueHome) / MICROS,
+      revenue: num(r.reported) > 0 ? num(r.avgRevenue) / MICROS : 0,
+      revenueHome: num(r.reported) > 0 ? num(r.avgRevenueHome) / MICROS : 0,
       tax: num(r.avgTax) / MICROS,
       currency: r.currency,
     });
@@ -307,7 +351,10 @@ export async function plans(env: Env) {
     // rate on top of it, so the buyer pays more than this and you are never handed the difference
     // in the first place — deducting it here would take the same money away twice.
     const modelRevenue = pack.priceEur * (1 - PLAY_SERVICE_FEE);
-    const real = actual.get(pack.id);
+    const row = actual.get(pack.id);
+    // Sales alone are not a measurement: a pack whose only order is still waiting on Google's
+    // accounting has nothing measured about it, and the model has to carry the row a while longer.
+    const real = row && row.orders > row.unreported ? row : null;
     // The converted figure where there is one — comparing a franc revenue against a euro cost
     // would produce a margin that is simply wrong.
     const realRevenueHome = real ? (real.revenueHome || real.revenue) : null;
@@ -335,9 +382,11 @@ export async function plans(env: Env) {
         margin: modelRevenue - costHome,
         marginPercent: modelRevenue > 0 ? ((modelRevenue - costHome) / modelRevenue) * 100 : 0,
       },
+      /** Sales that exist but carry no revenue figure yet — shown, never averaged in. */
+      unreportedOrders: row?.unreported ?? 0,
       actual: real
         ? {
-            orders: real.orders,
+            orders: real.orders - real.unreported,
             paid: real.paid,
             tax: real.tax,
             revenue: real.revenue,

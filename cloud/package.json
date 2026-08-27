@@ -14,6 +14,8 @@
     "db:migrate:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/002_alerts_fx_test.sql",
     "db:migrate3": "wrangler d1 execute dictate-cloud --local --file=migrations/003_refund_tracking_settings_expenses.sql",
     "db:migrate3:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/003_refund_tracking_settings_expenses.sql",
+    "db:migrate5": "wrangler d1 execute dictate-cloud --local --file=migrations/005_order_revenue_sync.sql",
+    "db:migrate5:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/005_order_revenue_sync.sql",
     "check:graph": "node tools/check-graph.mjs",
     "check:page": "node tools/check-page.mjs"
   },

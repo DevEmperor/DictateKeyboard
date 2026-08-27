@@ -166,6 +166,10 @@ export async function handleRedeem(request: Request, env: Env, ctx: ExecutionCon
   // carry money at all — and because the list price we charge is not what Play collects, nor what
   // Play pays out. Failure here is deliberately not fatal: the credit is already granted, and a
   // ledger row with an estimated price beats a customer without minutes.
+  //
+  // Asked *now* and usually answered only in part: Google states the payment immediately but the
+  // developer's share once it has settled, so `revenueMicros` is normally null at this point. That
+  // is written down as null rather than as zero, and `orders.ts` asks again nightly until it stands.
   const order = facts.orderId ? await fetchOrder(env, facts.orderId).catch(() => null) : null;
 
   // Converted here, once, with today's rate — and stored. Doing it at display time would mean a
@@ -180,8 +184,9 @@ export async function handleRedeem(request: Request, env: Env, ctx: ExecutionCon
     `INSERT INTO purchases (purchase_token, wallet_id, product_id, order_id, seconds, rewords,
                             price_eur, region_code, quantity, purchased_at, state,
                             paid_micros, tax_micros, revenue_micros, currency, buyer_country,
-                            purchase_type, fx_rate, revenue_home_micros)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'granted', ?, ?, ?, ?, ?, ?, ?, ?)`,
+                            purchase_type, fx_rate, revenue_home_micros,
+                            order_state, order_synced_at, order_attempts)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'granted', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
     .bind(
       purchaseToken,
@@ -203,6 +208,11 @@ export async function handleRedeem(request: Request, env: Env, ctx: ExecutionCon
       facts.purchaseType ?? null,
       fxRate,
       fxRate !== null && order?.revenueMicros != null ? Math.round(order.revenueMicros * fxRate) : null,
+      order?.state ?? null,
+      facts.orderId ? Date.now() : null,
+      // One attempt made here, so the nightly sync can count from a true starting point rather than
+      // treating a purchase it has never touched as one that has already been asked about.
+      facts.orderId ? 1 : 0,
     )
     .run();
 

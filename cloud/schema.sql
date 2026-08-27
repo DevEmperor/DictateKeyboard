@@ -92,11 +92,23 @@ CREATE TABLE IF NOT EXISTS purchases (
   --   revenue = what reaches the developer after Google's cut — the only figure that is income
   -- Null on older rows and whenever the order could not be read; the ledger falls back to the
   -- list price then, and the dashboard says which of the two it is showing.
+  --
+  -- `revenue_micros` is null far more often than the other two, and not by accident: Google states
+  -- the buyer's payment immediately but the developer's share only once the payment has settled.
+  -- Null therefore means "not accounted for yet", 0 means "really nothing" (a licence tester), and
+  -- `orders.ts` asks again each night until one of the two is true.
   paid_micros    INTEGER,
   tax_micros     INTEGER,
   revenue_micros INTEGER,
   currency       TEXT,
   buyer_country  TEXT,
+
+  -- What Google said about the order itself, and when it was last asked. Without the timestamp and
+  -- the counter, a purchase nobody could get figures for is indistinguishable from one nobody asked
+  -- about — and the nightly sync would have no way to give up on a hopeless case.
+  order_state     TEXT,                            -- PENDING | PROCESSED | REFUNDED …
+  order_synced_at INTEGER,
+  order_attempts  INTEGER NOT NULL DEFAULT 0,
 
   -- Absent on a real sale, 0 for a licence tester. The only reliable way to tell your own test
   -- purchases from income after the fact.

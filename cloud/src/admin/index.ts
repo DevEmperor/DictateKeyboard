@@ -8,6 +8,7 @@ import { NO_STORE, json } from '../util';
 import {
   giftCredit,
   mergeWallets,
+  refreshOrder,
   resetRecoveryCode,
   revokeToken,
   setBlocked,
@@ -169,6 +170,10 @@ export async function handleAdmin(request: Request, env: Env, ctx: ExecutionCont
         return json(await mergeWallets(env, admin, walletId, String(body.targetId ?? ''), note));
       case 'note':
         return json(await setNote(env, admin, walletId, note));
+      // No note required: this decides nothing, it asks Google what the order was worth and writes
+      // down the answer. See `refreshOrder`.
+      case 'refetch_order':
+        return json(await refreshOrder(env, admin, walletId, String(body.purchaseToken ?? '')));
       case 'mark_test':
         return json(await setTestAccount(env, admin, walletId, true, note));
       case 'unmark_test':

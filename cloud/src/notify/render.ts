@@ -39,6 +39,7 @@ const KIND: Record<string, string> = {
   overall_loss: 'Insgesamt im Minus',
   refund_loss: 'Erstattung nach Verbrauch',
   repeat_buyer_refunded: 'Käufer mit Erstattungshistorie',
+  revenue_unreported: 'Erlös nicht gemeldet',
   shared_token: 'Zugang weitergegeben',
   void_sweep: 'Nachgeholte Erstattung',
 };

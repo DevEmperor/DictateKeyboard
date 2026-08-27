@@ -3,6 +3,7 @@ import { limitsFrom, type Env } from './config';
 import { backfillPurchases, fetchRates } from './fx';
 import { maybeSendDigest } from './notify/digest';
 import { evaluateRules } from './notify/rules';
+import { syncOrderFigures } from './orders';
 import { handleChat } from './routes/chat';
 import { handleDelete, handleDeleteByCode } from './routes/delete';
 import { DELETE_PAGE_HTML } from './routes/delete-page';
@@ -126,9 +127,17 @@ export default {
         if (cleared > 0) console.log(`retention: cleared the Play pseudonym on ${cleared} deleted wallet(s)`);
       }),
     );
-    // Rates first, then the backfill that depends on them — one after the other on purpose.
+    // Three steps that each need the one before it, so they run in a row rather than side by side:
+    // today's rates, then the sales Google had not worked out its share of at redemption time, then
+    // the conversion of whatever that turned up. A failure in the middle does not stop the end —
+    // the conversion still has last night's figures to do something with.
     ctx.waitUntil(
       fetchRates(env)
+        .then(() => syncOrderFigures(env))
+        .then(({ asked, filled }) => {
+          if (asked > 0) console.log(`orders: asked about ${asked}, ${filled} now have a revenue figure`);
+        })
+        .catch((error) => console.log(`order sync failed: ${String(error).slice(0, 200)}`))
         .then(() => backfillPurchases(env))
         .then((filled) => {
           if (filled > 0) console.log(`fx: converted ${filled} purchases`);

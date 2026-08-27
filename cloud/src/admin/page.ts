@@ -808,13 +808,21 @@ var GRAPH = ${GRAPH_JSON};
     // omits sales is worse than one that says how many it omitted.
     if (s.withoutRate) extra.push(s.withoutRate + ' noch ohne Umrechnungskurs');
 
+    // Der Erlös kommt später als die Zahlung — bis dahin stünde hier sonst „0,00 €" für einen Kauf,
+    // der längst bezahlt ist. Die Schätzung steht deshalb daneben, nie in der Zahl darüber.
+    var pending = s.unreportedOrders
+      ? '<br>+ ca. ' + money(s.revenueEstimatedHome, cur) + ' aus ' + s.unreportedOrders +
+        ' Kauf/Käufen, die Google noch nicht abgerechnet hat'
+      : '';
+
     var html = card('Einnahmen',
       'Was nach Googles Anteil und Steuern bei dir ankommt — von Google je Bestellung gemeldet, nicht gerechnet. ' +
       'Fremdwährungen sind mit dem EZB-Kurs des Kauftags umgerechnet und zählen mit; der Kurs steht fest auf der ' +
       'Buchung, ändert sich also nachträglich nicht mehr. Testkäufe sind ausgenommen: die kosten nichts und ' +
-      'bringen nichts ein.',
+      'bringen nichts ein. Den Entwickleranteil meldet Google erst, wenn die Zahlung abgerechnet ist — was noch ' +
+      'aussteht, steht als Schätzung darunter (Brutto − Steuer − Googles Anteil) und zählt in keiner Summe mit.',
       money(s.revenueHome, cur),
-      s.orders + ' Kauf/Käufe · Kundschaft zahlte ' + money(s.paidHome, cur) + others +
+      s.orders + ' Kauf/Käufe · Kundschaft zahlte ' + money(s.paidHome, cur) + others + pending +
       (extra.length ? '<br>' + extra.join(' · ') : ''));
 
     html += card('OpenAI-Kosten',
@@ -832,7 +840,13 @@ var GRAPH = ${GRAPH_JSON};
       'Cloudflare, Domain und deine Zeit stehen nirgends darin.',
       s.profitHome === null ? '—'
         : '<span' + (profitCls ? ' style="color:var(--crit)"' : '') + '>' + money(s.profitHome, cur) + '</span>',
-      s.profitHome === null ? 'OpenAI nicht verbunden' : 'nach Play-Gebühr und Steuer');
+      s.profitHome === null ? 'OpenAI nicht verbunden'
+        : 'nach Play-Gebühr und Steuer' +
+          // Ein Minus, das nur an einer ausstehenden Meldung hängt, soll nicht wie ein Verlust
+          // dastehen. Beide Zahlen nebeneinander, keine davon in der anderen.
+          (s.unreportedOrders && s.profitWithEstimateHome !== null && s.profitWithEstimateHome !== undefined
+            ? '<br>mit den noch nicht abgerechneten Käufen: ' + money(s.profitWithEstimateHome, cur)
+            : ''));
     return html;
   }
 
@@ -1084,6 +1098,7 @@ var GRAPH = ${GRAPH_JSON};
     cost_drift: ['OpenAI rechnet anders ab', 'Die stille Regel: Preiserhöhung, die sonst niemand bemerkt.'],
     overall_loss: ['Insgesamt im Minus', 'Alles jemals eingenommen gegen alles jemals ausgegeben.'],
     error_rate: ['Viele Fehler', 'Meist eine Störung bei OpenAI.'],
+    revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
   };
 
   var NUMBERS = [
@@ -1326,20 +1341,38 @@ var GRAPH = ${GRAPH_JSON};
       var homeCur = sum ? sum.homeCurrency : 'EUR';
       html += sect('Käufe', d.purchases.length ? '<table><thead><tr><th>Datum</th><th>Paket</th><th>Bestellnummer</th><th class="num">Minuten</th>' +
         '<th class="num">Gezahlt' + hint('Was die Kundschaft tatsächlich gezahlt hat, in ihrer Währung und inklusive der Steuer ihres Landes — von Google gemeldet. Wo Google keine Bestellung herausgab, steht ersatzweise der Listenpreis.') + '</th>' +
-        '<th class="num">Dein Erlös</th><th>Region</th><th>Zustand</th></tr></thead><tbody>' +
+        '<th class="num">Dein Erlös' + hint('Von Google gemeldet, nicht gerechnet — und erst, wenn die Zahlung abgerechnet ist. Bis dahin steht hier „noch nicht gemeldet" samt Schätzung: Brutto minus Steuer minus Googles Anteil. Die Schätzung zählt in keiner Summe mit.') + '</th>' +
+        '<th>Region</th><th>Zustand</th><th></th></tr></thead><tbody>' +
         d.purchases.map(function (p) {
           var paid = p.paidMicros != null && p.currency
             ? money(p.paidMicros / 1e6, p.currency)
             : '<span class="muted">' + money(p.priceEur, 'EUR') + ' (Liste)</span>';
-          var rev = p.revenueHomeMicros != null ? money(p.revenueHomeMicros / 1e6, homeCur)
-            : p.revenueMicros != null && p.currency ? money(p.revenueMicros / 1e6, p.currency)
-            : '—';
+          // Drei verschiedene Aussagen, die früher alle wie „0,00" aussahen: gemeldet, noch nicht
+          // gemeldet (mit Schätzung), und gar keine Bestellung.
+          var rev;
+          if (p.revenueHomeMicros != null) rev = money(p.revenueHomeMicros / 1e6, homeCur);
+          else if (p.revenueMicros != null && p.currency) rev = money(p.revenueMicros / 1e6, p.currency);
+          else if (p.orderId) {
+            rev = '<span class="muted">noch nicht gemeldet</span>' +
+              (p.estimatedHomeMicros != null
+                ? '<br><span class="muted">≈ ' + money(p.estimatedHomeMicros / 1e6, homeCur) + '</span>' : '');
+          } else rev = '—';
+
+          var asked = p.orderSyncedAt
+            ? 'Zuletzt gefragt: ' + fmtDate(p.orderSyncedAt) +
+              (p.orderState ? ' · Bestellzustand ' + esc(p.orderState) : '') +
+              ' · ' + (p.orderAttempts || 0) + ' Versuch(e)'
+            : 'Noch nie nachgefragt.';
+
           return '<tr><td>' + fmtDate(p.purchasedAt) + '</td><td class="mono">' + esc(p.productId) +
             (p.purchaseType === 0 ? ' <span class="pill test">Lizenztester</span>' : '') +
             '</td><td class="mono">' + esc(p.orderId || '—') +
             '</td><td class="num">' + Math.round(p.seconds / 60) + '</td><td class="num">' + paid +
-            '</td><td class="num">' + rev + '</td><td>' + esc(p.regionCode || '—') +
-            '</td><td>' + (p.state === 'voided' ? '<span class="pill crit">erstattet</span>' : '<span class="pill ok">gutgeschrieben</span>') + '</td></tr>';
+            '</td><td class="num" title="' + esc(asked) + '">' + rev + '</td><td>' + esc(p.regionCode || '—') +
+            '</td><td>' + (p.state === 'voided' ? '<span class="pill crit">erstattet</span>' : '<span class="pill ok">gutgeschrieben</span>') +
+            '</td><td>' + (p.orderId
+              ? '<button class="btn ghost" data-refetch="' + esc(p.purchaseToken) + '" style="padding:4px 8px;font-size:12px">neu abfragen</button>'
+              : '') + '</td></tr>';
         }).join('') + '</tbody></table>' : null, 'Noch keine Käufe.');
 
       html += sect('Geräte', d.devices.length ? '<table><thead><tr><th>Gerät</th><th>Hinzugefügt</th><th>Zuletzt gesehen</th><th></th></tr></thead><tbody>' +
@@ -1437,6 +1470,20 @@ var GRAPH = ${GRAPH_JSON};
         if (y) run({ action: marking ? 'mark_test' : 'unmark_test', walletId: w.id, note: note() });
       });
     };
+    // Kein Grund, keine Rückfrage: hier wird nichts entschieden, sondern eine fremde Zahl geholt.
+    // Und „Google meldet weiterhin nichts" ist eine Auskunft, kein Fehlschlag — deshalb nicht über
+    // run(), das jede Antwort mit ok:false als „Nicht ausgeführt" überschreiben würde.
+    Array.prototype.forEach.call($('dBody').querySelectorAll('[data-refetch]'), function (b) {
+      b.onclick = function () {
+        b.disabled = true;
+        act({ action: 'refetch_order', walletId: w.id, purchaseToken: b.getAttribute('data-refetch') })
+          .then(function (r) {
+            b.disabled = false;
+            tell(r.ok ? 'Nachgetragen' : 'Googles Antwort', r.message)
+              .then(function () { openDetail(w.id); loadAll(); });
+          }, function () { b.disabled = false; });
+      };
+    });
     Array.prototype.forEach.call($('dBody').querySelectorAll('[data-revoke]'), function (b) {
       b.onclick = function () {
         if (!need()) return;
@@ -1465,9 +1512,12 @@ var GRAPH = ${GRAPH_JSON};
         '</tr></thead><tbody>' +
         p.byCurrency.map(function (c) {
           return '<tr><td class="mono">' + esc(c.currency) + '</td><td class="num">' + c.orders +
+            (c.unreported ? '<br><span class="muted" style="font-size:12px">' + c.unreported + ' offen</span>' : '') +
             '</td><td class="num">' + money(c.paid, c.currency) + '</td><td class="num muted">' + money(c.tax, c.currency) +
             '</td><td class="num">' + money(c.revenue, c.currency) +
-            '</td><td class="num"><strong>' + money(c.revenueHome, cur) + '</strong></td></tr>';
+            '</td><td class="num"><strong>' + money(c.revenueHome, cur) + '</strong>' +
+            (c.unreported ? '<br><span class="muted" style="font-size:12px">≈ + ' + money(c.estimatedHome, cur) + '</span>' : '') +
+            '</td></tr>';
         }).join('') +
         '<tr><td colspan="5"><strong>Summe</strong></td><td class="num"><strong>' + money(p.revenueHomeTotal, cur) + '</strong></td></tr>' +
         '</tbody></table></div>';
@@ -1476,6 +1526,12 @@ var GRAPH = ${GRAPH_JSON};
       }
       if (p.withoutRate) {
         html += '<p class="sub">' + p.withoutRate + ' Kauf/Käufe warten noch auf einen Umrechnungskurs — die Summe ist um diese Beträge zu niedrig. Der nächtliche Lauf trägt sie nach.</p>';
+      }
+      if (p.unreportedOrders) {
+        html += '<p class="sub">' + p.unreportedOrders + ' Kauf/Käufe sind bezahlt, aber Google hat den Entwickleranteil ' +
+          'noch nicht gemeldet — das passiert erst, wenn die Zahlung abgerechnet ist. Die Summe oben ist deshalb um ' +
+          'geschätzte ' + money(p.revenueEstimatedHome, cur) + ' zu niedrig. Der nächtliche Lauf fragt jede Nacht erneut nach; ' +
+          'im Konto lässt sich eine einzelne Bestellung sofort neu abfragen.</p>';
       }
     } else {
       html += '<div class="empty">Noch keine Käufe mit abgerufenen Beträgen.</div>';
@@ -1618,6 +1674,12 @@ var GRAPH = ${GRAPH_JSON};
       lines.push(['<strong>Bleibt</strong>', '<strong>' + money(y.profit, cur) + '</strong>', 'vor Steuern und ohne deine Zeit']);
 
       var warn = [];
+      // Ein Jahr, dem eine Einnahme fehlt, darf nicht vollständig aussehen — das ist die eine
+      // Ansicht, in der eine stille Lücke später teuer wird.
+      if (y.unreported) {
+        warn.push(y.unreported + ' Kauf/Käufe sind bezahlt, aber Google hat den Erlös noch nicht ' +
+          'gemeldet — sie fehlen in dieser Rechnung.');
+      }
       if (y.unconverted) warn.push(y.unconverted + ' Kauf/Käufe noch ohne Umrechnungskurs — die Summe ist zu niedrig.');
       if (y.spendUnconverted) warn.push(y.spendUnconverted + ' Ausgabe(n) ohne belasteten Betrag.');
       if (!y.spend) warn.push('Für dieses Jahr ist noch keine Ausgabe erfasst — ohne die ist „Bleibt" kein Gewinn, sondern nur die Einnahme.');
@@ -1736,7 +1798,10 @@ var GRAPH = ${GRAPH_JSON};
             (k.savingsPercent === null || k.savingsPercent === undefined ? ''
               : '<span class="pill info">' + k.savingsPercent + ' % günstiger je Min.</span> ') +
             (a ? '<span class="pill info">' + a.orders + ' Verkauf/Verkäufe</span>'
-               : '<span class="pill">nur Modell</span>') + '</div>' +
+               : '<span class="pill">nur Modell</span>') +
+            // Ein Paket, dessen einziger Verkauf noch nicht abgerechnet ist, hat nichts Gemessenes —
+            // es steht deshalb auf „nur Modell" und sagt hier, warum.
+            (k.unreportedOrders ? ' <span class="pill">' + k.unreportedOrders + ' noch nicht abgerechnet</span>' : '') + '</div>' +
         '</div>' +
         '<div style="flex:1.4;min-width:min(100%,250px)"><table style="font-size:13px">' +
           steps.map(function (s) {

@@ -397,7 +397,7 @@ export const NODES: GraphNode[] = [
     guards: ['Speicherbegrenzung', 'Netz unter den Push-Meldungen'],
     detail: 'Vier Arbeiten, bewusst zu einer krummen Minute statt zur vollen Stunde, wo sich jeder Cron der Plattform staut: Einzelzeilen aus <code>usage_log</code> älter als 90 Tage löschen; den Prüfwert des Vorgängerkontos 24 Monate nach einer Löschung kappen; die Tageskurse holen und fehlende Umrechnungen nachtragen; und 30 Tage gegen Googles Liste stornierter Käufe abgleichen, weil eine Push-Meldung ausbleiben kann.',
     long:
-      '<p>Vier Arbeiten, die niemand im laufenden Betrieb sehen soll:</p>' +
+      '<p>Fünf Arbeiten, die niemand im laufenden Betrieb sehen soll:</p>' +
       '<p><strong>Aufräumen.</strong> Einzelne Protokollzeilen älter als 90 Tage werden stapelweise ' +
       'gelöscht. Tagessummen und Admin-Protokoll bleiben — die Statistik ist vollständig, das ' +
       'Detailprotokoll altert weg.</p>' +
@@ -406,14 +406,17 @@ export const NODES: GraphNode[] = [
       'stillschweigend "für immer" geworden.</p>' +
       '<p><strong>Umrechnen.</strong> Die Tageskurse werden geholt und Käufe ohne Umrechnung ' +
       'nachgetragen. Erst danach zählt ein Verkauf in Franken oder Zloty überhaupt mit.</p>' +
+      '<p><strong>Nachfragen.</strong> Was Google beim Kauf noch nicht sagen konnte, wird erneut ' +
+      'geholt: den Entwickleranteil rechnet Play erst nach der Abrechnung aus. Ohne diesen Lauf ' +
+      'bliebe ein bezahlter Kauf für immer mit „nichts verdient" in den Büchern stehen.</p>' +
       '<p><strong>Abgleichen.</strong> 30 Tage gegen Googles eigene Liste stornierter Käufe. Eine ' +
       'Push-Nachricht ist nicht garantiert; ohne dieses Netz wäre eine verpasste Erstattung ein ' +
       'dauerhaft falscher Kontostand, den niemand bemerkt.</p>' +
       '<p>Die krumme Minute ist kein Zufall: Zur vollen Stunde staut sich jeder Cron der Plattform.</p>',
-    source: 'src/retention.ts, src/fx.ts, src/sweep.ts',
+    source: 'src/retention.ts, src/fx.ts, src/orders.ts, src/sweep.ts',
   },
   {
-    id: 'watchdog', zone: 'cf', label: 'Wachhund · alle 15 min', sub: 'sechs Regeln, Versand',
+    id: 'watchdog', zone: 'cf', label: 'Wachhund · alle 15 min', sub: 'sieben Regeln, Versand',
     col: 2, row: 5,
     holds: ['MAIL-Bindung'],
     guards: ['Regeln einzeln abschaltbar', 'gleiche Meldung nur einmal', 'Empfänger in der Bindung festgeschrieben'],
@@ -694,7 +697,7 @@ export const EDGES: GraphEdge[] = [
   },
   {
     from: 'cron', to: 'd1', kind: 'store',
-    label: 'Aufräumen, Kurse, Abgleich', guard: 'Speicherbegrenzung',
+    label: 'Aufräumen, Kurse, Erlöse, Abgleich', guard: 'Speicherbegrenzung',
     long:
       '<p>Der nächtliche Lauf schreibt in dieselbe Datenbank, aus der tagsüber gelesen wird: Er löscht ' +
       'alte Protokollzeilen stapelweise, kappt abgelaufene Prüfwerte, trägt Umrechnungen nach und ' +
@@ -716,10 +719,10 @@ export const EDGES: GraphEdge[] = [
   },
   {
     from: 'watchdog', to: 'd1', kind: 'store',
-    label: 'SQL · sechs Regeln', guard: 'nur Zahlen, keine Inhalte',
+    label: 'SQL · sieben Regeln', guard: 'nur Zahlen, keine Inhalte',
     long:
       '<p>Der Wachhund liest, was ohnehin da ist: Käufe, Verbrauch, Statuscodes, Gerätezahlen. Er ' +
-      'braucht keine zusätzliche Erhebung, weil jede seiner sechs Regeln aus Zahlen beantwortbar ist, ' +
+      'braucht keine zusätzliche Erhebung, weil jede seiner sieben Regeln aus Zahlen beantwortbar ist, ' +
       'die für die Abrechnung sowieso anfallen.</p>' +
       '<p>Er schreibt auch dorthin zurück: Jede ausgelöste Warnung wird als Zeile abgelegt, mit einem ' +
       'Schlüssel gegen Wiederholungen. Deshalb ist im Dashboard nachlesbar, was wann gemeldet wurde, ' +

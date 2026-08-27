@@ -139,9 +139,18 @@ export interface OrderFacts {
   /** What the customer paid, including tax. */
   paidMicros: number;
   taxMicros: number;
-  /** What reaches you after Google's cut. The only figure that is actually income. */
-  revenueMicros: number;
+  /**
+   * What reaches you after Google's cut. The only figure that is actually income — and **null when
+   * Google has not stated one**, which is the ordinary case in the hours after a sale: the share is
+   * worked out once the payment settles, not at the moment the purchase completes.
+   *
+   * Null and 0 are different answers and must stay that way. A licence tester's order really is
+   * worth zero; a fresh sale that Google has not accounted for yet is worth an unknown amount, and
+   * the two looked identical in the ledger until a real sale sat there reading 0.00 €.
+   */
+  revenueMicros: number | null;
   buyerCountry?: string;
+  /** `PENDING`, `PROCESSED`, `REFUNDED`, … — worth storing to explain a missing revenue figure. */
   state?: string;
 }
 
@@ -178,17 +187,23 @@ export async function fetchOrder(env: Env, orderId: string): Promise<OrderFacts 
 
   return {
     currency: total.currencyCode,
-    paidMicros: toMicros(order.total),
-    taxMicros: toMicros(order.tax),
+    paidMicros: toMicros(order.total) ?? 0,
+    taxMicros: toMicros(order.tax) ?? 0,
     revenueMicros: toMicros(order.developerRevenueInBuyerCurrency),
     buyerCountry: order.buyerAddress?.buyerCountry,
     state: order.state,
   };
 }
 
-/** Money → integer micros. Kept integer so summing thousands of orders never drifts. */
-function toMicros(money: Money | undefined): number {
-  if (!money) return 0;
+/**
+ * Money → integer micros, or null where Google sent no such amount at all.
+ *
+ * Kept integer so summing thousands of orders never drifts, and kept nullable so an absent field
+ * cannot pass itself off as a zero — see [OrderFacts.revenueMicros] for why that distinction is the
+ * difference between "not accounted for yet" and "earned nothing".
+ */
+function toMicros(money: Money | undefined): number | null {
+  if (!money) return null;
   const units = Number(money.units ?? 0);
   const nanos = Number(money.nanos ?? 0);
   return Math.round(units * 1_000_000 + nanos / 1000);

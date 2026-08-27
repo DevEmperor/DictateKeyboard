@@ -1,4 +1,4 @@
-import { PACKAGES, type Env } from '../config';
+import { PACKAGES, PLAY_SERVICE_FEE, type Env } from '../config';
 import { num } from '../costs';
 import { guardStub, walletStub } from '../meter';
 import { alertSettings } from '../settings';
@@ -231,11 +231,19 @@ export async function walletDetail(env: Env, id: string) {
     env.DB.prepare(
       `SELECT purchase_token AS purchaseToken, product_id AS productId, order_id AS orderId,
               seconds, price_eur AS priceEur, region_code AS regionCode,
-              paid_micros AS paidMicros, revenue_micros AS revenueMicros,
+              paid_micros AS paidMicros, tax_micros AS taxMicros, revenue_micros AS revenueMicros,
               revenue_home_micros AS revenueHomeMicros, currency, purchase_type AS purchaseType,
-              purchased_at AS purchasedAt, state
+              purchased_at AS purchasedAt, state,
+              order_state AS orderState, order_synced_at AS orderSyncedAt,
+              order_attempts AS orderAttempts,
+              -- What the sale is worth if the usual arithmetic holds, for the rows Google has not
+              -- accounted for yet. Worked out here so the page never does money arithmetic of its
+              -- own, and null wherever it cannot be said honestly.
+              CASE WHEN revenue_micros IS NULL AND paid_micros IS NOT NULL AND fx_rate IS NOT NULL
+                   THEN CAST((paid_micros - COALESCE(tax_micros, 0)) * ? * fx_rate AS INTEGER)
+              END AS estimatedHomeMicros
          FROM purchases WHERE wallet_id = ? ORDER BY purchased_at DESC`,
-    ).bind(id).all(),
+    ).bind(1 - PLAY_SERVICE_FEE, id).all(),
     env.DB.prepare(
       `SELECT token_hash AS tokenHash, created_at AS createdAt, last_seen_at AS lastSeenAt,
               label, revoked_at AS revokedAt

@@ -42,6 +42,7 @@ export async function evaluateRules(env: Env, ctx: ExecutionContext): Promise<nu
     on('cost_drift', () => costDrift(env, ctx, t.costDriftPercent)),
     on('overall_loss', () => overallLoss(env, ctx, t.minLossHome)),
     on('error_rate', () => errorRate(env, ctx, t.errorRatePercent)),
+    on('revenue_unreported', () => revenueUnreported(env, ctx)),
   ]);
 
   // One broken rule must not silence the other five. A rule that throws is itself worth knowing
@@ -257,6 +258,50 @@ async function overallLoss(env: Env, ctx: ExecutionContext, minLoss: number): Pr
       `Bleibt es so, stimmt entweder die Kalkulation nicht oder es wurde erstattet, nachdem verbraucht war.`,
     // Once a day at most: this is a state, not an event.
     dedupeKey: `overall_loss:${today()}`,
+  }, ctx)) ? 1 : 0;
+}
+
+/**
+ * A sale that is paid for and still has no revenue figure a week later.
+ *
+ * Google states the developer's share once the payment settles, which is normally a matter of hours
+ * and is why `orders.ts` asks again each night. Past a week the delay is no longer a delay: a
+ * permission missing on the service account, an order Google will not hand over, an assumption that
+ * stopped holding. Worth a warning precisely because the failure is so quiet — the books simply read
+ * as if that sale earned nothing, which is what happened to the first real one.
+ */
+const UNREPORTED_AFTER_DAYS = 7;
+
+async function revenueUnreported(env: Env, ctx: ExecutionContext): Promise<number> {
+  const cutoff = Date.now() - UNREPORTED_AFTER_DAYS * 24 * HOUR_MS;
+  const row = await env.DB.prepare(
+    `SELECT COUNT(*) AS n, MIN(p.purchased_at) AS oldest, MAX(p.order_attempts) AS attempts
+       FROM purchases p JOIN wallets w ON w.id = p.wallet_id AND w.is_test = 0
+      WHERE p.state = 'granted' AND p.purchase_type IS NULL AND p.order_id IS NOT NULL
+        AND p.revenue_micros IS NULL AND p.purchased_at < ?`,
+  ).bind(cutoff).first<{ n: number; oldest: number; attempts: number }>();
+
+  const open = num(row?.n);
+  if (open === 0) return 0;
+
+  const days = Math.floor((Date.now() - num(row?.oldest)) / (24 * HOUR_MS));
+  return (await raise(env, {
+    kind: 'revenue_unreported',
+    // Not critical: no money is being lost this minute, and a mail at three in the morning would
+    // not make Google answer any sooner. It belongs in the daily digest.
+    severity: 'notice',
+    value: open,
+    title: `${open} Kauf/Käufe ohne gemeldeten Erlös`,
+    detail:
+      `Google hat für ${open} bezahlte${open === 1 ? 'n' : ''} Kauf${open === 1 ? '' : 'e'} den ` +
+      `Entwickleranteil bis heute nicht gemeldet, der älteste liegt ${days} Tage zurück ` +
+      `(${num(row?.attempts)} Abfragen bisher). Normal ist das für ein paar Stunden nach dem Kauf, ` +
+      `nicht für eine Woche. In den Büchern sieht so ein Kauf aus, als hätte er nichts eingebracht — ` +
+      `deshalb diese Meldung. Zu prüfen: hat das Dienstkonto in der Play Console das Recht ` +
+      `„Finanzdaten, Bestellungen und Antworten auf Kündigungsumfragen einsehen"? Im Konto lässt sich ` +
+      `die Bestellung mit „neu abfragen" sofort erneut holen, dann steht Googles Antwort im Klartext da.`,
+    // A state, not an event: once a day is enough.
+    dedupeKey: `revenue_unreported:${today()}`,
   }, ctx)) ? 1 : 0;
 }
 

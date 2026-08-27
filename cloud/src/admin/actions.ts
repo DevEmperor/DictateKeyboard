@@ -1,6 +1,7 @@
 import { raise } from '../alerts';
 import type { Env } from '../config';
 import { guardStub, walletStub } from '../meter';
+import { syncOrderForPurchase } from '../orders';
 import { newRecoveryCode, sha256, today } from '../util';
 import type { AdminIdentity } from './auth';
 
@@ -219,6 +220,30 @@ export async function setTestAccount(
       ? 'Als Testkonto markiert — ab sofort aus allen Geldzahlen ausgenommen.'
       : 'Markierung entfernt — das Konto zählt wieder als echt.',
   };
+}
+
+/**
+ * Ask Google again what one order was worth.
+ *
+ * The one action here that requires no reason, because it does not decide anything: it fetches a
+ * figure that belongs to Google and writes down whatever comes back. It exists because the developer
+ * share arrives after the sale — sometimes hours after — and waiting for the nightly pass to find
+ * out whether a purchase is merely late or genuinely unreadable is a poor way to spend a day.
+ *
+ * Logged all the same, with the answer as the note: the ledger changing without a trace is how the
+ * numbers stop adding up later.
+ */
+export async function refreshOrder(
+  env: Env,
+  admin: AdminIdentity,
+  walletId: string,
+  purchaseToken: string,
+): Promise<ActionResult> {
+  if (!purchaseToken.trim()) return { ok: false, message: 'Kein Kauf angegeben.' };
+
+  const outcome = await syncOrderForPurchase(env, purchaseToken.trim());
+  await log(env, admin, walletId || null, 'refetch_order', 0, 0, outcome.message);
+  return { ok: outcome.ok, message: outcome.message };
 }
 
 async function syncToD1(env: Env, walletId: string, state: {
