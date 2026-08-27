@@ -633,10 +633,10 @@ private class GeminiRealtimeSession(
         }
         val server = obj["serverContent"]?.jsonObject
         // Speculative text: show it, never keep it. The next interim replaces this one outright.
-        server?.get("interimInputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { text ->
-            if (text.isNotEmpty()) {
-                pendingInterim = text
-                callbacks.onPartial(text)
+        server?.get("interimInputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { hypothesis ->
+            if (hypothesis.isNotEmpty()) {
+                pendingInterim = hypothesis
+                callbacks.onPartial(hypothesis)
             }
         }
         server?.get("inputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { chunk ->
