@@ -73,6 +73,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -613,6 +614,12 @@ private fun PromptEditorDialog(
     // a snippet can carry a typed trigger (issue #283).
     val isSnippet = snippetBodyOf(text.trim()) != null
 
+    // "Requires selection" has no meaning for a snippet: it is written verbatim, the selection is never
+    // read. Clear it the moment the brackets appear rather than saving a flag that quietly does nothing.
+    LaunchedEffect(isSnippet) {
+        if (isSnippet) requiresSelection = false
+    }
+
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
         title = stringRes(
@@ -715,6 +722,10 @@ private fun PromptEditorDialog(
                 tooltip = stringRes(R.string.dictate__prompt_requires_selection_summary),
                 checked = requiresSelection,
                 onCheckedChange = { requiresSelection = it },
+                // A snippet is inserted verbatim and never looks at a selection, so the switch would be
+                // a promise the prompt cannot keep — it is cleared and locked while the brackets are
+                // there, and selectable again the moment they are gone.
+                enabled = !isSnippet,
             )
             SwitchRow(
                 title = stringRes(R.string.dictate__prompt_auto_apply_title),
@@ -830,6 +841,7 @@ private fun SwitchRow(
     tooltip: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
 ) {
     TooltipBox(
         positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
@@ -839,13 +851,22 @@ private fun SwitchRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCheckedChange(!checked) }
+                .clickable(enabled = enabled) { onCheckedChange(!checked) }
                 .padding(vertical = 1.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(text = title, modifier = Modifier.weight(1f).padding(end = 12.dp))
-            Switch(checked = checked, onCheckedChange = onCheckedChange)
+            Text(
+                text = title,
+                modifier = Modifier.weight(1f).padding(end = 12.dp),
+                // Dim the label along with the switch, so a disabled row reads as one greyed-out unit.
+                color = if (enabled) {
+                    Color.Unspecified
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                },
+            )
+            Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
         }
     }
 }
