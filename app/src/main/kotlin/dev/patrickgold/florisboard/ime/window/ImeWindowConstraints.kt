@@ -345,7 +345,13 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             ImeFormFactor.Type.TABLET_PORTRAIT to DpSize(width = 800.dp, height = 1310.dp),
             ImeFormFactor.Type.TABLET_LANDSCAPE to DpSize(width = 850.dp, height = 800.dp),
             ImeFormFactor.Type.LARGE_TABLET to DpSize(width = 1335.dp, height = 775.dp),
-            ImeFormFactor.Type.DESKTOP to DpSize(width = 0.dp, height = 0.dp),
+            // Every keyboard dimension is a fraction of the baseline, so a zero here is not an untuned
+            // form factor but an invisible keyboard: the window collapses to no height, the app never
+            // moves up, and nothing at all is drawn (issue #114 — a 14.6" tablet in landscape, where
+            // this class starts). 1600 x 900 is the extra-large breakpoint itself, at which the class
+            // is chosen in the first place. Deliberately diverges from FlorisBoard upstream, which
+            // still carries the zero.
+            ImeFormFactor.Type.DESKTOP to DpSize(width = 1600.dp, height = 900.dp),
         )
 
         /**
