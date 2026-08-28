@@ -201,10 +201,11 @@ class OpenAiCompatibleClient(
                     // gpt-transcribe replaced the singular `language` with `languages`, "a list of
                     // expected input languages when the recording may contain more than one language".
                     // A list in multipart is the repeated bracket form the docs use (`-F 'languages[]=en'
-                    // -F 'languages[]=fr'`). Measured against the live endpoint on 2026-08-28: the bare
-                    // `languages` we sent before is read as well (an invalid code is rejected under both
-                    // names), so this is the documented spelling, not a repair — but it is the spelling
-                    // the docs give for more than one code, and that is what this call now sends.
+                    // -F 'languages[]=fr'`). Measured against the live endpoint on 2026-08-28: an invalid
+                    // code comes back 400 under `language`, `languages` and `languages[]` alike, so the
+                    // spelling was never what decided whether a language applied — but every entry of the
+                    // bracket list is validated, which is the proof that several languages actually
+                    // arrive rather than only the first.
                     // A pinned language is that one language; auto-detect passes the languages the user
                     // actually dictates in, which is what makes a four-language setup work at all (#99).
                     languageHintsOf(request.language, request.expectedLanguages)

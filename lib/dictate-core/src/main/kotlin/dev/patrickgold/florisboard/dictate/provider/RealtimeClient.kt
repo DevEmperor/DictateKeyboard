@@ -989,6 +989,13 @@ private class DeepgramRealtimeSession(
  * True for OpenAI's gpt-transcribe generation, which renamed the singular `language` field to a
  * `languages` array. Matched on the id prefix so later snapshots and variants are covered, while
  * gpt-realtime-whisper and the gpt-4o-*-transcribe models keep the old field (issue #248).
+ *
+ * Measured on the batch endpoint (2026-08-28): gpt-transcribe there answers an invalid code under
+ * `language`, `languages` and `languages[]` alike, so it reads all three and this branch is a
+ * courtesy rather than the thing that makes a language choice apply. What the array does earn is the
+ * *list*: every entry is validated, so several languages genuinely arrive (issue #99), which no
+ * singular field can express. Unverified for the realtime socket, where the field name may well
+ * matter — hence the branch stays.
  */
 internal fun usesLanguagesField(model: String): Boolean {
     val id = model.lowercase()
