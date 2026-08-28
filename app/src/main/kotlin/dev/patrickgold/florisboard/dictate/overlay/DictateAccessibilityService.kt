@@ -33,6 +33,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import android.view.inputmethod.EditorInfo
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -643,6 +644,10 @@ class DictateAccessibilityService : AccessibilityService() {
     private fun clearInstance() {
         if (instance === this) {
             instance = null
+            // A bubble dictation belongs to this service, and nothing else ends it now that the keyboard
+            // window closing no longer does (#293). Before the bubble and the microphone foreground go,
+            // so the recorder closes cleanly and the audio is kept rather than lost.
+            DictateController.stashRecordingOnOverlayGone(applicationContext)
             unregisterScreenReceiver()
             _editableFocused.value = false
             _dictateKeyboardActive.value = false

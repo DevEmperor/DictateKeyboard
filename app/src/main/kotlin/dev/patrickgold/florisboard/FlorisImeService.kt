@@ -350,7 +350,8 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onDestroy() {
         super.onDestroy()
         // If the service is torn down mid-recording, finalize and keep the audio and release the mic
-        // instead of leaking the (process-scoped) recorder (issue #147). No-op when not recording.
+        // instead of leaking the (process-scoped) recorder (issue #147). No-op when not recording, and
+        // for a dictation the keyboard does not own — the floating button's outlives it (issue #293).
         dev.patrickgold.florisboard.dictate.DictateController.stashRecordingOnHide(this)
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
@@ -492,7 +493,8 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onWindowHidden()
         // Collapsing the keyboard during a recording finalizes and keeps the audio so far (instead of
         // discarding it): the next keyboard open then offers to send the interrupted recording. Outside
-        // an active recording this is the normal teardown.
+        // an active recording this is the normal teardown. A recording the keyboard does not own — the
+        // floating button's, or the system voice input's — is left running (issue #293).
         dev.patrickgold.florisboard.dictate.DictateController.stashRecordingOnHide(this)
         if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)

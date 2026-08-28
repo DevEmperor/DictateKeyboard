@@ -390,7 +390,12 @@ object DictateController {
      */
     private var swallowedRewording: Throwable? = null
 
-    /** Output destination of the in-flight dictation; see [OutputTarget]. Reset to IME when idle. */
+    /**
+     * Output destination of the in-flight dictation; see [OutputTarget]. Latched by every start and left
+     * alone afterwards — so outside a running dictation it says where the *last* one went, not where the
+     * next one will go. Anything reading it to decide ownership therefore has to check for a live
+     * dictation as well (see [foreignDictationInFlight]).
+     */
     private var outputTarget = OutputTarget.IME
 
     // Haptic feedback (#166) fires on dictation state transitions. Started lazily on the first dictation
@@ -1023,17 +1028,20 @@ object DictateController {
 
     /**
      * Starts listening for [Intent.ACTION_SCREEN_OFF] while a recording is in progress (issue #147). When
-     * the screen turns off we treat it exactly like the keyboard being hidden ([stashRecordingOnHide]):
-     * the audio is finalized and kept, and the mic is released. This is the dependable catch-all for
+     * the screen turns off we treat it exactly like the keyboard being hidden ([stashRecording]): the
+     * audio is finalized and kept, and the mic is released. This is the dependable catch-all for
      * recordings that would otherwise be orphaned when no IME teardown callback is delivered (abrupt app
      * switch, IME switch, lock). It never fires while the screen is on, so long recordings are unaffected.
+     *
+     * Unlike the keyboard's own teardown this applies to *every* dictation, whoever owns it: a dark screen
+     * means the user has left, and that is as true for the floating button as for the keyboard (#293).
      */
     private fun registerScreenOffReceiver(appContext: Context) {
         if (screenOffReceiver != null) return
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 if (intent.action == Intent.ACTION_SCREEN_OFF) {
-                    stashRecordingOnHide(appContext)
+                    stashRecording(appContext)
                 }
             }
         }
@@ -2568,7 +2576,7 @@ object DictateController {
      * segment and a fresh recording starts, with the timer seeded so it shows the running total. When the
      * user finally stops, the carry-over and the new segment are merged into one audio and transcribed
      * together (see [stopAndTranscribe]); if the keyboard closes again first, both are merged back into
-     * the persisted interrupted file (see [stashRecordingOnHide]). No-op unless the interrupted chip is
+     * the persisted interrupted file (see [stashRecording]). No-op unless the interrupted chip is
      * showing with a usable file.
      */
     fun continueInterruptedRecording(context: Context) {
@@ -2605,14 +2613,58 @@ object DictateController {
         File(context.applicationContext.filesDir, "dictate_interrupted.wav")
 
     /**
-     * Called when the keyboard window is hidden (see [FlorisImeService.onWindowHidden]). If a recording
-     * is in progress it is *finalized and kept* instead of discarded: the audio is stopped cleanly (so
-     * the WAV is valid even if the recorder/process is destroyed afterwards) and moved to [interruptedAudioFile],
-     * with its metadata mirrored to prefs. The next keyboard open then offers to send it (see
-     * [maybeOfferInterruptedRecording]). Outside the recording state this falls back to the normal
-     * teardown ([cancelRecording]).
+     * Called when the keyboard window is hidden or the IME service is torn down (see
+     * [FlorisImeService.onWindowHidden] / [FlorisImeService.onDestroy]) — but only ends a dictation the
+     * keyboard actually owns. A recording driven by the floating button or the system voice-input service
+     * is none of the keyboard's business and is left running (#293): rotating the device tears the target
+     * app's window down and takes the keyboard with it, which used to end a bubble dictation that had
+     * nothing to do with any of it. Their teardown signals are their own service going away and the screen
+     * turning off.
      */
     fun stashRecordingOnHide(context: Context) {
+        if (foreignDictationInFlight()) return
+        stashRecording(context)
+    }
+
+    /**
+     * True while a dictation the keyboard does not own is starting or running: the floating button (#88)
+     * or the system voice-input service (#67). Both deliberately outlive the keyboard window — that
+     * independence is the floating button's whole purpose.
+     *
+     * The live-dictation half of the check is not optional: [outputTarget] is latched by every start and
+     * never reset, so on its own it would also silence the keyboard's ordinary idle teardown for the rest
+     * of the process's life after a single bubble dictation. [startJob] covers the gap between the tap and
+     * [UiState.Recording], during which audio focus, Bluetooth SCO and the realtime socket are still
+     * opening — a rotation landing there would otherwise cancel a dictation that had just begun.
+     */
+    private fun foreignDictationInFlight(): Boolean =
+        outputTarget != OutputTarget.IME && (
+            startJob?.isActive == true ||
+                _state.value is UiState.Recording ||
+                _state.value is UiState.Transcribing ||
+                _state.value is UiState.Rewording
+            )
+
+    /**
+     * The floating button's service is going away (switched off in the system settings, unbound by the
+     * system) while it owns a dictation. Nobody is left to show or inject it, so it is finalized and kept
+     * here — the duty the keyboard used to discharge by accident, now carried by the owner (#293). No-op
+     * for a keyboard dictation: turning the accessibility service off must not take one of those with it.
+     */
+    fun stashRecordingOnOverlayGone(context: Context) {
+        if (outputTarget != OutputTarget.OVERLAY) return
+        if (_state.value !is UiState.Recording && startJob?.isActive != true) return
+        stashRecording(context)
+    }
+
+    /**
+     * Finalizes and keeps an in-progress recording instead of discarding it: the audio is stopped cleanly
+     * (so the WAV is valid even if the recorder/process is destroyed afterwards) and moved to
+     * [interruptedAudioFile], with its metadata mirrored to prefs. The next keyboard open then offers to
+     * send it (see [maybeOfferInterruptedRecording]). Outside the recording state this falls back to the
+     * normal teardown ([cancelRecording]).
+     */
+    private fun stashRecording(context: Context) {
         val current = _state.value
         val activeRecorder = recorder
         if (current !is UiState.Recording || activeRecorder == null) {
