@@ -214,7 +214,16 @@ object DictateLanguages {
      */
     fun expectedLanguages(activeCode: String, selectionRaw: String): List<String> {
         if (activeCode != DETECT) return emptyList()
-        val selected = parseSelection(selectionRaw).map { it.code }.filter { it != DETECT }
+        val selected = parseSelection(selectionRaw)
+            .map { it.code }
+            .filter { it != DETECT }
+            // Regions are dropped here, and only here. A pinned language still goes out exactly as the
+            // user picked it, but a *set* is assembled by us, and four of the catalog's codes carry a
+            // region (`zh-CN`, `zh-TW`, `yue-CN`, `yue-HK`) that the plain ISO-639-1 field may not know.
+            // A rejected code fails the whole request, so what used to be free detection would become a
+            // failed dictation — too high a price for a distinction no language *hint* can act on.
+            .map { it.substringBefore('-') }
+            .distinct()
         return if (selected.size in 2..MAX_EXPECTED) selected else emptyList()
     }
 }

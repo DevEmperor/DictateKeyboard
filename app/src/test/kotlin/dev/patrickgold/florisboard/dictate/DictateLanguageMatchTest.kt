@@ -90,6 +90,12 @@ class DictateLanguageMatchTest : FunSpec({
             ) shouldBe emptyList()
         }
 
+        test("regional codes lose their region, and two variants of one language count once") {
+            // A hint cannot act on CN vs TW anyway, and a code the provider rejects fails the whole
+            // request — where the user previously just got free detection.
+            DictateLanguages.expectedLanguages("detect", "detect,zh-CN,zh-TW,en") shouldBe listOf("zh", "en")
+        }
+
         test("detect itself is never sent as a language") {
             DictateLanguages.expectedLanguages("detect", "detect,de,en")
                 .shouldNotContain(DictateLanguages.DETECT)
