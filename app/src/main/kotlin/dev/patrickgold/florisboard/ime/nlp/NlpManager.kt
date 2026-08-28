@@ -57,6 +57,23 @@ private const val BLANK_STR_PATTERN = "^\\s*$"
 // the user dictionary settings screen assigns to a hand-added word.
 private const val USER_DICTIONARY_FREQ = 255
 
+/**
+ * Whether the word provider should be asked at all, given the user's "Display suggestions" switch and
+ * whether the active provider insists (issue #297).
+ *
+ * Its own decision, because [NlpManager.isSuggestionOn] is not one: that is an OR across three unrelated
+ * features, and using it as the single gate meant emoji suggestions — on by default — held the door open
+ * for the word suggestions the user had just switched off.
+ *
+ * The exception is not a courtesy. A shape-based provider *types* through its candidate list: switching
+ * that off does not declutter the strip, it takes the language away. So the override lives here, beside
+ * the rule it overrides, instead of waiting to be rediscovered the next time someone tidies this up.
+ */
+internal fun wantsWordSuggestions(
+    displaySuggestions: Boolean,
+    providerForcesSuggestionOn: Boolean,
+): Boolean = displaySuggestions || providerForcesSuggestionOn
+
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
 
@@ -102,7 +119,11 @@ class NlpManager(context: Context) {
             assembleCandidates()
         }
         prefs.suggestion.enabled.asFlow().collectLatestIn(scope) {
-            assembleCandidates()
+            // Cleared, not merely reassembled: the words from before the flip are still sitting in
+            // [internalSuggestions], and reassembling publishes them straight back — the strip would stay
+            // exactly as it was until the next keystroke, which is what made switching this off look like
+            // it did nothing (issue #297). Clearing reassembles by itself.
+            clearSuggestions()
         }
         prefs.clipboard.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
@@ -229,6 +250,16 @@ class NlpManager(context: Context) {
                 else -> emptyList()
             }
             val suggestions = when {
+                // The switch that says "Display suggestions" was read nowhere below this line (issue
+                // #297): [isSuggestionOn] let emoji suggestions keep the gate open, and since turning
+                // words off also turns composing off, the provider fell straight through to next-word
+                // predictions — the one kind of suggestion nothing was gating.
+                !wantsWordSuggestions(
+                    displaySuggestions = prefs.suggestion.enabled.get(),
+                    providerForcesSuggestionOn = providerForcesSuggestionOn(subtype),
+                ) -> {
+                    emptyList()
+                }
                 emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
                     emptyList()
                 }
@@ -255,10 +286,19 @@ class NlpManager(context: Context) {
     }
 
     fun suggestDirectly(suggestions: List<SuggestionCandidate>, holdNext: Boolean = false) {
+        // Glide's alternatives reach the strip without passing through [suggest], so the word switch has
+        // to be honoured here as well — otherwise "Display suggestions" off would go on filling the strip
+        // after every swipe, which is the same complaint one path further along (issue #297). The word is
+        // still committed; only the alternatives are withheld, and holding the next suggest is left alone
+        // so nothing changes for the case this was written for (#127).
+        val wanted = wantsWordSuggestions(
+            displaySuggestions = prefs.suggestion.enabled.get(),
+            providerForcesSuggestionOn = providerForcesSuggestionOn(subtypeManager.activeSubtype),
+        )
         val reqTime = SystemClock.uptimeMillis()
         holdNextSuggest = holdNext
         runBlocking {
-            internalSuggestions = reqTime to suggestions
+            internalSuggestions = reqTime to if (wanted) suggestions else emptyList()
         }
     }
 
