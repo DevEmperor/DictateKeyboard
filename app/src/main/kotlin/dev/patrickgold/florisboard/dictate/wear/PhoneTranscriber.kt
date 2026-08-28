@@ -41,7 +41,14 @@ object PhoneTranscriber {
         val model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" }
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
 
-        val request = TranscriptionRequest(audioFile = audio, model = model, language = language)
+        val request = TranscriptionRequest(
+            audioFile = audio, model = model, language = language,
+            // The watch dictates with the phone's languages, so it gets the same list-shaped hint (#99).
+            expectedLanguages = DictateLanguages.expectedLanguages(
+                activeCode = prefs.dictate.activeInputLanguage.get(),
+                selectionRaw = prefs.dictate.inputLanguages.get(),
+            ),
+        )
 
         val transcript = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
             // The phone is configured for on-device STT: transcribe locally, no network/key needed.

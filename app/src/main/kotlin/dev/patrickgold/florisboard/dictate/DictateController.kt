@@ -745,6 +745,16 @@ object DictateController {
     }
 
     /**
+     * The languages to hand to a model whose language field takes a *list* (OpenAI's gpt-transcribe
+     * generation, Soniox, Gemini) — the user's own selection while auto-detect is active, nothing
+     * otherwise. See [DictateLanguages.expectedLanguages] (issue #99).
+     */
+    private fun expectedLanguages(): List<String> = DictateLanguages.expectedLanguages(
+        activeCode = prefs.dictate.activeInputLanguage.get(),
+        selectionRaw = prefs.dictate.inputLanguages.get(),
+    )
+
+    /**
      * Snaps [activeInputLanguage] back into the current [inputLanguages] selection. A stale active
      * code — most importantly "detect" left over after the user disabled auto-detect — would otherwise
      * keep the transcription request on auto-detect (language = null, so e.g. Portuguese gets detected
@@ -1568,6 +1578,9 @@ object DictateController {
                     // chat-audio path the language goes into the instruction (readable name) instead.
                     language = if (chatAudio) null else prefs.dictate.activeInputLanguage.get()
                         .takeIf { it != DictateLanguages.DETECT },
+                    // Auto-detect on a model that hints a list of languages: name the user's own instead
+                    // of detecting from the whole world (#99). Everything else ignores this.
+                    expectedLanguages = if (chatAudio) emptyList() else expectedLanguages(),
                     // Non-chat: style/punctuation prompt biases recognition (roadmap 2.4 / 4.11).
                     // Chat-audio: the full instruction (language + style + all auto-formatting) in one go.
                     prompt = if (chatAudio) buildChatAudioInstruction(appContext) else transcriptionStylePrompt(),
@@ -1987,6 +2000,9 @@ object DictateController {
                 RealtimeClient.open(
                     api!!, account.apiKey, model, language, callbacks,
                     baseUrl = baseUrlOverrideFor(account).takeIf { presetFor(account).isCustom },
+                    // Same as the batch path: the three providers with a list-shaped language field hear
+                    // which languages to expect instead of nothing at all (#99).
+                    expectedLanguages = expectedLanguages(),
                 )
             }
         }.getOrElse { realtimeFailed = true; null } ?: return null
@@ -2350,6 +2366,7 @@ object DictateController {
         }
         val request = TranscriptionRequest(
             audioFile = packed ?: toUpload, model = model, language = language, prompt = prompt,
+            expectedLanguages = expectedLanguages(),
         )
         return try {
             val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {

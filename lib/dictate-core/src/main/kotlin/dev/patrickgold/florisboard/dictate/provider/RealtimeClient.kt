@@ -69,6 +69,10 @@ object RealtimeClient {
      * [baseUrl] redirects the OpenAI-shaped session at a server of the user's own (#249) — several
      * self-hosted transcription servers expose exactly this protocol under `/v1/realtime`. Null, and every
      * session goes to its vendor's fixed address as before.
+     *
+     * [expectedLanguages] is read only by the three providers whose language field is a list (OpenAI's
+     * gpt-transcribe generation, Soniox, Gemini), and only when no language is pinned: it turns
+     * auto-detect into detection among the languages the user dictates in (issue #99).
      */
     fun open(
         api: RealtimeApi,
@@ -77,14 +81,20 @@ object RealtimeClient {
         language: String?,
         callbacks: RealtimeCallbacks,
         baseUrl: String? = null,
+        expectedLanguages: List<String> = emptyList(),
     ): RealtimeSession = when (api) {
         RealtimeApi.OPENAI ->
-            OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl).also { it.connect() }
+            OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages)
+                .also { it.connect() }
         RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.SONIOX -> SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.SONIOX ->
+            SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
+                .also { it.connect() }
         RealtimeApi.ASSEMBLYAI -> AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.ELEVENLABS -> ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.GEMINI -> GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.GEMINI ->
+            GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
+                .also { it.connect() }
         RealtimeApi.MISTRAL_VOXTRAL -> MistralRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
     }
 }
@@ -103,7 +113,10 @@ private class OpenAiRealtimeSession(
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
     private val baseUrl: String? = null,
+    expectedLanguages: List<String> = emptyList(),
 ) : RealtimeSession {
+
+    private val languageHints = languageHintsOf(language, expectedLanguages)
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -199,16 +212,16 @@ private class OpenAiRealtimeSession(
                     })
                     put("transcription", buildJsonObject {
                         put("model", model)
-                        if (!language.isNullOrBlank() && language != "detect") {
-                            // The gpt-transcribe generation takes `languages` as an array (it can hint
-                            // several for code-switching audio); the older models take a single
-                            // `language` string. Sending the wrong one is not an error, it is simply
-                            // ignored — the user's language choice would quietly stop applying (#248).
-                            if (usesLanguagesField(model)) {
-                                put("languages", buildJsonArray { add(JsonPrimitive(language)) })
-                            } else {
-                                put("language", language)
+                        // The gpt-transcribe generation takes `languages` as an array (it can hint
+                        // several for code-switching audio); the older models take a single
+                        // `language` string. Sending the wrong one is not an error, it is simply
+                        // ignored — the user's language choice would quietly stop applying (#248).
+                        if (usesLanguagesField(model)) {
+                            if (languageHints.isNotEmpty()) {
+                                put("languages", buildJsonArray { languageHints.forEach { add(JsonPrimitive(it)) } })
                             }
+                        } else if (!language.isNullOrBlank() && language != "detect") {
+                            put("language", language)
                         }
                     })
                     // No server-side turn detection: Dictate decides when a dictation ends and commits the
@@ -285,7 +298,10 @@ private class SonioxRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    expectedLanguages: List<String> = emptyList(),
 ) : RealtimeSession {
+
+    private val languageHints = languageHintsOf(language, expectedLanguages)
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -337,8 +353,9 @@ private class SonioxRealtimeSession(
         put("audio_format", "pcm_s16le")
         put("sample_rate", 16_000)
         put("num_channels", 1)
-        if (!language.isNullOrBlank() && language != "detect") {
-            put("language_hints", buildJsonArray { add(language) })
+        // Soniox hints a list, so auto-detect can still name the languages the user dictates in (#99).
+        if (languageHints.isNotEmpty()) {
+            put("language_hints", buildJsonArray { languageHints.forEach { add(it) } })
         }
     }.toString()
 
@@ -589,7 +606,10 @@ private class GeminiRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    expectedLanguages: List<String> = emptyList(),
 ) : RealtimeSession {
+
+    private val languageHints = languageHintsOf(language, expectedLanguages)
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -671,9 +691,9 @@ private class GeminiRealtimeSession(
             putJsonObject("inputAudioTranscription") {
                 // An empty list is Google's own way of asking for automatic detection, so the user's
                 // chosen language reaches Gemini for the first time — it used to be accepted and dropped.
-                put("languageCodes", buildJsonArray {
-                    language?.takeIf { it.isNotEmpty() && it != "detect" }?.let { add(it) }
-                })
+                // With none pinned the list carries the languages they dictate in, which is what Google
+                // means by a list in the first place (#99).
+                put("languageCodes", buildJsonArray { languageHints.forEach { add(it) } })
                 // SMART drops "um"/"uh", folds spoken self-corrections into the sentence and punctuates.
                 // VERBATIM would hand all of that to the rewording step instead — for a keyboard, clean
                 // text on arrival is worth more than a faithful record of the stumbles.
@@ -973,4 +993,16 @@ private class DeepgramRealtimeSession(
 internal fun usesLanguagesField(model: String): Boolean {
     val id = model.lowercase()
     return id.startsWith("gpt-transcribe") || id.startsWith("gpt-live-transcribe")
+}
+
+/**
+ * The codes for a provider field that takes a *list* of languages: the pinned language when the user
+ * chose one — a choice stays a choice, however many the model could juggle — and otherwise the
+ * languages they actually dictate in, which is what turns "detect automatically" into "detect among
+ * my languages" (issue #99). Empty means detect freely, as before.
+ */
+internal fun languageHintsOf(language: String?, expectedLanguages: List<String>): List<String> {
+    val pinned = language?.takeIf { it.isNotBlank() && it != "detect" }
+    return (if (pinned != null) listOf(pinned) else expectedLanguages)
+        .filter { it.isNotBlank() && it != "detect" }
 }

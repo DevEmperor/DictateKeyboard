@@ -196,4 +196,25 @@ object DictateLanguages {
     /** Serializes a subset back into the comma-separated pref format. */
     fun serializeSelection(languages: List<DictateLanguage>): String =
         languages.joinToString(",") { it.code }
+
+    /**
+     * How many languages are still an *expectation* a model can work with (#99). Six covers anyone who
+     * really switches languages mid-dictation; a longer list is a wish list, and free detection serves
+     * that better than a wall of hints.
+     */
+    private const val MAX_EXPECTED = 6
+
+    /**
+     * The codes to give a provider whose language field takes a *list* — OpenAI's gpt-transcribe
+     * generation, Soniox, Gemini — given the active language [activeCode] and the raw selection
+     * [selectionRaw]. Only auto-detect spends the selection: on those providers "detect automatically"
+     * then means "detect among the languages I dictate in", instead of against every language there is
+     * (issue #99). A picked language is a decision and never widened, and one language on its own is
+     * already covered by the ordinary single-language hint, so both return empty.
+     */
+    fun expectedLanguages(activeCode: String, selectionRaw: String): List<String> {
+        if (activeCode != DETECT) return emptyList()
+        val selected = parseSelection(selectionRaw).map { it.code }.filter { it != DETECT }
+        return if (selected.size in 2..MAX_EXPECTED) selected else emptyList()
+    }
 }

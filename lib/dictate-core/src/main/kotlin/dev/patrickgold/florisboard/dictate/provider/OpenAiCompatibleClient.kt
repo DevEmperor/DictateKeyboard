@@ -196,12 +196,21 @@ class OpenAiCompatibleClient(
             .addFormDataPart("model", request.model)
             .addFormDataPart("response_format", "json")
             .apply {
-                val lang = request.language
-                if (!lang.isNullOrEmpty() && lang != "detect") {
-                    // gpt-transcribe replaced the singular `language` with `languages`, which also accepts
-                    // several codes for code-switching audio. Sending the old field to it would silently
-                    // drop the user's language choice, so pick the name the model actually reads.
-                    addFormDataPart(if (usesLanguagesField(request.model)) "languages" else "language", lang)
+                val lang = request.language?.takeIf { it.isNotEmpty() && it != "detect" }
+                if (usesLanguagesField(request.model)) {
+                    // gpt-transcribe replaced the singular `language` with `languages`, "a list of
+                    // expected input languages when the recording may contain more than one language".
+                    // A list in multipart is the repeated bracket form the docs use (`-F 'languages[]=en'
+                    // -F 'languages[]=fr'`) — the wrong field name is not an error here, it silently
+                    // drops the user's language choice instead (#248). A pinned language is that one
+                    // language; auto-detect passes the languages the user actually dictates in, which is
+                    // what makes a four-language setup work at all (#99).
+                    languageHintsOf(request.language, request.expectedLanguages)
+                        .forEach { addFormDataPart("languages[]", it) }
+                } else if (lang != null) {
+                    // Every older model hints a single language, and the docs are explicit that the two
+                    // fields must never be sent together.
+                    addFormDataPart("language", lang)
                 }
                 if (!request.prompt.isNullOrEmpty()) addFormDataPart("prompt", request.prompt)
                 if (temperature != null) addFormDataPart("temperature", temperature.toString())

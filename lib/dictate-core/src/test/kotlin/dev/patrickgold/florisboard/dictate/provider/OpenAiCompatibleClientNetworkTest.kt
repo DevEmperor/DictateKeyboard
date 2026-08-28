@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate.provider
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
@@ -87,29 +88,87 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
-    // Issue #248: gpt-transcribe renamed the singular `language` field to `languages`. Sending the wrong
-    // one silently drops the user's language choice instead of failing, so both directions are asserted.
-    test("gpt-transcribe receives the language as `languages`, older models as `language`") {
+    // Issue #248: gpt-transcribe renamed the singular `language` field to a `languages` array, which in
+    // multipart is the repeated bracket form the docs show. Sending the wrong name silently drops the
+    // user's language choice instead of failing, so every direction is asserted.
+    test("gpt-transcribe receives the language as `languages[]`, older models as `language`") {
         val audio = createTempFile(suffix = ".wav").toFile().apply {
             writeBytes("RIFF-test-audio".encodeToByteArray())
         }
         try {
             MockWebServer().use { server ->
-                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
-                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
+                repeat(2) { server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}""")) }
                 val client = OpenAiCompatibleClient(
                     ProviderConfig(baseUrl = server.url("/").toString(), apiKey = "test"),
                 )
 
                 client.transcribe(TranscriptionRequest(audio, "gpt-transcribe", language = "de"))
                 val newModel = server.takeRequest().body.readUtf8()
-                newModel shouldContain "name=\"languages\""
+                newModel shouldContain "name=\"languages[]\"\r\n\r\nde"
                 newModel shouldNotContain "name=\"language\"\r\n"
 
                 client.transcribe(TranscriptionRequest(audio, "gpt-4o-mini-transcribe", language = "de"))
                 val oldModel = server.takeRequest().body.readUtf8()
                 oldModel shouldContain "name=\"language\""
-                oldModel shouldNotContain "name=\"languages\""
+                oldModel shouldNotContain "name=\"languages"
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    // Issue #99: four dictation languages and no pinned one. The generation that takes a list gets the
+    // whole set (detect among *these*); the generation that takes one language gets nothing, because a
+    // single code cannot say "one of these four" and guessing one is how the wrong language gets forced.
+    test("expected languages reach a list-shaped model, and no older one") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                repeat(2) { server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}""")) }
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(baseUrl = server.url("/").toString(), apiKey = "test"),
+                )
+                val expected = listOf("de", "en", "fr")
+
+                client.transcribe(
+                    TranscriptionRequest(audio, "gpt-transcribe", expectedLanguages = expected),
+                )
+                val listModel = server.takeRequest().body.readUtf8()
+                expected.forAll { listModel shouldContain "name=\"languages[]\"\r\n\r\n$it" }
+
+                client.transcribe(
+                    TranscriptionRequest(audio, "gpt-4o-transcribe", expectedLanguages = expected),
+                )
+                server.takeRequest().body.readUtf8() shouldNotContain "name=\"language"
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    // A picked language stays picked: the model may be able to juggle several, but the user said German.
+    test("a pinned language is not widened by the selection") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(baseUrl = server.url("/").toString(), apiKey = "test"),
+                )
+
+                client.transcribe(
+                    TranscriptionRequest(
+                        audio, "gpt-transcribe", language = "de", expectedLanguages = listOf("de", "en", "fr"),
+                    ),
+                )
+                val body = server.takeRequest().body.readUtf8()
+                body shouldContain "name=\"languages[]\"\r\n\r\nde"
+                body shouldNotContain "\r\n\r\nen"
+                body shouldNotContain "\r\n\r\nfr"
             }
         } finally {
             audio.delete()
