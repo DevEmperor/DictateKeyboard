@@ -89,8 +89,9 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
     }
 
     // Issue #248: gpt-transcribe renamed the singular `language` field to a `languages` array, which in
-    // multipart is the repeated bracket form the docs show. Sending the wrong name silently drops the
-    // user's language choice instead of failing, so every direction is asserted.
+    // multipart is the repeated bracket form the docs show — the form that carries more than one code.
+    // A field name the server does not read is dropped in silence rather than refused, so the user's
+    // language choice would just stop applying; both directions are asserted.
     test("gpt-transcribe receives the language as `languages[]`, older models as `language`") {
         val audio = createTempFile(suffix = ".wav").toFile().apply {
             writeBytes("RIFF-test-audio".encodeToByteArray())
