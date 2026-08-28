@@ -300,8 +300,20 @@ abstract class AbstractEditorInstance(context: Context) {
     protected open fun determinePhantomSpacePending(): Boolean = false
 
     protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
-        return editorInfo.isRichInputEditor && !editorInfo.inputAttributes.flagTextNoSuggestions
+        return editorInfo.isRichInputEditor &&
+            (!editorInfo.inputAttributes.flagTextNoSuggestions || ignoresNoSuggestionsFlag(editorInfo))
     }
+
+    /**
+     * Whether an editor's request to suppress suggestions may be disregarded (issue #296).
+     *
+     * `TYPE_TEXT_FLAG_NO_SUGGESTIONS` was meant for fields where a dictionary is nonsense — codes,
+     * identifiers — but plenty of apps set it on ordinary prose, and there the flag reads less as a
+     * property of the field than as somebody else's opinion about the user's keyboard. Whose opinion
+     * wins is a decision for the subclass that can see the user's settings; the base class refuses on
+     * its own account.
+     */
+    protected open fun ignoresNoSuggestionsFlag(editorInfo: FlorisEditorInfo): Boolean = false
 
     private suspend fun determineLocalComposing(
         textBeforeSelection: CharSequence, localLastCommitPosition: Int

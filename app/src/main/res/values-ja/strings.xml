@@ -1618,6 +1618,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">すべてのキーボード言語の単語を受け入れます</string>
     <string name="pref__suggestion__next_word_prediction__label">次の単語の候補</string>
     <string name="pref__suggestion__next_word_prediction__summary">単語を入力し終えると、次に来そうな単語を提案します</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">候補を無効にするアプリを無視する</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">一部のアプリはキーボードに候補と自動修正を隠すよう求めます。それでも表示します（パスワード欄では表示しません）</string>
     <string name="suggestion__added_to_dictionary">「{word}」を辞書に追加しました</string>
     <string name="suggestion__already_in_dictionary">「{word}」はすでに辞書にあります</string>
     <string name="dictate__legacy_record">録音</string>

@@ -1430,6 +1430,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "suggestion__next_word_prediction",
             default = true,
         )
+        // Some apps set TYPE_TEXT_FLAG_NO_SUGGESTIONS on ordinary text fields — Instagram and a lot of
+        // WebViews do — which takes the composing region away and with it every word suggestion and the
+        // autocorrect (issue #296). Gboard and SwiftKey ignore that flag outside password fields; this
+        // lets the user do the same. Off by default: an app asking for a quiet strip is taken at its word
+        // until somebody says otherwise.
+        val ignoreAppSuggestionBlock = boolean(
+            key = "suggestion__ignore_app_suggestion_block",
+            default = false,
+        )
         val displayMode = enum(
             key = "suggestion__display_mode",
             default = CandidatesDisplayMode.DYNAMIC_SCROLLABLE,

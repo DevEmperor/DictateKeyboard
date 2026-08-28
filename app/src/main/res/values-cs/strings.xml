@@ -1700,6 +1700,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Přijímat slova ze všech jazyků klávesnice</string>
     <string name="pref__suggestion__next_word_prediction__label">Návrhy dalšího slova</string>
     <string name="pref__suggestion__next_word_prediction__summary">Navrhuje pravděpodobná další slova po dokončení slova</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignorovat aplikace, které vypínají návrhy</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Některé aplikace žádají klávesnici, aby skryla návrhy a automatické opravy. Přesto je zobrazovat — nikdy však v polích pro heslo</string>
     <string name="suggestion__added_to_dictionary">Slovo \"{word}\" bylo přidáno do slovníku</string>
     <string name="suggestion__already_in_dictionary">Slovo \"{word}\" je již ve slovníku</string>
     <string name="dictate__legacy_record">Nahrát</string>

@@ -1665,6 +1665,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Aceitar palavras de todos os idiomas do teclado</string>
     <string name="pref__suggestion__next_word_prediction__label">Sugestões da palavra seguinte</string>
     <string name="pref__suggestion__next_word_prediction__summary">Sugere palavras prováveis depois de terminar uma palavra</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignorar as aplicações que desativam as sugestões</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Algumas aplicações pedem ao teclado que oculte as sugestões e a correção automática. Mostrá-las mesmo assim — nunca em campos de palavra-passe</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" adicionada ao seu dicionário</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" já está no seu dicionário</string>
     <string name="dictate__legacy_record">Gravar</string>

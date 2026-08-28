@@ -1561,6 +1561,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Accepta paraules de tots els idiomes del teclat</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggeriments de paraula següent</string>
     <string name="pref__suggestion__next_word_prediction__summary">Suggereix paraules probables quan hàgiu acabat una paraula</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignora les aplicacions que desactiven els suggeriments</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Algunes aplicacions demanen al teclat que amagui els suggeriments i la correcció automàtica. Mostra\'ls igualment — mai als camps de contrasenya</string>
     <string name="suggestion__added_to_dictionary">S\'ha afegit \"{word}\" al vostre diccionari</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" ja és al vostre diccionari</string>
     <string name="dictate__legacy_record">Grava</string>

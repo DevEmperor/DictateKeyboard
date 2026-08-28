@@ -49,6 +49,26 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.showShortToastSync
 
+/**
+ * Whether an app's `TYPE_TEXT_FLAG_NO_SUGGESTIONS` may be disregarded for a field of this [variation]
+ * (issue #296).
+ *
+ * The setting is only half the answer. A password field is the case the flag was written for, and the one
+ * place where honouring it is not a matter of taste: a composing region there hands the typed word to the
+ * dictionary, the autocorrect and, in the wrong app, the screen. So the exception is not spelled as a
+ * preference the user can get wrong — it is spelled here, and it is not negotiable.
+ */
+internal fun mayIgnoreNoSuggestionsFlag(
+    ignoreAppSuggestionBlock: Boolean,
+    variation: InputAttributes.Variation,
+): Boolean = ignoreAppSuggestionBlock && when (variation) {
+    InputAttributes.Variation.PASSWORD,
+    InputAttributes.Variation.VISIBLE_PASSWORD,
+    InputAttributes.Variation.WEB_PASSWORD,
+    -> false
+    else -> true
+}
+
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
@@ -154,6 +174,13 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
         return super.shouldDetermineComposingRegion(editorInfo) &&
             (phantomSpace.isInactive || phantomSpace.showComposingRegion)
+    }
+
+    override fun ignoresNoSuggestionsFlag(editorInfo: FlorisEditorInfo): Boolean {
+        return mayIgnoreNoSuggestionsFlag(
+            ignoreAppSuggestionBlock = prefs.suggestion.ignoreAppSuggestionBlock.get(),
+            variation = editorInfo.inputAttributes.variation,
+        )
     }
 
     /**

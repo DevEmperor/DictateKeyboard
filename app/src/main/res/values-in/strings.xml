@@ -1641,6 +1641,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__suggestion__multilingual_typing__summary">Terima kata dari semua bahasa keyboard Anda</string>
     <string name="pref__suggestion__next_word_prediction__label">Saran kata berikutnya</string>
     <string name="pref__suggestion__next_word_prediction__summary">Menyarankan kemungkinan kata berikutnya setelah Anda menyelesaikan sebuah kata</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Abaikan aplikasi yang mematikan saran</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Beberapa aplikasi meminta papan ketik menyembunyikan saran dan koreksi otomatis. Tetap tampilkan — tidak pernah di kolom kata sandi</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" ditambahkan ke kamus Anda</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" sudah ada di kamus Anda</string>
     <string name="dictate__legacy_record">Rekam</string>

@@ -1622,6 +1622,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Wörter aus allen deinen Tastatursprachen akzeptieren</string>
     <string name="pref__suggestion__next_word_prediction__label">Wortvorschläge</string>
     <string name="pref__suggestion__next_word_prediction__summary">Schlägt wahrscheinliche nächste Wörter vor, sobald ein Wort fertig ist</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Apps übergehen, die Vorschläge abschalten</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Manche Apps bitten die Tastatur, Vorschläge und Autokorrektur zu verbergen. Trotzdem anzeigen — in Passwortfeldern nie</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" zum Wörterbuch hinzugefügt</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" ist bereits im Wörterbuch</string>
     <string name="dictate__legacy_record">Aufnehmen</string>

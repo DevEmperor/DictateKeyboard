@@ -1561,6 +1561,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Accepter les mots de toutes vos langues de clavier</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggestions de mot suivant</string>
     <string name="pref__suggestion__next_word_prediction__summary">Propose les mots probables une fois un mot terminé</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignorer les applications qui désactivent les suggestions</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Certaines applications demandent au clavier de masquer les suggestions et la correction automatique. Les afficher quand même — jamais dans les champs de mot de passe</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" a été ajouté à votre dictionnaire</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" est déjà dans votre dictionnaire</string>
     <string name="dictate__legacy_record">Enregistrer</string>

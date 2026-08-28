@@ -308,6 +308,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__suggestion__auto_correct__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__auto_correct__label"),
         SettingsSearchEntry(R.string.pref__suggestion__multilingual_typing__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__multilingual_typing__label"),
         SettingsSearchEntry(R.string.pref__suggestion__next_word_prediction__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__next_word_prediction__label"),
+        SettingsSearchEntry(R.string.pref__suggestion__ignore_app_suggestion_block__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__ignore_app_suggestion_block__label"),
         SettingsSearchEntry(R.string.pref__suggestion__api30_inline_suggestions_enabled__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__api30_inline_suggestions_enabled__label"),
         SettingsSearchEntry(R.string.pref__suggestion__incognito_mode__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__incognito_mode__label"),
         SettingsSearchEntry(R.string.pref__correction__title, R.string.settings__typing__title, Routes.Settings.Typing),

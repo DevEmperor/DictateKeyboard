@@ -1664,6 +1664,8 @@
     <string name="pref__suggestion__multilingual_typing__summary">Tüm klavye dillerinizdeki kelimeleri kabul edin</string>
     <string name="pref__suggestion__next_word_prediction__label">Sonraki kelime önerileri</string>
     <string name="pref__suggestion__next_word_prediction__summary">Bir kelimeyi bitirdiğinizde olası sonraki kelimeleri önerir</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__label">Önerileri kapatan uygulamaları yok say</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Bazı uygulamalar klavyeden önerileri ve otomatik düzeltmeyi gizlemesini ister. Yine de göster — parola alanlarında asla</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" sözlüğünüze eklendi</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" zaten sözlüğünüzde</string>
     <string name="dictate__legacy_record">Kaydet</string>
