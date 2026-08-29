@@ -3322,10 +3322,16 @@ object DictateController {
      * doing it without a word is what made the report this comes from unreportable — the raw transcript
      * appeared with no hint that the AI pass had been attempted at all, and the reporter read that as
      * "rewording is being skipped entirely". [reportSwallowedRewording] says so once the text has landed.
+     *
+     * A blank result counts as "did not work out" and keeps the text too (issue #304). **A rewording step
+     * must never be able to replace a dictation with nothing**, and this is the one place all three loops
+     * — auto-formatting, auto-apply prompts, [applyPendingPrompts] — pass through, so it is the one place
+     * the rule belongs. It held before only because the provider client throws on an empty completion:
+     * a guard at the far end of the chain, protecting against damage that happens here.
      */
     private suspend fun rewordOrKeep(text: String, block: suspend () -> String): String =
         try {
-            block()
+            block().ifBlank { text }
         } catch (c: CancellationException) {
             throw c // the stop button (issue #192) is not a failure and has nothing to report
         } catch (t: Throwable) {

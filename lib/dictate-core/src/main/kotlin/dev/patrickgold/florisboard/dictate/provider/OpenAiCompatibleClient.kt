@@ -19,6 +19,11 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Credentials
@@ -82,7 +87,7 @@ class OpenAiCompatibleClient(
         } else {
             request
         }
-        return try {
+        val first = try {
             completeOnce(effective)
         } catch (e: DictateApiException) {
             // Many models/endpoints reject `reasoning_effort`: it's an unknown option (#184), an
@@ -95,6 +100,52 @@ class OpenAiCompatibleClient(
                 throw e
             }
         }
+        return when (first) {
+            is Completion.Answer -> first.result
+            // A 200 with nothing usable in it. When the model spent its whole answer thinking there is
+            // exactly one remedy on this side of the wire, and it is the one Dictate Cloud applies to
+            // itself: ask again with the thinking turned down. Once, and only while there is something
+            // left to turn down — an answer that came back empty at "low" will not come back fuller at
+            // "low" (issue #304).
+            is Completion.Empty -> {
+                if (first.thoughtOnly && canLowerThinking(effective.reasoningEffort)) {
+                    // Deliberately not runCatching: that also catches the CancellationException the stop
+                    // button throws (#192), turning a cancelled dictation into a failed one.
+                    val second = try {
+                        completeOnce(effective.copy(reasoningEffort = THINKING_FLOOR))
+                    } catch (e: DictateApiException) {
+                        if (isReasoningEffortRejected(e)) reasoningEffortUnsupported.add(key)
+                        null
+                    }
+                    if (second is Completion.Answer) return second.result
+                }
+                // Either way the caller hears about the *first* answer: that is the one that describes
+                // what actually went wrong, while a rejected retry is noise about a field we added.
+                throw DictateApiException(DictateApiException.Kind.UNKNOWN, first.message)
+            }
+        }
+    }
+
+    /**
+     * Whether asking again with less thinking could change anything.
+     *
+     * Null means the field was omitted and the provider applied its own default — which, for a model that
+     * has just answered with nothing but thoughts, is demonstrably not "no thinking", so that case is worth
+     * a second try. Anything already at the floor is not.
+     */
+    private fun canLowerThinking(current: String?): Boolean =
+        current == null || current.trim().lowercase() !in THINKING_AT_FLOOR
+
+    /** What one call came back with: an answer, or a 200 with nothing usable in it (issue #304). */
+    private sealed interface Completion {
+        data class Answer(val result: ChatResult) : Completion
+
+        /**
+         * [message] is what the user will be told; [thoughtOnly] says the emptiness came from the model
+         * thinking its answer away rather than from the provider reporting a failure inside a 200 — the
+         * one distinction that decides whether asking again is worth anything.
+         */
+        data class Empty(val message: String, val thoughtOnly: Boolean) : Completion
     }
 
     /** True when [e] looks like the provider rejecting the `reasoning_effort` field or its value. */
@@ -106,7 +157,7 @@ class OpenAiCompatibleClient(
             ("does not support" in m && ("thinking" in m || "reasoning" in m))
     }
 
-    private suspend fun completeOnce(request: ChatRequest): ChatResult {
+    private suspend fun completeOnce(request: ChatRequest): Completion {
         val dto = ChatCompletionRequestDto(
             model = request.model,
             messages = request.messages.map { MessageDto(it.role.wire, it.content) },
@@ -122,21 +173,30 @@ class OpenAiCompatibleClient(
             .build()
         val body = executeForBody(httpRequest)
         val response = decode(ChatCompletionResponseDto.serializer(), body)
-        val text = response.choices.firstOrNull()?.message?.content.orEmpty()
+        val choice = response.choices.firstOrNull()
+        val text = choice?.message?.content.orEmpty()
         // No text is never an answer here — this endpoint only ever runs a rewording, and "" is not one.
         // Two ways to arrive: some OpenAI-compatible gateways (notably OpenRouter) report errors as HTTP
         // 200 with an empty `choices` array and an `{ "error": { ... } }` envelope; and a reasoning model
         // can answer with a choice whose `content` is empty because the thinking used up the whole output
-        // budget, or because it only spoke in a `reasoning` field we don't read. That second case used to
-        // return "" quietly — which in the auto-apply chain *replaced the dictation with nothing* (#284).
-        // `finish_reason` is the provider's own word for which of the two happened, so it goes along.
+        // budget. That second case used to return "" quietly — which in the auto-apply chain *replaced the
+        // dictation with nothing* (#284). Which of the two happened decides whether asking again is worth
+        // anything, so it is answered here rather than left for the caller to read out of a message (#304).
         if (text.isBlank()) {
-            val reason = response.choices.firstOrNull()?.finishReason?.let { " (finish_reason=$it)" }.orEmpty()
-            val message = extractErrorMessage(body) ?: "Empty response from provider$reason"
-            throw DictateApiException(DictateApiException.Kind.UNKNOWN, message)
+            val reason = choice?.finishReason?.let { " (finish_reason=$it)" }.orEmpty()
+            val providerMessage = extractErrorMessage(body)
+            // A provider naming an error outranks everything else: then the emptiness is the symptom and
+            // that is the cause, and no amount of less thinking will fix it.
+            val thoughtOnly = providerMessage == null &&
+                (choice?.message?.thought == true || choice?.finishReason.equals("length", ignoreCase = true))
+            val message = providerMessage ?: when {
+                thoughtOnly -> "The model answered with reasoning only and no text$reason"
+                else -> "Empty response from provider$reason"
+            }
+            return Completion.Empty(message, thoughtOnly)
         }
         val usage = response.usage?.let { TokenUsage(it.promptTokens, it.completionTokens) }
-        return ChatResult(text, usage)
+        return Completion.Answer(ChatResult(text, usage))
     }
 
     /**
@@ -1175,7 +1235,35 @@ class OpenAiCompatibleClient(
     )
 
     @Serializable
-    private data class ResponseMessageDto(val content: String? = null)
+    private data class ResponseMessageDto(
+        val content: String? = null,
+        /**
+         * The model's thinking, when the gateway hands it over. OpenRouter and most OpenAI-compatible
+         * gateways call it `reasoning`, the DeepSeek-shaped ones `reasoning_content`.
+         *
+         * **Looked at, never used.** Thinking is not an answer and must never reach the user's text field;
+         * it is here for one job only, telling apart the two ways a completion comes back empty (#304).
+         * Hence [thought], a yes/no — the text is deliberately never extracted, so there is nothing to
+         * accidentally commit.
+         *
+         * Typed as [JsonElement] and not [String] for the same reason it is only ever read as a boolean: a
+         * gateway that answers with a *structured* reasoning (an array of blocks, say) would otherwise fail
+         * the parse of the whole response, including every perfectly good answer that carries one.
+         */
+        val reasoning: JsonElement? = null,
+        @SerialName("reasoning_content") val reasoningContent: JsonElement? = null,
+    ) {
+        /** Whether the model thought out loud, whatever shape the gateway put that in. */
+        val thought: Boolean
+            get() = reasoning.hasContent() || reasoningContent.hasContent()
+
+        private fun JsonElement?.hasContent(): Boolean = when (this) {
+            null, JsonNull -> false
+            is JsonPrimitive -> content.isNotBlank()
+            is JsonArray -> isNotEmpty()
+            is JsonObject -> isNotEmpty()
+        }
+    }
 
     @Serializable
     private data class UsageDto(
@@ -1466,6 +1554,18 @@ class OpenAiCompatibleClient(
          */
         private val reasoningEffortUnsupported =
             java.util.Collections.synchronizedSet(HashSet<String>())
+
+        /**
+         * The effort a retry asks for after a model answered with nothing but thinking (#304).
+         *
+         * "low" and not "minimal": minimal is effectively a gpt-5 word — Ollama rejected it outright in
+         * #186 — while every model that speaks this dialect at all understands "low". A floor that the
+         * provider refuses would turn the one useful retry into a second failure.
+         */
+        private const val THINKING_FLOOR = "low"
+
+        /** Efforts with nothing left below them, so a retry would only repeat the same request. */
+        private val THINKING_AT_FLOOR = setOf("low", "minimal", "none", "off")
 
         /** Soniox / AssemblyAI async polling: interval between status checks and the overall budget. */
         private const val SONIOX_POLL_INTERVAL_MS = 1500L

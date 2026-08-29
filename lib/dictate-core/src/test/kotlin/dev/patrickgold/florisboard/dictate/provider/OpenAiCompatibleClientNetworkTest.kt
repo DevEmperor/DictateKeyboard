@@ -369,4 +369,109 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             server.takeRequest().getHeader("Authorization") shouldBe "Token test"
         }
     }
+
+    // Issue #304: a thinking model that spends its whole answer on the thinking comes back as a perfectly
+    // valid 200 with nothing in it. The one remedy on this side is to ask again with less thinking.
+    test("a reasoning-only answer is asked again with the thinking turned down") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """
+                    {"choices":[{"finish_reason":"length","message":{
+                      "role":"assistant","content":"","reasoning":"The user wants this shortened, so I"}}]}
+                    """.trimIndent(),
+                ),
+            )
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"choices":[{"finish_reason":"stop","message":{"role":"assistant","content":"Kurz und knapp."}}]}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            // The user's own setting is OFF, so nothing was sent and the provider used its own default —
+            // exactly the shape the report came in with.
+            val result = client.complete(ChatRequest.ofUser("google/gemini-3.5-flash", "Fasse das zusammen."))
+
+            result.text shouldBe "Kurz und knapp."
+            server.requestCount shouldBe 2
+            server.takeRequest().body.readUtf8() shouldNotContain "reasoning_effort"
+            server.takeRequest().body.readUtf8() shouldContain "\"reasoning_effort\":\"low\""
+        }
+    }
+
+    test("the thinking never becomes the answer, and the failure says what happened") {
+        MockWebServer().use { server ->
+            repeat(2) {
+                server.enqueue(
+                    MockResponse().setResponseCode(200).setBody(
+                        """
+                        {"choices":[{"finish_reason":"length","message":{
+                          "role":"assistant","content":null,"reasoning":"Let me think about this at length"}}]}
+                        """.trimIndent(),
+                    ),
+                )
+            }
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            val error = shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser("google/gemini-3.5-flash", "Fasse das zusammen."))
+            }
+
+            error.message.orEmpty() shouldContain "reasoning only"
+            error.message.orEmpty() shouldContain "finish_reason=length"
+            // The thinking is measured, never repeated: it must not reach the user through the notice
+            // either, and above all it must never come back as the rewritten text.
+            error.message.orEmpty() shouldNotContain "Let me think"
+            server.requestCount shouldBe 2
+        }
+    }
+
+    // The other way an empty 200 arrives. Asking again with less thinking would only pay twice for the
+    // same refusal, so the provider's own words are what comes back.
+    test("an error reported inside a 200 is named rather than retried") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"choices":[],"error":{"message":"No endpoints found for this model."}}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            val error = shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser("openrouter/does-not-exist", "Fasse das zusammen."))
+            }
+
+            error.message.orEmpty() shouldContain "No endpoints found for this model."
+            server.requestCount shouldBe 1
+        }
+    }
+
+    // Nothing left to turn down. A second identical request would cost the user twice for one answer.
+    test("an answer already asked for at the floor is not asked for again") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"choices":[{"finish_reason":"length","message":{"content":"","reasoning":"hmm"}}]}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            shouldThrow<DictateApiException> {
+                client.complete(
+                    ChatRequest.ofUser("some/thinker", "Fasse das zusammen.", reasoningEffort = "low"),
+                )
+            }
+
+            server.requestCount shouldBe 1
+        }
+    }
 })
