@@ -135,6 +135,21 @@ export const DASHBOARD_HTML = `<!doctype html>
      whole document 45px wider than the screen and every tab under it sat shifted and clipped. */
   .bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px var(--pad); }
   .bar > * { min-width: 0; }
+  /*
+   * One row, one line.
+   *
+   * Centring boxes is not the same as aligning what is written in them. The bell and the refresh
+   * button were built for different places and came out 32px and 39px tall, so even perfectly
+   * centred they read as two sizes rather than one row; here they are given a common height and
+   * their vertical padding is replaced by it.
+   *
+   * The address was a second, separate problem: it wears .sub, whose 4px top margin is right for
+   * its real job — a line of detail under a value in a card — and simply pushed it down here.
+   */
+  .bar .sub { margin-top: 0; }
+  .bar .bell, .bar button.btn { min-height: 34px; display: inline-flex; align-items: center; justify-content: center; }
+  .bar .bell { padding: 0 13px; }
+  .bar button.btn { padding: 0 15px; }
   /* Loading, shown on the button that asked for it rather than beside it.
      A separate bar needed a strip of the header reserved for it at all times — visible for a second
      now and then, blank the rest of the day. The accent sweeping through the label says the same
