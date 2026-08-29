@@ -1402,7 +1402,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__file_preparing">Bestand voorbereiden…</string>
     <string name="dictate__file_too_large">Bestand is te groot – de aanbieder accepteert maximaal 25 MB.</string>
     <string name="dictate__file_read_error">Kan het geselecteerde bestand niet lezen.</string>
-    <string name="dictate__import_share_label">Transcriberen met Dictate</string>
+    <string name="dictate__import_share_label">Transcriberen</string>
     <string name="dictate__import_title">Bestand transcriberen</string>
     <string name="dictate__import_menu">Een bestand transcriberen</string>
     <string name="dictate__import_menu_summary">Kies een audio- of videobestand en lees wat erin gezegd wordt</string>
@@ -1410,7 +1410,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__import_status_transcribing">Transcriberen…</string>
     <string name="dictate__import_status_part">Deel %1$d van %2$d…</string>
     <string name="dictate__import_result_label">Transcript</string>
-    <string name="dictate__import_prompt_label">Doe er iets mee</string>
+    <string name="dictate__import_prompt_button">Herschrijven</string>
+    <string name="dictate__import_revert">Ongedaan maken</string>
     <string name="dictate__import_retry">Opnieuw proberen</string>
     <string name="dictate__import_no_file">Er is geen audiobestand gedeeld.</string>
     <string name="dictate__import_only_first">Alleen het eerste bestand wordt getranscribeerd – {count} andere zijn overgeslagen.</string>

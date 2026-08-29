@@ -58,6 +58,11 @@ import dev.patrickgold.florisboard.dictate.data.stats.DictateStats
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.datastore.model.collectAsState
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material.icons.filled.AudioFile
+import androidx.compose.material3.IconButton
+import dev.patrickgold.florisboard.dictate.importer.TranscribeShareActivity
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.text.NumberFormat
 import org.florisboard.lib.compose.FlorisErrorCard
@@ -184,10 +189,27 @@ fun HomeScreen() = FlorisScreen {
                 }
             }
         }*/
+        // "Transcribe a file" (issue #301) reachable in one tap from the top, without going through
+        // the Dictate screen first. The labelled row stays there as well: this icon is what the
+        // settings search cannot find and what nobody discovers who does not already know about it.
+        val dictateContext = LocalContext.current
+        val transcribePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                dictateContext.startActivity(TranscribeShareActivity.intentFor(dictateContext, uri))
+            }
+        }
         Preference(
             icon = Icons.Default.Mic,
             title = stringRes(R.string.dictate__title),
             onClick = { navController.navigate(Routes.Settings.Dictate) },
+            trailing = {
+                IconButton(onClick = { transcribePicker.launch(TranscribeShareActivity.MIME_TYPES) }) {
+                    Icon(
+                        imageVector = Icons.Default.AudioFile,
+                        contentDescription = stringRes(R.string.dictate__import_menu),
+                    )
+                }
+            },
         )
         Preference(
             icon = Icons.Default.Language,

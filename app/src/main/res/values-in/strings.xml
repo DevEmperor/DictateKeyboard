@@ -1458,7 +1458,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__file_preparing">Menyiapkan berkas…</string>
     <string name="dictate__file_too_large">Berkas terlalu besar – penyedia menerima maksimal 25 MB.</string>
     <string name="dictate__file_read_error">Tidak dapat membaca berkas yang dipilih.</string>
-    <string name="dictate__import_share_label">Transkripsikan dengan Dictate</string>
+    <string name="dictate__import_share_label">Transkripsikan</string>
     <string name="dictate__import_title">Transkripsikan berkas</string>
     <string name="dictate__import_menu">Transkripsikan berkas</string>
     <string name="dictate__import_menu_summary">Pilih berkas audio atau video dan baca isinya</string>
@@ -1466,7 +1466,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__import_status_transcribing">Mentranskripsikan…</string>
     <string name="dictate__import_status_part">Bagian %1$d dari %2$d…</string>
     <string name="dictate__import_result_label">Transkrip</string>
-    <string name="dictate__import_prompt_label">Lakukan sesuatu dengannya</string>
+    <string name="dictate__import_prompt_button">Olah ulang</string>
+    <string name="dictate__import_revert">Urungkan</string>
     <string name="dictate__import_retry">Coba lagi</string>
     <string name="dictate__import_no_file">Tidak ada berkas audio yang dibagikan.</string>
     <string name="dictate__import_only_first">Hanya berkas pertama yang ditranskripsikan – {count} lainnya dilewati.</string>

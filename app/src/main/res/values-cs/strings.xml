@@ -1517,7 +1517,7 @@
     <string name="dictate__file_preparing">Příprava souboru…</string>
     <string name="dictate__file_too_large">Soubor je příliš velký – poskytovatel přijímá nejvýše 25 MB.</string>
     <string name="dictate__file_read_error">Vybraný soubor nelze přečíst.</string>
-    <string name="dictate__import_share_label">Přepsat pomocí Dictate</string>
+    <string name="dictate__import_share_label">Přepsat</string>
     <string name="dictate__import_title">Přepsat soubor</string>
     <string name="dictate__import_menu">Přepsat soubor</string>
     <string name="dictate__import_menu_summary">Vyberte zvukový nebo video soubor a přečtěte si, co se v něm říká</string>
@@ -1525,7 +1525,8 @@
     <string name="dictate__import_status_transcribing">Přepisuje se…</string>
     <string name="dictate__import_status_part">Část %1$d z %2$d…</string>
     <string name="dictate__import_result_label">Přepis</string>
-    <string name="dictate__import_prompt_label">Něco s tím udělat</string>
+    <string name="dictate__import_prompt_button">Přepracovat</string>
+    <string name="dictate__import_revert">Zpět</string>
     <string name="dictate__import_retry">Zkusit znovu</string>
     <string name="dictate__import_no_file">Nebyl sdílen žádný zvukový soubor.</string>
     <string name="dictate__import_only_first">Přepisuje se jen první soubor – dalších {count} bylo vynecháno.</string>

@@ -1286,7 +1286,7 @@
     <string name="dictate__file_preparing">Preparazione del file…</string>
     <string name="dictate__file_too_large">Il file è troppo grande – il fornitore accetta al massimo 25 MB.</string>
     <string name="dictate__file_read_error">Impossibile leggere il file selezionato.</string>
-    <string name="dictate__import_share_label">Trascrivi con Dictate</string>
+    <string name="dictate__import_share_label">Trascrivi</string>
     <string name="dictate__import_title">Trascrivi file</string>
     <string name="dictate__import_menu">Trascrivi un file</string>
     <string name="dictate__import_menu_summary">Scegli un file audio o video e leggi cosa dice</string>
@@ -1294,7 +1294,8 @@
     <string name="dictate__import_status_transcribing">Trascrizione…</string>
     <string name="dictate__import_status_part">Parte %1$d di %2$d…</string>
     <string name="dictate__import_result_label">Trascrizione</string>
-    <string name="dictate__import_prompt_label">Fanne qualcosa</string>
+    <string name="dictate__import_prompt_button">Rielabora</string>
+    <string name="dictate__import_revert">Annulla</string>
     <string name="dictate__import_retry">Riprova</string>
     <string name="dictate__import_no_file">Nessun file audio è stato condiviso.</string>
     <string name="dictate__import_only_first">Viene trascritto solo il primo file: altri {count} sono stati esclusi.</string>

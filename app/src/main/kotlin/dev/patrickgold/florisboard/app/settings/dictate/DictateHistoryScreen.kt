@@ -48,7 +48,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -532,7 +532,7 @@ private fun DetailDialog(
                         }
                         IconButton(onClick = { toggle() }, modifier = Modifier.size(44.dp)) {
                             Icon(
-                                imageVector = if (playing) Icons.Default.Stop else Icons.Default.PlayArrow,
+                                imageVector = if (playing) Icons.Default.Pause else Icons.Default.PlayArrow,
                                 contentDescription = stringRes(R.string.dictate__history_play),
                                 modifier = Modifier.size(24.dp),
                             )

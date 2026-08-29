@@ -1506,7 +1506,7 @@
     <string name="dictate__file_preparing">Подготовка файла…</string>
     <string name="dictate__file_too_large">Файл слишком большой — поставщик принимает не более 25 МБ.</string>
     <string name="dictate__file_read_error">Не удалось прочитать выбранный файл.</string>
-    <string name="dictate__import_share_label">Расшифровать в Dictate</string>
+    <string name="dictate__import_share_label">Расшифровать</string>
     <string name="dictate__import_title">Расшифровать файл</string>
     <string name="dictate__import_menu">Расшифровать файл</string>
     <string name="dictate__import_menu_summary">Выберите аудио- или видеофайл и прочитайте, что в нём сказано</string>
@@ -1514,7 +1514,8 @@
     <string name="dictate__import_status_transcribing">Расшифровка…</string>
     <string name="dictate__import_status_part">Часть %1$d из %2$d…</string>
     <string name="dictate__import_result_label">Расшифровка</string>
-    <string name="dictate__import_prompt_label">Сделать что-нибудь с текстом</string>
+    <string name="dictate__import_prompt_button">Переработать</string>
+    <string name="dictate__import_revert">Отменить</string>
     <string name="dictate__import_retry">Повторить</string>
     <string name="dictate__import_no_file">Аудиофайл не был отправлен.</string>
     <string name="dictate__import_only_first">Расшифровывается только первый файл — пропущено ещё: {count}.</string>

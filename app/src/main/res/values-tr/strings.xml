@@ -1481,7 +1481,7 @@
     <string name="dictate__file_preparing">Dosya hazırlanıyor…</string>
     <string name="dictate__file_too_large">Dosya çok büyük – sağlayıcı en fazla 25 MB kabul eder.</string>
     <string name="dictate__file_read_error">Seçilen dosya okunamadı.</string>
-    <string name="dictate__import_share_label">Dictate ile yazıya dök</string>
+    <string name="dictate__import_share_label">Yazıya dök</string>
     <string name="dictate__import_title">Dosyayı yazıya dök</string>
     <string name="dictate__import_menu">Bir dosyayı yazıya dök</string>
     <string name="dictate__import_menu_summary">Bir ses veya video dosyası seçin ve ne söylendiğini okuyun</string>
@@ -1489,7 +1489,8 @@
     <string name="dictate__import_status_transcribing">Yazıya dökülüyor…</string>
     <string name="dictate__import_status_part">Bölüm %1$d / %2$d…</string>
     <string name="dictate__import_result_label">Metin</string>
-    <string name="dictate__import_prompt_label">Onunla bir şey yap</string>
+    <string name="dictate__import_prompt_button">Yeniden düzenle</string>
+    <string name="dictate__import_revert">Geri al</string>
     <string name="dictate__import_retry">Yeniden dene</string>
     <string name="dictate__import_no_file">Hiçbir ses dosyası paylaşılmadı.</string>
     <string name="dictate__import_only_first">Yalnızca ilk dosya yazıya dökülür – {count} dosya daha atlandı.</string>

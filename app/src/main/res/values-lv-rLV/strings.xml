@@ -1446,7 +1446,7 @@
     <string name="dictate__file_preparing">Sagatavo failu…</string>
     <string name="dictate__file_too_large">Fails ir pārāk liels – pakalpojuma sniedzējs pieņem ne vairāk kā 25 MB.</string>
     <string name="dictate__file_read_error">Neizdevās nolasīt atlasīto failu.</string>
-    <string name="dictate__import_share_label">Transkribēt ar Dictate</string>
+    <string name="dictate__import_share_label">Transkribēt</string>
     <string name="dictate__import_title">Transkribēt failu</string>
     <string name="dictate__import_menu">Transkribēt failu</string>
     <string name="dictate__import_menu_summary">Izvēlies audio vai video failu un izlasi, kas tajā teikts</string>
@@ -1454,7 +1454,8 @@
     <string name="dictate__import_status_transcribing">Transkribē…</string>
     <string name="dictate__import_status_part">%1$d. daļa no %2$d…</string>
     <string name="dictate__import_result_label">Transkripts</string>
-    <string name="dictate__import_prompt_label">Izdari ar to kaut ko</string>
+    <string name="dictate__import_prompt_button">Pārstrādāt</string>
+    <string name="dictate__import_revert">Atsaukt</string>
     <string name="dictate__import_retry">Mēģināt vēlreiz</string>
     <string name="dictate__import_no_file">Neviens audio fails netika kopīgots.</string>
     <string name="dictate__import_only_first">Tiek transkribēts tikai pirmais fails – vēl {count} tika izlaisti.</string>

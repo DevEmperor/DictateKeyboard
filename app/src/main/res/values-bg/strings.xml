@@ -1503,7 +1503,7 @@
     <string name="dictate__file_preparing">Подготовка на файла…</string>
     <string name="dictate__file_too_large">Файлът е твърде голям – доставчикът приема най-много 25 MB.</string>
     <string name="dictate__file_read_error">Избраният файл не може да бъде прочетен.</string>
-    <string name="dictate__import_share_label">Преобразувай с Dictate</string>
+    <string name="dictate__import_share_label">Преобразуване</string>
     <string name="dictate__import_title">Преобразуване на файл</string>
     <string name="dictate__import_menu">Преобразуване на файл</string>
     <string name="dictate__import_menu_summary">Изберете аудио- или видеофайл и прочетете какво се казва в него</string>
@@ -1511,7 +1511,8 @@
     <string name="dictate__import_status_transcribing">Преобразуване…</string>
     <string name="dictate__import_status_part">Част %1$d от %2$d…</string>
     <string name="dictate__import_result_label">Текст</string>
-    <string name="dictate__import_prompt_label">Направете нещо с него</string>
+    <string name="dictate__import_prompt_button">Преработи</string>
+    <string name="dictate__import_revert">Отмени</string>
     <string name="dictate__import_retry">Опитай отново</string>
     <string name="dictate__import_no_file">Не беше споделен аудиофайл.</string>
     <string name="dictate__import_only_first">Преобразува се само първият файл – още {count} бяха пропуснати.</string>

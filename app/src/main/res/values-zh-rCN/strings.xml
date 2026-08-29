@@ -1498,7 +1498,7 @@
     <string name="dictate__file_preparing">正在准备文件…</string>
     <string name="dictate__file_too_large">文件过大——服务商最多接受 25 MB。</string>
     <string name="dictate__file_read_error">无法读取所选文件。</string>
-    <string name="dictate__import_share_label">用 Dictate 转写</string>
+    <string name="dictate__import_share_label">转写</string>
     <string name="dictate__import_title">转写文件</string>
     <string name="dictate__import_menu">转写文件</string>
     <string name="dictate__import_menu_summary">选择音频或视频文件，读一读里面说了什么</string>
@@ -1506,7 +1506,8 @@
     <string name="dictate__import_status_transcribing">正在转写…</string>
     <string name="dictate__import_status_part">第 %1$d 段，共 %2$d 段…</string>
     <string name="dictate__import_result_label">转写文本</string>
-    <string name="dictate__import_prompt_label">用它做点什么</string>
+    <string name="dictate__import_prompt_button">重写</string>
+    <string name="dictate__import_revert">撤销</string>
     <string name="dictate__import_retry">重试</string>
     <string name="dictate__import_no_file">没有共享任何音频文件。</string>
     <string name="dictate__import_only_first">只转写第一个文件，另外 {count} 个已跳过。</string>

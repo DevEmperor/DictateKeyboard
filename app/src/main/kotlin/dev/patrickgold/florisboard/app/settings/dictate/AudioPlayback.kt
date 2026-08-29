@@ -13,18 +13,16 @@ package dev.patrickgold.florisboard.app.settings.dictate
 import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -45,9 +43,13 @@ import org.florisboard.lib.compose.stringRes
  * Playing back the audio behind a transcript, in one place.
  *
  * Both the history's detail dialog and the import screen (#301) let you listen while reading. The
- * part worth sharing is not the row of buttons but the [MediaPlayer] itself: it has to be stopped on
- * completion, released when the screen goes away, and polled while it runs — and a second
- * hand-rolled copy of that is a second place to leak a player.
+ * part worth sharing is not the row of buttons but the [MediaPlayer] itself: it has to be paused and
+ * resumed without losing its place, seekable, released when the screen goes away, and polled while
+ * it runs — a second hand-rolled copy of that is a second place to leak a player.
+ *
+ * Pause is not stop. The first version released the player on every tap, which meant "pause" threw
+ * away the position and the duration with it; this one keeps the player prepared and only lets go on
+ * [stop], which the composition calls when it leaves.
  */
 class AudioPlayerState internal constructor(
     private val path: String?,
@@ -57,106 +59,167 @@ class AudioPlayerState internal constructor(
 
     var playing by mutableStateOf(false)
         private set
-    var progress by mutableStateOf(0f)
+    var positionMs by mutableStateOf(0)
+        private set
+    var durationMs by mutableStateOf(0)
         private set
 
-    internal fun poll() {
-        val p = player ?: return
-        val dur = runCatching { p.duration }.getOrDefault(0)
-        val pos = runCatching { p.currentPosition }.getOrDefault(0)
-        progress = if (dur > 0) (pos.toFloat() / dur).coerceIn(0f, 1f) else 0f
+    /** Where the bar sits: the playhead, or the user's finger while they are dragging it. */
+    var scrubbing by mutableStateOf<Float?>(null)
+        private set
+
+    /** 0..1 for a progress ring or bar; the drag position wins while there is one. */
+    val progress: Float
+        get() = scrubbing ?: if (durationMs > 0) (positionMs.toFloat() / durationMs).coerceIn(0f, 1f) else 0f
+
+    /** True once the file has been opened, which is what makes a duration available to show. */
+    val ready: Boolean
+        get() = player != null
+
+    /**
+     * Opens the file without starting it, so the length and the bar are right before the first tap.
+     * Returns false when the audio cannot be opened at all.
+     */
+    private fun prepare(): Boolean {
+        player?.let { return true }
+        val source = path ?: return false
+        val opened = runCatching {
+            MediaPlayer().apply {
+                setDataSource(source)
+                prepare()
+            }
+        }.getOrNull() ?: return false
+        opened.setOnCompletionListener {
+            playing = false
+            // Back to the start, the way every audio player behaves at the end of a track.
+            runCatching { opened.seekTo(0) }
+            positionMs = 0
+        }
+        player = opened
+        durationMs = runCatching { opened.duration }.getOrDefault(0)
+        return true
     }
 
-    internal fun clearProgress() {
-        if (!playing) progress = 0f
-    }
-
-    fun stop() {
-        player?.let { runCatching { it.stop() }; runCatching { it.release() } }
-        player = null
-        playing = false
+    /** Opens the file eagerly so the duration shows before anything is played. */
+    internal fun preload() {
+        if (player == null && path != null) prepare()
     }
 
     fun toggle() {
         if (playing) {
-            stop()
+            pause()
             return
         }
-        val source = path ?: return onMissing()
-        val started = runCatching {
-            MediaPlayer().apply {
-                setDataSource(source)
-                setOnCompletionListener { stop() }
-                prepare()
-                start()
-            }
-        }.getOrNull()
-        if (started == null) {
+        if (!prepare()) {
             // Pruned, never kept, or a format this device will not open. Saying so beats a button
             // that does nothing.
             onMissing()
             return
         }
-        player = started
-        playing = true
+        runCatching { player?.start() }
+        playing = player?.isPlaying ?: false
+    }
+
+    fun pause() {
+        runCatching { player?.pause() }
+        playing = false
+        poll()
+    }
+
+    /** Jumps to [fraction] of the track (0..1), whether or not it is currently playing. */
+    fun seekTo(fraction: Float) {
+        if (!prepare()) return
+        val target = (durationMs * fraction.coerceIn(0f, 1f)).toInt()
+        runCatching { player?.seekTo(target) }
+        positionMs = target
+    }
+
+    /** The bar follows the finger while it is down; the playhead takes over again on release. */
+    fun scrubTo(fraction: Float) {
+        scrubbing = fraction.coerceIn(0f, 1f)
+    }
+
+    fun scrubFinished() {
+        scrubbing?.let { seekTo(it) }
+        scrubbing = null
+    }
+
+    internal fun poll() {
+        val p = player ?: return
+        positionMs = runCatching { p.currentPosition }.getOrDefault(positionMs)
+        if (durationMs <= 0) durationMs = runCatching { p.duration }.getOrDefault(0)
+    }
+
+    /** Releases the player. Called when the composition leaves — pausing does not come through here. */
+    fun stop() {
+        player?.let { runCatching { it.stop() }; runCatching { it.release() } }
+        player = null
+        playing = false
+        positionMs = 0
     }
 }
 
 /** A player bound to this composition: released when it leaves, and rebuilt when [path] changes. */
 @Composable
-fun rememberAudioPlayer(path: String?, onMissing: () -> Unit = {}): AudioPlayerState {
+fun rememberAudioPlayer(
+    path: String?,
+    // Opening the file up front costs one decode and buys a duration to display; a screen that only
+    // needs a play button can skip it.
+    preload: Boolean = false,
+    onMissing: () -> Unit = {},
+): AudioPlayerState {
     val state = remember(path) { AudioPlayerState(path, onMissing) }
     DisposableEffect(state) { onDispose { state.stop() } }
+    LaunchedEffect(state) { if (preload) state.preload() }
     LaunchedEffect(state.playing) {
         while (state.playing) {
             state.poll()
             delay(120)
         }
-        state.clearProgress()
     }
     return state
 }
 
+/** mm:ss, the only format a voice message ever needs. */
+fun formatPlaybackTime(ms: Int): String {
+    val total = (ms / 1000).coerceAtLeast(0)
+    return "%d:%02d".format(total / 60, total % 60)
+}
+
 /**
- * Play/stop with a progress ring and a bar — the whole playback control for a screen that has
- * nothing else to put in the row. The history dialog builds its own around export, share and pin.
+ * A plain audio player: play/pause, a bar you can drag, and the position against the length.
+ *
+ * The history dialog builds its own row instead, because that one also carries export, share and pin.
  */
 @Composable
 fun AudioPlaybackRow(path: String) {
     val context = LocalContext.current
-    val player = rememberAudioPlayer(path) {
+    val player = rememberAudioPlayer(path, preload = true) {
         Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            if (player.playing) {
-                CircularProgressIndicator(
-                    progress = { player.progress },
-                    modifier = Modifier.size(40.dp),
-                    strokeWidth = 2.dp,
-                )
-            }
-            IconButton(onClick = { player.toggle() }, modifier = Modifier.size(44.dp)) {
-                Icon(
-                    imageVector = if (player.playing) Icons.Default.Stop else Icons.Default.PlayArrow,
-                    contentDescription = stringRes(R.string.dictate__history_play),
-                    modifier = Modifier.size(24.dp),
-                )
-            }
-        }
-        if (player.playing) {
-            LinearProgressIndicator(progress = { player.progress }, modifier = Modifier.weight(1f))
-        } else {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = stringRes(R.string.dictate__history_play),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+        IconButton(onClick = { player.toggle() }, modifier = Modifier.size(44.dp)) {
+            Icon(
+                imageVector = if (player.playing) Icons.Default.Pause else Icons.Default.PlayArrow,
+                contentDescription = stringRes(R.string.dictate__history_play),
+                modifier = Modifier.size(26.dp),
             )
         }
+        Slider(
+            modifier = Modifier.weight(1f),
+            value = player.progress,
+            onValueChange = { player.scrubTo(it) },
+            onValueChangeFinished = { player.scrubFinished() },
+            enabled = player.ready,
+        )
+        Text(
+            text = formatPlaybackTime(player.positionMs) + " / " + formatPlaybackTime(player.durationMs),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }

@@ -1501,7 +1501,7 @@
     <string name="dictate__file_preparing">Fájl előkészítése…</string>
     <string name="dictate__file_too_large">A fájl túl nagy – a szolgáltató legfeljebb 25 MB-ot fogad el.</string>
     <string name="dictate__file_read_error">A kiválasztott fájl nem olvasható.</string>
-    <string name="dictate__import_share_label">Átírás a Dictate-tel</string>
+    <string name="dictate__import_share_label">Átírás</string>
     <string name="dictate__import_title">Fájl átírása</string>
     <string name="dictate__import_menu">Fájl átírása</string>
     <string name="dictate__import_menu_summary">Válassz egy hang- vagy videofájlt, és olvasd el, mi hangzik el benne</string>
@@ -1509,7 +1509,8 @@
     <string name="dictate__import_status_transcribing">Átírás…</string>
     <string name="dictate__import_status_part">%2$d/%1$d. rész…</string>
     <string name="dictate__import_result_label">Átirat</string>
-    <string name="dictate__import_prompt_label">Kezdj vele valamit</string>
+    <string name="dictate__import_prompt_button">Átdolgozás</string>
+    <string name="dictate__import_revert">Visszavonás</string>
     <string name="dictate__import_retry">Újra</string>
     <string name="dictate__import_no_file">Nem osztottál meg hangfájlt.</string>
     <string name="dictate__import_only_first">Csak az első fájl kerül átírásra – további {count} kimaradt.</string>

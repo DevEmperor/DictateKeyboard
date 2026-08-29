@@ -22,24 +22,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.AssistChip
+import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -110,6 +112,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     val skipped = (uris.size - 1).coerceAtLeast(0)
     /** Whether the failure is one the provider settings can fix, rather than a network hiccup. */
     var needsKey by remember { mutableStateOf(false) }
+    var promptMenuOpen by remember { mutableStateOf(false) }
 
     fun run(forceLocal: Boolean) {
         val file = audio ?: return
@@ -217,11 +220,22 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         }
     }
 
+    /*
+     * Fixed ends, one stretchy middle.
+     *
+     * The first version scrolled the whole page as one piece, so a long transcript pushed the
+     * buttons, the prompts and the finish button off the bottom — exactly the part you need once the
+     * text has arrived. Now the header and the footer stay put and the transcript takes whatever is
+     * left, scrolling inside its own frame.
+     *
+     * safeDrawingPadding rather than nothing: targetSdk 36 means the system draws this edge to edge,
+     * and without it the header sits under the status bar.
+     */
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .safeDrawingPadding()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         Header(info, onDevice, localAvailable, skipped, onLocalChange = {
             onDevice = it
@@ -229,45 +243,47 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         })
 
         audio?.let { file ->
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(4.dp))
             AudioPlaybackRow(path = file.absolutePath)
         }
 
-        Spacer(Modifier.height(16.dp))
-
-        if (busy) {
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                        Spacer(Modifier.size(12.dp))
-                        Text(status.ifBlank { stringRes(R.string.dictate__import_status_transcribing) })
-                    }
-                    Spacer(Modifier.height(12.dp))
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(12.dp))
+        // ---- the stretchy middle -------------------------------------------------------------
+        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+            when {
+                busy && text.isEmpty() -> Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    CircularProgressIndicator()
+                    Spacer(Modifier.height(16.dp))
+                    Text(status.ifBlank { stringRes(R.string.dictate__import_status_transcribing) })
+                    Spacer(Modifier.height(16.dp))
                     TextButton(onClick = { job?.cancel(); busy = false; status = "" }) {
                         Text(stringRes(R.string.action__cancel))
                     }
                 }
-            }
-        }
-
-        error?.let { message ->
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp)) {
+                text.isNotEmpty() -> OutlinedTextField(
+                    modifier = Modifier.fillMaxSize(),
+                    value = text,
+                    onValueChange = { text = it },
+                    label = { Text(stringRes(R.string.dictate__import_result_label)) },
+                )
+                error != null -> Column(
+                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                ) {
                     Text(
-                        text = message,
+                        text = error.orEmpty(),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyMedium,
                     )
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(12.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(onClick = { run(forceLocal = onDevice) }) {
                             Text(stringRes(R.string.dictate__import_retry))
                         }
-                        // A missing key is the one error the user can act on from here, and being told
-                        // about it without a way out is the definition of a dead end.
+                        // A missing key is the one error the user can act on from here, and being
+                        // told about it without a way out is the definition of a dead end.
                         if (needsKey) {
                             Button(onClick = { openProviderSettings(context) }) {
                                 Text(stringRes(R.string.dictate__action_settings))
@@ -278,25 +294,34 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             }
         }
 
-        if (text.isNotEmpty() || original.isNotEmpty()) {
-            if (original.isNotEmpty()) {
+        // A rewording that is still running over an existing transcript: said in one line rather than
+        // taking the whole middle away from the text it is about to replace.
+        if (busy && text.isNotEmpty()) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                 Text(
-                    text = stringRes(R.string.dictate__history_original),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    text = status.ifBlank { stringRes(R.string.dictate__status_rewording) },
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.weight(1f),
                 )
-                Text(text = original, style = MaterialTheme.typography.bodySmall)
-                Spacer(Modifier.height(12.dp))
+                TextButton(onClick = { job?.cancel(); busy = false; status = "" }) {
+                    Text(stringRes(R.string.action__cancel))
+                }
             }
-            OutlinedTextField(
+        }
+
+        // ---- the fixed footer ----------------------------------------------------------------
+        if (text.isNotEmpty()) {
+            Spacer(Modifier.height(10.dp))
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                value = text,
-                onValueChange = { text = it },
-                label = { Text(stringRes(R.string.dictate__import_result_label)) },
-                minLines = 4,
-            )
-            Spacer(Modifier.height(12.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Button(onClick = { copyToClipboard(context, text) }) {
                     Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.size(8.dp))
@@ -304,43 +329,62 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                 }
                 OutlinedButton(onClick = { shareText(context, text) }) {
                     Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.size(8.dp))
-                    Text(stringRes(R.string.dictate__stats_share))
                 }
-                OutlinedButton(onClick = { run(forceLocal = onDevice) }) {
+                OutlinedButton(onClick = { run(forceLocal = onDevice) }, enabled = !busy) {
                     Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(18.dp))
                 }
             }
-
-            if (prompts.value.isNotEmpty()) {
-                Spacer(Modifier.height(16.dp))
-                Text(
-                    text = stringRes(R.string.dictate__import_prompt_label),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.height(6.dp))
-                Row(
-                    modifier = Modifier.horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    for (prompt in prompts.value) {
-                        AssistChip(
-                            onClick = { applyPrompt(prompt) },
-                            enabled = !busy,
-                            label = { Text(prompt.name.orEmpty()) },
-                        )
+            Spacer(Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (prompts.value.isNotEmpty()) {
+                    // One button and a menu instead of a scrolling row of chips: the row cost a
+                    // heading and a whole line of height, and ran off both edges of the screen.
+                    Box {
+                        OutlinedButton(onClick = { promptMenuOpen = true }, enabled = !busy) {
+                            Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.size(8.dp))
+                            Text(stringRes(R.string.dictate__import_prompt_button))
+                        }
+                        DropdownMenu(expanded = promptMenuOpen, onDismissRequest = { promptMenuOpen = false }) {
+                            for (prompt in prompts.value) {
+                                DropdownMenuItem(
+                                    text = { Text(prompt.name.orEmpty()) },
+                                    onClick = {
+                                        promptMenuOpen = false
+                                        applyPrompt(prompt)
+                                    },
+                                )
+                            }
+                        }
                     }
                 }
+                // Only the reworded text is shown, so the transcript would otherwise be gone for good:
+                // a second transcription costs another upload and need not return the same words.
+                if (original.isNotEmpty()) {
+                    TextButton(onClick = { text = original; original = "" }, enabled = !busy) {
+                        Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.size(8.dp))
+                        Text(stringRes(R.string.dictate__import_revert))
+                    }
+                }
+                Spacer(Modifier.weight(1f))
+                Button(onClick = { job?.cancel(); onClose() }) {
+                    Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.size(8.dp))
+                    Text(stringRes(R.string.action__done))
+                }
             }
-        }
-
-        Spacer(Modifier.height(24.dp))
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-            TextButton(onClick = { job?.cancel(); onClose() }) {
-                Icon(Icons.Default.Close, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(Modifier.size(8.dp))
-                Text(stringRes(R.string.action__done))
+        } else {
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                TextButton(onClick = { job?.cancel(); onClose() }) {
+                    Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.size(8.dp))
+                    Text(stringRes(R.string.action__done))
+                }
             }
         }
     }

@@ -1361,7 +1361,7 @@
     <string name="dictate__file_preparing">جارٍ تحضير الملف…</string>
     <string name="dictate__file_too_large">الملف كبير جدًا – يقبل المزوّد 25 ميغابايت كحد أقصى.</string>
     <string name="dictate__file_read_error">تعذّرت قراءة الملف المحدّد.</string>
-    <string name="dictate__import_share_label">التفريغ باستخدام Dictate</string>
+    <string name="dictate__import_share_label">تفريغ</string>
     <string name="dictate__import_title">تفريغ ملف</string>
     <string name="dictate__import_menu">تفريغ ملف</string>
     <string name="dictate__import_menu_summary">اختر ملف صوت أو فيديو واقرأ ما قيل فيه</string>
@@ -1369,7 +1369,8 @@
     <string name="dictate__import_status_transcribing">جارٍ التفريغ…</string>
     <string name="dictate__import_status_part">الجزء %1$d من %2$d…</string>
     <string name="dictate__import_result_label">النص</string>
-    <string name="dictate__import_prompt_label">افعل شيئًا به</string>
+    <string name="dictate__import_prompt_button">إعادة الصياغة</string>
+    <string name="dictate__import_revert">تراجع</string>
     <string name="dictate__import_retry">أعد المحاولة</string>
     <string name="dictate__import_no_file">لم تتم مشاركة أي ملف صوتي.</string>
     <string name="dictate__import_only_first">يتم تفريغ الملف الأول فقط – وتم تجاوز {count} ملفات أخرى.</string>

@@ -2223,7 +2223,7 @@
 
     <!-- Share → Dictate for audio and video (issue #301): a shared voice message is transcribed on a
          screen of its own, because a share has no text field for the transcript to go into. -->
-    <string name="dictate__import_share_label" comment="Label of the Dictate entry in the system share sheet for audio and video files. Says what it does, because another Dictate entry already handles images.">Transcribe with Dictate</string>
+    <string name="dictate__import_share_label" comment="Label of the Dictate entry in the system share sheet for audio and video files. One word: the sheet already shows the app name next to it, and another Dictate entry handles images.">Transcribe</string>
     <string name="dictate__import_title" comment="Title of the screen that transcribes a shared or picked audio file">Transcribe file</string>
     <string name="dictate__import_menu" comment="Entry on the Dictate settings home that opens the file picker">Transcribe a file</string>
     <string name="dictate__import_menu_summary" comment="Summary under the \'Transcribe a file\' entry">Pick an audio or video file and read what it says</string>
@@ -2231,7 +2231,8 @@
     <string name="dictate__import_status_transcribing" comment="Progress line while the file is being transcribed">Transcribing…</string>
     <string name="dictate__import_status_part" comment="Progress line for a long file split into pieces; %1$d is the piece being worked on, %2$d the total">Part %1$d of %2$d…</string>
     <string name="dictate__import_result_label" comment="Label above the editable transcript on the import screen">Transcript</string>
-    <string name="dictate__import_prompt_label" comment="Label above the row of prompt chips that can be applied to the transcript">Do something with it</string>
+    <string name="dictate__import_prompt_button" comment="Button that opens the menu of prompts to run over the transcript">Rework</string>
+    <string name="dictate__import_revert" comment="Button that puts the raw transcript back after a prompt rewrote it">Undo</string>
     <string name="dictate__import_retry" comment="Button that starts the transcription over after it failed">Try again</string>
     <string name="dictate__import_no_file" comment="Shown when the share carried nothing we could read">No audio file was shared.</string>
     <string name="dictate__import_only_first" comment="Shown when several files were shared at once; {count} is how many were left out">Only the first file is transcribed – {count} more were left out.</string>
