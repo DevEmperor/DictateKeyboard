@@ -1502,6 +1502,7 @@
     <string name="dictate__prompt_library_all">Vše</string>
     <string name="dictate__prompt_library_add">Přidat</string>
     <string name="dictate__prompt_library_added">Přidáno</string>
+    <string name="dictate__prompt_library_add_again">Přidat znovu</string>
     <string name="dictate__prompt_library_empty">Vašemu hledání neodpovídají žádné prompty.</string>
     <string name="dictate__prompt_library_error">Komunitní knihovnu se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="dictate__prompt_library_retry">Zkusit znovu</string>

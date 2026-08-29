@@ -1387,6 +1387,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__prompt_library_all">Alles</string>
     <string name="dictate__prompt_library_add">Toevoegen</string>
     <string name="dictate__prompt_library_added">Toegevoegd</string>
+    <string name="dictate__prompt_library_add_again">Opnieuw toevoegen</string>
     <string name="dictate__prompt_library_empty">Geen prompts komen overeen met je zoekopdracht.</string>
     <string name="dictate__prompt_library_error">Kan de communitybibliotheek niet laden. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="dictate__prompt_library_retry">Opnieuw proberen</string>

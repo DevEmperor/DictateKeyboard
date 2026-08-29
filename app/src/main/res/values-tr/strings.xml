@@ -1466,6 +1466,7 @@
     <string name="dictate__prompt_library_all">Tümü</string>
     <string name="dictate__prompt_library_add">Ekle</string>
     <string name="dictate__prompt_library_added">Eklendi</string>
+    <string name="dictate__prompt_library_add_again">Tekrar ekle</string>
     <string name="dictate__prompt_library_empty">Aramanızla eşleşen komut yok.</string>
     <string name="dictate__prompt_library_error">Topluluk kütüphanesi yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="dictate__prompt_library_retry">Yeniden dene</string>

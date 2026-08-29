@@ -1503,6 +1503,7 @@
     <string name="dictate__prompt_library_all">Wszystkie</string>
     <string name="dictate__prompt_library_add">Dodaj</string>
     <string name="dictate__prompt_library_added">Dodano</string>
+    <string name="dictate__prompt_library_add_again">Dodaj ponownie</string>
     <string name="dictate__prompt_library_empty">Żaden prompt nie pasuje do wyszukiwania.</string>
     <string name="dictate__prompt_library_error">Nie udało się załadować biblioteki społeczności. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="dictate__prompt_library_retry">Ponów</string>

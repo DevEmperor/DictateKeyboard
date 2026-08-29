@@ -64,8 +64,9 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryEntry
-import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryInstalled
+import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryLegacyStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryManager
+import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryMarks
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -96,12 +97,11 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
     val scope = rememberCoroutineScope()
 
     val entries = remember { mutableStateListOf<PromptLibraryEntry>() }
-    // Normalised name+prompt keys of prompts already in the user's db, so the browser can mark entries
-    // that have been added. Rebuilt on every (re)load and after each add.
-    val installedKeys = remember { mutableStateListOf<String>() }
-    // Library ids the user has imported — the primary "Added" signal (survives edits). installedKeys
-    // (name+prompt) stays as a fallback for prompts imported before id-tracking existed.
-    val installedIds = remember { mutableStateListOf<String>() }
+    // What the user currently has, derived from their prompt rows alone (issue #303): the library ids
+    // the rows carry, plus name+prompt keys as the fallback for prompts imported before the LIBRARY_ID
+    // column existed. Rebuilt on every (re)load and after each add — so a prompt that is gone stops
+    // being marked as added, however it left the list.
+    var installed by remember { mutableStateOf(PromptLibraryMarks.Installed(emptySet(), emptySet())) }
     // Full-screen spinner: only while we have nothing to show yet. The background network refresh uses
     // [refreshing] (a thin top bar) instead, so a warm cache never blanks the screen on open.
     var loading by remember { mutableStateOf(true) }
@@ -111,20 +111,26 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
     var activeCategory by remember { mutableStateOf<String?>(null) }
     var preview by remember { mutableStateOf<PromptLibraryEntry?>(null) }
 
-    fun keyOf(name: String?, prompt: String?): String =
-        "${name.orEmpty().trim().lowercase()} ${prompt.orEmpty().trim().lowercase()}"
-
-    suspend fun refreshInstalledKeys() {
-        val keys = withContext(Dispatchers.IO) { db.getAll().map { keyOf(it.name, it.prompt) } }
-        installedKeys.clear()
-        installedKeys.addAll(keys)
-        val ids = withContext(Dispatchers.IO) { PromptLibraryInstalled.all(context) }
-        installedIds.clear()
-        installedIds.addAll(ids)
+    suspend fun refreshInstalled() {
+        val catalog = entries.toList()
+        installed = withContext(Dispatchers.IO) {
+            val rows = db.getAll()
+            // One-time carry-over of the pre-v6 side-store onto the rows it can still be matched to.
+            // Skipped entirely on a fresh install (nothing writes there any more) and a no-op once the
+            // rows carry their own ids, so the common path is a single read.
+            val carried = PromptLibraryMarks.carryOver(rows, catalog, PromptLibraryLegacyStore.all(context))
+            if (carried.isEmpty()) {
+                PromptLibraryMarks.installedIn(rows)
+            } else {
+                val updated = rows.map { row ->
+                    carried[row.id]?.let { id -> row.copy(libraryId = id).also { db.update(it) } } ?: row
+                }
+                PromptLibraryMarks.installedIn(updated)
+            }
+        }
     }
 
-    fun isAdded(entry: PromptLibraryEntry): Boolean =
-        entry.id in installedIds || keyOf(entry.name, entry.prompt) in installedKeys
+    fun isAdded(entry: PromptLibraryEntry): Boolean = PromptLibraryMarks.isAdded(installed, entry)
 
     // Always fetches from the network (used on open and by the refresh button). Keeps whatever is
     // already shown visible while it runs; only swaps the list in once a result arrives.
@@ -135,7 +141,7 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
             entries.clear()
             entries.addAll(result.entries)
         }
-        refreshInstalledKeys()
+        refreshInstalled()
         loadError = entries.isEmpty() && result.error != null
         loading = false
         refreshing = false
@@ -148,7 +154,7 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
         if (cached != null) {
             entries.clear()
             entries.addAll(cached)
-            refreshInstalledKeys()
+            refreshInstalled()
             loading = false
         }
         refreshFromNetwork()
@@ -156,11 +162,9 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
 
     fun addEntry(entry: PromptLibraryEntry) {
         scope.launch {
-            withContext(Dispatchers.IO) {
-                db.add(entry.toPromptModel(db.count()))
-                PromptLibraryInstalled.add(context, entry.id)
-            }
-            refreshInstalledKeys()
+            // The row itself carries the library id (issue #303) — nothing to keep in sync on the side.
+            withContext(Dispatchers.IO) { db.add(entry.toPromptModel(db.count())) }
+            refreshInstalled()
             DictateController.refreshPrompts(context)
             Toast.makeText(context, R.string.dictate__prompt_library_added, Toast.LENGTH_SHORT).show()
         }
@@ -405,12 +409,15 @@ private fun PreviewDialog(
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
         title = entry.name,
+        // Live even when the prompt is already in the list (issue #303): duplicates are legal here, and
+        // a confirm button that reacts to nothing at all is what made the reporter conclude the app was
+        // broken. The label says what a second tap will do instead of pretending to be a status.
         confirmLabel = if (added) {
-            stringRes(R.string.dictate__prompt_library_added)
+            stringRes(R.string.dictate__prompt_library_add_again)
         } else {
             stringRes(R.string.dictate__prompt_library_add)
         },
-        onConfirm = { if (!added) onAdd() },
+        onConfirm = onAdd,
         dismissLabel = stringRes(R.string.dictate__prompt_library_close),
         onDismiss = onDismiss,
         allowOutsideDismissal = true,

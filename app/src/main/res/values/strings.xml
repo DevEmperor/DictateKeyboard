@@ -2201,6 +2201,7 @@
     <string name="dictate__prompt_library_all" comment="Filter chip that shows prompts of every category">All</string>
     <string name="dictate__prompt_library_add" comment="Button that imports a library prompt into the user\'s own list">Add</string>
     <string name="dictate__prompt_library_added" comment="Marker/label shown once a library prompt has been imported">Added</string>
+    <string name="dictate__prompt_library_add_again" comment="Confirm button in the preview dialog for a prompt that is already in the user\'s list; adds a second copy">Add again</string>
     <string name="dictate__prompt_library_empty" comment="Shown when no library prompt matches the search/filter">No prompts match your search.</string>
     <string name="dictate__prompt_library_error" comment="Shown when the community library could not be downloaded">Couldn\'t load the community library. Check your connection and try again.</string>
     <string name="dictate__prompt_library_retry" comment="Button to retry loading the community library">Retry</string>

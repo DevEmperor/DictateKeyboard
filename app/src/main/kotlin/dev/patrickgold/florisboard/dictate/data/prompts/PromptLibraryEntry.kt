@@ -44,7 +44,11 @@ data class PromptLibraryEntry(
 ) {
     /**
      * Converts this library entry into a persistable [PromptModel]. [pos] is the target list position;
-     * [id]/[category]/[language]/[author]/[description] are dropped — they are catalog metadata only.
+     * [category]/[language]/[author]/[description] are dropped — they are catalog metadata only.
+     *
+     * [id] is the one piece of metadata that is kept, as [PromptModel.libraryId] (issue #303): it is
+     * what lets the browser say "Added" about a prompt that is actually still in the list, and stop
+     * saying it the moment the row is deleted.
      *
      * No typed trigger either (issue #283), deliberately: a prompt from the community library must
      * never arrive holding a shortcut that starts rewriting what the recipient types.
@@ -56,6 +60,7 @@ data class PromptLibraryEntry(
         prompt = prompt,
         requiresSelection = requiresSelection,
         autoApply = autoApply,
+        libraryId = id,
     )
 }
 

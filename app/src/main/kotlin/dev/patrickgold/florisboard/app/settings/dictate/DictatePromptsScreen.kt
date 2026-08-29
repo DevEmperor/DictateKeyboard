@@ -510,8 +510,10 @@ private fun exportPrompts(context: android.content.Context, uri: Uri, prompts: L
                     .apply { p.reasoningEffort?.let { put("reasoningEffort", it.name) } }
                     .apply { p.reasoningEffortCustom?.takeIf { it.isNotBlank() }?.let { put("reasoningEffortCustom", it) } }
                     // The typed trigger travels with the user's own export (issue #283) — unlike a
-                    // shared community prompt, this file is their own backup.
-                    .apply { p.trigger?.takeIf { it.isNotBlank() }?.let { put("trigger", it) } },
+                    // shared community prompt, this file is their own backup. Same for the library
+                    // origin (issue #303), so a re-import keeps the browser's "Added" marks honest.
+                    .apply { p.trigger?.takeIf { it.isNotBlank() }?.let { put("trigger", it) } }
+                    .apply { p.libraryId?.takeIf { it.isNotBlank() }?.let { put("libraryId", it) } },
             )
         }
         val root = JSONObject().put("version", 1).put("prompts", array)
@@ -554,6 +556,8 @@ private fun importPrompts(context: android.content.Context, uri: Uri): List<Prom
                     // Only kept if it is actually usable as a trigger — an old file may hold anything.
                     trigger = obj.optString("trigger", "").trim()
                         .takeIf { SnippetTriggers.isValidTrigger(it) },
+                    // Where the prompt came from, if the file says so (issue #303); missing → null.
+                    libraryId = obj.optString("libraryId", "").trim().takeIf { it.isNotEmpty() },
                 ),
             )
         }

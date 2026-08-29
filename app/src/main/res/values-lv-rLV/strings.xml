@@ -1431,6 +1431,7 @@
     <string name="dictate__prompt_library_all">Visas</string>
     <string name="dictate__prompt_library_add">Pievienot</string>
     <string name="dictate__prompt_library_added">Pievienota</string>
+    <string name="dictate__prompt_library_add_again">Pievienot vēlreiz</string>
     <string name="dictate__prompt_library_empty">Nav uzvednu, kas atbilstu jūsu meklējumam.</string>
     <string name="dictate__prompt_library_error">Neizdevās ielādēt kopienas bibliotēku. Pārbaudiet savienojumu un mēģiniet vēlreiz.</string>
     <string name="dictate__prompt_library_retry">Mēģināt vēlreiz</string>

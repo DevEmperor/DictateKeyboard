@@ -1335,6 +1335,7 @@
     <string name="dictate__prompt_library_all">Усі</string>
     <string name="dictate__prompt_library_add">Додати</string>
     <string name="dictate__prompt_library_added">Додано</string>
+    <string name="dictate__prompt_library_add_again">Додати ще раз</string>
     <string name="dictate__prompt_library_empty">Немає промптів, що відповідають вашому запиту.</string>
     <string name="dictate__prompt_library_error">Не вдалося завантажити бібліотеку спільноти. Перевірте підключення та повторіть спробу.</string>
     <string name="dictate__prompt_library_retry">Повторити</string>

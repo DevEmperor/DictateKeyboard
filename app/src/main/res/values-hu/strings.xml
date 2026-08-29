@@ -1486,6 +1486,7 @@
     <string name="dictate__prompt_library_all">Összes</string>
     <string name="dictate__prompt_library_add">Hozzáadás</string>
     <string name="dictate__prompt_library_added">Hozzáadva</string>
+    <string name="dictate__prompt_library_add_again">Hozzáadás újra</string>
     <string name="dictate__prompt_library_empty">Nincs a keresésnek megfelelő utasítás.</string>
     <string name="dictate__prompt_library_error">Nem sikerült betölteni a közösségi könyvtárat. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
     <string name="dictate__prompt_library_retry">Újra</string>

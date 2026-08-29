@@ -1488,6 +1488,7 @@
     <string name="dictate__prompt_library_all">Всички</string>
     <string name="dictate__prompt_library_add">Добави</string>
     <string name="dictate__prompt_library_added">Добавено</string>
+    <string name="dictate__prompt_library_add_again">Добави отново</string>
     <string name="dictate__prompt_library_empty">Няма подкани, съответстващи на търсенето ви.</string>
     <string name="dictate__prompt_library_error">Библиотеката на общността не можа да се зареди. Проверете връзката си и опитайте отново.</string>
     <string name="dictate__prompt_library_retry">Опитай отново</string>

@@ -1346,6 +1346,7 @@
     <string name="dictate__prompt_library_all">الكل</string>
     <string name="dictate__prompt_library_add">إضافة</string>
     <string name="dictate__prompt_library_added">تمت الإضافة</string>
+    <string name="dictate__prompt_library_add_again">إضافة مرة أخرى</string>
     <string name="dictate__prompt_library_empty">لا توجد مطالبات مطابقة لبحثك.</string>
     <string name="dictate__prompt_library_error">تعذّر تحميل مكتبة المجتمع. تحقّق من اتصالك وأعد المحاولة.</string>
     <string name="dictate__prompt_library_retry">إعادة المحاولة</string>

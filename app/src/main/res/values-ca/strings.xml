@@ -1363,6 +1363,7 @@
     <string name="dictate__prompt_library_all">Tots</string>
     <string name="dictate__prompt_library_add">Afegeix</string>
     <string name="dictate__prompt_library_added">Afegit</string>
+    <string name="dictate__prompt_library_add_again">Torna a afegir</string>
     <string name="dictate__prompt_library_empty">Cap prompt coincideix amb la teva cerca.</string>
     <string name="dictate__prompt_library_error">No s\'ha pogut carregar la biblioteca de la comunitat. Comprova la connexió i torna-ho a provar.</string>
     <string name="dictate__prompt_library_retry">Torna-ho a provar</string>

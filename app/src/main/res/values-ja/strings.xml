@@ -1420,6 +1420,7 @@
     <string name="dictate__prompt_library_all">すべて</string>
     <string name="dictate__prompt_library_add">追加</string>
     <string name="dictate__prompt_library_added">追加済み</string>
+    <string name="dictate__prompt_library_add_again">もう一度追加</string>
     <string name="dictate__prompt_library_empty">検索に一致するプロンプトがありません。</string>
     <string name="dictate__prompt_library_error">コミュニティライブラリを読み込めませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="dictate__prompt_library_retry">再試行</string>

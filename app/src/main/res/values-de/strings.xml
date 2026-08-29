@@ -1424,6 +1424,7 @@
     <string name="dictate__prompt_library_all">Alle</string>
     <string name="dictate__prompt_library_add">Hinzufügen</string>
     <string name="dictate__prompt_library_added">Hinzugefügt</string>
+    <string name="dictate__prompt_library_add_again">Erneut hinzufügen</string>
     <string name="dictate__prompt_library_empty">Keine Prompts passen zu deiner Suche.</string>
     <string name="dictate__prompt_library_error">Die Community-Bibliothek konnte nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="dictate__prompt_library_retry">Erneut versuchen</string>

@@ -1469,6 +1469,7 @@
     <string name="dictate__prompt_library_all">Todos</string>
     <string name="dictate__prompt_library_add">Añadir</string>
     <string name="dictate__prompt_library_added">Añadido</string>
+    <string name="dictate__prompt_library_add_again">Añadir otra vez</string>
     <string name="dictate__prompt_library_empty">Ningún prompt coincide con tu búsqueda.</string>
     <string name="dictate__prompt_library_error">No se pudo cargar la biblioteca de la comunidad. Comprueba tu conexión e inténtalo de nuevo.</string>
     <string name="dictate__prompt_library_retry">Reintentar</string>

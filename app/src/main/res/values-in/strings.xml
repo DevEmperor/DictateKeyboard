@@ -1443,6 +1443,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_library_all">Semua</string>
     <string name="dictate__prompt_library_add">Tambah</string>
     <string name="dictate__prompt_library_added">Ditambahkan</string>
+    <string name="dictate__prompt_library_add_again">Tambahkan lagi</string>
     <string name="dictate__prompt_library_empty">Tidak ada perintah yang cocok dengan pencarian Anda.</string>
     <string name="dictate__prompt_library_error">Tidak dapat memuat pustaka komunitas. Periksa koneksi Anda dan coba lagi.</string>
     <string name="dictate__prompt_library_retry">Coba lagi</string>

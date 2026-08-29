@@ -1491,6 +1491,7 @@
     <string name="dictate__prompt_library_all">Все</string>
     <string name="dictate__prompt_library_add">Добавить</string>
     <string name="dictate__prompt_library_added">Добавлено</string>
+    <string name="dictate__prompt_library_add_again">Добавить снова</string>
     <string name="dictate__prompt_library_empty">Нет промптов, соответствующих вашему запросу.</string>
     <string name="dictate__prompt_library_error">Не удалось загрузить библиотеку сообщества. Проверьте подключение и повторите попытку.</string>
     <string name="dictate__prompt_library_retry">Повторить</string>

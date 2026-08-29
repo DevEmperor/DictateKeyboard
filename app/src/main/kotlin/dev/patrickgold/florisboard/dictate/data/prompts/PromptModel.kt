@@ -42,6 +42,12 @@ data class PromptModel(
     // Optional typed shortcut that expands this snippet while typing (issue #283); null/blank = none.
     // Only ever honoured for `[snippet]` prompts — see [snippetBody] and `SnippetTriggers`.
     var trigger: String? = null,
+    // Where this prompt came from: the community-library entry id it was imported from, or null for a
+    // prompt the user wrote themselves (issue #303). Says nothing about what the prompt does — it is
+    // what lets the library show "Added" for a prompt that is actually still there, and stop showing it
+    // the moment the row is deleted. Deliberately part of the row: three call sites already forgot to
+    // keep the old parallel set in sync.
+    var libraryId: String? = null,
 ) {
     fun isPersisted(): Boolean = id >= 0
 
