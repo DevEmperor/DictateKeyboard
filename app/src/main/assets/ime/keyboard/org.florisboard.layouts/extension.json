@@ -269,6 +269,12 @@
         "direction": "ltr"
       },
       {
+        "id": "yashert_russian",
+        "label": "Russian (ЯШЕРТЫ)",
+        "authors": [ "leekery" ],
+        "direction": "ltr"
+      },
+      {
         "id": "jcuken_ukrainian",
         "label": "Ukrainian (ЙЦУКЕН)",
         "authors": [ "williamtheaker", "33kk" ],

@@ -452,6 +452,15 @@
       }
     },
     {
+      "languageTag": "ru",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:russian_ruble",
+      "popupMapping": "org.florisboard.localization:ru",
+      "preferred": {
+        "characters": "org.florisboard.layouts:yashert_russian"
+      }
+    },
+    {
       "languageTag": "rue",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
