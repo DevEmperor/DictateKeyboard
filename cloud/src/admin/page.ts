@@ -54,9 +54,32 @@ export const DASHBOARD_HTML = `<!doctype html>
     --accent-ink: #04121A;        /* text placed ON the accent */
     --accent-soft: rgba(48, 183, 230, .14);
     --bg: #0B0F14;
-    --surface: #121820;
-    --surface-2: #19212B;
-    --line: #1E2833;
+    /*
+     * The panels let the fog through rather than sitting on top of it.
+     *
+     * Deliberately plain alpha and no backdrop-filter. Frosted glass exists to blur detail behind a
+     * surface, and there is none here: the background is a 200-pixel image stretched tenfold, which
+     * is already softer than any blur would make it. A filter would look the same and cost a blur
+     * pass per panel per frame — fifteen panels against a background that repaints sixteen times a
+     * second is two hundred and forty of them a second, which is the trap this whole page has twice
+     * fallen into.
+     */
+    --surface: rgba(18, 24, 32, .56);
+    /* Where a surface must hide what is behind it: dialogs, and the boxes and labels of the network
+       diagram, where a line showing through a label is worse than no transparency at all. */
+    --surface-solid: #121820;
+    /*
+     * The calm ground, for the panels that carry tables.
+     *
+     * Letting the fog through is right for a card holding one figure and wrong for forty in rows:
+     * a column of numbers wants a contrast that does not depend on where a cloud happens to be. So
+     * the veil sits here rather than across the whole content column — the cards stand in the open
+     * fog, the tables keep their own quiet backing.
+     */
+    --surface-dense: rgba(15, 20, 27, .88);
+    /* A lightening rather than a colour, so it holds up over whatever the fog is doing behind it. */
+    --surface-2: rgba(255, 255, 255, .055);
+    --line: rgba(255, 255, 255, .13);
     --text: #E6EDF3;
     --muted: #7D8B9A;
     --ok: #3FB950;
@@ -198,8 +221,20 @@ export const DASHBOARD_HTML = `<!doctype html>
      because on a desk the tables happen to fit. */
   .stack > *, .dlg-body > * { min-width: 0; }
   .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  /*
+   * Lifted off the fog rather than drawn on it.
+   *
+   * Two shadows doing two jobs: the outer one puts the panel in front of the background, which a
+   * hairline border alone cannot do once that background has depth of its own; the inner top line
+   * is a lit edge, and it is what makes a translucent surface read as glass instead of as something
+   * that has faded.
+   */
+  .card, .panel, .zgroup, .gwrap {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .09);
+  }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
-  .card.lead { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  /* Keeps its accent ring, and gains the depth with it. */
+  .card.lead { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset, 0 10px 30px rgba(0, 0, 0, .45); }
   @media (min-width: 780px) { .card.lead { grid-column: span 2; } }
   .label { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 640; display: flex; align-items: center; gap: 6px; }
   .value { font-size: 27px; font-weight: 680; font-variant-numeric: tabular-nums; margin-top: 5px; letter-spacing: -0.025em; line-height: 1.15; }
@@ -237,7 +272,7 @@ export const DASHBOARD_HTML = `<!doctype html>
 
   h2 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; display: flex; align-items: center; gap: 7px; }
   h3 { font-size: 15px; margin: 0 0 10px; font-weight: 660; }
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
+  .panel { background: var(--surface-dense); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
   .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -264,9 +299,9 @@ export const DASHBOARD_HTML = `<!doctype html>
   .chart > div { flex: 1; background: color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 3px 3px 0 0; min-height: 2px; }
   .chart > div:last-child { background: var(--accent); }
 
-  dialog { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--text); padding: 0; max-width: min(940px, 96vw); width: 100%; max-height: 92vh; }
-  dialog::backdrop { background: rgba(4, 12, 18, .55); }
-  .dlg-head { display: flex; align-items: center; gap: 12px; padding: 13px var(--pad); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface); z-index: 2; }
+  dialog { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-solid); color: var(--text); padding: 0; max-width: min(940px, 96vw); width: 100%; max-height: 92vh; }
+  dialog::backdrop { background: rgba(4, 12, 18, .7); }
+  .dlg-head { display: flex; align-items: center; gap: 12px; padding: 13px var(--pad); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface-solid); z-index: 2; }
   .dlg-body { padding: var(--pad); display: grid; gap: 18px; overflow: auto; max-height: calc(92vh - 62px); }
   /* The account view is the one screen that has to hold everything known about a wallet at once.
      At the shared dialog width its tables each grew a horizontal scrollbar of their own, and a
@@ -317,7 +352,7 @@ export const DASHBOARD_HTML = `<!doctype html>
   .zone-bg { rx: 18; fill-opacity: .07; stroke-opacity: .35; stroke-width: 1.5; stroke-dasharray: 7 6; }
   .zone-label { font: 650 15px ui-sans-serif, system-ui, sans-serif; fill-opacity: .85; }
   .zone-sub { font: 400 12px ui-sans-serif, system-ui, sans-serif; fill: currentColor; opacity: .55; }
-  .gnode rect { rx: 11; fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .gnode rect { rx: 11; fill: var(--surface-solid); stroke: var(--line); stroke-width: 1.5; }
   /* Both of these are rects inside .gnode and would otherwise inherit the box's own fill and
      border from the rule above — a CSS declaration beats a fill="…" attribute every time. The
      accent bar was painted over in surface grey, and the invisible tap target came out as an
@@ -333,7 +368,7 @@ export const DASHBOARD_HTML = `<!doctype html>
   .gedge.hot path { opacity: 1; stroke-width: 3; }
   /* Labels live above the nodes, so a chip that lands on a box is still readable. */
   .glabel text { font: 550 10.5px ui-sans-serif, system-ui, sans-serif; fill: var(--text); }
-  .glabel rect.lbl { fill: var(--surface); stroke: var(--line); stroke-width: .8; rx: 5; }
+  .glabel rect.lbl { fill: var(--surface-solid); stroke: var(--line); stroke-width: .8; rx: 5; }
   .glabel.dim { opacity: .12; }
   .glabel.hot rect.lbl { stroke: var(--accent); stroke-width: 1.6; }
   .glabel.hot text { fill: var(--text); }
