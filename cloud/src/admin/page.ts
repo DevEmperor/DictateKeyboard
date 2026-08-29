@@ -169,7 +169,12 @@ export const DASHBOARD_HTML = `<!doctype html>
      The sky stops too, and stays as a still image: the point of it is the depth, not the drift. */
   @media (prefers-reduced-motion: reduce) {
     #refresh.working span { animation: none; background: none; color: var(--accent); }
-    .sky, header::after { animation: none; }
+    /* Everything that arrives, arrives already there; the traffic dots stand still on their routes;
+       the sky is drawn once and left. Nothing here is load-bearing — each is a way of saying
+       something the page also says in words or in a number. */
+    .grid > .card, .stack > .panel, #taxYears > .card, #planCards > .card,
+    .spark path.line, .spark path.area, .spark circle, .gedge path.flow { animation: none; }
+    .spark path.line { stroke-dashoffset: 0; }
   }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.015em; white-space: nowrap; }
   .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); flex: none; }
@@ -424,6 +429,61 @@ export const DASHBOARD_HTML = `<!doctype html>
   .spark path.area { fill: color-mix(in srgb, var(--accent) 16%, transparent); stroke: none; }
   .spark path.line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
   .spark circle { fill: var(--accent); }
+
+  /*
+   * Arriving.
+   *
+   * All one-shot: they run once when a view is rendered and then the element is static for as long
+   * as it is on screen. Nothing here loops, which is what separates a page that settles from one
+   * that fidgets.
+   *
+   * The line draws itself left to right, which is the direction it is read in, and the endpoint
+   * lands last because on a series ending today that is the value being looked for. It works on any
+   * series because the path carries pathLength="100": the dash arithmetic is then in percent and
+   * does not depend on how long the line actually is.
+   */
+  @keyframes rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: scale(1); } }
+
+  .grid > .card, .stack > .panel, #taxYears > .card, #planCards > .card { animation: rise .34s ease-out both; }
+  /* A short ladder, then nothing: past the eighth card the delay would be longer than the animation
+     and the last row would visibly lag behind the scroll. */
+  .grid > .card:nth-child(2), .stack > .panel:nth-child(2), #taxYears > .card:nth-child(2), #planCards > .card:nth-child(2) { animation-delay: .04s; }
+  .grid > .card:nth-child(3), .stack > .panel:nth-child(3), #taxYears > .card:nth-child(3), #planCards > .card:nth-child(3) { animation-delay: .08s; }
+  .grid > .card:nth-child(4), .stack > .panel:nth-child(4), #taxYears > .card:nth-child(4), #planCards > .card:nth-child(4) { animation-delay: .12s; }
+  .grid > .card:nth-child(5), .stack > .panel:nth-child(5), #planCards > .card:nth-child(5) { animation-delay: .16s; }
+  .grid > .card:nth-child(6), .stack > .panel:nth-child(6) { animation-delay: .20s; }
+  .grid > .card:nth-child(7) { animation-delay: .24s; }
+  .grid > .card:nth-child(8) { animation-delay: .28s; }
+
+  .spark path.line { stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw .85s ease-out .1s forwards; }
+  .spark path.area { animation: appear .5s ease-out .4s both; }
+  .spark circle { transform-box: fill-box; transform-origin: center; animation: pop .28s ease-out .85s both; }
+
+  /*
+   * Traffic on the diagram: dots travelling each route in the direction the arrow points.
+   *
+   * A dash pattern of zero-length dashes with a round cap is a row of dots, and sliding the offset
+   * by exactly one gap moves them along by one place — so the pattern lands back on itself and
+   * there is no jump at the end of the cycle. The path is a second copy of the same d attribute,
+   * which means the dots follow the routing that graph-layout.ts already worked out, curves and all.
+   *
+   * This is the one animation here that loops, and it is the only reason to watch the GPU on this
+   * page: an SVG dash offset is repainted rather than composited. It runs on this tab alone —
+   * section[hidden] is display: none, and a display: none subtree animates nothing.
+   */
+  .gedge path.flow {
+    fill: none; stroke-width: 3.4; stroke-linecap: round;
+    /* 0.1 rather than 0: a zero-length dash with a round cap is a dot in Chrome but not everywhere,
+       and a tenth of a unit under a 3.4-wide round cap looks identical where it does work. */
+    stroke-dasharray: 0.1 26; opacity: .85;
+    animation: gflow 2.6s linear infinite;
+  }
+  @keyframes gflow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -26; } }
+  /* A route the current filter has dimmed carries no traffic worth showing. */
+  .gedge.dim path.flow { display: none; }
 
   .stale { font-size: 11px; color: var(--muted); }
 
@@ -824,6 +884,121 @@ var GRAPH = ${GRAPH_JSON};
       (sub ? '<div class="sub">' + sub + '</div>' : '') + (extra || '') + '</div>';
   }
 
+  /* ------------------------------------------------------- Zahlen, die laufen */
+
+  /*
+   * A figure counts up to what it now says — but only when it is not what it said before.
+   *
+   * That condition is the point of the whole thing. On a page that is refreshed all day, motion
+   * that happens every time says nothing; motion that happens only on a change turns the animation
+   * itself into information, and the eye finds the one card that moved without reading the others.
+   *
+   * The numbers arrive here already formatted, as text, so they have to be read back out of it.
+   * [numberIn] does that without guessing a locale: it works out the decimal and grouping
+   * characters from the string in front of it and puts the same ones back, and returns null the
+   * moment anything is ambiguous — a figure that cannot be read back is simply not animated, which
+   * is always better than one that is redrawn wrong.
+   */
+  var seenValues = {}, rollCount = 0, valueTimer = 0;
+  var motionOff = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  function numberIn(text) {
+    var m = /^([^\\d-]*)(-?[\\d.,]*\\d)(.*)$/.exec(text);
+    if (!m) return null;
+    var prefix = m[1], raw = m[2], suffix = m[3];
+    var cut = Math.max(raw.lastIndexOf(','), raw.lastIndexOf('.'));
+    var dec = 0, decSep = '', groupSep = '';
+    if (cut >= 0) {
+      var tail = raw.slice(cut + 1);
+      if (!/^\\d+$/.test(tail)) return null;
+      // Exactly three digits after the last separator is a thousands group, not a fraction: 1.234
+      // is a thousand, 33.04 is not. Nothing on this page is written to three decimal places.
+      if (tail.length === 3) {
+        groupSep = raw.charAt(cut);
+      } else {
+        dec = tail.length; decSep = raw.charAt(cut);
+        var earlier = /[.,]/.exec(raw.slice(0, cut));
+        if (earlier) groupSep = earlier[0];
+      }
+    }
+    var digits = '';
+    for (var i = 0; i < raw.length; i++) {
+      var c = raw.charAt(i);
+      if ((c >= '0' && c <= '9') || c === '-') digits += c;
+      else if (i === cut && decSep) digits += '.';
+    }
+    var value = parseFloat(digits);
+    if (!isFinite(value)) return null;
+    return {
+      value: value,
+      write: function (v) {
+        var body = Math.abs(v).toFixed(dec);
+        var whole = dec ? body.slice(0, body.length - dec - 1) : body;
+        var frac = dec ? body.slice(body.length - dec) : '';
+        if (groupSep) whole = whole.replace(/\\B(?=(\\d{3})+(?!\\d))/g, groupSep);
+        return prefix + (v < 0 ? '-' : '') + whole + (dec ? decSep + frac : '') + suffix;
+      },
+    };
+  }
+
+  /* A card is identified by its heading, so the same figure is recognised across a re-render. */
+  function valueKey(el) {
+    if (!el.closest) return null;
+    var box = el.closest('.card');
+    var label = box ? box.querySelector('.label') : null;
+    var text = label ? label.textContent.trim() : '';
+    if (!text) return null;
+    var sect = el.closest('section');
+    return (sect ? sect.id : '-') + '|' + text;
+  }
+
+  function rollValue(el, from, to, write) {
+    rollCount++;
+    var t0 = 0;
+    function frame(now) {
+      if (!t0) t0 = now;
+      var p = Math.min(1, (now - t0) / 520);
+      // Fast at first and settling at the end, so the final figure is legible well before it stops.
+      el.textContent = write(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(frame); else rollCount--;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function countUp(scope) {
+    var nodes = (scope || document).querySelectorAll('.value');
+    Array.prototype.forEach.call(nodes, function (el) {
+      // Only a plain number: a .value holding markup, or an error message, is left alone.
+      if (el.children.length) return;
+      var key = valueKey(el);
+      if (!key) return;
+      var read = numberIn(el.textContent);
+      if (!read) { delete seenValues[key]; return; }
+      var before = seenValues[key];
+      seenValues[key] = read.value;
+      // The first sighting is recorded, never animated — a page that counts up on arrival says
+      // "everything changed", which is the opposite of what this is for.
+      if (motionOff || before === undefined || before === read.value) return;
+      rollValue(el, before, read.value, read.write);
+    });
+  }
+
+  /*
+   * One hook rather than a call at the end of every render: each view replaces its own innerHTML,
+   * and there are a dozen places that do it. The observer fires on those replacements, not per
+   * frame, and stands down entirely while a figure is mid-roll — otherwise the roll would observe
+   * itself sixty times a second.
+   */
+  function watchValues() {
+    var root = document.querySelector('main');
+    if (!root || !window.MutationObserver) return;
+    new MutationObserver(function () {
+      if (rollCount) return;
+      clearTimeout(valueTimer);
+      valueTimer = setTimeout(function () { countUp(root); }, 30);
+    }).observe(root, { childList: true, subtree: true });
+  }
+
   /**
    * A filled area over a series of numbers, with the last point marked.
    *
@@ -838,9 +1013,11 @@ var GRAPH = ${GRAPH_JSON};
     var pts = values.map(function (v, i) {
       return (i * step).toFixed(2) + ',' + (30 - (n(v) / max) * 28).toFixed(2);
     });
+    // pathLength="100" so the draw-in animation can work in percent: without it the dash arithmetic
+    // would depend on the real length of the line, which differs with every series.
     return '<svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true">' +
       '<path class="area" d="M0,32 L' + pts.join(' L') + ' L100,32 Z"></path>' +
-      '<path class="line" d="M' + pts.join(' L') + '"></path>' +
+      '<path class="line" pathLength="100" d="M' + pts.join(' L') + '"></path>' +
       '<circle cx="100" cy="' + (30 - (n(values[values.length - 1]) / max) * 28).toFixed(2) + '" r="1.9"></circle></svg>';
   }
 
@@ -1989,8 +2166,13 @@ var GRAPH = ${GRAPH_JSON};
       var dim = (filter === 'token' && !e.token) || (filter === 'guard' && !e.guard);
       var on = selected && selected.type === 'edge' && selected.i === i;
       var label = filter === 'guard' && e.guard ? e.guard : (filter === 'token' && e.token ? e.token : e.label);
+      // A second copy of the same d, carrying the dots. Its speed is nudged per route so the whole
+      // diagram does not pulse in unison — different pipes, different flow — and it takes no arrow
+      // marker: the line underneath already says which way this goes.
+      var flowSecs = (2.2 + (i % 7) * 0.31).toFixed(2);
       parts.push('<g class="gedge' + (dim ? ' dim' : '') + (on ? ' sel' : '') + '" data-e="' + i + '">' +
-        '<path d="' + e.d + '" stroke="' + EKIND[e.kind] + '" marker-end="url(#arw)"/></g>');
+        '<path d="' + e.d + '" stroke="' + EKIND[e.kind] + '" marker-end="url(#arw)"/>' +
+        '<path class="flow" d="' + e.d + '" stroke="' + EKIND[e.kind] + '" style="animation-duration:' + flowSecs + 's"/></g>');
       labels.push('<g class="glabel' + (dim ? ' dim' : '') + (on ? ' sel' : '') + '" data-e="' + i + '">' +
         '<rect class="lbl"/><text text-anchor="middle">' + esc(label) + '</text></g>');
     });
@@ -2660,6 +2842,7 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   startSky();
+  watchValues();
 
   initGraph();
   get('/admin/api/me').then(function (r) { $('who').textContent = r.email; });
