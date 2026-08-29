@@ -41,6 +41,9 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.settings__clipboard__title, R.string.settings__clipboard__title, Routes.Settings.Clipboard),
         SettingsSearchEntry(R.string.dictate__floating_button_title, R.string.dictate__floating_button_title, Routes.Settings.DictateFloatingButton, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__history_title, R.string.dictate__history_title, Routes.Settings.DictateHistory, parentRes = R.string.dictate__title),
+        // Hand-added: the generator only sees rows that navigate to a route, and this one opens the
+        // system file picker instead (issue #301).
+        SettingsSearchEntry(R.string.dictate__import_menu, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__import_menu"),
         SettingsSearchEntry(R.string.dictate__languages_title, R.string.dictate__languages_title, Routes.Settings.DictateLanguages, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__mappings_title, R.string.dictate__mappings_title, Routes.Settings.DictateMappings, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__prompt_library_title, R.string.dictate__prompt_library_title, Routes.Settings.DictatePromptLibrary, parentRes = R.string.dictate__title),

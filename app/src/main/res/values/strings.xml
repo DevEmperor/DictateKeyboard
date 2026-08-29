@@ -2221,6 +2221,23 @@
     <string name="dictate__file_too_large" comment="Toast when the chosen file exceeds the provider upload limit">File is too large – the provider accepts at most 25 MB.</string>
     <string name="dictate__file_read_error" comment="Toast when the chosen file could not be read">Could not read the selected file.</string>
 
+    <!-- Share → Dictate for audio and video (issue #301): a shared voice message is transcribed on a
+         screen of its own, because a share has no text field for the transcript to go into. -->
+    <string name="dictate__import_share_label" comment="Label of the Dictate entry in the system share sheet for audio and video files. Says what it does, because another Dictate entry already handles images.">Transcribe with Dictate</string>
+    <string name="dictate__import_title" comment="Title of the screen that transcribes a shared or picked audio file">Transcribe file</string>
+    <string name="dictate__import_menu" comment="Entry on the Dictate settings home that opens the file picker">Transcribe a file</string>
+    <string name="dictate__import_menu_summary" comment="Summary under the \'Transcribe a file\' entry">Pick an audio or video file and read what it says</string>
+    <string name="dictate__import_status_preparing" comment="Progress line while the shared file is being copied and examined">Preparing…</string>
+    <string name="dictate__import_status_transcribing" comment="Progress line while the file is being transcribed">Transcribing…</string>
+    <string name="dictate__import_status_part" comment="Progress line for a long file split into pieces; %1$d is the piece being worked on, %2$d the total">Part %1$d of %2$d…</string>
+    <string name="dictate__import_result_label" comment="Label above the editable transcript on the import screen">Transcript</string>
+    <string name="dictate__import_prompt_label" comment="Label above the row of prompt chips that can be applied to the transcript">Do something with it</string>
+    <string name="dictate__import_retry" comment="Button that starts the transcription over after it failed">Try again</string>
+    <string name="dictate__import_no_file" comment="Shown when the share carried nothing we could read">No audio file was shared.</string>
+    <string name="dictate__import_only_first" comment="Shown when several files were shared at once; {count} is how many were left out">Only the first file is transcribed – {count} more were left out.</string>
+    <string name="dictate__import_on_device" comment="Switch that transcribes the file with the downloaded on-device model">Transcribe on this device</string>
+    <string name="dictate__import_on_device_summary" comment="Summary under the on-device switch">Nothing is uploaded, and no size limit applies.</string>
+
     <!-- Dictate onboarding step -->
     <string name="dictate__setup_description" comment="Onboarding text inviting the user to set up Dictate">Set up your AI provider and API key so you can start dictating with the mic.</string>
     <string name="dictate__setup_configure_btn" comment="Onboarding button opening the Dictate settings">Configure Dictate</string>

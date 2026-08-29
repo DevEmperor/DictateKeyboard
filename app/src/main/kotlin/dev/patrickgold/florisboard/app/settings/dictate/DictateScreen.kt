@@ -45,6 +45,7 @@ import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.AudioFile
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Key
@@ -79,6 +80,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import dev.patrickgold.florisboard.dictate.importer.TranscribeShareActivity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.semantics.Role
@@ -150,6 +154,22 @@ fun DictateScreen() = FlorisScreen {
             title = stringRes(R.string.dictate__history_title),
             summary = stringRes(R.string.dictate__history_menu_summary),
             onClick = { navController.navigate(Routes.Settings.DictateHistory) },
+        )
+
+        // "Transcribe a file" (issue #301): the same screen a share lands on, reached from inside.
+        // Deliberately the system picker rather than a browser of our own — SAF is better at it than
+        // we would ever be, and it reopens where it was last used, which was the actual request in
+        // discussion #300 (a folder of Signal voice messages).
+        val importContext = LocalContext.current
+        val importPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) importContext.startActivity(TranscribeShareActivity.intentFor(importContext, uri))
+        }
+        Preference(
+            icon = Icons.Default.AudioFile,
+            modifier = Modifier.settingsSearchAnchor("dictate__import_menu"),
+            title = stringRes(R.string.dictate__import_menu),
+            summary = stringRes(R.string.dictate__import_menu_summary),
+            onClick = { importPicker.launch(TranscribeShareActivity.MIME_TYPES) },
         )
 
         // Dictation layout: its own category (issue #199) — the classic keyboard-less layout toggle

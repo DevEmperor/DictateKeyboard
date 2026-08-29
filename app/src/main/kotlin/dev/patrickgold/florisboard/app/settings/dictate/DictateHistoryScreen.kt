@@ -450,40 +450,17 @@ private fun DetailDialog(
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
-    // A self-contained player scoped to this dialog: released when it closes.
-    val playerRef = remember { mutableStateOf<MediaPlayer?>(null) }
-    var playing by remember { mutableStateOf(false) }
-    var progress by remember { mutableStateOf(0f) }
-    fun stop() {
-        playerRef.value?.let { runCatching { it.stop() }; runCatching { it.release() } }
-        playerRef.value = null
-        playing = false
+    // The player itself lives in AudioPlayback.kt and is shared with the import screen (#301): the
+    // lifecycle — stop on completion, release on dispose, poll while running — is the part worth
+    // having in one place. The row of buttons below stays here, because this dialog's row also
+    // carries export, share and pin.
+    val player = rememberAudioPlayer(entry.audioPath) {
+        Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
     }
-    fun toggle() {
-        if (playing) { stop(); return }
-        val path = entry.audioPath ?: return
-        val p = runCatching {
-            MediaPlayer().apply {
-                setDataSource(path)
-                setOnCompletionListener { stop() }
-                prepare()
-                start()
-            }
-        }.getOrNull()
-        if (p != null) { playerRef.value = p; playing = true }
-        else Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
-    }
-    DisposableEffect(Unit) { onDispose { stop() } }
-    LaunchedEffect(playing) {
-        while (playing) {
-            val p = playerRef.value ?: break
-            val dur = runCatching { p.duration }.getOrDefault(0)
-            val pos = runCatching { p.currentPosition }.getOrDefault(0)
-            progress = if (dur > 0) (pos.toFloat() / dur).coerceIn(0f, 1f) else 0f
-            delay(120)
-        }
-        if (!playing) progress = 0f
-    }
+    val playing = player.playing
+    val progress = player.progress
+    fun stop() = player.stop()
+    fun toggle() = player.toggle()
 
     JetPrefAlertDialog(
         scrollModifier = florisDialogScroll(),
