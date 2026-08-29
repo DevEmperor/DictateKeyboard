@@ -69,6 +69,25 @@ internal fun mayIgnoreNoSuggestionsFlag(
     else -> true
 }
 
+/**
+ * Which range an accepted suggestion replaces (issue #298): the composing region when there is one,
+ * otherwise the word the cursor sits in.
+ *
+ * The two used to be the same question, because a candidate could only ever appear while a composing
+ * region was set. Emoji suggestions broke that tie: they answer a typed `:smile` without needing the
+ * region — and a candidate that answers a word has to *replace* it. Committing behind it would leave
+ * the query standing and produce `:smile😄`.
+ *
+ * Invalid stays invalid: after a phantom space there is neither a composing region nor a current word,
+ * and there the candidate is genuinely new text that belongs after the cursor.
+ */
+internal fun completionReplacementRange(composing: EditorRange, currentWord: EditorRange): EditorRange =
+    when {
+        composing.isValid -> composing
+        currentWord.isValid -> currentWord
+        else -> EditorRange.Unspecified
+    }
+
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
@@ -132,15 +151,20 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             }
         }
         activeState.keyboardMode = keyboardMode
+        // A property of the field, not a setting (issue #298): whether words may be looked at here at
+        // all. Whether the user *wants* word suggestions is [determineComposingEnabled]'s to decide.
+        // Computing both in this one line is why emoji suggestions died together with the word ones —
+        // they only ever needed a word, not a composing region — and why shape-based input stopped
+        // being typable without them.
         activeState.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2,
             -> false
-            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                prefs.suggestion.enabled.get()// &&
-            //!instance.inputAttributes.flagTextAutoComplete &&
-            //!instance.inputAttributes.flagTextNoSuggestions
+            // The two flags FlorisBoard left commented out here are answered elsewhere now:
+            // NO_SUGGESTIONS in shouldDetermineComposingRegion (issue #296), and AUTO_COMPLETE nowhere,
+            // because nothing in the keyboard reads it as a block.
+            else -> activeState.keyVariation != KeyVariation.PASSWORD
         }
         activeState.isIncognitoMode = when (prefs.suggestion.incognitoMode.get()) {
             IncognitoMode.FORCE_OFF -> false
@@ -162,7 +186,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun determineComposingEnabled(): Boolean {
-        return activeState.isComposingEnabled && nlpManager.isSuggestionOn()
+        // The field allows it, and the user (or a provider that overrides them) wants word suggestions.
+        // Not [NlpManager.isSuggestionOn]: that is an OR across three unrelated features, and asking it
+        // here is what left shape-based input without a composing region — the very thing it types with —
+        // whenever "Display suggestions" was off (issue #298).
+        return activeState.isComposingEnabled && nlpManager.wordSuggestionsWanted()
     }
 
     override fun determinePhantomSpacePending(): Boolean = phantomSpace.isActive
@@ -173,6 +201,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
         return super.shouldDetermineComposingRegion(editorInfo) &&
+            // The field, not the setting (issue #298). This gates the *current word*, which since #298 is
+            // read even when no composing region is set — so the exclusion of password and number fields
+            // has to be made here, or the emoji provider would start reading passwords word by word.
+            activeState.isComposingEnabled &&
             (phantomSpace.isInactive || phantomSpace.showComposingRegion)
     }
 
@@ -301,8 +333,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
-     * Completes the given [candidate] in the current composing region. Does nothing if the current
-     * input editor is not rich or if the input connection is invalid.
+     * Completes the given [candidate] over the word it answers — see [completionReplacementRange]. Does
+     * nothing if the current input editor is not rich or if the input connection is invalid.
      *
      * Current phantom space state is respected and a space char will be inserted accordingly.
      * Phantom space will be activated if the text is committed.
@@ -315,9 +347,14 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val text = candidate.text.toString()
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
         val content = activeContent
-        return if (content.composing.isValid) {
+        val replaceRange = completionReplacementRange(content.composing, content.currentWord)
+        return if (replaceRange.isValid) {
             phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
-            super.finalizeComposingText(text)
+            super.finalizeComposingText(
+                text = text,
+                range = replaceRange,
+                rangeText = if (content.composing.isValid) content.composingText else content.currentWordText,
+            )
         } else {
             val isPhantomSpaceActive = phantomSpace.determine(text)
             phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
@@ -326,7 +363,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             } else {
                 super.commitText(text)
             }.also {
-                // handled in finalizeComposingText if content.composing.isValid
+                // handled in finalizeComposingText if there was a range to replace
                 updateLastCommitPosition()
             }
         }

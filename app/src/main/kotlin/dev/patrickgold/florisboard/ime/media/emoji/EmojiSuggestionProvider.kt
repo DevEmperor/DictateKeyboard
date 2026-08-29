@@ -30,6 +30,22 @@ import dev.patrickgold.florisboard.lib.FlorisLocale
 import io.github.reactivecircus.cache4k.Cache
 
 /**
+ * Where an emoji query is read from (issue #298): the composing region when there is one, otherwise the
+ * word the cursor sits in.
+ *
+ * Emoji suggestions have their own switch, but they used to read the composing text alone — and that is
+ * switched off by an entirely different preference, *Display suggestions*. So turning off **word**
+ * suggestions silently turned off **emoji** suggestions as well, while their switch went on claiming they
+ * were enabled.
+ *
+ * The current word is the right source because it is what this feature was ever after: the editor
+ * determines it independently of the composing region, so it is there either way, and reading it involves
+ * no composing region — hence no underline for the people who switched suggestions off to be rid of one.
+ */
+internal fun emojiQuerySource(composingText: String, currentWordText: String): String =
+    composingText.ifEmpty { currentWordText }
+
+/**
  * Provides emoji suggestions within a text input context.
  *
  * This class handles the following tasks:
@@ -65,7 +81,8 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     ): List<SuggestionCandidate> {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
         val showName = prefs.emoji.suggestionCandidateShowName.get()
-        val query = validateInputQuery(content.composingText) ?: return emptyList()
+        val query = validateInputQuery(emojiQuerySource(content.composingText, content.currentWordText))
+            ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
             emojis.parallelStream()

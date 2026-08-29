@@ -224,6 +224,18 @@ class NlpManager(context: Context) {
             || prefs.emoji.suggestionEnabled.get()
             || providerForcesSuggestionOn(subtypeManager.activeSubtype)
 
+    /**
+     * [wantsWordSuggestions] answered for the active subtype — the one question worth asking before doing
+     * any word work: does the user want them, or does the provider insist?
+     *
+     * Everyone who needs it used to build the pair themselves, which is how the composing region ended up
+     * hanging off [isSuggestionOn] instead (issue #298).
+     */
+    fun wordSuggestionsWanted(): Boolean = wantsWordSuggestions(
+        displaySuggestions = prefs.suggestion.enabled.get(),
+        providerForcesSuggestionOn = providerForcesSuggestionOn(subtypeManager.activeSubtype),
+    )
+
     // Set by a glide-typing commit: the word commit itself triggers one resetSuggestions → suggest() that
     // would immediately wipe the just-shown glide alternatives. This one-shot flag makes that next suggest()
     // a no-op so the alternatives stay in the strip until the user's next input (issue #127).
@@ -254,10 +266,7 @@ class NlpManager(context: Context) {
                 // #297): [isSuggestionOn] let emoji suggestions keep the gate open, and since turning
                 // words off also turns composing off, the provider fell straight through to next-word
                 // predictions — the one kind of suggestion nothing was gating.
-                !wantsWordSuggestions(
-                    displaySuggestions = prefs.suggestion.enabled.get(),
-                    providerForcesSuggestionOn = providerForcesSuggestionOn(subtype),
-                ) -> {
+                !wordSuggestionsWanted() -> {
                     emptyList()
                 }
                 emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
@@ -291,10 +300,7 @@ class NlpManager(context: Context) {
         // after every swipe, which is the same complaint one path further along (issue #297). The word is
         // still committed; only the alternatives are withheld, and holding the next suggest is left alone
         // so nothing changes for the case this was written for (#127).
-        val wanted = wantsWordSuggestions(
-            displaySuggestions = prefs.suggestion.enabled.get(),
-            providerForcesSuggestionOn = providerForcesSuggestionOn(subtypeManager.activeSubtype),
-        )
+        val wanted = wordSuggestionsWanted()
         val reqTime = SystemClock.uptimeMillis()
         holdNextSuggest = holdNext
         runBlocking {
