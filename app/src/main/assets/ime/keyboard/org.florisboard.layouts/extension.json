@@ -366,6 +366,12 @@
         "direction": "ltr"
       },
       {
+        "id": "russian_phonetic",
+        "label": "Russian (Phonetic)",
+        "authors": [ "DevEmperor" ],
+        "direction": "ltr"
+      },
+      {
         "id": "rusyn",
         "label": "Rusyn",
         "authors": [ "svvvst" ],
