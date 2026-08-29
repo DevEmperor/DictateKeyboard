@@ -81,66 +81,150 @@ export const DASHBOARD_HTML = `<!doctype html>
   /*
    * The sky behind the numbers.
    *
-   * Two fixed layers, no JavaScript, no canvas, no animation frame: this page sits open all day on
-   * a machine that has better things to do, and a background is not worth a millisecond of it. The
-   * only properties that move are transform and opacity, both of which the compositor handles on
-   * its own — the tiles are rasterised once and then merely pushed around, so there is no layout
-   * and no repainting per frame.
+   * The first version of this pegged a GPU, and the reason is worth writing down. It animated
+   * scale() on a layer a quarter larger than the viewport whose paint was a stack of gradients.
+   * A composited layer is rasterised at one scale and then transformed, so a scale that keeps
+   * changing forces the rasteriser to run again and again on a texture that, on a 4K display,
+   * runs to tens of megabytes. Translation is free; scale is emphatically not.
    *
-   * inset: -12% rather than 0, because the layers drift: one exactly the size of the viewport would
-   * show its own edge halfway through the cycle. Oversized, it cannot run out.
+   * So nothing scales here, and the expensive layer does not move at all:
    *
-   * The cards stay opaque. This lives in the margins and in the gaps between them, where it costs
-   * nothing in contrast — a column of figures has to stay as readable as it was.
+   *   nebula   the big one, several soft clouds — painted once, never animated, never promoted
+   *   stars    two tiled fields of small dots, translated by exactly one tile so they wrap
+   *            seamlessly, plus a slow fade
+   *
+   * That leaves two moving layers whose entire per-frame work is a translation of an existing
+   * texture. No JavaScript, no canvas, no animation frame, no blur filter, no will-change (a
+   * transform animation promotes the layer by itself, and asking twice only costs memory).
+   *
+   * The cards stay opaque, so no column of figures gets harder to read. This lives in the margins,
+   * in the gaps between cards, and in the header.
    */
   .sky {
-    position: fixed; inset: -12%; z-index: -1; pointer-events: none;
-    /* The layer is static content that only ever moves: promoting it once is cheaper than letting
-       the compositor decide again on every frame. */
-    will-change: transform;
+    position: fixed; z-index: -1; pointer-events: none;
+    /* Paint only — nothing in here can reach the layout or the scroll extent. Deliberately not
+       strict: size containment would have the layer size itself as if empty, and these are sized
+       entirely by their insets. */
+    contain: layout paint style;
   }
 
-  /* Three very soft clouds, together barely a tenth of the ground's brightness. Their colours are
-     the ones the diagram already uses for the services, so the page keeps one palette.
-     No blur filter on purpose: a blur pass over a full-screen layer is real work on every resize,
-     and on a high-DPI display it is not cheap. A radial gradient that fades out over two thirds of
-     its radius is already softer than any blur radius worth paying for. */
-  .sky.nebula {
-    background:
-      radial-gradient(46vw 42vw at 18% 22%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 70%),
-      radial-gradient(52vw 46vw at 82% 34%, color-mix(in srgb, var(--z-openai) 17%, transparent) 0%, transparent 68%),
-      radial-gradient(48vw 44vw at 52% 88%, color-mix(in srgb, var(--z-google) 12%, transparent) 0%, transparent 72%);
-    opacity: .5;
-    animation: drift 84s ease-in-out infinite alternate;
-  }
-
-  /* Stars, as three tiled gradients rather than an image: no request, no bytes worth counting, and
-     they scale with the display instead of blurring on it. Two layers at different tile sizes drift
-     at different speeds, which is the whole of the parallax. */
-  .sky.stars {
+  /*
+   * Five clouds rather than three, at sizes and offsets that do not line up, so the eye cannot
+   * find the arrangement. Their colours are the ones the diagram already uses for the services,
+   * so the page keeps a single palette.
+   *
+   * No blur filter on purpose: a blur pass over a full-screen layer is real work on every resize,
+   * and on a high-DPI display it is not cheap. A radial gradient that fades out over two thirds of
+   * its radius is softer than any blur radius worth paying for.
+   *
+   * background-size: 100vw 100vh is not redundant even though the layer is exactly that size: it
+   * pins the gradient geometry to the viewport, which is what lets the header paint the very same
+   * sky into its own box further down and have it line up to the pixel.
+   */
+  .sky.nebula, header::before {
     background-image:
-      radial-gradient(1.6px 1.6px at 34px 52px, rgba(230, 237, 243, .85) 50%, transparent 50%),
-      radial-gradient(1.2px 1.2px at 148px 96px, rgba(230, 237, 243, .55) 50%, transparent 50%),
-      radial-gradient(1px 1px at 92px 178px, rgba(48, 183, 230, .6) 50%, transparent 50%);
-    background-size: 220px 220px, 310px 310px, 170px 170px;
-    opacity: .5;
-    animation: sail 190s linear infinite, twinkle 11s ease-in-out infinite alternate;
+      radial-gradient(58vmax 44vmax at 9% 4%,   color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 68%),
+      radial-gradient(46vmax 52vmax at 91% 21%, color-mix(in srgb, var(--z-openai) 17%, transparent) 0%, transparent 66%),
+      radial-gradient(64vmax 40vmax at 38% 97%, color-mix(in srgb, var(--z-google) 11%, transparent) 0%, transparent 70%),
+      radial-gradient(34vmax 30vmax at 73% 63%, color-mix(in srgb, var(--z-cf) 8%, transparent) 0%, transparent 72%),
+      radial-gradient(40vmax 36vmax at 24% 52%, color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 74%);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    opacity: .62;
+  }
+  .sky.nebula { inset: 0; }
+
+  /*
+   * Stars as tiled gradients: no request, no bytes worth counting, and they stay crisp on any
+   * display instead of blurring like an image would.
+   *
+   * The dots sit at deliberately unrelated offsets inside a large tile. One dot per tile — which
+   * is what the first version had — draws a grid, and a grid is the one thing a sky must not look
+   * like. Nine dots in 300px and six in 470px, with the two layers sliding at different speeds and
+   * fading on two further periods, means the picture does not visibly repeat.
+   *
+   * Each layer is one tile wider and taller than the viewport and slides by exactly one tile, so
+   * the pattern lands back on itself: no jump at the end of the cycle, and no bare edge trailing
+   * behind it. That mismatch — sliding 220px while tiling at 310px — is why the old field stuttered.
+   */
+  .sky.stars, header::after {
+    background-image:
+      radial-gradient(1.5px 1.5px at 23px 41px,   rgba(230, 237, 243, .90) 50%, transparent 50%),
+      radial-gradient(1.1px 1.1px at 112px 17px,  rgba(230, 237, 243, .55) 50%, transparent 50%),
+      radial-gradient(1.3px 1.3px at 187px 93px,  rgba(214, 231, 255, .70) 50%, transparent 50%),
+      radial-gradient(1px 1px     at 64px 138px,  rgba(48, 183, 230, .60) 50%, transparent 50%),
+      radial-gradient(1.6px 1.6px at 261px 176px, rgba(230, 237, 243, .80) 50%, transparent 50%),
+      radial-gradient(1px 1px     at 141px 224px, rgba(230, 237, 243, .45) 50%, transparent 50%),
+      radial-gradient(1.2px 1.2px at 39px 271px,  rgba(169, 154, 240, .55) 50%, transparent 50%),
+      radial-gradient(1px 1px     at 218px 288px, rgba(230, 237, 243, .50) 50%, transparent 50%),
+      radial-gradient(1.4px 1.4px at 288px 57px,  rgba(230, 237, 243, .65) 50%, transparent 50%);
+    background-size: 300px 300px;
+  }
+  .sky.stars {
+    inset: 0 -300px -300px 0;
+    animation: sail-near 96s linear infinite, breathe-near 13s ease-in-out infinite alternate;
+  }
+  /* The far field: sparser, dimmer, and slower, which is the whole of the parallax. */
+  .sky.stars.far {
+    background-image:
+      radial-gradient(1px 1px at 57px 88px,    rgba(230, 237, 243, .55) 50%, transparent 50%),
+      radial-gradient(1px 1px at 244px 31px,   rgba(230, 237, 243, .40) 50%, transparent 50%),
+      radial-gradient(1.2px 1.2px at 391px 162px, rgba(48, 183, 230, .45) 50%, transparent 50%),
+      radial-gradient(1px 1px at 129px 297px,  rgba(230, 237, 243, .45) 50%, transparent 50%),
+      radial-gradient(1px 1px at 336px 388px,  rgba(230, 237, 243, .35) 50%, transparent 50%),
+      radial-gradient(1.1px 1.1px at 78px 421px, rgba(169, 154, 240, .40) 50%, transparent 50%);
+    background-size: 470px 470px;
+    inset: 0 -470px -470px 0;
+    animation: sail-far 271s linear infinite, breathe-far 19s ease-in-out infinite alternate;
   }
 
-  @keyframes drift {
-    from { transform: translate3d(-1.5%, -1%, 0) scale(1.04); }
-    to   { transform: translate3d(2%, 1.5%, 0) scale(1.12); }
-  }
-  @keyframes sail {
+  /* Exactly one tile, so the field lands back on itself. */
+  @keyframes sail-near {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-220px, -110px, 0); }
+    to   { transform: translate3d(-300px, -300px, 0); }
   }
-  @keyframes twinkle {
-    from { opacity: .38; }
-    to   { opacity: .62; }
+  @keyframes sail-far {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-470px, -470px, 0); }
+  }
+  /* Two unrelated periods on two different ranges: the near field never brightens in step with the
+     far one, so the whole sky has no beat to it. The far one stays dimmer throughout — that, and
+     its slower drift, is what puts it behind the other. */
+  @keyframes breathe-near {
+    from { opacity: .44; }
+    to   { opacity: .68; }
+  }
+  @keyframes breathe-far {
+    from { opacity: .22; }
+    to   { opacity: .44; }
   }
 
-  header { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top); }
+  /*
+   * The header carries the sky too, rather than sitting on it as a slab.
+   *
+   * It cannot simply be made translucent: it is sticky, so what would show through is the content
+   * scrolling underneath it, not the background. Instead it paints its own copy of both sky layers
+   * and clips them to its box. The copies line up to the pixel because the gradients are pinned to
+   * the viewport (background-size: 100vw 100vh for the clouds, a fixed tile for the stars) and the
+   * header's padding box starts at the viewport's top-left corner — and the star copy runs the very
+   * same animation, started at the same moment, so it drifts in step with the field below it.
+   *
+   * The base is --bg rather than --surface: the bar is now a piece of the sky, and the cards are
+   * the only thing that lifts off it.
+   */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top);
+    overflow: hidden;
+  }
+  header::before, header::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  /* The stars are a positioned pseudo-element and would otherwise paint over the labels. */
+  header > * { position: relative; z-index: 1; }
+  header::after {
+    inset: 0 -300px -300px 0;
+    animation: sail-near 96s linear infinite, breathe-near 13s ease-in-out infinite alternate;
+  }
   /* Wraps, and every item may shrink. Without both, the row simply grew past the window: flex
      items refuse to go below their own content width by default, so on a phone the bar pushed the
      whole document 45px wider than the screen and every tab under it sat shifted and clipped. */
@@ -165,7 +249,7 @@ export const DASHBOARD_HTML = `<!doctype html>
      The sky stops too, and stays as a still image: the point of it is the depth, not the drift. */
   @media (prefers-reduced-motion: reduce) {
     #refresh.working span { animation: none; background: none; color: var(--accent); }
-    .sky { animation: none; will-change: auto; }
+    .sky, header::after { animation: none; }
   }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.015em; white-space: nowrap; }
   .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); flex: none; }
@@ -467,9 +551,11 @@ export const DASHBOARD_HTML = `<!doctype html>
 </head>
 <body>
 
-<!-- Decoration only, and marked as such: two empty layers behind everything, invisible to a screen
-     reader and untouchable by the pointer. The .sky rules in the stylesheet say why they are free. -->
+<!-- Decoration only, and marked as such: three empty layers behind everything, invisible to a screen
+     reader and untouchable by the pointer. Only the two star fields move, and only by translation —
+     the .sky rules in the stylesheet say what that buys and what the first attempt cost. -->
 <div class="sky nebula" aria-hidden="true"></div>
+<div class="sky stars far" aria-hidden="true"></div>
 <div class="sky stars" aria-hidden="true"></div>
 
 <header>
