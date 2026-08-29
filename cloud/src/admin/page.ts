@@ -79,152 +79,57 @@ export const DASHBOARD_HTML = `<!doctype html>
   }
 
   /*
-   * The sky behind the numbers.
+   * The sky behind the numbers — a slow flow of colour, drawn at postage-stamp size.
    *
-   * The first version of this pegged a GPU, and the reason is worth writing down. It animated
-   * scale() on a layer a quarter larger than the viewport whose paint was a stack of gradients.
-   * A composited layer is rasterised at one scale and then transformed, so a scale that keeps
-   * changing forces the rasteriser to run again and again on a texture that, on a 4K display,
-   * runs to tens of megabytes. Translation is free; scale is emphatically not.
+   * Two attempts at this in CSS pegged a GPU, and the reason both times was the same one: a
+   * full-screen layer means the compositor handles millions of pixels, and a 4K window is eight
+   * million of them. Whether the layer scaled, translated or merely tiled a gradient across itself
+   * only decided how often that happened.
    *
-   * So nothing scales here, and the expensive layer does not move at all:
+   * So the field is not a full-screen layer at all. It is a canvas of about 160 by 100 pixels —
+   * fourteen thousand, half a percent of that window — on which five soft lights are drawn
+   * additively, and which the browser then stretches over the whole viewport. The stretch is one
+   * textured quad, the cheapest thing a GPU does, and the bilinear filtering on a 24-fold upscale
+   * is what gives the soft edges: no blur filter, and no banding either, because there is not
+   * enough resolution left to band.
    *
-   *   nebula   the big one, several soft clouds — painted once, never animated, never promoted
-   *   stars    two tiled fields of small dots, translated by exactly one tile so they wrap
-   *            seamlessly, plus a slow fade
+   * The lights move on sine pairs whose periods share no factor, so the picture never returns to
+   * an earlier state — that is where the flow comes from, rather than from a keyframe loop.
    *
-   * That leaves two moving layers whose entire per-frame work is a translation of an existing
-   * texture. No JavaScript, no canvas, no animation frame, no blur filter, no will-change (a
-   * transform animation promotes the layer by itself, and asking twice only costs memory).
-   *
-   * The cards stay opaque, so no column of figures gets harder to read. This lives in the margins,
-   * in the gaps between cards, and in the header.
+   * Redrawn about twelve times a second, which at this size is a few thousand pixel writes, and not
+   * at all while the tab is in the background. The cards stay opaque, so no column of figures gets
+   * harder to read.
    */
   .sky {
-    position: fixed; z-index: -1; pointer-events: none;
-    /* Paint only — nothing in here can reach the layout or the scroll extent. Deliberately not
-       strict: size containment would have the layer size itself as if empty, and these are sized
-       entirely by their insets. */
-    contain: layout paint style;
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    width: 100%; height: 100%; display: block;
   }
-
   /*
-   * Five clouds rather than three, at sizes and offsets that do not line up, so the eye cannot
-   * find the arrangement. Their colours are the ones the diagram already uses for the services,
-   * so the page keeps a single palette.
-   *
-   * No blur filter on purpose: a blur pass over a full-screen layer is real work on every resize,
-   * and on a high-DPI display it is not cheap. A radial gradient that fades out over two thirds of
-   * its radius is softer than any blur radius worth paying for.
-   *
-   * background-size: 100vw 100vh is not redundant even though the layer is exactly that size: it
-   * pins the gradient geometry to the viewport, which is what lets the header paint the very same
-   * sky into its own box further down and have it line up to the pixel.
-   */
-  .sky.nebula, header::before {
-    background-image:
-      radial-gradient(58vmax 44vmax at 9% 4%,   color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 68%),
-      radial-gradient(46vmax 52vmax at 91% 21%, color-mix(in srgb, var(--z-openai) 17%, transparent) 0%, transparent 66%),
-      radial-gradient(64vmax 40vmax at 38% 97%, color-mix(in srgb, var(--z-google) 11%, transparent) 0%, transparent 70%),
-      radial-gradient(34vmax 30vmax at 73% 63%, color-mix(in srgb, var(--z-cf) 8%, transparent) 0%, transparent 72%),
-      radial-gradient(40vmax 36vmax at 24% 52%, color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 74%);
-    background-size: 100vw 100vh;
-    background-repeat: no-repeat;
-    opacity: .62;
-  }
-  .sky.nebula { inset: 0; }
-
-  /*
-   * Stars as tiled gradients: no request, no bytes worth counting, and they stay crisp on any
-   * display instead of blurring like an image would.
-   *
-   * The dots sit at deliberately unrelated offsets inside a large tile. One dot per tile — which
-   * is what the first version had — draws a grid, and a grid is the one thing a sky must not look
-   * like. Nine dots in 300px and six in 470px, with the two layers sliding at different speeds and
-   * fading on two further periods, means the picture does not visibly repeat.
-   *
-   * Each layer is one tile wider and taller than the viewport and slides by exactly one tile, so
-   * the pattern lands back on itself: no jump at the end of the cycle, and no bare edge trailing
-   * behind it. That mismatch — sliding 220px while tiling at 310px — is why the old field stuttered.
-   */
-  .sky.stars, header::after {
-    background-image:
-      radial-gradient(1.5px 1.5px at 23px 41px,   rgba(230, 237, 243, .90) 50%, transparent 50%),
-      radial-gradient(1.1px 1.1px at 112px 17px,  rgba(230, 237, 243, .55) 50%, transparent 50%),
-      radial-gradient(1.3px 1.3px at 187px 93px,  rgba(214, 231, 255, .70) 50%, transparent 50%),
-      radial-gradient(1px 1px     at 64px 138px,  rgba(48, 183, 230, .60) 50%, transparent 50%),
-      radial-gradient(1.6px 1.6px at 261px 176px, rgba(230, 237, 243, .80) 50%, transparent 50%),
-      radial-gradient(1px 1px     at 141px 224px, rgba(230, 237, 243, .45) 50%, transparent 50%),
-      radial-gradient(1.2px 1.2px at 39px 271px,  rgba(169, 154, 240, .55) 50%, transparent 50%),
-      radial-gradient(1px 1px     at 218px 288px, rgba(230, 237, 243, .50) 50%, transparent 50%),
-      radial-gradient(1.4px 1.4px at 288px 57px,  rgba(230, 237, 243, .65) 50%, transparent 50%);
-    background-size: 300px 300px;
-  }
-  .sky.stars {
-    inset: 0 -300px -300px 0;
-    animation: sail-near 96s linear infinite, breathe-near 13s ease-in-out infinite alternate;
-  }
-  /* The far field: sparser, dimmer, and slower, which is the whole of the parallax. */
-  .sky.stars.far {
-    background-image:
-      radial-gradient(1px 1px at 57px 88px,    rgba(230, 237, 243, .55) 50%, transparent 50%),
-      radial-gradient(1px 1px at 244px 31px,   rgba(230, 237, 243, .40) 50%, transparent 50%),
-      radial-gradient(1.2px 1.2px at 391px 162px, rgba(48, 183, 230, .45) 50%, transparent 50%),
-      radial-gradient(1px 1px at 129px 297px,  rgba(230, 237, 243, .45) 50%, transparent 50%),
-      radial-gradient(1px 1px at 336px 388px,  rgba(230, 237, 243, .35) 50%, transparent 50%),
-      radial-gradient(1.1px 1.1px at 78px 421px, rgba(169, 154, 240, .40) 50%, transparent 50%);
-    background-size: 470px 470px;
-    inset: 0 -470px -470px 0;
-    animation: sail-far 271s linear infinite, breathe-far 19s ease-in-out infinite alternate;
-  }
-
-  /* Exactly one tile, so the field lands back on itself. */
-  @keyframes sail-near {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-300px, -300px, 0); }
-  }
-  @keyframes sail-far {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-470px, -470px, 0); }
-  }
-  /* Two unrelated periods on two different ranges: the near field never brightens in step with the
-     far one, so the whole sky has no beat to it. The far one stays dimmer throughout — that, and
-     its slower drift, is what puts it behind the other. */
-  @keyframes breathe-near {
-    from { opacity: .44; }
-    to   { opacity: .68; }
-  }
-  @keyframes breathe-far {
-    from { opacity: .22; }
-    to   { opacity: .44; }
-  }
-
-  /*
-   * The header carries the sky too, rather than sitting on it as a slab.
+   * The header carries the same sky rather than sitting on it as a slab.
    *
    * It cannot simply be made translucent: it is sticky, so what would show through is the content
-   * scrolling underneath it, not the background. Instead it paints its own copy of both sky layers
-   * and clips them to its box. The copies line up to the pixel because the gradients are pinned to
-   * the viewport (background-size: 100vw 100vh for the clouds, a fixed tile for the stars) and the
-   * header's padding box starts at the viewport's top-left corner — and the star copy runs the very
-   * same animation, started at the same moment, so it drifts in step with the field below it.
-   *
-   * The base is --bg rather than --surface: the bar is now a piece of the sky, and the cards are
-   * the only thing that lifts off it.
+   * scrolling underneath it, not the background. It gets its own canvas instead, holding a copy of
+   * the very same image, sized to the viewport and clipped to the bar. Because the header padding
+   * box starts at the viewport top-left corner, the copy lands exactly where the field behind the
+   * page would have been.
    */
+  #skyBar {
+    position: absolute; left: 0; top: 0; z-index: 0;
+    width: 100vw; height: 100vh; pointer-events: none;
+  }
+
+  /* The base is --bg rather than --surface: with the sky painted across it the bar is a piece of
+     the background, and the cards are the only thing that lifts off it. overflow: hidden is what
+     crops the copy of the field down to the height of the bar. */
   header {
     position: sticky; top: 0; z-index: 20;
     background: var(--bg); border-bottom: 1px solid var(--line);
     padding-top: env(safe-area-inset-top);
     overflow: hidden;
   }
-  header::before, header::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-  /* The stars are a positioned pseudo-element and would otherwise paint over the labels. */
+  /* The canvas is a child too, and would otherwise be lifted along with the labels — it carries its
+     own z-index above, and an id outranks this. */
   header > * { position: relative; z-index: 1; }
-  header::after {
-    inset: 0 -300px -300px 0;
-    animation: sail-near 96s linear infinite, breathe-near 13s ease-in-out infinite alternate;
-  }
   /* Wraps, and every item may shrink. Without both, the row simply grew past the window: flex
      items refuse to go below their own content width by default, so on a phone the bar pushed the
      whole document 45px wider than the screen and every tab under it sat shifted and clipped. */
@@ -551,14 +456,13 @@ export const DASHBOARD_HTML = `<!doctype html>
 </head>
 <body>
 
-<!-- Decoration only, and marked as such: three empty layers behind everything, invisible to a screen
-     reader and untouchable by the pointer. Only the two star fields move, and only by translation —
-     the .sky rules in the stylesheet say what that buys and what the first attempt cost. -->
-<div class="sky nebula" aria-hidden="true"></div>
-<div class="sky stars far" aria-hidden="true"></div>
-<div class="sky stars" aria-hidden="true"></div>
+<!-- Decoration only, and marked as such: a tiny canvas stretched over the window, invisible to a
+     screen reader and untouchable by the pointer. The .sky rules in the stylesheet say why it is
+     drawn at this size, and what the two full-screen attempts before it cost. -->
+<canvas class="sky" id="sky" aria-hidden="true"></canvas>
 
 <header>
+  <canvas id="skyBar" aria-hidden="true"></canvas>
   <div class="bar">
     <span class="brand"><span class="dot"></span>Dictate&nbsp;Cloud</span>
     <span id="killPill"></span>
@@ -2630,6 +2534,117 @@ var GRAPH = ${GRAPH_JSON};
     URL.revokeObjectURL(a.href);
   };
   window.addEventListener('resize', function () { if (!$('view-network').hidden) fit(); });
+
+  /* ------------------------------------------------------------------ Himmel */
+
+  /*
+   * The flow of colour behind the page.
+   *
+   * Everything about this is chosen to keep the pixel count down rather than the code short. Five
+   * soft lights are drawn additively onto a canvas of roughly 160 by 100 — about fourteen thousand
+   * pixels — and the browser stretches that over the window. Two earlier versions did the same
+   * thing with full-screen CSS layers and cost a GPU dearly; the arithmetic is the whole story,
+   * since a 4K window is eight million pixels and this is half a percent of one.
+   *
+   * Each light travels on a pair of sines whose periods share no common factor, so the composition
+   * drifts without ever coming back round. That is what makes it read as flow instead of as a loop.
+   */
+  function startSky() {
+    var canvas = $('sky');
+    var bar = $('skyBar');
+    if (!canvas || !canvas.getContext) return;
+    // #nosky leaves the background blank, so the cost of this can be measured against its absence
+    // rather than argued about. Two versions of this feature were defended with reasoning that
+    // turned out to be wrong; a switch settles it in one reload.
+    if ((location.hash || '').indexOf('nosky') >= 0) return;
+    var ctx = canvas.getContext('2d');
+    var barCtx = bar && bar.getContext ? bar.getContext('2d') : null;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Colour, strength, radius, and the four periods (in seconds) that carry it. The periods are
+    // deliberately awkward numbers: 37 and 53 return together only after half an hour, and five
+    // lights on ten such periods do not align inside a working day.
+    var LIGHTS = [
+      { rgb: '48,183,230',  a: 0.22, r: 0.62, px: 37, py: 53, ax: 0.34, ay: 0.30 },
+      { rgb: '169,154,240', a: 0.18, r: 0.66, px: 61, py: 43, ax: 0.32, ay: 0.34 },
+      { rgb: '94,200,124',  a: 0.11, r: 0.54, px: 79, py: 67, ax: 0.38, ay: 0.26 },
+      { rgb: '245,162,74',  a: 0.09, r: 0.46, px: 47, py: 89, ax: 0.30, ay: 0.32 },
+      { rgb: '48,183,230',  a: 0.13, r: 0.78, px: 101, py: 71, ax: 0.26, ay: 0.22 },
+    ];
+
+    var w = 0, h = 0, last = -1e9, frame = 0;
+
+    // The backing store follows the window's proportions so the lights stay round rather than
+    // stretched, but never grows past a couple of hundred pixels on a side — that ceiling is the
+    // reason this is cheap, and it must not quietly rise.
+    function skyMeasure() {
+      var vw = window.innerWidth || 1, vh = window.innerHeight || 1;
+      w = 160;
+      h = Math.max(80, Math.min(260, Math.round(160 * vh / vw)));
+      canvas.width = w; canvas.height = h;
+      if (bar) { bar.width = w; bar.height = h; }
+    }
+
+    function skyPaint(t) {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, w, h);
+      // Additive, so the lights mix the way light does instead of painting over one another. The
+      // alphas are low for the same reason: added up they must glow, not wash out to white.
+      ctx.globalCompositeOperation = 'lighter';
+      var reach = Math.max(w, h);
+      for (var i = 0; i < LIGHTS.length; i++) {
+        var l = LIGHTS[i];
+        var x = (0.5 + l.ax * Math.sin(t / l.px)) * w;
+        var y = (0.5 + l.ay * Math.cos(t / l.py)) * h;
+        var r = l.r * reach * (1 + 0.12 * Math.sin(t / (l.px * 1.7)));
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, 'rgba(' + l.rgb + ',' + l.a + ')');
+        g.addColorStop(1, 'rgba(' + l.rgb + ',0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      }
+      // The header shows the same image, not a second rendering of it: one blit of fourteen
+      // thousand pixels, which is also what keeps the two exactly in step.
+      if (barCtx) {
+        barCtx.clearRect(0, 0, w, h);
+        barCtx.drawImage(canvas, 0, 0);
+      }
+    }
+
+    // Twelve pictures a second. At this size the eye cannot tell, because the upscale blurs away
+    // any step, and it is a fifth of the work of following the display.
+    function skyTick(ms) {
+      frame = requestAnimationFrame(skyTick);
+      if (ms - last < 80) return;
+      last = ms;
+      skyPaint(ms / 1000);
+    }
+
+    function skyRun() {
+      if (frame || still) return;
+      last = -1e9;
+      frame = requestAnimationFrame(skyTick);
+    }
+    function skyHalt() {
+      if (frame) { cancelAnimationFrame(frame); frame = 0; }
+    }
+
+    skyMeasure();
+    skyPaint(0);
+    if (!still) skyRun();
+    // Nothing is drawn for a tab nobody is looking at. A dashboard is left open all day, and this
+    // is the difference between a background that costs nothing and one that costs nothing visible.
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) skyHalt(); else skyRun();
+    });
+    var resizeTimer = 0;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { skyMeasure(); skyPaint(performance.now() / 1000); }, 200);
+    });
+  }
+
+  startSky();
 
   initGraph();
   get('/admin/api/me').then(function (r) { $('who').textContent = r.email; });
