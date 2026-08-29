@@ -13,19 +13,25 @@ import { today } from './util';
  * asks again.
  *
  * Nobody did. The first real sale therefore sat in the ledger reading 0,00 € earned, indefinitely,
- * and every view believed it. This is the second ask: nightly, bounded, and recording each attempt
+ * and every view believed it. This is the second ask: hourly, bounded, and recording each attempt
  * so a purchase nobody could get an answer for never looks like one nobody asked about.
  */
 
 /**
- * How many nights to keep asking before treating the silence as final.
+ * How long to keep asking before treating the silence as final.
  *
  * Two weeks is well past any settlement delay. Beyond that the answer is not late, it is absent —
  * a permission missing on the service account, an order Google will not hand over — and repeating
- * the request every night for ever would only hide that behind a number that never arrives. The
- * watchdog reports what stays open (see `notify/rules.ts`).
+ * the request for ever would only hide that behind a number that never arrives. The watchdog
+ * reports what stays open (see `notify/rules.ts`).
+ *
+ * Measured against the sale itself, not counted in attempts. It used to be a count of fourteen,
+ * which meant a fortnight only for as long as this ran once a night: asking every hour would have
+ * spent the entire allowance before the first day was out, and a settlement that genuinely takes
+ * three days would have been given up on after fourteen hours. The attempts are still counted —
+ * they are the record of what was asked — they are simply no longer the clock.
  */
-const MAX_ATTEMPTS = 14;
+const GIVE_UP_AFTER_MS = 14 * 24 * 60 * 60 * 1000;
 
 export interface OrderSyncOutcome {
   /** True only when a revenue figure was actually written. */
@@ -45,7 +51,7 @@ interface PendingRow {
 }
 
 /**
- * The nightly pass: every real sale still without a revenue figure, youngest first.
+ * The hourly pass: every real sale still without a revenue figure, youngest first.
  *
  * Licence testers are excluded on purpose — their orders really are worth nothing, and asking about
  * them for a fortnight would be asking about a zero that is already correct.
@@ -55,9 +61,9 @@ export async function syncOrderFigures(env: Env, max = 50): Promise<{ asked: num
     `SELECT purchase_token AS token, order_id AS orderId, purchased_at AS purchasedAt, currency
        FROM purchases
       WHERE state = 'granted' AND order_id IS NOT NULL AND revenue_micros IS NULL
-        AND purchase_type IS NULL AND order_attempts < ?
+        AND purchase_type IS NULL AND purchased_at > ?
       ORDER BY purchased_at DESC LIMIT ?`,
-  ).bind(MAX_ATTEMPTS, max).all<PendingRow>();
+  ).bind(Date.now() - GIVE_UP_AFTER_MS, max).all<PendingRow>();
 
   const rows = pending.results ?? [];
   let filled = 0;
@@ -71,8 +77,8 @@ export async function syncOrderFigures(env: Env, max = 50): Promise<{ asked: num
 /**
  * One purchase, asked about right now — what the dashboard's button calls.
  *
- * Unlike the nightly pass this ignores the attempt limit and does not care whether a figure is
- * already stored: pressing it deliberately means "ask Google again and tell me what it says".
+ * Unlike the hourly pass this ignores the age limit and does not care whether a figure is already
+ * stored: pressing it deliberately means "ask Google again and tell me what it says".
  */
 export async function syncOrderForPurchase(env: Env, purchaseToken: string): Promise<OrderSyncOutcome> {
   const row = await env.DB.prepare(
@@ -97,7 +103,9 @@ async function syncRow(env: Env, row: PendingRow): Promise<OrderSyncOutcome> {
     order = await fetchOrder(env, row.orderId as string);
   } catch (error) {
     // Google being unreachable is not an answer about the money, so nothing is written but the
-    // attempt. Counted, because a night that failed is still a night that has passed.
+    // attempt. Counted, because an ask that failed is still an ask that was made — and since the
+    // giving-up clock runs on the age of the sale, a stretch of unreachability no longer eats into
+    // the fortnight it has to answer in.
     await bumpAttempt(env, row.token, now, null);
     return {
       ok: false,

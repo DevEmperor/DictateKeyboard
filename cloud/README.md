@@ -53,7 +53,7 @@ that can reach an app user is English wherever it lives.
 
 ```
 src/
-  index.ts        the router, and the two cron rhythms
+  index.ts        the router, and the three cron rhythms
   wallet.ts       one credit account, as a Durable Object — where "check and deduct" is atomic
   guard.ts        the daily spend ceiling and the code-guessing counter, one object for all
   meter.ts        the ledger; the only thing that writes

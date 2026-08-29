@@ -265,7 +265,7 @@ async function overallLoss(env: Env, ctx: ExecutionContext, minLoss: number): Pr
  * A sale that is paid for and still has no revenue figure a week later.
  *
  * Google states the developer's share once the payment settles, which is normally a matter of hours
- * and is why `orders.ts` asks again each night. Past a week the delay is no longer a delay: a
+ * and is why `orders.ts` asks again every hour. Past a week the delay is no longer a delay: a
  * permission missing on the service account, an order Google will not hand over, an assumption that
  * stopped holding. Worth a warning precisely because the failure is so quiet — the books simply read
  * as if that sale earned nothing, which is what happened to the first real one.

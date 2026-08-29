@@ -138,8 +138,8 @@ export async function usdRate(env: Env): Promise<{ rate: number; source: 'ecb' |
 /**
  * Fills in the converted revenue for purchases that do not have it yet.
  *
- * Runs nightly and is deliberately bounded: it fetches the historical rate for each distinct day
- * it still needs, not for each purchase. A hundred sales on one day cost one request.
+ * Runs hourly and again at night, deliberately bounded: it fetches the historical rate for each
+ * distinct day it still needs, not for each purchase. A hundred sales on one day cost one request.
  */
 export async function backfillPurchases(env: Env, maxDays = 20): Promise<number> {
   const pending = await env.DB.prepare(

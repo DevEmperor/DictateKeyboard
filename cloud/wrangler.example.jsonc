@@ -135,12 +135,13 @@
   // sending answers with E_RECIPIENT_NOT_ALLOWED.
   "send_email": [{ "name": "MAIL", "destination_address": "<your-address@example.com>" }],
 
-  // Two rhythms, told apart in the code by the cron string (see src/index.ts):
+  // Three rhythms, told apart in the code by the cron string (see src/index.ts):
   //   every quarter hour — the watchdog, and the check whether the daily report is due
+  //   hourly             — asking Google again what a sale was worth, and converting what comes back
   //   nightly            — cleaning up, fetching exchange rates, filling in missing conversions
-  // The nightly line sits on an odd minute rather than on the hour, where every cron on the platform
-  // piles up.
+  // Both the hourly and the nightly line sit on odd minutes rather than on the hour, where every cron
+  // on the platform piles up — and off the quarter hours, so they never collide with the watchdog.
   "triggers": {
-    "crons": ["*/15 * * * *", "17 3 * * *"]
+    "crons": ["*/15 * * * *", "23 * * * *", "17 3 * * *"]
   }
 }

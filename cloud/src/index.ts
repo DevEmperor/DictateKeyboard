@@ -89,21 +89,49 @@ export default {
   },
 
   /**
-   * Two rhythms, told apart by the cron expression that fired.
+   * Three rhythms, told apart by the cron expression that fired.
    *
    * **Every quarter hour** the watchdog runs and the digest checks whether its hour has come.
    * Quarter-hourly rather than hourly because the thing it is looking for — a fresh pack being
    * burned through — happens on the scale of minutes, and an hour late is a report rather than a
    * warning.
    *
+   * **Every hour** the question Google answers late: what a sale was actually worth. Settlement is
+   * a matter of hours, so a sale made this morning had its figure sitting there ready to be
+   * collected while the ledger went on reading 0,00 € until the small hours of the next day. Hourly
+   * is the cadence of the thing being waited for; nightly was the cadence of the job.
+   *
    * **Nightly** the slow work: let the detail log age out, fetch the day's exchange rates, fill in
    * conversions for purchases still missing one. Deliberately at an odd minute rather than on the
    * hour, where every cron on the platform piles up.
    */
   async scheduled(event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
-    const nightly = event.cron === NIGHTLY_CRON;
+    if (event.cron === HOURLY_CRON) {
+      // The same chain as the nightly one, with one difference: the rates may not stop the money.
+      // Fetching them hourly is safe because a stored rate is stamped with the ECB's own publication
+      // date, not with the day it was fetched — asking again therefore rewrites the same rows with
+      // the same numbers until the bank publishes, and picks the new publication up within the hour
+      // once it does. But a purchase that has been waiting since this morning should not go on
+      // waiting because Frankfurter happens to be down, so a failed fetch is swallowed here rather
+      // than skipping the two steps that matter.
+      ctx.waitUntil(
+        fetchRates(env)
+          .catch(() => null)
+          .then(() => syncOrderFigures(env))
+          .then(({ asked, filled }) => {
+            if (asked > 0) console.log(`orders: asked about ${asked}, ${filled} now have a revenue figure`);
+          })
+          .catch((error) => console.log(`order sync failed: ${String(error).slice(0, 200)}`))
+          .then(() => backfillPurchases(env))
+          .then((filled) => {
+            if (filled > 0) console.log(`fx: converted ${filled} purchases`);
+          })
+          .catch((error) => console.log(`fx failed: ${String(error).slice(0, 200)}`)),
+      );
+      return;
+    }
 
-    if (!nightly) {
+    if (event.cron !== NIGHTLY_CRON) {
       ctx.waitUntil(evaluateRules(env, ctx).then((n) => {
         if (n > 0) console.log(`alerts: raised ${n}`);
       }).catch((error) => console.log(`alerts failed: ${String(error).slice(0, 200)}`)));
@@ -131,6 +159,9 @@ export default {
     // today's rates, then the sales Google had not worked out its share of at redemption time, then
     // the conversion of whatever that turned up. A failure in the middle does not stop the end —
     // the conversion still has last night's figures to do something with.
+    //
+    // All three also run hourly now; they stay here as the daily backstop, so a stretch of hours in
+    // which the sync kept failing is still caught once a night with everything else.
     ctx.waitUntil(
       fetchRates(env)
         .then(() => syncOrderFigures(env))
@@ -155,6 +186,8 @@ export default {
 
 /** Must match `triggers.crons` in `wrangler.jsonc` character for character. */
 const NIGHTLY_CRON = '17 3 * * *';
+/** Likewise. Off the quarter hours, so it never fires in the same minute as the watchdog. */
+const HOURLY_CRON = '23 * * * *';
 
 export { Wallet } from './wallet';
 export { GlobalGuard } from './guard';

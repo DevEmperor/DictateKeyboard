@@ -1525,12 +1525,12 @@ var GRAPH = ${GRAPH_JSON};
         html += '<p class="sub">' + p.withoutFigures + ' Kauf/Käufe ohne echte Beträge — entweder vor dieser Auswertung getätigt oder die Bestellung war nicht abrufbar. Die fehlen in dieser Tabelle.</p>';
       }
       if (p.withoutRate) {
-        html += '<p class="sub">' + p.withoutRate + ' Kauf/Käufe warten noch auf einen Umrechnungskurs — die Summe ist um diese Beträge zu niedrig. Der nächtliche Lauf trägt sie nach.</p>';
+        html += '<p class="sub">' + p.withoutRate + ' Kauf/Käufe warten noch auf einen Umrechnungskurs — die Summe ist um diese Beträge zu niedrig. Der stündliche Lauf trägt sie nach, sobald der Kurs des Kauftags vorliegt.</p>';
       }
       if (p.unreportedOrders) {
         html += '<p class="sub">' + p.unreportedOrders + ' Kauf/Käufe sind bezahlt, aber Google hat den Entwickleranteil ' +
           'noch nicht gemeldet — das passiert erst, wenn die Zahlung abgerechnet ist. Die Summe oben ist deshalb um ' +
-          'geschätzte ' + money(p.revenueEstimatedHome, cur) + ' zu niedrig. Der nächtliche Lauf fragt jede Nacht erneut nach; ' +
+          'geschätzte ' + money(p.revenueEstimatedHome, cur) + ' zu niedrig. Es wird stündlich erneut nachgefragt; ' +
           'im Konto lässt sich eine einzelne Bestellung sofort neu abfragen.</p>';
       }
     } else {
