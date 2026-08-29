@@ -3,6 +3,7 @@ import { num } from '../costs';
 import { guardStub, walletStub } from '../meter';
 import { alertSettings } from '../settings';
 import { today } from '../util';
+import { REAL_SALES } from './finance';
 
 /**
  * Everything the dashboard reads. Queries only — the mutations live in `actions.ts`.
@@ -32,10 +33,7 @@ export async function overview(env: Env) {
   // the list price, which is what we ask for rather than what anyone paid.
   const salesSince = (since: number) => env.DB.prepare(
     `SELECT COUNT(*) AS count, COALESCE(SUM(p.revenue_home_micros), 0) AS revenueMicros
-       FROM purchases p
-      WHERE p.state = 'granted' AND (p.purchase_type IS NULL OR p.purchase_type != 0)
-        AND EXISTS (SELECT 1 FROM wallets w WHERE w.id = p.wallet_id AND w.is_test = 0)
-        AND p.purchased_at >= ?`,
+       FROM purchases p WHERE ${REAL_SALES} AND p.purchased_at >= ?`,
   ).bind(since).first<{ count: number; revenueMicros: number }>();
 
   const [byPackRows, salesToday, salesMonth, liability, wallets, totals, todayRow, recent, alerts] =
@@ -43,10 +41,7 @@ export async function overview(env: Env) {
       env.DB.prepare(
         `SELECT p.product_id AS productId, COUNT(*) AS count,
                 COALESCE(SUM(p.revenue_home_micros), 0) AS revenueMicros
-           FROM purchases p
-          WHERE p.state = 'granted' AND (p.purchase_type IS NULL OR p.purchase_type != 0)
-            AND EXISTS (SELECT 1 FROM wallets w WHERE w.id = p.wallet_id AND w.is_test = 0)
-          GROUP BY p.product_id`,
+           FROM purchases p WHERE ${REAL_SALES} GROUP BY p.product_id`,
       ).all<{ productId: string; count: number; revenueMicros: number }>(),
       salesSince(dayStartMs),
       salesSince(monthStartMs),

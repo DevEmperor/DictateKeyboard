@@ -28,9 +28,25 @@ import { homeCurrency, usdRate } from '../fx';
 const NANO_PER_USD = 1_000_000_000;
 const MICROS = 1_000_000;
 
-/** Repeated in every money query. Written once so no view can quietly forget it. */
-const REAL_SALES = `p.state = 'granted' AND (p.purchase_type IS NULL OR p.purchase_type != 0)
+/**
+ * Not one of your own orders. Split out from [REAL_SALES] because a refund is not a sale and still
+ * has to be filtered the same way — the tax view asked for voided purchases without this and would
+ * have subtracted a test wallet's cancellation from your income.
+ */
+export const NOT_A_TEST = `(p.purchase_type IS NULL OR p.purchase_type != 0)
   AND EXISTS (SELECT 1 FROM wallets w WHERE w.id = p.wallet_id AND w.is_test = 0)`;
+
+/** Repeated in every money query. Written once so no view can quietly forget it. */
+export const REAL_SALES = `p.state = 'granted' AND ${NOT_A_TEST}`;
+
+/**
+ * What one unit of the buyer's currency was worth in the payout currency, from the purchase itself.
+ *
+ * The rate is frozen onto the row on the day of the sale, so this never moves. A sale already in the
+ * payout currency carries no rate at all — that is the `CASE`, and without it every euro sale would
+ * silently drop out of a converted sum. Takes one bound parameter: the home currency.
+ */
+export const PURCHASE_RATE = `COALESCE(p.fx_rate, CASE WHEN p.currency = ? THEN 1.0 END)`;
 
 export interface CurrencyTotals {
   currency: string;
@@ -58,7 +74,7 @@ export async function playRevenue(env: Env, sinceMs = 0) {
     `WITH sales AS (
        SELECT p.currency AS currency, p.paid_micros AS paid, p.tax_micros AS tax,
               p.revenue_micros AS revenue, p.revenue_home_micros AS revenueHome,
-              COALESCE(p.fx_rate, CASE WHEN p.currency = ? THEN 1.0 END) AS rate
+              ${PURCHASE_RATE} AS rate
          FROM purchases p
         WHERE ${REAL_SALES} AND p.purchased_at >= ? AND p.currency IS NOT NULL
      )
@@ -298,36 +314,64 @@ export async function plans(env: Env) {
   const { rate, source } = await usdRate(env);
   const limits = limitsFrom(env);
 
+  // Grouped by pack **and currency**, never by pack alone. Averaging a euro price together with a
+  // lira one produces a number that is neither, and `MAX(currency)` then stamps one of the two
+  // currencies onto it — a pack that sold once in each would have shown a margin computed from a
+  // figure that never existed. The per-currency rows are folded together below in the payout
+  // currency, which is the only sum that is a sum.
   const rows = await env.DB.prepare(
-    `SELECT p.product_id AS productId, COUNT(*) AS orders,
-            COUNT(p.revenue_micros) AS reported,
-            AVG(p.paid_micros) AS avgPaid, AVG(p.revenue_micros) AS avgRevenue,
-            AVG(p.revenue_home_micros) AS avgRevenueHome,
-            AVG(p.tax_micros) AS avgTax, MAX(p.currency) AS currency
-       FROM purchases p WHERE ${REAL_SALES} AND p.currency IS NOT NULL
-      GROUP BY p.product_id`,
-  ).all<{
-    productId: string; orders: number; reported: number; avgPaid: number; avgRevenue: number;
-    avgRevenueHome: number; avgTax: number; currency: string;
+    `WITH sales AS (
+       SELECT p.product_id AS productId, p.currency AS currency, p.paid_micros AS paid,
+              p.tax_micros AS tax, p.revenue_micros AS revenue,
+              p.revenue_home_micros AS revenueHome, ${PURCHASE_RATE} AS rate
+         FROM purchases p WHERE ${REAL_SALES} AND p.currency IS NOT NULL
+     )
+     SELECT productId, currency, COUNT(*) AS orders, COUNT(revenue) AS reported,
+            AVG(paid) AS avgPaid, AVG(tax) AS avgTax, AVG(revenue) AS avgRevenue,
+            COALESCE(SUM(CASE WHEN rate IS NULL THEN 0 ELSE paid * rate END), 0) AS paidHomeMicros,
+            COALESCE(SUM(CASE WHEN rate IS NULL THEN 0 ELSE COALESCE(tax, 0) * rate END), 0) AS taxHomeMicros,
+            COALESCE(SUM(revenueHome), 0) AS revenueHomeMicros,
+            SUM(CASE WHEN revenueHome IS NULL THEN 0 ELSE 1 END) AS converted
+       FROM sales GROUP BY productId, currency`,
+  ).bind(home).all<{
+    productId: string; currency: string; orders: number; reported: number;
+    avgPaid: number; avgTax: number; avgRevenue: number;
+    paidHomeMicros: number; taxHomeMicros: number; revenueHomeMicros: number; converted: number;
   }>();
 
   const actual = new Map<string, {
-    orders: number; unreported: number; paid: number; revenue: number; revenueHome: number;
-    tax: number; currency: string;
+    orders: number; unreported: number; converted: number;
+    /** Averages in the buyer's own currency — only meaningful when there is exactly one. */
+    paid: number; tax: number; revenue: number; currency: string; currencies: number;
+    /** The same, in the payout currency. Always comparable, whatever was sold where. */
+    paidHome: number; taxHome: number; revenueHome: number;
   }>();
   for (const r of rows.results ?? []) {
+    const productId = r.productId;
+    const entry = actual.get(productId) ?? {
+      orders: 0, unreported: 0, converted: 0,
+      paid: 0, tax: 0, revenue: 0, currency: r.currency, currencies: 0,
+      paidHome: 0, taxHome: 0, revenueHome: 0,
+    };
+    const orders = num(r.orders);
+    const reported = num(r.reported);
+    entry.orders += orders;
     // `COUNT(column)` counts the rows that have one, and `AVG` averages only those — so a pack whose
     // only sale is still unaccounted for has no measured revenue at all. Recorded as such: averaging
     // it as zero would put a loss next to a pack that has in fact been paid for.
-    actual.set(r.productId, {
-      orders: num(r.orders),
-      unreported: num(r.orders) - num(r.reported),
-      paid: num(r.avgPaid) / MICROS,
-      revenue: num(r.reported) > 0 ? num(r.avgRevenue) / MICROS : 0,
-      revenueHome: num(r.reported) > 0 ? num(r.avgRevenueHome) / MICROS : 0,
-      tax: num(r.avgTax) / MICROS,
-      currency: r.currency,
-    });
+    entry.unreported += orders - reported;
+    entry.converted += num(r.converted);
+    entry.currencies += 1;
+    // Kept per pack only while a single currency answers for it; the second one makes these
+    // meaningless and the page stops showing them.
+    entry.currency = r.currency;
+    entry.paid = num(r.avgPaid) / MICROS;
+    entry.tax = num(r.avgTax) / MICROS;
+    entry.revenue = reported > 0 ? num(r.avgRevenue) / MICROS : 0;
+    entry.paidHome += num(r.paidHomeMicros) / MICROS;
+    entry.taxHome += num(r.taxHomeMicros) / MICROS;
+    entry.revenueHome += num(r.revenueHomeMicros) / MICROS;
+    actual.set(productId, entry);
   }
 
   const transcribeUsdPerMinute = COST.transcribePerMinuteNano / NANO_PER_USD;
@@ -353,11 +397,13 @@ export async function plans(env: Env) {
     const modelRevenue = pack.priceEur * (1 - PLAY_SERVICE_FEE);
     const row = actual.get(pack.id);
     // Sales alone are not a measurement: a pack whose only order is still waiting on Google's
-    // accounting has nothing measured about it, and the model has to carry the row a while longer.
-    const real = row && row.orders > row.unreported ? row : null;
-    // The converted figure where there is one — comparing a franc revenue against a euro cost
-    // would produce a margin that is simply wrong.
-    const realRevenueHome = real ? (real.revenueHome || real.revenue) : null;
+    // accounting — or on an exchange rate — has nothing measured about it, and the model has to
+    // carry the row a while longer.
+    const real = row && row.orders > row.unreported && row.converted > 0 ? row : null;
+    // Per sale, and only ever the converted figure. It used to fall back to `revenue` when the
+    // conversion was missing, which put a lira amount next to a euro cost and called the difference
+    // a margin. No rate means no comparable revenue, and the model keeps the card instead.
+    const realRevenueHome = real ? real.revenueHome / real.converted : null;
 
     const revenue = realRevenueHome ?? modelRevenue;
     const margin = revenue - costHome;
@@ -387,9 +433,19 @@ export async function plans(env: Env) {
       actual: real
         ? {
             orders: real.orders - real.unreported,
+            /**
+             * How many currencies this pack was sold in. One means the buyer-currency figures below
+             * describe every sale of it and the page may show them; more than one means they
+             * describe the last currency only, and the page has to fall back to the converted
+             * ladder. Mixing the two in one sum is how a margin quietly comes out wrong.
+             */
+            currencies: real.currencies,
             paid: real.paid,
             tax: real.tax,
             revenue: real.revenue,
+            /** Averaged over the sales that have a rate, in the payout currency. Always comparable. */
+            paidHome: real.paidHome / real.orders,
+            taxHome: real.taxHome / real.orders,
             revenueHome: realRevenueHome ?? 0,
             margin: (realRevenueHome ?? 0) - costHome,
             marginPercent: realRevenueHome ? ((realRevenueHome - costHome) / realRevenueHome) * 100 : 0,

@@ -78,6 +78,68 @@ export const DASHBOARD_HTML = `<!doctype html>
     overflow-wrap: break-word;
   }
 
+  /*
+   * The sky behind the numbers.
+   *
+   * Two fixed layers, no JavaScript, no canvas, no animation frame: this page sits open all day on
+   * a machine that has better things to do, and a background is not worth a millisecond of it. The
+   * only properties that move are transform and opacity, both of which the compositor handles on
+   * its own — the tiles are rasterised once and then merely pushed around, so there is no layout
+   * and no repainting per frame.
+   *
+   * inset: -12% rather than 0, because the layers drift: one exactly the size of the viewport would
+   * show its own edge halfway through the cycle. Oversized, it cannot run out.
+   *
+   * The cards stay opaque. This lives in the margins and in the gaps between them, where it costs
+   * nothing in contrast — a column of figures has to stay as readable as it was.
+   */
+  .sky {
+    position: fixed; inset: -12%; z-index: -1; pointer-events: none;
+    /* The layer is static content that only ever moves: promoting it once is cheaper than letting
+       the compositor decide again on every frame. */
+    will-change: transform;
+  }
+
+  /* Three very soft clouds, together barely a tenth of the ground's brightness. Their colours are
+     the ones the diagram already uses for the services, so the page keeps one palette.
+     No blur filter on purpose: a blur pass over a full-screen layer is real work on every resize,
+     and on a high-DPI display it is not cheap. A radial gradient that fades out over two thirds of
+     its radius is already softer than any blur radius worth paying for. */
+  .sky.nebula {
+    background:
+      radial-gradient(46vw 42vw at 18% 22%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 70%),
+      radial-gradient(52vw 46vw at 82% 34%, color-mix(in srgb, var(--z-openai) 17%, transparent) 0%, transparent 68%),
+      radial-gradient(48vw 44vw at 52% 88%, color-mix(in srgb, var(--z-google) 12%, transparent) 0%, transparent 72%);
+    opacity: .5;
+    animation: drift 84s ease-in-out infinite alternate;
+  }
+
+  /* Stars, as three tiled gradients rather than an image: no request, no bytes worth counting, and
+     they scale with the display instead of blurring on it. Two layers at different tile sizes drift
+     at different speeds, which is the whole of the parallax. */
+  .sky.stars {
+    background-image:
+      radial-gradient(1.6px 1.6px at 34px 52px, rgba(230, 237, 243, .85) 50%, transparent 50%),
+      radial-gradient(1.2px 1.2px at 148px 96px, rgba(230, 237, 243, .55) 50%, transparent 50%),
+      radial-gradient(1px 1px at 92px 178px, rgba(48, 183, 230, .6) 50%, transparent 50%);
+    background-size: 220px 220px, 310px 310px, 170px 170px;
+    opacity: .5;
+    animation: sail 190s linear infinite, twinkle 11s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    from { transform: translate3d(-1.5%, -1%, 0) scale(1.04); }
+    to   { transform: translate3d(2%, 1.5%, 0) scale(1.12); }
+  }
+  @keyframes sail {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-220px, -110px, 0); }
+  }
+  @keyframes twinkle {
+    from { opacity: .38; }
+    to   { opacity: .62; }
+  }
+
   header { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top); }
   /* Wraps, and every item may shrink. Without both, the row simply grew past the window: flex
      items refuse to go below their own content width by default, so on a phone the bar pushed the
@@ -99,9 +161,11 @@ export const DASHBOARD_HTML = `<!doctype html>
     animation: sweep 1s linear infinite;
   }
   @keyframes sweep { from { background-position: 160% 0; } to { background-position: -160% 0; } }
-  /* No sweep where motion is unwelcome — the label simply turns accent-coloured while it works. */
+  /* No sweep where motion is unwelcome — the label simply turns accent-coloured while it works.
+     The sky stops too, and stays as a still image: the point of it is the depth, not the drift. */
   @media (prefers-reduced-motion: reduce) {
     #refresh.working span { animation: none; background: none; color: var(--accent); }
+    .sky { animation: none; will-change: auto; }
   }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.015em; white-space: nowrap; }
   .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); flex: none; }
@@ -402,6 +466,11 @@ export const DASHBOARD_HTML = `<!doctype html>
 </style>
 </head>
 <body>
+
+<!-- Decoration only, and marked as such: two empty layers behind everything, invisible to a screen
+     reader and untouchable by the pointer. The .sky rules in the stylesheet say why they are free. -->
+<div class="sky nebula" aria-hidden="true"></div>
+<div class="sky stars" aria-hidden="true"></div>
 
 <header>
   <div class="bar">
@@ -1661,8 +1730,15 @@ var GRAPH = ${GRAPH_JSON};
     $('taxYears').innerHTML = t.years.length ? t.years.map(function (y) {
       // The order of a profit-and-loss, so it can be read straight down: what came in, what was
       // never yours, what went back out, what you actually paid, what is left.
+      // Brutto und Steuer stehen in der Währung des Käufers in der Datenbank und werden mit dem
+      // Kurs des Kauftags umgerechnet. Das muss an der Zahl stehen, nicht in der Dokumentation:
+      // eine umgerechnete Zahl, die sich als gemessene ausgibt, ist genau der Fehler, den diese
+      // Ansicht hatte.
+      var fxHint = y.foreignOrders
+        ? '<span class="hint" tabindex="0" data-tip="Beträge in Fremdwährung sind mit dem EZB-Kurs des jeweiligen Kauftags umgerechnet und fest auf die Buchung geschrieben. Googles Auszahlung rechnet mit Googles eigenem Kurs — eine gute Näherung, nicht der Kontoauszug."></span>'
+        : '';
       var lines = [
-        ['Kundschaft zahlte brutto', money(y.paidGross, cur), 'nur zur Einordnung — nie deine Einnahme'],
+        ['Kundschaft zahlte brutto' + fxHint, money(y.paidGross, cur), 'nur zur Einordnung — nie deine Einnahme'],
         ['davon Steuer', '− ' + money(y.taxCollected, cur), 'von Google eingezogen und abgeführt'],
         ['<strong>Erlös von Google</strong>', '<strong>' + money(y.revenue, cur) + '</strong>', 'nach Googles Anteil — das ist die Einnahme'],
       ];
@@ -1680,7 +1756,7 @@ var GRAPH = ${GRAPH_JSON};
         warn.push(y.unreported + ' Kauf/Käufe sind bezahlt, aber Google hat den Erlös noch nicht ' +
           'gemeldet — sie fehlen in dieser Rechnung.');
       }
-      if (y.unconverted) warn.push(y.unconverted + ' Kauf/Käufe noch ohne Umrechnungskurs — die Summe ist zu niedrig.');
+      if (y.unconverted) warn.push(y.unconverted + ' Kauf/Käufe noch ohne Umrechnungskurs — Brutto, Steuer und Erlös sind um diese Beträge zu niedrig.');
       if (y.spendUnconverted) warn.push(y.spendUnconverted + ' Ausgabe(n) ohne belasteten Betrag.');
       if (!y.spend) warn.push('Für dieses Jahr ist noch keine Ausgabe erfasst — ohne die ist „Bleibt" kein Gewinn, sondern nur die Einnahme.');
 
@@ -1726,7 +1802,9 @@ var GRAPH = ${GRAPH_JSON};
     });
 
     $('taxMonths').innerHTML = t.months.length
-      ? '<table><thead><tr><th>Monat</th><th class="num">Käufe</th><th class="num">Brutto</th><th class="num">Steuer</th><th class="num">Dein Erlös</th></tr></thead><tbody>' +
+      ? '<table><thead><tr><th>Monat</th><th class="num">Käufe</th>' +
+        '<th class="num">Brutto<span class="hint" tabindex="0" data-tip="Alles in ' + esc(cur) + ', mit dem EZB-Kurs des jeweiligen Kauftags umgerechnet — Käufe in Fremdwährung inbegriffen."></span></th>' +
+        '<th class="num">Steuer</th><th class="num">Dein Erlös</th></tr></thead><tbody>' +
         t.months.map(function (m) {
           return '<tr><td>' + esc(m.month) + '</td><td class="num">' + m.orders + '</td><td class="num">' +
             money(m.paidGross, cur) + '</td><td class="num muted">' + money(m.taxCollected, cur) +
@@ -1764,7 +1842,11 @@ var GRAPH = ${GRAPH_JSON};
       // The first four lines are the buyer's own currency, because that is what happened at the
       // till. From "Dein Erlös" on it is the payout currency — mixing the two in one sum is how a
       // margin quietly comes out wrong.
-      var steps = a
+      // Das gilt nur, solange ein Paket in genau einer Währung verkauft wurde. In mehreren ist ein
+      // Durchschnitt darüber kein Preis, den jemand bezahlt hat — dann steht die ganze Leiter in
+      // der Auszahlungswährung, und die Karte sagt, dass sie es tut.
+      var oneCurrency = !!a && a.currencies === 1;
+      var steps = a && oneCurrency
         ? [['Kundschaft zahlt', money(a.paid, k.currency)],
            ['davon Steuer', '− ' + money(a.tax, k.currency)],
            ['Google-Anteil', '− ' + money(a.paid - a.tax - a.revenue, k.currency)],
@@ -1772,6 +1854,13 @@ var GRAPH = ${GRAPH_JSON};
            (k.currency !== cur ? ['umgerechnet', money(a.revenueHome, cur)] : null),
            ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
            ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
+        : a
+        ? [['Kundschaft zahlt', money(a.paidHome, cur)],
+           ['davon Steuer', '− ' + money(a.taxHome, cur)],
+           ['Google-Anteil', '− ' + money(a.paidHome - a.taxHome - a.revenueHome, cur)],
+           ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenueHome, cur) + '</strong>'],
+           ['OpenAI, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
+           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']]
         : [['Listenpreis (netto)', money(k.listPrice, cur)],
            ['Google-Anteil (' + Math.round(fee * 100) + ' % angenommen)', '− ' + money(k.listPrice * fee, cur)],
            ['<strong>Erlös laut Modell</strong>', '<strong>' + money(k.model.revenue, cur) + '</strong>'],
@@ -1801,7 +1890,10 @@ var GRAPH = ${GRAPH_JSON};
                : '<span class="pill">nur Modell</span>') +
             // Ein Paket, dessen einziger Verkauf noch nicht abgerechnet ist, hat nichts Gemessenes —
             // es steht deshalb auf „nur Modell" und sagt hier, warum.
-            (k.unreportedOrders ? ' <span class="pill">' + k.unreportedOrders + ' noch nicht abgerechnet</span>' : '') + '</div>' +
+            (k.unreportedOrders ? ' <span class="pill">' + k.unreportedOrders + ' noch nicht abgerechnet</span>' : '') +
+            // Warum die Leiter rechts in Euro steht statt an der Kasse: mehrere Währungen lassen
+            // sich nicht mitteln, also ist jede Zeile umgerechnet.
+            (a && a.currencies > 1 ? ' <span class="pill">in ' + a.currencies + ' Währungen verkauft</span>' : '') + '</div>' +
         '</div>' +
         '<div style="flex:1.4;min-width:min(100%,250px)"><table style="font-size:13px">' +
           steps.map(function (s) {
