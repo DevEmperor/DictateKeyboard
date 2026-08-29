@@ -247,6 +247,25 @@ export const NODES: GraphNode[] = [
       'Unterschied zwischen "hinter einem Login" und "tatsächlich geschützt": Wer den Worker direkt ' +
       'anspricht und einen Header erfindet, kommt nicht weiter.</p>',
   },
+  {
+    id: 'backup', zone: 'client', label: 'Sicherung (dein Rechner)', sub: 'wrangler d1 export',
+    col: 0, row: 7,
+    guards: ['von Hand angestoßen', 'nur im verschlüsselten Ordner'],
+    detail: 'Kein laufender Dienst, sondern ein Handgriff: <code>npm run db:backup</code> zieht das komplette Hauptbuch als datierte SQL-Datei in den verschlüsselten Ordner, in dem auch die Konfiguration liegt. Der einzige Weg, auf dem die ganze Datenbank Cloudflare verlässt.',
+    long:
+      '<p>Cloudflare hält 30 Tage Zeitreise für D1 vor. Das deckt ein versehentliches DELETE ab — es ' +
+      'deckt <strong>nicht</strong> den Verlust des Kontos ab, und lesen lässt es sich nirgends außer ' +
+      'bei Cloudflare. Für ein Hauptbuch, an dem Kaufbelege und Kontostände hängen, ist das zu wenig; ' +
+      'es gab lange gar keine Sicherung und auch nichts Aufgeschriebenes darüber, wie man eine macht.</p>' +
+      '<p>Deshalb ein Befehl statt einer Anleitung, mit dem Datum im Dateinamen und mit dem Zielordner ' +
+      'fest eingetragen. Die Ausfuhr trägt Konto-IDs und die Prüfwerte der Geräte; sie hat außerhalb ' +
+      'des verschlüsselten Ordners nichts zu suchen, und ein Befehl, der den Pfad schon kennt, ist die ' +
+      'zuverlässigste Art, das durchzuhalten.</p>' +
+      '<p>Im Bild steht der Kasten, weil ein Netzbild, das jede Abfrage bei Google zeigt und den einen ' +
+      'Weg auslässt, auf dem die vollständige Datenbank das Rechenzentrum verlässt, an der heikelsten ' +
+      'Stelle unvollständig wäre.</p>',
+    source: 'package.json · db:backup',
+  },
 
   {
     id: 'worker', zone: 'cf', label: 'Worker', sub: 'api.dictatekeyboard.com',
@@ -395,7 +414,7 @@ export const NODES: GraphNode[] = [
     id: 'cron', zone: 'cf', label: 'Cron · 03:17 UTC', sub: 'nächtliche Langsamarbeit',
     col: 2, row: 3,
     guards: ['Speicherbegrenzung', 'Netz unter den Push-Meldungen'],
-    detail: 'Vier Arbeiten, bewusst zu einer krummen Minute statt zur vollen Stunde, wo sich jeder Cron der Plattform staut: Einzelzeilen aus <code>usage_log</code> älter als 90 Tage löschen; den Prüfwert des Vorgängerkontos 24 Monate nach einer Löschung kappen; die Tageskurse holen und fehlende Umrechnungen nachtragen; und 30 Tage gegen Googles Liste stornierter Käufe abgleichen, weil eine Push-Meldung ausbleiben kann.',
+    detail: 'Fünf Arbeiten, bewusst zu einer krummen Minute statt zur vollen Stunde, wo sich jeder Cron der Plattform staut: Einzelzeilen aus <code>usage_log</code> älter als 90 Tage löschen; den Prüfwert des Vorgängerkontos 24 Monate nach einer Löschung kappen; die Tageskurse holen und fehlende Umrechnungen nachtragen; bei Google nachfragen, was Verkäufe eingebracht haben; und 30 Tage gegen Googles Liste stornierter Käufe abgleichen, weil eine Push-Meldung ausbleiben kann. Das Nachfragen und das Umrechnen laufen seit der Umstellung stündlich — hier stehen sie nur noch als Tagesnetz.',
     long:
       '<p>Fünf Arbeiten, die niemand im laufenden Betrieb sehen soll:</p>' +
       '<p><strong>Aufräumen.</strong> Einzelne Protokollzeilen älter als 90 Tage werden stapelweise ' +
@@ -407,8 +426,9 @@ export const NODES: GraphNode[] = [
       '<p><strong>Umrechnen.</strong> Die Tageskurse werden geholt und Käufe ohne Umrechnung ' +
       'nachgetragen. Erst danach zählt ein Verkauf in Franken oder Zloty überhaupt mit.</p>' +
       '<p><strong>Nachfragen.</strong> Was Google beim Kauf noch nicht sagen konnte, wird erneut ' +
-      'geholt: den Entwickleranteil rechnet Play erst nach der Abrechnung aus. Ohne diesen Lauf ' +
-      'bliebe ein bezahlter Kauf für immer mit „nichts verdient" in den Büchern stehen.</p>' +
+      'geholt: den Entwickleranteil rechnet Play erst nach der Abrechnung aus. Das ist inzwischen ' +
+      'stündlich (siehe den Kasten darunter) — hier bleibt es als Tagesnetz stehen, damit eine Reihe ' +
+      'gescheiterter Stundenläufe einmal am Tag doch noch aufgeholt wird.</p>' +
       '<p><strong>Abgleichen.</strong> 30 Tage gegen Googles eigene Liste stornierter Käufe. Eine ' +
       'Push-Nachricht ist nicht garantiert; ohne dieses Netz wäre eine verpasste Erstattung ein ' +
       'dauerhaft falscher Kontostand, den niemand bemerkt.</p>' +
@@ -416,16 +436,53 @@ export const NODES: GraphNode[] = [
     source: 'src/retention.ts, src/fx.ts, src/orders.ts, src/sweep.ts',
   },
   {
+    id: 'orders', zone: 'cf', label: 'Erlöse · stündlich :23', sub: 'fragt Google nach dem Anteil',
+    col: 2, row: 4,
+    guards: ['Aufgabefrist zwei Wochen ab Kauf', 'höchstens 50 Käufe je Lauf', 'Kursausfall folgenlos'],
+    detail: 'Was ein Verkauf wirklich eingebracht hat, weiß Google erst nach der Abrechnung — die Frage beim Kauf kommt fast immer zu früh, und ohne eine zweite steht ein bezahlter Kauf für immer mit „nichts verdient" in den Büchern. Dieser Lauf stellt sie: <code>orders.get</code> für jeden Kauf ohne Erlöszahl, danach die Umrechnung dessen, was zurückkam. Zur Minute 23, also außerhalb der Viertelstunden des Wachhunds und außerhalb der vollen Stunde, zu der sich jeder Cron der Plattform staut.',
+    long:
+      '<p>Google beantwortet zwei Fragen auf zwei Uhren. <strong>Was die Kundschaft gezahlt hat</strong>, ' +
+      'steht im Moment des Kaufs fest. <strong>Was davon beim Entwickler ankommt</strong>, wird erst ' +
+      'ausgerechnet, wenn die Zahlung abgerechnet ist — bis dahin trägt die Bestellung schlicht keine ' +
+      'Erlöszahl. Der Kaufweg fragt in derselben Sekunde wie der Verkauf und fragt deshalb fast immer ' +
+      'zu früh. Das ist in Ordnung, solange jemand noch einmal fragt.</p>' +
+      '<p>Niemand tat es. Der erste echte Verkauf stand daraufhin unbefristet mit 0,00 € im Hauptbuch, ' +
+      'und jede Auswertung glaubte es.</p>' +
+      '<p><strong>Warum stündlich.</strong> Die Abrechnung dauert Stunden, nicht einen Tag. Ein Verkauf ' +
+      'vom Vormittag hatte seine Zahl längst bereitliegen, während die Bücher bis 03:17 der Folgenacht ' +
+      'weiter 0,00 € zeigten — der Takt gehörte dem Job, nicht der Sache, auf die er wartete.</p>' +
+      '<p><strong>Warum die Frist am Kaufdatum hängt.</strong> Früher war es eine Zählung: vierzehn ' +
+      'Versuche. Das hieß nur so lange „zwei Wochen", wie einmal pro Nacht gefragt wurde — stündlich ' +
+      'wäre das ganze Kontingent vor Ablauf des ersten Tages verbraucht gewesen, und eine Abrechnung, ' +
+      'die ehrlich drei Tage braucht, wäre nach vierzehn Stunden aufgegeben worden. Gezählt werden die ' +
+      'Versuche weiter, sie sind das Protokoll; die Uhr sind sie nicht mehr. Nebenwirkung: Eine Phase, ' +
+      'in der Google nicht erreichbar ist, frisst nicht mehr die Frist auf, in der es antworten soll.</p>' +
+      '<p><strong>Was nach zwei Wochen passiert:</strong> nichts mehr. Dann ist die Antwort nicht spät, ' +
+      'sondern abwesend — ein fehlendes Recht am Dienstkonto, eine Bestellung, die Google nicht ' +
+      'herausgibt. Weiterzufragen würde das hinter einer Zahl verstecken, die nie kommt; der Wachhund ' +
+      'meldet stattdessen, was offen bleibt.</p>' +
+      '<p>Die Kurse holt dieser Lauf mit, darf davon aber nicht aufgehalten werden: Ein Kauf, der seit ' +
+      'dem Morgen wartet, soll nicht weiterwarten, weil eine Kursquelle gerade nicht erreichbar ist.</p>',
+    source: 'src/orders.ts, src/fx.ts',
+  },
+  {
     id: 'watchdog', zone: 'cf', label: 'Wachhund · alle 15 min', sub: 'sieben Regeln, Versand',
     col: 2, row: 5,
     holds: ['MAIL-Bindung'],
     guards: ['Regeln einzeln abschaltbar', 'gleiche Meldung nur einmal', 'Empfänger in der Bindung festgeschrieben'],
-    detail: 'Prüft auf Budgetüberschreitung, ein zu schnell verbrauchtes Paket, ein Konto mit auffälligem Budgetanteil, weitergegebene Zugänge, Abweichungen zwischen kalkulierten und tatsächlichen Einkaufskosten und erhöhte Fehlerquoten. Viertelstündlich, weil das, worauf es wartet, in Minuten passiert — stündlich wäre ein Bericht statt einer Warnung. Der Versand läuft über Cloudflare Email Routing, und die Zieladresse steht in der Bindung, nicht nur in den Einstellungen: Eine im Dashboard vertippte Adresse führt damit zu einer fehlgeschlagenen Zustellung statt zu Post an Fremde.',
+    detail: 'Prüft auf ein zu schnell verbrauchtes Paket, ein Konto mit auffälligem Budgetanteil, weitergegebene Zugänge, Abweichungen zwischen kalkulierten und tatsächlichen Einkaufskosten, ein dauerhaftes Minus, erhöhte Fehlerquoten und Käufe, zu denen Google auch nach einer Woche keinen Erlös gemeldet hat. Viertelstündlich, weil das, worauf es wartet, in Minuten passiert — stündlich wäre ein Bericht statt einer Warnung. Der Versand läuft über Cloudflare Email Routing, und die Zieladresse steht in der Bindung, nicht nur in den Einstellungen: Eine im Dashboard vertippte Adresse führt damit zu einer fehlgeschlagenen Zustellung statt zu Post an Fremde.',
     long:
-      '<p>Sechs Regeln, jede gegen einen anderen Weg, Geld zu verlieren: das Tagesbudget läuft voll; ein ' +
-      'frisches Paket wird in Minuten verbraucht (das Muster vor einer Rückbuchung); ein einzelnes ' +
-      'Konto beansprucht einen auffälligen Anteil des Tagesbudgets; ein Zugang läuft auf ungewöhnlich ' +
-      'vielen Geräten; OpenAI rechnet anders ab als kalkuliert; die Fehlerquote steigt.</p>' +
+      '<p>Sieben Regeln, jede gegen einen anderen Weg, Geld zu verlieren: ein frisches Paket wird in ' +
+      'Minuten verbraucht (das Muster vor einer Rückbuchung); ein einzelnes Konto beansprucht einen ' +
+      'auffälligen Anteil des Tagesbudgets; ein Zugang läuft auf ungewöhnlich vielen Geräten; OpenAI ' +
+      'rechnet anders ab als kalkuliert; die Einnahmen bleiben dauerhaft hinter den Kosten zurück; die ' +
+      'Fehlerquote steigt; ein bezahlter Kauf hat auch nach einer Woche keinen gemeldeten Erlös.</p>' +
+      '<p>Die letzte ist die stillste und deshalb aufgenommen worden: Ohne sie liest sich ein Verkauf, ' +
+      'zu dem Google nichts herausrückt, einfach so, als hätte er nichts eingebracht — und genau das ' +
+      'ist dem ersten echten passiert. Sie meldet, was der stündliche Lauf nicht beantwortet bekommt.</p>' +
+      '<p>Sofortmeldungen wie „das Tagesbudget ist zu 80 % voll" oder eine eingehende Erstattung ' +
+      'stammen nicht von hier: Die entstehen dort, wo das Ereignis passiert, und brauchen keinen ' +
+      'Zeitplan.</p>' +
       '<p><strong>Viertelstündlich</strong>, weil das, worauf gewartet wird, in Minuten passiert. ' +
       'Stündlich wäre ein Bericht, keine Warnung — die Minuten sind dann längst verbraucht.</p>' +
       '<p>Dieselbe Meldung geht nur einmal raus; ohne diese Sperre erzeugt ein anhaltender Zustand ' +
@@ -716,6 +773,64 @@ export const EDGES: GraphEdge[] = [
       '<p>Schlägt der Abruf fehl, passiert nichts weiter: Die betroffenen Käufe bleiben ohne ' +
       'Umrechnung und werden in einer der nächsten Nächte nachgetragen. Kein Guthaben und keine ' +
       'Anfrage hängt daran.</p>',
+  },
+  {
+    from: 'cron', to: 'playapi', kind: 'auth',
+    label: 'voidedpurchases · 30 Tage zurück', token: 'OAuth-Token', guard: 'Netz unter den Push-Meldungen',
+    long:
+      '<p>Googles eigene Liste stornierter Käufe, 30 Tage rückwärts. Sie ist das Netz unter den ' +
+      'Push-Meldungen: Eine RTDN ist nicht garantiert, und eine verpasste Erstattung wäre ein dauerhaft ' +
+      'falscher Kontostand, den niemand bemerkt — Geld zurück und die Minuten behalten.</p>' +
+      '<p>Der Aufruf reitet auf demselben zwischengespeicherten Zugangstoken wie die Kaufprüfung; ' +
+      'erklärt wird die Anmeldung an der Kette <code>Worker → OAuth2 → Play API</code> und hier nicht ' +
+      'noch einmal. Die Linie steht trotzdem im Bild, weil sonst ein Netzweg zu Google unsichtbar ' +
+      'bliebe, den es tatsächlich jede Nacht gibt.</p>',
+  },
+  {
+    from: 'orders', to: 'playapi', kind: 'auth',
+    label: 'orders.get', token: 'OAuth-Token', guard: 'Aufgabefrist zwei Wochen',
+    long:
+      '<p>Die Frage, die beim Kauf zu früh kam: Was hat diese Bestellung wirklich eingebracht? Die ' +
+      'Antwort trennt sauber zwischen Gezahltem, Steuer und Entwickleranteil — und existiert erst, ' +
+      'wenn Google die Zahlung abgerechnet hat.</p>' +
+      '<p>Gefragt wird stündlich und nur für Käufe ohne Erlöszahl, höchstens 50 je Lauf, und nur ' +
+      'innerhalb von zwei Wochen nach dem Kauf. Danach ist die Antwort nicht spät, sondern abwesend, ' +
+      'und das ist ein Fall für den Wachhund, nicht für eine weitere Abfrage.</p>' +
+      '<p>Auch dieser Aufruf nutzt das zwischengespeicherte Token der Kaufprüfung — dieselbe ' +
+      'Berechtigung, dieselbe Stunde Gültigkeit, kein zusätzliches Geheimnis.</p>',
+  },
+  {
+    from: 'orders', to: 'd1', kind: 'store',
+    label: 'Erlös, Steuer, Umrechnung eintragen', guard: 'Kurs des Kauftags',
+    long:
+      '<p>Was zurückkommt, wird auf die Kaufzeile geschrieben: gezahlter Betrag, Steuer, ' +
+      'Entwickleranteil, Währung, Käuferland — und die Umrechnung dazu, <strong>mit dem Kurs des ' +
+      'Kauftags</strong>, nicht dem von heute. Eine Zahl, die drei Nächte zu spät eintrifft, ist damit ' +
+      'noch immer wert, was sie wert war.</p>' +
+      '<p>Mitgeschrieben wird auch jeder erfolglose Versuch. Ein Kauf, zu dem niemand eine Antwort ' +
+      'bekommen konnte, soll nicht aussehen wie einer, nach dem niemand gefragt hat.</p>',
+  },
+  {
+    from: 'orders', to: 'fx', kind: 'data',
+    label: 'HTTPS · Tageskurse', guard: 'Ausfall hält den Lauf nicht auf',
+    long:
+      '<p>Ein gespeicherter Kurs trägt das Veröffentlichungsdatum der EZB, nicht den Tag des Abrufs. ' +
+      'Stündlich erneut zu fragen schreibt deshalb dieselben Zeilen mit denselben Zahlen — bis die Bank ' +
+      'veröffentlicht, und dann ist die neue Notierung binnen einer Stunde da statt erst in der Nacht.</p>' +
+      '<p>Anders als im nächtlichen Lauf darf ein Fehlschlag hier nichts aufhalten: Er wird geschluckt, ' +
+      'und die beiden Schritte, um die es geht, laufen trotzdem. Sonst hinge ein Kauf, der seit dem ' +
+      'Morgen auf seine Zahl wartet, an der Erreichbarkeit einer Kursquelle.</p>',
+  },
+  {
+    from: 'd1', to: 'backup', kind: 'store',
+    label: 'wrangler d1 export · von Hand', guard: 'verschlüsselter Ordner',
+    long:
+      '<p>Die einzige Linie im Bild, die niemand automatisch auslöst. Sie läuft, wenn der Befehl ' +
+      'aufgerufen wird, und holt die gesamte Datenbank als SQL-Datei über die Cloudflare-API auf den ' +
+      'eigenen Rechner.</p>' +
+      '<p>Sie steht hier, weil sie die Zone verlässt: Alles andere an Kontodaten bleibt in Westeuropa ' +
+      'bei Cloudflare, diese Kopie nicht. Was am anderen Ende liegt, ist deshalb Teil der ' +
+      'Sicherheitsbetrachtung und nicht bloß eine Bequemlichkeit.</p>',
   },
   {
     from: 'watchdog', to: 'd1', kind: 'store',
