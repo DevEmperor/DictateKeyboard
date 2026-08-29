@@ -71,12 +71,12 @@ export const DASHBOARD_HTML = `<!doctype html>
     /*
      * The calm ground, for the panels that carry tables.
      *
-     * Letting the fog through is right for a card holding one figure and wrong for forty in rows:
-     * a column of numbers wants a contrast that does not depend on where a cloud happens to be. So
-     * the veil sits here rather than across the whole content column — the cards stand in the open
-     * fog, the tables keep their own quiet backing.
+     * Letting the fog through is right for a panel and wrong for forty numbers in rows: a column of
+     * figures wants a contrast that does not depend on where a cloud happens to be. So this sits
+     * behind the rows themselves rather than under the whole panel — everything keeps the glass,
+     * and only the densest thing on the page gets a quieter ground under it.
      */
-    --surface-dense: rgba(15, 20, 27, .88);
+    --surface-dense: rgba(13, 18, 25, .55);
     /* A lightening rather than a colour, so it holds up over whatever the fog is doing behind it. */
     --surface-2: rgba(255, 255, 255, .055);
     --line: rgba(255, 255, 255, .13);
@@ -272,9 +272,11 @@ export const DASHBOARD_HTML = `<!doctype html>
 
   h2 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; display: flex; align-items: center; gap: 7px; }
   h3 { font-size: 15px; margin: 0 0 10px; font-weight: 660; }
-  .panel { background: var(--surface-dense); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
   .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  /* The rows get their own quieter ground inside the glass, and only they: forty numbers in columns
+     are the one thing on this page whose contrast must not depend on where a cloud happens to be. */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface-dense); border-radius: 10px; }
   th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
   th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 650; }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -343,16 +345,33 @@ export const DASHBOARD_HTML = `<!doctype html>
   .act .label .chg { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 600; font-size: 11px; padding: 1px 8px; }
 
   /* ---- network graph ---- */
+  /*
+   * The diagram floats on the fog instead of sitting in a dark box of its own.
+   *
+   * That is what the transparent svg is for: it used to paint --bg across the whole plate, which
+   * made the one page with the most to look at the only one that had cut itself out of the design.
+   * Everything drawn on it — zones, boxes, labels — carries its own backing now, so nothing relies
+   * on the plate underneath being opaque.
+   */
   .gwrap { position: relative; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
   .gtools { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 3; flex-wrap: wrap; justify-content: flex-end; }
-  .gtools button { background: var(--surface); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 6px 11px; font-size: 13px; font-weight: 620; cursor: pointer; }
+  .gtools button { background: var(--surface-solid); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 6px 11px; font-size: 13px; font-weight: 620; cursor: pointer; box-shadow: 0 4px 14px rgba(0, 0, 0, .4); }
   .gtools button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-  #gsvg { display: block; width: 100%; height: min(72vh, 720px); touch-action: none; cursor: grab; background: var(--bg); }
+  #gsvg { display: block; width: 100%; height: min(72vh, 720px); touch-action: none; cursor: grab; background: rgba(11, 15, 20, .45); }
   #gsvg.dragging { cursor: grabbing; }
-  .zone-bg { rx: 18; fill-opacity: .07; stroke-opacity: .35; stroke-width: 1.5; stroke-dasharray: 7 6; }
+  /* A shade more presence than before, because the fog behind them now has some of its own. */
+  .zone-bg { rx: 18; fill-opacity: .09; stroke-opacity: .42; stroke-width: 1.5; stroke-dasharray: 7 6; }
   .zone-label { font: 650 15px ui-sans-serif, system-ui, sans-serif; fill-opacity: .85; }
   .zone-sub { font: 400 12px ui-sans-serif, system-ui, sans-serif; fill: currentColor; opacity: .55; }
-  .gnode rect { rx: 11; fill: var(--surface-solid); stroke: var(--line); stroke-width: 1.5; }
+  /*
+   * A box is a card, in SVG.
+   *
+   * The same three things that make the panels read as glass: a translucent ground, a border of
+   * white rather than of grey, and light from above. The sheen is a gradient defined once in defs
+   * and referenced by all twenty-six boxes rather than a filter on each — a drop shadow here would
+   * be re-rasterised on every pan and zoom, which on this page is exactly the cost not to pay.
+   */
+  .gnode rect { rx: 11; fill: url(#gglass); stroke: rgba(255, 255, 255, .16); stroke-width: 1.2; }
   /* Both of these are rects inside .gnode and would otherwise inherit the box's own fill and
      border from the rule above — a CSS declaration beats a fill="…" attribute every time. The
      accent bar was painted over in surface grey, and the invisible tap target came out as an
@@ -368,7 +387,9 @@ export const DASHBOARD_HTML = `<!doctype html>
   .gedge.hot path { opacity: 1; stroke-width: 3; }
   /* Labels live above the nodes, so a chip that lands on a box is still readable. */
   .glabel text { font: 550 10.5px ui-sans-serif, system-ui, sans-serif; fill: var(--text); }
-  .glabel rect.lbl { fill: var(--surface-solid); stroke: var(--line); stroke-width: .8; rx: 5; }
+  /* Chips stay nearly opaque: they sit on the routes, and a line running through a word is worse
+     than any amount of transparency is worth. */
+  .glabel rect.lbl { fill: rgba(12, 17, 24, .93); stroke: rgba(255, 255, 255, .14); stroke-width: .8; rx: 5; }
   .glabel.dim { opacity: .12; }
   .glabel.hot rect.lbl { stroke: var(--accent); stroke-width: 1.6; }
   .glabel.hot text { fill: var(--text); }
@@ -377,11 +398,11 @@ export const DASHBOARD_HTML = `<!doctype html>
   .swatch { width: 22px; height: 3px; border-radius: 2px; }
   .ndetail { padding: var(--pad); border-top: 1px solid var(--line); }
   .gmode { display: flex; gap: 6px; }
-  .gmode button { background: var(--surface); border: 1px solid var(--line); color: var(--muted); border-radius: 10px; padding: 8px 15px; font-size: 13.5px; font-weight: 620; cursor: pointer; }
+  .gmode button { background: var(--surface); border: 1px solid var(--line); color: var(--muted); border-radius: 10px; padding: 8px 15px; font-size: 13.5px; font-weight: 620; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .07); }
   .gmode button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
   /* The "?" on a box. Drawn as SVG rather than an HTML overlay so it pans and zooms with the
      diagram instead of drifting away from the box it belongs to. */
-  .gask circle { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
+  .gask circle { fill: rgba(255, 255, 255, .07); stroke: rgba(255, 255, 255, .16); stroke-width: 1; }
   .gask text { font: 700 11px ui-sans-serif, system-ui, sans-serif; fill: var(--muted); }
   .gnode:hover .gask circle, .gnode.sel .gask circle { stroke: var(--accent); }
   .gnode:hover .gask text, .gnode.sel .gask text { fill: var(--accent); }
@@ -2186,7 +2207,13 @@ var GRAPH = ${GRAPH_JSON};
 
   function drawGraph() {
     var parts = [], labels = [];
-    parts.push('<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>');
+    // One gradient for all twenty-six boxes: light from above over a translucent ground, which is
+    // the same thing the cards do with an inset highlight. Defined once and referenced, so the cost
+    // is a single paint server rather than a filter per node.
+    parts.push('<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker>' +
+      '<linearGradient id="gglass" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="rgba(34,45,60,.88)"/>' +
+      '<stop offset="1" stop-color="rgba(13,18,26,.88)"/></linearGradient></defs>');
 
     GRAPH.zones.forEach(function (z) {
       parts.push('<rect class="zone-bg" x="' + z.x + '" y="' + z.y + '" width="' + z.w + '" height="' + z.h +
