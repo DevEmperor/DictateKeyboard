@@ -1374,8 +1374,6 @@
     <string name="dictate__import_retry">أعد المحاولة</string>
     <string name="dictate__import_no_file">لم تتم مشاركة أي ملف صوتي.</string>
     <string name="dictate__import_only_first">يتم تفريغ الملف الأول فقط – وتم تجاوز {count} ملفات أخرى.</string>
-    <string name="dictate__import_on_device">التفريغ على هذا الجهاز</string>
-    <string name="dictate__import_on_device_summary">لا يتم رفع أي شيء، ولا ينطبق أي حد للحجم.</string>
     <string name="dictate__setup_description">أعِدّ مزوّد الذكاء الاصطناعي ومفتاح API لتتمكّن من بدء الإملاء بالميكروفون.</string>
     <string name="dictate__setup_configure_btn">إعداد Dictate</string>
     <string name="setup__grant_mic_permission__title">الوصول إلى الميكروفون</string>

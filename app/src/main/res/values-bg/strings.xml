@@ -1516,8 +1516,6 @@
     <string name="dictate__import_retry">Опитай отново</string>
     <string name="dictate__import_no_file">Не беше споделен аудиофайл.</string>
     <string name="dictate__import_only_first">Преобразува се само първият файл – още {count} бяха пропуснати.</string>
-    <string name="dictate__import_on_device">Преобразуване на това устройство</string>
-    <string name="dictate__import_on_device_summary">Нищо не се качва и няма ограничение за размера.</string>
     <string name="dictate__setup_description">Настройте своя ИИ доставчик и API ключ, за да започнете да диктувате с микрофона.</string>
     <string name="dictate__setup_configure_btn">Конфигурирай Dictate</string>
     <string name="setup__grant_mic_permission__title">Достъп до микрофона</string>

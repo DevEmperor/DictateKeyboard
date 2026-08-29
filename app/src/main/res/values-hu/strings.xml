@@ -1514,8 +1514,6 @@
     <string name="dictate__import_retry">Újra</string>
     <string name="dictate__import_no_file">Nem osztottál meg hangfájlt.</string>
     <string name="dictate__import_only_first">Csak az első fájl kerül átírásra – további {count} kimaradt.</string>
-    <string name="dictate__import_on_device">Átírás ezen az eszközön</string>
-    <string name="dictate__import_on_device_summary">Semmi sem töltődik fel, és nincs méretkorlát.</string>
     <string name="dictate__setup_description">Állítsa be az MI-szolgáltatóját és az API-kulcsát, hogy a mikrofonnal diktálhasson.</string>
     <string name="dictate__setup_configure_btn">Dictate beállítása</string>
     <string name="setup__grant_mic_permission__title">Mikrofon-hozzáférés</string>

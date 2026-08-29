@@ -1471,8 +1471,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__import_retry">Coba lagi</string>
     <string name="dictate__import_no_file">Tidak ada berkas audio yang dibagikan.</string>
     <string name="dictate__import_only_first">Hanya berkas pertama yang ditranskripsikan – {count} lainnya dilewati.</string>
-    <string name="dictate__import_on_device">Transkripsikan di perangkat ini</string>
-    <string name="dictate__import_on_device_summary">Tidak ada yang diunggah, dan tidak ada batas ukuran.</string>
     <string name="dictate__setup_description">Atur penyedia AI dan kunci API Anda agar dapat mulai mendikte dengan mikrofon.</string>
     <string name="dictate__setup_configure_btn">Konfigurasikan Dictate</string>
     <string name="setup__grant_mic_permission__title">Akses mikrofon</string>

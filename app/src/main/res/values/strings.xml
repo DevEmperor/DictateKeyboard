@@ -2231,13 +2231,11 @@
     <string name="dictate__import_status_transcribing" comment="Progress line while the file is being transcribed">Transcribing…</string>
     <string name="dictate__import_status_part" comment="Progress line for a long file split into pieces; %1$d is the piece being worked on, %2$d the total">Part %1$d of %2$d…</string>
     <string name="dictate__import_result_label" comment="Label above the editable transcript on the import screen">Transcript</string>
-    <string name="dictate__import_prompt_button" comment="Button that opens the menu of prompts to run over the transcript">Rework</string>
+    <string name="dictate__import_prompt_button" comment="Button that opens the menu of prompts to run over the transcript">Rewording</string>
     <string name="dictate__import_revert" comment="Button that puts the raw transcript back after a prompt rewrote it">Undo</string>
     <string name="dictate__import_retry" comment="Button that starts the transcription over after it failed">Try again</string>
     <string name="dictate__import_no_file" comment="Shown when the share carried nothing we could read">No audio file was shared.</string>
     <string name="dictate__import_only_first" comment="Shown when several files were shared at once; {count} is how many were left out">Only the first file is transcribed – {count} more were left out.</string>
-    <string name="dictate__import_on_device" comment="Switch that transcribes the file with the downloaded on-device model">Transcribe on this device</string>
-    <string name="dictate__import_on_device_summary" comment="Summary under the on-device switch">Nothing is uploaded, and no size limit applies.</string>
 
     <!-- Dictate onboarding step -->
     <string name="dictate__setup_description" comment="Onboarding text inviting the user to set up Dictate">Set up your AI provider and API key so you can start dictating with the mic.</string>

@@ -1393,8 +1393,6 @@
     <string name="dictate__import_retry">Réessayer</string>
     <string name="dictate__import_no_file">Aucun fichier audio n\'a été partagé.</string>
     <string name="dictate__import_only_first">Seul le premier fichier est transcrit – {count} autres ont été ignorés.</string>
-    <string name="dictate__import_on_device">Transcrire sur cet appareil</string>
-    <string name="dictate__import_on_device_summary">Rien n\'est envoyé, et aucune limite de taille ne s\'applique.</string>
     <string name="dictate__setup_description">Configurez votre fournisseur d\'IA et votre clé d\'API pour commencer à dicter avec le micro.</string>
     <string name="dictate__setup_configure_btn">Configurer Dictate</string>
     <string name="setup__grant_mic_permission__title">Accès au microphone</string>

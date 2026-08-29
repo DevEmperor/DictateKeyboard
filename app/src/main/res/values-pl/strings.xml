@@ -1531,8 +1531,6 @@
     <string name="dictate__import_retry">Spróbuj ponownie</string>
     <string name="dictate__import_no_file">Nie udostępniono żadnego pliku audio.</string>
     <string name="dictate__import_only_first">Transkrybowany jest tylko pierwszy plik – pominięto kolejne: {count}.</string>
-    <string name="dictate__import_on_device">Transkrybuj na tym urządzeniu</string>
-    <string name="dictate__import_on_device_summary">Nic nie jest wysyłane i nie obowiązuje limit rozmiaru.</string>
     <string name="dictate__setup_description">Skonfiguruj dostawcę AI i klucz API, aby zacząć dyktować za pomocą mikrofonu.</string>
     <string name="dictate__setup_configure_btn">Skonfiguruj Dictate</string>
     <string name="setup__grant_mic_permission__title">Dostęp do mikrofonu</string>

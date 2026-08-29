@@ -1530,8 +1530,6 @@
     <string name="dictate__import_retry">Zkusit znovu</string>
     <string name="dictate__import_no_file">Nebyl sdílen žádný zvukový soubor.</string>
     <string name="dictate__import_only_first">Přepisuje se jen první soubor – dalších {count} bylo vynecháno.</string>
-    <string name="dictate__import_on_device">Přepsat v tomto zařízení</string>
-    <string name="dictate__import_on_device_summary">Nic se neodesílá a neplatí žádný limit velikosti.</string>
     <string name="dictate__setup_description">Nastavte poskytovatele AI a klíč API, abyste mohli začít diktovat mikrofonem.</string>
     <string name="dictate__setup_configure_btn">Nastavit Dictate</string>
     <string name="setup__grant_mic_permission__title">Přístup k mikrofonu</string>

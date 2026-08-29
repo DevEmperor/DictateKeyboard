@@ -1363,8 +1363,6 @@
     <string name="dictate__import_retry">Спробувати ще раз</string>
     <string name="dictate__import_no_file">Аудіофайл не надіслано.</string>
     <string name="dictate__import_only_first">Розшифровується лише перший файл — пропущено ще: {count}.</string>
-    <string name="dictate__import_on_device">Розшифрувати на цьому пристрої</string>
-    <string name="dictate__import_on_device_summary">Нічого не завантажується, обмеження розміру немає.</string>
     <string name="dictate__setup_description">Налаштуйте постачальника ШІ та ключ API, щоб почати диктувати з мікрофона.</string>
     <string name="dictate__setup_configure_btn">Налаштувати Dictate</string>
     <string name="setup__grant_mic_permission__title">Доступ до мікрофона</string>

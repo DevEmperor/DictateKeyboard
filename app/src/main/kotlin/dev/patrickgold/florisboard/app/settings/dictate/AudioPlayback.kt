@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -71,6 +72,14 @@ class AudioPlayerState internal constructor(
     /** 0..1 for a progress ring or bar; the drag position wins while there is one. */
     val progress: Float
         get() = scrubbing ?: if (durationMs > 0) (positionMs.toFloat() / durationMs).coerceIn(0f, 1f) else 0f
+
+    /**
+     * The time to put on screen: while the bar is being dragged, **where it would resume on
+     * release** rather than where the playhead still happens to be. A clock that stands still under
+     * a moving finger is worse than no clock — it says the drag is doing nothing.
+     */
+    val displayedMs: Int
+        get() = scrubbing?.let { (durationMs * it).toInt() } ?: positionMs
 
     /** True once the file has been opened, which is what makes a duration available to show. */
     val ready: Boolean
@@ -198,7 +207,9 @@ fun AudioPlaybackRow(path: String) {
         Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
     }
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        // Room above and below: the row sits between the header and the transcript, and without it
+        // the slider's touch target runs straight into both.
+        modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
@@ -217,7 +228,7 @@ fun AudioPlaybackRow(path: String) {
             enabled = player.ready,
         )
         Text(
-            text = formatPlaybackTime(player.positionMs) + " / " + formatPlaybackTime(player.durationMs),
+            text = formatPlaybackTime(player.displayedMs) + " / " + formatPlaybackTime(player.durationMs),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

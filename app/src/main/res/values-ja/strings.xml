@@ -1448,8 +1448,6 @@
     <string name="dictate__import_retry">再試行</string>
     <string name="dictate__import_no_file">音声ファイルが共有されませんでした。</string>
     <string name="dictate__import_only_first">最初のファイルのみ文字起こしします。他の {count} 件は対象外です。</string>
-    <string name="dictate__import_on_device">この端末で文字起こし</string>
-    <string name="dictate__import_on_device_summary">何もアップロードされず、サイズ制限もありません。</string>
     <string name="dictate__setup_description">マイクで音声入力を始められるように、AIプロバイダーとAPIキーを設定してください。</string>
     <string name="dictate__setup_configure_btn">Dictateを設定</string>
     <string name="setup__grant_mic_permission__title">マイクへのアクセス</string>

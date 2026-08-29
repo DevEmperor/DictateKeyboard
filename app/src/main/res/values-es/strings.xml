@@ -1497,8 +1497,6 @@
     <string name="dictate__import_retry">Reintentar</string>
     <string name="dictate__import_no_file">No se compartió ningún archivo de audio.</string>
     <string name="dictate__import_only_first">Solo se transcribe el primer archivo: se omitieron {count} más.</string>
-    <string name="dictate__import_on_device">Transcribir en este dispositivo</string>
-    <string name="dictate__import_on_device_summary">No se sube nada y no hay límite de tamaño.</string>
     <string name="dictate__setup_description">Configura tu proveedor de IA y la clave de API para empezar a dictar con el micrófono.</string>
     <string name="dictate__setup_configure_btn">Configurar Dictate</string>
     <string name="setup__grant_mic_permission__title">Acceso al micrófono</string>

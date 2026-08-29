@@ -18,7 +18,6 @@ import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioWav
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
-import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
@@ -58,11 +57,10 @@ object ImportTranscriber {
         context: Context,
         prefs: FlorisPreferenceModel,
         audio: File,
-        forceLocal: Boolean = false,
         onProgress: (done: Int, total: Int) -> Unit = { _, _ -> },
     ): String = withContext(Dispatchers.IO) {
         val appContext = context.applicationContext
-        val account = accountFor(prefs, forceLocal)
+        val account = accountFor(prefs)
         val preset = presetFor(account)
         val onDevice = preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE
         val model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" }
@@ -196,24 +194,13 @@ object ImportTranscriber {
         }
     }
 
-    /** The provider this import will use — the configured one, or the on-device engine on request. */
-    fun accountFor(prefs: FlorisPreferenceModel, forceLocal: Boolean): ProviderAccount {
-        val accounts = prefs.dictate.providerAccounts.get()
-        if (!forceLocal) return accounts.getOrEmpty(prefs.dictate.transcriptionProviderId.get())
-        return accounts.getOrEmpty(ProviderRegistry.LOCAL.id)
-    }
+    /** The provider this import uses: the one configured for transcription, like every other path. */
+    fun accountFor(prefs: FlorisPreferenceModel): ProviderAccount =
+        prefs.dictate.providerAccounts.get().getOrEmpty(prefs.dictate.transcriptionProviderId.get())
 
     fun presetFor(account: ProviderAccount) = when {
         account.isCustom -> ProviderRegistry.custom(account.customBaseUrl, realtime = account.customRealtime)
         else -> ProviderRegistry.byId(account.providerId) ?: ProviderRegistry.OPENAI
-    }
-
-    /** Whether an on-device model is installed, which is what gates offering the choice at all. */
-    fun localModelReady(context: Context, prefs: FlorisPreferenceModel): Boolean {
-        val account = accountFor(prefs, forceLocal = true)
-        val preset = presetFor(account)
-        val model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" }
-        return model.isNotBlank() && LocalModelManager.isInstalled(context.applicationContext, model)
     }
 
     private fun looksLikeVideo(file: File): Boolean =

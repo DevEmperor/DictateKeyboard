@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +42,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -57,6 +60,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -104,22 +108,20 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     var busy by remember { mutableStateOf(true) }
     var status by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
-    var onDevice by remember { mutableStateOf(false) }
     var job by remember { mutableStateOf<Job?>(null) }
     val prompts = remember { mutableStateOf<List<PromptModel>>(emptyList()) }
 
-    val localAvailable = remember { ImportTranscriber.localModelReady(context, prefs) }
     val skipped = (uris.size - 1).coerceAtLeast(0)
     /** Whether the failure is one the provider settings can fix, rather than a network hiccup. */
     var needsKey by remember { mutableStateOf(false) }
     var promptMenuOpen by remember { mutableStateOf(false) }
 
-    fun run(forceLocal: Boolean) {
+    fun run() {
         val file = audio ?: return
         job?.cancel()
         error = null
         needsKey = false
-        val account = ImportTranscriber.accountFor(prefs, forceLocal)
+        val account = ImportTranscriber.accountFor(prefs)
         val preset = ImportTranscriber.presetFor(account)
         if (account.apiKey.isBlank() && preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
             // Checked before the file is touched: failing at the upload would say the same thing three
@@ -133,7 +135,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         status = context.getString(R.string.dictate__import_status_preparing)
         job = scope.launch {
             try {
-                val result = ImportTranscriber.transcribe(context, prefs, file, forceLocal) { done, total ->
+                val result = ImportTranscriber.transcribe(context, prefs, file) { done, total ->
                     status = if (total > 1) {
                         context.getString(R.string.dictate__import_status_part, done + 1, total)
                     } else {
@@ -144,7 +146,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                 original = ""
                 // Kept like every other dictation, so closing this screen does not lose the transcript.
                 withContext(Dispatchers.IO) {
-                    val account = ImportTranscriber.accountFor(prefs, forceLocal)
+                    val account = ImportTranscriber.accountFor(prefs)
                     val preset = ImportTranscriber.presetFor(account)
                     DictateHistoryStore.record(
                         context = context,
@@ -194,7 +196,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             // Snippets insert literal text and have nothing to say about a transcript.
             PromptsDatabaseHelper.getInstance(context).getAll().filter { it.snippetBody() == null }
         }
-        run(forceLocal = onDevice)
+        run()
     }
 
     fun applyPrompt(prompt: PromptModel) {
@@ -221,34 +223,27 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     }
 
     /*
-     * Fixed ends, one stretchy middle.
+     * Two arrangements out of the same four pieces.
      *
-     * The first version scrolled the whole page as one piece, so a long transcript pushed the
-     * buttons, the prompts and the finish button off the bottom — exactly the part you need once the
-     * text has arrived. Now the header and the footer stay put and the transcript takes whatever is
-     * left, scrolling inside its own frame.
+     * Portrait keeps the fixed ends and the stretchy middle: header, player, transcript, footer.
+     * Landscape has the opposite problem — barely any height, plenty of width — so the same pieces
+     * split into two columns and the transcript gets the full height instead of a strip.
      *
-     * safeDrawingPadding rather than nothing: targetSdk 36 means the system draws this edge to edge,
-     * and without it the header sits under the status bar.
+     * The pieces are composables rather than inline blocks precisely so there is one of each: two
+     * copies of a footer would be two places to forget a button.
+     *
+     * safeDrawingPadding rather than nothing: targetSdk 36 draws this edge to edge, and without it
+     * the header sits under the status bar.
      */
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .safeDrawingPadding()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-    ) {
-        Header(info, onDevice, localAvailable, skipped, onLocalChange = {
-            onDevice = it
-            run(forceLocal = it)
-        })
+    val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-        audio?.let { file ->
-            Spacer(Modifier.height(4.dp))
-            AudioPlaybackRow(path = file.absolutePath)
-        }
-
-        // ---- the stretchy middle -------------------------------------------------------------
-        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+    val header = @Composable { Header(info, skipped) }
+    val player = @Composable {
+        audio?.let { file -> AudioPlaybackRow(path = file.absolutePath) }
+        Unit
+    }
+    val middle = @Composable { modifier: Modifier ->
+        Box(modifier) {
             when {
                 busy && text.isEmpty() -> Column(
                     modifier = Modifier.fillMaxSize(),
@@ -279,7 +274,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                     )
                     Spacer(Modifier.height(12.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = { run(forceLocal = onDevice) }) {
+                        OutlinedButton(onClick = { run() }) {
                             Text(stringRes(R.string.dictate__import_retry))
                         }
                         // A missing key is the one error the user can act on from here, and being
@@ -293,9 +288,10 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                 }
             }
         }
-
-        // A rewording that is still running over an existing transcript: said in one line rather than
-        // taking the whole middle away from the text it is about to replace.
+    }
+    // A rewording running over a transcript that is already on screen: one line, rather than taking
+    // the middle away from the text it is about to replace.
+    val working = @Composable {
         if (busy && text.isNotEmpty()) {
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -313,95 +309,153 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                 }
             }
         }
+    }
+    val footer = @Composable {
+        Footer(
+            hasText = text.isNotEmpty(),
+            busy = busy,
+            labelled = landscape,
+            prompts = prompts.value,
+            canRevert = original.isNotEmpty(),
+            menuOpen = promptMenuOpen,
+            onMenu = { promptMenuOpen = it },
+            onCopy = { copyToClipboard(context, text) },
+            onShare = { shareText(context, text) },
+            onRetry = { run() },
+            onPrompt = { applyPrompt(it) },
+            onRevert = { text = original; original = "" },
+            onDone = { job?.cancel(); onClose() },
+        )
+    }
 
-        // ---- the fixed footer ----------------------------------------------------------------
-        if (text.isNotEmpty()) {
-            Spacer(Modifier.height(10.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Button(onClick = { copyToClipboard(context, text) }) {
-                    Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.size(8.dp))
-                    Text(stringRes(R.string.dictate__history_copy))
-                }
-                OutlinedButton(onClick = { shareText(context, text) }) {
-                    Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
-                }
-                OutlinedButton(onClick = { run(forceLocal = onDevice) }, enabled = !busy) {
-                    Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(18.dp))
-                }
-            }
-            Spacer(Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (prompts.value.isNotEmpty()) {
-                    // One button and a menu instead of a scrolling row of chips: the row cost a
-                    // heading and a whole line of height, and ran off both edges of the screen.
-                    Box {
-                        OutlinedButton(onClick = { promptMenuOpen = true }, enabled = !busy) {
-                            Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.size(8.dp))
-                            Text(stringRes(R.string.dictate__import_prompt_button))
-                        }
-                        DropdownMenu(expanded = promptMenuOpen, onDismissRequest = { promptMenuOpen = false }) {
-                            for (prompt in prompts.value) {
-                                DropdownMenuItem(
-                                    text = { Text(prompt.name.orEmpty()) },
-                                    onClick = {
-                                        promptMenuOpen = false
-                                        applyPrompt(prompt)
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-                // Only the reworded text is shown, so the transcript would otherwise be gone for good:
-                // a second transcription costs another upload and need not return the same words.
-                if (original.isNotEmpty()) {
-                    TextButton(onClick = { text = original; original = "" }, enabled = !busy) {
-                        Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.size(8.dp))
-                        Text(stringRes(R.string.dictate__import_revert))
-                    }
-                }
+    val root = Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp, vertical = 12.dp)
+    if (landscape) {
+        Row(root, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(Modifier.weight(2f).fillMaxHeight()) {
+                header()
+                player()
                 Spacer(Modifier.weight(1f))
-                Button(onClick = { job?.cancel(); onClose() }) {
-                    Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.size(8.dp))
-                    Text(stringRes(R.string.action__done))
-                }
+                working()
+                footer()
             }
-        } else {
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                TextButton(onClick = { job?.cancel(); onClose() }) {
-                    Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.size(8.dp))
-                    Text(stringRes(R.string.action__done))
-                }
-            }
+            middle(Modifier.weight(3f).fillMaxHeight())
+        }
+    } else {
+        Column(root) {
+            header()
+            player()
+            middle(Modifier.weight(1f).fillMaxWidth())
+            working()
+            footer()
         }
     }
 }
 
+/**
+ * The one row of actions.
+ *
+ * Copy is the only filled button, so it is the only thing wearing the accent: on a screen whose whole
+ * point is a piece of text, taking that text is the action, and the others are alternatives to it.
+ * The rest are icons in portrait — five labelled buttons do not fit across a phone — and regain their
+ * labels in landscape, where the width is there anyway. Undo lives in the prompt menu rather than
+ * being a sixth control: it belongs to the rewording that put it there.
+ */
 @Composable
-private fun Header(
-    info: SharedFileInfo?,
-    onDevice: Boolean,
-    localAvailable: Boolean,
-    skipped: Int,
-    onLocalChange: (Boolean) -> Unit,
+private fun Footer(
+    hasText: Boolean,
+    busy: Boolean,
+    labelled: Boolean,
+    prompts: List<PromptModel>,
+    canRevert: Boolean,
+    menuOpen: Boolean,
+    onMenu: (Boolean) -> Unit,
+    onCopy: () -> Unit,
+    onShare: () -> Unit,
+    onRetry: () -> Unit,
+    onPrompt: (PromptModel) -> Unit,
+    onRevert: () -> Unit,
+    onDone: () -> Unit,
 ) {
+    val done = @Composable {
+        OutlinedButton(onClick = onDone) {
+            Icon(Icons.Default.Check, contentDescription = stringRes(R.string.action__done), modifier = Modifier.size(18.dp))
+            if (labelled) {
+                Spacer(Modifier.size(8.dp))
+                Text(stringRes(R.string.action__done))
+            }
+        }
+    }
+    if (!hasText) {
+        Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp), contentAlignment = Alignment.CenterEnd) { done() }
+        return
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Button(onClick = onCopy) {
+            Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.size(8.dp))
+            Text(stringRes(R.string.dictate__history_copy))
+        }
+        OutlinedButton(onClick = onShare) {
+            Icon(Icons.Default.Share, contentDescription = stringRes(R.string.dictate__stats_share), modifier = Modifier.size(18.dp))
+            if (labelled) {
+                Spacer(Modifier.size(8.dp))
+                Text(stringRes(R.string.dictate__stats_share))
+            }
+        }
+        OutlinedButton(onClick = onRetry, enabled = !busy) {
+            Icon(Icons.Default.Refresh, contentDescription = stringRes(R.string.dictate__import_retry), modifier = Modifier.size(18.dp))
+            if (labelled) {
+                Spacer(Modifier.size(8.dp))
+                Text(stringRes(R.string.dictate__import_retry))
+            }
+        }
+        if (prompts.isNotEmpty()) {
+            Box {
+                OutlinedButton(onClick = { onMenu(true) }, enabled = !busy) {
+                    Icon(
+                        Icons.Default.AutoAwesome,
+                        contentDescription = stringRes(R.string.dictate__import_prompt_button),
+                        modifier = Modifier.size(18.dp),
+                    )
+                    if (labelled) {
+                        Spacer(Modifier.size(8.dp))
+                        Text(stringRes(R.string.dictate__import_prompt_button))
+                    }
+                }
+                DropdownMenu(expanded = menuOpen, onDismissRequest = { onMenu(false) }) {
+                    // Undo first and set apart: it is the way back out of the last thing chosen here.
+                    if (canRevert) {
+                        DropdownMenuItem(
+                            text = { Text(stringRes(R.string.dictate__import_revert)) },
+                            leadingIcon = { Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = null) },
+                            onClick = { onMenu(false); onRevert() },
+                        )
+                        HorizontalDivider()
+                    }
+                    for (prompt in prompts) {
+                        DropdownMenuItem(
+                            text = { Text(prompt.name.orEmpty()) },
+                            onClick = { onMenu(false); onPrompt(prompt) },
+                        )
+                    }
+                }
+            }
+        }
+        Spacer(Modifier.weight(1f))
+        done()
+    }
+}
+
+@Composable
+private fun Header(info: SharedFileInfo?, skipped: Int) {
     val context = LocalContext.current
     val prefs by FlorisPreferenceStore
-    val providerName = remember(onDevice) {
-        val account = ImportTranscriber.accountFor(prefs, forceLocal = onDevice)
+    val providerName = remember {
+        val account = ImportTranscriber.accountFor(prefs)
         account.displayName.ifBlank { ImportTranscriber.presetFor(account).displayName }
     }
     Card(modifier = Modifier.fillMaxWidth()) {
@@ -429,20 +483,6 @@ private fun Header(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-            }
-            if (localAvailable) {
-                Spacer(Modifier.height(12.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text(stringRes(R.string.dictate__import_on_device), style = MaterialTheme.typography.bodyMedium)
-                        Text(
-                            text = stringRes(R.string.dictate__import_on_device_summary),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Switch(checked = onDevice, onCheckedChange = onLocalChange)
-                }
             }
         }
     }

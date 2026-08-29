@@ -1391,8 +1391,6 @@
     <string name="dictate__import_retry">Torna-ho a provar</string>
     <string name="dictate__import_no_file">No s\'ha compartit cap fitxer d\'àudio.</string>
     <string name="dictate__import_only_first">Només es transcriu el primer fitxer: se n\'han omès {count} més.</string>
-    <string name="dictate__import_on_device">Transcriu en aquest dispositiu</string>
-    <string name="dictate__import_on_device_summary">No es puja res i no s\'aplica cap límit de mida.</string>
     <string name="dictate__setup_description">Configura el teu proveïdor d\'IA i la clau d\'API per començar a dictar amb el micròfon.</string>
     <string name="dictate__setup_configure_btn">Configura el Dictate</string>
     <string name="setup__grant_mic_permission__title">Accés al micròfon</string>

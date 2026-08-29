@@ -270,13 +270,21 @@
              the reverse — you are in Signal holding the audio and want to know what it says, with no
              text field anywhere in sight. Hence a screen rather than a commit, and hence its own
              label: a second entry reading just "Dictate" would be a riddle (the lesson of #280).
-             ACTION_VIEW as well, so "Open with → Dictate" works from any file manager. -->
+             ACTION_VIEW as well, so "Open with → Dictate" works from any file manager.
+
+             configChanges is not a shortcut here, it is the fix: without it a rotation tears the
+             activity down, every remember is gone, and the startup effect runs again with a freshly
+             built uri list as its key — a second upload, paid for, replacing a transcript that was
+             already finished, after the copy step has wiped its own cache dir. Handling the change
+             keeps the composition, the running job and the playback position; LocalConfiguration
+             still updates, so the landscape layout switches as it should. -->
         <activity
             android:name="dev.patrickgold.florisboard.dictate.importer.TranscribeShareActivity"
             android:label="@string/dictate__import_share_label"
             android:theme="@style/FlorisAppTheme"
             android:excludeFromRecents="true"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
                 <action android:name="android.intent.action.SEND_MULTIPLE"/>

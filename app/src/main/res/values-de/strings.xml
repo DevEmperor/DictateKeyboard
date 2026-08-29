@@ -1452,8 +1452,6 @@
     <string name="dictate__import_retry">Erneut versuchen</string>
     <string name="dictate__import_no_file">Es wurde keine Audiodatei geteilt.</string>
     <string name="dictate__import_only_first">Nur die erste Datei wird transkribiert – {count} weitere wurden ausgelassen.</string>
-    <string name="dictate__import_on_device">Auf diesem Gerät transkribieren</string>
-    <string name="dictate__import_on_device_summary">Nichts wird hochgeladen, und es gilt kein Größenlimit.</string>
     <string name="dictate__setup_description">Richte deinen KI-Anbieter und API-Schlüssel ein, damit du mit dem Mikrofon diktieren kannst.</string>
     <string name="dictate__setup_configure_btn">Dictate einrichten</string>
     <string name="setup__grant_mic_permission__title">Mikrofonzugriff</string>
