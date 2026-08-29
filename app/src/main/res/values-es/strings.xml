@@ -1668,7 +1668,7 @@
     <string name="pref__suggestion__next_word_prediction__label">Sugerencias de palabra siguiente</string>
     <string name="pref__suggestion__next_word_prediction__summary">Sugiere palabras probables cuando terminas una palabra</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignorar las aplicaciones que desactivan las sugerencias</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Algunas aplicaciones piden al teclado que oculte las sugerencias y la autocorrección. Mostrarlas de todos modos — nunca en campos de contraseña</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Mostrarlas de todos modos, excepto en campos de contraseña</string>
     <string name="suggestion__added_to_dictionary">Se añadió \"{word}\" a tu diccionario</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" ya está en tu diccionario</string>
     <string name="dictate__legacy_record">Grabar</string>

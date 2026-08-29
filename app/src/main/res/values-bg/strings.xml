@@ -1687,7 +1687,7 @@
     <string name="pref__suggestion__next_word_prediction__label">Предложения за следваща дума</string>
     <string name="pref__suggestion__next_word_prediction__summary">Предлага вероятни следващи думи, след като завършите дума</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">Пренебрегване на приложения, които изключват предложенията</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Някои приложения искат клавиатурата да скрие предложенията и автоматичната корекция. Показвайте ги въпреки това — но никога в полета за парола</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Показвайте ги въпреки това, освен в полета за парола</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" е добавена в речника ви</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" вече е в речника ви</string>
     <string name="dictate__legacy_record">Запис</string>

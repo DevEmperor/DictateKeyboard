@@ -1681,7 +1681,7 @@
     <string name="pref__suggestion__next_word_prediction__label">下一个词建议</string>
     <string name="pref__suggestion__next_word_prediction__summary">输入完一个词后建议可能的下一个词</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">忽略关闭候选词的应用</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">有些应用会要求键盘隐藏候选词和自动更正。仍然显示它们——密码框中始终不显示</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">仍然显示，密码框除外</string>
     <string name="suggestion__added_to_dictionary">已将“{word}”添加到词典</string>
     <string name="suggestion__already_in_dictionary">“{word}”已在词典中</string>
     <string name="dictate__legacy_record">录音</string>

@@ -1702,7 +1702,7 @@
     <string name="pref__suggestion__next_word_prediction__label">Podpowiedzi następnego słowa</string>
     <string name="pref__suggestion__next_word_prediction__summary">Proponuje prawdopodobne następne słowa po zakończeniu słowa</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">Ignoruj aplikacje wyłączające podpowiedzi</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Niektóre aplikacje proszą klawiaturę o ukrycie podpowiedzi i autokorekty. Pokazuj je mimo to — nigdy w polach haseł</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Pokazuj je mimo to, poza polami haseł</string>
     <string name="suggestion__added_to_dictionary">Dodano \"{word}\" do słownika</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" jest już w słowniku</string>
     <string name="dictate__legacy_record">Nagrywaj</string>

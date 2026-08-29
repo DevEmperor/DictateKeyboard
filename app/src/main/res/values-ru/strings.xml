@@ -1690,7 +1690,7 @@
     <string name="pref__suggestion__next_word_prediction__label">Подсказки следующего слова</string>
     <string name="pref__suggestion__next_word_prediction__summary">Предлагает вероятные следующие слова после завершения слова</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">Игнорировать приложения, отключающие подсказки</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Некоторые приложения просят клавиатуру скрыть подсказки и автозамену. Показывать их всё равно — но никогда в полях пароля</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Показывать их всё равно, кроме полей пароля</string>
     <string name="suggestion__added_to_dictionary">\"{word}\" добавлено в ваш словарь</string>
     <string name="suggestion__already_in_dictionary">\"{word}\" уже есть в вашем словаре</string>
     <string name="dictate__legacy_record">Запись</string>

@@ -1685,7 +1685,7 @@
     <string name="pref__suggestion__next_word_prediction__label">Következő szó javaslatok</string>
     <string name="pref__suggestion__next_word_prediction__summary">Valószínű következő szavakat javasol, ha befejezett egy szót</string>
     <string name="pref__suggestion__ignore_app_suggestion_block__label">A javaslatokat kikapcsoló alkalmazások figyelmen kívül hagyása</string>
-    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Egyes alkalmazások arra kérik a billentyűzetet, hogy rejtse el a javaslatokat és az automatikus javítást. Jelenjenek meg mégis — jelszómezőkben soha</string>
+    <string name="pref__suggestion__ignore_app_suggestion_block__summary">Jelenjenek meg mégis, a jelszómezők kivételével</string>
     <string name="suggestion__added_to_dictionary">A(z) \"{word}\" hozzáadva a szótárhoz</string>
     <string name="suggestion__already_in_dictionary">A(z) \"{word}\" már a szótárban van</string>
     <string name="dictate__legacy_record">Felvétel</string>
