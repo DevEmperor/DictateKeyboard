@@ -2735,63 +2735,24 @@ var GRAPH = ${GRAPH_JSON};
   /* ------------------------------------------------------------------ Himmel */
 
   /*
-   * The flow of colour behind the page.
+   * The fog behind the page.
    *
-   * A field of curls, and about ninety motes carried along it leaving trails.
+   * Five soft banks of colour, each drifting on its own small orbit and each fading slowly between
+   * the accent blue and a violet, so the two run into one another instead of sitting side by side.
+   * Nothing has an edge, which is the point: the earlier flow field was drawn with one-pixel
+   * strokes, and a one-pixel stroke is the one thing that cannot survive being stretched twelvefold.
    *
-   * Two versions of this in CSS pegged a GPU, and the number that decided it was never which
-   * property was animated but how many pixels were involved: a full-screen layer on a large display
-   * is millions of them, every frame, whether they arrived by scaling, by sliding a tiled gradient
-   * past itself, or by sitting still in triplicate.
+   * Same arithmetic as every version of this: it is drawn at 200 by about 125 and stretched over
+   * the window, so the work is proportional to twenty-five thousand pixels rather than to the
+   * several million a full-screen layer would cost. Two attempts at that in CSS pegged a GPU.
    *
-   * So the field is drawn at about 160 by 100 — fourteen thousand pixels, a fraction of a percent
-   * of the window — and the browser stretches that over the viewport. The stretch is one textured
-   * quad, the cheapest thing a compositor does, and the bilinear filtering of a twentyfold upscale
-   * is where the soft edges come from: no blur filter, and no banding, because there is not enough
-   * resolution left to band.
+   * Each bank keeps its own quarter of the canvas and only orbits inside it. Letting them all
+   * circle the centre — which is what the first draft did — leaves half the window empty and piles
+   * the rest into one bright lump.
    *
-   * The direction at any point comes from Perlin noise, so neighbouring motes turn together and the
-   * whole thing reads as a current rather than as drift. The field also turns very slowly on its
-   * own, which is what keeps it from settling into a pattern.
-   *
-   * Trails are made by fading the canvas towards the page colour instead of clearing it — nine
-   * hundredths per frame, so a stroke is gone in about a second. That fade is the only full-canvas
-   * operation here, and it covers fourteen thousand pixels.
+   * Rendered offline before shipping, at the size it is actually seen: blue and violet legible,
+   * whole surface covered, nothing saturating.
    */
-
-  /*
-   * Classic 2D Perlin noise, seeded so the field is the same on every load rather than different
-   * every time — a background that is subtly new on each refresh is a background you keep noticing.
-   */
-  function fieldNoise(seed) {
-    var perm = [], i, s = seed >>> 0, j, tmp;
-    for (i = 0; i < 256; i++) perm.push(i);
-    for (i = 255; i > 0; i--) {
-      s = (s * 1664525 + 1013904223) >>> 0;
-      j = s % (i + 1);
-      tmp = perm[i]; perm[i] = perm[j]; perm[j] = tmp;
-    }
-    var p = new Uint8Array(512);
-    for (i = 0; i < 512; i++) p[i] = perm[i & 255];
-    function ease(t) { return t * t * (3 - 2 * t); }
-    function mix(t, a, b) { return a + t * (b - a); }
-    // Eight directions rather than the usual twelve: at this resolution nothing can tell, and the
-    // branchless form is shorter than the table it would replace.
-    function slope(hash, x, y) {
-      var h = hash & 7, u = h < 4 ? x : y, v = h < 4 ? y : x;
-      return ((h & 1) ? -u : u) + ((h & 2) ? -2 * v : 2 * v);
-    }
-    return function (x, y) {
-      var X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
-      x -= Math.floor(x); y -= Math.floor(y);
-      var u = ease(x), v = ease(y);
-      var A = p[X] + Y, B = p[X + 1] + Y;
-      return mix(v,
-        mix(u, slope(p[A], x, y), slope(p[B], x - 1, y)),
-        mix(u, slope(p[A + 1], x, y - 1), slope(p[B + 1], x - 1, y - 1)));
-    };
-  }
-
   function startSky() {
     var canvas = $('sky');
     var bar = $('skyBar');
@@ -2803,105 +2764,82 @@ var GRAPH = ${GRAPH_JSON};
     var ctx = canvas.getContext('2d');
     var barCtx = bar && bar.getContext ? bar.getContext('2d') : null;
     var still = motionOff;
-    var noise = fieldNoise(20260829);
 
+    var BLUE = [48, 183, 230];      // --accent
+    var VIOLET = [169, 154, 240];   // --z-openai
     /*
-     * Drawn over rather than added.
-     *
-     * Additive blending is the obvious choice for lights on a dark ground, and it is wrong here: a
-     * flow field gathers its motes onto a handful of attractor curves, and anything that adds turns
-     * exactly those — the visible ones — into white. Painting over means a repeatedly struck pixel
-     * converges on the colour of the stroke instead of past it, so the currents stay blue and
-     * violet however often they are drawn.
+     * home x/y, orbit x/y, the two periods that carry it, and the period on which its colour
+     * crosses from one to the other. All of them awkward numbers with no common factor, so the
+     * arrangement does not come back round: the shortest pair here repeats after about six hours.
      */
-    var INK = [
-      'rgba(86,205,244,.13)', 'rgba(48,183,230,.09)', 'rgba(186,172,250,.12)',
-      'rgba(169,154,240,.08)', 'rgba(120,215,150,.07)', 'rgba(248,178,100,.055)',
+    var BANKS = [
+      { from: BLUE,   to: VIOLET, a: .24, r: .58, hx: .20, hy: .24, ox: .19, oy: .21, px: 23, py: 31, pc: 37 },
+      { from: VIOLET, to: BLUE,   a: .21, r: .54, hx: .80, hy: .28, ox: .18, oy: .23, px: 29, py: 19, pc: 43 },
+      { from: BLUE,   to: VIOLET, a: .19, r: .52, hx: .50, hy: .86, ox: .23, oy: .17, px: 17, py: 37, pc: 29 },
+      { from: VIOLET, to: BLUE,   a: .16, r: .46, hx: .90, hy: .80, ox: .17, oy: .21, px: 41, py: 23, pc: 53 },
+      { from: BLUE,   to: VIOLET, a: .15, r: .48, hx: .08, hy: .82, ox: .21, oy: .19, px: 19, py: 43, pc: 31 },
     ];
 
-    var w = 0, h = 0, bands = [], last = -1e9, frame = 0;
+    var w = 0, h = 0, last = -1e9, frame = 0, shownAt = 11;
 
-    // The backing store follows the window's proportions so the current is not stretched, but never
-    // grows past a couple of hundred pixels on a side. That ceiling is the reason this is cheap and
-    // it must not quietly rise.
+    // The backing store follows the window's proportions so the banks stay round rather than
+    // stretched, but never grows past a few hundred pixels on a side. That ceiling is the reason
+    // this is cheap and it must not quietly rise.
     function skyMeasure() {
       var vw = window.innerWidth || 1, vh = window.innerHeight || 1;
-      w = 160;
-      h = Math.max(80, Math.min(260, Math.round(160 * vh / vw)));
+      w = 200;
+      h = Math.max(100, Math.min(320, Math.round(200 * vh / vw)));
       canvas.width = w; canvas.height = h;
       if (bar) { bar.width = w; bar.height = h; }
-      ctx.fillStyle = '#0B0F14';
-      ctx.fillRect(0, 0, w, h);
-      skySeed();
+      // Setting width wipes the canvas, so it has to be repainted at once rather than left blank
+      // until the next frame — and under reduced motion there is no next frame at all.
+      skyPaint(shownAt);
     }
 
-    function place(m) {
-      m.x = Math.random() * w;
-      m.y = Math.random() * h;
-      // Staggered ages, so they do not all expire on the same frame and thin out together.
-      m.age = Math.random() * 170;
-    }
-
-    /*
-     * Motes are kept in one band per colour, and a band is drawn as a single path.
-     *
-     * Six hundred separate stroke calls a frame is twelve thousand a second, and the per-path
-     * overhead — not the pixels — would be the whole cost of this. Six are nothing.
-     */
-    function skySeed() {
-      bands = INK.map(function (ink) { return { ink: ink, motes: [] }; });
-      var count = Math.round(w * h / 26);
-      for (var i = 0; i < count; i++) {
-        var m = {};
-        place(m);
-        bands[i % bands.length].motes.push(m);
-      }
+    function ink(from, to, t, alpha) {
+      var m = 0.5 + 0.5 * Math.sin(t);
+      return 'rgba(' + Math.round(from[0] + (to[0] - from[0]) * m) + ',' +
+        Math.round(from[1] + (to[1] - from[1]) * m) + ',' +
+        Math.round(from[2] + (to[2] - from[2]) * m) + ',' + alpha + ')';
     }
 
     function skyPaint(t) {
-      // Fading towards the page colour rather than clearing is what leaves the trails: a stroke is
-      // gone in about a second, which is long enough to read as a current and short enough that an
-      // eddy cannot burn a bright spot into the picture.
+      shownAt = t;
       ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = 'rgba(11,15,20,.045)';
+      ctx.fillStyle = '#0B0F14';
       ctx.fillRect(0, 0, w, h);
-      ctx.lineWidth = 0.9;
-      ctx.lineCap = 'round';
-      for (var b = 0; b < bands.length; b++) {
-        var band = bands[b];
-        ctx.beginPath();
-        for (var i = 0; i < band.motes.length; i++) {
-          var m = band.motes[i];
-          /*
-           * Two octaves for the shape of the current, a slow drift of the sampling point so the
-           * field itself travels, a slow turn added on top so it never settles, and a little
-           * jitter per mote so neighbours do not trace one line on top of each other.
-           */
-          var a = (noise(m.x * 0.017 + t * 0.009, m.y * 0.017 - t * 0.006) +
-                   0.45 * noise(m.x * 0.046 - t * 0.011, m.y * 0.046 + t * 0.008)) * Math.PI * 2.6 +
-                  t * 0.04 + (Math.random() - 0.5) * 0.5;
-          var nx = m.x + Math.cos(a) * 0.5;
-          var ny = m.y + Math.sin(a) * 0.5;
-          ctx.moveTo(m.x, m.y);
-          ctx.lineTo(nx, ny);
-          m.x = nx; m.y = ny;
-          // Retired on age as well as on leaving, so the field keeps turning over instead of
-          // draining into whichever eddies happen to hold on.
-          if (++m.age > 170 || nx < -2 || ny < -2 || nx > w + 2 || ny > h + 2) place(m);
-        }
-        ctx.strokeStyle = band.ink;
-        ctx.stroke();
+      // Added rather than painted over, so where two banks meet the colours mix into a third
+      // instead of one hiding the other. Safe here in a way it was not for the flow field: these
+      // are wide and faint, and five of them at these alphas cannot reach white.
+      ctx.globalCompositeOperation = 'lighter';
+      var reach = Math.max(w, h);
+      for (var i = 0; i < BANKS.length; i++) {
+        var b = BANKS[i];
+        var x = (b.hx + b.ox * Math.sin(t / b.px)) * w;
+        var y = (b.hy + b.oy * Math.cos(t / b.py)) * h;
+        var r = b.r * reach * (1 + 0.15 * Math.sin(t / (b.px * 1.6)));
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        // The middle stop is what makes it a fog rather than a lamp: a plain two-stop gradient
+        // falls off in a straight line and reads as a disc with a soft edge.
+        g.addColorStop(0, ink(b.from, b.to, t / b.pc, b.a));
+        g.addColorStop(0.45, ink(b.from, b.to, t / b.pc, b.a * 0.34));
+        g.addColorStop(1, ink(b.from, b.to, t / b.pc, 0));
+        ctx.fillStyle = g;
+        // Only the square the bank actually reaches, not the whole canvas: five full-canvas fills
+        // a frame would be five times the pixels for no visible difference.
+        ctx.fillRect(Math.max(0, x - r), Math.max(0, y - r), Math.min(w, 2 * r), Math.min(h, 2 * r));
       }
-      // The header shows the same image, not a second rendering of it: one copy of fourteen
+      // The header shows the same image, not a second rendering of it: one copy of twenty-five
       // thousand pixels, which is also what keeps the two exactly in step.
       if (barCtx) barCtx.drawImage(canvas, 0, 0);
     }
 
-    // Twenty pictures a second. The trails are what needs the rate — at twelve they step visibly —
-    // and twenty of fourteen thousand pixels is still less work than one of a full screen.
+    // Sixteen pictures a second. A fog has no edge to judge a frame rate by — what moves between
+    // one picture and the next is a soft gradient shifting a fraction of a canvas pixel — so the
+    // rate buys nothing above this, and every frame not drawn is twenty-five thousand pixels saved.
     function skyTick(ms) {
       frame = requestAnimationFrame(skyTick);
-      if (ms - last < 50) return;
+      if (ms - last < 62) return;
       last = ms;
       skyPaint(ms / 1000);
     }
@@ -2916,13 +2854,9 @@ var GRAPH = ${GRAPH_JSON};
     }
 
     skyMeasure();
-    if (still) {
-      // Where motion is unwelcome the field is still worth having: it is run for a few hundred
-      // steps once, which draws the same picture, and then left alone as a still image.
-      for (var k = 0; k < 600; k++) skyPaint(k / 20);
-    } else {
-      skyRun();
-    }
+    // One picture either way; where motion is unwelcome that is the end of it. Unlike a field of
+    // trails, a fog needs no warming up — any single moment of it is the whole thing.
+    skyRun();
     // Nothing is drawn for a tab nobody is looking at. A dashboard is left open all day, and this
     // is the difference between a background that costs nothing and one that costs nothing visible.
     document.addEventListener('visibilitychange', function () {
