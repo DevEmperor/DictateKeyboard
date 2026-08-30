@@ -536,21 +536,44 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * kept: the point is to take back a word that was changed for you, not to undo your own keystroke.
      * A second backspace then deletes normally, because this only ever fires once.
      */
+    /**
+     * The boundary character standing after [correction]'s word, "" when there is none, or null when
+     * the editor no longer ends in the corrected word at all and nothing may be assumed about it.
+     *
+     * A correction is written as `word` on the punctuation path and as `word ` on the space path, and
+     * the cached text before the cursor is capped, so only the tail is compared — the same reasoning as
+     * in [undoSnippetExpansion].
+     */
+    private fun boundaryAfter(correction: AutoCorrection): String? {
+        val content = editorInstance.activeContent
+        if (content.selection.isSelectionMode) return null
+        val before = content.textBeforeSelection
+        val tail = correction.inserted.takeLast(TAIL_MATCH_LENGTH)
+        return when {
+            before.endsWith(tail) -> ""
+            before.length > correction.inserted.length && before.dropLast(1).endsWith(tail) -> before.takeLast(1)
+            else -> null
+        }
+    }
+
+    /**
+     * Marks the word a correction just wrote, now that the space or punctuation that triggered it has
+     * been written too (issue #295). Before that moment there is nothing to mark: the boundary is
+     * committed in the same key event, and committing ends the composing region the mark rides on.
+     */
+    private fun flashAutoCorrection() {
+        val correction = pendingAutoCorrection ?: return
+        val boundary = boundaryAfter(correction) ?: return
+        editorInstance.flashTextBeforeCursor(
+            length = correction.inserted.length + boundary.length,
+            color = editorInstance.correctionFlashColor(),
+        )
+    }
+
     private fun undoAutoCorrection(): Boolean {
         val correction = pendingAutoCorrection ?: return false
         pendingAutoCorrection = null
-        val content = editorInstance.activeContent
-        if (content.selection.isSelectionMode) return false
-        val before = content.textBeforeSelection
-        // Written as `word` on the punctuation path and as `word ` on the space path, and the cached
-        // text before the cursor is capped, so only the tail is compared — the same reasoning as in
-        // [undoSnippetExpansion].
-        val boundary = when {
-            before.endsWith(correction.inserted.takeLast(TAIL_MATCH_LENGTH)) -> ""
-            before.length > correction.inserted.length &&
-                before.dropLast(1).endsWith(correction.inserted.takeLast(TAIL_MATCH_LENGTH)) -> before.takeLast(1)
-            else -> return false
-        }
+        val boundary = boundaryAfter(correction) ?: return false
         editorInstance.replaceTextBeforeCursor(
             correction.inserted.length + boundary.length,
             correction.replaced + boundary,
@@ -802,6 +825,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
+        flashAutoCorrection()
     }
 
     /**
@@ -840,6 +864,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
+        flashAutoCorrection()
     }
 
     /**
@@ -1208,6 +1233,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                     // Punctuation ends the word — drop the tap evidence (issue #242).
                                     TouchTrace.reset()
                                     editorInstance.commitChar(text)
+                                    flashAutoCorrection()
                                 }
                             } else {
                                 TouchTrace.commit(text)

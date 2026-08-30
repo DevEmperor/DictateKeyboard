@@ -21,6 +21,7 @@ import android.net.Uri
 import android.content.ContentUris
 import android.content.Context
 import android.view.KeyEvent
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.FileProvider
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -355,6 +356,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (!completionReplacementRange(content.composing, content.currentWord).isValid) return ""
         return if (content.composing.isValid) content.composingText else content.currentWordText
     }
+
+    /** The colour an auto-corrected word is marked with for a moment (issue #295). */
+    fun correctionFlashColor(): Int = prefs.theme.accentColor.get().copy(alpha = 0.4f).toArgb()
 
     fun commitCompletion(candidate: SuggestionCandidate): Boolean {
         val text = candidate.text.toString()
