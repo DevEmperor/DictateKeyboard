@@ -185,7 +185,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     // frequent words first and stop early. Built lazily from the word data and cached.
     private val rankedWordsByLang = guardedByLock { mutableMapOf<String, List<String>>() }
 
-    // Fold keys aligned with rankedWordsByLang, for the languages where the two differ (issue #265).
+    // Fold keys aligned with rankedWordsByLang, for languages whose lookup spelling differs (issue #265).
     private val rankedFoldKeysByLang = guardedByLock { mutableMapOf<String, List<String>>() }
 
     // Languages that ship a bundled ime/dict/<lang>.json (currently just English), listed once.
@@ -300,9 +300,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             appContext.assets.readText("ime/dict/${lang}_bigrams.txt")
         }
         val map = HashMap<String, Long>(45_000)
-        // The file stores "w1 w2" lowercased; the lookup happens in fold space, so an Arabic-script
-        // language has to fold the key too or no pair would ever match. Folding the whole key at once is
-        // safe — the fold passes the separating space through untouched.
+        // The file stores "w1 w2" lowercased; the lookup happens in fold space, so a language with
+        // non-trivial folding has to fold the key too or no pair would ever match. Folding the whole key
+        // at once is safe — each fold passes the separating space through untouched.
         val folds = DictFold.hasNonTrivialFold(lang)
         text.lineSequence().forEach { line ->
             val tab = line.indexOf('\t')
@@ -348,9 +348,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * a plain lowercase and prefix matching can compare the words directly.
      *
      * Prefix completion is the one place that works on the *stored* spellings rather than the folded index,
-     * so an Arabic writer typing ان would otherwise get no completions at all — أنا and أنت do not start
-     * with what they typed. Precomputed once per language because folding 79,000 words on every keystroke
-     * is not an option.
+     * so an Arabic writer typing ان or a French writer typing ho would otherwise miss أنا and hôte.
+     * Precomputed once per language because folding 79,000 words on every keystroke is not an option.
      */
     private suspend fun rankedFoldKeysFor(subtype: Subtype, ranked: List<String>): List<String>? {
         val lang = dictLangFor(subtype)?.takeIf { DictFold.hasNonTrivialFold(it) } ?: return null
@@ -448,9 +447,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 val freq = HashMap<String, Int>(data.size)
                 val canonical = HashMap<String, String>(data.size)
                 val alphabet = HashSet<Char>()
-                // Only collected where the fold actually merges spellings, so nothing is paid for the
-                // languages where every key has exactly one form anyway.
-                val forms = if (DictFold.hasNonTrivialFold(lang)) HashMap<String, MutableList<String>>() else null
+                // Only Arabic restores an alternate spelling as a dedicated suggestion. French uses its
+                // fold for prefix matching, but needs neither this large surface-form index nor autocorrect.
+                val forms = if (DictFold.hasRestorationVariants(lang)) HashMap<String, MutableList<String>>() else null
                 for ((word, f) in data) {
                     val key = DictFold.foldKey(lang, word)
                     if ((freq[key] ?: -1) < f) {
@@ -916,7 +915,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // is a recognisable word with a preferred spelling, not a mistake.
         // Length 2 rather than the 3 the German and apostrophe blocks use: Arabic's most-written words are
         // two letters (من، في، ما), and فى → في is exactly the fix being asked for.
-        if (DictFold.hasNonTrivialFold(index.lang) && word.length >= 2) {
+        if (DictFold.hasRestorationVariants(index.lang) && word.length >= 2) {
             val key = index.fold(word)
             val forms = index.formsOf(key)
             if (forms.isNotEmpty() && forms.none { it == word }) {
@@ -1028,7 +1027,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             dm.queryUserDictionary(word, subtype.primaryLocale)
         }.getOrNull().orEmpty()
             .map { it.text.toString() }
-            .filter { it.startsWith(word, ignoreCase = true) }
+            .filter { index.fold(it).startsWith(index.fold(word)) }
             .distinctBy { it.lowercase() }
         var personalTaken = 0
 
@@ -1048,9 +1047,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
 
         val data = wordDataFor(subtype)
-        // Prefix matching happens on the stored spellings, so an Arabic writer typing ان would find
-        // nothing — أنا does not start with it. Where the fold merges spellings, compare the precomputed
-        // fold keys instead; everywhere else this is the same comparison it always was.
+        // Prefix matching happens on the stored spellings, so an Arabic writer typing ان or a French
+        // writer typing ho would miss أنا and hôte. Where the fold changes the lookup spelling, compare
+        // the precomputed fold keys instead; everywhere else this is the same comparison it always was.
         val ranked = rankedWordsFor(subtype)
         val rankedKeys = rankedFoldKeysFor(subtype, ranked)
         val foldedPrefix = if (rankedKeys != null) index.fold(word) else ""

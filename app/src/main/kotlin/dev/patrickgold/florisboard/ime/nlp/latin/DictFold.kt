@@ -16,12 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
+import java.text.Normalizer
+
 /**
  * How a typed word is reduced to the key it is looked up under (issue #265).
  *
- * For most languages this is what it has always been — lowercasing — and [foldKey] returns exactly what
- * `word.lowercase()` used to return, so nothing about English, German or the other 33 dictionaries
- * changes.
+ * For most languages this is what it has always been — lowercasing. French additionally removes
+ * diacritics and expands its common ligatures, so an unaccented prefix still reaches its dictionary
+ * spelling: `ho` finds `hôte`, and `oeu` finds `œuvre`.
  *
  * Arabic script needs more. A reader sees مدرسة and مَدْرَسَة as one word, and writers use أ إ آ and ا
  * interchangeably because only ا sits on the base keyboard — the others hide behind a long press. Left
@@ -64,20 +66,41 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 object DictFold {
     /** Languages written in the Arabic script, using [foldArabic] instead of a plain lowercase. */
     private val ARABIC_SCRIPT = setOf("ar", "fa", "ur", "ckb")
+    /** French accents sit behind long presses, so completion matches their base-letter spelling too. */
+    private const val FRENCH = "fr"
 
     /**
-     * Whether [lang] folds to something other than its lowercase form. Callers use this to skip building
-     * the extra fold→surface indices for the languages that don't need them, so the memory and the code
-     * path for English and the rest stay exactly as they were.
+     * Whether [lang] folds to something other than its lowercase form. Callers use this to skip folded
+     * lookup/index work for the languages that don't need it, so English and the rest stay on their
+     * original code path.
      */
-    fun hasNonTrivialFold(lang: String): Boolean = lang in ARABIC_SCRIPT
+    fun hasNonTrivialFold(lang: String): Boolean = lang in ARABIC_SCRIPT || lang == FRENCH
+
+    /** Only Arabic needs every surface form retained for its spelling-restoration suggestions. */
+    fun hasRestorationVariants(lang: String): Boolean = lang in ARABIC_SCRIPT
 
     /**
      * The dictionary key for [word] in [lang]. Both the stored words and the typed word go through this,
      * so the two always meet.
      */
-    fun foldKey(lang: String, word: String): String =
-        if (lang in ARABIC_SCRIPT) foldArabic(word) else word.lowercase()
+    fun foldKey(lang: String, word: String): String = when {
+        lang in ARABIC_SCRIPT -> foldArabic(word)
+        lang == FRENCH -> foldFrench(word)
+        else -> word.lowercase()
+    }
+
+    /**
+     * Reduces French accents to their base letters for dictionary lookup. NFD covers acute, grave,
+     * circumflex, diaeresis and cedilla whether the input arrived precomposed or as a combining mark;
+     * `œ` and `æ` need their conventional two-letter expansions because Unicode does not decompose them.
+     */
+    fun foldFrench(word: String): String = Normalizer.normalize(word, Normalizer.Form.NFD)
+        .asSequence()
+        .filter { it.category != CharCategory.NON_SPACING_MARK }
+        .joinToString("")
+        .lowercase()
+        .replace("œ", "oe")
+        .replace("æ", "ae")
 
     /**
      * Reduce an Arabic-script word to its lookup key. Also lowercases, because Arabic text is full of
