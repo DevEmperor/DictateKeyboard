@@ -60,6 +60,8 @@ export const RULE_KEYS = [
   'overall_loss',
   'error_rate',
   'revenue_unreported',
+  'neuron_spike',
+  'reasoning_leak',
 ] as const;
 
 async function overrides(env: Env): Promise<Record<string, string>> {
@@ -117,6 +119,7 @@ export async function alertSettings(env: Env): Promise<AlertSettings> {
     devicesPerWallet: number('devicesPerWallet', base.devicesPerWallet),
     costDriftPercent: number('costDriftPercent', base.costDriftPercent),
     errorRatePercent: number('errorRatePercent', base.errorRatePercent),
+    neuronSpikeFactor: number('neuronSpikeFactor', base.neuronSpikeFactor),
     minLossHome: number('minLossHome', base.minLossHome),
 
     rules,
@@ -153,6 +156,7 @@ export async function changedKeys(env: Env): Promise<string[]> {
     devicesPerWallet: String(base.devicesPerWallet),
     costDriftPercent: String(base.costDriftPercent),
     errorRatePercent: String(base.errorRatePercent),
+    neuronSpikeFactor: String(base.neuronSpikeFactor),
     minLossHome: String(base.minLossHome),
   };
   for (const key of RULE_KEYS) shipped[`rule.${key}`] = '1';

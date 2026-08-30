@@ -1,3 +1,4 @@
+import { raise } from '../alerts';
 import { authenticate, touch } from '../auth';
 import { OPENAI_BASE, chatCostNano, costToSeconds, type Env, type Limits } from '../config';
 import { budgetAllows, logUsage, settleBudget, walletStub } from '../meter';
@@ -151,6 +152,23 @@ export async function handleChat(
     state = await wallet.adjust(actualSeconds - reservedSeconds);
   }
 
+  // Dictate Cloud does not think. Rewriting a sentence needs no deliberation, thinking tokens are
+  // billed to the buyer's balance like any other output, and one request once spent 116 seconds and
+  // twelve thousand tokens on it before running out of room to answer.
+  //
+  // Which is why this is checked on every response rather than trusted to the request. The switch
+  // that turns it off is not the same on both sides — `reasoning_effort` at OpenAI,
+  // `chat_template_kwargs.enable_thinking` at Workers AI, where thinking is *on* by default — and a
+  // model update, a renamed field or a new value in CHAT_MODEL would each silently undo it.
+  //
+  // Measured against the answer, because the obvious instrument does not work: the type definitions
+  // carry `usage.completion_tokens_details.reasoning_tokens`, and Workers AI never fills it (probed
+  // 30.08.2026, with thinking on and off). A guard on that field would have reported quiet while
+  // the model was thinking, which is worse than no guard. Thinking tokens do land in
+  // `completion_tokens`, so a model that thinks spends far more than it says — the same test showed
+  // 777 tokens against a twenty-token answer.
+  ctx.waitUntil(reportReasoning(env, usage.out, answerTextOf(body), limits.chatModel));
+
   // An answer that ran out of room is not an answer. The budget covers the visible reply *and*
   // whatever the model spends on reasoning, so a request can come back with a perfectly valid
   // 200, a `length` finish and nothing usable in it — the app then quietly keeps the original and
@@ -267,4 +285,41 @@ function parseUsage(body: string): { in: number; out: number } {
   } catch {
     return { in: 0, out: 0 };
   }
+}
+
+/** The visible reply, for measuring the token count against. Empty when the shape is unexpected. */
+function answerTextOf(body: string): string {
+  try {
+    const parsed = JSON.parse(body) as { choices?: { message?: { content?: string } }[] };
+    return parsed.choices?.[0]?.message?.content ?? '';
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Raises `reasoning_leak` when a reply cost far more output tokens than it contains.
+ *
+ * Factor three, not two: token counts are estimated on our side and counted on theirs, and the
+ * two disagree by a fair margin on short text. A model that is actually thinking overshoots by a
+ * factor of tens, so the slack costs nothing in sensitivity. The floor keeps one-word answers —
+ * where an estimate of four tokens against a real twelve is noise — from ringing it.
+ */
+async function reportReasoning(env: Env, tokensOut: number, answer: string, model: string): Promise<void> {
+  const expected = Math.max(estimateTokens(answer), 16);
+  if (tokensOut <= expected * 3) return;
+  await raise(env, {
+    kind: 'reasoning_leak',
+    severity: 'critical',
+    value: tokensOut / expected,
+    title: `Das Umformulierungsmodell denkt wieder (${tokensOut} Token für ${expected} Token Antwort)`,
+    detail:
+      `\`${model}\` hat ${tokensOut} Ausgabe-Token verbraucht, in der Antwort stehen aber nur etwa ${expected}. ` +
+      `Die Differenz sind Denk-Token: Sie werden wie jede andere Ausgabe abgerechnet und gehen damit vom ` +
+      `Guthaben des Käufers ab, ohne dass er etwas davon bekommt. Bei Dictate Cloud soll nicht gedacht werden — ` +
+      `zu prüfen ist, ob \`chat_template_kwargs.enable_thinking\` noch gesetzt wird bzw. das Modell den Schalter ` +
+      `noch kennt. Ein Modellwechsel in CHAT_MODEL ist die häufigste Ursache.`,
+    // Per model and hour: it is a state of the configuration, not a property of one request.
+    dedupeKey: `reasoning_leak:${model}:${new Date().toISOString().slice(0, 13)}`,
+  });
 }

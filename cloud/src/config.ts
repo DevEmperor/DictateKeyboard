@@ -73,6 +73,7 @@ export interface Env {
   ALERT_DEVICES_PER_WALLET?: string;
   ALERT_COST_DRIFT_PERCENT?: string;
   ALERT_ERROR_RATE_PERCENT?: string;
+  ALERT_NEURON_SPIKE_FACTOR?: string;
   ALERT_MIN_LOSS?: string;
 
   /** `openai` (default) or `workers-ai`. One per service, never one for both — the two moves have
@@ -252,6 +253,29 @@ export function neuronsToNano(neurons: number): number {
   return Math.round(neurons * NANO_PER_NEURON);
 }
 
+/** Neurons included per UTC day on the Workers Paid plan. Resets at 00:00 UTC, no rollover. */
+export const FREE_NEURONS_PER_DAY = 10_000;
+
+/**
+ * What Cloudflare actually charges for one day's neurons.
+ *
+ * The allowance is a *daily* figure, and everything awkward about it follows from that. It cannot
+ * be applied per request — the same recording would then cost nothing in the morning and money in
+ * the evening, depending only on how many came before it. And it cannot be summed across a month:
+ * a quiet day's unused neurons are not credit, they are simply gone.
+ *
+ * So `usage_log.cost_nano` stays the list price, always, and this function is the only place the
+ * allowance is ever subtracted. Note that it is fed *both* neuron columns: the allowance is granted
+ * to the account, not to the paying customers, and does not care whose request spent it.
+ *
+ * Worth at most $0.11 a day, $40 a year. Small enough that the cost figure is deliberately shown
+ * without it (see the dashboard) — a cost that errs upwards is the right kind of wrong.
+ */
+export function billedNanoForDay(neuronsMicro: number): number {
+  const billable = Math.max(0, neuronsMicro - FREE_NEURONS_PER_DAY * 1_000_000);
+  return Math.round((billable / 1_000_000) * NANO_PER_NEURON);
+}
+
 /**
  * What the table above says a request should have cost in neurons, or null for a model it does not
  * know. Only ever compared against the reported figure — never billed.
@@ -342,6 +366,15 @@ export interface AlertThresholds {
   costDriftPercent: number;
   errorRatePercent: number;
   /**
+   * A day's neuron use this many times the last week's average is worth looking at.
+   *
+   * Neurons are the one figure that turns straight into a bill, and they can move for reasons that
+   * are nobody's fault — a new customer, a long recording — as well as for reasons that are: a loop,
+   * a model that started thinking again, someone else's project on the same account. The alert does
+   * not judge which; it says the day is unlike the week.
+   */
+  neuronSpikeFactor: number;
+  /**
    * How far into the red the running total has to be before it is worth saying so, in the payout
    * currency.
    *
@@ -368,6 +401,7 @@ export function alertThresholds(env: Env): AlertThresholds {
     devicesPerWallet: num(env.ALERT_DEVICES_PER_WALLET, 5),
     costDriftPercent: num(env.ALERT_COST_DRIFT_PERCENT, 20),
     errorRatePercent: num(env.ALERT_ERROR_RATE_PERCENT, 25),
+    neuronSpikeFactor: num(env.ALERT_NEURON_SPIKE_FACTOR, 3),
     minLossHome: num(env.ALERT_MIN_LOSS, 1),
   };
 }

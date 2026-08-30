@@ -1,5 +1,5 @@
 import { raise } from '../alerts';
-import { limitsFrom, type Env } from '../config';
+import { FREE_NEURONS_PER_DAY, billedNanoForDay, limitsFrom, type Env } from '../config';
 import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
 import { alertSettings } from '../settings';
@@ -43,6 +43,7 @@ export async function evaluateRules(env: Env, ctx: ExecutionContext): Promise<nu
     on('overall_loss', () => overallLoss(env, ctx, t.minLossHome)),
     on('error_rate', () => errorRate(env, ctx, t.errorRatePercent)),
     on('revenue_unreported', () => revenueUnreported(env, ctx)),
+    on('neuron_spike', () => neuronSpike(env, ctx, t.neuronSpikeFactor)),
   ]);
 
   // One broken rule must not silence the other five. A rule that throws is itself worth knowing
@@ -332,5 +333,57 @@ async function errorRate(env: Env, ctx: ExecutionContext, percent: number): Prom
       `${errors} von ${total} Anfragen sind fehlgeschlagen. Kunden bekommen dann Fehlermeldungen statt Text. ` +
       `Meist ist es eine Störung bei OpenAI; im Verkehrsprotokoll steht, welcher Statuscode zurückkam.`,
     dedupeKey: `error_rate:${new Date().toISOString().slice(0, 13)}`,
+  }, ctx)) ? 1 : 0;
+}
+
+/**
+ * A day whose compute use is unlike the week before it.
+ *
+ * Neurons are the one figure that turns straight into an invoice, and they can move for reasons
+ * that are nobody's fault — a new customer, a stack of long recordings — as well as for reasons
+ * that are: a retry loop, a model that quietly started thinking again, another project on the same
+ * account eating the allowance. The rule does not try to tell those apart. It says the day is
+ * unlike the week, which is the point at which looking is cheap and not looking is not.
+ *
+ * Both neuron columns are summed, test traffic included, because Cloudflare's allowance is granted
+ * to the account and does not care whose request spent it.
+ *
+ * Two guards against crying wolf. Nothing fires below a floor — going from four neurons to twenty
+ * is a factor of five and worth nothing — and nothing fires before there is a week to compare
+ * against, since the first days of a service are all spikes by construction.
+ */
+async function neuronSpike(env: Env, ctx: ExecutionContext, factor: number): Promise<number> {
+  const day = today();
+  const rows = (await env.DB.prepare(
+    `SELECT day, neurons_micro + test_neurons_micro AS neuronsMicro
+       FROM daily_totals WHERE day <= ? ORDER BY day DESC LIMIT 8`,
+  ).bind(day).all<{ day: string; neuronsMicro: number }>()).results ?? [];
+
+  const todayMicro = num(rows.find((r) => r.day === day)?.neuronsMicro);
+  const before = rows.filter((r) => r.day < day);
+  if (before.length < 5) return 0;
+
+  const avgMicro = before.reduce((sum, r) => sum + num(r.neuronsMicro), 0) / before.length;
+  // A tenth of the free allowance. Below that the whole day still costs nothing at all, and a
+  // multiple of nothing is not news.
+  const floorMicro = 1_000 * 1_000_000;
+  if (todayMicro < floorMicro || avgMicro <= 0) return 0;
+  if (todayMicro < avgMicro * factor) return 0;
+
+  const neurons = Math.round(todayMicro / 1_000_000);
+  const avg = Math.round(avgMicro / 1_000_000);
+  const billedUsd = billedNanoForDay(todayMicro) / NANO_PER_USD;
+  return (await raise(env, {
+    kind: 'neuron_spike',
+    severity: 'notice',
+    value: todayMicro / avgMicro,
+    title: `${neurons.toLocaleString('de-DE')} Neuronen heute — ${(todayMicro / avgMicro).toFixed(1)}× der Wochenschnitt`,
+    detail:
+      `Der Schnitt der letzten ${before.length} Tage liegt bei ${avg.toLocaleString('de-DE')}. ` +
+      `Berechnet werden für heute bisher ${billedUsd.toFixed(4)} $ — alles über ${FREE_NEURONS_PER_DAY.toLocaleString('de-DE')} ` +
+      `Neuronen am Tag kostet. Harmlos, wenn jemand viel diktiert hat; nachsehen lohnt trotzdem, ` +
+      `weil dieselbe Kurve entsteht, wenn ein Modell wieder nachdenkt oder etwas in eine Schleife läuft.`,
+    // A state of the day, not an event: once per day is enough.
+    dedupeKey: `neuron_spike:${day}`,
   }, ctx)) ? 1 : 0;
 }

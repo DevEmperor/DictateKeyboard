@@ -36,6 +36,8 @@ const KIND: Record<string, string> = {
   error_rate: 'Fehlerquote',
   fast_burn: 'Guthaben rasant verbraucht',
   kill_switch: 'Not-Aus',
+  neuron_spike: 'Neuronen-Ausschlag',
+  reasoning_leak: 'Das Modell denkt wieder',
   overall_loss: 'Insgesamt im Minus',
   refund_loss: 'Erstattung nach Verbrauch',
   repeat_buyer_refunded: 'Käufer mit Erstattungshistorie',

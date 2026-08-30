@@ -1157,6 +1157,64 @@ var GRAPH = ${GRAPH_JSON};
     return html;
   }
 
+  /*
+   * Das Freikontingent und die Kosten des Tages.
+   *
+   * Beide Karten erscheinen erst, wenn es Neuronen gibt — vor der Umstellung wäre ein Balken auf
+   * null keine Information, sondern eine Zeile, die man wegzulesen lernt.
+   *
+   * Der Balken darf über 100 % laufen. Mehr als 214 Audiominuten am Tag sind kein Fehler, sondern
+   * ein guter Tag; nur ist ab dort eben etwas zu bezahlen, und genau das steht dann darunter.
+   */
+  function untilReset(ms) {
+    var left = Math.max(0, ms - Date.now());
+    var h = Math.floor(left / 3600000);
+    var m = Math.floor((left % 3600000) / 60000);
+    return h ? h + ' h ' + m + ' min' : m + ' min';
+  }
+
+  function neuronCards(o) {
+    var ne = o.neurons || {};
+    // Der Balken erscheint erst, wenn es Neuronen gibt. Vor der Umstellung wäre er dauerhaft auf
+    // null — eine Zeile, die man wegzulesen lernt, bevor sie etwas zu sagen hat.
+    var html = ne.freePerDay && (ne.total || ne.today) ? freeQuotaCard(ne) : '';
+    // Die Kostenkarte dagegen immer: der Listenpreis existiert heute schon, und „was hat heute
+    // gekostet" ist die Frage, die man täglich hat. Die Zeilen „berechnet" kommen erst dazu, wenn
+    // es ein Freikontingent gibt, gegen das sie sich unterscheiden könnten — sonst stünde dort
+    // dreimal 0,0000 $ neben einer Zahl, und das liest sich wie ein Fehler.
+    var billed = ne.total || ne.today
+      ? 'berechnet: <strong>' + fmtUsd4(o.cost.billedTodayUsd) + '</strong><br>'
+      : '';
+    var perMonth = 'Monat ' + fmtUsd4(o.cost.monthUsd) +
+      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedMonthUsd) : '');
+    var perTotal = 'gesamt ' + fmtUsd4(o.cost.totalUsd) +
+      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedTotalUsd) : '');
+    var trend = ne.total
+      ? '<br><span class="muted">gestern ' + ne.yesterday.toLocaleString('de-DE') +
+        ' · Schnitt 7 T ' + ne.avg7.toLocaleString('de-DE') + ' Neuronen</span>'
+      : '';
+    html += card('Einkauf heute',
+      'Was der Verkehr von heute gekostet hat — der Listenpreis, gegen den auch die Marge gerechnet wird. Sobald über Workers AI eingekauft wird, steht darunter, was Cloudflare davon tatsächlich berechnet: erst was über dem Freikontingent liegt. An den meisten Tagen ist das null, und dann springt es.',
+      fmtUsd4(o.cost.todayUsd), billed + perMonth + '<br>' + perTotal + trend);
+    return html;
+  }
+
+  function freeQuotaCard(ne) {
+    var pct = ne.freeUsedPercent;
+    var cls = pct >= 100 ? 'crit' : pct >= 80 ? 'warn' : '';
+    var over = Math.max(0, ne.today - ne.freePerDay);
+    var html = '<div class="card"><div class="label">Freikontingent' +
+      hint('Workers Paid enthält ' + ne.freePerDay.toLocaleString('de-DE') + ' Neuronen je Tag — das entspricht etwa ' +
+        ne.freeAudioMinutes + ' Audiominuten, wenn nur diktiert wird. Rücksetzung um 00:00 UTC, also 02:00 unserer Sommerzeit. Nichts wird übertragen: Was heute übrig bleibt, ist morgen weg. Höchstwert ' +
+        fmtUsd4(ne.freeValueUsd) + ' am Tag.') +
+      '</div><div class="value">' + pct + ' %</div><div class="sub">' +
+      ne.today.toLocaleString('de-DE') + ' von ' + ne.freePerDay.toLocaleString('de-DE') + ' Neuronen' +
+      (over ? ' · <strong>' + over.toLocaleString('de-DE') + ' darüber</strong>' : '') +
+      '<br>Rücksetzung in ' + untilReset(ne.resetAtMs) +
+      '</div><div class="bar-track"><i class="' + cls + '" style="width:' + Math.min(100, pct) + '%"></i></div></div>';
+    return html;
+  }
+
   function renderOverview(o) {
     current = o;
     var bcls = o.budget.usedPercent >= 90 ? 'crit' : o.budget.usedPercent >= 60 ? 'warn' : '';
@@ -1164,6 +1222,7 @@ var GRAPH = ${GRAPH_JSON};
     html += card('Offenes Guthaben', 'Bezahlte, aber noch nicht verbrauchte Minuten. Eine Verbindlichkeit, kein Umsatz — Arbeit, die du noch schuldest. Die Zahl, die ein Prepaid-Modell am leichtesten unterschlägt.', fmtMinutes(o.liability.seconds), 'Über alle aktiven Konten', 'lead');
     html += moneyCards(sum);
     html += '<div class="card"><div class="label">Tagesbudget' + hint('Obergrenze für die Einkaufskosten eines Tages. Ist sie erreicht, antwortet der Dienst mit 503 und die App meldet „vorübergehend nicht verfügbar".') + '</div><div class="value">' + o.budget.usedPercent + ' %</div><div class="sub">' + fmtUsd4(o.budget.spentUsd) + ' von ' + fmtUsd(o.budget.limitUsd) + '</div><div class="bar-track"><i class="' + bcls + '" style="width:' + Math.min(100, o.budget.usedPercent) + '%"></i></div></div>';
+    html += neuronCards(o);
     html += card('Konten', '„Aktiv" heißt: hat im Zeitraum mindestens eine Anfrage gestellt. Testkonten sind nicht mitgezählt.', o.wallets.total, o.wallets.active7 + ' aktiv (7 T) · ' + o.wallets.active30 + ' (30 T)<br>' + o.wallets.new30 + ' neu (30 T) · ' + o.wallets.blocked + ' gesperrt' + (o.wallets.test ? ' · ' + o.wallets.test + ' Testkonten' : ''));
 
     var trend = o.days.slice().reverse().map(function (d) { return d.requests; });
@@ -1406,6 +1465,8 @@ var GRAPH = ${GRAPH_JSON};
     overall_loss: ['Insgesamt im Minus', 'Alles jemals eingenommen gegen alles jemals ausgegeben.'],
     error_rate: ['Viele Fehler', 'Meist eine Störung bei OpenAI.'],
     revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
+    neuron_spike: ['Neuronen-Ausschlag', 'Ein Tag, der nicht zur Woche davor passt — die Zahl, die direkt zur Rechnung wird.'],
+    reasoning_leak: ['Das Modell denkt wieder', 'Denk-Token gehen vom Guthaben des Käufers ab, ohne dass er etwas davon bekommt.'],
   };
 
   var NUMBERS = [
@@ -1416,6 +1477,7 @@ var GRAPH = ${GRAPH_JSON};
     ['devicesPerWallet', 'Geräte je Konto', 'Stk.', 'Mehr als so viele an einem Tag deuten auf Weitergabe.'],
     ['costDriftPercent', 'Abweichung OpenAI', '%', 'Unterschied zwischen unserer Rechnung und OpenAIs Abrechnung.'],
     ['errorRatePercent', 'Fehlerquote', '%', 'Anteil fehlgeschlagener Anfragen je Stunde.'],
+    ['neuronSpikeFactor', 'Neuronen-Ausschlag ab', '×', 'Wie oft der Wochenschnitt an einem Tag überschritten sein muss.'],
     ['minLossHome', 'Minus meldet ab', '€', 'Darunter ist es Rundung oder Anlaufphase.'],
   ];
 
