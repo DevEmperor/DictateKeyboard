@@ -309,6 +309,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__theme__theme_accent_color__label, R.string.settings__theme__title, Routes.Settings.Theme, anchor = "pref__theme__theme_accent_color__label"),
         SettingsSearchEntry(R.string.pref__suggestion__enabled__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__enabled__label"),
         SettingsSearchEntry(R.string.pref__suggestion__auto_correct__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__auto_correct__label"),
+        SettingsSearchEntry(R.string.pref__correction__auto_correct_strength__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__correction__auto_correct_strength__label"),
         SettingsSearchEntry(R.string.pref__suggestion__multilingual_typing__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__multilingual_typing__label"),
         SettingsSearchEntry(R.string.pref__suggestion__next_word_prediction__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__next_word_prediction__label"),
         SettingsSearchEntry(R.string.pref__suggestion__ignore_app_suggestion_block__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__suggestion__ignore_app_suggestion_block__label"),

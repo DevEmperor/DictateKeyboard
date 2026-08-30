@@ -1708,6 +1708,13 @@
     <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автоисправление</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматически исправлять опечатки при пробеле</string>
+    <string name="pref__correction__auto_correct_strength__label">Сила автокоррекции</string>
+    <string name="enum__auto_correct_strength__cautious">Осторожная</string>
+    <string name="enum__auto_correct_strength__cautious__description">Исправляет только явное соскальзывание пальца. Необычные написания не трогает.</string>
+    <string name="enum__auto_correct_strength__balanced">Сбалансированная</string>
+    <string name="enum__auto_correct_strength__balanced__description">Исправляет повседневные опечатки, в том числе нажатие соседней клавиши. Рекомендуется.</string>
+    <string name="enum__auto_correct_strength__aggressive">Агрессивная</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Исправляет и более далёкие слова — и иногда заменяет то, которое вы имели в виду.</string>
     <string name="pref__suggestion__multilingual_typing__label">Многоязычный ввод</string>
     <string name="pref__suggestion__multilingual_typing__summary">Принимать слова из всех языков клавиатуры</string>
     <string name="pref__suggestion__next_word_prediction__label">Подсказки следующего слова</string>

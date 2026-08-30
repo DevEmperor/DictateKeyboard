@@ -1641,6 +1641,13 @@
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Autokorrektur</string>
     <string name="pref__suggestion__auto_correct__summary">Tippfehler beim Leerzeichen automatisch korrigieren</string>
+    <string name="pref__correction__auto_correct_strength__label">Stärke der Autokorrektur</string>
+    <string name="enum__auto_correct_strength__cautious">Vorsichtig</string>
+    <string name="enum__auto_correct_strength__cautious__description">Korrigiert nur ein offensichtliches Verrutschen des Fingers. Ungewöhnliche Schreibweisen bleiben unangetastet.</string>
+    <string name="enum__auto_correct_strength__balanced">Ausgewogen</string>
+    <string name="enum__auto_correct_strength__balanced__description">Korrigiert alltägliche Tippfehler, auch den Griff zur Nachbartaste. Empfohlen.</string>
+    <string name="enum__auto_correct_strength__aggressive">Aggressiv</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Korrigiert auch weiter entfernte Wörter — und ersetzt hin und wieder eines, das du so wolltest.</string>
     <string name="pref__suggestion__multilingual_typing__label">Mehrsprachiges Tippen</string>
     <string name="pref__suggestion__multilingual_typing__summary">Wörter aus allen deinen Tastatursprachen akzeptieren</string>
     <string name="pref__suggestion__next_word_prediction__label">Wortvorschläge</string>

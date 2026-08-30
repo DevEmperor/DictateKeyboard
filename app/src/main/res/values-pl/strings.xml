@@ -1720,6 +1720,13 @@
     <string name="settings__localization__subtype_status_context">Kontekst</string>
     <string name="pref__suggestion__auto_correct__label">Autokorekta</string>
     <string name="pref__suggestion__auto_correct__summary">Automatyczne poprawianie literówek po spacji</string>
+    <string name="pref__correction__auto_correct_strength__label">Siła autokorekty</string>
+    <string name="enum__auto_correct_strength__cautious">Ostrożna</string>
+    <string name="enum__auto_correct_strength__cautious__description">Poprawia tylko oczywiste ześlizgnięcie palca. Nietypowa pisownia pozostaje nietknięta.</string>
+    <string name="enum__auto_correct_strength__balanced">Zrównoważona</string>
+    <string name="enum__auto_correct_strength__balanced__description">Poprawia codzienne literówki, w tym trafienie w sąsiedni klawisz. Zalecane.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agresywna</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Poprawia też słowa bardziej odległe — i co jakiś czas zamienia to, które chciałeś.</string>
     <string name="pref__suggestion__multilingual_typing__label">Pisanie wielojęzyczne</string>
     <string name="pref__suggestion__multilingual_typing__summary">Akceptuj słowa ze wszystkich języków klawiatury</string>
     <string name="pref__suggestion__next_word_prediction__label">Podpowiedzi następnego słowa</string>

@@ -1580,6 +1580,13 @@
     <string name="settings__localization__subtype_status_context">Contexte</string>
     <string name="pref__suggestion__auto_correct__label">Correction automatique</string>
     <string name="pref__suggestion__auto_correct__summary">Corriger les fautes de frappe automatiquement à l\'espace</string>
+    <string name="pref__correction__auto_correct_strength__label">Intensité de la correction automatique</string>
+    <string name="enum__auto_correct_strength__cautious">Prudente</string>
+    <string name="enum__auto_correct_strength__cautious__description">Ne corrige qu\'un dérapage évident du doigt. Les graphies inhabituelles ne sont jamais touchées.</string>
+    <string name="enum__auto_correct_strength__balanced">Équilibrée</string>
+    <string name="enum__auto_correct_strength__balanced__description">Corrige les fautes de frappe courantes, y compris la touche voisine. Recommandé.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agressive</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Corrige aussi les mots plus éloignés — et remplace parfois celui que vous vouliez.</string>
     <string name="pref__suggestion__multilingual_typing__label">Saisie multilingue</string>
     <string name="pref__suggestion__multilingual_typing__summary">Accepter les mots de toutes vos langues de clavier</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggestions de mot suivant</string>

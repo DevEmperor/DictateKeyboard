@@ -1683,6 +1683,13 @@
     <string name="settings__localization__subtype_status_context">Bağlam</string>
     <string name="pref__suggestion__auto_correct__label">Otomatik düzeltme</string>
     <string name="pref__suggestion__auto_correct__summary">Boşlukta yazım hatalarını otomatik düzelt</string>
+    <string name="pref__correction__auto_correct_strength__label">Otomatik düzeltme gücü</string>
+    <string name="enum__auto_correct_strength__cautious">Temkinli</string>
+    <string name="enum__auto_correct_strength__cautious__description">Yalnızca bariz bir parmak kaymasını düzeltir. Alışılmadık yazımlara hiç dokunmaz.</string>
+    <string name="enum__auto_correct_strength__balanced">Dengeli</string>
+    <string name="enum__auto_correct_strength__balanced__description">Günlük yazım hatalarını, yan tuşa basmayı da dâhil düzeltir. Önerilir.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agresif</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Daha uzaktaki sözcükleri de düzeltir — ve arada bir kastettiğinizi değiştirir.</string>
     <string name="pref__suggestion__multilingual_typing__label">Çok dilli yazım</string>
     <string name="pref__suggestion__multilingual_typing__summary">Tüm klavye dillerinizdeki kelimeleri kabul edin</string>
     <string name="pref__suggestion__next_word_prediction__label">Sonraki kelime önerileri</string>

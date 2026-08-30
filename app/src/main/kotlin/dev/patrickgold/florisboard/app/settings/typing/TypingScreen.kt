@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.latin.AutoCorrectStrength
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -73,6 +74,19 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__suggestion__auto_correct__label),
                 summary = stringRes(R.string.pref__suggestion__auto_correct__summary),
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            ListPreference(
+                prefs.correction.autoCorrectStrength,
+                modifier = Modifier.settingsSearchAnchor("pref__correction__auto_correct_strength__label"),
+                title = stringRes(R.string.pref__correction__auto_correct_strength__label),
+                entries = enumDisplayEntriesOf(AutoCorrectStrength::class),
+                // Sits with autocorrect rather than in the Correction group below, because it changes
+                // nothing else — and it is greyed out when autocorrect is off, where it genuinely does
+                // nothing (issue #297: a disabled child preference must actually stop applying).
+                enabledIf = {
+                    prefs.suggestion.enabled isEqualTo true &&
+                        prefs.suggestion.autoCorrect isEqualTo true
+                },
             )
             SwitchPreference(
                 prefs.suggestion.multilingualTyping,

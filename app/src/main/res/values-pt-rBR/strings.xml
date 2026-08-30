@@ -1513,6 +1513,13 @@
     <string name="settings__localization__subtype_status_context">Contexto</string>
     <string name="pref__suggestion__auto_correct__label">Correção automática</string>
     <string name="pref__suggestion__auto_correct__summary">Corrigir erros de digitação automaticamente ao dar espaço</string>
+    <string name="pref__correction__auto_correct_strength__label">Intensidade da correção automática</string>
+    <string name="enum__auto_correct_strength__cautious">Cautelosa</string>
+    <string name="enum__auto_correct_strength__cautious__description">Corrige apenas um deslize óbvio do dedo. Grafias incomuns nunca são alteradas.</string>
+    <string name="enum__auto_correct_strength__balanced">Equilibrada</string>
+    <string name="enum__auto_correct_strength__balanced__description">Corrige os erros de digitação do dia a dia, incluindo a tecla ao lado. Recomendado.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agressiva</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Também corrige palavras mais distantes — e de vez em quando troca uma que você queria.</string>
     <string name="pref__suggestion__multilingual_typing__label">Digitação multilíngue</string>
     <string name="pref__suggestion__multilingual_typing__summary">Aceitar palavras de todos os idiomas do teclado</string>
     <string name="pref__suggestion__next_word_prediction__label">Sugestões da próxima palavra</string>

@@ -1719,6 +1719,13 @@
     <string name="settings__localization__subtype_status_context">Kontext</string>
     <string name="pref__suggestion__auto_correct__label">Automatické opravy</string>
     <string name="pref__suggestion__auto_correct__summary">Automaticky opravit překlepy při stisku mezerníku</string>
+    <string name="pref__correction__auto_correct_strength__label">Síla automatických oprav</string>
+    <string name="enum__auto_correct_strength__cautious">Opatrná</string>
+    <string name="enum__auto_correct_strength__cautious__description">Opraví jen zjevné uklouznutí prstu. Neobvyklých tvarů se nikdy nedotkne.</string>
+    <string name="enum__auto_correct_strength__balanced">Vyvážená</string>
+    <string name="enum__auto_correct_strength__balanced__description">Opraví běžné překlepy včetně stisku sousední klávesy. Doporučeno.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agresivní</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Opraví i vzdálenější slova — a občas nahradí i to, které jste chtěli.</string>
     <string name="pref__suggestion__multilingual_typing__label">Vícejazyčné psaní</string>
     <string name="pref__suggestion__multilingual_typing__summary">Přijímat slova ze všech jazyků klávesnice</string>
     <string name="pref__suggestion__next_word_prediction__label">Návrhy dalšího slova</string>

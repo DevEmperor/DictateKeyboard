@@ -1637,6 +1637,13 @@
     <string name="settings__localization__subtype_status_context">文脈</string>
     <string name="pref__suggestion__auto_correct__label">自動修正</string>
     <string name="pref__suggestion__auto_correct__summary">スペース入力時にタイプミスを自動修正</string>
+    <string name="pref__correction__auto_correct_strength__label">自動修正の強さ</string>
+    <string name="enum__auto_correct_strength__cautious">控えめ</string>
+    <string name="enum__auto_correct_strength__cautious__description">明らかな指のずれだけを直します。珍しいつづりには触れません。</string>
+    <string name="enum__auto_correct_strength__balanced">バランス</string>
+    <string name="enum__auto_correct_strength__balanced__description">隣のキーを押したものを含め、日常的な打ち間違いを直します。推奨。</string>
+    <string name="enum__auto_correct_strength__aggressive">積極的</string>
+    <string name="enum__auto_correct_strength__aggressive__description">離れた文字の誤りも直します。ただし、意図した語がまれに置き換わります。</string>
     <string name="pref__suggestion__multilingual_typing__label">多言語入力</string>
     <string name="pref__suggestion__multilingual_typing__summary">すべてのキーボード言語の単語を受け入れます</string>
     <string name="pref__suggestion__next_word_prediction__label">次の単語の候補</string>

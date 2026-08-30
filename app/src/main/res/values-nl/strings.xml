@@ -1604,6 +1604,13 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="settings__localization__subtype_status_context">Context</string>
     <string name="pref__suggestion__auto_correct__label">Autocorrectie</string>
     <string name="pref__suggestion__auto_correct__summary">Typefouten automatisch corrigeren bij een spatie</string>
+    <string name="pref__correction__auto_correct_strength__label">Sterkte van autocorrectie</string>
+    <string name="enum__auto_correct_strength__cautious">Voorzichtig</string>
+    <string name="enum__auto_correct_strength__cautious__description">Corrigeert alleen een duidelijke uitschieter van de vinger. Ongewone spellingen blijven onaangeroerd.</string>
+    <string name="enum__auto_correct_strength__balanced">Gebalanceerd</string>
+    <string name="enum__auto_correct_strength__balanced__description">Corrigeert alledaagse typefouten, ook de toets ernaast. Aanbevolen.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agressief</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Corrigeert ook woorden die verder afliggen — en vervangt af en toe een woord dat je bedoelde.</string>
     <string name="pref__suggestion__multilingual_typing__label">Meertalig typen</string>
     <string name="pref__suggestion__multilingual_typing__summary">Woorden uit al je toetsenbordtalen accepteren</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggesties voor volgend woord</string>

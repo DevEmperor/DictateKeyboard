@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.latin.AutoCorrectStrength
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -176,6 +177,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val autoCapitalization = boolean(
             key = "correction__auto_capitalization",
             default = true,
+        )
+        // How much tap evidence autocorrect wants before replacing a word on its own (issue #295). Only
+        // the silent swap is affected — every level shows the same suggestions in the strip.
+        val autoCorrectStrength = enum(
+            key = "correction__auto_correct_strength",
+            default = AutoCorrectStrength.BALANCED,
         )
         val autoSpacePunctuation = boolean(
             key = "correction__auto_space_punctuation",

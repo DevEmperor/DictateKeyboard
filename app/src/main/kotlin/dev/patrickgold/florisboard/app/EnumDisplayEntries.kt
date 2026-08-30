@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.latin.AutoCorrectStrength
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -342,6 +343,28 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
                 label = stringRes(id = R.string.enum__incognito_display_mode__display_behind_keyboard),
+            )
+        }
+    },
+    AutoCorrectStrength::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = AutoCorrectStrength.CAUTIOUS,
+                label = stringRes(R.string.enum__auto_correct_strength__cautious),
+                description = stringRes(R.string.enum__auto_correct_strength__cautious__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = AutoCorrectStrength.BALANCED,
+                label = stringRes(R.string.enum__auto_correct_strength__balanced),
+                description = stringRes(R.string.enum__auto_correct_strength__balanced__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = AutoCorrectStrength.AGGRESSIVE,
+                label = stringRes(R.string.enum__auto_correct_strength__aggressive),
+                description = stringRes(R.string.enum__auto_correct_strength__aggressive__description),
+                showDescriptionOnlyIfSelected = true,
             )
         }
     },

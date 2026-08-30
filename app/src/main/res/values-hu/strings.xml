@@ -1703,6 +1703,13 @@
     <string name="settings__localization__subtype_status_context">Kontextus</string>
     <string name="pref__suggestion__auto_correct__label">Automatikus javítás</string>
     <string name="pref__suggestion__auto_correct__summary">Elgépelések automatikus javítása szóköznél</string>
+    <string name="pref__correction__auto_correct_strength__label">Automatikus javítás erőssége</string>
+    <string name="enum__auto_correct_strength__cautious">Óvatos</string>
+    <string name="enum__auto_correct_strength__cautious__description">Csak a nyilvánvaló ujjmegcsúszást javítja. A szokatlan írásmódokhoz soha nem nyúl.</string>
+    <string name="enum__auto_correct_strength__balanced">Kiegyensúlyozott</string>
+    <string name="enum__auto_correct_strength__balanced__description">Javítja a hétköznapi elgépeléseket, a szomszédos billentyűt is. Ajánlott.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agresszív</string>
+    <string name="enum__auto_correct_strength__aggressive__description">A távolabbi szavakat is javítja — és néha olyat cserél le, amit szándékosan írtál.</string>
     <string name="pref__suggestion__multilingual_typing__label">Többnyelvű gépelés</string>
     <string name="pref__suggestion__multilingual_typing__summary">Szavak elfogadása az összes billentyűzetnyelvedből</string>
     <string name="pref__suggestion__next_word_prediction__label">Következő szó javaslatok</string>

@@ -1580,6 +1580,13 @@
     <string name="settings__localization__subtype_status_context">Context</string>
     <string name="pref__suggestion__auto_correct__label">Correcció automàtica</string>
     <string name="pref__suggestion__auto_correct__summary">Corregeix errades automàticament en prémer espai</string>
+    <string name="pref__correction__auto_correct_strength__label">Força de la correcció automàtica</string>
+    <string name="enum__auto_correct_strength__cautious">Prudent</string>
+    <string name="enum__auto_correct_strength__cautious__description">Només corregeix una relliscada evident del dit. Mai no toca les grafies inusuals.</string>
+    <string name="enum__auto_correct_strength__balanced">Equilibrada</string>
+    <string name="enum__auto_correct_strength__balanced__description">Corregeix les errades del dia a dia, inclosa la tecla del costat. Recomanat.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agressiva</string>
+    <string name="enum__auto_correct_strength__aggressive__description">També corregeix paraules més allunyades — i de tant en tant en substitueix una que volies.</string>
     <string name="pref__suggestion__multilingual_typing__label">Escriptura multilingüe</string>
     <string name="pref__suggestion__multilingual_typing__summary">Accepta paraules de tots els idiomes del teclat</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggeriments de paraula següent</string>

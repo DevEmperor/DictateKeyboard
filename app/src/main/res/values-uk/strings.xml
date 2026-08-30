@@ -1552,6 +1552,13 @@
     <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автовиправлення</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматично виправляти помилки при пробілі</string>
+    <string name="pref__correction__auto_correct_strength__label">Сила автовиправлення</string>
+    <string name="enum__auto_correct_strength__cautious">Обережне</string>
+    <string name="enum__auto_correct_strength__cautious__description">Виправляє лише очевидне зісковзування пальця. Незвичних написань не торкається.</string>
+    <string name="enum__auto_correct_strength__balanced">Збалансоване</string>
+    <string name="enum__auto_correct_strength__balanced__description">Виправляє щоденні одруки, зокрема натискання сусідньої клавіші. Рекомендовано.</string>
+    <string name="enum__auto_correct_strength__aggressive">Агресивне</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Виправляє й віддаленіші слова — та інколи замінює те, яке ви мали на увазі.</string>
     <string name="pref__suggestion__multilingual_typing__label">Багатомовне введення</string>
     <string name="pref__suggestion__multilingual_typing__summary">Приймати слова з усіх мов клавіатури</string>
     <string name="pref__suggestion__next_word_prediction__label">Підказки наступного слова</string>

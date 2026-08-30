@@ -1648,6 +1648,13 @@
     <string name="settings__localization__subtype_status_context">Konteksts</string>
     <string name="pref__suggestion__auto_correct__label">Automātiskā labošana</string>
     <string name="pref__suggestion__auto_correct__summary">Automātiski labot drukas kļūdas, nospiežot atstarpi</string>
+    <string name="pref__correction__auto_correct_strength__label">Automātiskās labošanas stiprums</string>
+    <string name="enum__auto_correct_strength__cautious">Piesardzīgi</string>
+    <string name="enum__auto_correct_strength__cautious__description">Labo tikai acīmredzamu pirksta paslīdēšanu. Neparastas rakstības netiek aiztiktas.</string>
+    <string name="enum__auto_correct_strength__balanced">Līdzsvaroti</string>
+    <string name="enum__auto_correct_strength__balanced__description">Labo ikdienas drukas kļūdas, arī blakus taustiņa nospiešanu. Ieteicams.</string>
+    <string name="enum__auto_correct_strength__aggressive">Agresīvi</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Labo arī tālākus vārdus — un reizēm aizstāj to, kuru gribēji.</string>
     <string name="pref__suggestion__multilingual_typing__label">Daudzvalodu rakstīšana</string>
     <string name="pref__suggestion__multilingual_typing__summary">Pieņemt vārdus no visām tastatūras valodām</string>
     <string name="pref__suggestion__next_word_prediction__label">Nākamā vārda ieteikumi</string>

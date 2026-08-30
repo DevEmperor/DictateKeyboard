@@ -1488,6 +1488,13 @@
     <string name="settings__localization__subtype_status_context">Contesto</string>
     <string name="pref__suggestion__auto_correct__label">Correzione automatica</string>
     <string name="pref__suggestion__auto_correct__summary">Correggi i refusi automaticamente premendo spazio</string>
+    <string name="pref__correction__auto_correct_strength__label">Intensità della correzione automatica</string>
+    <string name="enum__auto_correct_strength__cautious">Prudente</string>
+    <string name="enum__auto_correct_strength__cautious__description">Corregge solo un evidente scivolone del dito. Le grafie insolite non vengono mai toccate.</string>
+    <string name="enum__auto_correct_strength__balanced">Equilibrata</string>
+    <string name="enum__auto_correct_strength__balanced__description">Corregge i refusi di tutti i giorni, incluso il tasto accanto a quello giusto. Consigliato.</string>
+    <string name="enum__auto_correct_strength__aggressive">Aggressiva</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Corregge anche parole più lontane — e ogni tanto ne sostituisce una che volevi davvero.</string>
     <string name="pref__suggestion__multilingual_typing__label">Digitazione multilingue</string>
     <string name="pref__suggestion__multilingual_typing__summary">Accetta parole da tutte le lingue della tastiera</string>
     <string name="pref__suggestion__next_word_prediction__label">Suggerimenti parola successiva</string>

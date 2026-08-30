@@ -613,6 +613,13 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>
     <string name="pref__suggestion__auto_correct__label" comment="Preference title">Auto-correct</string>
     <string name="pref__suggestion__auto_correct__summary" comment="Preference summary">Automatically fix typos when you type a space</string>
+    <string name="pref__correction__auto_correct_strength__label" comment="Preference title. How readily auto-correct replaces a word on its own.">Auto-correct strength</string>
+    <string name="enum__auto_correct_strength__cautious" comment="Option of the auto-correct strength setting">Cautious</string>
+    <string name="enum__auto_correct_strength__cautious__description" comment="Description of the cautious auto-correct strength">Only fixes an obvious slip of the finger. Unusual spellings are never touched.</string>
+    <string name="enum__auto_correct_strength__balanced" comment="Option of the auto-correct strength setting; this is the default">Balanced</string>
+    <string name="enum__auto_correct_strength__balanced__description" comment="Description of the balanced auto-correct strength">Fixes everyday typos, including hitting the key next to the right one. Recommended.</string>
+    <string name="enum__auto_correct_strength__aggressive" comment="Option of the auto-correct strength setting">Aggressive</string>
+    <string name="enum__auto_correct_strength__aggressive__description" comment="Description of the aggressive auto-correct strength">Also fixes words that are further off — and now and then replaces one you meant.</string>
     <string name="pref__suggestion__multilingual_typing__label" comment="Preference title">Multilingual typing</string>
     <string name="pref__suggestion__multilingual_typing__summary" comment="Preference summary">Accept words from all your keyboard languages</string>
     <string name="pref__suggestion__next_word_prediction__label" comment="Preference title">Next-word suggestions</string>

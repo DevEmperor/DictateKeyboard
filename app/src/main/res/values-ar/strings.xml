@@ -1563,6 +1563,13 @@
     <string name="settings__localization__subtype_status_context">السياق</string>
     <string name="pref__suggestion__auto_correct__label">التصحيح التلقائي</string>
     <string name="pref__suggestion__auto_correct__summary">تصحيح الأخطاء المطبعية تلقائيًا عند كتابة مسافة</string>
+    <string name="pref__correction__auto_correct_strength__label">قوة التصحيح التلقائي</string>
+    <string name="enum__auto_correct_strength__cautious">حذر</string>
+    <string name="enum__auto_correct_strength__cautious__description">يصحح زلة الإصبع الواضحة فقط. لا يمس التهجئات غير المعتادة أبدًا.</string>
+    <string name="enum__auto_correct_strength__balanced">متوازن</string>
+    <string name="enum__auto_correct_strength__balanced__description">يصحح الأخطاء المطبعية اليومية، بما في ذلك الضغط على المفتاح المجاور للمفتاح الصحيح. موصى به.</string>
+    <string name="enum__auto_correct_strength__aggressive">قوي</string>
+    <string name="enum__auto_correct_strength__aggressive__description">يصحح أيضًا الكلمات الأبعد — ويستبدل أحيانًا كلمة قصدتها.</string>
     <string name="pref__suggestion__multilingual_typing__label">الكتابة متعددة اللغات</string>
     <string name="pref__suggestion__multilingual_typing__summary">قبول الكلمات من جميع لغات لوحة المفاتيح لديك</string>
     <string name="pref__suggestion__next_word_prediction__label">اقتراحات الكلمة التالية</string>

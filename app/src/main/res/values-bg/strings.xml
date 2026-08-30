@@ -1705,6 +1705,13 @@
     <string name="settings__localization__subtype_status_context">Контекст</string>
     <string name="pref__suggestion__auto_correct__label">Автокоригиране</string>
     <string name="pref__suggestion__auto_correct__summary">Автоматично поправяне на печатни грешки при интервал</string>
+    <string name="pref__correction__auto_correct_strength__label">Сила на автокорекцията</string>
+    <string name="enum__auto_correct_strength__cautious">Предпазлива</string>
+    <string name="enum__auto_correct_strength__cautious__description">Поправя само явно подхлъзване на пръста. Необичайните изписвания остават недокоснати.</string>
+    <string name="enum__auto_correct_strength__balanced">Балансирана</string>
+    <string name="enum__auto_correct_strength__balanced__description">Поправя ежедневните грешки, включително натискане на съседния клавиш. Препоръчително.</string>
+    <string name="enum__auto_correct_strength__aggressive">Агресивна</string>
+    <string name="enum__auto_correct_strength__aggressive__description">Поправя и по-отдалечени думи — и понякога заменя дума, която сте искали.</string>
     <string name="pref__suggestion__multilingual_typing__label">Многоезично писане</string>
     <string name="pref__suggestion__multilingual_typing__summary">Приемане на думи от всички езици на клавиатурата ви</string>
     <string name="pref__suggestion__next_word_prediction__label">Предложения за следваща дума</string>

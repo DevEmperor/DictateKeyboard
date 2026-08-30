@@ -1699,6 +1699,13 @@
     <string name="settings__localization__subtype_status_context">上下文</string>
     <string name="pref__suggestion__auto_correct__label">自动更正</string>
     <string name="pref__suggestion__auto_correct__summary">按空格时自动修正拼写错误</string>
+    <string name="pref__correction__auto_correct_strength__label">自动更正强度</string>
+    <string name="enum__auto_correct_strength__cautious">谨慎</string>
+    <string name="enum__auto_correct_strength__cautious__description">只更正明显的手滑。绝不改动不常见的拼写。</string>
+    <string name="enum__auto_correct_strength__balanced">均衡</string>
+    <string name="enum__auto_correct_strength__balanced__description">更正日常错字，包括按到旁边的键。推荐。</string>
+    <string name="enum__auto_correct_strength__aggressive">激进</string>
+    <string name="enum__auto_correct_strength__aggressive__description">也更正相差更远的词——偶尔会替换掉你本来想要的词。</string>
     <string name="pref__suggestion__multilingual_typing__label">多语言输入</string>
     <string name="pref__suggestion__multilingual_typing__summary">接受来自所有键盘语言的单词</string>
     <string name="pref__suggestion__next_word_prediction__label">下一个词建议</string>

@@ -80,28 +80,18 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Used only on the path where real tap coordinates are available; the legacy ranking above keeps its
         // own constants so behaviour without a trace is bit-for-bit unchanged.
         //
-        // The dictionary stores frequencies on a 128..255 scale that is already *linear in log frequency*
-        // (tools/glide-dict/generate.py), so the prior is linear here rather than another ln() — taking the
-        // log twice would squash the whole vocabulary into 0.69 nats and make the language model irrelevant.
-        // LM_SPAN is that scale expressed in nats.
-        private const val LM_SPAN = 4.0
-        // Touch variance in key-width², i.e. how much an off-centre tap is allowed to cost. Tuned together
-        // with LM_SPAN; accuracy varies by under 1 pp when either is doubled or halved.
-        private const val TOUCH_SIGMA2 = 0.2
+        // The prior and the touch variance live in [TouchScoring], because the evaluation harness has to
+        // score exactly the way this does — a second copy of the formula is what made the #242 numbers
+        // impossible to reproduce.
+        //
         // Flat cost for a candidate of a different length (a dropped or doubled letter), which the beam
         // cannot produce and which therefore comes from the edit-distance generator.
         private const val TOUCH_LENGTH_PENALTY = -5.0
         // How many words the beam returns before scoring.
         private const val BEAM_CANDIDATES = 12
-        // Highest excess tap distance (key-width², summed over the word) still allowed to *silently* replace
-        // what was typed. Suggestions are always offered; this only gates the automatic swap.
-        //
-        // Without it, any unknown word with a frequent neighbour gets rewritten — measured on German, 30% of
-        // correctly typed out-of-dictionary words (names like "Sarahs"→"daraus", "Pete"→"Peter") would be
-        // mangled, far worse than the 19% the old gate allowed. At 0.8 that drops to ~0% while still
-        // auto-fixing 95% of genuine mis-taps, because a real slip lands near a key boundary (cheap) whereas
-        // a correctly typed name needs a full key jump (expensive).
-        private const val AUTO_COMMIT_MAX_TOUCH_COST = 0.8f
+        // Whether a decoded correction may be swapped in silently now lives in [AutoCommitGate], so the
+        // rule can be measured against both populations that care about it — mis-taps that must be fixed
+        // and correctly typed unknown words that must not be touched (issue #295).
 
         // Candidates are de-duplicated by their case-folded text. The typed spelling kept alongside a noun
         // capitalisation folds to the very same key as the capitalised form, so it is stored under this
@@ -693,7 +683,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         for (candidate in beam) {
             val freq = index.freq[candidate.word] ?: continue
             scored[candidate.word] =
-                lmPrior(freq) - candidate.cost / (2.0 * TOUCH_SIGMA2) + contextScore(candidate.word)
+                TouchScoring.score(freq, candidate.cost, contextScore(candidate.word))
             costs[candidate.word] = candidate.cost
         }
         // Length-changing slips (a letter dropped or typed twice) are invisible to the beam.
@@ -701,7 +691,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         for (edit in edits1(lower, index.alphabet)) {
             if (edit.length == lower.length) continue
             val freq = index.freq[edit] ?: continue
-            scored.putIfAbsent(edit, lmPrior(freq) + TOUCH_LENGTH_PENALTY + contextScore(edit))
+            scored.putIfAbsent(edit, TouchScoring.lmPrior(freq) + TOUCH_LENGTH_PENALTY + contextScore(edit))
         }
         if (scored.isEmpty()) return null
         val ranked = scored.entries.sortedByDescending { it.value }.take(maxCount)
@@ -710,13 +700,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             topCost = costs[ranked.first().key],
         )
     }
-
-    /**
-     * Log-probability prior for a dictionary frequency. The stored 128..255 values are already linear in log
-     * frequency, so this only rescales them into nats — applying ln() again (as the legacy [channelScore]
-     * does) would compress the entire vocabulary into 0.69 nats.
-     */
-    private fun lmPrior(freq: Int): Double = (freq - 128).coerceAtLeast(0) / 127.0 * LM_SPAN
 
     // --- German umlaut / ß restoration (issue #219) -------------------------------------------------
 
@@ -1124,7 +1107,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 // the `hadCandidatesBefore` gate, which suppressed 2.7 % of otherwise correct fixes merely
                 // because the typo prefixed some dictionary word — while a bare "a correction exists" rule
                 // would rewrite 30 % of correctly typed names.
-                topTouchCost != null -> topTouchCost <= AUTO_COMMIT_MAX_TOUCH_COST
+                topTouchCost != null ->
+                    AutoCommitGate.allows(topTouchCost, word.length, prefs.correction.autoCorrectStrength.get())
                 // A dropped or doubled letter: the beam cannot see it and the taps say nothing either way,
                 // so keep the conservative classic rule.
                 touchCorrections != null -> !hadCandidatesBefore
