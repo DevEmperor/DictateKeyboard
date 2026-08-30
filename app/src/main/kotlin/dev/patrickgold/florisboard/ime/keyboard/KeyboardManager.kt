@@ -556,20 +556,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    /**
-     * Marks the word a correction just wrote, now that the space or punctuation that triggered it has
-     * been written too (issue #295). Before that moment there is nothing to mark: the boundary is
-     * committed in the same key event, and committing ends the composing region the mark rides on.
-     */
-    private fun flashAutoCorrection() {
-        val correction = pendingAutoCorrection ?: return
-        val boundary = boundaryAfter(correction) ?: return
-        editorInstance.flashTextBeforeCursor(
-            length = correction.inserted.length + boundary.length,
-            color = editorInstance.correctionFlashColor(),
-        )
-    }
-
     private fun undoAutoCorrection(): Boolean {
         val correction = pendingAutoCorrection ?: return false
         pendingAutoCorrection = null
@@ -825,7 +811,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
-        flashAutoCorrection()
     }
 
     /**
@@ -864,7 +849,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
-        flashAutoCorrection()
     }
 
     /**
@@ -1233,7 +1217,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                     // Punctuation ends the word — drop the tap evidence (issue #242).
                                     TouchTrace.reset()
                                     editorInstance.commitChar(text)
-                                    flashAutoCorrection()
                                 }
                             } else {
                                 TouchTrace.commit(text)

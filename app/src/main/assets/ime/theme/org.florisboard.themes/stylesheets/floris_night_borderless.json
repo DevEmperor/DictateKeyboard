@@ -252,13 +252,11 @@
     "foreground": "var(--on-background)"
   },
   "smartbar-candidate-word[auto-commit=1]": {
-    "background": "var(--primary)",
-    "foreground": "var(--on-primary)",
-    "shape": "rounded-corner(25%, 25%, 25%, 25%)"
+    "foreground": "var(--primary)"
   },
   "smartbar-candidate-word[auto-commit=1]:pressed": {
-    "background": "var(--primary-variant)",
-    "foreground": "var(--on-primary)"
+    "background": "var(--surface)",
+    "foreground": "var(--primary)"
   },
   "smartbar-candidate-word-secondary-text": {
     "font-size": "8sp",

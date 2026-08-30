@@ -19,10 +19,7 @@ package dev.patrickgold.florisboard.ime.editor
 import android.content.Context
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
-import android.text.SpannableString
-import android.text.Spanned
 import android.text.TextUtils
-import android.text.style.BackgroundColorSpan
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -34,9 +31,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -452,77 +447,6 @@ abstract class AbstractEditorInstance(context: Context) {
      * Going through the composing region rather than a selection keeps the bookkeeping — the expected
      * content and the last commit position — on the one path that is known to be right.
      */
-    /**
-     * How long a corrected word stays marked in the editor (issue #295).
-     *
-     * Long enough to catch the eye without the underline that comes with a composing region starting
-     * to look like a mistake of its own.
-     */
-    private val flashDurationMs = 220L
-
-    private var flashJob: Job? = null
-
-    /**
-     * Leaves the composing region open a moment so the editor keeps drawing the mark, then closes it.
-     *
-     * Safe to leave hanging because **every** write in this class begins with `finishComposingText()` —
-     * the next keystroke therefore ends the mark itself, before it writes anything, and the delayed
-     * call finds nothing left to finish. That is what makes this a visual change and not a second
-     * source of truth about the editor's contents.
-     */
-    private fun endFlashLater() {
-        flashJob?.cancel()
-        flashJob = scope.launch {
-            delay(flashDurationMs)
-            currentInputConnection()?.finishComposingText()
-        }
-    }
-
-    /**
-     * [text] with [color] behind it, for the brief mark on an auto-corrected word.
-     *
-     * Whether it is drawn at all is the editor's decision: a view-based field honours spans on
-     * composing text, while a Compose text field rebuilds its own styling and ignores them. Nothing
-     * breaks in the second case, the word simply appears without the mark.
-     */
-    private fun flashSpan(text: String, color: Int): CharSequence =
-        SpannableString(text).apply {
-            setSpan(BackgroundColorSpan(color), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-
-    /**
-     * Marks the [length] characters before the cursor with [color] for a moment (issue #295).
-     *
-     * Done by opening a composing region over them, which is the only channel an IME has for styling
-     * text it has already written. Two consequences worth knowing before touching this:
-     *
-     *  - **It must reach as far as the cursor.** A composing region that floats behind the caret is not
-     *    something editors expect, so the mark covers the word *and* the space that ended it rather
-     *    than the word alone.
-     *  - **It cannot be applied at correction time.** The boundary character is committed microseconds
-     *    later in the same key event, and every write here begins with `finishComposingText()` — the
-     *    mark would be gone before a frame was drawn. It goes on afterwards, once the word is final.
-     *
-     * Whether the mark is drawn at all is the editor's decision: a view-based field honours spans on
-     * composing text, a Compose text field rebuilds its own styling and ignores them. Nothing breaks in
-     * the second case; the correction simply happens without the highlight.
-     */
-    fun flashTextBeforeCursor(length: Int, color: Int) {
-        if (length <= 0 || activeInfo.isRawInputEditor) return
-        val ic = currentInputConnection() ?: return
-        val selection = activeContent.selection
-        if (!selection.isValid || selection.isSelectionMode) return
-        val start = selection.start - length
-        if (start < 0) return
-        val text = activeContent.textBeforeSelection.takeLast(length)
-        if (text.length != length) return
-        ic.beginBatchEdit()
-        ic.setComposingRegion(start, selection.start)
-        ic.setComposingText(flashSpan(text, color), 1)
-        ic.endBatchEdit()
-        endFlashLater()
-    }
-
     open fun finalizeComposingText(text: String, range: EditorRange, rangeText: String): Boolean {
         val ic = currentInputConnection() ?: return false
         val content = activeContent
