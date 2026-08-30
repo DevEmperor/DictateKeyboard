@@ -1,6 +1,6 @@
 import {
-  COST, PACKAGES, PLAY_SERVICE_FEE, TYPICAL_REWORD_SECONDS, chatCostNano, limitsFrom,
-  savingsPercent, type Env,
+  COST, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_SECONDS, chatCostNano,
+  limitsFrom, savingsPercent, type Env,
 } from '../config';
 import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
@@ -375,14 +375,27 @@ export async function plans(env: Env) {
   }
 
   const transcribeUsdPerMinute = COST.transcribePerMinuteNano / NANO_PER_USD;
+  // What a sold minute is worth, which is what bounds the spend — not what a bought minute costs.
+  const secondValueUsdPerMinute = (SECOND_VALUE_NANO * 60) / NANO_PER_USD;
   // A typical rewording as the plan measured it: ~500 tokens in, ~300 out.
   const rewordUsd = chatCostNano(500, 300) / NANO_PER_USD;
 
   const packs = Object.values(PACKAGES).map((pack) => {
-    // The whole cost of a pack, and not an estimate of it: every service is priced into the same
-    // seconds, so the seconds sold *are* the upstream spend. Whatever the buyer does with them —
-    // all dictation, all rewording, any mixture — this figure cannot be exceeded.
-    const costUsd = pack.minutes * transcribeUsdPerMinute;
+    // Two figures, because one stopped being able to say both things.
+    //
+    // The ceiling is what a pack can cost at worst, and it holds for any use the buyer makes of it:
+    // every service prices itself into the same seconds and none may cost more than a second is
+    // worth, so the seconds sold bound the spend from above. It is therefore measured against
+    // `SECOND_VALUE_NANO` and not against any provider's price list.
+    //
+    // The ordinary case is what a pack costs when it is spent the way packs are spent — on
+    // dictation — at what dictation is actually bought for. While transcription was the only thing
+    // priced into the unit these two were the same number, and the old comment here said so. They
+    // part company as soon as it is bought somewhere cheaper: the ceiling stays where it was, and
+    // the ordinary case falls away from it.
+    const maxUsd = pack.minutes * secondValueUsdPerMinute;
+    const typicalUsd = pack.minutes * transcribeUsdPerMinute;
+    const costUsd = maxUsd;
     const costHome = costUsd * rate;
     // How far the pack goes if it is spent entirely on rewordings of ordinary length. Shown
     // beside the minutes because "150 minutes" and "or about 4500 rewordings" are the same pack.
@@ -417,10 +430,14 @@ export async function plans(env: Env) {
       currency: real?.currency ?? home,
 
       cost: {
-        dictationUsd: costUsd,
+        dictationUsd: typicalUsd,
         rewordsUsd: 0,
         totalUsd: costUsd,
         totalHome: costHome,
+        // What the pack costs when it is spent on dictation, which is how it is spent. Equal to
+        // `totalUsd` while both providers price a second the same, and lower once they do not.
+        typicalUsd,
+        typicalHome: typicalUsd * rate,
         perMinuteUsd: transcribeUsdPerMinute,
       },
       model: {

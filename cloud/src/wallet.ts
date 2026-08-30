@@ -16,7 +16,7 @@ import { TYPICAL_REWORD_SECONDS, type Env } from './config';
  * And in seconds *only*. There used to be a second balance counting rewordings, which meant the
  * account could not say what it was worth — a rewording deducted one unit whether it cost a fifth
  * of a second or sixteen. One balance, and every service priced into it, makes the remaining
- * seconds an exact statement about money: see `NANO_PER_SECOND` in config.ts.
+ * seconds an exact statement about money: see `SECOND_VALUE_NANO` in config.ts.
  */
 
 /** What is written to storage. */

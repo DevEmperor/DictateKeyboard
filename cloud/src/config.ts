@@ -152,8 +152,11 @@ export function savingsPercent(pack: Package): number | null {
 }
 
 /**
- * Upstream prices in **nano-dollars** (1e-9 $), so everything stays integer and nothing
- * rounds away across millions of requests.
+ * What the upstream provider charges *us*, in **nano-dollars** (1e-9 $), so everything stays
+ * integer and nothing rounds away across millions of requests.
+ *
+ * Purchase prices only. What a second is worth when it is sold is `SECOND_VALUE_NANO`, and the two
+ * are deliberately not connected — see the note there.
  *
  * As of August 2026, from OpenAI's own pricing page.
  */
@@ -175,19 +178,30 @@ export function chatCostNano(tokensIn: number, tokensOut: number): number {
 }
 
 /**
- * One second of dictation, in nano-dollars. The unit the whole balance is denominated in.
+ * What one sold second is worth, in nano-dollars. The unit the whole balance is denominated in.
  *
  * A credit account holds seconds and nothing else, and every service prices itself into them.
  * That is not a simplification but the safety property: a pack of 150 minutes is 9000 seconds is
- * exactly $0.675 of upstream spend, whatever the buyer does with it. Before this, rewordings were
- * counted rather than costed, and a large one cost five times what it deducted — so a pack could
- * be turned into a loss simply by using it in a way the price list had not imagined.
+ * exactly $0.675, whatever the buyer does with it. Before this, rewordings were counted rather
+ * than costed, and a large one cost five times what it deducted — so a pack could be turned into
+ * a loss simply by using it in a way the price list had not imagined.
+ *
+ * **It follows no provider's price, and that is the point.** This value was once written as
+ * `COST.transcribePerMinuteNano / 60`, which was correct for exactly as long as the two numbers
+ * meant the same thing. They stop meaning the same thing the moment transcription is bought
+ * somewhere cheaper: the second sold is still worth what it was sold for, while the second bought
+ * is not. Deriving one from the other would have shrunk the unit along with the purchase price and
+ * made an ordinary rewording deduct seventeen seconds instead of two — with no test failing and no
+ * warning raised, only balances draining eight times faster.
+ *
+ * The invariant that has to hold: no service may cost more than this per second it deducts.
+ * `costToSeconds` rounds up to guarantee it.
  */
-export const NANO_PER_SECOND = COST.transcribePerMinuteNano / 60;
+export const SECOND_VALUE_NANO = 75_000;
 
 /** What a service costs, expressed in the only currency the wallet knows. Always rounded up. */
 export function costToSeconds(nano: number): number {
-  return Math.ceil(nano / NANO_PER_SECOND);
+  return Math.ceil(nano / SECOND_VALUE_NANO);
 }
 
 /**

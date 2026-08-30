@@ -2084,26 +2084,39 @@ var GRAPH = ${GRAPH_JSON};
       // Durchschnitt darüber kein Preis, den jemand bezahlt hat — dann steht die ganze Leiter in
       // der Auszahlungswährung, und die Karte sagt, dass sie es tut.
       var oneCurrency = !!a && a.currencies === 1;
+      // Der Einkauf steht in zwei Zeilen, sobald es zwei zu sagen gibt.
+      //
+      // Die obere ist die Obergrenze und gilt für jede Nutzung: Kein Dienst darf mehr kosten, als
+      // eine Sekunde wert ist (SECOND_VALUE_NANO in config.ts), also kann ein Paket diese Summe
+      // unter keinem Nutzungsmuster überschreiten. Die untere ist der Regelfall — dasselbe Paket
+      // verdiktiert, zum tatsächlichen Einkaufspreis.
+      //
+      // Solange beide Zahlen gleich sind, wäre die zweite Zeile dieselbe Zahl noch einmal und
+      // bleibt weg. Sie erscheint von selbst, sobald der Einkauf unter den Verkaufswert fällt.
+      var maxRow = ['Einkauf, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)];
+      var typicalRow = k.cost.typicalUsd < k.cost.totalUsd
+        ? ['davon im Regelfall (nur Diktat)', '− ' + fmtUsd4(k.cost.typicalUsd)]
+        : null;
       var steps = a && oneCurrency
         ? [['Kundschaft zahlt', money(a.paid, k.currency)],
            ['davon Steuer', '− ' + money(a.tax, k.currency)],
            ['Google-Anteil', '− ' + money(a.paid - a.tax - a.revenue, k.currency)],
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenue, k.currency) + '</strong>'],
            (k.currency !== cur ? ['umgerechnet', money(a.revenueHome, cur)] : null),
-           ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
+           maxRow, typicalRow,
            ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
         : a
         ? [['Kundschaft zahlt', money(a.paidHome, cur)],
            ['davon Steuer', '− ' + money(a.taxHome, cur)],
            ['Google-Anteil', '− ' + money(a.paidHome - a.taxHome - a.revenueHome, cur)],
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenueHome, cur) + '</strong>'],
-           ['OpenAI, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']]
+           maxRow, typicalRow,
+           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
         : [['Listenpreis (netto)', money(k.listPrice, cur)],
            ['Google-Anteil (' + Math.round(fee * 100) + ' % angenommen)', '− ' + money(k.listPrice * fee, cur)],
            ['<strong>Erlös laut Modell</strong>', '<strong>' + money(k.model.revenue, cur) + '</strong>'],
-           ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']];
+           maxRow, typicalRow,
+           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']].filter(Boolean);
 
       // Vom Ziel zurück auf den Preis: der Erlös muss Einkauf / (1 − Marge) sein, und der
       // Listenpreis ist dieser Erlös vor Googles Anteil. Steht hier, damit die nächste Preisrunde
