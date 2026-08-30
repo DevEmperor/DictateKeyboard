@@ -305,8 +305,31 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    /**
+     * Applies the correction the strip had marked, and remembers what it overwrote so the next
+     * backspace can take it back (issue #295).
+     *
+     * Separate from [commitCandidate] because only the *silent* swap earns an undo: a tap on the strip
+     * is a choice, and a backspace after one is meant for the text, not for the choice.
+     */
+    private fun commitAutoCorrection(candidate: SuggestionCandidate) {
+        // Read before the commit — afterwards the editor holds the corrected word and the typed one is
+        // gone for good.
+        val replaced = editorInstance.textCompletionWouldReplace()
+        commitCandidate(candidate)
+        val inserted = candidate.text.toString()
+        pendingAutoCorrection = if (replaced.isNotEmpty() && replaced != inserted) {
+            AutoCorrection(inserted = inserted, replaced = replaced)
+        } else {
+            null
+        }
+    }
+
     fun commitCandidate(candidate: SuggestionCandidate) {
         pendingExpansion = null // this write does not come through onInputKeyUp (issue #283)
+        // A tap on the strip replaces whatever the previous correction left behind, so there is nothing
+        // left to take back. [commitAutoCorrection] re-arms it immediately afterwards for its own case.
+        pendingAutoCorrection = null
         scope.launch {
             candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
         }
@@ -320,7 +343,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun commitGesture(word: String) {
-        pendingExpansion = null // same as above: a glide never passes through onInputKeyUp (issue #283)
+        // Same as above: a glide never passes through onInputKeyUp (issues #283, #295).
+        pendingExpansion = null
+        pendingAutoCorrection = null
         // A glide produces a whole word at once, so there are no per-character taps to reason about (#242).
         TouchTrace.reset()
         val text = fixCase(word)
@@ -458,6 +483,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private var pendingExpansion: SnippetExpansion? = null
 
     /**
+     * An auto-correction that has just been applied, kept for exactly one keystroke so the next
+     * backspace can put the typed word back (issue #295). [inserted] is the word that now stands,
+     * [replaced] what was actually typed.
+     *
+     * Only ever armed for a *silent* correction. Tapping a suggestion in the strip is a decision the
+     * user made and does not want undone by a backspace they meant for the letter before it.
+     */
+    private data class AutoCorrection(val inserted: String, val replaced: String)
+
+    private var pendingAutoCorrection: AutoCorrection? = null
+
+    /**
      * Expands a typed snippet trigger (issue #283): if the word right before the cursor is a shortcut
      * of a `[snippet]` prompt, it is replaced by that snippet plus [boundary] — the space, punctuation
      * mark or line break that ended the word. Returns true when that happened, in which case the caller
@@ -491,6 +528,39 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Undoes the snippet expansion of the previous keystroke, if the editor still ends exactly in what
      * was inserted. Returns true when the backspace was consumed by putting the shortcut back.
      */
+    /**
+     * Puts back the word the previous keystroke auto-corrected away, if the editor still ends in what
+     * the correction wrote. Returns true when the backspace was spent on that instead of deleting.
+     *
+     * The boundary that triggered the correction — the space or punctuation mark typed after it — is
+     * kept: the point is to take back a word that was changed for you, not to undo your own keystroke.
+     * A second backspace then deletes normally, because this only ever fires once.
+     */
+    private fun undoAutoCorrection(): Boolean {
+        val correction = pendingAutoCorrection ?: return false
+        pendingAutoCorrection = null
+        val content = editorInstance.activeContent
+        if (content.selection.isSelectionMode) return false
+        val before = content.textBeforeSelection
+        // Written as `word` on the punctuation path and as `word ` on the space path, and the cached
+        // text before the cursor is capped, so only the tail is compared — the same reasoning as in
+        // [undoSnippetExpansion].
+        val boundary = when {
+            before.endsWith(correction.inserted.takeLast(TAIL_MATCH_LENGTH)) -> ""
+            before.length > correction.inserted.length &&
+                before.dropLast(1).endsWith(correction.inserted.takeLast(TAIL_MATCH_LENGTH)) -> before.takeLast(1)
+            else -> return false
+        }
+        editorInstance.replaceTextBeforeCursor(
+            correction.inserted.length + boundary.length,
+            correction.replaced + boundary,
+        )
+        // The restored word is the user's own spelling again; nothing about the taps that produced it
+        // still describes what is in the editor (issue #242).
+        TouchTrace.reset()
+        return true
+    }
+
     private fun undoSnippetExpansion(): Boolean {
         val expansion = pendingExpansion ?: return false
         pendingExpansion = null
@@ -536,6 +606,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             TouchTrace.reset()
             return
         }
+        // And straight after an auto-correction it puts the typed word back (issue #295), which is the
+        // fastest way out of a correction you did not want. A second one then deletes normally.
+        if (undoAutoCorrection()) return
         // Keep the tap evidence aligned with the word: a single-character backspace drops the last tap,
         // anything coarser (a whole word) invalidates the trace entirely (issue #242).
         if (unit == OperationUnit.CHARACTERS) TouchTrace.pop() else TouchTrace.reset()
@@ -722,7 +795,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     fun handleHardwareKeyboardSpace() {
         val candidate = nlpManager.getAutoCommitCandidate()
-        candidate?.let { commitCandidate(it) }
+        candidate?.let { commitAutoCorrection(it) }
         // Skip handling changing to characters keyboard and double space periods
         // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
@@ -740,7 +813,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // word and there is nothing left to recognise (issue #283).
         if (expandSnippet(KeyCode.SPACE.toChar().toString())) return
         val candidate = nlpManager.getAutoCommitCandidate()
-        candidate?.let { commitCandidate(it) }
+        candidate?.let { commitAutoCorrection(it) }
         TouchTrace.reset() // word boundary (issue #242)
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
@@ -979,9 +1052,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
-        // The snippet undo lasts exactly one keystroke: anything but a plain backspace lets it go, and
-        // the expansion itself re-arms it further down (issue #283).
-        if (data.code != KeyCode.DELETE) pendingExpansion = null
+        // Both undos last exactly one keystroke: anything but a plain backspace lets them go, and the
+        // expansion and the correction re-arm themselves further down (issues #283, #295).
+        if (data.code != KeyCode.DELETE) {
+            pendingExpansion = null
+            pendingAutoCorrection = null
+        }
         val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
         if (emojiSearchQuery.value != null && handleEmojiSearchKey(data)) {
             return@batchEdit
@@ -1099,7 +1175,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
-                    nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                    nlpManager.getAutoCommitCandidate()?.let { commitAutoCorrection(it) }
                     editorInstance.commitText(data.asString(isForDisplay = false))
                     return@batchEdit
                 }
@@ -1128,7 +1204,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                 // A punctuation mark ends the word too, so it can expand a snippet
                                 // trigger (issue #283) — and then it has already written itself.
                                 if (!expandSnippet(text)) {
-                                    nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                                    nlpManager.getAutoCommitCandidate()?.let { commitAutoCorrection(it) }
                                     // Punctuation ends the word — drop the tap evidence (issue #242).
                                     TouchTrace.reset()
                                     editorInstance.commitChar(text)
