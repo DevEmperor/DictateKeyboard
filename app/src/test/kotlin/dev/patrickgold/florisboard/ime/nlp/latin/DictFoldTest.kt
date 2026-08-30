@@ -19,17 +19,17 @@ import kotlin.test.assertTrue
 /**
  * Covers the dictionary key folding (issue #265).
  *
- * Two things matter here and they pull against each other: an Arabic word must reach its entry however
- * the writer spelled it, and every language that already ships a dictionary must fold exactly the way it
- * did before — a change there would silently re-key 33 word lists.
+ * French and Arabic words must reach their entries from the spellings people can easily type, while every
+ * other language that already ships a dictionary must fold exactly the way it did before — a change there
+ * would silently re-key its word list.
  */
 class DictFoldTest {
 
     // --- the languages that must not change -------------------------------------------------------
 
     @Test
-    fun `latin languages still fold to plain lowercase`() {
-        for (lang in listOf("en", "de", "fr", "tr", "vi", "ru", "el", "he")) {
+    fun `other languages still fold to plain lowercase`() {
+        for (lang in listOf("en", "de", "tr", "vi", "ru", "el", "he")) {
             for (word in listOf("Baum", "STRASSE", "don't", "well-known", "Ärmel", "İstanbul", "мир", "Ελλάδα")) {
                 assertEquals(word.lowercase(), DictFold.foldKey(lang, word), "$lang / $word")
             }
@@ -37,13 +37,38 @@ class DictFoldTest {
     }
 
     @Test
-    fun `only arabic script languages fold non-trivially`() {
+    fun `only french and arabic script languages fold non-trivially`() {
         for (lang in listOf("ar", "fa", "ur", "ckb")) {
             assertTrue(DictFold.hasNonTrivialFold(lang), lang)
         }
+        assertTrue(DictFold.hasNonTrivialFold("fr"))
+        assertFalse(DictFold.hasRestorationVariants("fr"))
         for (lang in listOf("en", "de", "he", "fa-IR", "", "hi", "bn", "ta")) {
             assertFalse(DictFold.hasNonTrivialFold(lang), lang)
         }
+    }
+
+    // --- french: base-letter typing reaches accented spellings -----------------------------------
+
+    @Test
+    fun `french accents fold to their base letters`() {
+        assertEquals("hote", DictFold.foldFrench("hôte"))
+        assertEquals("garcon", DictFold.foldFrench("garçon"))
+        assertEquals("eleve", DictFold.foldFrench("élève"))
+        assertEquals("deja", DictFold.foldFrench("de\u0301ja"))
+    }
+
+    @Test
+    fun `french unaccented prefixes match accented dictionary words`() {
+        val prefix = DictFold.foldKey("fr", "ho")
+        assertTrue(DictFold.foldKey("fr", "hôte").startsWith(prefix))
+        assertTrue(DictFold.foldKey("fr", "hôtel").startsWith(prefix))
+    }
+
+    @Test
+    fun `french ligatures fold to their keyboard spelling`() {
+        assertEquals("oeuvre", DictFold.foldFrench("œuvre"))
+        assertEquals("aether", DictFold.foldFrench("æther"))
     }
 
     // --- arabic: marks that carry no meaning ------------------------------------------------------
