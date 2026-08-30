@@ -46,6 +46,13 @@
     }
   ],
 
+  // Workers AI. No key and no secret: the binding bills the account this Worker belongs to, which
+  // is the whole point — nothing has to leave for an outside service. Harmless while both providers
+  // below say "openai"; the binding is simply never called then.
+  "ai": {
+    "binding": "AI"
+  },
+
   "durable_objects": {
     "bindings": [
       { "name": "WALLET", "class_name": "Wallet" },
@@ -80,6 +87,15 @@
   // in the configuration rather than in the code so that the source can be published without giving
   // the limits away with it.
   "vars": {
+    // Who does the work: "openai" or "workers-ai", one per service and never one for both. The two
+    // moves have different reasons, different measurements and different ways back, and the useful
+    // in-between state — dictation at Cloudflare, rewording still at OpenAI — needs them separate.
+    //
+    // Switching one is this file plus `wrangler deploy`, with no code change and nothing to think
+    // about at three in the morning. The matching model below is picked up automatically if it is
+    // left pointing at the other provider, so a half-flipped configuration keeps working.
+    "TRANSCRIBE_PROVIDER": "openai",
+    "CHAT_PROVIDER": "openai",
     "TRANSCRIBE_MODEL": "gpt-transcribe",
     "CHAT_MODEL": "gpt-5-nano",
     "MAX_AUDIO_SECONDS": "<number>",

@@ -16,6 +16,16 @@ export interface Env {
   WALLET: DurableObjectNamespace<Wallet>;
   GLOBAL: DurableObjectNamespace<GlobalGuard>;
 
+  /**
+   * Workers AI. Not a secret and not a key — the binding bills the account the Worker belongs to.
+   *
+   * That is the whole legal difference to OpenAI in one line: nothing leaves for an outside
+   * service, because the model already runs inside the one this Worker lives in. What it does not
+   * change is *where*: the inference runs wherever Cloudflare has capacity, and that cannot be
+   * pinned without an Enterprise contract.
+   */
+  AI: Ai;
+
   /** Secret. Lives here only and never reaches a client. */
   OPENAI_API_KEY: string;
   /**
@@ -178,6 +188,20 @@ export function transcribeCostNano(seconds: number): number {
   return Math.ceil((seconds / 60) * COST.transcribePerMinuteNano);
 }
 
+/**
+ * The same figure at whichever provider is in use.
+ *
+ * Needed because the day's budget is reserved *before* the request goes out, when the only thing
+ * known about the cost is who is about to be asked. On the way back Workers AI reports the neurons
+ * it actually spent, and that measurement replaces this estimate — this one only has to be close
+ * enough to hold the right amount of budget, and to be wrong in the safe direction if it is wrong.
+ */
+export function transcribeCostNanoFor(p: Provider, seconds: number): number {
+  if (p !== 'workers-ai') return transcribeCostNano(seconds);
+  const perMinute = NEURONS['@cf/openai/whisper-large-v3-turbo'].perAudioMinute;
+  return Math.ceil((seconds / 60) * perMinute * NANO_PER_NEURON);
+}
+
 export function chatCostNano(tokensIn: number, tokensOut: number): number {
   return tokensIn * COST.chatInputPerTokenNano + tokensOut * COST.chatOutputPerTokenNano;
 }
@@ -316,6 +340,24 @@ function provider(value: string | undefined): Provider {
   return value === 'workers-ai' ? 'workers-ai' : 'openai';
 }
 
+/** The Workers AI models the switch falls back to, so flipping it is one line and not two. */
+const CF_DEFAULT_TRANSCRIBE = '@cf/openai/whisper-large-v3-turbo';
+const CF_DEFAULT_CHAT = '@cf/google/gemma-4-26b-a4b-it';
+
+/**
+ * The model to use, refusing one that belongs to the other provider.
+ *
+ * `TRANSCRIBE_PROVIDER` and `TRANSCRIBE_MODEL` are two settings that have to agree, and the moment
+ * anyone flips one at three in the morning is the moment they forget the other. Sending
+ * `gpt-transcribe` to `env.AI.run` would fail every request for as long as it took to notice.
+ * Falling back to the right default keeps the service up; the wrong name is visible in the ledger's
+ * `model` column either way, so nothing is hidden by this — only nothing is broken by it.
+ */
+function modelFor(p: Provider, configured: string | undefined, cfDefault: string, openaiDefault: string): string {
+  if (p === 'workers-ai') return configured?.startsWith('@cf/') ? configured : cfDefault;
+  return configured?.startsWith('@cf/') ? openaiDefault : (configured ?? openaiDefault);
+}
+
 export function limitsFrom(env: Env): Limits {
   return {
     // Read here so the ledger can record who a request was routed to. Nothing branches on these
@@ -324,8 +366,10 @@ export function limitsFrom(env: Env): Limits {
     // the day before looked like, and that comparison is the whole point of the exercise.
     transcribeProvider: provider(env.TRANSCRIBE_PROVIDER),
     chatProvider: provider(env.CHAT_PROVIDER),
-    transcribeModel: env.TRANSCRIBE_MODEL ?? 'gpt-transcribe',
-    chatModel: env.CHAT_MODEL ?? 'gpt-5-nano',
+    transcribeModel: modelFor(
+      provider(env.TRANSCRIBE_PROVIDER), env.TRANSCRIBE_MODEL, CF_DEFAULT_TRANSCRIBE, 'gpt-transcribe',
+    ),
+    chatModel: modelFor(provider(env.CHAT_PROVIDER), env.CHAT_MODEL, CF_DEFAULT_CHAT, 'gpt-5-nano'),
     maxAudioSeconds: num(env.MAX_AUDIO_SECONDS, 600),
     maxChatInputTokens: num(env.MAX_CHAT_INPUT_TOKENS, 8000),
     maxChatOutputTokens: num(env.MAX_CHAT_OUTPUT_TOKENS, 2000),
