@@ -250,6 +250,15 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)"
   },
+  "smartbar-candidate-word[auto-commit=1]": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)",
+    "shape": "rounded-corner(25%, 25%, 25%, 25%)"
+  },
+  "smartbar-candidate-word[auto-commit=1]:pressed": {
+    "background": "var(--primary-variant)",
+    "foreground": "var(--on-primary)"
+  },
   "smartbar-candidate-word-secondary-text": {
     "font-size": "8sp",
     "margin": "0dp 2dp 0dp 0dp"

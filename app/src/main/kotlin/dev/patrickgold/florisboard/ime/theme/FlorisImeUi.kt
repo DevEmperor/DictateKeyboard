@@ -416,5 +416,14 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         const val Mode = "mode"
         const val ShiftState = "shiftstate"
         const val WindowMode = "windowmode"
+
+        /**
+         * 1 on the candidate that will replace the typed word when you press space, 0 on the rest.
+         *
+         * Named here so a theme can style it: `smartbar-candidate-word[auto-commit=1]`. Bold alone
+         * turned out not to be visible in peripheral vision (issue #295), and a theme is the right
+         * place to decide what "visible" looks like.
+         */
+        const val AutoCommit = "auto-commit"
     }
 }

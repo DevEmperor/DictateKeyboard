@@ -249,6 +249,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
+    // The suggestion that space will apply. Bold alone was not enough to find it without looking
+    // straight at it (issue #295), so it also carries the accent. Here as well as in every bundled
+    // stylesheet, because this is what a theme that says nothing about it falls back to.
+    FlorisImeUi.SmartbarCandidateWord.elementName(FlorisImeUi.Attr.AutoCommit to listOf(1)) {
+        background = `var`("--primary")
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(25)
+    }
+    FlorisImeUi.SmartbarCandidateWord.elementName(
+        FlorisImeUi.Attr.AutoCommit to listOf(1),
+        selector = SnyggSelector.PRESSED,
+    ) {
+        background = `var`("--primary-variant")
+        foreground = `var`("--on-primary")
+    }
     FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName {
         fontSize = fontSize(8.sp)
         margin = padding(0.dp, 2.dp, 0.dp, 0.dp)

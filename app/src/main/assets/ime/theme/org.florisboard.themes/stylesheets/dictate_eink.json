@@ -249,6 +249,11 @@
     "background": "var(--ink)",
     "foreground": "var(--paper)"
   },
+  "smartbar-candidate-word[auto-commit=1]": {
+    "border-color": "#000000",
+    "border-width": "1.5dp",
+    "shape": "rounded-corner(25%, 25%, 25%, 25%)"
+  },
   "smartbar-candidate-word-secondary-text": {
     "font-size": "8sp",
     "margin": "0dp 2dp 0dp 0dp"

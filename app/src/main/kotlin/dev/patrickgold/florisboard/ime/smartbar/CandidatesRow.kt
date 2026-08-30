@@ -214,7 +214,7 @@ private fun CandidateItem(
     // unstable arg to the Snygg composables below, would also defeat their skipping) — reduces the
     // per-keystroke recomposition + GC churn behind the typing jank.
     val autoCommit = candidate.isEligibleForAutoCommit
-    val attributes = remember(autoCommit) { mapOf("auto-commit" to if (autoCommit) 1 else 0) }
+    val attributes = remember(autoCommit) { mapOf(FlorisImeUi.Attr.AutoCommit to if (autoCommit) 1 else 0) }
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
 
     SnyggRow(
