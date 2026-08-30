@@ -207,6 +207,20 @@ export function chatCostNano(tokensIn: number, tokensOut: number): number {
 }
 
 /**
+ * The same at whichever provider is in use, for the reservation only.
+ *
+ * A model the neuron table does not know falls back to OpenAI's prices rather than refusing to
+ * estimate. They are the same order of magnitude across every candidate, and this figure exists to
+ * hold roughly the right amount of budget for the length of one request — the real cost comes back
+ * as neurons and replaces it.
+ */
+export function chatCostNanoFor(p: Provider, model: string, tokensIn: number, tokensOut: number): number {
+  if (p !== 'workers-ai') return chatCostNano(tokensIn, tokensOut);
+  const neurons = expectedNeurons(model, { tokensIn, tokensOut });
+  return neurons === null ? chatCostNano(tokensIn, tokensOut) : Math.ceil(neurons * NANO_PER_NEURON);
+}
+
+/**
  * What one sold second is worth, in nano-dollars. The unit the whole balance is denominated in.
  *
  * A credit account holds seconds and nothing else, and every service prices itself into them.
