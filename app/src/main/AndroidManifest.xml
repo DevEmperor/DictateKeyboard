@@ -190,11 +190,17 @@
                 <data android:mimeType="application/vnd.florisboard.extension+zip"/>
                 <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
+            <!-- Sharing an extension keeps its own type only. octet-stream belongs on the VIEW
+                 filter above, where it earns its keep: a browser downloads a .flex and hands it over
+                 with no type at all. On SEND it earned nothing and cost something — Android has no
+                 type for .opus either, so every shared voice note offered "Import Extension" beside
+                 "Transcribe", and a share sheet that asks you to choose between two entries of the
+                 same app is a riddle. An extension that arrives typed still works, "Open with" still
+                 works, and the settings have their own import screen. -->
             <intent-filter android:label="Import Extension">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="application/vnd.florisboard.extension+zip"/>
-                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
@@ -277,12 +283,16 @@
              built uri list as its key — a second upload, paid for, replacing a transcript that was
              already finished, after the copy step has wiped its own cache dir. Handling the change
              keeps the composition, the running job and the playback position; LocalConfiguration
-             still updates, so the landscape layout switches as it should. -->
+             still updates, so the landscape layout switches as it should.
+
+             Deliberately NOT excludeFromRecents, unlike the sticker trampoline above. That one is an
+             invisible hop with nothing to come back to; this is a screen someone reads, and hiding it
+             from the recents list meant stepping into another app lost the transcript with no way
+             back to it. -->
         <activity
             android:name="dev.patrickgold.florisboard.dictate.importer.TranscribeShareActivity"
             android:label="@string/dictate__import_share_label"
             android:theme="@style/FlorisAppTheme"
-            android:excludeFromRecents="true"
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden">
             <intent-filter>

@@ -460,7 +460,10 @@ private fun Footer(
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.size(8.dp))
-            Text(stringRes(if (copied) R.string.dictate__import_copied else R.string.dictate__import_copy))
+            // The label never changes. A word that grows to "Copied!" and shrinks back resizes the
+            // button under the finger that just pressed it, and the row shifts with it; the tick is
+            // the same confirmation without moving anything.
+            Text(stringRes(R.string.dictate__import_copy))
         }
     }
     @Composable
