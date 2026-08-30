@@ -1412,6 +1412,14 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__import_result_label">Transcript</string>
     <string name="dictate__import_prompt_button">Herschrijven</string>
     <string name="dictate__import_revert">Ongedaan maken</string>
+    <string name="dictate__import_copy">Kopiëren</string>
+    <string name="dictate__import_copied">Gekopieerd!</string>
+    <string name="dictate__import_save">Opslaan als bestand</string>
+    <string name="dictate__import_saved">Transcript opgeslagen.</string>
+    <string name="dictate__import_save_failed">Het transcript kon niet worden opgeslagen.</string>
+    <string name="dictate__import_search">Zoeken in transcript</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Opnieuw proberen</string>
     <string name="dictate__import_no_file">Er is geen audiobestand gedeeld.</string>
     <string name="dictate__import_only_first">Alleen het eerste bestand wordt getranscribeerd – {count} andere zijn overgeslagen.</string>

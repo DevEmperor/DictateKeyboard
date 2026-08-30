@@ -1508,6 +1508,14 @@
     <string name="dictate__import_result_label">转写文本</string>
     <string name="dictate__import_prompt_button">重写</string>
     <string name="dictate__import_revert">撤销</string>
+    <string name="dictate__import_copy">复制</string>
+    <string name="dictate__import_copied">已复制！</string>
+    <string name="dictate__import_save">保存为文件</string>
+    <string name="dictate__import_saved">转写文本已保存。</string>
+    <string name="dictate__import_save_failed">无法保存转写文本。</string>
+    <string name="dictate__import_search">在转写文本中搜索</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">重试</string>
     <string name="dictate__import_no_file">没有共享任何音频文件。</string>
     <string name="dictate__import_only_first">只转写第一个文件，另外 {count} 个已跳过。</string>

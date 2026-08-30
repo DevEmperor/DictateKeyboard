@@ -1449,6 +1449,14 @@
     <string name="dictate__import_result_label">Transkript</string>
     <string name="dictate__import_prompt_button">Überarbeiten</string>
     <string name="dictate__import_revert">Zurücksetzen</string>
+    <string name="dictate__import_copy">Kopieren</string>
+    <string name="dictate__import_copied">Kopiert!</string>
+    <string name="dictate__import_save">Als Datei speichern</string>
+    <string name="dictate__import_saved">Transkript gespeichert.</string>
+    <string name="dictate__import_save_failed">Das Transkript konnte nicht gespeichert werden.</string>
+    <string name="dictate__import_search">Im Transkript suchen</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Erneut versuchen</string>
     <string name="dictate__import_no_file">Es wurde keine Audiodatei geteilt.</string>
     <string name="dictate__import_only_first">Nur die erste Datei wird transkribiert – {count} weitere wurden ausgelassen.</string>

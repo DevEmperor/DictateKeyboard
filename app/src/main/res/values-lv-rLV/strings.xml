@@ -1456,6 +1456,14 @@
     <string name="dictate__import_result_label">Transkripts</string>
     <string name="dictate__import_prompt_button">Pārstrādāt</string>
     <string name="dictate__import_revert">Atsaukt</string>
+    <string name="dictate__import_copy">Kopēt</string>
+    <string name="dictate__import_copied">Nokopēts!</string>
+    <string name="dictate__import_save">Saglabāt kā failu</string>
+    <string name="dictate__import_saved">Transkripts saglabāts.</string>
+    <string name="dictate__import_save_failed">Transkriptu neizdevās saglabāt.</string>
+    <string name="dictate__import_search">Meklēt transkriptā</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Mēģināt vēlreiz</string>
     <string name="dictate__import_no_file">Neviens audio fails netika kopīgots.</string>
     <string name="dictate__import_only_first">Tiek transkribēts tikai pirmais fails – vēl {count} tika izlaisti.</string>

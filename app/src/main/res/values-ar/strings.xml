@@ -1371,6 +1371,14 @@
     <string name="dictate__import_result_label">النص</string>
     <string name="dictate__import_prompt_button">إعادة الصياغة</string>
     <string name="dictate__import_revert">تراجع</string>
+    <string name="dictate__import_copy">نسخ</string>
+    <string name="dictate__import_copied">تم النسخ!</string>
+    <string name="dictate__import_save">حفظ كملف</string>
+    <string name="dictate__import_saved">تم حفظ النص.</string>
+    <string name="dictate__import_save_failed">تعذّر حفظ النص.</string>
+    <string name="dictate__import_search">البحث في النص</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">أعد المحاولة</string>
     <string name="dictate__import_no_file">لم تتم مشاركة أي ملف صوتي.</string>
     <string name="dictate__import_only_first">يتم تفريغ الملف الأول فقط – وتم تجاوز {count} ملفات أخرى.</string>

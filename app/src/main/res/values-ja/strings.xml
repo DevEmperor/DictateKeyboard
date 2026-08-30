@@ -1445,6 +1445,14 @@
     <string name="dictate__import_result_label">文字起こし</string>
     <string name="dictate__import_prompt_button">書き直す</string>
     <string name="dictate__import_revert">元に戻す</string>
+    <string name="dictate__import_copy">コピー</string>
+    <string name="dictate__import_copied">コピーしました！</string>
+    <string name="dictate__import_save">ファイルに保存</string>
+    <string name="dictate__import_saved">文字起こしを保存しました。</string>
+    <string name="dictate__import_save_failed">文字起こしを保存できませんでした。</string>
+    <string name="dictate__import_search">文字起こし内を検索</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">再試行</string>
     <string name="dictate__import_no_file">音声ファイルが共有されませんでした。</string>
     <string name="dictate__import_only_first">最初のファイルのみ文字起こしします。他の {count} 件は対象外です。</string>

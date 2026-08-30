@@ -1528,6 +1528,14 @@
     <string name="dictate__import_result_label">Transkrypcja</string>
     <string name="dictate__import_prompt_button">Przeredaguj</string>
     <string name="dictate__import_revert">Cofnij</string>
+    <string name="dictate__import_copy">Kopiuj</string>
+    <string name="dictate__import_copied">Skopiowano!</string>
+    <string name="dictate__import_save">Zapisz jako plik</string>
+    <string name="dictate__import_saved">Zapisano transkrypcję.</string>
+    <string name="dictate__import_save_failed">Nie udało się zapisać transkrypcji.</string>
+    <string name="dictate__import_search">Szukaj w transkrypcji</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Spróbuj ponownie</string>
     <string name="dictate__import_no_file">Nie udostępniono żadnego pliku audio.</string>
     <string name="dictate__import_only_first">Transkrybowany jest tylko pierwszy plik – pominięto kolejne: {count}.</string>

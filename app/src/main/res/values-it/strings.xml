@@ -1296,6 +1296,14 @@
     <string name="dictate__import_result_label">Trascrizione</string>
     <string name="dictate__import_prompt_button">Rielabora</string>
     <string name="dictate__import_revert">Annulla</string>
+    <string name="dictate__import_copy">Copia</string>
+    <string name="dictate__import_copied">Copiato!</string>
+    <string name="dictate__import_save">Salva come file</string>
+    <string name="dictate__import_saved">Trascrizione salvata.</string>
+    <string name="dictate__import_save_failed">Impossibile salvare la trascrizione.</string>
+    <string name="dictate__import_search">Cerca nella trascrizione</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Riprova</string>
     <string name="dictate__import_no_file">Nessun file audio è stato condiviso.</string>
     <string name="dictate__import_only_first">Viene trascritto solo il primo file: altri {count} sono stati esclusi.</string>

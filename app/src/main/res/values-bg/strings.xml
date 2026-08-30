@@ -1513,6 +1513,14 @@
     <string name="dictate__import_result_label">Текст</string>
     <string name="dictate__import_prompt_button">Преработи</string>
     <string name="dictate__import_revert">Отмени</string>
+    <string name="dictate__import_copy">Копирай</string>
+    <string name="dictate__import_copied">Копирано!</string>
+    <string name="dictate__import_save">Запази като файл</string>
+    <string name="dictate__import_saved">Текстът е запазен.</string>
+    <string name="dictate__import_save_failed">Текстът не можа да бъде запазен.</string>
+    <string name="dictate__import_search">Търсене в текста</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Опитай отново</string>
     <string name="dictate__import_no_file">Не беше споделен аудиофайл.</string>
     <string name="dictate__import_only_first">Преобразува се само първият файл – още {count} бяха пропуснати.</string>

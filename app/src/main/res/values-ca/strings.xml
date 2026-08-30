@@ -1388,6 +1388,14 @@
     <string name="dictate__import_result_label">Transcripció</string>
     <string name="dictate__import_prompt_button">Reelabora</string>
     <string name="dictate__import_revert">Desfés</string>
+    <string name="dictate__import_copy">Copia</string>
+    <string name="dictate__import_copied">Copiat!</string>
+    <string name="dictate__import_save">Desa com a fitxer</string>
+    <string name="dictate__import_saved">Transcripció desada.</string>
+    <string name="dictate__import_save_failed">No s\'ha pogut desar la transcripció.</string>
+    <string name="dictate__import_search">Cerca a la transcripció</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Torna-ho a provar</string>
     <string name="dictate__import_no_file">No s\'ha compartit cap fitxer d\'àudio.</string>
     <string name="dictate__import_only_first">Només es transcriu el primer fitxer: se n\'han omès {count} més.</string>

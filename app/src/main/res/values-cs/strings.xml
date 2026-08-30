@@ -1527,6 +1527,14 @@
     <string name="dictate__import_result_label">Přepis</string>
     <string name="dictate__import_prompt_button">Přepracovat</string>
     <string name="dictate__import_revert">Zpět</string>
+    <string name="dictate__import_copy">Kopírovat</string>
+    <string name="dictate__import_copied">Zkopírováno!</string>
+    <string name="dictate__import_save">Uložit do souboru</string>
+    <string name="dictate__import_saved">Přepis uložen.</string>
+    <string name="dictate__import_save_failed">Přepis se nepodařilo uložit.</string>
+    <string name="dictate__import_search">Hledat v přepisu</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Zkusit znovu</string>
     <string name="dictate__import_no_file">Nebyl sdílen žádný zvukový soubor.</string>
     <string name="dictate__import_only_first">Přepisuje se jen první soubor – dalších {count} bylo vynecháno.</string>

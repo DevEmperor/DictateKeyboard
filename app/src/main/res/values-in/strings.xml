@@ -1468,6 +1468,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__import_result_label">Transkrip</string>
     <string name="dictate__import_prompt_button">Olah ulang</string>
     <string name="dictate__import_revert">Urungkan</string>
+    <string name="dictate__import_copy">Salin</string>
+    <string name="dictate__import_copied">Tersalin!</string>
+    <string name="dictate__import_save">Simpan sebagai berkas</string>
+    <string name="dictate__import_saved">Transkrip disimpan.</string>
+    <string name="dictate__import_save_failed">Transkrip tidak dapat disimpan.</string>
+    <string name="dictate__import_search">Cari dalam transkrip</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Coba lagi</string>
     <string name="dictate__import_no_file">Tidak ada berkas audio yang dibagikan.</string>
     <string name="dictate__import_only_first">Hanya berkas pertama yang ditranskripsikan – {count} lainnya dilewati.</string>

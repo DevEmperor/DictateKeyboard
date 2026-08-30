@@ -1390,6 +1390,14 @@
     <string name="dictate__import_result_label">Transcription</string>
     <string name="dictate__import_prompt_button">Retravailler</string>
     <string name="dictate__import_revert">Annuler</string>
+    <string name="dictate__import_copy">Copier</string>
+    <string name="dictate__import_copied">Copié !</string>
+    <string name="dictate__import_save">Enregistrer en fichier</string>
+    <string name="dictate__import_saved">Transcription enregistrée.</string>
+    <string name="dictate__import_save_failed">Impossible d\'enregistrer la transcription.</string>
+    <string name="dictate__import_search">Rechercher dans la transcription</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Réessayer</string>
     <string name="dictate__import_no_file">Aucun fichier audio n\'a été partagé.</string>
     <string name="dictate__import_only_first">Seul le premier fichier est transcrit – {count} autres ont été ignorés.</string>

@@ -1516,6 +1516,14 @@
     <string name="dictate__import_result_label">Расшифровка</string>
     <string name="dictate__import_prompt_button">Переработать</string>
     <string name="dictate__import_revert">Отменить</string>
+    <string name="dictate__import_copy">Копировать</string>
+    <string name="dictate__import_copied">Скопировано!</string>
+    <string name="dictate__import_save">Сохранить в файл</string>
+    <string name="dictate__import_saved">Расшифровка сохранена.</string>
+    <string name="dictate__import_save_failed">Не удалось сохранить расшифровку.</string>
+    <string name="dictate__import_search">Поиск в расшифровке</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Повторить</string>
     <string name="dictate__import_no_file">Аудиофайл не был отправлен.</string>
     <string name="dictate__import_only_first">Расшифровывается только первый файл — пропущено ещё: {count}.</string>

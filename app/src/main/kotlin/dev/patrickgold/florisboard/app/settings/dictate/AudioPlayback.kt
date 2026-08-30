@@ -198,18 +198,18 @@ fun formatPlaybackTime(ms: Int): String {
 /**
  * A plain audio player: play/pause, a bar you can drag, and the position against the length.
  *
- * The history dialog builds its own row instead, because that one also carries export, share and pin.
+ * Takes the state rather than making it, because the caller may need it to outlive this row. The
+ * import screen swaps its whole layout between portrait and landscape, and a player created in here
+ * would be disposed — and released mid-playback — every time the phone turns.
+ *
+ * The history dialog builds its own row instead: that one also carries export, share and pin.
  */
 @Composable
-fun AudioPlaybackRow(path: String) {
-    val context = LocalContext.current
-    val player = rememberAudioPlayer(path, preload = true) {
-        Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
-    }
+fun AudioPlaybackRow(player: AudioPlayerState, modifier: Modifier = Modifier) {
     Row(
         // Room above and below: the row sits between the header and the transcript, and without it
         // the slider's touch target runs straight into both.
-        modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+        modifier = modifier.fillMaxWidth().padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {

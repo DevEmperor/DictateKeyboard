@@ -2233,6 +2233,14 @@
     <string name="dictate__import_result_label" comment="Label above the editable transcript on the import screen">Transcript</string>
     <string name="dictate__import_prompt_button" comment="Button that opens the menu of prompts to run over the transcript">Rewording</string>
     <string name="dictate__import_revert" comment="Button that puts the raw transcript back after a prompt rewrote it">Undo</string>
+    <string name="dictate__import_copy" comment="Button that copies the transcript. One word: it sits in a row of four and the screen holds exactly one piece of text.">Copy</string>
+    <string name="dictate__import_copied" comment="Shown on the copy button for a moment after the transcript was copied">Copied!</string>
+    <string name="dictate__import_save" comment="Button that writes the transcript to a text file the user picks">Save as file</string>
+    <string name="dictate__import_saved" comment="Toast after the transcript was written to a file">Transcript saved.</string>
+    <string name="dictate__import_save_failed" comment="Toast when the transcript could not be written">Could not save the transcript.</string>
+    <string name="dictate__import_search" comment="Button and field label for searching inside the transcript">Search transcript</string>
+    <string name="dictate__import_search_hits" comment="Match counter next to the search field; {current} is the match you are on, {total} how many there are">{current}/{total}</string>
+    <string name="dictate__import_search_none" comment="Match counter when the search text appears nowhere">0/0</string>
     <string name="dictate__import_retry" comment="Button that starts the transcription over after it failed">Try again</string>
     <string name="dictate__import_no_file" comment="Shown when the share carried nothing we could read">No audio file was shared.</string>
     <string name="dictate__import_only_first" comment="Shown when several files were shared at once; {count} is how many were left out">Only the first file is transcribed – {count} more were left out.</string>

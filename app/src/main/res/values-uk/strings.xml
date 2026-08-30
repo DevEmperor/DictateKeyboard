@@ -1360,6 +1360,14 @@
     <string name="dictate__import_result_label">Розшифровка</string>
     <string name="dictate__import_prompt_button">Переробити</string>
     <string name="dictate__import_revert">Скасувати</string>
+    <string name="dictate__import_copy">Копіювати</string>
+    <string name="dictate__import_copied">Скопійовано!</string>
+    <string name="dictate__import_save">Зберегти у файл</string>
+    <string name="dictate__import_saved">Розшифровку збережено.</string>
+    <string name="dictate__import_save_failed">Не вдалося зберегти розшифровку.</string>
+    <string name="dictate__import_search">Пошук у розшифровці</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Спробувати ще раз</string>
     <string name="dictate__import_no_file">Аудіофайл не надіслано.</string>
     <string name="dictate__import_only_first">Розшифровується лише перший файл — пропущено ще: {count}.</string>

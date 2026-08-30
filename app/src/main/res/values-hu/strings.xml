@@ -1511,6 +1511,14 @@
     <string name="dictate__import_result_label">Átirat</string>
     <string name="dictate__import_prompt_button">Átdolgozás</string>
     <string name="dictate__import_revert">Visszavonás</string>
+    <string name="dictate__import_copy">Másolás</string>
+    <string name="dictate__import_copied">Másolva!</string>
+    <string name="dictate__import_save">Mentés fájlba</string>
+    <string name="dictate__import_saved">Az átirat elmentve.</string>
+    <string name="dictate__import_save_failed">Az átiratot nem sikerült elmenteni.</string>
+    <string name="dictate__import_search">Keresés az átiratban</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Újra</string>
     <string name="dictate__import_no_file">Nem osztottál meg hangfájlt.</string>
     <string name="dictate__import_only_first">Csak az első fájl kerül átírásra – további {count} kimaradt.</string>

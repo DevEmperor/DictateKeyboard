@@ -291,6 +291,12 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="audio/*"/>
                 <data android:mimeType="video/*"/>
+                <!-- WhatsApp voice notes are .opus. The media store types them audio/ogg, which
+                     audio/* already catches, but a file manager that derives the type from the
+                     extension hands out application/ogg instead — and that matched nothing. Named
+                     explicitly rather than opening up application/octet-stream, which would put
+                     "Transcribe" in the share sheet of every zip and apk on the phone. -->
+                <data android:mimeType="application/ogg"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -298,6 +304,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:mimeType="audio/*"/>
                 <data android:mimeType="video/*"/>
+                <data android:mimeType="application/ogg"/>
             </intent-filter>
         </activity>
 

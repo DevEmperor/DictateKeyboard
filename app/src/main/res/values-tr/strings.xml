@@ -1491,6 +1491,14 @@
     <string name="dictate__import_result_label">Metin</string>
     <string name="dictate__import_prompt_button">Yeniden düzenle</string>
     <string name="dictate__import_revert">Geri al</string>
+    <string name="dictate__import_copy">Kopyala</string>
+    <string name="dictate__import_copied">Kopyalandı!</string>
+    <string name="dictate__import_save">Dosyaya kaydet</string>
+    <string name="dictate__import_saved">Metin kaydedildi.</string>
+    <string name="dictate__import_save_failed">Metin kaydedilemedi.</string>
+    <string name="dictate__import_search">Metinde ara</string>
+    <string name="dictate__import_search_hits">{current}/{total}</string>
+    <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Yeniden dene</string>
     <string name="dictate__import_no_file">Hiçbir ses dosyası paylaşılmadı.</string>
     <string name="dictate__import_only_first">Yalnızca ilk dosya yazıya dökülür – {count} dosya daha atlandı.</string>

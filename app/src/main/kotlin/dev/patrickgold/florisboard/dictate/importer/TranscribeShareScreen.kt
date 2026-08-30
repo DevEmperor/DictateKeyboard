@@ -32,8 +32,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.SaveAlt
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
@@ -47,11 +52,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,12 +68,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import android.widget.Toast
 import dev.patrickgold.florisboard.app.settings.dictate.AudioPlaybackRow
+import dev.patrickgold.florisboard.app.settings.dictate.rememberAudioPlayer
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistorySource
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
@@ -80,6 +92,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.stringRes
@@ -115,6 +128,35 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     /** Whether the failure is one the provider settings can fix, rather than a network hiccup. */
     var needsKey by remember { mutableStateOf(false) }
     var promptMenuOpen by remember { mutableStateOf(false) }
+    var searching by remember { mutableStateOf(false) }
+    var query by remember { mutableStateOf("") }
+    var activeMatch by remember { mutableStateOf(0) }
+    var copied by remember { mutableStateOf(false) }
+    /** Recomputed from the text and the query, so an edit while searching keeps the hits honest. */
+    val matches = remember(text, query) { findMatches(text, query) }
+
+    // The copy button says so for a moment and then goes back to being a button. Long enough to be
+    // read, short enough that it is never the label you find when you look again.
+    LaunchedEffect(copied) {
+        if (copied) {
+            delay(2200)
+            copied = false
+        }
+    }
+
+    val saveLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/plain"),
+    ) { uri ->
+        if (uri == null) return@rememberLauncherForActivityResult
+        val ok = runCatching {
+            context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) } != null
+        }.getOrDefault(false)
+        Toast.makeText(
+            context,
+            if (ok) R.string.dictate__import_saved else R.string.dictate__import_save_failed,
+            Toast.LENGTH_SHORT,
+        ).show()
+    }
 
     fun run() {
         val file = audio ?: return
@@ -223,25 +265,25 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     }
 
     /*
-     * Two arrangements out of the same four pieces.
+     * Two arrangements out of the same pieces.
      *
-     * Portrait keeps the fixed ends and the stretchy middle: header, player, transcript, footer.
-     * Landscape has the opposite problem — barely any height, plenty of width — so the same pieces
-     * split into two columns and the transcript gets the full height instead of a strip.
+     * Portrait stacks them: header, player, transcript, footer. Landscape has the opposite problem —
+     * almost no height, plenty of width — so the header, the player and the buttons move into a
+     * narrow left column with the buttons two to a row, and the transcript takes the rest at full
+     * height. Left to right that is still the file first and its text second, which is the order one
+     * thinks in.
      *
-     * The pieces are composables rather than inline blocks precisely so there is one of each: two
-     * copies of a footer would be two places to forget a button.
-     *
-     * safeDrawingPadding rather than nothing: targetSdk 36 draws this edge to edge, and without it
-     * the header sits under the status bar.
+     * The player state is made **here**, above the branch, and passed down. Made inside a branch it
+     * would be disposed and released every time the phone turned, which is exactly what stopped the
+     * playback on rotation.
      */
     val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val player = rememberAudioPlayer(audio?.absolutePath, preload = true) {
+        Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
+    }
 
     val header = @Composable { Header(info, skipped) }
-    val player = @Composable {
-        audio?.let { file -> AudioPlaybackRow(path = file.absolutePath) }
-        Unit
-    }
+    val playerRow = @Composable { if (audio != null) AudioPlaybackRow(player) }
     val middle = @Composable { modifier: Modifier ->
         Box(modifier) {
             when {
@@ -258,11 +300,12 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                         Text(stringRes(R.string.action__cancel))
                     }
                 }
-                text.isNotEmpty() -> OutlinedTextField(
-                    modifier = Modifier.fillMaxSize(),
+                text.isNotEmpty() -> TranscriptField(
                     value = text,
                     onValueChange = { text = it },
-                    label = { Text(stringRes(R.string.dictate__import_result_label)) },
+                    matches = matches,
+                    activeMatch = activeMatch,
+                    modifier = Modifier.fillMaxSize(),
                 )
                 error != null -> Column(
                     modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
@@ -311,30 +354,52 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         }
     }
     val footer = @Composable {
-        Footer(
-            hasText = text.isNotEmpty(),
-            busy = busy,
-            labelled = landscape,
-            prompts = prompts.value,
-            canRevert = original.isNotEmpty(),
-            menuOpen = promptMenuOpen,
-            onMenu = { promptMenuOpen = it },
-            onCopy = { copyToClipboard(context, text) },
-            onShare = { shareText(context, text) },
-            onRetry = { run() },
-            onPrompt = { applyPrompt(it) },
-            onRevert = { text = original; original = "" },
-            onDone = { job?.cancel(); onClose() },
-        )
+        if (text.isNotEmpty()) {
+            if (searching) {
+                SearchRow(
+                    query = query,
+                    onQuery = { query = it; activeMatch = 0 },
+                    hits = matches.size,
+                    active = activeMatch,
+                    onStep = { step ->
+                        if (matches.isNotEmpty()) {
+                            activeMatch = (activeMatch + step + matches.size) % matches.size
+                        }
+                    },
+                    onClose = { searching = false; query = "" },
+                )
+            } else {
+                Footer(
+                    busy = busy,
+                    twoPerRow = landscape,
+                    prompts = prompts.value,
+                    canRevert = original.isNotEmpty(),
+                    menuOpen = promptMenuOpen,
+                    copied = copied,
+                    onMenu = { promptMenuOpen = it },
+                    onCopy = {
+                        copyToClipboard(context, text)
+                        copied = true
+                    },
+                    onShare = { shareText(context, text) },
+                    onRetry = { run() },
+                    onSave = { saveLauncher.launch((info?.displayName ?: "transcript").substringBeforeLast('.') + ".txt") },
+                    onSearch = { searching = true },
+                    onPrompt = { applyPrompt(it) },
+                    onRevert = { text = original; original = "" },
+                )
+            }
+        }
     }
 
     val root = Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp, vertical = 12.dp)
     if (landscape) {
         Row(root, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Column(Modifier.weight(2f).fillMaxHeight()) {
+            Column(
+                modifier = Modifier.weight(2f).fillMaxHeight().verticalScroll(rememberScrollState()),
+            ) {
                 header()
-                player()
-                Spacer(Modifier.weight(1f))
+                playerRow()
                 working()
                 footer()
             }
@@ -343,7 +408,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     } else {
         Column(root) {
             header()
-            player()
+            playerRow()
             middle(Modifier.weight(1f).fillMaxWidth())
             working()
             footer()
@@ -352,101 +417,169 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
 }
 
 /**
- * The one row of actions.
+ * The row of actions.
  *
- * Copy is the only filled button, so it is the only thing wearing the accent: on a screen whose whole
- * point is a piece of text, taking that text is the action, and the others are alternatives to it.
- * The rest are icons in portrait — five labelled buttons do not fit across a phone — and regain their
- * labels in landscape, where the width is there anyway. Undo lives in the prompt menu rather than
- * being a sixth control: it belongs to the rewording that put it there.
+ * Copy is the only filled button and so the only thing wearing the accent: on a screen whose whole
+ * point is a piece of text, taking that text is the action and the rest are alternatives to it. The
+ * others are icons — six labelled buttons do not fit across a phone — and in landscape, where the
+ * column is narrow instead of short, they wrap two to a row.
+ *
+ * There is no finish button. Nothing here needs confirming, and back closes the screen; a checkmark
+ * would only be a second way to do what the system already does.
  */
 @Composable
 private fun Footer(
-    hasText: Boolean,
     busy: Boolean,
-    labelled: Boolean,
+    twoPerRow: Boolean,
     prompts: List<PromptModel>,
     canRevert: Boolean,
     menuOpen: Boolean,
+    copied: Boolean,
     onMenu: (Boolean) -> Unit,
     onCopy: () -> Unit,
     onShare: () -> Unit,
     onRetry: () -> Unit,
+    onSave: () -> Unit,
+    onSearch: () -> Unit,
     onPrompt: (PromptModel) -> Unit,
     onRevert: () -> Unit,
-    onDone: () -> Unit,
 ) {
-    val done = @Composable {
-        OutlinedButton(onClick = onDone) {
-            Icon(Icons.Default.Check, contentDescription = stringRes(R.string.action__done), modifier = Modifier.size(18.dp))
-            if (labelled) {
-                Spacer(Modifier.size(8.dp))
-                Text(stringRes(R.string.action__done))
-            }
+    val copy = @Composable { modifier: Modifier ->
+        Button(onClick = onCopy, modifier = modifier) {
+            Icon(
+                imageVector = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+            )
+            Spacer(Modifier.size(8.dp))
+            Text(stringRes(if (copied) R.string.dictate__import_copied else R.string.dictate__import_copy))
         }
     }
-    if (!hasText) {
-        Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp), contentAlignment = Alignment.CenterEnd) { done() }
-        return
+    @Composable
+    fun iconButton(icon: androidx.compose.ui.graphics.vector.ImageVector, label: Int, enabled: Boolean, modifier: Modifier, onClick: () -> Unit) {
+        OutlinedButton(onClick = onClick, enabled = enabled, modifier = modifier) {
+            Icon(icon, contentDescription = stringRes(label), modifier = Modifier.size(20.dp))
+        }
     }
+
+    if (twoPerRow) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                copy(Modifier.weight(1f))
+                iconButton(Icons.Default.Share, R.string.dictate__stats_share, true, Modifier.weight(1f)) { onShare() }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                iconButton(Icons.Default.Refresh, R.string.dictate__import_retry, !busy, Modifier.weight(1f)) { onRetry() }
+                iconButton(Icons.Default.SaveAlt, R.string.dictate__import_save, true, Modifier.weight(1f)) { onSave() }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Box(Modifier.weight(1f)) {
+                    iconButton(Icons.Default.AutoFixHigh, R.string.dictate__import_prompt_button, !busy && prompts.isNotEmpty(), Modifier.fillMaxWidth()) { onMenu(true) }
+                    PromptMenu(menuOpen, prompts, canRevert, onMenu, onPrompt, onRevert)
+                }
+                iconButton(Icons.Default.Search, R.string.dictate__import_search, true, Modifier.weight(1f)) { onSearch() }
+            }
+        }
+    } else {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            copy(Modifier)
+            iconButton(Icons.Default.Share, R.string.dictate__stats_share, true, Modifier.weight(1f)) { onShare() }
+            iconButton(Icons.Default.Refresh, R.string.dictate__import_retry, !busy, Modifier.weight(1f)) { onRetry() }
+            iconButton(Icons.Default.SaveAlt, R.string.dictate__import_save, true, Modifier.weight(1f)) { onSave() }
+            Box(Modifier.weight(1f)) {
+                iconButton(Icons.Default.AutoFixHigh, R.string.dictate__import_prompt_button, !busy && prompts.isNotEmpty(), Modifier.fillMaxWidth()) { onMenu(true) }
+                PromptMenu(menuOpen, prompts, canRevert, onMenu, onPrompt, onRevert)
+            }
+            iconButton(Icons.Default.Search, R.string.dictate__import_search, true, Modifier.weight(1f)) { onSearch() }
+        }
+    }
+}
+
+/** The prompts, plus the way back out of the last one applied. */
+@Composable
+private fun PromptMenu(
+    open: Boolean,
+    prompts: List<PromptModel>,
+    canRevert: Boolean,
+    onMenu: (Boolean) -> Unit,
+    onPrompt: (PromptModel) -> Unit,
+    onRevert: () -> Unit,
+) {
+    DropdownMenu(expanded = open, onDismissRequest = { onMenu(false) }) {
+        // Undo first and set apart: it is the way back out of the last thing chosen here.
+        if (canRevert) {
+            DropdownMenuItem(
+                text = { Text(stringRes(R.string.dictate__import_revert)) },
+                leadingIcon = { Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = null) },
+                onClick = { onMenu(false); onRevert() },
+            )
+            HorizontalDivider()
+        }
+        for (prompt in prompts) {
+            DropdownMenuItem(
+                text = { Text(prompt.name.orEmpty()) },
+                onClick = { onMenu(false); onPrompt(prompt) },
+            )
+        }
+    }
+}
+
+/**
+ * The action row, become a search bar.
+ *
+ * It replaces the buttons rather than sitting above them: in portrait every fixed line is height the
+ * transcript does not get, and a search field on a twenty-second voice message is a line nobody
+ * needs. Opening it is one tap, and closing it puts the buttons straight back.
+ */
+@Composable
+private fun SearchRow(
+    query: String,
+    onQuery: (String) -> Unit,
+    hits: Int,
+    active: Int,
+    onStep: (Int) -> Unit,
+    onClose: () -> Unit,
+) {
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     Row(
         modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Button(onClick = onCopy) {
-            Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.size(8.dp))
-            Text(stringRes(R.string.dictate__history_copy))
+        OutlinedTextField(
+            modifier = Modifier.weight(1f).focusRequester(focus),
+            value = query,
+            onValueChange = onQuery,
+            singleLine = true,
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+            placeholder = { Text(stringRes(R.string.dictate__import_search)) },
+        )
+        Text(
+            text = if (hits == 0) {
+                stringRes(R.string.dictate__import_search_none)
+            } else {
+                stringRes(R.string.dictate__import_search_hits, "current" to (active + 1).toString(), "total" to hits.toString())
+            },
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        IconButton(onClick = { onStep(-1) }, enabled = hits > 0) {
+            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null)
         }
-        OutlinedButton(onClick = onShare) {
-            Icon(Icons.Default.Share, contentDescription = stringRes(R.string.dictate__stats_share), modifier = Modifier.size(18.dp))
-            if (labelled) {
-                Spacer(Modifier.size(8.dp))
-                Text(stringRes(R.string.dictate__stats_share))
-            }
+        IconButton(onClick = { onStep(1) }, enabled = hits > 0) {
+            Icon(Icons.Default.KeyboardArrowDown, contentDescription = null)
         }
-        OutlinedButton(onClick = onRetry, enabled = !busy) {
-            Icon(Icons.Default.Refresh, contentDescription = stringRes(R.string.dictate__import_retry), modifier = Modifier.size(18.dp))
-            if (labelled) {
-                Spacer(Modifier.size(8.dp))
-                Text(stringRes(R.string.dictate__import_retry))
-            }
+        IconButton(onClick = onClose) {
+            Icon(Icons.Default.Close, contentDescription = stringRes(R.string.action__cancel))
         }
-        if (prompts.isNotEmpty()) {
-            Box {
-                OutlinedButton(onClick = { onMenu(true) }, enabled = !busy) {
-                    Icon(
-                        Icons.Default.AutoAwesome,
-                        contentDescription = stringRes(R.string.dictate__import_prompt_button),
-                        modifier = Modifier.size(18.dp),
-                    )
-                    if (labelled) {
-                        Spacer(Modifier.size(8.dp))
-                        Text(stringRes(R.string.dictate__import_prompt_button))
-                    }
-                }
-                DropdownMenu(expanded = menuOpen, onDismissRequest = { onMenu(false) }) {
-                    // Undo first and set apart: it is the way back out of the last thing chosen here.
-                    if (canRevert) {
-                        DropdownMenuItem(
-                            text = { Text(stringRes(R.string.dictate__import_revert)) },
-                            leadingIcon = { Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = null) },
-                            onClick = { onMenu(false); onRevert() },
-                        )
-                        HorizontalDivider()
-                    }
-                    for (prompt in prompts) {
-                        DropdownMenuItem(
-                            text = { Text(prompt.name.orEmpty()) },
-                            onClick = { onMenu(false); onPrompt(prompt) },
-                        )
-                    }
-                }
-            }
-        }
-        Spacer(Modifier.weight(1f))
-        done()
     }
 }
 
