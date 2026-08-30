@@ -75,6 +75,10 @@ export interface Env {
   ALERT_ERROR_RATE_PERCENT?: string;
   ALERT_MIN_LOSS?: string;
 
+  /** `openai` (default) or `workers-ai`. One per service, never one for both — the two moves have
+   *  different reasons, different measurements and different ways back. */
+  TRANSCRIBE_PROVIDER?: string;
+  CHAT_PROVIDER?: string;
   TRANSCRIBE_MODEL?: string;
   CHAT_MODEL?: string;
   MAX_AUDIO_SECONDS?: string;
@@ -214,8 +218,58 @@ export function costToSeconds(nano: number): number {
 export const TYPICAL_REWORD_NANO = chatCostNano(500, 300);
 export const TYPICAL_REWORD_SECONDS = costToSeconds(TYPICAL_REWORD_NANO);
 
+/**
+ * Who a request is routed to.
+ *
+ * Recorded on every ledger row, including refused ones: the column says which service the request
+ * was *routed to*, not which one answered. A refusal that never left the building still belongs to
+ * the provider it was on its way to, and reading it any other way would leave a second meaning of
+ * NULL — "nobody was involved" next to "recorded before this column existed".
+ */
+export type Provider = 'openai' | 'workers-ai';
+
+/** Neuron rates, for checking the figure the provider reports rather than replacing it.
+ *
+ * Workers AI returns `usage.neurons` on every response — measured 30.08.2026, on both the chat and
+ * the speech model, and it appears in no type definition. That reported number is what gets booked:
+ * a quantity that is read cannot quietly diverge from a price list nobody updated.
+ *
+ * This table exists so that divergence is *noticed*. Whisper's reported figure implies 46.6302
+ * neurons per minute against the published 46.63, which is rounding in the documentation; anything
+ * beyond a per-mille is the price list having moved.
+ *
+ * Stand 30.08.2026, from <https://developers.cloudflare.com/workers-ai/platform/pricing/>.
+ */
+export const NEURONS = {
+  '@cf/openai/whisper-large-v3-turbo': { perAudioMinute: 46.63 },
+  '@cf/google/gemma-4-26b-a4b-it': { perMTokensIn: 9_091, perMTokensOut: 27_273 },
+} as const;
+
+/** $0.011 per 1000 neurons, in nano-dollars per neuron. */
+export const NANO_PER_NEURON = 11_000;
+
+export function neuronsToNano(neurons: number): number {
+  return Math.round(neurons * NANO_PER_NEURON);
+}
+
+/**
+ * What the table above says a request should have cost in neurons, or null for a model it does not
+ * know. Only ever compared against the reported figure — never billed.
+ */
+export function expectedNeurons(
+  model: string,
+  usage: { audioSeconds?: number; tokensIn?: number; tokensOut?: number },
+): number | null {
+  const rate = (NEURONS as Record<string, { perAudioMinute?: number; perMTokensIn?: number; perMTokensOut?: number }>)[model];
+  if (!rate) return null;
+  if (rate.perAudioMinute !== undefined) return ((usage.audioSeconds ?? 0) / 60) * rate.perAudioMinute;
+  return ((usage.tokensIn ?? 0) * (rate.perMTokensIn ?? 0) + (usage.tokensOut ?? 0) * (rate.perMTokensOut ?? 0)) / 1e6;
+}
+
 /** The resolved limits for one request — read from the environment once per call. */
 export interface Limits {
+  transcribeProvider: Provider;
+  chatProvider: Provider;
   transcribeModel: string;
   chatModel: string;
   maxAudioSeconds: number;
@@ -234,8 +288,18 @@ export interface Limits {
   maxDevices: number;
 }
 
+function provider(value: string | undefined): Provider {
+  return value === 'workers-ai' ? 'workers-ai' : 'openai';
+}
+
 export function limitsFrom(env: Env): Limits {
   return {
+    // Read here so the ledger can record who a request was routed to. Nothing branches on these
+    // yet — the calls themselves still go to OpenAI either way. Recording starts before switching
+    // deliberately: a column that only begins to be filled on the day of the move cannot show what
+    // the day before looked like, and that comparison is the whole point of the exercise.
+    transcribeProvider: provider(env.TRANSCRIBE_PROVIDER),
+    chatProvider: provider(env.CHAT_PROVIDER),
     transcribeModel: env.TRANSCRIBE_MODEL ?? 'gpt-transcribe',
     chatModel: env.CHAT_MODEL ?? 'gpt-5-nano',
     maxAudioSeconds: num(env.MAX_AUDIO_SECONDS, 600),
