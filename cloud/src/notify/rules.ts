@@ -193,11 +193,18 @@ async function costDrift(env: Env, ctx: ExecutionContext, percent: number): Prom
   const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
   const theirs = costs.days.find((d) => d.day === yesterday)?.usd ?? 0;
 
-  const row = await env.DB.prepare('SELECT cost_nano AS costNano FROM daily_totals WHERE day = ?')
-    .bind(yesterday).first<{ costNano: number }>();
+  // **Only the part that went to OpenAI.** `cost_nano` is the whole day across every provider, and
+  // holding that against a bill from one of them would read the other one's spend as a discrepancy.
+  // On a day split between the two the rule would have fired at the size of the split — a critical
+  // alert every morning, for nothing, until it stopped being read.
+  const row = await env.DB.prepare(
+    'SELECT cost_nano - cost_nano_cf AS costNano FROM daily_totals WHERE day = ?',
+  ).bind(yesterday).first<{ costNano: number }>();
   const ours = num(row?.costNano) / NANO_PER_USD;
 
-  // Below a few cents the percentage is noise: one long dictation moves it by half.
+  // Below a few cents the percentage is noise: one long dictation moves it by half. Once nothing
+  // goes to OpenAI any more this is also what switches the rule off by itself, which is the right
+  // way round: it stays armed for as long as there is something for it to check.
   if (ours < 0.1 || theirs < 0.1) return 0;
 
   const drift = ((theirs - ours) / ours) * 100;

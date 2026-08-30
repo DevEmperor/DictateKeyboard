@@ -89,14 +89,22 @@ export const ZONES: GraphZone[] = [
       'in dem Rechenzentrum, das der anfragenden Person am nächsten liegt. Für einen Dienst, dessen ' +
       'Last aus einzelnen kurzen Anfragen besteht und dessen Betreiber nachts schlafen will, ist das ' +
       'die passende Bauform. Der Preis dafür steht in der Übertragungs-Dokumentation: Cloudflare, Inc. ' +
-      'sitzt in den USA, Datenbank und Kontostände sind deshalb ausdrücklich auf die EU festgelegt.</p>',
+      'sitzt in den USA, Datenbank und Kontostände sind deshalb ausdrücklich auf die EU festgelegt.</p>' +
+      '<p><strong>Für die Modelle in dieser Spalte gilt das ausdrücklich nicht.</strong> Die ' +
+      'Festlegung auf Westeuropa greift für den Speicher, nicht für die Rechenzeit: Workers AI läuft, ' +
+      'wo gerade Kapazität ist, und lässt sich ohne Enterprise-Zusatz nicht festlegen. Wer aus „alles ' +
+      'bei Cloudflare" liest „alles in der EU", liest an dieser einen Stelle falsch.</p>',
   },
   {
-    id: 'openai', label: 'OpenAI', sub: 'Modelle', tone: 'openai',
+    id: 'openai', label: 'OpenAI', sub: 'Modelle, wenn dorthin geschaltet', tone: 'openai',
     long:
-      '<p>Der einzige Ort, an dem Inhalte verarbeitet werden — Sprache wird zu Text, Text wird ' +
+      '<p>Einer von zwei Orten, an denen Inhalte verarbeitet werden — Sprache wird zu Text, Text wird ' +
       'umformuliert. Zwei getrennte Zugänge mit zwei getrennten Schlüsseln: der Projektschlüssel für ' +
       'die Arbeit, ein reiner Leseschlüssel für die Abrechnung.</p>' +
+      '<p>Ob diese Spalte überhaupt angesprochen wird, entscheiden <code>TRANSCRIBE_PROVIDER</code> ' +
+      'und <code>CHAT_PROVIDER</code>, je Dienst einzeln. Die Alternative steht links in der ' +
+      'Cloudflare-Spalte — und die Wahl zwischen beiden ist keine technische, sondern die zwischen ' +
+      'einem Vertragspartner im EWR und einem in den USA.</p>' +
       '<p>Vertragspartner ist <strong>OpenAI Ireland Ltd.</strong>, also eine Gesellschaft im ' +
       'Europäischen Wirtschaftsraum; der Auftragsverarbeitungsvertrag ist gezeichnet. Aufnahmen und ' +
       'Texte werden dort bis zu 30 Tage zur Missbrauchserkennung vorgehalten — eine bewusste ' +
@@ -267,6 +275,32 @@ export const NODES: GraphNode[] = [
     source: 'package.json · db:backup',
   },
 
+  {
+    id: 'workersai', zone: 'cf', label: 'Workers AI', sub: 'Whisper · Gemma · abschaltbar',
+    col: 1, row: 2,
+    guards: ['kein Schlüssel — Bindung statt Netzweg', 'Denkmodus ausdrücklich aus', 'je Dienst einzeln umlegbar'],
+    detail: 'Die zweite Möglichkeit für Diktat und Umformulierung, gewählt über <code>TRANSCRIBE_PROVIDER</code> und <code>CHAT_PROVIDER</code> — je Dienst einer, nie einer für beide. Rechnet über <em>dieses</em> Konto ab, es gibt also kein Geheimnis, das leaken könnte. Meldet je Antwort die verbrauchten Neuronen zurück; genau die stehen im Hauptbuch.',
+    long:
+      '<p>Die Modelle laufen bei Cloudflare selbst, erreichbar über eine Bindung statt über HTTPS: ' +
+      '<strong>kein API-Schlüssel, kein Netzweg nach draußen.</strong> Was der Worker schickt, verlässt ' +
+      'das Haus nicht — es war nie draußen.</p>' +
+      '<p><strong>Und genau hier endet die gute Nachricht.</strong> „Nicht nach draußen" heißt nicht ' +
+      '„in der EU". Datenbank und Kontostände sind ausdrücklich auf Westeuropa festgelegt; die ' +
+      '<em>Inferenz</em> ist es nicht und kann es ohne Enterprise-Vertrag auch nicht werden — Custom ' +
+      'Regions ist ein kostenpflichtiger Zusatz. Ein Diktat wird dort gerechnet, wo Cloudflare gerade ' +
+      'Kapazität hat, und der Vertragspartner dafür ist Cloudflare, Inc. in den USA. Der Unterschied ' +
+      'zu OpenAI ist damit nicht „drinnen statt draußen", sondern eine Gesellschaft im EWR gegen eine ' +
+      'in einem Drittland.</p>' +
+      '<p><strong>Es wird nicht nachgedacht.</strong> Bei Workers AI ist der Denkmodus <em>standardmäßig ' +
+      'an</em>, wird also ausdrücklich abgeschaltet. Gemessen an einem Satz: 20 Ausgabe-Token gegen 777, ' +
+      '1,06 s gegen 7,70 s, 1,43 Neuronen gegen 22,10 — bei gleicher Antwort. Denk-Token gehen als ' +
+      'Ausgabe vom Guthaben des Käufers ab, weshalb jede Antwort daraufhin geprüft wird und nicht bloß ' +
+      'jede Anfrage entsprechend gestellt.</p>' +
+      '<p>Die Menge wird <strong>abgelesen, nicht gerechnet</strong>: Jede Antwort bringt ihre Neuronen ' +
+      'mit. Eine abgelesene Menge kann nicht dadurch falsch werden, dass sich still eine Preisliste ' +
+      'ändert — die Preistabelle im Quelltext ist nur noch die Gegenprobe.</p>',
+    source: 'src/routes/transcriptions.ts, src/routes/chat.ts',
+  },
   {
     id: 'worker', zone: 'cf', label: 'Worker', sub: 'api.dictatekeyboard.com',
     col: 1, row: 1,
@@ -496,7 +530,7 @@ export const NODES: GraphNode[] = [
   },
 
   {
-    id: 'openai', zone: 'openai', label: 'OpenAI API', sub: 'gpt-transcribe · gpt-5-nano',
+    id: 'openai', zone: 'openai', label: 'OpenAI API', sub: 'gpt-transcribe · gpt-5-nano · abschaltbar',
     col: 3, row: 0,
     guards: ['Modell serverseitig festgelegt', 'Antwortlänge gedeckelt', 'Reasoning fest auf minimal'],
     detail: 'Diktat und Umformulierung. Modell, Antwortlänge und Denkaufwand bestimmt der Server, nicht der Client — sonst wäre die Kalkulation offen. Der Denkaufwand steht fest auf <code>minimal</code>, weil Reasoning-Token gegen dasselbe Ausgabebudget laufen wie die Antwort: mit der Voreinstellung kam bei langen Texten eine leere Antwort zurück, für die trotzdem bezahlt war. Der Schlüssel liegt ausschließlich als Worker-Secret vor.',
@@ -872,7 +906,26 @@ export const EDGES: GraphEdge[] = [
       '<p>Fehler von OpenAI werden weitergegeben, aber nicht deren Wortlaut. Die nutzende Person hat ' +
       'keinen Vertrag mit OpenAI und kann mit "your organization has been blocked" nichts anfangen; ' +
       'außerdem verriete die Meldung Interna. Sie bekommt eine Aussage, auf die sie reagieren kann, ' +
-      'und ihr Guthaben zurück.</p>',
+      'und ihr Guthaben zurück.</p>' +
+      '<p><strong>Diese Linie ist seit Kurzem eine von zweien.</strong> Steht ein Dienst auf ' +
+      '<code>workers-ai</code>, geht er stattdessen an die Bindung nebenan und diese Linie bleibt für ' +
+      'ihn kalt. Beide Wege sind gebaut, beide Voreinstellungen stehen auf <code>openai</code>.</p>',
+  },
+  {
+    from: 'worker', to: 'workersai', kind: 'data',
+    label: 'Bindung · Audio & Text, ohne Netzweg',
+    guard: 'kein Schlüssel, nichts gespeichert',
+    long:
+      '<p>Derselbe Inhalt wie eine Zeile weiter unten, nur ohne die Zeile. Die Bindung ist ein Aufruf ' +
+      'innerhalb der Laufzeit: kein HTTPS, kein Schlüssel, keine Gegenstelle, die man erreichen können ' +
+      'muss. Gespeichert wird auch hier nichts, in keine Richtung.</p>' +
+      '<p><strong>Was diese Linie kostet, bevor sie überhaupt anfängt:</strong> Das Modell will das ' +
+      'Audio als Zeichenkette, also wird es kodiert — aus 19 MB werden 26,5 MB und rund zwei Sekunden ' +
+      'Rechenzeit. Gegen die Fünf-Minuten-Grenze unkritisch, aber wer annimmt, der Weg ohne Netzsprung ' +
+      'sei deshalb der schnellere, liegt bei langen Aufnahmen zwei Sekunden daneben.</p>' +
+      '<p>Was zurückkommt, wird auf das Nötige gekürzt: der Text, beziehungsweise die eine Antwort und ' +
+      'ihr Verbrauch. Segmente, Wortzahlen, ein VTT-Spur und der <code>@cf/…</code>-Modellname bleiben ' +
+      'hier — sie helfen niemandem und verraten, was hinter Dictate Cloud steht.</p>',
   },
   {
     from: 'worker', to: 'costs', kind: 'auth',

@@ -478,7 +478,15 @@ object ProviderRegistry {
      * 39 seconds — which is what made a 14-minute dictation fail outright (#281).
      *
      * Figures read from each provider's own documentation on 2026-08-17:
-     *  - OpenAI 25 MB. Dictate Cloud proxies to OpenAI, so it inherits the same ceiling.
+     *  - OpenAI 25 MB.
+     *  - Dictate Cloud 25 MB — but for its own reason, not a borrowed one. The figure used to be
+     *    justified as "it proxies to OpenAI, so it inherits the ceiling", and that reasoning has
+     *    stopped being true: the server now chooses between two providers per service and the app is
+     *    deliberately never told which. What the number has to express is the **server's own
+     *    promise**, `MAX_AUDIO_SECONDS` — ten minutes, which at 16 kHz mono WAV is about 19 MB. The
+     *    25 MB stays because it is the ceiling the server would reject at, and rejecting is its job:
+     *    it answers 413 with `CONTENT_SIZE_LIMIT`, which the app turns into an offer to keep the
+     *    recording. A lower figure here would refuse locally what the server would have accepted.
      *  - Groq 25 MB on the free tier, 100 MB on the dev tier. The key does not say which tier it is
      *    on, so the lower one is assumed.
      *  - Gemini caps the whole request at 20 MB, and its audio travels **base64-inline**

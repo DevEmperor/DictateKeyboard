@@ -1,8 +1,14 @@
 # Dictate Cloud
 
 The credit server behind Dictate's optional "buy minutes instead of bringing your own API key"
-path. A single Cloudflare Worker: it verifies a Google Play purchase, keeps a balance, and proxies
-dictation and rewording to OpenAI while metering what they cost.
+path. A single Cloudflare Worker: it verifies a Google Play purchase, keeps a balance, and passes
+dictation and rewording to a speech and a language model while metering what they cost.
+
+Which model that is, is configuration rather than architecture: `TRANSCRIBE_PROVIDER` and
+`CHAT_PROVIDER` choose between OpenAI and Cloudflare's own Workers AI, one setting per service.
+Everything around the call — who you are, how long the recording is, whether the day's budget
+allows it, deduct before asking, refund on failure — is the same either way, because none of it
+depends on who answers.
 
 Using Dictate does not require any of this. Bring an API key from a provider of your choice and the
 app never speaks to this server at all — see the app's provider settings. This exists so that
@@ -26,7 +32,8 @@ the watchdog uses. The thresholds guard nothing on their own — they only decid
 sent — but knowing them tells you exactly how to stay underneath. `wrangler.example.jsonc` has the
 same structure with the values removed.
 
-**Secrets**, of course. The OpenAI key, the Play service account and the notification secret live in
+**Secrets**, of course. The OpenAI key — needed only while a service is pointed at OpenAI, since
+the Workers AI binding has none — the Play service account and the notification secret live in
 Cloudflare's secret store and never in a file. The source is written so that publishing it gives
 nothing away.
 
@@ -69,7 +76,7 @@ schema.sql        the shape of a fresh database
 ```sh
 npm install
 cp wrangler.example.jsonc wrangler.jsonc   # then fill in the placeholders
-npx wrangler secret put OPENAI_API_KEY
+npx wrangler secret put OPENAI_API_KEY   # only while a provider is set to "openai"
 npx wrangler secret put GOOGLE_SERVICE_ACCOUNT
 npx wrangler d1 create dictate-cloud --location weur
 npx wrangler d1 execute dictate-cloud --remote --file schema.sql

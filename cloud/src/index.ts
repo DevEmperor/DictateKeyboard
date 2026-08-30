@@ -49,7 +49,7 @@ export default {
       return handleChat(request, env, ctx, limits);
     }
     if (request.method === 'GET' && path === '/v1/models') {
-      return handleModels(limits);
+      return handleModels();
     }
     if (request.method === 'GET' && path === '/v1/wallet') {
       return handleBalance(request, env, ctx);

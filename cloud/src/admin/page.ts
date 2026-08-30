@@ -722,7 +722,7 @@ export const DASHBOARD_HTML = `<!doctype html>
         <input id="exDate" type="date" style="width:auto">
         <select id="exKind" style="width:auto">
           <option value="openai_topup">OpenAI-Aufladung</option>
-          <option value="cloudflare">Cloudflare</option>
+          <option value="cloudflare">Cloudflare (inkl. Workers AI)</option>
           <option value="domain">Domain</option>
           <option value="other">Sonstiges</option>
         </select>
@@ -934,6 +934,25 @@ var GRAPH = ${GRAPH_JSON};
   }
   function tell(title, text) { return modal({ title: title, text: esc(text), cancel: false }); }
 
+  /*
+   * Wohin eine Anfrage ging — kurz in der Spalte, genau im Tooltip.
+   *
+   * Der Anbieter beantwortet die rechtliche Frage (wo war der Inhalt), das Modell die kaufmännische
+   * (zu welchem Preis). Ausgeschrieben wären beide zu breit für eine Zeile, weggelassen wäre das
+   * Modell die Angabe, die man nach einem Wechsel als Erstes sucht — also kurz und angetippt genau.
+   *
+   * Neuronen stehen dazu, wo es welche gibt: sie sind die Menge, die sich als Einzige gegen
+   * Cloudflares eigene Zählung halten lässt.
+   */
+  function providerCell(x) {
+    if (!x.provider) return '<span class="muted">—</span>';
+    var cf = x.provider === 'workers-ai';
+    var neurons = (x.neuronsMicro || 0) / 1e6;
+    var tip = (x.model || 'unbekannt') + (neurons ? ' · ' + neurons.toFixed(3) + ' Neuronen' : '');
+    return '<span class="pill ' + (cf ? 'ok' : '') + '" title="' + esc(tip) + '">' +
+      (cf ? 'Workers AI' : 'OpenAI') + '</span>';
+  }
+
   function card(label, tip, value, sub, cls, extra) {
     return '<div class="card' + (cls ? ' ' + cls : '') + '"><div class="label">' + esc(label) +
       (tip ? hint(tip) : '') + '</div><div class="value">' + value + '</div>' +
@@ -1132,22 +1151,34 @@ var GRAPH = ${GRAPH_JSON};
       s.orders + ' Kauf/Käufe · Kundschaft zahlte ' + money(s.paidHome, cur) + others + pending +
       (extra.length ? '<br>' + extra.join(' · ') : ''));
 
-    html += card('OpenAI-Kosten',
-      s.openaiConnected
-        ? 'Von OpenAI abgerechnet, nur das Projekt dieses Dienstes' + (s.serviceProject ? ' („' + s.serviceProject.name + '")' : '') + '. Abgefragt, nicht geschätzt.'
-        : 'Kein Admin-Schlüssel hinterlegt — hier stünde sonst, was OpenAI tatsächlich abgerechnet hat.',
+    // Zwei Herkünfte, zwei Beweisgrade — und das gehört dazugeschrieben. Die OpenAI-Zahl ist eine
+    // Abrechnung, die Workers-AI-Zahl ist unsere eigene Aufzeichnung: für Cloudflare gibt es kein
+    // Gegenstück zum Abrechnungs-Endpunkt, das man fragen könnte. Wer beides gleich beschriftet,
+    // hält in einem Jahr eine Selbstauskunft für eine Rechnung.
+    var split = [];
+    if (s.openaiUsd !== null && s.openaiUsd !== undefined) split.push('OpenAI ' + fmtUsd4(s.openaiUsd));
+    if (s.workersAiUsd) split.push('Workers AI ' + fmtUsd4(s.workersAiUsd) + ' (eigene Zählung)');
+
+    html += card('Einkaufskosten',
+      (s.openaiConnected
+        ? 'OpenAI: abgerechnet, nur das Projekt dieses Dienstes' + (s.serviceProject ? ' („' + s.serviceProject.name + '")' : '') + '. Abgefragt, nicht geschätzt.'
+        : 'Kein OpenAI-Admin-Schlüssel hinterlegt — hier stünde sonst, was OpenAI tatsächlich abgerechnet hat.') +
+      ' Workers AI rechnet über dasselbe Konto ab wie dieser Worker, es gibt dort nichts zu fragen: ' +
+      'die Zahl ist der Listenpreis aus dem eigenen Protokoll und zum Freikontingent noch nicht verrechnet. ' +
+      'Fehlt eine der beiden Quellen, steht hier ein Strich statt einer Teilsumme.',
       s.costUsd === null ? '—' : fmtUsd(s.costUsd),
       s.costHome === null ? esc(s.openaiReason || 'kein Projekt zugeordnet')
-                          : '≈ ' + money(s.costHome, cur) + ' · ' + rateNote);
+                          : '≈ ' + money(s.costHome, cur) + ' · ' + rateNote +
+                            (split.length > 1 ? '<br>' + split.join(' · ') : ''));
 
     var profitCls = s.profitHome === null ? '' : (s.profitHome < 0 ? 'crit' : '');
     html += card('Gewinn',
-      'Einnahmen minus OpenAI-Kosten, beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
+      'Einnahmen minus Einkaufskosten, beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
       'nicht Googles Kurs — Play zahlt zu eigenen Kursen aus, die Zahl bleibt also eine gute Näherung. ' +
-      'Cloudflare, Domain und deine Zeit stehen nirgends darin.',
+      'Cloudflare-Grundgebühr, Domain und deine Zeit stehen nirgends darin.',
       s.profitHome === null ? '—'
         : '<span' + (profitCls ? ' style="color:var(--crit)"' : '') + '>' + money(s.profitHome, cur) + '</span>',
-      s.profitHome === null ? 'OpenAI nicht verbunden'
+      s.profitHome === null ? 'Eine Kostenquelle fehlt — siehe Einkaufskosten'
         : 'nach Play-Gebühr und Steuer' +
           // Ein Minus, das nur an einer ausstehenden Meldung hängt, soll nicht wie ein Verlust
           // dastehen. Beide Zahlen nebeneinander, keine davon in der anderen.
@@ -1368,13 +1399,16 @@ var GRAPH = ${GRAPH_JSON};
     if ($('tFail').checked) p += '&failures=1';
     if (!$('tTest').checked) p += '&test=0';
     get('/admin/api/requests' + p).then(function (r) {
-      $('traffic').innerHTML = r.requests.length ? '<table><thead><tr><th>Zeit</th><th>Konto</th><th>Gerät</th><th>Art</th><th class="num">Sek.</th><th class="num">Tokens</th><th class="num">Kosten</th><th class="num">HTTP</th><th class="num">ms</th></tr></thead><tbody>' +
+      $('traffic').innerHTML = r.requests.length ? '<table><thead><tr><th>Zeit</th><th>Konto</th><th>Gerät</th><th>Art</th><th>Wohin</th><th class="num">Sek.</th><th class="num">Tokens</th><th class="num">Kosten</th><th class="num">HTTP</th><th class="num">ms</th></tr></thead><tbody>' +
         r.requests.map(function (x) {
           return '<tr' + (x.isTest ? ' class="is-test"' : '') + '><td>' + fmtDate(x.ts) + '</td><td class="mono">' + esc(String(x.walletId).slice(0, 8)) + '…' +
             (x.isTest ? ' <span class="pill test">Test</span>' : '') + '</td><td class="muted">' + esc(x.device || '—') +
             // A rewording has no audio, so its second count is not zero — it does not exist. Printing
             // 0 invites the reading "this dictation was empty", which is a different thing entirely.
-            '</td><td>' + (x.kind === 'transcribe' ? 'Diktat' : 'Umformulierung') + '</td><td class="num">' + (x.kind === 'transcribe' ? (x.seconds || 0) : '—') +
+            '</td><td>' + (x.kind === 'transcribe' ? 'Diktat' : 'Umformulierung') +
+            // Wohin die Anfrage ging, mit dem Modell im Tooltip. Leer heißt „vor Migration 006 nicht
+            // erhoben" — nicht „nirgendwohin", und deshalb steht dort ein Strich und nicht „OpenAI".
+            '</td><td>' + providerCell(x) + '</td><td class="num">' + (x.kind === 'transcribe' ? (x.seconds || 0) : '—') +
             '</td><td class="num">' + ((x.tokensIn || 0) + (x.tokensOut || 0) || '—') + '</td><td class="num">' + fmtUsd4((x.costNano || 0) / 1e9) +
             // A refusal is not a fault, and colouring it like one turns every out-of-credit
             // customer into a red line in a list meant to show breakage. Amber says "we said no",
@@ -1461,7 +1495,7 @@ var GRAPH = ${GRAPH_JSON};
     fast_burn: ['Guthaben rasant verbraucht', 'Der Vorlauf zur Rückbuchung — kaufen, verbrauchen, Geld zurückholen.'],
     budget_hog: ['Ein Konto frisst das Tagesbudget', 'Kein Verlust, aber alle anderen bekommen dann 503.'],
     shared_token: ['Zugang weitergegeben', 'Viele Geräte an einem Guthaben.'],
-    cost_drift: ['OpenAI rechnet anders ab', 'Die stille Regel: Preiserhöhung, die sonst niemand bemerkt.'],
+    cost_drift: ['OpenAI rechnet anders ab', 'Die stille Regel: Preiserhöhung, die sonst niemand bemerkt. Deckt nur den OpenAI-Anteil ab — für Workers AI gibt es keinen Abrechnungs-Endpunkt zum Gegenfragen.'],
     overall_loss: ['Insgesamt im Minus', 'Alles jemals eingenommen gegen alles jemals ausgegeben.'],
     error_rate: ['Viele Fehler', 'Meist eine Störung bei OpenAI.'],
     revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
@@ -1475,7 +1509,7 @@ var GRAPH = ${GRAPH_JSON};
     ['refundUsedPercent', 'Erstattung meldet ab', '%', 'Wie viel verbraucht sein muss, damit eine Erstattung als Verlust gilt.'],
     ['walletBudgetSharePercent', 'Konto-Anteil am Budget', '%', 'Ab welchem Anteil des Tagesbudgets ein einzelnes Konto auffällt.'],
     ['devicesPerWallet', 'Geräte je Konto', 'Stk.', 'Mehr als so viele an einem Tag deuten auf Weitergabe.'],
-    ['costDriftPercent', 'Abweichung OpenAI', '%', 'Unterschied zwischen unserer Rechnung und OpenAIs Abrechnung.'],
+    ['costDriftPercent', 'Abweichung OpenAI', '%', 'Unterschied zwischen unserer Rechnung und OpenAIs Abrechnung — verglichen wird nur der Anteil, der dorthin ging.'],
     ['errorRatePercent', 'Fehlerquote', '%', 'Anteil fehlgeschlagener Anfragen je Stunde.'],
     ['neuronSpikeFactor', 'Neuronen-Ausschlag ab', '×', 'Wie oft der Wochenschnitt an einem Tag überschritten sein muss.'],
     ['minLossHome', 'Minus meldet ab', '€', 'Darunter ist es Rundung oder Anlaufphase.'],
@@ -2020,7 +2054,7 @@ var GRAPH = ${GRAPH_JSON};
 
   var taxData = null;
   var KIND_LABEL = {
-    openai_topup: 'OpenAI-Aufladung', cloudflare: 'Cloudflare', domain: 'Domain', other: 'Sonstiges',
+    openai_topup: 'OpenAI-Aufladung', cloudflare: 'Cloudflare (inkl. Workers AI)', domain: 'Domain', other: 'Sonstiges',
   };
 
   function renderTax(t) {

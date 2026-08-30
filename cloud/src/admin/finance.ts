@@ -164,11 +164,35 @@ export async function summary(env: Env, ctx?: ExecutionContext) {
   // Converted per purchase with its own stored rate — see the query in [playRevenue].
   const paidHome = play.paidHomeTotal;
 
-  const costUsd = openai.connected ? openai.serviceUsd : null;
+  // The spend, and it is a sum over providers rather than a figure from one of them.
+  //
+  // This used to be `openai.serviceUsd` alone, which was the whole truth for as long as OpenAI was
+  // the only thing being bought. It is the one line in this dashboard that turning the switch would
+  // have made **quietly wrong**: `openai.connected` stays true while any rewording still goes there,
+  // `serviceUsd` keeps returning a number, and the number simply no longer contains the biggest
+  // block. The result is not an error message — it is a profit that is too high, which is the sort
+  // of wrong that gets believed.
+  //
+  // Workers AI is billed to the same account this Worker runs on and there is no equivalent of
+  // OpenAI's billing endpoint to ask, so its share comes from our own ledger: `cost_nano_cf`, the
+  // list price of everything that went through the binding. Not the same class of evidence as an
+  // invoice, and labelled as such on the page.
+  const cfRow = await env.DB.prepare(
+    'SELECT COALESCE(SUM(cost_nano_cf), 0) AS costNano FROM daily_totals',
+  ).first<{ costNano: number }>();
+  const workersAiUsd = num(cfRow?.costNano) / NANO_PER_USD;
+
+  // Null, not a part of the sum, when a source is missing. A bottom line short of one cost block
+  // reads as a better month rather than as a gap, and there is no way for a reader to tell.
+  const openaiUsd = openai.connected ? openai.serviceUsd : null;
+  const costUsd = openaiUsd === null ? null : openaiUsd + workersAiUsd;
   const costHome = costUsd === null ? null : costUsd * fx.rate;
   const profitHome = costHome === null ? null : revenueHome - costHome;
 
   return {
+    /** The two halves of `costUsd`, so the page can say where the money went and how it is known. */
+    openaiUsd,
+    workersAiUsd,
     homeCurrency: home,
     rate: fx.rate,
     rateSource: fx.source,

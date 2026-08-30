@@ -381,6 +381,9 @@ export async function recentRequests(
     env.DB.prepare(
       `SELECT u.id, u.wallet_id AS walletId, u.ts, u.kind, u.seconds,
               u.tokens_in AS tokensIn, u.tokens_out AS tokensOut, u.cost_nano AS costNano,
+              -- Null on rows written before migration 006, which is the honest answer for them:
+              -- "not recorded then" is a different thing from "OpenAI", even where it means the same.
+              u.provider, u.model, u.neurons_micro AS neuronsMicro,
               u.status, u.ms, COALESCE(t.label, '') AS device, COALESCE(w.is_test, 0) AS isTest
          ${from} LEFT JOIN tokens t ON t.token_hash = u.token_hash
          ${clause}
