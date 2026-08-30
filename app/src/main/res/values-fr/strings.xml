@@ -1400,6 +1400,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Réessayer</string>
     <string name="dictate__import_no_file">Aucun fichier audio n\'a été partagé.</string>
+    <string name="dictate__import_not_audio">Ce fichier ne contient aucun son.</string>
     <string name="dictate__import_only_first">Seul le premier fichier est transcrit – {count} autres ont été ignorés.</string>
     <string name="dictate__setup_description">Configurez votre fournisseur d\'IA et votre clé d\'API pour commencer à dicter avec le micro.</string>
     <string name="dictate__setup_configure_btn">Configurer Dictate</string>

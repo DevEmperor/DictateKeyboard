@@ -1537,6 +1537,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Zkusit znovu</string>
     <string name="dictate__import_no_file">Nebyl sdílen žádný zvukový soubor.</string>
+    <string name="dictate__import_not_audio">Tento soubor neobsahuje zvuk.</string>
     <string name="dictate__import_only_first">Přepisuje se jen první soubor – dalších {count} bylo vynecháno.</string>
     <string name="dictate__setup_description">Nastavte poskytovatele AI a klíč API, abyste mohli začít diktovat mikrofonem.</string>
     <string name="dictate__setup_configure_btn">Nastavit Dictate</string>

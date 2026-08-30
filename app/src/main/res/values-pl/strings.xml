@@ -1538,6 +1538,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Spróbuj ponownie</string>
     <string name="dictate__import_no_file">Nie udostępniono żadnego pliku audio.</string>
+    <string name="dictate__import_not_audio">Ten plik nie zawiera dźwięku.</string>
     <string name="dictate__import_only_first">Transkrybowany jest tylko pierwszy plik – pominięto kolejne: {count}.</string>
     <string name="dictate__setup_description">Skonfiguruj dostawcę AI i klucz API, aby zacząć dyktować za pomocą mikrofonu.</string>
     <string name="dictate__setup_configure_btn">Skonfiguruj Dictate</string>

@@ -1478,6 +1478,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Coba lagi</string>
     <string name="dictate__import_no_file">Tidak ada berkas audio yang dibagikan.</string>
+    <string name="dictate__import_not_audio">Berkas ini tidak berisi audio.</string>
     <string name="dictate__import_only_first">Hanya berkas pertama yang ditranskripsikan – {count} lainnya dilewati.</string>
     <string name="dictate__setup_description">Atur penyedia AI dan kunci API Anda agar dapat mulai mendikte dengan mikrofon.</string>
     <string name="dictate__setup_configure_btn">Konfigurasikan Dictate</string>

@@ -1422,6 +1422,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Opnieuw proberen</string>
     <string name="dictate__import_no_file">Er is geen audiobestand gedeeld.</string>
+    <string name="dictate__import_not_audio">Dit bestand bevat geen audio.</string>
     <string name="dictate__import_only_first">Alleen het eerste bestand wordt getranscribeerd – {count} andere zijn overgeslagen.</string>
     <string name="dictate__setup_description">Stel je AI-aanbieder en API-sleutel in zodat je met de microfoon kunt dicteren.</string>
     <string name="dictate__setup_configure_btn">Dictate instellen</string>

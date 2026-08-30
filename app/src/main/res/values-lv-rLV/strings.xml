@@ -1466,6 +1466,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Mēģināt vēlreiz</string>
     <string name="dictate__import_no_file">Neviens audio fails netika kopīgots.</string>
+    <string name="dictate__import_not_audio">Šajā failā nav audio.</string>
     <string name="dictate__import_only_first">Tiek transkribēts tikai pirmais fails – vēl {count} tika izlaisti.</string>
     <string name="dictate__setup_description">Iestatiet savu MI pakalpojuma sniedzēju un API atslēgu, lai sāktu diktēt ar mikrofonu.</string>
     <string name="dictate__setup_configure_btn">Konfigurēt Dictate</string>

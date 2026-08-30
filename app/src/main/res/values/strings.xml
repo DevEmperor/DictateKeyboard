@@ -2243,6 +2243,7 @@
     <string name="dictate__import_search_none" comment="Match counter when the search text appears nowhere">0/0</string>
     <string name="dictate__import_retry" comment="Button that starts the transcription over after it failed">Try again</string>
     <string name="dictate__import_no_file" comment="Shown when the share carried nothing we could read">No audio file was shared.</string>
+    <string name="dictate__import_not_audio" comment="Shown when the shared file turned out to hold no sound at all">This file contains no audio.</string>
     <string name="dictate__import_only_first" comment="Shown when several files were shared at once; {count} is how many were left out">Only the first file is transcribed – {count} more were left out.</string>
 
     <!-- Dictate onboarding step -->

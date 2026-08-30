@@ -291,12 +291,19 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="audio/*"/>
                 <data android:mimeType="video/*"/>
-                <!-- WhatsApp voice notes are .opus. The media store types them audio/ogg, which
-                     audio/* already catches, but a file manager that derives the type from the
-                     extension hands out application/ogg instead — and that matched nothing. Named
-                     explicitly rather than opening up application/octet-stream, which would put
-                     "Transcribe" in the share sheet of every zip and apk on the phone. -->
+                <!-- WhatsApp voice notes are .opus, and three different answers exist for what
+                     that is. The media store scanner says audio/ogg; a file manager reading the
+                     extension says application/ogg; and Android's own MimeTypeMap has no entry for
+                     "opus" at all, so every documents provider falls back to octet-stream. Measured
+                     on a device: only the last of the three failed to reach here, which is why the
+                     voice notes stayed invisible after the first two were added.
+
+                     octet-stream is broader than one would like, but narrower than it sounds: it is
+                     the type of files Android cannot identify, not of all files. A zip is
+                     application/zip, an apk has its own type, a pdf has its own. The screen checks
+                     for an audio track and says so plainly when there is none. -->
                 <data android:mimeType="application/ogg"/>
+                <data android:mimeType="application/octet-stream"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -305,6 +312,7 @@
                 <data android:mimeType="audio/*"/>
                 <data android:mimeType="video/*"/>
                 <data android:mimeType="application/ogg"/>
+                <data android:mimeType="application/octet-stream"/>
             </intent-filter>
         </activity>
 

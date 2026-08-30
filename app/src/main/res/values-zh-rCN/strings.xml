@@ -1518,6 +1518,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">重试</string>
     <string name="dictate__import_no_file">没有共享任何音频文件。</string>
+    <string name="dictate__import_not_audio">此文件不含音频。</string>
     <string name="dictate__import_only_first">只转写第一个文件，另外 {count} 个已跳过。</string>
     <string name="dictate__setup_description">设置您的 AI 服务商和 API 密钥，即可用麦克风开始听写。</string>
     <string name="dictate__setup_configure_btn">配置 Dictate</string>

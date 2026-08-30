@@ -1381,6 +1381,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">أعد المحاولة</string>
     <string name="dictate__import_no_file">لم تتم مشاركة أي ملف صوتي.</string>
+    <string name="dictate__import_not_audio">لا يحتوي هذا الملف على صوت.</string>
     <string name="dictate__import_only_first">يتم تفريغ الملف الأول فقط – وتم تجاوز {count} ملفات أخرى.</string>
     <string name="dictate__setup_description">أعِدّ مزوّد الذكاء الاصطناعي ومفتاح API لتتمكّن من بدء الإملاء بالميكروفون.</string>
     <string name="dictate__setup_configure_btn">إعداد Dictate</string>

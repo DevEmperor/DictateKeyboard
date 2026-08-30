@@ -232,6 +232,14 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             error = context.getString(R.string.dictate__file_read_error)
             return@LaunchedEffect
         }
+        if (!copied.second.hasAudio) {
+            // The filter accepts unknown types so voice notes get through; this is where the ones
+            // that are not audio stop, before a byte leaves the phone.
+            copied.first.delete()
+            busy = false
+            error = context.getString(R.string.dictate__import_not_audio)
+            return@LaunchedEffect
+        }
         audio = copied.first
         info = copied.second
         prompts.value = withContext(Dispatchers.IO) {
@@ -462,42 +470,39 @@ private fun Footer(
         }
     }
 
-    if (twoPerRow) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                copy(Modifier.weight(1f))
-                iconButton(Icons.Default.Share, R.string.dictate__stats_share, true, Modifier.weight(1f)) { onShare() }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                iconButton(Icons.Default.Refresh, R.string.dictate__import_retry, !busy, Modifier.weight(1f)) { onRetry() }
-                iconButton(Icons.Default.SaveAlt, R.string.dictate__import_save, true, Modifier.weight(1f)) { onSave() }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Box(Modifier.weight(1f)) {
-                    iconButton(Icons.Default.AutoFixHigh, R.string.dictate__import_prompt_button, !busy && prompts.isNotEmpty(), Modifier.fillMaxWidth()) { onMenu(true) }
-                    PromptMenu(menuOpen, prompts, canRevert, onMenu, onPrompt, onRevert)
-                }
-                iconButton(Icons.Default.Search, R.string.dictate__import_search, true, Modifier.weight(1f)) { onSearch() }
-            }
+    val share = @Composable { m: Modifier -> iconButton(Icons.Default.Share, R.string.dictate__stats_share, true, m) { onShare() } }
+    val save = @Composable { m: Modifier -> iconButton(Icons.Default.SaveAlt, R.string.dictate__import_save, true, m) { onSave() } }
+    val retry = @Composable { m: Modifier -> iconButton(Icons.Default.Refresh, R.string.dictate__import_retry, !busy, m) { onRetry() } }
+    val search = @Composable { m: Modifier -> iconButton(Icons.Default.Search, R.string.dictate__import_search, true, m) { onSearch() } }
+    val reword = @Composable { m: Modifier ->
+        Box(m) {
+            iconButton(
+                Icons.Default.AutoFixHigh, R.string.dictate__import_prompt_button,
+                !busy && prompts.isNotEmpty(), Modifier.fillMaxWidth(),
+            ) { onMenu(true) }
+            PromptMenu(menuOpen, prompts, canRevert, onMenu, onPrompt, onRevert)
         }
+    }
+
+    /*
+     * Six controls never fit across a phone. The first attempt put them in one row and squeezed the
+     * icons out of existence — a button so narrow that its icon is clipped is worse than a second
+     * row. Portrait therefore takes three and three, which leaves Copy room for its word; the
+     * landscape column is narrower still, so there it is two and two and two.
+     */
+    val rows: List<List<@Composable (Modifier) -> Unit>> = if (twoPerRow) {
+        listOf(listOf(copy, share), listOf(retry, save), listOf(reword, search))
     } else {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            copy(Modifier)
-            iconButton(Icons.Default.Share, R.string.dictate__stats_share, true, Modifier.weight(1f)) { onShare() }
-            iconButton(Icons.Default.Refresh, R.string.dictate__import_retry, !busy, Modifier.weight(1f)) { onRetry() }
-            iconButton(Icons.Default.SaveAlt, R.string.dictate__import_save, true, Modifier.weight(1f)) { onSave() }
-            Box(Modifier.weight(1f)) {
-                iconButton(Icons.Default.AutoFixHigh, R.string.dictate__import_prompt_button, !busy && prompts.isNotEmpty(), Modifier.fillMaxWidth()) { onMenu(true) }
-                PromptMenu(menuOpen, prompts, canRevert, onMenu, onPrompt, onRevert)
+        listOf(listOf(copy, share, save), listOf(retry, reword, search))
+    }
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        for (row in rows) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                for (cell in row) cell(Modifier.weight(1f))
             }
-            iconButton(Icons.Default.Search, R.string.dictate__import_search, true, Modifier.weight(1f)) { onSearch() }
         }
     }
 }
@@ -552,7 +557,7 @@ private fun SearchRow(
     Row(
         modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(0.dp),
     ) {
         OutlinedTextField(
             modifier = Modifier.weight(1f).focusRequester(focus),
@@ -570,15 +575,19 @@ private fun SearchRow(
             },
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            // The counter belongs to the field, not against it: it sat flush on the border.
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
-        IconButton(onClick = { onStep(-1) }, enabled = hits > 0) {
-            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null)
+        // Smaller and tighter than the default 48dp target, so the three of them together take about
+        // as much room as one button and the field keeps the width.
+        IconButton(onClick = { onStep(-1) }, enabled = hits > 0, modifier = Modifier.size(38.dp)) {
+            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null, modifier = Modifier.size(22.dp))
         }
-        IconButton(onClick = { onStep(1) }, enabled = hits > 0) {
-            Icon(Icons.Default.KeyboardArrowDown, contentDescription = null)
+        IconButton(onClick = { onStep(1) }, enabled = hits > 0, modifier = Modifier.size(38.dp)) {
+            Icon(Icons.Default.KeyboardArrowDown, contentDescription = null, modifier = Modifier.size(22.dp))
         }
-        IconButton(onClick = onClose) {
-            Icon(Icons.Default.Close, contentDescription = stringRes(R.string.action__cancel))
+        IconButton(onClick = onClose, modifier = Modifier.size(38.dp)) {
+            Icon(Icons.Default.Close, contentDescription = stringRes(R.string.action__cancel), modifier = Modifier.size(22.dp))
         }
     }
 }

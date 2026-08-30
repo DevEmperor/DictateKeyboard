@@ -1370,6 +1370,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Спробувати ще раз</string>
     <string name="dictate__import_no_file">Аудіофайл не надіслано.</string>
+    <string name="dictate__import_not_audio">У цьому файлі немає звуку.</string>
     <string name="dictate__import_only_first">Розшифровується лише перший файл — пропущено ще: {count}.</string>
     <string name="dictate__setup_description">Налаштуйте постачальника ШІ та ключ API, щоб почати диктувати з мікрофона.</string>
     <string name="dictate__setup_configure_btn">Налаштувати Dictate</string>

@@ -1501,6 +1501,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Yeniden dene</string>
     <string name="dictate__import_no_file">Hiçbir ses dosyası paylaşılmadı.</string>
+    <string name="dictate__import_not_audio">Bu dosyada ses yok.</string>
     <string name="dictate__import_only_first">Yalnızca ilk dosya yazıya dökülür – {count} dosya daha atlandı.</string>
     <string name="dictate__setup_description">Mikrofonla dikte etmeye başlayabilmek için yapay zekâ sağlayıcınızı ve API anahtarınızı ayarlayın.</string>
     <string name="dictate__setup_configure_btn">Dictate\'i yapılandır</string>

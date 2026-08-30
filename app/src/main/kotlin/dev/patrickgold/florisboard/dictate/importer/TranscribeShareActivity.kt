@@ -108,6 +108,15 @@ data class SharedFileInfo(
     val displayName: String,
     val sizeBytes: Long,
     val durationSecs: Long,
+    /**
+     * Whether the file actually carries sound.
+     *
+     * Asked because the share filter has to accept application/octet-stream to see WhatsApp voice
+     * notes at all — Android's MimeTypeMap has no entry for "opus", so every documents provider
+     * calls them unknown. Accepting unknown means accepting things that are not audio, and the
+     * honest place to find that out is here, before anything is uploaded.
+     */
+    val hasAudio: Boolean,
 )
 
 /**
@@ -146,12 +155,14 @@ fun copySharedFile(context: Context, uri: Uri): Pair<File, SharedFileInfo>? {
     }
     if (size <= 0L) size = target.length()
 
-    val duration = runCatching {
+    val probe = runCatching {
         MediaMetadataRetriever().use { mmr ->
             mmr.setDataSource(target.absolutePath)
-            (mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull() ?: 0L) / 1000L
+            val secs = (mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull() ?: 0L) / 1000L
+            val audio = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_HAS_AUDIO) == "yes"
+            secs to audio
         }
-    }.getOrDefault(0L)
+    }.getOrDefault(0L to false)
 
-    return target to SharedFileInfo(safeName, size, duration)
+    return target to SharedFileInfo(safeName, size, probe.first, probe.second)
 }

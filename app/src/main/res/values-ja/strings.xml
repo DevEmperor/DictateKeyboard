@@ -1455,6 +1455,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">再試行</string>
     <string name="dictate__import_no_file">音声ファイルが共有されませんでした。</string>
+    <string name="dictate__import_not_audio">このファイルには音声が含まれていません。</string>
     <string name="dictate__import_only_first">最初のファイルのみ文字起こしします。他の {count} 件は対象外です。</string>
     <string name="dictate__setup_description">マイクで音声入力を始められるように、AIプロバイダーとAPIキーを設定してください。</string>
     <string name="dictate__setup_configure_btn">Dictateを設定</string>

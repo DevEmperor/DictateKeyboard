@@ -1521,6 +1521,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Újra</string>
     <string name="dictate__import_no_file">Nem osztottál meg hangfájlt.</string>
+    <string name="dictate__import_not_audio">Ez a fájl nem tartalmaz hangot.</string>
     <string name="dictate__import_only_first">Csak az első fájl kerül átírásra – további {count} kimaradt.</string>
     <string name="dictate__setup_description">Állítsa be az MI-szolgáltatóját és az API-kulcsát, hogy a mikrofonnal diktálhasson.</string>
     <string name="dictate__setup_configure_btn">Dictate beállítása</string>

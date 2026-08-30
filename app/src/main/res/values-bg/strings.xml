@@ -1523,6 +1523,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Опитай отново</string>
     <string name="dictate__import_no_file">Не беше споделен аудиофайл.</string>
+    <string name="dictate__import_not_audio">Този файл не съдържа звук.</string>
     <string name="dictate__import_only_first">Преобразува се само първият файл – още {count} бяха пропуснати.</string>
     <string name="dictate__setup_description">Настройте своя ИИ доставчик и API ключ, за да започнете да диктувате с микрофона.</string>
     <string name="dictate__setup_configure_btn">Конфигурирай Dictate</string>

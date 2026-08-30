@@ -1502,6 +1502,7 @@
     <string name="dictate__import_search_none">0/0</string>
     <string name="dictate__import_retry">Tentar novamente</string>
     <string name="dictate__import_no_file">Nenhum ficheiro de áudio foi partilhado.</string>
+    <string name="dictate__import_not_audio">Este ficheiro não contém áudio.</string>
     <string name="dictate__import_only_first">Apenas o primeiro ficheiro é transcrito – mais {count} ficaram de fora.</string>
     <string name="dictate__setup_description">Configure o seu fornecedor de IA e a chave de API para começar a ditar com o microfone.</string>
     <string name="dictate__setup_configure_btn">Configurar o Dictate</string>
