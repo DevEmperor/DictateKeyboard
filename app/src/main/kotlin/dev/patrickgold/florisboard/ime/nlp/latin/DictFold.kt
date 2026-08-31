@@ -76,9 +76,6 @@ object DictFold {
      */
     fun hasNonTrivialFold(lang: String): Boolean = lang in ARABIC_SCRIPT || lang == FRENCH
 
-    /** Only Arabic needs every surface form retained for its spelling-restoration suggestions. */
-    fun hasRestorationVariants(lang: String): Boolean = lang in ARABIC_SCRIPT
-
     /**
      * The dictionary key for [word] in [lang]. Both the stored words and the typed word go through this,
      * so the two always meet.

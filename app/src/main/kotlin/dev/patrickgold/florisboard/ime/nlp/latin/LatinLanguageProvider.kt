@@ -447,9 +447,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 val freq = HashMap<String, Int>(data.size)
                 val canonical = HashMap<String, String>(data.size)
                 val alphabet = HashSet<Char>()
-                // Only Arabic restores an alternate spelling as a dedicated suggestion. French uses its
-                // fold for prefix matching, but needs neither this large surface-form index nor autocorrect.
-                val forms = if (DictFold.hasRestorationVariants(lang)) HashMap<String, MutableList<String>>() else null
+                // Only collected where the fold actually merges spellings, so nothing is paid for the
+                // languages where every key has exactly one form anyway. Both folding languages need it:
+                // it is what lets a typed ان or hote reach أن and hôte as a suggestion at all.
+                val forms = if (DictFold.hasNonTrivialFold(lang)) HashMap<String, MutableList<String>>() else null
                 for ((word, f) in data) {
                     val key = DictFold.foldKey(lang, word)
                     if ((freq[key] ?: -1) < f) {
@@ -900,22 +901,33 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
-        // Arabic-script spelling restoration (issue #265). The base keyboard carries only ا, ي and the
-        // plain letters; أ إ آ ى ک ی hide behind long presses, so people type the bare form and the review
-        // that prompted this asked for exactly that to be fixed — "correcting text when there's a writing
-        // error", where in Arabic most writing errors *are* these variants.
+        // Spelling restoration for the folding languages (issue #265, extended to French in #306). The
+        // base keyboard carries only ا, ي and the plain letters; أ إ آ ى ک ی hide behind long presses, so
+        // people type the bare form and the review that prompted this asked for exactly that to be fixed —
+        // "correcting text when there's a writing error", where in Arabic most writing errors *are* these
+        // variants. French is the same shape with different letters: é è ê ç à sit behind long presses too,
+        // and hote for hôte is the same kind of miss as ان for أن.
         //
         // Because the dictionary was filtered through Hunspell, it holds only correct spellings: ان is not
-        // in it, أن is. So a typed form whose fold key exists but whose own spelling does not is a spelling
-        // to restore, and every dictionary word sharing that key is a legitimate reading — أن، إن، آن all
-        // go in the strip, most frequent first, rather than the keyboard guessing which was meant.
+        // in it, أن is; hote is not, hôte is. So a typed form whose fold key exists but whose own spelling
+        // does not is a spelling to restore, and every dictionary word sharing that key is a legitimate
+        // reading — أن، إن، آن all go in the strip, most frequent first, rather than the keyboard guessing
+        // which was meant.
         //
-        // Runs before the correction path below, which never sees these words: isKnownWord answers on the
-        // fold key, so ان counts as known and is not treated as a typo. That is the intended reading — it
-        // is a recognisable word with a preferred spelling, not a mistake.
+        // **This block is what keeps the fold from costing more than it gives**, and the French case shows
+        // why it cannot be skipped: isKnownWord answers on the fold key, so hote counts as known, and the
+        // correction path below — which is gated on !isKnown — never sees it. Without this, hôte would
+        // appear only as an ordinary prefix completion and never be committed automatically, exactly the
+        // failure the German noun block further down exists to undo.
+        //
+        // Correctly spelled words are untouched by construction: `forms.none { it == word }` is false for
+        // ou, a, cote and every other word that is itself in the dictionary, so the block never fires on
+        // them. It only ever offers something for a spelling the language does not have.
+        //
         // Length 2 rather than the 3 the German and apostrophe blocks use: Arabic's most-written words are
-        // two letters (من، في، ما), and فى → في is exactly the fix being asked for.
-        if (DictFold.hasRestorationVariants(index.lang) && word.length >= 2) {
+        // two letters (من، في، ما), and فى → في is exactly the fix being asked for. It suits French as
+        // well — ca → ça is worth having, while ou and a are real words and never reach here.
+        if (DictFold.hasNonTrivialFold(index.lang) && word.length >= 2) {
             val key = index.fold(word)
             val forms = index.formsOf(key)
             if (forms.isNotEmpty() && forms.none { it == word }) {

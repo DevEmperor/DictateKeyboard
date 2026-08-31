@@ -42,7 +42,6 @@ class DictFoldTest {
             assertTrue(DictFold.hasNonTrivialFold(lang), lang)
         }
         assertTrue(DictFold.hasNonTrivialFold("fr"))
-        assertFalse(DictFold.hasRestorationVariants("fr"))
         for (lang in listOf("en", "de", "he", "fa-IR", "", "hi", "bn", "ta")) {
             assertFalse(DictFold.hasNonTrivialFold(lang), lang)
         }
@@ -69,6 +68,27 @@ class DictFoldTest {
     fun `french ligatures fold to their keyboard spelling`() {
         assertEquals("oeuvre", DictFold.foldFrench("œuvre"))
         assertEquals("aether", DictFold.foldFrench("æther"))
+    }
+
+    /**
+     * The property the spelling restoration stands on, and the reason it must stay true.
+     *
+     * `isKnownWord` answers on the fold key, so once French folds, `hote` reads as a known word and the
+     * correction path — gated on `!isKnown` — never sees it. What puts `hôte` back is the restoration
+     * block, and that block finds it by exactly this equality. Break it and the accent silently stops
+     * being offered, with nothing failing anywhere else.
+     */
+    @Test
+    fun `an unaccented french spelling reaches its accented entry`() {
+        for ((typed, stored) in listOf(
+            "hote" to "hôte",
+            "eleve" to "élève",
+            "garcon" to "garçon",
+            "ca" to "ça",
+            "oeuvre" to "œuvre",
+        )) {
+            assertEquals(DictFold.foldKey("fr", stored), DictFold.foldKey("fr", typed), "$typed / $stored")
+        }
     }
 
     // --- arabic: marks that carry no meaning ------------------------------------------------------
