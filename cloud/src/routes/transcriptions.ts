@@ -1,9 +1,7 @@
 import { raise } from '../alerts';
 import { estimateSeconds, probeDuration, shortestPossibleSeconds } from '../audio';
 import { authenticate, touch } from '../auth';
-import {
-  OPENAI_BASE, neuronsToNano, transcribeCostNanoFor, type Env, type Limits,
-} from '../config';
+import { neuronsToNano, transcribeCostNano, type Env, type Limits } from '../config';
 import { budgetAllows, logUsage, settleBudget, walletStub } from '../meter';
 import { NO_STORE, apiError } from '../util';
 
@@ -18,9 +16,9 @@ import { NO_STORE, apiError } from '../util';
  *   5. Forward
  *   6. Refund on failure, correct to the real duration on success
  *
- * Only step 5 knows which provider is in use, and it is the only one that has to: none of the other
- * five depends on who does the transcribing. `TRANSCRIBE_PROVIDER` picks between `runOpenAi` and
- * `runWorkersAi`, both of which answer in the same shape.
+ * Step 5 goes to Workers AI over the binding — no key, no network hop, nothing that has to be
+ * reachable. Everything around it is unchanged from when it went somewhere else, because none of it
+ * ever depended on who did the transcribing.
  */
 export async function handleTranscription(
   request: Request,
@@ -76,9 +74,9 @@ export async function handleTranscription(
 
   // Held up front, and never more than the longest recording allowed: the estimate assumes speech
   // at 32 kbit/s, so a better-encoded file reads several times its true length and would demand
-  // credit for minutes it does not contain. Corrected to the real duration once OpenAI reports it.
+  // credit for minutes it does not contain. Corrected to the real duration once the model reports it.
   const chargedSeconds = Math.min(Math.ceil(duration.seconds), limits.maxAudioSeconds);
-  const estimateNano = transcribeCostNanoFor(limits.transcribeProvider, chargedSeconds);
+  const estimateNano = transcribeCostNano(chargedSeconds);
 
   if (!(await budgetAllows(env, limits, estimateNano, ctx))) {
     // Recorded like any other outcome. A refusal is the one event a support message is most
@@ -102,12 +100,7 @@ export async function handleTranscription(
     return refusal;
   }
 
-  // Step 5, and the only step either provider changes. Everything around it — who you are, how
-  // long the audio is, whether the day's budget allows it, deduct first, refund on failure — is
-  // the same order for both, because none of it depends on who does the transcribing.
-  const upstream = limits.transcribeProvider === 'workers-ai'
-    ? await runWorkersAi(env, limits, file, form)
-    : await runOpenAi(env, limits, file, form);
+  const upstream = await runWorkersAi(env, limits, file, form);
 
   if (upstream.kind === 'unreachable') {
     await wallet.refund(chargedSeconds);
@@ -157,44 +150,36 @@ export async function handleTranscription(
       // deliberately encoded below that rate goes the other way and is billed short.
       //
       // Either way the number is wrong and nothing else would say so, which is why this reports
-      // rather than guesses. Once every six hours per model is enough: this is a change at the
-      // provider, not an event — it either happens for every request or for none.
-      //
-      // The field is not the same on both sides, so neither is the message. Pointing at
-      // `usage.seconds` while the request went to Workers AI would cost an hour of looking in the
-      // wrong place, which is the one thing an alert must never do.
-      const cf = limits.transcribeProvider === 'workers-ai';
-      const who = cf ? 'Workers AI' : 'OpenAI';
-      const field = cf ? '`transcription_info.duration`' : '`usage.seconds`';
+      // rather than guesses. Once every six hours per model is enough: this is a change at
+      // Cloudflare, not an event — it either happens for every request or for none.
       ctx.waitUntil(raise(env, {
         kind: 'audio_duration_missing',
         severity: 'critical',
         value: chargedSeconds,
-        title: `${who} meldet die Audiolänge nicht mehr`,
+        title: 'Workers AI meldet die Audiolänge nicht mehr',
         detail:
           `Eine Aufnahme, deren Länge sich nicht aus dem Dateikopf lesen ließ, wurde nach Größe ` +
-          `geschätzt (${chargedSeconds} s) — und die Antwort von ${who} enthielt kein ` +
-          `${field}, mit dem sich das hätte richtigstellen lassen. Bis dahin galt dieses ` +
+          `geschätzt (${chargedSeconds} s) — und die Antwort enthielt kein ` +
+          `\`transcription_info.duration\`, mit dem sich das hätte richtigstellen lassen. Bis dahin galt dieses ` +
           `Feld als gesetzt; fehlt es dauerhaft, wird jede Datei außer WAV falsch abgerechnet: ` +
           `gewöhnliche Aufnahmen zu teuer, absichtlich niedrig kodierte zu billig. Betroffen ist ` +
           `nur, was über die Dateiauswahl kommt — die App selbst nimmt WAV auf, und dort steht die ` +
           `Länge exakt im Kopf. Zu prüfen: das Antwortformat von \`${limits.transcribeModel}\` und ` +
-          `ob ${who} die Angabe umbenannt hat.`,
+          `ob Cloudflare die Angabe umbenannt hat.`,
         dedupeKey: `audio_duration_missing:${limits.transcribeModel}`,
       }, ctx).then(() => undefined));
     }
   }
 
-  // What it really cost to buy, and the two providers answer that differently. OpenAI is priced by
-  // the minute, so the duration *is* the cost. Workers AI reports the neurons it spent, and that is
-  // the figure to keep: it is a measurement rather than our multiplication, and it stays right if
-  // the price list moves. Only when it is missing does the per-minute table stand in.
+  // What it really cost to buy. Workers AI reports the neurons it spent, and that is the figure to
+  // keep: a measurement rather than our multiplication, and it stays right when the price list
+  // moves. Only when it is missing does the per-minute table stand in.
   //
   // The day's budget is settled against exactly this number rather than against the duration, so
   // the guard and the ledger cannot drift apart.
   const actualNano = upstream.neurons > 0
     ? neuronsToNano(upstream.neurons)
-    : transcribeCostNanoFor(limits.transcribeProvider, finalSeconds);
+    : transcribeCostNano(finalSeconds);
   settleBudget(env, actualNano - estimateNano, ctx);
 
   logUsage(env, {
@@ -280,10 +265,11 @@ export function debitError(reason: 'blocked' | 'insufficient' | 'rate_limited'):
 }
 
 /**
- * An error from OpenAI is passed on, but not its wording.
+ * An upstream error is passed on, but not its wording.
  *
- * The user has no contract with OpenAI and can do nothing with "your organization has been
- * blocked" — and the message could give away internals.
+ * The user has no contract with the model provider and can do nothing with "your organization has
+ * been blocked" — and the message could give away internals. Kept although the binding throws
+ * rather than returning a status: the shape stays ready for a status that does arrive.
  */
 function upstreamFailure(status: number): Response {
   if (status === 429) {
@@ -296,51 +282,21 @@ function upstreamFailure(status: number): Response {
 }
 
 /**
- * One transcription, whoever performs it.
+ * One transcription.
  *
- * `body` is what the client receives — for OpenAI that is its answer passed through untouched, for
- * Workers AI a `{ "text": … }` built from it. The app reads nothing but `text` (its
- * `TranscriptionResponseDto` has one field), and handing back segments, word counts and a `vtt`
- * track would publish which model is behind Dictate Cloud for no one's benefit.
+ * `body` is what the client receives: a `{ "text": … }` built from the answer. The app reads nothing
+ * but `text` (its `TranscriptionResponseDto` has one field), and handing back segments, word counts
+ * and a `vtt` track would publish which model is behind Dictate Cloud for no one's benefit.
  */
 type Upstream =
   | { kind: 'ok'; body: string; reportedSeconds: number | null; neurons: number }
   | { kind: 'failed'; status: number }
   | { kind: 'unreachable' };
 
-/** The path as it has always been: multipart to OpenAI, its JSON straight back to the client. */
-async function runOpenAi(env: Env, limits: Limits, file: File, form: FormData): Promise<Upstream> {
-  // The server decides the model and the response format. Whatever the client sends as
-  // `model` is deliberately discarded — otherwise the costing would be wide open.
-  const upstream = new FormData();
-  upstream.set('file', file, file.name || 'audio.wav');
-  upstream.set('model', limits.transcribeModel);
-  upstream.set('response_format', 'json');
-  for (const key of ['language', 'prompt'] as const) {
-    const value = form.get(key);
-    if (typeof value === 'string' && value.trim()) upstream.set(key, value);
-  }
-
-  let response: Response;
-  try {
-    response = await fetch(`${OPENAI_BASE}/audio/transcriptions`, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${env.OPENAI_API_KEY}` },
-      body: upstream,
-    });
-  } catch {
-    return { kind: 'unreachable' };
-  }
-
-  const body = await response.text();
-  if (!response.ok) return { kind: 'failed', status: response.status };
-  return { kind: 'ok', body, reportedSeconds: reportedSeconds(body), neurons: 0 };
-}
-
 /**
- * The same through the Workers AI binding.
+ * The transcription itself, over the binding.
  *
- * Four things differ from the path above, and each of them has a reason worth keeping:
+ * Four things about it are worth keeping in mind, and each has a reason:
  *
  *  1. **Base64, not multipart.** `whisper-large-v3-turbo` takes the audio as a string. The older
  *     `@cf/openai/whisper` wants `number[]` — nineteen million array entries for a ten-minute file
@@ -373,9 +329,9 @@ async function runWorkersAi(env: Env, limits: Limits, file: File, form: FormData
       initial_prompt: text('prompt'),
     } as never) as typeof result;
   } catch (error) {
-    // No status to map, so the distinction the two branches used to make is gone: everything that
-    // is not an answer is treated as "unreachable", which refunds and returns 502 — the same thing
-    // a 5xx from OpenAI did. Logged, because a binding that starts failing says so nowhere else.
+    // The binding throws rather than answering with a status, so there is nothing to map:
+    // everything that is not an answer refunds and returns 502. Logged, because a binding that
+    // starts failing says so nowhere else.
     console.log(`workers-ai transcribe failed: ${String(error).slice(0, 200)}`);
     return { kind: 'unreachable' };
   }
@@ -406,7 +362,7 @@ async function runWorkersAi(env: Env, limits: Limits, file: File, form: FormData
  *
  * Both figures matter and neither is a problem: two seconds against a five-minute CPU limit, and
  * 26 MB of string on top of the 19 MB buffer and the file the form is still holding — call it 65 MB
- * against 128. Worth knowing before assuming the binding is simply faster than the hop to OpenAI:
+ * against 128. Worth knowing before assuming a call without a network hop is simply the faster one:
  * for a long recording it starts two seconds behind.
  */
 function base64(bytes: Uint8Array): string {

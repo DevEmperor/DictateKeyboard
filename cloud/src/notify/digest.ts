@@ -1,10 +1,10 @@
 import type { Severity } from '../alerts';
 import type { Env } from '../config';
-import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
 import { alertSettings } from '../settings';
 import { sendMail } from './email';
 import { renderDigestMail } from './render';
+import { num } from '../util';
 
 /**
  * One mail a day, whether or not anything happened.
@@ -46,7 +46,7 @@ export async function sendDigest(env: Env): Promise<boolean> {
   const dayStart = Date.parse(`${yesterday}T00:00:00Z`);
   const dayEnd = dayStart + 86_400_000;
 
-  const [totals, sales, wallets, liability, alerts, costs, fx] = await Promise.all([
+  const [totals, sales, wallets, liability, alerts] = await Promise.all([
     env.DB.prepare(
       'SELECT requests, seconds, errors, cost_nano AS costNano FROM daily_totals WHERE day = ?',
     ).bind(yesterday).first<{ requests: number; seconds: number; errors: number; costNano: number }>(),
@@ -65,8 +65,6 @@ export async function sendDigest(env: Env): Promise<boolean> {
       `SELECT ts, severity, title, detail FROM alerts
         WHERE ts >= ? ORDER BY CASE severity WHEN 'critical' THEN 0 ELSE 1 END, ts DESC LIMIT 25`,
     ).bind(Date.now() - 86_400_000).all<{ ts: number; severity: Severity; title: string; detail: string }>(),
-    openaiCosts(env, 30),
-    usdRate(env),
   ]);
 
   const revenue = num(sales?.revenue) / 1_000_000;
@@ -76,19 +74,11 @@ export async function sendDigest(env: Env): Promise<boolean> {
     { label: 'Anfragen', value: `${num(totals?.requests).toLocaleString('de-DE')}${num(totals?.errors) ? ` (${num(totals?.errors)} Fehler)` : ''}` },
     { label: 'Diktiert', value: `${Math.round(num(totals?.seconds) / 60).toLocaleString('de-DE')} Minuten` },
     { label: 'Verkäufe', value: `${num(sales?.orders)} · ${revenue.toFixed(2)} ${home}` },
-    { label: 'Einkauf (eigene Rechnung)', value: `${costUsd.toFixed(4)} $` },
+    { label: 'Einkauf (Listenpreis)', value: `${costUsd.toFixed(4)} $` },
     { label: 'Neue Konten', value: String(num(wallets?.n)) },
     { label: 'Offenes Guthaben', value: `${Math.round(num(liability?.seconds) / 60).toLocaleString('de-DE')} Minuten` },
   ];
 
-  // Only when OpenAI is actually reachable. A line that says "unknown" every morning teaches you
-  // to skip the block it sits in.
-  if (costs.connected && costs.serviceUsd !== null) {
-    figures.push({
-      label: 'Einkauf laut OpenAI (30 T)',
-      value: `${costs.serviceUsd.toFixed(2)} $ ≈ ${(costs.serviceUsd * fx.rate).toFixed(2)} ${home}`,
-    });
-  }
 
   const settings = await alertSettings(env);
   return sendMail(env, renderDigestMail(env, {

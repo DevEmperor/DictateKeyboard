@@ -92,12 +92,8 @@ export async function handleAdmin(request: Request, env: Env, ctx: ExecutionCont
       case '/admin/api/plans':
         return json(await plans(env));
       // One endpoint for the money, where there used to be two. `summary` and `finance` each
-      // fetched OpenAI's billing separately, so opening the page paged through it twice.
       case '/admin/api/money': {
-        const [sum, fin] = await Promise.all([
-          summary(env, ctx),
-          finance(env, clamp(url.searchParams.get('days'), 30, 180), ctx),
-        ]);
+        const [sum, fin] = await Promise.all([summary(env), finance(env)]);
         return json({ summary: sum, ...fin });
       }
       case '/admin/api/settings':

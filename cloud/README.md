@@ -2,13 +2,11 @@
 
 The credit server behind Dictate's optional "buy minutes instead of bringing your own API key"
 path. A single Cloudflare Worker: it verifies a Google Play purchase, keeps a balance, and passes
-dictation and rewording to a speech and a language model while metering what they cost.
+dictation and rewording to Cloudflare's own Workers AI while metering what they cost.
 
-Which model that is, is configuration rather than architecture: `TRANSCRIBE_PROVIDER` and
-`CHAT_PROVIDER` choose between OpenAI and Cloudflare's own Workers AI, one setting per service.
-Everything around the call — who you are, how long the recording is, whether the day's budget
-allows it, deduct before asking, refund on failure — is the same either way, because none of it
-depends on who answers.
+The models run inside the same platform the Worker does, reached through a binding rather than over
+the network — so there is no API key for them, and nothing has to leave for an outside service.
+Which model does the work is `TRANSCRIBE_MODEL` and `CHAT_MODEL`, changeable without a code change.
 
 Using Dictate does not require any of this. Bring an API key from a provider of your choice and the
 app never speaks to this server at all — see the app's provider settings. This exists so that
@@ -32,10 +30,9 @@ the watchdog uses. The thresholds guard nothing on their own — they only decid
 sent — but knowing them tells you exactly how to stay underneath. `wrangler.example.jsonc` has the
 same structure with the values removed.
 
-**Secrets**, of course. The OpenAI key — needed only while a service is pointed at OpenAI, since
-the Workers AI binding has none — the Play service account and the notification secret live in
-Cloudflare's secret store and never in a file. The source is written so that publishing it gives
-nothing away.
+**Secrets**, of course. The Play service account and the notification secret live in Cloudflare's
+secret store and never in a file. There is no key for the models: the binding bills the account this
+Worker runs on. The source is written so that publishing it gives nothing away.
 
 **The business papers.** Record of processing, technical and organisational measures, the tax notes,
 the third-country documentation, the abuse test plan. They belong to the operator, not to the code.
@@ -65,6 +62,7 @@ src/
   guard.ts        the daily spend ceiling and the code-guessing counter, one object for all
   meter.ts        the ledger; the only thing that writes
   routes/         transcriptions, chat, redeem, restore, delete, Google's notifications
+  config.ts       prices, packages, limits — and the neuron table the reported figures are checked against
   admin/          the dashboard behind Cloudflare Access
   notify/         alert rules, digest, the mails
 migrations/       applied by hand, in order — see the note in each file
@@ -76,7 +74,6 @@ schema.sql        the shape of a fresh database
 ```sh
 npm install
 cp wrangler.example.jsonc wrangler.jsonc   # then fill in the placeholders
-npx wrangler secret put OPENAI_API_KEY   # only while a provider is set to "openai"
 npx wrangler secret put GOOGLE_SERVICE_ACCOUNT
 npx wrangler d1 create dictate-cloud --location weur
 npx wrangler d1 execute dictate-cloud --remote --file schema.sql

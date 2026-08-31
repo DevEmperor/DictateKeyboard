@@ -1,9 +1,9 @@
 import {
-  COST, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_SECONDS, chatCostNano,
-  limitsFrom, savingsPercent, type Env,
+  NANO_PER_NEURON, NEURONS, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_NANO,
+  TYPICAL_REWORD_SECONDS, limitsFrom, savingsPercent, type Env,
 } from '../config';
-import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
+import { num } from '../util';
 
 /**
  * The money, from the sources that actually hold it.
@@ -12,7 +12,11 @@ import { homeCurrency, usdRate } from '../fx';
  * requests and seconds but wrong for counting money: the list price in `config.ts` is what we ask
  * for, not what Play collects (it converts per country and adds local tax) and certainly not what
  * Play pays out (it keeps a share). So the takings come from Google's Orders API, stored per
- * purchase, and the spend comes from OpenAI's own cost endpoint.
+ * purchase.
+ *
+ * **The spend does not.** It is the list price of what ran, out of our own roll-up — a self-report
+ * rather than an invoice, because Workers AI bills the account this Worker lives on and there is no
+ * endpoint to ask. The check on it is the monthly Cloudflare invoice, read by hand.
  *
  * **Currencies are added up now, and that is a change.** Until recently only the euro row counted
  * towards the profit and a sale in francs was quietly worth nothing. Each purchase now carries the
@@ -148,51 +152,35 @@ export async function playRevenue(env: Env, sinceMs = 0) {
 /**
  * The bottom line, in one place so the overview and the statistics view cannot disagree.
  *
- * Both outside figures — Play's developer revenue and OpenAI's billing — are cached, so this is
- * fast after the first call of the ten-minute window. `ctx` lets an expired entry refresh behind
- * the response rather than making someone wait for OpenAI's pagination.
+ * The one outside figure — Play's developer revenue — is cached, so this is fast after the first
+ * call of the ten-minute window. The spend needs nothing from outside: it is our own ledger.
  */
-export async function summary(env: Env, ctx?: ExecutionContext) {
+export async function summary(env: Env) {
   const home = homeCurrency(env);
-  const [play, openai, fx] = await Promise.all([
-    playRevenue(env),
-    openaiCosts(env, 180, ctx),
-    usdRate(env),
-  ]);
+  const [play, fx] = await Promise.all([playRevenue(env), usdRate(env)]);
 
   const revenueHome = play.revenueHomeTotal;
   // Converted per purchase with its own stored rate — see the query in [playRevenue].
   const paidHome = play.paidHomeTotal;
 
-  // The spend, and it is a sum over providers rather than a figure from one of them.
+  // The spend, from our own ledger — and that is worth saying out loud, because it used to come
+  // from an invoice.
   //
-  // This used to be `openai.serviceUsd` alone, which was the whole truth for as long as OpenAI was
-  // the only thing being bought. It is the one line in this dashboard that turning the switch would
-  // have made **quietly wrong**: `openai.connected` stays true while any rewording still goes there,
-  // `serviceUsd` keeps returning a number, and the number simply no longer contains the biggest
-  // block. The result is not an error message — it is a profit that is too high, which is the sort
-  // of wrong that gets believed.
+  // Workers AI is billed to the same account this Worker runs on, and there is no equivalent of
+  // OpenAI's billing endpoint to ask. So this is the list price of what actually ran, summed from
+  // `daily_totals`, and it is a *self-report*: a different class of evidence from a bill, and the
+  // page says so. Note also that it is the list price — the daily free allowance is deliberately
+  // not deducted here, so the figure errs upwards, which is the right direction for a cost.
   //
-  // Workers AI is billed to the same account this Worker runs on and there is no equivalent of
-  // OpenAI's billing endpoint to ask, so its share comes from our own ledger: `cost_nano_cf`, the
-  // list price of everything that went through the binding. Not the same class of evidence as an
-  // invoice, and labelled as such on the page.
-  const cfRow = await env.DB.prepare(
-    'SELECT COALESCE(SUM(cost_nano_cf), 0) AS costNano FROM daily_totals',
+  // The one thing that replaces the lost second opinion is the monthly invoice, read by hand.
+  const costRow = await env.DB.prepare(
+    'SELECT COALESCE(SUM(cost_nano), 0) AS costNano FROM daily_totals',
   ).first<{ costNano: number }>();
-  const workersAiUsd = num(cfRow?.costNano) / NANO_PER_USD;
-
-  // Null, not a part of the sum, when a source is missing. A bottom line short of one cost block
-  // reads as a better month rather than as a gap, and there is no way for a reader to tell.
-  const openaiUsd = openai.connected ? openai.serviceUsd : null;
-  const costUsd = openaiUsd === null ? null : openaiUsd + workersAiUsd;
-  const costHome = costUsd === null ? null : costUsd * fx.rate;
-  const profitHome = costHome === null ? null : revenueHome - costHome;
+  const costUsd = num(costRow?.costNano) / NANO_PER_USD;
+  const costHome = costUsd * fx.rate;
+  const profitHome = revenueHome - costHome;
 
   return {
-    /** The two halves of `costUsd`, so the page can say where the money went and how it is known. */
-    openaiUsd,
-    workersAiUsd,
     homeCurrency: home,
     rate: fx.rate,
     rateSource: fx.source,
@@ -214,17 +202,12 @@ export async function summary(env: Env, ctx?: ExecutionContext) {
     withoutFigures: play.withoutFigures,
     withoutRate: play.withoutRate,
     byCurrency: play.byCurrency,
-    openaiConnected: openai.connected,
-    openaiReason: openai.connected ? null : openai.reason,
-    openaiFetchedAt: openai.fetchedAt,
-    serviceProject: openai.connected ? openai.serviceProject : null,
   };
 }
 
-/** The finance panel: takings per currency and the spend, side by side. */
-export async function finance(env: Env, days = 30, ctx?: ExecutionContext) {
-  const [play, openai] = await Promise.all([playRevenue(env), openaiCosts(env, days, ctx)]);
-  return { play, openai };
+/** The finance panel: takings per currency. */
+export async function finance(env: Env) {
+  return { play: await playRevenue(env) };
 }
 
 /**
@@ -398,11 +381,12 @@ export async function plans(env: Env) {
     actual.set(productId, entry);
   }
 
-  const transcribeUsdPerMinute = COST.transcribePerMinuteNano / NANO_PER_USD;
+  const transcribeUsdPerMinute =
+    (NEURONS['@cf/openai/whisper-large-v3-turbo'].perAudioMinute * NANO_PER_NEURON) / NANO_PER_USD;
   // What a sold minute is worth, which is what bounds the spend — not what a bought minute costs.
   const secondValueUsdPerMinute = (SECOND_VALUE_NANO * 60) / NANO_PER_USD;
-  // A typical rewording as the plan measured it: ~500 tokens in, ~300 out.
-  const rewordUsd = chatCostNano(500, 300) / NANO_PER_USD;
+  // A rewording of ordinary length, as 131 real ones measured out: 327 tokens in, 63 out.
+  const rewordUsd = TYPICAL_REWORD_NANO / NANO_PER_USD;
 
   const packs = Object.values(PACKAGES).map((pack) => {
     // Two figures, because one stopped being able to say both things.

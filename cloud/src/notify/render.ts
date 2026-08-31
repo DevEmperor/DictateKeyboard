@@ -32,7 +32,6 @@ const KIND: Record<string, string> = {
   code_guessing: 'Codes werden durchprobiert',
   device_limit: 'Gerätegrenze erreicht',
   budget_hog: 'Konto-Anteil am Budget',
-  cost_drift: 'Abweichung OpenAI',
   error_rate: 'Fehlerquote',
   fast_burn: 'Guthaben rasant verbraucht',
   kill_switch: 'Not-Aus',

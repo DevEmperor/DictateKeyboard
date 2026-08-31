@@ -5,7 +5,7 @@ import type { Env } from './config';
  * The lid over everything.
  *
  * Each individual wallet is bounded by what it bought — that is the real protection. This
- * object catches the rest: a bug in our own code, a price jump at OpenAI, anything nobody saw
+ * object catches the rest: a bug in our own code, a price jump at Cloudflare, anything nobody saw
  * coming. Once the daily budget is reached the service answers 503 and the app falls back to
  * "temporarily unavailable".
  *

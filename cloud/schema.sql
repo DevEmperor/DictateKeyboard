@@ -266,13 +266,3 @@ CREATE TABLE IF NOT EXISTS settings (
   updated_by TEXT NOT NULL
 );
 
--- Answers from outside that are slow and not worth asking twice a minute.
---
--- OpenAI's billing endpoint pages through up to a dozen sequential requests and its numbers are
--- not live anyway. Serving the stored answer immediately and refreshing behind the request is the
--- difference between a dashboard that opens and one that is waited for.
-CREATE TABLE IF NOT EXISTS cache (
-  key        TEXT PRIMARY KEY,
-  payload    TEXT NOT NULL,                      -- JSON
-  fetched_at INTEGER NOT NULL
-);

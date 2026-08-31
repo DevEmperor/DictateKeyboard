@@ -2,10 +2,9 @@ import {
   FREE_NEURONS_PER_DAY, NANO_PER_NEURON, NEURONS, PACKAGES, PLAY_SERVICE_FEE, billedNanoForDay,
   type Env,
 } from '../config';
-import { num } from '../costs';
 import { guardStub, walletStub } from '../meter';
 import { alertSettings } from '../settings';
-import { today } from '../util';
+import { num, today } from '../util';
 import { REAL_SALES } from './finance';
 
 /**

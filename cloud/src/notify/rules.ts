@@ -1,21 +1,28 @@
 import { raise } from '../alerts';
 import { FREE_NEURONS_PER_DAY, billedNanoForDay, limitsFrom, type Env } from '../config';
-import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
 import { alertSettings } from '../settings';
-import { today } from '../util';
+import { num, today } from '../util';
 
 /**
  * The watchdog, run every quarter of an hour against the ledger.
  *
  * What is deliberately **not** in here: high consumption. A customer cannot dictate you into a
- * loss — the balance is debited before OpenAI is called, and even the largest pack consumed to the
- * last second leaves a healthy margin. Alerting on heavy use would train you to ignore the mails
- * that matter.
+ * loss — the balance is debited before the model is called, and even the largest pack consumed to
+ * the last second leaves a healthy margin. Alerting on heavy use would train you to ignore the
+ * mails that matter.
  *
- * What is in here are the four shapes that actually cost money or hide a problem: credit spent
- * suspiciously fast (the run-up to a refund), one account starving the shared daily budget,
- * a token being passed around, and OpenAI's invoice drifting away from our own price list.
+ * What is in here are the shapes that actually cost money or hide a problem: credit spent
+ * suspiciously fast (the run-up to a refund), one account starving the shared daily budget, a token
+ * being passed around, a day whose compute is unlike the week before it, and a model that has
+ * started thinking again.
+ *
+ * **What used to be in here and no longer can be:** the comparison against the provider's own
+ * invoice. It was the only rule able to find a mistake in our *own* arithmetic, and it worked
+ * because OpenAI published a billing endpoint. Workers AI bills the account this Worker runs on and
+ * offers nothing to ask, so the check moved out of the software and onto a calendar: the monthly
+ * Cloudflare invoice, read by hand against the dashboard. Written down here because a guarantee
+ * that quietly disappears is worse than one that was never claimed.
  *
  * The budget thresholds live in `guard.ts` instead, because only the Durable Object can decide
  * "this request crossed 80 %" without two of them crossing it at once. Refunds live in
@@ -39,7 +46,6 @@ export async function evaluateRules(env: Env, ctx: ExecutionContext): Promise<nu
     on('fast_burn', () => fastBurn(env, ctx, t.fastBurnPercent, t.fastBurnHours)),
     on('budget_hog', () => hogsTheBudget(env, ctx, t.walletBudgetSharePercent)),
     on('shared_token', () => sharedToken(env, ctx, t.devicesPerWallet)),
-    on('cost_drift', () => costDrift(env, ctx, t.costDriftPercent)),
     on('overall_loss', () => overallLoss(env, ctx, t.minLossHome)),
     on('error_rate', () => errorRate(env, ctx, t.errorRatePercent)),
     on('revenue_unreported', () => revenueUnreported(env, ctx)),
@@ -180,51 +186,6 @@ async function sharedToken(env: Env, ctx: ExecutionContext, maxDevices: number):
 }
 
 /**
- * OpenAI's invoice drifting away from our own price list.
- *
- * The quiet one. Everything else in this service calculates cost from the numbers in `config.ts`,
- * so if OpenAI raises a price, the calculation carries on agreeing with itself while the margin
- * disappears. Comparing yesterday against OpenAI's own figure is the only way that ever surfaces.
- */
-async function costDrift(env: Env, ctx: ExecutionContext, percent: number): Promise<number> {
-  const costs = await openaiCosts(env, 7, ctx);
-  if (!costs.connected || costs.serviceUsd === null) return 0;
-
-  const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
-  const theirs = costs.days.find((d) => d.day === yesterday)?.usd ?? 0;
-
-  // **Only the part that went to OpenAI.** `cost_nano` is the whole day across every provider, and
-  // holding that against a bill from one of them would read the other one's spend as a discrepancy.
-  // On a day split between the two the rule would have fired at the size of the split — a critical
-  // alert every morning, for nothing, until it stopped being read.
-  const row = await env.DB.prepare(
-    'SELECT cost_nano - cost_nano_cf AS costNano FROM daily_totals WHERE day = ?',
-  ).bind(yesterday).first<{ costNano: number }>();
-  const ours = num(row?.costNano) / NANO_PER_USD;
-
-  // Below a few cents the percentage is noise: one long dictation moves it by half. Once nothing
-  // goes to OpenAI any more this is also what switches the rule off by itself, which is the right
-  // way round: it stays armed for as long as there is something for it to check.
-  if (ours < 0.1 || theirs < 0.1) return 0;
-
-  const drift = ((theirs - ours) / ours) * 100;
-  if (Math.abs(drift) < percent) return 0;
-
-  return (await raise(env, {
-    kind: 'cost_drift',
-    severity: 'critical',
-    value: drift,
-    title: `OpenAI rechnet ${drift > 0 ? 'mehr' : 'weniger'} ab als kalkuliert (${Math.round(drift)} %)`,
-    detail:
-      `Für ${yesterday} weist OpenAI ${theirs.toFixed(4)} $ aus, unsere eigene Rechnung kommt auf ` +
-      `${ours.toFixed(4)} $. Die Preise in config.ts stimmen dann nicht mehr mit der Wirklichkeit überein — ` +
-      `bei einer Erhöhung schrumpft die Marge, ohne dass irgendeine Zahl im Dashboard sich verändert. ` +
-      `Preisliste bei OpenAI prüfen und COST in config.ts nachziehen.`,
-    dedupeKey: `cost_drift:${yesterday}`,
-  }, ctx)) ? 1 : 0;
-}
-
-/**
  * The bottom line turning negative.
  *
  * Deliberately cumulative rather than per day. Credit is prepaid: the money arrives on the day of
@@ -233,20 +194,24 @@ async function costDrift(env: Env, ctx: ExecutionContext, percent: number): Prom
  * ever spent.
  */
 async function overallLoss(env: Env, ctx: ExecutionContext, minLoss: number): Promise<number> {
-  const costs = await openaiCosts(env, 180, ctx);
-  if (!costs.connected || costs.serviceUsd === null) return 0;
-
   const { rate } = await usdRate(env);
   const home = homeCurrency(env);
 
-  const row = await env.DB.prepare(
-    `SELECT COALESCE(SUM(p.revenue_home_micros), 0) AS revenue
-       FROM purchases p JOIN wallets w ON w.id = p.wallet_id AND w.is_test = 0
-      WHERE p.state = 'granted'`,
-  ).first<{ revenue: number }>();
+  const [row, spend] = await Promise.all([
+    env.DB.prepare(
+      `SELECT COALESCE(SUM(p.revenue_home_micros), 0) AS revenue
+         FROM purchases p JOIN wallets w ON w.id = p.wallet_id AND w.is_test = 0
+        WHERE p.state = 'granted'`,
+    ).first<{ revenue: number }>(),
+    // Our own ledger, at list price: there is no invoice endpoint to ask, and the free daily
+    // allowance is deliberately not deducted. Both make the cost err upwards, so this rule warns
+    // slightly too eagerly rather than slightly too late — the right way round for a loss.
+    env.DB.prepare('SELECT COALESCE(SUM(cost_nano), 0) AS costNano FROM daily_totals')
+      .first<{ costNano: number }>(),
+  ]);
 
   const revenue = num(row?.revenue) / 1_000_000;
-  const cost = costs.serviceUsd * rate;
+  const cost = (num(spend?.costNano) / NANO_PER_USD) * rate;
   const margin = revenue - cost;
 
   // A floor, not a sign test. Right at the start there are no sales and a handful of test requests,
@@ -261,7 +226,7 @@ async function overallLoss(env: Env, ctx: ExecutionContext, minLoss: number): Pr
     title: `Insgesamt im Minus: ${margin.toFixed(2)} ${home}`,
     detail:
       `Eingenommen wurden bisher ${revenue.toFixed(2)} ${home} (nach Googles Anteil, ohne Testkonten), ` +
-      `bei OpenAI ausgegeben ${costs.serviceUsd.toFixed(2)} $ ≈ ${cost.toFixed(2)} ${home}. ` +
+      `an Rechenzeit eingekauft ${(num(spend?.costNano) / NANO_PER_USD).toFixed(2)} $ ≈ ${cost.toFixed(2)} ${home}. ` +
       `Am Anfang ist das normal, solange die Testphase mehr kostet als die ersten Verkäufe einbringen. ` +
       `Bleibt es so, stimmt entweder die Kalkulation nicht oder es wurde erstattet, nachdem verbraucht war.`,
     // Once a day at most: this is a state, not an event.

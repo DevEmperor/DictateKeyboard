@@ -7,7 +7,7 @@ import { alertSettings } from './settings';
  * Raising, storing and de-duplicating alerts.
  *
  * The service used to be mute. It could reach its spending cap, be drained by a refund, or watch
- * OpenAI's price list move under it, and none of that reached anyone until somebody happened to
+ * a price list move under it, and none of that reached anyone until somebody happened to
  * open the dashboard. This is the part that speaks.
  *
  * Two decisions shape everything here:

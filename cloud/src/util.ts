@@ -88,9 +88,24 @@ export function today(now = Date.now()): string {
  * Rough token estimate for the input check: about four characters per token.
  *
  * This is not real tokenisation and is not meant to be — it only exists to turn away an
- * absurdly large request before it costs money. Whatever slips through is capped by OpenAI
- * itself.
+ * absurdly large request before it costs money. Whatever slips through is capped by the model's
+ * own context limit.
  */
 export function estimateTokens(text: string): number {
   return Math.ceil(text.length / 4);
+}
+
+/**
+ * A number out of something that may not be one.
+ *
+ * SQLite hands back a *string* whenever a sum outgrows what fits comfortably in a double, and that
+ * turns arithmetic into concatenation without complaining — the mistake then shows up somewhere far
+ * away, in a figure nobody suspects. Everything read out of the database goes through here.
+ *
+ * Lived in `costs.ts` while that file existed for OpenAI's billing endpoint; it never had anything
+ * to do with OpenAI.
+ */
+export function num(value: unknown): number {
+  const n = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(n) ? n : 0;
 }

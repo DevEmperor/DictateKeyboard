@@ -22,7 +22,7 @@ export interface GraphZone {
   id: string;
   label: string;
   sub: string;
-  tone: 'client' | 'cloudflare' | 'google' | 'openai' | 'ext';
+  tone: 'client' | 'cloudflare' | 'google' | 'ext';
   /** The full account, shown by the button. HTML, paragraphs. */
   long: string;
 }
@@ -64,7 +64,7 @@ export const COLUMNS: GraphColumn[] = [
   { zone: 'client' },
   { zone: 'cf' },
   { zone: 'cf' },
-  { zone: 'openai' },
+  { zone: 'google' },
 ];
 
 export const ZONES: GraphZone[] = [
@@ -94,22 +94,6 @@ export const ZONES: GraphZone[] = [
       'Festlegung auf Westeuropa greift für den Speicher, nicht für die Rechenzeit: Workers AI läuft, ' +
       'wo gerade Kapazität ist, und lässt sich ohne Enterprise-Zusatz nicht festlegen. Wer aus „alles ' +
       'bei Cloudflare" liest „alles in der EU", liest an dieser einen Stelle falsch.</p>',
-  },
-  {
-    id: 'openai', label: 'OpenAI', sub: 'Modelle, wenn dorthin geschaltet', tone: 'openai',
-    long:
-      '<p>Einer von zwei Orten, an denen Inhalte verarbeitet werden — Sprache wird zu Text, Text wird ' +
-      'umformuliert. Zwei getrennte Zugänge mit zwei getrennten Schlüsseln: der Projektschlüssel für ' +
-      'die Arbeit, ein reiner Leseschlüssel für die Abrechnung.</p>' +
-      '<p>Ob diese Spalte überhaupt angesprochen wird, entscheiden <code>TRANSCRIBE_PROVIDER</code> ' +
-      'und <code>CHAT_PROVIDER</code>, je Dienst einzeln. Die Alternative steht links in der ' +
-      'Cloudflare-Spalte — und die Wahl zwischen beiden ist keine technische, sondern die zwischen ' +
-      'einem Vertragspartner im EWR und einem in den USA.</p>' +
-      '<p>Vertragspartner ist <strong>OpenAI Ireland Ltd.</strong>, also eine Gesellschaft im ' +
-      'Europäischen Wirtschaftsraum; der Auftragsverarbeitungsvertrag ist gezeichnet. Aufnahmen und ' +
-      'Texte werden dort bis zu 30 Tage zur Missbrauchserkennung vorgehalten — eine bewusste ' +
-      'Entscheidung, keine Vorgabe, und die einzige Stelle im ganzen Bild, an der Inhalte überhaupt ' +
-      'eine Zeit lang liegen.</p>',
   },
   {
     id: 'google', label: 'Google', sub: 'Play, Cloud, Identität', tone: 'google',
@@ -276,12 +260,13 @@ export const NODES: GraphNode[] = [
   },
 
   {
-    id: 'workersai', zone: 'cf', label: 'Workers AI', sub: 'Whisper · Gemma · abschaltbar',
+    id: 'workersai', zone: 'cf', label: 'Workers AI', sub: 'Whisper · Gemma',
     col: 1, row: 2,
-    guards: ['kein Schlüssel — Bindung statt Netzweg', 'Denkmodus ausdrücklich aus', 'je Dienst einzeln umlegbar'],
-    detail: 'Die zweite Möglichkeit für Diktat und Umformulierung, gewählt über <code>TRANSCRIBE_PROVIDER</code> und <code>CHAT_PROVIDER</code> — je Dienst einer, nie einer für beide. Rechnet über <em>dieses</em> Konto ab, es gibt also kein Geheimnis, das leaken könnte. Meldet je Antwort die verbrauchten Neuronen zurück; genau die stehen im Hauptbuch.',
+    guards: ['kein Schlüssel — Bindung statt Netzweg', 'Denkmodus ausdrücklich aus', 'Modell ohne Deployment wechselbar'],
+    detail: 'Diktat und Umformulierung, beides hier. Rechnet über <em>dieses</em> Konto ab, es gibt also kein Geheimnis, das leaken könnte. Meldet je Antwort die verbrauchten Neuronen zurück; genau die stehen im Hauptbuch. Welches Modell, sagt <code>TRANSCRIBE_MODEL</code> bzw. <code>CHAT_MODEL</code> — eine Konfigurationszeile, kein Deployment.',
     long:
-      '<p>Die Modelle laufen bei Cloudflare selbst, erreichbar über eine Bindung statt über HTTPS: ' +
+      '<p>Seit dem Umzug der einzige Ort, an dem Inhalte verarbeitet werden. Die Modelle laufen bei ' +
+      'Cloudflare selbst, erreichbar über eine Bindung statt über HTTPS: ' +
       '<strong>kein API-Schlüssel, kein Netzweg nach draußen.</strong> Was der Worker schickt, verlässt ' +
       'das Haus nicht — es war nie draußen.</p>' +
       '<p><strong>Und genau hier endet die gute Nachricht.</strong> „Nicht nach draußen" heißt nicht ' +
@@ -529,48 +514,10 @@ export const NODES: GraphNode[] = [
     source: 'src/notify/rules.ts, src/notify/email.ts',
   },
 
-  {
-    id: 'openai', zone: 'openai', label: 'OpenAI API', sub: 'gpt-transcribe · gpt-5-nano · abschaltbar',
-    col: 3, row: 0,
-    guards: ['Modell serverseitig festgelegt', 'Antwortlänge gedeckelt', 'Reasoning fest auf minimal'],
-    detail: 'Diktat und Umformulierung. Modell, Antwortlänge und Denkaufwand bestimmt der Server, nicht der Client — sonst wäre die Kalkulation offen. Der Denkaufwand steht fest auf <code>minimal</code>, weil Reasoning-Token gegen dasselbe Ausgabebudget laufen wie die Antwort: mit der Voreinstellung kam bei langen Texten eine leere Antwort zurück, für die trotzdem bezahlt war. Der Schlüssel liegt ausschließlich als Worker-Secret vor.',
-    long:
-      '<p>Zwei Aufrufe, ein Schlüssel: Sprache zu Text mit einem Transkriptionsmodell, Umformulierung ' +
-      'mit einem kleinen Chatmodell. Beides bestimmt der Server. Was der Client als Modell mitschickt, ' +
-      'wird verworfen — sonst könnte jemand das teuerste Modell wählen und für den Preis des ' +
-      'kalkulierten bekommen.</p>' +
-      '<p><strong>Der Denkaufwand steht fest auf <code>minimal</code>, und das ist eine teuer gelernte ' +
-      'Zeile.</strong> Bei den gpt-5-Modellen zählen Reasoning-Token gegen dasselbe Ausgabebudget wie ' +
-      'die Antwort selbst. Mit der Voreinstellung verbrauchte ein langer Text sein ganzes Budget im ' +
-      'Nachdenken und lieferte eine <em>leere</em> Antwort — bezahlt, geliefert nichts. Für "formuliere ' +
-      'diesen Satz höflicher" ist ausgiebiges Nachdenken ohnehin verschwendet.</p>' +
-      '<p>Der Schlüssel liegt ausschließlich in Cloudflares Secret-Speicher: nicht im Quelltext, nicht ' +
-      'in der Konfigurationsdatei, nicht in der Datenbank. Deshalb kann der Quelltext veröffentlicht ' +
-      'werden.</p>',
-  },
-  {
-    id: 'costs', zone: 'openai', label: 'Costs API', sub: 'was OpenAI wirklich berechnet',
-    col: 3, row: 1,
-    holds: ['OPENAI_ADMIN_KEY'],
-    guards: ['nur Lesen', 'eigener Schlüssel, nicht der des Diensts'],
-    detail: 'Ein <strong>anderer</strong> Schlüssel als der, mit dem diktiert wird: organisationsweit und ausschließlich zum Lesen der Abrechnung. Ohne ihn sagt die Finanzansicht das offen, statt eine Zahl zu erfinden. Er ist die einzige Quelle, gegen die sich die eigene Kalkulation prüfen lässt — daher die Warnung bei Abweichung.',
-    long:
-      '<p>Der Dienst rechnet selbst mit, was eine Anfrage bei OpenAI kostet — Sekunden mal Preis, Token ' +
-      'mal Preis. Diese Rechnung kann falsch sein: ein geänderter Listenpreis, ein anderes Modell im ' +
-      'Hintergrund, ein Denkfehler in der Formel. Ohne eine zweite Quelle fällt das erst auf der ' +
-      'Kreditkartenabrechnung auf.</p>' +
-      '<p>Deshalb wird die tatsächliche Abrechnung gelesen und gegen die eigene Kalkulation gehalten. ' +
-      'Weicht sie um mehr als die eingestellte Spanne ab, kommt eine kritische Warnung. Das ist die ' +
-      'einzige Regel, die einen Fehler in der <em>eigenen</em> Mathematik finden kann.</p>' +
-      '<p><strong>Ein anderer Schlüssel</strong> als der zum Diktieren: organisationsweit statt ' +
-      'projektgebunden, und nur zum Lesen. Ist er nicht hinterlegt, sagt die Finanzansicht genau das, ' +
-      'statt eine Zahl zu erfinden — ein leeres Feld ist ehrlicher als ein geschätztes.</p>',
-    source: 'src/costs.ts',
-  },
 
   {
     id: 'oauth', zone: 'google', label: 'Google OAuth2', sub: 'oauth2.googleapis.com',
-    col: 3, row: 3,
+    col: 3, row: 2,
     holds: ['Access-Token (1 h)'],
     detail: 'Tauscht den selbstsignierten RS256-JWT des Dienstkontos gegen ein Access-Token. Der Worker baut den JWT von Hand mit WebCrypto — ein Worker hat keine Node-Bibliotheken.',
     long:
@@ -587,7 +534,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'playapi', zone: 'google', label: 'Play Developer API', sub: 'androidpublisher v3',
-    col: 3, row: 4,
+    col: 3, row: 3,
     guards: ['Einzige verbindliche Quelle für Käufe'],
     detail: '<code>purchases.products.get</code> entscheidet, ob wirklich Geld geflossen ist — der Kauf-Token der App wird nicht geglaubt. <code>:acknowledge</code> verhindert, dass Google den Kauf nach drei Tagen zurückdreht. <code>orders.get</code> liefert getrennt, was der Kauf wirklich wert war (gezahlt, Steuer, Erlös), und <code>purchases.voidedpurchases</code> ist die Liste, gegen die der nächtliche Abgleich läuft.',
     long:
@@ -606,7 +553,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'pubsub', zone: 'google', label: 'Cloud Pub/Sub', sub: 'Thema play-rtdn',
-    col: 3, row: 5,
+    col: 3, row: 4,
     holds: ['RTDN_SECRET in der Push-URL'],
     guards: ['Kann ausschließlich Guthaben entfernen'],
     detail: 'Push-Abo an <code>/v1/rtdn?key=…</code>. Meldet Erstattungen. Selbst wer den Schlüssel kennt, kann darüber nur Guthaben abziehen — und nur für einen Kauf, den er bereits kennen müsste.',
@@ -624,7 +571,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'console', zone: 'google', label: 'Play Console', sub: 'Produkte, Kanäle, Tester',
-    col: 3, row: 6,
+    col: 3, row: 5,
     detail: 'Hier liegen die vier Einmalkaufprodukte, die Testkanäle und die Lizenztester. Die Produkt-IDs müssen zeichengenau mit <code>PACKAGES</code> im Server übereinstimmen.',
     long:
       '<p>Kein technischer Bestandteil des Diensts, aber der Ort, an dem drei Dinge festgelegt werden, ' +
@@ -639,7 +586,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'sa', zone: 'google', label: 'Dienstkonto', sub: 'IAM · Play-Berechtigung',
-    col: 3, row: 7,
+    col: 3, row: 6,
     holds: ['privater RSA-Schlüssel'],
     guards: ['Nur Leserecht auf Käufe nötig'],
     detail: 'In der Google Cloud angelegt, in der Play Console eingeladen und dort auf diese App berechtigt. Die vollständige JSON-Schlüsseldatei liegt als Worker-Secret und sonst nirgends.',
@@ -658,7 +605,7 @@ export const NODES: GraphNode[] = [
 
   {
     id: 'fx', zone: 'ext', label: 'Frankfurter · EZB-Kurse', sub: 'api.frankfurter.dev',
-    col: 3, row: 9,
+    col: 3, row: 8,
     guards: ['ohne Anmeldung', 'Ausfall ist folgenlos'],
     detail: 'Die Referenzkurse der EZB, mit denen ein Verkauf in CHF oder PLN überhaupt in der Hauswährung zählbar wird. Der Kurs des Kauftags wird einmal geschrieben und nie neu gerechnet — eine Zahl, die sich von selbst ändert, ist keine Buchführung. Bleibt der Dienst aus, fehlt nur die Umrechnung, nicht das Guthaben.',
     long:
@@ -893,32 +840,17 @@ export const EDGES: GraphEdge[] = [
   },
 
   {
-    from: 'worker', to: 'openai', kind: 'data',
-    label: 'HTTPS · Audio & Text durchgereicht', token: 'OPENAI_API_KEY (Secret)',
-    guard: 'nichts gespeichert',
-    long:
-      '<p>Die einzige Stelle, an der Inhalte den eigenen Dienst verlassen. Die Aufnahme wird ' +
-      'durchgereicht, das Ergebnis zurückgereicht — <strong>ohne Zwischenspeicherung auf einem ' +
-      'Datenträger</strong>, in beide Richtungen.</p>' +
-      '<p>Was der Server dabei ersetzt: Modell, Antwortformat, Antwortlänge und Denkaufwand. Was er ' +
-      'durchlässt: Sprache und Prompt, weil beides die Qualität verbessert und keines die Kosten ' +
-      'öffnet.</p>' +
-      '<p>Fehler von OpenAI werden weitergegeben, aber nicht deren Wortlaut. Die nutzende Person hat ' +
-      'keinen Vertrag mit OpenAI und kann mit "your organization has been blocked" nichts anfangen; ' +
-      'außerdem verriete die Meldung Interna. Sie bekommt eine Aussage, auf die sie reagieren kann, ' +
-      'und ihr Guthaben zurück.</p>' +
-      '<p><strong>Diese Linie ist seit Kurzem eine von zweien.</strong> Steht ein Dienst auf ' +
-      '<code>workers-ai</code>, geht er stattdessen an die Bindung nebenan und diese Linie bleibt für ' +
-      'ihn kalt. Beide Wege sind gebaut, beide Voreinstellungen stehen auf <code>openai</code>.</p>',
-  },
-  {
     from: 'worker', to: 'workersai', kind: 'data',
     label: 'Bindung · Audio & Text, ohne Netzweg',
     guard: 'kein Schlüssel, nichts gespeichert',
     long:
-      '<p>Derselbe Inhalt wie eine Zeile weiter unten, nur ohne die Zeile. Die Bindung ist ein Aufruf ' +
-      'innerhalb der Laufzeit: kein HTTPS, kein Schlüssel, keine Gegenstelle, die man erreichen können ' +
-      'muss. Gespeichert wird auch hier nichts, in keine Richtung.</p>' +
+      '<p>Die einzige Linie, auf der Inhalte den Worker verlassen — und sie verlässt das Haus nicht. ' +
+      'Die Bindung ist ein Aufruf innerhalb der Laufzeit: kein HTTPS, kein Schlüssel, keine ' +
+      'Gegenstelle, die man erreichen können muss. Gespeichert wird nichts, in keine Richtung.</p>' +
+      '<p><strong>Vorher lief hier eine zweite Linie hinaus</strong>, zu OpenAI, mit einem ' +
+      'Projektschlüssel und einer 30-tägigen Aufbewahrung am anderen Ende. Die gibt es nicht mehr: ' +
+      'ein Auftragsverarbeiter statt zwei, ein Geheimnis weniger in der Umgebung, und eine Zeile ' +
+      'weniger, an der jemand mitlesen könnte.</p>' +
       '<p><strong>Was diese Linie kostet, bevor sie überhaupt anfängt:</strong> Das Modell will das ' +
       'Audio als Zeichenkette, also wird es kodiert — aus 19 MB werden 26,5 MB und rund zwei Sekunden ' +
       'Rechenzeit. Gegen die Fünf-Minuten-Grenze unkritisch, aber wer annimmt, der Weg ohne Netzsprung ' +
@@ -926,18 +858,6 @@ export const EDGES: GraphEdge[] = [
       '<p>Was zurückkommt, wird auf das Nötige gekürzt: der Text, beziehungsweise die eine Antwort und ' +
       'ihr Verbrauch. Segmente, Wortzahlen, ein VTT-Spur und der <code>@cf/…</code>-Modellname bleiben ' +
       'hier — sie helfen niemandem und verraten, was hinter Dictate Cloud steht.</p>',
-  },
-  {
-    from: 'worker', to: 'costs', kind: 'auth',
-    label: 'HTTPS · Abrechnung lesen', token: 'OPENAI_ADMIN_KEY (Secret)', guard: 'nur Lesen',
-    long:
-      '<p>Die Gegenprobe. Gelesen wird, was OpenAI tatsächlich in Rechnung stellt, um es gegen die ' +
-      'eigene Kalkulation zu halten — für die Finanzansicht und für die Warnung bei Abweichung.</p>' +
-      '<p>Bewusst ein <strong>anderer Schlüssel</strong> als der, mit dem diktiert wird, und einer, der ' +
-      'nur lesen kann. Ein einziger Schlüssel für beides wäre bequemer und würde dem Diktatpfad ' +
-      'organisationsweite Rechte geben, die er nie braucht.</p>' +
-      '<p>Die Abfrage ist zwischengespeichert: Sie beantwortet eine Frage über Tage, nicht über ' +
-      'Sekunden, und gehört nicht in den Weg einer einzelnen Anfrage.</p>',
   },
 
   {

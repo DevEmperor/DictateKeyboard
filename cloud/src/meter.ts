@@ -1,5 +1,5 @@
 import { raise } from './alerts';
-import { limitsFrom, type Env, type Limits, type Provider } from './config';
+import { limitsFrom, type Env, type Limits } from './config';
 import { alertSettings } from './settings';
 import { today } from './util';
 import type { Wallet } from './wallet';
@@ -157,15 +157,16 @@ export interface UsageEntry {
   isTest?: boolean;
   kind: 'transcribe' | 'reword';
   /**
-   * Who handled it, and with what. Left out here, both are read from the environment — which is
-   * right for every caller, since nothing decides them per request.
+   * Who handled it, and with what. Left out here, the model is read from the environment and the
+   * provider is what it can only be.
    *
-   * Both are recorded, because they answer different questions. The provider answers the legal one
-   * (where did the content go); the model answers the commercial one (at which price). Swapping
-   * gemma-4 for qwen3 changes the second and not the first; falling back to OpenAI changes both.
-   * With only one of them, a day six months old could not be recalculated.
+   * Both are recorded although one of them is currently a constant. They answer different
+   * questions: the provider answers the legal one (where did the content go), the model the
+   * commercial one (at which price). Swapping gemma-4 for qwen3 moves the second and not the first.
+   * A column that says what it is costs one word a row and means a day six months old can still be
+   * recalculated without knowing what the code looked like then.
    */
-  provider?: Provider;
+  provider?: string;
   model?: string;
   seconds?: number;
   tokensIn?: number;
@@ -174,8 +175,8 @@ export interface UsageEntry {
    * Neurons × 10⁶, as *reported* by Workers AI, not as computed from a price list.
    *
    * A quantity and a price are two different things and both are kept: prices change, quantities do
-   * not, and only the quantity can be held against Cloudflare's own count. Zero for OpenAI, which
-   * is not a missing figure but a correct one — no neurons were spent.
+   * not, and only the quantity can be held against Cloudflare's own count. Zero when a request
+   * never reached a model — a refusal spends none, and that is a correct figure, not a missing one.
    */
   neuronsMicro?: number;
   costNano: number;
@@ -214,9 +215,8 @@ export function logUsage(env: Env, entry: UsageEntry, ctx: ExecutionContext): vo
   const now = Date.now();
   const day = today(now);
   const limits = limitsFrom(env);
-  const transcribe = entry.kind === 'transcribe';
-  const provider = entry.provider ?? (transcribe ? limits.transcribeProvider : limits.chatProvider);
-  const model = entry.model ?? (transcribe ? limits.transcribeModel : limits.chatModel);
+  const provider = entry.provider ?? 'workers-ai';
+  const model = entry.model ?? (entry.kind === 'transcribe' ? limits.transcribeModel : limits.chatModel);
   const neuronsMicro = Math.round(entry.neuronsMicro ?? 0);
   const statements: D1PreparedStatement[] = [
     env.DB.prepare(

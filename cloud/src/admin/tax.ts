@@ -1,8 +1,8 @@
 import type { Env } from '../config';
-import { num, openaiCosts } from '../costs';
 import { homeCurrency, rateOn, usdRate } from '../fx';
 import type { AdminIdentity } from './auth';
 import { NOT_A_TEST, PURCHASE_RATE, REAL_SALES } from './finance';
+import { num } from '../util';
 
 /**
  * The figures for the tax return, and the honest limits of them.
@@ -11,7 +11,7 @@ import { NOT_A_TEST, PURCHASE_RATE, REAL_SALES } from './finance';
  * only surfaces a year later in a letter:
  *
  * **This is not your tax return, it is the reconciliation.** The binding documents are Google's
- * monthly earnings reports and OpenAI's invoices. What this page does is let you check that those
+ * monthly earnings reports and Cloudflare's invoices. What this page does is let you check that those
  * documents say what you expected, and hand your accountant a per-month breakdown.
  *
  * **Income arrives when Google pays, not when someone buys.** Under the cash-basis method most
@@ -20,10 +20,13 @@ import { NOT_A_TEST, PURCHASE_RATE, REAL_SALES } from './finance';
  * that is what the ledger knows exactly — so December always needs a second look. It is called out
  * on the page rather than quietly smoothed over.
  *
- * **Spending is the top-up, not the usage.** OpenAI runs on prepaid credit: money leaves your
- * account when you load it, not as tokens are consumed. On a cash basis that top-up is the expense.
- * OpenAI has no API for it — costs are readable, payments are not — so those are entered by hand
- * below and the API's usage figure sits next to them as a cross-check, never as a substitute.
+ * **Spending is what was invoiced, not what was consumed.** Compute is billed in arrears on the
+ * monthly Cloudflare invoice; on a cash basis the expense is that payment, on the day it leaves the
+ * account. Entered by hand below, with the invoice number — there is no endpoint to ask, and the
+ * dashboard's own running total is a self-report rather than a bill.
+ *
+ * Older rows may still carry `openai_topup`, from when compute was prepaid at a second provider.
+ * They stay: a kind that disappears takes its year's figures out of the evaluation with it.
  */
 
 const MICROS = 1_000_000;
@@ -134,7 +137,7 @@ export async function listExpenses(env: Env, year?: number): Promise<Expense[]> 
 export async function taxReport(env: Env, ctx?: ExecutionContext) {
   const home = homeCurrency(env);
 
-  const [years, months, refunds, expenseYears, openai, fx] = await Promise.all([
+  const [years, months, refunds, expenseYears, fx] = await Promise.all([
     env.DB.prepare(
       `WITH sales AS (
          SELECT strftime('%Y', p.purchased_at / 1000, 'unixepoch') AS year,
@@ -188,7 +191,6 @@ export async function taxReport(env: Env, ctx?: ExecutionContext) {
               COALESCE(SUM(CASE WHEN amount_home_micros IS NULL THEN 1 ELSE 0 END), 0) AS unconverted
          FROM expenses GROUP BY year, kind ORDER BY year DESC`,
     ).all(),
-    openaiCosts(env, 180, ctx),
     usdRate(env),
   ]);
 
@@ -265,12 +267,6 @@ export async function taxReport(env: Env, ctx?: ExecutionContext) {
       revenue: num(r.revenueHomeMicros) / MICROS,
     })),
     expenses: await listExpenses(env),
-    /**
-     * OpenAI's own usage figure. A cross-check against what you loaded, never the expense itself:
-     * consumption is not payment, and only the payment left your account.
-     */
-    openaiUsageUsd: openai.connected ? openai.serviceUsd : null,
-    openaiConnected: openai.connected,
     rate: fx.rate,
     rateSource: fx.source,
   };
