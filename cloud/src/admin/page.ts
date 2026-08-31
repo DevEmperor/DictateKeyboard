@@ -744,6 +744,13 @@ export const DASHBOARD_HTML = `<!doctype html>
     </div>
 
     <div class="panel">
+      <h2>Abgleich mit Cloudflares Rechnung
+        <span class="hint" tabindex="0" data-tip="Die einzige Prüfung gegen echtes Geld. Bis zum Umzug verglich eine Regel täglich die eigene Rechnung mit der Abrechnung des Anbieters; Workers AI hat keinen solchen Endpunkt, also bleibt die Monatsrechnung von Hand. Links steht, was wir sagen — Neuronen abzüglich Freikontingent, tagweise. Rechts, was berechnet wurde, sobald du die Rechnung unter Ausgaben erfasst hast. Ein abgeschlossener Monat ohne Rechnung meldet sich nach zwei Wochen von selbst."></span>
+      </h2>
+      <div id="reconcile" class="scroll"></div>
+    </div>
+
+    <div class="panel">
       <h2>Ausgaben erfassen
         <span class="hint" tabindex="0" data-tip="Rechnungen werden von Hand erfasst, mit Rechnungsnummer. Für die Einnahmen-Überschuss-Rechnung zählt der Tag, an dem das Geld abgeht — nicht der Tag, an dem die Rechenzeit verbraucht wird."></span>
       </h2>
@@ -1291,7 +1298,21 @@ var GRAPH = ${GRAPH_JSON};
     current = o;
     var bcls = o.budget.usedPercent >= 90 ? 'crit' : o.budget.usedPercent >= 60 ? 'warn' : '';
     var html = '';
-    html += card('Offenes Guthaben', 'Bezahlte, aber noch nicht verbrauchte Minuten. Eine Verbindlichkeit, kein Umsatz — Arbeit, die du noch schuldest. Die Zahl, die ein Prepaid-Modell am leichtesten unterschlägt.', fmtMinutes(o.liability.seconds), 'Über alle aktiven Konten', 'lead');
+    // Wie alt das offene Guthaben ist, gehört neben die Summe und nicht in eine eigene Ansicht:
+    // Guthaben auf einem Konto, das sich seit einem Monat nicht gemeldet hat, ist etwas anderes als
+    // Guthaben auf einem, das gestern diktiert hat — einmal eine Verbindlichkeit, die kommt, einmal
+    // eine, die vermutlich liegen bleibt. Und die zweite Zahl ist zugleich das deutlichste
+    // Produktsignal, das dieser Dienst hat.
+    var liaSub = 'Über alle aktiven Konten';
+    if (o.liability.staleSeconds > 0) {
+      liaSub += '<br><span class="muted">' + fmtMinutes(o.liability.freshSeconds) + ' auf Konten der letzten 30 Tage · ' +
+        fmtMinutes(o.liability.staleSeconds) + ' länger unberührt</span>';
+    }
+    if (o.liability.dormantWallets > 0) {
+      liaSub += '<br><span class="warn-text">' + o.liability.dormantWallets +
+        ' Konto/Konten mit Guthaben seit über 90 Tagen still</span>';
+    }
+    html += card('Offenes Guthaben', 'Bezahlte, aber noch nicht verbrauchte Minuten. Eine Verbindlichkeit, kein Umsatz — Arbeit, die du noch schuldest. Die Zahl, die ein Prepaid-Modell am leichtesten unterschlägt. Darunter, wie alt sie ist: Guthaben auf einem Konto, das sich seit Monaten nicht gemeldet hat, wird vermutlich nie eingelöst — und sagt zugleich, dass jemand gekauft und aufgehört hat.', fmtMinutes(o.liability.seconds), liaSub, 'lead');
     html += moneyCards(sum);
     html += '<div class="card"><div class="label">Tagesbudget' + hint('Obergrenze für die Einkaufskosten eines Tages. Ist sie erreicht, antwortet der Dienst mit 503 und die App meldet „vorübergehend nicht verfügbar".') + '</div><div class="value">' + o.budget.usedPercent + ' %</div><div class="sub">' + fmtUsd4(o.budget.spentUsd) + ' von ' + fmtUsd(o.budget.limitUsd) + '</div><div class="bar-track"><i class="' + bcls + '" style="width:' + Math.min(100, o.budget.usedPercent) + '%"></i></div></div>';
     html += neuronCards(o);
@@ -1541,6 +1562,7 @@ var GRAPH = ${GRAPH_JSON};
     revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
     neuron_spike: ['Neuronen-Ausschlag', 'Ein Tag, der nicht zur Woche davor passt — die Zahl, die direkt zur Rechnung wird.'],
     reasoning_leak: ['Das Modell denkt wieder', 'Denk-Token gehen vom Guthaben des Käufers ab, ohne dass er etwas davon bekommt.'],
+    invoice_missing: ['Cloudflare-Rechnung fehlt', 'Ein abgeschlossener Monat ohne erfasste Rechnung — die einzige Prüfung gegen echtes Geld bleibt sonst aus.'],
     slow_upstream: ['Kurze Diktate werden langsam', 'Gemessen nur an Aufnahmen bis 30 s — die schwanken nicht, lange schon. Das ist die Zahl, die Nutzende spüren.'],
   };
 
@@ -2069,6 +2091,37 @@ var GRAPH = ${GRAPH_JSON};
     cloudflare: 'Cloudflare (inkl. Workers AI)', domain: 'Domain', other: 'Sonstiges',
   };
 
+  function renderReconcile(r) {
+    var cur = r.homeCurrency;
+    var rows = r.months || [];
+    if (!rows.length) { $('reconcile').innerHTML = '<div class="empty">Noch kein Monat mit Verkehr.</div>'; return; }
+    $('reconcile').innerHTML = '<table><thead><tr><th>Monat</th><th class="num">unsere Rechnung</th>' +
+      '<th class="num">Cloudflares Rechnung</th><th class="num">Differenz</th><th>Stand</th></tr></thead><tbody>' +
+      rows.map(function (m) {
+        // Drei Zustände, und nur einer davon ist ein Ergebnis: läuft noch, fehlt, oder verglichen.
+        var state, delta = '—';
+        if (m.open) {
+          state = '<span class="pill">läuft noch</span>';
+        } else if (m.invoiceHome === null) {
+          state = '<span class="pill warn">Rechnung fehlt</span>';
+        } else {
+          var d = n(m.deltaHome);
+          // Ein Cent auf eine Monatsrechnung ist Rundung, kein Befund. Alles darüber gehört gesehen.
+          var off = Math.abs(d) > 0.01;
+          delta = '<span class="' + (off ? 'warn-text' : 'ok-text') + '">' +
+            (d >= 0 ? '+' : '−') + money(Math.abs(d), cur) + '</span>';
+          state = off
+            ? '<span class="pill warn">weicht ab</span>'
+            : '<span class="pill ok">stimmt</span>';
+          if (m.invoiceReference) state += ' <span class="mono muted">' + esc(m.invoiceReference) + '</span>';
+        }
+        return '<tr><td class="mono">' + esc(m.month) + ' <span class="muted">' + m.days + ' T</span></td>' +
+          '<td class="num">' + money(m.ownHome, cur) + ' <span class="muted">(' + fmtUsd4(m.ownUsd) + ')</span></td>' +
+          '<td class="num">' + (m.invoiceHome === null ? '—' : money(m.invoiceHome, cur)) + '</td>' +
+          '<td class="num">' + delta + '</td><td>' + state + '</td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+
   function renderTax(t) {
     taxData = t;
     var cur = t.homeCurrency;
@@ -2154,6 +2207,11 @@ var GRAPH = ${GRAPH_JSON};
 
   function loadTax() {
     $('taxYears').innerHTML = skeleton('card', 2);
+    // Zwei Anfragen, aber ein Fehlschlag der einen darf die andere nicht mitnehmen: Der Abgleich
+    // ist die Ansicht, wegen der man diesen Reiter im Zweifel öffnet.
+    get('/admin/api/reconcile').then(renderReconcile).catch(function (e) {
+      $('reconcile').innerHTML = '<div class="empty">Konnte nicht geladen werden: ' + esc(e.message) + '</div>';
+    });
     return get('/admin/api/tax').then(renderTax).catch(function (e) {
       $('taxYears').innerHTML = '<div class="empty">Konnte nicht geladen werden: ' + esc(e.message) + '</div>';
     });

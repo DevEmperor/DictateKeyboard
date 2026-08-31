@@ -18,7 +18,7 @@ import {
 } from './actions';
 import { adminConfigured, authenticateAdmin } from './auth';
 import { adminLog, overview, recentRequests, walletDetail, wallets } from './data';
-import { finance, history, months, plans, summary } from './finance';
+import { finance, history, months, plans, summary, reconciliation } from './finance';
 import { DASHBOARD_HTML } from './page';
 import { addExpense, deleteExpense, taxReport } from './tax';
 
@@ -112,6 +112,8 @@ export async function handleAdmin(request: Request, env: Env, ctx: ExecutionCont
           // mystery.
           pinnedRecipient: env.ALERT_EMAIL_TO ?? null,
         });
+      case '/admin/api/reconcile':
+        return json(await reconciliation(env));
       case '/admin/api/tax':
         return json(await taxReport(env, ctx));
       case '/admin/api/history':

@@ -542,3 +542,85 @@ export async function plans(env: Env) {
     packs,
   };
 }
+
+/**
+ * Our own arithmetic against Cloudflare's invoice, month by month.
+ *
+ * Until the move there was a rule that did this every day: the old provider published a billing
+ * endpoint, and `cost_drift` compared what we had calculated against what it said. Workers AI bills
+ * the account this Worker runs on and has no such endpoint, so **the monthly invoice, read by hand,
+ * is now the only check against real money.** Everything else on the dashboard is self-report.
+ *
+ * A check that depends on remembering is a check that stops happening, so it is given a place to be
+ * written down and a column that shows the difference. A month with no invoice recorded is not
+ * silently blank: it says so, and after a fortnight the watchdog says so too.
+ *
+ * Both sides are in the payout currency. Ours is converted at today's rate rather than the rate of
+ * each day — the invoice is one payment on one date, and pretending to a precision the comparison
+ * does not have would only make a real difference look like a rounding one.
+ */
+export async function reconciliation(env: Env) {
+  const home = homeCurrency(env);
+  const { rate } = await usdRate(env);
+
+  const [dayRows, invoiceRows] = await Promise.all([
+    env.DB.prepare(
+      `SELECT day, substr(day, 1, 7) AS month,
+              neurons_micro + test_neurons_micro AS neuronsMicro, cost_nano AS costNano
+         FROM daily_totals ORDER BY day DESC`,
+    ).all<{ day: string; month: string; neuronsMicro: number; costNano: number }>(),
+    env.DB.prepare(
+      `SELECT strftime('%Y-%m', paid_at / 1000, 'unixepoch') AS month,
+              COUNT(*) AS n,
+              COALESCE(SUM(amount_home_micros), 0) AS homeMicros,
+              COALESCE(SUM(CASE WHEN amount_home_micros IS NULL THEN 1 ELSE 0 END), 0) AS unconverted,
+              MAX(reference) AS reference
+         FROM expenses WHERE kind = 'cloudflare' GROUP BY month`,
+    ).all<{ month: string; n: number; homeMicros: number; unconverted: number; reference: string | null }>(),
+  ]);
+
+  const invoices = new Map<string, { n: number; home: number; unconverted: number; reference: string | null }>();
+  for (const r of invoiceRows.results ?? []) {
+    invoices.set(r.month, {
+      n: num(r.n), home: num(r.homeMicros) / MICROS,
+      unconverted: num(r.unconverted), reference: r.reference,
+    });
+  }
+
+  const byMonth = new Map<string, { month: string; billedUsd: number; listUsd: number; days: number }>();
+  for (const r of dayRows.results ?? []) {
+    const e = byMonth.get(r.month) ?? { month: r.month, billedUsd: 0, listUsd: 0, days: 0 };
+    // Per day, always — the free allowance does not carry over. See `billedNanoForDay`.
+    e.billedUsd += billedNanoForDay(num(r.neuronsMicro)) / NANO_PER_USD;
+    e.listUsd += num(r.costNano) / NANO_PER_USD;
+    e.days += 1;
+    byMonth.set(r.month, e);
+  }
+
+  const thisMonth = new Date().toISOString().slice(0, 7);
+  return {
+    homeCurrency: home,
+    rate,
+    months: [...byMonth.values()].sort((a, b) => (a.month < b.month ? 1 : -1)).map((m) => {
+      const invoice = invoices.get(m.month) ?? null;
+      const ownHome = m.billedUsd * rate;
+      return {
+        month: m.month,
+        days: m.days,
+        /** What we say it cost: neurons, less the daily allowance. */
+        ownUsd: m.billedUsd,
+        ownHome,
+        /** The same traffic at list price, for context. */
+        listUsd: m.listUsd,
+        /** What was actually invoiced, if it has been entered. */
+        invoiceHome: invoice ? invoice.home : null,
+        invoiceCount: invoice?.n ?? 0,
+        invoiceReference: invoice?.reference ?? null,
+        invoiceUnconverted: invoice?.unconverted ?? 0,
+        deltaHome: invoice ? invoice.home - ownHome : null,
+        /** A month still running cannot be missing its invoice yet. */
+        open: m.month >= thisMonth,
+      };
+    }),
+  };
+}

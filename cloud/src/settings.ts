@@ -77,6 +77,7 @@ export const RULE_KEYS = [
   'neuron_spike',
   'reasoning_leak',
   'slow_upstream',
+  'invoice_missing',
 ] as const;
 
 async function overrides(env: Env): Promise<Record<string, string>> {

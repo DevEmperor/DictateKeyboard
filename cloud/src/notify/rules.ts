@@ -51,6 +51,7 @@ export async function evaluateRules(env: Env, ctx: ExecutionContext): Promise<nu
     on('revenue_unreported', () => revenueUnreported(env, ctx)),
     on('neuron_spike', () => neuronSpike(env, ctx, t.neuronSpikeFactor)),
     on('slow_upstream', () => slowUpstream(env, ctx, t.slowShortMs)),
+    on('invoice_missing', () => invoiceMissing(env, ctx)),
   ]);
 
   // One broken rule must not silence the other five. A rule that throws is itself worth knowing
@@ -411,5 +412,49 @@ async function slowUpstream(env: Env, ctx: ExecutionContext, thresholdMs: number
       `Lange Aufnahmen sind hier absichtlich nicht mitgezählt: Die schwanken bei Workers AI von Haus ` +
       `aus zu stark, um eine Schwelle zu tragen. Wenn diese Zahl steigt, merken es die Nutzenden.`,
     dedupeKey: `slow_upstream:${new Date().toISOString().slice(0, 13)}`,
+  }, ctx)) ? 1 : 0;
+}
+
+/**
+ * A finished month whose Cloudflare invoice has not been entered.
+ *
+ * Before the move, a rule compared our arithmetic against the provider's own billing figures every
+ * day. Workers AI has no billing endpoint, so that comparison is now a monthly one, done by hand —
+ * and a check that depends on remembering is a check that stops happening. This is the reminder.
+ *
+ * Two weeks after a month ends, not one day: Cloudflare does not invoice on the first, and an alarm
+ * that fires before the thing it asks for exists teaches you to ignore it.
+ */
+async function invoiceMissing(env: Env, ctx: ExecutionContext): Promise<number> {
+  const now = new Date();
+  // The month that ended most recently, and only once a fortnight has passed inside the new one.
+  if (now.getUTCDate() < 15) return 0;
+  const previous = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1))
+    .toISOString().slice(0, 7);
+
+  // Nothing was bought, so there is nothing to reconcile.
+  const used = await env.DB.prepare(
+    'SELECT COUNT(*) AS n FROM daily_totals WHERE day LIKE ?',
+  ).bind(`${previous}%`).first<{ n: number }>();
+  if (num(used?.n) === 0) return 0;
+
+  const invoice = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM expenses
+      WHERE kind = 'cloudflare' AND strftime('%Y-%m', paid_at / 1000, 'unixepoch') = ?`,
+  ).bind(previous).first<{ n: number }>();
+  if (num(invoice?.n) > 0) return 0;
+
+  return (await raise(env, {
+    kind: 'invoice_missing',
+    severity: 'notice',
+    value: 0,
+    title: `Für ${previous} ist keine Cloudflare-Rechnung erfasst`,
+    detail:
+      `Der Monat ist abgeschlossen und hat Verkehr, aber unter Steuer → Ausgaben steht keine Rechnung ` +
+      `dafür. Das ist die einzige Prüfung gegen echtes Geld, die es seit dem Umzug noch gibt: Alles ` +
+      `andere auf dem Dashboard ist die eigene Rechnung. Eintragen, dann steht die Differenz im ` +
+      `Abgleich.`,
+    // Einmal je Monat, nicht einmal je Viertelstunde bis zum Eintrag.
+    dedupeKey: `invoice_missing:${previous}`,
   }, ctx)) ? 1 : 0;
 }

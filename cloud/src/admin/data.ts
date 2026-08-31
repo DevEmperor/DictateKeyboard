@@ -47,9 +47,21 @@ export async function overview(env: Env) {
       ).all<{ productId: string; count: number; revenueMicros: number }>(),
       salesSince(dayStartMs),
       salesSince(monthStartMs),
+      // Offenes Guthaben, und daneben wie alt es ist.
+      //
+      // Die Summe allein sagt nur, wie viel Arbeit noch geschuldet wird. Interessant ist, wie viel
+      // davon auf Konten liegt, die sich nicht mehr melden: Das ist zugleich die Verbindlichkeit,
+      // die vermutlich nie eingelöst wird, und das deutlichste Produktsignal, das dieser Dienst
+      // hat — gekauft und aufgehört. `last_seen_at` ist der letzte Kontakt, nicht der letzte
+      // Verbrauch; wer die App offen hat, aber nicht diktiert, zählt hier als aktiv.
       env.DB.prepare(
-        "SELECT COALESCE(SUM(seconds_left), 0) AS seconds FROM wallets WHERE status = 'active' AND is_test = 0",
-      ).first<{ seconds: number }>(),
+        `SELECT COALESCE(SUM(seconds_left), 0) AS seconds,
+                COALESCE(SUM(CASE WHEN last_seen_at >= ? THEN seconds_left ELSE 0 END), 0) AS fresh,
+                COALESCE(SUM(CASE WHEN last_seen_at <  ? THEN seconds_left ELSE 0 END), 0) AS stale,
+                COALESCE(SUM(CASE WHEN last_seen_at <  ? AND seconds_left > 0 THEN 1 ELSE 0 END), 0) AS staleWallets
+           FROM wallets WHERE status = 'active' AND is_test = 0`,
+      ).bind(now - 30 * 86_400_000, now - 30 * 86_400_000, now - 90 * 86_400_000)
+        .first<{ seconds: number; fresh: number; stale: number; staleWallets: number }>(),
       // A deleted account is counted as deleted and nowhere else. Its row only still exists
       // because the receipts point at it; leaving it in "accounts" would make the customer count
       // a number that never goes down.
@@ -233,6 +245,12 @@ export async function overview(env: Env) {
     liability: {
       seconds: num(liability?.seconds),
       minutes: Math.floor(num(liability?.seconds) / 60),
+      /** On accounts seen in the last 30 days — credit that is plausibly still going to be used. */
+      freshSeconds: num(liability?.fresh),
+      /** On accounts that have not been seen for 30 days. */
+      staleSeconds: num(liability?.stale),
+      /** How many accounts hold credit and have not been seen for 90 days. */
+      dormantWallets: num(liability?.staleWallets),
     },
     wallets: {
       total: num(wallets?.total),

@@ -44,8 +44,13 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
          * (`TYPICAL_REWORD_SECONDS`), repeated here only to say it in the shop before the app has
          * ever spoken to the service. A wrong number here shows a wrong estimate, never a wrong
          * balance: what is charged is decided where the money is.
+         *
+         * It read 2 while that was the server's figure. The server then measured 131 real
+         * rewordings — 327 tokens in, 63 out — and came down to 1, and this copy stayed behind: the
+         * shop promised 4,500 rewordings where the service actually grants 9,000. **When the
+         * server's figure moves, this moves in the same commit.** Nothing notices on its own.
          */
-        const val SECONDS_PER_REWORD = 2
+        const val SECONDS_PER_REWORD = 1
 
         /** Display order in the shop — cheapest first, as in the Play Console. */
         val ordered: List<DictateCloudPack> = listOf(NOTES, DAILY, WRITER, PRO)
