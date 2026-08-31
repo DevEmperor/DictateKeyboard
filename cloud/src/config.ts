@@ -19,10 +19,9 @@ export interface Env {
   /**
    * Workers AI. Not a secret and not a key — the binding bills the account the Worker belongs to.
    *
-   * That is the whole legal difference to OpenAI in one line: nothing leaves for an outside
-   * service, because the model already runs inside the one this Worker lives in. What it does not
-   * change is *where*: the inference runs wherever Cloudflare has capacity, and that cannot be
-   * pinned without an Enterprise contract.
+   * Nothing leaves for an outside service: the model already runs inside the one this Worker lives
+   * in. What that does not settle is *where* — the inference runs wherever Cloudflare has capacity,
+   * and that cannot be pinned without an Enterprise contract.
    */
   AI: Ai;
 
@@ -323,7 +322,7 @@ export interface Limits {
  * The model to use, refusing one that does not belong here.
  *
  * `TRANSCRIBE_MODEL` and `CHAT_MODEL` exist so a model can be swapped without a deploy. A name left
- * over from somewhere else — `gpt-transcribe`, say — would fail every request for as long as it took
+ * that is not a `@cf/…` model would fail every request for as long as it took
  * someone to notice, so it is corrected to the default instead. Nothing is hidden by that: the wrong
  * name is still whatever the configuration says, and what actually ran is in the ledger's `model`
  * column.

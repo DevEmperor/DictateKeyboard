@@ -1,6 +1,6 @@
 import {
   NANO_PER_NEURON, NEURONS, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_NANO,
-  TYPICAL_REWORD_SECONDS, limitsFrom, savingsPercent, type Env,
+  TYPICAL_REWORD_SECONDS, billedNanoForDay, limitsFrom, savingsPercent, type Env,
 } from '../config';
 import { homeCurrency, usdRate } from '../fx';
 import { num } from '../util';
@@ -167,16 +167,29 @@ export async function summary(env: Env) {
   // from an invoice.
   //
   // Workers AI is billed to the same account this Worker runs on, and there is no equivalent of
-  // OpenAI's billing endpoint to ask. So this is the list price of what actually ran, summed from
-  // `daily_totals`, and it is a *self-report*: a different class of evidence from a bill, and the
-  // page says so. Note also that it is the list price — the daily free allowance is deliberately
-  // not deducted here, so the figure errs upwards, which is the right direction for a cost.
+  // no billing endpoint to ask. So this is summed from `daily_totals`, and it is a *self-report*: a
+  // different class of evidence from a bill, and the page says so. The one thing that replaces the
+  // lost second opinion is the monthly invoice, read by hand.
   //
-  // The one thing that replaces the lost second opinion is the monthly invoice, read by hand.
-  const costRow = await env.DB.prepare(
-    'SELECT COALESCE(SUM(cost_nano), 0) AS costNano FROM daily_totals',
-  ).first<{ costNano: number }>();
-  const costUsd = num(costRow?.costNano) / NANO_PER_USD;
+  // **Cost here is what Cloudflare charges, not the list price.** The two differ by the daily free
+  // allowance, and on a small service they differ by nearly all of it: a day that stays under the
+  // allowance costs nothing at all, whatever its list price says. Reporting the list price as the
+  // cost would understate the profit by the whole allowance every single day — an error that grows
+  // with time and always in the same direction, which is the kind that goes unnoticed longest.
+  //
+  // It has to be summed **per day**, because the allowance is a daily figure and does not carry
+  // over: a month is a sum of per-day results and never a calculation on the summed neurons. Both
+  // neuron columns go in, because the allowance belongs to the account — own testing eats it
+  // exactly like a customer's request does, and once the day is over the allowance, that testing
+  // costs real money.
+  const costRows = await env.DB.prepare(
+    `SELECT neurons_micro + test_neurons_micro AS neuronsMicro, cost_nano AS costNano
+       FROM daily_totals`,
+  ).all<{ neuronsMicro: number; costNano: number }>();
+  const days = costRows.results ?? [];
+  const costUsd = days.reduce((sum, r) => sum + billedNanoForDay(num(r.neuronsMicro)), 0) / NANO_PER_USD;
+  /** The same traffic before the allowance — what the margin is calculated against. */
+  const listUsd = days.reduce((sum, r) => sum + num(r.costNano), 0) / NANO_PER_USD;
   const costHome = costUsd * fx.rate;
   const profitHome = revenueHome - costHome;
 
@@ -187,6 +200,8 @@ export async function summary(env: Env) {
     revenueHome,
     paidHome,
     costUsd,
+    listUsd,
+    listHome: listUsd * fx.rate,
     costHome,
     profitHome,
     /**
@@ -223,7 +238,8 @@ export async function history(env: Env, days = 365) {
   const [usage, sales, signups] = await Promise.all([
     env.DB.prepare(
       `SELECT day, requests, seconds, rewords, cost_nano AS costNano, errors,
-              test_requests AS testRequests, test_cost_nano AS testCostNano
+              test_requests AS testRequests, test_cost_nano AS testCostNano,
+              neurons_micro + test_neurons_micro AS neuronsMicro
          FROM daily_totals WHERE day >= date('now', ?) ORDER BY day ASC`,
     ).bind(`-${days} days`).all(),
     env.DB.prepare(
@@ -243,14 +259,17 @@ export async function history(env: Env, days = 365) {
   // Merged into one series so the front end never has to align three arrays by date.
   const merged: Record<string, Record<string, unknown>> = {};
   const touch = (day: string) => (merged[day] = merged[day] || {
-    day, requests: 0, seconds: 0, rewords: 0, costUsd: 0, errors: 0, testRequests: 0,
+    day, requests: 0, seconds: 0, rewords: 0, costUsd: 0, listUsd: 0, errors: 0, testRequests: 0,
     orders: 0, secondsSold: 0, revenue: 0, newWallets: 0,
   });
 
   for (const r of (usage.results ?? []) as Array<Record<string, unknown>>) {
     const e = touch(String(r.day));
     e.requests = num(r.requests); e.seconds = num(r.seconds); e.rewords = num(r.rewords);
-    e.costUsd = num(r.costNano) / NANO_PER_USD; e.errors = num(r.errors);
+    // Was der Tag gekostet hat, ist was er *berechnet* bekommt — das Freikontingent lässt sich hier
+    // exakt anwenden, weil eine Zeile genau einen Tag ist. Der Listenpreis bleibt daneben stehen.
+    e.costUsd = billedNanoForDay(num(r.neuronsMicro)) / NANO_PER_USD;
+    e.listUsd = num(r.costNano) / NANO_PER_USD; e.errors = num(r.errors);
     e.testRequests = num(r.testRequests);
   }
   for (const r of (sales.results ?? []) as Array<Record<string, unknown>>) {
@@ -269,10 +288,13 @@ export async function history(env: Env, days = 365) {
 export async function months(env: Env, count = 24) {
   const [rows, sales] = await Promise.all([
     env.DB.prepare(
-      `SELECT substr(day, 1, 7) AS month, SUM(requests) AS requests, SUM(seconds) AS seconds,
-              SUM(cost_nano) AS costNano, SUM(errors) AS errors
-         FROM daily_totals GROUP BY month ORDER BY month DESC LIMIT ?`,
-    ).bind(count).all(),
+      // Tageszeilen und **nicht** nach Monat summiert: Das Freikontingent ist ein Tageswert, also
+      // ist der Monat die Summe der Tagesergebnisse und niemals eine Rechnung auf den
+      // Monatsneuronen. Andersherum bekäme jeder Monat nur ein einziges Kontingent abgezogen.
+      `SELECT day, substr(day, 1, 7) AS month, requests, seconds, cost_nano AS costNano, errors,
+              neurons_micro + test_neurons_micro AS neuronsMicro
+         FROM daily_totals ORDER BY day DESC`,
+    ).all(),
     env.DB.prepare(
       `SELECT strftime('%Y-%m', p.purchased_at / 1000, 'unixepoch') AS month,
               COUNT(*) AS orders, SUM(COALESCE(p.revenue_home_micros, 0)) AS revenueHomeMicros,
@@ -282,17 +304,18 @@ export async function months(env: Env, count = 24) {
   ]);
 
   const blank = (month: string) => ({
-    month, requests: 0, seconds: 0, costUsd: 0, errors: 0, orders: 0, revenue: 0, secondsSold: 0,
+    month, requests: 0, seconds: 0, costUsd: 0, listUsd: 0, errors: 0, orders: 0, revenue: 0, secondsSold: 0,
   });
   const byMonth: Record<string, ReturnType<typeof blank>> = {};
 
   for (const r of (rows.results ?? []) as Array<Record<string, unknown>>) {
     const month = String(r.month);
-    byMonth[month] = {
-      ...blank(month),
-      requests: num(r.requests), seconds: num(r.seconds),
-      costUsd: num(r.costNano) / NANO_PER_USD, errors: num(r.errors),
-    };
+    const e = byMonth[month] ?? (byMonth[month] = blank(month));
+    e.requests += num(r.requests);
+    e.seconds += num(r.seconds);
+    e.errors += num(r.errors);
+    e.costUsd += billedNanoForDay(num(r.neuronsMicro)) / NANO_PER_USD;
+    e.listUsd += num(r.costNano) / NANO_PER_USD;
   }
   for (const r of (sales.results ?? []) as Array<Record<string, unknown>>) {
     const month = String(r.month);
@@ -302,7 +325,9 @@ export async function months(env: Env, count = 24) {
     entry.secondsSold = num(r.secondsSold);
   }
 
-  return Object.keys(byMonth).sort().reverse().map((k) => byMonth[k]);
+  // Begrenzt wird erst hier. Die Tageszeilen mussten vollständig gelesen werden, weil sich sonst
+  // ein Monat aus einem angeschnittenen Satz Tage zusammensetzt.
+  return Object.keys(byMonth).sort().reverse().slice(0, count).map((k) => byMonth[k]);
 }
 
 /**

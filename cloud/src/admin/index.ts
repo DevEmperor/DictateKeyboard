@@ -203,7 +203,7 @@ export async function handleAdmin(request: Request, env: Env, ctx: ExecutionCont
       case 'add_expense':
         return json(await addExpense(env, admin, {
           paidAt: Date.parse(String(body.paidAt ?? '')),
-          kind: String(body.kind ?? 'openai_topup'),
+          kind: String(body.kind ?? 'cloudflare'),
           amount: Number(body.amount),
           currency: String(body.currency ?? 'USD'),
           // Empty means "work it out from the day's rate". Zero would mean "it cost nothing",

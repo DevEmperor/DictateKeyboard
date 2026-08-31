@@ -19,7 +19,7 @@ import { num, today } from '../util';
  *
  * **What used to be in here and no longer can be:** the comparison against the provider's own
  * invoice. It was the only rule able to find a mistake in our *own* arithmetic, and it worked
- * because OpenAI published a billing endpoint. Workers AI bills the account this Worker runs on and
+ * because the old provider published a billing endpoint. Workers AI bills the account this Worker runs on and
  * offers nothing to ask, so the check moved out of the software and onto a calendar: the monthly
  * Cloudflare invoice, read by hand against the dashboard. Written down here because a guarantee
  * that quietly disappears is worse than one that was never claimed.
@@ -303,7 +303,7 @@ async function errorRate(env: Env, ctx: ExecutionContext, percent: number): Prom
     title: `${Math.round(share)} % Fehler in der letzten Stunde`,
     detail:
       `${errors} von ${total} Anfragen sind fehlgeschlagen. Kunden bekommen dann Fehlermeldungen statt Text. ` +
-      `Meist ist es eine Störung bei OpenAI; im Verkehrsprotokoll steht, welcher Statuscode zurückkam.`,
+      `Meist ist es eine Störung bei Workers AI; im Verkehrsprotokoll steht, welcher Statuscode zurückkam.`,
     dedupeKey: `error_rate:${new Date().toISOString().slice(0, 13)}`,
   }, ctx)) ? 1 : 0;
 }

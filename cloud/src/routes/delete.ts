@@ -12,8 +12,8 @@ import { apiError, json, normalizeRecoveryCode, sha256 } from '../util';
  *
  * **Credit is forfeited, not refunded.** Deliberate, and the warning says so in as many words
  * before anything happens. A deletion that pays money back would be a refund channel outside Google
- * Play — with no purchase to reverse, no way to reclaim what was already spent at OpenAI, and an
- * obvious way to launder a refund past Play's own rules.
+ * Play — with no purchase to reverse, no way to reclaim the compute already bought and paid for,
+ * and an obvious way to launder a refund past Play's own rules.
  *
  * **What survives, and why it must.** The purchase records stay: § 147 AO obliges a business to
  * keep them for ten years, and Art. 17 Abs. 3 lit. b DSGVO makes room for exactly that. What they

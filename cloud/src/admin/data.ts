@@ -96,6 +96,26 @@ export async function overview(env: Env) {
     'SELECT COALESCE(SUM(cost_nano), 0) AS costNano FROM daily_totals WHERE day LIKE ?',
   ).bind(`${monthPrefix}%`).first<{ costNano: number }>();
 
+  // How much of the cost figure is a measurement rather than an estimate.
+  //
+  // Every reply from Workers AI carries the neurons it spent, and that number is what gets booked —
+  // the estimate exists only to reserve budget before the request goes out, and is replaced on the
+  // way back. But it is *only* replaced when a figure comes back: a reply without `usage.neurons`
+  // leaves the estimate standing, and nothing on the page would have said so.
+  //
+  // So it is counted. A cost built entirely from measurements can be presented as exact; one with
+  // estimates in it cannot, and the difference belongs on the page rather than in a comment.
+  const measured = await env.DB.prepare(
+    `SELECT COUNT(*) AS requests,
+            COALESCE(SUM(CASE WHEN neurons_micro > 0 THEN 1 ELSE 0 END), 0) AS measured
+       FROM usage_log WHERE cost_nano > 0`,
+  ).first<{ requests: number; measured: number }>();
+  const measuredToday = await env.DB.prepare(
+    `SELECT COUNT(*) AS requests,
+            COALESCE(SUM(CASE WHEN neurons_micro > 0 THEN 1 ELSE 0 END), 0) AS measured
+       FROM usage_log WHERE cost_nano > 0 AND ts >= ?`,
+  ).bind(dayStartMs).first<{ requests: number; measured: number }>();
+
   // Every day, not the last thirty: what Cloudflare bills can only be worked out one day at a time
   // (the free allowance is a daily figure and does not carry over), so a month or a lifetime total
   // is a sum of per-day results and never a calculation on the summed neurons. One row per day —
@@ -172,6 +192,15 @@ export async function overview(env: Env) {
       testTotalUsd: round6(num(totals?.testCostNano) / NANO_PER_USD),
       /** The Workers AI share of the lifetime figure — zero until the switch is thrown. */
       workersAiTotalUsd: round6(num(totals?.costNanoCf) / NANO_PER_USD),
+      /**
+       * Whether the figures above are measurements. `estimated` counts the requests whose cost is
+       * still the reservation estimate because the reply carried no neuron count — the only reason
+       * any number here would not be exact.
+       */
+      measuredRequests: num(measured?.measured),
+      estimatedRequests: num(measured?.requests) - num(measured?.measured),
+      measuredToday: num(measuredToday?.measured),
+      estimatedToday: num(measuredToday?.requests) - num(measuredToday?.measured),
     },
     /**
      * The free allowance, as a day that is being used up rather than a fact about the plan.
@@ -381,7 +410,7 @@ export async function recentRequests(
       `SELECT u.id, u.wallet_id AS walletId, u.ts, u.kind, u.seconds,
               u.tokens_in AS tokensIn, u.tokens_out AS tokensOut, u.cost_nano AS costNano,
               -- Null on rows written before migration 006, which is the honest answer for them:
-              -- "not recorded then" is a different thing from "OpenAI", even where it means the same.
+              -- "not recorded then" is a different thing from a name filled in afterwards.
               u.provider, u.model, u.neurons_micro AS neuronsMicro,
               u.status, u.ms, COALESCE(t.label, '') AS device, COALESCE(w.is_test, 0) AS isTest
          ${from} LEFT JOIN tokens t ON t.token_hash = u.token_hash

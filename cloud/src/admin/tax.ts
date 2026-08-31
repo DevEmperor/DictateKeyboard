@@ -25,7 +25,8 @@ import { num } from '../util';
  * account. Entered by hand below, with the invoice number — there is no endpoint to ask, and the
  * dashboard's own running total is a self-report rather than a bill.
  *
- * Older rows may still carry `openai_topup`, from when compute was prepaid at a second provider.
+ * Cloudflare invoices in arrears, so an expense is recorded on the date of the invoice — there is
+ * nothing to top up in advance.
  * They stay: a kind that disappears takes its year's figures out of the evaluation with it.
  */
 
@@ -80,7 +81,7 @@ export async function addExpense(
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   ).bind(
     Math.round(input.paidAt),
-    input.kind || 'openai_topup',
+    input.kind || 'cloudflare',
     Math.round(input.amount * MICROS),
     currency,
     amountHome === null ? null : Math.round(amountHome * MICROS),

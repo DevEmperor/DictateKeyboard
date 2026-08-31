@@ -273,9 +273,9 @@ export const NODES: GraphNode[] = [
       '„in der EU". Datenbank und Kontostände sind ausdrücklich auf Westeuropa festgelegt; die ' +
       '<em>Inferenz</em> ist es nicht und kann es ohne Enterprise-Vertrag auch nicht werden — Custom ' +
       'Regions ist ein kostenpflichtiger Zusatz. Ein Diktat wird dort gerechnet, wo Cloudflare gerade ' +
-      'Kapazität hat, und der Vertragspartner dafür ist Cloudflare, Inc. in den USA. Der Unterschied ' +
-      'zu OpenAI ist damit nicht „drinnen statt draußen", sondern eine Gesellschaft im EWR gegen eine ' +
-      'in einem Drittland.</p>' +
+      'Kapazität hat, und der Vertragspartner dafür ist Cloudflare, Inc. in den USA. Getragen wird ' +
+      'die Übermittlung deshalb von den Standardvertragsklauseln und davon, dass nichts gespeichert ' +
+      'wird — nicht von einer Ortswahl.</p>' +
       '<p><strong>Es wird nicht nachgedacht.</strong> Bei Workers AI ist der Denkmodus <em>standardmäßig ' +
       'an</em>, wird also ausdrücklich abgeschaltet. Gemessen an einem Satz: 20 Ausgabe-Token gegen 777, ' +
       '1,06 s gegen 7,70 s, 1,43 Neuronen gegen 22,10 — bei gleicher Antwort. Denk-Token gehen als ' +
@@ -289,14 +289,16 @@ export const NODES: GraphNode[] = [
   {
     id: 'worker', zone: 'cf', label: 'Worker', sub: 'api.dictatekeyboard.com',
     col: 1, row: 1,
-    holds: ['OPENAI_API_KEY', 'GOOGLE_SERVICE_ACCOUNT', 'RTDN_SECRET', 'ACCESS_AUD'],
+    // Kein Schlüssel für die Modelle: Workers AI läuft über die Bindung und rechnet über dasselbe
+    // Konto ab wie dieser Worker.
+    holds: ['GOOGLE_SERVICE_ACCOUNT', 'RTDN_SECRET', 'ACCESS_AUD'],
     guards: ['Rate-Limit je Konto (20/min)', 'Tagesbudget', 'Not-Aus', 'Audio ≤ 10 min', 'Chat ≤ 8k/2k Token', 'höchstens 3 Geräte', 'Codeversuche gedrosselt'],
     detail: 'Prüft das Token gegen den SHA-256-Abzug, liest die Audiodauer aus dem Dateikopf — WAV, FLAC, Ogg/Opus, MP4/M4A und MP3 sagen sie selbst —, bucht ab und reicht erst dann weiter. Nur ein unbekannter Container wird nach Größe geschätzt, und dann nur zum Zurücklegen. Abgerechnet wird alles in Sekunden, Diktat wie Umformulierung. Speichert niemals Audio oder Text.',
     long:
       '<p>Alles läuft hier durch, und die Reihenfolge innerhalb einer Anfrage ist Absicht, nicht ' +
       'Geschmack: <strong>wer bist du</strong> (sonst 401) → <strong>wie lang ist die Aufnahme</strong> ' +
       '(aus dem Dateikopf, nicht aus einer Behauptung des Clients) → <strong>darf der Dienst heute ' +
-      'noch</strong> (Tagesbudget) → <strong>abbuchen</strong> → <strong>erst jetzt zu OpenAI</strong> ' +
+      'noch</strong> (Tagesbudget) → <strong>abbuchen</strong> → <strong>erst jetzt zum Modell</strong> ' +
       '→ bei Fehlschlag zurückbuchen. Würde nach dem Einkauf abgebucht, ginge jeder Abbruch auf Kosten ' +
       'des Betreibers.</p>' +
       '<p><strong>Die Länge wird gelesen, nicht geraten.</strong> WAV, FLAC, Ogg/Opus, MP4/M4A und MP3 ' +
@@ -493,8 +495,9 @@ export const NODES: GraphNode[] = [
     long:
       '<p>Sieben Regeln, jede gegen einen anderen Weg, Geld zu verlieren: ein frisches Paket wird in ' +
       'Minuten verbraucht (das Muster vor einer Rückbuchung); ein einzelnes Konto beansprucht einen ' +
-      'auffälligen Anteil des Tagesbudgets; ein Zugang läuft auf ungewöhnlich vielen Geräten; OpenAI ' +
-      'rechnet anders ab als kalkuliert; die Einnahmen bleiben dauerhaft hinter den Kosten zurück; die ' +
+      'auffälligen Anteil des Tagesbudgets; ein Zugang läuft auf ungewöhnlich vielen Geräten; der ' +
+      'Neuronenverbrauch springt gegenüber dem, was die Preistabelle erwarten lässt; die Einnahmen ' +
+      'bleiben dauerhaft hinter den Kosten zurück; die ' +
       'Fehlerquote steigt; ein bezahlter Kauf hat auch nach einer Woche keinen gemeldeten Erlös.</p>' +
       '<p>Die letzte ist die stillste und deshalb aufgenommen worden: Ohne sie liest sich ein Verkauf, ' +
       'zu dem Google nichts herausrückt, einfach so, als hätte er nichts eingebracht — und genau das ' +
@@ -847,10 +850,9 @@ export const EDGES: GraphEdge[] = [
       '<p>Die einzige Linie, auf der Inhalte den Worker verlassen — und sie verlässt das Haus nicht. ' +
       'Die Bindung ist ein Aufruf innerhalb der Laufzeit: kein HTTPS, kein Schlüssel, keine ' +
       'Gegenstelle, die man erreichen können muss. Gespeichert wird nichts, in keine Richtung.</p>' +
-      '<p><strong>Vorher lief hier eine zweite Linie hinaus</strong>, zu OpenAI, mit einem ' +
-      'Projektschlüssel und einer 30-tägigen Aufbewahrung am anderen Ende. Die gibt es nicht mehr: ' +
-      'ein Auftragsverarbeiter statt zwei, ein Geheimnis weniger in der Umgebung, und eine Zeile ' +
-      'weniger, an der jemand mitlesen könnte.</p>' +
+      '<p><strong>Es gibt nur diese eine Linie.</strong> Diktat und Umformulierung gehen beide über ' +
+      'dieselbe Bindung: ein Auftragsverarbeiter, kein Schlüssel in der Umgebung, und keine zweite ' +
+      'Verbindung, an der jemand mitlesen könnte.</p>' +
       '<p><strong>Was diese Linie kostet, bevor sie überhaupt anfängt:</strong> Das Modell will das ' +
       'Audio als Zeichenkette, also wird es kodiert — aus 19 MB werden 26,5 MB und rund zwei Sekunden ' +
       'Rechenzeit. Gegen die Fünf-Minuten-Grenze unkritisch, aber wer annimmt, der Weg ohne Netzsprung ' +

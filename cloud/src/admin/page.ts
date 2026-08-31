@@ -90,7 +90,8 @@ export const DASHBOARD_HTML = `<!doctype html>
     --z-client: #30B7E6;
     --z-cf: #F5A24A;
     --z-google: #5EC87C;
-    --z-openai: #A99AF0;
+    /* Nur noch Dekoration: der Nebel im Hintergrund. Es gibt keine Zone mehr, die diese Farbe trägt. */
+    --z-violet: #A99AF0;
     --z-ext: #8FA0B4;
   }
   * { box-sizing: border-box; }
@@ -326,6 +327,11 @@ export const DASHBOARD_HTML = `<!doctype html>
   .kv dt { color: var(--muted); }
   .kv dd { margin: 0; }
   .muted { color: var(--muted); }
+  /* Für den einen Satz je Karte, der sagt, ob die Zahl darüber zu glauben ist. Als Textfarbe und
+     nicht als Pille: eine Pille zieht das Auge auf sich, und diese Sätze sollen gelesen werden,
+     wenn man ohnehin auf die Zahl schaut. */
+  .ok-text { color: var(--ok); }
+  .warn-text { color: var(--warn); }
   .empty { color: var(--muted); font-size: 13.5px; padding: 14px 0; text-align: center; }
   .pager { display: flex; align-items: center; gap: 10px; justify-content: flex-end; margin-top: 12px; flex-wrap: wrap; }
   .pager .count { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; margin-right: auto; }
@@ -1156,14 +1162,21 @@ var GRAPH = ${GRAPH_JSON};
       s.orders + ' Kauf/Käufe · Kundschaft zahlte ' + money(s.paidHome, cur) + others + pending +
       (extra.length ? '<br>' + extra.join(' · ') : ''));
 
+    // Was auf der Rechnung landet, nicht der Listenpreis. Der Unterschied ist bei diesem Umfang
+    // nicht klein, sondern fast alles: Ein Tag unter dem Freikontingent kostet **null**, egal was
+    // sein Listenpreis sagt. Stünde hier die Liste, wäre der Gewinn jeden Tag um das ganze
+    // Kontingent zu niedrig — ein Fehler, der mit der Zeit wächst und immer in dieselbe Richtung.
+    var listNote = s.listUsd > s.costUsd
+      ? '<br><span class="muted">Listenpreis ' + fmtUsd4(s.listUsd) + ' · die Differenz deckt das Freikontingent</span>'
+      : '';
     html += card('Einkaufskosten',
-      'Der Listenpreis dessen, was tatsächlich gerechnet wurde — aus dem eigenen Hauptbuch, nicht von einer Rechnung. Workers AI rechnet über dasselbe Konto ab wie dieser Worker, es gibt dort keinen Abrechnungs-Endpunkt zum Gegenfragen. Das tägliche Freikontingent ist absichtlich nicht abgezogen, die Zahl irrt also nach oben — die richtige Richtung für eine Kostenzahl. Geprüft wird sie einmal im Monat gegen die echte Cloudflare-Rechnung, von Hand.',
+      'Was Cloudflare tatsächlich berechnet: der Neuronenverbrauch aus dem eigenen Hauptbuch, **je Tag abzüglich des Freikontingents**. Tagweise gerechnet, weil das Kontingent ein Tageswert ist und nicht überträgt — ein Monat ist die Summe der Tagesergebnisse und nie eine Rechnung auf den Monatsneuronen. Die Neuronen meldet jedes Modell in seiner eigenen Antwort, es ist also gemessen und nicht geschätzt. Eigene Testanfragen zählen mit: Das Kontingent gehört dem Konto, nicht der Kundschaft. Geprüft wird die Zahl einmal im Monat gegen die echte Cloudflare-Rechnung, von Hand.',
       fmtUsd(s.costUsd),
-      '≈ ' + money(s.costHome, cur) + ' · ' + rateNote);
+      '≈ ' + money(s.costHome, cur) + ' · ' + rateNote + listNote);
 
     var profitCls = s.profitHome < 0 ? 'crit' : '';
     html += card('Gewinn',
-      'Einnahmen minus Einkaufskosten, beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
+      'Einnahmen minus dem, was Cloudflare wirklich berechnet — nicht minus dem Listenpreis. Beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
       'nicht Googles Kurs — Play zahlt zu eigenen Kursen aus, die Zahl bleibt also eine gute Näherung. ' +
       'Cloudflare-Grundgebühr, Domain und deine Zeit stehen nirgends darin.',
       '<span' + (profitCls ? ' style="color:var(--crit)"' : '') + '>' + money(s.profitHome, cur) + '</span>',
@@ -1197,24 +1210,40 @@ var GRAPH = ${GRAPH_JSON};
     // Der Balken erscheint erst, wenn es Neuronen gibt. Vor der Umstellung wäre er dauerhaft auf
     // null — eine Zeile, die man wegzulesen lernt, bevor sie etwas zu sagen hat.
     var html = ne.freePerDay && (ne.total || ne.today) ? freeQuotaCard(ne) : '';
-    // Die Kostenkarte dagegen immer: der Listenpreis existiert heute schon, und „was hat heute
-    // gekostet" ist die Frage, die man täglich hat. Die Zeilen „berechnet" kommen erst dazu, wenn
-    // es ein Freikontingent gibt, gegen das sie sich unterscheiden könnten — sonst stünde dort
-    // dreimal 0,0000 $ neben einer Zahl, und das liest sich wie ein Fehler.
-    var billed = ne.total || ne.today
-      ? 'berechnet: <strong>' + fmtUsd4(o.cost.billedTodayUsd) + '</strong><br>'
-      : '';
-    var perMonth = 'Monat ' + fmtUsd4(o.cost.monthUsd) +
-      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedMonthUsd) : '');
-    var perTotal = 'gesamt ' + fmtUsd4(o.cost.totalUsd) +
-      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedTotalUsd) : '');
+
+    // Die Karte zeigt, was Cloudflare berechnet, und nicht den Listenpreis. Das ist der Unterschied
+    // zwischen einer Zahl, die man ablesen kann, und einer, die man erst umrechnen muss: Solange der
+    // Tag unter dem Freikontingent bleibt — und das sind die meisten —, ist der Einkauf **null**,
+    // und eine Karte, die dann 0,0008 $ anzeigt, behauptet eine Ausgabe, die es nicht gibt.
+    //
+    // Der Listenpreis steht darunter, weil er nicht wertlos ist: Er ist die Größe, gegen die die
+    // Marge gerechnet wird, und er sagt, wie nah der Tag am Kontingent war.
+    var free = ne.freePerDay && ne.today < ne.freePerDay;
+    var sub = free
+      ? '<span class="ok-text">im Freikontingent</span> · Listenpreis ' + fmtUsd4(o.cost.todayUsd)
+      : 'Listenpreis ' + fmtUsd4(o.cost.todayUsd);
+    var perMonth = 'Monat <strong>' + fmtUsd4(o.cost.billedMonthUsd) + '</strong>' +
+      ' <span class="muted">(Liste ' + fmtUsd4(o.cost.monthUsd) + ')</span>';
+    var perTotal = 'gesamt <strong>' + fmtUsd4(o.cost.billedTotalUsd) + '</strong>' +
+      ' <span class="muted">(Liste ' + fmtUsd4(o.cost.totalUsd) + ')</span>';
     var trend = ne.total
       ? '<br><span class="muted">gestern ' + ne.yesterday.toLocaleString('de-DE') +
         ' · Schnitt 7 T ' + ne.avg7.toLocaleString('de-DE') + ' Neuronen</span>'
       : '';
+
+    // Woher die Zahl kommt. Alles andere auf dieser Karte ist wertlos, wenn dieser Satz nicht
+    // „gemessen" sagt — deshalb steht er dabei und nicht in der Erklärung.
+    var est = o.cost.estimatedRequests || 0;
+    var meas = o.cost.measuredRequests || 0;
+    var origin = (meas + est) === 0 ? ''
+      : est === 0
+        ? '<br><span class="ok-text">alle ' + meas + ' Anfragen aus der Antwort gemessen</span>'
+        : '<br><span class="warn-text">' + est + ' von ' + (meas + est) +
+          ' Anfragen geschätzt — die Antwort nannte keine Neuronen</span>';
+
     html += card('Einkauf heute',
-      'Was der Verkehr von heute gekostet hat — der Listenpreis, gegen den auch die Marge gerechnet wird. Sobald über Workers AI eingekauft wird, steht darunter, was Cloudflare davon tatsächlich berechnet: erst was über dem Freikontingent liegt. An den meisten Tagen ist das null, und dann springt es.',
-      fmtUsd4(o.cost.todayUsd), billed + perMonth + '<br>' + perTotal + trend);
+      'Was Cloudflare für heute wirklich berechnet: der Neuronenverbrauch, **abzüglich des Freikontingents**. An den meisten Tagen ist das null, und dann springt es — das ist kein Fehler, sondern ein Tag, der über dem Kontingent lag. Der Listenpreis darunter ist die Zahl ohne den Abzug; gegen ihn wird die Marge gerechnet. Beide stammen aus den Neuronen, die die Modelle selbst je Antwort melden, nicht aus einer Schätzung.',
+      fmtUsd4(o.cost.billedTodayUsd), sub + '<br>' + perMonth + '<br>' + perTotal + trend + origin);
     return html;
   }
 
@@ -1950,24 +1979,30 @@ var GRAPH = ${GRAPH_JSON};
       card('Diktiert', 'Summe der abgerechneten Audiosekunden.', fmtMinutes(sum('seconds')), '') +
       card('Verkauft', 'Minuten, die im Zeitraum gekauft wurden — nicht dieselben, die verbraucht wurden.', fmtMinutes(sum('secondsSold')), sum('orders') + ' Käufe') +
       card('Erlös', 'Nach Googles Anteil, wie von Google gemeldet.', money(sum('revenue'), cur), '') +
-      card('Einkauf', 'Was die durchgereichten Anfragen an Rechenzeit gekostet haben, zum Listenpreis.', fmtUsd(sum('costUsd')), '') +
+      card('Einkauf', 'Was Cloudflare für den Zeitraum berechnet — je Tag abzüglich des Freikontingents, dann summiert. Ein Tag unter dem Kontingent kostet nichts. Der Listenpreis daneben ist dieselbe Rechenzeit ohne den Abzug.',
+        fmtUsd(sum('costUsd')),
+        sum('listUsd') > sum('costUsd') ? 'Listenpreis ' + fmtUsd4(sum('listUsd')) : '') +
       card('Neue Konten', 'Erstmals angelegte Guthabenkonten.', sum('newWallets'), '');
 
     $('sDays').innerHTML = rows.length ? '<table><thead><tr><th>Tag</th><th class="num">Anfragen</th><th class="num">Diktiert</th>' +
-      '<th class="num">Fehler</th><th class="num">Käufe</th><th class="num">Erlös</th><th class="num">Einkauf</th><th class="num">Neue Konten</th></tr></thead><tbody>' +
+      '<th class="num">Fehler</th><th class="num">Käufe</th><th class="num">Erlös</th><th class="num">Einkauf</th>' +
+      '<th class="num">Liste</th><th class="num">Neue Konten</th></tr></thead><tbody>' +
       rows.slice().reverse().map(function (r) {
         return '<tr><td>' + esc(r.day) + '</td><td class="num">' + r.requests + '</td><td class="num">' + fmtMinutes(r.seconds) +
           '</td><td class="num">' + (r.errors || '—') + '</td><td class="num">' + (r.orders || '—') +
           '</td><td class="num">' + (r.revenue ? money(r.revenue, cur) : '—') + '</td><td class="num">' + fmtUsd4(r.costUsd) +
+          '</td><td class="num muted">' + fmtUsd4(r.listUsd) +
           '</td><td class="num">' + (r.newWallets || '—') + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Noch keine Tage erfasst.</div>';
 
     $('sMonths').innerHTML = histMonths.length ? '<table><thead><tr><th>Monat</th><th class="num">Anfragen</th>' +
-      '<th class="num">Diktiert</th><th class="num">Verkauft</th><th class="num">Käufe</th><th class="num">Erlös</th><th class="num">Einkauf</th></tr></thead><tbody>' +
+      '<th class="num">Diktiert</th><th class="num">Verkauft</th><th class="num">Käufe</th><th class="num">Erlös</th>' +
+      '<th class="num">Einkauf</th><th class="num">Liste</th></tr></thead><tbody>' +
       histMonths.map(function (m) {
         return '<tr><td>' + esc(m.month) + '</td><td class="num">' + m.requests + '</td><td class="num">' + fmtMinutes(m.seconds) +
           '</td><td class="num">' + fmtMinutes(m.secondsSold) + '</td><td class="num">' + (m.orders || '—') +
-          '</td><td class="num">' + (m.revenue ? money(m.revenue, cur) : '—') + '</td><td class="num">' + fmtUsd4(m.costUsd) + '</td></tr>';
+          '</td><td class="num">' + (m.revenue ? money(m.revenue, cur) : '—') + '</td><td class="num">' + fmtUsd4(m.costUsd) +
+          '</td><td class="num muted">' + fmtUsd4(m.listUsd) + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Noch keine Monate erfasst.</div>';
   }
 
@@ -2005,7 +2040,7 @@ var GRAPH = ${GRAPH_JSON};
 
   var taxData = null;
   var KIND_LABEL = {
-    openai_topup: 'OpenAI-Aufladung (historisch)', cloudflare: 'Cloudflare (inkl. Workers AI)', domain: 'Domain', other: 'Sonstiges',
+    cloudflare: 'Cloudflare (inkl. Workers AI)', domain: 'Domain', other: 'Sonstiges',
   };
 
   function renderTax(t) {
@@ -2234,7 +2269,7 @@ var GRAPH = ${GRAPH_JSON};
 
   /* --------------------------------------------------------------- Netzwerk */
 
-  var TONE = { client: 'var(--z-client)', cloudflare: 'var(--z-cf)', google: 'var(--z-google)', openai: 'var(--z-openai)', ext: 'var(--z-ext)' };
+  var TONE = { client: 'var(--z-client)', cloudflare: 'var(--z-cf)', google: 'var(--z-google)', ext: 'var(--z-ext)' };
   var EKIND = { data: 'var(--accent)', auth: 'var(--z-google)', store: 'var(--muted)', notify: 'var(--z-cf)' };
   var cam = { s: 1, x: 0, y: 0 }, filter = 'all', selected = null, graphMode = 'map';
   var byId = {};
@@ -2881,7 +2916,7 @@ var GRAPH = ${GRAPH_JSON};
     var still = motionOff;
 
     var BLUE = [48, 183, 230];      // --accent
-    var VIOLET = [169, 154, 240];   // --z-openai
+    var VIOLET = [169, 154, 240];   // --z-violet
     /*
      * home x/y, orbit x/y, the two periods that carry it, and the period on which its colour
      * crosses from one to the other. All of them awkward numbers with no common factor, so the
