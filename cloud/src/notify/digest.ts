@@ -28,14 +28,18 @@ export async function maybeSendDigest(env: Env): Promise<boolean> {
   if (now.getUTCHours() !== settings.digestHourUtc) return false;
 
   const day = now.toISOString().slice(0, 10);
-  const mark = await env.DB.prepare('SELECT payload FROM cache WHERE key = ?')
-    .bind(DIGEST_MARK).first<{ payload: string }>();
+  // In `settings` rather than a table of its own. The mark used to live in `cache`, which was there
+  // to hold a foreign billing endpoint's answers; when that went, the table went with it and this
+  // one line stayed behind — a reference no type checker can see, because it is inside a string.
+  const mark = await env.DB.prepare('SELECT value FROM settings WHERE key = ?')
+    .bind(DIGEST_MARK).first<{ value: string }>();
   // The cron fires four times an hour. Without this the digest would go out four times.
-  if (mark?.payload === JSON.stringify(day)) return false;
+  if (mark?.value === day) return false;
 
   const sent = await sendDigest(env);
-  await env.DB.prepare('INSERT OR REPLACE INTO cache (key, payload, fetched_at) VALUES (?, ?, ?)')
-    .bind(DIGEST_MARK, JSON.stringify(day), Date.now()).run();
+  await env.DB.prepare(
+    'INSERT OR REPLACE INTO settings (key, value, updated_at, updated_by) VALUES (?, ?, ?, ?)',
+  ).bind(DIGEST_MARK, day, Date.now(), 'cron').run();
   return sent;
 }
 

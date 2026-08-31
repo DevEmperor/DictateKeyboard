@@ -22,7 +22,8 @@
     "db:migrate7:remote": "wrangler d1 execute dictate-cloud --remote --file=migrations/007_fresh_start.sql",
     "db:backup": "wrangler d1 export dictate-cloud --remote --output=../private/dictate-cloud/backups/d1-$(date +%F).sql",
     "check:graph": "node tools/check-graph.mjs",
-    "check:page": "node tools/check-page.mjs"
+    "check:page": "node tools/check-page.mjs",
+    "check:sql": "node tools/check-sql.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260801.1",

@@ -158,7 +158,13 @@ export async function changedKeys(env: Env): Promise<string[]> {
   };
   for (const key of RULE_KEYS) shipped[`rule.${key}`] = '1';
 
-  return Object.keys(stored).filter((key) => !matchesShipped(stored[key] ?? '', shipped[key]));
+  // Keys with a colon are the cron's own bookkeeping, not settings — `digest:last-day` records which
+  // day the daily report already went out for. They live in this table because it is the one that
+  // survives a ledger wipe, and they must never appear in the dashboard's list of changed settings:
+  // a mark that rewrites itself every morning would make that list permanently non-empty.
+  return Object.keys(stored)
+    .filter((key) => !key.includes(':'))
+    .filter((key) => !matchesShipped(stored[key] ?? '', shipped[key]));
 }
 
 function matchesShipped(stored: string, shipped: string | undefined): boolean {
