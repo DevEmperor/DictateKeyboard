@@ -909,6 +909,35 @@
     <string name="apptour60__outro_eyebrow">That is 6.0</string>
     <string name="apptour60__outro_title">Have fun with it</string>
     <string name="apptour60__outro_body">Whichever way you use Dictate — your own key, your own server, a model on the device, or credit — nothing about the other ways has changed. You can revisit any tour under Settings › About.</string>
+    <string name="apptour61__cta_try" comment="Button on a what\'s-new page that opens the settings screen for the feature just described">Try it</string>
+    <string name="apptour61__art_folder" comment="Folder name shown on the sticker-grid illustration; a plausible folder someone would point the keyboard at">Stickers</string>
+    <string name="apptour61__art_share" comment="Label on the share-sheet card in the illustration, above the app name">Share with</string>
+    <string name="apptour61__art_typed" comment="A misspelled word shown being corrected in the illustration. Should look like a real thumb slip in the target language.">teh</string>
+    <string name="apptour61__art_fixed" comment="The correction of apptour61__art_typed, shown replacing it in the illustration">the</string>
+    <string name="apptour61__intro_eyebrow">Dictate 6.1</string>
+    <string name="apptour61__intro_title">Stickers, voice messages, and an autocorrect that catches the typo</string>
+    <string name="apptour61__intro_body">Point the keyboard at a folder of your own stickers, share a voice message straight to Dictate to find out what it says, and get an autocorrect that finally sees the mistake it was built not to see.</string>
+    <string name="apptour61__stickers_eyebrow">New: your own stickers</string>
+    <string name="apptour61__stickers_title">A folder on your phone, on the keyboard</string>
+    <string name="apptour61__stickers_body">Point Dictate at any folder and its pictures become stickers — subfolders turn into tabs, with favourites and recents of their own. Add one from any app through the share sheet, delete one without leaving the keyboard. What a chat app will actually accept is not what it says it accepts, so each sticker is brought into shape once on the way in and simply sent from there.</string>
+    <string name="apptour61__share_eyebrow">New: share to Dictate</string>
+    <string name="apptour61__share_title">Find out what that voice message says</string>
+    <string name="apptour61__share_body">Dictate now appears in the share sheet for audio and video. Share a voice message to it and a screen opens that starts transcribing by itself — no field to find, no button to press. The transcript is searchable, and long recordings are handled in pieces instead of being turned away.</string>
+    <string name="apptour61__autocorrect_eyebrow">Autocorrect</string>
+    <string name="apptour61__autocorrect_title">The typo it was built not to see</string>
+    <string name="apptour61__autocorrect_body">The rule deciding whether a word could be corrected let through a finger that slid most of the way to the next key — but never one that landed on it squarely, which is the ordinary typo. That is fixed, and how eagerly it corrects is now yours to set. The word space is about to take is marked in your accent colour, and backspace right after a correction gives back exactly what you typed.</string>
+    <string name="apptour61__contacts_eyebrow">Contacts</string>
+    <string name="apptour61__contacts_title">Names it stops underlining</string>
+    <string name="apptour61__contacts_body">Your contacts\' names can go into the personal dictionary, so the keyboard stops treating them as typos and starts suggesting them. It does not ask for access to your address book — you pick the names yourself, or import a vCard. Nothing is read that you did not hand over.</string>
+    <string name="apptour61__models_eyebrow">Gemini and Deepgram Flux</string>
+    <string name="apptour61__models_title">Two providers that got better at listening</string>
+    <string name="apptour61__models_body">Google shipped speech-to-text models of its own, so Gemini no longer transcribes with a chat model under instruction — and it can do it live now too. Deepgram\'s Flux decides for itself when you have stopped talking instead of waiting out a silence timer. And if you speak more than one language, you can now say which ones instead of picking one and hoping.</string>
+    <string name="apptour61__more_eyebrow">Also</string>
+    <string name="apptour61__more_title">A lot of small things</string>
+    <string name="apptour61__more_body">Prompts can be triggered by typing a shortcut, not just by tapping one. Russian can be typed phonetically, and French finds its accents from the plain letters. Very wide tablets get a keyboard in landscape again. And the suggestions switch now really switches suggestions off — including when an app tries to do it for you.</string>
+    <string name="apptour61__outro_eyebrow">That is 6.1</string>
+    <string name="apptour61__outro_title">Same keyboard, fewer edges</string>
+    <string name="apptour61__outro_body">Nothing about how you already dictate has changed — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
