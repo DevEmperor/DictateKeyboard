@@ -122,6 +122,19 @@ object DictatePromptDefaults {
     }
 
     /**
+     * Whether [transcript] carries no word at all — no letter and no digit, only punctuation, symbols or
+     * whitespace ("...", "—", "?!").
+     *
+     * Such a transcript is not blank, so it passes every emptiness check, and there is nothing in it to
+     * format. Sent to a model anyway it produces a *conversational* reply rather than a result: measured
+     * against `gemma-4-26b-a4b-it`, a transcript of "..." came back as "(Please provide the transcript you
+     * would like me to format.)". That sentence is not the prompt, so [looksLikeAutoFormattingPrompt] does
+     * not catch it, and it would land in the user's field — the same failure as #124, wearing a different
+     * coat. The cure is not to ask: a text without a single word has no formatting to apply.
+     */
+    fun hasNoWords(transcript: String): Boolean = transcript.none { it.isLetterOrDigit() }
+
+    /**
      * Whether [transcript] is just the transcription **style prompt echoed back** (issue #77). Whisper-style
      * models emit their `prompt` verbatim on silent/unclear audio, so a recording that "transcribes" to the
      * style sentence isn't real speech and must be dropped instead of inserted. Language-agnostic: it

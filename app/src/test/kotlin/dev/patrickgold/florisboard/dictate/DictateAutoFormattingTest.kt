@@ -48,6 +48,19 @@ class DictateAutoFormattingTest : FunSpec({
         prompt.endsWith("Transcript:\nHallo Welt") shouldBe true
     }
 
+    context("hasNoWords keeps wordless transcripts away from the model") {
+        // Not blank, so every emptiness check lets them through — and there is nothing in them to format.
+        withData(nameFn = { "transcript=<$it>" }, "...", "—", "?!", " . . . ", "\u00b7\u00b7\u00b7", "-") { t ->
+            DictatePromptDefaults.hasNoWords(t) shouldBe true
+        }
+    }
+
+    context("hasNoWords lets anything with a word through") {
+        withData(nameFn = { "transcript=<$it>" }, "Hello", "7", "\u00e4hm", "uh", "a.", "3.", "\u4f60\u597d") { t ->
+            DictatePromptDefaults.hasNoWords(t) shouldBe false
+        }
+    }
+
     test("looksLikeAutoFormattingPrompt flags an echoed prompt but not real transcripts (#124)") {
         // A verbatim echo of the prompt / its wrapper is detected...
         DictatePromptDefaults.looksLikeAutoFormattingPrompt(

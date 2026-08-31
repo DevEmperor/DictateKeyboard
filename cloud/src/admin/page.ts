@@ -651,7 +651,7 @@ export const DASHBOARD_HTML = `<!doctype html>
   <section id="view-stats" class="stack" hidden>
     <div class="panel">
       <h2>Echte Zahlen
-        <span class="hint" tabindex="0" data-tip="Nicht gerechnet, sondern abgefragt: die Erlöse stammen aus Googles Orders-API und stehen je Kauf im Hauptbuch, die Ausgaben aus OpenAIs eigenem Kostenendpunkt."></span>
+        <span class="hint" tabindex="0" data-tip="Nicht gerechnet, sondern abgefragt: die Erlöse stammen aus Googles Orders-API und stehen je Kauf im Hauptbuch, die Ausgaben sind der Listenpreis des tatsächlich Gerechneten aus dem eigenen Hauptbuch."></span>
       </h2>
       <div id="finance"></div>
     </div>
@@ -708,21 +708,20 @@ export const DASHBOARD_HTML = `<!doctype html>
   <section id="view-tax" class="stack" hidden>
     <div class="panel">
       <h2>Jahresübersicht
-        <span class="hint" tabindex="0" data-tip="Zum Abgleich gedacht, nicht als Steuererklärung. Verbindlich sind Googles monatliche Auszahlungsberichte und OpenAIs Rechnungen — hier siehst du, ob die das sagen, was du erwartest, und dein Steuerberater bekommt eine Aufstellung je Monat."></span>
+        <span class="hint" tabindex="0" data-tip="Zum Abgleich gedacht, nicht als Steuererklärung. Verbindlich sind Googles monatliche Auszahlungsberichte und Cloudflares Rechnungen — hier siehst du, ob die das sagen, was du erwartest, und dein Steuerberater bekommt eine Aufstellung je Monat."></span>
       </h2>
       <div id="taxYears" class="stack"></div>
     </div>
 
     <div class="panel">
       <h2>Ausgaben erfassen
-        <span class="hint" tabindex="0" data-tip="OpenAI hat keine Schnittstelle für Aufladungen — Verbrauch ist abrufbar, Zahlungen nicht. Bei der Einnahmen-Überschuss-Rechnung ist aber genau die Aufladung die Betriebsausgabe, nicht der später verbrauchte Token. Deshalb hier von Hand, mit Rechnungsnummer."></span>
+        <span class="hint" tabindex="0" data-tip="Rechnungen werden von Hand erfasst, mit Rechnungsnummer. Für die Einnahmen-Überschuss-Rechnung zählt der Tag, an dem das Geld abgeht — nicht der Tag, an dem die Rechenzeit verbraucht wird."></span>
       </h2>
       <p class="sub" style="margin:0 0 12px">Trage ein, was tatsächlich von deinem Konto abgegangen ist. „Belastet" ist der Betrag auf dem Kontoauszug inklusive Fremdwährungsaufschlag — leer gelassen rechne ich mit dem EZB-Kurs des Tages und kennzeichne es als Näherung.</p>
       <div class="row">
         <input id="exDate" type="date" style="width:auto">
         <select id="exKind" style="width:auto">
-          <option value="openai_topup">OpenAI-Aufladung</option>
-          <option value="cloudflare">Cloudflare</option>
+          <option value="cloudflare">Cloudflare (inkl. Workers AI)</option>
           <option value="domain">Domain</option>
           <option value="other">Sonstiges</option>
         </select>
@@ -934,6 +933,25 @@ var GRAPH = ${GRAPH_JSON};
   }
   function tell(title, text) { return modal({ title: title, text: esc(text), cancel: false }); }
 
+  /*
+   * Welches Modell die Anfrage bearbeitet hat — kurz in der Spalte, genau im Tooltip.
+   *
+   * Nicht der Anbieter: den gibt es nur noch einen, eine Spalte mit einem einzigen Wert in jeder
+   * Zeile ist Rauschen. Das Modell dagegen kann sich ohne Deployment ändern, und dann ist es die
+   * Angabe, die man als Erstes sucht.
+   *
+   * Neuronen stehen im Tooltip dazu: die Menge, die sich als Einzige gegen Cloudflares eigene
+   * Zählung halten lässt.
+   */
+  function modelCell(x) {
+    if (!x.model) return '<span class="muted">—</span>';
+    var short = String(x.model).replace(/^@cf\/[^/]+\//, '');
+    var neurons = (x.neuronsMicro || 0) / 1e6;
+    var tip = x.model + (x.provider ? ' · ' + x.provider : '') +
+      (neurons ? ' · ' + neurons.toFixed(3) + ' Neuronen' : '');
+    return '<span class="pill" title="' + esc(tip) + '">' + esc(short) + '</span>';
+  }
+
   function card(label, tip, value, sub, cls, extra) {
     return '<div class="card' + (cls ? ' ' + cls : '') + '"><div class="label">' + esc(label) +
       (tip ? hint(tip) : '') + '</div><div class="value">' + value + '</div>' +
@@ -1132,28 +1150,81 @@ var GRAPH = ${GRAPH_JSON};
       s.orders + ' Kauf/Käufe · Kundschaft zahlte ' + money(s.paidHome, cur) + others + pending +
       (extra.length ? '<br>' + extra.join(' · ') : ''));
 
-    html += card('OpenAI-Kosten',
-      s.openaiConnected
-        ? 'Von OpenAI abgerechnet, nur das Projekt dieses Dienstes' + (s.serviceProject ? ' („' + s.serviceProject.name + '")' : '') + '. Abgefragt, nicht geschätzt.'
-        : 'Kein Admin-Schlüssel hinterlegt — hier stünde sonst, was OpenAI tatsächlich abgerechnet hat.',
-      s.costUsd === null ? '—' : fmtUsd(s.costUsd),
-      s.costHome === null ? esc(s.openaiReason || 'kein Projekt zugeordnet')
-                          : '≈ ' + money(s.costHome, cur) + ' · ' + rateNote);
+    html += card('Einkaufskosten',
+      'Der Listenpreis dessen, was tatsächlich gerechnet wurde — aus dem eigenen Hauptbuch, nicht von einer Rechnung. Workers AI rechnet über dasselbe Konto ab wie dieser Worker, es gibt dort keinen Abrechnungs-Endpunkt zum Gegenfragen. Das tägliche Freikontingent ist absichtlich nicht abgezogen, die Zahl irrt also nach oben — die richtige Richtung für eine Kostenzahl. Geprüft wird sie einmal im Monat gegen die echte Cloudflare-Rechnung, von Hand.',
+      fmtUsd(s.costUsd),
+      '≈ ' + money(s.costHome, cur) + ' · ' + rateNote);
 
-    var profitCls = s.profitHome === null ? '' : (s.profitHome < 0 ? 'crit' : '');
+    var profitCls = s.profitHome < 0 ? 'crit' : '';
     html += card('Gewinn',
-      'Einnahmen minus OpenAI-Kosten, beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
+      'Einnahmen minus Einkaufskosten, beides in ' + cur + '. Der Dollarkurs kommt von der EZB, ist aber trotzdem ' +
       'nicht Googles Kurs — Play zahlt zu eigenen Kursen aus, die Zahl bleibt also eine gute Näherung. ' +
-      'Cloudflare, Domain und deine Zeit stehen nirgends darin.',
-      s.profitHome === null ? '—'
-        : '<span' + (profitCls ? ' style="color:var(--crit)"' : '') + '>' + money(s.profitHome, cur) + '</span>',
-      s.profitHome === null ? 'OpenAI nicht verbunden'
-        : 'nach Play-Gebühr und Steuer' +
+      'Cloudflare-Grundgebühr, Domain und deine Zeit stehen nirgends darin.',
+      '<span' + (profitCls ? ' style="color:var(--crit)"' : '') + '>' + money(s.profitHome, cur) + '</span>',
+      'nach Play-Gebühr und Steuer' +
           // Ein Minus, das nur an einer ausstehenden Meldung hängt, soll nicht wie ein Verlust
           // dastehen. Beide Zahlen nebeneinander, keine davon in der anderen.
           (s.unreportedOrders && s.profitWithEstimateHome !== null && s.profitWithEstimateHome !== undefined
             ? '<br>mit den noch nicht abgerechneten Käufen: ' + money(s.profitWithEstimateHome, cur)
             : ''));
+    return html;
+  }
+
+  /*
+   * Das Freikontingent und die Kosten des Tages.
+   *
+   * Beide Karten erscheinen erst, wenn es Neuronen gibt — vor der Umstellung wäre ein Balken auf
+   * null keine Information, sondern eine Zeile, die man wegzulesen lernt.
+   *
+   * Der Balken darf über 100 % laufen. Mehr als 214 Audiominuten am Tag sind kein Fehler, sondern
+   * ein guter Tag; nur ist ab dort eben etwas zu bezahlen, und genau das steht dann darunter.
+   */
+  function untilReset(ms) {
+    var left = Math.max(0, ms - Date.now());
+    var h = Math.floor(left / 3600000);
+    var m = Math.floor((left % 3600000) / 60000);
+    return h ? h + ' h ' + m + ' min' : m + ' min';
+  }
+
+  function neuronCards(o) {
+    var ne = o.neurons || {};
+    // Der Balken erscheint erst, wenn es Neuronen gibt. Vor der Umstellung wäre er dauerhaft auf
+    // null — eine Zeile, die man wegzulesen lernt, bevor sie etwas zu sagen hat.
+    var html = ne.freePerDay && (ne.total || ne.today) ? freeQuotaCard(ne) : '';
+    // Die Kostenkarte dagegen immer: der Listenpreis existiert heute schon, und „was hat heute
+    // gekostet" ist die Frage, die man täglich hat. Die Zeilen „berechnet" kommen erst dazu, wenn
+    // es ein Freikontingent gibt, gegen das sie sich unterscheiden könnten — sonst stünde dort
+    // dreimal 0,0000 $ neben einer Zahl, und das liest sich wie ein Fehler.
+    var billed = ne.total || ne.today
+      ? 'berechnet: <strong>' + fmtUsd4(o.cost.billedTodayUsd) + '</strong><br>'
+      : '';
+    var perMonth = 'Monat ' + fmtUsd4(o.cost.monthUsd) +
+      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedMonthUsd) : '');
+    var perTotal = 'gesamt ' + fmtUsd4(o.cost.totalUsd) +
+      (ne.total ? ' · berechnet ' + fmtUsd4(o.cost.billedTotalUsd) : '');
+    var trend = ne.total
+      ? '<br><span class="muted">gestern ' + ne.yesterday.toLocaleString('de-DE') +
+        ' · Schnitt 7 T ' + ne.avg7.toLocaleString('de-DE') + ' Neuronen</span>'
+      : '';
+    html += card('Einkauf heute',
+      'Was der Verkehr von heute gekostet hat — der Listenpreis, gegen den auch die Marge gerechnet wird. Sobald über Workers AI eingekauft wird, steht darunter, was Cloudflare davon tatsächlich berechnet: erst was über dem Freikontingent liegt. An den meisten Tagen ist das null, und dann springt es.',
+      fmtUsd4(o.cost.todayUsd), billed + perMonth + '<br>' + perTotal + trend);
+    return html;
+  }
+
+  function freeQuotaCard(ne) {
+    var pct = ne.freeUsedPercent;
+    var cls = pct >= 100 ? 'crit' : pct >= 80 ? 'warn' : '';
+    var over = Math.max(0, ne.today - ne.freePerDay);
+    var html = '<div class="card"><div class="label">Freikontingent' +
+      hint('Workers Paid enthält ' + ne.freePerDay.toLocaleString('de-DE') + ' Neuronen je Tag — das entspricht etwa ' +
+        ne.freeAudioMinutes + ' Audiominuten, wenn nur diktiert wird. Rücksetzung um 00:00 UTC, also 02:00 unserer Sommerzeit. Nichts wird übertragen: Was heute übrig bleibt, ist morgen weg. Höchstwert ' +
+        fmtUsd4(ne.freeValueUsd) + ' am Tag.') +
+      '</div><div class="value">' + pct + ' %</div><div class="sub">' +
+      ne.today.toLocaleString('de-DE') + ' von ' + ne.freePerDay.toLocaleString('de-DE') + ' Neuronen' +
+      (over ? ' · <strong>' + over.toLocaleString('de-DE') + ' darüber</strong>' : '') +
+      '<br>Rücksetzung in ' + untilReset(ne.resetAtMs) +
+      '</div><div class="bar-track"><i class="' + cls + '" style="width:' + Math.min(100, pct) + '%"></i></div></div>';
     return html;
   }
 
@@ -1164,6 +1235,7 @@ var GRAPH = ${GRAPH_JSON};
     html += card('Offenes Guthaben', 'Bezahlte, aber noch nicht verbrauchte Minuten. Eine Verbindlichkeit, kein Umsatz — Arbeit, die du noch schuldest. Die Zahl, die ein Prepaid-Modell am leichtesten unterschlägt.', fmtMinutes(o.liability.seconds), 'Über alle aktiven Konten', 'lead');
     html += moneyCards(sum);
     html += '<div class="card"><div class="label">Tagesbudget' + hint('Obergrenze für die Einkaufskosten eines Tages. Ist sie erreicht, antwortet der Dienst mit 503 und die App meldet „vorübergehend nicht verfügbar".') + '</div><div class="value">' + o.budget.usedPercent + ' %</div><div class="sub">' + fmtUsd4(o.budget.spentUsd) + ' von ' + fmtUsd(o.budget.limitUsd) + '</div><div class="bar-track"><i class="' + bcls + '" style="width:' + Math.min(100, o.budget.usedPercent) + '%"></i></div></div>';
+    html += neuronCards(o);
     html += card('Konten', '„Aktiv" heißt: hat im Zeitraum mindestens eine Anfrage gestellt. Testkonten sind nicht mitgezählt.', o.wallets.total, o.wallets.active7 + ' aktiv (7 T) · ' + o.wallets.active30 + ' (30 T)<br>' + o.wallets.new30 + ' neu (30 T) · ' + o.wallets.blocked + ' gesperrt' + (o.wallets.test ? ' · ' + o.wallets.test + ' Testkonten' : ''));
 
     var trend = o.days.slice().reverse().map(function (d) { return d.requests; });
@@ -1309,13 +1381,16 @@ var GRAPH = ${GRAPH_JSON};
     if ($('tFail').checked) p += '&failures=1';
     if (!$('tTest').checked) p += '&test=0';
     get('/admin/api/requests' + p).then(function (r) {
-      $('traffic').innerHTML = r.requests.length ? '<table><thead><tr><th>Zeit</th><th>Konto</th><th>Gerät</th><th>Art</th><th class="num">Sek.</th><th class="num">Tokens</th><th class="num">Kosten</th><th class="num">HTTP</th><th class="num">ms</th></tr></thead><tbody>' +
+      $('traffic').innerHTML = r.requests.length ? '<table><thead><tr><th>Zeit</th><th>Konto</th><th>Gerät</th><th>Art</th><th>Modell</th><th class="num">Sek.</th><th class="num">Tokens</th><th class="num">Kosten</th><th class="num">HTTP</th><th class="num">ms</th></tr></thead><tbody>' +
         r.requests.map(function (x) {
           return '<tr' + (x.isTest ? ' class="is-test"' : '') + '><td>' + fmtDate(x.ts) + '</td><td class="mono">' + esc(String(x.walletId).slice(0, 8)) + '…' +
             (x.isTest ? ' <span class="pill test">Test</span>' : '') + '</td><td class="muted">' + esc(x.device || '—') +
             // A rewording has no audio, so its second count is not zero — it does not exist. Printing
             // 0 invites the reading "this dictation was empty", which is a different thing entirely.
-            '</td><td>' + (x.kind === 'transcribe' ? 'Diktat' : 'Umformulierung') + '</td><td class="num">' + (x.kind === 'transcribe' ? (x.seconds || 0) : '—') +
+            '</td><td>' + (x.kind === 'transcribe' ? 'Diktat' : 'Umformulierung') +
+            // Das Modell, gekürzt; Anbieter und Neuronen im Tooltip. Ein Strich heißt, dass die
+            // Zeile aus einer Zeit ohne diese Spalte stammt — nach dem Umzug gibt es davon keine.
+            '</td><td>' + modelCell(x) + '</td><td class="num">' + (x.kind === 'transcribe' ? (x.seconds || 0) : '—') +
             '</td><td class="num">' + ((x.tokensIn || 0) + (x.tokensOut || 0) || '—') + '</td><td class="num">' + fmtUsd4((x.costNano || 0) / 1e9) +
             // A refusal is not a fault, and colouring it like one turns every out-of-credit
             // customer into a red line in a list meant to show breakage. Amber says "we said no",
@@ -1402,10 +1477,11 @@ var GRAPH = ${GRAPH_JSON};
     fast_burn: ['Guthaben rasant verbraucht', 'Der Vorlauf zur Rückbuchung — kaufen, verbrauchen, Geld zurückholen.'],
     budget_hog: ['Ein Konto frisst das Tagesbudget', 'Kein Verlust, aber alle anderen bekommen dann 503.'],
     shared_token: ['Zugang weitergegeben', 'Viele Geräte an einem Guthaben.'],
-    cost_drift: ['OpenAI rechnet anders ab', 'Die stille Regel: Preiserhöhung, die sonst niemand bemerkt.'],
     overall_loss: ['Insgesamt im Minus', 'Alles jemals eingenommen gegen alles jemals ausgegeben.'],
-    error_rate: ['Viele Fehler', 'Meist eine Störung bei OpenAI.'],
+    error_rate: ['Viele Fehler', 'Meist eine Störung bei Workers AI.'],
     revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
+    neuron_spike: ['Neuronen-Ausschlag', 'Ein Tag, der nicht zur Woche davor passt — die Zahl, die direkt zur Rechnung wird.'],
+    reasoning_leak: ['Das Modell denkt wieder', 'Denk-Token gehen vom Guthaben des Käufers ab, ohne dass er etwas davon bekommt.'],
   };
 
   var NUMBERS = [
@@ -1414,8 +1490,8 @@ var GRAPH = ${GRAPH_JSON};
     ['refundUsedPercent', 'Erstattung meldet ab', '%', 'Wie viel verbraucht sein muss, damit eine Erstattung als Verlust gilt.'],
     ['walletBudgetSharePercent', 'Konto-Anteil am Budget', '%', 'Ab welchem Anteil des Tagesbudgets ein einzelnes Konto auffällt.'],
     ['devicesPerWallet', 'Geräte je Konto', 'Stk.', 'Mehr als so viele an einem Tag deuten auf Weitergabe.'],
-    ['costDriftPercent', 'Abweichung OpenAI', '%', 'Unterschied zwischen unserer Rechnung und OpenAIs Abrechnung.'],
     ['errorRatePercent', 'Fehlerquote', '%', 'Anteil fehlgeschlagener Anfragen je Stunde.'],
+    ['neuronSpikeFactor', 'Neuronen-Ausschlag ab', '×', 'Wie oft der Wochenschnitt an einem Tag überschritten sein muss.'],
     ['minLossHome', 'Minus meldet ab', '€', 'Darunter ist es Rundung oder Anlaufphase.'],
   ];
 
@@ -1437,7 +1513,7 @@ var GRAPH = ${GRAPH_JSON};
     // moving it is an informed act rather than a number typed into a blank box.
     var spent = current && current.budget ? current.budget.spentUsd : null;
     var html = '<h2>Betriebsgrenze' +
-      hint('Die Sicherung des Dienstes: Sobald die geschätzten OpenAI-Kosten eines Tages diesen Betrag erreichen, antwortet der Dienst mit 503, statt weiter einzukaufen. Ein Tag kann dich also nie mehr kosten als das — egal, was sonst schiefgeht. Höher setzen heißt mehr Umsatz möglich und mehr Schaden möglich; niedriger heißt früher Feierabend für alle. Wirkt binnen einer Minute, ohne Deployment.') +
+      hint('Die Sicherung des Dienstes: Sobald die geschätzten Einkaufskosten eines Tages diesen Betrag erreichen, antwortet der Dienst mit 503, statt weiter einzukaufen. Ein Tag kann dich also nie mehr kosten als das — egal, was sonst schiefgeht. Höher setzen heißt mehr Umsatz möglich und mehr Schaden möglich; niedriger heißt früher Feierabend für alle. Wirkt binnen einer Minute, ohne Deployment.') +
       '</h2>' +
       '<div class="acts" style="margin-bottom:20px"><div class="act">' +
         '<div class="label">Tagesbudget' + mark('dailyBudgetUsd') + '</div>' +
@@ -1543,7 +1619,7 @@ var GRAPH = ${GRAPH_JSON};
       modal({
         title: 'Tagesbudget anheben?',
         text: 'Von <strong>' + esc(fmtUsd(now)) + '</strong> auf <strong>' + esc(fmtUsd(next)) +
-          '</strong> je Tag. Das ist die Obergrenze dessen, was ein einzelner Tag dich bei OpenAI ' +
+          '</strong> je Tag. Das ist die Obergrenze dessen, was ein einzelner Tag dich an Rechenzeit ' +
           'kosten kann — und damit auch die Obergrenze des Schadens, wenn etwas schiefgeht.',
         okLabel: 'Anheben und speichern',
         danger: next > now * 3,
@@ -1844,34 +1920,6 @@ var GRAPH = ${GRAPH_JSON};
       html += '<div class="empty">Noch keine Käufe mit abgerufenen Beträgen.</div>';
     }
 
-    html += '<h3 style="margin-top:18px">OpenAI-Ausgaben</h3>';
-    if (f.openai.connected) {
-      var byProj = f.openai.byProject || [];
-      // The project that carries this service — matched by name, because its id says nothing.
-      var mine = byProj.filter(function (p) { return /dictate/i.test(p.name); })[0];
-      html += '<div class="grid">' +
-        (mine ? card('Dictate Cloud', 'Nur das OpenAI-Projekt dieses Dienstes. Diese Zahl ist mit dem Projektfilter auf OpenAIs eigener Usage-Seite vergleichbar.', fmtUsd4(mine.usd), 'Letzte 30 Tage', 'lead') : '') +
-        card('Gesamtes Konto', 'Alle Projekte deiner OpenAI-Organisation zusammen — also auch alles, was nichts mit Dictate Cloud zu tun hat.', fmtUsd(f.openai.totalUsd), 'Letzte 30 Tage · ' + byProj.length + ' Projekt(e)') +
-        '</div>';
-
-      if (byProj.length > 1) {
-        html += '<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Projekt</th><th class="num">Kosten (30 T)</th></tr></thead><tbody>' +
-          byProj.map(function (p) {
-            return '<tr><td>' + esc(p.name) + (mine && p.id === mine.id ? ' <span class="pill info">dieser Dienst</span>' : '') +
-              '</td><td class="num">' + fmtUsd4(p.usd) + '</td></tr>';
-          }).join('') + '</tbody></table></div>';
-      }
-
-      var recent = f.openai.days.slice(-10).reverse();
-      html += recent.length ? '<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Tag</th>' +
-        '<th class="num">Kosten (alle Projekte)</th></tr></thead><tbody>' +
-        recent.map(function (d) { return '<tr><td>' + esc(d.day) + '</td><td class="num">' + fmtUsd4(d.usd) + '</td></tr>'; }).join('') +
-        '</tbody></table></div>' : '';
-    } else {
-      html += '<p class="sub">Nicht verbunden — ' + esc(f.openai.reason) + '.<br>' +
-        'Mit einem <strong>Admin-Schlüssel</strong> (nicht dem Projektschlüssel) zeigt diese Seite, was OpenAI tatsächlich abgerechnet hat, statt nur unserer eigenen Summe:<br>' +
-        '<code>npx wrangler secret put OPENAI_ADMIN_KEY</code></p>';
-    }
     $('finance').innerHTML = html;
   }
 
@@ -1896,7 +1944,7 @@ var GRAPH = ${GRAPH_JSON};
       card('Diktiert', 'Summe der abgerechneten Audiosekunden.', fmtMinutes(sum('seconds')), '') +
       card('Verkauft', 'Minuten, die im Zeitraum gekauft wurden — nicht dieselben, die verbraucht wurden.', fmtMinutes(sum('secondsSold')), sum('orders') + ' Käufe') +
       card('Erlös', 'Nach Googles Anteil, wie von Google gemeldet.', money(sum('revenue'), cur), '') +
-      card('Einkauf', 'Was die durchgereichten Anfragen bei OpenAI gekostet haben.', fmtUsd(sum('costUsd')), '') +
+      card('Einkauf', 'Was die durchgereichten Anfragen an Rechenzeit gekostet haben, zum Listenpreis.', fmtUsd(sum('costUsd')), '') +
       card('Neue Konten', 'Erstmals angelegte Guthabenkonten.', sum('newWallets'), '');
 
     $('sDays').innerHTML = rows.length ? '<table><thead><tr><th>Tag</th><th class="num">Anfragen</th><th class="num">Diktiert</th>' +
@@ -1918,20 +1966,13 @@ var GRAPH = ${GRAPH_JSON};
   }
 
   /**
-   * The money, in one request.
-   *
-   * There used to be two — /summary and /finance — and each of them separately paged through
-   * OpenAI's billing endpoint. Two dozen sequential fetches to answer one screen, on every single
-   * page load. Now it is one call, served from a ten-minute cache, refreshed behind the response
-   * when it is stale.
-   */
-  /**
    * The money view, which is the one call that leaves the house.
    *
-   * It asks Google for payouts and OpenAI for costs, so it is the slowest thing on the page and the
-   * only one with a rate limit at the far end. Now that every tab visit reloads, it keeps a minute
-   * of cache: switching between tabs must not fire this again and again, and figures that count in
-   * whole days do not change in the meantime. The refresh button clears it outright.
+   * It asks Google for the payouts — the spend needs nothing from outside any more, it is our own
+   * ledger — so it is still the slowest thing on the page and the only one with a rate limit at the
+   * far end. Since every tab visit reloads, it keeps a minute of cache: switching between tabs must
+   * not fire this again and again, and figures that count in whole days do not change in the
+   * meantime. The refresh button clears it outright.
    */
   var moneyAt = 0;
   var MONEY_TTL = 60000;
@@ -1958,7 +1999,7 @@ var GRAPH = ${GRAPH_JSON};
 
   var taxData = null;
   var KIND_LABEL = {
-    openai_topup: 'OpenAI-Aufladung', cloudflare: 'Cloudflare', domain: 'Domain', other: 'Sonstiges',
+    openai_topup: 'OpenAI-Aufladung (historisch)', cloudflare: 'Cloudflare (inkl. Workers AI)', domain: 'Domain', other: 'Sonstiges',
   };
 
   function renderTax(t) {
@@ -2013,13 +2054,6 @@ var GRAPH = ${GRAPH_JSON};
       '</div></div>';
     }).join('') : '<div class="empty">Noch keine Käufe und keine Ausgaben erfasst.</div>';
 
-    // OpenAI's own usage figure, next to the payments rather than instead of them.
-    if (t.openaiConnected && t.openaiUsageUsd !== null) {
-      $('taxYears').innerHTML += '<p class="sub">Zum Abgleich: OpenAI weist für die letzten 180 Tage ' +
-        fmtUsd(t.openaiUsageUsd) + ' <strong>Verbrauch</strong> aus. Das ist nicht dieselbe Zahl wie deine Aufladungen — ' +
-        'verbraucht wird nach und nach, bezahlt hast du im Voraus. Für die Steuer zählt die Aufladung.</p>';
-    }
-
     $('taxExpenses').innerHTML = t.expenses.length
       ? '<table><thead><tr><th>Datum</th><th>Art</th><th class="num">Rechnung</th><th class="num">Belastet</th><th>Beleg</th><th></th></tr></thead><tbody>' +
         t.expenses.map(function (e) {
@@ -2030,7 +2064,7 @@ var GRAPH = ${GRAPH_JSON};
             '<td class="mono muted">' + esc(e.reference || '—') + '</td>' +
             '<td class="num"><button class="btn ghost" data-del="' + e.id + '">Löschen</button></td></tr>';
         }).join('') + '</tbody></table>'
-      : '<div class="empty">Noch nichts erfasst. Die erste OpenAI-Aufladung gehört hier hinein.</div>';
+      : '<div class="empty">Noch nichts erfasst. Die erste Cloudflare-Rechnung gehört hier hinein.</div>';
 
     Array.prototype.forEach.call($('taxExpenses').querySelectorAll('[data-del]'), function (b) {
       b.onclick = function () {
@@ -2076,7 +2110,7 @@ var GRAPH = ${GRAPH_JSON};
       var cls = pct >= 45 ? 'ok' : pct >= 35 ? 'warn' : 'crit';
 
       // Every line of the sum, in the order it happens: the customer pays, tax and Google come
-      // off, OpenAI is bought, what is left is yours.
+      // off, the compute is bought, what is left is yours.
       // The first four lines are the buyer's own currency, because that is what happened at the
       // till. From "Dein Erlös" on it is the payout currency — mixing the two in one sum is how a
       // margin quietly comes out wrong.
@@ -2084,30 +2118,43 @@ var GRAPH = ${GRAPH_JSON};
       // Durchschnitt darüber kein Preis, den jemand bezahlt hat — dann steht die ganze Leiter in
       // der Auszahlungswährung, und die Karte sagt, dass sie es tut.
       var oneCurrency = !!a && a.currencies === 1;
+      // Der Einkauf steht in zwei Zeilen, sobald es zwei zu sagen gibt.
+      //
+      // Die obere ist die Obergrenze und gilt für jede Nutzung: Kein Dienst darf mehr kosten, als
+      // eine Sekunde wert ist (SECOND_VALUE_NANO in config.ts), also kann ein Paket diese Summe
+      // unter keinem Nutzungsmuster überschreiten. Die untere ist der Regelfall — dasselbe Paket
+      // verdiktiert, zum tatsächlichen Einkaufspreis.
+      //
+      // Solange beide Zahlen gleich sind, wäre die zweite Zeile dieselbe Zahl noch einmal und
+      // bleibt weg. Sie erscheint von selbst, sobald der Einkauf unter den Verkaufswert fällt.
+      var maxRow = ['Einkauf, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)];
+      var typicalRow = k.cost.typicalUsd < k.cost.totalUsd
+        ? ['davon im Regelfall (nur Diktat)', '− ' + fmtUsd4(k.cost.typicalUsd)]
+        : null;
       var steps = a && oneCurrency
         ? [['Kundschaft zahlt', money(a.paid, k.currency)],
            ['davon Steuer', '− ' + money(a.tax, k.currency)],
            ['Google-Anteil', '− ' + money(a.paid - a.tax - a.revenue, k.currency)],
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenue, k.currency) + '</strong>'],
            (k.currency !== cur ? ['umgerechnet', money(a.revenueHome, cur)] : null),
-           ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
+           maxRow, typicalRow,
            ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
         : a
         ? [['Kundschaft zahlt', money(a.paidHome, cur)],
            ['davon Steuer', '− ' + money(a.taxHome, cur)],
            ['Google-Anteil', '− ' + money(a.paidHome - a.taxHome - a.revenueHome, cur)],
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenueHome, cur) + '</strong>'],
-           ['OpenAI, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']]
+           maxRow, typicalRow,
+           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
         : [['Listenpreis (netto)', money(k.listPrice, cur)],
            ['Google-Anteil (' + Math.round(fee * 100) + ' % angenommen)', '− ' + money(k.listPrice * fee, cur)],
            ['<strong>Erlös laut Modell</strong>', '<strong>' + money(k.model.revenue, cur) + '</strong>'],
-           ['OpenAI, h\u00f6chstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)],
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']];
+           maxRow, typicalRow,
+           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']].filter(Boolean);
 
       // Vom Ziel zurück auf den Preis: der Erlös muss Einkauf / (1 − Marge) sein, und der
       // Listenpreis ist dieser Erlös vor Googles Anteil. Steht hier, damit die nächste Preisrunde
-      // eine Ablesung ist und keine Rechnung auf einem Zettel — besonders dann, wenn OpenAI seine
+      // eine Ablesung ist und keine Rechnung auf einem Zettel — besonders dann, wenn Cloudflare seine
       // Preisliste bewegt und der Einkauf unter jedem Paket ein anderer wird.
       var targets = [45, 50, 55, 60].map(function (m) {
         var price = k.cost.totalHome / ((1 - m / 100) * (1 - fee));
@@ -2145,7 +2192,7 @@ var GRAPH = ${GRAPH_JSON};
 
     $('planTable').innerHTML = '<table><thead><tr><th>Paket</th><th class="num">Preis</th>' +
       '<th class="num">Minuten</th><th class="num">ct/Min.</th><th class="num">günstiger</th>' +
-      '<th class="num">OpenAI</th>' +
+      '<th class="num">Einkauf</th>' +
       '<th class="num">Erlös</th><th class="num">Marge</th><th class="num">%</th><th>Quelle</th></tr></thead><tbody>' +
       p.packs.map(function (k) {
         var s = k.actual || k.model;
@@ -2172,7 +2219,7 @@ var GRAPH = ${GRAPH_JSON};
       '<dt>„günstiger"</dt><dd>Preis je Minute gegenüber dem kleinsten Paket, abgerundet. Die App ' +
         'blendet alles unter 10 % aus, zeigt also nicht zwingend jede Zahl, die hier steht.</dd>' +
       '</div>' +
-      '<p class="sub" style="margin-top:10px">Die OpenAI-Zeile ist eine <strong>Obergrenze</strong>, keine Schätzung: ' +
+      '<p class="sub" style="margin-top:10px">Die Einkaufsspalte ist eine <strong>Obergrenze</strong>, keine Schätzung: ' +
       'jede Leistung wird in dieselben Sekunden eingepreist, also sind die verkauften Sekunden zugleich der ' +
       'gesamte Einkauf. Wie die Kundschaft sie aufteilt, ändert daran nichts — die Marge kann nur nach oben ' +
       'abweichen. Fixkosten stehen nirgends darin: Cloudflare, Domain und deine Zeit fehlen.</p>';
@@ -2659,7 +2706,7 @@ var GRAPH = ${GRAPH_JSON};
       var money = loadMoney();
       return get('/admin/api/overview').then(function (o) {
         // Wait for the money only if it is not in yet, so the first paint is not held up by
-        // Google and OpenAI — but never render the cards twice for nothing.
+        // Google and the models — but never render the cards twice for nothing.
         return money.then(function () { renderOverview(o); });
       }).catch(function (e) {
         $('stats').innerHTML = '<div class="card"><div class="label">Fehler</div><div class="value" style="font-size:18px">' + esc(e.message) + '</div></div>';

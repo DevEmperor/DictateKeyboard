@@ -1,5 +1,5 @@
 import { raise } from './alerts';
-import type { Env, Limits } from './config';
+import { limitsFrom, type Env, type Limits } from './config';
 import { alertSettings } from './settings';
 import { today } from './util';
 import type { Wallet } from './wallet';
@@ -156,9 +156,29 @@ export interface UsageEntry {
    */
   isTest?: boolean;
   kind: 'transcribe' | 'reword';
+  /**
+   * Who handled it, and with what. Left out here, the model is read from the environment and the
+   * provider is what it can only be.
+   *
+   * Both are recorded although one of them is currently a constant. They answer different
+   * questions: the provider answers the legal one (where did the content go), the model the
+   * commercial one (at which price). Swapping gemma-4 for qwen3 moves the second and not the first.
+   * A column that says what it is costs one word a row and means a day six months old can still be
+   * recalculated without knowing what the code looked like then.
+   */
+  provider?: string;
+  model?: string;
   seconds?: number;
   tokensIn?: number;
   tokensOut?: number;
+  /**
+   * Neurons × 10⁶, as *reported* by Workers AI, not as computed from a price list.
+   *
+   * A quantity and a price are two different things and both are kept: prices change, quantities do
+   * not, and only the quantity can be held against Cloudflare's own count. Zero when a request
+   * never reached a model — a refusal spends none, and that is a correct figure, not a missing one.
+   */
+  neuronsMicro?: number;
   costNano: number;
   status: number;
   ms: number;
@@ -194,35 +214,47 @@ export function isServiceFault(status: number): boolean {
 export function logUsage(env: Env, entry: UsageEntry, ctx: ExecutionContext): void {
   const now = Date.now();
   const day = today(now);
+  const limits = limitsFrom(env);
+  const provider = entry.provider ?? 'workers-ai';
+  const model = entry.model ?? (entry.kind === 'transcribe' ? limits.transcribeModel : limits.chatModel);
+  const neuronsMicro = Math.round(entry.neuronsMicro ?? 0);
   const statements: D1PreparedStatement[] = [
     env.DB.prepare(
-      `INSERT INTO usage_log (wallet_id, token_hash, ts, kind, seconds, tokens_in, tokens_out, cost_nano, status, ms)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO usage_log (wallet_id, token_hash, ts, kind, provider, model, seconds, tokens_in, tokens_out,
+                              neurons_micro, cost_nano, status, ms)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).bind(
       entry.walletId,
       entry.tokenHash ?? null,
       now,
       entry.kind,
+      provider,
+      model,
       Math.round(entry.seconds ?? 0),
       entry.tokensIn ?? 0,
       entry.tokensOut ?? 0,
+      neuronsMicro,
       entry.costNano,
       entry.status,
       entry.ms,
     ),
     env.DB.prepare(
-      `INSERT INTO daily_totals (day, requests, seconds, rewords, cost_nano, errors,
-                                 test_requests, test_seconds, test_cost_nano)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO daily_totals (day, requests, seconds, rewords, cost_nano, cost_nano_cf, errors,
+                                 neurons_micro, test_requests, test_seconds, test_cost_nano,
+                                 test_neurons_micro)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(day) DO UPDATE SET
-         requests       = requests       + excluded.requests,
-         seconds        = seconds        + excluded.seconds,
-         rewords        = rewords        + excluded.rewords,
-         cost_nano      = cost_nano      + excluded.cost_nano,
-         errors         = errors         + excluded.errors,
-         test_requests  = test_requests  + excluded.test_requests,
-         test_seconds   = test_seconds   + excluded.test_seconds,
-         test_cost_nano = test_cost_nano + excluded.test_cost_nano`,
+         requests           = requests           + excluded.requests,
+         seconds            = seconds            + excluded.seconds,
+         rewords            = rewords            + excluded.rewords,
+         cost_nano          = cost_nano          + excluded.cost_nano,
+         cost_nano_cf       = cost_nano_cf       + excluded.cost_nano_cf,
+         errors             = errors             + excluded.errors,
+         neurons_micro      = neurons_micro      + excluded.neurons_micro,
+         test_requests      = test_requests      + excluded.test_requests,
+         test_seconds       = test_seconds       + excluded.test_seconds,
+         test_cost_nano     = test_cost_nano     + excluded.test_cost_nano,
+         test_neurons_micro = test_neurons_micro + excluded.test_neurons_micro`,
     ).bind(
       day,
       // Every request lands in exactly one of the two sets of columns, never both — so the two
@@ -231,12 +263,21 @@ export function logUsage(env: Env, entry: UsageEntry, ctx: ExecutionContext): vo
       entry.isTest ? 0 : Math.round(entry.seconds ?? 0),
       entry.isTest || entry.kind !== 'reword' ? 0 : 1,
       entry.isTest ? 0 : entry.costNano,
+      // The Workers AI share of the line above, so a mixed day can still be split once usage_log
+      // has been pruned. Once both services have moved this equals cost_nano; during the changeover
+      // it is the only thing that keeps the two apart in the surviving roll-up.
+      !entry.isTest && provider === 'workers-ai' ? entry.costNano : 0,
       // Only genuine faults. A refusal is counted as a request but never as an error —
       // see isServiceFault.
       !entry.isTest && isServiceFault(entry.status) ? 1 : 0,
+      entry.isTest ? 0 : neuronsMicro,
       entry.isTest ? 1 : 0,
       entry.isTest ? Math.round(entry.seconds ?? 0) : 0,
       entry.isTest ? entry.costNano : 0,
+      // Test traffic is kept apart from the money but has to be added back for the free allowance:
+      // Cloudflare's 10 000 neurons a day are account-wide and do not care whose request it was.
+      // Anything reading the allowance therefore has to sum both columns, not just the first.
+      entry.isTest ? neuronsMicro : 0,
     ),
   ];
 

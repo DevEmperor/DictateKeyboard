@@ -1,9 +1,9 @@
 import {
-  COST, PACKAGES, PLAY_SERVICE_FEE, TYPICAL_REWORD_SECONDS, chatCostNano, limitsFrom,
-  savingsPercent, type Env,
+  NANO_PER_NEURON, NEURONS, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_NANO,
+  TYPICAL_REWORD_SECONDS, limitsFrom, savingsPercent, type Env,
 } from '../config';
-import { num, openaiCosts } from '../costs';
 import { homeCurrency, usdRate } from '../fx';
+import { num } from '../util';
 
 /**
  * The money, from the sources that actually hold it.
@@ -12,7 +12,11 @@ import { homeCurrency, usdRate } from '../fx';
  * requests and seconds but wrong for counting money: the list price in `config.ts` is what we ask
  * for, not what Play collects (it converts per country and adds local tax) and certainly not what
  * Play pays out (it keeps a share). So the takings come from Google's Orders API, stored per
- * purchase, and the spend comes from OpenAI's own cost endpoint.
+ * purchase.
+ *
+ * **The spend does not.** It is the list price of what ran, out of our own roll-up — a self-report
+ * rather than an invoice, because Workers AI bills the account this Worker lives on and there is no
+ * endpoint to ask. The check on it is the monthly Cloudflare invoice, read by hand.
  *
  * **Currencies are added up now, and that is a change.** Until recently only the euro row counted
  * towards the profit and a sale in francs was quietly worth nothing. Each purchase now carries the
@@ -148,25 +152,33 @@ export async function playRevenue(env: Env, sinceMs = 0) {
 /**
  * The bottom line, in one place so the overview and the statistics view cannot disagree.
  *
- * Both outside figures — Play's developer revenue and OpenAI's billing — are cached, so this is
- * fast after the first call of the ten-minute window. `ctx` lets an expired entry refresh behind
- * the response rather than making someone wait for OpenAI's pagination.
+ * The one outside figure — Play's developer revenue — is cached, so this is fast after the first
+ * call of the ten-minute window. The spend needs nothing from outside: it is our own ledger.
  */
-export async function summary(env: Env, ctx?: ExecutionContext) {
+export async function summary(env: Env) {
   const home = homeCurrency(env);
-  const [play, openai, fx] = await Promise.all([
-    playRevenue(env),
-    openaiCosts(env, 180, ctx),
-    usdRate(env),
-  ]);
+  const [play, fx] = await Promise.all([playRevenue(env), usdRate(env)]);
 
   const revenueHome = play.revenueHomeTotal;
   // Converted per purchase with its own stored rate — see the query in [playRevenue].
   const paidHome = play.paidHomeTotal;
 
-  const costUsd = openai.connected ? openai.serviceUsd : null;
-  const costHome = costUsd === null ? null : costUsd * fx.rate;
-  const profitHome = costHome === null ? null : revenueHome - costHome;
+  // The spend, from our own ledger — and that is worth saying out loud, because it used to come
+  // from an invoice.
+  //
+  // Workers AI is billed to the same account this Worker runs on, and there is no equivalent of
+  // OpenAI's billing endpoint to ask. So this is the list price of what actually ran, summed from
+  // `daily_totals`, and it is a *self-report*: a different class of evidence from a bill, and the
+  // page says so. Note also that it is the list price — the daily free allowance is deliberately
+  // not deducted here, so the figure errs upwards, which is the right direction for a cost.
+  //
+  // The one thing that replaces the lost second opinion is the monthly invoice, read by hand.
+  const costRow = await env.DB.prepare(
+    'SELECT COALESCE(SUM(cost_nano), 0) AS costNano FROM daily_totals',
+  ).first<{ costNano: number }>();
+  const costUsd = num(costRow?.costNano) / NANO_PER_USD;
+  const costHome = costUsd * fx.rate;
+  const profitHome = revenueHome - costHome;
 
   return {
     homeCurrency: home,
@@ -190,17 +202,12 @@ export async function summary(env: Env, ctx?: ExecutionContext) {
     withoutFigures: play.withoutFigures,
     withoutRate: play.withoutRate,
     byCurrency: play.byCurrency,
-    openaiConnected: openai.connected,
-    openaiReason: openai.connected ? null : openai.reason,
-    openaiFetchedAt: openai.fetchedAt,
-    serviceProject: openai.connected ? openai.serviceProject : null,
   };
 }
 
-/** The finance panel: takings per currency and the spend, side by side. */
-export async function finance(env: Env, days = 30, ctx?: ExecutionContext) {
-  const [play, openai] = await Promise.all([playRevenue(env), openaiCosts(env, days, ctx)]);
-  return { play, openai };
+/** The finance panel: takings per currency. */
+export async function finance(env: Env) {
+  return { play: await playRevenue(env) };
 }
 
 /**
@@ -374,15 +381,29 @@ export async function plans(env: Env) {
     actual.set(productId, entry);
   }
 
-  const transcribeUsdPerMinute = COST.transcribePerMinuteNano / NANO_PER_USD;
-  // A typical rewording as the plan measured it: ~500 tokens in, ~300 out.
-  const rewordUsd = chatCostNano(500, 300) / NANO_PER_USD;
+  const transcribeUsdPerMinute =
+    (NEURONS['@cf/openai/whisper-large-v3-turbo'].perAudioMinute * NANO_PER_NEURON) / NANO_PER_USD;
+  // What a sold minute is worth, which is what bounds the spend — not what a bought minute costs.
+  const secondValueUsdPerMinute = (SECOND_VALUE_NANO * 60) / NANO_PER_USD;
+  // A rewording of ordinary length, as 131 real ones measured out: 327 tokens in, 63 out.
+  const rewordUsd = TYPICAL_REWORD_NANO / NANO_PER_USD;
 
   const packs = Object.values(PACKAGES).map((pack) => {
-    // The whole cost of a pack, and not an estimate of it: every service is priced into the same
-    // seconds, so the seconds sold *are* the upstream spend. Whatever the buyer does with them —
-    // all dictation, all rewording, any mixture — this figure cannot be exceeded.
-    const costUsd = pack.minutes * transcribeUsdPerMinute;
+    // Two figures, because one stopped being able to say both things.
+    //
+    // The ceiling is what a pack can cost at worst, and it holds for any use the buyer makes of it:
+    // every service prices itself into the same seconds and none may cost more than a second is
+    // worth, so the seconds sold bound the spend from above. It is therefore measured against
+    // `SECOND_VALUE_NANO` and not against any provider's price list.
+    //
+    // The ordinary case is what a pack costs when it is spent the way packs are spent — on
+    // dictation — at what dictation is actually bought for. While transcription was the only thing
+    // priced into the unit these two were the same number, and the old comment here said so. They
+    // part company as soon as it is bought somewhere cheaper: the ceiling stays where it was, and
+    // the ordinary case falls away from it.
+    const maxUsd = pack.minutes * secondValueUsdPerMinute;
+    const typicalUsd = pack.minutes * transcribeUsdPerMinute;
+    const costUsd = maxUsd;
     const costHome = costUsd * rate;
     // How far the pack goes if it is spent entirely on rewordings of ordinary length. Shown
     // beside the minutes because "150 minutes" and "or about 4500 rewordings" are the same pack.
@@ -417,10 +438,14 @@ export async function plans(env: Env) {
       currency: real?.currency ?? home,
 
       cost: {
-        dictationUsd: costUsd,
+        dictationUsd: typicalUsd,
         rewordsUsd: 0,
         totalUsd: costUsd,
         totalHome: costHome,
+        // What the pack costs when it is spent on dictation, which is how it is spent. Equal to
+        // `totalUsd` while both providers price a second the same, and lower once they do not.
+        typicalUsd,
+        typicalHome: typicalUsd * rate,
         perMinuteUsd: transcribeUsdPerMinute,
       },
       model: {

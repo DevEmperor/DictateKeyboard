@@ -128,7 +128,7 @@ export async function rateOn(env: Env, currency: string, day: string): Promise<n
   return newest?.rate ?? null;
 }
 
-/** Today's USD rate, for OpenAI's bill. Falls back to the configured assumption. */
+/** Today's USD rate, for bringing Cloudflare's dollars home. Falls back to the assumption. */
 export async function usdRate(env: Env): Promise<{ rate: number; source: 'ecb' | 'assumed' }> {
   const found = await rateOn(env, 'USD', today());
   if (found) return { rate: found, source: 'ecb' };

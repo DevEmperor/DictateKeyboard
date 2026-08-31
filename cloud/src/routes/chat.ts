@@ -1,5 +1,6 @@
+import { raise } from '../alerts';
 import { authenticate, touch } from '../auth';
-import { OPENAI_BASE, chatCostNano, costToSeconds, type Env, type Limits } from '../config';
+import { chatCostNano, costToSeconds, neuronsToNano, type Env, type Limits } from '../config';
 import { budgetAllows, logUsage, settleBudget, walletStub } from '../meter';
 import { NO_STORE, apiError, estimateTokens } from '../util';
 import { debitError, logRefusal } from './transcriptions';
@@ -15,7 +16,7 @@ import { debitError, logRefusal } from './transcriptions';
  *
  * Exact billing cannot happen before the call, because the token count is only known after it.
  * So the worst case is reserved — the input as estimated plus the largest permitted answer — and
- * the difference is given back once OpenAI reports what it really was. The same reserve-then-
+ * the difference is given back once the model reports what it really was. The same reserve-then-
  * settle the dictation path uses for files whose length cannot be read from a header.
  */
 export async function handleChat(
@@ -56,7 +57,7 @@ export async function handleChat(
 
   // At worst the request costs the full input plus the full permitted output. That ceiling is
   // what the daily budget is checked against; it is corrected to the real usage afterwards.
-  const worstCaseNano = chatCostNano(inputTokens, limits.maxChatOutputTokens);
+  const worstCaseNano = chatCostNano(limits.chatModel, inputTokens, limits.maxChatOutputTokens);
   if (!(await budgetAllows(env, limits, worstCaseNano, ctx))) {
     logRefusal(env, session, 'reword', 503, started, ctx);
     return apiError(
@@ -80,47 +81,22 @@ export async function handleChat(
     return refusal;
   }
 
-  // The server decides the model, the output length and the reasoning effort. Whatever the client
-  // sends for any of the three is discarded — see below.
-  const upstream: Record<string, unknown> = {
-    model: limits.chatModel,
-    messages,
-    max_completion_tokens: Math.min(
-      Number(payload.max_completion_tokens ?? payload.max_tokens ?? limits.maxChatOutputTokens),
-      limits.maxChatOutputTokens,
-    ),
-  };
-  // Fixed, and the client does not get a say. Two reasons, and the second is the one that matters.
-  //
-  // Rewriting does not need deliberation. Left unset the model applies its own default — `medium`
-  // for the gpt-5 family — and pays for it out of the same budget as the answer: one request spent
-  // 116 seconds and twelve thousand tokens thinking, then had no room left to write anything.
-  //
-  // And a client-chosen effort would be a dial that multiplies what a request costs *here* without
-  // costing the person turning it anything. The price of a pack is calculated for a rewriting job;
-  // a setting that turns one request into ten is not the buyer's to turn. On their own API key it
-  // is exactly their business, and the app still offers it there.
-  upstream.reasoning_effort = 'minimal';
+  // The server decides the model and the output length. Whatever the client sends for either is
+  // discarded — otherwise the costing would be wide open.
+  const maxTokens = Math.min(
+    Number(payload.max_completion_tokens ?? payload.max_tokens ?? limits.maxChatOutputTokens),
+    limits.maxChatOutputTokens,
+  );
 
-  let response: Response;
-  try {
-    response = await fetch(`${OPENAI_BASE}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(upstream),
-    });
-  } catch {
+  const upstream = await runWorkersAi(env, limits, messages, maxTokens);
+
+  if (upstream.kind === 'unreachable') {
     await wallet.refund(reservedSeconds);
     settleBudget(env, -worstCaseNano, ctx);
     return apiError(502, 'The service is unreachable.', 'upstream_unreachable', 'server_error');
   }
 
-  const body = await response.text();
-
-  if (!response.ok) {
+  if (upstream.kind === 'failed') {
     const state = await wallet.refund(reservedSeconds);
     settleBudget(env, -worstCaseNano, ctx);
     logUsage(env, {
@@ -129,7 +105,7 @@ export async function handleChat(
       isTest: session.isTest,
       kind: 'reword',
       costNano: 0,
-      status: response.status,
+      status: upstream.status,
       ms: Date.now() - started,
       secondsLeft: state.secondsLeft,
       rewordsLeft: state.rewordsLeft,
@@ -138,11 +114,16 @@ export async function handleChat(
     return apiError(502, 'The rewording failed.', 'upstream_rejected', 'server_error');
   }
 
-  // What it really cost, from OpenAI's own count rather than our estimate of it. The reservation
-  // is settled against that, so the account is charged to the second — usually a good deal less
-  // than was held, because the full permitted answer is rarely used.
+  const body = upstream.body;
+
+  // What it really cost, from the model's own count rather than our estimate of it: it reports the
+  // neurons it spent, and that measurement wins. The reservation is settled against it, so the
+  // account is charged to the second — usually a good deal less than was held, because the full
+  // permitted answer is rarely used.
   const usage = parseUsage(body);
-  const actualNano = chatCostNano(usage.in || inputTokens, usage.out);
+  const actualNano = upstream.neurons > 0
+    ? neuronsToNano(upstream.neurons)
+    : chatCostNano(limits.chatModel, usage.in || inputTokens, usage.out);
   const actualSeconds = costToSeconds(actualNano);
   settleBudget(env, actualNano - worstCaseNano, ctx);
 
@@ -150,6 +131,22 @@ export async function handleChat(
   if (actualSeconds !== reservedSeconds) {
     state = await wallet.adjust(actualSeconds - reservedSeconds);
   }
+
+  // Dictate Cloud does not think. Rewriting a sentence needs no deliberation, thinking tokens are
+  // billed to the buyer's balance like any other output, and one request on the old provider once
+  // spent 116 seconds and twelve thousand tokens on it before running out of room to answer.
+  //
+  // Which is why this is checked on every response rather than trusted to the request.
+  // `chat_template_kwargs.enable_thinking` is the switch, thinking is *on* by default, and a model
+  // update, a renamed field or a new value in CHAT_MODEL would each silently undo it.
+  //
+  // Measured against the answer, because the obvious instrument does not work: the type definitions
+  // carry `usage.completion_tokens_details.reasoning_tokens`, and Workers AI never fills it (probed
+  // 30.08.2026, with thinking on and off). A guard on that field would have reported quiet while
+  // the model was thinking, which is worse than no guard. Thinking tokens do land in
+  // `completion_tokens`, so a model that thinks spends far more than it says — the same test showed
+  // 777 tokens against a twenty-token answer.
+  ctx.waitUntil(reportReasoning(env, usage.out, answerTextOf(body), limits.chatModel));
 
   // An answer that ran out of room is not an answer. The budget covers the visible reply *and*
   // whatever the model spends on reasoning, so a request can come back with a perfectly valid
@@ -267,4 +264,104 @@ function parseUsage(body: string): { in: number; out: number } {
   } catch {
     return { in: 0, out: 0 };
   }
+}
+
+/** The visible reply, for measuring the token count against. Empty when the shape is unexpected. */
+function answerTextOf(body: string): string {
+  try {
+    const parsed = JSON.parse(body) as { choices?: { message?: { content?: string } }[] };
+    return parsed.choices?.[0]?.message?.content ?? '';
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Raises `reasoning_leak` when a reply cost far more output tokens than it contains.
+ *
+ * Factor three, not two: token counts are estimated on our side and counted on theirs, and the
+ * two disagree by a fair margin on short text. A model that is actually thinking overshoots by a
+ * factor of tens, so the slack costs nothing in sensitivity. The floor keeps one-word answers —
+ * where an estimate of four tokens against a real twelve is noise — from ringing it.
+ */
+async function reportReasoning(env: Env, tokensOut: number, answer: string, model: string): Promise<void> {
+  const expected = Math.max(estimateTokens(answer), 16);
+  if (tokensOut <= expected * 3) return;
+  await raise(env, {
+    kind: 'reasoning_leak',
+    severity: 'critical',
+    value: tokensOut / expected,
+    title: `Das Umformulierungsmodell denkt wieder (${tokensOut} Token für ${expected} Token Antwort)`,
+    detail:
+      `\`${model}\` hat ${tokensOut} Ausgabe-Token verbraucht, in der Antwort stehen aber nur etwa ${expected}. ` +
+      `Die Differenz sind Denk-Token: Sie werden wie jede andere Ausgabe abgerechnet und gehen damit vom ` +
+      `Guthaben des Käufers ab, ohne dass er etwas davon bekommt. Bei Dictate Cloud soll nicht gedacht werden — ` +
+      `zu prüfen ist, ob \`chat_template_kwargs.enable_thinking\` noch gesetzt wird bzw. das Modell den Schalter ` +
+      `noch kennt. Ein Modellwechsel in CHAT_MODEL ist die häufigste Ursache.`,
+    // Per model and hour: it is a state of the configuration, not a property of one request.
+    dedupeKey: `reasoning_leak:${model}:${new Date().toISOString().slice(0, 13)}`,
+  });
+}
+
+/**
+ * One rewording.
+ *
+ * `body` is the OpenAI chat-completion shape, because `wasTruncated` and `parseUsage` read it and
+ * the app's own parser expects it. Workers AI answers in that shape already — its binding is typed
+ * `ChatCompletionsInput` in, `ChatCompletionsOutput` out — so what happens below is not a
+ * translation but a trim: only the choice and the usage go back, not the `@cf/…` model name, which
+ * would publish what is behind Dictate Cloud for no one's benefit.
+ */
+type Upstream =
+  | { kind: 'ok'; body: string; neurons: number }
+  | { kind: 'failed'; status: number }
+  | { kind: 'unreachable' };
+
+/**
+ * The rewording itself, over the binding, and it does not think.
+ *
+ * `reasoning_effort` is deliberately **not** sent. Workers AI accepts only `low | medium | high`
+ * for it — `minimal`, the value the gpt-5 family understood, does not exist here, so sending it
+ * would at best be ignored. The switch that works is `chat_template_kwargs`, and the
+ * type definition spells out why it has to be set rather than left alone: *"Whether to enable
+ * reasoning, enabled by default."* Sending nothing means thinking.
+ *
+ * Measured on 30.08.2026, same sentence, same model: 20 output tokens against 777, 1.06 s against
+ * 7.70, 1.43 neurons against 22.10 — for an answer that was the same either way. Whether it stays
+ * off is not trusted to this line; every response is checked against the length of its own answer
+ * (see `reportReasoning`).
+ */
+async function runWorkersAi(env: Env, limits: Limits, messages: unknown[], maxTokens: number): Promise<Upstream> {
+  let result: {
+    choices?: { message?: { content?: string | null }; finish_reason?: string }[];
+    usage?: { prompt_tokens?: number; completion_tokens?: number; neurons?: number };
+  };
+  try {
+    result = await env.AI.run(limits.chatModel as keyof AiModels, {
+      messages,
+      max_completion_tokens: maxTokens,
+      chat_template_kwargs: { enable_thinking: false },
+    } as never) as typeof result;
+  } catch (error) {
+    // The binding throws instead of answering with a status, so there is nothing to map: anything
+    // that is not an answer refunds and returns 502.
+    console.log(`workers-ai chat failed: ${String(error).slice(0, 200)}`);
+    return { kind: 'unreachable' };
+  }
+
+  const choice = result.choices?.[0];
+  return {
+    kind: 'ok',
+    body: JSON.stringify({
+      choices: [{
+        message: { role: 'assistant', content: choice?.message?.content ?? '' },
+        finish_reason: choice?.finish_reason ?? 'stop',
+      }],
+      usage: {
+        prompt_tokens: result.usage?.prompt_tokens ?? 0,
+        completion_tokens: result.usage?.completion_tokens ?? 0,
+      },
+    }),
+    neurons: typeof result.usage?.neurons === 'number' ? result.usage.neurons : 0,
+  };
 }

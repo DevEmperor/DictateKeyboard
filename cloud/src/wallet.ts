@@ -1,5 +1,5 @@
 import { DurableObject } from 'cloudflare:workers';
-import { TYPICAL_REWORD_SECONDS, type Env } from './config';
+import { LEGACY_REWORD_SECONDS, TYPICAL_REWORD_SECONDS, type Env } from './config';
 
 /**
  * One credit account.
@@ -16,7 +16,7 @@ import { TYPICAL_REWORD_SECONDS, type Env } from './config';
  * And in seconds *only*. There used to be a second balance counting rewordings, which meant the
  * account could not say what it was worth — a rewording deducted one unit whether it cost a fifth
  * of a second or sixteen. One balance, and every service priced into it, makes the remaining
- * seconds an exact statement about money: see `NANO_PER_SECOND` in config.ts.
+ * seconds an exact statement about money: see `SECOND_VALUE_NANO` in config.ts.
  */
 
 /** What is written to storage. */
@@ -68,15 +68,19 @@ export class Wallet extends DurableObject<Env> {
    * allowance on the way past.
    *
    * Done here rather than as a database migration because the balance lives in this object and
-   * nowhere else — there is no table to sweep. It runs once per account, on its next touch, and
-   * credits the allowance at what a rewording is worth, so nobody is poorer for the changeover.
+   * nowhere else — there is no table to sweep. It runs once per account, on its next touch.
+   *
+   * The rate is `LEGACY_REWORD_SECONDS` and **not** what a rewording costs today. Those were the
+   * same number when this was written; they parted company when the typical rewording was measured
+   * rather than assumed, and had they stayed tied, that measurement would have quietly halved an
+   * old allowance on the day it landed. A past conversion keeps its own rate.
    */
   private async read(): Promise<StoredState> {
     const stored = (await this.ctx.storage.get<StoredState>('state')) ?? EMPTY;
     if (stored.rewordsLeft === undefined) return stored;
 
     const converted: StoredState = {
-      secondsLeft: stored.secondsLeft + Math.max(0, stored.rewordsLeft) * TYPICAL_REWORD_SECONDS,
+      secondsLeft: stored.secondsLeft + Math.max(0, stored.rewordsLeft) * LEGACY_REWORD_SECONDS,
       secondsBought: stored.secondsBought,
       secondsUsed: stored.secondsUsed,
       status: stored.status,
@@ -107,7 +111,7 @@ export class Wallet extends DurableObject<Env> {
   /**
    * Deducts if there is enough. The only way credit is ever spent.
    *
-   * Happens **before** the call to OpenAI, not after: bill last and every dropped connection
+   * Happens **before** the model is called, not after: bill last and every dropped connection
    * is a giveaway. If the call fails, [refund] puts the credit back.
    */
   async debit(seconds: number, rateLimitPerMinute: number): Promise<DebitResult> {
@@ -135,7 +139,7 @@ export class Wallet extends DurableObject<Env> {
     return { ok: true, state: this.view(next) };
   }
 
-  /** Puts a deduction back — for when OpenAI never answered at all. */
+  /** Puts a deduction back — for when the model never answered at all. */
   async refund(seconds: number): Promise<WalletState> {
     const state = await this.read();
     const back = Math.ceil(seconds);

@@ -1,7 +1,7 @@
 # Privacy Policy for Dictate Keyboard
 
-**Effective date:** 10 August 2026
-**Last updated:** 12 August 2026
+**Effective date:** 31 August 2026
+**Last updated:** 31 August 2026
 
 This Privacy Policy explains how **Dictate Keyboard** (the "App", application ID
 `net.devemperor.dictate`) handles your information. The App is developed and
@@ -169,17 +169,19 @@ described above.
 
 Dictate Cloud exists for people who do not want to create an account with an AI
 provider. You buy dictation minutes through Google Play, and your recordings are
-sent to a server we operate, which passes them to OpenAI and returns the text.
+sent to a server we operate, which has them transcribed on **Cloudflare Workers
+AI** and returns the text. Rewording works the same way.
 
 ### 4.1 What we process
 
 **Recordings and text.** Your recording is sent to our server, **not stored
-there**, and passed straight on to OpenAI for transcription. The same applies to
-text you have reworded. We keep none of it — no audio, no transcript, no prompt.
+there**, and passed straight on to Cloudflare Workers AI for transcription. The
+same applies to text you have reworded. We keep none of it — no audio, no
+transcript, no prompt.
 
-OpenAI states that it retains API inputs and outputs for **up to 30 days** to
-detect misuse, and deletes them afterwards. OpenAI states that API data is not
-used to train its models.
+**Nothing is retained at the other end either.** Workers AI runs the request and
+keeps nothing afterwards: there is no copy to delete, because none is made. Your
+recordings and text are not used to train any model.
 
 **Your credit account.** We store a random identifier, your balance, a hash of
 your recovery code and hashes of your access keys. There is no account in the
@@ -215,28 +217,38 @@ have deleted your credit account, carries nothing at all.
 
 ### 4.3 Recipients and where the data is
 
-- **OpenAI Ireland Ltd.**, Ireland — transcription and rewording, as our
-  processor under a data processing agreement dated 10 August 2026. As our
-  counterparty is in the EEA, that transfer takes place within the EU. Where
-  OpenAI Ireland passes data to affiliates outside the EEA — the United States in
-  particular — clause 4.1 of that agreement requires the European Commission's
-  standard contractual clauses or an adequacy decision under Art. 45 GDPR. The
-  sub-processors in use are listed at https://platform.openai.com/subprocessors.
-- **Cloudflare, Inc.**, USA — operating the server and database, as our processor
-  under Cloudflare's data processing addendum, which forms part of its terms.
-  That transfer relies on the standard contractual clauses.
+- **Cloudflare, Inc.**, USA — **one processor in two roles**: it operates our
+  server and database, *and* it transcribes and rewords your text on Workers AI.
+  Both rest on Cloudflare's data processing addendum, which forms part of its
+  terms, and that transfer relies on the European Commission's **standard
+  contractual clauses**.
+  - For Workers AI, Cloudflare names two sub-processors of its own:
+    **CoreWeave, Inc.** (United States) and **Nebius BV** (England). The
+    inference does not run on Cloudflare's own hardware. Transfers to CoreWeave
+    rest on the same standard contractual clauses; England is covered by an
+    adequacy decision under Art. 45 GDPR.
 
-Database and balances are held in the **European Union** (Western Europe). That
-does not mean nobody outside the EU can reach them: Cloudflare and OpenAI are
-groups with companies in the United States, and access from there is itself a
-transfer under data protection law. The standard contractual clauses above cover
-exactly that.
+**Where your data actually is — and the part we cannot promise.** Our database
+and your balance are held in the **European Union** (Western Europe); we pinned
+them there deliberately.
+
+**That pinning does not extend to transcription and rewording.** On our plan the
+location of the inference cannot be chosen — Cloudflare offers that only to
+enterprise customers — so a request runs wherever there is capacity, which may be
+the United States or England. We would rather say so plainly than let the
+sentence about the database be read as covering everything.
+
+Pinning would not be the whole answer in any case: Cloudflare is a US company,
+and access from the United States is itself a transfer under data protection law
+even when the bytes sit in Europe. What carries this is the standard contractual
+clauses above — and the fact that **nothing is kept**, so there is no store for
+anyone to reach into.
 
 ### 4.4 How long we keep it
 
 | What | How long |
 | --- | --- |
-| Recordings, transcripts, prompts | not at all with us; up to 30 days at OpenAI |
+| Recordings, transcripts, prompts | not at all — neither with us nor at Cloudflare |
 | Usage log (individual rows) | 90 days |
 | Daily totals | indefinitely, with no link to an account |
 | Credit account, access keys | until you delete it |

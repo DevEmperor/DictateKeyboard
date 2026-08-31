@@ -1,5 +1,5 @@
 import { raise } from '../alerts';
-import { TYPICAL_REWORD_SECONDS, transcribeCostNano, type Env } from '../config';
+import { LEGACY_REWORD_SECONDS, transcribeCostNano, type Env } from '../config';
 import { homeCurrency, usdRate } from '../fx';
 import { walletStub } from '../meter';
 import { alertSettings } from '../settings';
@@ -107,8 +107,9 @@ export async function revoke(env: Env, purchaseToken: string, ctx: ExecutionCont
 
   // Purchases made before rewordings were priced also granted a separate allowance, which the
   // wallet folded into its seconds on first touch. Clawing back only `seconds` would leave that
-  // part behind, so it is converted the same way the wallet converted it.
-  const clawSeconds = row.seconds + Math.max(0, row.rewords) * TYPICAL_REWORD_SECONDS;
+  // part behind, so it is converted the same way the wallet converted it — at the *frozen* rate,
+  // not at what a rewording costs today. The two used to be one number and no longer are.
+  const clawSeconds = row.seconds + Math.max(0, row.rewords) * LEGACY_REWORD_SECONDS;
   const state = walletGone ? null : await walletStub(env, row.walletId).claw(clawSeconds);
 
   const writes = [

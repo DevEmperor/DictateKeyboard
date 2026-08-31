@@ -8,10 +8,8 @@
 // To set up: copy this file to `wrangler.jsonc`, fill in the placeholders, then set the secrets
 // (never in this file):
 //
-//   npx wrangler secret put OPENAI_API_KEY
 //   npx wrangler secret put GOOGLE_SERVICE_ACCOUNT   # the service account's entire JSON key
 //   npx wrangler secret put RTDN_SECRET
-//   npx wrangler secret put OPENAI_ADMIN_KEY         # optional, only for the cost figures
 //
 // The dashboard at /admin additionally needs ACCESS_TEAM_DOMAIN and ACCESS_AUD from Cloudflare
 // Access. Without them it answers 404 rather than 403 — see src/admin/auth.ts.
@@ -31,7 +29,7 @@
   "routes": [{ "pattern": "api.dictatekeyboard.com", "custom_domain": true }],
 
   // Switched off deliberately, not merely as a side effect of the route: otherwise every version
-  // would get its own public URL, each one reaching the same database and the same OpenAI account —
+  // would get its own public URL, each one reaching the same database and the same AI account —
   // and each one an address at which a limit could be walked around.
   "workers_dev": false,
   "preview_urls": false,
@@ -45,6 +43,13 @@
       "database_id": "<d1-database-id>"
     }
   ],
+
+  // Workers AI. No key and no secret: the binding bills the account this Worker belongs to, which
+  // is the whole point — the models run inside the same service this Worker lives in, so nothing
+  // has to leave for an outside one.
+  "ai": {
+    "binding": "AI"
+  },
 
   "durable_objects": {
     "bindings": [
@@ -80,8 +85,11 @@
   // in the configuration rather than in the code so that the source can be published without giving
   // the limits away with it.
   "vars": {
-    "TRANSCRIBE_MODEL": "gpt-transcribe",
-    "CHAT_MODEL": "gpt-5-nano",
+    // Which Workers AI model does the work. Changeable here plus `wrangler deploy`, with no code
+    // change — a name that is not a `@cf/…` model is ignored in favour of the default, so a typo
+    // costs a wrong entry in the ledger's `model` column rather than every request of the day.
+    "TRANSCRIBE_MODEL": "@cf/openai/whisper-large-v3-turbo",
+    "CHAT_MODEL": "@cf/google/gemma-4-26b-a4b-it",
     "MAX_AUDIO_SECONDS": "<number>",
     "MAX_CHAT_INPUT_TOKENS": "<number>",
     "MAX_CHAT_OUTPUT_TOKENS": "<number>",
@@ -116,7 +124,6 @@
     "ALERT_REFUND_USED_PERCENT": "<number>",
     "ALERT_WALLET_BUDGET_SHARE": "<number>",
     "ALERT_DEVICES_PER_WALLET": "<number>",
-    "ALERT_COST_DRIFT_PERCENT": "<number>",
     "ALERT_ERROR_RATE_PERCENT": "<number>",
     // From how much cumulative loss to report, in the payout currency. Below that it is rounding, or
     // the opening phase where a handful of test requests weigh more than the sales that have not

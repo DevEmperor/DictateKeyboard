@@ -138,10 +138,20 @@ CREATE TABLE IF NOT EXISTS usage_log (
   token_hash  TEXT,
   ts          INTEGER NOT NULL,
   kind        TEXT NOT NULL,                     -- transcribe | reword
+  -- Who the request was routed to, and with which model. Both, because they answer different
+  -- questions: the provider says where the content went, the model says at which price. Swapping
+  -- one Workers AI model for another moves the second and not the first. NULL only on rows written
+  -- before these columns existed.
+  provider    TEXT,                              -- openai | workers-ai
+  model       TEXT,                              -- gpt-transcribe | @cf/openai/whisper-large-v3-turbo | …
   seconds     INTEGER NOT NULL DEFAULT 0,        -- billed audio seconds
   tokens_in   INTEGER NOT NULL DEFAULT 0,
   tokens_out  INTEGER NOT NULL DEFAULT 0,
-  cost_nano   INTEGER NOT NULL DEFAULT 0,        -- upstream cost in nano-USD
+  -- Neurons × 10⁶, as reported by Workers AI rather than computed from a price list. A quantity
+  -- keeps its meaning when a price changes, and it is the only figure that can be held against
+  -- Cloudflare's own count. 0 for OpenAI — a correct figure, not a missing one.
+  neurons_micro INTEGER NOT NULL DEFAULT 0,
+  cost_nano   INTEGER NOT NULL DEFAULT 0,        -- upstream cost in nano-USD, at list price
   status      INTEGER NOT NULL,                  -- HTTP status the client received
   ms          INTEGER                            -- request duration
 );
@@ -170,14 +180,25 @@ CREATE TABLE IF NOT EXISTS daily_totals (
   seconds     INTEGER NOT NULL DEFAULT 0,
   rewords     INTEGER NOT NULL DEFAULT 0,
   cost_nano   INTEGER NOT NULL DEFAULT 0,
+  -- The Workers AI share of cost_nano, so a mixed day can still be split after usage_log has been
+  -- pruned. Equal to cost_nano once everything has moved; during the changeover it is the only
+  -- thing that keeps the two providers apart in the roll-up that survives.
+  cost_nano_cf INTEGER NOT NULL DEFAULT 0,
   errors      INTEGER NOT NULL DEFAULT 0,
+  -- Neurons × 10⁶. Belongs here and not only in usage_log: that table is pruned after 90 days, and
+  -- a ledger with three months of memory cannot answer what the spring cost.
+  neurons_micro INTEGER NOT NULL DEFAULT 0,
 
   -- Test traffic, counted separately rather than filtered out later. The roll-up is the only
   -- thing that survives the 90-day prune, so a history that cannot separate your own testing
   -- from real use can never be corrected afterwards. The columns above are real traffic only.
   test_requests  INTEGER NOT NULL DEFAULT 0,
   test_seconds   INTEGER NOT NULL DEFAULT 0,
-  test_cost_nano INTEGER NOT NULL DEFAULT 0
+  test_cost_nano INTEGER NOT NULL DEFAULT 0,
+  -- Separate from the money, like its neighbours — but it has to be added *back* for the free
+  -- allowance. Cloudflare's 10 000 neurons a day are account-wide and do not care whose request it
+  -- was, so anything reading the allowance sums both neuron columns.
+  test_neurons_micro INTEGER NOT NULL DEFAULT 0
 );
 
 -- Anything worth waking up for. One row per occurrence; `dedupe_key` plus a cooldown keeps a
@@ -245,13 +266,3 @@ CREATE TABLE IF NOT EXISTS settings (
   updated_by TEXT NOT NULL
 );
 
--- Answers from outside that are slow and not worth asking twice a minute.
---
--- OpenAI's billing endpoint pages through up to a dozen sequential requests and its numbers are
--- not live anyway. Serving the stored answer immediately and refreshing behind the request is the
--- difference between a dashboard that opens and one that is waited for.
-CREATE TABLE IF NOT EXISTS cache (
-  key        TEXT PRIMARY KEY,
-  payload    TEXT NOT NULL,                      -- JSON
-  fetched_at INTEGER NOT NULL
-);

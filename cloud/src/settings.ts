@@ -26,7 +26,7 @@ export interface AlertSettings extends AlertThresholds {
    * The day's ceiling on upstream spend, in dollars.
    *
    * The one setting here that is not about warnings but about the service itself: once the day's
-   * estimated OpenAI spend reaches it, requests are answered with 503 instead of being bought.
+   * estimated spend reaches it, requests are answered with 503 instead of being bought.
    * It is the fuse — whatever else is wrong, a day cannot cost more than this.
    *
    * Adjustable from the dashboard because it is the number most likely to need moving, and needing
@@ -56,10 +56,11 @@ export const RULE_KEYS = [
   'fast_burn',
   'budget_hog',
   'shared_token',
-  'cost_drift',
   'overall_loss',
   'error_rate',
   'revenue_unreported',
+  'neuron_spike',
+  'reasoning_leak',
 ] as const;
 
 async function overrides(env: Env): Promise<Record<string, string>> {
@@ -115,8 +116,8 @@ export async function alertSettings(env: Env): Promise<AlertSettings> {
     refundUsedPercent: number('refundUsedPercent', base.refundUsedPercent),
     walletBudgetSharePercent: number('walletBudgetSharePercent', base.walletBudgetSharePercent),
     devicesPerWallet: number('devicesPerWallet', base.devicesPerWallet),
-    costDriftPercent: number('costDriftPercent', base.costDriftPercent),
     errorRatePercent: number('errorRatePercent', base.errorRatePercent),
+    neuronSpikeFactor: number('neuronSpikeFactor', base.neuronSpikeFactor),
     minLossHome: number('minLossHome', base.minLossHome),
 
     rules,
@@ -151,8 +152,8 @@ export async function changedKeys(env: Env): Promise<string[]> {
     refundUsedPercent: String(base.refundUsedPercent),
     walletBudgetSharePercent: String(base.walletBudgetSharePercent),
     devicesPerWallet: String(base.devicesPerWallet),
-    costDriftPercent: String(base.costDriftPercent),
     errorRatePercent: String(base.errorRatePercent),
+    neuronSpikeFactor: String(base.neuronSpikeFactor),
     minLossHome: String(base.minLossHome),
   };
   for (const key of RULE_KEYS) shipped[`rule.${key}`] = '1';

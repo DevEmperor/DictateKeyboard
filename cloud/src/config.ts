@@ -2,7 +2,7 @@
  * Prices, packages and limits in one place.
  *
  * Two rules that explain the rest of the project:
- *  - Anything OpenAI might change is a number here, not a rewrite.
+ *  - Anything the model provider might change is a number here, not a rewrite.
  *  - Anything an attacker should not know (limits, budget) comes from the environment, so
  *    this source can be published.
  */
@@ -16,14 +16,16 @@ export interface Env {
   WALLET: DurableObjectNamespace<Wallet>;
   GLOBAL: DurableObjectNamespace<GlobalGuard>;
 
-  /** Secret. Lives here only and never reaches a client. */
-  OPENAI_API_KEY: string;
   /**
-   * Secret, optional. An OpenAI **admin** key — a different thing from the project key above:
-   * organisation-wide and used only to read the billing endpoint, so the dashboard can show what
-   * OpenAI actually charged rather than what we calculated. Without it that panel says so.
+   * Workers AI. Not a secret and not a key — the binding bills the account the Worker belongs to.
+   *
+   * That is the whole legal difference to OpenAI in one line: nothing leaves for an outside
+   * service, because the model already runs inside the one this Worker lives in. What it does not
+   * change is *where*: the inference runs wherever Cloudflare has capacity, and that cannot be
+   * pinned without an Enterprise contract.
    */
-  OPENAI_ADMIN_KEY?: string;
+  AI: Ai;
+
   /** Secret. The full JSON key file of the Play service account. */
   GOOGLE_SERVICE_ACCOUNT: string;
   /** Secret. Guards the notification endpoint Google calls from outside. */
@@ -41,14 +43,12 @@ export interface Env {
   ACCESS_AUD?: string;
 
   /**
-   * The currency you are actually paid in, and the rate used to bring OpenAI's dollars into it.
+   * The currency you are actually paid in, and the rate used to bring Cloudflare's dollars into it.
    * The rate is an assumption, not a quote — it is shown as one wherever a converted figure
    * appears, because a profit line that silently invents an exchange rate is worse than none.
    */
   HOME_CURRENCY?: string;
   USD_TO_HOME_RATE?: string;
-  /** Pins which OpenAI project is this service. Falls back to matching the name against "dictate". */
-  OPENAI_PROJECT_ID?: string;
 
   /**
    * Cloudflare Email Routing, for the alerts. Absent means alerts are still recorded and shown in
@@ -71,10 +71,11 @@ export interface Env {
   ALERT_REFUND_USED_PERCENT?: string;
   ALERT_WALLET_BUDGET_SHARE?: string;
   ALERT_DEVICES_PER_WALLET?: string;
-  ALERT_COST_DRIFT_PERCENT?: string;
   ALERT_ERROR_RATE_PERCENT?: string;
+  ALERT_NEURON_SPIKE_FACTOR?: string;
   ALERT_MIN_LOSS?: string;
 
+  /** Which Workers AI model each service uses. Swappable without a deploy; see `modelFor`. */
   TRANSCRIBE_MODEL?: string;
   CHAT_MODEL?: string;
   MAX_AUDIO_SECONDS?: string;
@@ -151,54 +152,151 @@ export function savingsPercent(pack: Package): number | null {
   return Math.floor((1 - perMinute / basePerMinute) * 100);
 }
 
-/**
- * Upstream prices in **nano-dollars** (1e-9 $), so everything stays integer and nothing
- * rounds away across millions of requests.
+/** Neuron rates, for checking the figure the provider reports rather than replacing it.
  *
- * As of August 2026, from OpenAI's own pricing page.
+ * Workers AI returns `usage.neurons` on every response — measured 30.08.2026, on both the chat and
+ * the speech model, and it appears in no type definition. That reported number is what gets booked:
+ * a quantity that is read cannot quietly diverge from a price list nobody updated.
+ *
+ * This table exists so that divergence is *noticed*. Whisper's reported figure implies 46.6302
+ * neurons per minute against the published 46.63, which is rounding in the documentation; anything
+ * beyond a per-mille is the price list having moved.
+ *
+ * Stand 30.08.2026, from <https://developers.cloudflare.com/workers-ai/platform/pricing/>.
  */
-export const COST = {
-  /** `gpt-transcribe`: $0.0045 per audio minute. */
-  transcribePerMinuteNano: 4_500_000,
-  /** `gpt-5-nano`: $0.05 per 1M input tokens. */
-  chatInputPerTokenNano: 50,
-  /** `gpt-5-nano`: $0.40 per 1M output tokens. */
-  chatOutputPerTokenNano: 400,
+export const NEURONS = {
+  '@cf/openai/whisper-large-v3-turbo': { perAudioMinute: 46.63 },
+  '@cf/google/gemma-4-26b-a4b-it': { perMTokensIn: 9_091, perMTokensOut: 27_273 },
 } as const;
 
-export function transcribeCostNano(seconds: number): number {
-  return Math.ceil((seconds / 60) * COST.transcribePerMinuteNano);
+/** $0.011 per 1000 neurons, in nano-dollars per neuron. */
+export const NANO_PER_NEURON = 11_000;
+
+export function neuronsToNano(neurons: number): number {
+  return Math.round(neurons * NANO_PER_NEURON);
 }
 
-export function chatCostNano(tokensIn: number, tokensOut: number): number {
-  return tokensIn * COST.chatInputPerTokenNano + tokensOut * COST.chatOutputPerTokenNano;
+/** Neurons included per UTC day on the Workers Paid plan. Resets at 00:00 UTC, no rollover. */
+export const FREE_NEURONS_PER_DAY = 10_000;
+
+/**
+ * What Cloudflare actually charges for one day's neurons.
+ *
+ * The allowance is a *daily* figure, and everything awkward about it follows from that. It cannot
+ * be applied per request — the same recording would then cost nothing in the morning and money in
+ * the evening, depending only on how many came before it. And it cannot be summed across a month:
+ * a quiet day's unused neurons are not credit, they are simply gone.
+ *
+ * So `usage_log.cost_nano` stays the list price, always, and this function is the only place the
+ * allowance is ever subtracted. Note that it is fed *both* neuron columns: the allowance is granted
+ * to the account, not to the paying customers, and does not care whose request spent it.
+ *
+ * Worth at most $0.11 a day, $40 a year. Small enough that the cost figure is deliberately shown
+ * without it (see the dashboard) — a cost that errs upwards is the right kind of wrong.
+ */
+export function billedNanoForDay(neuronsMicro: number): number {
+  const billable = Math.max(0, neuronsMicro - FREE_NEURONS_PER_DAY * 1_000_000);
+  return Math.round((billable / 1_000_000) * NANO_PER_NEURON);
 }
 
 /**
- * One second of dictation, in nano-dollars. The unit the whole balance is denominated in.
+ * What the table above says a request should have cost in neurons, or null for a model it does not
+ * know. Only ever compared against the reported figure — never billed.
+ */
+export function expectedNeurons(
+  model: string,
+  usage: { audioSeconds?: number; tokensIn?: number; tokensOut?: number },
+): number | null {
+  const rate = (NEURONS as Record<string, { perAudioMinute?: number; perMTokensIn?: number; perMTokensOut?: number }>)[model];
+  if (!rate) return null;
+  if (rate.perAudioMinute !== undefined) return ((usage.audioSeconds ?? 0) / 60) * rate.perAudioMinute;
+  return ((usage.tokensIn ?? 0) * (rate.perMTokensIn ?? 0) + (usage.tokensOut ?? 0) * (rate.perMTokensOut ?? 0)) / 1e6;
+}
+
+/** The Workers AI models the switch falls back to, so flipping it is one line and not two. */
+const CF_DEFAULT_TRANSCRIBE = '@cf/openai/whisper-large-v3-turbo';
+const CF_DEFAULT_CHAT = '@cf/google/gemma-4-26b-a4b-it';
+
+/**
+ * What a request costs to buy, in **nano-dollars** (1e-9 $), so everything stays integer and
+ * nothing rounds away across millions of requests.
+ *
+ * **Estimates only, and only for the reservation.** The day's budget has to be held before the
+ * request goes out, when nothing is known about the cost yet; on the way back Workers AI reports
+ * the neurons it actually spent and that measurement replaces this. A figure here only has to be
+ * close enough to hold roughly the right amount, and to be wrong upwards if it is wrong.
+ *
+ * Purchase prices. What a second is worth when it is *sold* is `SECOND_VALUE_NANO`, and the two are
+ * deliberately not connected — see the note there.
+ */
+export function transcribeCostNano(seconds: number): number {
+  const perMinute = NEURONS['@cf/openai/whisper-large-v3-turbo'].perAudioMinute;
+  return Math.ceil((seconds / 60) * perMinute * NANO_PER_NEURON);
+}
+
+/** The same for a rewording. An unknown model estimates as the default one rather than as nothing. */
+export function chatCostNano(model: string, tokensIn: number, tokensOut: number): number {
+  const neurons = expectedNeurons(model, { tokensIn, tokensOut })
+    ?? expectedNeurons(CF_DEFAULT_CHAT, { tokensIn, tokensOut })
+    ?? 0;
+  return Math.ceil(neurons * NANO_PER_NEURON);
+}
+
+/**
+ * What one sold second is worth, in nano-dollars. The unit the whole balance is denominated in.
  *
  * A credit account holds seconds and nothing else, and every service prices itself into them.
  * That is not a simplification but the safety property: a pack of 150 minutes is 9000 seconds is
- * exactly $0.675 of upstream spend, whatever the buyer does with it. Before this, rewordings were
- * counted rather than costed, and a large one cost five times what it deducted — so a pack could
- * be turned into a loss simply by using it in a way the price list had not imagined.
+ * exactly $0.675, whatever the buyer does with it. Before this, rewordings were counted rather
+ * than costed, and a large one cost five times what it deducted — so a pack could be turned into
+ * a loss simply by using it in a way the price list had not imagined.
+ *
+ * **It follows no provider's price, and that is the point.** This value was once derived from the
+ * transcription price, which was correct for exactly as long as the two numbers meant the same
+ * thing. They stopped meaning the same thing the moment transcription was bought somewhere cheaper:
+ * the second sold is still worth what it was sold for, while the second bought is not. Left derived,
+ * the move to Workers AI would have shrunk the unit along with the purchase price and made an
+ * ordinary rewording deduct seventeen seconds instead of two — with no test failing and no warning
+ * raised, only balances draining eight times faster.
+ *
+ * The invariant that has to hold: no service may cost more than this per second it deducts.
+ * `costToSeconds` rounds up to guarantee it.
  */
-export const NANO_PER_SECOND = COST.transcribePerMinuteNano / 60;
+export const SECOND_VALUE_NANO = 75_000;
 
 /** What a service costs, expressed in the only currency the wallet knows. Always rounded up. */
 export function costToSeconds(nano: number): number {
-  return Math.ceil(nano / NANO_PER_SECOND);
+  return Math.ceil(nano / SECOND_VALUE_NANO);
 }
 
 /**
- * A rewording of ordinary length — roughly a dictated paragraph in, a tidied one out.
+ * A rewording of ordinary length, **measured rather than assumed**.
  *
- * Used for estimates only, never for billing: it turns a seconds balance into the "enough for
- * about 750 rewordings" the app shows, and it is what the old separate allowance is converted at
- * when an account is migrated. Billing uses the tokens OpenAI actually reports.
+ * 327 tokens in and 63 out is what 131 real rewordings averaged over the fortnight from 16.08.2026.
+ * It is input-heavy, and obviously so once seen: the input carries the instruction, the system
+ * prompt and the text, the output carries one tidied sentence. The figure written here before was
+ * 500/300 — three and a half times too large, and output-heavy, which had also made two models rank
+ * the wrong way round against each other.
+ *
+ * Used for estimates only, never for billing: it turns a seconds balance into the "enough for about
+ * 750 rewordings" the app shows. Billing uses the neurons the model actually reports.
  */
-export const TYPICAL_REWORD_NANO = chatCostNano(500, 300);
+export const TYPICAL_REWORD_NANO = chatCostNano(CF_DEFAULT_CHAT, 327, 63);
 export const TYPICAL_REWORD_SECONDS = costToSeconds(TYPICAL_REWORD_NANO);
+
+/**
+ * What the old separate rewording allowance is converted at, **frozen**.
+ *
+ * There used to be a second balance counting rewordings; a wallet whose stored state predates the
+ * seconds model still gets converted on first read. That conversion happened at whatever
+ * `TYPICAL_REWORD_SECONDS` said at the time, which was fine while nobody expected that number to
+ * move — and it has now moved, from 2 to 1, because it was measured.
+ *
+ * Left tied together, that measurement would have quietly halved an old allowance on the day it
+ * landed. A past conversion has to keep its own rate, so it gets one.
+ */
+export const LEGACY_REWORD_SECONDS = 2;
+
 
 /** The resolved limits for one request — read from the environment once per call. */
 export interface Limits {
@@ -220,10 +318,24 @@ export interface Limits {
   maxDevices: number;
 }
 
+
+/**
+ * The model to use, refusing one that does not belong here.
+ *
+ * `TRANSCRIBE_MODEL` and `CHAT_MODEL` exist so a model can be swapped without a deploy. A name left
+ * over from somewhere else — `gpt-transcribe`, say — would fail every request for as long as it took
+ * someone to notice, so it is corrected to the default instead. Nothing is hidden by that: the wrong
+ * name is still whatever the configuration says, and what actually ran is in the ledger's `model`
+ * column.
+ */
+function modelFor(configured: string | undefined, fallback: string): string {
+  return configured?.startsWith('@cf/') ? configured : fallback;
+}
+
 export function limitsFrom(env: Env): Limits {
   return {
-    transcribeModel: env.TRANSCRIBE_MODEL ?? 'gpt-transcribe',
-    chatModel: env.CHAT_MODEL ?? 'gpt-5-nano',
+    transcribeModel: modelFor(env.TRANSCRIBE_MODEL, CF_DEFAULT_TRANSCRIBE),
+    chatModel: modelFor(env.CHAT_MODEL, CF_DEFAULT_CHAT),
     maxAudioSeconds: num(env.MAX_AUDIO_SECONDS, 600),
     maxChatInputTokens: num(env.MAX_CHAT_INPUT_TOKENS, 8000),
     maxChatOutputTokens: num(env.MAX_CHAT_OUTPUT_TOKENS, 2000),
@@ -260,9 +372,16 @@ export interface AlertThresholds {
   walletBudgetSharePercent: number;
   /** Distinct devices on one account within a day — the shape of a passed-around token. */
   devicesPerWallet: number;
-  /** Gap between OpenAI's own bill and our calculation that means the price list moved. */
-  costDriftPercent: number;
   errorRatePercent: number;
+  /**
+   * A day's neuron use this many times the last week's average is worth looking at.
+   *
+   * Neurons are the one figure that turns straight into a bill, and they can move for reasons that
+   * are nobody's fault — a new customer, a long recording — as well as for reasons that are: a loop,
+   * a model that started thinking again, someone else's project on the same account. The alert does
+   * not judge which; it says the day is unlike the week.
+   */
+  neuronSpikeFactor: number;
   /**
    * How far into the red the running total has to be before it is worth saying so, in the payout
    * currency.
@@ -288,8 +407,8 @@ export function alertThresholds(env: Env): AlertThresholds {
     refundUsedPercent: num(env.ALERT_REFUND_USED_PERCENT, 30),
     walletBudgetSharePercent: num(env.ALERT_WALLET_BUDGET_SHARE, 20),
     devicesPerWallet: num(env.ALERT_DEVICES_PER_WALLET, 5),
-    costDriftPercent: num(env.ALERT_COST_DRIFT_PERCENT, 20),
     errorRatePercent: num(env.ALERT_ERROR_RATE_PERCENT, 25),
+    neuronSpikeFactor: num(env.ALERT_NEURON_SPIKE_FACTOR, 3),
     minLossHome: num(env.ALERT_MIN_LOSS, 1),
   };
 }
@@ -298,5 +417,3 @@ function num(value: string | undefined, fallback: number): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
-
-export const OPENAI_BASE = 'https://api.openai.com/v1';
