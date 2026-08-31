@@ -3370,6 +3370,9 @@ object DictateController {
      */
     private suspend fun postProcessTranscript(context: Context, transcript: String): String {
         if (!prefs.dictate.rewordingEnabled.get() || transcript.isBlank()) return transcript
+        // Punctuation-only transcripts ("...") are not blank but hold nothing to reword, and a model
+        // asked to format them answers the *request* instead of the text. See [hasNoWords].
+        if (DictatePromptDefaults.hasNoWords(transcript)) return transcript
         // No rewording key (not even a shared transcription one) → nothing here can run; return the raw
         // transcript instead of flashing "Formatting…" and looping through doomed throw/catch calls.
         if (rewordingApiKey().isBlank()) return transcript
