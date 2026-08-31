@@ -1,7 +1,7 @@
 # Privacy Policy for Dictate Keyboard
 
-**Effective date:** «UMZUGSDATUM»
-**Last updated:** «UMZUGSDATUM»
+**Effective date:** 31 August 2026
+**Last updated:** 31 August 2026
 
 This Privacy Policy explains how **Dictate Keyboard** (the "App", application ID
 `net.devemperor.dictate`) handles your information. The App is developed and
@@ -171,15 +171,6 @@ Dictate Cloud exists for people who do not want to create an account with an AI
 provider. You buy dictation minutes through Google Play, and your recordings are
 sent to a server we operate, which has them transcribed on **Cloudflare Workers
 AI** and returns the text. Rewording works the same way.
-
-> **What changed on «UMZUGSDATUM».** Until that date, transcription and rewording
-> were carried out by OpenAI. They are now carried out on Cloudflare Workers AI,
-> which is the same platform our server already ran on. Two things follow, and we
-> would rather put both of them here than only the flattering one: your
-> recordings now reach **one** processor instead of two, and **nothing is
-> retained** where up to 30 days used to be — but that processing now takes place
-> in the **United States** rather than inside the EEA. Section 4.3 sets out what
-> carries that transfer.
 
 ### 4.1 What we process
 
