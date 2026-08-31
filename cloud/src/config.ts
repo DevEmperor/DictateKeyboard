@@ -297,6 +297,30 @@ export const TYPICAL_REWORD_SECONDS = costToSeconds(TYPICAL_REWORD_NANO);
 export const LEGACY_REWORD_SECONDS = 2;
 
 
+/**
+ * The dearest a credit-second can actually be, in nano-dollars.
+ *
+ * Two bounds exist and they are far apart, which is why this one is written down. The *structural*
+ * one is `SECOND_VALUE_NANO`: `costToSeconds` rounds up, so no service can ever deduct fewer seconds
+ * than it cost, and a pack therefore cannot cost more than its seconds are worth under any use at
+ * all. That guarantee holds — but it describes a service priced exactly at what it sells for, and
+ * neither of ours is.
+ *
+ * This is the bound that can be reached: the worst of the services actually offered, per second it
+ * deducts. Dictation buys a second of audio for a fraction of what the second sells for; a rewording
+ * of ordinary length deducts one second and costs rather more of it. Rewording is therefore the
+ * expensive end, and a pack spent entirely on it is the real floor under a margin — the number worth
+ * showing beside the ordinary case, because the structural bound flatters nobody and frightens
+ * everybody.
+ */
+export const WORST_COST_PER_SECOND_NANO = Math.max(
+  // Dictation: one audio second sold is one credit-second.
+  (NEURONS[CF_DEFAULT_TRANSCRIBE].perAudioMinute / 60) * NANO_PER_NEURON,
+  // Rewording: one of ordinary length, over the seconds it deducts.
+  TYPICAL_REWORD_NANO / TYPICAL_REWORD_SECONDS,
+);
+
+
 /** The resolved limits for one request — read from the environment once per call. */
 export interface Limits {
   transcribeModel: string;

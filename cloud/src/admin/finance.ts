@@ -1,6 +1,7 @@
 import {
   NANO_PER_NEURON, NEURONS, PACKAGES, PLAY_SERVICE_FEE, SECOND_VALUE_NANO, TYPICAL_REWORD_NANO,
-  TYPICAL_REWORD_SECONDS, billedNanoForDay, limitsFrom, savingsPercent, type Env,
+  TYPICAL_REWORD_SECONDS, WORST_COST_PER_SECOND_NANO, billedNanoForDay, limitsFrom, savingsPercent,
+  type Env,
 } from '../config';
 import { homeCurrency, usdRate } from '../fx';
 import { num } from '../util';
@@ -414,22 +415,28 @@ export async function plans(env: Env) {
   const rewordUsd = TYPICAL_REWORD_NANO / NANO_PER_USD;
 
   const packs = Object.values(PACKAGES).map((pack) => {
-    // Two figures, because one stopped being able to say both things.
+    // Three figures, and which of them leads decides whether this card is read as encouraging or
+    // as alarming.
     //
-    // The ceiling is what a pack can cost at worst, and it holds for any use the buyer makes of it:
-    // every service prices itself into the same seconds and none may cost more than a second is
-    // worth, so the seconds sold bound the spend from above. It is therefore measured against
-    // `SECOND_VALUE_NANO` and not against any provider's price list.
+    // `boundUsd` is the *structural* guarantee: `costToSeconds` rounds up, so no service can deduct
+    // fewer seconds than it cost, and a pack therefore cannot exceed the value of the seconds it
+    // sold — whatever the buyer does with it. True, and useless as a headline: it describes a
+    // service priced at exactly what it sells for, which neither of ours is. Led with, it reported
+    // 66 % where the business actually runs at 96 %.
     //
-    // The ordinary case is what a pack costs when it is spent the way packs are spent — on
-    // dictation — at what dictation is actually bought for. While transcription was the only thing
-    // priced into the unit these two were the same number, and the old comment here said so. They
-    // part company as soon as it is bought somewhere cheaper: the ceiling stays where it was, and
-    // the ordinary case falls away from it.
-    const maxUsd = pack.minutes * secondValueUsdPerMinute;
+    // `worstUsd` is the floor that can really be reached: the whole pack spent on the dearer of the
+    // two services. That is rewording — one of ordinary length deducts a second and costs 51.6 of
+    // the 75 nano-dollars that second sold for, against dictation's 8.5.
+    //
+    // `typicalUsd` is the ordinary case: the pack spent on dictation, which is how packs are spent
+    // — 94.3 % of credit-seconds, measured. This is what the margin badge shows, with the floor
+    // beside it, because a number nobody's usage produces is not the honest headline either.
+    const boundUsd = pack.minutes * secondValueUsdPerMinute;
+    const worstUsd = (pack.minutes * 60 * WORST_COST_PER_SECOND_NANO) / NANO_PER_USD;
     const typicalUsd = pack.minutes * transcribeUsdPerMinute;
-    const costUsd = maxUsd;
+    const costUsd = typicalUsd;
     const costHome = costUsd * rate;
+    const worstHome = worstUsd * rate;
     // How far the pack goes if it is spent entirely on rewordings of ordinary length. Shown
     // beside the minutes because "150 minutes" and "or about 4500 rewordings" are the same pack.
     const rewordsIfOnly = Math.floor((pack.minutes * 60) / TYPICAL_REWORD_SECONDS);
@@ -465,18 +472,26 @@ export async function plans(env: Env) {
       cost: {
         dictationUsd: typicalUsd,
         rewordsUsd: 0,
+        /** The ordinary case — the pack spent on dictation. What the headline margin uses. */
         totalUsd: costUsd,
         totalHome: costHome,
-        // What the pack costs when it is spent on dictation, which is how it is spent. Equal to
-        // `totalUsd` while both providers price a second the same, and lower once they do not.
         typicalUsd,
-        typicalHome: typicalUsd * rate,
+        typicalHome: costHome,
+        /** The whole pack spent on rewording: the dearest thing it can actually be spent on. */
+        worstUsd,
+        worstHome,
+        /** The structural ceiling. Cannot be exceeded by any usage; also cannot be reached. */
+        boundUsd,
+        boundHome: boundUsd * rate,
         perMinuteUsd: transcribeUsdPerMinute,
       },
       model: {
         revenue: modelRevenue,
         margin: modelRevenue - costHome,
         marginPercent: modelRevenue > 0 ? ((modelRevenue - costHome) / modelRevenue) * 100 : 0,
+        /** The same pack spent entirely on rewording. */
+        marginWorst: modelRevenue - worstHome,
+        marginPercentWorst: modelRevenue > 0 ? ((modelRevenue - worstHome) / modelRevenue) * 100 : 0,
       },
       /** Sales that exist but carry no revenue figure yet — shown, never averaged in. */
       unreportedOrders: row?.unreported ?? 0,
@@ -499,6 +514,8 @@ export async function plans(env: Env) {
             revenueHome: realRevenueHome ?? 0,
             margin: (realRevenueHome ?? 0) - costHome,
             marginPercent: realRevenueHome ? ((realRevenueHome - costHome) / realRevenueHome) * 100 : 0,
+            marginWorst: (realRevenueHome ?? 0) - worstHome,
+            marginPercentWorst: realRevenueHome ? ((realRevenueHome - worstHome) / realRevenueHome) * 100 : 0,
           }
         : null,
       // What a minute costs the customer, and what it earns you. The pair that shows whether the

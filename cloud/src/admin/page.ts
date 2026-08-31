@@ -233,7 +233,18 @@ export const DASHBOARD_HTML = `<!doctype html>
   .card, .panel, .zgroup, .gwrap {
     box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .09);
   }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px;
+    /* Beides zusammen ist der Grund, warum ein Hinweistext nicht mehr hinter der Nachbarkachel
+       verschwindet. Die Einblend-Animation weiter unten läuft mit fill-mode: both und lässt
+       deshalb **dauerhaft** einen eigenen Stapelkontext je Kachel zurück; darin nützt das z-index
+       des Hinweises nichts, weil die nächste Kachel im Dokument als Ganzes darüber liegt. Geordnet
+       werden muss also auf der Ebene der Kacheln, und das geht nur, wenn sie positioniert sind. */
+    position: relative; }
+  /* Die Kachel, auf der die Maus steht, kommt nach vorn — samt ihrem Hinweisfeld. focus-within
+     deckt denselben Fall über die Tastatur ab, wo das Fragezeichen den Fokus bekommt.
+     (Keine Backticks in dieser Datei: sie ist ein einziges Template-Literal, und einer davon
+     beendet es. Derselbe Fallstrick wie ein Backslash — siehe modelCell.) */
+  .card:hover, .card:focus-within, .panel:hover, .panel:focus-within { z-index: 40; }
   /* Keeps its accent ring, and gains the depth with it. */
   .card.lead { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset, 0 10px 30px rgba(0, 0, 0, .45); }
   @media (min-width: 780px) { .card.lead { grid-column: span 2; } }
@@ -273,7 +284,7 @@ export const DASHBOARD_HTML = `<!doctype html>
 
   h2 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; display: flex; align-items: center; gap: 7px; }
   h3 { font-size: 15px; margin: 0 0 10px; font-weight: 660; }
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); position: relative; }
   .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   /* The rows get their own quieter ground inside the glass, and only they: forty numbers in columns
      are the one thing on this page whose contrast must not depend on where a cloud happens to be. */
@@ -2159,18 +2170,16 @@ var GRAPH = ${GRAPH_JSON};
       // Durchschnitt darüber kein Preis, den jemand bezahlt hat — dann steht die ganze Leiter in
       // der Auszahlungswährung, und die Karte sagt, dass sie es tut.
       var oneCurrency = !!a && a.currencies === 1;
-      // Der Einkauf steht in zwei Zeilen, sobald es zwei zu sagen gibt.
+      // Die Leiter rechnet mit dem **Regelfall** — dem Paket, das verdiktiert wird, so wie Pakete
+      // verbraucht werden (94,3 % der Guthabensekunden, gemessen). Das ist die Zahl, die zählt.
       //
-      // Die obere ist die Obergrenze und gilt für jede Nutzung: Kein Dienst darf mehr kosten, als
-      // eine Sekunde wert ist (SECOND_VALUE_NANO in config.ts), also kann ein Paket diese Summe
-      // unter keinem Nutzungsmuster überschreiten. Die untere ist der Regelfall — dasselbe Paket
-      // verdiktiert, zum tatsächlichen Einkaufspreis.
-      //
-      // Solange beide Zahlen gleich sind, wäre die zweite Zeile dieselbe Zahl noch einmal und
-      // bleibt weg. Sie erscheint von selbst, sobald der Einkauf unter den Verkaufswert fällt.
-      var maxRow = ['Einkauf, höchstens (' + k.minutes + ' Min. gekauft)', '− ' + fmtUsd4(k.cost.totalUsd)];
-      var typicalRow = k.cost.typicalUsd < k.cost.totalUsd
-        ? ['davon im Regelfall (nur Diktat)', '− ' + fmtUsd4(k.cost.typicalUsd)]
+      // Darunter der Boden: dasselbe Paket vollständig umformuliert, also am teureren der beiden
+      // Dienste verbraucht. Er ist erreichbar und deshalb erwähnenswert — anders als die bauliche
+      // Obergrenze (die Sekunden zu ihrem Verkaufswert), die niemand erreichen kann und die als
+      // Schlagzeile aus 96 % magere 66 % machte.
+      var maxRow = ['Einkauf (' + k.minutes + ' Min. verdiktiert)', '− ' + fmtUsd4(k.cost.typicalUsd)];
+      var typicalRow = k.cost.worstUsd > k.cost.typicalUsd
+        ? ['ganz verformuliert wären es', '− ' + fmtUsd4(k.cost.worstUsd)]
         : null;
       var steps = a && oneCurrency
         ? [['Kundschaft zahlt', money(a.paid, k.currency)],
@@ -2179,19 +2188,25 @@ var GRAPH = ${GRAPH_JSON};
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenue, k.currency) + '</strong>'],
            (k.currency !== cur ? ['umgerechnet', money(a.revenueHome, cur)] : null),
            maxRow, typicalRow,
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
+           ['<strong>Bleibt</strong>', '<strong>' + money(a.margin, cur) + '</strong>'],
+           (a.marginWorst !== undefined && a.marginWorst !== a.margin
+             ? ['<span class="muted">im schlechtesten Fall</span>', '<span class="muted">' + money(a.marginWorst, cur) + '</span>'] : null)].filter(Boolean)
         : a
         ? [['Kundschaft zahlt', money(a.paidHome, cur)],
            ['davon Steuer', '− ' + money(a.taxHome, cur)],
            ['Google-Anteil', '− ' + money(a.paidHome - a.taxHome - a.revenueHome, cur)],
            ['<strong>Dein Erlös</strong>', '<strong>' + money(a.revenueHome, cur) + '</strong>'],
            maxRow, typicalRow,
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(a.margin, cur) + '</strong>']].filter(Boolean)
+           ['<strong>Bleibt</strong>', '<strong>' + money(a.margin, cur) + '</strong>'],
+           (a.marginWorst !== undefined && a.marginWorst !== a.margin
+             ? ['<span class="muted">im schlechtesten Fall</span>', '<span class="muted">' + money(a.marginWorst, cur) + '</span>'] : null)].filter(Boolean)
         : [['Listenpreis (netto)', money(k.listPrice, cur)],
            ['Google-Anteil (' + Math.round(fee * 100) + ' % angenommen)', '− ' + money(k.listPrice * fee, cur)],
            ['<strong>Erlös laut Modell</strong>', '<strong>' + money(k.model.revenue, cur) + '</strong>'],
            maxRow, typicalRow,
-           ['<strong>Bleibt mindestens</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>']].filter(Boolean);
+           ['<strong>Bleibt</strong>', '<strong>' + money(k.model.margin, cur) + '</strong>'],
+           (k.model.marginWorst !== undefined && k.model.marginWorst !== k.model.margin
+             ? ['<span class="muted">im schlechtesten Fall</span>', '<span class="muted">' + money(k.model.marginWorst, cur) + '</span>'] : null)].filter(Boolean);
 
       // Vom Ziel zurück auf den Preis: der Erlös muss Einkauf / (1 − Marge) sein, und der
       // Listenpreis ist dieser Erlös vor Googles Anteil. Steht hier, damit die nächste Preisrunde
@@ -2210,6 +2225,10 @@ var GRAPH = ${GRAPH_JSON};
           '<div class="sub">' + k.minutes.toLocaleString('de-DE') + ' Minuten <span class="muted">oder ~' + k.rewords.toLocaleString('de-DE') + ' Umformulierungen</span><br>' +
             k.pricePerMinuteCents.toFixed(2) + ' ct/Min. Preis · ' + k.marginPerMinuteCents.toFixed(2) + ' ct/Min. Marge</div>' +
           '<div style="margin-top:8px"><span class="pill ' + cls + '">' + pct + ' % Marge</span> ' +
+            // Der Boden gehört daneben und nicht in die Fußnote: Er ist die Zahl, die zählt, wenn
+            // jemand sein ganzes Paket in Umformulierungen steckt.
+            (typeof shown.marginPercentWorst === 'number' && Math.round(shown.marginPercentWorst) !== pct
+              ? '<span class="pill">min. ' + Math.round(shown.marginPercentWorst) + ' %</span> ' : '') +
             (k.savingsPercent === null || k.savingsPercent === undefined ? ''
               : '<span class="pill info">' + k.savingsPercent + ' % günstiger je Min.</span> ') +
             (a ? '<span class="pill info">' + a.orders + ' Verkauf/Verkäufe</span>'
