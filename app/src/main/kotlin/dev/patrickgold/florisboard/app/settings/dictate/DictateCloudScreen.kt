@@ -71,6 +71,7 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDeletion
+import dev.patrickgold.florisboard.dictate.cloud.DictateCloudPack
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDevice
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudDeviceLimitException
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudException
@@ -489,7 +490,7 @@ private fun BalanceCard(
                 Text(
                     text = stringRes(
                         R.string.dictate__cloud_balance_rewords,
-                        "count" to rewordsLeft.toString(),
+                        "count" to DictateCloudPack.roundDown(rewordsLeft).toString(),
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -659,7 +660,7 @@ private fun PackCard(
                 Text(
                     text = stringRes(
                         R.string.dictate__cloud_balance_rewords,
-                        "count" to rewords.toString(),
+                        "count" to DictateCloudPack.roundDown(rewords).toString(),
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

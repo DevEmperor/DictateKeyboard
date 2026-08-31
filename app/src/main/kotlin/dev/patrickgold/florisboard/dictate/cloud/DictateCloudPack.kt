@@ -36,7 +36,7 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
      * serve. A rewording of ordinary length is worth about two seconds, so this is a division and
      * says the same thing as the minutes beside it.
      */
-    val rewords: Int get() = (minutes * 60) / SECONDS_PER_REWORD
+    val rewords: Int get() = roundDown((minutes * 60) / SECONDS_PER_REWORD)
 
     companion object {
         /**
@@ -56,6 +56,28 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
          * own — a wrong number here shows a wrong estimate, never a wrong balance.
          */
         const val SECONDS_PER_REWORD = 7
+
+        /**
+         * Rounds an "about this many" figure **down** to something a person can read.
+         *
+         * The division leaves numbers like 1,285 and 18,857, and a figure that precise reads as a
+         * promise rather than an estimate — while being neither: the real count depends on how long
+         * each rewording turns out to be. Rounding down keeps it honest in the one direction that
+         * matters, since a pack that yields more than it said is a good surprise and one that yields
+         * less is a complaint.
+         *
+         * The step grows with the number, because 50 is a sensible unit at a thousand and a silly one
+         * at twenty thousand: 1,285 → 1,250, 3,428 → 3,400, 8,571 → 8,500, 18,857 → 18,500.
+         */
+        fun roundDown(value: Int): Int {
+            val step = when {
+                value < 200 -> 10
+                value < 2_000 -> 50
+                value < 10_000 -> 100
+                else -> 500
+            }
+            return (value / step) * step
+        }
 
         /** Display order in the shop — cheapest first, as in the Play Console. */
         val ordered: List<DictateCloudPack> = listOf(NOTES, DAILY, WRITER, PRO)

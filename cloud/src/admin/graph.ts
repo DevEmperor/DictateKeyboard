@@ -520,7 +520,7 @@ export const NODES: GraphNode[] = [
 
   {
     id: 'oauth', zone: 'google', label: 'Google OAuth2', sub: 'oauth2.googleapis.com',
-    col: 3, row: 2,
+    col: 3, row: 0,
     holds: ['Access-Token (1 h)'],
     detail: 'Tauscht den selbstsignierten RS256-JWT des Dienstkontos gegen ein Access-Token. Der Worker baut den JWT von Hand mit WebCrypto — ein Worker hat keine Node-Bibliotheken.',
     long:
@@ -537,7 +537,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'playapi', zone: 'google', label: 'Play Developer API', sub: 'androidpublisher v3',
-    col: 3, row: 3,
+    col: 3, row: 1,
     guards: ['Einzige verbindliche Quelle für Käufe'],
     detail: '<code>purchases.products.get</code> entscheidet, ob wirklich Geld geflossen ist — der Kauf-Token der App wird nicht geglaubt. <code>:acknowledge</code> verhindert, dass Google den Kauf nach drei Tagen zurückdreht. <code>orders.get</code> liefert getrennt, was der Kauf wirklich wert war (gezahlt, Steuer, Erlös), und <code>purchases.voidedpurchases</code> ist die Liste, gegen die der nächtliche Abgleich läuft.',
     long:
@@ -556,7 +556,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'pubsub', zone: 'google', label: 'Cloud Pub/Sub', sub: 'Thema play-rtdn',
-    col: 3, row: 4,
+    col: 3, row: 2,
     holds: ['RTDN_SECRET in der Push-URL'],
     guards: ['Kann ausschließlich Guthaben entfernen'],
     detail: 'Push-Abo an <code>/v1/rtdn?key=…</code>. Meldet Erstattungen. Selbst wer den Schlüssel kennt, kann darüber nur Guthaben abziehen — und nur für einen Kauf, den er bereits kennen müsste.',
@@ -574,7 +574,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'console', zone: 'google', label: 'Play Console', sub: 'Produkte, Kanäle, Tester',
-    col: 3, row: 5,
+    col: 3, row: 3,
     detail: 'Hier liegen die vier Einmalkaufprodukte, die Testkanäle und die Lizenztester. Die Produkt-IDs müssen zeichengenau mit <code>PACKAGES</code> im Server übereinstimmen.',
     long:
       '<p>Kein technischer Bestandteil des Diensts, aber der Ort, an dem drei Dinge festgelegt werden, ' +
@@ -589,7 +589,7 @@ export const NODES: GraphNode[] = [
   },
   {
     id: 'sa', zone: 'google', label: 'Dienstkonto', sub: 'IAM · Play-Berechtigung',
-    col: 3, row: 6,
+    col: 3, row: 4,
     holds: ['privater RSA-Schlüssel'],
     guards: ['Nur Leserecht auf Käufe nötig'],
     detail: 'In der Google Cloud angelegt, in der Play Console eingeladen und dort auf diese App berechtigt. Die vollständige JSON-Schlüsseldatei liegt als Worker-Secret und sonst nirgends.',
@@ -613,7 +613,7 @@ export const NODES: GraphNode[] = [
     // Auf Zeile 7 liefe der in die Google-Zone hinein, auf Zeile 8 klafften 118 px Leere darüber —
     // das Loch unten rechts, das das Bild schief aussehen ließ. 7,2 ist die erste Stelle, an der
     // keins von beidem passiert: 106 px weniger Höhe, und zwölf zwischen den beiden Kästen.
-    col: 3, row: 7.2,
+    col: 3, row: 5.4,
     guards: ['ohne Anmeldung', 'Ausfall ist folgenlos'],
     detail: 'Die Referenzkurse der EZB, mit denen ein Verkauf in CHF oder PLN überhaupt in der Hauswährung zählbar wird. Der Kurs des Kauftags wird einmal geschrieben und nie neu gerechnet — eine Zahl, die sich von selbst ändert, ist keine Buchführung. Bleibt der Dienst aus, fehlt nur die Umrechnung, nicht das Guthaben.',
     long:
