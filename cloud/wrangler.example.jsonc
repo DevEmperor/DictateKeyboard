@@ -125,6 +125,13 @@
     "ALERT_WALLET_BUDGET_SHARE": "<number>",
     "ALERT_DEVICES_PER_WALLET": "<number>",
     "ALERT_ERROR_RATE_PERCENT": "<number>",
+    // Wie oft der Wochenschnitt an einem Tag überschritten sein muss, damit der Neuronenverbrauch
+    // gemeldet wird. Neuronen sind die eine Zahl, die direkt zur Rechnung wird.
+    "ALERT_NEURON_SPIKE_FACTOR": "<number>",
+    // p95 kurzer Diktate (bis 30 s Audio) über eine Stunde, in Millisekunden. Nur kurze, weil lange
+    // Aufnahmen bei Workers AI von Haus aus zu stark schwanken, um eine Schwelle zu tragen —
+    // gemessen 31–49 s für zehn Minuten, gegen 2–4 s für eine kurze.
+    "ALERT_SLOW_SHORT_MS": "<number>",
     // From how much cumulative loss to report, in the payout currency. Below that it is rounding, or
     // the opening phase where a handful of test requests weigh more than the sales that have not
     // happened yet.
