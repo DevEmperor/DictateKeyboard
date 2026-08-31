@@ -31,7 +31,15 @@ const script = source.slice(open + '<script>'.length, close);
 
 // The page is a template literal, so `${...}` holes are server-side values. Replace them with a
 // harmless literal: what is being checked is the shape of the script, not the data poured into it.
-const code = script.replace(/\$\{[^}]*\}/g, 'null');
+const holesFilled = script.replace(/\$\{[^}]*\}/g, 'null');
+
+// And then let JavaScript itself apply the template literal's escape rules, because reading the
+// source text is not the same as reading the page. A backslash inside a template literal is
+// consumed: `\/` in the source arrives at the browser as `/`. That is not a corner case — it took
+// the whole dashboard down once. A regex written `/^@cf\/[^/]+\//` in this file was served as
+// `/^@cf/[^/]+//`, which is a syntax error, so no script ran at all: no figures, and every tab dead.
+// Checking the source would have passed it, as it did. Checking what is served does not.
+const code = eval('`' + holesFilled + '`');
 
 let failed = false;
 

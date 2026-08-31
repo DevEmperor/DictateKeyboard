@@ -945,7 +945,13 @@ var GRAPH = ${GRAPH_JSON};
    */
   function modelCell(x) {
     if (!x.model) return '<span class="muted">—</span>';
-    var short = String(x.model).replace(/^@cf\/[^/]+\//, '');
+    // Split rather than a regex, and that is not a style choice: this whole document is one template
+    // literal, so a backslash inside it is consumed before the browser ever sees the script. The
+    // regex this replaced read /^@cf\\/[^/]+\\// in the source, arrived as /^@cf/[^/]+// in the page,
+    // and took the entire dashboard down with a syntax error — no data, no working tabs, and nothing
+    // in the toolchain able to say why. Escapes in here are a trap; not needing one is the fix.
+    var parts = String(x.model).split('/');
+    var short = parts[parts.length - 1];
     var neurons = (x.neuronsMicro || 0) / 1e6;
     var tip = x.model + (x.provider ? ' · ' + x.provider : '') +
       (neurons ? ' · ' + neurons.toFixed(3) + ' Neuronen' : '');
