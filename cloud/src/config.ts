@@ -72,6 +72,7 @@ export interface Env {
   ALERT_DEVICES_PER_WALLET?: string;
   ALERT_ERROR_RATE_PERCENT?: string;
   ALERT_NEURON_SPIKE_FACTOR?: string;
+  ALERT_SLOW_SHORT_MS?: string;
   ALERT_MIN_LOSS?: string;
 
   /** Which Workers AI model each service uses. Swappable without a deploy; see `modelFor`. */
@@ -405,6 +406,7 @@ export interface AlertThresholds {
    * not judge which; it says the day is unlike the week.
    */
   neuronSpikeFactor: number;
+  slowShortMs: number;
   /**
    * How far into the red the running total has to be before it is worth saying so, in the payout
    * currency.
@@ -432,6 +434,7 @@ export function alertThresholds(env: Env): AlertThresholds {
     devicesPerWallet: num(env.ALERT_DEVICES_PER_WALLET, 5),
     errorRatePercent: num(env.ALERT_ERROR_RATE_PERCENT, 25),
     neuronSpikeFactor: num(env.ALERT_NEURON_SPIKE_FACTOR, 3),
+    slowShortMs: num(env.ALERT_SLOW_SHORT_MS, 10_000),
     minLossHome: num(env.ALERT_MIN_LOSS, 1),
   };
 }

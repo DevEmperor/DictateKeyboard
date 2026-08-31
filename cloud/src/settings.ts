@@ -52,6 +52,21 @@ export interface AlertSettings extends AlertThresholds {
 }
 
 /** The rules that can be switched off individually, in the order they are shown. */
+/**
+ * Every setting the dashboard may write, in one place.
+ *
+ * It used to be a second list in `admin/index.ts`, hand-kept beside this one, and they drifted:
+ * `costDriftPercent` stayed on it after the rule was deleted, and `neuronSpikeFactor` never made it
+ * on — so the dashboard offered a threshold, accepted it, said "Gespeichert", and dropped it. A
+ * setting that silently does not save is worse than one that is missing, because it is believed.
+ */
+export const SETTING_KEYS = [
+  'enabled', 'mail', 'digest', 'digestHourUtc', 'emailTo', 'emailFrom',
+  'dailyBudgetUsd', 'maxDevices', 'budgetSteps',
+  'fastBurnPercent', 'fastBurnHours', 'refundUsedPercent', 'walletBudgetSharePercent',
+  'devicesPerWallet', 'errorRatePercent', 'neuronSpikeFactor', 'slowShortMs', 'minLossHome',
+] as const;
+
 export const RULE_KEYS = [
   'fast_burn',
   'budget_hog',
@@ -61,6 +76,7 @@ export const RULE_KEYS = [
   'revenue_unreported',
   'neuron_spike',
   'reasoning_leak',
+  'slow_upstream',
 ] as const;
 
 async function overrides(env: Env): Promise<Record<string, string>> {
@@ -118,6 +134,7 @@ export async function alertSettings(env: Env): Promise<AlertSettings> {
     devicesPerWallet: number('devicesPerWallet', base.devicesPerWallet),
     errorRatePercent: number('errorRatePercent', base.errorRatePercent),
     neuronSpikeFactor: number('neuronSpikeFactor', base.neuronSpikeFactor),
+    slowShortMs: number('slowShortMs', base.slowShortMs),
     minLossHome: number('minLossHome', base.minLossHome),
 
     rules,
@@ -154,6 +171,7 @@ export async function changedKeys(env: Env): Promise<string[]> {
     devicesPerWallet: String(base.devicesPerWallet),
     errorRatePercent: String(base.errorRatePercent),
     neuronSpikeFactor: String(base.neuronSpikeFactor),
+    slowShortMs: String(base.slowShortMs),
     minLossHome: String(base.minLossHome),
   };
   for (const key of RULE_KEYS) shipped[`rule.${key}`] = '1';
@@ -162,8 +180,12 @@ export async function changedKeys(env: Env): Promise<string[]> {
   // day the daily report already went out for. They live in this table because it is the one that
   // survives a ledger wipe, and they must never appear in the dashboard's list of changed settings:
   // a mark that rewrites itself every morning would make that list permanently non-empty.
+  // Ein Schlüssel, den `SETTING_KEYS` nicht kennt, ist entweder eine Regel (`rule.…`) oder eine
+  // Altlast aus einer entfernten Einstellung. Beides gehört nicht in die Liste „geändert".
+  const known = (key: string) => (SETTING_KEYS as readonly string[]).includes(key) || key.startsWith('rule.');
   return Object.keys(stored)
     .filter((key) => !key.includes(':'))
+    .filter(known)
     .filter((key) => !matchesShipped(stored[key] ?? '', shipped[key]));
 }
 

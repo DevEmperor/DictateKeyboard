@@ -50,6 +50,7 @@ export async function evaluateRules(env: Env, ctx: ExecutionContext): Promise<nu
     on('error_rate', () => errorRate(env, ctx, t.errorRatePercent)),
     on('revenue_unreported', () => revenueUnreported(env, ctx)),
     on('neuron_spike', () => neuronSpike(env, ctx, t.neuronSpikeFactor)),
+    on('slow_upstream', () => slowUpstream(env, ctx, t.slowShortMs)),
   ]);
 
   // One broken rule must not silence the other five. A rule that throws is itself worth knowing
@@ -357,5 +358,58 @@ async function neuronSpike(env: Env, ctx: ExecutionContext, factor: number): Pro
       `weil dieselbe Kurve entsteht, wenn ein Modell wieder nachdenkt oder etwas in eine Schleife läuft.`,
     // A state of the day, not an event: once per day is enough.
     dedupeKey: `neuron_spike:${day}`,
+  }, ctx)) ? 1 : 0;
+}
+
+/**
+ * Short dictations that suddenly take a long time.
+ *
+ * Measured against **short recordings only** — thirty seconds of audio or less — and that
+ * restriction is the whole idea. A ten-minute recording legitimately takes thirty to fifty seconds
+ * on Workers AI, and the spread between one run and the next is wider than any threshold worth
+ * setting; a rule over all requests would either shout at every long dictation or never fire at
+ * all. Under thirty seconds the answer comes back in two to four, and 89 % of real dictations are
+ * in that group — so a p95 of ten seconds there is unambiguous, and it is the number the people
+ * using the service actually feel.
+ *
+ * Latency is the one thing the move to Workers AI made worse and nothing else watches. The error
+ * rate stays flat while a service crawls, and a customer noticing before the operator does is the
+ * failure this exists to prevent.
+ */
+async function slowUpstream(env: Env, ctx: ExecutionContext, thresholdMs: number): Promise<number> {
+  if (thresholdMs <= 0) return 0;
+  const since = Date.now() - 3_600_000;
+
+  const counted = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM usage_log
+      WHERE ts >= ? AND kind = 'transcribe' AND ms IS NOT NULL AND seconds > 0 AND seconds <= 30
+        AND status = 200`,
+  ).bind(since).first<{ n: number }>();
+  const n = num(counted?.n);
+  // Four is not a sample, and a single slow request is not a trend. Below this the rule says
+  // nothing rather than something it cannot support.
+  if (n < 5) return 0;
+
+  const offset = Math.min(n - 1, Math.floor(n * 0.95));
+  const row = await env.DB.prepare(
+    `SELECT ms FROM usage_log
+      WHERE ts >= ? AND kind = 'transcribe' AND ms IS NOT NULL AND seconds > 0 AND seconds <= 30
+        AND status = 200
+      ORDER BY ms ASC LIMIT 1 OFFSET ?`,
+  ).bind(since, offset).first<{ ms: number }>();
+  const p95 = num(row?.ms);
+  if (p95 <= thresholdMs) return 0;
+
+  return (await raise(env, {
+    kind: 'slow_upstream',
+    severity: 'notice',
+    value: p95,
+    title: `Kurze Diktate brauchen ${(p95 / 1000).toFixed(1)} s`,
+    detail:
+      `Das p95 kurzer Aufnahmen (bis 30 s Audio) liegt in der letzten Stunde bei ${p95} ms, über der ` +
+      `Schwelle von ${thresholdMs} ms — gemessen an ${n} Anfragen. Normal sind zwei bis vier Sekunden. ` +
+      `Lange Aufnahmen sind hier absichtlich nicht mitgezählt: Die schwanken bei Workers AI von Haus ` +
+      `aus zu stark, um eine Schwelle zu tragen. Wenn diese Zahl steigt, merken es die Nutzenden.`,
+    dedupeKey: `slow_upstream:${new Date().toISOString().slice(0, 13)}`,
   }, ctx)) ? 1 : 0;
 }

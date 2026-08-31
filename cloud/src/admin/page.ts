@@ -196,7 +196,7 @@ export const DASHBOARD_HTML = `<!doctype html>
     /* Everything that arrives, arrives already there; the traffic dots stand still on their routes;
        the sky is drawn once and left. Nothing here is load-bearing — each is a way of saying
        something the page also says in words or in a number. */
-    .grid > .card, .stack > .panel, #taxYears > .card, #planCards > .card,
+    .grid > .card, .stack > .panel, #taxYears > .card, .plans > .card,
     .spark path.line, .spark path.area, .spark circle, .gedge path.flow { animation: none; }
     .spark path.line { stroke-dashoffset: 0; }
   }
@@ -271,6 +271,9 @@ export const DASHBOARD_HTML = `<!doctype html>
     .hint::after { display: none; }
   }
 
+  /* Untereinander statt in einer Zeile: nebeneinander brachen sie bei schmalen Karten mitten im
+     Satz um, und welche Pille zu welcher Aussage gehörte, war dann Ratesache. */
+  .pillcol { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-top: 9px; }
   .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 650; white-space: nowrap; }
   .pill.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
   .pill.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
@@ -284,6 +287,11 @@ export const DASHBOARD_HTML = `<!doctype html>
 
   h2 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; display: flex; align-items: center; gap: 7px; }
   h3 { font-size: 15px; margin: 0 0 10px; font-weight: 660; }
+  /* Zwei Pakete nebeneinander, sobald zwei nebeneinander passen. Untereinander stand jede Karte
+     über die volle Breite, und die Leiter rechts trieb Bezeichner und Betrag so weit auseinander,
+     dass man mit den Augen die Zeile suchen musste. */
+  .plans { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 1080px) { .plans { grid-template-columns: 1fr 1fr; } }
   .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); position: relative; }
   .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   /* The rows get their own quieter ground inside the glass, and only they: forty numbers in columns
@@ -334,6 +342,11 @@ export const DASHBOARD_HTML = `<!doctype html>
   #modal .m-code { font-family: ui-monospace, monospace; font-size: 19px; font-weight: 700; letter-spacing: .06em; background: var(--surface-2); border-radius: 10px; padding: 14px; text-align: center; user-select: all; }
   #modal .m-actions { display: flex; gap: 9px; justify-content: flex-end; flex-wrap: wrap; }
 
+  /* Die Leiter füllt die Karte nicht mehr aus, sondern nur sich selbst: Bezeichner und Betrag
+     stehen so dicht beieinander, dass eine Zeile in einem Blick zu lesen ist statt in zweien. */
+  .ladder { width: auto; min-width: 240px; font-size: 13px; background: none; }
+  .ladder td { border: 0; padding: 3px 0; }
+  .ladder td:first-child { padding-right: 26px; }
   .kv { display: grid; grid-template-columns: max-content 1fr; gap: 5px 14px; font-size: 13.5px; }
   .kv dt { color: var(--muted); }
   .kv dd { margin: 0; }
@@ -520,13 +533,13 @@ export const DASHBOARD_HTML = `<!doctype html>
   @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
   @keyframes pop { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: scale(1); } }
 
-  .grid > .card, .stack > .panel, #taxYears > .card, #planCards > .card { animation: rise .34s ease-out both; }
+  .grid > .card, .stack > .panel, #taxYears > .card, .plans > .card { animation: rise .34s ease-out both; }
   /* A short ladder, then nothing: past the eighth card the delay would be longer than the animation
      and the last row would visibly lag behind the scroll. */
-  .grid > .card:nth-child(2), .stack > .panel:nth-child(2), #taxYears > .card:nth-child(2), #planCards > .card:nth-child(2) { animation-delay: .04s; }
-  .grid > .card:nth-child(3), .stack > .panel:nth-child(3), #taxYears > .card:nth-child(3), #planCards > .card:nth-child(3) { animation-delay: .08s; }
-  .grid > .card:nth-child(4), .stack > .panel:nth-child(4), #taxYears > .card:nth-child(4), #planCards > .card:nth-child(4) { animation-delay: .12s; }
-  .grid > .card:nth-child(5), .stack > .panel:nth-child(5), #planCards > .card:nth-child(5) { animation-delay: .16s; }
+  .grid > .card:nth-child(2), .stack > .panel:nth-child(2), #taxYears > .card:nth-child(2), .plans > .card:nth-child(2) { animation-delay: .04s; }
+  .grid > .card:nth-child(3), .stack > .panel:nth-child(3), #taxYears > .card:nth-child(3), .plans > .card:nth-child(3) { animation-delay: .08s; }
+  .grid > .card:nth-child(4), .stack > .panel:nth-child(4), #taxYears > .card:nth-child(4), .plans > .card:nth-child(4) { animation-delay: .12s; }
+  .grid > .card:nth-child(5), .stack > .panel:nth-child(5), .plans > .card:nth-child(5) { animation-delay: .16s; }
   .grid > .card:nth-child(6), .stack > .panel:nth-child(6) { animation-delay: .20s; }
   .grid > .card:nth-child(7) { animation-delay: .24s; }
   .grid > .card:nth-child(8) { animation-delay: .28s; }
@@ -710,7 +723,7 @@ export const DASHBOARD_HTML = `<!doctype html>
       <h2>Was jedes Paket einbringt
         <span class="hint" tabindex="0" data-tip="Zwei Spalten nebeneinander: das Modell, mit dem die Preise kalkuliert wurden, und was tatsächlich passiert ist. Wo noch nichts verkauft wurde, bleibt die Ist-Spalte leer — eine Hochrechnung als Messung auszugeben wäre genau der Fehler, den diese Seite nicht machen darf."></span>
       </h2>
-      <div id="planCards" class="stack"></div>
+      <div id="planCards" class="plans"></div>
     </div>
     <div class="panel">
       <h2>Vergleich</h2>
@@ -1528,6 +1541,7 @@ var GRAPH = ${GRAPH_JSON};
     revenue_unreported: ['Erlös nicht gemeldet', 'Ein bezahlter Kauf steht seit einer Woche ohne Erlös in den Büchern.'],
     neuron_spike: ['Neuronen-Ausschlag', 'Ein Tag, der nicht zur Woche davor passt — die Zahl, die direkt zur Rechnung wird.'],
     reasoning_leak: ['Das Modell denkt wieder', 'Denk-Token gehen vom Guthaben des Käufers ab, ohne dass er etwas davon bekommt.'],
+    slow_upstream: ['Kurze Diktate werden langsam', 'Gemessen nur an Aufnahmen bis 30 s — die schwanken nicht, lange schon. Das ist die Zahl, die Nutzende spüren.'],
   };
 
   var NUMBERS = [
@@ -1538,6 +1552,7 @@ var GRAPH = ${GRAPH_JSON};
     ['devicesPerWallet', 'Geräte je Konto', 'Stk.', 'Mehr als so viele an einem Tag deuten auf Weitergabe.'],
     ['errorRatePercent', 'Fehlerquote', '%', 'Anteil fehlgeschlagener Anfragen je Stunde.'],
     ['neuronSpikeFactor', 'Neuronen-Ausschlag ab', '×', 'Wie oft der Wochenschnitt an einem Tag überschritten sein muss.'],
+    ['slowShortMs', 'Kurze Diktate langsam ab', 'ms', 'p95 der Aufnahmen bis 30 s Audio, über eine Stunde. Normal sind 2 000 bis 4 000 ms; lange Aufnahmen zählen bewusst nicht mit.'],
     ['minLossHome', 'Minus meldet ab', '€', 'Darunter ist es Rundung oder Anlaufphase.'],
   ];
 
@@ -2208,14 +2223,25 @@ var GRAPH = ${GRAPH_JSON};
            (k.model.marginWorst !== undefined && k.model.marginWorst !== k.model.margin
              ? ['<span class="muted">im schlechtesten Fall</span>', '<span class="muted">' + money(k.model.marginWorst, cur) + '</span>'] : null)].filter(Boolean);
 
-      // Vom Ziel zurück auf den Preis: der Erlös muss Einkauf / (1 − Marge) sein, und der
-      // Listenpreis ist dieser Erlös vor Googles Anteil. Steht hier, damit die nächste Preisrunde
-      // eine Ablesung ist und keine Rechnung auf einem Zettel — besonders dann, wenn Cloudflare seine
-      // Preisliste bewegt und der Einkauf unter jedem Paket ein anderer wird.
-      var targets = [45, 50, 55, 60].map(function (m) {
-        var price = k.cost.totalHome / ((1 - m / 100) * (1 - fee));
-        return '<tr><td class="muted" style="border:0;padding:2px 0">' + m + ' % Marge</td>' +
-          '<td class="num" style="border:0;padding:2px 0">' + money(price, cur) + '</td></tr>';
+      // Die Frage hat sich mit dem Einkaufspreis gedreht.
+      //
+      // Früher stand hier der Preis für eine Zielmarge — sinnvoll, solange der Einkauf so groß war,
+      // dass er den Preis bestimmte. Bei $0,0005 die Minute kommt dabei „14 Cent für 45 % Marge"
+      // heraus: arithmetisch richtig und als Antwort wertlos, weil kein Paket zu diesem Preis
+      // verkauft würde.
+      //
+      // Umgekehrt ist es jetzt die Frage, die man wirklich hat: **Zum heutigen Preis — wie viele
+      // Minuten könnten drin sein?** Das ist die Rechnung hinter einem Angebot, und sie geht so:
+      // Vom Erlös darf (1 − Marge) für den Einkauf draufgehen, und das geteilt durch den Preis je
+      // Minute sind die Minuten.
+      var revHome = a ? a.revenueHome : k.model.revenue;
+      var targets = [90, 92, 94, 96].map(function (m) {
+        var allowedUsd = (revHome * (1 - m / 100)) / n(p.rate);
+        var minutes = k.cost.perMinuteUsd > 0 ? allowedUsd / k.cost.perMinuteUsd : 0;
+        var here = Math.abs(m - pct) < 1;
+        return '<tr><td class="' + (here ? '' : 'muted') + '">' + m + ' % Marge' +
+          (here ? ' <span class="muted">(heute)</span>' : '') + '</td>' +
+          '<td class="num' + (here ? '' : ' muted') + '">' + Math.round(minutes).toLocaleString('de-DE') + ' Min.</td></tr>';
       }).join('');
 
       return '<div class="card"><div class="row" style="align-items:flex-start">' +
@@ -2224,7 +2250,7 @@ var GRAPH = ${GRAPH_JSON};
           '<div class="value">' + money(shown.margin, cur) + '</div>' +
           '<div class="sub">' + k.minutes.toLocaleString('de-DE') + ' Minuten <span class="muted">oder ~' + k.rewords.toLocaleString('de-DE') + ' Umformulierungen</span><br>' +
             k.pricePerMinuteCents.toFixed(2) + ' ct/Min. Preis · ' + k.marginPerMinuteCents.toFixed(2) + ' ct/Min. Marge</div>' +
-          '<div style="margin-top:8px"><span class="pill ' + cls + '">' + pct + ' % Marge</span> ' +
+          '<div class="pillcol"><span class="pill ' + cls + '">' + pct + ' % Marge</span> ' +
             // Der Boden gehört daneben und nicht in die Fußnote: Er ist die Zahl, die zählt, wenn
             // jemand sein ganzes Paket in Umformulierungen steckt.
             (typeof shown.marginPercentWorst === 'number' && Math.round(shown.marginPercentWorst) !== pct
@@ -2240,13 +2266,13 @@ var GRAPH = ${GRAPH_JSON};
             // sich nicht mitteln, also ist jede Zeile umgerechnet.
             (a && a.currencies > 1 ? ' <span class="pill">in ' + a.currencies + ' Währungen verkauft</span>' : '') + '</div>' +
         '</div>' +
-        '<div style="flex:1.4;min-width:min(100%,250px)"><table style="font-size:13px">' +
+        '<div style="flex:1.4;min-width:min(100%,250px)"><table class="ladder">' +
           steps.map(function (s) {
-            return '<tr><td style="border:0;padding:3px 0">' + s[0] + '</td>' +
-              '<td class="num" style="border:0;padding:3px 0">' + s[1] + '</td></tr>';
+            return '<tr><td>' + s[0] + '</td><td class="num">' + s[1] + '</td></tr>';
           }).join('') + '</table>' +
-          '<div class="sub" style="margin-top:10px">Listenpreis für eine Zielmarge</div>' +
-          '<table style="font-size:13px">' + targets + '</table></div>' +
+          '<div class="sub" style="margin-top:10px">Zum heutigen Preis wären drin' +
+            hint('Wie groß das Paket bei einer bestimmten Marge sein dürfte, ohne den Preis zu ändern — die Rechnung hinter einem Angebot. Vom Erlös darf (1 − Marge) für den Einkauf draufgehen; geteilt durch den Preis je Minute sind das die Minuten. Die Zeile ohne Graustufe ist der heutige Stand.') + '</div>' +
+          '<table class="ladder">' + targets + '</table></div>' +
       '</div></div>';
     }).join('');
 

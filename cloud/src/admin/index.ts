@@ -3,7 +3,7 @@ import type { Env } from '../config';
 import { sendDigest } from '../notify/digest';
 import { durableObjectPlacement } from '../meter';
 import { evaluateRules } from '../notify/rules';
-import { RULE_KEYS, alertSettings, changedKeys, resetSettings, saveSettings } from '../settings';
+import { RULE_KEYS, SETTING_KEYS, alertSettings, changedKeys, resetSettings, saveSettings } from '../settings';
 import { NO_STORE, json } from '../util';
 import {
   giftCredit,
@@ -182,13 +182,7 @@ export async function handleAdmin(request: Request, env: Env, ctx: ExecutionCont
         const patch: Record<string, string> = {};
         // Only known keys, so a typo in a request body cannot quietly create a setting that
         // nothing reads and that then looks like it is doing something.
-        const allowed = [
-          'enabled', 'mail', 'digest', 'digestHourUtc', 'emailTo', 'emailFrom',
-          'budgetSteps', 'fastBurnPercent', 'fastBurnHours', 'refundUsedPercent',
-          'walletBudgetSharePercent', 'devicesPerWallet', 'costDriftPercent',
-          'errorRatePercent', 'minLossHome', 'dailyBudgetUsd', 'maxDevices',
-          ...RULE_KEYS.map((k) => `rule.${k}`),
-        ];
+        const allowed: string[] = [...SETTING_KEYS, ...RULE_KEYS.map((k) => `rule.${k}`)];
         for (const key of allowed) {
           if (body[key] !== undefined) patch[key] = String(body[key]);
         }
