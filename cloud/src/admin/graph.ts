@@ -608,7 +608,12 @@ export const NODES: GraphNode[] = [
 
   {
     id: 'fx', zone: 'ext', label: 'Frankfurter · EZB-Kurse', sub: 'api.frankfurter.dev',
-    col: 3, row: 8,
+    // Eine gebrochene Zeile, und das ist Absicht statt Schlamperei. „Öffentliche Quellen" ist die
+    // einzige Zone mit einem einzigen Mitglied, und ihr Kasten braucht 54 px Kopf über dem Knoten.
+    // Auf Zeile 7 liefe der in die Google-Zone hinein, auf Zeile 8 klafften 118 px Leere darüber —
+    // das Loch unten rechts, das das Bild schief aussehen ließ. 7,2 ist die erste Stelle, an der
+    // keins von beidem passiert: 106 px weniger Höhe, und zwölf zwischen den beiden Kästen.
+    col: 3, row: 7.2,
     guards: ['ohne Anmeldung', 'Ausfall ist folgenlos'],
     detail: 'Die Referenzkurse der EZB, mit denen ein Verkauf in CHF oder PLN überhaupt in der Hauswährung zählbar wird. Der Kurs des Kauftags wird einmal geschrieben und nie neu gerechnet — eine Zahl, die sich von selbst ändert, ist keine Buchführung. Bleibt der Dienst aus, fehlt nur die Umrechnung, nicht das Guthaben.',
     long:
