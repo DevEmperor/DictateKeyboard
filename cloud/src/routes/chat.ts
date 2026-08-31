@@ -193,6 +193,15 @@ export async function handleChat(
     seconds: actualSeconds,
     tokensIn: usage.in || inputTokens,
     tokensOut: usage.out,
+    // The column the transcription route writes and this one did not. It cost nothing in money —
+    // `costNano` above is already the measured figure — but it emptied the one number that turns
+    // into an invoice: every rewording booked zero neurons, so the day's total, the free-allowance
+    // bar and the billed cost were all short by whatever rewording had spent, and the dashboard
+    // counted each one as *estimated* while its cost had in fact been measured.
+    //
+    // Provider and model are deliberately not passed: `meter.ts` fills both in, and a second copy
+    // of a default is how the two drift apart.
+    neuronsMicro: Math.round(upstream.neurons * 1_000_000),
     costNano: actualNano,
     status: 200,
     ms: Date.now() - started,
