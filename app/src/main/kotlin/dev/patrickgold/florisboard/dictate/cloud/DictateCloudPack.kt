@@ -45,12 +45,17 @@ enum class DictateCloudPack(val productId: String, val minutes: Int) {
          * ever spoken to the service. A wrong number here shows a wrong estimate, never a wrong
          * balance: what is charged is decided where the money is.
          *
-         * It read 2 while that was the server's figure. The server then measured 131 real
-         * rewordings — 327 tokens in, 63 out — and came down to 1, and this copy stayed behind: the
-         * shop promised 4,500 rewordings where the service actually grants 9,000. **When the
-         * server's figure moves, this moves in the same commit.** Nothing notices on its own.
+         * It has moved twice, and both times for a reason worth knowing. It read 2 by assumption;
+         * the server measured 131 real rewordings — 327 tokens in, 63 out — and came down to 1, and
+         * this copy stayed behind, so the shop promised 4,500 where the service granted 9,000. Then
+         * the conversion itself changed: credit is billed at what a second *costs* to serve rather
+         * than at what it sells for, which makes every service earn the same margin and puts an
+         * ordinary rewording at seven seconds.
+         *
+         * **When the server's figure moves, this moves in the same commit.** Nothing notices on its
+         * own — a wrong number here shows a wrong estimate, never a wrong balance.
          */
-        const val SECONDS_PER_REWORD = 1
+        const val SECONDS_PER_REWORD = 7
 
         /** Display order in the shop — cheapest first, as in the Play Console. */
         val ordered: List<DictateCloudPack> = listOf(NOTES, DAILY, WRITER, PRO)

@@ -260,13 +260,38 @@ export function chatCostNano(model: string, tokensIn: number, tokensOut: number)
  * raised, only balances draining eight times faster.
  *
  * The invariant that has to hold: no service may cost more than this per second it deducts.
- * `costToSeconds` rounds up to guarantee it.
+ * `costToSeconds` guarantees it with room to spare — it converts at [BILLING_NANO_PER_SECOND], which
+ * is what a second *costs*, roughly a ninth of what it sells for. This value is what a second is
+ * worth on the sales side: it prices the packs, and it is the ceiling the margin is measured against.
  */
 export const SECOND_VALUE_NANO = 75_000;
 
-/** What a service costs, expressed in the only currency the wallet knows. Always rounded up. */
+/**
+ * What a second of credit **costs to serve**, in nano-dollars — the rate every service is billed at.
+ *
+ * Not the same thing as [SECOND_VALUE_NANO], and the distance between them is the margin. A second
+ * of credit sells for 75 000 and buys 8 549 worth of dictation, so dictation keeps 88.6 %. Deriving
+ * this from the transcription model is the whole point: it makes **one audio second cost exactly one
+ * credit second**, by construction, and then holds every other service to the same rate.
+ *
+ * Before this existed, `costToSeconds` divided by the *sale* value, and the consequence was invisible
+ * until it was worked out: a rewording costs 51 601 and so deducted a single second, keeping 31 %
+ * where dictation kept 89. A customer who spent a whole pack on rewording was not doing anything
+ * wrong — the price list simply had a hole in it that nobody could see from the outside. Now the
+ * margin is the same whatever the credit is spent on, and stays the same when a model's price moves,
+ * because both sides of the fraction move with it.
+ */
+export const BILLING_NANO_PER_SECOND =
+  (NEURONS[CF_DEFAULT_TRANSCRIBE].perAudioMinute / 60) * NANO_PER_NEURON;
+
+/**
+ * What a service costs, expressed in the only currency the wallet knows. Always rounded up.
+ *
+ * Rounding up is what keeps the guarantee one-directional: a service can only ever deduct more
+ * than it cost, never less, so no pattern of use can turn a pack into a loss.
+ */
 export function costToSeconds(nano: number): number {
-  return Math.ceil(nano / SECOND_VALUE_NANO);
+  return Math.max(1, Math.ceil(nano / BILLING_NANO_PER_SECOND));
 }
 
 /**
