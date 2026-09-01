@@ -4,14 +4,14 @@ import { Reveal } from "./Reveal";
 /**
  * The share sheet as a way in.
  *
- * File transcription has existed since 4.0.0, and it only ever answered one of the two questions
- * people have about an audio file. Long-press the mic and the words land at the cursor: that is
- * "put this file's words into the field I am typing in". What someone actually does with a voice
- * message is the reverse — you are in a chat, holding the audio, wanting to know what it says.
+ * This is not a bullet under the file card because the feature lives in *other* apps' menus: someone
+ * who never opens Dictate Keyboard is exactly the person who has to be told it is there. So the art
+ * draws the share sheet itself — the dimmed chat, the drag handle, the file being shared, the row of
+ * targets — because that is the moment being described, and a reader recognises it before reading a
+ * word of the copy.
  *
- * That difference is the section, and it is why this is not a bullet under the file card: the
- * feature lives in *other* apps' share sheets, so a reader who never opens Dictate is exactly the
- * reader who needs to be told it exists.
+ * Shapes rather than a screenshot, like every other visual here: a real capture would need a light
+ * and a dark version and would be wrong in every language the page is not written in.
  */
 const steps = [
   {
@@ -31,36 +31,69 @@ const steps = [
   },
 ];
 
+/** The four targets an Android share sheet would show; the third one is ours. */
+const targets = ["Drive", "Files", "Dictate", "More"];
+
 export function VoiceMessage() {
   return (
     <section className="voice-message section-shell" id="voice-messages">
       <div className="section-intro voice-message-intro">
         <Reveal>
-          <span className="eyebrow">NEW IN 6.1</span>
+          <span className="eyebrow">AUDIO YOU DIDN’T RECORD</span>
           <h2>That voice message.<br /><span>Just read it.</span></h2>
         </Reveal>
         <Reveal delay={0.08}>
           <p>
-            Someone sends ninety seconds of audio and you are somewhere you cannot listen. Until now the way
-            to the words was: leave the app, open a keyboard, find a text field, long-press the mic, navigate
-            back to the file. Now you share it to Dictate Keyboard and read it.
+            Someone sends ninety seconds of audio and you are somewhere you cannot listen. Share it to
+            Dictate Keyboard and read it instead — the same share sheet you already use for a photo or a
+            link, with the words waiting on the other side of it.
           </p>
         </Reveal>
       </div>
 
       <div className="voice-message-body">
         <Reveal className="voice-message-art" delay={0.06}>
-          <div className="vm-card" aria-hidden="true">
-            <span className="vm-card-label">Share with</span>
-            <span className="vm-card-app"><i />Dictate Keyboard</span>
+          <div className="vm-phone" aria-hidden="true">
+            {/* The conversation the message arrived in, dimmed the way Android dims it behind a sheet. */}
+            <div className="vm-chat">
+              <span className="vm-bubble vm-bubble-them" />
+              <span className="vm-bubble vm-bubble-me" />
+              <span className="vm-bubble vm-bubble-audio">
+                <i className="vm-bubble-play" />
+                <i className="vm-bubble-wave" />
+              </span>
+            </div>
+            <div className="vm-sheet">
+              <span className="vm-handle" />
+              <div className="vm-file">
+                <span className="vm-file-icon" />
+                <span className="vm-file-meta">
+                  <strong>Voice message</strong>
+                  <em>0:38 · audio/ogg</em>
+                </span>
+              </div>
+              <div className="vm-targets">
+                {targets.map((name) => (
+                  <span className={`vm-target ${name === "Dictate" ? "is-ours" : ""}`} key={name}>
+                    <i />
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-          <span className="vm-arrow" aria-hidden="true" />
-          <div className="vm-wave" aria-hidden="true">
-            {Array.from({ length: 22 }, (_, i) => (
-              <i key={i} style={{ "--h": `${28 + Math.round(58 * Math.abs(Math.sin(i * 1.1)))}%` }} />
-            ))}
+
+          <span className="vm-arrow" />
+
+          {/* What comes back. Bars, not a sentence — nothing here needs translating. */}
+          <div className="vm-result">
+            <div className="vm-wave">
+              {Array.from({ length: 20 }, (_, i) => (
+                <i key={i} style={{ "--h": `${26 + Math.round(60 * Math.abs(Math.sin(i * 1.1)))}%` }} />
+              ))}
+            </div>
+            <div className="vm-lines"><i /><i /><i /><i /></div>
           </div>
-          <div className="vm-lines" aria-hidden="true"><i /><i /><i /><i /></div>
         </Reveal>
 
         <ol className="voice-message-steps">

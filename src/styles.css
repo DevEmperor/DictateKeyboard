@@ -6509,76 +6509,192 @@ p {
   font-weight: 650;
 }
 
-/* ------------------------------------------------------------------ Sprachnachricht (6.1) */
+/* ------------------------------------------------------------------ Sprachnachricht teilen */
 
+/* Derselbe senkrechte Raum wie beim Nachbarn (.accessibility): ohne ihn stieß die Karte unten
+   direkt an den dunklen Sprachen-Abschnitt, und eine harte Kante zwischen zwei Hintergründen liest
+   sich als Fehler, nicht als Übergang. */
 .voice-message {
   display: grid;
-  gap: 44px;
+  gap: 56px;
+  padding-block: 130px;
 }
 .voice-message-body {
   display: grid;
-  gap: 34px;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 46px;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   align-items: center;
 }
 @media (max-width: 900px) {
+  .voice-message { padding-block: 96px; }
   .voice-message-body { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Die drei Schläge des Bildes untereinander: geteilt → Ton → Text. Wie überall hier aus Formen
-   gebaut und nicht aus einem Bildschirmfoto — ein Screenshot bräuchte eine helle und eine dunkle
-   Fassung und wäre in jeder Sprache falsch. */
 .voice-message-art {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
-  padding: 30px 26px;
+  gap: 15px;
+  padding: 32px 26px 34px;
   border: 1px solid var(--line);
   border-radius: 25px;
   background: var(--card-veil);
   box-shadow: 0 5px 0 #d7d3c9, 0 18px 45px rgba(13, 17, 23, 0.055);
 }
-.vm-card {
+
+/* Ein Telefonausschnitt: oben das Gespräch, darüber das Blatt. Die runden oberen Ecken, der Griff
+   und die Reihe runder Ziele sind die drei Dinge, an denen jemand ein Android-Teilenblatt erkennt,
+   noch bevor er die Beschriftung liest. */
+.vm-phone {
+  position: relative;
   display: flex;
-  width: min(100%, 260px);
+  width: min(100%, 262px);
   flex-direction: column;
-  gap: 7px;
-  padding: 12px 15px;
+  justify-content: flex-end;
+  height: 296px;
+  overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 15px;
+  border-radius: 22px;
   background: var(--paper-bright);
 }
-.vm-card-label {
+.vm-chat {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 14px;
+}
+.vm-bubble {
+  display: block;
+  height: 22px;
+  border-radius: 12px;
+  background: rgba(13, 17, 23, 0.07);
+}
+.vm-bubble-them { width: 62%; }
+.vm-bubble-me { width: 48%; align-self: flex-end; background: rgba(48, 183, 230, 0.14); }
+.vm-bubble-audio {
+  display: flex;
+  width: 74%;
+  height: 34px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 11px;
+  border-radius: 14px;
+  background: rgba(13, 17, 23, 0.07);
+}
+.vm-bubble-play {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(13, 17, 23, 0.32);
+}
+.vm-bubble-wave {
+  height: 9px;
+  flex: 1;
+  border-radius: 999px;
+  background: repeating-linear-gradient(90deg, rgba(13, 17, 23, 0.26) 0 2px, transparent 2px 5px);
+}
+
+/* Das Blatt verdunkelt, was dahinter liegt — genau wie das System es tut. */
+.vm-sheet {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 9px 15px 17px;
+  border-radius: 20px 20px 22px 22px;
+  background: var(--paper-bright);
+  box-shadow: 0 -12px 34px rgba(13, 17, 23, 0.16), 0 -1px 0 var(--line);
+}
+.vm-phone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 17, 23, 0.26);
+}
+.vm-handle {
+  width: 30px;
+  height: 4px;
+  align-self: center;
+  border-radius: 999px;
+  background: rgba(13, 17, 23, 0.20);
+}
+.vm-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--line);
+}
+.vm-file-icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 9px;
+  background: rgba(48, 183, 230, 0.16);
+}
+.vm-file-icon::after {
+  content: "";
+  position: absolute;
+  inset: 11px 9px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(90deg, var(--accent, #30b7e6) 0 2px, transparent 2px 5px);
+}
+.vm-file-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.vm-file-meta strong { font-size: 0.82rem; font-weight: 650; }
+.vm-file-meta em {
   color: #8a9199;
   font-family: var(--font-mono);
   font-size: 0.56rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-style: normal;
+  letter-spacing: 0.04em;
 }
-.vm-card-app {
+.vm-targets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.vm-target {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 9px;
-  font-size: 0.9rem;
-  font-weight: 650;
+  gap: 6px;
+  color: #8a9199;
+  font-size: 0.56rem;
+  letter-spacing: 0.02em;
 }
-.vm-card-app i {
-  width: 21px;
-  height: 21px;
-  border-radius: 7px;
+.vm-target i {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(13, 17, 23, 0.08);
+}
+.vm-target.is-ours { color: var(--ink, #0d1117); font-weight: 650; }
+.vm-target.is-ours i {
   background: var(--accent, #30b7e6);
+  box-shadow: 0 0 0 3px rgba(48, 183, 230, 0.18);
 }
+
 .vm-arrow {
   width: 2px;
-  height: 20px;
+  height: 22px;
   border-radius: 2px;
   background: linear-gradient(180deg, rgba(48, 183, 230, 0.15), var(--accent, #30b7e6));
 }
+
+.vm-result {
+  display: flex;
+  width: min(100%, 262px);
+  flex-direction: column;
+  gap: 13px;
+}
 .vm-wave {
   display: flex;
-  width: min(100%, 260px);
-  height: 40px;
+  height: 36px;
   align-items: center;
   justify-content: space-between;
   gap: 3px;
@@ -6589,13 +6705,7 @@ p {
   border-radius: 999px;
   background: rgba(48, 183, 230, 0.45);
 }
-.vm-lines {
-  display: flex;
-  width: min(100%, 260px);
-  flex-direction: column;
-  gap: 7px;
-  margin-top: 4px;
-}
+.vm-lines { display: flex; flex-direction: column; gap: 7px; }
 .vm-lines i {
   height: 6px;
   border-radius: 999px;
@@ -6607,11 +6717,10 @@ p {
 
 .voice-message-steps {
   display: grid;
-  gap: 18px;
+  gap: 22px;
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: none;
 }
 .voice-message-step {
   display: grid;
