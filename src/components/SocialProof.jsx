@@ -15,15 +15,15 @@ import { playLink } from "../lib/playLink";
 
 const GITHUB_URL = "https://github.com/DevEmperor/DictateKeyboard";
 
-// Maintained by hand — checked 18 August 2026. Play publishes the rating and the rating count on the
+// Maintained by hand — checked 1 September 2026. Play publishes the rating and the rating count on the
 // listing; the install figure is the Play Console total, which is higher than the public "1K+" bracket
 // because Google rounds that one down hard. Re-check before a push that matters: the page once carried
 // 4.8 for weeks after Play had settled at 4.7, and a number drifting upwards is the one kind that costs
 // trust when someone checks.
 const stats = [
   { icon: Star, value: "4.7", label: "Google Play rating", href: playLink("proof"), note: "643 ratings" },
-  { icon: GithubLogo, value: "267", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
-  { icon: DownloadSimple, value: "3K+", label: "installs", href: playLink("proof"), note: "on Google Play" },
+  { icon: GithubLogo, value: "272", label: "GitHub stars", href: GITHUB_URL, note: "open source" },
+  { icon: DownloadSimple, value: "5K+", label: "installs", href: playLink("proof"), note: "on Google Play" },
   { icon: Lock, value: "€0", label: "subscription", href: `${GITHUB_URL}/blob/main/LICENSE`, note: "Apache 2.0" },
 ];
 
