@@ -50,6 +50,8 @@ const sttModels = [
   { provider: "Google Gemini", model: "gemini-2.5-flash", route: "async", cost: "$6.66", unit: "/ 1k min observed", wer: 5.14, languages: "Model-dependent", detail: "Faster multimodal route" },
   { provider: "Google Gemini", model: "gemini-2.5-flash-lite", route: "async", cost: "$6.56", unit: "/ 1k min observed", wer: 5.17, languages: "Model-dependent", detail: "Lightweight multimodal route" },
   { provider: "Google Gemini", model: "gemini-3.5-flash", route: "async", cost: "Live", unit: "token pricing", quality: "Not AA-tested", languages: "Model-dependent", detail: "Dynamic Gemini catalog" },
+  { provider: "Google Gemini", model: "gemini-3.5-transcribe", route: "async", cost: "Live", unit: "token pricing", quality: "Not AA-tested", languages: "Model-dependent", detail: "Google's own speech model, not a chat model under instruction" },
+  { provider: "Google Gemini", model: "gemini-3.5-transcribe-live", route: "realtime", cost: "Live", unit: "token pricing", quality: "Not AA-tested", languages: "Model-dependent", detail: "Streaming counterpart · Gemini realtime was unavailable before it" },
 
   { provider: "Mistral", model: "voxtral-mini-latest", route: "async", cost: "~$3.00", unit: "/ 1k min", quality: "3.59% alias proxy*", languages: "13 languages", detail: "Moving alias · current Voxtral Mini family benchmark" },
   { provider: "Soniox", model: "stt-async-v5", route: "async", cost: "$1.66", unit: "/ 1k min", wer: 3.81, languages: "60+ languages", detail: "Mixed-language capable" },
@@ -60,6 +62,7 @@ const sttModels = [
   { provider: "Deepgram", model: "nova-2", route: "async", cost: "~$5.83", unit: "/ 1k min", wer: 5.31, languages: "Additional coverage", detail: "Fills model/language gaps" },
   { provider: "Deepgram", model: "nova-3", route: "realtime", cost: "~$4.80", unit: "/ 1k min", wer: 6.59, latency: "0.066s final", languages: "Live language catalog", detail: "Realtime route · very low measured final latency" },
   { provider: "Deepgram", model: "nova-2", route: "realtime", cost: "~$5.83", unit: "/ 1k min", quality: "Not AA-tested", languages: "Additional coverage", detail: "Enabled realtime route" },
+  { provider: "Deepgram", model: "flux", route: "realtime", cost: "~$4.80", unit: "/ 1k min", quality: "Not AA-tested", languages: "Live language catalog", detail: "Decides itself when a turn ended, instead of waiting out a silence timer" },
   { provider: "AssemblyAI", model: "universal-3-pro", route: "async", cost: "$3.50", unit: "/ 1k min", wer: 3.12, languages: "6 languages", detail: "Accuracy-focused batch default" },
   { provider: "AssemblyAI", model: "universal-2", route: "async", cost: "~$2.50", unit: "/ 1k min", quality: "3.82% alias proxy*", languages: "99 languages", detail: "Wider language coverage" },
   { provider: "AssemblyAI", model: "universal-streaming", route: "realtime", cost: "~$2.50", unit: "/ 1k min", quality: "Not AA-tested", languages: "Endpoint-dependent", detail: "Dictate Keyboard realtime default" },

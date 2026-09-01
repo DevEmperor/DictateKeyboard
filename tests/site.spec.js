@@ -47,7 +47,7 @@ test("desktop conversion path, model buffet, and install", async ({ page }) => {
   await page.locator(".reword-playground").scrollIntoViewIfNeeded();
   await page.locator(".reword-prompts").getByRole("button", { name: "Bullets" }).click();
   await expect(page.locator(".reword-card-output")).toContainText("Proposal: send by Friday");
-  await expect(page.locator(".capability-card")).toHaveCount(7);
+  await expect(page.locator(".capability-card")).toHaveCount(10);
   await expect(page.getByRole("heading", { name: "Transcribe existing recordings." })).toBeVisible();
 
   await page.locator("#models").scrollIntoViewIfNeeded();
@@ -67,7 +67,8 @@ test("desktop conversion path, model buffet, and install", async ({ page }) => {
   await page.locator(".buffet-filters").getByRole("button", { name: "All routes" }).click();
   await expect(page.locator(".buffet-row")).toHaveCount(13);
   await page.getByRole("button", { name: /Explore all \d+ mapped STT options/ }).click();
-  await expect(page.locator(".buffet-row")).toHaveCount(48);
+  // 51 since 6.1: Gemini's two dedicated speech models and Deepgram Flux joined the table.
+  await expect(page.locator(".buffet-row")).toHaveCount(51);
 
   await page.locator(".modes").scrollIntoViewIfNeeded();
   await expect(page.locator(".mode-tabs button")).toHaveCount(4);
@@ -204,7 +205,9 @@ for (const width of [1440, 1100, 900, 700, 480]) {
       }),
     );
 
-    expect(gaps.length).toBe(7);
+    // Ten since 6.1: stickers, contacts and the autocorrect strip joined the deck. The count is
+    // asserted rather than derived so a card that silently stops rendering is a failure, not a shrug.
+    expect(gaps.length).toBe(10);
     for (const { title, gap } of gaps) {
       expect(gap, `"${title}" leaves only ${gap}px between its visual and its copy`).toBeGreaterThanOrEqual(16);
     }

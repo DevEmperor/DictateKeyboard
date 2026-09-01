@@ -4493,7 +4493,9 @@ p {
 .cap-prompts,
 .cap-stats,
 .cap-audio,
-.cap-themes {
+.cap-themes,
+.cap-contacts,
+.cap-correct {
   align-self: center;
   justify-self: center;
 }
@@ -6395,6 +6397,247 @@ p {
 .cap-gif-grid i:nth-child(5) { animation-delay: 0.6s; }
 .cap-gif-grid i:nth-child(6) { animation-delay: 0.75s; background: linear-gradient(115deg, rgba(217, 119, 87, 0.28), rgba(48, 183, 230, 0.14)); }
 @keyframes cap-gif-shimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* Ein Ordner, der zur Tastatur wird. Reiter oben, Kacheln darunter — dieselbe Bauart wie .cap-gifs:
+   die Höhe steht fest, die Kacheln teilen sie sich. Formen statt Bilder, weil ein echter Sticker
+   mitgeliefert und lizenziert werden müsste, um zu sagen, was die Form schon sagt. */
+.cap-stickers {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-self: center;
+  justify-self: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 286px;
+}
+.cap-sticker-tabs {
+  display: flex;
+  gap: 6px;
+  align-self: flex-start;
+}
+.cap-sticker-tabs i {
+  height: 7px;
+  width: 26px;
+  border-radius: 999px;
+  background: rgba(48, 183, 230, 0.22);
+}
+.cap-sticker-tabs i:first-child {
+  width: 38px;
+  background: var(--accent, #30b7e6);
+}
+.cap-sticker-grid {
+  display: grid;
+  height: 116px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6px;
+}
+.cap-sticker-grid i {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(48, 183, 230, 0.10);
+}
+.cap-sticker-grid i:nth-child(2) { border-radius: 50%; background: rgba(85, 183, 156, 0.16); }
+.cap-sticker-grid i:nth-child(3) { background: rgba(245, 166, 35, 0.14); }
+.cap-sticker-grid i:nth-child(5) { border-radius: 50%; background: rgba(217, 119, 87, 0.14); }
+
+/* Drei Namen, der letzte gerade hinzugekommen — und darunter der Satz, auf den es ankommt. */
+.cap-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  width: min(88%, 280px);
+}
+.cap-contacts span {
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-bright);
+  font-size: 0.82rem;
+}
+.cap-contacts span.is-new {
+  border-color: rgba(48, 183, 230, 0.45);
+  background: rgba(48, 183, 230, 0.10);
+  font-weight: 600;
+}
+.cap-contacts i {
+  margin-top: 3px;
+  color: #8a9199;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Das getippte Wort oben, die Leiste darunter — beide Hälften der Autokorrektur in einem Bild. */
+.cap-correct {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(88%, 280px);
+}
+.cap-correct-typed {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: underline wavy rgba(217, 119, 87, 0.6);
+  text-underline-offset: 5px;
+}
+.cap-correct-strip {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.cap-correct-strip i {
+  color: #8a9199;
+  font-size: 0.82rem;
+  font-style: normal;
+}
+.cap-correct-strip strong {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--accent, #30b7e6);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+/* ------------------------------------------------------------------ Sprachnachricht (6.1) */
+
+.voice-message {
+  display: grid;
+  gap: 44px;
+}
+.voice-message-body {
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .voice-message-body { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Die drei Schläge des Bildes untereinander: geteilt → Ton → Text. Wie überall hier aus Formen
+   gebaut und nicht aus einem Bildschirmfoto — ein Screenshot bräuchte eine helle und eine dunkle
+   Fassung und wäre in jeder Sprache falsch. */
+.voice-message-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  padding: 30px 26px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: var(--card-veil);
+  box-shadow: 0 5px 0 #d7d3c9, 0 18px 45px rgba(13, 17, 23, 0.055);
+}
+.vm-card {
+  display: flex;
+  width: min(100%, 260px);
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--paper-bright);
+}
+.vm-card-label {
+  color: #8a9199;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vm-card-app {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+.vm-card-app i {
+  width: 21px;
+  height: 21px;
+  border-radius: 7px;
+  background: var(--accent, #30b7e6);
+}
+.vm-arrow {
+  width: 2px;
+  height: 20px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(48, 183, 230, 0.15), var(--accent, #30b7e6));
+}
+.vm-wave {
+  display: flex;
+  width: min(100%, 260px);
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+}
+.vm-wave i {
+  width: 100%;
+  height: var(--h);
+  border-radius: 999px;
+  background: rgba(48, 183, 230, 0.45);
+}
+.vm-lines {
+  display: flex;
+  width: min(100%, 260px);
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+.vm-lines i {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(13, 17, 23, 0.14);
+}
+.vm-lines i:nth-child(2) { width: 92%; }
+.vm-lines i:nth-child(3) { width: 97%; }
+.vm-lines i:nth-child(4) { width: 55%; }
+
+.voice-message-steps {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+.voice-message-step {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+}
+.voice-message-step-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper-bright);
+  color: var(--accent, #30b7e6);
+}
+.voice-message-step strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.02rem;
+}
+.voice-message-step p {
+  margin: 0;
+  color: var(--ink-soft, #55606b);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .language-marquee-track, .cap-gif-grid i { animation: none !important; }

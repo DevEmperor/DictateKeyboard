@@ -39,6 +39,7 @@ import { ProviderIcon } from "./components/ProviderIcon";
 import { GooglePlayGlyph } from "./components/GooglePlayBadge";
 import { VideoShowcase } from "./components/VideoShowcase";
 import { Languages } from "./components/Languages";
+import { VoiceMessage } from "./components/VoiceMessage";
 import { Accessibility } from "./components/Accessibility";
 import { SocialProof } from "./components/SocialProof";
 import { useMarqueeScroll, useTilt } from "./lib/interactions";
@@ -350,6 +351,8 @@ function App() {
             </Reveal>
           </div>
         </section>
+
+        <VoiceMessage />
 
         <Languages />
 
