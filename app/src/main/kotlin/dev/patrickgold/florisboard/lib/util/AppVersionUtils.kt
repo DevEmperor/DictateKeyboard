@@ -61,22 +61,48 @@ object AppVersionUtils {
     }
 
     /**
-     * Records the version the app was first installed at, and the version last used.
+     * Records the version the app was first installed at, the version last used, and — for someone
+     * who has only ever run the version they installed — how much of the What's-new material they can
+     * be considered to have already been offered.
      *
-     * A fresh install also starts both "what have you already been shown" marks at that version,
-     * because someone installing today has missed nothing. Left at the 0.0.0 default they would mean
-     * "has seen no release ever", and the *next* update — including a patch meant to pass unnoticed —
-     * would replay every What's-new tour in the registry and a changelog listing every release.
+     * Both "already shown" marks start at 0.0.0, which reads as *has seen no release ever*. For a user
+     * who installed at 6.1.0 that is false in a way the next update pays for: nothing is shown on a
+     * fresh install (there is nothing to catch up on), so the mark is never written, and the first
+     * update afterwards replays every tour in the registry and a changelog listing every release since
+     * 5.0. A patch meant to install unnoticed is exactly where that would be unmissable.
+     *
+     * Reading `versionLastUse` *before* it is overwritten is what makes this safe to apply to installs
+     * that already exist: it distinguishes someone who has only ever run their install version — who
+     * has genuinely missed nothing — from someone who has updated through releases without finishing a
+     * tour, who may really be owed one and is left alone.
      */
     suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: FlorisPreferenceModel) {
+        val current = getRawVersionName(context)
+        val lastUse = prefs.internal.versionLastUse.get()
         if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
-            val current = getRawVersionName(context)
             prefs.internal.versionOnInstall.set(current)
-            prefs.internal.versionLastWhatsNew.set(current)
-            prefs.internal.versionLastChangelog.set(current)
         }
-        prefs.internal.versionLastUse.set(getRawVersionName(context))
+        val installVersion = prefs.internal.versionOnInstall.get()
+        if (hasMissedNothing(installVersion, lastUse)) {
+            if (prefs.internal.versionLastWhatsNew.get() == VersionName.DEFAULT_RAW) {
+                prefs.internal.versionLastWhatsNew.set(installVersion)
+            }
+            if (prefs.internal.versionLastChangelog.get() == VersionName.DEFAULT_RAW) {
+                prefs.internal.versionLastChangelog.set(installVersion)
+            }
+        }
+        prefs.internal.versionLastUse.set(current)
     }
+
+    /**
+     * Whether this install has never run a version other than the one it was installed at — in which
+     * case an unwritten "already shown" mark means *nothing was ever due*, not *everything is owed*.
+     *
+     * [lastUseRaw] must be read before this launch overwrites it.
+     */
+    internal fun hasMissedNothing(installVersionRaw: String, lastUseRaw: String): Boolean =
+        installVersionRaw != VersionName.DEFAULT_RAW &&
+            (lastUseRaw == VersionName.DEFAULT_RAW || lastUseRaw == installVersionRaw)
 
     suspend fun updateVersionLastChangelog(context: Context, prefs: FlorisPreferenceModel) {
         prefs.internal.versionLastChangelog.set(getRawVersionName(context))

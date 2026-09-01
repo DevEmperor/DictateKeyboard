@@ -103,12 +103,13 @@ class UpdateAnnouncementTest {
     }
 
     /**
-     * The case that made the fresh-install seeding necessary. Someone who installed 6.1.0 yesterday has
-     * an untouched high-water mark; without seeding it at install time, the *silent* 6.1.1 patch would
-     * greet them with all six tours in a row — the single most visible thing a quiet patch could do.
+     * The case that made the seeding necessary. Someone who installed 6.1.0 yesterday has an untouched
+     * high-water mark — nothing is shown on a fresh install, so nothing ever wrote it — and the
+     * *silent* 6.1.1 patch would greet them with all six tours in a row, the single most visible thing
+     * a quiet patch could do.
      *
-     * [AppVersionUtils.updateVersionOnInstallAndLastUse] writes the mark on first launch, which is what
-     * turns the first argument pair below into the second.
+     * [AppVersionUtils.updateVersionOnInstallAndLastUse] writes the mark on launch, which is what turns
+     * the first argument pair below into the second.
      */
     @Test
     fun `a fresh installer is not made to catch up on every past tour`() {
@@ -121,6 +122,34 @@ class UpdateAnnouncementTest {
             installVersion = v("6.1.0"), lastWhatsNew = v("6.1.0"), current = v("6.1.1"), candidates = tours,
         )
         assertEquals(emptyList(), seeded)
+    }
+
+    // --- who counts as having missed nothing ---------------------------------------------------------
+
+    @Test
+    fun `a brand new install has missed nothing`() {
+        assertTrue(AppVersionUtils.hasMissedNothing("6.1.1", VersionName.DEFAULT_RAW))
+    }
+
+    /**
+     * The reason the seeding is applied on every launch and not only at install time: the users it has
+     * to reach installed 6.1.0 *before* the code existed, so their mark is already sitting at the
+     * default and nothing would ever come along to write it.
+     */
+    @Test
+    fun `an install that has only ever run its own version has missed nothing`() {
+        assertTrue(AppVersionUtils.hasMissedNothing("6.1.0", "6.1.0"))
+    }
+
+    /** Someone who has updated through releases may genuinely be owed a tour; leave their mark alone. */
+    @Test
+    fun `an install that has run later versions is left alone`() {
+        assertFalse(AppVersionUtils.hasMissedNothing("5.0.0", "6.0.0"))
+    }
+
+    @Test
+    fun `an unknown install version claims nothing`() {
+        assertFalse(AppVersionUtils.hasMissedNothing(VersionName.DEFAULT_RAW, VersionName.DEFAULT_RAW))
     }
 
     @Test
