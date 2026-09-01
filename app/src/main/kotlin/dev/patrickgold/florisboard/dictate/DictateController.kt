@@ -75,6 +75,7 @@ import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
+import dev.patrickgold.florisboard.lib.util.VersionName
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeoutOrNull
@@ -240,6 +241,9 @@ object DictateController {
 
     /** Forces the floating-button spotlight regardless of gates (testing only). MUST be false for shipped builds. */
     private const val DEBUG_FORCE_FB_SPOTLIGHT = false
+
+    /** This build's release, patch level dropped — the bucket the once-per-release nudges are keyed on. */
+    private val FEATURE_VERSION_NAME = VersionName.featureVersionOf(BuildConfig.VERSION_NAME)
 
     private val prefs by FlorisPreferenceStore
 
@@ -3116,13 +3120,16 @@ object DictateController {
      * Shows a one-time Smartbar spotlight for the floating dictation button to users who have not enabled
      * it yet, so existing users discover the feature. Tapping it deep-links straight to the floating-button
      * settings screen (where the accessibility opt-in + disclosure live — it is never auto-enabled).
-     * Gated by a per-version flag; skipped once the user has enabled it or opened its screen. No-op unless idle.
+     * Gated by a per-release flag; skipped once the user has enabled it or opened its screen. No-op unless idle.
+     *
+     * "Per release" means per *feature* release: a patch is meant to install unnoticed, and a spotlight
+     * reappearing the day after one would announce it just as loudly as an update notice would.
      */
     fun maybePromptFloatingButton(context: Context) {
         if (_state.value !is UiState.Idle) return
         if (!DEBUG_FORCE_FB_SPOTLIGHT) {
             if (prefs.dictate.floatingButtonEnabled.get() || prefs.dictate.floatingButtonHintSeen.get()) return
-            if (prefs.dictate.floatingButtonSpotlightVersion.get() == BuildConfig.VERSION_NAME) return
+            if (prefs.dictate.floatingButtonSpotlightVersion.get() == FEATURE_VERSION_NAME) return
         }
         _state.value = UiState.Promo(PromoKind.FLOATING_BUTTON)
     }
@@ -3184,8 +3191,8 @@ object DictateController {
                 // Remember this version so the keyboard nudge shows only once per update. The in-app
                 // dialog stays governed by versionLastChangelog, so tapping/dismissing here never hides it.
                 PromoKind.CHANGELOG -> prefs.dictate.changelogNudgeVersion.set(BuildConfig.VERSION_NAME)
-                // Show the floating-button spotlight only once per version.
-                PromoKind.FLOATING_BUTTON -> prefs.dictate.floatingButtonSpotlightVersion.set(BuildConfig.VERSION_NAME)
+                // Show the floating-button spotlight only once per feature release (see the gate).
+                PromoKind.FLOATING_BUTTON -> prefs.dictate.floatingButtonSpotlightVersion.set(FEATURE_VERSION_NAME)
                 // The milestone was already consumed when shown; nothing further to persist.
                 PromoKind.MILESTONE -> Unit
                 // The flag was already set when shown, so the nudge cannot come back on the next

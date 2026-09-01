@@ -28,6 +28,17 @@ object AppVersionUtils {
         }
     }
 
+    /**
+     * Whether this launch should announce the update — the changelog dialog in the app and the
+     * "Dictate was updated" nudge in the Smartbar, which share this one gate.
+     *
+     * Only a *feature* release announces itself. A patch bump (x.y.Z) is a fix that was already
+     * described where it was reported; a user who never noticed the bug has nothing to read, and
+     * interrupting them to say a background repair happened is worse than saying nothing. Comparing
+     * [VersionName.featureVersion] rather than the full version is what keeps 6.1.0 → 6.1.1 silent
+     * while 6.1.x → 6.2.0 still speaks up. Note the mark itself stays untouched by a silent patch, so
+     * the next feature release still lists everything since the last release the user actually read.
+     */
     fun shouldShowChangelog(context: Context, prefs: FlorisPreferenceModel): Boolean {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
@@ -36,12 +47,33 @@ object AppVersionUtils {
         val currentVersion =
             VersionName.fromString(getRawVersionName(context)) ?: VersionName.DEFAULT
 
-        return lastChangelogVersion < currentVersion && installVersion != currentVersion
+        return shouldShowChangelog(installVersion, lastChangelogVersion, currentVersion)
     }
 
+    /** The rule itself, free of [Context] and preferences so it can be unit-tested. */
+    internal fun shouldShowChangelog(
+        installVersion: VersionName,
+        lastChangelogVersion: VersionName,
+        currentVersion: VersionName,
+    ): Boolean {
+        return lastChangelogVersion.featureVersion() < currentVersion.featureVersion() &&
+            installVersion != currentVersion
+    }
+
+    /**
+     * Records the version the app was first installed at, and the version last used.
+     *
+     * A fresh install also starts both "what have you already been shown" marks at that version,
+     * because someone installing today has missed nothing. Left at the 0.0.0 default they would mean
+     * "has seen no release ever", and the *next* update — including a patch meant to pass unnoticed —
+     * would replay every What's-new tour in the registry and a changelog listing every release.
+     */
     suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: FlorisPreferenceModel) {
         if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
-            prefs.internal.versionOnInstall.set(getRawVersionName(context))
+            val current = getRawVersionName(context)
+            prefs.internal.versionOnInstall.set(current)
+            prefs.internal.versionLastWhatsNew.set(current)
+            prefs.internal.versionLastChangelog.set(current)
         }
         prefs.internal.versionLastUse.set(getRawVersionName(context))
     }
@@ -82,7 +114,16 @@ object AppVersionUtils {
             VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
         val lastWhatsNew =
             VersionName.fromString(prefs.internal.versionLastWhatsNew.get()) ?: VersionName.DEFAULT
-        val current = currentVersion(context)
+        return pendingTourVersions(installVersion, lastWhatsNew, currentVersion(context), candidates)
+    }
+
+    /** The rule itself, free of [Context] and preferences so it can be unit-tested. */
+    internal fun pendingTourVersions(
+        installVersion: VersionName,
+        lastWhatsNew: VersionName,
+        current: VersionName,
+        candidates: List<VersionName>,
+    ): List<VersionName> {
         if (installVersion == current) return emptyList() // fresh install → setup flow, not what's-new
         return candidates
             .filter { it > lastWhatsNew && !(current < it) }
@@ -100,6 +141,16 @@ data class VersionName(
     companion object {
         val DEFAULT: VersionName = VersionName(0, 0, 0)
         const val DEFAULT_RAW: String = "0.0.0"
+
+        /**
+         * [raw] with the patch level dropped ("6.1.1" → "6.1.0"), for preferences that remember "the
+         * user has already been shown this once per release". Keying those on the full version would
+         * make a patch release re-show them, which is the opposite of what a patch is for.
+         *
+         * A version name that cannot be parsed (debug builds carry a suffix) is returned unchanged, so
+         * it simply keeps a bucket of its own.
+         */
+        fun featureVersionOf(raw: String): String = fromString(raw)?.featureVersion()?.toString() ?: raw
 
         fun fromString(raw: String): VersionName? {
             if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+""".toRegex())) {
@@ -134,6 +185,13 @@ data class VersionName(
             return null
         }
     }
+
+    /**
+     * This version with the patch level (and any pre-release suffix) dropped — 6.1.1 and 6.1.0 both
+     * become 6.1.0. Two builds that agree here carry the same features, which is what decides whether
+     * an update has anything to announce; see [AppVersionUtils.shouldShowChangelog].
+     */
+    fun featureVersion(): VersionName = VersionName(major, minor, 0)
 
     override fun toString(): String {
         val mmp = "$major.$minor.$patch"
