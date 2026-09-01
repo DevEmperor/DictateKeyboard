@@ -43,6 +43,24 @@ data class GifPage(
 }
 
 /**
+ * Appends [incoming] onto [current], keeping only the GIFs whose [GifItem.id] is not in the list yet.
+ *
+ * Providers repeat themselves. KLIPY returns the same slug twice inside a single page of trending
+ * results, and returns it again on the next page once the ranking has shifted between the two
+ * requests. The grid in [GifPanel] keys its items by that id, and a repeated key is not a cosmetic
+ * problem: Compose throws `IllegalArgumentException: Key "…" was already used` out of the measure
+ * pass, which takes the whole keyboard down with it (issue #307).
+ *
+ * Every page goes through here, the first one included — that is where the crash was actually
+ * reported from, and a dedup that only covers the appends leaves the opening screen unguarded.
+ * [MutableSet.add] returning false is what also drops duplicates *within* [incoming].
+ */
+fun appendUnseenGifs(current: List<GifItem>, incoming: List<GifItem>): List<GifItem> {
+    val seen = current.mapTo(HashSet(current.size + incoming.size)) { it.id }
+    return current + incoming.filter { seen.add(it.id) }
+}
+
+/**
  * Abstraction over an online GIF search backend. Implementations must be safe to call from a
  * coroutine (they perform network I/O internally on [kotlinx.coroutines.Dispatchers.IO]).
  */

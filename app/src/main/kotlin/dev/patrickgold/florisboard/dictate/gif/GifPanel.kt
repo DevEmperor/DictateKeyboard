@@ -128,7 +128,7 @@ fun GifPanel(
         submittedQuery?.takeIf { it.isNotBlank() }?.let { GifHistoryHelper.addSearch(prefs, it) }
         try {
             val first = loadPage(1)
-            gifs = first.items
+            gifs = appendUnseenGifs(emptyList(), first.items)
             hasNext = first.hasNext
         } catch (e: Exception) {
             loadError = true
@@ -144,8 +144,7 @@ fun GifPanel(
                     loadingMore = true
                     try {
                         val next = loadPage(page + 1)
-                        val seen = gifs.mapTo(HashSet()) { it.id }
-                        gifs = gifs + next.items.filterNot { it.id in seen }
+                        gifs = appendUnseenGifs(gifs, next.items)
                         page += 1
                         hasNext = next.hasNext
                     } catch (e: Exception) {
