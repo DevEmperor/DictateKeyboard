@@ -143,6 +143,51 @@ data class ProviderAccount(
 }
 
 /**
+ * Whether single-call multimodal (issue #130) actually applies to [account] — the switch being on is not
+ * enough on its own.
+ *
+ * The route posts audio to `chat/completions`, so it needs a chat model that accepts audio. The on-device
+ * engine has no chat surface at all, and a *dedicated* speech-to-text model answers on its own endpoint
+ * (Google's, issue #292) — with either of those chosen, the switch has to yield to the model.
+ *
+ * Asked in one place because two very different questions turn on it: whether a dictation goes out as one
+ * request, and — since #313 — whether the transcription model is also the rewording model. When those two
+ * drifted apart, the dialog said one model did both while the rewording quietly used something else.
+ */
+fun singleCallApplies(transcriptionViaChat: Boolean, preset: ProviderPreset, model: String): Boolean =
+    transcriptionViaChat &&
+        preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
+        !(preset.id == ProviderRegistry.GEMINI.id && ProviderRegistry.isGeminiTranscribeModel(model))
+
+/**
+ * The model to reword with for [account] — the one the settings dialog says will be used, which is not
+ * always the one [ProviderAccount.chatModel] holds (issue #313).
+ *
+ * Three answers, in order:
+ *
+ *  1. **An explicit choice wins.** A rewording model the user picked is used verbatim, and if the provider
+ *     has since retired it they get an error naming the model they chose, which is the honest outcome.
+ *  2. **Otherwise the single-call promise is kept.** With that switch on, the dialog hides the rewording
+ *     field and relabels the remaining one "Transcription & rewording model" — so that field is what the
+ *     user was told does both, and rewording has to read it. It did not: `chatModel` stayed blank forever
+ *     and every rewording went to the preset default instead, which is the bug #313 reports. Only when
+ *     [singleCallApplies], because a dedicated speech-to-text model cannot reword at all.
+ *  3. **Otherwise the preset default**, which is what "no model chosen" has always meant. Kept as an empty
+ *     stored string on purpose, so a later app update can move a provider off a retired model — the
+ *     mechanism that failed here not because it is wrong but because nobody moved the models.
+ */
+fun chatModelFor(
+    account: ProviderAccount,
+    preset: ProviderPreset,
+    fallback: String = "gpt-4o-mini",
+): String {
+    account.chatModel.takeIf { it.isNotBlank() }?.let { return it }
+    val shared = account.transcriptionModel
+    if (shared.isNotBlank() && singleCallApplies(account.transcriptionViaChat, preset, shared)) return shared
+    return preset.defaultChatModel ?: fallback
+}
+
+/**
  * The provider keyring: every configured [ProviderAccount] keyed by provider id. Persisted as a single
  * JetPref `custom` preference (see `AppPrefs.dictate.providerAccounts`) using [Serializer], mirroring
  * the `EmojiHistory` pattern. Switching the active transcription/rewording provider is just a change of

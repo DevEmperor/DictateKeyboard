@@ -18,6 +18,7 @@ import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
+import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.sync.DictateSyncedSettings
 import dev.patrickgold.florisboard.dictate.sync.SyncedPrompt
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +53,7 @@ object PhoneWearSettingsResolver {
         val rewordingId = prefs.dictate.rewordingProviderId.get()
         val rewordingAccount = prefs.dictate.providerAccounts.get().getOrEmpty(rewordingId)
         val rewordingPreset = presetFor(rewordingAccount)
-        val chatModel = rewordingAccount.chatModel.ifBlank { rewordingPreset.defaultChatModel ?: "" }
+        val chatModel = chatModelFor(rewordingAccount, rewordingPreset, fallback = "")
         val rewordingBaseUrl = if ((rewordingAccount.isCustom || rewordingPreset.allowsCustomBaseUrl) && rewordingAccount.customBaseUrl.isNotBlank()) rewordingAccount.customBaseUrl else rewordingPreset.baseUrl
         val rewordingKey = rewordingAccount.apiKey.ifBlank { account.apiKey }
         val autoApply = withContext(Dispatchers.IO) {

@@ -89,6 +89,7 @@ import dev.patrickgold.florisboard.dictate.provider.DictateRewording
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
+import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -659,7 +660,7 @@ private suspend fun rewordWith(context: Context, promptBody: String, transcript:
     )
     return DictateRewording.apply(
         client = client,
-        chatModel = account.chatModel.ifBlank { preset.defaultChatModel ?: "gpt-4o-mini" },
+        chatModel = chatModelFor(account, preset),
         transcript = transcript,
         // The chosen prompt is the whole job here — no auto-formatting and no auto-apply chain, which
         // the transcript already went through if the user wanted them.

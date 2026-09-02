@@ -80,6 +80,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
+import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -588,6 +589,12 @@ private fun ProviderEditorDialog(
         else -> preset
     }
 
+    // Whether single-call would actually run with what is currently in the dialog, which is what decides
+    // both the transcription field's label and whether the rewording field is shown (#313). The switch on
+    // its own is not the answer: the same question is asked at dictation time, and this is the one place
+    // where the user can see the answer before it costs them a failed rewording.
+    val singleCall = singleCallApplies(transcriptionViaChat, effectivePreset, transcriptionModel)
+
     // Pre-load the model catalog so we know whether this provider has any audio-capable model — that
     // gates the single-call multimodal option (#130/#132). Populates on open for keyed accounts; for a
     // fresh account the model browser fills it in when the user picks a model. Once classified, stops.
@@ -696,9 +703,14 @@ private fun ProviderEditorDialog(
             ConnectionTestRow(preset = effectivePreset, apiKey = apiKey)
             if (showTranscription) {
                 EditorField(
-                    // When single-call is on, this one model does both transcription and rewording (#130).
+                    // When single-call is on, this one model does both transcription and rewording (#130) —
+                    // and since #313 the rewording path reads the same field, so the label is a promise
+                    // rather than a description. It is therefore asked whether single-call *applies*, not
+                    // merely whether the switch is on: with a dedicated speech-to-text model chosen there
+                    // is no chat surface, nothing is done in one call, and the rewording field below comes
+                    // back rather than the label claiming a model that cannot reword.
                     label = stringRes(
-                        if (transcriptionViaChat) {
+                        if (singleCall) {
                             R.string.dictate__providers_field_transcription_rewording_model
                         } else {
                             R.string.dictate__providers_field_transcription_model
@@ -762,7 +774,7 @@ private fun ProviderEditorDialog(
                 }
             }
             // Rewording model is unused while single-call multimodal is on (one model does both, #130).
-            if (showChat && !transcriptionViaChat) {
+            if (showChat && !singleCall) {
                 EditorField(
                     label = stringRes(R.string.dictate__providers_field_chat_model),
                     value = chatModel,

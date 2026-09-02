@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
+import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -82,7 +83,7 @@ object PhoneTranscriber {
         val apiKey = rewordingAccount.apiKey.ifBlank { transcriptionKey }
         if (apiKey.isBlank() && rewordingPreset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return transcript
 
-        val chatModel = rewordingAccount.chatModel.ifBlank { rewordingPreset.defaultChatModel ?: "gpt-4o-mini" }
+        val chatModel = chatModelFor(rewordingAccount, rewordingPreset)
         val client = OpenAiCompatibleClient.from(
             rewordingPreset,
             apiKey,
