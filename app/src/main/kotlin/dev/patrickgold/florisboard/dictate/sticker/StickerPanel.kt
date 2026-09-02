@@ -172,6 +172,14 @@ fun StickerPanel(
         }
     }
 
+    /**
+     * The folder [item] actually lives in, which is what every history write is keyed on — not the tab
+     * it was tapped from. The combined tab shows stickers from every pack, so the two differ there, and
+     * keying on the tab is what made a pack's own list disagree with the combined one (#308).
+     */
+    fun ownerOf(item: StickerItem): String =
+        index?.categoryOf(item.docId) ?: StickerCategory.ROOT_ID
+
     fun insert(item: StickerItem, categoryId: String, asGif: Boolean = false) {
         val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
         scope.launch {
@@ -366,19 +374,19 @@ fun StickerPanel(
                                 emptyList()
                             },
                             packOf = { docId -> currentIndex!!.categoryOf(docId) },
-                            onInsert = { item -> insert(item, category.id) },
+                            onInsert = { item -> insert(item, ownerOf(item)) },
                             onDelete = { item -> deleteFile(item) },
                             onShare = { item -> shareSticker(item) },
-                            onInsertAsGif = { item -> insert(item, category.id, asGif = true) },
+                            onInsertAsGif = { item -> insert(item, ownerOf(item), asGif = true) },
                             onMoveToPack = { item, packId -> moveToPack(item, packId) },
                             onPin = { item ->
-                                scope.launch { StickerHistoryHelper.pin(prefs, historyKey, item.docId) }
+                                scope.launch { StickerHistoryHelper.pin(prefs, ownerOf(item), item.docId) }
                             },
                             onUnpin = { item ->
-                                scope.launch { StickerHistoryHelper.unpin(prefs, historyKey, item.docId) }
+                                scope.launch { StickerHistoryHelper.unpin(prefs, ownerOf(item), item.docId) }
                             },
                             onForget = { item ->
-                                scope.launch { StickerHistoryHelper.removeRecent(prefs, historyKey, item.docId) }
+                                scope.launch { StickerHistoryHelper.removeRecent(prefs, ownerOf(item), item.docId) }
                             },
                         )
                     }
@@ -421,12 +429,12 @@ private fun StickerCategoryPage(
     var packPickerOpen by remember { mutableStateOf(false) }
 
     val byId = remember(pool) { pool.associateBy { it.docId } }
-    // Favourites and recents live on the first tab only. Inside a pack every sticker is equal — the
-    // pack *is* the sorting, and repeating a sticker at the top under a second heading only made it
-    // harder to find the one you came for.
-    val showHistory = category.id == StickerCategory.ROOT_ID
-    val pinned = if (showHistory) history.pinnedIn(historyKey).mapNotNull { byId[it] } else emptyList()
-    val recent = if (showHistory) history.recentIn(historyKey).mapNotNull { byId[it] } else emptyList()
+    // Every tab carries its own favourites and recents (#308). They were once shown on the first tab
+    // alone, on the argument that inside a pack every sticker is equal — but a pack of two hundred is
+    // exactly where "the six I actually use" is worth the two rows it costs, and it is what the folder
+    // feature was described as doing.
+    val pinned = history.pinnedIn(historyKey).mapNotNull { byId[it] }
+    val recent = history.recentIn(historyKey).mapNotNull { byId[it] }
     val shown = remember(pinned, recent, category.items) {
         val used = HashSet<String>(pinned.size + recent.size)
         pinned.mapTo(used) { it.docId }

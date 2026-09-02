@@ -19,13 +19,18 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 /**
- * Favourites and recently used stickers, kept **per category** (issue #280).
+ * Favourites and recently used stickers, kept **per category** (issues #280, #308).
  *
  * The request asked for each folder to remember its own favourites and its own recents, and for the
  * combined tab to keep a separate order of its own — so both maps are keyed by category id, with
  * [GLOBAL] holding the combined lists. Writing to two lists on every use is what makes the orders
  * independent: reordering a favourite inside one folder leaves the combined view alone, which is exactly
  * what was asked for and would be impossible if the combined list were derived on read.
+ *
+ * **Every write is keyed on the folder the sticker lives in, never on the tab it was tapped from.** The
+ * combined tab shows stickers from every pack, so keying on the tab meant a sticker used from there
+ * never reached its own pack's list, while the same sticker used from inside the pack did — the two
+ * lists disagreed about the same action depending on where you were standing when you performed it.
  *
  * Stored as document ids rather than whole items: the index already knows the rest, and an id that no
  * longer resolves is simply skipped when the rows are built.
@@ -83,6 +88,11 @@ object StickerHistoryHelper {
         val pinned = current.pinned.mapValuesTo(HashMap()) { it.value.toMutableList() }
         val recent = current.recent.mapValuesTo(HashMap()) { it.value.toMutableList() }
         block(pinned, recent)
+        // A list under the root id was written by older builds and is read by nothing: loose files have
+        // no tab of their own, so their history is the combined one. Dropping it on the next write
+        // rather than in a migration keeps the stored blob honest without a version to check.
+        pinned.remove(StickerCategory.ROOT_ID)
+        recent.remove(StickerCategory.ROOT_ID)
         prefs.sticker.historyData.set(
             StickerHistory(
                 pinned = pinned.filterValues { it.isNotEmpty() }.mapValues { it.value.toList() },
@@ -90,6 +100,20 @@ object StickerHistoryHelper {
             )
         )
     }
+
+    /**
+     * The history lists a sticker owned by [categoryId] belongs in.
+     *
+     * A pack keeps its own list *and* feeds the combined one. Loose files in the picked folder have no
+     * tab of their own — the combined tab is where they are shown — so for them the two are the same
+     * list and there is only one to write.
+     */
+    internal fun listKeysFor(categoryId: String): List<String> =
+        if (categoryId == StickerCategory.ROOT_ID) {
+            listOf(StickerHistory.GLOBAL)
+        } else {
+            listOf(categoryId, StickerHistory.GLOBAL)
+        }
 
     private fun MutableMap<String, MutableList<String>>.prepend(key: String, docId: String, maxSize: Int) {
         val list = getOrPut(key) { mutableListOf() }
@@ -111,35 +135,39 @@ object StickerHistoryHelper {
         }
     }
 
-    /** Records a use in [categoryId] and in the combined list. Pinned stickers stay where they are. */
+    /**
+     * Records a use of a sticker owned by [categoryId], in that pack's list and in the combined one.
+     * Pinned stickers stay where they are — a favourite is not demoted to a recent by being used.
+     */
     suspend fun markUsed(prefs: FlorisPreferenceModel, categoryId: String, docId: String) {
         val maxSize = prefs.sticker.historyRecentMaxSize.get()
         edit(prefs) { pinned, recent ->
-            if (docId !in pinned[categoryId].orEmpty()) {
-                recent.prepend(categoryId, docId, maxSize)
-            }
-            if (docId !in pinned[StickerHistory.GLOBAL].orEmpty()) {
-                recent.prepend(StickerHistory.GLOBAL, docId, maxSize)
+            for (key in listKeysFor(categoryId)) {
+                if (docId !in pinned[key].orEmpty()) {
+                    recent.prepend(key, docId, maxSize)
+                }
             }
         }
     }
 
-    /** Pins in the sticker's own category and in the combined list, and drops it from both recents. */
+    /** Pins in the sticker's own pack and in the combined list, and drops it from both recents. */
     suspend fun pin(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { pinned, recent ->
-        pinned.prepend(categoryId, docId, maxSize = 0)
-        pinned.prepend(StickerHistory.GLOBAL, docId, maxSize = 0)
-        recent[categoryId]?.remove(docId)
-        recent[StickerHistory.GLOBAL]?.remove(docId)
+        for (key in listKeysFor(categoryId)) {
+            pinned.prepend(key, docId, maxSize = 0)
+            recent[key]?.remove(docId)
+        }
     }
 
     suspend fun unpin(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { pinned, _ ->
-        pinned[categoryId]?.remove(docId)
-        pinned[StickerHistory.GLOBAL]?.remove(docId)
+        for (key in listKeysFor(categoryId)) {
+            pinned[key]?.remove(docId)
+        }
     }
 
     suspend fun removeRecent(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { _, recent ->
-        recent[categoryId]?.remove(docId)
-        recent[StickerHistory.GLOBAL]?.remove(docId)
+        for (key in listKeysFor(categoryId)) {
+            recent[key]?.remove(docId)
+        }
     }
 
     /**

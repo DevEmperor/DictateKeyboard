@@ -77,6 +77,35 @@ class StickerHistoryTest {
         assertTrue(StickerHistory.GLOBAL.any { it.code == 0 })
     }
 
+    /**
+     * Which lists a use is written to, and why it is keyed on the folder rather than the tab (#308).
+     *
+     * The combined tab shows stickers from every pack. Keying a write on the tab therefore meant the
+     * same action landed in different lists depending on where the user was standing: used from inside
+     * the pack it reached the pack's list, used from the combined tab it did not — and the pack's
+     * favourites row disagreed with the combined one about a sticker they both contain.
+     */
+    @Test
+    fun `a pack keeps its own list and feeds the combined one`() {
+        assertEquals(
+            listOf("memes", StickerHistory.GLOBAL),
+            StickerHistoryHelper.listKeysFor("memes"),
+        )
+    }
+
+    /**
+     * Loose files have no tab of their own — the combined tab is where they are shown — so for them
+     * the pack list and the combined list are the same list, and writing it twice would be the only
+     * effect of pretending otherwise. Older builds did write a root-keyed list; nothing ever read it.
+     */
+    @Test
+    fun `a loose file has only the combined list`() {
+        assertEquals(
+            listOf(StickerHistory.GLOBAL),
+            StickerHistoryHelper.listKeysFor(StickerCategory.ROOT_ID),
+        )
+    }
+
     @Test
     fun `the index finds an item across categories and reports emptiness honestly`() {
         val png = { id: String -> StickerItem(docId = id, name = id, mime = "image/png", lastModified = 0L) }
