@@ -2047,8 +2047,6 @@
     <string name="prefs__media__sticker_rescan">重新读取文件夹</string>
     <string name="prefs__media__sticker_rescan__summary">在添加或删除文件后使用</string>
     <string name="prefs__media__sticker_thumbnail_size">贴纸大小</string>
-    <string name="prefs__media__sticker_history_enabled">收藏和最近使用</string>
-    <string name="prefs__media__sticker_history_enabled__summary">在每个文件夹上方显示已固定和最近使用的贴纸</string>
     <string name="prefs__media__sticker_history_recent_max_size">保留的最近使用贴纸数量</string>
     <string name="prefs__media__sticker_confirm_before_insert">发送前确认</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">轻点一次贴纸以选中，再轻点一次发送。快速双击可直接发送</string>

@@ -91,6 +91,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.dictate.ui.MediaAction
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -749,6 +750,10 @@ private fun ClipTextItemDescription(
     }
 }
 
+/**
+ * One row of the item popup. The implementation moved to [MediaAction] when the sticker and GIF
+ * panels adopted this surface; the alias stays so the call sites here still read as their own thing.
+ */
 @Composable
 private fun PopupAction(
     icon: ImageVector,
@@ -756,16 +761,5 @@ private fun PopupAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    SnyggRow(FlorisImeUi.ClipboardItemAction.elementName,
-        modifier = modifier.rippleClickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        SnyggIcon(FlorisImeUi.ClipboardItemActionIcon.elementName,
-            imageVector = icon,
-        )
-        SnyggText(FlorisImeUi.ClipboardItemActionText.elementName,
-            modifier = Modifier.weight(1f),
-            text = text,
-        )
-    }
+    MediaAction(icon = icon, text = text, modifier = modifier, onClick = onClick)
 }

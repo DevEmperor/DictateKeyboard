@@ -2068,8 +2068,6 @@
     <string name="prefs__media__sticker_rescan">Wczytaj folder ponownie</string>
     <string name="prefs__media__sticker_rescan__summary">Użyj po dodaniu lub usunięciu plików</string>
     <string name="prefs__media__sticker_thumbnail_size">Rozmiar naklejek</string>
-    <string name="prefs__media__sticker_history_enabled">Ulubione i ostatnio używane</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Pokazuj przypięte i ostatnio używane naklejki nad każdym folderem</string>
     <string name="prefs__media__sticker_history_recent_max_size">Liczba zapamiętanych ostatnio używanych naklejek</string>
     <string name="prefs__media__sticker_confirm_before_insert">Potwierdzaj przed wysłaniem</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Dotknij naklejki raz, aby ją wybrać, i ponownie, aby wysłać. Szybkie dwukrotne dotknięcie wysyła od razu</string>

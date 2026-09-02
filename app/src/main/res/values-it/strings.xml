@@ -1836,8 +1836,6 @@
     <string name="prefs__media__sticker_rescan">Rileggi la cartella</string>
     <string name="prefs__media__sticker_rescan__summary">Da usare dopo aver aggiunto o rimosso file</string>
     <string name="prefs__media__sticker_thumbnail_size">Dimensione degli adesivi</string>
-    <string name="prefs__media__sticker_history_enabled">Preferiti e usati di recente</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Mostra gli adesivi fissati e usati di recente sopra ogni cartella</string>
     <string name="prefs__media__sticker_history_recent_max_size">Adesivi recenti da conservare</string>
     <string name="prefs__media__sticker_confirm_before_insert">Conferma prima di inviare</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Tocca uno sticker una volta per selezionarlo e di nuovo per inviarlo. Un doppio tocco rapido lo invia subito</string>

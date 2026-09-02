@@ -1861,8 +1861,6 @@
     <string name="prefs__media__sticker_rescan">Ler a pasta de novo</string>
     <string name="prefs__media__sticker_rescan__summary">Use depois de adicionar ou remover arquivos</string>
     <string name="prefs__media__sticker_thumbnail_size">Tamanho das figurinhas</string>
-    <string name="prefs__media__sticker_history_enabled">Favoritas e usadas recentemente</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Mostrar as figurinhas fixadas e usadas recentemente acima de cada pasta</string>
     <string name="prefs__media__sticker_history_recent_max_size">Figurinhas recentes a manter</string>
     <string name="prefs__media__sticker_confirm_before_insert">Confirmar antes de enviar</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Toque uma vez em um sticker para selecioná-lo e outra para enviá-lo. Um toque duplo rápido envia direto</string>

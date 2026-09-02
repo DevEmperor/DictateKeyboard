@@ -2053,8 +2053,6 @@
     <string name="prefs__media__sticker_rescan">Прочети папката отново</string>
     <string name="prefs__media__sticker_rescan__summary">Използвайте след добавяне или премахване на файлове</string>
     <string name="prefs__media__sticker_thumbnail_size">Размер на стикерите</string>
-    <string name="prefs__media__sticker_history_enabled">Любими и наскоро използвани</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Показвай закачените и наскоро използваните стикери над всяка папка</string>
     <string name="prefs__media__sticker_history_recent_max_size">Брой запазени наскоро използвани стикери</string>
     <string name="prefs__media__sticker_confirm_before_insert">Потвърждаване преди изпращане</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Докоснете стикер веднъж, за да го изберете, и още веднъж, за да го изпратите. Бързото двойно докосване го изпраща веднага</string>

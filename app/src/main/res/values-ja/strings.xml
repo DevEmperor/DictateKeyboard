@@ -1985,8 +1985,6 @@
     <string name="prefs__media__sticker_rescan">フォルダを読み直す</string>
     <string name="prefs__media__sticker_rescan__summary">ファイルを追加・削除した後に使用します</string>
     <string name="prefs__media__sticker_thumbnail_size">ステッカーの大きさ</string>
-    <string name="prefs__media__sticker_history_enabled">お気に入りと最近使ったもの</string>
-    <string name="prefs__media__sticker_history_enabled__summary">固定したステッカーと最近使ったステッカーを各フォルダの上に表示</string>
     <string name="prefs__media__sticker_history_recent_max_size">保存する最近使ったステッカーの数</string>
     <string name="prefs__media__sticker_confirm_before_insert">送信前に確認</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">ステッカーを1回タップして選択し、もう一度タップして送信します。すばやく2回タップするとすぐに送信されます</string>

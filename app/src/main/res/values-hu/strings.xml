@@ -2051,8 +2051,6 @@
     <string name="prefs__media__sticker_rescan">Mappa újraolvasása</string>
     <string name="prefs__media__sticker_rescan__summary">Fájlok hozzáadása vagy törlése után használd</string>
     <string name="prefs__media__sticker_thumbnail_size">Matricák mérete</string>
-    <string name="prefs__media__sticker_history_enabled">Kedvencek és nemrég használtak</string>
-    <string name="prefs__media__sticker_history_enabled__summary">A kitűzött és nemrég használt matricák megjelenítése minden mappa fölött</string>
     <string name="prefs__media__sticker_history_recent_max_size">Megőrzött nemrég használt matricák száma</string>
     <string name="prefs__media__sticker_confirm_before_insert">Megerősítés küldés előtt</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Koppints egyszer a matricára a kiválasztásához, majd újra a küldéshez. A gyors dupla koppintás azonnal elküldi</string>

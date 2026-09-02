@@ -1928,8 +1928,6 @@
     <string name="prefs__media__sticker_rescan">Ordner neu einlesen</string>
     <string name="prefs__media__sticker_rescan__summary">Nach dem Hinzufügen oder Löschen von Dateien verwenden</string>
     <string name="prefs__media__sticker_thumbnail_size">Stickergröße</string>
-    <string name="prefs__media__sticker_history_enabled">Favoriten und zuletzt verwendet</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Angeheftete und zuletzt verwendete Sticker über jedem Ordner anzeigen</string>
     <string name="prefs__media__sticker_history_recent_max_size">Anzahl gemerkter zuletzt verwendeter Sticker</string>
     <string name="prefs__media__sticker_confirm_before_insert">Vor dem Senden bestätigen</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Einmal tippen wählt den Sticker aus, noch einmal sendet ihn. Ein schneller Doppeltipp sendet sofort</string>

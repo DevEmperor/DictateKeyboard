@@ -1952,8 +1952,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="prefs__media__sticker_rescan">Map opnieuw inlezen</string>
     <string name="prefs__media__sticker_rescan__summary">Gebruik dit na het toevoegen of verwijderen van bestanden</string>
     <string name="prefs__media__sticker_thumbnail_size">Stickergrootte</string>
-    <string name="prefs__media__sticker_history_enabled">Favorieten en onlangs gebruikt</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Vastgezette en onlangs gebruikte stickers boven elke map tonen</string>
     <string name="prefs__media__sticker_history_recent_max_size">Aantal bewaarde onlangs gebruikte stickers</string>
     <string name="prefs__media__sticker_confirm_before_insert">Bevestigen voor verzenden</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Tik één keer op een sticker om hem te kiezen en nog een keer om hem te versturen. Twee keer snel tikken verstuurt hem meteen</string>

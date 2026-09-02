@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.gif
 
+import android.graphics.drawable.Animatable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,6 +29,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -39,8 +41,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,11 +60,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupProperties
+import coil3.DrawableImage
 import coil3.compose.AsyncImage
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.ui.MediaAction
+import dev.patrickgold.florisboard.dictate.ui.MediaActionOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
@@ -115,8 +117,11 @@ fun GifPanel(
     var initialLoading by remember { mutableStateOf(true) }
     var loadError by remember { mutableStateOf(false) }
     var loadingMore by remember { mutableStateOf(false) }
-    var confirmDeleteGifId by remember { mutableStateOf<String?>(null) }
+    // The long-pressed GIF, if any. Its own state rather than an id, because the sheet shows it.
+    var menuItem by remember { mutableStateOf<GifItem?>(null) }
     val gridState = rememberLazyStaggeredGridState()
+    // The recents row scrolls independently of the grid, and its GIFs animate independently too.
+    val recentsState = rememberLazyListState()
 
     suspend fun loadPage(p: Int): GifPage =
         if (submittedQuery.isNullOrBlank()) GifManager.provider.trending(p)
@@ -264,6 +269,7 @@ fun GifPanel(
                         // Home view: a row of recently used GIFs above trending. (Hidden while showing results.)
                         if (!inResults && history.recentGifs.isNotEmpty()) {
                             LazyRow(
+                                state = recentsState,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(96.dp),
@@ -271,36 +277,19 @@ fun GifPanel(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 items(history.recentGifs, key = { "recent-${it.id}" }) { item ->
-                                    Box {
-                                        GifThumb(
-                                            item = item,
-                                            fixedHeight = true,
-                                            onClick = {
-                                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                                insert(item)
-                                            },
-                                            onLongClick = {
-                                                inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
-                                                confirmDeleteGifId = item.id
-                                            },
-                                        )
-                                        DropdownMenu(
-                                            expanded = confirmDeleteGifId == item.id,
-                                            onDismissRequest = { confirmDeleteGifId = null },
-                                            // See StickerPanel: a focusable popup makes the IME lose
-                                            // window focus and the panel closes itself.
-                                            properties = PopupProperties(focusable = false),
-                                        ) {
-                                            DropdownMenuItem(
-                                                text = { Text(stringRes(R.string.action__delete)) },
-                                                leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
-                                                onClick = {
-                                                    scope.launch { GifHistoryHelper.removeGif(prefs, item.id) }
-                                                    confirmDeleteGifId = null
-                                                },
-                                            )
-                                        }
-                                    }
+                                    GifThumb(
+                                        item = item,
+                                        fixedHeight = true,
+                                        scrolling = { recentsState.isScrollInProgress },
+                                        onClick = {
+                                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                            insert(item)
+                                        },
+                                        onLongClick = {
+                                            inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                                            menuItem = item
+                                        },
+                                    )
                                 }
                             }
                         }
@@ -325,6 +314,7 @@ fun GifPanel(
                                 items(gifs, key = { it.id }) { item ->
                                     GifThumb(
                                         item = item,
+                                        scrolling = { gridState.isScrollInProgress },
                                         onClick = {
                                             inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                             insert(item)
@@ -336,7 +326,7 @@ fun GifPanel(
                     }
                 }
             }
-            if (hasKey) {
+            if (hasKey && menuItem == null) {
                 SnyggText(
                     elementName = FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName,
                     text = stringRes(R.string.gif__powered_by),
@@ -344,6 +334,30 @@ fun GifPanel(
                         .align(Alignment.BottomEnd)
                         .padding(6.dp),
                 )
+            }
+            val sheetItem = menuItem
+            if (sheetItem != null) {
+                MediaActionOverlay(
+                    onDismiss = { menuItem = null },
+                    preview = {
+                        AsyncImage(
+                            model = sheetItem.previewUrl,
+                            contentDescription = sheetItem.title,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f)
+                                .aspectRatio(1f),
+                        )
+                    },
+                ) {
+                    MediaAction(
+                        icon = Icons.Default.Delete,
+                        text = stringRes(R.string.action__delete),
+                    ) {
+                        scope.launch { GifHistoryHelper.removeGif(prefs, sheetItem.id) }
+                        menuItem = null
+                    }
+                }
             }
         }
     }
@@ -354,9 +368,21 @@ fun GifPanel(
 private fun GifThumb(
     item: GifItem,
     onClick: () -> Unit,
+    scrolling: () -> Boolean,
     fixedHeight: Boolean = false,
     onLongClick: (() -> Unit)? = null,
 ) {
+    // Every cell here is animated, which makes this panel the heavier of the two: Coil hands over an
+    // AnimatedImageDrawable and never memory-caches it, so a grid in motion is decoding new frames and
+    // whole new images at the same time. Pausing for the length of the scroll gives the incoming
+    // decodes the room, and costs nothing anyone can perceive — an animation cannot be read mid-fling.
+    var animation by remember(item.id) { mutableStateOf<Animatable?>(null) }
+    LaunchedEffect(animation) {
+        val running = animation ?: return@LaunchedEffect
+        snapshotFlow { scrolling() }.collect { moving ->
+            if (moving) running.stop() else running.start()
+        }
+    }
     val ratio = if (item.width > 0 && item.height > 0) {
         (item.width.toFloat() / item.height.toFloat()).coerceIn(0.6f, 2.2f)
     } else 1f
@@ -370,6 +396,9 @@ private fun GifThumb(
         model = item.previewUrl,
         contentDescription = item.title,
         contentScale = ContentScale.Crop,
+        onSuccess = { state ->
+            animation = (state.result.image as? DrawableImage)?.drawable as? Animatable
+        },
         modifier = base
             .then(if (fixedHeight) Modifier.padding(horizontal = 3.dp) else Modifier)
             .aspectRatio(ratio)

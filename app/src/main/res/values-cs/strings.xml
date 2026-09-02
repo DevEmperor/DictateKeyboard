@@ -2067,8 +2067,6 @@
     <string name="prefs__media__sticker_rescan">Načíst složku znovu</string>
     <string name="prefs__media__sticker_rescan__summary">Použijte po přidání nebo odebrání souborů</string>
     <string name="prefs__media__sticker_thumbnail_size">Velikost samolepek</string>
-    <string name="prefs__media__sticker_history_enabled">Oblíbené a naposledy použité</string>
-    <string name="prefs__media__sticker_history_enabled__summary">Zobrazovat připnuté a naposledy použité samolepky nad každou složkou</string>
     <string name="prefs__media__sticker_history_recent_max_size">Počet uchovaných naposledy použitých samolepek</string>
     <string name="prefs__media__sticker_confirm_before_insert">Potvrdit před odesláním</string>
     <string name="prefs__media__sticker_confirm_before_insert__summary">Klepnutím na samolepku ji vyberete, dalším klepnutím ji odešlete. Rychlé dvojité klepnutí ji odešle hned</string>
