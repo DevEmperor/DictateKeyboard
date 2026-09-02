@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.sticker
 
+import android.graphics.drawable.Animatable
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -75,6 +76,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import coil3.DrawableImage
 import coil3.compose.AsyncImage
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -350,7 +352,11 @@ fun StickerPanel(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f),
-                        beyondViewportPageCount = 1,
+                        // Only the page being looked at. Keeping the neighbour composed made swiping
+                        // between tabs seamless, but a composed page of animated stickers is a second
+                        // grid of running decoders behind the first one — which is why the frame rate
+                        // was reported as dropping on tab switches specifically (#308).
+                        beyondViewportPageCount = 0,
                     ) { page ->
                         val category = categories[page]
                         val isRoot = category.id == StickerCategory.ROOT_ID
@@ -472,6 +478,7 @@ private fun StickerCategoryPage(
                 treeUri = treeUri,
                 armed = isArmed,
                 accent = accent,
+                scrolling = { gridState.isScrollInProgress },
                 onClick = {
                     inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                     // With confirmation on, the first tap arms and the second sends. A quick
@@ -670,9 +677,28 @@ private fun StickerThumb(
     treeUri: Uri,
     armed: Boolean,
     accent: Color,
+    scrolling: () -> Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
+    // An animated sticker keeps decoding frames for as long as it is on screen, and a grid of them
+    // does it in parallel — which is the work that has to give way while the grid is moving. Nobody
+    // reads an animation mid-fling, so it is paused for the duration and resumed the moment the grid
+    // settles; the sticker stays animated, it just stops competing with the scroll (#308).
+    //
+    // Coil hands over an AnimatedImageDrawable and starts it when the cell is composed. It is never
+    // memory-cached — a running drawable cannot be shared between callers, so `Image.shareable` is
+    // false and the cache refuses it — which is also why every cell that scrolls back into view pays
+    // for a fresh decode. Pausing does not fix that; it stops it landing all at once.
+    var animation by remember(item.docId) { mutableStateOf<Animatable?>(null) }
+    LaunchedEffect(animation) {
+        val running = animation ?: return@LaunchedEffect
+        // snapshotFlow rather than reading the flag in composition: the cell must not recompose twice
+        // per scroll gesture just to learn something only its drawable acts on.
+        snapshotFlow { scrolling() }.collect { moving ->
+            if (moving) running.stop() else running.start()
+        }
+    }
     // Waiting for its confirming tap: the accent ring and its wash mark one cell out of the grid
     // without moving anything, so the answer to "which one did I hit" needs no second look. Drawn on
     // the cell itself rather than as a popup over the panel — a focusable popup raised by an input
@@ -690,6 +716,9 @@ private fun StickerThumb(
         contentDescription = item.name,
         // Fit, not Crop: a sticker cropped to a square loses exactly the part that makes it readable.
         contentScale = ContentScale.Fit,
+        onSuccess = { state ->
+            animation = (state.result.image as? DrawableImage)?.drawable as? Animatable
+        },
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
