@@ -1103,6 +1103,7 @@
     <string name="dictate__error_transcription_failed">Échec de la transcription.</string>
     <string name="dictate__error_unknown">Erreur inconnue lors de la transcription.</string>
     <string name="dictate__error_rewording_failed">Échec de la reformulation.</string>
+    <string name="dictate__error_rewording_default_model">%1$s est le modèle par défaut intégré de %2$s, pas celui que vous avez choisi. Choisissez un modèle de reformulation dans Fournisseurs d\'IA.</string>
     <string name="dictate__notice_rewording_failed">Échec de la reformulation – texte brut inséré</string>
     <string name="dictate__error_overlay_insert_clipboard">Cette application n\'a pas accepté le texte. Il est dans le presse-papiers : appuyez longuement sur le champ et collez.</string>
     <string name="dictate__error_invalid_api_key">Vérifiez votre clé d\'API</string>

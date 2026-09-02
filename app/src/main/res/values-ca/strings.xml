@@ -1101,6 +1101,7 @@
     <string name="dictate__error_transcription_failed">Ha fallat la transcripció.</string>
     <string name="dictate__error_unknown">Error desconegut durant la transcripció.</string>
     <string name="dictate__error_rewording_failed">Ha fallat la reformulació.</string>
+    <string name="dictate__error_rewording_default_model">%1$s és el model predeterminat integrat de %2$s, no pas un que hàgiu triat. Trieu un model de reformulació a Proveïdors d\'IA.</string>
     <string name="dictate__notice_rewording_failed">Ha fallat la reformulació – text brut inserit</string>
     <string name="dictate__error_overlay_insert_clipboard">Aquesta aplicació no ha acceptat el text. És al porta-retalls: manteniu premut el camp i enganxeu-lo.</string>
     <string name="dictate__error_invalid_api_key">Comprova la teva clau d\'API</string>

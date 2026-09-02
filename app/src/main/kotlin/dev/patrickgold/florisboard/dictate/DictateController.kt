@@ -71,6 +71,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.overlay.AccessibilitySink
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
+import dev.patrickgold.florisboard.dictate.provider.chatModelIsPresetDefault
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
 import dev.patrickgold.florisboard.dictate.recognition.RecognitionSink
 import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
@@ -902,6 +903,31 @@ object DictateController {
         return !(ready && prefs.dictate.localFallbackEnabled.get())
     }
 
+    /**
+     * A sentence saying where the failing model came from, when the provider complained about a model
+     * the user never chose (issue #313).
+     *
+     * An empty stored model means "follow the preset", which is what lets an app update move a provider
+     * off a retired model — but when nobody moves it, the user is shown a provider error naming a model
+     * they have never seen in their settings. That reads as the app sending the wrong thing, and it was
+     * reported as exactly that, at length.
+     *
+     * Deliberately narrow. It is attached only when the provider's own text mentions the very model that
+     * was sent, so an unrelated failure never grows advice about model settings, and only when nothing in
+     * the account chose that model — a model the user picked needs no explanation of where it came from.
+     */
+    private fun defaultModelNote(context: Context, stage: Stage, providerText: String?): String? {
+        if (stage != Stage.REWORDING || providerText.isNullOrBlank()) return null
+        val account = rewordingAccount()
+        val preset = presetFor(account)
+        if (!chatModelIsPresetDefault(account, preset)) return null
+        val model = chatModelFor(account, preset)
+        if (model.isBlank() || !providerText.contains(model)) return null
+        return context.getString(
+            R.string.dictate__error_rewording_default_model, model, preset.displayName,
+        )
+    }
+
     private fun apiError(
         e: DictateApiException,
         context: Context,
@@ -925,7 +951,10 @@ object DictateController {
         // goes into the detail popup, where there is room and where the raw provider text for a network
         // failure ("timeout") is next to useless on its own.
         val hint = suggestOnDevice && !outOfCredit
-        val detail = e.message?.takeIf { it.isNotBlank() }
+        val detail = listOfNotNull(
+            e.message?.takeIf { it.isNotBlank() },
+            defaultModelNote(context, stage, e.message),
+        ).joinToString("\n\n").takeIf { it.isNotBlank() }
         return UiState.Error(
             message = when {
                 outOfCredit -> context.getString(R.string.dictate__error_out_of_credit)

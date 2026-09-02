@@ -1181,6 +1181,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_transcription_failed">Transkripsi gagal.</string>
     <string name="dictate__error_unknown">Kesalahan tidak diketahui saat transkripsi.</string>
     <string name="dictate__error_rewording_failed">Penyusunan ulang gagal.</string>
+    <string name="dictate__error_rewording_default_model">%1$s adalah model bawaan default %2$s, bukan yang kamu pilih. Pilih model penyusunan ulang di Penyedia AI.</string>
     <string name="dictate__notice_rewording_failed">Penyusunan ulang gagal – teks mentah dimasukkan</string>
     <string name="dictate__error_overlay_insert_clipboard">Aplikasi ini tidak menerima teksnya. Teks ada di papan klip — tekan lama kolomnya lalu tempel.</string>
     <string name="dictate__error_invalid_api_key">Periksa kunci API Anda</string>

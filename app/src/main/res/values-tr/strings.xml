@@ -1204,6 +1204,7 @@
     <string name="dictate__error_transcription_failed">Yazıya dökme başarısız oldu.</string>
     <string name="dictate__error_unknown">Yazıya dökme sırasında bilinmeyen hata.</string>
     <string name="dictate__error_rewording_failed">Yeniden ifade etme başarısız oldu.</string>
+    <string name="dictate__error_rewording_default_model">%1$s, %2$s sağlayıcısının yerleşik varsayılan modelidir, senin seçtiğin değil. Yapay zekâ sağlayıcıları bölümünden bir yeniden ifade modeli seç.</string>
     <string name="dictate__notice_rewording_failed">Yeniden ifade etme başarısız – ham metin eklendi</string>
     <string name="dictate__error_overlay_insert_clipboard">Bu uygulama metni kabul etmedi. Metin panoda — alana uzun basıp yapıştırın.</string>
     <string name="dictate__error_invalid_api_key">API anahtarınızı kontrol edin</string>

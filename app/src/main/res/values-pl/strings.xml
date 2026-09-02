@@ -1241,6 +1241,7 @@
     <string name="dictate__error_transcription_failed">Transkrypcja nie powiodła się.</string>
     <string name="dictate__error_unknown">Nieznany błąd podczas transkrypcji.</string>
     <string name="dictate__error_rewording_failed">Przeformułowanie nie powiodło się.</string>
+    <string name="dictate__error_rewording_default_model">%1$s to wbudowany domyślny model dostawcy %2$s, a nie wybrany przez Ciebie. Wybierz model przeredagowania w sekcji Dostawcy AI.</string>
     <string name="dictate__notice_rewording_failed">Przeformułowanie nie powiodło się – wstawiono surowy tekst</string>
     <string name="dictate__error_overlay_insert_clipboard">Ta aplikacja nie przyjęła tekstu. Jest w schowku — przytrzymaj pole i wklej.</string>
     <string name="dictate__error_invalid_api_key">Sprawdź swój klucz API</string>

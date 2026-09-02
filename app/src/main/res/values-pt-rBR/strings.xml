@@ -1034,6 +1034,7 @@
     <string name="dictate__error_transcription_failed">Falha na transcrição.</string>
     <string name="dictate__error_unknown">Erro desconhecido durante a transcrição.</string>
     <string name="dictate__error_rewording_failed">Falha na reformulação.</string>
+    <string name="dictate__error_rewording_default_model">%1$s é o modelo padrão interno de %2$s, não um que você escolheu. Escolha um modelo de reescrita em Provedores de IA.</string>
     <string name="dictate__notice_rewording_failed">Falha na reformulação – texto bruto inserido</string>
     <string name="dictate__error_overlay_insert_clipboard">Este app não aceitou o texto. Ele está na área de transferência — mantenha o campo pressionado e cole.</string>
     <string name="dictate__error_invalid_api_key">Verifique sua chave de API</string>

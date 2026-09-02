@@ -1169,6 +1169,7 @@
     <string name="dictate__error_transcription_failed">Transkribēšana neizdevās.</string>
     <string name="dictate__error_unknown">Nezināma kļūda transkribēšanas laikā.</string>
     <string name="dictate__error_rewording_failed">Pārformulēšana neizdevās.</string>
+    <string name="dictate__error_rewording_default_model">%1$s ir %2$s iebūvētais noklusējuma modelis, nevis jūsu izvēlētais. Izvēlieties pārfrāzēšanas modeli sadaļā MI pakalpojumu sniedzēji.</string>
     <string name="dictate__notice_rewording_failed">Pārformulēšana neizdevās – ievietots neapstrādāts teksts</string>
     <string name="dictate__error_overlay_insert_clipboard">Šī lietotne tekstu nepieņēma. Tas ir starpliktuvē — turiet lauku un ielīmējiet.</string>
     <string name="dictate__error_invalid_api_key">Pārbaudiet savu API atslēgu</string>

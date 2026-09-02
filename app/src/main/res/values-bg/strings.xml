@@ -1226,6 +1226,7 @@
     <string name="dictate__error_transcription_failed">Транскрибирането е неуспешно.</string>
     <string name="dictate__error_unknown">Неизвестна грешка при транскрибиране.</string>
     <string name="dictate__error_rewording_failed">Преформулирането е неуспешно.</string>
+    <string name="dictate__error_rewording_default_model">%1$s е вградения модел по подразбиране на %2$s, а не избран от вас. Изберете модел за преформулиране в „Доставчици на ИИ“.</string>
     <string name="dictate__notice_rewording_failed">Преформулирането е неуспешно – вмъкнат е необработеният текст</string>
     <string name="dictate__error_overlay_insert_clipboard">Това приложение не прие текста. Той е в клипборда — задръжте полето и поставете.</string>
     <string name="dictate__error_invalid_api_key">Проверете API ключа си</string>

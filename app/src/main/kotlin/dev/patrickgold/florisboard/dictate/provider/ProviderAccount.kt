@@ -188,6 +188,18 @@ fun chatModelFor(
 }
 
 /**
+ * Whether [chatModelFor] answered with the built-in default rather than with anything the user chose.
+ *
+ * Worth asking when a rewording fails: a provider naming a model the user has never heard of reads as
+ * the app sending the wrong thing, which is exactly how #313 was reported. Knowing the model came from
+ * the preset turns that into one sentence about where it came from and where to change it.
+ */
+fun chatModelIsPresetDefault(account: ProviderAccount, preset: ProviderPreset): Boolean =
+    account.chatModel.isBlank() &&
+        !(account.transcriptionModel.isNotBlank() &&
+            singleCallApplies(account.transcriptionViaChat, preset, account.transcriptionModel))
+
+/**
  * The provider keyring: every configured [ProviderAccount] keyed by provider id. Persisted as a single
  * JetPref `custom` preference (see `AppPrefs.dictate.providerAccounts`) using [Serializer], mirroring
  * the `EmojiHistory` pattern. Switching the active transcription/rewording provider is just a change of

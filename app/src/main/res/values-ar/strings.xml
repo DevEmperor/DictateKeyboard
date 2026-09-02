@@ -1084,6 +1084,7 @@
     <string name="dictate__error_transcription_failed">فشل التفريغ النصي.</string>
     <string name="dictate__error_unknown">خطأ غير معروف أثناء التفريغ النصي.</string>
     <string name="dictate__error_rewording_failed">فشلت إعادة الصياغة.</string>
+    <string name="dictate__error_rewording_default_model">‏%1$s هو النموذج الافتراضي المدمج لدى %2$s، وليس نموذجًا اخترته. اختر نموذج إعادة الصياغة من مزوّدي الذكاء الاصطناعي.</string>
     <string name="dictate__notice_rewording_failed">فشلت إعادة الصياغة – تم إدراج النص الخام</string>
     <string name="dictate__error_overlay_insert_clipboard">لم يقبل هذا التطبيق النص. تم نسخه إلى الحافظة — اضغط مطولاً على الحقل والصقه.</string>
     <string name="dictate__error_invalid_api_key">تحقّق من مفتاح API الخاص بك</string>
