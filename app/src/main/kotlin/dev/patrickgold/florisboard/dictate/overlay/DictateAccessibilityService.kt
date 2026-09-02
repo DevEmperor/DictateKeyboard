@@ -392,29 +392,8 @@ class DictateAccessibilityService : AccessibilityService() {
      * Only if that path fails too does the caller fall back to the clipboard.
      */
     private fun dictationTarget(): AccessibilityNodeInfo? =
-        imeWindowField()
-            ?: editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
             ?: editableUnderFocus(rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
-
-    /**
-     * A text field of the keyboard's own, when one holds focus inside the soft-keyboard window — Gboard's
-     * translate box being the case this exists for (issue #310).
-     *
-     * It has to be asked first, because the global focus lookup does not settle the question: the app's
-     * field keeps its view focus while the keyboard's field takes its own, both windows report a focused
-     * view, and which one comes back is not something to rely on. When a keyboard puts a text field on
-     * screen and the user types into it, that field is where the writing is going.
-     *
-     * Deliberately strict — the focused node itself must be a field, with no descending into its
-     * children. This is the one lookup that reaches outside the app the user is in, so it may only win on
-     * unambiguous evidence; anything less and an ordinary dictation could be diverted into the keyboard.
-     */
-    private fun imeWindowField(): AccessibilityNodeInfo? = runCatching {
-        windows.firstOrNull { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }
-            ?.root
-            ?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
-            ?.takeIf { it.isLikelyEditable() }
-    }.getOrNull()
 
     /**
      * Whether [node] lives in a soft-keyboard window, i.e. a text field belonging to the IME itself —
@@ -424,6 +403,18 @@ class DictateAccessibilityService : AccessibilityService() {
      * is a private editor inside the keyboard, while the connection still addresses the host app. Writing
      * through it would put the text in the app's message box while the cursor sits in the translate box,
      * which is precisely the complaint. Such a field can only be served through the node itself.
+     *
+     * **Do not add a lookup that goes hunting for that field.** One was tried and measured on a device:
+     * Gboard's translate window is `TYPE_INPUT_METHOD` with `fl=81800108`, and bit `0x8` of that is
+     * `FLAG_NOT_FOCUSABLE`. A window that never takes window focus never holds input focus either — the
+     * accessibility window itself reports `focused=false` — so a `FOCUS_INPUT` search inside a keyboard
+     * window has nothing to return, for every keyboard, by construction. That is not a Gboard quirk: it
+     * is what lets the app keep its InputConnection while the keyboard is on screen. The only route left
+     * would be to walk the keyboard's tree and guess which of its boxes was meant, which is the search
+     * that put dictations in Chrome's address bar, aimed this time at another app's private UI.
+     *
+     * This guard stays because it is still the right handling for a keyboard that *does* take focus — a
+     * dialog or a fullscreen extract view — and there the global lookup finds the node on its own.
      */
     private fun isInsideImeWindow(node: AccessibilityNodeInfo): Boolean = runCatching {
         node.window?.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD
