@@ -94,16 +94,14 @@ object StickerManager {
         context: Context,
         treeUri: Uri,
         item: StickerItem,
-        categoryId: String,
         asGif: Boolean = false,
         onPreparing: (Boolean) -> Unit = {},
-    ): EditorInstance.MediaCommitResult = insertNow(context, treeUri, item, categoryId, asGif, onPreparing)
+    ): EditorInstance.MediaCommitResult = insertNow(context, treeUri, item, asGif, onPreparing)
 
     private suspend fun insertNow(
         context: Context,
         treeUri: Uri,
         item: StickerItem,
-        categoryId: String,
         asGif: Boolean,
         onPreparing: (Boolean) -> Unit,
     ): EditorInstance.MediaCommitResult {
@@ -156,7 +154,7 @@ object StickerManager {
         MediaLog.log("insert: result=$result")
 
         if (result != EditorInstance.MediaCommitResult.FAILED) {
-            StickerHistoryHelper.markUsed(prefs, categoryId, item.docId)
+            StickerHistoryHelper.markUsed(prefs, item.docId)
         }
         withContext(Dispatchers.IO) {
             MediaCache.prune(context)

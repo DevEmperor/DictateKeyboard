@@ -17,58 +17,84 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
- * Favourites and recently used stickers, kept **per category** (issues #280, #308).
+ * Favourites and recently used stickers: **one list each, for the whole collection** (issues #280, #308).
  *
- * The request asked for each folder to remember its own favourites and its own recents, and for the
- * combined tab to keep a separate order of its own — so both maps are keyed by category id, with
- * [GLOBAL] holding the combined lists. Writing to two lists on every use is what makes the orders
- * independent: reordering a favourite inside one folder leaves the combined view alone, which is exactly
- * what was asked for and would be impossible if the combined list were derived on read.
+ * A tab shows the part of these lists that it can resolve. The combined tab can resolve every sticker,
+ * so it shows all of them; a pack tab only knows its own files, so it shows the ones that live in it.
+ * The filtering is not a step anywhere — the panel looks each id up in the tab's own items and drops
+ * what it does not find, which it has to do regardless for stickers whose file has since disappeared.
  *
- * **Every write is keyed on the folder the sticker lives in, never on the tab it was tapped from.** The
- * combined tab shows stickers from every pack, so keying on the tab meant a sticker used from there
- * never reached its own pack's list, while the same sticker used from inside the pack did — the two
- * lists disagreed about the same action depending on where you were standing when you performed it.
+ * This replaces a per-category map, and the reason is worth keeping. Two sets of lists have to be kept
+ * in agreement by whoever writes them, and they were not: the write was keyed on the tab the sticker
+ * was tapped from, but the combined tab is not a folder, so the same action landed in different lists
+ * depending on where the user happened to be standing. Keying the write on the sticker's own folder
+ * fixed that instance and left the shape that produced it. One list cannot disagree with itself.
+ *
+ * What is given up is a per-pack *order* — a pack could arrange its favourites differently from the
+ * combined view. Nothing ever showed that difference to anyone.
  *
  * Stored as document ids rather than whole items: the index already knows the rest, and an id that no
  * longer resolves is simply skipped when the rows are built.
  */
 @Serializable
 data class StickerHistory(
-    val pinned: Map<String, List<String>> = emptyMap(),
-    val recent: Map<String, List<String>> = emptyMap(),
+    val pinned: List<String> = emptyList(),
+    val recent: List<String> = emptyList(),
 ) {
-    fun pinnedIn(categoryId: String): List<String> = pinned[categoryId].orEmpty()
-
-    fun recentIn(categoryId: String): List<String> = recent[categoryId].orEmpty()
-
-    fun isPinned(categoryId: String, docId: String): Boolean = docId in pinnedIn(categoryId)
+    fun isPinned(docId: String): Boolean = docId in pinned
 
     object Serializer : PreferenceSerializer<StickerHistory> {
         override fun serialize(value: StickerHistory): String {
             return Json.encodeToString(value)
         }
 
+        /**
+         * Reads the current shape, and the per-category one that shipped in 6.1.
+         *
+         * The old blob held a map of lists keyed by category, of which the combined entry was the only
+         * one a user had ever seen — the per-pack entries were half-filled by construction. Taking the
+         * combined entry and dropping the rest is therefore not data loss: it is the only version of
+         * that data that was ever true.
+         */
         override fun deserialize(value: String): StickerHistory {
             return try {
-                Json.decodeFromString(value)
+                val root = Json.parseToJsonElement(value).jsonObject
+                if (root["pinned"] is JsonObject || root["recent"] is JsonObject) {
+                    StickerHistory(
+                        pinned = root.legacyCombined("pinned"),
+                        recent = root.legacyCombined("recent"),
+                    )
+                } else {
+                    Json.decodeFromJsonElement(root)
+                }
             } catch (e: Exception) {
                 flogError { "Failed to deserialize StickerHistory: $e" }
                 Empty
             }
         }
+
+        private fun JsonObject.legacyCombined(field: String): List<String> =
+            (this[field] as? JsonObject)?.get(LEGACY_COMBINED_KEY)
+                ?.jsonArray?.map { it.jsonPrimitive.content }
+                .orEmpty()
     }
 
     companion object {
         val Empty = StickerHistory()
 
         /**
-         * Key of the combined lists shown on the "All" tab. A NUL character cannot appear in a SAF
-         * document id, so this can never collide with a real category.
+         * Key the 6.1 blob stored the combined lists under. Only [Serializer] still needs it, to read
+         * an installation that has not been written since. A NUL character cannot appear in a SAF
+         * document id, which is why it could never collide with a real category.
          */
-        const val GLOBAL = "\u0000all"
+        private const val LEGACY_COMBINED_KEY = "\u0000all"
     }
 }
 
@@ -82,42 +108,13 @@ object StickerHistoryHelper {
 
     private suspend fun edit(
         prefs: FlorisPreferenceModel,
-        block: (pinned: MutableMap<String, MutableList<String>>, recent: MutableMap<String, MutableList<String>>) -> Unit,
+        block: (pinned: MutableList<String>, recent: MutableList<String>) -> Unit,
     ) = guard.withLock {
         val current = prefs.sticker.historyData.get()
-        val pinned = current.pinned.mapValuesTo(HashMap()) { it.value.toMutableList() }
-        val recent = current.recent.mapValuesTo(HashMap()) { it.value.toMutableList() }
+        val pinned = current.pinned.toMutableList()
+        val recent = current.recent.toMutableList()
         block(pinned, recent)
-        // A list under the root id was written by older builds and is read by nothing: loose files have
-        // no tab of their own, so their history is the combined one. Dropping it on the next write
-        // rather than in a migration keeps the stored blob honest without a version to check.
-        pinned.remove(StickerCategory.ROOT_ID)
-        recent.remove(StickerCategory.ROOT_ID)
-        prefs.sticker.historyData.set(
-            StickerHistory(
-                pinned = pinned.filterValues { it.isNotEmpty() }.mapValues { it.value.toList() },
-                recent = recent.filterValues { it.isNotEmpty() }.mapValues { it.value.toList() },
-            )
-        )
-    }
-
-    /**
-     * The history lists a sticker owned by [categoryId] belongs in.
-     *
-     * A pack keeps its own list *and* feeds the combined one. Loose files in the picked folder have no
-     * tab of their own — the combined tab is where they are shown — so for them the two are the same
-     * list and there is only one to write.
-     */
-    internal fun listKeysFor(categoryId: String): List<String> =
-        if (categoryId == StickerCategory.ROOT_ID) {
-            listOf(StickerHistory.GLOBAL)
-        } else {
-            listOf(categoryId, StickerHistory.GLOBAL)
-        }
-
-    private fun MutableMap<String, MutableList<String>>.prepend(key: String, docId: String, maxSize: Int) {
-        val list = getOrPut(key) { mutableListOf() }
-        prependCapped(list, docId, maxSize)
+        prefs.sticker.historyData.set(StickerHistory(pinned = pinned.toList(), recent = recent.toList()))
     }
 
     /**
@@ -136,50 +133,42 @@ object StickerHistoryHelper {
     }
 
     /**
-     * Records a use of a sticker owned by [categoryId], in that pack's list and in the combined one.
-     * Pinned stickers stay where they are — a favourite is not demoted to a recent by being used.
+     * Records a use. Pinned stickers stay where they are — a favourite is not demoted to a recent by
+     * being used.
      */
-    suspend fun markUsed(prefs: FlorisPreferenceModel, categoryId: String, docId: String) {
+    suspend fun markUsed(prefs: FlorisPreferenceModel, docId: String) {
         val maxSize = prefs.sticker.historyRecentMaxSize.get()
         edit(prefs) { pinned, recent ->
-            for (key in listKeysFor(categoryId)) {
-                if (docId !in pinned[key].orEmpty()) {
-                    recent.prepend(key, docId, maxSize)
-                }
+            if (docId !in pinned) {
+                prependCapped(recent, docId, maxSize)
             }
         }
     }
 
-    /** Pins in the sticker's own pack and in the combined list, and drops it from both recents. */
-    suspend fun pin(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { pinned, recent ->
-        for (key in listKeysFor(categoryId)) {
-            pinned.prepend(key, docId, maxSize = 0)
-            recent[key]?.remove(docId)
-        }
+    /** Pins a sticker and drops it from the recents, where it would otherwise appear twice. */
+    suspend fun pin(prefs: FlorisPreferenceModel, docId: String) = edit(prefs) { pinned, recent ->
+        prependCapped(pinned, docId, maxSize = 0)
+        recent.remove(docId)
     }
 
-    suspend fun unpin(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { pinned, _ ->
-        for (key in listKeysFor(categoryId)) {
-            pinned[key]?.remove(docId)
-        }
+    suspend fun unpin(prefs: FlorisPreferenceModel, docId: String) = edit(prefs) { pinned, _ ->
+        pinned.remove(docId)
     }
 
-    suspend fun removeRecent(prefs: FlorisPreferenceModel, categoryId: String, docId: String) = edit(prefs) { _, recent ->
-        for (key in listKeysFor(categoryId)) {
-            recent[key]?.remove(docId)
-        }
+    suspend fun removeRecent(prefs: FlorisPreferenceModel, docId: String) = edit(prefs) { _, recent ->
+        recent.remove(docId)
     }
 
     /**
-     * Drops a sticker from every list it appears in, whatever the category.
+     * Drops a sticker from both lists.
      *
      * Used when the file itself is deleted: the panel skips ids it cannot resolve, so leaving them
      * behind would not show a broken image, but it would silently shorten the favourites row and make
      * "keep 16 recents" mean something else.
      */
     suspend fun forget(prefs: FlorisPreferenceModel, docId: String) = edit(prefs) { pinned, recent ->
-        for (list in pinned.values) list.remove(docId)
-        for (list in recent.values) list.remove(docId)
+        pinned.remove(docId)
+        recent.remove(docId)
     }
 
     suspend fun clearRecent(prefs: FlorisPreferenceModel) = edit(prefs) { _, recent ->

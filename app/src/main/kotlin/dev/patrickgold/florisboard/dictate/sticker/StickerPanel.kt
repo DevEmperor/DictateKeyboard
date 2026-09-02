@@ -178,18 +178,10 @@ fun StickerPanel(
         }
     }
 
-    /**
-     * The folder [item] actually lives in, which is what every history write is keyed on — not the tab
-     * it was tapped from. The combined tab shows stickers from every pack, so the two differ there, and
-     * keying on the tab is what made a pack's own list disagree with the combined one (#308).
-     */
-    fun ownerOf(item: StickerItem): String =
-        index?.categoryOf(item.docId) ?: StickerCategory.ROOT_ID
-
-    fun insert(item: StickerItem, categoryId: String, asGif: Boolean = false) {
+    fun insert(item: StickerItem, asGif: Boolean = false) {
         val treeUri = folderUri.takeIf { it.isNotBlank() }?.toUri() ?: return
         scope.launch {
-            val outcome = StickerManager.insert(context, treeUri, item, categoryId, asGif) { preparing ->
+            val outcome = StickerManager.insert(context, treeUri, item, asGif) { preparing ->
                 preparingDocId = if (preparing) item.docId else null
             }
             when (outcome) {
@@ -360,15 +352,14 @@ fun StickerPanel(
                     ) { page ->
                         val category = categories[page]
                         val isRoot = category.id == StickerCategory.ROOT_ID
-                        // The first tab aggregates: its favourites and recents span every folder, while
-                        // the plain grid below stays the loose files of the picked folder itself.
-                        val historyKey = if (isRoot) StickerHistory.GLOBAL else category.id
+                        // What this tab can resolve, which is also what decides how much of the history
+                        // it shows: everything on the first tab, and a pack's own files on a pack tab.
+                        // The plain grid below stays the loose files of the picked folder itself.
                         val pool = if (isRoot) currentIndex!!.allItems else category.items
 
                         StickerCategoryPage(
                             category = category,
                             pool = pool,
-                            historyKey = historyKey,
                             history = history,
                             preparingDocId = preparingDocId,
                             thumbnailSize = thumbnailSize,
@@ -384,19 +375,19 @@ fun StickerPanel(
                                 emptyList()
                             },
                             packOf = { docId -> currentIndex!!.categoryOf(docId) },
-                            onInsert = { item -> insert(item, ownerOf(item)) },
+                            onInsert = { item -> insert(item) },
                             onDelete = { item -> deleteFile(item) },
                             onShare = { item -> shareSticker(item) },
-                            onInsertAsGif = { item -> insert(item, ownerOf(item), asGif = true) },
+                            onInsertAsGif = { item -> insert(item, asGif = true) },
                             onMoveToPack = { item, packId -> moveToPack(item, packId) },
                             onPin = { item ->
-                                scope.launch { StickerHistoryHelper.pin(prefs, ownerOf(item), item.docId) }
+                                scope.launch { StickerHistoryHelper.pin(prefs, item.docId) }
                             },
                             onUnpin = { item ->
-                                scope.launch { StickerHistoryHelper.unpin(prefs, ownerOf(item), item.docId) }
+                                scope.launch { StickerHistoryHelper.unpin(prefs, item.docId) }
                             },
                             onForget = { item ->
-                                scope.launch { StickerHistoryHelper.removeRecent(prefs, ownerOf(item), item.docId) }
+                                scope.launch { StickerHistoryHelper.removeRecent(prefs, item.docId) }
                             },
                         )
                     }
@@ -410,7 +401,6 @@ fun StickerPanel(
 private fun StickerCategoryPage(
     category: StickerCategory,
     pool: List<StickerItem>,
-    historyKey: String,
     history: StickerHistory,
     preparingDocId: String?,
     thumbnailSize: Int,
@@ -453,12 +443,12 @@ private fun StickerCategoryPage(
     var packPickerOpen by remember { mutableStateOf(false) }
 
     val byId = remember(pool) { pool.associateBy { it.docId } }
-    // Every tab carries its own favourites and recents (#308). They were once shown on the first tab
-    // alone, on the argument that inside a pack every sticker is equal — but a pack of two hundred is
-    // exactly where "the six I actually use" is worth the two rows it costs, and it is what the folder
-    // feature was described as doing.
-    val pinned = history.pinnedIn(historyKey).mapNotNull { byId[it] }
-    val recent = history.recentIn(historyKey).mapNotNull { byId[it] }
+    // One history, shown through the tab (#308). Looking each id up in this tab's own items is what
+    // narrows it: the combined tab resolves everything, a pack tab resolves only its own files, and an
+    // id whose file has since been deleted resolves nowhere. No list is kept per tab, so no two lists
+    // can disagree about what the user just did.
+    val pinned = history.pinned.mapNotNull { byId[it] }
+    val recent = history.recent.mapNotNull { byId[it] }
     val shown = remember(pinned, recent, category.items) {
         val used = HashSet<String>(pinned.size + recent.size)
         pinned.mapTo(used) { it.docId }
@@ -470,7 +460,7 @@ private fun StickerCategoryPage(
     @Composable
     fun Cell(item: StickerItem, section: String) {
         val menuKey = "$section/${item.docId}"
-        val isPinned = history.isPinned(historyKey, item.docId)
+        val isPinned = history.isPinned(item.docId)
         val isArmed = armedKey == menuKey
         Box {
             StickerThumb(

@@ -16,14 +16,20 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The bookkeeping behind "favourites and recently used", which is per category (issue #280).
+ * The bookkeeping behind "favourites and recently used" (issues #280, #308).
  *
  * Two rules are worth pinning. Re-using a sticker has to *move* it rather than add a second copy —
  * otherwise a favourite tapped ten times fills the whole row. And when the limit is reached the entry
  * that goes is the oldest one, never the one just used, which is the mistake that makes a recents list
  * feel broken without ever looking wrong in a screenshot.
+ *
+ * The third is newer: there is one list, and a tab shows the part of it that it can resolve. That is
+ * what makes a pack's row and the combined row incapable of disagreeing, which two lists were not.
  */
 class StickerHistoryTest {
+
+    /** The key 6.1 stored the combined lists under; a NUL cannot occur in a SAF document id. */
+    private val NUL = 0.toChar()
 
     @Test
     fun `using a sticker again moves it to the front instead of duplicating it`() {
@@ -53,57 +59,73 @@ class StickerHistoryTest {
         assertEquals(listOf("d", "a", "b", "c"), list)
     }
 
-    @Test
-    fun `categories keep their own lists and the combined list keeps its own order`() {
-        val history = StickerHistory(
-            pinned = mapOf(
-                "memes" to listOf("m1"),
-                StickerHistory.GLOBAL to listOf("r1", "m1"),
-            ),
-            recent = mapOf("memes" to listOf("m2")),
-        )
-        assertEquals(listOf("m1"), history.pinnedIn("memes"))
-        assertEquals(listOf("r1", "m1"), history.pinnedIn(StickerHistory.GLOBAL))
-        assertEquals(listOf("m2"), history.recentIn("memes"))
-        assertTrue(history.isPinned("memes", "m1"))
-        assertFalse(history.isPinned("memes", "r1"))
-        // An unknown category is empty, not an error — a folder can be renamed away at any time.
-        assertEquals(emptyList<String>(), history.recentIn("gone"))
-    }
-
-    @Test
-    fun `the combined key cannot collide with a real document id`() {
-        // SAF document ids come from a URI path segment, so a NUL byte can never appear in one.
-        assertTrue(StickerHistory.GLOBAL.any { it.code == 0 })
-    }
-
     /**
-     * Which lists a use is written to, and why it is keyed on the folder rather than the tab (#308).
+     * How a tab narrows the one history, and why it is a lookup rather than a stored subset.
      *
-     * The combined tab shows stickers from every pack. Keying a write on the tab therefore meant the
-     * same action landed in different lists depending on where the user was standing: used from inside
-     * the pack it reached the pack's list, used from the combined tab it did not — and the pack's
-     * favourites row disagreed with the combined one about a sticker they both contain.
+     * The panel resolves each id against the items of the tab it is drawing. The combined tab knows
+     * every sticker, so it shows the whole list; a pack knows its own files, so it shows those. An id
+     * that resolves nowhere — a file the user has deleted since — falls out of both, which the rows
+     * needed anyway and which is why no separate filtering step exists.
      */
     @Test
-    fun `a pack keeps its own list and feeds the combined one`() {
-        assertEquals(
-            listOf("memes", StickerHistory.GLOBAL),
-            StickerHistoryHelper.listKeysFor("memes"),
-        )
+    fun `a tab shows the part of the history it can resolve`() {
+        val history = StickerHistory(pinned = listOf("loose", "m1"), recent = listOf("m2", "loose"))
+        val everything = setOf("loose", "m1", "m2")
+        val memes = setOf("m1", "m2")
+
+        assertEquals(listOf("loose", "m1"), history.pinned.filter { it in everything })
+        assertEquals(listOf("m1"), history.pinned.filter { it in memes })
+        assertEquals(listOf("m2"), history.recent.filter { it in memes })
+        assertTrue(history.isPinned("m1"))
+        assertFalse(history.isPinned("m2"))
     }
 
     /**
-     * Loose files have no tab of their own — the combined tab is where they are shown — so for them
-     * the pack list and the combined list are the same list, and writing it twice would be the only
-     * effect of pretending otherwise. Older builds did write a root-keyed list; nothing ever read it.
+     * A sticker that no longer exists must not shorten a row into a gap. Ids are kept as ids precisely
+     * so an unresolvable one costs nothing.
      */
     @Test
-    fun `a loose file has only the combined list`() {
-        assertEquals(
-            listOf(StickerHistory.GLOBAL),
-            StickerHistoryHelper.listKeysFor(StickerCategory.ROOT_ID),
+    fun `an id whose file is gone simply does not appear`() {
+        val history = StickerHistory(pinned = listOf("m1", "deleted", "m2"))
+        assertEquals(listOf("m1", "m2"), history.pinned.filter { it in setOf("m1", "m2") })
+    }
+
+    /**
+     * Reading the blob 6.1 wrote. It held a map keyed by category, and only the combined entry was
+     * ever shown to anyone — the per-pack entries were half-filled by construction, because writes
+     * were keyed on the tab rather than on the sticker's folder. Keeping the combined entry and
+     * dropping the rest loses nothing that was ever true, and losing someone's favourites on update
+     * would be the one unacceptable outcome.
+     */
+    @Test
+    fun `the per-category blob from 6_1 is read into the single list`() {
+        val combined = NUL + "all"
+        val legacy = """{"pinned":{"$combined":["a","b"],"memes":["b"]},""" +
+            """"recent":{"$combined":["c"],"memes":["c","d"]}}"""
+        val history = StickerHistory.Serializer.deserialize(legacy)
+        assertEquals(listOf("a", "b"), history.pinned)
+        assertEquals(listOf("c"), history.recent)
+    }
+
+    @Test
+    fun `a legacy blob with no combined entry reads as empty rather than failing`() {
+        val legacy = """{"pinned":{"memes":["b"]},"recent":{}}"""
+        val history = StickerHistory.Serializer.deserialize(legacy)
+        assertEquals(StickerHistory.Empty, history)
+    }
+
+    @Test
+    fun `the current shape survives a round trip`() {
+        val history = StickerHistory(pinned = listOf("a"), recent = listOf("b", "c"))
+        val roundTripped = StickerHistory.Serializer.deserialize(
+            StickerHistory.Serializer.serialize(history)
         )
+        assertEquals(history, roundTripped)
+    }
+
+    @Test
+    fun `an unreadable blob falls back to empty instead of throwing`() {
+        assertEquals(StickerHistory.Empty, StickerHistory.Serializer.deserialize("not json"))
     }
 
     @Test
