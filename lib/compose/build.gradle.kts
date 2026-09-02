@@ -92,3 +92,9 @@ dependencies {
     testImplementation(libs.kotlin.test.junit5)
 }
 
+
+// The module ships one piece of logic worth testing on its own: the panel scrollbar's row geometry,
+// which is pure arithmetic over positions Compose has already measured (see PanelScrollbar.kt).
+tasks.withType<Test> {
+    useJUnitPlatform()
+}

@@ -123,20 +123,88 @@ fun Modifier.panelScrollbar(state: LazyListState, accent: Color, width: Dp = 5.d
         )
     }
 
-fun Modifier.panelScrollbar(state: LazyGridState, accent: Color, width: Dp = 5.dp): Modifier =
-    panelScrollbar(accent, width) {
-        val visible = state.layoutInfo.visibleItemsInfo
+/**
+ * Grid geometry measured in **rows**, which is what a grid with section headers actually has.
+ *
+ * The plain item model — `rows = items / columns`, `row = index / columns` — holds only while every
+ * item is one cell wide. A full-span header is one item that occupies a whole row, so it makes the
+ * row count too small and the row of everything after it too low. Worse, taking the pitch from the
+ * first two visible offsets picks up the *header's* height whenever a header is on screen: the
+ * content then measures as a fraction of its real height and the thumb inflates to fill the track,
+ * only to shrink again once the header scrolls away. That is the sticker panel's scrollbar growing
+ * at the top and stranding a short thumb up there at the bottom (#308), and the clipboard, which has
+ * had headers all along, has been doing it just as quietly.
+ *
+ * [LazyGridItemInfo.row] already accounts for spans, so it is the honest unit. Only the rows below
+ * the fold have to be estimated, and only their count — headers there are counted as cells, which
+ * costs a fraction of a row each and never moves the thumb visibly.
+ */
+private fun gridMetrics(state: LazyGridState): ScrollbarMetrics? {
+    val visible = state.layoutInfo.visibleItemsInfo
+    val first = visible.firstOrNull() ?: return null
+    val last = visible.last()
+    return rowMetrics(
+        totalItems = state.layoutInfo.totalItemsCount,
         // Cells sharing the topmost row give the column count of the current layout, which an
         // adaptive grid only knows once it has measured itself.
-        val columns = visible.firstOrNull()?.let { top -> visible.count { it.offset.y == top.offset.y } } ?: 1
-        metricsFrom(
-            totalItems = state.layoutInfo.totalItemsCount,
-            columns = columns,
-            firstIndex = state.firstVisibleItemIndex,
-            firstOffset = state.firstVisibleItemScrollOffset,
-            pitch = pitchOf(visible.map { it.offset.y }, visible.map { it.size.height }),
-        )
-    }
+        columns = visible.count { it.row == first.row },
+        firstRow = first.row,
+        firstOffset = state.firstVisibleItemScrollOffset,
+        lastRow = last.row,
+        lastIndex = last.index,
+        pitch = rowPitchOf(visible.map { it.offset.y }, visible.maxOfOrNull { it.size.height } ?: 0),
+    )
+}
+
+/**
+ * The bar's geometry from row positions that are already known, plus an estimate of what is below.
+ *
+ * Only the rows past the last laid-out item have to be guessed, and only their count: headers down
+ * there are counted as cells, which costs a fraction of a row each and never moves the thumb enough
+ * to see. Everything above is exact, so the thumb reaches the bottom when the content does.
+ */
+internal fun rowMetrics(
+    totalItems: Int,
+    columns: Int,
+    firstRow: Int,
+    firstOffset: Int,
+    lastRow: Int,
+    lastIndex: Int,
+    pitch: Float,
+): ScrollbarMetrics? {
+    if (totalItems <= 0 || pitch <= 0f) return null
+    val cols = columns.coerceAtLeast(1)
+    val itemsBelow = (totalItems - 1 - lastIndex).coerceAtLeast(0)
+    val rowsBelow = (itemsBelow + cols - 1) / cols
+    val totalRows = lastRow + 1 + rowsBelow
+    return ScrollbarMetrics(
+        contentHeight = totalRows * pitch,
+        scrolled = firstRow * pitch + firstOffset,
+    )
+}
+
+/**
+ * The distance between two consecutive rows of cells, given the tops of the rows on screen.
+ *
+ * The **most common** gap, not the first one: a header sits closer to the row beneath it than two
+ * rows of cells sit to each other, so the first gap is the wrong answer exactly when a header is on
+ * screen — and taking it there is what made the thumb balloon at the top of a sectioned grid. With a
+ * single row visible there is nothing to measure and [tallest] stands in.
+ */
+internal fun rowPitchOf(rowTops: List<Int>, tallest: Int): Float {
+    val tops = rowTops.distinct().sorted()
+    if (tops.size < 2) return tallest.toFloat()
+    return tops.zipWithNext { a, b -> b - a }
+        .groupingBy { it }.eachCount()
+        .entries
+        // Ties go to the larger gap: with one header row and one cell row the two gaps are equally
+        // common, and the cell pitch is the one that describes the content.
+        .maxWithOrNull(compareBy({ it.value }, { it.key }))
+        ?.key?.toFloat() ?: 0f
+}
+
+fun Modifier.panelScrollbar(state: LazyGridState, accent: Color, width: Dp = 5.dp): Modifier =
+    panelScrollbar(accent, width) { gridMetrics(state) }
 
 fun Modifier.panelScrollbar(state: LazyStaggeredGridState, accent: Color, width: Dp = 5.dp): Modifier =
     panelScrollbar(accent, width) {
