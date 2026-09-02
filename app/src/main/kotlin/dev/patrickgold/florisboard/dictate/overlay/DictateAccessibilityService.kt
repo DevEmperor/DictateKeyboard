@@ -134,25 +134,24 @@ class DictateAccessibilityService : AccessibilityService() {
         }
     }
 
-    /** The currently input-focused node if it is an editable text field, else null. */
-    private fun focusedEditableNode(): AccessibilityNodeInfo? {
-        val node = findFocus(AccessibilityNodeInfo.FOCUS_INPUT) ?: return null
-        if (node.isLikelyEditable()) return node
-        // findFocus sometimes returns a container that merely *holds* the editable view (common in
-        // wrapped/cross-platform UIs); descend to the first editable descendant.
-        return findEditableDescendant(node, 0)
-    }
+    /**
+     * The currently input-focused node if it is an editable text field, else null. Asks whether there is
+     * somewhere to dictate at all, which is what decides whether the bubble is shown.
+     *
+     * Deliberately the single lookup rather than [dictationTarget]'s two: this runs on every focus and
+     * window event, and the second lookup would be paid on exactly the events where there is no field —
+     * the common case while browsing. Writing is rare and can afford to ask twice; showing is not.
+     */
+    private fun focusedEditableNode(): AccessibilityNodeInfo? =
+        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
 
-    /** Depth-first search under [node] for the first editable descendant, bounded to avoid deep trees. */
-    private fun findEditableDescendant(node: AccessibilityNodeInfo, depth: Int): AccessibilityNodeInfo? {
-        if (depth >= MAX_EDITABLE_SEARCH_DEPTH) return null
-        for (i in 0 until node.childCount) {
-            val child = node.getChild(i) ?: continue
-            if (child.isLikelyEditable()) return child
-            findEditableDescendant(child, depth + 1)?.let { return it }
-        }
-        return null
-    }
+    /** [targetUnderFocus] over accessibility nodes, with this service's editability heuristic. */
+    private fun editableUnderFocus(focused: AccessibilityNodeInfo?): AccessibilityNodeInfo? =
+        targetUnderFocus(
+            focused = focused,
+            editable = { it.isLikelyEditable() },
+            children = { node -> (0 until node.childCount).mapNotNull { node.getChild(it) } },
+        )
 
     /**
      * A node we should treat as a dictation target. [isEditable] is the canonical flag, but several apps
@@ -294,27 +293,36 @@ class DictateAccessibilityService : AccessibilityService() {
 
         // Insert exactly like a normal keyboard: through the accessibility input connection's commitText,
         // straight into the field at the cursor — no clipboard, no toast, and it never prepends a shown
-        // placeholder (e.g. WhatsApp's "Message"). The stability trick is to first resolve the field the
-        // user actually SEES (fresh from the live window, so a recreated/stale field can't swallow the
-        // text) and, if it isn't already focused, give it input focus. Focusing the visible field points
-        // the input connection at THAT field instead of an editor the app discarded — the root of the old
-        // "green check, no text" flakiness. A short retry covers the instant right after a send when the
-        // host app is still rebuilding its field. Node ACTION_SET_TEXT / clipboard paste stay only as
-        // fallbacks for the rare fields that accept no input connection (old OS, some WebView/custom views).
+        // placeholder (e.g. WhatsApp's "Message"). That path needs no node of its own: it addresses
+        // whatever the system holds as the input target, which is the field the user tapped. The node
+        // [dictationTarget] resolves is for the two fallbacks below and for one nudge — a field that holds
+        // focus without admitting it gets ACTION_FOCUS, because Compose fields refuse ACTION_SET_TEXT
+        // otherwise (#156). A short retry covers the instant right after a send when the host app is still
+        // rebuilding its field, which is what used to end as "green check, no text" (#132, #161).
+        //
+        // Nothing here goes looking for a field the user is *not* in. That search is what put dictations in
+        // Chrome's address bar (#310); see [dictationTarget].
         repeat(COMMIT_ATTEMPTS) { attempt ->
-            val target = activeWindowEditable()
+            val target = dictationTarget()
             if (target != null && !target.isFocused) {
+                // Only ever a node inside the focused subtree — [dictationTarget] cannot return anything
+                // else — so this asks a field that already has focus to admit it, which is what Compose
+                // fields need before they accept ACTION_SET_TEXT (#156). It can no longer move the user's
+                // cursor to a different field (#310).
                 runCatching { target.performAction(AccessibilityNodeInfo.ACTION_FOCUS) }
                 runCatching { target.refresh() }
                 // Let the input connection rebind to the field we just focused before we commit into it.
                 SystemClock.sleep(FOCUS_SETTLE_MS)
             }
+            // A field belonging to the keyboard itself is not what the input connection addresses, so
+            // that path would write into the host app instead. Go through the node for it (#310).
+            val viaNodeOnly = target != null && isInsideImeWindow(target)
 
             // 1. The keyboard-style path: commit through the input connection (no clipboard, no toast).
             //    Its API returns void, so "it did not throw" is all the call itself tells us — hence the
             //    read-back below (issue #277).
-            val before = if (verify) readBeforeCursor(text.length) else null
-            if (commitViaInputConnection(text)) {
+            val before = if (verify && !viaNodeOnly) readBeforeCursor(text.length) else null
+            if (!viaNodeOnly && commitViaInputConnection(text)) {
                 if (!verify || insertLanded(before, text.length)) {
                     flogDebug { "commit via inputConnection len=${text.length}" }
                     return true
@@ -345,20 +353,42 @@ class DictateAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * The editable field in the currently active (visible) window, located fresh from the live node tree
-     * via [rootInActiveWindow]. Used when the cached input focus is stale — e.g. the host app recreated
-     * its input after sending a message — so dictation lands in the field the user actually sees rather
-     * than a detached one (#132 follow-up).
+     * The field a dictation may be written into: **the one holding input focus, and nothing else.**
+     *
+     * Asked twice, because the two lookups can disagree about how current they are. The service-wide
+     * [findFocus] is the system's own answer to "who has input focus". The second, through
+     * [rootInActiveWindow], re-reads it from the window that is actually on screen — the point of the
+     * #132 hardening, for the moment right after a host app recreates its field (WhatsApp clearing its
+     * composer on send) and the first answer still describes the field it discarded.
+     *
+     * What it deliberately no longer does is *guess*. It used to fall back to walking the whole window
+     * tree and taking the first editable node in it, which in Chrome is the address bar and in WhatsApp
+     * the message box — and [commitTextIntoFocused] then pulled focus onto that node before writing, so
+     * the dictation did not merely land in the wrong field, it moved the cursor there first (issue #310).
+     * Neither reason the walk was added needs it: a recreated field holds input focus like any other, so
+     * [findFocus] finds it.
+     *
+     * Null is a legitimate answer and not a dead end. The input-connection path in [commitTextIntoFocused]
+     * needs no node at all — it writes to whatever the system holds as the input target, which is exactly
+     * the field the user tapped — so a browser whose web field this cannot name is still served correctly.
+     * Only if that path fails too does the caller fall back to the clipboard.
      */
-    private fun activeWindowEditable(): AccessibilityNodeInfo? {
-        val root = rootInActiveWindow ?: return null
-        root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)?.let { focused ->
-            if (focused.isLikelyEditable()) return focused
-            findEditableDescendant(focused, 0)?.let { return it }
-        }
-        if (root.isLikelyEditable()) return root
-        return findEditableDescendant(root, 0)
-    }
+    private fun dictationTarget(): AccessibilityNodeInfo? =
+        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+            ?: editableUnderFocus(rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+
+    /**
+     * Whether [node] lives in a soft-keyboard window, i.e. a text field belonging to the IME itself —
+     * Gboard's translate box being the case that prompted this (issue #310).
+     *
+     * It matters because the accessibility input connection does *not* point there: the IME's own field
+     * is a private editor inside the keyboard, while the connection still addresses the host app. Writing
+     * through it would put the text in the app's message box while the cursor sits in the translate box,
+     * which is precisely the complaint. Such a field can only be served through the node itself.
+     */
+    private fun isInsideImeWindow(node: AccessibilityNodeInfo): Boolean = runCatching {
+        node.window?.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD
+    }.getOrDefault(false)
 
     /**
      * The text immediately before the cursor, read back through the *same* input connection the write
@@ -471,7 +501,7 @@ class DictateAccessibilityService : AccessibilityService() {
         if (text.isEmpty()) return false
         // Reconstruct the field without the inserted text via ACTION_SET_TEXT (works pre-API-33 too and
         // lets us verify the match first, so the user's own edits are never eaten).
-        val node = focusedEditableNode() ?: return false
+        val node = dictationTarget() ?: return false
         node.refresh()
         val existing = node.editableText()
         val cursor = node.textSelectionEnd.coerceForText(existing)
@@ -540,7 +570,7 @@ class DictateAccessibilityService : AccessibilityService() {
 
     /** The selected text in the focused editable field, or empty when nothing is selected. */
     private fun selectedTextOfFocused(): String {
-        val node = focusedEditableNode() ?: return ""
+        val node = dictationTarget() ?: return ""
         node.refresh()
         val text = node.editableText()
         if (text.isEmpty()) return ""
@@ -554,14 +584,14 @@ class DictateAccessibilityService : AccessibilityService() {
 
     /** The full text of the focused editable field, or empty when there is none. */
     private fun fullTextOfFocused(): String {
-        val node = focusedEditableNode() ?: return ""
+        val node = dictationTarget() ?: return ""
         node.refresh()
         return node.editableText()
     }
 
     /** Selects the whole field so a subsequent inject replaces it. Returns true on success. */
     private fun selectAllInFocused(): Boolean {
-        val node = focusedEditableNode() ?: return false
+        val node = dictationTarget() ?: return false
         node.refresh()
         val len = node.editableText().length
         val args = Bundle().apply {
@@ -603,13 +633,13 @@ class DictateAccessibilityService : AccessibilityService() {
      * implements no editor action refuses. Returns whether it was accepted (issue #278); the caller
      * reports rather than pretends.
      *
-     * The field is resolved the same way [commitTextIntoFocused] resolves it, freshly from the active
-     * window: the plain input-focus lookup used before could return a different node than the one the
-     * text just went into, which is the staleness #161 fixed for the insert but not for Enter.
+     * The field is resolved the same way [commitTextIntoFocused] resolves it, through [dictationTarget]:
+     * the plain input-focus lookup used before could return a different node than the one the text just
+     * went into, which is the staleness #161 fixed for the insert but not for Enter.
      */
     private fun performEnterOnFocused(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return commitTextIntoFocused("\n")
-        val node = activeWindowEditable() ?: focusedEditableNode()
+        val node = dictationTarget()
         if (node != null &&
             node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_IME_ENTER.id)
         ) {
@@ -738,6 +768,40 @@ class DictateAccessibilityService : AccessibilityService() {
          */
         internal fun insertLandedFrom(before: String?, after: String?): Boolean =
             before == null || after == null || before != after
+
+        /**
+         * The node a dictation may be written into, given the input-[focused] one: that node when it is a
+         * field, otherwise the first field beneath it, otherwise **nothing**.
+         *
+         * The rule is one sentence — *only what input focus points at* — and it is written as a function
+         * over an abstract tree so that sentence can be tested without an Android node behind it. The bug
+         * it exists to make impossible is issue #310: with no field found, the service used to walk the
+         * whole window and take the first editable node anywhere in it, which is the address bar in a
+         * browser and the message box in a chat app.
+         *
+         * Descending is still right, and is the reason this is not simply `focused`: cross-platform and
+         * wrapped UIs routinely give focus to a container that merely holds the editable view. Everything
+         * it returns is inside the focused subtree, so it can only ever name a field the user is already
+         * in. [maxDepth] bounds the walk, since a deep tree is walked over IPC one node at a time.
+         */
+        internal fun <N : Any> targetUnderFocus(
+            focused: N?,
+            editable: (N) -> Boolean,
+            children: (N) -> List<N>,
+            maxDepth: Int = MAX_EDITABLE_SEARCH_DEPTH,
+        ): N? {
+            val node = focused ?: return null
+            if (editable(node)) return node
+            fun descend(from: N, depth: Int): N? {
+                if (depth >= maxDepth) return null
+                for (child in children(from)) {
+                    if (editable(child)) return child
+                    descend(child, depth + 1)?.let { return it }
+                }
+                return null
+            }
+            return descend(node, 0)
+        }
         // Debounce window for focus re-checks so a typing burst triggers at most one focused-node fetch.
         private const val FOCUS_UPDATE_DEBOUNCE_MS = 150L
         // Real-time overlay preview (#128): min gap between accessibility writes while streaming, so live
