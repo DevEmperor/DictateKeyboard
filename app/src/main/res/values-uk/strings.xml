@@ -1903,6 +1903,8 @@
     <string name="prefs__media__sticker_history_enabled">Улюблені та нещодавні</string>
     <string name="prefs__media__sticker_history_enabled__summary">Показувати закріплені та нещодавні стікери над кожною текою</string>
     <string name="prefs__media__sticker_history_recent_max_size">Скільки нещодавніх стікерів зберігати</string>
+    <string name="prefs__media__sticker_confirm_before_insert">Підтверджувати перед надсиланням</string>
+    <string name="prefs__media__sticker_confirm_before_insert__summary">Торкніться стікера один раз, щоб вибрати його, і ще раз, щоб надіслати. Швидкий подвійний дотик надсилає одразу</string>
     <string name="prefs__media__sticker_pinned_reset">Очистити улюблені стікери</string>
     <string name="prefs__media__sticker_history_reset">Очистити нещодавні стікери</string>
     <string name="sticker__title">Стікери</string>

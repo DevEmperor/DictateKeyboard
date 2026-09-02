@@ -2037,6 +2037,8 @@
     <string name="prefs__media__sticker_history_enabled">Favoritos y usados recientemente</string>
     <string name="prefs__media__sticker_history_enabled__summary">Mostrar los adhesivos fijados y usados recientemente encima de cada carpeta</string>
     <string name="prefs__media__sticker_history_recent_max_size">Adhesivos recientes que se conservan</string>
+    <string name="prefs__media__sticker_confirm_before_insert">Confirmar antes de enviar</string>
+    <string name="prefs__media__sticker_confirm_before_insert__summary">Toca un sticker una vez para seleccionarlo y otra para enviarlo. Un toque doble rápido lo envía directamente</string>
     <string name="prefs__media__sticker_pinned_reset">Borrar adhesivos favoritos</string>
     <string name="prefs__media__sticker_history_reset">Borrar adhesivos usados recientemente</string>
     <string name="sticker__title">Adhesivos</string>

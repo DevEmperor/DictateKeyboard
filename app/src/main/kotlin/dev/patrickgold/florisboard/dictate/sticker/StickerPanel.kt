@@ -13,6 +13,7 @@ package dev.patrickgold.florisboard.dictate.sticker
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +64,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -79,7 +81,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
@@ -420,7 +424,21 @@ private fun StickerCategoryPage(
     onForget: (StickerItem) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
+    val prefs by FlorisPreferenceStore
+    val inputFeedbackController = LocalInputFeedbackController.current
+    val confirmBeforeInsert by prefs.sticker.confirmBeforeInsert.collectPrefAsState()
     var menuFor by remember { mutableStateOf<String?>(null) }
+    // Which sticker is waiting for its confirming tap, by the same section/doc key the menu uses — the
+    // same sticker can appear under favourites and again in the grid, and only the one that was tapped
+    // should light up. Cleared as soon as the grid moves: a sticker armed before a scroll is a sticker
+    // the user has stopped looking at, and leaving it armed is how a confirmation turns into a misfire
+    // of its own.
+    var armedKey by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(gridState) {
+        snapshotFlow { gridState.isScrollInProgress }.collect { scrolling ->
+            if (scrolling) armedKey = null
+        }
+    }
     // Deleting removes the user's own file, so it takes a second tap. Held per menu rather than per
     // sticker so closing the menu also cancels the armed confirmation.
     var deleteArmed by remember { mutableStateOf(false) }
@@ -447,12 +465,32 @@ private fun StickerCategoryPage(
     fun Cell(item: StickerItem, section: String) {
         val menuKey = "$section/${item.docId}"
         val isPinned = history.isPinned(historyKey, item.docId)
+        val isArmed = armedKey == menuKey
         Box {
             StickerThumb(
                 item = item,
                 treeUri = treeUri,
-                onClick = { onInsert(item) },
-                onLongClick = { menuFor = menuKey; deleteArmed = false; packPickerOpen = false },
+                armed = isArmed,
+                accent = accent,
+                onClick = {
+                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                    // With confirmation on, the first tap arms and the second sends. A quick
+                    // double-tap therefore sends in one motion without a shortcut of its own, and
+                    // tapping a different sticker moves the armed state rather than sending it.
+                    if (!confirmBeforeInsert || isArmed) {
+                        armedKey = null
+                        onInsert(item)
+                    } else {
+                        armedKey = menuKey
+                    }
+                },
+                onLongClick = {
+                    inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                    armedKey = null
+                    menuFor = menuKey
+                    deleteArmed = false
+                    packPickerOpen = false
+                },
             )
             if (preparingDocId == item.docId) {
                 // Sized to the cell so it reads as "this one is busy" rather than "the panel is busy".
@@ -630,9 +668,23 @@ private fun StickerCategoryPage(
 private fun StickerThumb(
     item: StickerItem,
     treeUri: Uri,
+    armed: Boolean,
+    accent: Color,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
+    // Waiting for its confirming tap: the accent ring and its wash mark one cell out of the grid
+    // without moving anything, so the answer to "which one did I hit" needs no second look. Drawn on
+    // the cell itself rather than as a popup over the panel — a focusable popup raised by an input
+    // method takes focus off the field, the system hides the keyboard, and the keyboard takes the
+    // popup down with it.
+    val ring = if (armed) {
+        Modifier
+            .border(2.dp, accent, RoundedCornerShape(8.dp))
+            .background(accent.copy(alpha = 0.16f))
+    } else {
+        Modifier.background(Color(0x14808080))
+    }
     AsyncImage(
         model = StickerScanner.documentUri(treeUri, item.docId),
         contentDescription = item.name,
@@ -642,7 +694,7 @@ private fun StickerThumb(
             .fillMaxWidth()
             .aspectRatio(1f)
             .clip(RoundedCornerShape(8.dp))
-            .background(Color(0x14808080))
+            .then(ring)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(3.dp),
     )

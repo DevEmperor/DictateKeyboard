@@ -460,6 +460,12 @@ fun MediaScreen() = FlorisScreen {
                     max = 50,
                     stepIncrement = 1,
                 )
+                SwitchPreference(
+                    prefs.sticker.confirmBeforeInsert,
+                    modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_confirm_before_insert"),
+                    title = stringRes(R.string.prefs__media__sticker_confirm_before_insert),
+                    summary = stringRes(R.string.prefs__media__sticker_confirm_before_insert__summary),
+                )
                 Preference(
                     modifier = Modifier.settingsSearchAnchor("prefs__media__sticker_pinned_reset"),
                     title = stringRes(R.string.prefs__media__sticker_pinned_reset),

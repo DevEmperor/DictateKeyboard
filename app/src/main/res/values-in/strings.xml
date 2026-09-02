@@ -2011,6 +2011,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="prefs__media__sticker_history_enabled">Favorit dan baru digunakan</string>
     <string name="prefs__media__sticker_history_enabled__summary">Tampilkan stiker yang disematkan dan baru digunakan di atas setiap folder</string>
     <string name="prefs__media__sticker_history_recent_max_size">Jumlah stiker terbaru yang disimpan</string>
+    <string name="prefs__media__sticker_confirm_before_insert">Konfirmasi sebelum mengirim</string>
+    <string name="prefs__media__sticker_confirm_before_insert__summary">Ketuk stiker sekali untuk memilihnya, ketuk lagi untuk mengirim. Ketuk dua kali dengan cepat untuk langsung mengirim</string>
     <string name="prefs__media__sticker_pinned_reset">Hapus stiker favorit</string>
     <string name="prefs__media__sticker_history_reset">Hapus stiker yang baru digunakan</string>
     <string name="sticker__title">Stiker</string>

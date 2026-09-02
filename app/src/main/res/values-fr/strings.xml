@@ -1931,6 +1931,8 @@
     <string name="prefs__media__sticker_history_enabled">Favoris et récemment utilisés</string>
     <string name="prefs__media__sticker_history_enabled__summary">Afficher les autocollants épinglés et récemment utilisés au-dessus de chaque dossier</string>
     <string name="prefs__media__sticker_history_recent_max_size">Nombre d\'autocollants récents conservés</string>
+    <string name="prefs__media__sticker_confirm_before_insert">Confirmer avant l\'envoi</string>
+    <string name="prefs__media__sticker_confirm_before_insert__summary">Touchez un autocollant une fois pour le sélectionner, une seconde fois pour l\'envoyer. Un double appui rapide l\'envoie directement</string>
     <string name="prefs__media__sticker_pinned_reset">Effacer les autocollants favoris</string>
     <string name="prefs__media__sticker_history_reset">Effacer les autocollants récemment utilisés</string>
     <string name="sticker__title">Autocollants</string>

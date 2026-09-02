@@ -991,6 +991,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "sticker__history_recent_max_size",
             default = 16,
         )
+        // Ask for a second tap before a sticker is sent (#308). Off by default: it costs every send a
+        // tap to save the occasional wrong one, which is only worth it to someone who keeps making
+        // that mistake. A quick double-tap arms and confirms in one motion, so the habit survives.
+        val confirmBeforeInsert = boolean(
+            key = "sticker__confirm_before_insert",
+            default = false,
+        )
         // Favourites and recently used, per category (see StickerHistory).
         val historyData = custom(
             key = "sticker__history_data",
