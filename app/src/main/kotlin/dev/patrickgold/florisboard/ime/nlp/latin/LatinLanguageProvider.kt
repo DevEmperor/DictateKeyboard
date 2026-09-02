@@ -147,6 +147,24 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             return settled.isNotEmpty() && settled.last() !in SENTENCE_ENDINGS
         }
 
+        /**
+         * Whether the dictionary has any business judging [word] at all (issue #309).
+         *
+         * A word with a digit in it is a version, a model number, a code — top10, covid19, mp3 — and every
+         * one of those is exactly one deletion away from a very common word. So the edit-distance corrector
+         * offers to delete the digit, and on the classic gate it does so silently: nothing in the dictionary
+         * starts with `top1`, so `hadCandidatesBefore` is false by construction and the swap is allowed.
+         * `top10` came out as `top0`, because typing the second digit is what collected the correction the
+         * first digit had already earned.
+         *
+         * [spell] has refused these words since it was written; the same refusal belongs on the suggestion
+         * side, and having it in one place is what keeps the two from drifting apart again.
+         *
+         * Digits, not "anything that isn't a letter": an apostrophe is part of *don't*, and correcting
+         * *dont* to it is a fix worth making (issue #212).
+         */
+        internal fun isDictionaryJudgeable(word: String): Boolean = word.none { it.isDigit() }
+
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
         private val LANG_ALIASES = mapOf("iw" to "he", "in" to "id", "ji" to "yi")
@@ -815,7 +833,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): SpellingResult {
         val trimmed = word.trim()
         // Don't flag single characters, numbers or words containing digits.
-        if (trimmed.length <= 1 || trimmed.any { it.isDigit() }) return SpellingResult.validWord()
+        if (trimmed.length <= 1 || !isDictionaryJudgeable(trimmed)) return SpellingResult.validWord()
         val index = lowerIndexFor(subtype)
         // No dictionary for this language (#265): say nothing rather than underline every word of it.
         if (index.freq.isEmpty()) return SpellingResult.unspecified()
@@ -1020,9 +1038,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Whether the composed word is valid in any of the user's keyboard languages (multilingual, #190);
         // computed up front because it also decides whether to reserve strip slots for spelling fixes.
         val isKnown = isKnownWord(word, subtype)
+        // Whether this word is a candidate for a spelling fix at all. One value rather than the same
+        // conditions written twice, because the block that corrects and the slots reserved *for* correcting
+        // have to agree — the digit rule (issue #309) was easy to add to one of them and forget in the other.
+        val mayCorrect = autoCorrectOn && !isKnown && word.length >= 3 && isDictionaryJudgeable(word)
         // Reserve a few slots for edit-distance corrections so a typo's fix isn't crowded out by prefix
-        // completions of that typo (issue #212). Only when we'd actually correct (unknown word, length >= 3).
-        val completionCap = if (autoCorrectOn && !isKnown && word.length >= 3) {
+        // completions of that typo (issue #212). Only when we'd actually correct.
+        val completionCap = if (mayCorrect) {
             (maxCandidateCount - CORRECTION_RESERVE).coerceAtLeast(1)
         } else {
             maxCandidateCount
@@ -1095,8 +1117,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // instead of only word extensions. Auto-commit stays conservative: only the top distance-1 fix and
         // only when nothing else already filled the strip, so intentional input and words-in-progress aren't
         // swapped. Distance 2 is a suggestions-only fallback when distance 1 finds nothing (too uncertain to
-        // swap in silently). #190: never correct a word valid in any configured language.
-        if (autoCorrectOn && !isKnown && word.length >= 3) {
+        // swap in silently). #190: never correct a word valid in any configured language, #309: never one
+        // that carries a digit.
+        if (mayCorrect) {
             val hadCandidatesBefore = out.isNotEmpty() // German restoration and/or prefix completions
             val prevWord = previousWordOf(content, index)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
