@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.gif
 
 import android.graphics.drawable.Animatable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -54,6 +55,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -258,82 +260,87 @@ fun GifPanel(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            when {
-                !hasKey -> GifSetupNeeded { FlorisImeService.launchSettings("settings/media") }
-                initialLoading -> GifCentered { CircularProgressIndicator(color = accent) }
-                loadError -> GifCentered {
-                    SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__error))
-                }
-                else -> {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        // Home view: a row of recently used GIFs above trending. (Hidden while showing results.)
-                        if (!inResults && history.recentGifs.isNotEmpty()) {
-                            LazyRow(
-                                state = recentsState,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(96.dp),
-                                contentPadding = PaddingValues(6.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                items(history.recentGifs, key = { "recent-${it.id}" }) { item ->
-                                    GifThumb(
-                                        item = item,
-                                        fixedHeight = true,
-                                        scrolling = { recentsState.isScrollInProgress },
-                                        onClick = {
-                                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                            insert(item)
-                                        },
-                                        onLongClick = {
-                                            inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
-                                            menuItem = item
-                                        },
-                                    )
+            // Dimmed rather than covered, so the GIF being acted on stays visible behind the sheet —
+            // which on a wall of moving thumbnails is the only way to see which one was long-pressed.
+            val panelAlpha by animateFloatAsState(targetValue = if (menuItem != null) 0.12f else 1f)
+            Box(modifier = Modifier.fillMaxSize().alpha(panelAlpha)) {
+                when {
+                    !hasKey -> GifSetupNeeded { FlorisImeService.launchSettings("settings/media") }
+                    initialLoading -> GifCentered { CircularProgressIndicator(color = accent) }
+                    loadError -> GifCentered {
+                        SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__error))
+                    }
+                    else -> {
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            // Home view: a row of recently used GIFs above trending. (Hidden while showing results.)
+                            if (!inResults && history.recentGifs.isNotEmpty()) {
+                                LazyRow(
+                                    state = recentsState,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(96.dp),
+                                    contentPadding = PaddingValues(6.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    items(history.recentGifs, key = { "recent-${it.id}" }) { item ->
+                                        GifThumb(
+                                            item = item,
+                                            fixedHeight = true,
+                                            scrolling = { recentsState.isScrollInProgress },
+                                            onClick = {
+                                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                                insert(item)
+                                            },
+                                            onLongClick = {
+                                                inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                                                menuItem = item
+                                            },
+                                        )
+                                    }
                                 }
                             }
-                        }
-                        if (gifs.isEmpty()) {
-                            GifCentered {
-                                SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__no_results))
-                            }
-                        } else {
-                            // Staggered so GIFs keep their own aspect ratio and pack tightly (no fixed
-                            // cell height leaving gaps under shorter GIFs). More pages load on scroll.
-                            LazyVerticalStaggeredGrid(
-                                state = gridState,
-                                columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                                    .panelScrollbar(gridState, accent),
-                                contentPadding = PaddingValues(4.dp),
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalItemSpacing = 4.dp,
-                            ) {
-                                items(gifs, key = { it.id }) { item ->
-                                    GifThumb(
-                                        item = item,
-                                        scrolling = { gridState.isScrollInProgress },
-                                        onClick = {
-                                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                            insert(item)
-                                        },
-                                    )
+                            if (gifs.isEmpty()) {
+                                GifCentered {
+                                    SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__no_results))
+                                }
+                            } else {
+                                // Staggered so GIFs keep their own aspect ratio and pack tightly (no fixed
+                                // cell height leaving gaps under shorter GIFs). More pages load on scroll.
+                                LazyVerticalStaggeredGrid(
+                                    state = gridState,
+                                    columns = StaggeredGridCells.Adaptive(minSize = 128.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f)
+                                        .panelScrollbar(gridState, accent),
+                                    contentPadding = PaddingValues(4.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalItemSpacing = 4.dp,
+                                ) {
+                                    items(gifs, key = { it.id }) { item ->
+                                        GifThumb(
+                                            item = item,
+                                            scrolling = { gridState.isScrollInProgress },
+                                            onClick = {
+                                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                                insert(item)
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            if (hasKey && menuItem == null) {
-                SnyggText(
-                    elementName = FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName,
-                    text = stringRes(R.string.gif__powered_by),
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(6.dp),
-                )
+                if (hasKey) {
+                    SnyggText(
+                        elementName = FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName,
+                        text = stringRes(R.string.gif__powered_by),
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(6.dp),
+                    )
+                }
             }
             val sheetItem = menuItem
             if (sheetItem != null) {
