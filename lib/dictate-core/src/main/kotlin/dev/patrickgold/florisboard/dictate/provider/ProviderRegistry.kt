@@ -132,13 +132,29 @@ object ProviderRegistry {
         capabilities = CHAT_AND_STT,
         supportsDynamicModels = true,
         apiKeyUrl = "https://console.groq.com/keys",
-        defaultChatModel = "llama-3.3-70b-versatile",
+        // Every Llama and Gemma entry that used to stand here was decommissioned by Groq (announced
+        // 2026-06-17, gone by 2026-08-16), and the default among them is what made #313 look like a
+        // model-resolution bug: a request went out naming a model the user had never chosen and could
+        // not have. Verified against the live catalog on 2026-09-02, which now lists 14 models in total.
+        // gpt-oss-120b rather than the smaller 20b because it is the first replacement Groq's own
+        // deprecation notice names for the 70B model it succeeds — a default should not quietly cost
+        // quality. Both gpt-oss models are reasoning models, which is fine here: they return their
+        // thinking in a separate `reasoning` field, and nothing in the app caps `max_tokens`, so the
+        // reply is the answer alone.
+        //
+        // qwen/qwen3.6-27b is the third model Groq's notice names and is deliberately NOT listed: asked
+        // to fix a sentence it wrote 1161 tokens of `<think>…</think>` *into the content*, and nothing
+        // strips that, so it would land verbatim in the user's text field. qwen3.8-27b answers cleanly.
+        // Measured against the live API on 2026-09-02 with the app's own Fix Grammar prompt — an id
+        // existing in the catalog is not the same as a model that can reword.
+        defaultChatModel = "openai/gpt-oss-120b",
         defaultTranscriptionModel = "whisper-large-v3-turbo",
         curatedChatModels = listOf(
-            "llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it",
+            "openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b",
         ),
+        // distil-whisper-large-v3-en went the same way; both remaining Whispers are live.
         curatedTranscriptionModels = listOf(
-            "whisper-large-v3-turbo", "whisper-large-v3", "distil-whisper-large-v3-en",
+            "whisper-large-v3-turbo", "whisper-large-v3",
         ),
     )
 
@@ -184,7 +200,11 @@ object ProviderRegistry {
         transcriptionApi = TranscriptionApi.GEMINI_GENERATE_CONTENT,
         supportsDynamicModels = true,
         apiKeyUrl = "https://aistudio.google.com/app/apikey",
-        defaultChatModel = "gemini-2.5-flash",
+        // gemini-2.5-flash answers 404 with "no longer available to new users" (issue #313). Google names
+        // the successor in three places that agree: that error text, the deprecations page, and its
+        // migration notes for the 2.0 family. gemini-3.8-flash appeared on 2026-09-02 and is too fresh to
+        // be what everyone who never chose a model gets.
+        defaultChatModel = "gemini-3.6-flash",
         // gemini-3.5-transcribe (2026-08) is Google's first dedicated speech-to-text model: ~$0.005/min
         // against chat-model token pricing, 2.6% word error rate, 85+ languages (issue #292). It does not
         // speak generateContent — see TranscriptionApi.GEMINI_GENERATE_CONTENT and [isGeminiTranscribeModel].
@@ -193,14 +213,15 @@ object ProviderRegistry {
         defaultTranscriptionModel = "gemini-3.5-transcribe",
         // Stable, audio-capable Gemini models (verified June 2026; 2.0-flash was retired 2026-06-01). The
         // live picker merges any newer ones on top.
+        // The whole 2.5 generation is retired; the live picker merges any newer ones on top.
         curatedChatModels = listOf(
-            "gemini-2.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-2.5-pro", "gemini-2.5-flash-lite",
+            "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite",
         ),
-        // The dedicated STT model first, then the multimodal chat models that doubled as transcription
-        // models before it existed — they still work and travel a different endpoint, so both belong here.
+        // The dedicated STT model first, then the multimodal chat models that double as transcription
+        // models — they travel a different endpoint, so both belong here.
         curatedTranscriptionModels = listOf(
             "gemini-3.5-transcribe",
-            "gemini-2.5-flash", "gemini-3.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-pro",
+            "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
         ),
         // Realtime (#128/#292): Live API (BidiGenerateContent) with inputAudioTranscription. This was off
         // until Google shipped a streaming model built for it — the conversational live models connect but
@@ -233,7 +254,7 @@ object ProviderRegistry {
         apiKeyUrl = "https://console.anthropic.com/settings/keys",
         defaultChatModel = "claude-haiku-4-5-20251001",
         curatedChatModels = listOf(
-            "claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-4-8",
+            "claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-5",
         ),
     )
 
