@@ -392,8 +392,29 @@ class DictateAccessibilityService : AccessibilityService() {
      * Only if that path fails too does the caller fall back to the clipboard.
      */
     private fun dictationTarget(): AccessibilityNodeInfo? =
-        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+        imeWindowField()
+            ?: editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
             ?: editableUnderFocus(rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+
+    /**
+     * A text field of the keyboard's own, when one holds focus inside the soft-keyboard window — Gboard's
+     * translate box being the case this exists for (issue #310).
+     *
+     * It has to be asked first, because the global focus lookup does not settle the question: the app's
+     * field keeps its view focus while the keyboard's field takes its own, both windows report a focused
+     * view, and which one comes back is not something to rely on. When a keyboard puts a text field on
+     * screen and the user types into it, that field is where the writing is going.
+     *
+     * Deliberately strict — the focused node itself must be a field, with no descending into its
+     * children. This is the one lookup that reaches outside the app the user is in, so it may only win on
+     * unambiguous evidence; anything less and an ordinary dictation could be diverted into the keyboard.
+     */
+    private fun imeWindowField(): AccessibilityNodeInfo? = runCatching {
+        windows.firstOrNull { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }
+            ?.root
+            ?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
+            ?.takeIf { it.isLikelyEditable() }
+    }.getOrNull()
 
     /**
      * Whether [node] lives in a soft-keyboard window, i.e. a text field belonging to the IME itself —
