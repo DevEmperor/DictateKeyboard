@@ -321,24 +321,42 @@ class DictateAccessibilityService : AccessibilityService() {
             // 1. The keyboard-style path: commit through the input connection (no clipboard, no toast).
             //    Its API returns void, so "it did not throw" is all the call itself tells us — hence the
             //    read-back below (issue #277).
+            val beforeText = if (verify) readNodeText(target) else null
             val before = if (verify && !viaNodeOnly) readBeforeCursor(text.length) else null
             if (!viaNodeOnly && commitViaInputConnection(text)) {
-                if (!verify || insertLanded(before, text.length)) {
+                if (!verify || landedInField(target, beforeText, before, text.length)) {
                     flogDebug { "commit via inputConnection len=${text.length}" }
                     return true
                 }
-                // The field demonstrably did not change. Deliberately NOT falling through to the other
-                // two mechanisms: if this verdict were wrong, writing again would leave the text in the
-                // field twice, and duplicated text is worse than a wrong error message. The caller puts
-                // it on the clipboard instead.
-                flogDebug { "commit swallowed by the field len=${text.length}" }
-                return false
+                if (beforeText == null) {
+                    // No node to ask, so the only verdict available came from the connection — and a
+                    // connection cannot tell "written into a dead editor" from "not written". Do not write
+                    // again on a verdict that weak: if it were wrong, the text would end up in the field
+                    // twice, which is worse than a wrong error message. The caller puts it on the
+                    // clipboard instead.
+                    flogDebug { "commit swallowed, no node to recover through len=${text.length}" }
+                    return false
+                }
+                // The *field* — the thing the user is looking at — demonstrably did not change, so the
+                // write went somewhere invisible and falling through cannot duplicate anything. This is
+                // the long-standing "green check but no text" (#132, #156, #277): the read-back went
+                // through the same connection as the write, so it faithfully reported the text it had
+                // just put into an editor the app had already discarded.
+                flogDebug { "commit swallowed by the field, recovering via the node len=${text.length}" }
             }
             // 2. Fallback: write straight into the visible node (older OS without the a11y input method, or
             //    fields that expose no editor connection). Placeholder-safe via editableText().
             if (target != null && setTextOnFocused(target, text)) {
-                flogDebug { "commit via setText len=${text.length}" }
-                return true
+                // ACTION_SET_TEXT returning true means the action was accepted, not that the text stuck —
+                // the same void-return problem one level down, and the reason this path used to report
+                // success unconditionally.
+                // [beforeText] is still the right baseline: either path 1 never ran, or it ran and the
+                // node proved it changed nothing.
+                if (!verify || landedInField(target, beforeText, null, text.length)) {
+                    flogDebug { "commit via setText len=${text.length}" }
+                    return true
+                }
+                flogDebug { "setText accepted but changed nothing len=${text.length}" }
             }
             // 3. Last resort only: clipboard paste (WebView/custom inputs that ignore both). The paste
             //    toast is therefore the rare exception, never the normal case.
@@ -420,6 +438,46 @@ class DictateAccessibilityService : AccessibilityService() {
         if (insertLandedFrom(before, readBeforeCursor(sentLength))) return true
         SystemClock.sleep(VERIFY_SETTLE_MS)
         return insertLandedFrom(before, readBeforeCursor(sentLength))
+    }
+
+    /**
+     * The field's text as the *user* sees it, or null when there is no node or it cannot be read.
+     *
+     * Deliberately the node and not the input connection: the connection is the very thing under
+     * suspicion. A write that goes into an editor the app has already discarded is faithfully read back
+     * through that same connection, which is why "green check but no text" survived the read-back
+     * verification of #277 — it was never verifying what the user was looking at.
+     *
+     * Placeholder-safe through [editableText], and that is what makes the comparison work in the case it
+     * exists for: a field showing its hint reads as empty both before and after a swallowed write, so
+     * nothing changed; a field that took the text reads as its content, so something did.
+     */
+    private fun readNodeText(node: AccessibilityNodeInfo?): String? {
+        val target = node ?: return null
+        return runCatching {
+            if (!target.refresh()) return null
+            target.editableText()
+        }.getOrNull()
+    }
+
+    /**
+     * Whether the write reached the field, asking the node when there is one and the input connection
+     * only when there is not.
+     *
+     * Both verdicts follow [insertLandedFrom]'s lopsided rule — only a demonstrably unchanged field is a
+     * failure — so an unreadable node falls back to the connection rather than inventing a failure. The
+     * settle covers an app that applies the write on its own UI thread a moment later.
+     */
+    private fun landedInField(
+        node: AccessibilityNodeInfo?,
+        beforeText: String?,
+        beforeCursor: String?,
+        sentLength: Int,
+    ): Boolean {
+        if (beforeText == null) return insertLanded(beforeCursor, sentLength)
+        if (insertLandedFrom(beforeText, readNodeText(node))) return true
+        SystemClock.sleep(VERIFY_SETTLE_MS)
+        return insertLandedFrom(beforeText, readNodeText(node))
     }
 
     /**
