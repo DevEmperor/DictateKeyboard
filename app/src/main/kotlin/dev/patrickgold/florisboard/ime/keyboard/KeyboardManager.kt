@@ -1209,18 +1209,40 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
-                            if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
-                                // A punctuation mark ends the word too, so it can expand a snippet
-                                // trigger (issue #283) — and then it has already written itself.
-                                if (!expandSnippet(text)) {
-                                    nlpManager.getAutoCommitCandidate()?.let { commitAutoCorrection(it) }
-                                    // Punctuation ends the word — drop the tap evidence (issue #242).
+                            val codePoint = UCharacter.codePointAt(text, 0)
+                            when {
+                                UCharacter.isUAlphabetic(codePoint) -> {
+                                    TouchTrace.commit(text)
+                                    editorInstance.commitChar(text)
+                                }
+                                // A digit does not end the word it is written into. Unicode's word rules
+                                // keep `top1` in one piece (UAX#29 WB9/WB10) and so does the composing
+                                // region built from them, so treating a digit as a boundary made the two
+                                // halves of the keyboard disagree about where the word ends — and the
+                                // half that ends it too early hands the other one's work in.
+                                //
+                                // That is how `top10` became `Top 1` (issue #311): "Top" is a German noun
+                                // waiting in the strip while `top` is composed, the first digit collected
+                                // that correction as if the word were finished, and the phantom space that
+                                // follows every committed candidate put a space after it. Nothing about
+                                // the digit was wrong; the word simply was not over.
+                                //
+                                // The tap evidence still goes: no tap is recorded for a digit, so a trace
+                                // that no longer matches the word cannot decode it anyway (issue #242).
+                                UCharacter.isDigit(codePoint) -> {
                                     TouchTrace.reset()
                                     editorInstance.commitChar(text)
                                 }
-                            } else {
-                                TouchTrace.commit(text)
-                                editorInstance.commitChar(text)
+                                // A punctuation mark ends the word too, so it can expand a snippet
+                                // trigger (issue #283) — and then it has already written itself.
+                                else -> {
+                                    if (!expandSnippet(text)) {
+                                        nlpManager.getAutoCommitCandidate()?.let { commitAutoCorrection(it) }
+                                        // Punctuation ends the word — drop the tap evidence (issue #242).
+                                        TouchTrace.reset()
+                                        editorInstance.commitChar(text)
+                                    }
+                                }
                             }
                         }
                         else -> {
