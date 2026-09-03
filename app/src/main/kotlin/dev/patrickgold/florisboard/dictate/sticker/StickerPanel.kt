@@ -349,7 +349,13 @@ fun StickerPanel(
                                     modifier = Modifier
                                         .padding(horizontal = 3.dp)
                                         .clip(RoundedCornerShape(50))
-                                        .background(if (selected) Color(0x33808080) else Color(0x18808080))
+                                        // The accent marks what the user picked, everywhere else in
+                                        // this panel already — the scrollbar and the ring around a
+                                        // sticker waiting for its second tap. The tab pill was the
+                                        // one thing left painting that same meaning in grey (#317).
+                                        .background(
+                                            if (selected) accent.copy(alpha = 0.28f) else Color(0x18808080)
+                                        )
                                         .clickable {
                                             scope.launch { pagerState.animateScrollToPage(position) }
                                         }
