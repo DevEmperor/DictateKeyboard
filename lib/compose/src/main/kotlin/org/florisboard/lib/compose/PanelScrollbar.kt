@@ -13,6 +13,7 @@ package org.florisboard.lib.compose
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
@@ -21,6 +22,9 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+
+/** Breathing room between the last column of content and the bar (issue #317). */
+private val ScrollbarGap = 6.dp
 
 /**
  * A scrollbar that is actually visible inside the keyboard.
@@ -44,6 +48,17 @@ import androidx.compose.ui.unit.dp
  * makes it glide instead of stutter.
  */
 private fun Modifier.panelScrollbar(
+    accent: Color,
+    width: Dp,
+    metrics: () -> ScrollbarMetrics?,
+): Modifier = drawScrollbar(accent, width, metrics)
+    // The order is the whole trick: the draw node sits *outside* the padding, so it still measures the
+    // full width and paints the bar against the panel's real edge, while the padding narrows only the
+    // content. Stacked the other way round the content would keep its width and the last column would
+    // go on running underneath the bar, which is what it did.
+    .padding(end = width + ScrollbarGap)
+
+private fun Modifier.drawScrollbar(
     accent: Color,
     width: Dp,
     metrics: () -> ScrollbarMetrics?,

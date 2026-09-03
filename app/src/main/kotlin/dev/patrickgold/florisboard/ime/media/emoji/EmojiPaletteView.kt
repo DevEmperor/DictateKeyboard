@@ -274,7 +274,10 @@ fun EmojiPaletteView(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
-            contentPadding = PaddingValues(horizontal = 4.dp),
+            // The fixed tab row used to give each tab a ninth of the width, which left the first icon
+            // looking inset. A scrolling row starts where it is told to, so the margin has to be said
+            // out loud or the pill and the last category sit flush against the panel's edges.
+            contentPadding = PaddingValues(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             item(key = "search") {

@@ -426,7 +426,9 @@ fun StickerPanel(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(FlorisImeSizing.smartbarHeight),
-                            contentPadding = PaddingValues(horizontal = 4.dp),
+                            // The same margin the emoji categories keep, so the two tab rows start and
+                            // end at the same place rather than each at its own.
+                            contentPadding = PaddingValues(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             itemsIndexed(categories, key = { _, category -> category.id }) { position, category ->
