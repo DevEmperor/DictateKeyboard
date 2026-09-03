@@ -22,6 +22,7 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
@@ -54,13 +55,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState as collectFlowAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -117,6 +118,7 @@ import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.compose.pluralsRes
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -866,9 +868,20 @@ private fun StickerPackDialog(
             .filter { it.id != StickerCategory.ROOT_ID }
             .toMutableStateList()
     }
-    var draggingName by remember { mutableStateOf<String?>(null) }
+    // Where the dragged pack started, and how far the finger has taken it. The list itself is left
+    // alone until the drop — see the comment on the rows for why that matters.
+    var dragFrom by remember { mutableIntStateOf(-1) }
     var dragOffset by remember { mutableFloatStateOf(0f) }
     var rowHeight by remember { mutableIntStateOf(0) }
+    // Where it would land if let go now. A function rather than a value, because the drag callbacks
+    // below outlive the composition that created them: a captured value would be the one from when
+    // the gesture handler started, which is none.
+    fun dropTarget(): Int = if (dragFrom < 0 || rowHeight <= 0) {
+        -1
+    } else {
+        (dragFrom + (dragOffset / rowHeight).roundToInt()).coerceIn(0, packs.lastIndex)
+    }
+    val dragTo = dropTarget()
 
     // The create/rename button belongs where every other dialog puts its action: on the button row at
     // the bottom, beside Cancel. It doubles as "rename" while a pack is being edited.
@@ -919,85 +932,88 @@ private fun StickerPackDialog(
                     modifier = Modifier.padding(bottom = 4.dp),
                 )
             }
-            for (pack in packs) {
-                val isDragging = draggingName == pack.name
-                // The whole row drags, the handle only says so. Lifted above its neighbours while it
-                // moves, so it reads as picked up rather than as the list glitching.
-                Surface(
-                    tonalElevation = if (isDragging) 4.dp else 0.dp,
+            for ((position, pack) in packs.withIndex()) key(pack.name) {
+                val isDragging = dragFrom == position
+                // How far this row steps aside for the one being dragged: the rows between where it
+                // started and where it would land shuffle up or down by exactly one row, and they
+                // animate there, so the list opens a gap rather than snapping into a new order.
+                val displaced = when {
+                    isDragging || dragFrom < 0 || rowHeight <= 0 -> 0f
+                    dragFrom < dragTo && position in (dragFrom + 1)..dragTo -> -rowHeight.toFloat()
+                    dragFrom > dragTo && position in dragTo until dragFrom -> rowHeight.toFloat()
+                    else -> 0f
+                }
+                val shift by animateFloatAsState(displaced, label = "packShift")
+                // **The list is not touched while the finger is down.** Reordering it mid-gesture
+                // changed which pack each slot rendered, which changed the key of `pointerInput`
+                // below, which tore down the running gesture — the row jumped once and then went
+                // dead. Only the drawing moves; the order is written on the drop.
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(vertical = 4.dp)
                         .zIndex(if (isDragging) 1f else 0f)
-                        .graphicsLayer { translationY = if (isDragging) dragOffset else 0f }
+                        .graphicsLayer { translationY = if (isDragging) dragOffset else shift }
                         .onSizeChanged { rowHeight = it.height }
-                        .pointerInput(pack.name) {
+                        .pointerInput(pack.name, packs.size) {
                             detectDragGesturesAfterLongPress(
-                                onDragStart = { draggingName = pack.name; dragOffset = 0f },
+                                onDragStart = { dragFrom = position; dragOffset = 0f },
                                 onDragEnd = {
-                                    draggingName = null
+                                    val from = dragFrom
+                                    val to = dropTarget()
+                                    dragFrom = -1
                                     dragOffset = 0f
-                                    scope.launch {
-                                        StickerPackSettingsHelper.setOrder(prefs, packs.map { it.name })
+                                    if (from >= 0 && to >= 0 && from != to) {
+                                        packs.add(to, packs.removeAt(from))
+                                        scope.launch {
+                                            StickerPackSettingsHelper.setOrder(prefs, packs.map { it.name })
+                                        }
                                     }
                                 },
                                 onDragCancel = {
-                                    draggingName = null
+                                    dragFrom = -1
                                     dragOffset = 0f
-                                    reload++
                                 },
                                 onDrag = { change, amount ->
                                     change.consume()
-                                    dragOffset += amount.y
-                                    val current = packs.indexOfFirst { it.name == draggingName }
-                                    if (current < 0 || rowHeight <= 0) {
-                                        return@detectDragGesturesAfterLongPress
-                                    }
-                                    // Past half a row → swap with the neighbour and carry the offset
-                                    // over, so the row stays under the finger instead of jumping.
-                                    if (dragOffset > rowHeight / 2 && current < packs.lastIndex) {
-                                        packs.add(current + 1, packs.removeAt(current))
-                                        dragOffset -= rowHeight
-                                    } else if (dragOffset < -rowHeight / 2 && current > 0) {
-                                        packs.add(current - 1, packs.removeAt(current))
-                                        dragOffset += rowHeight
-                                    }
+                                    // Held to the list's own extent, so a pack cannot be dragged out
+                                    // over the rest of the dialog.
+                                    val limitUp = -position.toFloat() * rowHeight
+                                    val limitDown = (packs.lastIndex - position).toFloat() * rowHeight
+                                    dragOffset = (dragOffset + amount.y).coerceIn(limitUp, limitDown)
                                 },
                             )
                         },
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        if (packs.size > 1) {
-                            Icon(
-                                Icons.Default.DragHandle,
-                                contentDescription = null,
-                                modifier = Modifier.padding(end = 8.dp),
-                            )
-                        }
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = pack.name,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                            Text(
-                                text = pluralsRes(
-                                    R.plurals.unit__items__written,
-                                    pack.items.size,
-                                    "v" to pack.items.size,
-                                ),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        IconButton(onClick = { renaming = pack; newName = pack.name }) {
-                            Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
-                        }
-                        IconButton(onClick = { deleting = pack }) {
-                            Icon(Icons.Outlined.Delete, contentDescription = stringRes(R.string.sticker__pack_delete))
-                        }
+                    if (packs.size > 1) {
+                        Icon(
+                            Icons.Default.DragHandle,
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 8.dp),
+                        )
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = pack.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        Text(
+                            text = pluralsRes(
+                                R.plurals.unit__items__written,
+                                pack.items.size,
+                                "v" to pack.items.size,
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    IconButton(onClick = { renaming = pack; newName = pack.name }) {
+                        Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
+                    }
+                    IconButton(onClick = { deleting = pack }) {
+                        Icon(Icons.Outlined.Delete, contentDescription = stringRes(R.string.sticker__pack_delete))
                     }
                 }
             }
