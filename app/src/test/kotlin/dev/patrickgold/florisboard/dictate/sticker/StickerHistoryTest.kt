@@ -59,6 +59,42 @@ class StickerHistoryTest {
         assertEquals(listOf("d", "a", "b", "c"), list)
     }
 
+    @Test
+    fun `moving a favourite puts it where the arrow points`() {
+        val list = mutableListOf("a", "b", "c", "d")
+        assertTrue(StickerHistoryHelper.moveWithin(list, "c", -1))
+        assertEquals(listOf("a", "c", "b", "d"), list)
+        assertTrue(StickerHistoryHelper.moveWithin(list, "c", 2))
+        assertEquals(listOf("a", "b", "d", "c"), list)
+    }
+
+    /**
+     * The ends are walls, not a wrap-around. An arrow that sent the first favourite to the far end
+     * would read as a bug every single time it was pressed one time too many.
+     */
+    @Test
+    fun `an arrow at the end of the row does nothing`() {
+        val list = mutableListOf("a", "b", "c")
+        assertFalse(StickerHistoryHelper.moveWithin(list, "a", -1))
+        assertFalse(StickerHistoryHelper.moveWithin(list, "c", 1))
+        assertEquals(listOf("a", "b", "c"), list)
+    }
+
+    /** A step larger than the row is clamped rather than refused — the sticker lands at the end. */
+    @Test
+    fun `a step past the end lands at the end`() {
+        val list = mutableListOf("a", "b", "c")
+        assertTrue(StickerHistoryHelper.moveWithin(list, "a", 9))
+        assertEquals(listOf("b", "c", "a"), list)
+    }
+
+    @Test
+    fun `moving something that is not in the row changes nothing`() {
+        val list = mutableListOf("a", "b")
+        assertFalse(StickerHistoryHelper.moveWithin(list, "gone", -1))
+        assertEquals(listOf("a", "b"), list)
+    }
+
     /**
      * How a tab narrows the one history, and why it is a lookup rather than a stored subset.
      *

@@ -2046,6 +2046,10 @@
     <string name="sticker__section_rest">Todos los adhesivos</string>
     <string name="sticker__pin">Añadir a favoritos</string>
     <string name="sticker__unpin">Quitar de favoritos</string>
+    <string name="sticker__reorder">Cambiar la posición</string>
+    <string name="sticker__reorder_hint">Mover con las flechas</string>
+    <string name="sticker__reorder_earlier">Mover hacia el principio</string>
+    <string name="sticker__reorder_later">Mover hacia el final</string>
     <string name="sticker__setup_needed">Elige una carpeta para usar tus propios adhesivos</string>
     <string name="sticker__setup_needed_action">Abrir ajustes</string>
     <string name="sticker__folder_empty">No hay imágenes en esta carpeta</string>

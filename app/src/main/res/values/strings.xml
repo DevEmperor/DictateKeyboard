@@ -58,6 +58,10 @@
     <string name="sticker__section_rest" comment="Section heading above the remaining stickers of a folder">All stickers</string>
     <string name="sticker__pin" comment="Long-press action, adds a sticker to the favourites">Add to favourites</string>
     <string name="sticker__unpin" comment="Long-press action, removes a sticker from the favourites">Remove from favourites</string>
+    <string name="sticker__reorder" comment="Long-press action on a favourite, starts moving it along the row">Change position</string>
+    <string name="sticker__reorder_hint" comment="Header text while a favourite is being moved with the arrows">Move with the arrows</string>
+    <string name="sticker__reorder_earlier" comment="Screen reader label for the arrow that moves a favourite towards the start">Move towards the start</string>
+    <string name="sticker__reorder_later" comment="Screen reader label for the arrow that moves a favourite towards the end">Move towards the end</string>
     <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>
     <string name="sticker__setup_needed_action" comment="Button that opens the settings screen">Open settings</string>
     <string name="sticker__folder_empty" comment="Empty state when the chosen folder holds no usable images">No images in this folder</string>

@@ -2079,6 +2079,10 @@
     <string name="sticker__section_rest">Všechny samolepky</string>
     <string name="sticker__pin">Přidat k oblíbeným</string>
     <string name="sticker__unpin">Odebrat z oblíbených</string>
+    <string name="sticker__reorder">Změnit pozici</string>
+    <string name="sticker__reorder_hint">Přesouvejte šipkami</string>
+    <string name="sticker__reorder_earlier">Přesunout na začátek</string>
+    <string name="sticker__reorder_later">Přesunout na konec</string>
     <string name="sticker__setup_needed">Vyberte složku, abyste mohli používat vlastní samolepky</string>
     <string name="sticker__setup_needed_action">Otevřít nastavení</string>
     <string name="sticker__folder_empty">V této složce nejsou žádné obrázky</string>

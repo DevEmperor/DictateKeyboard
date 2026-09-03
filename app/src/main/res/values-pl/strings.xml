@@ -2080,6 +2080,10 @@
     <string name="sticker__section_rest">Wszystkie naklejki</string>
     <string name="sticker__pin">Dodaj do ulubionych</string>
     <string name="sticker__unpin">Usuń z ulubionych</string>
+    <string name="sticker__reorder">Zmień pozycję</string>
+    <string name="sticker__reorder_hint">Przesuń strzałkami</string>
+    <string name="sticker__reorder_earlier">Przesuń do przodu</string>
+    <string name="sticker__reorder_later">Przesuń do tyłu</string>
     <string name="sticker__setup_needed">Wybierz folder, aby używać własnych naklejek</string>
     <string name="sticker__setup_needed_action">Otwórz ustawienia</string>
     <string name="sticker__folder_empty">Brak obrazów w tym folderze</string>

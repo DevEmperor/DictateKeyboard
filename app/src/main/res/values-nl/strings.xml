@@ -1964,6 +1964,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__section_rest">Alle stickers</string>
     <string name="sticker__pin">Aan favorieten toevoegen</string>
     <string name="sticker__unpin">Uit favorieten verwijderen</string>
+    <string name="sticker__reorder">Positie wijzigen</string>
+    <string name="sticker__reorder_hint">Verplaatsen met de pijlen</string>
+    <string name="sticker__reorder_earlier">Naar voren verplaatsen</string>
+    <string name="sticker__reorder_later">Naar achteren verplaatsen</string>
     <string name="sticker__setup_needed">Kies een map om je eigen stickers te gebruiken</string>
     <string name="sticker__setup_needed_action">Instellingen openen</string>
     <string name="sticker__folder_empty">Geen afbeeldingen in deze map</string>

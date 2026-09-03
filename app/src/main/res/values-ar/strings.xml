@@ -1923,6 +1923,10 @@
     <string name="sticker__section_rest">كل الملصقات</string>
     <string name="sticker__pin">إضافة إلى المفضلة</string>
     <string name="sticker__unpin">إزالة من المفضلة</string>
+    <string name="sticker__reorder">تغيير الموضع</string>
+    <string name="sticker__reorder_hint">التحريك بالأسهم</string>
+    <string name="sticker__reorder_earlier">التحريك نحو البداية</string>
+    <string name="sticker__reorder_later">التحريك نحو النهاية</string>
     <string name="sticker__setup_needed">اختر مجلدًا لاستخدام ملصقاتك الخاصة</string>
     <string name="sticker__setup_needed_action">فتح الإعدادات</string>
     <string name="sticker__folder_empty">لا توجد صور في هذا المجلد</string>

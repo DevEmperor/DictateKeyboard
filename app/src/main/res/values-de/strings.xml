@@ -1940,6 +1940,10 @@
     <string name="sticker__section_rest">Alle Sticker</string>
     <string name="sticker__pin">Zu Favoriten hinzufügen</string>
     <string name="sticker__unpin">Aus Favoriten entfernen</string>
+    <string name="sticker__reorder">Position ändern</string>
+    <string name="sticker__reorder_hint">Mit den Pfeilen verschieben</string>
+    <string name="sticker__reorder_earlier">Nach vorne schieben</string>
+    <string name="sticker__reorder_later">Nach hinten schieben</string>
     <string name="sticker__setup_needed">Wähle einen Ordner, um eigene Sticker zu verwenden</string>
     <string name="sticker__setup_needed_action">Einstellungen öffnen</string>
     <string name="sticker__folder_empty">Keine Bilder in diesem Ordner</string>

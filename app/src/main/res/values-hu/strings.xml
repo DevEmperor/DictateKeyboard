@@ -2063,6 +2063,10 @@
     <string name="sticker__section_rest">Minden matrica</string>
     <string name="sticker__pin">Hozzáadás a kedvencekhez</string>
     <string name="sticker__unpin">Eltávolítás a kedvencekből</string>
+    <string name="sticker__reorder">Pozíció módosítása</string>
+    <string name="sticker__reorder_hint">Mozgatás a nyilakkal</string>
+    <string name="sticker__reorder_earlier">Mozgatás előre</string>
+    <string name="sticker__reorder_later">Mozgatás hátra</string>
     <string name="sticker__setup_needed">Válassz egy mappát a saját matricáid használatához</string>
     <string name="sticker__setup_needed_action">Beállítások megnyitása</string>
     <string name="sticker__folder_empty">Nincs kép ebben a mappában</string>

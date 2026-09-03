@@ -2065,6 +2065,10 @@
     <string name="sticker__section_rest">Всички стикери</string>
     <string name="sticker__pin">Добави в любими</string>
     <string name="sticker__unpin">Премахни от любими</string>
+    <string name="sticker__reorder">Промяна на позицията</string>
+    <string name="sticker__reorder_hint">Преместване със стрелките</string>
+    <string name="sticker__reorder_earlier">Преместване към началото</string>
+    <string name="sticker__reorder_later">Преместване към края</string>
     <string name="sticker__setup_needed">Изберете папка, за да използвате собствените си стикери</string>
     <string name="sticker__setup_needed_action">Отвори настройките</string>
     <string name="sticker__folder_empty">В тази папка няма изображения</string>

@@ -1848,6 +1848,10 @@
     <string name="sticker__section_rest">Tutti gli adesivi</string>
     <string name="sticker__pin">Aggiungi ai preferiti</string>
     <string name="sticker__unpin">Rimuovi dai preferiti</string>
+    <string name="sticker__reorder">Cambia posizione</string>
+    <string name="sticker__reorder_hint">Sposta con le frecce</string>
+    <string name="sticker__reorder_earlier">Sposta verso l\'inizio</string>
+    <string name="sticker__reorder_later">Sposta verso la fine</string>
     <string name="sticker__setup_needed">Scegli una cartella per usare i tuoi adesivi</string>
     <string name="sticker__setup_needed_action">Apri le impostazioni</string>
     <string name="sticker__folder_empty">Nessuna immagine in questa cartella</string>

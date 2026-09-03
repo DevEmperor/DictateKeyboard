@@ -1940,6 +1940,10 @@
     <string name="sticker__section_rest">Tots els adhesius</string>
     <string name="sticker__pin">Afegeix a preferits</string>
     <string name="sticker__unpin">Treu dels preferits</string>
+    <string name="sticker__reorder">Canvia la posició</string>
+    <string name="sticker__reorder_hint">Mou amb les fletxes</string>
+    <string name="sticker__reorder_earlier">Mou cap al principi</string>
+    <string name="sticker__reorder_later">Mou cap al final</string>
     <string name="sticker__setup_needed">Trieu una carpeta per fer servir els vostres adhesius</string>
     <string name="sticker__setup_needed_action">Obre la configuració</string>
     <string name="sticker__folder_empty">No hi ha imatges en aquesta carpeta</string>

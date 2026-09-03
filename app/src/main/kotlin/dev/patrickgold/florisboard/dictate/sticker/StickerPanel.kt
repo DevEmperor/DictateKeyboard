@@ -40,10 +40,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.HistoryToggleOff
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material.icons.outlined.DriveFileMove
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FolderOff
@@ -147,6 +151,14 @@ fun StickerPanel(
     var deleteArmed by remember { mutableStateOf(false) }
     // The sheet's second face: which pack to move into. A submenu would need somewhere to hang.
     var packPickerOpen by remember { mutableStateOf(false) }
+    // The favourite being moved along the row right now (issue #317). While this is set the header
+    // turns into a pair of arrows and taps stop inserting, which is what makes the mode safe: nothing
+    // can be sent by accident while the grid is being rearranged.
+    //
+    // Arrows rather than dragging, and not for want of trying: Compose loses the pointer stream
+    // mid-press inside the keyboard window (#235), so a drag has to be driven from the root view's
+    // own touch dispatch. That is a lot of machinery for moving a sticker one place to the left.
+    var reorderDocId by remember { mutableStateOf<String?>(null) }
 
     fun closeMenu() {
         menuItem = null
@@ -261,36 +273,85 @@ fun StickerPanel(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp),
+            val movingDocId = reorderDocId
+            if (movingDocId != null) {
+                // The header carries the arrows rather than the grid: a button drawn on the cell
+                // itself would have to sit somewhere, and every place it could sit is a place the
+                // finger already means something else.
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { scope.launch { StickerHistoryHelper.movePinned(prefs, movingDocId, -1) } },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = stringRes(R.string.sticker__reorder_earlier),
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
+                SnyggText(
+                    elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                    text = stringRes(R.string.sticker__reorder_hint),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp),
                 )
-            }
-            SnyggText(
-                elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
-                text = stringRes(R.string.sticker__title),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 8.dp),
-            )
-            SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                onClick = { FlorisImeService.launchSettings("settings/media") },
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp),
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { scope.launch { StickerHistoryHelper.movePinned(prefs, movingDocId, 1) } },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = stringRes(R.string.sticker__reorder_later),
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { reorderDocId = null },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = stringRes(R.string.action__done),
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
+            } else {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
+                SnyggText(
+                    elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                    text = stringRes(R.string.sticker__title),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp),
                 )
+                SnyggIconButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    onClick = { FlorisImeService.launchSettings("settings/media") },
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
             }
         }
 
@@ -392,7 +453,11 @@ fun StickerPanel(
                             treeUri = treeUri,
                             restLabel = restLabel,
                             accent = accent,
+                            reorderDocId = reorderDocId,
                             onInsert = { item -> insert(item) },
+                            // Tapping another favourite hands the arrows over to it, so a row can be
+                            // put in order without leaving the mode once per sticker.
+                            onReorderPick = { item -> reorderDocId = item.docId },
                             onLongPress = { item, section ->
                                 menuItem = item
                                 menuSection = section
@@ -470,6 +535,17 @@ fun StickerPanel(
                         }
                         closeMenu()
                     }
+                    if (isPinned) {
+                        // Re-pinning already moves a sticker to the front, so this is here for the
+                        // finer case: a favourite that belongs third, not first.
+                        MediaAction(
+                            icon = Icons.Default.SwapHoriz,
+                            text = stringRes(R.string.sticker__reorder),
+                        ) {
+                            reorderDocId = sheetItem.docId
+                            closeMenu()
+                        }
+                    }
                     if (packs.isNotEmpty()) {
                         MediaAction(
                             icon = Icons.Outlined.DriveFileMove,
@@ -536,7 +612,9 @@ private fun StickerCategoryPage(
     treeUri: Uri,
     restLabel: String,
     accent: Color,
+    reorderDocId: String?,
     onInsert: (StickerItem) -> Unit,
+    onReorderPick: (StickerItem) -> Unit,
     onLongPress: (StickerItem, String) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
@@ -572,7 +650,10 @@ private fun StickerCategoryPage(
     @Composable
     fun Cell(item: StickerItem, section: String) {
         val cellKey = "$section/${item.docId}"
-        val isArmed = armedKey == cellKey
+        // The same ring marks both states, because both mean the same thing: this is the sticker the
+        // next button press acts on.
+        val isMoving = section == "pinned" && reorderDocId == item.docId
+        val isArmed = armedKey == cellKey || isMoving
         Box {
             StickerThumb(
                 item = item,
@@ -582,14 +663,19 @@ private fun StickerCategoryPage(
                 scrolling = { gridState.isScrollInProgress },
                 onClick = {
                     inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                    // With confirmation on, the first tap arms and the second sends. A quick
-                    // double-tap therefore sends in one motion without a shortcut of its own, and
-                    // tapping a different sticker moves the armed state rather than sending it.
-                    if (!confirmBeforeInsert || isArmed) {
-                        armedKey = null
-                        onInsert(item)
-                    } else {
-                        armedKey = cellKey
+                    when {
+                        // Nothing is sent while the arrows are up. A favourite hands them over; any
+                        // other sticker is not a thing the arrows could move, so the tap does nothing
+                        // rather than quietly doing the one thing the mode exists to prevent.
+                        reorderDocId != null -> if (section == "pinned") onReorderPick(item)
+                        // With confirmation on, the first tap arms and the second sends. A quick
+                        // double-tap therefore sends in one motion without a shortcut of its own, and
+                        // tapping a different sticker moves the armed state rather than sending it.
+                        !confirmBeforeInsert || isArmed -> {
+                            armedKey = null
+                            onInsert(item)
+                        }
+                        else -> armedKey = cellKey
                     }
                 },
                 onLongClick = {

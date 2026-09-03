@@ -2059,6 +2059,10 @@
     <string name="sticker__section_rest">所有贴纸</string>
     <string name="sticker__pin">添加到收藏</string>
     <string name="sticker__unpin">从收藏中移除</string>
+    <string name="sticker__reorder">调整位置</string>
+    <string name="sticker__reorder_hint">用箭头移动</string>
+    <string name="sticker__reorder_earlier">向前移动</string>
+    <string name="sticker__reorder_later">向后移动</string>
     <string name="sticker__setup_needed">选择一个文件夹以使用你自己的贴纸</string>
     <string name="sticker__setup_needed_action">打开设置</string>
     <string name="sticker__folder_empty">此文件夹中没有图片</string>

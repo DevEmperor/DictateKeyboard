@@ -2068,6 +2068,10 @@
     <string name="sticker__section_rest">Все стикеры</string>
     <string name="sticker__pin">В избранное</string>
     <string name="sticker__unpin">Убрать из избранного</string>
+    <string name="sticker__reorder">Изменить позицию</string>
+    <string name="sticker__reorder_hint">Перемещайте стрелками</string>
+    <string name="sticker__reorder_earlier">Переместить к началу</string>
+    <string name="sticker__reorder_later">Переместить к концу</string>
     <string name="sticker__setup_needed">Выберите папку, чтобы использовать свои стикеры</string>
     <string name="sticker__setup_needed_action">Открыть настройки</string>
     <string name="sticker__folder_empty">В этой папке нет изображений</string>

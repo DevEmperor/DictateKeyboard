@@ -1997,6 +1997,10 @@
     <string name="sticker__section_rest">すべてのステッカー</string>
     <string name="sticker__pin">お気に入りに追加</string>
     <string name="sticker__unpin">お気に入りから削除</string>
+    <string name="sticker__reorder">位置を変更</string>
+    <string name="sticker__reorder_hint">矢印で移動</string>
+    <string name="sticker__reorder_earlier">前へ移動</string>
+    <string name="sticker__reorder_later">後ろへ移動</string>
     <string name="sticker__setup_needed">自分のステッカーを使うにはフォルダを選択してください</string>
     <string name="sticker__setup_needed_action">設定を開く</string>
     <string name="sticker__folder_empty">このフォルダに画像がありません</string>
