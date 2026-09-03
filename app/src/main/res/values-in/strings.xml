@@ -1557,7 +1557,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_field_transcription_rewording_model">Model transkripsi &amp; penyusunan ulang</string>
     <string name="dictate__providers_single_call_title">Panggilan tunggal multimodal</string>
     <string name="dictate__providers_single_call_summary">Satu model berkemampuan audio mentranskripsi dan memformat dalam satu permintaan.</string>
-    <string name="dictate__providers_single_call_pick_audio">Pilih model yang mendukung audio (ditandai 🎤 di daftar model).</string>
     <string name="dictate__providers_rewording_single_call_note">Sedang tidak digunakan — penyedia transkripsi Anda melakukan penyusunan ulang dalam panggilan tunggalnya.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opsi untuk mendikte dari jam tangan yang dipasangkan</string>

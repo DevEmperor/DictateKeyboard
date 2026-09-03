@@ -211,8 +211,6 @@ fun ModelPickerDialog(
                     ModelRow(
                         label = model,
                         selected = model.equals(current, ignoreCase = true),
-                        // Mark models the catalog reports as accepting audio input (issue #130/#132).
-                        audio = audioModelIds.contains(model),
                         onClick = { onPick(model); onDismiss() },
                     )
                 }
@@ -222,7 +220,7 @@ fun ModelPickerDialog(
 }
 
 @Composable
-private fun ModelRow(label: String, selected: Boolean, audio: Boolean = false, onClick: () -> Unit) {
+private fun ModelRow(label: String, selected: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -235,10 +233,10 @@ private fun ModelRow(label: String, selected: Boolean, audio: Boolean = false, o
             modifier = Modifier.weight(1f),
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
         )
-        // Audio-input capable (usable for single-call multimodal); helps the user spot those models.
-        if (audio) {
-            Text("🎤", modifier = Modifier.padding(end = 8.dp))
-        }
+        // No capability badge here any more. A 🎤 used to mark what the catalog called audio-capable, and
+        // it was wrong often enough to send people away from models that work (#313). The modality data
+        // still decides which ids *appear* in the transcription list, where being wrong only ever adds an
+        // entry — claiming something about a particular model is the part that had to go.
         if (selected) {
             Icon(Icons.Default.Check, contentDescription = null)
         }

@@ -1545,7 +1545,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Transkripcijas un pārformulēšanas modelis</string>
     <string name="dictate__providers_single_call_title">Viens multimodāls pieprasījums</string>
     <string name="dictate__providers_single_call_summary">Viens audio modelis transkribē un formatē vienā pieprasījumā.</string>
-    <string name="dictate__providers_single_call_pick_audio">Izvēlieties audio ievadi atbalstošu modeli (modeļu sarakstā atzīmēts ar 🎤).</string>
     <string name="dictate__providers_rewording_single_call_note">Pašlaik netiek izmantots — jūsu transkripcijas pakalpojums veic pārformulēšanu savā vienreizējā pieprasījumā.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Diktēšanas opcijas no savienota pulksteņa</string>

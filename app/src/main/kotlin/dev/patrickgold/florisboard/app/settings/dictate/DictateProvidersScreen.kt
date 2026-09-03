@@ -594,40 +594,11 @@ private fun ProviderEditorDialog(
         else -> preset
     }
 
-    // The model that would actually be used, which since the fields stopped being pre-filled is usually
-    // the preset default rather than anything on screen. Every question below is about this one and not
-    // about the box: an empty box does not mean "no model", it means "that one".
-    val effectiveTranscriptionModel =
-        transcriptionModel.trim().ifBlank { preset?.defaultTranscriptionModel.orEmpty() }
-
-    // Whether single-call would actually run with what is currently in the dialog, which is what decides
-    // both the transcription field's label and whether the rewording field is shown (#313). The switch on
-    // its own is not the answer: the same question is asked at dictation time, and this is the one place
-    // where the user can see the answer before it costs them a failed rewording.
-    val singleCall = singleCallApplies(transcriptionViaChat, effectivePreset, effectiveTranscriptionModel)
-
-    // Pre-load the model catalog so we know whether this provider has any audio-capable model — that
-    // gates the single-call multimodal option (#130/#132). Populates on open for keyed accounts; for a
-    // fresh account the model browser fills it in when the user picks a model. Once classified, stops.
-    LaunchedEffect(effectivePreset.id, effectivePreset.baseUrl) {
-        if (showTranscription && showChat && effectivePreset.supportsDynamicModels &&
-            cachedAudioModels.isEmpty() &&
-            (apiKey.isNotBlank() || effectivePreset.apiKeyUrl == null)
-        ) {
-            runCatching {
-                val models = OpenAiCompatibleClient
-                    .from(
-                        effectivePreset, apiKey,
-                        baseUrlOverride = effectivePreset.baseUrl,
-                        trustUserCerts = prefs.dictate.trustUserCertificates.get(),
-                    )
-                    .listModels()
-                cachedModels = models.map { it.id }
-                cachedAudioModels = models.filter { it.acceptsAudioInput }.map { it.id }
-                cachedTranscriptionModels = models.filter { it.isTranscriptionModel }.map { it.id }
-            }
-        }
-    }
+    // Nothing here asks what a model can do. Which fields are shown is the switch's business alone, and
+    // what belongs in the merged field is the user's — the app cannot know, and a version that guessed
+    // both refused to merge and said nothing about why (#313). There used to be a catalog fetch on open
+    // whose only job was that guess; the picker loads the catalog itself when it is opened, so the
+    // dialog no longer sends a request nobody asked for.
 
     JetPrefAlertDialog(
         title = preset?.displayName ?: stringRes(R.string.dictate__providers_custom_title),
@@ -714,14 +685,13 @@ private fun ProviderEditorDialog(
             ConnectionTestRow(preset = effectivePreset, apiKey = apiKey)
             if (showTranscription) {
                 EditorField(
-                    // When single-call is on, this one model does both transcription and rewording (#130) —
-                    // and since #313 the rewording path reads the same field, so the label is a promise
-                    // rather than a description. It is therefore asked whether single-call *applies*, not
-                    // merely whether the switch is on: with a dedicated speech-to-text model chosen there
-                    // is no chat surface, nothing is done in one call, and the rewording field below comes
-                    // back rather than the label claiming a model that cannot reword.
+                    // When single-call is on, this one model does both transcription and rewording (#130),
+                    // and since #313 the rewording path reads this field rather than its own. Whether the
+                    // model in it can do both is the user's call: the app has no reliable way to know, and
+                    // the version that tried to work it out refused to merge the fields and left the
+                    // switch looking broken.
                     label = stringRes(
-                        if (singleCall) {
+                        if (transcriptionViaChat) {
                             R.string.dictate__providers_field_transcription_rewording_model
                         } else {
                             R.string.dictate__providers_field_transcription_model
@@ -785,7 +755,7 @@ private fun ProviderEditorDialog(
                 }
             }
             // Rewording model is unused while single-call multimodal is on (one model does both, #130).
-            if (showChat && !singleCall) {
+            if (showChat && !transcriptionViaChat) {
                 EditorField(
                     label = stringRes(R.string.dictate__providers_field_chat_model),
                     value = chatModel,
@@ -821,20 +791,14 @@ private fun ProviderEditorDialog(
                 }
             }
             // Single-call multimodal (issue #130): kept at the bottom; when on, this one model transcribes
-            // and formats in a single request (the rewording model above is hidden). Offered for any
-            // provider with a chat endpoint (the prerequisite for input_audio) — whether a given model
-            // accepts audio is only known for providers that report modalities (#132), so we don't hide
-            // the toggle, but we do warn when the catalog says the selected model is not audio-capable.
+            // and formats in a single request and the rewording field above is folded into it. Offered for
+            // any provider with a chat endpoint, which is the prerequisite for input_audio.
+            //
+            // It used to warn when the catalog said the chosen model accepted no audio, and the model list
+            // marked the audio-capable ones. Both are gone: the classification was wrong often enough to
+            // mislead, and a wrong warning about a model that works is worse than none. Picking a model
+            // that can do both is the user's job here, and it is one the app cannot do for them.
             if (showTranscription && showChat) {
-                // Only warn when we positively know the model isn't audio-capable (catalog has modality
-                // data and the chosen model isn't in it) — never for providers that don't report it.
-                // Asked about the effective model, or an empty box would read as "not audio-capable".
-                val knownNotAudio = cachedAudioModels.isNotEmpty() &&
-                    effectiveTranscriptionModel !in cachedAudioModels
-                // The switch is on and nothing happens: a speech-to-text model cannot transcribe and
-                // reword in one request, so neither the merge nor the single call takes place. Saying so
-                // here is the feedback that was missing — the switch used to look simply broken.
-                val switchIsIdle = transcriptionViaChat && (!singleCall || knownNotAudio)
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -845,13 +809,7 @@ private fun ProviderEditorDialog(
                             style = MaterialTheme.typography.bodyLarge,
                         )
                         Text(
-                            stringRes(
-                                if (switchIsIdle) {
-                                    R.string.dictate__providers_single_call_pick_audio
-                                } else {
-                                    R.string.dictate__providers_single_call_summary
-                                },
-                            ),
+                            stringRes(R.string.dictate__providers_single_call_summary),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

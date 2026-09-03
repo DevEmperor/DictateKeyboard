@@ -1385,7 +1385,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Modello di trascrizione e riformulazione</string>
     <string name="dictate__providers_single_call_title">Chiamata singola multimodale</string>
     <string name="dictate__providers_single_call_summary">Un solo modello con supporto audio trascrive e formatta in un\'unica richiesta.</string>
-    <string name="dictate__providers_single_call_pick_audio">Scegli un modello con supporto audio (contrassegnato da 🎤 nell\'elenco dei modelli).</string>
     <string name="dictate__providers_rewording_single_call_note">Al momento non utilizzato — il tuo provider di trascrizione esegue la riformulazione nella sua chiamata singola.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opzioni per dettare da un orologio abbinato</string>

@@ -143,63 +143,57 @@ data class ProviderAccount(
 }
 
 /**
- * Whether single-call multimodal (issue #130) actually applies to [account] — the switch being on is not
- * enough on its own.
+ * Whether a dictation can go out as a single `chat/completions` request with the audio in it (#130).
  *
- * The route posts audio to `chat/completions`, so it needs a chat model that accepts audio. The on-device
- * engine has no chat surface at all, and a *dedicated* speech-to-text model answers on its own endpoint
- * (Google's, issue #292) — with either of those chosen, the switch has to yield to the model.
+ * A **routing** question, not a judgement about what a model is good at: the on-device engine has no
+ * chat endpoint at all, and Google's dedicated speech-to-text models answer on their own endpoint
+ * (#292), so neither can be posted to. Everything else is offered, and whether the model actually
+ * accepts audio is the user's business — see [sharedSingleCallModel].
  *
- * Asked in one place because two very different questions turn on it: whether a dictation goes out as one
- * request, and — since #313 — whether the transcription model is also the rewording model. When those two
- * drifted apart, the dialog said one model did both while the rewording quietly used something else.
+ * Read only by the dictation path. The settings dialog folds its fields on the switch alone, and the
+ * rewording model follows the field the user can see; having this decide those too is what left the
+ * switch looking broken (#313).
  */
 fun singleCallApplies(transcriptionViaChat: Boolean, preset: ProviderPreset, model: String): Boolean =
     transcriptionViaChat &&
         preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
-        !ProviderRegistry.isDedicatedTranscriptionModel(model)
+        !(preset.id == ProviderRegistry.GEMINI.id && ProviderRegistry.isGeminiTranscribeModel(model))
 
 /**
  * The model to reword with for [account] — the one the settings dialog says will be used, which is not
  * always the one [ProviderAccount.chatModel] holds (issue #313).
  *
- * Three answers, in order:
- *
- *  1. **An explicit choice wins.** A rewording model the user picked is used verbatim, and if the provider
- *     has since retired it they get an error naming the model they chose, which is the honest outcome.
- *  2. **Otherwise the single-call promise is kept.** With that switch on, the dialog hides the rewording
- *     field and relabels the remaining one "Transcription & rewording model" — so that field is what the
- *     user was told does both, and rewording has to read it. It did not: `chatModel` stayed blank forever
- *     and every rewording went to the preset default instead, which is the bug #313 reports. Only when
- *     [singleCallApplies], because a dedicated speech-to-text model cannot reword at all.
- *  3. **Otherwise the preset default**, which is what "no model chosen" has always meant. Kept as an empty
- *     stored string on purpose, so a later app update can move a provider off a retired model — the
- *     mechanism that failed here not because it is wrong but because nobody moved the models.
+ * With single-call on, the dialog folds the rewording field into the transcription one and labels it
+ * "Transcription & rewording model". Rewording used to go on reading `chatModel` regardless, which that
+ * fold leaves blank forever, so every rewording went to the preset default and no setting could change
+ * it. So the merged field wins when it holds something ([sharedSingleCallModel]); otherwise the rewording
+ * field's own value, and failing that the preset default — which is what an empty box has always meant.
  */
 fun chatModelFor(
     account: ProviderAccount,
     preset: ProviderPreset,
     fallback: String = "gpt-4o-mini",
 ): String {
-    account.chatModel.takeIf { it.isNotBlank() }?.let { return it }
-    val shared = sharedSingleCallModel(account, preset)
-    if (shared != null) return shared
-    return preset.defaultChatModel ?: fallback
+    sharedSingleCallModel(account)?.let { return it }
+    return account.chatModel.ifBlank { preset.defaultChatModel ?: fallback }
 }
 
 /**
  * The transcription model when it is also the rewording model, else null.
  *
- * Resolved rather than read: since the settings dialog stopped filling its fields in, an empty
- * transcription model means the preset default, and the merge has to be decided about the model that
- * will actually run. Deciding it about the empty box instead would have the dialog show one merged
- * field while the dictation used two different models — the same disagreement #313 was.
+ * Two conditions, and neither of them is a guess about the model. The switch has to be on, because that
+ * is what folds the two fields into one on screen; and something has to actually stand in that field,
+ * because an empty box is not a choice — it is the preset default showing through, and each field then
+ * falls back to its own. Sharing a *default* would mean a fresh Gemini account rewording with
+ * `gemini-3.5-transcribe`, which fails, so nothing would work until the user typed something.
+ *
+ * What is emphatically not asked is whether the chosen model can do both. The app has no reliable way to
+ * know — the modality data it once used was wrong often enough to mislead — and a version that decided
+ * for the user refused to merge the fields and left the switch looking broken. Choosing a model that
+ * serves both is the user's job here, and when it does not, the error names the model they chose.
  */
-private fun sharedSingleCallModel(account: ProviderAccount, preset: ProviderPreset): String? {
-    val effective = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel.orEmpty() }
-    if (effective.isBlank()) return null
-    return effective.takeIf { singleCallApplies(account.transcriptionViaChat, preset, it) }
-}
+private fun sharedSingleCallModel(account: ProviderAccount): String? =
+    account.transcriptionModel.takeIf { account.transcriptionViaChat && it.isNotBlank() }
 
 /**
  * Whether [chatModelFor] answered with the built-in default rather than with anything the user chose.
@@ -209,10 +203,9 @@ private fun sharedSingleCallModel(account: ProviderAccount, preset: ProviderPres
  * the preset turns that into one sentence about where it came from and where to change it.
  */
 fun chatModelIsPresetDefault(account: ProviderAccount, preset: ProviderPreset): Boolean =
-    account.chatModel.isBlank() &&
-        // A transcription model the user typed and that single-call hands to rewording is their choice
-        // like any other. A blank one resolves to a preset default whichever way it then goes.
-        (account.transcriptionModel.isBlank() || sharedSingleCallModel(account, preset) == null)
+    // A model handed over by the merged field is the user's choice like any other, so it needs no
+    // explanation of where it came from.
+    sharedSingleCallModel(account) == null && account.chatModel.isBlank()
 
 /**
  * The provider keyring: every configured [ProviderAccount] keyed by provider id. Persisted as a single

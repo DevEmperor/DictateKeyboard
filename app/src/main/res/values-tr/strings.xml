@@ -1580,7 +1580,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Yazıya dökme ve yeniden ifade modeli</string>
     <string name="dictate__providers_single_call_title">Tek çağrılı çok kipli</string>
     <string name="dictate__providers_single_call_summary">Sesi destekleyen tek bir model, tek bir istekte yazıya döker ve biçimlendirir.</string>
-    <string name="dictate__providers_single_call_pick_audio">Ses girişini destekleyen bir model seçin (model listesinde 🎤 ile işaretli).</string>
     <string name="dictate__providers_rewording_single_call_note">Şu anda kullanılmıyor — yazıya dökme sağlayıcınız yeniden ifadeyi tek çağrısında yapıyor.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Eşleştirilmiş saatten dikte seçenekleri</string>

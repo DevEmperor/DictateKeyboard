@@ -1617,7 +1617,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Model transkrypcji i przeredagowania</string>
     <string name="dictate__providers_single_call_title">Pojedyncze wywołanie multimodalne</string>
     <string name="dictate__providers_single_call_summary">Jeden model obsługujący dźwięk transkrybuje i formatuje w jednym żądaniu.</string>
-    <string name="dictate__providers_single_call_pick_audio">Wybierz model obsługujący dźwięk (oznaczony 🎤 na liście modeli).</string>
     <string name="dictate__providers_rewording_single_call_note">Obecnie nieużywany — Twój dostawca transkrypcji wykonuje przeredagowanie w swoim pojedynczym wywołaniu.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opcje dyktowania ze sparowanego zegarka</string>

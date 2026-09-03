@@ -1602,7 +1602,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Модел за транскрипция и преформулиране</string>
     <string name="dictate__providers_single_call_title">Единична мултимодална заявка</string>
     <string name="dictate__providers_single_call_summary">Един модел с поддръжка на аудио транскрибира и форматира с една заявка.</string>
-    <string name="dictate__providers_single_call_pick_audio">Изберете модел с поддръжка на аудио (отбелязан с 🎤 в списъка с модели).</string>
     <string name="dictate__providers_rewording_single_call_note">В момента не се използва — вашият доставчик за транскрипция извършва преформулирането в своята единична заявка.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Опции за диктуване от сдвоен часовник</string>

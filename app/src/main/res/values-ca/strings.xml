@@ -1477,7 +1477,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Model de transcripció i reformulació</string>
     <string name="dictate__providers_single_call_title">Crida única multimodal</string>
     <string name="dictate__providers_single_call_summary">Un sol model amb capacitat d\'àudio transcriu i dóna format en una única sol·licitud.</string>
-    <string name="dictate__providers_single_call_pick_audio">Tria un model amb capacitat d\'àudio (marcat amb 🎤 a la llista de models).</string>
     <string name="dictate__providers_rewording_single_call_note">Ara mateix no s\'utilitza — el teu proveïdor de transcripció fa la reformulació en la seva crida única.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opcions per dictar des d\'un rellotge vinculat</string>

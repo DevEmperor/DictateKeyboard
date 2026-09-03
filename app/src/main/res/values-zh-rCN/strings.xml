@@ -1596,7 +1596,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">转录和改写模型</string>
     <string name="dictate__providers_single_call_title">单次多模态调用</string>
     <string name="dictate__providers_single_call_summary">一个支持音频的模型在一次请求中完成转录和格式化。</string>
-    <string name="dictate__providers_single_call_pick_audio">选择一个支持音频输入的模型（在模型列表中以 🎤 标记）。</string>
     <string name="dictate__providers_rewording_single_call_note">当前未使用 — 你的转录服务商在其单次调用中完成改写。</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">从已配对手表听写的选项</string>

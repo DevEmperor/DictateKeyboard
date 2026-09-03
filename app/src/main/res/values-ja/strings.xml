@@ -1534,7 +1534,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">文字起こしと書き換えのモデル</string>
     <string name="dictate__providers_single_call_title">シングルコール（マルチモーダル）</string>
     <string name="dictate__providers_single_call_summary">音声対応の 1 つのモデルが、1 回のリクエストで文字起こしと整形を行います。</string>
-    <string name="dictate__providers_single_call_pick_audio">音声入力に対応したモデルを選択してください（モデル一覧で 🎤 が付いたもの）。</string>
     <string name="dictate__providers_rewording_single_call_note">現在は使用されていません。文字起こしプロバイダーがシングルコール内で書き換えを行います。</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">ペアリングした時計から音声入力するためのオプション</string>

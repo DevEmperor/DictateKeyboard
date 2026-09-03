@@ -1807,7 +1807,6 @@
     <string name="dictate__providers_field_chat_model" comment="Label for the chat/rewording model field in the provider editor">Rewording model</string>
     <string name="dictate__providers_single_call_title" comment="Toggle: send audio directly to a multimodal chat model in one call">Single-call multimodal</string>
     <string name="dictate__providers_single_call_summary" comment="Short summary for the single-call multimodal toggle">One audio-capable model transcribes and formats in a single request.</string>
-    <string name="dictate__providers_single_call_pick_audio" comment="Hint shown when single-call is on but the chosen transcription model does not accept audio">Pick an audio-capable model (marked 🎤 in the model list).</string>
     <string name="dictate__providers_rewording_single_call_note" comment="Info shown at the rewording provider when single-call is active at the transcription provider">Not used right now — your transcription provider does rewording in its single call.</string>
     <string name="dictate__providers_test" comment="Button that checks the provider's base URL and API key">Test connection</string>
     <string name="dictate__providers_test_success" comment="Shown after a successful connection test. {count} is the number of available models.">Connected · {count} models</string>

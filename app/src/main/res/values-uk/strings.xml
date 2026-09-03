@@ -1449,7 +1449,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Модель транскрипції та переформулювання</string>
     <string name="dictate__providers_single_call_title">Один мультимодальний запит</string>
     <string name="dictate__providers_single_call_summary">Одна модель із підтримкою аудіо транскрибує та форматує за один запит.</string>
-    <string name="dictate__providers_single_call_pick_audio">Виберіть модель із підтримкою аудіо (позначена 🎤 у списку моделей).</string>
     <string name="dictate__providers_rewording_single_call_note">Зараз не використовується — ваш постачальник транскрипції виконує переформулювання у своєму єдиному запиті.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Параметри диктування з парного годинника</string>

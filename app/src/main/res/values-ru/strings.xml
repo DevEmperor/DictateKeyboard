@@ -1605,7 +1605,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Модель транскрипции и переформулирования</string>
     <string name="dictate__providers_single_call_title">Один мультимодальный запрос</string>
     <string name="dictate__providers_single_call_summary">Одна модель с поддержкой аудио расшифровывает и форматирует за один запрос.</string>
-    <string name="dictate__providers_single_call_pick_audio">Выберите модель с поддержкой аудио (отмечена 🎤 в списке моделей).</string>
     <string name="dictate__providers_rewording_single_call_note">Сейчас не используется — ваш провайдер транскрипции выполняет переформулирование в своём едином запросе.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Параметры диктовки с сопряжённых часов</string>

@@ -1538,7 +1538,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Transkriptions- &amp; Umformulierungsmodell</string>
     <string name="dictate__providers_single_call_title">Single-Call (multimodal)</string>
     <string name="dictate__providers_single_call_summary">Ein audiofähiges Modell transkribiert und formatiert in einer einzigen Anfrage.</string>
-    <string name="dictate__providers_single_call_pick_audio">Wähle ein audiofähiges Modell (mit 🎤 in der Modellliste markiert).</string>
     <string name="dictate__providers_rewording_single_call_note">Wird gerade nicht genutzt – dein Transkriptions-Anbieter übernimmt die Umformulierung in seinem Single-Call.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Optionen fürs Diktieren von einer gekoppelten Uhr</string>

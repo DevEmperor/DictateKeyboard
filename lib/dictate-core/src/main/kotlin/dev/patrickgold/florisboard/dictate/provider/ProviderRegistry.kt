@@ -546,27 +546,12 @@ object ProviderRegistry {
     fun isGeminiTranscribeModel(model: String): Boolean =
         model.removePrefix("models/").lowercase().contains("transcribe")
 
-    /**
-     * Whether [model] is a *dedicated* speech-to-text model on any provider — audio in, text out, with no
-     * chat surface at all.
-     *
-     * The same question [isGeminiTranscribeModel] asks, asked of everyone, and it became necessary the
-     * moment the settings dialog stopped filling its model fields in: an empty field means the preset
-     * default, and those defaults are speech-to-text models (`gpt-transcribe` on OpenAI,
-     * `whisper-large-v3-turbo` on Groq). Resolving one of those and then treating it as a chat model
-     * would post audio to `chat/completions` and hand rewording to something that cannot answer.
-     *
-     * Kept apart from [isGeminiTranscribeModel] because that one also decides which *endpoint* a Gemini
-     * request travels, a question only Gemini has.
-     *
-     * Matched by name, the same bet as above — `gpt-5-transcribe` will need no app update. It only has to
-     * hold for providers that offer chat at all: a Deepgram or Soniox model is never asked, because
-     * without a chat endpoint there is nothing to confuse it with.
-     */
-    fun isDedicatedTranscriptionModel(model: String): Boolean =
-        model.removePrefix("models/").lowercase().let { id ->
-            id.contains("transcribe") || id.contains("whisper") || id.contains("scribe")
-        }
+    // A general "is this a speech-to-text model" check briefly lived here, so the single-call switch and
+    // the rewording model could be decided from it. It is gone on purpose: guessing a model's abilities
+    // from its name held for the ids we knew and misfired on the rest, and the wrong answer cost more
+    // than the right one gave — it refused to fold the settings fields together and explained nothing
+    // (#313). Which model can do what is now the user's call. The Gemini check above stays because it
+    // answers a different question: which *endpoint* a request travels.
 
     /** Builds a preset for a user-defined OpenAI-compatible endpoint. */
     /**

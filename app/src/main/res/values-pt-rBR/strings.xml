@@ -1410,7 +1410,6 @@
     <string name="dictate__providers_field_transcription_rewording_model">Modelo de transcrição e reformulação</string>
     <string name="dictate__providers_single_call_title">Chamada única multimodal</string>
     <string name="dictate__providers_single_call_summary">Um único modelo com áudio transcreve e formata em uma única requisição.</string>
-    <string name="dictate__providers_single_call_pick_audio">Escolha um modelo com suporte a áudio (marcado com 🎤 na lista de modelos).</string>
     <string name="dictate__providers_rewording_single_call_note">Não está sendo usado no momento — seu provedor de transcrição faz a reformulação na chamada única dele.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opções para ditar de um relógio pareado</string>
