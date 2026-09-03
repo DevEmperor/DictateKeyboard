@@ -424,6 +424,10 @@ fun EmojiPaletteView(
                             .panelScrollbar(lazyGridState, accentColor),
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyGridState,
+                        // The clipboard's grid gets its breathing room from the items themselves —
+                        // `clipboard-item` carries a margin. `media-emoji-key` carries none, so
+                        // without this the emojis sit flush against the panel's edges (#317).
+                        contentPadding = PaddingValues(horizontal = 4.dp),
                     ) {
                         if (emojiMapping.pinned.isNotEmpty()) {
                             header("header_pinned") {

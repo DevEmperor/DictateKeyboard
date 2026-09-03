@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /** Breathing room between the last column of content and the bar (issue #317). */
-private val ScrollbarGap = 6.dp
+private val ScrollbarGap = 4.dp
 
 /**
  * A scrollbar that is actually visible inside the keyboard.
