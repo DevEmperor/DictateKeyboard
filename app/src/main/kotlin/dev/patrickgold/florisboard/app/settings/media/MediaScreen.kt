@@ -68,6 +68,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -892,52 +893,59 @@ private fun StickerPackDialog(
                 )
             }
             for ((position, pack) in packs.withIndex()) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(Icons.Outlined.Folder, contentDescription = null)
-                    Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
-                        Text(text = pack.name)
-                        Text(
-                            text = pluralsRes(R.plurals.unit__items__written, pack.items.size, "v" to pack.items.size),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    if (packs.size > 1) {
-                        IconButton(
-                            enabled = position > 0,
-                            onClick = {
-                                scope.launch {
-                                    StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, -1)
-                                }
-                            },
-                        ) {
-                            Icon(
-                                Icons.Outlined.ArrowUpward,
-                                contentDescription = stringRes(R.string.sticker__pack_move_up),
-                            )
+                // Name above, buttons below. Four buttons and a name do not fit across a dialog: with
+                // them on one line the name was left about ten dp and wrapped to one letter per row.
+                // The folder icon went with them — every line here is a folder.
+                Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                    Text(
+                        text = pack.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        text = pluralsRes(R.plurals.unit__items__written, pack.items.size, "v" to pack.items.size),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        if (packs.size > 1) {
+                            IconButton(
+                                enabled = position > 0,
+                                onClick = {
+                                    scope.launch {
+                                        StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, -1)
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    Icons.Outlined.ArrowUpward,
+                                    contentDescription = stringRes(R.string.sticker__pack_move_up),
+                                )
+                            }
+                            IconButton(
+                                enabled = position < packs.lastIndex,
+                                onClick = {
+                                    scope.launch {
+                                        StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, 1)
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    Icons.Outlined.ArrowDownward,
+                                    contentDescription = stringRes(R.string.sticker__pack_move_down),
+                                )
+                            }
                         }
-                        IconButton(
-                            enabled = position < packs.lastIndex,
-                            onClick = {
-                                scope.launch {
-                                    StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, 1)
-                                }
-                            },
-                        ) {
-                            Icon(
-                                Icons.Outlined.ArrowDownward,
-                                contentDescription = stringRes(R.string.sticker__pack_move_down),
-                            )
+                        IconButton(onClick = { renaming = pack; newName = pack.name }) {
+                            Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
                         }
-                    }
-                    IconButton(onClick = { renaming = pack; newName = pack.name }) {
-                        Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
-                    }
-                    IconButton(onClick = { deleting = pack }) {
-                        Icon(Icons.Outlined.Delete, contentDescription = stringRes(R.string.sticker__pack_delete))
+                        IconButton(onClick = { deleting = pack }) {
+                            Icon(Icons.Outlined.Delete, contentDescription = stringRes(R.string.sticker__pack_delete))
+                        }
                     }
                 }
             }
