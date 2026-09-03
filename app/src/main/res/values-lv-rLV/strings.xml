@@ -2012,6 +2012,9 @@
     <string name="sticker__reorder_hint">Pārvietot ar bultiņām</string>
     <string name="sticker__reorder_earlier">Pārvietot uz sākumu</string>
     <string name="sticker__reorder_later">Pārvietot uz beigām</string>
+    <string name="sticker__search">Meklēt uzlīmes</string>
+    <string name="sticker__search_placeholder">Meklēt pēc faila nosaukuma</string>
+    <string name="sticker__search_no_results">Nav uzlīmes ar šādu nosaukumu</string>
     <string name="sticker__setup_needed">Izvēlieties mapi, lai lietotu savas uzlīmes</string>
     <string name="sticker__setup_needed_action">Atvērt iestatījumus</string>
     <string name="sticker__folder_empty">Šajā mapē nav attēlu</string>

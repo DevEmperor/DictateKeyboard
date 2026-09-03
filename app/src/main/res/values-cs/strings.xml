@@ -2083,6 +2083,9 @@
     <string name="sticker__reorder_hint">Přesouvejte šipkami</string>
     <string name="sticker__reorder_earlier">Přesunout na začátek</string>
     <string name="sticker__reorder_later">Přesunout na konec</string>
+    <string name="sticker__search">Hledat samolepky</string>
+    <string name="sticker__search_placeholder">Hledat podle názvu souboru</string>
+    <string name="sticker__search_no_results">Žádná samolepka s tímto názvem</string>
     <string name="sticker__setup_needed">Vyberte složku, abyste mohli používat vlastní samolepky</string>
     <string name="sticker__setup_needed_action">Otevřít nastavení</string>
     <string name="sticker__folder_empty">V této složce nejsou žádné obrázky</string>

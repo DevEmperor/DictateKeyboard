@@ -2024,6 +2024,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__reorder_hint">Pindahkan dengan panah</string>
     <string name="sticker__reorder_earlier">Pindahkan ke awal</string>
     <string name="sticker__reorder_later">Pindahkan ke akhir</string>
+    <string name="sticker__search">Cari stiker</string>
+    <string name="sticker__search_placeholder">Cari berdasarkan nama file</string>
+    <string name="sticker__search_no_results">Tidak ada stiker dengan nama itu</string>
     <string name="sticker__setup_needed">Pilih folder untuk memakai stiker milikmu sendiri</string>
     <string name="sticker__setup_needed_action">Buka pengaturan</string>
     <string name="sticker__folder_empty">Tidak ada gambar di folder ini</string>

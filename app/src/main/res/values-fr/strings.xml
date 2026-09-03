@@ -1944,6 +1944,9 @@
     <string name="sticker__reorder_hint">Déplacer avec les flèches</string>
     <string name="sticker__reorder_earlier">Déplacer vers le début</string>
     <string name="sticker__reorder_later">Déplacer vers la fin</string>
+    <string name="sticker__search">Rechercher des autocollants</string>
+    <string name="sticker__search_placeholder">Rechercher par nom de fichier</string>
+    <string name="sticker__search_no_results">Aucun autocollant de ce nom</string>
     <string name="sticker__setup_needed">Choisissez un dossier pour utiliser vos propres autocollants</string>
     <string name="sticker__setup_needed_action">Ouvrir les paramètres</string>
     <string name="sticker__folder_empty">Aucune image dans ce dossier</string>

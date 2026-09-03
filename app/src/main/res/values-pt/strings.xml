@@ -2048,6 +2048,9 @@
     <string name="sticker__reorder_hint">Mover com as setas</string>
     <string name="sticker__reorder_earlier">Mover para o início</string>
     <string name="sticker__reorder_later">Mover para o fim</string>
+    <string name="sticker__search">Procurar autocolantes</string>
+    <string name="sticker__search_placeholder">Procurar pelo nome do ficheiro</string>
+    <string name="sticker__search_no_results">Nenhum autocolante com esse nome</string>
     <string name="sticker__setup_needed">Escolha uma pasta para usar os seus autocolantes</string>
     <string name="sticker__setup_needed_action">Abrir definições</string>
     <string name="sticker__folder_empty">Não há imagens nesta pasta</string>

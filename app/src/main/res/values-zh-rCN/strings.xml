@@ -2063,6 +2063,9 @@
     <string name="sticker__reorder_hint">用箭头移动</string>
     <string name="sticker__reorder_earlier">向前移动</string>
     <string name="sticker__reorder_later">向后移动</string>
+    <string name="sticker__search">搜索贴纸</string>
+    <string name="sticker__search_placeholder">按文件名搜索</string>
+    <string name="sticker__search_no_results">没有同名贴纸</string>
     <string name="sticker__setup_needed">选择一个文件夹以使用你自己的贴纸</string>
     <string name="sticker__setup_needed_action">打开设置</string>
     <string name="sticker__folder_empty">此文件夹中没有图片</string>

@@ -1852,6 +1852,9 @@
     <string name="sticker__reorder_hint">Sposta con le frecce</string>
     <string name="sticker__reorder_earlier">Sposta verso l\'inizio</string>
     <string name="sticker__reorder_later">Sposta verso la fine</string>
+    <string name="sticker__search">Cerca adesivi</string>
+    <string name="sticker__search_placeholder">Cerca per nome file</string>
+    <string name="sticker__search_no_results">Nessun adesivo con questo nome</string>
     <string name="sticker__setup_needed">Scegli una cartella per usare i tuoi adesivi</string>
     <string name="sticker__setup_needed_action">Apri le impostazioni</string>
     <string name="sticker__folder_empty">Nessuna immagine in questa cartella</string>

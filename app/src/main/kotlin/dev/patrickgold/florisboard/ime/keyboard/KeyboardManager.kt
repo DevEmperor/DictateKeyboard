@@ -124,6 +124,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val gifSearchQuery = MutableStateFlow<String?>(null)
     val gifSearchSubmit = MutableStateFlow<String?>(null)
 
+    /**
+     * The live query of the sticker search (issue #317), or `null` when no search is running.
+     *
+     * Shaped like the emoji search rather than the GIF one, because the difference between them is
+     * where the answer comes from: KLIPY has to be asked, so a query is submitted; sticker names are
+     * already in memory, so the results can narrow on every keystroke and there is nothing to submit.
+     */
+    val stickerSearchQuery = MutableStateFlow<String?>(null)
+
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion = AtomicInteger(0)
     val activeEvaluator: StateFlow<ComputingEvaluator>
@@ -991,6 +1000,54 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         gifSearchQuery.value = ""
     }
 
+    /** Empties the sticker query without leaving the search — the ✕ inside the search bar. */
+    fun clearStickerSearch() {
+        if (stickerSearchQuery.value == null) return
+        stickerSearchQuery.value = ""
+    }
+
+    /** Starts a sticker search: shows the text keyboard so the user can type a file name. */
+    fun activateStickerSearch() {
+        stickerSearchQuery.value = ""
+        activeState.imeUiMode = ImeUiMode.TEXT
+    }
+
+    /**
+     * Closes the sticker search. [returnToPanel] is what separates backing out — which belongs back in
+     * the panel the search was opened from — from having just inserted a sticker, after which the
+     * keyboard is where the user wants to be.
+     */
+    fun closeStickerSearch(returnToPanel: Boolean = true) {
+        if (stickerSearchQuery.value == null) return
+        stickerSearchQuery.value = null
+        if (returnToPanel) activeState.imeUiMode = ImeUiMode.STICKER
+    }
+
+    /**
+     * While a sticker search is active, folds typing keys into the query instead of the editor.
+     * Mirrors [handleEmojiSearchKey], Enter included: there is nothing to submit, so pressing it must
+     * not put a newline into whatever is being written.
+     */
+    private fun handleStickerSearchKey(data: KeyData): Boolean {
+        val current = stickerSearchQuery.value ?: return false
+        when (data.code) {
+            KeyCode.SPACE -> stickerSearchQuery.value = "$current "
+            KeyCode.ENTER -> { /* swallow: the results are already filtered */ }
+            KeyCode.DELETE, KeyCode.DELETE_WORD -> {
+                if (current.isEmpty()) {
+                    closeStickerSearch()
+                } else {
+                    stickerSearchQuery.value = current.dropLast(1)
+                }
+            }
+            else -> {
+                if (data.type != KeyType.CHARACTER) return false
+                stickerSearchQuery.value = current + data.asString(isForDisplay = false)
+            }
+        }
+        return true
+    }
+
     /** Starts a GIF search: shows the text keyboard so the user can type the query. */
     fun activateGifSearch() {
         gifSearchQuery.value = ""
@@ -1072,6 +1129,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             return@batchEdit
         }
         if (gifSearchQuery.value != null && handleGifSearchKey(data)) {
+            return@batchEdit
+        }
+        if (stickerSearchQuery.value != null && handleStickerSearchKey(data)) {
             return@batchEdit
         }
         when (data.code) {

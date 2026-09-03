@@ -62,6 +62,9 @@
     <string name="sticker__reorder_hint" comment="Header text while a favourite is being moved with the arrows">Move with the arrows</string>
     <string name="sticker__reorder_earlier" comment="Screen reader label for the arrow that moves a favourite towards the start">Move towards the start</string>
     <string name="sticker__reorder_later" comment="Screen reader label for the arrow that moves a favourite towards the end">Move towards the end</string>
+    <string name="sticker__search" comment="Screen reader label for the button that opens the sticker search">Search stickers</string>
+    <string name="sticker__search_placeholder" comment="Hint inside the sticker search field">Search by file name</string>
+    <string name="sticker__search_no_results" comment="Shown when no file name matches what was typed">No sticker with that name</string>
     <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>
     <string name="sticker__setup_needed_action" comment="Button that opens the settings screen">Open settings</string>
     <string name="sticker__folder_empty" comment="Empty state when the chosen folder holds no usable images">No images in this folder</string>

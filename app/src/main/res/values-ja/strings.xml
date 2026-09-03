@@ -2001,6 +2001,9 @@
     <string name="sticker__reorder_hint">矢印で移動</string>
     <string name="sticker__reorder_earlier">前へ移動</string>
     <string name="sticker__reorder_later">後ろへ移動</string>
+    <string name="sticker__search">ステッカーを検索</string>
+    <string name="sticker__search_placeholder">ファイル名で検索</string>
+    <string name="sticker__search_no_results">その名前のステッカーはありません</string>
     <string name="sticker__setup_needed">自分のステッカーを使うにはフォルダを選択してください</string>
     <string name="sticker__setup_needed_action">設定を開く</string>
     <string name="sticker__folder_empty">このフォルダに画像がありません</string>

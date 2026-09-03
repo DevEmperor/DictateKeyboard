@@ -1877,6 +1877,9 @@
     <string name="sticker__reorder_hint">Mover com as setas</string>
     <string name="sticker__reorder_earlier">Mover para o início</string>
     <string name="sticker__reorder_later">Mover para o fim</string>
+    <string name="sticker__search">Pesquisar figurinhas</string>
+    <string name="sticker__search_placeholder">Pesquisar pelo nome do arquivo</string>
+    <string name="sticker__search_no_results">Nenhuma figurinha com esse nome</string>
     <string name="sticker__setup_needed">Escolha uma pasta para usar suas próprias figurinhas</string>
     <string name="sticker__setup_needed_action">Abrir configurações</string>
     <string name="sticker__folder_empty">Nenhuma imagem nesta pasta</string>

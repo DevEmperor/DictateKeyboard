@@ -2047,6 +2047,9 @@
     <string name="sticker__reorder_hint">Oklarla taşı</string>
     <string name="sticker__reorder_earlier">Başa doğru taşı</string>
     <string name="sticker__reorder_later">Sona doğru taşı</string>
+    <string name="sticker__search">Çıkartma ara</string>
+    <string name="sticker__search_placeholder">Dosya adına göre ara</string>
+    <string name="sticker__search_no_results">Bu adda çıkartma yok</string>
     <string name="sticker__setup_needed">Kendi çıkartmalarınızı kullanmak için bir klasör seçin</string>
     <string name="sticker__setup_needed_action">Ayarları aç</string>
     <string name="sticker__folder_empty">Bu klasörde görsel yok</string>

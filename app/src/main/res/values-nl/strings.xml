@@ -1968,6 +1968,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__reorder_hint">Verplaatsen met de pijlen</string>
     <string name="sticker__reorder_earlier">Naar voren verplaatsen</string>
     <string name="sticker__reorder_later">Naar achteren verplaatsen</string>
+    <string name="sticker__search">Stickers zoeken</string>
+    <string name="sticker__search_placeholder">Zoeken op bestandsnaam</string>
+    <string name="sticker__search_no_results">Geen sticker met die naam</string>
     <string name="sticker__setup_needed">Kies een map om je eigen stickers te gebruiken</string>
     <string name="sticker__setup_needed_action">Instellingen openen</string>
     <string name="sticker__folder_empty">Geen afbeeldingen in deze map</string>

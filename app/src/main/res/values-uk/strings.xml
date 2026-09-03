@@ -1916,6 +1916,9 @@
     <string name="sticker__reorder_hint">Переміщуйте стрілками</string>
     <string name="sticker__reorder_earlier">Перемістити до початку</string>
     <string name="sticker__reorder_later">Перемістити до кінця</string>
+    <string name="sticker__search">Пошук стікерів</string>
+    <string name="sticker__search_placeholder">Пошук за іменем файлу</string>
+    <string name="sticker__search_no_results">Немає стікера з такою назвою</string>
     <string name="sticker__setup_needed">Виберіть теку, щоб використовувати власні стікери</string>
     <string name="sticker__setup_needed_action">Відкрити налаштування</string>
     <string name="sticker__folder_empty">У цій теці немає зображень</string>

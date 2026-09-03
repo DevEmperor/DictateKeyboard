@@ -46,6 +46,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.HistoryToggleOff
 import androidx.compose.material.icons.filled.PushPin
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material.icons.outlined.DriveFileMove
@@ -341,6 +342,22 @@ fun StickerPanel(
                         .weight(1f)
                         .padding(horizontal = 8.dp),
                 )
+                if (index?.isEmpty == false) {
+                    // Typing a name means the keyboard, and the keyboard is what this panel replaced —
+                    // so the search hands the screen back to it and shows its results in the strip
+                    // above (#317), the same way the emoji search does.
+                    SnyggIconButton(
+                        elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                        onClick = { keyboardManager.activateStickerSearch() },
+                        modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringRes(R.string.sticker__search),
+                            modifier = Modifier.size(30.dp),
+                        )
+                    }
+                }
                 SnyggIconButton(
                     elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     onClick = { FlorisImeService.launchSettings("settings/media") },
@@ -654,53 +671,36 @@ private fun StickerCategoryPage(
         // next button press acts on.
         val isMoving = section == "pinned" && reorderDocId == item.docId
         val isArmed = armedKey == cellKey || isMoving
-        Box {
-            StickerThumb(
-                item = item,
-                treeUri = treeUri,
-                armed = isArmed,
-                accent = accent,
-                scrolling = { gridState.isScrollInProgress },
-                onClick = {
-                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                    when {
-                        // Nothing is sent while the arrows are up. A favourite hands them over; any
-                        // other sticker is not a thing the arrows could move, so the tap does nothing
-                        // rather than quietly doing the one thing the mode exists to prevent.
-                        reorderDocId != null -> if (section == "pinned") onReorderPick(item)
-                        // With confirmation on, the first tap arms and the second sends. A quick
-                        // double-tap therefore sends in one motion without a shortcut of its own, and
-                        // tapping a different sticker moves the armed state rather than sending it.
-                        !confirmBeforeInsert || isArmed -> {
-                            armedKey = null
-                            onInsert(item)
-                        }
-                        else -> armedKey = cellKey
+        StickerCell(
+            item = item,
+            treeUri = treeUri,
+            armed = isArmed,
+            preparing = preparingDocId == item.docId,
+            accent = accent,
+            scrolling = { gridState.isScrollInProgress },
+            onClick = {
+                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                when {
+                    // Nothing is sent while the arrows are up. A favourite hands them over; any
+                    // other sticker is not a thing the arrows could move, so the tap does nothing
+                    // rather than quietly doing the one thing the mode exists to prevent.
+                    reorderDocId != null -> if (section == "pinned") onReorderPick(item)
+                    // With confirmation on, the first tap arms and the second sends. A quick
+                    // double-tap therefore sends in one motion without a shortcut of its own, and
+                    // tapping a different sticker moves the armed state rather than sending it.
+                    !confirmBeforeInsert || isArmed -> {
+                        armedKey = null
+                        onInsert(item)
                     }
-                },
-                onLongClick = {
-                    inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
-                    armedKey = null
-                    onLongPress(item, section)
-                },
-            )
-            if (preparingDocId == item.docId) {
-                // Sized to the cell so it reads as "this one is busy" rather than "the panel is busy".
-                Box(
-                    modifier = Modifier.matchParentSize().background(Color(0x66000000)),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    // Accent, not the default: with no MaterialTheme in the IME, an untinted
-                    // indicator comes out in Compose's built-in purple — the same reason the shared
-                    // scrollbar was invisible here.
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp,
-                        color = accent,
-                    )
+                    else -> armedKey = cellKey
                 }
-            }
-        }
+            },
+            onLongClick = {
+                inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                armedKey = null
+                onLongPress(item, section)
+            },
+        )
     }
 
     LazyVerticalGrid(
@@ -734,6 +734,53 @@ private fun StickerCategoryPage(
                 }
             }
             items(shown, key = { "all-${it.docId}" }) { item -> Cell(item, "all") }
+        }
+    }
+}
+
+/**
+ * One sticker as it appears in any grid — the panel's own, and the search results above the keyboard.
+ *
+ * Shared because the busy ring is the part that would otherwise be forgotten in the second place:
+ * converting a sticker on the way out takes about a second, and a second of nothing after a tap reads
+ * as a broken button rather than as work.
+ */
+@Composable
+internal fun StickerCell(
+    item: StickerItem,
+    treeUri: Uri,
+    armed: Boolean,
+    preparing: Boolean,
+    accent: Color,
+    scrolling: () -> Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+) {
+    Box {
+        StickerThumb(
+            item = item,
+            treeUri = treeUri,
+            armed = armed,
+            accent = accent,
+            scrolling = scrolling,
+            onClick = onClick,
+            onLongClick = onLongClick,
+        )
+        if (preparing) {
+            // Sized to the cell so it reads as "this one is busy" rather than "the panel is busy".
+            Box(
+                modifier = Modifier.matchParentSize().background(Color(0x66000000)),
+                contentAlignment = Alignment.Center,
+            ) {
+                // Accent, not the default: with no MaterialTheme in the IME, an untinted indicator
+                // comes out in Compose's built-in purple — the same reason the shared scrollbar was
+                // invisible here.
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp,
+                    color = accent,
+                )
+            }
         }
     }
 }

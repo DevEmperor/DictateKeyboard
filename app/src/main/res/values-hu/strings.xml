@@ -2067,6 +2067,9 @@
     <string name="sticker__reorder_hint">Mozgatás a nyilakkal</string>
     <string name="sticker__reorder_earlier">Mozgatás előre</string>
     <string name="sticker__reorder_later">Mozgatás hátra</string>
+    <string name="sticker__search">Matricák keresése</string>
+    <string name="sticker__search_placeholder">Keresés fájlnév szerint</string>
+    <string name="sticker__search_no_results">Nincs ilyen nevű matrica</string>
     <string name="sticker__setup_needed">Válassz egy mappát a saját matricáid használatához</string>
     <string name="sticker__setup_needed_action">Beállítások megnyitása</string>
     <string name="sticker__folder_empty">Nincs kép ebben a mappában</string>

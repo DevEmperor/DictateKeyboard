@@ -1927,6 +1927,9 @@
     <string name="sticker__reorder_hint">التحريك بالأسهم</string>
     <string name="sticker__reorder_earlier">التحريك نحو البداية</string>
     <string name="sticker__reorder_later">التحريك نحو النهاية</string>
+    <string name="sticker__search">البحث في الملصقات</string>
+    <string name="sticker__search_placeholder">البحث بالاسم</string>
+    <string name="sticker__search_no_results">لا يوجد ملصق بهذا الاسم</string>
     <string name="sticker__setup_needed">اختر مجلدًا لاستخدام ملصقاتك الخاصة</string>
     <string name="sticker__setup_needed_action">فتح الإعدادات</string>
     <string name="sticker__folder_empty">لا توجد صور في هذا المجلد</string>

@@ -2072,6 +2072,9 @@
     <string name="sticker__reorder_hint">Перемещайте стрелками</string>
     <string name="sticker__reorder_earlier">Переместить к началу</string>
     <string name="sticker__reorder_later">Переместить к концу</string>
+    <string name="sticker__search">Поиск стикеров</string>
+    <string name="sticker__search_placeholder">Поиск по имени файла</string>
+    <string name="sticker__search_no_results">Нет стикера с таким именем</string>
     <string name="sticker__setup_needed">Выберите папку, чтобы использовать свои стикеры</string>
     <string name="sticker__setup_needed_action">Открыть настройки</string>
     <string name="sticker__folder_empty">В этой папке нет изображений</string>
