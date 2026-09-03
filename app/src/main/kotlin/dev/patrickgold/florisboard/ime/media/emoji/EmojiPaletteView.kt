@@ -186,6 +186,10 @@ fun EmojiPaletteView(
         SnyggText(
             elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
             text = text,
+            // Indented to sit under the search pill above rather than against the panel's edge. Bare
+            // text at the same x as a filled shape reads as further left than the shape does, so
+            // matching the pill's edge exactly is not what looks aligned (#317).
+            modifier = Modifier.padding(start = 8.dp),
         )
     }
 
