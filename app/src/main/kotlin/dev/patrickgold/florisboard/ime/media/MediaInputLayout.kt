@@ -24,16 +24,12 @@ import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Backspace
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -104,30 +100,8 @@ fun MediaInputLayout(
                     fontWeight = FontWeight.Bold,
                 )
             }
-            // Opens the in-keyboard emoji search (issue #110): switches to the text keyboard with the
-            // search panel so the user can type a term and filter emojis live.
-            val inputFeedbackController = LocalInputFeedbackController.current
-            SnyggBox(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1f)
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onTap = {
-                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                keyboardManager.activateEmojiSearch()
-                            },
-                        )
-                    },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null,
-                    modifier = Modifier.size(34.dp),
-                )
-            }
+            // The search moved up into the category row (issue #317), where a keyboard user looks for
+            // it and where it is reachable without crossing the whole panel.
             Spacer(modifier = Modifier.weight(1f))
             KeyboardLikeButton(
                 elementName = FlorisImeUi.MediaBottomRowButton.elementName,

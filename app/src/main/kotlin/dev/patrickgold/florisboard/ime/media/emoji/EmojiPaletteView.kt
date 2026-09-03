@@ -21,9 +21,12 @@ import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.TextView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,18 +41,20 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.PrimaryTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -64,6 +69,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -231,49 +237,95 @@ fun EmojiPaletteView(
     }
 
 
+    /**
+     * The row above the emoji grid: search first, then the categories, scrolled sideways (issue #317).
+     *
+     * It used to be a [PrimaryTabRow], which divides the width evenly between every category and
+     * underlines the current one — so nine icons each got a ninth of the screen whether or not they
+     * needed it, and there was nowhere to put anything else. A scrolling row gives each tab the space
+     * an icon actually takes and leaves room at the front for the search pill, which is where a
+     * keyboard user looks for search.
+     *
+     * The selected category is marked by a filled circle in the accent colour rather than an
+     * underline — the same thing the sticker panel's tab pill says, in the same language.
+     */
     @Composable
     fun EmojiCategoriesTabRow(
         activeCategory: EmojiCategory,
         onCategoryChange: (EmojiCategory) -> Unit,
     ) {
         val inputFeedbackController = LocalInputFeedbackController.current
-        val selectedTabIndex = categoryToPageNumber(activeCategory)
-        val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
-        PrimaryTabRow(
+        val accent by prefs.theme.accentColor.collectAsState()
+        val shownCategories = remember(emojiHistoryEnabled) {
+            EmojiCategoryValues.filter { it != EmojiCategory.RECENTLY_USED || emojiHistoryEnabled }
+        }
+        val tabRowState = rememberLazyListState()
+        // Keep the current category on screen when the pager is swiped rather than tapped — otherwise
+        // the row silently disagrees with the grid below it. Only when it has actually gone out of
+        // view: scrolling to a tab that is already visible would shove the search pill off the front
+        // the moment the panel opens. The +1 is the pill, which is the row's first item.
+        LaunchedEffect(activeCategory) {
+            val target = shownCategories.indexOf(activeCategory) + 1
+            if (target > 0 && tabRowState.layoutInfo.visibleItemsInfo.none { it.index == target }) {
+                tabRowState.animateScrollToItem(target)
+            }
+        }
+        LazyRow(
+            state = tabRowState,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
-            selectedTabIndex = selectedTabIndex,
-            containerColor = Color.Transparent,
-            contentColor = style.foreground(),
-            indicator = {
-                val style = rememberSnyggThemeQuery(
-                    elementName = FlorisImeUi.MediaEmojiTab.elementName,
-                    selector = SnyggSelector.FOCUS,
-                )
-                TabRowDefaults.PrimaryIndicator(
-                    Modifier.tabIndicatorOffset(selectedTabIndex),
-                    height = 4.dp,
-                    color = style.foreground(),
-                )
-            },
+            contentPadding = PaddingValues(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            for (category in EmojiCategoryValues) {
-                if (category == EmojiCategory.RECENTLY_USED && !emojiHistoryEnabled) {
-                    continue
-                }
-                Tab(
-                    onClick = {
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                        onCategoryChange(category)
-                    },
-                    selected = activeCategory == category,
-                    icon = { SnyggIcon(
+            item(key = "search") {
+                // A plain Row, like the sticker panel's tab pill: a Snygg element would paint its own
+                // background underneath this one and a user theme could put a square behind the pill.
+                Row(
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(Color(0x22808080))
+                        .clickable {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                            keyboardManager.activateEmojiSearch()
+                        }
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    SnyggIcon(
                         elementName = FlorisImeUi.MediaEmojiTab.elementName,
-                        selector = if (activeCategory == category) SnyggSelector.FOCUS else SnyggSelector.NONE,
-                        modifier = Modifier.size(ButtonDefaults.IconSize),
-                        imageVector = category.icon(),
-                    ) },
+                        modifier = Modifier
+                            .padding(end = 6.dp)
+                            .size(18.dp),
+                        imageVector = Icons.Default.Search,
+                    )
+                    SnyggText(
+                        elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                        text = stringRes(R.string.emoji__search__hint),
+                        maxLines = 1,
+                    )
+                }
+            }
+            // The count-based form on purpose: the list-based `items` would collide with the grid's
+            // import of the same name further down this file.
+            items(shownCategories.size, key = { shownCategories[it].name }) { position ->
+                val category = shownCategories[position]
+                val selected = activeCategory == category
+                SnyggIcon(
+                    elementName = FlorisImeUi.MediaEmojiTab.elementName,
+                    selector = if (selected) SnyggSelector.FOCUS else SnyggSelector.NONE,
+                    modifier = Modifier
+                        .padding(horizontal = 2.dp)
+                        .clip(CircleShape)
+                        .background(if (selected) accent.copy(alpha = 0.28f) else Color.Transparent)
+                        .clickable {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                            onCategoryChange(category)
+                        }
+                        .padding(8.dp)
+                        .size(ButtonDefaults.IconSize),
+                    imageVector = category.icon(),
                 )
             }
         }
