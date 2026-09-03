@@ -2115,6 +2115,10 @@
     <string name="sticker__pack_new">新建贴纸包</string>
     <string name="sticker__pack_name">贴纸包名称</string>
     <string name="sticker__pack_rename">重命名</string>
+    <string name="sticker__pack_move_up">上移</string>
+    <string name="sticker__pack_move_down">下移</string>
+    <string name="sticker__pack_icon_set">设为贴纸包图标</string>
+    <string name="sticker__pack_icon_clear">移除贴纸包图标</string>
     <string name="sticker__pack_delete">删除贴纸包</string>
     <string name="sticker__pack_delete_confirm">要删除贴纸包“{name}”及其中的 {n} 个贴纸吗？</string>
     <string name="sticker__pack_failed">没有成功 — 该文件夹可能是只读的</string>

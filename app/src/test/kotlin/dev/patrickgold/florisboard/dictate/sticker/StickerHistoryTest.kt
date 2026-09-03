@@ -62,9 +62,9 @@ class StickerHistoryTest {
     @Test
     fun `moving a favourite puts it where the arrow points`() {
         val list = mutableListOf("a", "b", "c", "d")
-        assertTrue(StickerHistoryHelper.moveWithin(list, "c", -1))
+        assertTrue(moveWithin(list, "c", -1))
         assertEquals(listOf("a", "c", "b", "d"), list)
-        assertTrue(StickerHistoryHelper.moveWithin(list, "c", 2))
+        assertTrue(moveWithin(list, "c", 2))
         assertEquals(listOf("a", "b", "d", "c"), list)
     }
 
@@ -75,8 +75,8 @@ class StickerHistoryTest {
     @Test
     fun `an arrow at the end of the row does nothing`() {
         val list = mutableListOf("a", "b", "c")
-        assertFalse(StickerHistoryHelper.moveWithin(list, "a", -1))
-        assertFalse(StickerHistoryHelper.moveWithin(list, "c", 1))
+        assertFalse(moveWithin(list, "a", -1))
+        assertFalse(moveWithin(list, "c", 1))
         assertEquals(listOf("a", "b", "c"), list)
     }
 
@@ -84,14 +84,14 @@ class StickerHistoryTest {
     @Test
     fun `a step past the end lands at the end`() {
         val list = mutableListOf("a", "b", "c")
-        assertTrue(StickerHistoryHelper.moveWithin(list, "a", 9))
+        assertTrue(moveWithin(list, "a", 9))
         assertEquals(listOf("b", "c", "a"), list)
     }
 
     @Test
     fun `moving something that is not in the row changes nothing`() {
         val list = mutableListOf("a", "b")
-        assertFalse(StickerHistoryHelper.moveWithin(list, "gone", -1))
+        assertFalse(moveWithin(list, "gone", -1))
         assertEquals(listOf("a", "b"), list)
     }
 

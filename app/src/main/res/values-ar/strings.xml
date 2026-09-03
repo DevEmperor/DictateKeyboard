@@ -1979,6 +1979,10 @@
     <string name="sticker__pack_new">إنشاء حزمة</string>
     <string name="sticker__pack_name">اسم الحزمة</string>
     <string name="sticker__pack_rename">إعادة تسمية</string>
+    <string name="sticker__pack_move_up">نقل لأعلى</string>
+    <string name="sticker__pack_move_down">نقل لأسفل</string>
+    <string name="sticker__pack_icon_set">استخدام كأيقونة للحزمة</string>
+    <string name="sticker__pack_icon_clear">إزالة أيقونة الحزمة</string>
     <string name="sticker__pack_delete">حذف الحزمة</string>
     <string name="sticker__pack_delete_confirm">هل تريد حذف الحزمة \"{name}\" و{n} ملصقًا فيها؟</string>
     <string name="sticker__pack_failed">لم ينجح ذلك — قد يكون المجلد محميًا ضد الكتابة</string>

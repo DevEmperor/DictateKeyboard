@@ -33,6 +33,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Apps
+import androidx.compose.material.icons.outlined.ArrowDownward
+import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Downloading
 import androidx.compose.material.icons.outlined.Edit
@@ -78,6 +80,8 @@ import dev.patrickgold.florisboard.dictate.sticker.StickerCategory
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistoryHelper
 import dev.patrickgold.florisboard.dictate.sticker.StickerImports
 import dev.patrickgold.florisboard.dictate.sticker.StickerNormalizer
+import dev.patrickgold.florisboard.dictate.sticker.StickerPackSettings
+import dev.patrickgold.florisboard.dictate.sticker.StickerPackSettingsHelper
 import dev.patrickgold.florisboard.dictate.sticker.StickerIndex
 import dev.patrickgold.florisboard.dictate.sticker.StickerScanner
 import dev.patrickgold.florisboard.dictate.sticker.StickerWriter
@@ -808,11 +812,14 @@ private fun StickerSourceDialog(
 }
 
 /**
- * Creating, renaming and deleting sticker packs — which are the subfolders of the chosen folder.
+ * Creating, renaming, reordering and deleting sticker packs — which are the subfolders of the chosen
+ * folder.
  *
  * Lives in settings rather than in the keyboard panel for one practical reason: naming a pack means
  * typing, and the panel *is* the keyboard. Moving a sticker into an existing pack needs no text and
- * stays where it belongs, on the sticker's own long-press menu.
+ * stays where it belongs, on the sticker's own long-press menu. The tab order joined it here for a
+ * different reason (issue #317): it is a list of packs with a button each, which this dialog already
+ * is, where the panel would have needed a mode of its own for something done once.
  */
 @Composable
 private fun StickerPackDialog(
@@ -821,6 +828,8 @@ private fun StickerPackDialog(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val prefs by FlorisPreferenceStore
+    val packSettings by prefs.sticker.packSettings.collectAsState()
     var index by remember { mutableStateOf<StickerIndex?>(null) }
     var reload by remember { mutableStateOf(0) }
     var newName by remember { mutableStateOf("") }
@@ -835,7 +844,11 @@ private fun StickerPackDialog(
         index?.let { withContext(Dispatchers.IO) { StickerScanner.saveCached(context, it) } }
     }
 
-    val packs = index?.categories.orEmpty().filter { it.id != StickerCategory.ROOT_ID }
+    // Shown in the order the tabs are in, because arrows that move a pack "up" have to move it up the
+    // list the user is actually looking at.
+    val packs = StickerPackSettings
+        .ordered(index?.categories.orEmpty(), packSettings.order)
+        .filter { it.id != StickerCategory.ROOT_ID }
 
     // The create/rename button belongs where every other dialog puts its action: on the button row at
     // the bottom, beside Cancel. It doubles as "rename" while a pack is being edited.
@@ -852,6 +865,12 @@ private fun StickerPackDialog(
                     StickerWriter.renamePack(context, treeUri, target.id, name)
                 } else {
                     StickerWriter.createPack(context, treeUri, name) != null
+                }
+                // A rename is the one moment the old and the new name are both known. Miss it and the
+                // pack's place in the row and its chosen picture are simply gone, since both are kept
+                // under the name — the document id is not the same one after a rename.
+                if (ok && target != null) {
+                    StickerPackSettingsHelper.renamed(prefs, target.name, name)
                 }
                 if (!ok) context.showLongToast(R.string.sticker__pack_failed)
                 newName = ""
@@ -872,7 +891,7 @@ private fun StickerPackDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            for (pack in packs) {
+            for ((position, pack) in packs.withIndex()) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -885,6 +904,34 @@ private fun StickerPackDialog(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
+                    }
+                    if (packs.size > 1) {
+                        IconButton(
+                            enabled = position > 0,
+                            onClick = {
+                                scope.launch {
+                                    StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, -1)
+                                }
+                            },
+                        ) {
+                            Icon(
+                                Icons.Outlined.ArrowUpward,
+                                contentDescription = stringRes(R.string.sticker__pack_move_up),
+                            )
+                        }
+                        IconButton(
+                            enabled = position < packs.lastIndex,
+                            onClick = {
+                                scope.launch {
+                                    StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, 1)
+                                }
+                            },
+                        ) {
+                            Icon(
+                                Icons.Outlined.ArrowDownward,
+                                contentDescription = stringRes(R.string.sticker__pack_move_down),
+                            )
+                        }
                     }
                     IconButton(onClick = { renaming = pack; newName = pack.name }) {
                         Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))
@@ -917,7 +964,11 @@ private fun StickerPackDialog(
                 scope.launch {
                     // Deleting a pack deletes a real folder, and the stickers in it go with it — hence
                     // the count in the question rather than a bare "are you sure".
-                    if (!StickerWriter.deletePack(context, treeUri, pack.id)) {
+                    if (StickerWriter.deletePack(context, treeUri, pack.id)) {
+                        // Otherwise the name keeps its place in the tab order, holding a slot open for
+                        // a folder that no longer exists.
+                        StickerPackSettingsHelper.forget(prefs, pack.name)
+                    } else {
                         context.showLongToast(R.string.sticker__pack_failed)
                     }
                     deleting = null

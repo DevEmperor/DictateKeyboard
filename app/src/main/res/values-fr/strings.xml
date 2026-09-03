@@ -1996,6 +1996,10 @@
     <string name="sticker__pack_new">Créer un pack</string>
     <string name="sticker__pack_name">Nom du pack</string>
     <string name="sticker__pack_rename">Renommer</string>
+    <string name="sticker__pack_move_up">Monter</string>
+    <string name="sticker__pack_move_down">Descendre</string>
+    <string name="sticker__pack_icon_set">Utiliser comme icône du pack</string>
+    <string name="sticker__pack_icon_clear">Retirer l\'icône du pack</string>
     <string name="sticker__pack_delete">Supprimer le pack</string>
     <string name="sticker__pack_delete_confirm">Supprimer le pack \"{name}\" et les {n} autocollants qu\'il contient ?</string>
     <string name="sticker__pack_failed">Cela n\'a pas fonctionné — le dossier est peut-être en lecture seule</string>

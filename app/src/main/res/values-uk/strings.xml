@@ -1968,6 +1968,10 @@
     <string name="sticker__pack_new">Створити набір</string>
     <string name="sticker__pack_name">Назва набору</string>
     <string name="sticker__pack_rename">Перейменувати</string>
+    <string name="sticker__pack_move_up">Вгору</string>
+    <string name="sticker__pack_move_down">Вниз</string>
+    <string name="sticker__pack_icon_set">Зробити значком набору</string>
+    <string name="sticker__pack_icon_clear">Прибрати значок набору</string>
     <string name="sticker__pack_delete">Видалити набір</string>
     <string name="sticker__pack_delete_confirm">Видалити набір «{name}» і {n} стікерів у ньому?</string>
     <string name="sticker__pack_failed">Не вийшло — можливо, тека захищена від запису</string>

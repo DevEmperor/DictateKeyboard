@@ -2053,6 +2053,10 @@
     <string name="sticker__pack_new">パックを作成</string>
     <string name="sticker__pack_name">パック名</string>
     <string name="sticker__pack_rename">名前を変更</string>
+    <string name="sticker__pack_move_up">上へ</string>
+    <string name="sticker__pack_move_down">下へ</string>
+    <string name="sticker__pack_icon_set">パックのアイコンにする</string>
+    <string name="sticker__pack_icon_clear">パックのアイコンを削除</string>
     <string name="sticker__pack_delete">パックを削除</string>
     <string name="sticker__pack_delete_confirm">パック「{name}」と、その中の {n} 件のステッカーを削除しますか？</string>
     <string name="sticker__pack_failed">うまくいきませんでした — フォルダが書き込み禁止かもしれません</string>

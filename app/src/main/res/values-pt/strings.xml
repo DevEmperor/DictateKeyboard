@@ -2100,6 +2100,10 @@
     <string name="sticker__pack_new">Criar pacote</string>
     <string name="sticker__pack_name">Nome do pacote</string>
     <string name="sticker__pack_rename">Mudar o nome</string>
+    <string name="sticker__pack_move_up">Mover para cima</string>
+    <string name="sticker__pack_move_down">Mover para baixo</string>
+    <string name="sticker__pack_icon_set">Usar como ícone do pacote</string>
+    <string name="sticker__pack_icon_clear">Remover ícone do pacote</string>
     <string name="sticker__pack_delete">Apagar pacote</string>
     <string name="sticker__pack_delete_confirm">Apagar o pacote \"{name}\" e os {n} autocolantes que contém?</string>
     <string name="sticker__pack_failed">Não resultou — a pasta pode estar protegida contra escrita</string>

@@ -133,23 +133,6 @@ object StickerHistoryHelper {
     }
 
     /**
-     * Moves [docId] [delta] places along [list] and says whether anything changed.
-     *
-     * Clamped at both ends rather than wrapping: an arrow that sends the first favourite to the far
-     * end reads as a bug every time it happens by accident. Split out for the same reason as
-     * [prependCapped] — the rule is worth a test that needs no preference store behind it.
-     */
-    internal fun moveWithin(list: MutableList<String>, docId: String, delta: Int): Boolean {
-        val from = list.indexOf(docId)
-        if (from < 0) return false
-        val to = (from + delta).coerceIn(0, list.size - 1)
-        if (to == from) return false
-        list.removeAt(from)
-        list.add(to, docId)
-        return true
-    }
-
-    /**
      * Reorders the favourites (issue #317).
      *
      * Re-pinning already moves a sticker to the front, so the gap this fills is the finer one: putting

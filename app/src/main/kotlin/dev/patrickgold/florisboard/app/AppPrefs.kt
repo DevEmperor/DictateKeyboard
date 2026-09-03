@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.dictate.gif.GifHistory
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistory
+import dev.patrickgold.florisboard.dictate.sticker.StickerPackSettings
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
@@ -1003,6 +1004,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "sticker__history_data",
             default = StickerHistory.Empty,
             serializer = StickerHistory.Serializer,
+        )
+        // What the user decided about their packs beyond what the folder says: the order of the tabs
+        // and the sticker that stands for each one. Keyed by pack name, because a renamed folder is a
+        // different document id (see StickerPackSettings).
+        val packSettings = custom(
+            key = "sticker__pack_settings",
+            default = StickerPackSettings.Empty,
+            serializer = StickerPackSettings.Serializer,
         )
     }
 

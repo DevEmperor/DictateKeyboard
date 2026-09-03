@@ -2136,6 +2136,10 @@
     <string name="sticker__pack_new">Utwórz pakiet</string>
     <string name="sticker__pack_name">Nazwa pakietu</string>
     <string name="sticker__pack_rename">Zmień nazwę</string>
+    <string name="sticker__pack_move_up">W górę</string>
+    <string name="sticker__pack_move_down">W dół</string>
+    <string name="sticker__pack_icon_set">Użyj jako ikony pakietu</string>
+    <string name="sticker__pack_icon_clear">Usuń ikonę pakietu</string>
     <string name="sticker__pack_delete">Usuń pakiet</string>
     <string name="sticker__pack_delete_confirm">Usunąć pakiet \"{name}\" i {n} naklejek w nim?</string>
     <string name="sticker__pack_failed">Nie udało się — folder może być chroniony przed zapisem</string>

@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,6 +54,7 @@ import androidx.compose.material.icons.outlined.DriveFileMove
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FolderOff
 import androidx.compose.material.icons.outlined.Gif
+import androidx.compose.material.icons.outlined.Label
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CircularProgressIndicator
@@ -130,6 +132,7 @@ fun StickerPanel(
     val folderUri by prefs.sticker.folderUri.collectPrefAsState()
     val thumbnailSize by prefs.sticker.thumbnailSize.collectPrefAsState()
     val history by prefs.sticker.historyData.collectPrefAsState()
+    val packSettings by prefs.sticker.packSettings.collectPrefAsState()
     val scope = rememberCoroutineScope()
 
     var index by remember { mutableStateOf<StickerIndex?>(null) }
@@ -373,8 +376,17 @@ fun StickerPanel(
         }
 
         val currentIndex = index
-        val categories = remember(currentIndex) {
-            currentIndex?.categories.orEmpty().filter { it.items.isNotEmpty() }
+        val categories = remember(currentIndex, packSettings) {
+            StickerPackSettings.ordered(
+                categories = currentIndex?.categories.orEmpty().filter { it.items.isNotEmpty() },
+                order = packSettings.order,
+            )
+        }
+        // A pack icon whose file has since been deleted or moved is dropped here rather than left to
+        // draw a hole in the tab: the same courtesy the favourites row does for an id it cannot resolve.
+        val packIcons = remember(currentIndex, packSettings) {
+            val known = currentIndex?.allItems?.mapTo(HashSet()) { it.docId }.orEmpty()
+            packSettings.icons.filterValues { it in known }
         }
         val openSettings: () -> Unit = { FlorisImeService.launchSettings("settings/media") }
         // Dimmed rather than covered, so the sticker being acted on stays visible behind the sheet.
@@ -415,15 +427,9 @@ fun StickerPanel(
                         ) {
                             itemsIndexed(categories, key = { _, category -> category.id }) { position, category ->
                                 val selected = pagerState.currentPage == position
-                                SnyggText(
-                                    elementName = if (selected) {
-                                        FlorisImeUi.SmartbarCandidateWordText.elementName
-                                    } else {
-                                        FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName
-                                    },
-                                    text = category.name.ifBlank { rootLabel },
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
+                                val iconDocId = packIcons[category.name]
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
                                         .padding(horizontal = 3.dp)
                                         .clip(RoundedCornerShape(50))
@@ -438,7 +444,36 @@ fun StickerPanel(
                                             scope.launch { pagerState.animateScrollToPage(position) }
                                         }
                                         .padding(horizontal = 12.dp, vertical = 6.dp),
-                                )
+                                ) {
+                                    if (iconDocId != null) {
+                                        AsyncImage(
+                                            model = StickerScanner.documentUri(treeUri, iconDocId),
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Fit,
+                                            // Stopped the moment it arrives: an animated tab icon is a
+                                            // decoder running for as long as the panel is open, for an
+                                            // 18 dp picture nobody is watching. Frame rate was the
+                                            // whole of #308's third point.
+                                            onSuccess = { state ->
+                                                ((state.result.image as? DrawableImage)?.drawable
+                                                    as? Animatable)?.stop()
+                                            },
+                                            modifier = Modifier
+                                                .padding(end = 6.dp)
+                                                .size(18.dp),
+                                        )
+                                    }
+                                    SnyggText(
+                                        elementName = if (selected) {
+                                            FlorisImeUi.SmartbarCandidateWordText.elementName
+                                        } else {
+                                            FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName
+                                        },
+                                        text = category.name.ifBlank { rootLabel },
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
                             }
                         }
                     }
@@ -568,6 +603,31 @@ fun StickerPanel(
                             icon = Icons.Outlined.DriveFileMove,
                             text = stringRes(R.string.sticker__move_to_pack),
                         ) { packPickerOpen = true }
+                    }
+                    // A pack can be told apart at a glance by one of the stickers in it, which is a
+                    // better label than its name once there are more tabs than fit on screen. Offered
+                    // on the sticker rather than on the tab: this is the moment you are looking at the
+                    // picture and can tell whether it stands for the rest.
+                    val currentPackName = currentIndex?.categories
+                        ?.firstOrNull { it.id == currentPack }?.name.orEmpty()
+                    if (currentPackName.isNotEmpty()) {
+                        val isPackIcon = packSettings.icons[currentPackName] == sheetItem.docId
+                        MediaAction(
+                            icon = Icons.Outlined.Label,
+                            text = stringRes(
+                                if (isPackIcon) R.string.sticker__pack_icon_clear
+                                else R.string.sticker__pack_icon_set
+                            ),
+                        ) {
+                            scope.launch {
+                                StickerPackSettingsHelper.setIcon(
+                                    prefs = prefs,
+                                    pack = currentPackName,
+                                    docId = if (isPackIcon) null else sheetItem.docId,
+                                )
+                            }
+                            closeMenu()
+                        }
                     }
                     if (menuSection == "recent") {
                         MediaAction(

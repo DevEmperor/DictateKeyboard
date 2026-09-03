@@ -2121,6 +2121,10 @@
     <string name="sticker__pack_new">Създай пакет</string>
     <string name="sticker__pack_name">Име на пакета</string>
     <string name="sticker__pack_rename">Преименувай</string>
+    <string name="sticker__pack_move_up">Нагоре</string>
+    <string name="sticker__pack_move_down">Надолу</string>
+    <string name="sticker__pack_icon_set">Икона на пакета</string>
+    <string name="sticker__pack_icon_clear">Премахване на иконата</string>
     <string name="sticker__pack_delete">Изтрий пакета</string>
     <string name="sticker__pack_delete_confirm">Да се изтрие ли пакетът \"{name}\" и {n} стикера в него?</string>
     <string name="sticker__pack_failed">Не се получи — папката може да е защитена от запис</string>

@@ -2064,6 +2064,10 @@
     <string name="sticker__pack_new">Izveidot paku</string>
     <string name="sticker__pack_name">Pakas nosaukums</string>
     <string name="sticker__pack_rename">Pārdēvēt</string>
+    <string name="sticker__pack_move_up">Pārvietot augšup</string>
+    <string name="sticker__pack_move_down">Pārvietot lejup</string>
+    <string name="sticker__pack_icon_set">Izmantot kā pakas ikonu</string>
+    <string name="sticker__pack_icon_clear">Noņemt pakas ikonu</string>
     <string name="sticker__pack_delete">Dzēst paku</string>
     <string name="sticker__pack_delete_confirm">Vai dzēst paku \"{name}\" un tajā esošās {n} uzlīmes?</string>
     <string name="sticker__pack_failed">Neizdevās — mape var būt aizsargāta pret rakstīšanu</string>
