@@ -54,7 +54,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -297,7 +296,7 @@ fun EmojiPaletteView(
                         elementName = FlorisImeUi.MediaEmojiTab.elementName,
                         modifier = Modifier
                             .padding(end = 6.dp)
-                            .size(18.dp),
+                            .size(20.dp),
                         imageVector = Icons.Default.Search,
                     )
                     SnyggText(
@@ -323,8 +322,11 @@ fun EmojiPaletteView(
                             inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                             onCategoryChange(category)
                         }
-                        .padding(8.dp)
-                        .size(ButtonDefaults.IconSize),
+                        .padding(6.dp)
+                        // The same size every other panel header uses, rather than the button
+                        // default: this is a header row now, and it was one of the rows that looked
+                        // shrunken (#317).
+                        .size(FlorisImeSizing.mediaHeaderIconSize),
                     imageVector = category.icon(),
                 )
             }
