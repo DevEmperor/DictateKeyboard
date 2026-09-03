@@ -200,14 +200,14 @@ fun StickerSearchPanel(modifier: Modifier = Modifier) {
             onClear = { keyboardManager.clearStickerSearch() },
             leading = {
                 SnyggIconButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                     onClick = { keyboardManager.closeStickerSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringRes(R.string.action__back),
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                     )
                 }
             },

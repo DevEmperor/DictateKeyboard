@@ -45,6 +45,17 @@ private val LocalKeyboardRowBaseHeight = compositionLocalOf { 65.dp }
 private val LocalSmartbarHeight = compositionLocalOf { 40.dp }
 
 object FlorisImeSizing {
+    /**
+     * The icon inside a media panel's header button — clipboard, stickers, GIFs, dictation history and
+     * the three search bars (issue #317).
+     *
+     * One number, because the panels are meant to read as one family and had drifted to four different
+     * sizes. They also looked far smaller than that: the header buttons used to be styled as
+     * `media-bottom-row-button`, whose `padding: 16dp 0dp` is meant for the emoji panel's bottom row —
+     * a whole key tall — and inside a [smartbarHeight] box that padding leaves the icon about 8 dp.
+     */
+    val mediaHeaderIconSize: Dp = 24.dp
+
     val keyboardRowBaseHeight: Dp
         @Composable
         @ReadOnlyComposable

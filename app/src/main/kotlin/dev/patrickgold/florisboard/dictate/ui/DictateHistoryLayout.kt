@@ -96,20 +96,25 @@ fun DictateHistoryLayout(
             // Lock to the normal keyboard height so opening history never changes the IME height (no jump).
             .height(FlorisImeSizing.panelUiHeight()),
     ) {
-        // Header: back to the typing keyboard + panel title.
+        // Header: back to the typing keyboard + panel title. Styled as the clipboard's header rather
+        // than as the emoji panel's bottom row, whose 16 dp of vertical padding would leave these icons
+        // about 8 dp in a row this height (#317).
         SnyggRow(
-            elementName = FlorisImeUi.MediaBottomRow.elementName,
+            elementName = FlorisImeUi.ClipboardHeader.elementName,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {
-                SnyggIcon(imageVector = Icons.AutoMirrored.Filled.ArrowBack)
+                SnyggIcon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
+                )
             }
             SnyggText(
                 elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
@@ -120,14 +125,14 @@ fun DictateHistoryLayout(
             )
             // Jump straight to the full history management screen in the settings app.
             SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { FlorisImeService.launchSettings("settings/dictate/history") },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = null,
-                    modifier = Modifier.size(34.dp),
+                    modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                 )
             }
         }

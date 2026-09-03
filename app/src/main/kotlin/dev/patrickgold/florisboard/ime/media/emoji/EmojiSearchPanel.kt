@@ -199,14 +199,14 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                 // Back, not a second ✕: the ✕ in the field empties the query, and two crosses next to
                 // each other look like the same button drawn twice.
                 SnyggIconButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                     onClick = { keyboardManager.closeEmojiSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
                     SnyggIcon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringRes(R.string.action__back),
-                        modifier = Modifier.size(22.dp),
+                        modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                     )
                 }
             },

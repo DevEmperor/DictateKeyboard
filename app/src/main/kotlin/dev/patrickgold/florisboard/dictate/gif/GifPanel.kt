@@ -189,16 +189,18 @@ fun GifPanel(
             // Taller than a normal keyboard so more (and larger) GIFs are visible at once.
             .height(FlorisImeSizing.imeUiHeight() + FlorisImeSizing.keyboardRowBaseHeight * 2),
     ) {
-        // Header: back, tappable search field, settings.
+        // Header: back, tappable search field, settings. Styled as the clipboard's header rather than
+        // as the emoji panel's bottom row, whose 16 dp of vertical padding would leave these icons
+        // about 8 dp in a row this height (#317).
         SnyggRow(
-            elementName = FlorisImeUi.MediaBottomRow.elementName,
+            elementName = FlorisImeUi.ClipboardHeader.elementName,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = {
                     if (inResults) {
                         keyboardManager.gifSearchSubmit.value = null // back to the home view
@@ -211,7 +213,7 @@ fun GifPanel(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
-                    modifier = Modifier.size(30.dp),
+                    modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                 )
             }
             Box(
@@ -243,14 +245,14 @@ fun GifPanel(
                 }
             }
             SnyggIconButton(
-                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { FlorisImeService.launchSettings("settings/media") },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = null,
-                    modifier = Modifier.size(30.dp),
+                    modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                 )
             }
         }

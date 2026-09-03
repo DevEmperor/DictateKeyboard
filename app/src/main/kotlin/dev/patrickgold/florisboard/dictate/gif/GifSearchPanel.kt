@@ -142,14 +142,14 @@ fun GifSearchPanel(
             onClear = { keyboardManager.clearGifSearch() },
             leading = {
                 SnyggIconButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                     onClick = { keyboardManager.closeGifSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringRes(R.string.action__back),
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                     )
                 }
             },
