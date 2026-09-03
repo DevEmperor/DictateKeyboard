@@ -91,6 +91,21 @@ private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 /** How much of an expanded snippet must still stand before the cursor for the backspace undo (issue #283). */
 private const val TAIL_MATCH_LENGTH = 120
 
+/**
+ * Whether a keystroke belongs to an open in-keyboard search rather than to the app's text field.
+ *
+ * Stated as what a search *takes*, not as the one thing it refuses. The rule used to name the single
+ * type it accepted — `CHARACTER` — and hand everything else to the editor, which is how every digit
+ * typed into the emoji, GIF or sticker search ended up in the message being written instead of in the
+ * search box: the number row declares its keys as `"type": "numeric"` in the layout files, so they
+ * were never characters (issue #317).
+ *
+ * Text-producing types only. A shift, a backspace or a layout switch has work of its own to do and
+ * must reach the keyboard, and an empty string is a key that writes nothing at all.
+ */
+internal fun keyProducesSearchText(type: KeyType, text: String): Boolean =
+    (type == KeyType.CHARACTER || type == KeyType.NUMERIC) && text.isNotEmpty()
+
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
@@ -377,6 +392,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         emojiSearchQuery.value?.let { emojiSearchQuery.value = joined(it); return true }
         gifSearchQuery.value?.let { gifSearchQuery.value = joined(it); return true }
+        stickerSearchQuery.value?.let { stickerSearchQuery.value = joined(it); return true }
         return false
     }
 
@@ -964,25 +980,40 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
-     * While an emoji search is active, folds typing-related keys into the search query instead of letting
-     * them reach the editor. Returns `true` when the key was consumed. A backspace on an empty query exits
-     * the search (a common "back out" gesture), and Enter is swallowed so it never inserts a newline.
+     * Folds a keystroke into [query] while that search is open, instead of letting it reach the editor.
+     * Returns `true` when the key was consumed, `false` when the search is closed or the key is not one
+     * that writes text.
+     *
+     * One function for all three searches (emoji, GIF, sticker). They were three copies of the same
+     * twenty lines, and the copies are what let the bug in [keyProducesSearchText] sit in all three at
+     * once: a rule that lives in one place can only be wrong once.
+     *
+     * A backspace on an empty query leaves the search — a common "back out" gesture — and Enter is the
+     * only thing the three still disagree about, so it is passed in: GIF submits its query, the other
+     * two swallow it, because their results are already filtered and a newline would land in whatever
+     * the user was writing.
      */
-    private fun handleEmojiSearchKey(data: KeyData): Boolean {
-        val current = emojiSearchQuery.value ?: return false
+    private fun handleSearchKey(
+        query: MutableStateFlow<String?>,
+        data: KeyData,
+        onEnter: (String) -> Unit,
+        onExit: () -> Unit,
+    ): Boolean {
+        val current = query.value ?: return false
         when (data.code) {
-            KeyCode.SPACE -> emojiSearchQuery.value = "$current "
-            KeyCode.ENTER -> { /* swallow: keep the query, never commit a newline */ }
+            KeyCode.SPACE -> query.value = "$current "
+            KeyCode.ENTER -> onEnter(current)
             KeyCode.DELETE, KeyCode.DELETE_WORD -> {
                 if (current.isEmpty()) {
-                    closeEmojiSearch()
+                    onExit()
                 } else {
-                    emojiSearchQuery.value = current.dropLast(1)
+                    query.value = current.dropLast(1)
                 }
             }
             else -> {
-                if (data.type != KeyType.CHARACTER) return false
-                emojiSearchQuery.value = current + data.asString(isForDisplay = false)
+                val text = data.asString(isForDisplay = false)
+                if (!keyProducesSearchText(data.type, text)) return false
+                query.value = current + text
             }
         }
         return true
@@ -1023,31 +1054,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         if (returnToPanel) activeState.imeUiMode = ImeUiMode.STICKER
     }
 
-    /**
-     * While a sticker search is active, folds typing keys into the query instead of the editor.
-     * Mirrors [handleEmojiSearchKey], Enter included: there is nothing to submit, so pressing it must
-     * not put a newline into whatever is being written.
-     */
-    private fun handleStickerSearchKey(data: KeyData): Boolean {
-        val current = stickerSearchQuery.value ?: return false
-        when (data.code) {
-            KeyCode.SPACE -> stickerSearchQuery.value = "$current "
-            KeyCode.ENTER -> { /* swallow: the results are already filtered */ }
-            KeyCode.DELETE, KeyCode.DELETE_WORD -> {
-                if (current.isEmpty()) {
-                    closeStickerSearch()
-                } else {
-                    stickerSearchQuery.value = current.dropLast(1)
-                }
-            }
-            else -> {
-                if (data.type != KeyType.CHARACTER) return false
-                stickerSearchQuery.value = current + data.asString(isForDisplay = false)
-            }
-        }
-        return true
-    }
-
     /** Starts a GIF search: shows the text keyboard so the user can type the query. */
     fun activateGifSearch() {
         gifSearchQuery.value = ""
@@ -1075,29 +1081,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         if (returnToPanel) activeState.imeUiMode = ImeUiMode.GIF
     }
 
-    /**
-     * While a GIF search is active, folds typing keys into the query instead of the editor. Mirrors
-     * [handleEmojiSearchKey]: backspace on an empty query exits, Enter is swallowed.
-     */
-    private fun handleGifSearchKey(data: KeyData): Boolean {
-        val current = gifSearchQuery.value ?: return false
-        when (data.code) {
-            KeyCode.SPACE -> gifSearchQuery.value = "$current "
-            KeyCode.ENTER -> submitGifSearch(current) // Enter runs the search → full results page.
-            KeyCode.DELETE, KeyCode.DELETE_WORD -> {
-                if (current.isEmpty()) {
-                    closeGifSearch()
-                } else {
-                    gifSearchQuery.value = current.dropLast(1)
-                }
-            }
-            else -> {
-                if (data.type != KeyType.CHARACTER) return false
-                gifSearchQuery.value = current + data.asString(isForDisplay = false)
-            }
-        }
-        return true
-    }
 
     override fun onInputKeyDown(data: KeyData) {
         val windowController = FlorisImeService.windowControllerOrNull()
@@ -1125,13 +1108,25 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             pendingAutoCorrection = null
         }
         val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
-        if (emojiSearchQuery.value != null && handleEmojiSearchKey(data)) {
-            return@batchEdit
-        }
-        if (gifSearchQuery.value != null && handleGifSearchKey(data)) {
-            return@batchEdit
-        }
-        if (stickerSearchQuery.value != null && handleStickerSearchKey(data)) {
+        // Only one of the three can be open at a time — each is reached from its own panel — so the
+        // first one that answers has consumed the key.
+        val consumedBySearch = handleSearchKey(
+            query = emojiSearchQuery,
+            data = data,
+            onEnter = { /* swallow: the results are already filtered */ },
+            onExit = { closeEmojiSearch() },
+        ) || handleSearchKey(
+            query = gifSearchQuery,
+            data = data,
+            onEnter = { query -> submitGifSearch(query) }, // Enter runs the search → full results page
+            onExit = { closeGifSearch() },
+        ) || handleSearchKey(
+            query = stickerSearchQuery,
+            data = data,
+            onEnter = { /* swallow: the results are already filtered */ },
+            onExit = { closeStickerSearch() },
+        )
+        if (consumedBySearch) {
             return@batchEdit
         }
         when (data.code) {
