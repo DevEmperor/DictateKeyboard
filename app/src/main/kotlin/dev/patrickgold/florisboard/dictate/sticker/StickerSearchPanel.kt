@@ -18,10 +18,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -59,9 +59,6 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggText
 
-/** Two rows of results, the same shape the emoji search shows above its bar. */
-private const val ResultRows = 2
-
 /**
  * Finding a sticker by name (issue #317), shown in the Smartbar's slot while the search is open so the
  * keyboard below can type the query — see
@@ -71,6 +68,10 @@ private const val ResultRows = 2
  * KLIPY has to be asked over the network, so a GIF query is submitted with Enter and answered on a
  * page of its own; file names are already in memory, so these results narrow on every keystroke and
  * there is nothing to submit. That is what "instant filter" was asked for, and it costs nothing.
+ *
+ * One row, scrolled sideways, and it sits directly on top of the search bar: two rows of thumbnails
+ * take a third of the screen away from the app being typed into, and a sticker is recognised at a
+ * glance rather than read.
  *
  * With nothing typed the strip shows the favourites and recents, so the space holds something worth
  * tapping instead of standing empty — the same courtesy the emoji search does.
@@ -111,14 +112,14 @@ fun StickerSearchPanel(modifier: Modifier = Modifier) {
     val hits = remember(items, query) { StickerSearch.filter(items, query) }
     val shown = if (query.isBlank()) fallback else hits
 
-    val gridState = rememberLazyGridState()
-    // Every letter is a new result set, so it starts at the top rather than wherever the previous one
+    val listState = rememberLazyListState()
+    // Every letter is a new result set, so it starts at the front rather than wherever the previous one
     // happened to be scrolled to.
     LaunchedEffect(shown) {
-        if (shown.isNotEmpty()) gridState.scrollToItem(0)
+        if (shown.isNotEmpty()) listState.scrollToItem(0)
     }
-    LaunchedEffect(gridState) {
-        snapshotFlow { gridState.isScrollInProgress }.collect { scrolling ->
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.isScrollInProgress }.collect { scrolling ->
             if (scrolling) armedDocId = null
         }
     }
@@ -147,7 +148,7 @@ fun StickerSearchPanel(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(thumbnailSize.dp * ResultRows),
+                .height(thumbnailSize.dp),
             contentAlignment = Alignment.Center,
         ) {
             when {
@@ -160,36 +161,39 @@ fun StickerSearchPanel(modifier: Modifier = Modifier) {
                     text = stringRes(R.string.sticker__search_no_results),
                     modifier = Modifier.padding(horizontal = 16.dp),
                 )
-                else -> LazyVerticalGrid(
-                    state = gridState,
-                    columns = GridCells.Adaptive(minSize = thumbnailSize.dp),
+                else -> LazyRow(
+                    state = listState,
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(4.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     items(shown, key = { it.docId }) { item ->
-                        StickerCell(
-                            item = item,
-                            treeUri = treeUri,
-                            armed = armedDocId == item.docId,
-                            preparing = preparingDocId == item.docId,
-                            accent = accent,
-                            scrolling = { gridState.isScrollInProgress },
-                            onClick = {
-                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                                // The same two-tap rule the panel follows. A misfire out of a search
-                                // result is exactly as unwanted as one out of the grid, so the setting
-                                // that guards one has to guard the other.
-                                if (!confirmBeforeInsert || armedDocId == item.docId) {
-                                    armedDocId = null
-                                    insert(item)
-                                } else {
-                                    armedDocId = item.docId
-                                }
-                            },
-                            onLongClick = { },
-                        )
+                        // A row hands its items an unbounded width, so each cell has to name its own
+                        // — the thumbnail inside fills what it is given.
+                        Box(modifier = Modifier.width(thumbnailSize.dp)) {
+                            StickerCell(
+                                item = item,
+                                treeUri = treeUri,
+                                armed = armedDocId == item.docId,
+                                preparing = preparingDocId == item.docId,
+                                accent = accent,
+                                scrolling = { listState.isScrollInProgress },
+                                onClick = {
+                                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                    // The same two-tap rule the panel follows. A misfire out of a
+                                    // search result is exactly as unwanted as one out of the grid, so
+                                    // the setting that guards one has to guard the other.
+                                    if (!confirmBeforeInsert || armedDocId == item.docId) {
+                                        armedDocId = null
+                                        insert(item)
+                                    } else {
+                                        armedDocId = item.docId
+                                    }
+                                },
+                                onLongClick = { },
+                            )
+                        }
                     }
                 }
             }
