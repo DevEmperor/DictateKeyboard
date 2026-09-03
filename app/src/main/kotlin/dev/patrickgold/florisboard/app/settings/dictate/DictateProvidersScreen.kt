@@ -541,32 +541,37 @@ private fun ProviderEditorDialog(
             account.customBaseUrl.ifBlank { if (preset?.allowsCustomBaseUrl == true) preset.baseUrl else "" },
         )
     }
-    // Model fields show the *effective* model, filling in the preset default when nothing was chosen —
-    // an empty box tells the user nothing about what is actually running. Storage keeps the old meaning:
-    // [modelToStore] turns a value that still equals the default back into an empty string on confirm, so
-    // the account goes on following the preset and a later update can move it. Only a deliberate choice of
-    // something else is pinned.
+    // Model fields hold what the *user* chose and nothing else; the preset default appears greyed out
+    // behind an empty one, which says what is running without pretending someone picked it. Filling the
+    // default in as a value was the older answer to the same question, and it cost more than it gave: it
+    // came back after the user cleared the field, and it made the single-call switch look broken, because
+    // Gemini's default transcription model is a speech-to-text model that cannot serve rewording.
+    //
+    // So blank means what it has always meant in storage — follow the preset — and it now means the same
+    // on screen. Nothing converts a value back to blank on confirm any more: what stands in the box is
+    // what gets stored, including a deliberate pick of the model that is currently the default, which is
+    // then pinned and no longer moves with an app update. That is the trade this way round, and it is the
+    // one #313 asked for: what you choose is what is used.
+    //
     // On-device: a streaming model stored in the one-shot slot predates the two-slot split (#233) — move
     // it across on open so the dialog shows it under "Live" where it belongs, instead of as the one-shot
     // pick it was never meant to be.
-    val legacyStreamingPick = preset?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE &&
-        LocalModelCatalog.isStreaming(account.transcriptionModel)
+    val isLocalProvider = preset?.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE
+    val legacyStreamingPick = isLocalProvider && LocalModelCatalog.isStreaming(account.transcriptionModel)
     var transcriptionModel by remember {
         mutableStateOf(
-            if (legacyStreamingPick) "" else {
-                account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() }
+            when {
+                legacyStreamingPick -> ""
+                // The one field that is a list rather than a text box, so it has no placeholder to grey
+                // out: blank there would read as "no model selected" instead of "the default applies".
+                isLocalProvider -> account.transcriptionModel.ifBlank { preset?.defaultTranscriptionModel.orEmpty() }
+                else -> account.transcriptionModel
             },
         )
     }
-    var chatModel by remember {
-        mutableStateOf(account.chatModel.ifBlank { preset?.defaultChatModel.orEmpty() })
-    }
+    var chatModel by remember { mutableStateOf(account.chatModel) }
     var realtimeModel by remember {
-        mutableStateOf(
-            if (legacyStreamingPick) account.transcriptionModel else {
-                account.realtimeModel.ifBlank { preset?.defaultRealtimeModel.orEmpty() }
-            },
-        )
+        mutableStateOf(if (legacyStreamingPick) account.transcriptionModel else account.realtimeModel)
     }
     var showRealtimePicker by remember { mutableStateOf(false) }
     // Live catalog cache, updated when the picker fetches; persisted together with the rest on confirm.
@@ -589,11 +594,17 @@ private fun ProviderEditorDialog(
         else -> preset
     }
 
+    // The model that would actually be used, which since the fields stopped being pre-filled is usually
+    // the preset default rather than anything on screen. Every question below is about this one and not
+    // about the box: an empty box does not mean "no model", it means "that one".
+    val effectiveTranscriptionModel =
+        transcriptionModel.trim().ifBlank { preset?.defaultTranscriptionModel.orEmpty() }
+
     // Whether single-call would actually run with what is currently in the dialog, which is what decides
     // both the transcription field's label and whether the rewording field is shown (#313). The switch on
     // its own is not the answer: the same question is asked at dictation time, and this is the one place
     // where the user can see the answer before it costs them a failed rewording.
-    val singleCall = singleCallApplies(transcriptionViaChat, effectivePreset, transcriptionModel)
+    val singleCall = singleCallApplies(transcriptionViaChat, effectivePreset, effectiveTranscriptionModel)
 
     // Pre-load the model catalog so we know whether this provider has any audio-capable model — that
     // gates the single-call multimodal option (#130/#132). Populates on open for keyed accounts; for a
@@ -634,9 +645,9 @@ private fun ProviderEditorDialog(
                     customBaseUrl = baseUrl.trim(),
                     customRealtime = customRealtime,
                     customWarmUp = customWarmUp,
-                    transcriptionModel = modelToStore(transcriptionModel, preset?.defaultTranscriptionModel),
-                    chatModel = modelToStore(chatModel, preset?.defaultChatModel),
-                    realtimeModel = modelToStore(realtimeModel, preset?.defaultRealtimeModel),
+                    transcriptionModel = transcriptionModel.trim(),
+                    chatModel = chatModel.trim(),
+                    realtimeModel = realtimeModel.trim(),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
                     cachedTranscriptionModels = cachedTranscriptionModels,
@@ -817,8 +828,13 @@ private fun ProviderEditorDialog(
             if (showTranscription && showChat) {
                 // Only warn when we positively know the model isn't audio-capable (catalog has modality
                 // data and the chosen model isn't in it) — never for providers that don't report it.
+                // Asked about the effective model, or an empty box would read as "not audio-capable".
                 val knownNotAudio = cachedAudioModels.isNotEmpty() &&
-                    transcriptionModel.trim() !in cachedAudioModels
+                    effectiveTranscriptionModel !in cachedAudioModels
+                // The switch is on and nothing happens: a speech-to-text model cannot transcribe and
+                // reword in one request, so neither the merge nor the single call takes place. Saying so
+                // here is the feedback that was missing — the switch used to look simply broken.
+                val switchIsIdle = transcriptionViaChat && (!singleCall || knownNotAudio)
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -830,7 +846,7 @@ private fun ProviderEditorDialog(
                         )
                         Text(
                             stringRes(
-                                if (transcriptionViaChat && knownNotAudio) {
+                                if (switchIsIdle) {
                                     R.string.dictate__providers_single_call_pick_audio
                                 } else {
                                     R.string.dictate__providers_single_call_summary
@@ -878,16 +894,6 @@ private fun ProviderEditorDialog(
             onDismiss = { showRealtimePicker = false },
         )
     }
-}
-
-/**
- * What actually gets written for a model field: an empty string when the value still equals the preset
- * default, so the account keeps following it, and the trimmed value otherwise. The editor itself shows the
- * default filled in, which is why this cannot simply store what is on screen.
- */
-private fun modelToStore(value: String, default: String?): String {
-    val trimmed = value.trim()
-    return if (default != null && trimmed == default) "" else trimmed
 }
 
 /**

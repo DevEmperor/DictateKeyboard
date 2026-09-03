@@ -13,8 +13,11 @@ package dev.patrickgold.florisboard.dictate
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
+import dev.patrickgold.florisboard.dictate.provider.chatModelIsPresetDefault
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Which model a rewording actually goes out with (issue #313).
@@ -67,10 +70,55 @@ class ChatModelForTest {
 
     @Test
     fun `a dedicated speech-to-text model cannot reword`() {
-        // Gemini's transcribe models answer on their own endpoint and have no chat surface, so single-call
-        // does not run for them either — the same condition the dictation path applies.
+        // Transcribe models answer on their own endpoint and have no chat surface, so single-call does not
+        // run for them either — the same condition the dictation path applies.
         val a = account(transcription = "gemini-3.5-transcribe", singleCall = true)
         assertEquals(gemini.defaultChatModel, chatModelFor(a, gemini))
+    }
+
+    @Test
+    fun `an empty transcription field means the preset default, and it is judged the same way`() {
+        // Since the dialog stopped filling its fields in, this is the ordinary state — and the answer has
+        // to be about the model that will run, not about the empty box. Gemini's default transcription
+        // model is a transcribe model, so nothing is shared and rewording keeps the chat default.
+        assertEquals(gemini.defaultChatModel, chatModelFor(account(singleCall = true), gemini))
+        // Same for Groq, whose default is Whisper: this is what the Gemini-only check used to miss, and
+        // it would have handed rewording to a model with no chat endpoint at all.
+        assertEquals(groq.defaultChatModel, chatModelFor(account(singleCall = true), groq))
+    }
+
+    @Test
+    fun `the hint about a built-in default fires exactly when nobody chose the model`() {
+        // Nothing chosen: whatever runs came from the preset.
+        assertTrue(chatModelIsPresetDefault(account(), gemini))
+        assertTrue(chatModelIsPresetDefault(account(singleCall = true), gemini))
+        // A rewording model the user picked needs no explanation of where it came from.
+        assertFalse(chatModelIsPresetDefault(account(chat = "gemini-3.6-flash"), gemini))
+        // Nor does a transcription model they picked that single-call then shares with rewording.
+        assertFalse(
+            chatModelIsPresetDefault(account(transcription = "gemini-3.6-flash", singleCall = true), gemini),
+        )
+        // But if that pick cannot reword, what runs is the preset default again.
+        assertTrue(
+            chatModelIsPresetDefault(account(transcription = "gemini-3.5-transcribe", singleCall = true), gemini),
+        )
+    }
+
+    @Test
+    fun `dedicated speech-to-text models are recognised across providers`() {
+        // Every default our presets carry, so this fails if one is renamed into something unrecognisable.
+        for (model in listOf(
+            "gemini-3.5-transcribe", "models/gemini-3.5-transcribe", "gpt-transcribe",
+            "gpt-4o-mini-transcribe", "whisper-large-v3-turbo", "openai/whisper-large-v3", "scribe_v2",
+        )) {
+            assertTrue(ProviderRegistry.isDedicatedTranscriptionModel(model), model)
+        }
+        // Chat models, which must stay usable for single-call.
+        for (model in listOf(
+            "gemini-3.6-flash", "openai/gpt-oss-120b", "gpt-4o-mini", "qwen/qwen3.8-27b",
+        )) {
+            assertFalse(ProviderRegistry.isDedicatedTranscriptionModel(model), model)
+        }
     }
 
     @Test

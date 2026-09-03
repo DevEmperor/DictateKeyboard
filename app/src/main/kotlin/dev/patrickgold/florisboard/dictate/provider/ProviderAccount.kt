@@ -157,7 +157,7 @@ data class ProviderAccount(
 fun singleCallApplies(transcriptionViaChat: Boolean, preset: ProviderPreset, model: String): Boolean =
     transcriptionViaChat &&
         preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
-        !(preset.id == ProviderRegistry.GEMINI.id && ProviderRegistry.isGeminiTranscribeModel(model))
+        !ProviderRegistry.isDedicatedTranscriptionModel(model)
 
 /**
  * The model to reword with for [account] — the one the settings dialog says will be used, which is not
@@ -182,9 +182,23 @@ fun chatModelFor(
     fallback: String = "gpt-4o-mini",
 ): String {
     account.chatModel.takeIf { it.isNotBlank() }?.let { return it }
-    val shared = account.transcriptionModel
-    if (shared.isNotBlank() && singleCallApplies(account.transcriptionViaChat, preset, shared)) return shared
+    val shared = sharedSingleCallModel(account, preset)
+    if (shared != null) return shared
     return preset.defaultChatModel ?: fallback
+}
+
+/**
+ * The transcription model when it is also the rewording model, else null.
+ *
+ * Resolved rather than read: since the settings dialog stopped filling its fields in, an empty
+ * transcription model means the preset default, and the merge has to be decided about the model that
+ * will actually run. Deciding it about the empty box instead would have the dialog show one merged
+ * field while the dictation used two different models — the same disagreement #313 was.
+ */
+private fun sharedSingleCallModel(account: ProviderAccount, preset: ProviderPreset): String? {
+    val effective = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel.orEmpty() }
+    if (effective.isBlank()) return null
+    return effective.takeIf { singleCallApplies(account.transcriptionViaChat, preset, it) }
 }
 
 /**
@@ -196,8 +210,9 @@ fun chatModelFor(
  */
 fun chatModelIsPresetDefault(account: ProviderAccount, preset: ProviderPreset): Boolean =
     account.chatModel.isBlank() &&
-        !(account.transcriptionModel.isNotBlank() &&
-            singleCallApplies(account.transcriptionViaChat, preset, account.transcriptionModel))
+        // A transcription model the user typed and that single-call hands to rewording is their choice
+        // like any other. A blank one resolves to a preset default whichever way it then goes.
+        (account.transcriptionModel.isBlank() || sharedSingleCallModel(account, preset) == null)
 
 /**
  * The provider keyring: every configured [ProviderAccount] keyed by provider id. Persisted as a single
