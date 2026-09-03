@@ -2124,8 +2124,7 @@
     <string name="sticker__pack_new">Создать набор</string>
     <string name="sticker__pack_name">Название набора</string>
     <string name="sticker__pack_rename">Переименовать</string>
-    <string name="sticker__pack_move_up">Вверх</string>
-    <string name="sticker__pack_move_down">Вниз</string>
+    <string name="sticker__pack_reorder_hint">Удерживайте набор, чтобы переместить</string>
     <string name="sticker__pack_icon_set">Сделать значком набора</string>
     <string name="sticker__pack_icon_clear">Убрать значок набора</string>
     <string name="sticker__pack_delete">Удалить набор</string>

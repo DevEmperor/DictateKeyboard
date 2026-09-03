@@ -2020,8 +2020,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="sticker__pack_new">Pakket maken</string>
     <string name="sticker__pack_name">Naam van het pakket</string>
     <string name="sticker__pack_rename">Hernoemen</string>
-    <string name="sticker__pack_move_up">Omhoog</string>
-    <string name="sticker__pack_move_down">Omlaag</string>
+    <string name="sticker__pack_reorder_hint">Houd een pakket vast om het te verplaatsen</string>
     <string name="sticker__pack_icon_set">Als pakketpictogram gebruiken</string>
     <string name="sticker__pack_icon_clear">Pakketpictogram verwijderen</string>
     <string name="sticker__pack_delete">Pakket verwijderen</string>

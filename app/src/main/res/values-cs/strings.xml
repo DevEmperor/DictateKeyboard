@@ -2135,8 +2135,7 @@
     <string name="sticker__pack_new">Vytvořit balíček</string>
     <string name="sticker__pack_name">Název balíčku</string>
     <string name="sticker__pack_rename">Přejmenovat</string>
-    <string name="sticker__pack_move_up">Nahoru</string>
-    <string name="sticker__pack_move_down">Dolů</string>
+    <string name="sticker__pack_reorder_hint">Podržte balíček a přesuňte jej</string>
     <string name="sticker__pack_icon_set">Použít jako ikonu balíčku</string>
     <string name="sticker__pack_icon_clear">Odebrat ikonu balíčku</string>
     <string name="sticker__pack_delete">Smazat balíček</string>

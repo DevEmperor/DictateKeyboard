@@ -2076,8 +2076,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="sticker__pack_new">Buat paket</string>
     <string name="sticker__pack_name">Nama paket</string>
     <string name="sticker__pack_rename">Ganti nama</string>
-    <string name="sticker__pack_move_up">Naikkan</string>
-    <string name="sticker__pack_move_down">Turunkan</string>
+    <string name="sticker__pack_reorder_hint">Tahan paket untuk memindahkannya</string>
     <string name="sticker__pack_icon_set">Gunakan sebagai ikon paket</string>
     <string name="sticker__pack_icon_clear">Hapus ikon paket</string>
     <string name="sticker__pack_delete">Hapus paket</string>

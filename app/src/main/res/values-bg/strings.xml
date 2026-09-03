@@ -2121,8 +2121,7 @@
     <string name="sticker__pack_new">Създай пакет</string>
     <string name="sticker__pack_name">Име на пакета</string>
     <string name="sticker__pack_rename">Преименувай</string>
-    <string name="sticker__pack_move_up">Нагоре</string>
-    <string name="sticker__pack_move_down">Надолу</string>
+    <string name="sticker__pack_reorder_hint">Задръжте пакет, за да го преместите</string>
     <string name="sticker__pack_icon_set">Икона на пакета</string>
     <string name="sticker__pack_icon_clear">Премахване на иконата</string>
     <string name="sticker__pack_delete">Изтрий пакета</string>

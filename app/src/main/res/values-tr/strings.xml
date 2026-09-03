@@ -2099,8 +2099,7 @@
     <string name="sticker__pack_new">Paket oluştur</string>
     <string name="sticker__pack_name">Paket adı</string>
     <string name="sticker__pack_rename">Yeniden adlandır</string>
-    <string name="sticker__pack_move_up">Yukarı taşı</string>
-    <string name="sticker__pack_move_down">Aşağı taşı</string>
+    <string name="sticker__pack_reorder_hint">Taşımak için pakete basılı tutun</string>
     <string name="sticker__pack_icon_set">Paket simgesi yap</string>
     <string name="sticker__pack_icon_clear">Paket simgesini kaldır</string>
     <string name="sticker__pack_delete">Paketi sil</string>

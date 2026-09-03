@@ -118,8 +118,7 @@
     <string name="sticker__pack_new" comment="Button that creates a pack">Create pack</string>
     <string name="sticker__pack_name" comment="Text field label for the pack name">Pack name</string>
     <string name="sticker__pack_rename" comment="Button and icon label for renaming a pack">Rename</string>
-    <string name="sticker__pack_move_up" comment="Screen reader label for the button that moves a pack's tab towards the front">Move up</string>
-    <string name="sticker__pack_move_down" comment="Screen reader label for the button that moves a pack's tab towards the back">Move down</string>
+    <string name="sticker__pack_reorder_hint" comment="Hint above the pack list, explaining how the tab order is changed">Hold a pack to move it</string>
     <string name="sticker__pack_icon_set" comment="Long-press action, makes this sticker the little picture on its pack's tab">Use as pack icon</string>
     <string name="sticker__pack_icon_clear" comment="Long-press action, takes this sticker back off its pack's tab">Remove pack icon</string>
     <string name="sticker__pack_delete" comment="Icon label and title of the delete confirmation">Delete pack</string>

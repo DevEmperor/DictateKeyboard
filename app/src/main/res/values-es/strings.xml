@@ -2102,8 +2102,7 @@
     <string name="sticker__pack_new">Crear paquete</string>
     <string name="sticker__pack_name">Nombre del paquete</string>
     <string name="sticker__pack_rename">Renombrar</string>
-    <string name="sticker__pack_move_up">Subir</string>
-    <string name="sticker__pack_move_down">Bajar</string>
+    <string name="sticker__pack_reorder_hint">Mantén pulsado un paquete para moverlo</string>
     <string name="sticker__pack_icon_set">Usar como icono del paquete</string>
     <string name="sticker__pack_icon_clear">Quitar icono del paquete</string>
     <string name="sticker__pack_delete">Borrar paquete</string>

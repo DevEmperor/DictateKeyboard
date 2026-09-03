@@ -2115,8 +2115,7 @@
     <string name="sticker__pack_new">新建贴纸包</string>
     <string name="sticker__pack_name">贴纸包名称</string>
     <string name="sticker__pack_rename">重命名</string>
-    <string name="sticker__pack_move_up">上移</string>
-    <string name="sticker__pack_move_down">下移</string>
+    <string name="sticker__pack_reorder_hint">长按贴纸包即可移动</string>
     <string name="sticker__pack_icon_set">设为贴纸包图标</string>
     <string name="sticker__pack_icon_clear">移除贴纸包图标</string>
     <string name="sticker__pack_delete">删除贴纸包</string>

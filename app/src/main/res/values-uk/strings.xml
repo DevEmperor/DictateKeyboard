@@ -1968,8 +1968,7 @@
     <string name="sticker__pack_new">Створити набір</string>
     <string name="sticker__pack_name">Назва набору</string>
     <string name="sticker__pack_rename">Перейменувати</string>
-    <string name="sticker__pack_move_up">Вгору</string>
-    <string name="sticker__pack_move_down">Вниз</string>
+    <string name="sticker__pack_reorder_hint">Утримуйте набір, щоб перемістити</string>
     <string name="sticker__pack_icon_set">Зробити значком набору</string>
     <string name="sticker__pack_icon_clear">Прибрати значок набору</string>
     <string name="sticker__pack_delete">Видалити набір</string>

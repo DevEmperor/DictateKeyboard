@@ -1904,8 +1904,7 @@
     <string name="sticker__pack_new">Crea pacchetto</string>
     <string name="sticker__pack_name">Nome del pacchetto</string>
     <string name="sticker__pack_rename">Rinomina</string>
-    <string name="sticker__pack_move_up">Sposta su</string>
-    <string name="sticker__pack_move_down">Sposta giù</string>
+    <string name="sticker__pack_reorder_hint">Tieni premuto un pacchetto per spostarlo</string>
     <string name="sticker__pack_icon_set">Usa come icona del pacchetto</string>
     <string name="sticker__pack_icon_clear">Rimuovi icona del pacchetto</string>
     <string name="sticker__pack_delete">Elimina pacchetto</string>

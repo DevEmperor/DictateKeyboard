@@ -23,6 +23,7 @@ import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +34,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Apps
-import androidx.compose.material.icons.outlined.ArrowDownward
-import androidx.compose.material.icons.outlined.ArrowUpward
+import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Downloading
 import androidx.compose.material.icons.outlined.Edit
@@ -54,24 +54,32 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState as collectFlowAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
@@ -819,8 +827,12 @@ private fun StickerSourceDialog(
  * Lives in settings rather than in the keyboard panel for one practical reason: naming a pack means
  * typing, and the panel *is* the keyboard. Moving a sticker into an existing pack needs no text and
  * stays where it belongs, on the sticker's own long-press menu. The tab order joined it here for a
- * different reason (issue #317): it is a list of packs with a button each, which this dialog already
- * is, where the panel would have needed a mode of its own for something done once.
+ * different reason (issue #317): it is a list of packs, which this dialog already is, where the panel
+ * would have needed a mode of its own for something done once.
+ *
+ * Reordering is a long press and a drag, the same gesture the prompt list uses, and that is what keeps
+ * the row readable: a pair of arrows would be two more buttons on a line that already could not fit a
+ * name beside four of them.
  */
 @Composable
 private fun StickerPackDialog(
@@ -845,11 +857,18 @@ private fun StickerPackDialog(
         index?.let { withContext(Dispatchers.IO) { StickerScanner.saveCached(context, it) } }
     }
 
-    // Shown in the order the tabs are in, because arrows that move a pack "up" have to move it up the
-    // list the user is actually looking at.
-    val packs = StickerPackSettings
-        .ordered(index?.categories.orEmpty(), packSettings.order)
-        .filter { it.id != StickerCategory.ROOT_ID }
+    // Shown in the order the tabs are in — a list you rearrange has to start out looking like the thing
+    // it rearranges. Held in a mutable list so a dragged row can move under the finger; the preference
+    // is written once, on drop.
+    val packs = remember(index, packSettings) {
+        StickerPackSettings
+            .ordered(index?.categories.orEmpty(), packSettings.order)
+            .filter { it.id != StickerCategory.ROOT_ID }
+            .toMutableStateList()
+    }
+    var draggingName by remember { mutableStateOf<String?>(null) }
+    var dragOffset by remember { mutableFloatStateOf(0f) }
+    var rowHeight by remember { mutableIntStateOf(0) }
 
     // The create/rename button belongs where every other dialog puts its action: on the button row at
     // the bottom, beside Cancel. It doubles as "rename" while a pack is being edited.
@@ -892,53 +911,86 @@ private fun StickerPackDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            for ((position, pack) in packs.withIndex()) {
-                // Name above, buttons below. Four buttons and a name do not fit across a dialog: with
-                // them on one line the name was left about ten dp and wrapped to one letter per row.
-                // The folder icon went with them — every line here is a folder.
-                Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                    Text(
-                        text = pack.name,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        text = pluralsRes(R.plurals.unit__items__written, pack.items.size, "v" to pack.items.size),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+            if (packs.size > 1) {
+                Text(
+                    text = stringRes(R.string.sticker__pack_reorder_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 4.dp),
+                )
+            }
+            for (pack in packs) {
+                val isDragging = draggingName == pack.name
+                // The whole row drags, the handle only says so. Lifted above its neighbours while it
+                // moves, so it reads as picked up rather than as the list glitching.
+                Surface(
+                    tonalElevation = if (isDragging) 4.dp else 0.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .zIndex(if (isDragging) 1f else 0f)
+                        .graphicsLayer { translationY = if (isDragging) dragOffset else 0f }
+                        .onSizeChanged { rowHeight = it.height }
+                        .pointerInput(pack.name) {
+                            detectDragGesturesAfterLongPress(
+                                onDragStart = { draggingName = pack.name; dragOffset = 0f },
+                                onDragEnd = {
+                                    draggingName = null
+                                    dragOffset = 0f
+                                    scope.launch {
+                                        StickerPackSettingsHelper.setOrder(prefs, packs.map { it.name })
+                                    }
+                                },
+                                onDragCancel = {
+                                    draggingName = null
+                                    dragOffset = 0f
+                                    reload++
+                                },
+                                onDrag = { change, amount ->
+                                    change.consume()
+                                    dragOffset += amount.y
+                                    val current = packs.indexOfFirst { it.name == draggingName }
+                                    if (current < 0 || rowHeight <= 0) {
+                                        return@detectDragGesturesAfterLongPress
+                                    }
+                                    // Past half a row → swap with the neighbour and carry the offset
+                                    // over, so the row stays under the finger instead of jumping.
+                                    if (dragOffset > rowHeight / 2 && current < packs.lastIndex) {
+                                        packs.add(current + 1, packs.removeAt(current))
+                                        dragOffset -= rowHeight
+                                    } else if (dragOffset < -rowHeight / 2 && current > 0) {
+                                        packs.add(current - 1, packs.removeAt(current))
+                                        dragOffset += rowHeight
+                                    }
+                                },
+                            )
+                        },
+                ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         if (packs.size > 1) {
-                            IconButton(
-                                enabled = position > 0,
-                                onClick = {
-                                    scope.launch {
-                                        StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, -1)
-                                    }
-                                },
-                            ) {
-                                Icon(
-                                    Icons.Outlined.ArrowUpward,
-                                    contentDescription = stringRes(R.string.sticker__pack_move_up),
-                                )
-                            }
-                            IconButton(
-                                enabled = position < packs.lastIndex,
-                                onClick = {
-                                    scope.launch {
-                                        StickerPackSettingsHelper.move(prefs, packs.map { it.name }, pack.name, 1)
-                                    }
-                                },
-                            ) {
-                                Icon(
-                                    Icons.Outlined.ArrowDownward,
-                                    contentDescription = stringRes(R.string.sticker__pack_move_down),
-                                )
-                            }
+                            Icon(
+                                Icons.Default.DragHandle,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 8.dp),
+                            )
+                        }
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = pack.name,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                text = pluralsRes(
+                                    R.plurals.unit__items__written,
+                                    pack.items.size,
+                                    "v" to pack.items.size,
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                         IconButton(onClick = { renaming = pack; newName = pack.name }) {
                             Icon(Icons.Outlined.Edit, contentDescription = stringRes(R.string.sticker__pack_rename))

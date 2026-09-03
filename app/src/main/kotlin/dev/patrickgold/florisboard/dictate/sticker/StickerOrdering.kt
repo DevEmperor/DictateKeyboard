@@ -108,21 +108,14 @@ object StickerPackSettingsHelper {
     }
 
     /**
-     * Moves [name] along the tab row.
+     * Records the tab row as the user has just arranged it.
      *
-     * [displayed] is the row as it is on screen, not the stored order — most of it is usually implied
-     * by the alphabet rather than written down. Moving one pack therefore writes the whole row out,
-     * which is also what stops a later rename or a new pack from shuffling the rest around.
+     * The whole row, not the one pack that moved: most of the order is usually implied by the alphabet
+     * rather than written down, and writing it all out is also what stops a later rename or a new pack
+     * from shuffling the rest around afterwards.
      */
-    suspend fun move(
-        prefs: FlorisPreferenceModel,
-        displayed: List<String>,
-        name: String,
-        delta: Int,
-    ) {
-        val next = displayed.toMutableList()
-        if (!moveWithin(next, name, delta)) return
-        edit(prefs) { it.copy(order = next.toList()) }
+    suspend fun setOrder(prefs: FlorisPreferenceModel, names: List<String>) = edit(prefs) {
+        it.copy(order = names.toList())
     }
 
     /** Picks the sticker that stands for [pack] on its tab, or drops it when [docId] is null. */

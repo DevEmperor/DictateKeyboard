@@ -2119,8 +2119,7 @@
     <string name="sticker__pack_new">Csomag létrehozása</string>
     <string name="sticker__pack_name">Csomag neve</string>
     <string name="sticker__pack_rename">Átnevezés</string>
-    <string name="sticker__pack_move_up">Fel</string>
-    <string name="sticker__pack_move_down">Le</string>
+    <string name="sticker__pack_reorder_hint">Tartsa nyomva a csomagot az áthelyezéshez</string>
     <string name="sticker__pack_icon_set">Csomagikonként használ</string>
     <string name="sticker__pack_icon_clear">Csomagikon eltávolítása</string>
     <string name="sticker__pack_delete">Csomag törlése</string>

@@ -1996,8 +1996,7 @@
     <string name="sticker__pack_new">Pack anlegen</string>
     <string name="sticker__pack_name">Name des Packs</string>
     <string name="sticker__pack_rename">Umbenennen</string>
-    <string name="sticker__pack_move_up">Nach oben</string>
-    <string name="sticker__pack_move_down">Nach unten</string>
+    <string name="sticker__pack_reorder_hint">Zum Verschieben ein Pack gedrückt halten</string>
     <string name="sticker__pack_icon_set">Als Pack-Symbol verwenden</string>
     <string name="sticker__pack_icon_clear">Pack-Symbol entfernen</string>
     <string name="sticker__pack_delete">Pack löschen</string>

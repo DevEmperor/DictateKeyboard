@@ -1996,8 +1996,7 @@
     <string name="sticker__pack_new">Crea un paquet</string>
     <string name="sticker__pack_name">Nom del paquet</string>
     <string name="sticker__pack_rename">Reanomena</string>
-    <string name="sticker__pack_move_up">Mou amunt</string>
-    <string name="sticker__pack_move_down">Mou avall</string>
+    <string name="sticker__pack_reorder_hint">Mantén premut un paquet per moure\'l</string>
     <string name="sticker__pack_icon_set">Usa com a icona del paquet</string>
     <string name="sticker__pack_icon_clear">Treu la icona del paquet</string>
     <string name="sticker__pack_delete">Esborra el paquet</string>
