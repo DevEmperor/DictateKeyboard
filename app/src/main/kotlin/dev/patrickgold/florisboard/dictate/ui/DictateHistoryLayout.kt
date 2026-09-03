@@ -117,10 +117,10 @@ fun DictateHistoryLayout(
                 )
             }
             SnyggText(
-                elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 4.dp),
+                // The clipboard's title element. This one used to be the emoji subheader, which is
+                // bold and carries a margin — so of the three panel titles no two matched (#317).
+                elementName = FlorisImeUi.ClipboardHeaderText.elementName,
+                modifier = Modifier.weight(1f),
                 text = stringRes(R.string.dictate__history_title),
             )
             // Jump straight to the full history management screen in the settings app.

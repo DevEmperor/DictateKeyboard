@@ -298,13 +298,11 @@ fun StickerPanel(
                     )
                 }
                 SnyggText(
-                    elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                    elementName = FlorisImeUi.ClipboardHeaderText.elementName,
                     text = stringRes(R.string.sticker__reorder_hint),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 8.dp),
+                    modifier = Modifier.weight(1f),
                 )
                 SnyggIconButton(
                     elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
@@ -341,13 +339,14 @@ fun StickerPanel(
                     )
                 }
                 SnyggText(
-                    elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                    // The clipboard's title element, and no padding of its own: the 8 dp that used
+                    // to be here is exactly why the gap after the back arrow was wider here than
+                    // there (#317).
+                    elementName = FlorisImeUi.ClipboardHeaderText.elementName,
                     text = stringRes(R.string.sticker__title),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 8.dp),
+                    modifier = Modifier.weight(1f),
                 )
                 if (index?.isEmpty == false) {
                     // Typing a name means the keyboard, and the keyboard is what this panel replaced —

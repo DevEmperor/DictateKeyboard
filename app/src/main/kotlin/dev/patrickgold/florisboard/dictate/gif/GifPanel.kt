@@ -86,6 +86,7 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
  * The GIF panel, its own [ImeUiMode.GIF] next to the typing keyboard (opened via the GIF QuickAction).
@@ -235,10 +236,15 @@ fun GifPanel(
                             .size(20.dp)
                             .padding(end = 8.dp),
                     )
-                    SnyggText(
-                        elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
+                    // This box stands in for a search field, so it has to be lettered like one. The
+                    // real bar (KeyboardSearchBar) draws its query with a plain Text at the default
+                    // size; a SnyggText here would inherit the header's 16sp and read a size larger
+                    // than the thing it imitates (#317).
+                    val headerStyle = rememberSnyggThemeQuery(FlorisImeUi.ClipboardHeader.elementName)
+                    Text(
                         text = submittedQuery?.takeIf { it.isNotBlank() }
                             ?: stringRes(R.string.gif__search_placeholder),
+                        color = headerStyle.foreground(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
