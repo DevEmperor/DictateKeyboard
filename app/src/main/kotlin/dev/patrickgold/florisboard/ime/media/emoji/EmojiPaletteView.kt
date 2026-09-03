@@ -296,7 +296,7 @@ fun EmojiPaletteView(
                         elementName = FlorisImeUi.MediaEmojiTab.elementName,
                         modifier = Modifier
                             .padding(end = 6.dp)
-                            .size(20.dp),
+                            .size(FlorisImeSizing.mediaHeaderIconSize),
                         imageVector = Icons.Default.Search,
                     )
                     SnyggText(
