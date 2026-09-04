@@ -98,12 +98,18 @@ object ProviderRegistry {
         curatedTranscriptionModels = listOf(
             "gpt-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
         ),
-        // Read 2026-09-04 from the speech-to-text guide: mp3, mp4, mpeg, mpga, m4a, wav, webm. Ogg and
-        // flac are deliberately NOT here even though OpenAI's own API reference lists them — the two
-        // pages disagree, and the point of this list is to convert on a fact rather than gamble on one.
-        // OpenAI is therefore the provider where a shared voice note actually has to be transcoded.
+        // The guide lists mp3, mp4, mpeg, mpga, m4a, wav, webm; the API reference adds flac and ogg.
+        // Rather than pick a page, the endpoint was asked directly on 2026-09-04 with the same Ogg/Opus
+        // bytes twice, same `audio/ogg` part type, only the file NAME differing:
+        //     filename=PTT-….opus -> 400 "Unsupported file format opus"
+        //     filename=voice.ogg  -> 200 and a correct transcript (gpt-transcribe and whisper-1 alike)
+        // So Ogg belongs here: what OpenAI refuses is the extension `opus`, not the container — which is
+        // why uploads now travel under the canonical name for what is inside them (see
+        // [audioUploadNameOf]). A shared voice note therefore needs no transcode at all any more.
+        // flac stays out: the same disagreement applies to it and nobody has measured it.
         acceptedAudioContainers = setOf(
-            AudioContainer.MP3, AudioContainer.M4A, AudioContainer.WAV, AudioContainer.WEBM,
+            AudioContainer.MP3, AudioContainer.M4A, AudioContainer.WAV,
+            AudioContainer.WEBM, AudioContainer.OGG,
         ),
         // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-live-transcribe is the streaming
         // model of the gpt-transcribe generation and emits deltas like gpt-realtime-whisper did, at the

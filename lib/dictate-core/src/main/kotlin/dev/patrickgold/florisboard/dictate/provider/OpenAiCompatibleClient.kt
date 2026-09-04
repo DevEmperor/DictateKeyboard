@@ -252,7 +252,9 @@ class OpenAiCompatibleClient(
         val fileBody = request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile))
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("file", request.audioFile.name, fileBody)
+            // The name, not the part's content type, is what these endpoints read — see
+            // [audioUploadNameOf], which carries the measurement that proves it.
+            .addFormDataPart("file", audioUploadNameOf(request.audioFile), fileBody)
             .addFormDataPart("model", request.model)
             .addFormDataPart("response_format", "json")
             .apply {
@@ -439,7 +441,7 @@ class OpenAiCompatibleClient(
         val fileBody = request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile))
         val uploadBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("file", request.audioFile.name, fileBody)
+            .addFormDataPart("file", audioUploadNameOf(request.audioFile), fileBody)
             .build()
         val uploadRequest = Request.Builder()
             .url(base + "files")
@@ -551,7 +553,7 @@ class OpenAiCompatibleClient(
         val fileBody = request.audioFile.asRequestBody(guessAudioMediaType(request.audioFile))
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("file", request.audioFile.name, fileBody)
+            .addFormDataPart("file", audioUploadNameOf(request.audioFile), fileBody)
             .addFormDataPart("model_id", request.model)
             .apply {
                 val lang = request.language

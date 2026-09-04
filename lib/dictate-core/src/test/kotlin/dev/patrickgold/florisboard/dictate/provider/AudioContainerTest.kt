@@ -91,6 +91,23 @@ class AudioContainerTest : FunSpec({
         audioMimeTypeOf(odd) shouldBe "application/octet-stream"
     }
 
+    test("an upload travels under the canonical name for what is inside it") {
+        // Measured against OpenAI on 2026-09-04: the same Ogg bytes with the same audio/ogg part type
+        // are refused as `PTT-….opus` ("Unsupported file format opus") and accepted as `voice.ogg`.
+        // The endpoint reads the NAME, so renaming is the fix and transcoding was the expensive detour.
+        val voiceNote = file("PTT-20260904-WA0001.opus", ascii("OggS", pad = 12))
+        audioUploadNameOf(voiceNote).endsWith(".ogg") shouldBe true
+        audioUploadNameOf(voiceNote).endsWith(".opus") shouldBe false
+
+        // A name that already matches the contents is left exactly as it is.
+        val recording = file("dictate_audio.wav", ascii("RIFF····WAVE"))
+        audioUploadNameOf(recording) shouldBe recording.name
+
+        // Nothing recognisable: no better guess exists, so the original name stands.
+        val mystery = file("whatever.xyz", bytes(9, 9, 9, 9))
+        audioUploadNameOf(mystery) shouldBe mystery.name
+    }
+
     test("every container names itself consistently across the three fields") {
         // One table now answers all three questions; this is what "they can no longer disagree" means.
         for (container in AudioContainer.entries) {

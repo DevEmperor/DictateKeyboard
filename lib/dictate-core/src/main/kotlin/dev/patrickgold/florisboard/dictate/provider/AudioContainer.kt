@@ -171,3 +171,27 @@ fun audioMimeTypeOf(file: File): String = AudioContainer.of(file).mimeType
  */
 fun audioFormatOf(file: File): String =
     AudioContainer.of(file).formatName.ifEmpty { file.extension.lowercase() }
+
+/**
+ * The name to upload [file] under: its own stem, but the **canonical extension for what is inside it**.
+ *
+ * Measured against OpenAI on 2026-09-04, and it is the whole reason this function exists. The same Ogg
+ * bytes, with the same `audio/ogg` part type, sent twice:
+ *
+ * ```
+ * filename=PTT-20260904-WA0001.opus  ->  400  "Unsupported file format opus"
+ * filename=voice.ogg                 ->  200  a correct transcript
+ * ```
+ *
+ * So the endpoint reads the **file name**, not the part's content type, and it refuses `.opus` as a
+ * *name* while accepting the container it holds. A WhatsApp voice note therefore needs renaming, not
+ * re-encoding — which is free, where a transcode costs half a second and tripled the upload.
+ *
+ * An unrecognised container keeps its original name: there is no better guess to make, and the old
+ * behaviour is the right fallback.
+ */
+fun audioUploadNameOf(file: File): String {
+    val extension = AudioContainer.of(file).extension
+    if (extension.isEmpty() || file.extension.equals(extension, ignoreCase = true)) return file.name
+    return "${file.nameWithoutExtension}.$extension"
+}
