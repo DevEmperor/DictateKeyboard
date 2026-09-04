@@ -996,6 +996,13 @@ private class DeepgramRealtimeSession(
  * *list*: every entry is validated, so several languages genuinely arrive (issue #99), which no
  * singular field can express. Unverified for the realtime socket, where the field name may well
  * matter — hence the branch stays.
+ *
+ * **The prefix is deliberately not vendor-tolerant.** OpenRouter's id for the same model reads
+ * `openai/gpt-transcribe` and therefore does NOT match, which is correct: OpenRouter's transcription
+ * endpoint documents the singular `language` and nothing else, and an unread multipart field is
+ * dropped in silence rather than refused — so "generalising" this to strip a `vendor/` prefix would
+ * turn every language choice on OpenRouter into a no-op with no error to show for it. A test in
+ * OpenAiCompatibleClientNetworkTest holds that line (issue #321).
  */
 internal fun usesLanguagesField(model: String): Boolean {
     val id = model.lowercase()

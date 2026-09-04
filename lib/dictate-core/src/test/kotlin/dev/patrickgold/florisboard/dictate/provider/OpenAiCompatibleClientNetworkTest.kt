@@ -118,6 +118,47 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Issue #321: the same model reached through OpenRouter is called `openai/gpt-transcribe`, and it
+    // must keep getting the SINGULAR field. OpenRouter's transcription endpoint documents `language`
+    // and nothing else; a field it does not read is dropped without an error, so a well-meant
+    // "the prefix check misses the vendor-qualified id" fix would silently switch every OpenRouter
+    // dictation to detect-anything. This test is the tripwire for that change.
+    test("the vendor-qualified gpt-transcribe keeps OpenRouter's singular `language`") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Hallo"}"""))
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(
+                        baseUrl = server.url("/").toString(),
+                        apiKey = "test",
+                        transcriptionApi = TranscriptionApi.OPENROUTER_MULTIPART,
+                    ),
+                )
+
+                // The id OpenRouter serves it under, and the one this app now dictates with by default —
+                // asserted so the scenario cannot quietly stop being real.
+                val model = "openai/gpt-transcribe"
+                ProviderRegistry.OPENROUTER.defaultTranscriptionModel shouldBe model
+
+                client.transcribe(
+                    TranscriptionRequest(
+                        audio, model,
+                        language = "de",
+                        expectedLanguages = listOf("de", "en"),
+                    ),
+                )
+                val body = server.takeRequest().body.readUtf8()
+                body shouldContain "name=\"language\"\r\n\r\nde"
+                body shouldNotContain "name=\"languages"
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
     // Issue #99: four dictation languages and no pinned one. The generation that takes a list gets the
     // whole set (detect among *these*); the generation that takes one language gets nothing, because a
     // single code cannot say "one of these four" and guessing one is how the wrong language gets forced.
