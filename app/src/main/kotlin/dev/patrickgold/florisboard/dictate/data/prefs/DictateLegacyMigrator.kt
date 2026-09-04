@@ -21,6 +21,9 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.ProxyConfig
 import java.net.Proxy
 import java.util.Locale
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
+import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -334,6 +337,44 @@ object DictateLegacyMigrator {
         prefs.dictate.promptsLayout.set(DictatePromptsLayout.ROW)
         prefs.dictate.promptsLayoutRowMigrated.set(true)
     }
+
+    /**
+     * Drops the Devanagari digit row (१२३…) from saved Hindi subtypes (issue #315). Hindi is written with
+     * Western digits in practice, and the preset no longer asks for the localized row — but a subtype is
+     * persisted with its full layout map, so the old choice would otherwise survive forever.
+     *
+     * Only subtypes that still carry the untouched old default are rewritten; anyone who deliberately
+     * picked a digit row in the subtype editor keeps it.
+     */
+    suspend fun migrateHindiNumericRowIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        if (prefs.localization.hindiNumericRowMigrated.get()) return
+        prefs.localization.hindiNumericRowMigrated.set(true)
+
+        val listRaw = prefs.localization.subtypes.get()
+        if (listRaw.isBlank() || !listRaw.contains(LEGACY_DEVANAGARI_NUMERIC_ROW)) return
+        val subtypes = runCatching {
+            SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
+        }.getOrNull() ?: return
+
+        var changed = false
+        val migrated = subtypes.map { subtype ->
+            val isUntouchedHindiDefault = subtype.primaryLocale.language == "hi" &&
+                subtype.layoutMap.numericRow == extCoreLayout("devanagari") &&
+                subtype.layoutMap.characters == extCoreLayout("hindi_in")
+            if (isUntouchedHindiDefault) {
+                changed = true
+                subtype.copy(layoutMap = subtype.layoutMap.copy(numericRow = extCoreLayout("western_arabic")))
+            } else {
+                subtype
+            }
+        }
+        if (changed) {
+            prefs.localization.subtypes.set(SubtypeJsonConfig.encodeToString(migrated))
+        }
+    }
+
+    private const val LEGACY_DEVANAGARI_NUMERIC_ROW = "org.florisboard.layouts:devanagari"
 
     /**
      * Injects [keyData] at the front of the saved dynamic action row unless an action with [code] is

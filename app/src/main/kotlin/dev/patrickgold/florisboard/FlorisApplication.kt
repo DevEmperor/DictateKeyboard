@@ -126,6 +126,7 @@ class FlorisApplication : Application() {
             DictateLegacyMigrator.removeLivePromptActionIfNeeded(this@FlorisApplication)
             DictateLegacyMigrator.migratePromptsActionIfNeeded(this@FlorisApplication)
             DictateLegacyMigrator.migratePromptsLayoutToRowIfNeeded()
+            DictateLegacyMigrator.migrateHindiNumericRowIfNeeded()
             DictateLegacyMigrator.reofferRateAndDonateIfNeeded()
             preferenceStoreLoaded.value = true
             // Keep the Wear OS companion's settings snapshot fresh: re-publish whenever a watch-relevant

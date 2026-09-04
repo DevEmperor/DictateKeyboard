@@ -786,8 +786,7 @@
       "currencySet": "org.florisboard.currencysets:indian_rupee",
       "popupMapping": "org.florisboard.localization:hi-IN",
       "preferred": {
-        "characters": "org.florisboard.layouts:hindi_in",
-        "numericRow": "org.florisboard.layouts:devanagari"
+        "characters": "org.florisboard.layouts:hindi_in"
       }
     },
     {
