@@ -966,6 +966,17 @@ private class TextKeyboardLayoutController(
         }
     }
 
+    /**
+     * The tick that says a glide has begun — the same moment Gboard marks (issue #325).
+     *
+     * It runs off the "gesture swipe" preference rather than one of its own: a glide is the other thing
+     * a swipe across the keys can turn into, and the alternative was a new setting whose only job is to
+     * split a hair the finger cannot feel. Worth knowing when reading that switch's name.
+     */
+    override fun onGlideStart() {
+        inputFeedbackController?.gestureSwipe(TextKeyData.UNSPECIFIED)
+    }
+
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
         if (isGlideEnabled) {
             glideDataForDrawing.add(point to System.currentTimeMillis())
