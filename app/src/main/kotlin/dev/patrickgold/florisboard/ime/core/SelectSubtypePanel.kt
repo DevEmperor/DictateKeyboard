@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -47,6 +49,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
+    val inputFeedbackController = LocalInputFeedbackController.current
 
     val listState = rememberLazyListState()
     val subtypes by subtypeManager.subtypesFlow.collectAsState()
@@ -80,6 +83,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                     SnyggListItem(
                         elementName = FlorisImeUi.SubtypePanelListItem.elementName,
                         onClick = {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                             subtypeManager.switchToSubtypeById(it.id)
                             keyboardManager.activeState.isSubtypeSelectionVisible = false
                         },

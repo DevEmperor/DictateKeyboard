@@ -44,8 +44,11 @@ import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -56,7 +59,6 @@ import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
@@ -76,6 +78,7 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val editorInstance by context.editorInstance()
     val subtypeManager by context.subtypeManager()
+    val inputFeedbackController = LocalInputFeedbackController.current
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
 
@@ -181,6 +184,7 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                                 isPinned = false,
                                 isRecent = false,
                                 onEmojiInput = { emoji ->
+                                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                     // Commit straight to the editor: routing through the dispatcher
                                     // would be swallowed by the active search-query interception.
                                     editorInstance.commitText(emoji.value)
@@ -200,8 +204,7 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
             leading = {
                 // Back, not a second ✕: the ✕ in the field empties the query, and two crosses next to
                 // each other look like the same button drawn twice.
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { keyboardManager.closeEmojiSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {

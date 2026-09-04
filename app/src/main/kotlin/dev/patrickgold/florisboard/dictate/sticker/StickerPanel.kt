@@ -93,6 +93,7 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -104,7 +105,6 @@ import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -286,8 +286,7 @@ fun StickerPanel(
                 // The header carries the arrows rather than the grid: a button drawn on the cell
                 // itself would have to sit somewhere, and every place it could sit is a place the
                 // finger already means something else.
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { scope.launch { StickerHistoryHelper.movePinned(prefs, movingDocId, -1) } },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
@@ -304,8 +303,7 @@ fun StickerPanel(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
                 )
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { scope.launch { StickerHistoryHelper.movePinned(prefs, movingDocId, 1) } },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
@@ -315,8 +313,7 @@ fun StickerPanel(
                         modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                     )
                 }
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { reorderDocId = null },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
@@ -327,8 +324,7 @@ fun StickerPanel(
                     )
                 }
             } else {
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {
@@ -352,8 +348,7 @@ fun StickerPanel(
                     // Typing a name means the keyboard, and the keyboard is what this panel replaced —
                     // so the search hands the screen back to it and shows its results in the strip
                     // above (#317), the same way the emoji search does.
-                    SnyggIconButton(
-                        elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                    PanelHeaderButton(
                         onClick = { keyboardManager.activateStickerSearch() },
                         modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                     ) {
@@ -364,8 +359,7 @@ fun StickerPanel(
                         )
                     }
                 }
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { FlorisImeService.launchSettings("settings/media") },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {

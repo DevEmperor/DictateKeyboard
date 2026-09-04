@@ -44,6 +44,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -56,7 +57,6 @@ import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggText
 
 /**
@@ -203,8 +203,7 @@ fun StickerSearchPanel(modifier: Modifier = Modifier) {
             placeholder = stringRes(R.string.sticker__search_placeholder),
             onClear = { keyboardManager.clearStickerSearch() },
             leading = {
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { keyboardManager.closeStickerSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {

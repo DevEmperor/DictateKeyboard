@@ -146,6 +146,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     candidate = candidate,
                     displayMode = displayMode,
                     onClick = {
+                        FlorisImeService.inputFeedbackController()?.keyPress()
                         // Can't use candidate directly
                         keyboardManager.commitCandidate(candidates[n])
                     },

@@ -46,15 +46,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState as collectPrefAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -75,6 +77,7 @@ fun GifSearchPanel(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val inputFeedbackController = LocalInputFeedbackController.current
     val keyboardManager by context.keyboardManager()
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
@@ -113,8 +116,14 @@ fun GifSearchPanel(
                                     .clip(RoundedCornerShape(50))
                                     .background(Color(0x22808080))
                                     .combinedClickable(
-                                        onClick = { keyboardManager.submitGifSearch(term) },
-                                        onLongClick = { confirmDeleteTerm = term },
+                                        onClick = {
+                                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                            keyboardManager.submitGifSearch(term)
+                                        },
+                                        onLongClick = {
+                                            inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                                            confirmDeleteTerm = term
+                                        },
                                     )
                                     .padding(horizontal = 12.dp, vertical = 6.dp),
                             )
@@ -141,8 +150,7 @@ fun GifSearchPanel(
             placeholder = stringRes(R.string.gif__search_placeholder),
             onClear = { keyboardManager.clearGifSearch() },
             leading = {
-                SnyggIconButton(
-                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                PanelHeaderButton(
                     onClick = { keyboardManager.closeGifSearch() },
                     modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
                 ) {

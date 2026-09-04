@@ -96,7 +96,9 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
 import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
 import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
@@ -127,7 +129,6 @@ import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggChip
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -146,6 +147,7 @@ fun ClipboardInputLayout(
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
     val keyboardManager by context.keyboardManager()
+    val inputFeedbackController = LocalInputFeedbackController.current
     val androidKeyguardManager = remember { context.systemService(AndroidKeyguardManager::class) }
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
@@ -193,8 +195,7 @@ fun ClipboardInputLayout(
             val sizeModifier = Modifier
                 .sizeIn(maxHeight = FlorisImeSizing.smartbarHeight)
                 .aspectRatio(1f)
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = sizeModifier,
             ) {
@@ -207,8 +208,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { scope.launch { prefs.clipboard.historyEnabled.set(!historyEnabled) } },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
@@ -221,8 +221,7 @@ fun ClipboardInputLayout(
                     },
                 )
             }
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { showClearAllHistory = true },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && historyEnabled && filteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
@@ -231,8 +230,7 @@ fun ClipboardInputLayout(
                     imageVector = Icons.Default.DeleteSweep,
                 )
             }
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { isFilterRowShown = !isFilterRowShown },
                 modifier = sizeModifier,
                 enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
@@ -275,9 +273,11 @@ fun ClipboardInputLayout(
                 indication = ripple(),
                 enabled = popupItem == null,
                 onLongClick = {
+                    inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
                     popupItem = item
                 },
                 onClick = {
+                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                     clipboardManager.pasteItem(item)
                 },
             ),

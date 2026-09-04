@@ -73,6 +73,7 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -83,7 +84,6 @@ import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.compose.panelScrollbar
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
@@ -200,8 +200,7 @@ fun GifPanel(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = {
                     if (inResults) {
                         keyboardManager.gifSearchSubmit.value = null // back to the home view
@@ -250,8 +249,7 @@ fun GifPanel(
                     )
                 }
             }
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { FlorisImeService.launchSettings("settings/media") },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {

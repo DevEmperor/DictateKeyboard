@@ -42,7 +42,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggIcon
@@ -77,6 +79,7 @@ fun KeyboardSearchBar(
     trailing: @Composable (RowScope.() -> Unit)? = null,
 ) {
     val style = rememberSnyggThemeQuery(FlorisImeUi.SmartbarCandidatesRow.elementName)
+    val inputFeedbackController = LocalInputFeedbackController.current
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier
@@ -132,7 +135,10 @@ fun KeyboardSearchBar(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
-                        .clickable(onClick = onClear)
+                        .clickable(onClick = {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                            onClear()
+                        })
                         .padding(6.dp),
                 ) {
                     SnyggIcon(

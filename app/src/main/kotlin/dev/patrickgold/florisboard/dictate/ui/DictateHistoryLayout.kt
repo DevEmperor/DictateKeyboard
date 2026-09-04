@@ -46,7 +46,10 @@ import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.Dispatchers
@@ -106,8 +109,7 @@ fun DictateHistoryLayout(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {
@@ -124,8 +126,7 @@ fun DictateHistoryLayout(
                 text = stringRes(R.string.dictate__history_title),
             )
             // Jump straight to the full history management screen in the settings app.
-            SnyggIconButton(
-                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+            PanelHeaderButton(
                 onClick = { FlorisImeService.launchSettings("settings/dictate/history") },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
             ) {
@@ -201,6 +202,7 @@ private fun HistoryPanelRow(
     onInsertOriginal: () -> Unit,
     onRetranscribe: () -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     // Both versions exist only when a prompt actually rewrote the dictation (issue #240).
     val hasOriginal = entry.originalText.isNotEmpty() && entry.originalText != entry.text
     // Compact text, large tap targets: the transcript uses the candidate-word text size and the meta line
@@ -216,8 +218,18 @@ private fun HistoryPanelRow(
         // A failed entry has no committed text yet — inserting is disabled until it's re-transcribed.
         clickAndSemanticsModifier = Modifier.combinedClickable(
             enabled = !entry.failed,
-            onClick = { onInsert() },
-            onLongClick = if (hasOriginal) onInsertOriginal else null,
+            onClick = {
+                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                onInsert()
+            },
+            onLongClick = if (hasOriginal) {
+                {
+                    inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                    onInsertOriginal()
+                }
+            } else {
+                null
+            },
         ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
