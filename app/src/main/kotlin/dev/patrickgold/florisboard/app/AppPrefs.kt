@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
 import dev.patrickgold.florisboard.dictate.gif.GifContentFilter
 import dev.patrickgold.florisboard.dictate.gif.GifHistory
+import dev.patrickgold.florisboard.dictate.overlay.BubbleAnchors
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.sticker.StickerHistory
@@ -490,6 +491,16 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val floatingButtonRememberPosition = boolean(
             key = "dictate__floating_button_remember_position",
             default = true,
+        )
+        // The remembered positions themselves (issue #323). Each is an anchor — a side of the screen plus
+        // a share of the travel — not a pixel pair, so a position keeps its meaning when the screen it was
+        // made on changes shape: a rotation, a foldable opening, a move into split screen. Persisted
+        // because the map used to live in the accessibility service and nowhere else, which made
+        // "remember" true only until that service was next restarted.
+        val floatingButtonPositions = custom(
+            key = "dictate__floating_button_positions",
+            default = BubbleAnchors.Empty,
+            serializer = BubbleAnchors.Serializer,
         )
         // Vibrate briefly when the button is tapped.
         val floatingButtonHaptic = boolean(
