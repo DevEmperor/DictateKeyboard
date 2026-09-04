@@ -204,7 +204,9 @@ fun BackupScreen() = FlorisScreen {
             }
         }
         if (backupFilesSelector.dictateHistory) {
-            // Export the transcription-history table as JSON, plus any retained audio WAVs (named by id).
+            // Export the transcription-history table as JSON, plus any retained audio (named by id, and
+            // since #322 keeping the extension of what is actually inside — writing `.wav` over an
+            // imported voice note here would put the same lie back into the backup).
             val entries = DictateHistoryStore.exportAll(context)
             workspace.inputDir.subDir("dictate").let { dir ->
                 dir.mkdirs()
@@ -215,7 +217,8 @@ fun BackupScreen() = FlorisScreen {
                     val src = entry.audioPath?.let { java.io.File(it) } ?: continue
                     if (src.exists() && src.length() > 0L) {
                         if (!audioDirMade) { audioDir.mkdirs(); audioDirMade = true }
-                        src.copyTo(audioDir.subFile("${entry.id}.wav"), overwrite = true)
+                        val extension = src.extension.ifEmpty { "wav" }
+                        src.copyTo(audioDir.subFile("${entry.id}.$extension"), overwrite = true)
                     }
                 }
             }

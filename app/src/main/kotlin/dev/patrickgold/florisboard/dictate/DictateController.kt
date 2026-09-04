@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
+import dev.patrickgold.florisboard.dictate.audio.AudioConvert
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioLevelSmoother
 import dev.patrickgold.florisboard.dictate.audio.AudioEncode
@@ -64,6 +65,7 @@ import dev.patrickgold.florisboard.dictate.provider.RealtimeApi
 import dev.patrickgold.florisboard.dictate.provider.RealtimeCallbacks
 import dev.patrickgold.florisboard.dictate.provider.RealtimeClient
 import dev.patrickgold.florisboard.dictate.provider.RealtimeSession
+import dev.patrickgold.florisboard.dictate.provider.AudioContainer
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
@@ -1505,6 +1507,9 @@ object DictateController {
             // Set only when the upload was packed into m4a (#281): the WAV it was packed from, so the
             // finally block can drop it once the on-device fallback no longer needs it.
             var packedFrom: File? = null
+            // Set only when the container had to be changed for this provider (#322) — same bookkeeping
+            // as packedFrom, kept separate because the two can in principle both run.
+            var convertedFrom: File? = null
             try {
                 logLatency(latencyTrace, "coroutineStarted", coroutineScheduledNanos)
                 reconcileActiveLanguage() // correct a stale active language before it's read for the request
@@ -1602,6 +1607,22 @@ object DictateController {
                         if (localFallbackFile == null) localFallbackFile = uploadFile
                         uploadFile = packed
                         logLatency(latencyTrace, "audioPacked")
+                    }
+                }
+                // Does this provider even take this container (issue #322)? Recordings are WAV and every
+                // provider takes WAV, so this fires on the files the user brought: a shared voice note is
+                // Ogg/Opus, which OpenAI does not accept and which used to be found out only from the
+                // provider's refusal. The preset's list is the authority; an empty one converts nothing.
+                // The single-call route has a narrower list of its own — wav or mp3 and nothing else.
+                if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
+                    val accepted =
+                        if (chatAudio) AudioContainer.CHAT_AUDIO_INPUT else preset.acceptedAudioContainers
+                    AudioConvert.toAccepted(appContext.cacheDir, uploadFile, accepted)?.let { converted ->
+                        convertedFrom = uploadFile
+                        // The on-device fallback wants the original, not a re-decode of our own encode.
+                        if (localFallbackFile == null) localFallbackFile = uploadFile
+                        uploadFile = converted
+                        logLatency(latencyTrace, "audioConverted")
                     }
                 }
                 val request = TranscriptionRequest(
@@ -1762,6 +1783,10 @@ object DictateController {
                 // here because the on-device fallback may still have needed it.
                 packedFrom?.takeIf { it !== audioFile && it !== uploadFile && it !== localFallbackFile }
                     ?.let { runCatching { it.delete() } }
+                // The file the container conversion (#322) replaced, on the same terms.
+                convertedFrom?.takeIf {
+                    it !== audioFile && it !== uploadFile && it !== localFallbackFile && it !== packedFrom
+                }?.let { runCatching { it.delete() } }
                 // System voice input (#67): hand the terminal outcome back to the RecognitionService so it
                 // delivers results / an error to the calling app. One hook covers every path (success,
                 // no-speech, prompt-echo, API/unexpected error) since `outcome` is set before each return.
@@ -3024,9 +3049,12 @@ object DictateController {
 
     /**
      * Re-transcribes a stored entry's retained audio (issue #140) and commits the fresh result into the
-     * field, then overwrites the entry's text in place. The history-owned WAV is copied to a cache temp
+     * field, then overwrites the entry's text in place. The history-owned file is copied to a cache temp
      * first so the shared transcribe path's finally-delete can't remove it. Marked as a replay so stats
      * aren't double-counted. No-op when the entry has no retained audio or a dictation is in flight.
+     *
+     * The temp copy keeps the stored extension (#322). It used to be `.wav` unconditionally, which for
+     * an imported voice note renamed Ogg bytes into a WAV and told the provider so.
      */
     fun retranscribeHistoryEntry(context: Context, entry: DictateHistoryEntry) {
         if (_state.value is UiState.Recording || _state.value is UiState.Transcribing ||
@@ -3035,7 +3063,7 @@ object DictateController {
         val path = entry.audioPath ?: return
         val src = File(path)
         if (!src.exists() || src.length() == 0L) return
-        val temp = File(context.cacheDir, "dictate_history_replay.wav")
+        val temp = File(context.cacheDir, "dictate_history_replay.${src.extension.ifEmpty { "wav" }}")
         runCatching { src.copyTo(temp, overwrite = true) }.getOrElse { return }
         outputTarget = OutputTarget.IME
         clearError()

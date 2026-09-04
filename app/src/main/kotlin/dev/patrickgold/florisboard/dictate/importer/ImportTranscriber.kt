@@ -14,6 +14,7 @@ import android.content.Context
 import android.util.Log
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.dictate.DictateLanguages
+import dev.patrickgold.florisboard.dictate.audio.AudioConvert
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioWav
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
@@ -133,32 +134,34 @@ object ImportTranscriber {
         return out.ifEmpty { listOf(audio) }
     }
 
-    /** Writes one sample range as 16 kHz mono PCM16 WAV. Same shape as `SpeechGate.writeTrimmedWav`. */
-    private fun writeSlice(samples: FloatArray, sampleRate: Int, range: IntRange, outFile: File): Boolean {
-        val from = range.first.coerceIn(0, samples.size)
-        val to = (range.last + 1).coerceIn(0, samples.size)
-        if (to <= from) return false
-        return runCatching {
-            outFile.outputStream().buffered().use { os ->
-                os.write(AudioWav.header(sampleRate, channels = 1, bitsPerSample = 16, dataLen = (to - from).toLong() * 2))
-                val buf = ByteArray(8192) // even size: two bytes per sample
-                var bi = 0
-                for (i in from until to) {
-                    val v = (samples[i].coerceIn(-1f, 1f) * 32767f).toInt()
-                    buf[bi++] = (v and 0xff).toByte()
-                    buf[bi++] = ((v shr 8) and 0xff).toByte()
-                    if (bi == buf.size) { os.write(buf, 0, bi); bi = 0 }
-                }
-                if (bi > 0) os.write(buf, 0, bi)
-            }
-            true
-        }.getOrElse {
-            runCatching { outFile.delete() }
-            false
+    /** Writes one sample range as 16 kHz mono PCM16 WAV. */
+    private fun writeSlice(samples: FloatArray, sampleRate: Int, range: IntRange, outFile: File): Boolean =
+        AudioWav.write(samples, sampleRate, outFile, listOf(intArrayOf(range.first, range.last + 1)))
+
+    private suspend fun transcribeOne(
+        appContext: Context,
+        prefs: FlorisPreferenceModel,
+        account: ProviderAccount,
+        preset: dev.patrickgold.florisboard.dictate.provider.ProviderPreset,
+        model: String,
+        audio: File,
+        onDevice: Boolean,
+    ): String {
+        // The container the user brought is the whole point of this screen, so it is also where a
+        // provider is most likely to be handed something it does not take (issue #322). A slice this
+        // function made is already WAV and passes straight through; a file small enough to go up whole
+        // is whatever the sharing app wrote. On-device decodes anything and needs no conversion.
+        val converted = if (onDevice) null else {
+            AudioConvert.toAccepted(appContext.cacheDir, audio, preset.acceptedAudioContainers)
+        }
+        try {
+            return transcribeFile(appContext, prefs, account, preset, model, converted ?: audio, onDevice)
+        } finally {
+            converted?.let { runCatching { it.delete() } }
         }
     }
 
-    private suspend fun transcribeOne(
+    private suspend fun transcribeFile(
         appContext: Context,
         prefs: FlorisPreferenceModel,
         account: ProviderAccount,

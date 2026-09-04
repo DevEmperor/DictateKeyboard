@@ -24,6 +24,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.dictate.provider.AudioContainer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -40,9 +41,11 @@ object DictateHistorySource {
 
 /**
  * One stored dictation (issue #140): the finished transcript plus enough metadata to browse, re-insert,
- * re-transcribe and manage it later. [audioPath] is the absolute path of a WAV copied into the app's
- * private history dir when audio retention is on; it is nullable because retention is opt-in and some
- * paths (e.g. realtime after a clean finish, or a text-only re-insert) leave no audio to keep.
+ * re-transcribe and manage it later. [audioPath] is the absolute path of the audio copied into the
+ * app's private history dir when audio retention is on — a WAV for a dictation, and since #322 the
+ * original container for an imported file rather than a WAV name over other bytes. It is nullable
+ * because retention is opt-in and some paths (e.g. realtime after a clean finish, or a text-only
+ * re-insert) leave no audio to keep.
  */
 @Serializable
 @Entity(tableName = DICTATE_HISTORY_TABLE)
@@ -181,6 +184,29 @@ object DictateHistoryStore {
     /** Private directory holding the retained WAVs (survives the cacheDir wipe). */
     fun audioDir(context: Context): File = File(context.applicationContext.filesDir, "dictate_history")
 
+    /**
+     * What to call entry [id]'s retained copy of [audio] (issue #322).
+     *
+     * This used to be `<id>.wav` for everything, which is true of a dictation and a lie about an
+     * imported file — and the lie was believed later: re-transcribing such an entry sent Ogg or MP3
+     * bytes to the provider under a `.wav` name and an `audio/wav` content type. The name now follows
+     * the container actually in the file, read from its first bytes.
+     *
+     * Entries written before this keep their `.wav` name on disk and go on working: nothing looks a
+     * history file up by extension, the path is stored per row — see [audioFileFor] for the one place
+     * that had to reconstruct a name and now searches instead.
+     */
+    private fun audioFileName(id: Long, audio: File): String {
+        val container = AudioContainer.of(audio)
+        val extension = container.extension.ifEmpty { audio.extension.lowercase().ifEmpty { "bin" } }
+        return "$id.$extension"
+    }
+
+    /** An entry's retained audio in [dir], whatever extension it was stored under. */
+    private fun audioFileFor(dir: File, id: Long): File? =
+        dir.listFiles { file -> file.isFile && file.nameWithoutExtension == id.toString() }
+            ?.firstOrNull { it.length() > 0L }
+
     /** Reactive stream of all entries, newest first — for the settings screen and the in-keyboard panel. */
     fun flow(context: Context): Flow<List<DictateHistoryEntry>> = db(context).dao().getAllAsFlow()
 
@@ -233,7 +259,7 @@ object DictateHistoryStore {
         if ((forceAudio || prefs.dictate.historyAudioRetention.get()) && audioFile != null &&
             audioFile.exists() && audioFile.length() > 0L
         ) {
-            val dest = File(audioDir(context).apply { mkdirs() }, "$id.wav")
+            val dest = File(audioDir(context).apply { mkdirs() }, audioFileName(id, audioFile))
             runCatching { audioFile.copyTo(dest, overwrite = true) }
                 .onSuccess { dao.setAudio(id, dest.absolutePath, dest.length()) }
         }
@@ -285,10 +311,12 @@ object DictateHistoryStore {
         for (entry in entries) {
             if (entry.text.isBlank()) continue
             val newId = dao.insert(entry.copy(id = 0, audioPath = null, audioBytes = 0L))
-            val srcWav = backupAudioDir?.let { File(it, "${entry.id}.wav") }
-            if (srcWav != null && srcWav.exists() && srcWav.length() > 0L) {
-                val dest = File(destDir.apply { mkdirs() }, "$newId.wav")
-                runCatching { srcWav.copyTo(dest, overwrite = true) }
+            // Found by id rather than by name: since #322 a retained file carries the extension of what
+            // is actually in it, so a backup holds a mix of `.wav` and everything else.
+            val source = backupAudioDir?.let { audioFileFor(it, entry.id) }
+            if (source != null) {
+                val dest = File(destDir.apply { mkdirs() }, "$newId.${source.extension}")
+                runCatching { source.copyTo(dest, overwrite = true) }
                     .onSuccess { dao.setAudio(newId, dest.absolutePath, dest.length()) }
             }
         }
