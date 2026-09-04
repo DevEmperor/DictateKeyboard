@@ -369,6 +369,9 @@ object DictateLegacyMigrator {
                         characters = extCoreLayout("hindi_varnamala"),
                         numericRow = extCoreLayout("western_arabic"),
                     ),
+                    // Five character rows plus a digit row plus the smartbar is too tall; match what
+                    // a new Hindi subtype gets from the preset.
+                    numberRow = false,
                 )
             } else {
                 subtype

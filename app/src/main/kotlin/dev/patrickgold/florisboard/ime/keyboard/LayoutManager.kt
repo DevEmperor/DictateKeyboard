@@ -335,7 +335,10 @@ class LayoutManager(context: Context) {
 
         when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
-                if (prefs.keyboard.numberRow.get()) {
+                // A subtype may overrule the global switch in either direction (issue #315): a script
+                // that fills five rows on its own wants the digit row gone without taking it away
+                // from every other language.
+                if (subtype.numberRow ?: prefs.keyboard.numberRow.get()) {
                     extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
                 }
                 main = LTN(LayoutType.CHARACTERS, subtype.layoutMap.characters)

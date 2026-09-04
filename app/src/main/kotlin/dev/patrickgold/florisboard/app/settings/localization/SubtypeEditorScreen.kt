@@ -126,6 +126,7 @@ private class SubtypeEditorState(init: Subtype?) {
                     punctuationRule = editor.punctuationRule.value,
                     popupMapping = editor.popupMapping.value,
                     layoutMap = editor.layoutMap.value,
+                    numberRow = editor.numberRow.value,
                 )
                 SubtypeJsonConfig.encodeToString(subtype)
             },
@@ -145,6 +146,7 @@ private class SubtypeEditorState(init: Subtype?) {
     val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: Subtype.DEFAULT.punctuationRule)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
+    val numberRow: MutableState<Boolean?> = mutableStateOf(init?.numberRow)
 
     fun applySubtype(subtype: Subtype) {
         id.value = subtype.id
@@ -156,6 +158,7 @@ private class SubtypeEditorState(init: Subtype?) {
         punctuationRule.value = subtype.punctuationRule
         popupMapping.value = subtype.popupMapping
         layoutMap.value = subtype.layoutMap
+        numberRow.value = subtype.numberRow
     }
 
     fun toSubtype() = runCatching {
@@ -176,7 +179,7 @@ private class SubtypeEditorState(init: Subtype?) {
         check(layoutMap.value.phone2 != SelectComponentName)
         Subtype(
             id.value, primaryLocale.value, secondaryLocales.value, nlpProviders.value, composer.value,
-            currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value,
+            currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value, numberRow.value,
         )
     }
 }
@@ -223,6 +226,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
     var nlpProviders by subtypeEditor.nlpProviders
+    var numberRow by subtypeEditor.numberRow
 
     var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(id == null) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
@@ -587,6 +591,34 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_layout), LayoutType.NUMERIC)
 
             SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_advanced_layout), LayoutType.NUMERIC_ADVANCED)
+
+            // Whether this language shows the digit row, overruling the global switch (issue #315).
+            // "Default" means: keep following that switch.
+            SubtypeProperty(stringRes(R.string.pref__keyboard__number_row__label)) {
+                val numberRowOptions = listOf(
+                    stringRes(R.string.settings__default),
+                    stringRes(R.string.state__enabled),
+                    stringRes(R.string.state__disabled),
+                )
+                val expanded = remember { mutableStateOf(false) }
+                JetPrefDropdown(
+                    options = numberRowOptions,
+                    expanded = expanded,
+                    selectedOptionIndex = when (numberRow) {
+                        null -> 0
+                        true -> 1
+                        false -> 2
+                    },
+                    onSelectOption = {
+                        numberRow = when (it) {
+                            1 -> true
+                            2 -> false
+                            else -> null
+                        }
+                    },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
+                )
+            }
 
             SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_row_layout), LayoutType.NUMERIC_ROW)
 

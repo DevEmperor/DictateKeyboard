@@ -787,7 +787,8 @@
       "popupMapping": "org.florisboard.localization:hi-IN",
       "preferred": {
         "characters": "org.florisboard.layouts:hindi_varnamala"
-      }
+      },
+      "numberRow": false
     },
     {
       "languageTag": "hi-IN",

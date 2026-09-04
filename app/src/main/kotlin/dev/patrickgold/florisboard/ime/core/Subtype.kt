@@ -55,6 +55,12 @@ data class Subtype(
     val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
     val popupMapping: ExtensionComponentName,
     val layoutMap: SubtypeLayoutMap,
+    /**
+     * Whether this subtype shows the dedicated digit row, or `null` to follow the global setting
+     * (issue #315). A script that needs more rows for its own characters wants the row gone without
+     * taking it away from every other language.
+     */
+    val numberRow: Boolean? = null,
 ) {
     companion object {
         /**
@@ -100,6 +106,7 @@ data class Subtype(
         if (other.punctuationRule != punctuationRule) return false
         if (other.popupMapping != popupMapping) return false
         if (other.layoutMap != layoutMap) return false
+        if (other.numberRow != numberRow) return false
 
         return true
     }
@@ -244,6 +251,7 @@ data class SubtypePreset(
     val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
     val popupMapping: ExtensionComponentName = extCorePopupMapping("default"),
     val preferred: SubtypeLayoutMap,
+    val numberRow: Boolean? = null,
 ) {
     fun toSubtype(): Subtype {
         return Subtype(
@@ -256,6 +264,7 @@ data class SubtypePreset(
             punctuationRule = punctuationRule,
             popupMapping = popupMapping,
             layoutMap = preferred,
+            numberRow = numberRow,
         )
     }
 }
