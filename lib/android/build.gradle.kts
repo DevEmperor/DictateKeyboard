@@ -85,4 +85,14 @@ dependencies {
     implementation(projects.lib.kotlin)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.kotlin.test.junit5)
+}
+
+
+// The module ships one piece of logic worth testing on its own: how a haptic tick's length and strength
+// are derived from the user's settings (see Vibrator.kt). Getting that arithmetic wrong scales a channel
+// out of existence without any error, which is exactly what it did before issue #325.
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
