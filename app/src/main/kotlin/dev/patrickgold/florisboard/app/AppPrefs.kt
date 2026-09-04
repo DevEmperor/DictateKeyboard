@@ -1349,10 +1349,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "localization__subtypes",
             default = "[]",
         )
-        // One-time guard: existing Hindi subtypes were saved with the Devanagari digit row, which the
-        // preset no longer sets (issue #315). See DictateLegacyMigrator.migrateHindiNumericRowIfNeeded.
-        val hindiNumericRowMigrated = boolean(
-            key = "localization__hindi_numeric_row_migrated",
+        // One-time guard: existing Hindi subtypes were saved with the old character layout and the
+        // Devanagari digit row, neither of which the preset asks for any more (issue #315). See
+        // DictateLegacyMigrator.migrateHindiDefaultsIfNeeded.
+        val hindiDefaultsMigrated = boolean(
+            key = "localization__hindi_defaults_migrated",
             default = false,
         )
     }

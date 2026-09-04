@@ -70,6 +70,12 @@
         "direction": "ltr"
       },
       {
+        "id": "hindi_varnamala",
+        "label": "हिंदी (वर्णमाला)",
+        "authors": [ "DevEmperor" ],
+        "direction": "ltr"
+      },
+      {
         "id": "bepo",
         "label": "BÉPO",
         "authors": [ "salamandar" ],

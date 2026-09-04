@@ -346,13 +346,13 @@ object DictateLegacyMigrator {
      * Only subtypes that still carry the untouched old default are rewritten; anyone who deliberately
      * picked a digit row in the subtype editor keeps it.
      */
-    suspend fun migrateHindiNumericRowIfNeeded() {
+    suspend fun migrateHindiDefaultsIfNeeded() {
         val prefs by FlorisPreferenceStore
-        if (prefs.localization.hindiNumericRowMigrated.get()) return
-        prefs.localization.hindiNumericRowMigrated.set(true)
+        if (prefs.localization.hindiDefaultsMigrated.get()) return
+        prefs.localization.hindiDefaultsMigrated.set(true)
 
         val listRaw = prefs.localization.subtypes.get()
-        if (listRaw.isBlank() || !listRaw.contains(LEGACY_DEVANAGARI_NUMERIC_ROW)) return
+        if (listRaw.isBlank() || !listRaw.contains(LEGACY_HINDI_CHARACTERS)) return
         val subtypes = runCatching {
             SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
         }.getOrNull() ?: return
@@ -360,11 +360,16 @@ object DictateLegacyMigrator {
         var changed = false
         val migrated = subtypes.map { subtype ->
             val isUntouchedHindiDefault = subtype.primaryLocale.language == "hi" &&
-                subtype.layoutMap.numericRow == extCoreLayout("devanagari") &&
-                subtype.layoutMap.characters == extCoreLayout("hindi_in")
+                subtype.layoutMap.characters == extCoreLayout(LEGACY_HINDI_CHARACTERS_ID) &&
+                subtype.layoutMap.numericRow == extCoreLayout(LEGACY_HINDI_NUMERIC_ROW_ID)
             if (isUntouchedHindiDefault) {
                 changed = true
-                subtype.copy(layoutMap = subtype.layoutMap.copy(numericRow = extCoreLayout("western_arabic")))
+                subtype.copy(
+                    layoutMap = subtype.layoutMap.copy(
+                        characters = extCoreLayout("hindi_varnamala"),
+                        numericRow = extCoreLayout("western_arabic"),
+                    ),
+                )
             } else {
                 subtype
             }
@@ -374,7 +379,9 @@ object DictateLegacyMigrator {
         }
     }
 
-    private const val LEGACY_DEVANAGARI_NUMERIC_ROW = "org.florisboard.layouts:devanagari"
+    private const val LEGACY_HINDI_CHARACTERS_ID = "hindi_in"
+    private const val LEGACY_HINDI_NUMERIC_ROW_ID = "devanagari"
+    private const val LEGACY_HINDI_CHARACTERS = "org.florisboard.layouts:$LEGACY_HINDI_CHARACTERS_ID"
 
     /**
      * Injects [keyData] at the front of the saved dynamic action row unless an action with [code] is

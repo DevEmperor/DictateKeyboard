@@ -1,11 +1,49 @@
 {
   "all": {
+    "अ": {
+      "main": { "$": "auto_text_key", "code": 2418, "label": "ॲ" },
+      "relevant": [
+        { "$": "auto_text_key", "code": 2308, "label": "ऄ" },
+        { "$": "auto_text_key", "code": 2365, "label": "ऽ" }
+      ]
+    },
+    "ए": {
+      "main": { "$": "auto_text_key", "code": 2317, "label": "ऍ" },
+      "relevant": [
+        { "$": "auto_text_key", "code": 2318, "label": "ऎ" },
+        { "$": "auto_text_key", "code": 2373, "label": " ॅ" },
+        { "$": "auto_text_key", "code": 2374, "label": " ॆ" }
+      ]
+    },
+    "ओ": {
+      "main": { "$": "auto_text_key", "code": 2321, "label": "ऑ" },
+      "relevant": [
+        { "$": "auto_text_key", "code": 2377, "label": " ॉ" },
+        { "$": "auto_text_key", "code": 2322, "label": "ऒ" },
+        { "$": "auto_text_key", "code": 2378, "label": " ॊ" },
+        { "$": "auto_text_key", "code": 2384, "label": "ॐ" }
+      ]
+    },
+    "ख": {
+      "main": { "$": "multi_text_key", "codePoints": [2326, 2364], "label": "ख़" }
+    },
+    "श": {
+      "main": { "$": "multi_text_key", "codePoints": [2358, 2381, 2352], "label": "श्र" }
+    },
+    "ह": {
+      "main": { "$": "auto_text_key", "code": 2307, "label": " ः" },
+      "relevant": [{ "$": "auto_text_key", "code": 2365, "label": "ऽ" }]
+    },
+    "्": {
+      "main": { "code": 8204, "label": "<⁞>" },
+      "relevant": [{ "code": 8205, "label": ">⁞<" }]
+    },
     "क": {
-      "main": { "$": "auto_text_key", "code": 2392, "label": "क़" },
-      "relevant": [{ "$": "auto_text_key", "code": 2393, "label": "ख़" }]
+      "main": { "$": "multi_text_key", "codePoints": [2325, 2364], "label": "क़" },
+      "relevant": [{ "$": "multi_text_key", "codePoints": [2326, 2364], "label": "ख़" }]
     },
     "ग": {
-      "main": { "$": "auto_text_key", "code": 2394, "label": "ग़" },
+      "main": { "$": "multi_text_key", "codePoints": [2327, 2364], "label": "ग़" },
       "relevant": [{ "$": "auto_text_key", "code": 2427, "label": "ॻ" }]
     },
     "च": {
@@ -15,24 +53,27 @@
       ]
     },
     "ज": {
-      "main": { "$": "auto_text_key", "code": 2395, "label": "ज़" },
+      "main": { "$": "multi_text_key", "codePoints": [2332, 2364], "label": "ज़" },
       "relevant": [
         { "$": "auto_text_key", "code": 2428, "label": "ॼ" },
         { "$": "auto_text_key", "code": 2425, "label": "ॹ" }
       ]
     },
     "ड": {
-      "main": { "$": "auto_text_key", "code": 2396, "label": "ड़" },
-      "relevant": [{ "$": "auto_text_key", "code": 2397, "label": "ढ़" }]
+      "main": { "$": "multi_text_key", "codePoints": [2337, 2364], "label": "ड़" },
+      "relevant": [{ "$": "multi_text_key", "codePoints": [2338, 2364], "label": "ढ़" }]
+    },
+    "ढ": {
+      "main": { "$": "multi_text_key", "codePoints": [2338, 2364], "label": "ढ़" }
     },
     "त": {
       "main": { "$": "multi_text_key", "codePoints": [2340, 2381, 2352], "label": "त्र" }
     },
     "द": {
-      "main": { "$": "auto_text_key", "code": 2396, "label": "ड़" },
+      "main": { "$": "multi_text_key", "codePoints": [2337, 2364], "label": "ड़" },
       "relevant": [
         { "$": "auto_text_key", "code": 2430, "label": "ॾ" },
-        { "$": "auto_text_key", "code": 2397, "label": "ढ़" },
+        { "$": "multi_text_key", "codePoints": [2338, 2364], "label": "ढ़" },
         { "$": "auto_text_key", "code": 2424, "label": "ॸ" }
       ]
     },
@@ -44,7 +85,7 @@
       ]
     },
     "फ": {
-      "main": { "$": "auto_text_key", "code": 2398, "label": "फ़" }
+      "main": { "$": "multi_text_key", "codePoints": [2347, 2364], "label": "फ़" }
     },
     "ब": {
       "relevant": [
@@ -69,6 +110,7 @@
       ]
     },
     "ल": {
+      "main": { "$": "auto_text_key", "code": 2355, "label": "ळ" },
       "relevant": [
         { "$": "auto_text_key", "code": 2402, "label": "ॢ" },
         { "$": "auto_text_key", "code": 2403, "label": "ॣ" },
