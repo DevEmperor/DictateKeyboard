@@ -136,6 +136,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
      */
     private var anchor: BubbleAnchor = BubbleAnchor.Default
 
+    /**
+     * Whether [anchor] describes a placement that actually happened — restored from preferences, or read
+     * back off the bubble on screen — rather than the untouched default.
+     *
+     * What it guards is the first layout pass. A restored position arrives immediately when the service
+     * starts, long before the bubble has been measured, and the default placement runs at the moment it
+     * is: without this, every service restart threw the remembered position away and dropped the bubble
+     * back at the right edge.
+     */
+    private var anchorIsPlaced = false
+
     /** Whether the bubble is currently anchored to the right edge (drives which way the pill expands). */
     private val anchoredToRight: Boolean get() = anchor.edge == BubbleEdge.RIGHT
 
@@ -833,6 +844,12 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     private fun applyInitialPlacement() {
         val lp = params ?: return
         val v = rootView ?: return
+        // A position remembered from a previous run beats the default. It was restored before the bubble
+        // had a size to place it against, so this is the first moment it can actually be honoured.
+        if (anchorIsPlaced) {
+            applyAnchor()
+            return
+        }
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
         val maxY = (screenHeight() - v.height).coerceAtLeast(0)
         val margin = edgeMargin(maxX)
@@ -875,6 +892,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     private fun captureAnchor() {
         val lp = params ?: return
         anchor = BubbleAnchor.capture(lp.x, lp.y, travelX(), travelY())
+        anchorIsPlaced = true
     }
 
     /**
@@ -936,6 +954,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         currentPackage = pkg
         val saved = pkg?.let { prefs.dictate.floatingButtonPositions.get().toMap()[it] } ?: return
         anchor = saved
+        anchorIsPlaced = true
         applyAnchor()
     }
 
