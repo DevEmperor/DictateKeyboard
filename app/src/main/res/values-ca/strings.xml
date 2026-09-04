@@ -315,7 +315,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">p. e. tecles, botons, pestanyes d\'emojis</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">p. e. menú emergent</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">p. e. tecla de supressió</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">No implementat</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">p. e. lliscar per canviar d\'idioma, escriptura lliscant</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">p. e. el control d\'arrossegament del cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclat</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Fila amb els números</string>

@@ -186,7 +186,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">npr. tipke, gumbi, pločica emotikona</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">npr. skočni izbornik</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">npr. tipka za brisanje</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nije implementirano</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">npr. klizanje za promjenu jezika, pisanje klizanjem</string>
     <!-- Smartbar strings -->
     <string name="pref__smartbar__enabled__label" comment="Preference title">Omogući Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Prikazivat će se na vrhu tipkovnice</string>

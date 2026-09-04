@@ -412,7 +412,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">np. klawisze, przyciski, zakładki emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">np. menu podręczne</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">np. klawisz delete</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nie zaimplementowano</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">np. przesunięcie zmieniające język, pisanie przesuwaniem</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">np. gest kontroli karetki (kursora)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klawiatura</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Wiersz numeryczny</string>

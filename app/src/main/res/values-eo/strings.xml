@@ -238,7 +238,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ekz. klavojn, butonojn, emoĝiajn langetojn</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ekz. ŝprucmenuo</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ekz. forigklavon</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ne efektivigita</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ekz. ŝovo por ŝanĝi lingvon, ŝova tajpado</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nombra vico</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Vidigi nombran vicon supre la signa aranĝo</string>

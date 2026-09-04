@@ -221,7 +221,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">예) 키, 버튼, 이모지 탭</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">예) 팝업 메뉴</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">예) 삭제 키</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">구현되지 않음</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">예) 언어 전환 스와이프, 글라이드 입력</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">예) 커서 제어 스와이프</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">키보드</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">숫자 행</string>

@@ -398,7 +398,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">mis. tombol, tab emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">mis. menu munculan</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">mis. tombol hapus</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">tidak diimplementasikan</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">mis. geser untuk ganti bahasa, mengetik geser</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">mis. geser kontrol kursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Papan ketik</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Baris angka</string>

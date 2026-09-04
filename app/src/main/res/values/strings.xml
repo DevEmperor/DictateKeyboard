@@ -577,7 +577,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">e.g. keys, buttons, emoji tabs</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">e.g. popup menu</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">e.g. delete key</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">not implemented</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">e.g. language switch swipe, glide typing</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">e.g. cursor control swipe</string>
 
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Keyboard</string>

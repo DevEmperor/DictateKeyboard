@@ -406,7 +406,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например кнопки, служебные клавиши или вкладки с эмодзи</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">например, всплывающее меню</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">например, кнопка «удалить»</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не реализовано</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">например, смена языка жестом, набор скольжением</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">например, жест перемещения курсора</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Клавиатура</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Цифровой ряд</string>

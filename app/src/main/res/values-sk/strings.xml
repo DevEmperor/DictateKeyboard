@@ -186,7 +186,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">Napr. Klávesy, tlačidlá, karty emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">Napr. Vyskakovanie menu</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">Napr. Kláves delete</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nerealizované</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">Napr. prepnutie jazyka potiahnutím, písanie ťahom</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">Napr. Ovládanie kurzora potiahnutím</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klávesnica</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Číselný riadok</string>

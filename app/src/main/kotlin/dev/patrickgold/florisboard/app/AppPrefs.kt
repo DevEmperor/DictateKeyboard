@@ -1154,9 +1154,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "input_feedback__haptic_feat_key_press",
             default = true,
         )
+        // On since issue #325. Both were off upstream, which was defensible while gesture swipes fed
+        // nothing and a long press was only ever an accent popup. Now that the swipe channel reaches the
+        // keyboard, and because both also carry the push-to-talk hold — start, lock, and *discard a
+        // recording* — leaving them off shipped a destructive gesture you cannot feel.
         val hapticFeatKeyLongPress = boolean(
             key = "input_feedback__haptic_feat_key_long_press",
-            default = false,
+            default = true,
         )
         val hapticFeatKeyRepeatedAction = boolean(
             key = "input_feedback__haptic_feat_key_repeated_action",
@@ -1164,7 +1168,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val hapticFeatGestureSwipe = boolean(
             key = "input_feedback__haptic_feat_gesture_swipe",
-            default = false,
+            default = true,
         )
         val hapticFeatGestureMovingSwipe = boolean(
             key = "input_feedback__haptic_feat_gesture_moving_swipe",

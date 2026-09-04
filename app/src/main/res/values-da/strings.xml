@@ -335,7 +335,7 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstyrke</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tasttryksvibration</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Langt tasttryksvibration</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementeret</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">f.eks. stryg for at skifte sprog, strygeskrivning</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerække</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Opsætning</string>

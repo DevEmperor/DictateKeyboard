@@ -401,7 +401,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">por exemplo: teclas, botões e emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">por exemplo: menus popup</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">por exemplo: tecla delete</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">não implementado</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">por exemplo: deslizar para mudar de idioma, escrita deslizante</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">por exemplo: deslize do cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclado</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>

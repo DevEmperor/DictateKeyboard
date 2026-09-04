@@ -201,7 +201,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">f.eks. taster, knapper, emoji faner</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">f.eks. popup meny</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">f.eks. sletteknapp</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementert</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">f.eks. sveip for å bytte språk, sveipeskriving</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">f.eks. markør kontroll sveip</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrad</string>

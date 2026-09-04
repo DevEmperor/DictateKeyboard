@@ -334,7 +334,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">bijv. toetsen, knoppen, emoji\'s</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">bijv. popup menu</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">bijv. backspace</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">niet geïmplementeerd</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">bijv. vegen om van taal te wisselen, veegtypen</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">bijv. gebaar voor cursorbediening</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Toetsenbord</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>

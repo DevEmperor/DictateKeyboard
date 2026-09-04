@@ -148,7 +148,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">esim. näppäin, -painike ja emojivälilehdet</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">esim. ponnahdusvalikko</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">esim. poistonäppäin</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ei toteutettuna</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">esim. kielen vaihto pyyhkäisemällä, pyyhkäisykirjoitus</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Näppäimistö</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Numerorivi</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Näytä numerorivi merkkiasettelun yläpuolella</string>

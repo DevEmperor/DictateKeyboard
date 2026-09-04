@@ -364,7 +364,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">piemēram, taustiņi, pogas, sajūtu rakstzīmju cilnes</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, uznirstošā izvēlne</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">piemēram, dzēšanas taustiņš</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nav īstenots</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">piemēram, valodas maiņa ar pavilkšanu, vilkšanas rakstīšana</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">piemēram, rādītāja vadīšanas pavilkšana</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatūra</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Ciparu rinda</string>

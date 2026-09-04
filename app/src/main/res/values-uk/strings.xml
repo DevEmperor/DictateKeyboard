@@ -298,7 +298,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">напр. клавіші, кнопки, вкладки емоджі</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">напр. спливаюче меню</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">напр. клавіша видалення</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не реалізовано</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">наприклад, зміна мови жестом, набір ковзанням</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">наприклад, жест переміщення курсора</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Клавіатура</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Рядок з цифрами</string>

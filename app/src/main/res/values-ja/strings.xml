@@ -384,7 +384,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">例：キー、ボタン、絵文字タブ</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">例：ポップアップメニュー</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">例：削除キー</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">未実装</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">例：言語切り替えスワイプ、グライド入力</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">例：カーソルコントロールスワイプ</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">キーボード</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">数字行</string>

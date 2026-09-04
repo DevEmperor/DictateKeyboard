@@ -402,7 +402,7 @@
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ej. teclas, botones, pestañas de emojis</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ej. menú emergente</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ej. tecla borrar</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">sin implemetar</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ej. deslizar para cambiar de idioma, escritura deslizante</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">ej. control de deslizamiento del cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclado</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Fila de números</string>
