@@ -38,6 +38,18 @@ data class ProviderPreset(
      */
     val curatedChatModels: List<String> = emptyList(),
     val curatedTranscriptionModels: List<String> = emptyList(),
+    /**
+     * The audio containers this provider documents as accepted uploads (issue #322).
+     *
+     * **Empty means unknown, never "anything goes"** — the same rule [maxUploadBytes] follows, and for
+     * the same reason: a provider that publishes no list is left to speak for itself, and an unknown
+     * file is sent as it is rather than converted on a guess. A non-empty list is a promise the app
+     * acts on: a container missing from it is transcoded before upload instead of being refused by the
+     * provider after the bytes have already been paid for.
+     *
+     * Filled in only from the provider's own documentation, with the date it was read.
+     */
+    val acceptedAudioContainers: Set<AudioContainer> = emptySet(),
     /** Wire format of this provider's speech-to-text endpoint (OpenRouter differs – see [TranscriptionApi]). */
     val transcriptionApi: TranscriptionApi = TranscriptionApi.OPENAI_MULTIPART,
     /**
@@ -86,6 +98,13 @@ object ProviderRegistry {
         curatedTranscriptionModels = listOf(
             "gpt-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
         ),
+        // Read 2026-09-04 from the speech-to-text guide: mp3, mp4, mpeg, mpga, m4a, wav, webm. Ogg and
+        // flac are deliberately NOT here even though OpenAI's own API reference lists them — the two
+        // pages disagree, and the point of this list is to convert on a fact rather than gamble on one.
+        // OpenAI is therefore the provider where a shared voice note actually has to be transcoded.
+        acceptedAudioContainers = setOf(
+            AudioContainer.MP3, AudioContainer.M4A, AudioContainer.WAV, AudioContainer.WEBM,
+        ),
         // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-live-transcribe is the streaming
         // model of the gpt-transcribe generation and emits deltas like gpt-realtime-whisper did, at the
         // same $0.017/min but a lower word error rate (11.65% -> 9.60%), so it is the default. The
@@ -123,6 +142,14 @@ object ProviderRegistry {
         defaultChatModel = "dictate-cloud",
         defaultTranscriptionModel = "dictate-cloud",
         supportsRealtime = false,
+        // Not copied from an upstream provider's list — the server does not say which one it used. This
+        // is what its OWN duration probe reads (`cloud/src/audio.ts`), and that matters to the person
+        // paying: a container it cannot probe is billed from a generous size estimate instead of the
+        // real length. Converting into this set is therefore cheaper for the user, not just safer.
+        acceptedAudioContainers = setOf(
+            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.M4A,
+            AudioContainer.OGG, AudioContainer.FLAC,
+        ),
     )
 
     val GROQ = ProviderPreset(
@@ -155,6 +182,12 @@ object ProviderRegistry {
         // distil-whisper-large-v3-en went the same way; both remaining Whispers are live.
         curatedTranscriptionModels = listOf(
             "whisper-large-v3-turbo", "whisper-large-v3",
+        ),
+        // Read 2026-09-04: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm. Ogg included, so a shared
+        // voice note goes to Groq untouched where OpenAI needs it transcoded.
+        acceptedAudioContainers = setOf(
+            AudioContainer.FLAC, AudioContainer.MP3, AudioContainer.M4A,
+            AudioContainer.OGG, AudioContainer.WAV, AudioContainer.WEBM,
         ),
     )
 
@@ -208,6 +241,11 @@ object ProviderRegistry {
             "mistralai/voxtral-mini-transcribe", "deepgram/nova-3",
             "openai/whisper-large-v3-turbo", "openai/whisper-large-v3",
         ),
+        // Read 2026-09-04 from the speech-to-text guide: wav, mp3, flac, m4a, ogg, webm, aac.
+        acceptedAudioContainers = setOf(
+            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.FLAC, AudioContainer.M4A,
+            AudioContainer.OGG, AudioContainer.WEBM, AudioContainer.AAC,
+        ),
         // Attribution headers recommended by OpenRouter: both are used for app ranking and some routes
         // reject requests without an HTTP-Referer. The value is a stable identifier, not a real URL.
         extraHeaders = mapOf(
@@ -249,6 +287,13 @@ object ProviderRegistry {
         curatedTranscriptionModels = listOf(
             "gemini-3.5-transcribe",
             "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
+        ),
+        // Read 2026-09-04 from Google's audio docs: wav, mp3, aiff, aac, ogg, flac, mpeg, m4a, l16,
+        // opus, alaw, mulaw, webm. The voice note in #322 was never a format Gemini refuses — the app
+        // only failed to say what it was. Nothing here has to be converted for Gemini.
+        acceptedAudioContainers = setOf(
+            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.AAC, AudioContainer.OGG,
+            AudioContainer.FLAC, AudioContainer.M4A, AudioContainer.WEBM,
         ),
         // Realtime (#128/#292): Live API (BidiGenerateContent) with inputAudioTranscription. This was off
         // until Google shipped a streaming model built for it — the conversational live models connect but
@@ -359,6 +404,12 @@ object ProviderRegistry {
         apiKeyUrl = "https://elevenlabs.io/app/settings/api-keys",
         defaultTranscriptionModel = "scribe_v2",
         curatedTranscriptionModels = listOf("scribe_v2"),
+        // Read 2026-09-04: aac, aiff, ogg, mpeg/mp3, opus, wav, webm, flac, mp4/m4a — the most generous
+        // list of any provider here, and one of only two that name Opus explicitly.
+        acceptedAudioContainers = setOf(
+            AudioContainer.AAC, AudioContainer.OGG, AudioContainer.MP3, AudioContainer.WAV,
+            AudioContainer.WEBM, AudioContainer.FLAC, AudioContainer.M4A,
+        ),
         // Realtime (#128): Scribe v2 Realtime WebSocket (~150ms). Model id verified when the session is built.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.ELEVENLABS,

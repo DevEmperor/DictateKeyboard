@@ -690,7 +690,7 @@ class OpenAiCompatibleClient(
         val base64 = withContext(Dispatchers.IO) {
             base64EncodeFile(request.audioFile)
         }
-        val mimeType = guessAudioMediaType(request.audioFile).toString().substringBefore(";").trim()
+        val mimeType = audioMimeTypeOf(request.audioFile)
         val dto = GeminiGenerateRequestDto(
             contents = listOf(
                 GeminiContentDto(
@@ -787,14 +787,18 @@ class OpenAiCompatibleClient(
     }
 
     /**
-     * The Interactions audio block takes `audio/m4a` where [guessAudioMediaType] answers `audio/mp4` —
+     * The Interactions audio block takes `audio/m4a` where [AudioContainer.M4A] says `audio/mp4` — the
      * same container, and only one of the two names is in Google's accepted list. Recordings are WAV
      * (#130); m4a shows up when a long dictation was packed for the wire (#281) or a file was imported.
+     *
+     * The one place a provider still overrides the shared table, and it stays a single expression
+     * rather than a table of its own (issue #322).
      */
-    private fun interactionsAudioMimeType(file: File): String = when (file.extension.lowercase()) {
-        "m4a", "mp4" -> "audio/m4a"
-        else -> guessAudioMediaType(file).toString().substringBefore(";").trim()
-    }
+    private fun interactionsAudioMimeType(file: File): String =
+        when (val container = AudioContainer.of(file)) {
+            AudioContainer.M4A -> "audio/m4a"
+            else -> container.mimeType
+        }
 
     /**
      * Turns the transcription style hint into `custom_vocabulary` terms, or nothing.
@@ -1146,32 +1150,14 @@ class OpenAiCompatibleClient(
         }
     }
 
-    private fun guessAudioMediaType(file: File): MediaType {
-        val type = when (file.extension.lowercase()) {
-            "mp3", "mpeg", "mpga" -> "audio/mpeg"
-            "mp4", "m4a" -> "audio/mp4"
-            "wav" -> "audio/wav"
-            "webm" -> "audio/webm"
-            "ogg", "oga" -> "audio/ogg"
-            "flac" -> "audio/flac"
-            "amr" -> "audio/amr"
-            else -> "application/octet-stream"
-        }
-        return type.toMediaType()
-    }
-
     /**
-     * Maps a file to one of OpenRouter's accepted `format` strings (wav, mp3, flac, m4a, ogg, webm,
-     * aac). Dictate records m4a; other extensions come from picked files. Unknown extensions are passed
-     * through as-is so a still-valid container isn't rejected client-side.
+     * What to call [file] on the wire. Both of these used to be extension keyed tables of their own,
+     * disagreeing with each other and with a third one below; [AudioContainer] reads the actual bytes
+     * and answers all three (issue #322).
      */
-    private fun guessAudioFormat(file: File): String = when (val ext = file.extension.lowercase()) {
-        "mp4", "m4a", "aac" -> "m4a"
-        "mpeg", "mpga", "mp3" -> "mp3"
-        "oga", "ogg" -> "ogg"
-        "wav", "flac", "webm" -> ext
-        else -> ext
-    }
+    private fun guessAudioMediaType(file: File): MediaType = audioMimeTypeOf(file).toMediaType()
+
+    private fun guessAudioFormat(file: File): String = audioFormatOf(file)
 
     private fun base64EncodeFile(file: File): String {
         val out = Base64StringOutput(base64Capacity(file.length()))
