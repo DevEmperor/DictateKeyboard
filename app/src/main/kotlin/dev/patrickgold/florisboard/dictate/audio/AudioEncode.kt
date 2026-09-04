@@ -85,6 +85,59 @@ object AudioEncode {
         output
     }
 
+    /**
+     * Encodes **any** decodable container into AAC/m4a (issue #322) — not just the recorder's own WAV.
+     *
+     * The two halves of this have been in the tree since #104 and #281 and were never joined:
+     * [AudioDecode.decodeToMono16k] turns anything MediaCodec can open into 16 kHz mono float samples,
+     * and [encode] wants exactly that as PCM16. Going straight from one to the other means no
+     * intermediate WAV on disk, which for a long voice note is the difference between one temporary
+     * file and two.
+     *
+     * Unlike [toM4a] this does **not** refuse a result that came out larger. It is used where the
+     * provider will not take the container at all, and a bigger file that is accepted beats a smaller
+     * one that is rejected. Returns null on any failure, and the caller then sends what it already had.
+     */
+    suspend fun transcodeToM4a(input: File, output: File): File? = withContext(Dispatchers.Default) {
+        val startedNanos = System.nanoTime()
+        val samples = runCatching { AudioDecode.decodeToMono16k(input) }.getOrElse { error ->
+            Log.w(TAG, "transcode decode failed for ${input.name}: $error")
+            return@withContext null
+        }
+        if (samples.isEmpty()) return@withContext null
+        val pcm = Pcm(AudioWav.pcm16(samples), AudioDecode.TARGET_SAMPLE_RATE, channels = 1)
+        val encoded = runCatching { encode(pcm, output) }.getOrElse { error ->
+            Log.w(TAG, "transcode encode failed for ${input.name}: $error")
+            runCatching { output.delete() }
+            return@withContext null
+        }
+        if (!encoded || output.length() <= 0L) {
+            runCatching { output.delete() }
+            return@withContext null
+        }
+        Log.i(
+            TAG,
+            "transcoded ${input.length() / 1024} kB ${input.extension} to ${output.length() / 1024} kB " +
+                "m4a in ${(System.nanoTime() - startedNanos) / 1_000_000} ms",
+        )
+        output
+    }
+
+    /**
+     * The same conversion, stopping at PCM: any decodable container written back out as the 16 kHz mono
+     * WAV that every provider takes. Used where the target does not accept m4a either — the single-call
+     * multimodal path takes wav or mp3 and nothing else (#130).
+     */
+    suspend fun transcodeToWav(input: File, output: File): File? = withContext(Dispatchers.Default) {
+        val samples = runCatching { AudioDecode.decodeToMono16k(input) }.getOrElse { error ->
+            Log.w(TAG, "transcode decode failed for ${input.name}: $error")
+            return@withContext null
+        }
+        if (samples.isEmpty()) return@withContext null
+        if (!AudioWav.write(samples, AudioDecode.TARGET_SAMPLE_RATE, output)) return@withContext null
+        output
+    }
+
     private class Pcm(val samples: ByteArray, val sampleRate: Int, val channels: Int)
 
     /** Reads the recorder's own WAV without decoding it — it is already the PCM the encoder wants. */

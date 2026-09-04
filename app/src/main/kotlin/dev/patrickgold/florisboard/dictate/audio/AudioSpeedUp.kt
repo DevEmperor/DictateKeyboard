@@ -201,21 +201,7 @@ object AudioSpeedUp {
 
     /** Writes [samples] as 16 kHz mono PCM16 WAV. */
     private fun writeWav(samples: FloatArray, sampleRate: Int, output: File): File {
-        output.outputStream().buffered().use { os ->
-            os.write(AudioWav.header(sampleRate, channels = 1, bitsPerSample = 16, dataLen = samples.size.toLong() * 2))
-            val buf = ByteArray(8192) // even size: two bytes per sample
-            var bi = 0
-            for (sample in samples) {
-                val v = (sample.coerceIn(-1f, 1f) * 32767f).toInt()
-                buf[bi++] = (v and 0xff).toByte()
-                buf[bi++] = ((v shr 8) and 0xff).toByte()
-                if (bi == buf.size) {
-                    os.write(buf, 0, bi)
-                    bi = 0
-                }
-            }
-            if (bi > 0) os.write(buf, 0, bi)
-        }
+        check(AudioWav.write(samples, sampleRate, output)) { "could not write ${output.name}" }
         return output
     }
 }

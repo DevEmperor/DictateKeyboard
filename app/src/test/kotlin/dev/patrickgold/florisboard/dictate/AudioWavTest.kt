@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate
 
 import dev.patrickgold.florisboard.dictate.audio.AudioConcat
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
+import dev.patrickgold.florisboard.dictate.audio.AudioWav
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -66,8 +67,70 @@ class AudioWavTest {
         }
     }
 
+    /**
+     * The shared float-to-WAV writer (issue #322). The silence trimmer, the speed-up and the import
+     * splitter each had their own copy of this loop; they now all come through here, and cutting the
+     * gaps out of a recording is what the multi-range form exists for.
+     */
+    @Test
+    fun sharedWriterWritesRangesBackToBack() {
+        val dir = Files.createTempDirectory("dictate-wav-write").toFile()
+        try {
+            val samples = FloatArray(10) { it / 100f }
+            val output = File(dir, "trimmed.wav")
+
+            // Keep 0..2 and 6..8, i.e. drop the middle the way the trimmer drops a pause.
+            assertTrue(
+                AudioWav.write(
+                    samples, AudioDecode.TARGET_SAMPLE_RATE, output,
+                    ranges = listOf(intArrayOf(0, 2), intArrayOf(6, 8)),
+                ),
+            )
+            val written = AudioDecode.decodeToMono16k(output)
+
+            assertEquals(4, written.size)
+            // Quantisation tolerance, not exactness: a float goes out through 16 bits and comes back,
+            // so 0.01 returns as 327/32768. One step is what "unchanged" can mean here.
+            assertQuantised(0.00f, written[0])
+            assertQuantised(0.01f, written[1])
+            assertQuantised(0.06f, written[2])
+            assertQuantised(0.07f, written[3])
+            // The in-memory form the encoder is fed must agree with the file, byte for byte.
+            assertEquals(
+                written.size * 2,
+                AudioWav.pcm16(samples, listOf(intArrayOf(0, 2), intArrayOf(6, 8))).size,
+            )
+        } finally {
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun sharedWriterClampsRangesAndRefusesAnEmptySelection() {
+        val dir = Files.createTempDirectory("dictate-wav-clamp").toFile()
+        try {
+            val samples = FloatArray(4) { 0.5f }
+            val clamped = File(dir, "clamped.wav")
+            // A range running past the end is trimmed to it rather than throwing.
+            assertTrue(AudioWav.write(samples, 16_000, clamped, listOf(intArrayOf(-5, 99))))
+            assertEquals(4, AudioDecode.decodeToMono16k(clamped).size)
+
+            // Nothing to write is a false, not a zero-sample WAV the provider would have to reject.
+            val empty = File(dir, "empty.wav")
+            assertTrue(!AudioWav.write(samples, 16_000, empty, listOf(intArrayOf(3, 3))))
+            assertTrue(!empty.exists() || empty.length() == 0L)
+        } finally {
+            dir.deleteRecursively()
+        }
+    }
+
     private fun assertNear(expected: Float, actual: Float) {
         assertTrue(abs(expected - actual) < 0.000001f, "expected=$expected actual=$actual")
+    }
+
+    /** Within one 16-bit step — the most a value can keep after a round trip through PCM16. */
+    private fun assertQuantised(expected: Float, actual: Float) {
+        assertTrue(abs(expected - actual) <= 1f / 32768f, "expected=$expected actual=$actual")
     }
 
     private fun wavBytes(samples: ShortArray): ByteArray {

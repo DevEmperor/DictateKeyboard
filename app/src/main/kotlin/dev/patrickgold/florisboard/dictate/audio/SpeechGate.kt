@@ -251,36 +251,12 @@ object SpeechGate {
         // Not worth re-encoding (and downsampling to 16 kHz) if we'd barely shave anything off.
         if (removed < (MIN_TRIM_MS.toLong() * sr / 1000L).toInt()) return@withContext null
 
-        runCatching {
-            outFile.outputStream().buffered().use { os ->
-                os.write(AudioWav.header(sr, channels = 1, bitsPerSample = 16, dataLen = keptCount.toLong() * 2))
-                val buf = ByteArray(8192) // even size: two bytes per sample
-                var bi = 0
-                for (r in kept) {
-                    var i = r[0]
-                    val e = r[1]
-                    while (i < e) {
-                        val v = (samples[i].coerceIn(-1f, 1f) * 32767f).toInt()
-                        buf[bi++] = (v and 0xff).toByte()
-                        buf[bi++] = ((v shr 8) and 0xff).toByte()
-                        if (bi == buf.size) {
-                            os.write(buf, 0, bi)
-                            bi = 0
-                        }
-                        i++
-                    }
-                }
-                if (bi > 0) os.write(buf, 0, bi)
-            }
-            Log.i(
-                LOG_TAG,
-                "speechGate trim removedMs=${removed * 1000L / sr} keptMs=${keptCount * 1000L / sr}",
-            )
-            outFile
-        }.getOrElse {
-            runCatching { outFile.delete() }
-            null
-        }
+        if (!AudioWav.write(samples, sr, outFile, kept)) return@withContext null
+        Log.i(
+            LOG_TAG,
+            "speechGate trim removedMs=${removed * 1000L / sr} keptMs=${keptCount * 1000L / sr}",
+        )
+        outFile
     }
 
     /** Below this much removed silence, trimming isn't worth the re-encode (issue #232). */
