@@ -44,11 +44,9 @@ import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -78,7 +76,6 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val editorInstance by context.editorInstance()
     val subtypeManager by context.subtypeManager()
-    val inputFeedbackController = LocalInputFeedbackController.current
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
 
@@ -184,7 +181,9 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                                 isPinned = false,
                                 isRecent = false,
                                 onEmojiInput = { emoji ->
-                                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                    // No feedback call here: [EmojiKey] already ticks on the confirmed
+                                    // tap before it hands the emoji over, and adding one here played the
+                                    // sound twice for a single tap.
                                     // Commit straight to the editor: routing through the dispatcher
                                     // would be swallowed by the active search-query interception.
                                     editorInstance.commitText(emoji.value)
