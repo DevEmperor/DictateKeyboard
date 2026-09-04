@@ -65,6 +65,7 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.keyboard.DevanagariBase
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.vectorResource
@@ -85,6 +86,13 @@ interface ComputingEvaluator {
     /** True while a KLIPY GIF search is being typed, so the Enter key shows a search icon. */
     val isGifSearchActive: Boolean
         get() = false
+
+    /**
+     * The Devanagari consonant waiting for a vowel sign, or [DevanagariBase.NONE] (issue #315). Turns the
+     * vowel row of an Indic layout into a matra row while a consonant is pending.
+     */
+    val devanagariBase: Int
+        get() = DevanagariBase.NONE
 
     fun context(): Context?
 

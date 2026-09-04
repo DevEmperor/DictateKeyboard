@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutDirectionSelector
 import dev.patrickgold.florisboard.ime.keyboard.ShiftStateSelector
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.DevanagariVowelKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import java.io.File
@@ -48,6 +49,7 @@ val DefaultJsonConfig = Json {
             subclass(TextKeyData::class, TextKeyData.serializer())
             subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
+            subclass(DevanagariVowelKeyData::class, DevanagariVowelKeyData.serializer())
             subclass(CaseSelector::class, CaseSelector.serializer())
             subclass(ShiftStateSelector::class, ShiftStateSelector.serializer())
             subclass(VariationSelector::class, VariationSelector.serializer())
@@ -60,6 +62,7 @@ val DefaultJsonConfig = Json {
             subclass(TextKeyData::class, TextKeyData.serializer())
             subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
+            subclass(DevanagariVowelKeyData::class, DevanagariVowelKeyData.serializer())
             defaultDeserializer { TextKeyData.serializer() }
         }
     }

@@ -336,6 +336,7 @@ private fun TextKeyButton(
         FlorisImeUi.Attr.Code to key.computedData.code,
         FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
         FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
+        FlorisImeUi.Attr.Composing to (key.computedData is ComposedMatraKeyData),
     )
     val selector = when {
         !key.isEnabled -> SnyggSelector.DISABLED

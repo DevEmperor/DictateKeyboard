@@ -425,5 +425,15 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
          * place to decide what "visible" looks like.
          */
         const val AutoCommit = "auto-commit"
+
+        /**
+         * `true` on a key that is currently showing what it would attach to the pending character rather
+         * than the character itself — today the Devanagari vowel row, which reads का कि की while a
+         * consonant waits for a vowel sign (issue #315).
+         *
+         * Named here so a theme can set those keys apart: `key[composing=true]`. The changed label is the
+         * feedback out of the box; this is for themes that want to go further.
+         */
+        const val Composing = "composing"
     }
 }

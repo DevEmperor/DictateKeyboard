@@ -652,6 +652,80 @@ class MultiTextKeyData(
     }
 }
 
+/**
+ * A Devanagari vowel key that turns into the matching vowel sign while a consonant is waiting for one
+ * (issue #315).
+ *
+ * With nothing pending it is the independent vowel — आ emits आ. Once a consonant sits before the cursor
+ * the key emits the [matra] instead and shows the two of them together, so the row reads का कि की कु कू
+ * के कै को कौ. The text produced is a plain consonant-then-sign sequence either way; only the face of
+ * the key changes. Which consonant counts as pending is decided by [DevanagariBase].
+ *
+ * Example usage in a layout JSON file:
+ * ```
+ * { "$": "devanagari_vowel_key", "code": 2310, "matra": 2366, "label": "आ" }
+ * ```
+ *
+ * A [matra] of zero means the vowel has no sign of its own (अ carries the inherent vowel) and the key
+ * never changes.
+ */
+@Serializable
+@SerialName("devanagari_vowel_key")
+class DevanagariVowelKeyData(
+    override val type: KeyType = KeyType.CHARACTER,
+    override val code: Int = KeyCode.UNSPECIFIED,
+    val matra: Int = 0,
+    override val label: String = "",
+    override val groupId: Int = KeyData.GROUP_DEFAULT,
+    override val popup: PopupSet<AbstractKeyData>? = null,
+) : KeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData {
+        val base = evaluator.devanagariBase
+        if (matra == 0 || base == DevanagariBase.NONE) {
+            return TextKeyData(type, code, label, groupId, popup)
+        }
+        val preview = buildString {
+            appendCodePoint(base)
+            appendCodePoint(matra)
+        }
+        return ComposedMatraKeyData(type, matra, preview, groupId, popup)
+    }
+
+    override fun asString(isForDisplay: Boolean): String {
+        return asString(this, isForDisplay)
+    }
+
+    override fun toString(): String {
+        return "${DevanagariVowelKeyData::class.simpleName} { type=$type code=$code matra=$matra label=\"$label\" groupId=$groupId }"
+    }
+}
+
+/**
+ * The computed face of a [DevanagariVowelKeyData] while a consonant is pending: sends the vowel sign
+ * alone, but shows it already attached to that consonant.
+ *
+ * This exists instead of a plain [TextKeyData] because the shared [asString] prefixes a dotted circle to
+ * any lone combining mark — right for a bare matra key, wrong here, where the label already carries a
+ * real base to hang on. Never serialized; only ever produced by [DevanagariVowelKeyData.compute].
+ */
+class ComposedMatraKeyData(
+    override val type: KeyType,
+    override val code: Int,
+    override val label: String,
+    override val groupId: Int,
+    override val popup: PopupSet<AbstractKeyData>?,
+) : KeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData = this
+
+    override fun asString(isForDisplay: Boolean): String {
+        return if (isForDisplay) label else buildString { appendCodePoint(code) }
+    }
+
+    override fun toString(): String {
+        return "${ComposedMatraKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+}
+
 internal fun asString(data: KeyData, isForDisplay: Boolean) : String {
     return buildString {
         if (isForDisplay || data.code == KeyCode.URI_COMPONENT_TLD || data.code < KeyCode.SPACE) {
