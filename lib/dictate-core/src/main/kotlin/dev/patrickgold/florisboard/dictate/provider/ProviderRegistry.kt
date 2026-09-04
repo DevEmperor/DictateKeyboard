@@ -545,11 +545,16 @@ object ProviderRegistry {
      *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
      *    anything a keyboard produces; recorded so the number is not looked up twice.
      *  - SiliconFlow 50 MB (and one hour), from its transcription API reference.
+     *  - OpenRouter 25 MB for a multipart upload, added 2026-09-04 while checking #321 — it was simply
+     *    missing, which meant the file-import path never split anything for it and a shared recording
+     *    went out whole to be refused. Its harder limit is not a size at all: a request gets about 60
+     *    seconds of *processing* time, and that does not convert into an audio length honestly, because
+     *    how much speech fits depends on the chosen model's speed rather than on anything we control.
      *  - Mistral and Soniox document a *duration* (3 hours, 300 minutes) but no size, so they stay 0.
      *    Do not translate a duration into bytes here: the encoding is not theirs to assume.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
-        "openai", "cloud", "groq" -> 25L * 1024 * 1024
+        "openai", "cloud", "groq", "openrouter" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
         "siliconflow" -> 50L * 1024 * 1024
         "elevenlabs" -> 3L * 1024 * 1024 * 1024

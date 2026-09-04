@@ -12,6 +12,7 @@ package dev.patrickgold.florisboard.dictate
 
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -28,7 +29,7 @@ class ShouldPackTest {
     private fun seconds(n: Int) = n * kbPerSecond
     private fun mib(n: Int) = n * 1024L * 1024L
 
-    /** OpenAI and Groq; every other provider reports 0, meaning "we do not know". */
+    /** OpenAI, Groq and OpenRouter; every other provider reports 0, meaning "we do not know". */
     private val known = mib(25)
     private val unknown = 0L
 
@@ -105,6 +106,21 @@ class ShouldPackTest {
         assertTrue(siliconflow == mib(50), "expected a documented 50 MiB ceiling, got $siliconflow")
         assertFalse(pack(mib(10), siliconflow))
         assertTrue(pack(mib(20), siliconflow))
+    }
+
+    @Test
+    fun `openrouter carries a ceiling at all, which is the half that was missing`() {
+        // #321: OpenRouter documents 25 MB for a multipart upload, and the table simply did not know it.
+        // Packing was never the part that suffered — three quarters of 25 MiB is above the general
+        // threshold, so the 16 MiB rule keeps deciding here as it does for OpenAI. What suffered is
+        // every caller that asks "is there a figure at all": the import screen's size check and the
+        // splitter both read 0 as "nothing to check against", so a shared recording went out whole and
+        // came back refused. A number, any number, is what turns those two back on.
+        val openrouter = ProviderRegistry.maxUploadBytes("openrouter")
+        assertTrue(openrouter > 0L, "openrouter must document a ceiling, not report 0 = unknown")
+        assertEquals(mib(25), openrouter)
+        assertFalse(pack(mib(10), openrouter))
+        assertTrue(pack(mib(20), openrouter))
     }
 
     @Test
