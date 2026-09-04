@@ -2622,14 +2622,24 @@ object DictateController {
         }
     }
 
-    /** Copies [src] into Downloads/Dictate as a WAV via MediaStore (API 29+) or the public dir. Returns the file name, or null on failure. */
+    /**
+     * Copies [src] into Downloads/Dictate via MediaStore (API 29+) or the public dir. Returns the file
+     * name, or null on failure.
+     *
+     * Name and MIME follow what is actually in the file (#322). This used to say `.wav` and `audio/wav`
+     * unconditionally, which is right for a dictation and wrong for a failed *import* — the retained
+     * audio there is the file the user brought, so an Ogg voice note landed in their Downloads folder
+     * registered as a WAV, where some players simply refuse it.
+     */
     private fun exportAudioToDownloads(context: Context, src: File): String? = runCatching {
         val stamp = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US).format(java.util.Date())
-        val name = "dictate-recording-$stamp.wav"
+        val container = AudioContainer.of(src)
+        val extension = container.extension.ifEmpty { src.extension.lowercase().ifEmpty { "wav" } }
+        val name = "dictate-recording-$stamp.$extension"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val values = ContentValues().apply {
                 put(MediaStore.Downloads.DISPLAY_NAME, name)
-                put(MediaStore.Downloads.MIME_TYPE, "audio/wav")
+                put(MediaStore.Downloads.MIME_TYPE, container.mimeType)
                 put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Dictate")
                 put(MediaStore.Downloads.IS_PENDING, 1)
             }
