@@ -78,6 +78,7 @@ import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
+import dev.patrickgold.florisboard.ime.text.gestures.swipeCommitDirection
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -784,14 +785,18 @@ private class TextKeyboardLayoutController(
                 }
                 initialKey.computedData.code > KeyCode.SPACE && !popupUiController.isShowingExtendedPopup -> when {
                     !isGlideEnabled && !pointer.hasTriggeredGestureMove -> when (event.type) {
-                        SwipeGesture.Type.TOUCH_UP -> {
-                            val swipeAction = when (event.direction) {
-                                SwipeGesture.Direction.UP -> prefs.gestures.swipeUp.get()
-                                SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown.get()
-                                SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft.get()
-                                SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight.get()
-                                else -> SwipeAction.NO_ACTION
-                            }
+                        // Under the finger, the moment the travel is unmistakable (issue #327). Waiting
+                        // for lift-off is what made these feel dead: the accepting rule sampled speed as
+                        // the finger left the glass, so a swipe you *end* — decelerating onto a target,
+                        // which is what "swipe down to hide" is — measured as stationary and was dropped
+                        // however far it had gone.
+                        //
+                        // Returning true here has the caller cancel the key press for this pointer and
+                        // set hasTriggeredGestureMove, which this same branch checks — so the action can
+                        // fire only once per gesture and the lift-off path below is skipped afterwards.
+                        SwipeGesture.Type.TOUCH_MOVE -> {
+                            val direction = swipeCommitDirection(event.absUnitCountX, event.absUnitCountY)
+                            val swipeAction = direction?.let { swipeActionFor(it) } ?: SwipeAction.NO_ACTION
                             if (swipeAction != SwipeAction.NO_ACTION) {
                                 keyboardManager.executeSwipeAction(swipeAction)
                                 true
@@ -799,13 +804,32 @@ private class TextKeyboardLayoutController(
                                 false
                             }
                         }
-                        else -> false
+                        // The short-but-fast half of the rule: a flick that lifts before covering the
+                        // distance above still counts, and there speed is the evidence of intent.
+                        SwipeGesture.Type.TOUCH_UP -> {
+                            val swipeAction = swipeActionFor(event.direction)
+                            if (swipeAction != SwipeAction.NO_ACTION) {
+                                keyboardManager.executeSwipeAction(swipeAction)
+                                true
+                            } else {
+                                false
+                            }
+                        }
                     }
                     else -> false
                 }
                 else -> false
             }
         }
+    }
+
+    /** The action bound to a swipe direction on an ordinary character key. Diagonals carry none. */
+    private fun swipeActionFor(direction: SwipeGesture.Direction): SwipeAction = when (direction) {
+        SwipeGesture.Direction.UP -> prefs.gestures.swipeUp.get()
+        SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown.get()
+        SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft.get()
+        SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight.get()
+        else -> SwipeAction.NO_ACTION
     }
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {

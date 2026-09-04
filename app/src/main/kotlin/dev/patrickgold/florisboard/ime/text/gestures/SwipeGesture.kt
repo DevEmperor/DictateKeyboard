@@ -75,7 +75,13 @@ abstract class SwipeGesture {
                 val relDiffY = currentY - gesturePointer.lastY
                 val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get().dp.value.toDouble()
                 val unitWidth = thresholdWidth / 4.0
-                return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
+                // Reported every unit rather than every other one (issue #327). A swipe on a character key
+                // is now judged from these reports rather than at lift-off, so the reporting step is also
+                // the precision of that decision: at half a threshold the same gesture landed either side
+                // of the line depending on where the last sample happened to fall, which reads as "it
+                // works sometimes". Counting is unaffected — units have always been quarter-thresholds,
+                // and the pointers that need every sample (space, delete) already ask for it outright.
+                return if (alwaysTriggerOnMove || abs(relDiffX) > unitWidth || abs(relDiffY) > unitWidth) {
                     gesturePointer.lastX = currentX
                     gesturePointer.lastY = currentY
                     val direction = detectDirection(relDiffX.toDouble(), relDiffY.toDouble())
@@ -111,7 +117,12 @@ abstract class SwipeGesture {
                 velocityTracker.computeCurrentVelocity(1000)
                 val velocityX = ViewUtils.px2dp(velocityTracker.getXVelocity(pointer.id))
                 val velocityY = ViewUtils.px2dp(velocityTracker.getYVelocity(pointer.id))
-                flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
+                // Travel as well as speed, because tuning the thresholds needs the distribution of both
+                // over ordinary typing — how far a tap that was only ever meant as a tap actually drifts
+                // (issue #327). Debug builds only; flog compiles out of a release.
+                flogDebug(LogTopic.GESTURES) {
+                    "Swipe candidate: travel ${absDiffX}x${absDiffY} dp, velocity $velocityX $velocityY dp/s"
+                }
                 pointerMap.removeById(pointer.id)
                 val thresholdSpeed = prefs.gestures.swipeVelocityThreshold.get().toDouble()
                 val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get().dp.value.toDouble()
