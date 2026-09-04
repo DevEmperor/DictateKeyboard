@@ -556,6 +556,8 @@
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Never play sounds for input events, regardless of system settings</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Sound volume for input events</string>
+    <string name="pref__input_feedback__audio_muted_by_system__warning" comment="Warning card shown when Android\'s touch sounds are off">Android\'s touch sounds are switched off, so the keyboard stays silent. Tap here to turn them on, or set the option below to always play sounds.</string>
+    <string name="pref__input_feedback__audio_muted_by_ringer__warning" comment="Warning card shown when the phone is on vibrate or silent">Your phone is on vibrate or silent. Android mutes key sounds in these modes, even when this app is set to always play them.</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Key press sounds</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Key long press sounds</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Key repeated action sounds</string>

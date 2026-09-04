@@ -302,6 +302,8 @@
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Niemals Töne für Eingaben abspielen, unabhängig von den Systemeinstellungen</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lautstärke für Eingabeereignisse</string>
+    <string name="pref__input_feedback__audio_muted_by_system__warning" comment="Warning card shown when Android\'s touch sounds are off">Androids Töne bei Berührung sind ausgeschaltet, deshalb bleibt die Tastatur stumm. Tippe hier, um sie einzuschalten, oder stelle die Einstellung unten auf immer abspielen.</string>
+    <string name="pref__input_feedback__audio_muted_by_ringer__warning" comment="Warning card shown when the phone is on vibrate or silent">Dein Handy steht auf Vibration oder lautlos. Android schaltet Tastentöne in diesen Modi stumm, auch wenn hier immer abspielen eingestellt ist.</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastentöne</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ton bei langem Tastendruck</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ton bei wiederholten Tasten</string>
