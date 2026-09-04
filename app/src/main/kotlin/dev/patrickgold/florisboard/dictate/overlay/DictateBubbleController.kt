@@ -17,6 +17,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PixelFormat
+import android.graphics.Point
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
@@ -32,6 +33,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
@@ -863,23 +865,41 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     }
 
     /**
-     * The size of the display this overlay window lives on.
+     * The size of the area the bubble's coordinates are measured in — which is **not** the display.
      *
-     * Read fresh on every call, never cached — the answer changes underneath a running overlay whenever
-     * the device is rotated, unfolded or moved into split screen, which is the whole of issue #323.
-     * [WindowManager.getCurrentWindowMetrics] is the API that answers for a window; the display metrics
-     * of a service context are the older approximation of the same thing, kept for API < 30.
+     * `WindowManager.LayoutParams.x/y` are relative to the window's parent frame, and this window does not
+     * ask for `FLAG_LAYOUT_IN_SCREEN`, so that frame is the display minus the system decorations. In
+     * portrait the difference is only vertical and nothing gives it away. In landscape it is horizontal:
+     * on a Galaxy A55 the camera cutout takes a strip off the side, and the frame is 2251 px wide on a
+     * 2340 px display. Measuring against the display and placing against the frame put the bubble 89 px
+     * further out than there was room for, and it hung over the edge (issue #323, found on hardware).
+     *
+     * The system-bar insets are subtracted as well as the cutout, even though the frame does not always
+     * shrink for them — a gesture bar does not inset it, a three-button navigation bar does, and in
+     * landscape that one sits on a side too. Subtracting one too many costs the bubble a few pixels of
+     * reach at an edge it was never parked against; subtracting one too few puts it off the screen, where
+     * it cannot be dragged back. Only one of those two is recoverable.
+     *
+     * Read fresh on every call, never cached: the answer changes underneath a running overlay whenever the
+     * device is rotated, unfolded or moved into split screen, which is the whole of the issue.
      */
-    private fun screenWidth(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        windowManager.currentWindowMetrics.bounds.width()
-    } else {
-        context.resources.displayMetrics.widthPixels
-    }
+    private fun screenWidth(): Int = screenSize().x
 
-    private fun screenHeight(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        windowManager.currentWindowMetrics.bounds.height()
-    } else {
-        context.resources.displayMetrics.heightPixels
+    private fun screenHeight(): Int = screenSize().y
+
+    private fun screenSize(): Point {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val metrics = windowManager.currentWindowMetrics
+            val insets = metrics.windowInsets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout()
+            )
+            return Point(
+                (metrics.bounds.width() - insets.left - insets.right).coerceAtLeast(0),
+                (metrics.bounds.height() - insets.top - insets.bottom).coerceAtLeast(0),
+            )
+        }
+        val dm = context.resources.displayMetrics
+        return Point(dm.widthPixels, dm.heightPixels)
     }
 
     /** How far the bubble can travel horizontally, i.e. the x of the right edge. */
@@ -912,8 +932,14 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         // The only way to observe where the bubble ended up without guessing at a screenshot. Debug builds
         // only; flog compiles out of a release.
         flogDebug {
+            val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                windowManager.currentWindowMetrics.bounds.let { "${it.width()}x${it.height()}" }
+            } else {
+                "?"
+            }
             "Bubble anchor ${anchor.edge} x=${anchor.xFraction} y=${anchor.yFraction} " +
-                "-> ($nx, $ny) travel ${maxX}x$maxY on ${screenWidth()}x${screenHeight()}"
+                "-> ($nx, $ny) travel ${maxX}x$maxY in frame ${screenWidth()}x${screenHeight()} " +
+                "of display $display"
         }
         if (nx == lp.x && ny == lp.y) return
         lp.x = nx
