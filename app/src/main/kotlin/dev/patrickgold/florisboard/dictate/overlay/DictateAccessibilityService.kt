@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ServiceInfo
+import android.content.res.Configuration
 import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
@@ -97,6 +98,16 @@ class DictateAccessibilityService : AccessibilityService() {
         refreshScreenState()
         bubble = DictateBubbleController(this).also { it.start() }
         updateEditableFocus()
+    }
+
+    /**
+     * The screen changed shape: a rotation, a foldable being opened or closed, a move into or out of split
+     * screen. The bubble is a window with raw coordinates on a screen that just became a different size,
+     * so it has to be put back where the user meant it (issue #323) — nothing did that before.
+     */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        bubble?.onScreenGeometryChanged()
     }
 
     override fun onUnbind(intent: Intent?): Boolean {

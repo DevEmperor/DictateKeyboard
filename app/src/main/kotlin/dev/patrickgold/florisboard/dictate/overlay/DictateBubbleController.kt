@@ -57,6 +57,7 @@ import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateAuroraOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateLatticeSphereView
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -127,8 +128,16 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
     private var sizeScale = DictateFloatingButtonSize.MEDIUM.scale
     private var accentColor = 0xFF30B7E6.toInt()
 
+    /**
+     * Where the bubble is parked, as an intent rather than as a pixel pair (issue #323): which side, and
+     * how far along the travel. The single source of truth for placement — every geometry the window ends
+     * up in derives its coordinates from this, which is what lets a position survive a rotation, a fold,
+     * or a move into split screen.
+     */
+    private var anchor: BubbleAnchor = BubbleAnchor.Default
+
     /** Whether the bubble is currently anchored to the right edge (drives which way the pill expands). */
-    private var anchoredToRight = false
+    private val anchoredToRight: Boolean get() = anchor.edge == BubbleEdge.RIGHT
 
     /**
      * Set until the bubble has been placed at its default spot (right edge, vertically centered) once the
@@ -138,8 +147,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
      */
     private var needsInitialPlacement = true
 
-    /** Per-app saved positions (in-memory for the service's lifetime) and the current foreground app. */
-    private val positions = HashMap<String, Pair<Int, Int>>()
+    /** The app the bubble is currently floating over; the key its position is filed under. */
     private var currentPackage: String? = null
 
     /** While true a transient error/success flash owns the visuals; live-state updates are suppressed. */
@@ -672,8 +680,8 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             gravity = Gravity.TOP or Gravity.START
             // Rough seed for the right edge near mid-height, just to avoid a left-edge flash before the
             // bubble is measured. The exact default (right edge + margin, vertically centered) is applied
-            // in applyInitialPlacement once we know the bubble's size.
-            anchoredToRight = true
+            // in applyInitialPlacement once we know the bubble's size; the anchor field already points at
+            // the same side, so nothing has to say so twice.
             x = screenWidth()
             y = (screenHeight() * 2 / 5 - dp(28)).coerceAtLeast(0)
         }
@@ -739,7 +747,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                         // the screen by ACTION_MOVE); otherwise it animates to the nearer side edge.
                         prefs.dictate.floatingButtonSnapToEdge.get() -> snapToEdge()
                     }
-                    if (moved) saveCurrentPosition()
+                    if (moved) rememberCurrentPosition()
                     scheduleDim() // restart the idle timer after the interaction
                     true
                 }
@@ -770,9 +778,11 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         val v = rootView ?: return
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
         val margin = edgeMargin(maxX)
-        anchoredToRight = lp.x + v.width / 2 >= screenWidth() / 2
-        val targetX = if (anchoredToRight) maxX - margin else margin
         lp.y = lp.y.coerceIn(0, (screenHeight() - v.height).coerceAtLeast(0))
+        // The drag decided which side; read that off the dropped position before animating towards it.
+        // After the clamp, so a drop past the bottom edge is anchored where it lands, not where it went.
+        captureAnchor()
+        val targetX = if (anchoredToRight) maxX - margin else margin
         snapAnim?.cancel()
         snapAnim = ValueAnimator.ofInt(lp.x, targetX).apply {
             duration = 180
@@ -785,7 +795,7 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    saveCurrentPosition() // persist the final snapped position for this app
+                    rememberCurrentPosition() // persist the final snapped position for this app
                 }
             })
             start()
@@ -826,15 +836,95 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         val maxX = (screenWidth() - v.width).coerceAtLeast(0)
         val maxY = (screenHeight() - v.height).coerceAtLeast(0)
         val margin = edgeMargin(maxX)
-        anchoredToRight = true
         lp.x = (maxX - margin).coerceAtLeast(0)
         // Vertically center the bubble at ~60% up from the bottom edge (≈40% down from the top).
         lp.y = (screenHeight() * 2 / 5 - v.height / 2).coerceIn(0, maxY)
+        // Read the anchor off the spot we just placed, rather than the other way round: the default keeps
+        // its margin to the edge, and the margin is a length that only exists once the bubble is measured.
+        captureAnchor()
         if (added) runCatching { windowManager.updateViewLayout(v, lp) }
     }
 
-    private fun screenWidth(): Int = context.resources.displayMetrics.widthPixels
-    private fun screenHeight(): Int = context.resources.displayMetrics.heightPixels
+    /**
+     * The size of the display this overlay window lives on.
+     *
+     * Read fresh on every call, never cached — the answer changes underneath a running overlay whenever
+     * the device is rotated, unfolded or moved into split screen, which is the whole of issue #323.
+     * [WindowManager.getCurrentWindowMetrics] is the API that answers for a window; the display metrics
+     * of a service context are the older approximation of the same thing, kept for API < 30.
+     */
+    private fun screenWidth(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        windowManager.currentWindowMetrics.bounds.width()
+    } else {
+        context.resources.displayMetrics.widthPixels
+    }
+
+    private fun screenHeight(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        windowManager.currentWindowMetrics.bounds.height()
+    } else {
+        context.resources.displayMetrics.heightPixels
+    }
+
+    /** How far the bubble can travel horizontally, i.e. the x of the right edge. */
+    private fun travelX(): Int = (screenWidth() - (rootView?.width ?: 0)).coerceAtLeast(0)
+
+    /** How far the bubble can travel vertically, i.e. the y of the bottom edge. */
+    private fun travelY(): Int = (screenHeight() - (rootView?.height ?: 0)).coerceAtLeast(0)
+
+    /** Reads the anchor back out of wherever the window currently sits. */
+    private fun captureAnchor() {
+        val lp = params ?: return
+        anchor = BubbleAnchor.capture(lp.x, lp.y, travelX(), travelY())
+    }
+
+    /**
+     * Moves the window to where the anchor points on the *current* screen.
+     *
+     * Deliberately one-way: this never reads the position back. Every caller runs at a moment when the
+     * geometry is in flux — a hinge delivers several configuration changes for one movement — and an
+     * apply that also captured would fold each intermediate state into the anchor and walk the bubble
+     * across the screen.
+     */
+    private fun applyAnchor() {
+        val lp = params ?: return
+        val maxX = travelX()
+        val maxY = travelY()
+        val nx = anchor.toX(maxX, edgeMargin(maxX), prefs.dictate.floatingButtonSnapToEdge.get())
+        val ny = anchor.toY(maxY)
+        // The only way to observe where the bubble ended up without guessing at a screenshot. Debug builds
+        // only; flog compiles out of a release.
+        flogDebug {
+            "Bubble anchor ${anchor.edge} x=${anchor.xFraction} y=${anchor.yFraction} " +
+                "-> ($nx, $ny) travel ${maxX}x$maxY on ${screenWidth()}x${screenHeight()}"
+        }
+        if (nx == lp.x && ny == lp.y) return
+        lp.x = nx
+        lp.y = ny
+        val v = rootView
+        if (added && v != null) runCatching { windowManager.updateViewLayout(v, lp) }
+        if (cancelAdded) positionCancel()
+        if (undoAdded) positionUndo()
+    }
+
+    /**
+     * Puts the bubble back on screen after the screen itself changed shape — rotation, a foldable opening,
+     * a move into or out of split screen.
+     *
+     * Nothing used to react to this at all. The window keeps raw coordinates and carries
+     * [WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS], so an x measured on a wider screen was simply
+     * drawn past the edge of a narrower one and stayed there; only an unrelated event that happened to
+     * re-clamp the position (an app switch, a skin resize) brought it back.
+     *
+     * Runs regardless of the "remember position per app" setting: that setting decides whether an anchor
+     * is filed under a package, not whether the bubble is allowed to stay on screen.
+     */
+    fun onScreenGeometryChanged() {
+        applyAnchor()
+        // The metrics can still describe the old screen when the callback arrives. One trip through the
+        // view's own queue lands after the window has been laid out again; applying twice costs nothing
+        // because the second pass finds the position already correct and returns.
+        rootView?.post { applyAnchor() }
+    }
 
     /** Saves the bubble position for the leaving app and restores the position saved for the new app. */
     private fun onForegroundPackageChanged(pkg: String?) {
@@ -842,25 +932,36 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             currentPackage = pkg
             return
         }
-        saveCurrentPosition()
+        rememberCurrentPosition()
         currentPackage = pkg
-        val saved = pkg?.let { positions[it] } ?: return
-        val lp = params ?: return
-        val v = rootView
-        val w = v?.width ?: 0
-        val maxX = (screenWidth() - w).coerceAtLeast(0)
-        val maxY = (screenHeight() - (v?.height ?: 0)).coerceAtLeast(0)
-        lp.x = saved.first.coerceIn(0, maxX)
-        lp.y = saved.second.coerceIn(0, maxY)
-        anchoredToRight = lp.x + w / 2 >= screenWidth() / 2
-        if (added && v != null) runCatching { windowManager.updateViewLayout(v, lp) }
+        val saved = pkg?.let { prefs.dictate.floatingButtonPositions.get().toMap()[it] } ?: return
+        anchor = saved
+        applyAnchor()
     }
 
-    private fun saveCurrentPosition() {
+    /**
+     * Files the current position under the foreground app, in preferences rather than in memory.
+     *
+     * The anchor is read back even when the per-app setting is off: it describes where the bubble *is*,
+     * which the next geometry change needs whether or not anyone asked for it to be remembered. Only the
+     * filing under a package name is what the setting governs.
+     *
+     * Nothing is written before the bubble has been placed for the first time. The service can be
+     * connected long before the preference store has finished loading — at boot, for instance — and a
+     * position for a bubble that has never been on screen would only overwrite the real ones with a
+     * default.
+     */
+    private fun rememberCurrentPosition() {
+        if (needsInitialPlacement) return
+        captureAnchor()
         if (!prefs.dictate.floatingButtonRememberPosition.get()) return
-        val lp = params ?: return
         val pkg = currentPackage ?: return
-        positions[pkg] = lp.x to lp.y
+        val stored = prefs.dictate.floatingButtonPositions.get().toMap()
+        stored.remove(pkg) // re-insert at the back, so the list stays in least-recently-used order
+        stored[pkg] = anchor
+        // The write is suspending; the read above is not, and is done before the launch so the map cannot
+        // be built from a store that a second drag has already moved on from.
+        scope.launch { prefs.dictate.floatingButtonPositions.set(BubbleAnchors.of(stored)) }
     }
 
     private fun scheduleDim() {
