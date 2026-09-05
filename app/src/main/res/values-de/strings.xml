@@ -614,6 +614,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
+    <string name="pref__clipboard__strip_tracking_params__label" comment="Preference title">Tracking aus Links entfernen</string>
+    <string name="pref__clipboard__strip_tracking_params__summary" comment="Preference summary">Entfernt utm_, si, fbclid und Ähnliches beim Einfügen</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Beschränkung für die Vorschläge der Zwischenablage</string>

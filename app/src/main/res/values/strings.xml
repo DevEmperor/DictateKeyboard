@@ -1160,6 +1160,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
+    <string name="pref__clipboard__strip_tracking_params__label" comment="Preference title">Remove tracking from links</string>
+    <string name="pref__clipboard__strip_tracking_params__summary" comment="Preference summary">Strips utm_, si, fbclid and the like when pasting</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Number of grid columns</string>

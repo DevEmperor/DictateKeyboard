@@ -107,6 +107,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__sync_to_system",
             default = ClipboardSyncBehavior.NO_EVENTS,
         )
+        // Opt-in on purpose (issue #329): this quietly changes what the user pastes, and that is only
+        // ever acceptable because they asked for it.
+        val stripTrackingParams = boolean(
+            key = "clipboard__strip_tracking_params",
+            default = false,
+        )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
             default = true,

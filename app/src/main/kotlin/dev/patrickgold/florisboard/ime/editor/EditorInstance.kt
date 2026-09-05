@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.util.UrlSanitizer
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.io.File
@@ -467,7 +468,15 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.TEXT -> {
-                commitText(item.text.toString()).also {
+                // One funnel for all three ways to paste — the key, the clipboard panel and the
+                // suggestion chip — which is why the link cleaner sits here and nowhere else (#329).
+                val text = item.text.toString()
+                val outgoing = if (prefs.clipboard.stripTrackingParams.get()) {
+                    UrlSanitizer.clean(text)
+                } else {
+                    text
+                }
+                commitText(outgoing).also {
                     updateLastCommitPosition()
                 }
             }
