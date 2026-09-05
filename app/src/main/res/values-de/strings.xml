@@ -396,7 +396,7 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
     <string name="pref__dictionary__learn_typed_words__label" comment="Preference title for automatic word learning">Wörter beim Tippen lernen</string>
-    <string name="pref__dictionary__learn_typed_words__summary" comment="Preference summary for automatic word learning">Merkt sich Wörter, die kein Wörterbuch kennt — Namen, Fachbegriffe, eigene Schreibweisen — und schlägt sie später vor. Alles bleibt auf diesem Gerät. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt.</string>
+    <string name="pref__dictionary__learn_typed_words__summary" comment="Preference summary for automatic word learning">Merkt sich Namen und Fachbegriffe, die kein Wörterbuch kennt. Bleibt auf dem Gerät.</string>
     <string name="pref__dictionary__manage_learned_words__label" comment="Preference title">Gelernte Wörter</string>
     <string name="pref__dictionary__manage_learned_words__summary" comment="Preference summary">Ansehen, was die Tastatur aufgeschnappt hat, und löschen, was sie vergessen soll</string>
 
@@ -411,7 +411,7 @@
     <string name="settings__learned__forget_all" comment="Button that removes every learned word">Alles vergessen</string>
     <string name="settings__learned__forget_all_confirm" comment="Confirmation question before deleting all learned words">Alle gelernten Wörter vergessen? Wörter, die schon im Wörterbuch stehen, bleiben dort.</string>
     <string name="settings__learned__add_now" comment="Button that promotes a learned word into the personal dictionary immediately">Ins Wörterbuch übernehmen</string>
-    <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">Ein Wort wird erst gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper. Ab dem zweiten Mal wird es vorgeschlagen, ab dem dritten steht es im Wörterbuch — von da an lässt die Autokorrektur es in Ruhe.</string>
+    <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">Ein Wort wird erst gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper. Ab dem zweiten Mal wird es vorgeschlagen, ab dem dritten steht es im Wörterbuch — von da an lässt die Autokorrektur es in Ruhe.\n\nAlles bleibt auf diesem Gerät. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt — ausschließlich aus dem, was du wirklich getippt hast.</string>
     <string name="suggestion__forgot_word" comment="Toast after forgetting a learned word. The placeholder inserts the word.">„{word}“ vergessen</string>
 
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internes Benutzerwörterbuch</string>
@@ -1938,19 +1938,6 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt-Reihen</string>
     <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
     <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
-    <string name="apptour62__intro_eyebrow">Dictate 6.2</string>
-    <string name="apptour62__intro_title">Eine Tastatur, die deine Wörter lernt</string>
-    <string name="apptour62__intro_body">Namen, Fachbegriffe, eigene Schreibweisen — genau die Wörter, die in keinem Wörterbuch stehen, sind die, um die man mit einer Tastatur streitet. Dictate kann sie jetzt beim Tippen aufschnappen, und die Funktion bleibt aus, bis du sie einschaltest.</string>
-    <string name="apptour62__learning_eyebrow">Neu: gelernte Wörter</string>
-    <string name="apptour62__learning_title">Dreimal getippt, und es gehört dir</string>
-    <string name="apptour62__learning_body">Ein Wort, das kein Wörterbuch kennt, wird beim ersten Tippen gemerkt, ab dem zweiten vorgeschlagen und beim dritten ins Wörterbuch übernommen — von da an lässt die Autokorrektur es in Ruhe. Aufgeschnappte Wörter stehen kursiv in der Leiste, ein langer Druck vergisst sie wieder. Und die Tastatur lernt auch, welche Wörter du zusammen schreibst, sodass die Nächstes-Wort-Vorschläge deine werden statt die eines Korpus.</string>
-    <string name="apptour62__learning_cta">Einschalten</string>
-    <string name="apptour62__care_eyebrow">Was sie nicht tut</string>
-    <string name="apptour62__care_title">Ein gelernter Tippfehler bleibt für immer</string>
-    <string name="apptour62__care_body">Deshalb wird ein Wort nur gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper — Dictate weiß, wo deine Finger gelandet sind, und erkennt den Unterschied daran. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt, ausschließlich aus dem, was du wirklich getippt hast. Alles bleibt auf diesem Gerät, die vollständige Liste steht unter „Benutzerwörterbücher\", und im Backup ist sie jetzt mit dabei.</string>
-    <string name="apptour62__outro_eyebrow">Das ist 6.2</string>
-    <string name="apptour62__outro_title">Deins zum Korrigieren</string>
-    <string name="apptour62__outro_body">Wenn sie sich etwas merkt, das sie nicht sollte: langer Druck auf den Vorschlag oder aus der Liste löschen. Jede Tour lässt sich unter Einstellungen › Über erneut öffnen.</string>
     <string name="about__website__title">Website</string>
     <string name="dictate__error_out_of_credit">Guthaben aufgebraucht</string>
     <string name="dictate__action_top_up">Guthaben aufladen</string>

@@ -62,7 +62,6 @@ import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.IosShare
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.PhoneAndroid
@@ -706,47 +705,6 @@ private val WhatsNewPages61: List<WhatsNewPage> = listOf(
     ),
 )
 
-private val WhatsNewPages62: List<WhatsNewPage> = listOf(
-    WhatsNewPage(
-        icon = Icons.Filled.AutoAwesome,
-        eyebrow = R.string.apptour62__intro_eyebrow,
-        title = R.string.apptour62__intro_title,
-        body = R.string.apptour62__intro_body,
-        cta = R.string.apptour__start,
-        route = null,
-        kind = PageKind.INTRO,
-    ),
-    WhatsNewPage(
-        icon = Icons.Filled.Spellcheck,
-        eyebrow = R.string.apptour62__learning_eyebrow,
-        title = R.string.apptour62__learning_title,
-        body = R.string.apptour62__learning_body,
-        // The feature is opt-in, so the button has to be the way *in* rather than a look around: an
-        // announcement of something switched off, with a "try it" that lands on a switch nobody notices,
-        // announces nothing.
-        cta = R.string.apptour62__learning_cta,
-        route = Routes.Settings.Dictionary,
-        highlight = true,
-    ),
-    WhatsNewPage(
-        icon = Icons.Filled.Lock,
-        eyebrow = R.string.apptour62__care_eyebrow,
-        title = R.string.apptour62__care_title,
-        body = R.string.apptour62__care_body,
-        cta = R.string.apptour__next,
-        route = null,
-    ),
-    WhatsNewPage(
-        icon = Icons.Filled.Celebration,
-        eyebrow = R.string.apptour62__outro_eyebrow,
-        title = R.string.apptour62__outro_title,
-        body = R.string.apptour62__outro_body,
-        cta = R.string.apptour__done,
-        route = null,
-        kind = PageKind.OUTRO,
-    ),
-)
-
 internal val WHATS_NEW_TOURS: List<WhatsNewTourDef> = listOf(
     WhatsNewTourDef(VersionName(5, 0, 0), WhatsNewPages50),
     WhatsNewTourDef(VersionName(5, 1, 0), WhatsNewPages51),
@@ -754,7 +712,6 @@ internal val WHATS_NEW_TOURS: List<WhatsNewTourDef> = listOf(
     WhatsNewTourDef(VersionName(5, 3, 0), WhatsNewPages53),
     WhatsNewTourDef(VersionName(6, 0, 0), WhatsNewPages60),
     WhatsNewTourDef(VersionName(6, 1, 0), WhatsNewPages61),
-    WhatsNewTourDef(VersionName(6, 2, 0), WhatsNewPages62),
 )
 
 /**
