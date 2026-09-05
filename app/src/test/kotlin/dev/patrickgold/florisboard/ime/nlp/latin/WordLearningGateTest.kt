@@ -36,8 +36,6 @@ class WordLearningGateTest {
         isPrivateField: Boolean = false,
         origin: WordOrigin = WordOrigin.TYPED,
         word: String = "klabautersteg",
-        atSentenceStart: Boolean = false,
-        autoCapitalizationOn: Boolean = true,
         isKnownWord: Boolean = false,
         cheapCorrectionExists: Boolean = false,
     ) = WordLearningGate.shouldLearn(
@@ -45,8 +43,6 @@ class WordLearningGateTest {
         isPrivateField = isPrivateField,
         origin = origin,
         word = word,
-        atSentenceStart = atSentenceStart,
-        autoCapitalizationOn = autoCapitalizationOn,
         isKnownWord = isKnownWord,
         cheapCorrectionExists = cheapCorrectionExists,
     )
@@ -89,10 +85,14 @@ class WordLearningGateTest {
         assertFalse(learns(cheapCorrectionExists = true))
     }
 
+    /**
+     * A word opening a sentence used to be refused, because auto-capitalisation makes the capital
+     * unattributable. That excluded the feature's main case — "Dario, kannst du…" is where a name goes —
+     * and it is unnecessary, because nothing downstream compares spellings case-sensitively.
+     */
     @Test
-    fun `a sentence start is skipped only while auto-capitalisation could have caused it`() {
-        assertFalse(learns(atSentenceStart = true, autoCapitalizationOn = true))
-        assertTrue(learns(atSentenceStart = true, autoCapitalizationOn = false))
+    fun `a word opening a sentence is learned like any other`() {
+        assertTrue(learns(word = "Dario"))
     }
 
     // ── Shape ────────────────────────────────────────────────────────────────────────────────────

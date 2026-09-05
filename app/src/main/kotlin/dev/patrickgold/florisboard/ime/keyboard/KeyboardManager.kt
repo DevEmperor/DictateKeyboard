@@ -430,7 +430,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         nlpManager.learnFinishedWord(
             word = word,
             origin = if (wasTyped) WordOrigin.TYPED else WordOrigin.OTHER,
-            textBeforeWord = textBefore,
             tapPoints = TouchTrace.pointsFor(word),
         )
         if (wasTyped) {
@@ -690,13 +689,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // dictionary word by construction, which is exactly what that reasoning treats as a typo.
         val restored = correction.replaced.trim()
         if (restored.isNotEmpty()) {
-            val before = editorInstance.activeContent.textBeforeSelection
-                .removeSuffix(boundary)
-                .removeSuffix(correction.replaced)
             nlpManager.learnFinishedWord(
                 word = restored,
                 origin = WordOrigin.TYPED,
-                textBeforeWord = before,
                 tapPoints = null,
                 weight = WordLearningGate.REJECTION_WEIGHT,
                 trustedByUser = true,

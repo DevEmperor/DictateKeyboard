@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.dictionary.LearnedSnapshot
 import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
 import dev.patrickgold.florisboard.ime.nlp.LearnOutcome
 import dev.patrickgold.florisboard.ime.nlp.LearningProvider
@@ -817,6 +818,82 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
+    // --- The user's own words as correction targets (issue #318 follow-up) ------------------------
+
+    /**
+     * Fold key → stored spelling for every word the user added by hand, cached per language.
+     *
+     * A cache rather than a query because the corrector asks by *edit distance*: it needs to look up a
+     * few hundred candidate spellings per keystroke, and the personal dictionary's own lookup is a
+     * `LIKE '%word%'` scan. Dropped whenever the dictionary changes ([onPersonalVocabularyChanged]),
+     * which is the same handful of places that already rebuild the glide index.
+     */
+    private val personalWordsByLang = guardedByLock { mutableMapOf<String, Map<String, String>>() }
+
+    override suspend fun onPersonalVocabularyChanged() {
+        personalWordsByLang.withLock { it.clear() }
+    }
+
+    private suspend fun personalWordsFor(subtype: Subtype): Map<String, String> {
+        val lang = dictLangFor(subtype) ?: return emptyMap()
+        return personalWordsByLang.withLock { cache ->
+            cache.getOrPut(lang) {
+                runCatching {
+                    val dm = DictionaryManager.default()
+                    dm.loadUserDictionariesIfNecessary()
+                    buildMap {
+                        for (entry in dm.queryAllUserWords(subtype.primaryLocale)) {
+                            val word = entry.word.trim()
+                            if (word.isNotEmpty()) put(DictFold.foldKey(lang, word), word)
+                        }
+                    }
+                }.getOrDefault(emptyMap())
+            }
+        }
+    }
+
+    /**
+     * The user's own words one edit away from [word] — theirs to be corrected *into*, which no amount of
+     * dictionary data can do for them.
+     *
+     * This closes the gap the maintainer found: a personal word was offered as a prefix completion and
+     * protected from autocorrect, but it was invisible to the corrector, because `correctionsFor` filters
+     * candidates against the bundled dictionary index and nothing else. So typing a name slightly wrong
+     * produced no offer at all, and the word was never marked or committed by space the way a dictionary
+     * word is.
+     *
+     * Distance 1 only, and returned as ordinary correction candidates so the existing auto-commit gate
+     * decides whether any of them may be swapped in silently. That gate is the whole safety argument
+     * here: every word added to a correction candidate set is a word that correctly typed input can now
+     * be rewritten *into* — the lesson from #242, where a bigger dictionary measured negative for exactly
+     * that reason.
+     */
+    private suspend fun personalCorrectionsFor(
+        word: String,
+        subtype: Subtype,
+        index: LowerIndex,
+    ): List<String> {
+        val personal = personalWordsFor(subtype)
+        val learned = learnedSnapshotFor(subtype)
+        if (personal.isEmpty() && (learned == null || learned.isEmpty)) return emptyList()
+        val folded = index.fold(word)
+        val minScore = WordLearningGate.scoreFloorFor(WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS)
+        val out = LinkedHashSet<String>()
+        for (edit in EditDistance.edits1(folded, index.alphabet)) {
+            if (edit == folded) continue
+            personal[edit]?.let { out.add(it) }
+            learned?.wordForKey(edit, minScore)?.let { out.add(it) }
+            if (out.size >= CORRECTION_MAX) break
+        }
+        return out.toList()
+    }
+
+    /** The learned-word snapshot for [subtype], or null when learning is off / there is no dictionary. */
+    private suspend fun learnedSnapshotFor(subtype: Subtype): LearnedSnapshot? =
+        dictLangFor(subtype)
+            ?.takeIf { prefs.suggestion.learnTypedWords.get() }
+            ?.let { lang -> runCatching { LearnedWordsStore.snapshot(appContext, lang) }.getOrNull() }
+
     private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
         val dm = DictionaryManager.default()
         dm.loadUserDictionariesIfNecessary()
@@ -1112,9 +1189,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // is remembered and nothing more — and always marked, so the strip can say where they came from.
         // A promoted word arrives through [personal] above instead, but is still marked here: it is no
         // less the user's word for having graduated into the dictionary.
-        val learnedSnapshot = dictLangFor(subtype)
-            ?.takeIf { prefs.suggestion.learnTypedWords.get() }
-            ?.let { lang -> runCatching { LearnedWordsStore.snapshot(appContext, lang) }.getOrNull() }
+        val learnedSnapshot = learnedSnapshotFor(subtype)
         val learned = learnedSnapshot
             ?.startingWith(
                 prefix = index.fold(word),
@@ -1241,6 +1316,23 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     ),
                 )
             }
+            // The user's own words go first among the corrections. They are not in the dictionary index,
+            // so they carry no frequency of their own — they are ranked at the same band they occupy as
+            // completions, which is what puts them ahead of a rare dictionary word one edit away.
+            val personalFixes = personalCorrectionsFor(word, subtype, index)
+            personalFixes.forEachIndexed { i, correction ->
+                val text = cased(correction)
+                out.putIfAbsent(
+                    text.lowercase(),
+                    WordSuggestionCandidate(
+                        text = text,
+                        confidence = USER_DICTIONARY_RANK_FREQ / 255.0,
+                        isEligibleForAutoCommit = allowAutoCommit && i == 0,
+                        sourceProvider = this,
+                        isLearned = true,
+                    ),
+                )
+            }
             corrections.forEachIndexed { i, correction ->
                 val text = cased(correction)
                 val freq = index.freq[index.fold(correction)] ?: 0
@@ -1249,7 +1341,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     WordSuggestionCandidate(
                         text = text,
                         confidence = freq / 255.0,
-                        isEligibleForAutoCommit = allowAutoCommit && i == 0 && freq >= AUTOCORRECT_MIN_FREQ,
+                        // Only when nothing of the user's own already took the auto-commit slot: two bold
+                        // candidates would be a lie about which one space is going to take.
+                        isEligibleForAutoCommit = allowAutoCommit && i == 0 &&
+                            personalFixes.isEmpty() && freq >= AUTOCORRECT_MIN_FREQ,
                         sourceProvider = this,
                     ),
                 )
@@ -1260,17 +1355,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     // --- Word learning (issue #318) ------------------------------------------------------------------
-
-    /**
-     * Whether [textBeforeWord] leaves the word that follows it standing at the start of a sentence.
-     *
-     * Reuses [SENTENCE_ENDINGS] rather than a second list, so "what ends a sentence" keeps meaning one
-     * thing across next-word prediction (issue #245) and this.
-     */
-    private fun opensASentence(textBeforeWord: String): Boolean {
-        val settled = textBeforeWord.trimEnd()
-        return settled.isEmpty() || settled.last() in SENTENCE_ENDINGS
-    }
 
     /**
      * The best word the beam reads out of [points] for [word], with the excess tap distance it cost, or
@@ -1307,7 +1391,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         subtype: Subtype,
         word: String,
         origin: WordOrigin,
-        textBeforeWord: String,
         tapPoints: FloatArray?,
         isPrivateSession: Boolean,
         weight: Int,
@@ -1342,10 +1425,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             isPrivateField = false,
             origin = origin,
             word = trimmed,
-            atSentenceStart = opensASentence(textBeforeWord),
-            // A word the user restored by hand is theirs whatever its capitalisation: they typed it, saw
-            // what we made of it, and put it back.
-            autoCapitalizationOn = !trustedByUser && prefs.correction.autoCapitalization.get(),
             isKnownWord = false,
             cheapCorrectionExists = slip,
         )

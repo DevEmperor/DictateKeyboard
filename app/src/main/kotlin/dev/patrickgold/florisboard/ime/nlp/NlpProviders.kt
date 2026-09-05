@@ -306,7 +306,6 @@ interface LearningProvider {
      * Offers one finished word for learning and reports what happened.
      *
      * @param word the word as typed, with its capitalisation, already stripped of its separator.
-     * @param textBeforeWord everything in front of it, for deciding whether it opened a sentence.
      * @param tapPoints where the fingers landed, `[x0, y0, x1, y1, …]` in key-width units, or null when
      *  there was no usable trace — a hardware keyboard, or a cursor jump that desynced it. It is passed in
      *  rather than read here because this runs after the word boundary, by which time the live trace has
@@ -321,7 +320,6 @@ interface LearningProvider {
         subtype: Subtype,
         word: String,
         origin: WordOrigin,
-        textBeforeWord: String,
         tapPoints: FloatArray?,
         isPrivateSession: Boolean,
         weight: Int = 1,
@@ -336,6 +334,15 @@ interface LearningProvider {
      * into the personal dictionary — in which case the caller has that copy to remove as well.
      */
     suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean
+
+    /**
+     * The personal dictionary changed underneath the provider — drop whatever it cached from it.
+     *
+     * Needed because the corrector reads the personal words from a cache rather than from the database
+     * (it looks them up by edit distance, hundreds of keys per keystroke). Called from the same places
+     * that already rebuild the glide index.
+     */
+    suspend fun onPersonalVocabularyChanged()
 }
 
 /**

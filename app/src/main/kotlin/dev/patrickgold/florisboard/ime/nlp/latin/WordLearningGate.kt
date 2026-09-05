@@ -228,18 +228,14 @@ internal object WordLearningGate {
      * @param isPrivateField incognito, a password field, or a field that asked for no suggestions.
      * @param origin how the word reached the editor; only [WordOrigin.TYPED] may be learned.
      * @param word the word as it was typed, trimmed of its trailing separator.
-     * @param atSentenceStart the word opened a sentence.
-     * @param autoCapitalizationOn the setting that would have capitalised it there.
      * @param isKnownWord any configured language's dictionary knows it, or it is already personal.
-     * @param cheapCorrectionExists the verdict of [correctionLooksLikeASlip].
+     * @param cheapCorrectionExists the verdict of [looksLikeASlip].
      */
     fun shouldLearn(
         enabled: Boolean,
         isPrivateField: Boolean,
         origin: WordOrigin,
         word: String,
-        atSentenceStart: Boolean,
-        autoCapitalizationOn: Boolean,
         isKnownWord: Boolean,
         cheapCorrectionExists: Boolean,
     ): Boolean {
@@ -249,11 +245,16 @@ internal object WordLearningGate {
         if (!isLearnableForm(word)) return false
         if (isKnownWord) return false
         if (cheapCorrectionExists) return false
-        // At a sentence start with auto-capitalisation on, there is no way to tell whether the capital
-        // was the user's decision or ours — and a wrongly capitalised entry is exactly the kind of debris
-        // that makes a personal dictionary worse than none. The word is learned the next time it appears
-        // mid-sentence; at three sightings that costs almost nothing.
-        if (atSentenceStart && autoCapitalizationOn) return false
+        // A word opening a sentence used to be refused here, because auto-capitalisation makes it
+        // impossible to tell whether the capital was the user's decision or ours. That was the wrong
+        // trade and the maintainer's own use put a name on it: "Dario, kannst du…" is the most natural
+        // place to type a name, so the rule was excluding precisely the case the feature exists for.
+        //
+        // It is safe to drop because nothing downstream compares spellings case-sensitively: the
+        // known-word test folds case, the strip re-cases a suggestion to match what is being typed, and
+        // the fold key both stores index on ignores case by construction. The residue is cosmetic — a
+        // German noun typed lowercase at a sentence start is stored capitalised — and the settings list
+        // is right there to correct it.
         return true
     }
 }

@@ -352,7 +352,10 @@ class NlpManager(context: Context) {
                         shortcut = null,
                     )
                 )
-                scope.launch { suggest(subtypeManager.activeSubtype, editorInstance.activeContent) }
+                scope.launch {
+                    notePersonalVocabularyChanged(subtype)
+                    suggest(subtypeManager.activeSubtype, editorInstance.activeContent)
+                }
                 // Glide builds its index up front, so a word added mid-session would otherwise be typable
                 // but not swipeable until the next subtype change (issue #263).
                 glideTypingManager.value.invalidateWordData()
@@ -377,7 +380,6 @@ class NlpManager(context: Context) {
     fun learnFinishedWord(
         word: String,
         origin: WordOrigin,
-        textBeforeWord: String,
         tapPoints: FloatArray?,
         weight: Int = 1,
         trustedByUser: Boolean = false,
@@ -391,7 +393,6 @@ class NlpManager(context: Context) {
                 subtype = subtype,
                 word = word,
                 origin = origin,
-                textBeforeWord = textBeforeWord,
                 tapPoints = tapPoints,
                 isPrivateSession = isPrivate,
                 weight = weight,
@@ -432,6 +433,7 @@ class NlpManager(context: Context) {
         }.getOrDefault(false)
         if (!promoted) return
         LearnedWordsStore.setPromoted(appContext, outcome.entryId, true, outcome.lang)
+        notePersonalVocabularyChanged(subtype)
         // Glide builds its index up front, so without this the freshly promoted word would be typable
         // but not swipeable until the next subtype change (issue #263).
         glideTypingManager.value.invalidateWordData()
@@ -455,10 +457,16 @@ class NlpManager(context: Context) {
                 runCatching {
                     dao?.queryExactFuzzyLocale(word, subtype.primaryLocale)?.forEach { dao.delete(it) }
                 }
+                notePersonalVocabularyChanged(subtype)
                 glideTypingManager.value.invalidateWordData()
             }
             suggest(subtype, editorInstance.activeContent)
         }
+    }
+
+    /** Tells the active provider its cached copy of the personal dictionary is stale. */
+    private suspend fun notePersonalVocabularyChanged(subtype: Subtype) {
+        (getSuggestionProvider(subtype) as? LearningProvider)?.onPersonalVocabularyChanged()
     }
 
     /** Records that [word] followed [previousWord], for the personal half of next-word prediction. */

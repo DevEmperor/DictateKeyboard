@@ -265,6 +265,25 @@ class LearnedSnapshot internal constructor(
         return out.take(limit).map { it.first }
     }
 
+    /**
+     * The stored spelling for the exact folded [key], if it is held at [minScore] or above.
+     *
+     * For the corrector, which asks about one candidate key at a time rather than about a prefix.
+     */
+    fun wordForKey(key: String, minScore: Double): String? {
+        var lo = lowerBound(key)
+        var best: String? = null
+        var bestScore = minScore
+        while (lo < keys.size && keys[lo] == key) {
+            if (scores[lo] >= bestScore) {
+                bestScore = scores[lo]
+                best = words[lo]
+            }
+            lo++
+        }
+        return best
+    }
+
     /** The decayed score of the exact folded [key], or 0.0 when it is not held. */
     fun scoreOfKey(key: String): Double {
         var lo = lowerBound(key)
