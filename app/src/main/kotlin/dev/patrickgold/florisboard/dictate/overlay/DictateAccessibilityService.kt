@@ -606,27 +606,36 @@ class DictateAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * Asks the field to put its caret at position [length]. The answer is the point, not the caret.
-     *
-     * `TextView` validates the range against the text it really holds — which for a field showing its
-     * hint is the *empty* string, not the hint. So a field that claims seven characters of content and
-     * then refuses position seven has just told us that those seven characters are a placeholder.
+     * Whether the node's claim to be holding [text] survives being tested — [claimProbeIndex] explains
+     * what the test is and why a field's answer to it cannot be faked.
      *
      * A refusal is only ever "unknown", never "empty": a view with its own accessibility node provider
      * (WebView, Compose) may refuse for its own reasons, and concluding "empty" there would rebuild the
      * field without the user's text — deleting real content, which is far worse than a stray prepend.
      *
-     * Only asked when the node reports no caret at all, i.e. exactly where we would otherwise have
-     * appended blindly; asking a field that knows its caret would drag the user's cursor to the end.
+     * The caret is put back where it was afterwards, so someone who placed it mid-sentence still gets
+     * the dictation there and not at the end.
      */
-    private fun confirmCaretAtEnd(node: AccessibilityNodeInfo, length: Int): Boolean {
-        val args = Bundle().apply {
-            putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_START_INT, length)
-            putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_END_INT, length)
+    private fun confirmClaimedText(
+        node: AccessibilityNodeInfo,
+        text: String,
+        start: Int,
+        end: Int,
+    ): Boolean {
+        val probe = claimProbeIndex(text.length, start, end) ?: return true
+        val confirmed = runCatching { setSelection(node, probe, probe) }.getOrDefault(false)
+        if (confirmed && start >= 0 && end >= 0) {
+            runCatching { setSelection(node, start, end) }
         }
-        return runCatching {
-            node.performAction(AccessibilityNodeInfo.ACTION_SET_SELECTION, args)
-        }.getOrDefault(false)
+        return confirmed
+    }
+
+    private fun setSelection(node: AccessibilityNodeInfo, start: Int, end: Int): Boolean {
+        val args = Bundle().apply {
+            putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_START_INT, start)
+            putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_END_INT, end)
+        }
+        return node.performAction(AccessibilityNodeInfo.ACTION_SET_SELECTION, args)
     }
 
     /** [fieldContentFrom] over a real node, with [icContent] (read earlier) as the preferred source. */
@@ -646,7 +655,10 @@ class DictateAccessibilityService : AccessibilityService() {
             nodeText = nodeText,
             nodeStart = node?.textSelectionStart ?: -1,
             nodeEnd = node?.textSelectionEnd ?: -1,
-            confirmCaretAtEnd = { node != null && confirmCaretAtEnd(node, nodeText.length) },
+            confirmClaimedText = {
+                node != null &&
+                    confirmClaimedText(node, nodeText, node.textSelectionStart, node.textSelectionEnd)
+            },
         )
     }
 
@@ -1194,17 +1206,22 @@ class DictateAccessibilityService : AccessibilityService() {
          *  1. **The input connection.** The editor has no notion of a placeholder and knows its real
          *     caret. Available from API 33, and always right when it is.
          *  2. **An empty node.** Nothing to preserve, so nothing can be got wrong.
-         *  3. **A node that reports a caret.** A field that knows where its cursor is, is a field that
-         *     is telling us about real content rather than about the hint it is drawing.
-         *  4. **A node that reports none** — the WhatsApp/Telegram case, `text="Message"`, `sel=-1`.
-         *     Only [confirmCaretAtEnd] can settle it, and only in one direction.
+         *  3. **A node whose claim survives [confirmClaimedText].** Everything else the node says is a
+         *     claim, including its caret.
+         *
+         * Whether the node reports a caret decides only *where* the dictation goes, never whether its
+         * text may be believed. That distinction is the second half of issue #314 and cost a round of
+         * its own: WhatsApp's search field reports the placeholder `Ask Meta AI or Search` as its text
+         * **and** a caret at position 1, so reading "it knows its cursor" as proof of real content
+         * spliced the dictation into the middle of the placeholder — `A`, the dictation, then
+         * `sk Meta AI or Search`, exactly as it was reported.
          */
         internal fun fieldContentFrom(
             icContent: FieldContent?,
             nodeText: String,
             nodeStart: Int,
             nodeEnd: Int,
-            confirmCaretAtEnd: () -> Boolean,
+            confirmClaimedText: () -> Boolean,
         ): FieldContent? {
             if (icContent != null) {
                 val text = icContent.text
@@ -1213,13 +1230,33 @@ class DictateAccessibilityService : AccessibilityService() {
                 return FieldContent(text, minOf(start, end), maxOf(start, end), icContent.source)
             }
             if (nodeText.isEmpty()) return FieldContent("", 0, 0, "empty")
-            if (nodeStart >= 0 && nodeEnd >= 0) {
-                val start = minOf(nodeStart, nodeEnd).coerceAtMost(nodeText.length)
-                val end = maxOf(nodeStart, nodeEnd).coerceAtMost(nodeText.length)
-                return FieldContent(nodeText, start, end, "node")
-            }
-            if (!confirmCaretAtEnd()) return null
-            return FieldContent(nodeText, nodeText.length, nodeText.length, "probe")
+            if (!confirmClaimedText()) return null
+            val hasCaret = nodeStart >= 0 && nodeEnd >= 0
+            val length = nodeText.length
+            val start = if (hasCaret) minOf(nodeStart, nodeEnd).coerceAtMost(length) else length
+            val end = if (hasCaret) maxOf(nodeStart, nodeEnd).coerceAtMost(length) else length
+            return FieldContent(nodeText, start, end, if (hasCaret) "node" else "probe")
+        }
+
+        /**
+         * Where to ask the field to put its caret in order to test a claim of [claimedLength]
+         * characters, or null when the claim cannot be tested at all.
+         *
+         * `TextView` validates a requested selection against the text it really holds — for a field
+         * drawing its hint, the empty string — so a field that claims 21 characters and then refuses
+         * position 21 has just admitted that those 21 characters are not content.
+         *
+         * The wrinkle is that the same code returns false when the requested selection is the one
+         * already set, which would make every field whose caret sits at the end look unprovable. Those
+         * are probed one character earlier instead. A claim of a single character cannot be told from an
+         * empty field this way and is not worth the round trip: at worst one stray character, against a
+         * system clipboard notice on every dictation into such a field.
+         */
+        internal fun claimProbeIndex(claimedLength: Int, start: Int, end: Int): Int? {
+            if (claimedLength <= 0) return null
+            val caretAtEnd = start == claimedLength && end == claimedLength
+            val index = if (caretAtEnd) claimedLength - 1 else claimedLength
+            return index.takeIf { it > 0 }
         }
 
         /**

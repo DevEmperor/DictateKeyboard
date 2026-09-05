@@ -38,21 +38,33 @@ class FieldContentTest {
         nodeText: String = "",
         nodeStart: Int = -1,
         nodeEnd: Int = -1,
-        caretConfirmed: Boolean = false,
+        claimConfirmed: Boolean = false,
     ) = DictateAccessibilityService.fieldContentFrom(
         icContent = ic,
         nodeText = nodeText,
         nodeStart = nodeStart,
         nodeEnd = nodeEnd,
-        confirmCaretAtEnd = { caretConfirmed },
+        confirmClaimedText = { claimConfirmed },
     )
+
+    private fun probe(claimedLength: Int, start: Int, end: Int) =
+        DictateAccessibilityService.claimProbeIndex(claimedLength, start, end)
 
     // --- The reported bug -------------------------------------------------------------------------
 
     @Test
     fun `a placeholder with no caret proves nothing and is not rebuilt`() {
         // WhatsApp's composer as measured: the hint arrives as text, hintText is unset, no selection.
-        assertNull(resolve(nodeText = "Message", caretConfirmed = false))
+        assertNull(resolve(nodeText = "Message", claimConfirmed = false))
+    }
+
+    @Test
+    fun `a placeholder that also reports a caret proves nothing either`() {
+        // WhatsApp's search field, measured: text "Ask Meta AI or Search" AND a caret at 1. Trusting
+        // the caret as evidence of real content produced "A" + dictation + "sk Meta AI or Search".
+        assertNull(
+            resolve(nodeText = "Ask Meta AI or Search", nodeStart = 1, nodeEnd = 1, claimConfirmed = false),
+        )
     }
 
     @Test
@@ -64,7 +76,7 @@ class FieldContentTest {
 
     @Test
     fun `a field that confirms the caret is real content and may be appended to`() {
-        val content = resolve(nodeText = "Message", caretConfirmed = true)
+        val content = resolve(nodeText = "Message", claimConfirmed = true)
         assertEquals(FieldContent("Message", 7, 7, "probe"), content)
     }
 
@@ -89,14 +101,20 @@ class FieldContentTest {
     }
 
     @Test
-    fun `a node that reports its caret is trusted without the probe`() {
-        val content = resolve(nodeText = "hello", nodeStart = 2, nodeEnd = 2, caretConfirmed = false)
+    fun `a confirmed claim keeps the caret the node reported`() {
+        val content = resolve(nodeText = "hello", nodeStart = 2, nodeEnd = 2, claimConfirmed = true)
         assertEquals(FieldContent("hello", 2, 2, "node"), content)
     }
 
     @Test
+    fun `a confirmed claim without a caret appends at the end`() {
+        val content = resolve(nodeText = "hello", claimConfirmed = true)
+        assertEquals(FieldContent("hello", 5, 5, "probe"), content)
+    }
+
+    @Test
     fun `a selection is kept so the write replaces it`() {
-        val content = resolve(nodeText = "hello world", nodeStart = 6, nodeEnd = 11)
+        val content = resolve(nodeText = "hello world", nodeStart = 6, nodeEnd = 11, claimConfirmed = true)
         assertEquals(6, content?.start)
         assertEquals(11, content?.end)
     }
@@ -105,14 +123,14 @@ class FieldContentTest {
 
     @Test
     fun `a reversed selection is normalised rather than trusted as given`() {
-        val content = resolve(nodeText = "hello", nodeStart = 4, nodeEnd = 1)
+        val content = resolve(nodeText = "hello", nodeStart = 4, nodeEnd = 1, claimConfirmed = true)
         assertEquals(1, content?.start)
         assertEquals(4, content?.end)
     }
 
     @Test
     fun `a caret past the end of the text is clamped to it`() {
-        val content = resolve(nodeText = "hi", nodeStart = 99, nodeEnd = 99)
+        val content = resolve(nodeText = "hi", nodeStart = 99, nodeEnd = 99, claimConfirmed = true)
         assertEquals(2, content?.start)
         assertEquals(2, content?.end)
     }
@@ -127,7 +145,7 @@ class FieldContentTest {
 
     @Test
     fun `proven content splices the dictation in without touching the rest`() {
-        val content = resolve(nodeText = "hello world", nodeStart = 5, nodeEnd = 5)!!
+        val content = resolve(nodeText = "hello world", nodeStart = 5, nodeEnd = 5, claimConfirmed = true)!!
         val spliced = content.text.substring(0, content.start) + " there" +
             content.text.substring(content.end)
         assertEquals("hello there world", spliced)
@@ -137,5 +155,31 @@ class FieldContentTest {
     fun `an unproven field never reaches the splice at all`() {
         // The point of returning null: the caller pastes instead, and a paste cannot prepend anything.
         assertTrue(resolve(nodeText = "Ask Meta AI or Search") == null)
+    }
+
+    // --- Where the claim gets tested ---------------------------------------------------------------
+
+    @Test
+    fun `a claim is tested at the position it says it reaches`() {
+        assertEquals(21, probe(21, 1, 1))
+    }
+
+    @Test
+    fun `a caret already at the end is tested one character earlier`() {
+        // Asking for the selection a field already has is refused by TextView even when the text is
+        // real, so probing the end there would call every appendable field unprovable.
+        assertEquals(4, probe(5, 5, 5))
+    }
+
+    @Test
+    fun `a selection ending at the claim is still tested at the end`() {
+        // Only a collapsed caret at the end collides with the requested selection.
+        assertEquals(5, probe(5, 0, 5))
+    }
+
+    @Test
+    fun `nothing to test`() {
+        assertNull(probe(0, 0, 0))
+        assertNull(probe(1, 1, 1))
     }
 }
