@@ -45,6 +45,17 @@ object TouchTrace {
     private var pendingY = EXACT
     private var hasPending = false
 
+    /**
+     * Whether [xs]/[ys] still line up with [chars].
+     *
+     * Split from the character record for word learning (issue #318). A hardware keystroke produces a
+     * character with no coordinates, which invalidates the *spatial* evidence but is still perfectly good
+     * evidence that the word was **typed** — and "was this typed?" is the question that decides whether a
+     * word may enter the user's vocabulary. Before this the two were one thing, so a character without a
+     * tap threw the record away entirely.
+     */
+    private var coordsValid = true
+
     /** A character key was pressed at the given raw touch position (pixels). */
     @Synchronized
     fun pendingTap(xPx: Float, yPx: Float) {
@@ -76,14 +87,20 @@ object TouchTrace {
      */
     @Synchronized
     fun commit(text: String) {
-        if (!hasPending || text.length != 1 || chars.length >= MAX_LENGTH) {
+        if (text.length != 1 || chars.length >= MAX_LENGTH) {
             reset()
             return
         }
         val i = chars.length
         chars.append(text[0])
-        xs[i] = pendingX
-        ys[i] = pendingY
+        if (hasPending) {
+            xs[i] = pendingX
+            ys[i] = pendingY
+        } else {
+            // A keystroke with no touch behind it — a hardware keyboard. The character is still recorded,
+            // because it is what proves the word was typed; only the coordinates are gone from here on.
+            coordsValid = false
+        }
         hasPending = false
     }
 
@@ -99,6 +116,26 @@ object TouchTrace {
     fun reset() {
         chars.setLength(0)
         hasPending = false
+        coordsValid = true
+    }
+
+    /**
+     * Whether every character of [word] arrived through a key press, in that order (issue #318).
+     *
+     * This is the guarantee that nothing is learned from dictation, a paste, a glide or an accepted
+     * suggestion — and it is deliberately the same self-validating shape as [pointsFor] rather than a
+     * counter or a flag someone has to remember to clear. A counter would have said yes to a four-letter
+     * dictation arriving after four typed characters; comparing the actual characters cannot.
+     *
+     * Case is ignored for the same reason [pointsFor] ignores it: shift is a key, not a different word.
+     */
+    @Synchronized
+    fun wasFullyTyped(word: String): Boolean {
+        if (word.isEmpty() || word.length != chars.length) return false
+        for (i in word.indices) {
+            if (!word[i].equals(chars[i], ignoreCase = true)) return false
+        }
+        return true
     }
 
     /**
@@ -108,6 +145,7 @@ object TouchTrace {
      */
     @Synchronized
     fun pointsFor(word: String): FloatArray? {
+        if (!coordsValid) return null
         if (word.isEmpty() || word.length != chars.length) return null
         for (i in word.indices) {
             if (!word[i].equals(chars[i], ignoreCase = true)) return null

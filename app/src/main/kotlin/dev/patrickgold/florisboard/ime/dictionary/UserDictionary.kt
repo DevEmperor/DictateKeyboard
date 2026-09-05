@@ -35,6 +35,7 @@ import androidx.room.TypeConverters
 import androidx.room.Update
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.FlorisLocale
+import kotlinx.serialization.Serializable
 import dev.patrickgold.florisboard.lib.ValidationRule
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.android.writeText
@@ -64,6 +65,15 @@ private val PROJECTIONS_LANGUAGE: Array<String> = arrayOf(
     UserDictionary.Words.LOCALE,
 )
 
+/**
+ * One word in a personal dictionary.
+ *
+ * `@Serializable` because the backup writes these as JSON (issue #318). Worth stating why it is not
+ * optional: `writeJson` resolves its serializer from a *reified* type at runtime, so a missing annotation
+ * here compiles perfectly and then throws when someone actually presses "Back up" — which is how it was
+ * found, on the device, with the archive silently never produced.
+ */
+@Serializable
 @Entity(tableName = WORDS_TABLE)
 data class UserDictionaryEntry(
     @PrimaryKey(autoGenerate = true)

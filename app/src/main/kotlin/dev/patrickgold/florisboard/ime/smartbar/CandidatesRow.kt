@@ -66,6 +66,7 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -157,6 +158,21 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             // Clipboard suggestions keep their existing "long-press to forget" behaviour.
                             candidateItem is ClipboardSuggestionCandidate -> {
                                 nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                            }
+                            // A word the keyboard picked up by itself is already in the vocabulary, so the
+                            // gesture means the opposite there: forget it (issue #318). Without this, the
+                            // only way to take back something it learned would be the settings screen —
+                            // and the moment you want it undone is the moment you see it suggested.
+                            candidateItem.isLearned -> {
+                                FlorisImeService.inputFeedbackController()?.keyLongPress()
+                                nlpManager.forgetLearnedWord(subtypeManager.activeSubtype, candidateItem)
+                                scope.launch {
+                                    context.showShortToast(
+                                        R.string.suggestion__forgot_word,
+                                        "word" to candidateItem.text.toString(),
+                                    )
+                                }
+                                true
                             }
                             // For words the gesture teaches the personal dictionary instead (issue #241).
                             // It used to call removeSuggestion(), which every word provider answers with
@@ -270,6 +286,10 @@ private fun CandidateItem(
                 // Gboard-style: bold the suggestion that will be auto-applied (autocorrect), so it's clear
                 // what will replace the typed word; other suggestions stay normal weight (issue #150).
                 fontWeight = if (autoCommit) FontWeight.Bold else null,
+                // Italic marks a word from the user's own vocabulary rather than the bundled dictionary
+                // (issue #318), so it is visible where a suggestion came from — and so the feature can be
+                // seen working at all without waiting for autocorrect to stop interfering.
+                fontStyle = if (candidate.isLearned) FontStyle.Italic else null,
                 text = candidate.text.toString(),
             )
             if (candidate.secondaryText != null) {

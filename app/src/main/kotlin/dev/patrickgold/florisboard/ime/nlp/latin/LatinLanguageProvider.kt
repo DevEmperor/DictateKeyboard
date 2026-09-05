@@ -22,10 +22,15 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.dictionary.LearnedSnapshot
+import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
+import dev.patrickgold.florisboard.ime.nlp.LearnOutcome
+import dev.patrickgold.florisboard.ime.nlp.LearningProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.WordOrigin
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +46,7 @@ import org.florisboard.lib.kotlin.guardedByLock
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.ln
 
-class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
+class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider, LearningProvider {
     companion object {
         // Default user ID used for all subtypes, unless otherwise specified.
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
@@ -57,7 +62,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // A typo is only auto-corrected when its best fix is at least this frequent (on the dictionary's
         // 128..255 scale). Rarer fixes are still offered as tap suggestions but never swapped in
         // automatically, so uncommon-but-intentional words (names, jargon) aren't mangled.
-        private const val AUTOCORRECT_MIN_FREQ = 170
+        //
+        // The number itself moved to [AutoCommitGate] (issue #318): the word learner reads "a correction
+        // we would have applied" as evidence that the word was mistyped, so it has to mean the same thing
+        // in both places, and the evaluation harness has to measure the same rule both use.
+        private const val AUTOCORRECT_MIN_FREQ = AutoCommitGate.MIN_FREQ
 
         // Spelling-fix suggestions (issue #212 / distance-2 fallback): how many edit-distance corrections
         // to surface, how many strip slots to reserve for them so prefix completions of a typo don't crowd
@@ -109,6 +118,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // the maximum (NlpManager's USER_DICTIONARY_FREQ, 255), so honouring it would put a nickname above
         // "the" — and that number was chosen to protect words from autocorrect, a different question.
         private const val USER_DICTIONARY_RANK_FREQ = 212
+
+        // …and how frequent a word the keyboard picked up *by itself* counts as, before it has been seen
+        // often enough to be promoted into that dictionary (issue #318). 187 is the 75th percentile of the
+        // bundled English dictionary, measured the same way the 212 above was: it beats three quarters of
+        // the vocabulary, so it surfaces once a prefix has narrowed the ordinary words away — but it loses
+        // to anything the user added deliberately, which is the right order between a word someone chose
+        // to teach and a word we merely noticed.
+        private const val LEARNED_RANK_FREQ = 187
+
+        // How many learned words one prefix may contribute. Small on purpose: these sit among the tail of
+        // the dictionary walk, and a user with a large personal vocabulary should not find the strip made
+        // entirely of their own rare words.
+        private const val LEARNED_MAX = 3
 
         // German umlaut/ß restoration (issue #219): bound the variant generation so a long word with many
         // a/o/u doesn't explode combinatorially (2^sites). Words needing more than this are left alone.
@@ -531,21 +553,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return isInUserDictionary(word, subtype)
     }
 
-    /** All strings one edit away from [word] (delete / transpose / replace / insert) — Norvig's edits1. */
-    private fun edits1(word: String, alphabet: Set<Char>): Set<String> {
-        val result = HashSet<String>()
-        for (i in 0..word.length) {
-            val a = word.substring(0, i)
-            val b = word.substring(i)
-            if (b.isNotEmpty()) {
-                result.add(a + b.substring(1))                                    // delete
-                if (b.length > 1) result.add(a + b[1] + b[0] + b.substring(2))    // transpose
-                for (c in alphabet) result.add(a + c + b.substring(1))            // replace
-            }
-            for (c in alphabet) result.add(a + c + b)                             // insert
-        }
-        return result
-    }
+    /** All strings one edit away from [word] — shared with the word learner (issue #318). */
+    private fun edits1(word: String, alphabet: Set<Char>): Set<String> =
+        EditDistance.edits1(word, alphabet)
 
     /** Dictionary words closest to (a misspelling of) [word], ranked by frequency. */
     private fun correctionsFor(
@@ -632,27 +642,54 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val index = lowerIndexFor(subtype)
         val prevWord = previousWordOf(content, index) ?: return emptyList()
         val bigrams = bigramsFor(subtype)
-        if (bigrams.isEmpty()) return emptyList()
-
         val prefix = "$prevWord "
+
+        // The pairs this user has actually written, ahead of the corpus (issue #318). This is the half of
+        // word learning people recognise as the keyboard knowing them: a learned single word only helps
+        // while that word is being typed, but a learned *pair* answers before they have typed anything.
+        //
+        // Deliberately only here, and not in `bigramContextScore`, which feeds the *corrector*. Context
+        // that re-ranks a silent replacement was measured to mangle 2.4–9.2 % of correctly typed words
+        // even with the large corpus tables; a handful of personal pairs is far thinner evidence and the
+        // failure would be a word the user never typed appearing in place of one they did. Offering a
+        // prediction risks nothing — it sits in the strip until it is chosen.
+        val learnedPairs = if (prefs.suggestion.learnTypedWords.get()) {
+            dictLangFor(subtype)
+                ?.let { lang -> runCatching { LearnedWordsStore.bigrams(appContext, lang) }.getOrNull() }
+                .orEmpty()
+                .asSequence()
+                .filter { it.key.startsWith(prefix) && it.value >= WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS }
+                .sortedByDescending { it.value }
+                .map { it.key.substring(prefix.length) }
+                .filter { it.isNotBlank() }
+                .toList()
+        } else {
+            emptyList()
+        }
+        if (bigrams.isEmpty() && learnedPairs.isEmpty()) return emptyList()
+
         // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
         // ("the", "and", "of") that carries no information about what the user is writing.
-        return bigrams.asSequence()
+        val corpusPairs = bigrams.asSequence()
             .filter { it.key.startsWith(prefix) }
             .sortedByDescending { it.value }
             .take(maxCandidateCount)
-            .mapNotNull { entry ->
-                val candidate = entry.key.substring(prefix.length)
-                if (candidate.isBlank()) return@mapNotNull null
-                val text = index.canonical[candidate] ?: candidate
-                WordSuggestionCandidate(
-                    text = text,
-                    confidence = (index.freq[candidate] ?: 0) / 255.0,
-                    isEligibleForAutoCommit = false,
-                    sourceProvider = this,
-                )
-            }
-            .toList()
+            .map { it.key.substring(prefix.length) }
+            .filter { it.isNotBlank() }
+
+        val seen = LinkedHashMap<String, Boolean>() // candidate -> came from the user's own writing
+        for (candidate in learnedPairs) seen.putIfAbsent(candidate, true)
+        for (candidate in corpusPairs) seen.putIfAbsent(candidate, false)
+        return seen.entries.take(maxCandidateCount).map { (candidate, isLearned) ->
+            val text = index.canonical[candidate] ?: candidate
+            WordSuggestionCandidate(
+                text = text,
+                confidence = (index.freq[candidate] ?: 0) / 255.0,
+                isEligibleForAutoCommit = false,
+                sourceProvider = this,
+                isLearned = isLearned,
+            )
+        }
     }
 
     // --- Touch-decoded corrections (issue #242) -----------------------------------------------------
@@ -781,6 +818,82 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
+    // --- The user's own words as correction targets (issue #318 follow-up) ------------------------
+
+    /**
+     * Fold key → stored spelling for every word the user added by hand, cached per language.
+     *
+     * A cache rather than a query because the corrector asks by *edit distance*: it needs to look up a
+     * few hundred candidate spellings per keystroke, and the personal dictionary's own lookup is a
+     * `LIKE '%word%'` scan. Dropped whenever the dictionary changes ([onPersonalVocabularyChanged]),
+     * which is the same handful of places that already rebuild the glide index.
+     */
+    private val personalWordsByLang = guardedByLock { mutableMapOf<String, Map<String, String>>() }
+
+    override suspend fun onPersonalVocabularyChanged() {
+        personalWordsByLang.withLock { it.clear() }
+    }
+
+    private suspend fun personalWordsFor(subtype: Subtype): Map<String, String> {
+        val lang = dictLangFor(subtype) ?: return emptyMap()
+        return personalWordsByLang.withLock { cache ->
+            cache.getOrPut(lang) {
+                runCatching {
+                    val dm = DictionaryManager.default()
+                    dm.loadUserDictionariesIfNecessary()
+                    buildMap {
+                        for (entry in dm.queryAllUserWords(subtype.primaryLocale)) {
+                            val word = entry.word.trim()
+                            if (word.isNotEmpty()) put(DictFold.foldKey(lang, word), word)
+                        }
+                    }
+                }.getOrDefault(emptyMap())
+            }
+        }
+    }
+
+    /**
+     * The user's own words one edit away from [word] — theirs to be corrected *into*, which no amount of
+     * dictionary data can do for them.
+     *
+     * This closes the gap the maintainer found: a personal word was offered as a prefix completion and
+     * protected from autocorrect, but it was invisible to the corrector, because `correctionsFor` filters
+     * candidates against the bundled dictionary index and nothing else. So typing a name slightly wrong
+     * produced no offer at all, and the word was never marked or committed by space the way a dictionary
+     * word is.
+     *
+     * Distance 1 only, and returned as ordinary correction candidates so the existing auto-commit gate
+     * decides whether any of them may be swapped in silently. That gate is the whole safety argument
+     * here: every word added to a correction candidate set is a word that correctly typed input can now
+     * be rewritten *into* — the lesson from #242, where a bigger dictionary measured negative for exactly
+     * that reason.
+     */
+    private suspend fun personalCorrectionsFor(
+        word: String,
+        subtype: Subtype,
+        index: LowerIndex,
+    ): List<String> {
+        val personal = personalWordsFor(subtype)
+        val learned = learnedSnapshotFor(subtype)
+        if (personal.isEmpty() && (learned == null || learned.isEmpty)) return emptyList()
+        val folded = index.fold(word)
+        val minScore = WordLearningGate.scoreFloorFor(WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS)
+        val out = LinkedHashSet<String>()
+        for (edit in EditDistance.edits1(folded, index.alphabet)) {
+            if (edit == folded) continue
+            personal[edit]?.let { out.add(it) }
+            learned?.wordForKey(edit, minScore)?.let { out.add(it) }
+            if (out.size >= CORRECTION_MAX) break
+        }
+        return out.toList()
+    }
+
+    /** The learned-word snapshot for [subtype], or null when learning is off / there is no dictionary. */
+    private suspend fun learnedSnapshotFor(subtype: Subtype): LearnedSnapshot? =
+        dictLangFor(subtype)
+            ?.takeIf { prefs.suggestion.learnTypedWords.get() }
+            ?.let { lang -> runCatching { LearnedWordsStore.snapshot(appContext, lang) }.getOrNull() }
+
     private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
         val dm = DictionaryManager.default()
         dm.loadUserDictionariesIfNecessary()
@@ -819,6 +932,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         resolvedDictLang.clear()
         maybeDownloadDict(subtype)
         wordDataFor(subtype)
+        // Housekeeping for the learned vocabulary (issue #318) rides along here: it is the one moment per
+        // language change that is already off the typing path and already expected to touch storage.
+        if (prefs.suggestion.learnTypedWords.get()) {
+            dictLangFor(subtype)?.let { lang ->
+                runCatching { LearnedWordsStore.prune(appContext, lang) }
+            }
+        }
         Unit
     }
 
@@ -1065,6 +1185,22 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             .distinctBy { it.lowercase() }
         var personalTaken = 0
 
+        // The words this keyboard picked up on its own (issue #318). Only from the second sighting — one
+        // is remembered and nothing more — and always marked, so the strip can say where they came from.
+        // A promoted word arrives through [personal] above instead, but is still marked here: it is no
+        // less the user's word for having graduated into the dictionary.
+        val learnedSnapshot = learnedSnapshotFor(subtype)
+        val learned = learnedSnapshot
+            ?.startingWith(
+                prefix = index.fold(word),
+                minScore = WordLearningGate.scoreFloorFor(WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS),
+                limit = LEARNED_MAX,
+            )
+            .orEmpty()
+        var learnedTaken = 0
+        fun isLearnedWord(text: String): Boolean =
+            learnedSnapshot != null && learnedSnapshot.scoreOfKey(index.fold(text)) > 0.0
+
         /** Puts the personal words in as soon as the dictionary walk has dropped to [freq] or below. */
         fun addPersonalDownTo(freq: Int) {
             while (personalTaken < personal.size && USER_DICTIONARY_RANK_FREQ >= freq && out.size < completionCap) {
@@ -1075,6 +1211,23 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                         text = text,
                         confidence = USER_DICTIONARY_RANK_FREQ / 255.0,
                         sourceProvider = this,
+                        isLearned = isLearnedWord(text),
+                    ),
+                )
+            }
+        }
+
+        /** The same for the words picked up automatically, one rank band lower. */
+        fun addLearnedDownTo(freq: Int) {
+            while (learnedTaken < learned.size && LEARNED_RANK_FREQ >= freq && out.size < completionCap) {
+                val text = cased(learned[learnedTaken++])
+                out.putIfAbsent(
+                    text.lowercase(),
+                    WordSuggestionCandidate(
+                        text = text,
+                        confidence = LEARNED_RANK_FREQ / 255.0,
+                        sourceProvider = this,
+                        isLearned = true,
                     ),
                 )
             }
@@ -1097,6 +1250,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             if (!matches) continue
             val freq = data[dictWord] ?: 0
             addPersonalDownTo(freq)
+            addLearnedDownTo(freq)
             if (out.size >= completionCap) break
             val text = cased(dictWord)
             out.putIfAbsent(
@@ -1108,9 +1262,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 ),
             )
         }
-        // Nothing (or too little) in the dictionary extends this prefix: the personal words are all that is
-        // left to offer, so they go in rather than being dropped for want of a rank to sit at.
+        // Nothing (or too little) in the dictionary extends this prefix: the user's own words are all that
+        // is left to offer, so they go in rather than being dropped for want of a rank to sit at.
         addPersonalDownTo(0)
+        addLearnedDownTo(0)
 
         // Spelling fixes for an unknown word — now surfaced even when there are prefix completions of the
         // typo (issue #212), so a missing apostrophe/hyphen or other slip is offered (whats → what's)
@@ -1161,6 +1316,23 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     ),
                 )
             }
+            // The user's own words go first among the corrections. They are not in the dictionary index,
+            // so they carry no frequency of their own — they are ranked at the same band they occupy as
+            // completions, which is what puts them ahead of a rare dictionary word one edit away.
+            val personalFixes = personalCorrectionsFor(word, subtype, index)
+            personalFixes.forEachIndexed { i, correction ->
+                val text = cased(correction)
+                out.putIfAbsent(
+                    text.lowercase(),
+                    WordSuggestionCandidate(
+                        text = text,
+                        confidence = USER_DICTIONARY_RANK_FREQ / 255.0,
+                        isEligibleForAutoCommit = allowAutoCommit && i == 0,
+                        sourceProvider = this,
+                        isLearned = true,
+                    ),
+                )
+            }
             corrections.forEachIndexed { i, correction ->
                 val text = cased(correction)
                 val freq = index.freq[index.fold(correction)] ?: 0
@@ -1169,7 +1341,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     WordSuggestionCandidate(
                         text = text,
                         confidence = freq / 255.0,
-                        isEligibleForAutoCommit = allowAutoCommit && i == 0 && freq >= AUTOCORRECT_MIN_FREQ,
+                        // Only when nothing of the user's own already took the auto-commit slot: two bold
+                        // candidates would be a lie about which one space is going to take.
+                        isEligibleForAutoCommit = allowAutoCommit && i == 0 &&
+                            personalFixes.isEmpty() && freq >= AUTOCORRECT_MIN_FREQ,
                         sourceProvider = this,
                     ),
                 )
@@ -1177,6 +1352,110 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
 
         return out.values.take(maxCandidateCount)
+    }
+
+    // --- Word learning (issue #318) ------------------------------------------------------------------
+
+    /**
+     * The best word the beam reads out of [points] for [word], with the excess tap distance it cost, or
+     * null when there is no usable evidence.
+     *
+     * Deliberately *not* [touchCorrectionsFor]: that one exists to produce a ranked correction list and
+     * mixes in length-changing edit-distance candidates that carry no positional evidence at all. Here
+     * only the spatial reading is wanted, and its cost has to mean "how far were the fingers off", which
+     * a synthesised edit-distance entry cannot answer.
+     */
+    private suspend fun beamReadingOf(
+        word: String,
+        subtype: Subtype,
+        index: LowerIndex,
+        points: FloatArray,
+    ): Pair<String, Float>? {
+        val layout = KeyProximityInfo.snapshot() ?: return null
+        val prefixIndex = prefixIndexFor(subtype) ?: return null
+        val beam = TouchBeamDecoder.decode(points, word, prefixIndex, layout, BEAM_CANDIDATES)
+        var best: TouchBeamDecoder.Candidate? = null
+        var bestScore = Double.NEGATIVE_INFINITY
+        for (candidate in beam) {
+            val freq = index.freq[candidate.word] ?: continue
+            val score = TouchScoring.score(freq, candidate.cost, 0.0)
+            if (score > bestScore) {
+                bestScore = score
+                best = candidate
+            }
+        }
+        return best?.let { index.canonical[it.word].orEmpty().ifEmpty { it.word } to it.cost }
+    }
+
+    override suspend fun learnTypedWord(
+        subtype: Subtype,
+        word: String,
+        origin: WordOrigin,
+        tapPoints: FloatArray?,
+        isPrivateSession: Boolean,
+        weight: Int,
+        trustedByUser: Boolean,
+    ): LearnOutcome {
+        val enabled = prefs.suggestion.learnTypedWords.get()
+        val trimmed = word.trim()
+        // Cheap refusals first — the common case by far is a word the dictionary already knows, and this
+        // runs at every word boundary.
+        if (!enabled || origin != WordOrigin.TYPED || isPrivateSession) return LearnOutcome.NOTHING
+        if (!WordLearningGate.isLearnableForm(trimmed)) return LearnOutcome.NOTHING
+        val lang = dictLangFor(subtype) ?: return LearnOutcome.NOTHING
+        val known = isKnownWord(trimmed, subtype) || isInUserDictionary(trimmed, subtype)
+        if (known) return LearnOutcome.NOTHING
+
+        val index = lowerIndexFor(subtype)
+        val folded = index.fold(trimmed)
+        val slip = if (trustedByUser) {
+            false
+        } else {
+            val reading = tapPoints?.let { beamReadingOf(trimmed, subtype, index, it) }
+            WordLearningGate.looksLikeASlip(
+                typedWord = trimmed,
+                hadTapEvidence = tapPoints != null,
+                beamCorrection = reading?.first,
+                beamCost = reading?.second,
+                nearestKnownFreq = EditDistance.nearestKnownFrequency(folded, index.alphabet, index.freq),
+            )
+        }
+        val mayLearn = WordLearningGate.shouldLearn(
+            enabled = true,
+            isPrivateField = false,
+            origin = origin,
+            word = trimmed,
+            isKnownWord = false,
+            cheapCorrectionExists = slip,
+        )
+        if (!mayLearn) return LearnOutcome.NOTHING
+
+        val entry = LearnedWordsStore.note(appContext, trimmed, folded, lang, weight)
+            ?: return LearnOutcome.NOTHING
+        val score = WordLearningGate.decayedScore(entry.count, entry.lastUsed, System.currentTimeMillis() / 1000L)
+        return LearnOutcome(
+            learned = true,
+            word = trimmed,
+            lang = lang,
+            entryId = entry.id,
+            readyForPromotion = !entry.promoted &&
+                WordLearningGate.stageOf(score) == WordLearningGate.Stage.PROMOTED,
+        )
+    }
+
+    override suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean {
+        val lang = dictLangFor(subtype) ?: return false
+        return LearnedWordsStore.forgetWord(appContext, word.trim(), lang)?.promoted == true
+    }
+
+    override suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String) {
+        if (!prefs.suggestion.learnTypedWords.get()) return
+        val lang = dictLangFor(subtype) ?: return
+        val index = lowerIndexFor(subtype)
+        val prev = index.fold(previousWord.trim())
+        val next = word.trim()
+        if (prev.isEmpty() || next.isEmpty()) return
+        LearnedWordsStore.noteBigram(appContext, prev, next, lang)
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

@@ -20,6 +20,7 @@ import android.content.Context
 import android.os.SystemClock
 import android.util.LruCache
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
@@ -29,6 +30,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
@@ -78,6 +80,7 @@ class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
 
     private val prefs by FlorisPreferenceStore
+    private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
@@ -349,13 +352,131 @@ class NlpManager(context: Context) {
                         shortcut = null,
                     )
                 )
-                scope.launch { suggest(subtypeManager.activeSubtype, editorInstance.activeContent) }
+                scope.launch {
+                    notePersonalVocabularyChanged(subtype)
+                    suggest(subtypeManager.activeSubtype, editorInstance.activeContent)
+                }
                 // Glide builds its index up front, so a word added mid-session would otherwise be typable
                 // but not swipeable until the next subtype change (issue #263).
                 glideTypingManager.value.invalidateWordData()
                 AddToDictionaryResult.ADDED
             }
         }.getOrDefault(AddToDictionaryResult.UNAVAILABLE)
+    }
+
+    /**
+     * Offers a finished word to the active provider for learning, and carries out the promotion when it
+     * has earned one (issue #318).
+     *
+     * The split is deliberate. The provider owns the vocabulary and decides whether a word is worth
+     * remembering; promotion means writing into the personal dictionary and rebuilding the glide index,
+     * which is plumbing this manager already owns for [addToUserDictionary] and which a language provider
+     * has no business reaching into.
+     *
+     * Everything the decision needs is passed in rather than read here, because by the time this
+     * coroutine runs the separator has been committed, the composing region is gone and the tap trace
+     * has been reset for the next word.
+     */
+    fun learnFinishedWord(
+        word: String,
+        origin: WordOrigin,
+        tapPoints: FloatArray?,
+        weight: Int = 1,
+        trustedByUser: Boolean = false,
+    ) {
+        if (word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return
+        val subtype = subtypeManager.activeSubtype
+        val isPrivate = keyboardManager.activeState.isIncognitoMode || !wordSuggestionsWanted()
+        scope.launch {
+            val provider = getSuggestionProvider(subtype) as? LearningProvider ?: return@launch
+            val outcome = provider.learnTypedWord(
+                subtype = subtype,
+                word = word,
+                origin = origin,
+                tapPoints = tapPoints,
+                isPrivateSession = isPrivate,
+                weight = weight,
+                trustedByUser = trustedByUser,
+            )
+            if (!outcome.learned) return@launch
+            if (outcome.readyForPromotion) promoteLearnedWord(subtype, outcome)
+            // From the second sighting the word may appear in the strip, so the suggestions standing on
+            // screen are now out of date for the word that is about to be typed next.
+            suggest(subtype, editorInstance.activeContent)
+        }
+    }
+
+    /**
+     * Moves a word that has been seen often enough into the personal dictionary, where it becomes an
+     * ordinary entry: known to autocorrect, swipeable, visible in settings, part of the backup.
+     *
+     * The row in the learned store is kept and marked, rather than deleted — it is the record of *why*
+     * that dictionary entry exists, which is what lets the settings screen tell a word the user added by
+     * hand from one the keyboard picked up.
+     */
+    private suspend fun promoteLearnedWord(subtype: Subtype, outcome: LearnOutcome) {
+        val dao = DictionaryManager.default().florisUserDictionaryDao() ?: return
+        val locale = subtype.primaryLocale
+        val promoted = runCatching {
+            if (dao.queryExactFuzzyLocale(outcome.word, locale).isEmpty()) {
+                dao.insert(
+                    UserDictionaryEntry(
+                        id = 0,
+                        word = outcome.word,
+                        freq = USER_DICTIONARY_FREQ,
+                        locale = locale.localeTag(),
+                        shortcut = null,
+                    )
+                )
+            }
+            true
+        }.getOrDefault(false)
+        if (!promoted) return
+        LearnedWordsStore.setPromoted(appContext, outcome.entryId, true, outcome.lang)
+        notePersonalVocabularyChanged(subtype)
+        // Glide builds its index up front, so without this the freshly promoted word would be typable
+        // but not swipeable until the next subtype change (issue #263).
+        glideTypingManager.value.invalidateWordData()
+    }
+
+    /**
+     * Forgets a word the keyboard had picked up, from the long-press on its suggestion (issue #318).
+     *
+     * If it had already been promoted, the copy in the personal dictionary goes too. Anything less would
+     * be a lie: the strip would keep offering the word from the dictionary while the settings screen
+     * showed nothing learned, and there would be no obvious way to get rid of it.
+     */
+    fun forgetLearnedWord(subtype: Subtype, candidate: SuggestionCandidate) {
+        val word = candidate.text.toString().trim()
+        if (word.isEmpty()) return
+        scope.launch {
+            val provider = getSuggestionProvider(subtype) as? LearningProvider ?: return@launch
+            val wasPromoted = provider.forgetLearnedWord(subtype, word)
+            if (wasPromoted) {
+                val dao = DictionaryManager.default().florisUserDictionaryDao()
+                runCatching {
+                    dao?.queryExactFuzzyLocale(word, subtype.primaryLocale)?.forEach { dao.delete(it) }
+                }
+                notePersonalVocabularyChanged(subtype)
+                glideTypingManager.value.invalidateWordData()
+            }
+            suggest(subtype, editorInstance.activeContent)
+        }
+    }
+
+    /** Tells the active provider its cached copy of the personal dictionary is stale. */
+    private suspend fun notePersonalVocabularyChanged(subtype: Subtype) {
+        (getSuggestionProvider(subtype) as? LearningProvider)?.onPersonalVocabularyChanged()
+    }
+
+    /** Records that [word] followed [previousWord], for the personal half of next-word prediction. */
+    fun learnWordPair(previousWord: String, word: String) {
+        if (previousWord.isBlank() || word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return
+        if (keyboardManager.activeState.isIncognitoMode) return
+        val subtype = subtypeManager.activeSubtype
+        scope.launch {
+            (getSuggestionProvider(subtype) as? LearningProvider)?.learnWordPair(subtype, previousWord, word)
+        }
     }
 
     fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {

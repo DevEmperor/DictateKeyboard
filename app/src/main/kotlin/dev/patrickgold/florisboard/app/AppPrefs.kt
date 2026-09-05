@@ -1484,6 +1484,17 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "suggestion__next_word_prediction",
             default = true,
         )
+        // Build a personal vocabulary out of what is typed (issue #318): a word no dictionary knows is
+        // remembered, offered from the second sighting and added to the personal dictionary at the third.
+        //
+        // Off by default, and deliberately so. Every learned word is a word autocorrect eventually stops
+        // repairing, and a keyboard that starts keeping a record of what you write is a thing to be asked
+        // about rather than told. Nothing is learned in incognito, in password fields, or from anything
+        // that was not typed key by key — dictation and glide included.
+        val learnTypedWords = boolean(
+            key = "suggestion__learn_typed_words",
+            default = false,
+        )
         // Some apps set TYPE_TEXT_FLAG_NO_SUGGESTIONS on ordinary text fields — Instagram and a lot of
         // WebViews do — which takes the composing region away and with it every word suggestion and the
         // autocorrect (issue #296). Gboard and SwiftKey ignore that flag outside password fields; this

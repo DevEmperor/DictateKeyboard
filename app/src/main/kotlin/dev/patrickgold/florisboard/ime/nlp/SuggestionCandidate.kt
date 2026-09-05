@@ -97,6 +97,18 @@ interface SuggestionCandidate {
      * callbacks.
      */
     val sourceProvider: SuggestionProvider?
+
+    /**
+     * True when this word comes from the user's own vocabulary rather than the bundled dictionary — either
+     * picked up from their typing or added by hand (issue #318).
+     *
+     * The UI shows these in italics. That is not decoration: a keyboard that quietly builds a vocabulary
+     * out of what you write should be able to show you which of its suggestions came from you, and it is
+     * also what makes the feature testable at all — without it "did it learn that?" can only be answered
+     * by waiting to see whether autocorrect stops interfering.
+     */
+    val isLearned: Boolean
+        get() = false
 }
 
 /**
@@ -111,6 +123,7 @@ data class WordSuggestionCandidate(
     override val isEligibleForAutoCommit: Boolean = false,
     override val isEligibleForUserRemoval: Boolean = true,
     override val sourceProvider: SuggestionProvider? = null,
+    override val isLearned: Boolean = false,
 ) : SuggestionCandidate {
     override val icon: ImageVector? = null
 }

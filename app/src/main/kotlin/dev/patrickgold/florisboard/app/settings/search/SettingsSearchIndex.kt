@@ -202,6 +202,12 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__dictionary__manage_system_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__manage_system_user_dictionary__label"),
         SettingsSearchEntry(R.string.pref__dictionary__enable_internal_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__enable_internal_user_dictionary__label"),
         SettingsSearchEntry(R.string.pref__dictionary__manage_floris_user_dictionary__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__manage_floris_user_dictionary__label"),
+        // Word learning (issue #318). Added by hand rather than by rerunning the generator: it was run
+        // against this change and dropped eight existing hand-added rows, which is the documented
+        // behaviour — it only sees what it can parse, and everything else disappears on every pass.
+        SettingsSearchEntry(R.string.pref__dictionary__learn_typed_words__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__learn_typed_words__label"),
+        SettingsSearchEntry(R.string.pref__dictionary__manage_learned_words__label, R.string.settings__dictionary__title, Routes.Settings.Dictionary, anchor = "pref__dictionary__manage_learned_words__label"),
+        SettingsSearchEntry(R.string.settings__learned__title, R.string.settings__learned__title, Routes.Settings.LearnedWords, parentRes = R.string.settings__dictionary__title),
         // Hand-added (issue #264): the contact import lives in the personal dictionary's ⋮ menu, which the
         // generator cannot see — searching for "contacts" would otherwise find nothing at all.
         SettingsSearchEntry(R.string.settings__udm__add_from_contacts, R.string.settings__dictionary__title, Routes.Settings.UserDictionary(UserDictionaryType.FLORIS)),

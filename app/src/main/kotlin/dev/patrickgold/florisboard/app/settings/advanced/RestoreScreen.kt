@@ -82,6 +82,12 @@ import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.LearnedBigramEntry
+import dev.patrickgold.florisboard.ime.dictionary.LearnedWordEntry
+import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
+import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
+import dev.patrickgold.florisboard.lib.FlorisLocale
 
 object Restore {
     const val MIN_VERSION_CODE = 64
@@ -187,6 +193,37 @@ fun RestoreScreen() = FlorisScreen {
                 val audioDir = dictateDir.subDir(Backup.DICTATE_HISTORY_AUDIO_DIR)
                 DictateHistoryStore.importEntries(
                     context, entries, audioDir.takeIf { it.exists() }, replace = shouldReset,
+                )
+            }
+        }
+        if (restoreFilesSelector.personalDictionary) {
+            // Older backups have no such directory → skipped, same as every other component here.
+            val dictionaryDir = workspace.outputDir.subDir(Backup.DICTIONARY_DIR)
+            val personalFile = dictionaryDir.subFile(Backup.PERSONAL_DICTIONARY_JSON_NAME)
+            if (personalFile.exists()) {
+                val dm = DictionaryManager.default().also { it.loadUserDictionariesIfNecessary() }
+                val dao = dm.florisUserDictionaryDao()
+                if (dao != null) {
+                    if (shouldReset) dao.deleteAll()
+                    for (entry in personalFile.readJson<List<UserDictionaryEntry>>()) {
+                        val locale = entry.locale?.let { runCatching { FlorisLocale.fromTag(it) }.getOrNull() }
+                        // Merge mode must not create a second row for a word that is already there;
+                        // a restore is usually adding one device's vocabulary to another's, not
+                        // replacing it.
+                        if (dao.queryExact(entry.word, locale).isEmpty()) {
+                            dao.insert(entry.copy(id = 0))
+                        }
+                    }
+                }
+            }
+            val learnedFile = dictionaryDir.subFile(Backup.LEARNED_WORDS_JSON_NAME)
+            val pairsFile = dictionaryDir.subFile(Backup.LEARNED_BIGRAMS_JSON_NAME)
+            if (learnedFile.exists() || pairsFile.exists()) {
+                if (shouldReset) LearnedWordsStore.forgetAll(context)
+                LearnedWordsStore.importAll(
+                    context = context,
+                    words = if (learnedFile.exists()) learnedFile.readJson<List<LearnedWordEntry>>() else emptyList(),
+                    bigrams = if (pairsFile.exists()) pairsFile.readJson<List<LearnedBigramEntry>>() else emptyList(),
                 )
             }
         }

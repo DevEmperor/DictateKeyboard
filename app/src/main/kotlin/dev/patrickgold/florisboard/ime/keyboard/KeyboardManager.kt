@@ -47,7 +47,9 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordOrigin
 import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
+import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -371,6 +373,73 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    /**
+     * The last word this keyboard saw finished that was genuinely typed, so the pair it forms with the
+     * next one can be learned (issue #318).
+     *
+     * Not cleared on cursor moves, because it does not need to be: [endOfWord] only believes it when the
+     * text in front of the new word actually ends with it. Same self-validating shape as [TouchTrace] —
+     * a remembered value that proves itself against the editor beats a value that relies on every
+     * possible invalidation site having been found.
+     */
+    private var lastTypedWord: String? = null
+
+    /**
+     * Everything that has to happen when a word ends: apply the correction the strip had marked, or —
+     * when there is none — offer the word to the vocabulary, and drop the tap evidence either way.
+     *
+     * One function because there are three ways to end a word (space, hardware space, punctuation) and
+     * they were each doing the same two steps by hand. Adding a third step in three places is how they
+     * start disagreeing.
+     *
+     * A word that was auto-corrected is deliberately *not* offered: what is in the editor now is a
+     * dictionary word, and what was typed has just been judged a mistake.
+     *
+     * Returns the correction that was applied, or null when the word stood as typed — the hardware-space
+     * path needs to know, and asking [NlpManager] a second time after the commit would be a different
+     * question.
+     */
+    private fun endOfWord(): SuggestionCandidate? {
+        val candidate = nlpManager.getAutoCommitCandidate()
+        if (candidate != null) {
+            commitAutoCorrection(candidate)
+            lastTypedWord = null
+        } else {
+            offerFinishedWordForLearning()
+        }
+        TouchTrace.reset() // word boundary (issue #242)
+        return candidate
+    }
+
+    /**
+     * Hands the word that just ended to [NlpManager], along with the evidence that only exists at this
+     * instant: whether every one of its characters came from a key press, and where the fingers landed.
+     *
+     * Both are read here rather than inside the provider because the provider runs a coroutine later, by
+     * which time the separator has been committed and the trace has been reset for the next word.
+     */
+    private fun offerFinishedWordForLearning() {
+        val content = editorInstance.activeContent
+        val word = content.composingText
+        if (word.isBlank()) {
+            lastTypedWord = null
+            return
+        }
+        val wasTyped = TouchTrace.wasFullyTyped(word)
+        val textBefore = content.textBeforeSelection.removeSuffix(word)
+        nlpManager.learnFinishedWord(
+            word = word,
+            origin = if (wasTyped) WordOrigin.TYPED else WordOrigin.OTHER,
+            tapPoints = TouchTrace.pointsFor(word),
+        )
+        if (wasTyped) {
+            lastTypedWord
+                ?.takeIf { textBefore.trimEnd().endsWith(it, ignoreCase = true) }
+                ?.let { nlpManager.learnWordPair(it, word) }
+        }
+        lastTypedWord = word.takeIf { wasTyped }
+    }
+
     fun commitCandidate(candidate: SuggestionCandidate) {
         pendingExpansion = null // this write does not come through onInputKeyUp (issue #283)
         // A tap on the strip replaces whatever the previous correction left behind, so there is nothing
@@ -614,6 +683,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // The restored word is the user's own spelling again; nothing about the taps that produced it
         // still describes what is in the editor (issue #242).
         TouchTrace.reset()
+        // …and taking a correction back is the plainest thing a user can say about a word: *that spelling
+        // was intended* (issue #318). It counts double, and it bypasses the slip reasoning, which would
+        // otherwise reject it for certain — a word restored from a correction is one cheap edit from a
+        // dictionary word by construction, which is exactly what that reasoning treats as a typo.
+        val restored = correction.replaced.trim()
+        if (restored.isNotEmpty()) {
+            nlpManager.learnFinishedWord(
+                word = restored,
+                origin = WordOrigin.TYPED,
+                tapPoints = null,
+                weight = WordLearningGate.REJECTION_WEIGHT,
+                trustedByUser = true,
+            )
+        }
+        lastTypedWord = null
         return true
     }
 
@@ -667,7 +751,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         if (undoAutoCorrection()) return
         // Keep the tap evidence aligned with the word: a single-character backspace drops the last tap,
         // anything coarser (a whole word) invalidates the trace entirely (issue #242).
-        if (unit == OperationUnit.CHARACTERS) TouchTrace.pop() else TouchTrace.reset()
+        if (unit == OperationUnit.CHARACTERS) {
+            TouchTrace.pop()
+        } else {
+            TouchTrace.reset()
+            // Not a retraction of the word for learning purposes (issue #318). There used to be an
+            // "unlearn what you just deleted" hook here, and the device test showed it was theatre: it
+            // only fires for KeyCode.DELETE_WORD, which is neither the default swipe action nor the one
+            // that works — "delete words precisely" deletes by *selecting* and never reaches this path,
+            // so the hook was unreachable in practice while looking like a feature. Taking a word back is
+            // the long-press on its suggestion and the Learned words screen, both of which are deliberate.
+            // Deleting a word right after typing it is usually editing this text, not a statement about
+            // your vocabulary — and promotion needs three sightings, so there is room to change your mind.
+            lastTypedWord = null
+        }
         editorInstance.deleteBackwards(unit)
     }
 
@@ -850,8 +947,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * but skips handling changing to characters keyboard and double space periods.
      */
     fun handleHardwareKeyboardSpace() {
-        val candidate = nlpManager.getAutoCommitCandidate()
-        candidate?.let { commitAutoCorrection(it) }
+        val candidate = endOfWord()
         // Skip handling changing to characters keyboard and double space periods
         // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
@@ -868,9 +964,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // Before the auto-commit candidate: otherwise autocorrect replaces the shortcut with a "better"
         // word and there is nothing left to recognise (issue #283).
         if (expandSnippet(KeyCode.SPACE.toChar().toString())) return
-        val candidate = nlpManager.getAutoCommitCandidate()
-        candidate?.let { commitAutoCorrection(it) }
-        TouchTrace.reset() // word boundary (issue #242)
+        val candidate = endOfWord()
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -1314,9 +1408,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                 // trigger (issue #283) — and then it has already written itself.
                                 else -> {
                                     if (!expandSnippet(text)) {
-                                        nlpManager.getAutoCommitCandidate()?.let { commitAutoCorrection(it) }
-                                        // Punctuation ends the word — drop the tap evidence (issue #242).
-                                        TouchTrace.reset()
+                                        // Punctuation ends the word: correct it or learn it, then drop
+                                        // the tap evidence (issues #242, #318).
+                                        endOfWord()
                                         editorInstance.commitChar(text)
                                     }
                                 }
