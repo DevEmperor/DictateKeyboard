@@ -40,6 +40,13 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     var computedNumberHint: KeyData? = null
     var computedHintData: KeyData = TextKeyData.UNSPECIFIED
 
+    /**
+     * True when the digit row is on screen, so the digit stays reachable by long-press but is not printed
+     * in the corner of the letter key (issue #329) — it is already visible one row up, and a keyboard
+     * that shows "1" twice above each other looks broken rather than helpful.
+     */
+    var suppressNumberHintLabel: Boolean = false
+
     // This should exclusively be set and used by the TextKeyboardLayout
     var computedDataOnDown: KeyData = TextKeyData.UNSPECIFIED
 
@@ -248,7 +255,9 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
         } else if (!data.isSpaceKey() || data.type == KeyType.NUMERIC) {
             val prefs by FlorisPreferenceStore
             computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let { hintData ->
-                if (hintData?.isSpaceKey() == false) {
+                val isSuppressedDigit = suppressNumberHintLabel && hintData != null &&
+                    hintData == computedPopups.numberHint
+                if (hintData?.isSpaceKey() == false && !isSuppressedDigit) {
                     hintedLabel = hintData.asString(isForDisplay = true)
                     computedHintData = hintData
                 } else {

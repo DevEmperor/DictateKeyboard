@@ -266,11 +266,22 @@ class LayoutManager(context: Context) {
         // Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS && computedArrangement.isNotEmpty()) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
-            // number row hint always happens on first row
-            if (prefs.keyboard.hintedNumberRowEnabled.get() && symbolsComputedArrangement.isNotEmpty()) {
-                val row = computedArrangement[0]
+            // The digit hints belong on the first *letter* row — which is row 0 only while the digit row
+            // is switched off (issue #329). With it on, row 0 IS the digit row: the hints were being
+            // written onto the digits themselves, where each one already carries its own digit and the
+            // hint does nothing, and the letters below lost their long-press digits entirely. Turning the
+            // digit row on therefore took a feature away instead of adding one.
+            val firstCharacterRow = if (extensionLayout != null) 1 else 0
+            if (prefs.keyboard.hintedNumberRowEnabled.get() && symbolsComputedArrangement.isNotEmpty() &&
+                computedArrangement.size > firstCharacterRow
+            ) {
+                val row = computedArrangement[firstCharacterRow]
                 val symbolRow = symbolsComputedArrangement[0]
                 addRowHints(row, symbolRow, KeyType.NUMERIC)
+                // Reachable, but not printed a second time right underneath the row it came from.
+                if (firstCharacterRow > 0) {
+                    row.forEach { it.suppressNumberHintLabel = true }
+                }
             }
             // all other symbols are added bottom-aligned
             val rOffset = computedArrangement.size - symbolsComputedArrangement.size
