@@ -24,6 +24,7 @@ import java.util.Locale
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
+import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -381,6 +382,47 @@ object DictateLegacyMigrator {
             prefs.localization.subtypes.set(SubtypeJsonConfig.encodeToString(migrated))
         }
     }
+
+    /**
+     * Points saved French subtypes at the new `french` punctuation rule (issue #329).
+     *
+     * French puts a space before `? ! ; :` — that is correct typography, not a slip — so punctuation
+     * tightening must leave those alone. The rule now says so, and the presets name it, but a preset only
+     * ever seeds a *new* subtype: every French keyboard that already exists still carries `default` and
+     * would have its spaces eaten the moment the setting is switched on.
+     *
+     * Only subtypes that still carry the untouched old default are rewritten; anyone who deliberately
+     * chose a punctuation rule in the subtype editor keeps it.
+     */
+    suspend fun migrateFrenchPunctuationRuleIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        if (prefs.localization.frenchPunctuationMigrated.get()) return
+        prefs.localization.frenchPunctuationMigrated.set(true)
+
+        val listRaw = prefs.localization.subtypes.get()
+        if (listRaw.isBlank()) return
+        val subtypes = runCatching {
+            SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
+        }.getOrNull() ?: return
+
+        var changed = false
+        val migrated = subtypes.map { subtype ->
+            val isUntouchedFrenchDefault = subtype.primaryLocale.language == "fr" &&
+                subtype.punctuationRule == extCorePunctuationRule(LEGACY_DEFAULT_PUNCTUATION_ID)
+            if (isUntouchedFrenchDefault) {
+                changed = true
+                subtype.copy(punctuationRule = extCorePunctuationRule(FRENCH_PUNCTUATION_ID))
+            } else {
+                subtype
+            }
+        }
+        if (changed) {
+            prefs.localization.subtypes.set(SubtypeJsonConfig.encodeToString(migrated))
+        }
+    }
+
+    private const val LEGACY_DEFAULT_PUNCTUATION_ID = "default"
+    private const val FRENCH_PUNCTUATION_ID = "french"
 
     private const val LEGACY_HINDI_CHARACTERS_ID = "hindi_in"
     private const val LEGACY_HINDI_NUMERIC_ROW_ID = "devanagari"

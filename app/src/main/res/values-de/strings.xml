@@ -374,6 +374,8 @@
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatische Leerzeichen nach Punktsetzung</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatisch ein Leerzeichen nach einem Punkt setzen</string>
+    <string name="pref__correction__tighten_punctuation_spacing__label" comment="Preference title">Zeichensetzung straffen</string>
+    <string name="pref__correction__tighten_punctuation_spacing__summary" comment="Preference summary">Entfernt ein Leerzeichen vor . , ? !</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>

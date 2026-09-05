@@ -190,6 +190,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "correction__auto_space_punctuation",
             default = false,
         )
+        // The other half of the same idea (issue #329): auto-space puts a space *after* a punctuation
+        // mark, this removes one the user typed *before* it. Its own switch rather than a widening of
+        // auto-space, because this one rewrites what was already typed.
+        val tightenPunctuationSpacing = boolean(
+            key = "correction__tighten_punctuation_spacing",
+            default = false,
+        )
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",
             default = true,
@@ -1363,6 +1370,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // DictateLegacyMigrator.migrateHindiDefaultsIfNeeded.
         val hindiDefaultsMigrated = boolean(
             key = "localization__hindi_defaults_migrated",
+            default = false,
+        )
+        // One-time guard: French subtypes saved before the "french" punctuation rule existed still name
+        // "default", which would let punctuation tightening eat the space French wants before ? ! ; :
+        // (issue #329). See DictateLegacyMigrator.migrateFrenchPunctuationRuleIfNeeded.
+        val frenchPunctuationMigrated = boolean(
+            key = "localization__french_punctuation_migrated",
             default = false,
         )
     }
