@@ -245,6 +245,97 @@ interface SuggestionProvider : NlpProvider {
 }
 
 /**
+ * Where a word that just reached the editor came from (issue #318).
+ *
+ * An explicit flag rather than something inferred, because "nothing is learned from dictation" has to be
+ * a guarantee and not a likelihood. The tempting shortcut is to read the tap trace — no taps, not typed —
+ * but a trace is absent for several unrelated reasons (a hardware keyboard, a cursor jump, a glide), so
+ * that rule would learn nothing on a physical keyboard while still being unable to *prove* anything about
+ * dictation. Naming the origin at each commit site costs four lines and answers the question outright.
+ *
+ * Lives here rather than beside the learning rules because it describes an editor event, not a property
+ * of any one language's corrector.
+ */
+enum class WordOrigin {
+    /** Composed character by character from key presses. The only origin that may be learned. */
+    TYPED,
+
+    /** Produced by a glide. One gesture is not evidence about how a word is spelled. */
+    GESTURE,
+
+    /** Taken from the suggestion strip — by definition already in a dictionary. */
+    CANDIDATE,
+
+    /** Dictation, paste, snippet expansion, autofill: not the user's typing at all. */
+    OTHER,
+}
+
+/**
+ * What a provider did with a word the user finished typing (issue #318).
+ *
+ * [readyForPromotion] is answered by the provider but *acted on* by [NlpManager], because promotion means
+ * writing into the personal dictionary and rebuilding the glide index — neither of which a language
+ * provider should reach into. The provider knows the vocabulary; the manager owns the plumbing.
+ */
+data class LearnOutcome(
+    val learned: Boolean,
+    val word: String = "",
+    val lang: String = "",
+    val entryId: Long = 0L,
+    val readyForPromotion: Boolean = false,
+) {
+    companion object {
+        val NOTHING = LearnOutcome(learned = false)
+    }
+}
+
+/**
+ * Optional capability of a [SuggestionProvider]: building a vocabulary out of what the user types
+ * (issue #318).
+ *
+ * Separate from [SuggestionProvider] rather than part of it, because learning is only meaningful where a
+ * word list and spatial evidence exist. A shape-based provider types *through* its candidate list — the
+ * question "was this word meant or mistyped?" has no answer there — and the clipboard and emoji providers
+ * have no vocabulary at all. Making them all implement three empty methods would say the opposite.
+ *
+ * The caller asks; whether anything is remembered is entirely the provider's decision, and every call
+ * here may legitimately do nothing.
+ */
+interface LearningProvider {
+    /**
+     * Offers one finished word for learning and reports what happened.
+     *
+     * @param word the word as typed, with its capitalisation, already stripped of its separator.
+     * @param textBeforeWord everything in front of it, for deciding whether it opened a sentence.
+     * @param tapPoints where the fingers landed, `[x0, y0, x1, y1, …]` in key-width units, or null when
+     *  there was no usable trace — a hardware keyboard, or a cursor jump that desynced it. It is passed in
+     *  rather than read here because this runs after the word boundary, by which time the live trace has
+     *  already been reset for the next word.
+     * @param weight how much this sighting counts; more than one when the user took back a correction.
+     * @param trustedByUser the user has said in so many words that this spelling was intended — they took
+     *  a correction back. Skips the "was this a slip?" reasoning entirely, because that reasoning exists
+     *  to guess at what an explicit action has just answered, and it would guess *wrong* here: a word
+     *  restored from a correction is by construction one cheap edit away from a dictionary word.
+     */
+    suspend fun learnTypedWord(
+        subtype: Subtype,
+        word: String,
+        origin: WordOrigin,
+        textBeforeWord: String,
+        tapPoints: FloatArray?,
+        isPrivateSession: Boolean,
+        weight: Int = 1,
+        trustedByUser: Boolean = false,
+    ): LearnOutcome
+
+    /** Takes a sighting back — the user deleted the word again right after typing it. */
+    suspend fun unlearnTypedWord(subtype: Subtype, word: String, weight: Int = 1)
+
+    /** Records that [word] followed [previousWord], both of them typed rather than suggested. */
+    suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String)
+}
+
+/**
  * Fallback NLP provider which implements all provider variants. Is used in case no other providers can be found.
  */
 object FallbackNlpProvider : SpellingProvider, SuggestionProvider {

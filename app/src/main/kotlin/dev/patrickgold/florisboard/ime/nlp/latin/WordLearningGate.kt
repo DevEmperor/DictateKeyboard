@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
+import dev.patrickgold.florisboard.ime.nlp.WordOrigin
 import kotlin.math.pow
 
 /**
@@ -42,9 +43,8 @@ import kotlin.math.pow
  *
  * Every other condition below is bookkeeping: the right field, the right origin, a plausible shape. The
  * one that separates "a name the dictionary does not know" from "a word the finger got wrong" is
- * [correctionLooksLikeASlip], and it is deliberately the *same* rule that decides whether a correction
- * may be applied without asking. If we would have silently fixed it, we must not learn it — anything
- * else means the keyboard disagrees with itself about the same word in the same instant.
+ * [looksLikeASlip], which weighs the same tap evidence the corrector weighs — at a deliberately more
+ * suspicious threshold, because refusing to remember something is cheap and rewriting it is not.
  */
 internal object WordLearningGate {
 
@@ -80,30 +80,6 @@ internal object WordLearningGate {
 
         /** Belongs in the personal dictionary: known to autocorrect, swipeable, in the backup. */
         PROMOTED,
-    }
-
-    /**
-     * Where a committed word came from.
-     *
-     * The reason this is an explicit flag rather than something inferred from the tap trace: the promise
-     * "nothing is learned from dictation" has to be a guarantee, not a likelihood. A trace can be absent
-     * for several unrelated reasons (a hardware keyboard, a cursor jump, a glide), and a rule that reads
-     * "no trace" as "not typed" would also learn nothing on a physical keyboard while still being unable
-     * to *prove* anything about dictation. Naming the origin at each commit site costs four call sites
-     * and answers the question outright.
-     */
-    enum class WordOrigin {
-        /** Composed character by character from key presses. The only origin that may be learned. */
-        TYPED,
-
-        /** Produced by a glide. One gesture is not evidence about spelling. */
-        GESTURE,
-
-        /** Taken from the suggestion strip — by definition already in a dictionary. */
-        CANDIDATE,
-
-        /** Dictation, paste, snippet expansion, autofill: not the user's typing at all. */
-        OTHER,
     }
 
     /**

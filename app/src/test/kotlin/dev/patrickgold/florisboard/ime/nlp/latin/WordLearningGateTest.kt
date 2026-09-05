@@ -10,8 +10,8 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
+import dev.patrickgold.florisboard.ime.nlp.WordOrigin
 import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate.Stage
-import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate.WordOrigin
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
