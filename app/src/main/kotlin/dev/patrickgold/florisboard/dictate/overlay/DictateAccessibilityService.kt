@@ -887,18 +887,27 @@ class DictateAccessibilityService : AccessibilityService() {
      * Skipped when the user asked for every dictation to be copied (#214) — there it belongs there.
      */
     private fun clearOwnClipboardAfterPaste(text: String) {
-        if (lastClipText != text) return
-        if (prefs.dictate.floatingButtonCopyToClipboard.get()) return
+        if (lastClipText != text) {
+            flogDebug { "clipboard: not ours to clear" }
+            return
+        }
+        if (prefs.dictate.floatingButtonCopyToClipboard.get()) {
+            flogDebug { "clipboard: kept, the always-copy setting wants it there" }
+            return
+        }
         val clipboard = getSystemService(ClipboardManager::class.java) ?: return
         mainHandler.postDelayed({
-            runCatching {
+            val cleared = runCatching {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     clipboard.clearPrimaryClip()
                 } else {
                     clipboard.setPrimaryClip(ClipData.newPlainText("", ""))
                 }
                 lastClipText = null
-            }
+            }.isSuccess
+            // Says whether the call went through, not whether the phone forgot: an OEM clipboard
+            // history is a second store, and no app can delete another app's entries from it.
+            flogDebug { "clipboard: clear attempted, ok=$cleared" }
         }, CLIPBOARD_CLEAR_DELAY_MS)
     }
 
