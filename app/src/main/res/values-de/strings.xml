@@ -395,6 +395,25 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im internen Benutzerwörterbuch gespeichert sind</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
+    <string name="pref__dictionary__learn_typed_words__label" comment="Preference title for automatic word learning">Wörter beim Tippen lernen</string>
+    <string name="pref__dictionary__learn_typed_words__summary" comment="Preference summary for automatic word learning">Merkt sich Wörter, die kein Wörterbuch kennt — Namen, Fachbegriffe, eigene Schreibweisen — und schlägt sie später vor. Alles bleibt auf diesem Gerät. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt.</string>
+    <string name="pref__dictionary__manage_learned_words__label" comment="Preference title">Gelernte Wörter</string>
+    <string name="pref__dictionary__manage_learned_words__summary" comment="Preference summary">Ansehen, was die Tastatur aufgeschnappt hat, und löschen, was sie vergessen soll</string>
+
+    <string name="settings__learned__title" comment="Title of the learned words screen">Gelernte Wörter</string>
+    <string name="settings__learned__empty" comment="Shown when nothing has been learned yet">Noch nichts gelernt. Wörter, die du tippst und die kein Wörterbuch kennt, erscheinen hier.</string>
+    <string name="settings__learned__disabled" comment="Shown when the learning feature is switched off">Das Lernen beim Tippen ist ausgeschaltet, es wird also nichts Neues gemerkt.</string>
+    <string name="settings__learned__stage_remembered" comment="Ladder stage: seen once, no effect yet">Bemerkt — wird noch nicht vorgeschlagen</string>
+    <string name="settings__learned__stage_suggested" comment="Ladder stage: appears in the suggestion strip">Wird beim Tippen vorgeschlagen</string>
+    <string name="settings__learned__stage_promoted" comment="Ladder stage: in the personal dictionary">Im Wörterbuch — die Autokorrektur lässt es in Ruhe</string>
+    <string name="settings__learned__sightings" comment="How often a word has been seen. The placeholder inserts a count.">{count}× gesehen</string>
+    <string name="settings__learned__forget" comment="Button that removes one learned word">Vergessen</string>
+    <string name="settings__learned__forget_all" comment="Button that removes every learned word">Alles vergessen</string>
+    <string name="settings__learned__forget_all_confirm" comment="Confirmation question before deleting all learned words">Alle gelernten Wörter vergessen? Wörter, die schon im Wörterbuch stehen, bleiben dort.</string>
+    <string name="settings__learned__add_now" comment="Button that promotes a learned word into the personal dictionary immediately">Ins Wörterbuch übernehmen</string>
+    <string name="settings__learned__how_it_works" comment="Explanation shown at the top of the learned words screen">Ein Wort wird erst gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper. Ab dem zweiten Mal wird es vorgeschlagen, ab dem dritten steht es im Wörterbuch — von da an lässt die Autokorrektur es in Ruhe.</string>
+    <string name="suggestion__forgot_word" comment="Toast after forgetting a learned word. The placeholder inserts the word.">„{word}“ vergessen</string>
+
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internes Benutzerwörterbuch</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System-Benutzerwörterbuch</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Dieses Wörterbuch enthält keine Wörter.</string>

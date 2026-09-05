@@ -1343,6 +1343,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         LearnedWordsStore.demote(appContext, word.trim(), lang, weight)
     }
 
+    override suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean {
+        val lang = dictLangFor(subtype) ?: return false
+        return LearnedWordsStore.forgetWord(appContext, word.trim(), lang)?.promoted == true
+    }
+
     override suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String) {
         if (!prefs.suggestion.learnTypedWords.get()) return
         val lang = dictLangFor(subtype) ?: return

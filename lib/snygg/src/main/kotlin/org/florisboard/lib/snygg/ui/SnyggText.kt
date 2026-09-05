@@ -57,6 +57,7 @@ fun SnyggText(
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     fontWeight: FontWeight? = null,
+    fontStyle: FontStyle? = null,
     // Optional overrides for cases where the caller needs a fixed line budget (e.g. a two-line preview)
     // instead of the themed values; null falls back to the stylesheet.
     maxLines: Int? = null,
@@ -78,7 +79,9 @@ fun SnyggText(
             // ("lineHeight can't be negative (NaN)"). Coerce those to Unspecified so a bad theme can't crash
             // the keyboard (issue: SnyggText NaN lineHeight).
             fontSize = style.fontSize().finiteOrUnspecified(),
-            fontStyle = style.fontStyle(),
+            // Optional override, same shape as the weight below: italics mark a word that came from the
+            // user's own vocabulary rather than the bundled dictionary (issue #318).
+            fontStyle = fontStyle ?: style.fontStyle(),
             // Optional override (e.g. bold the autocorrect/auto-commit candidate, issue #150) — falls back
             // to the themed weight when null.
             fontWeight = fontWeight ?: style.fontWeight(),

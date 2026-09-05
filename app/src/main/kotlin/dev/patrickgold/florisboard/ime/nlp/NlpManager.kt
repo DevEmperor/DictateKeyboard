@@ -446,6 +446,30 @@ class NlpManager(context: Context) {
         }
     }
 
+    /**
+     * Forgets a word the keyboard had picked up, from the long-press on its suggestion (issue #318).
+     *
+     * If it had already been promoted, the copy in the personal dictionary goes too. Anything less would
+     * be a lie: the strip would keep offering the word from the dictionary while the settings screen
+     * showed nothing learned, and there would be no obvious way to get rid of it.
+     */
+    fun forgetLearnedWord(subtype: Subtype, candidate: SuggestionCandidate) {
+        val word = candidate.text.toString().trim()
+        if (word.isEmpty()) return
+        scope.launch {
+            val provider = getSuggestionProvider(subtype) as? LearningProvider ?: return@launch
+            val wasPromoted = provider.forgetLearnedWord(subtype, word)
+            if (wasPromoted) {
+                val dao = DictionaryManager.default().florisUserDictionaryDao()
+                runCatching {
+                    dao?.queryExactFuzzyLocale(word, subtype.primaryLocale)?.forEach { dao.delete(it) }
+                }
+                glideTypingManager.value.invalidateWordData()
+            }
+            suggest(subtype, editorInstance.activeContent)
+        }
+    }
+
     /** Records that [word] followed [previousWord], for the personal half of next-word prediction. */
     fun learnWordPair(previousWord: String, word: String) {
         if (previousWord.isBlank() || word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return

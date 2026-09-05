@@ -333,6 +333,12 @@ interface LearningProvider {
 
     /** Records that [word] followed [previousWord], both of them typed rather than suggested. */
     suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String)
+
+    /**
+     * Drops [word] from the learned vocabulary entirely and reports whether it had already been promoted
+     * into the personal dictionary — in which case the caller has that copy to remove as well.
+     */
+    suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean
 }
 
 /**

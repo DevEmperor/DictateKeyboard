@@ -135,6 +135,14 @@ abstract class LearnedWordsDao {
     @Query("DELETE FROM $LEARNED_WORDS_TABLE WHERE id = :id")
     abstract suspend fun deleteWord(id: Long)
 
+    /** Removes [word] and reports what it was, so a promoted one can also be taken out of the dictionary. */
+    @Transaction
+    open suspend fun deleteWordByName(lang: String, word: String): LearnedWordEntry? {
+        val existing = findWord(lang, word) ?: return null
+        deleteWord(existing.id)
+        return existing
+    }
+
     @Query("DELETE FROM $LEARNED_WORDS_TABLE")
     abstract suspend fun deleteAllWords()
 

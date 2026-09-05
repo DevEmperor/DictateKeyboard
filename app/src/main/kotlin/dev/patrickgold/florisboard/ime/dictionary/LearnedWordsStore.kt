@@ -143,6 +143,19 @@ object LearnedWordsStore {
         invalidate(entry.lang)
     }
 
+    /**
+     * Removes [word] by name and returns the row that was there, or null if there was none.
+     *
+     * The row is returned rather than a boolean because the caller has one more thing to do when it was
+     * promoted: the copy in the personal dictionary has to go too, or the word stays "learned" from the
+     * user's point of view while this store insists it has forgotten it.
+     */
+    suspend fun forgetWord(context: Context, word: String, lang: String): LearnedWordEntry? {
+        val removed = db(context).dao().deleteWordByName(lang, word)
+        if (removed != null) invalidate(lang)
+        return removed
+    }
+
     suspend fun forgetAll(context: Context) {
         db(context).dao().deleteAllWords()
         db(context).dao().deleteAllBigrams()

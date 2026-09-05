@@ -61,5 +61,21 @@ fun DictionaryScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.UserDictionary(UserDictionaryType.FLORIS)) },
             enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },
         )
+        // Issue #318. The switch hangs off the internal dictionary rather than standing alone, because
+        // promotion writes into exactly that dictionary — with it off, a learned word could never graduate
+        // and the feature would half-work in a way nobody could diagnose.
+        SwitchPreference(
+            prefs.suggestion.learnTypedWords,
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__learn_typed_words__label"),
+            title = stringRes(R.string.pref__dictionary__learn_typed_words__label),
+            summary = stringRes(R.string.pref__dictionary__learn_typed_words__summary),
+            enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },
+        )
+        Preference(
+            modifier = Modifier.settingsSearchAnchor("pref__dictionary__manage_learned_words__label"),
+            title = stringRes(R.string.pref__dictionary__manage_learned_words__label),
+            summary = stringRes(R.string.pref__dictionary__manage_learned_words__summary),
+            onClick = { navController.navigate(Routes.Settings.LearnedWords) },
+        )
     }
 }
