@@ -641,27 +641,54 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val index = lowerIndexFor(subtype)
         val prevWord = previousWordOf(content, index) ?: return emptyList()
         val bigrams = bigramsFor(subtype)
-        if (bigrams.isEmpty()) return emptyList()
-
         val prefix = "$prevWord "
+
+        // The pairs this user has actually written, ahead of the corpus (issue #318). This is the half of
+        // word learning people recognise as the keyboard knowing them: a learned single word only helps
+        // while that word is being typed, but a learned *pair* answers before they have typed anything.
+        //
+        // Deliberately only here, and not in `bigramContextScore`, which feeds the *corrector*. Context
+        // that re-ranks a silent replacement was measured to mangle 2.4–9.2 % of correctly typed words
+        // even with the large corpus tables; a handful of personal pairs is far thinner evidence and the
+        // failure would be a word the user never typed appearing in place of one they did. Offering a
+        // prediction risks nothing — it sits in the strip until it is chosen.
+        val learnedPairs = if (prefs.suggestion.learnTypedWords.get()) {
+            dictLangFor(subtype)
+                ?.let { lang -> runCatching { LearnedWordsStore.bigrams(appContext, lang) }.getOrNull() }
+                .orEmpty()
+                .asSequence()
+                .filter { it.key.startsWith(prefix) && it.value >= WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS }
+                .sortedByDescending { it.value }
+                .map { it.key.substring(prefix.length) }
+                .filter { it.isNotBlank() }
+                .toList()
+        } else {
+            emptyList()
+        }
+        if (bigrams.isEmpty() && learnedPairs.isEmpty()) return emptyList()
+
         // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
         // ("the", "and", "of") that carries no information about what the user is writing.
-        return bigrams.asSequence()
+        val corpusPairs = bigrams.asSequence()
             .filter { it.key.startsWith(prefix) }
             .sortedByDescending { it.value }
             .take(maxCandidateCount)
-            .mapNotNull { entry ->
-                val candidate = entry.key.substring(prefix.length)
-                if (candidate.isBlank()) return@mapNotNull null
-                val text = index.canonical[candidate] ?: candidate
-                WordSuggestionCandidate(
-                    text = text,
-                    confidence = (index.freq[candidate] ?: 0) / 255.0,
-                    isEligibleForAutoCommit = false,
-                    sourceProvider = this,
-                )
-            }
-            .toList()
+            .map { it.key.substring(prefix.length) }
+            .filter { it.isNotBlank() }
+
+        val seen = LinkedHashMap<String, Boolean>() // candidate -> came from the user's own writing
+        for (candidate in learnedPairs) seen.putIfAbsent(candidate, true)
+        for (candidate in corpusPairs) seen.putIfAbsent(candidate, false)
+        return seen.entries.take(maxCandidateCount).map { (candidate, isLearned) ->
+            val text = index.canonical[candidate] ?: candidate
+            WordSuggestionCandidate(
+                text = text,
+                confidence = (index.freq[candidate] ?: 0) / 255.0,
+                isEligibleForAutoCommit = false,
+                sourceProvider = this,
+                isLearned = isLearned,
+            )
+        }
     }
 
     // --- Touch-decoded corrections (issue #242) -----------------------------------------------------

@@ -969,6 +969,19 @@
     <string name="apptour61__outro_eyebrow">That is 6.1</string>
     <string name="apptour61__outro_title">Same keyboard, fewer edges</string>
     <string name="apptour61__outro_body">Nothing about how you already dictate has changed — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
+    <string name="apptour62__intro_eyebrow">Dictate 6.2</string>
+    <string name="apptour62__intro_title">A keyboard that learns your words</string>
+    <string name="apptour62__intro_body">Names, terms, spellings of your own — the words no dictionary ships with are the ones a keyboard fights you over. Dictate can now pick them up from your typing, and it stays off until you switch it on.</string>
+    <string name="apptour62__learning_eyebrow">New: learned words</string>
+    <string name="apptour62__learning_title">Type it three times, and it is yours</string>
+    <string name="apptour62__learning_body">A word no dictionary knows is remembered the first time you type it, suggested from the second, and added to your dictionary at the third — from then on autocorrect leaves it alone. Words it picked up are shown in italics, and a long press on one forgets it again. It also learns which words you put together, so the next-word suggestions become yours rather than the corpus\'.</string>
+    <string name="apptour62__learning_cta">Switch it on</string>
+    <string name="apptour62__care_eyebrow">What it will not do</string>
+    <string name="apptour62__care_title">A typo learned is a typo forever</string>
+    <string name="apptour62__care_body">So a word is only remembered when it looks deliberate rather than mistyped — Dictate knows where your fingers landed and uses that to tell the difference. Nothing is learned in incognito mode, in password fields, or from dictation: only from what you actually typed. Everything stays on this device, you can see the whole list under User dictionaries, and it now travels with your backup.</string>
+    <string name="apptour62__outro_eyebrow">That is 6.2</string>
+    <string name="apptour62__outro_title">Yours to correct</string>
+    <string name="apptour62__outro_body">If it picks up something it should not have, forget it with a long press on the suggestion or from the list. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
@@ -1084,6 +1097,7 @@
     <string name="backup_and_restore__back_up__files">Select what to back up</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferences</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Saved rewording prompts</string>
+    <string name="backup_and_restore__back_up__files_personal_dictionary">Personal dictionary and learned words</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spelling extensions / dictionaries</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Theme extensions</string>

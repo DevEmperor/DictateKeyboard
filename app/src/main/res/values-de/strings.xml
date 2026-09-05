@@ -544,6 +544,7 @@
     <string name="backup_and_restore__back_up__files">Auswählen, wovon eine Sicherung erstellt werden soll</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Einstellungen</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Gespeicherte Umformulierungs-Prompts</string>
+    <string name="backup_and_restore__back_up__files_personal_dictionary">Persönliches Wörterbuch und gelernte Wörter</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastaturerweiterungen</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rechtschreibeerweiterungen / Wörterbücher</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Design-Erweiterungen</string>
@@ -1937,6 +1938,19 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt-Reihen</string>
     <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
     <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
+    <string name="apptour62__intro_eyebrow">Dictate 6.2</string>
+    <string name="apptour62__intro_title">Eine Tastatur, die deine Wörter lernt</string>
+    <string name="apptour62__intro_body">Namen, Fachbegriffe, eigene Schreibweisen — genau die Wörter, die in keinem Wörterbuch stehen, sind die, um die man mit einer Tastatur streitet. Dictate kann sie jetzt beim Tippen aufschnappen, und die Funktion bleibt aus, bis du sie einschaltest.</string>
+    <string name="apptour62__learning_eyebrow">Neu: gelernte Wörter</string>
+    <string name="apptour62__learning_title">Dreimal getippt, und es gehört dir</string>
+    <string name="apptour62__learning_body">Ein Wort, das kein Wörterbuch kennt, wird beim ersten Tippen gemerkt, ab dem zweiten vorgeschlagen und beim dritten ins Wörterbuch übernommen — von da an lässt die Autokorrektur es in Ruhe. Aufgeschnappte Wörter stehen kursiv in der Leiste, ein langer Druck vergisst sie wieder. Und die Tastatur lernt auch, welche Wörter du zusammen schreibst, sodass die Nächstes-Wort-Vorschläge deine werden statt die eines Korpus.</string>
+    <string name="apptour62__learning_cta">Einschalten</string>
+    <string name="apptour62__care_eyebrow">Was sie nicht tut</string>
+    <string name="apptour62__care_title">Ein gelernter Tippfehler bleibt für immer</string>
+    <string name="apptour62__care_body">Deshalb wird ein Wort nur gemerkt, wenn es absichtlich getippt aussieht und nicht wie ein Vertipper — Dictate weiß, wo deine Finger gelandet sind, und erkennt den Unterschied daran. Im Inkognito-Modus, in Passwortfeldern und aus Diktaten wird nichts gelernt, ausschließlich aus dem, was du wirklich getippt hast. Alles bleibt auf diesem Gerät, die vollständige Liste steht unter „Benutzerwörterbücher\", und im Backup ist sie jetzt mit dabei.</string>
+    <string name="apptour62__outro_eyebrow">Das ist 6.2</string>
+    <string name="apptour62__outro_title">Deins zum Korrigieren</string>
+    <string name="apptour62__outro_body">Wenn sie sich etwas merkt, das sie nicht sollte: langer Druck auf den Vorschlag oder aus der Liste löschen. Jede Tour lässt sich unter Einstellungen › Über erneut öffnen.</string>
     <string name="about__website__title">Website</string>
     <string name="dictate__error_out_of_credit">Guthaben aufgebraucht</string>
     <string name="dictate__action_top_up">Guthaben aufladen</string>

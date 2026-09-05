@@ -74,6 +74,8 @@ import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
 
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
@@ -88,6 +90,15 @@ object Backup {
     // any retained audio WAVs go into DICTATE_HISTORY_AUDIO_DIR named by the entry id.
     const val DICTATE_HISTORY_JSON_NAME = "dictate_history.json"
     const val DICTATE_HISTORY_AUDIO_DIR = "dictate_history_audio"
+    // The user's own vocabulary (issue #318): the words they added by hand and the ones the keyboard
+    // picked up from their typing, plus the word pairs behind personal next-word prediction. Exported as
+    // JSON for the same reason as everything above — the archive stays independent of SQLite versions,
+    // WAL files and locks. Until this existed a device change silently threw the whole vocabulary away,
+    // which is the one thing the reporter of #318 asked for by name.
+    const val PERSONAL_DICTIONARY_JSON_NAME = "personal_dictionary.json"
+    const val LEARNED_WORDS_JSON_NAME = "learned_words.json"
+    const val LEARNED_BIGRAMS_JSON_NAME = "learned_bigrams.json"
+    const val DICTIONARY_DIR = "dictionary"
 
     fun defaultFileName(metadata: Metadata): String {
         return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
@@ -102,6 +113,7 @@ object Backup {
         var jetprefDatastore by mutableStateOf(true)
         var dictatePrompts by mutableStateOf(true)
         var dictateHistory by mutableStateOf(true)
+        var personalDictionary by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
         var clipboardTextItems by mutableStateOf(false)
@@ -131,7 +143,7 @@ object Backup {
         }
 
         fun atLeastOneSelected(): Boolean {
-            return jetprefDatastore || dictatePrompts || dictateHistory || imeKeyboard || imeTheme || clipboardTextItems || clipboardImageItems || clipboardVideoItems
+            return jetprefDatastore || dictatePrompts || dictateHistory || personalDictionary || imeKeyboard || imeTheme || clipboardTextItems || clipboardImageItems || clipboardVideoItems
         }
     }
 
@@ -221,6 +233,21 @@ fun BackupScreen() = FlorisScreen {
                         src.copyTo(audioDir.subFile("${entry.id}.$extension"), overwrite = true)
                     }
                 }
+            }
+        }
+        if (backupFilesSelector.personalDictionary) {
+            // Both halves of the user's vocabulary (issue #318): the entries they curated themselves and
+            // the ones the keyboard learned. Kept as separate files rather than merged, because a restore
+            // has to be able to tell them apart — a hand-added word is not up for pruning.
+            val dm = DictionaryManager.default().also { it.loadUserDictionariesIfNecessary() }
+            val personal = runCatching { dm.florisUserDictionaryDao()?.queryAll() }.getOrNull().orEmpty()
+            val learned = runCatching { LearnedWordsStore.exportWords(context) }.getOrDefault(emptyList())
+            val pairs = runCatching { LearnedWordsStore.exportBigrams(context) }.getOrDefault(emptyList())
+            workspace.inputDir.subDir(Backup.DICTIONARY_DIR).let { dir ->
+                dir.mkdirs()
+                dir.subFile(Backup.PERSONAL_DICTIONARY_JSON_NAME).writeJson(personal)
+                dir.subFile(Backup.LEARNED_WORDS_JSON_NAME).writeJson(learned)
+                dir.subFile(Backup.LEARNED_BIGRAMS_JSON_NAME).writeJson(pairs)
             }
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
@@ -383,6 +410,11 @@ internal fun BackupFilesSelector(
             onClick = { filesSelector.dictateHistory = !filesSelector.dictateHistory },
             checked = filesSelector.dictateHistory,
             text = stringRes(R.string.dictate__history_title),
+        )
+        CheckboxListItem(
+            onClick = { filesSelector.personalDictionary = !filesSelector.personalDictionary },
+            checked = filesSelector.personalDictionary,
+            text = stringRes(R.string.backup_and_restore__back_up__files_personal_dictionary),
         )
         CheckboxListItem(
             onClick = { filesSelector.imeKeyboard = !filesSelector.imeKeyboard },
