@@ -1506,6 +1506,9 @@
     <string name="dictate__floating_button_copy_to_clipboard_title">Jedes Diktat in die Zwischenablage kopieren</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_on">Jedes Diktat wird zusätzlich in die Zwischenablage kopiert, sodass du es manuell einfügen kannst, falls das Einfügen fehlschlägt. Zeigt auf manchen Geräten einen Zwischenablage-Hinweis.</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_off">Diktate werden nur eingefügt, nicht in die Zwischenablage kopiert.</string>
+    <string name="dictate__floating_button_clear_clipboard_title">Zwischenablage nach dem Einfügen leeren</string>
+    <string name="dictate__floating_button_clear_clipboard_summary_on">Musste ein Diktat über die Zwischenablage eingefügt werden, wird sie danach wieder geleert. Kostet auf Geräten mit Zwischenablage-Hinweis eine zweite Einblendung.</string>
+    <string name="dictate__floating_button_clear_clipboard_summary_off">Ein Diktat, das eingefügt werden musste, bleibt in der Zwischenablage – so kannst du es selbst noch einmal einfügen, falls es nicht angekommen ist.</string>
     <string name="dictate__floating_button_undo_summary_off">Es wird keine Rückgängig-Schaltfläche angezeigt.</string>
     <string name="dictate__floating_button_undo_summary_on">Nach einer Diktateingabe erscheint neben der Schaltfläche eine Rückgängig-Schaltfläche, mit der du den eingefügten Text mit einem Tippen wieder entfernst.</string>
     <string name="dictate__floating_button_undo_title">Rückgängig-Schaltfläche</string>

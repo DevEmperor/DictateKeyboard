@@ -72,6 +72,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.overlay.AccessibilitySink
+import dev.patrickgold.florisboard.dictate.overlay.DictateAccessibilityService
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.chatModelIsPresetDefault
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
@@ -1935,7 +1936,10 @@ object DictateController {
 
     private fun copyToSystemClipboard(context: Context, text: String) {
         val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
-        runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
+        val copied = runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
+        // Tell the overlay what is on the clipboard now, so a paste-based insert moments later does not
+        // write the identical text a second time — each write raises the system's "copied" notice.
+        if (copied.isSuccess) DictateAccessibilityService.lastClipText = text
     }
 
     // --- Real-time streaming (issue #128) -------------------------------------------------------
