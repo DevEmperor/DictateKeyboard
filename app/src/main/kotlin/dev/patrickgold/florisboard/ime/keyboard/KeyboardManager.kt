@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.WordOrigin
 import dev.patrickgold.florisboard.ime.nlp.latin.TouchTrace
 import dev.patrickgold.florisboard.ime.nlp.latin.WordLearningGate
+import dev.patrickgold.florisboard.ime.nlp.math.MathSuggestionCandidate
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -453,6 +454,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         TouchTrace.reset()
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            // Written behind the cursor verbatim, not over the current word (issue #329). What stands
+            // in front of it is the sum the user typed, and "150 * 4 = " must keep every character of
+            // itself — commitCompletion would treat the trailing token as something to replace.
+            is MathSuggestionCandidate -> editorInstance.commitText(candidate.result)
             else -> editorInstance.commitCompletion(candidate)
         }
     }

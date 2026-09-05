@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.FormatClear
 import androidx.compose.material.icons.filled.Language
@@ -109,6 +110,13 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__suggestion__ignore_app_suggestion_block__label),
                 summary = stringRes(R.string.pref__suggestion__ignore_app_suggestion_block__summary),
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.suggestion.mathSuggestions,
+                icon = Icons.Default.Calculate,
+                modifier = Modifier.settingsSearchAnchor("pref__suggestion__math_suggestions__label"),
+                title = stringRes(R.string.pref__suggestion__math_suggestions__label),
+                summary = stringRes(R.string.pref__suggestion__math_suggestions__summary),
             )
             SwitchPreference(
                 prefs.suggestion.api30InlineSuggestionsEnabled,

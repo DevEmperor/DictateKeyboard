@@ -1515,6 +1515,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "suggestion__learn_typed_words",
             default = false,
         )
+        // On by default (issue #329), unlike the learning above: this one keeps no record, changes
+        // nothing on its own, and only ever appears when somebody has literally typed a sum and then an
+        // equals sign. Tapping it is the only way anything reaches the field.
+        val mathSuggestions = boolean(
+            key = "suggestion__math_suggestions",
+            default = true,
+        )
         // Some apps set TYPE_TEXT_FLAG_NO_SUGGESTIONS on ordinary text fields — Instagram and a lot of
         // WebViews do — which takes the composing region away and with it every word suggestion and the
         // autocorrect (issue #296). Gboard and SwiftKey ignore that flag outside password fields; this

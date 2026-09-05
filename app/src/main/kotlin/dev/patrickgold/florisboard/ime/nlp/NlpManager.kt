@@ -35,6 +35,9 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.math.Calculator
+import dev.patrickgold.florisboard.ime.nlp.math.MathSuggestionCandidate
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
@@ -132,6 +135,9 @@ class NlpManager(context: Context) {
             assembleCandidates()
         }
         prefs.emoji.suggestionEnabled.asFlow().collectLatestIn(scope) {
+            assembleCandidates()
+        }
+        prefs.suggestion.mathSuggestions.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
@@ -502,10 +508,29 @@ class NlpManager(context: Context) {
         return runBlocking { getSuggestionProvider(subtype).getFrequencyForWord(subtype, word) }
     }
 
+    /**
+     * The answer to a sum the user just finished typing, or an empty list (issue #329).
+     *
+     * Ahead of both the clipboard and the word suggestions in [assembleCandidates], because typing `=`
+     * is an expressed intent and a clipboard offer is a guess. Never in a password field: the strip is
+     * the one place a keyboard shows back what is being typed, and there it must not.
+     */
+    private fun mathCandidates(): List<SuggestionCandidate> {
+        if (!prefs.suggestion.mathSuggestions.get()) return emptyList()
+        val state = keyboardManager.activeState
+        if (state.keyVariation == KeyVariation.PASSWORD) return emptyList()
+        if (editorInstance.activeInfo.isRawInputEditor) return emptyList()
+        val result = Calculator.evaluateTrailing(
+            textBeforeCursor = editorInstance.activeContent.textBeforeSelection,
+            locale = subtypeManager.activeSubtype.primaryLocale.base,
+        ) ?: return emptyList()
+        return listOf(MathSuggestionCandidate(result))
+    }
+
     private fun assembleCandidates() {
         runBlocking {
             val candidates = when {
-                isSuggestionOn() -> {
+                isSuggestionOn() -> mathCandidates().ifEmpty {
                     clipboardSuggestionProvider.suggest(
                         subtype = Subtype.DEFAULT,
                         content = editorInstance.activeContent,
