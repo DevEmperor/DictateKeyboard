@@ -1935,10 +1935,14 @@ object DictateController {
     }
 
     private fun copyToSystemClipboard(context: Context, text: String) {
+        // Already there, so writing it again would buy nothing but a second "copied" notice. This is the
+        // normal case on the failure route: the paste attempt put the text on the clipboard moments ago,
+        // and then the failure handler goes to copy the very same text as the recovery route.
+        if (DictateAccessibilityService.lastClipText == text) return
         val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
         val copied = runCatching { clipboard.setPrimaryClip(ClipData.newPlainText("Dictate", text)) }
         // Tell the overlay what is on the clipboard now, so a paste-based insert moments later does not
-        // write the identical text a second time — each write raises the system's "copied" notice.
+        // write the identical text a second time either.
         if (copied.isSuccess) DictateAccessibilityService.lastClipText = text
     }
 
