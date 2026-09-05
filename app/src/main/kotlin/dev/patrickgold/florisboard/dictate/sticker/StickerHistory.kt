@@ -145,8 +145,12 @@ object StickerHistoryHelper {
     /**
      * Records a use. Pinned stickers stay where they are — a favourite is not demoted to a recent by
      * being used.
+     *
+     * Nothing is recorded while [isPrivate] (issue #329). Pinning and unpinning stay open in incognito:
+     * those are the user editing a list in front of him, not a protocol of what he sent.
      */
-    suspend fun markUsed(prefs: FlorisPreferenceModel, docId: String) {
+    suspend fun markUsed(prefs: FlorisPreferenceModel, isPrivate: Boolean, docId: String) {
+        if (isPrivate) return
         val maxSize = prefs.sticker.historyRecentMaxSize.get()
         edit(prefs) { pinned, recent ->
             if (docId !in pinned) {

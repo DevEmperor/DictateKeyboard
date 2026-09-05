@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.ime.smartbar.KeyboardSearchBar
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -187,7 +188,9 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                                     // Commit straight to the editor: routing through the dispatcher
                                     // would be swallowed by the active search-query interception.
                                     editorInstance.commitText(emoji.value)
-                                    scope.launch { EmojiHistoryHelper.markEmojiUsed(prefs, emoji) }
+                                    scope.launch {
+                                        EmojiHistoryHelper.markEmojiUsed(prefs, PrivateSession.isActive(context), emoji)
+                                    }
                                 },
                                 onHistoryAction = { },
                             )

@@ -14,6 +14,7 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import java.util.UUID
@@ -90,7 +91,7 @@ object GifManager {
             editorInstance.commitMedia(file, MIME_GIF, item.title?.ifBlank { "GIF" } ?: "GIF")
         }
         if (result != EditorInstance.MediaCommitResult.FAILED) {
-            GifHistoryHelper.addInsertedGif(prefs, item)
+            GifHistoryHelper.addInsertedGif(prefs, PrivateSession.isActive(context), item)
             provider.registerShare(item.id)
         }
         return result

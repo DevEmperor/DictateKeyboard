@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.dictate.media.MediaLog
 import dev.patrickgold.florisboard.dictate.media.WebPTranscoder
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
 import kotlin.math.absoluteValue
@@ -154,7 +155,7 @@ object StickerManager {
         MediaLog.log("insert: result=$result")
 
         if (result != EditorInstance.MediaCommitResult.FAILED) {
-            StickerHistoryHelper.markUsed(prefs, item.docId)
+            StickerHistoryHelper.markUsed(prefs, PrivateSession.isActive(context), item.docId)
         }
         withContext(Dispatchers.IO) {
             MediaCache.prune(context)

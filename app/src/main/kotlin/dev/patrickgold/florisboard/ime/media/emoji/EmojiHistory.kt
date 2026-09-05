@@ -75,7 +75,17 @@ data class EmojiHistory(
 object EmojiHistoryHelper {
     private var emojiGuard = Mutex(locked = false)
 
-    suspend fun markEmojiUsed(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
+    /**
+     * Records a use of [emoji], unless [isPrivate] (issue #329).
+     *
+     * The incognito gate matters here beyond the emoji palette: this is also the path an accepted
+     * emoji *suggestion* takes, so without it a word typed in incognito could still leave an emoji
+     * behind in the recents.
+     */
+    suspend fun markEmojiUsed(prefs: FlorisPreferenceModel, isPrivate: Boolean, emoji: Emoji): Unit = emojiGuard.withLock {
+        if (isPrivate) {
+            return
+        }
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
