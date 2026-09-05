@@ -221,10 +221,14 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     }
 
     /**
-     * Instructs the content provider to delete this URI. If not an image, is a noop
+     * Instructs the content provider to delete this URI. If the item holds no media, is a noop.
+     *
+     * Videos are cloned into the same storage as images and are deleted through the same provider,
+     * but were left out here — so every clear-all path deleted the images and quietly kept the
+     * videos, which are the larger files of the two (issue #316).
      */
     fun close(context: Context) {
-        if (type == ItemType.IMAGE) {
+        if (type == ItemType.IMAGE || type == ItemType.VIDEO) {
             tryOrNull { context.contentResolver.delete(this.uri!!, null, null) }
         }
     }

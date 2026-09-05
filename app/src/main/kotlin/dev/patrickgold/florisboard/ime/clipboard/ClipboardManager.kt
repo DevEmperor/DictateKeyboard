@@ -281,9 +281,7 @@ class ClipboardManager(
             val nToRemove = nonPinnedItems.size - prefs.clipboard.historySizeLimit.get()
             if (nToRemove > 0) {
                 val itemsToRemove = nonPinnedItems.asReversed().filterIndexed { n, _ -> n < nToRemove }
-                ioScope.launch {
-                    clipHistoryDao?.delete(itemsToRemove)
-                }
+                deleteWithMedia(itemsToRemove)
             }
         }
     }
@@ -300,9 +298,27 @@ class ClipboardManager(
             val expiryTime = System.currentTimeMillis() - (prefs.clipboard.historyAutoCleanSensitiveAfter.get() * 1000)
             itemsToRemove.addAll(sensitiveData.filter { it.creationTimestampMs < expiryTime })
         }
-        if (itemsToRemove.isNotEmpty()) {
-            ioScope.launch {
-                clipHistoryDao?.delete(itemsToRemove.toList())
+        deleteWithMedia(itemsToRemove.toList())
+    }
+
+    /**
+     * Removes [items] from the history and takes their media files with them.
+     *
+     * The two automatic clean-ups above used to delete the database row and nothing else, so every
+     * image and video that aged or fell out of the size limit left its cloned file behind in the
+     * app's own storage: invisible in the panel, unreachable from anywhere, and collected by
+     * nothing. With the size limit on by default that is the normal path out of the history, which
+     * made it the one leak that grows on its own (issue #316).
+     */
+    private fun deleteWithMedia(items: List<ClipboardItem>) {
+        if (items.isEmpty()) return
+        ioScope.launch {
+            // Row first, file second. If anything goes wrong between the two, what is left over is an
+            // unreferenced file — invisible and cleared by the next full wipe — rather than an entry
+            // in the panel whose picture has already been deleted underneath it.
+            clipHistoryDao?.delete(items)
+            for (item in items) {
+                item.close(appContext)
             }
         }
     }
@@ -322,20 +338,19 @@ class ClipboardManager(
     }
 
     fun clearExactHistory(items: List<ClipboardItem>) {
-        ioScope.launch {
-            for (item in items) {
-                item.close(appContext)
-            }
-            clipHistoryDao?.delete(items)
-        }
+        deleteWithMedia(items)
     }
 
     /**
-     * Clears all unpinned items from the clipboard history
+     * Clears all unpinned items from the clipboard history.
+     *
+     * Only the unpinned ones are closed. Closing every item and then deleting only the unpinned rows
+     * left a pinned image as an entry whose file had just been deleted underneath it — the one thing
+     * pinning is supposed to prevent (issue #316).
      */
     fun clearHistory() {
         ioScope.launch {
-            for (item in currentHistory.all) {
+            for (item in currentHistory.unpinned) {
                 item.close(appContext)
             }
             clipHistoryDao?.deleteAllUnpinned()
