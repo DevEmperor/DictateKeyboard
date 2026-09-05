@@ -1183,6 +1183,30 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             .map { it.text.toString() }
             .filter { index.fold(it).startsWith(index.fold(word)) }
             .distinctBy { it.lowercase() }
+
+        // What the user stored behind this exact word as a *shortcut* — an e-mail address behind "mail",
+        // say. Deliberately exempt from the prefix filter above and offered first, because an expansion
+        // is the opposite of a completion: it looks nothing like what was typed, and typing the shortcut
+        // in full is as deliberate as a user gets. Never auto-committed — "mail" is also an ordinary word,
+        // and space must not swap it for an address in the middle of a sentence.
+        val shortcutExpansions = runCatching {
+            val dm = DictionaryManager.default()
+            dm.loadUserDictionariesIfNecessary()
+            dm.queryUserShortcuts(word, subtype.primaryLocale)
+        }.getOrNull().orEmpty()
+        for (expansion in shortcutExpansions) {
+            if (out.size >= maxCandidateCount) break
+            out.putIfAbsent(
+                expansion.lowercase(),
+                WordSuggestionCandidate(
+                    text = expansion,
+                    confidence = USER_DICTIONARY_RANK_FREQ / 255.0,
+                    isEligibleForAutoCommit = false,
+                    sourceProvider = this,
+                    isLearned = true,
+                ),
+            )
+        }
         var personalTaken = 0
 
         // The words this keyboard picked up on its own (issue #318). Only from the second sighting — one

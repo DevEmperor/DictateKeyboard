@@ -115,6 +115,33 @@ class DictionaryManager private constructor(context: Context) {
         }
     }
 
+    /**
+     * What the user has stored behind the typed [shortcut] — the expansions, not the shortcut itself.
+     *
+     * Its own method rather than part of [queryUserDictionary] because the two answer different
+     * questions and the caller has to treat them differently. A word match is a *prefix completion* and
+     * is filtered as one; a shortcut match is an *expansion*, which by its nature looks nothing like what
+     * was typed. Folding both into one list is why shortcuts never appeared in the suggestion strip: the
+     * prefix filter added for contact names (issue #264) threw every expansion away, since
+     * `jannis@example.com` does not start with `mail`.
+     *
+     * Case is ignored, because a shortcut typed at the start of a sentence arrives capitalised.
+     */
+    fun queryUserShortcuts(shortcut: String, locale: FlorisLocale): List<String> {
+        if (shortcut.isBlank()) return emptyList()
+        val florisDao = florisUserDictionaryDao()
+        val systemDao = systemUserDictionaryDao()
+        if (florisDao == null && systemDao == null) return emptyList()
+        return buildList {
+            if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+                florisDao?.queryShortcutIgnoringCase(shortcut, locale)?.forEach { add(it.word) }
+            }
+            if (prefs.dictionary.enableSystemUserDictionary.get()) {
+                systemDao?.queryShortcutIgnoringCase(shortcut, locale)?.forEach { add(it.word) }
+            }
+        }.filter { it.isNotBlank() }.distinct()
+    }
+
     fun spell(word: String, locale: FlorisLocale): Boolean {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()

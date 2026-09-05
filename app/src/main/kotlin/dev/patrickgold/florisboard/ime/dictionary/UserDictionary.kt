@@ -110,6 +110,16 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES")
     fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
+    /**
+     * The same, ignoring case. A shortcut is something the user types, and they type it at the start of a
+     * sentence too — where auto-capitalisation turns `mail` into `Mail` and an exact match finds nothing.
+     */
+    @Query(
+        "$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut COLLATE NOCASE " +
+            "AND $LOCALE_MATCHES"
+    )
+    fun queryShortcutIgnoringCase(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry>
+
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
@@ -302,6 +312,22 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 selectionArgs = arrayOf(shortcut),
                 sortOrder = SORT_BY_FREQ_DESC,
             )
+        }
+
+        override fun queryShortcutIgnoringCase(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.SHORTCUT} = ? COLLATE NOCASE AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(shortcut),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.SHORTCUT} = ? COLLATE NOCASE AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf(shortcut, locale.localeTag(), locale.language),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
         }
 
         override fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
