@@ -222,8 +222,12 @@ private fun LearnedWordRow(
  */
 private suspend fun promoteByHand(context: android.content.Context, entry: LearnedWordEntry) =
     withContext(Dispatchers.IO) {
-        val dao = DictionaryManager.default().also { it.loadUserDictionariesIfNecessary() }
-            .florisUserDictionaryDao() ?: return@withContext
+        // runCatching around default() as well: it throws when the manager was never initialised, which
+        // is reachable from the settings app on a cold start, and a crash here would be a crash of the
+        // whole settings screen rather than a button that quietly did nothing.
+        val dao = runCatching {
+            DictionaryManager.default().also { it.loadUserDictionariesIfNecessary() }.florisUserDictionaryDao()
+        }.getOrNull() ?: return@withContext
         val locale = runCatching { FlorisLocale.fromTag(entry.lang) }.getOrNull()
         val inserted = runCatching {
             if (dao.queryExactFuzzyLocale(entry.word, locale ?: FlorisLocale.default()).isEmpty()) {
