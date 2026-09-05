@@ -57,7 +57,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // A typo is only auto-corrected when its best fix is at least this frequent (on the dictionary's
         // 128..255 scale). Rarer fixes are still offered as tap suggestions but never swapped in
         // automatically, so uncommon-but-intentional words (names, jargon) aren't mangled.
-        private const val AUTOCORRECT_MIN_FREQ = 170
+        //
+        // The number itself moved to [AutoCommitGate] (issue #318): the word learner reads "a correction
+        // we would have applied" as evidence that the word was mistyped, so it has to mean the same thing
+        // in both places, and the evaluation harness has to measure the same rule both use.
+        private const val AUTOCORRECT_MIN_FREQ = AutoCommitGate.MIN_FREQ
 
         // Spelling-fix suggestions (issue #212 / distance-2 fallback): how many edit-distance corrections
         // to surface, how many strip slots to reserve for them so prefix completions of a typo don't crowd
@@ -531,21 +535,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return isInUserDictionary(word, subtype)
     }
 
-    /** All strings one edit away from [word] (delete / transpose / replace / insert) — Norvig's edits1. */
-    private fun edits1(word: String, alphabet: Set<Char>): Set<String> {
-        val result = HashSet<String>()
-        for (i in 0..word.length) {
-            val a = word.substring(0, i)
-            val b = word.substring(i)
-            if (b.isNotEmpty()) {
-                result.add(a + b.substring(1))                                    // delete
-                if (b.length > 1) result.add(a + b[1] + b[0] + b.substring(2))    // transpose
-                for (c in alphabet) result.add(a + c + b.substring(1))            // replace
-            }
-            for (c in alphabet) result.add(a + c + b)                             // insert
-        }
-        return result
-    }
+    /** All strings one edit away from [word] — shared with the word learner (issue #318). */
+    private fun edits1(word: String, alphabet: Set<Char>): Set<String> =
+        EditDistance.edits1(word, alphabet)
 
     /** Dictionary words closest to (a misspelling of) [word], ranked by frequency. */
     private fun correctionsFor(

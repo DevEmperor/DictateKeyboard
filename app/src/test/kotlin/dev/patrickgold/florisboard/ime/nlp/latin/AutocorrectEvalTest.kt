@@ -10,11 +10,12 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
-import java.io.File
-import kotlin.math.sqrt
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertTrue
+
+/** What the beam decided about one word, as [EvalKeyboard] reports it. */
+private typealias Decision = EvalKeyboard.Decision
 
 /**
  * A measuring stand for the silent half of autocorrect (issues #242, #295).
@@ -51,119 +52,29 @@ import kotlin.test.assertTrue
  */
 class AutocorrectEvalTest {
 
-    // ── Keyboard geometry ────────────────────────────────────────────────────────────────────────
-    // A synthetic QWERTY in key-width units. Note that KeyProximityInfo.normalize divides *both* axes
-    // by the key width, so the row pitch is greater than 1: a key one row up is further away than a key
-    // one column across, and any rule expressed in these units has to live with that.
-
     private companion object {
-        const val ROW_HEIGHT = 1.15f
-        val ROWS = listOf("qwertyuiop" to 0.0f, "asdfghjkl" to 0.5f, "zxcvbnm" to 1.5f)
-
         /** The dictionary frequency a correction needs before it may be auto-committed. */
-        const val MIN_FREQ = 170
-
-        /** How many words the beam returns before scoring, mirroring `BEAM_CANDIDATES`. */
-        const val BEAM_CANDIDATES = 12
+        const val MIN_FREQ = EvalKeyboard.MIN_FREQ
 
         const val SAMPLE_SIZE = 1500
         const val SEED = 20260830L
     }
 
-    private val layout: KeyProximityInfo.Layout = run {
-        val codes = ArrayList<Int>()
-        val xs = ArrayList<Float>()
-        val ys = ArrayList<Float>()
-        ROWS.forEachIndexed { rowIndex, (row, offset) ->
-            row.forEachIndexed { i, ch ->
-                codes.add(ch.code)
-                xs.add(offset + i)
-                ys.add(rowIndex * ROW_HEIGHT)
-            }
-        }
-        KeyProximityInfo.Layout(codes.toIntArray(), xs.toFloatArray(), ys.toFloatArray())
-    }
+    // The keyboard, the dictionaries and the ways a finger goes wrong all live in [EvalKeyboard], so
+    // this file and [LearningEvalTest] measure opposite questions against identical evidence. Thin
+    // forwarders rather than call sites rewritten to `EvalKeyboard.x`: the experiment below reads the
+    // same as it did when its numbers were taken, which is what makes them comparable.
 
-    private val centres: Map<Char, Pair<Float, Float>> = buildMap {
-        ROWS.forEachIndexed { rowIndex, (row, offset) ->
-            row.forEachIndexed { i, ch -> put(ch, (offset + i) to (rowIndex * ROW_HEIGHT)) }
-        }
-    }
+    private fun readDict(name: String): Map<String, Int> = EvalKeyboard.readDict(name)
 
-    /** Keys within 1.3 key-widths — the ones a finger realistically lands on by mistake. */
-    private val neighbours: Map<Char, List<Char>> = centres.keys.associateWith { ch ->
-        val (x, y) = centres.getValue(ch)
-        centres.entries
-            .filter { (other, p) ->
-                other != ch && sqrt((p.first - x) * (p.first - x) + (p.second - y) * (p.second - y)) <= 1.3f
-            }
-            .map { it.key }
-    }
+    private fun typeable(word: String): Boolean = EvalKeyboard.typeable(word)
 
-    // ── Dictionaries ─────────────────────────────────────────────────────────────────────────────
-
-    private fun dictFile(name: String): File {
-        // The working directory of a unit test is the module, but do not rely on it: walk up until the
-        // assets are found, so this also runs from the repository root or an IDE run configuration.
-        var dir = File(".").absoluteFile
-        repeat(5) {
-            val candidate = File(dir, "app/src/main/assets/ime/dict/$name")
-            if (candidate.isFile) return candidate
-            val here = File(dir, "src/main/assets/ime/dict/$name")
-            if (here.isFile) return here
-            dir = dir.parentFile ?: return@repeat
-        }
-        error("could not locate ime/dict/$name — run from the repository or the app module")
-    }
-
-    /** `{"word": 231, …}` into a map. Hand-parsed to keep the test off the serialization runtime. */
-    private fun readDict(name: String): Map<String, Int> {
-        val text = dictFile(name).readText()
-        val out = HashMap<String, Int>(70_000)
-        var i = 0
-        while (i < text.length) {
-            val keyStart = text.indexOf('"', i)
-            if (keyStart < 0) break
-            val keyEnd = text.indexOf('"', keyStart + 1)
-            if (keyEnd < 0) break
-            val colon = text.indexOf(':', keyEnd + 1)
-            if (colon < 0) break
-            var end = colon + 1
-            while (end < text.length && text[end] != ',' && text[end] != '}') end++
-            val value = text.substring(colon + 1, end).trim().toIntOrNull()
-            if (value != null) out[text.substring(keyStart + 1, keyEnd)] = value
-            i = end + 1
-        }
-        return out
-    }
-
-    /** Only words the synthetic layout can actually produce: plain a–z, at least three long. */
-    private fun typeable(word: String): Boolean =
-        word.length >= 3 && word.all { it in centres }
-
-    // ── The decoder under test ───────────────────────────────────────────────────────────────────
-
-    /** What the beam decides, scored exactly as the provider scores it. Null when it has no opinion. */
-    private fun decide(taps: FloatArray, typed: String, index: TouchBeamDecoder.PrefixIndex, freq: Map<String, Int>): Decision? {
-        val beam = TouchBeamDecoder.decode(taps, typed, index, layout, BEAM_CANDIDATES)
-        if (beam.isEmpty()) return null
-        var bestWord: String? = null
-        var bestScore = Double.NEGATIVE_INFINITY
-        var bestCost = 0f
-        for (candidate in beam) {
-            val f = freq[candidate.word] ?: continue
-            val score = TouchScoring.score(f, candidate.cost, 0.0)
-            if (score > bestScore) {
-                bestScore = score
-                bestWord = candidate.word
-                bestCost = candidate.cost
-            }
-        }
-        val word = bestWord ?: return null
-        return Decision(word = word, cost = bestCost, freq = freq[word] ?: 0, taps = typed.length)
-    }
-
-    private data class Decision(val word: String, val cost: Float, val freq: Int, val taps: Int)
+    private fun decide(
+        taps: FloatArray,
+        typed: String,
+        index: TouchBeamDecoder.PrefixIndex,
+        freq: Map<String, Int>,
+    ): Decision? = EvalKeyboard.decide(taps, typed, index, freq)
 
     /** A rule decides, given the tap evidence, whether the swap may happen unasked. */
     private fun interface Rule {
@@ -172,65 +83,19 @@ class AutocorrectEvalTest {
 
     // ── Tap generation ───────────────────────────────────────────────────────────────────────────
 
-    private fun tapsFor(word: String): FloatArray {
-        val out = FloatArray(word.length * 2)
-        word.forEachIndexed { i, ch ->
-            val (x, y) = centres.getValue(ch)
-            out[i * 2] = x
-            out[i * 2 + 1] = y
-        }
-        return out
-    }
+    private fun tapsFor(word: String): FloatArray = EvalKeyboard.tapsFor(word)
 
     /** The case #295 is about: the finger lands dead-centre, on the wrong key. */
-    private fun cleanNeighbourSlip(word: String, rng: Random, slips: Int): Pair<String, FloatArray>? {
-        val chars = word.toCharArray()
-        val positions = word.indices.shuffled(rng).take(slips)
-        for (p in positions) {
-            val options = neighbours[chars[p]].orEmpty()
-            if (options.isEmpty()) return null
-            chars[p] = options[rng.nextInt(options.size)]
-        }
-        val typed = String(chars)
-        return if (typed == word) null else typed to tapsFor(typed)
-    }
+    private fun cleanNeighbourSlip(word: String, rng: Random, slips: Int): Pair<String, FloatArray>? =
+        EvalKeyboard.cleanNeighbourSlip(word, rng, slips)
 
     /** The case #242 measured: the finger is off-centre enough to land on the neighbouring key. */
-    private fun noisySlip(word: String, rng: Random, sigma: Float): Pair<String, FloatArray>? {
-        val taps = FloatArray(word.length * 2)
-        val typed = StringBuilder(word.length)
-        word.forEachIndexed { i, ch ->
-            val (cx, cy) = centres.getValue(ch)
-            val x = cx + (rng.nextDouble() * 2 - 1).toFloat() * sigma
-            val y = cy + (rng.nextDouble() * 2 - 1).toFloat() * sigma
-            taps[i * 2] = x
-            taps[i * 2 + 1] = y
-            // What the keyboard would have resolved this tap to.
-            var best = ch
-            var bestDist = Float.MAX_VALUE
-            for ((c, p) in centres) {
-                val d = (p.first - x) * (p.first - x) + (p.second - y) * (p.second - y)
-                if (d < bestDist) {
-                    bestDist = d
-                    best = c
-                }
-            }
-            typed.append(best)
-        }
-        val result = typed.toString()
-        return if (result == word) null else result to taps
-    }
+    private fun noisySlip(word: String, rng: Random, sigma: Float): Pair<String, FloatArray>? =
+        EvalKeyboard.noisySlip(word, rng, sigma)
 
     /** Two adjacent characters swapped: the fingers were right, the order was not. */
-    private fun transposition(word: String, rng: Random): Pair<String, FloatArray>? {
-        if (word.length < 4) return null
-        val at = rng.nextInt(word.length - 1)
-        if (word[at] == word[at + 1]) return null
-        val chars = word.toCharArray()
-        val t = chars[at]; chars[at] = chars[at + 1]; chars[at + 1] = t
-        val typed = String(chars)
-        return typed to tapsFor(typed)
-    }
+    private fun transposition(word: String, rng: Random): Pair<String, FloatArray>? =
+        EvalKeyboard.transposition(word, rng)
 
     // ── The experiment ───────────────────────────────────────────────────────────────────────────
 

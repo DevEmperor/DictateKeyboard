@@ -56,6 +56,19 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 object AutoCommitGate {
 
     /**
+     * How frequent a word a correction must be, on the dictionary's stored 128..255 scale, before it may
+     * be swapped in silently. Rarer fixes are still offered as tap suggestions, so an uncommon-but-
+     * intentional word (a name, jargon) is never mangled by one.
+     *
+     * Lives here rather than in [LatinLanguageProvider] because it is half of the same question — how
+     * much has to be true before we act without being asked — and because two other places have to agree
+     * with it to the digit: [WordLearningGate], which reads "a correction we would have applied" as
+     * evidence that a word was mistyped, and `AutocorrectEvalTest`, which measures the pair. Three
+     * copies of 170 is exactly how the #242 numbers became unreproducible.
+     */
+    const val MIN_FREQ = 170
+
+    /**
      * Excess tap distance per tap (key-width²) a correction may cost and still be swapped in silently.
      *
      * Per tap rather than per word, so the rule does not get stricter simply because the word is longer:
