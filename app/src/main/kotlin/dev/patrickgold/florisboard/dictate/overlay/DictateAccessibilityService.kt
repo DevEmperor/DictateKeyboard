@@ -36,6 +36,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import android.view.inputmethod.EditorInfo
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
@@ -491,7 +492,11 @@ class DictateAccessibilityService : AccessibilityService() {
      * won and where its knowledge of the field came from — **never the text itself**, only its length.
      */
     private fun logCommit(path: String, content: String, length: Int) {
-        Log.i(LOG_TAG, "commit path=$path content=$content started=${isInputStarted()} len=$length")
+        val legacy = if (legacyInsertionForced()) " legacy=forced" else ""
+        Log.i(
+            LOG_TAG,
+            "commit path=$path content=$content started=${isInputStarted()}$legacy len=$length",
+        )
     }
 
     /**
@@ -554,6 +559,24 @@ class DictateAccessibilityService : AccessibilityService() {
     }.getOrDefault(false)
 
     /**
+     * Whether the accessibility input connection may be used at all.
+     *
+     * The version check is the real condition: the API arrived with Android 13, and below it the
+     * floating button has nothing but the node and the clipboard — which is where issue #314 lives.
+     *
+     * The devtools switch is what makes that half reachable on a modern phone. Without it every commit
+     * here wins on route 1 and the placeholder handling, the caret probe and the paste route are never
+     * executed at all. An emulator is no substitute: the apps whose fields misreport their placeholder
+     * are precisely the ones that are not installed on one.
+     */
+    private fun inputConnectionUsable(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !legacyInsertionForced()
+
+    /** Debug builds only, so a release can never be talked out of its best insertion route. */
+    private fun legacyInsertionForced(): Boolean =
+        BuildConfig.DEBUG && runCatching { prefs.devtools.forceLegacyInsertion.get() }.getOrDefault(false)
+
+    /**
      * The field's whole text and caret, read from the accessibility input connection (API 33+), or null
      * when that is unavailable or would only give a slice.
      *
@@ -565,7 +588,7 @@ class DictateAccessibilityService : AccessibilityService() {
      * faithfully reports our own text back, even out of an editor the app has already discarded (#310).
      */
     private fun readWholeFieldFromConnection(): FieldContent? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
+        if (!inputConnectionUsable()) return null
         val connection = inputMethod?.currentInputConnection ?: return null
         return runCatching {
             val window = connection.getSurroundingText(FIELD_READ_WINDOW, FIELD_READ_WINDOW, 0)
@@ -649,7 +672,7 @@ class DictateAccessibilityService : AccessibilityService() {
      * is the same floor the write path already has.
      */
     private fun readBeforeCursor(sentLength: Int): String? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
+        if (!inputConnectionUsable()) return null
         val connection = inputMethod?.currentInputConnection ?: return null
         return runCatching {
             val window = connection.getSurroundingText(sentLength + VERIFY_WINDOW_PAD, 0, 0) ?: return null
@@ -760,7 +783,7 @@ class DictateAccessibilityService : AccessibilityService() {
      * (older OS, or no editor currently bound), so the caller falls back to the node-based methods.
      */
     private fun commitViaInputConnection(text: String): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return false
+        if (!inputConnectionUsable()) return false
         val connection = inputMethod?.currentInputConnection ?: return false
         return runCatching {
             connection.commitText(text, 1, null)
@@ -934,7 +957,7 @@ class DictateAccessibilityService : AccessibilityService() {
      * field gets one insert at the end, which is the path that is actually verified.
      */
     private fun canStreamIntoField(): Boolean =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+        inputConnectionUsable() &&
             runCatching { inputMethod?.currentInputConnection != null }.getOrDefault(false)
 
     private fun setPreviewThrottled(full: String) {

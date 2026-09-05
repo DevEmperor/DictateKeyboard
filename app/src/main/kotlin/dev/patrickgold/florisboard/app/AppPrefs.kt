@@ -226,6 +226,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "devtools__show_touch_boundaries",
             default = false,
         )
+        // Makes the floating button insert as if the accessibility input connection did not exist, i.e.
+        // the way it must on Android 12 and older, where that API is not there at all. Without this the
+        // whole node/placeholder/paste half of the insert path (issue #314) is unreachable on a modern
+        // phone — and an emulator cannot stand in for it, because the apps whose fields misreport their
+        // placeholder are exactly the ones not installed there.
+        val forceLegacyInsertion = boolean(
+            key = "devtools__force_legacy_insertion",
+            default = false,
+        )
         val showDragAndDropHelpers = boolean(
             key = "devtools__show_drag_and_drop_helpers",
             default = false,

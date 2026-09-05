@@ -1174,6 +1174,8 @@
     <string name="devtools__show_inline_autofill_overlay__label">Show inline autofill overlay</string>
     <string name="devtools__show_inline_autofill_overlay__summary">Overlays the current inline autofill results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
+    <string name="devtools__force_legacy_insertion__label" comment="Label of the debug switch that makes the floating button insert the pre-Android-13 way">Floating button: insert like Android 12</string>
+    <string name="devtools__force_legacy_insertion__summary" comment="Summary of that debug switch">Pretend the accessibility input connection does not exist, so inserts go through the node and the clipboard the way they must on Android 12 and older. Debug builds only.</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag&amp;drop screens for debugging</string>

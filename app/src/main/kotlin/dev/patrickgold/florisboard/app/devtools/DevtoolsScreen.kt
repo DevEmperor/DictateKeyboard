@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -95,6 +96,13 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = stringRes(R.string.devtools__show_key_touch_boundaries__label),
                 summary = stringRes(R.string.devtools__show_key_touch_boundaries__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.devtools.forceLegacyInsertion,
+                title = stringRes(R.string.devtools__force_legacy_insertion__label),
+                summary = stringRes(R.string.devtools__force_legacy_insertion__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+                visibleIf = { BuildConfig.DEBUG },
             )
             SwitchPreference(
                 prefs.devtools.showDragAndDropHelpers,
