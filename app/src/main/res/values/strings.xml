@@ -643,6 +643,8 @@
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
+    <string name="pref__suggestion__math_suggestions__label" comment="Preference title">Inline calculator</string>
+    <string name="pref__suggestion__math_suggestions__summary" comment="Preference summary">Type a sum and = to get the answer as a suggestion</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
     <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
@@ -651,6 +653,8 @@
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Auto-space after punctuation</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatically insert a space after a punctuation</string>
+    <string name="pref__correction__tighten_punctuation_spacing__label" comment="Preference title">Tighten punctuation</string>
+    <string name="pref__correction__tighten_punctuation_spacing__summary" comment="Preference summary">Removes a space typed before . , ? !</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
@@ -1158,6 +1162,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
+    <string name="pref__clipboard__strip_tracking_params__label" comment="Preference title">Remove tracking from links</string>
+    <string name="pref__clipboard__strip_tracking_params__summary" comment="Preference summary">Strips utm_, si, fbclid and the like when pasting</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Number of grid columns</string>

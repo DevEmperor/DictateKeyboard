@@ -20,7 +20,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.FormatClear
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material3.Card
@@ -110,6 +112,13 @@ fun TypingScreen() = FlorisScreen {
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
             )
             SwitchPreference(
+                prefs.suggestion.mathSuggestions,
+                icon = Icons.Default.Calculate,
+                modifier = Modifier.settingsSearchAnchor("pref__suggestion__math_suggestions__label"),
+                title = stringRes(R.string.pref__suggestion__math_suggestions__label),
+                summary = stringRes(R.string.pref__suggestion__math_suggestions__summary),
+            )
+            SwitchPreference(
                 prefs.suggestion.api30InlineSuggestionsEnabled,
                 modifier = Modifier.settingsSearchAnchor("pref__suggestion__api30_inline_suggestions_enabled__label"),
                 title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
@@ -157,6 +166,15 @@ fun TypingScreen() = FlorisScreen {
                     }
                 }
             }
+            // The other half of auto-space (issue #329), and its own switch on purpose: auto-space adds
+            // a character, this one takes one the user already typed away.
+            SwitchPreference(
+                prefs.correction.tightenPunctuationSpacing,
+                icon = Icons.Default.FormatClear,
+                modifier = Modifier.settingsSearchAnchor("pref__correction__tighten_punctuation_spacing__label"),
+                title = stringRes(R.string.pref__correction__tighten_punctuation_spacing__label),
+                summary = stringRes(R.string.pref__correction__tighten_punctuation_spacing__summary),
+            )
             SwitchPreference(
                 prefs.correction.rememberCapsLockState,
                 modifier = Modifier.settingsSearchAnchor("pref__correction__remember_caps_lock_state__label"),

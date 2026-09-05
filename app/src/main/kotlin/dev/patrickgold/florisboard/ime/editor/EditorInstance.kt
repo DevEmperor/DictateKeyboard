@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.util.UrlSanitizer
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.io.File
@@ -87,6 +88,31 @@ internal fun completionReplacementRange(composing: EditorRange, currentWord: Edi
         currentWord.isValid -> currentWord
         else -> EditorRange.Unspecified
     }
+
+/**
+ * Whether the space between [textBefore] and the punctuation mark [char] should be swallowed, turning
+ * `hello , world` into `hello, world` (issue #329).
+ *
+ * This is the other half of auto-space: that one puts a space *after* a mark, this one removes one the
+ * user typed *before* it. Which marks qualify comes from the active punctuation rule's
+ * [dev.patrickgold.florisboard.ime.nlp.PunctuationRule.symbolsTighteningSpace], passed in as
+ * [tighteningSymbols] — its own list, because "a space belongs after this mark" is emphatically not the
+ * same statement as "none belongs before it": `AT & T` wants both, and French wants both around `?`.
+ *
+ * Only a lone space is taken, and only with a real character in front of it. That rules out three cases
+ * in one go without a second mechanism: indentation after a line break, a leading space at the start of
+ * a field, and a deliberate run of spaces — three spaces before a comma are somebody's intent, not a
+ * slip of the thumb.
+ */
+internal fun shouldTightenSpaceBefore(
+    char: String,
+    textBefore: String,
+    tighteningSymbols: String,
+): Boolean {
+    if (char.isEmpty() || !tighteningSymbols.contains(char.first())) return false
+    if (textBefore.length < 2 || textBefore.last() != ' ') return false
+    return !textBefore[textBefore.length - 2].isWhitespace()
+}
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
@@ -261,6 +287,25 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             punctuationRule.symbolsPrecedingAutoSpace.contains(text.first())
     }
 
+    /**
+     * Whether a space the *user* typed before [text] should be swallowed (issue #329).
+     *
+     * The mechanism is not new — [AbstractEditorInstance.commitChar] has always been able to drop the
+     * preceding space, over the composing region and without a delete, so nothing flickers. All that
+     * was missing is a reason to ask for it that isn't "we put that space there ourselves".
+     */
+    private fun shouldTightenSpaceBeforePunctuation(text: String): Boolean {
+        if (!prefs.correction.tightenPunctuationSpacing.get() || text.isEmpty()) return false
+        if (activeInfo.isRawInputEditor) return false
+        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+        return shouldTightenSpaceBefore(
+            char = text,
+            // Two characters is all the rule needs: the space itself and whatever stands in front of it.
+            textBefore = activeContent.getTextBeforeCursor(2),
+            tighteningSymbols = nlpManager.getActivePunctuationRule().symbolsTighteningSpace,
+        )
+    }
+
     override fun commitChar(char: String): Boolean {
         val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
         val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
@@ -272,9 +317,13 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
+        // Loses to anything that wants a space in that exact spot, so the two never fight over one
+        // position — removing a space and inserting one in the same commit is a no-op with extra steps.
+        val isTightenSpace = !isPhantomSpaceActive && !isInsertAutoSpaceBeforeChar &&
+            shouldTightenSpaceBeforePunctuation(char)
         return super.commitChar(
             char = char,
-            deletePreviousSpace = isDeletePreviousSpace,
+            deletePreviousSpace = isDeletePreviousSpace || isTightenSpace,
             insertSpaceBeforeChar = isInsertAutoSpaceBeforeChar || isPhantomSpaceActive,
             insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
         )
@@ -419,7 +468,15 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.TEXT -> {
-                commitText(item.text.toString()).also {
+                // One funnel for all three ways to paste — the key, the clipboard panel and the
+                // suggestion chip — which is why the link cleaner sits here and nowhere else (#329).
+                val text = item.text.toString()
+                val outgoing = if (prefs.clipboard.stripTrackingParams.get()) {
+                    UrlSanitizer.clean(text)
+                } else {
+                    text
+                }
+                commitText(outgoing).also {
                     updateLastCommitPosition()
                 }
             }

@@ -49,12 +49,26 @@ data class GifHistory(
     }
 }
 
-/** Mutations of the GIF history; all suspend and serialized behind a single mutex. */
+/**
+ * Mutations of the GIF history; all suspend and serialized behind a single mutex.
+ *
+ * The two *recording* functions take [isPrivate] as a required parameter rather than reading the
+ * keyboard state themselves (issue #329). Required, because the bug was not that a caller passed the
+ * wrong value — it was that nobody asked at all, and a parameter the compiler insists on cannot be
+ * forgotten. Deliberate actions (removing an entry) are not gated: they are the user editing a list
+ * he is looking at, not a protocol being written behind his back.
+ */
 object GifHistoryHelper {
     private val guard = Mutex(locked = false)
 
-    /** Records a search term (trimmed), moving/prepending it and capping the list. Blanks are ignored. */
-    suspend fun addSearch(prefs: FlorisPreferenceModel, term: String): Unit = guard.withLock {
+    /**
+     * Records a search term (trimmed), moving/prepending it and capping the list. Blanks are ignored.
+     *
+     * The most sensitive of the media writes: a search term is text the user typed, and it stays
+     * visible as a chip until it is pushed out. Nothing is recorded while [isPrivate].
+     */
+    suspend fun addSearch(prefs: FlorisPreferenceModel, isPrivate: Boolean, term: String): Unit = guard.withLock {
+        if (isPrivate) return
         val trimmed = term.trim()
         if (trimmed.isEmpty()) return
         val current = prefs.gif.history.get()
@@ -66,7 +80,8 @@ object GifHistoryHelper {
     }
 
     /** Records an inserted GIF, moving/prepending it (deduped by id) and capping the list. */
-    suspend fun addInsertedGif(prefs: FlorisPreferenceModel, gif: GifItem): Unit = guard.withLock {
+    suspend fun addInsertedGif(prefs: FlorisPreferenceModel, isPrivate: Boolean, gif: GifItem): Unit = guard.withLock {
+        if (isPrivate) return
         val current = prefs.gif.history.get()
         val updated = buildList {
             add(gif)

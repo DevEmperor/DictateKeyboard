@@ -107,6 +107,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__sync_to_system",
             default = ClipboardSyncBehavior.NO_EVENTS,
         )
+        // Opt-in on purpose (issue #329): this quietly changes what the user pastes, and that is only
+        // ever acceptable because they asked for it.
+        val stripTrackingParams = boolean(
+            key = "clipboard__strip_tracking_params",
+            default = false,
+        )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
             default = true,
@@ -188,6 +194,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val autoSpacePunctuation = boolean(
             key = "correction__auto_space_punctuation",
+            default = false,
+        )
+        // The other half of the same idea (issue #329): auto-space puts a space *after* a punctuation
+        // mark, this removes one the user typed *before* it. Its own switch rather than a widening of
+        // auto-space, because this one rewrites what was already typed.
+        val tightenPunctuationSpacing = boolean(
+            key = "correction__tighten_punctuation_spacing",
             default = false,
         )
         val doubleSpacePeriod = boolean(
@@ -1365,6 +1378,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "localization__hindi_defaults_migrated",
             default = false,
         )
+        // One-time guard: French subtypes saved before the "french" punctuation rule existed still name
+        // "default", which would let punctuation tightening eat the space French wants before ? ! ; :
+        // (issue #329). See DictateLegacyMigrator.migrateFrenchPunctuationRuleIfNeeded.
+        val frenchPunctuationMigrated = boolean(
+            key = "localization__french_punctuation_migrated",
+            default = false,
+        )
     }
 
     val other = Other()
@@ -1494,6 +1514,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val learnTypedWords = boolean(
             key = "suggestion__learn_typed_words",
             default = false,
+        )
+        // On by default (issue #329), unlike the learning above: this one keeps no record, changes
+        // nothing on its own, and only ever appears when somebody has literally typed a sum and then an
+        // equals sign. Tapping it is the only way anything reaches the field.
+        val mathSuggestions = boolean(
+            key = "suggestion__math_suggestions",
+            default = true,
         )
         // Some apps set TYPE_TEXT_FLAG_NO_SUGGESTIONS on ordinary text fields — Instagram and a lot of
         // WebViews do — which takes the composing region away and with it every word suggestion and the

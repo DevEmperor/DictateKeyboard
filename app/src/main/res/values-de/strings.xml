@@ -374,6 +374,8 @@
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatische Leerzeichen nach Punktsetzung</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatisch ein Leerzeichen nach einem Punkt setzen</string>
+    <string name="pref__correction__tighten_punctuation_spacing__label" comment="Preference title">Zeichensetzung straffen</string>
+    <string name="pref__correction__tighten_punctuation_spacing__summary" comment="Preference summary">Entfernt ein Leerzeichen vor . , ? !</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>
@@ -612,6 +614,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
+    <string name="pref__clipboard__strip_tracking_params__label" comment="Preference title">Tracking aus Links entfernen</string>
+    <string name="pref__clipboard__strip_tracking_params__summary" comment="Preference summary">Entfernt utm_, si, fbclid und Ähnliches beim Einfügen</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Beschränkung für die Vorschläge der Zwischenablage</string>
@@ -1552,6 +1556,8 @@
     <string name="dictate__wear_standalone_title">Schlüssel mit Uhr synchronisieren</string>
     <string name="emoji__search__hint">Emoji suchen</string>
     <string name="emoji__search__no_results">Keine passenden Emojis</string>
+    <string name="pref__suggestion__math_suggestions__label" comment="Preference title">Rechner in der Vorschlagsleiste</string>
+    <string name="pref__suggestion__math_suggestions__summary" comment="Preference summary">Rechenaufgabe und = eintippen, das Ergebnis wird vorgeschlagen</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Autofill-Vorschläge des Systems</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Verhindert, dass möglicherweise anstößige Wörter beim Tippen vorgeschlagen werden</string>
     <string name="quick_action__dictate_reinsert">Verlauf</string>

@@ -23,6 +23,7 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
@@ -113,7 +114,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         if (!updateHistory || candidate !is EmojiSuggestionCandidate) {
             return
         }
-        EmojiHistoryHelper.markEmojiUsed(prefs, candidate.emoji)
+        EmojiHistoryHelper.markEmojiUsed(prefs, PrivateSession.isActive(context), candidate.emoji)
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {

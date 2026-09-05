@@ -31,6 +31,7 @@ import kotlinx.serialization.Serializable
  *       "id": "default",
  *       "label": "Default",
  *       "symbolsPrecedingAutoSpace": ".,?‽!\"&%)]}»",
+ *       "symbolsTighteningSpace": ".,;:?!‽",
  *       "symbolsFollowingAutoSpace": "",
  *       "symbolsPrecedingPhantomSpace": ".,;:?‽!&%)]}»©®™",
  *       "symbolsFollowingPhantomSpace": "¿⸘¡([{",
@@ -54,6 +55,16 @@ import kotlinx.serialization.Serializable
  *  Each character is considered a separate symbol.
  * @property symbolsFollowingPhantomSpace List of characters considered to be valid symbols after a phantom space.
  *  Each character is considered a separate symbol.
+ * @property symbolsTighteningSpace List of characters that swallow a space the user typed in front of them, so
+ *  `hello , world` becomes `hello, world` (issue #329). Each character is a separate symbol.
+ *
+ *  Its own list rather than a reading of [symbolsPrecedingAutoSpace], which was the first idea and is wrong twice
+ *  over. `&` takes a space after it and one before it — deriving the set from that field would turn `AT & T` into
+ *  `AT& T`. And French wants a space on *both* sides of `?`, so a rule cannot express "space after, none before"
+ *  unless the two sides are stated separately.
+ *
+ *  Defaults to the pair no language disagrees about, so an extension that predates this field, or a third-party one
+ *  that never heard of it, behaves conservatively instead of guessing.
  */
 @Serializable
 data class PunctuationRule(
@@ -65,6 +76,7 @@ data class PunctuationRule(
     val symbolsPrecedingPhantomSpace: String,
     val symbolsFollowingPhantomSpace: String,
     val symbolsTerminatingSentence: String,
+    val symbolsTighteningSpace: String = ".,",
 ) : ExtensionComponent {
 
     companion object {

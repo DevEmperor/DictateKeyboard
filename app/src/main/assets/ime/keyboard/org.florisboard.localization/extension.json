@@ -21,7 +21,18 @@
       "symbolsFollowingAutoSpace": "",
       "symbolsPrecedingPhantomSpace": ".,;:?‽!&%)]}»©®™",
       "symbolsFollowingPhantomSpace": "¿⸘¡([{",
-      "symbolsTerminatingSentence": ".?‽!"
+      "symbolsTerminatingSentence": ".?‽!",
+      "symbolsTighteningSpace": ".,;:?!‽"
+    },
+    {
+      "id": "french",
+      "label": "French",
+      "symbolsPrecedingAutoSpace": ".,?‽!\"&%)]}»",
+      "symbolsFollowingAutoSpace": "",
+      "symbolsPrecedingPhantomSpace": ".,;:?‽!&%)]}»©®™",
+      "symbolsFollowingPhantomSpace": "¿⸘¡([{",
+      "symbolsTerminatingSentence": ".?‽!",
+      "symbolsTighteningSpace": ".,"
     }
   ],
   "popupMappings": [
@@ -160,6 +171,7 @@
     {
       "languageTag": "fr-FR",
       "composer": "org.florisboard.composers:appender",
+      "punctuationRule": "org.florisboard.localization:french",
       "currencySet": "org.florisboard.currencysets:euro",
       "popupMapping": "org.florisboard.localization:fr",
       "preferred": {
@@ -169,6 +181,7 @@
     {
       "languageTag": "fr-CA",
       "composer": "org.florisboard.composers:appender",
+      "punctuationRule": "org.florisboard.localization:french",
       "currencySet": "org.florisboard.currencysets:dollar",
       "popupMapping": "org.florisboard.localization:fr",
       "preferred": {
@@ -178,6 +191,7 @@
     {
       "languageTag": "fr-CH",
       "composer": "org.florisboard.composers:appender",
+      "punctuationRule": "org.florisboard.localization:french",
       "currencySet": "org.florisboard.currencysets:euro",
       "popupMapping": "org.florisboard.localization:fr",
       "preferred": {

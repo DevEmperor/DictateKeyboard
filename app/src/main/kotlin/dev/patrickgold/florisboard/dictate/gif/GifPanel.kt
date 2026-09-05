@@ -74,6 +74,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.PanelHeaderButton
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -136,7 +137,9 @@ fun GifPanel(
         initialLoading = true; loadError = false; gifs = emptyList(); page = 1; hasNext = false
         GifManager.ensureCustomerId()
         // Remember the term so it shows up as a recent-search chip next time.
-        submittedQuery?.takeIf { it.isNotBlank() }?.let { GifHistoryHelper.addSearch(prefs, it) }
+        submittedQuery?.takeIf { it.isNotBlank() }?.let {
+            GifHistoryHelper.addSearch(prefs, PrivateSession.isActive(context), it)
+        }
         try {
             val first = loadPage(1)
             gifs = appendUnseenGifs(emptyList(), first.items)

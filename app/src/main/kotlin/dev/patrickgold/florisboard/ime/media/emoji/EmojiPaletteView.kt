@@ -91,6 +91,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -208,7 +209,7 @@ fun EmojiPaletteView(
             onEmojiInput = { emoji ->
                 keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                 scope.launch {
-                    EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
+                    EmojiHistoryHelper.markEmojiUsed(prefs, PrivateSession.isActive(context), emoji)
                 }
             },
             onHistoryAction = {
