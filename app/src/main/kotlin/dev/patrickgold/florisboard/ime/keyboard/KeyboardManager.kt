@@ -760,10 +760,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             TouchTrace.pop()
         } else {
             TouchTrace.reset()
-            // Deleting the whole word you just finished is a retraction, so the sighting goes back
-            // (issue #318). Only for a word-sized delete: a run of single backspaces is how people edit,
-            // and reading every one of those as "I did not mean that word" would unlearn constantly.
-            lastTypedWord?.let { nlpManager.unlearnWord(it) }
+            // Not a retraction of the word for learning purposes (issue #318). There used to be an
+            // "unlearn what you just deleted" hook here, and the device test showed it was theatre: it
+            // only fires for KeyCode.DELETE_WORD, which is neither the default swipe action nor the one
+            // that works — "delete words precisely" deletes by *selecting* and never reaches this path,
+            // so the hook was unreachable in practice while looking like a feature. Taking a word back is
+            // the long-press on its suggestion and the Learned words screen, both of which are deliberate.
+            // Deleting a word right after typing it is usually editing this text, not a statement about
+            // your vocabulary — and promotion needs three sightings, so there is room to change your mind.
             lastTypedWord = null
         }
         editorInstance.deleteBackwards(unit)

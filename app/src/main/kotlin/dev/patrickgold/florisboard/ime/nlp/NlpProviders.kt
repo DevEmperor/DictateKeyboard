@@ -328,9 +328,6 @@ interface LearningProvider {
         trustedByUser: Boolean = false,
     ): LearnOutcome
 
-    /** Takes a sighting back — the user deleted the word again right after typing it. */
-    suspend fun unlearnTypedWord(subtype: Subtype, word: String, weight: Int = 1)
-
     /** Records that [word] followed [previousWord], both of them typed rather than suggested. */
     suspend fun learnWordPair(subtype: Subtype, previousWord: String, word: String)
 

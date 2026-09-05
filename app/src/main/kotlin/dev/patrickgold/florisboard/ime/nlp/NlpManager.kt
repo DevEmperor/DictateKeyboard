@@ -437,15 +437,6 @@ class NlpManager(context: Context) {
         glideTypingManager.value.invalidateWordData()
     }
 
-    /** Takes a sighting back — the user deleted the word again right after typing it. */
-    fun unlearnWord(word: String, weight: Int = 1) {
-        if (word.isBlank() || !prefs.suggestion.learnTypedWords.get()) return
-        val subtype = subtypeManager.activeSubtype
-        scope.launch {
-            (getSuggestionProvider(subtype) as? LearningProvider)?.unlearnTypedWord(subtype, word, weight)
-        }
-    }
-
     /**
      * Forgets a word the keyboard had picked up, from the long-press on its suggestion (issue #318).
      *

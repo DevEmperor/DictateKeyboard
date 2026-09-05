@@ -1364,12 +1364,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         )
     }
 
-    override suspend fun unlearnTypedWord(subtype: Subtype, word: String, weight: Int) {
-        if (!prefs.suggestion.learnTypedWords.get()) return
-        val lang = dictLangFor(subtype) ?: return
-        LearnedWordsStore.demote(appContext, word.trim(), lang, weight)
-    }
-
     override suspend fun forgetLearnedWord(subtype: Subtype, word: String): Boolean {
         val lang = dictLangFor(subtype) ?: return false
         return LearnedWordsStore.forgetWord(appContext, word.trim(), lang)?.promoted == true

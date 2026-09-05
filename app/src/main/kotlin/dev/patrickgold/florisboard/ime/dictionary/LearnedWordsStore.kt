@@ -115,12 +115,6 @@ object LearnedWordsStore {
         return entry
     }
 
-    /** Takes [weight] sightings back — the user deleted the word again. Promoted rows are untouched. */
-    suspend fun demote(context: Context, word: String, lang: String, weight: Int = 1) {
-        db(context).dao().demoteWord(word, lang, weight, nowSeconds())
-        invalidate(lang)
-    }
-
     /** Records that [word] followed [prev] (both folded by the caller for [prev]). */
     suspend fun noteBigram(context: Context, prev: String, word: String, lang: String) {
         db(context).dao().noteBigram(prev, word, lang, nowSeconds())

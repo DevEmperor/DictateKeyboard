@@ -171,21 +171,6 @@ abstract class LearnedWordsDao {
         return findWord(lang, word)
     }
 
-    /**
-     * Takes [weight] sightings back off [word], deleting the row when nothing is left.
-     *
-     * Never touches a promoted row: once a word is in the personal dictionary it is the user's, and a
-     * backspace over it is about the text rather than about the vocabulary. Removing it there is the
-     * long-press, or the settings list.
-     */
-    @Transaction
-    open suspend fun demoteWord(word: String, lang: String, weight: Int, now: Long) {
-        val existing = findWord(lang, word) ?: return
-        if (existing.promoted) return
-        val remaining = existing.count - weight
-        if (remaining <= 0) deleteWord(existing.id) else setWordCount(existing.id, remaining, now)
-    }
-
     // ── Bigrams ──────────────────────────────────────────────────────────────────────────────────
 
     @Query("SELECT * FROM $LEARNED_BIGRAMS_TABLE WHERE lang = :lang")
