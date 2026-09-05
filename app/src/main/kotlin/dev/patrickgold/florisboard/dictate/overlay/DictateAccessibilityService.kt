@@ -323,10 +323,17 @@ class DictateAccessibilityService : AccessibilityService() {
     private fun commitTextIntoFocused(text: String, verify: Boolean = true): Boolean {
         if (text.isEmpty()) return true // silence: nothing to insert — a no-op is a success, not a failure.
 
-        // One budget for every wait this call is allowed to make. commitOutput runs on the main thread,
-        // so this is what the UI is blocked for in the worst case — a per-path wait would multiply with
-        // the number of paths tried and again with the retry.
-        val verifyDeadline = SystemClock.uptimeMillis() + VERIFY_BUDGET_MS
+        // The ceiling on everything this call may wait for. commitOutput runs on the main thread, so it
+        // exists to bound how long the UI is blocked — but it is only a *ceiling*: each verification
+        // gets its own [VERIFY_WAIT_MS] measured from its own write. Sharing one deadline from here was
+        // wrong and cost nothing less than the verdict itself: resolving the field, focusing it and the
+        // write ate the budget, so the first read-back found the deadline already passed and never
+        // waited at all — which is how a Compose field that simply had not published its new text yet
+        // read as "swallowed".
+        val commitDeadline = SystemClock.uptimeMillis() + COMMIT_BUDGET_MS
+        // Only for the failure log line: a commit that lost tells us much more when it also says what it
+        // was able to work out about the field.
+        var lastSource = "-"
 
         // Insert exactly like a normal keyboard: through the accessibility input connection's commitText,
         // straight into the field at the cursor — no clipboard, no toast, and it never prepends a shown
@@ -366,7 +373,7 @@ class DictateAccessibilityService : AccessibilityService() {
             val beforeText = if (verify) readNodeText(target) else null
             val before = if (verify && !viaNodeOnly) readBeforeCursor(text.length) else null
             if (!viaNodeOnly && commitViaInputConnection(text)) {
-                if (!verify || landedInField(target, beforeText, before, text.length, verifyDeadline)) {
+                if (!verify || landedInField(target, beforeText, before, text.length, commitDeadline)) {
                     logCommit("ic", icContent?.source ?: "-", text.length)
                     return true
                 }
@@ -391,6 +398,7 @@ class DictateAccessibilityService : AccessibilityService() {
             // What is in the field and where the caret is, as far as it can be **proven**. Null means
             // *unknown*, never "empty" — keeping those two apart is the whole of issue #314.
             val content = resolveFieldContent(target, icContent)
+            lastSource = content?.source ?: "unknown"
 
             // 2. Rebuild the field through the node — but only around content we can prove. This is the
             //    one mechanism that can invent text: it sends back the whole field, so anything it
@@ -401,7 +409,7 @@ class DictateAccessibilityService : AccessibilityService() {
                 // success unconditionally.
                 // [beforeText] is still the right baseline: either path 1 never ran, or it ran and the
                 // node proved it changed nothing.
-                if (!verify || landedInField(target, beforeText, null, text.length, verifyDeadline)) {
+                if (!verify || landedInField(target, beforeText, null, text.length, commitDeadline)) {
                     logCommit("setText", content.source, text.length)
                     return true
                 }
@@ -412,7 +420,7 @@ class DictateAccessibilityService : AccessibilityService() {
             //    of an unproven rebuild instead of last. It costs a system clipboard notice, and that is
             //    the right trade: a notice beats a word the user never said.
             if (target != null && pasteIntoFocused(target, text)) {
-                if (!verify || landedInField(target, beforeText, null, text.length, verifyDeadline)) {
+                if (!verify || landedInField(target, beforeText, null, text.length, commitDeadline)) {
                     logCommit("paste", content?.source ?: "unknown", text.length)
                     return true
                 }
@@ -421,7 +429,7 @@ class DictateAccessibilityService : AccessibilityService() {
             // 4. Last resort: rebuild around what the node merely claims. Only reached when the field
             //    refuses everything else, and there a possible prepend still beats no insert at all.
             if (target != null && content == null && setTextOnFocused(target, text, guessedContent(target))) {
-                if (!verify || landedInField(target, beforeText, null, text.length, verifyDeadline)) {
+                if (!verify || landedInField(target, beforeText, null, text.length, commitDeadline)) {
                     logCommit("setText", "unproven", text.length)
                     return true
                 }
@@ -429,7 +437,7 @@ class DictateAccessibilityService : AccessibilityService() {
             if (attempt < COMMIT_ATTEMPTS - 1) SystemClock.sleep(COMMIT_RETRY_DELAY_MS)
         }
         flogDebug { "commit FAILED after $COMMIT_ATTEMPTS attempts len=${text.length}" }
-        logCommit("none", "-", text.length)
+        logCommit("none", lastSource, text.length)
         return false
     }
 
@@ -634,20 +642,25 @@ class DictateAccessibilityService : AccessibilityService() {
      *
      * Both verdicts follow [insertLandedFrom]'s lopsided rule — only a demonstrably unchanged field is a
      * failure — so an unreadable witness never invents one. What did change is the *waiting*: instead of
-     * one 50 ms settle, this polls until [deadline], because an app that applies the write a moment later
-     * on its own UI thread used to read as "swallowed" — and a false swallowed verdict is not harmless,
-     * it is exactly what sends the commit on into the rebuilding path, the only one that can invent text
-     * (#314). The deadline is shared across every path of one commit, since all of it blocks the main
-     * thread.
+     * one 50 ms settle, this polls for [VERIFY_WAIT_MS] **measured from this write**, capped by
+     * [commitDeadline] so the whole commit stays bounded on the main thread.
+     *
+     * The distinction is the entire point. A field does not publish its new text to the accessibility
+     * layer the instant it accepts it — a Compose text field takes a composition pass to get there — so
+     * reading back immediately finds the old text and calls a perfectly good write "swallowed". And a
+     * false swallowed verdict is not harmless: it is what sends the commit on to the next mechanism,
+     * which writes the text a second time and can invent a placeholder along the way (#314).
      */
     private fun landedInField(
         node: AccessibilityNodeInfo?,
         beforeText: String?,
         beforeCursor: String?,
         sentLength: Int,
-        deadline: Long,
+        commitDeadline: Long,
     ): Boolean {
         if (beforeText == null && beforeCursor == null) return true
+        val startedAt = SystemClock.uptimeMillis()
+        val deadline = minOf(startedAt + VERIFY_WAIT_MS, commitDeadline)
         while (true) {
             val landed = if (beforeText != null) {
                 insertLandedFrom(beforeText, readNodeText(node))
@@ -655,9 +668,30 @@ class DictateAccessibilityService : AccessibilityService() {
                 insertLandedFrom(beforeCursor, readBeforeCursor(sentLength))
             }
             if (landed) return true
-            if (SystemClock.uptimeMillis() >= deadline) return false
+            if (SystemClock.uptimeMillis() >= deadline) break
             SystemClock.sleep(VERIFY_POLL_MS)
         }
+        flogDebug {
+            "verify: still unchanged after ${SystemClock.uptimeMillis() - startedAt}ms — " +
+                describeForVerify(node, beforeText)
+        }
+        return false
+    }
+
+    /**
+     * The shape of the field a verification just gave up on: class, flags and lengths, **never text**.
+     * Debug builds only, and the first thing to look at when a write that visibly worked is reported as
+     * refused — it says whether the node was unreadable, still showing its hint, or simply behind.
+     */
+    private fun describeForVerify(node: AccessibilityNodeInfo?, beforeText: String?): String {
+        val before = "beforeLen=${beforeText?.length ?: -1}"
+        val target = node ?: return "node=none $before"
+        return runCatching {
+            "cls=${target.className} refresh=${target.refresh()} " +
+                "textLen=${target.text?.length ?: -1} hintLen=${target.hintText?.length ?: -1} " +
+                "showHint=${target.isShowingHintText} " +
+                "sel=${target.textSelectionStart}..${target.textSelectionEnd} $before"
+        }.getOrDefault("node=unreadable $before")
     }
 
     /**
@@ -1041,11 +1075,15 @@ class DictateAccessibilityService : AccessibilityService() {
         // Read-back verification of the input-connection write (#277). The window is a little wider than
         // what was sent so a field that reformats around it still reads as changed.
         private const val VERIFY_WINDOW_PAD = 16
-        // How long one commit may spend waiting for the field to show the write, across every path it
-        // tries. This runs on the main thread, so it is a budget and not a per-path pause: too short and
-        // a slow app reads as "swallowed", which is what sends the commit into the rebuilding path.
-        private const val VERIFY_BUDGET_MS = 400L
+        // How long one read-back may wait for the field to show the write, measured from that write —
+        // long enough for a Compose field to get the change through a composition pass. Too short and a
+        // perfectly good write reads as "swallowed", which is what sends the commit into the rebuilding
+        // path and writes the text a second time.
+        private const val VERIFY_WAIT_MS = 250L
         private const val VERIFY_POLL_MS = 40L
+        // The ceiling on all of a commit's waiting together. This runs on the main thread, so the
+        // per-write waits above must not simply multiply with the paths tried and the retry.
+        private const val COMMIT_BUDGET_MS = 900L
         // How much of the field to ask the input connection for. Anything longer than this is treated as
         // unreadable rather than truncated — see [readWholeFieldFromConnection].
         private const val FIELD_READ_WINDOW = 8192
