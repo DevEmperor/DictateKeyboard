@@ -126,6 +126,41 @@ class WordLearningGateTest {
         assertEquals(Stage.PROMOTED, WordLearningGate.stageOf(3.0))
     }
 
+    /**
+     * Found on the device: the store said "seen 2×" while the screen said "not suggested yet", and the
+     * suggestion filter agreed with the screen — so the middle rung of the ladder never happened at all.
+     *
+     * Decay is continuous, so a word seen twice is worth exactly 2.0 only in the instant of the second
+     * sighting. A `>= 2.0` threshold therefore fails one second later. Promotion only escaped it because
+     * it is evaluated in the same second as the write.
+     */
+    @Test
+    fun `a sighting still counts a second after it was made`() {
+        val now = 1_000_000L
+        val aSecondAgo = now - 1
+        assertEquals(Stage.SUGGESTED, WordLearningGate.stageOf(WordLearningGate.decayedScore(2, aSecondAgo, now)))
+        assertEquals(Stage.PROMOTED, WordLearningGate.stageOf(WordLearningGate.decayedScore(3, aSecondAgo, now)))
+        // …and a week later, which is the case the ladder is actually about.
+        val aWeekAgo = now - 7 * day
+        assertEquals(Stage.SUGGESTED, WordLearningGate.stageOf(WordLearningGate.decayedScore(2, aWeekAgo, now)))
+    }
+
+    @Test
+    fun `a word decayed most of the way down loses its rung`() {
+        val now = 1_000_000L
+        // Two sightings, two half-lives ago: worth 0.5, which is closer to one sighting than to two.
+        val longAgo = now - (WordLearningGate.HALF_LIFE_DAYS * 2 * day).toLong()
+        assertEquals(Stage.REMEMBERED, WordLearningGate.stageOf(WordLearningGate.decayedScore(2, longAgo, now)))
+    }
+
+    @Test
+    fun `the score floor and the stage agree about where a rung begins`() {
+        // Two ways of asking the same question; they must not drift apart.
+        val floor = WordLearningGate.scoreFloorFor(WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS)
+        assertEquals(Stage.SUGGESTED, WordLearningGate.stageOf(floor))
+        assertEquals(Stage.REMEMBERED, WordLearningGate.stageOf(floor - 0.001))
+    }
+
     @Test
     fun `a rejected auto-correction is worth two ordinary sightings`() {
         // Not a coincidence worth losing: taking a correction back is the clearest statement the user

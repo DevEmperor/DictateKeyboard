@@ -1118,7 +1118,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val learned = learnedSnapshot
             ?.startingWith(
                 prefix = index.fold(word),
-                minScore = WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS.toDouble(),
+                minScore = WordLearningGate.scoreFloorFor(WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS),
                 limit = LEARNED_MAX,
             )
             .orEmpty()

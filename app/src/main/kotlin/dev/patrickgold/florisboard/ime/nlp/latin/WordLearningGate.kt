@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.ime.nlp.latin
 
 import dev.patrickgold.florisboard.ime.nlp.WordOrigin
+import kotlin.math.floor
 import kotlin.math.pow
 
 /**
@@ -93,12 +94,36 @@ internal object WordLearningGate {
         return count * 0.5.pow(elapsedDays / HALF_LIFE_DAYS)
     }
 
+    /**
+     * How many sightings a decayed [score] still counts as.
+     *
+     * The boundary sits **halfway** between whole sightings, and that is not a rounding convenience — it
+     * is the difference between the ladder working and not working. Decay is continuous, so a word seen
+     * twice is worth exactly 2.0 only in the instant of the second sighting; a second later it is
+     * 1.9999997. Against a `>= 2.0` threshold that word drops straight back to the bottom rung, which is
+     * what the device test found: the store said "seen 2×" while the screen said "not suggested yet",
+     * and the suggestion filter agreed with the screen — so the middle rung never happened at all. The
+     * only reason promotion still worked is that it is evaluated in the same second as the write.
+     *
+     * Halfway is also the honest reading: a score of 1.6 is closer to two sightings than to one.
+     */
+    fun sightingsOf(score: Double): Int = floor(score + 0.5).toInt()
+
     /** Where [score] sits on the ladder, for a word that has not been promoted yet. */
-    fun stageOf(score: Double): Stage = when {
-        score >= SIGHTINGS_FOR_PROMOTION -> Stage.PROMOTED
-        score >= SIGHTINGS_FOR_SUGGESTIONS -> Stage.SUGGESTED
-        else -> Stage.REMEMBERED
+    fun stageOf(score: Double): Stage {
+        val sightings = sightingsOf(score)
+        return when {
+            sightings >= SIGHTINGS_FOR_PROMOTION -> Stage.PROMOTED
+            sightings >= SIGHTINGS_FOR_SUGGESTIONS -> Stage.SUGGESTED
+            else -> Stage.REMEMBERED
+        }
     }
+
+    /**
+     * The lowest decayed score that still counts as [sightings] — for callers that filter on the score
+     * itself rather than asking for a [Stage], so the two cannot disagree about where a rung begins.
+     */
+    fun scoreFloorFor(sightings: Int): Double = sightings - 0.5
 
     /**
      * Whether [word] has the shape of vocabulary at all.

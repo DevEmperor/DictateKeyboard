@@ -228,15 +228,24 @@ private suspend fun promoteByHand(context: android.content.Context, entry: Learn
         val dao = runCatching {
             DictionaryManager.default().also { it.loadUserDictionariesIfNecessary() }.florisUserDictionaryDao()
         }.getOrNull() ?: return@withContext
-        val locale = runCatching { FlorisLocale.fromTag(entry.lang) }.getOrNull()
+        // Stored for **every** language rather than for `entry.lang`, and that is the fix for a bug the
+        // device test caught: the learned store normalises its language to a bare code ("de") so a
+        // vocabulary does not fall apart across de-DE and de-AT, but the personal dictionary is queried
+        // with the subtype's full locale and matches only an exact tag or NULL. A word promoted here as
+        // "de" was therefore written successfully, shown as "in your dictionary", and never suggested
+        // again — the button appeared to work and did nothing.
+        //
+        // NULL is also the honest answer: this row says "the user pressed a button next to a word". It
+        // does not say which regional variant they had in mind. (The automatic promotion path knows the
+        // active subtype and keeps using its exact locale.)
         val inserted = runCatching {
-            if (dao.queryExactFuzzyLocale(entry.word, locale ?: FlorisLocale.default()).isEmpty()) {
+            if (dao.queryExactFuzzyLocale(entry.word, FlorisLocale.default()).isEmpty()) {
                 dao.insert(
                     UserDictionaryEntry(
                         id = 0,
                         word = entry.word,
                         freq = PROMOTED_FREQ,
-                        locale = locale?.localeTag(),
+                        locale = null,
                         shortcut = null,
                     )
                 )
