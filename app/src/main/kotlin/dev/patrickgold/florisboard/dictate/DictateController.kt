@@ -1857,7 +1857,15 @@ object DictateController {
             // Realtime (#128): replace the live-streamed preview with the finished (reworded) result via the
             // minimal diff, then honor auto-enter — instead of committing on top of the preview.
             val outSink = sink(appContext)
-            val landed = outSink.commitDictationFinal(outputText, realtimeShown.toString())
+            // Off the main thread for the overlay, like every other accessibility write: this one ends
+            // in the same resolve-focus-write-verify round trip (see [writeToSink]).
+            val landed = if (outputTarget == OutputTarget.OVERLAY) {
+                withContext(Dispatchers.IO) {
+                    outSink.commitDictationFinal(outputText, realtimeShown.toString())
+                }
+            } else {
+                outSink.commitDictationFinal(outputText, realtimeShown.toString())
+            }
             realtimeShown.setLength(0)
             // This branch never went through commitOutput, so it never saw the insert-failure check
             // either (issue #277) — a swallowed write finished as Idle, i.e. a green check.
@@ -2510,14 +2518,14 @@ object DictateController {
         // System voice input (#67) returns the whole result at once — no typewriter animation, which only
         // makes sense when we're the one typing into a visible field.
         if (prefs.dictate.instantOutput.get() || outputTarget == OutputTarget.RECOGNITION_SERVICE) {
-            committed = sink.commitText(text)
+            committed = writeToSink(sink, text)
         } else {
             val perChar = perCharDelayMs(prefs.dictate.outputSpeed.get())
             val results = ArrayList<Boolean>(text.length)
             // Verify the first character only: it is the one [typedCommitLanded] judges, and a read-back
             // per character would be hundreds of extra round trips into the host app (issue #277).
             text.forEachIndexed { i, ch ->
-                results.add(sink.commitText(ch.toString(), verify = i == 0))
+                results.add(writeToSink(sink, ch.toString(), verify = i == 0))
                 delay(perChar)
             }
             committed = typedCommitLanded(results)
@@ -2529,6 +2537,22 @@ object DictateController {
         }
         return committed
     }
+
+    /**
+     * Writes into the sink, off the main thread when it goes through the accessibility service.
+     *
+     * A floating-button insert is not a quick call: it resolves the field, focuses it, writes, and then
+     * waits — sometimes a few hundred milliseconds — for the field to show the write. On the main thread
+     * that is the bubble visibly freezing mid-dictation, which is exactly what it looked like. The
+     * keyboard's own sink stays where it is: it talks to the editor through the IME's InputConnection,
+     * which belongs to this thread.
+     */
+    private suspend fun writeToSink(sink: DictationSink, text: String, verify: Boolean = true): Boolean =
+        if (outputTarget == OutputTarget.OVERLAY) {
+            withContext(Dispatchers.IO) { sink.commitText(text, verify) }
+        } else {
+            sink.commitText(text, verify)
+        }
 
     /**
      * Whether a character-by-character commit counts as having landed. **The first write decides.**
@@ -3316,8 +3340,11 @@ object DictateController {
         // Snippet shortcut: text wrapped in [...] is inserted literally (no network call).
         val snippet = prompt.snippetBody()
         if (snippet != null) {
-            // A refused write here used to end in a green check as well (issue #277).
-            reportOverlayInsertFailure(appContext, sink.commitText(snippet), snippet)
+            // A refused write here used to end in a green check as well (issue #277). Launched rather
+            // than called: for the overlay the write goes off the main thread (see [writeToSink]).
+            scope.launch {
+                reportOverlayInsertFailure(appContext, writeToSink(sink, snippet), snippet)
+            }
             return
         }
 
@@ -3355,7 +3382,7 @@ object DictateController {
             try {
                 val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
                 // commitText replaces the active selection if any, else inserts at the cursor.
-                val committed = sink.commitText(text)
+                val committed = writeToSink(sink, text)
                 // Don't declare success over a write the field refused (issue #277) — the reworded text
                 // is the expensive part, and it goes to the clipboard rather than nowhere.
                 if (!reportOverlayInsertFailure(appContext, committed, text)) _state.value = UiState.Idle

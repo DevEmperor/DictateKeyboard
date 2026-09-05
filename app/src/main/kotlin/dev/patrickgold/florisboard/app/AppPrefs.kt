@@ -523,15 +523,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_copy_to_clipboard",
             default = false,
         )
-        // When a dictation had to be inserted by pasting, empty the clipboard again afterwards. Off by
-        // default: every clipboard write raises the system's "copied" notice, so clearing costs a second
-        // one — and leaving the text there is also what makes it recoverable if the paste did not land.
-        // (The old code pretended to *restore* the previous clipboard, but a background app cannot read
-        // the clipboard since Android 10, so it only ever cleared it — now that is at least honest.)
-        val floatingButtonClearClipboardAfterPaste = boolean(
-            key = "dictate__floating_button_clear_clipboard_after_paste",
-            default = false,
-        )
         // Whether the user has opened the floating-button screen at least once (clears the "New" badge).
         val floatingButtonHintSeen = boolean(
             key = "dictate__floating_button_hint_seen",
