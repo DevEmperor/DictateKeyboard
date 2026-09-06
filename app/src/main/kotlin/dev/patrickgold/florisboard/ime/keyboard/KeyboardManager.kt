@@ -962,6 +962,43 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * The word that just ended together with the capital form its language insists on, or null when
+     * there is nothing to do (issue #333).
+     *
+     * Split from [applyStandaloneCapitalization] because the two have to happen on either side of
+     * [endOfWord]: the word is only readable while it is still composing, and rewriting it is only
+     * safe once the correction path has declined it.
+     */
+    private fun pendingStandaloneCapitalization(): Pair<String, String>? {
+        if (!prefs.correction.autoCapitalization.get()) return null
+        if (activeState.keyVariation == KeyVariation.PASSWORD) return null
+        val content = editorInstance.activeContent
+        if (content.selection.isSelectionMode) return null
+        val word = content.composingText
+        if (word.isEmpty()) return null
+        val capitalized = nlpManager.standaloneCapitalization(word) ?: return null
+        return word to capitalized
+    }
+
+    /**
+     * Writes the capital form over the word it belongs to, and arms the same one-keystroke undo every
+     * other silent correction gets (issue #295): a backspace right after puts the typed spelling back,
+     * which is the escape hatch for the rare place where the lowercase form was meant.
+     *
+     * Only reached from [handleSpace]. A word ended by a full stop is deliberately left alone — "i.e."
+     * would otherwise become "I.e." with no way to notice in time, and the pronoun is followed by a
+     * space almost every time it is written, because a verb follows it.
+     */
+    private fun applyStandaloneCapitalization(pending: Pair<String, String>?) {
+        val (word, capitalized) = pending ?: return
+        // The editor has to still end in the word that was read before the boundary; if anything moved
+        // in between, the safe thing is to leave the text exactly as the user left it.
+        if (!editorInstance.activeContent.textBeforeSelection.endsWith(word)) return
+        editorInstance.replaceTextBeforeCursor(word.length, capitalized)
+        pendingAutoCorrection = AutoCorrection(inserted = capitalized, replaced = word)
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -969,7 +1006,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // Before the auto-commit candidate: otherwise autocorrect replaces the shortcut with a "better"
         // word and there is nothing left to recognise (issue #283).
         if (expandSnippet(KeyCode.SPACE.toChar().toString())) return
+        // Read while the word is still composing; applied below, once the correction path has had its
+        // say and declined (issue #333).
+        val standaloneCapitalization = pendingStandaloneCapitalization()
         val candidate = endOfWord()
+        if (candidate == null) {
+            applyStandaloneCapitalization(standaloneCapitalization)
+        }
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,

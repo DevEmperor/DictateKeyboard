@@ -229,6 +229,24 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         /** The characters that only ever hold an address together — never a word the dictionary knows. */
         private const val RUN_PUNCTUATION = "@_+:/"
 
+        /**
+         * The form [word] must take in a language that always capitalises it, or null (issue #333).
+         *
+         * One entry, and the list is meant to stay short: this is for words a language capitalises
+         * *wherever they stand*, which is a much stronger claim than "the dictionary spells it this
+         * way". English "I" qualifies. A German noun does not — it is capitalised because of what it
+         * is, which the dictionary already records, and the noun path in [suggest] handles it.
+         *
+         * The language check is what makes the rule safe rather than merely useful. Polish writes `i`
+         * for *and* and Italian uses it as a plural article; both are among the commonest words in
+         * those languages, and both would be visibly wrecked by an unguarded rule.
+         */
+        internal fun standaloneCapitalizationIn(word: String, language: String): String? = when {
+            !language.equals("en", ignoreCase = true) -> null
+            word == "i" -> "I"
+            else -> null
+        }
+
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
         private val LANG_ALIASES = mapOf("iw" to "he", "in" to "id", "ji" to "yi")
@@ -1020,6 +1038,26 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override fun continuesWord(composingWord: String, char: Char): Boolean =
         WordRun.continuesRun(composingWord, char)
+
+    // --- Words a language always capitalises (issue #333) ---------------------------------------------
+
+    /**
+     * English writes its first-person pronoun with a capital wherever it stands, and it is the only
+     * one-letter word in any of our languages that does.
+     *
+     * Not expressible in the dictionary, which is where every other capitalisation here comes from
+     * (see the noun block in [suggest]): `en.json` stores `i` in lowercase at frequency 254 and has no
+     * `I` entry at all — correctly, because a lone lowercase `i` is right in "i.e.", in a roman
+     * numeral and in an identifier. The dictionary describes the word; this describes the sentence it
+     * stands in, and the caller supplies that context by only asking at a space.
+     *
+     * Strictly English. Polish `i` means *and*, Italian `i` is a plural article; both are among the
+     * commonest words in those languages, and capitalising them would be a visible regression rather
+     * than a fix. The language is the active subtype's, which is also the limit of what this can know
+     * while multilingual typing (issue #190) has more than one language in play.
+     */
+    override fun standaloneCapitalization(word: String, subtype: Subtype): String? =
+        standaloneCapitalizationIn(word, subtype.primaryLocale.language)
 
     /**
      * The composing region, widened to keep an e-mail or web address in one piece (issue #318).

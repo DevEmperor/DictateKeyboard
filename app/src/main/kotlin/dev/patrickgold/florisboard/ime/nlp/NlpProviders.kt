@@ -248,6 +248,20 @@ interface SuggestionProvider : NlpProvider {
      */
     fun continuesWord(composingWord: String, char: Char): Boolean = false
 
+    /**
+     * The capitalised form of [word] when the language writes this one-word form with a capital
+     * wherever it stands, or null when it does not — the English pronoun "I" and nothing else so far
+     * (issue #333).
+     *
+     * Asked at a word boundary, for a word the dictionary itself cannot answer for: the case-folded
+     * index reports the lowercase spelling as a perfectly good word, which is true of "i" in every
+     * other language on the list. Polish writes "i" for *and* and Italian uses it as a plural article,
+     * so this has to be a per-language statement rather than a dictionary entry.
+     *
+     * Default null, so a provider without an opinion changes nothing.
+     */
+    fun standaloneCapitalization(word: String, subtype: Subtype): String? = null
+
     val forcesSuggestionOn
         get() = false
 

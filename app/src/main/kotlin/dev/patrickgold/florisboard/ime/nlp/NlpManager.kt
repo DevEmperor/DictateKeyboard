@@ -234,6 +234,17 @@ class NlpManager(context: Context) {
         return runBlocking { getSuggestionProvider(subtype) }.continuesWord(composingWord, char)
     }
 
+    /**
+     * The capitalised form the active language insists on for [word], or null — see
+     * [SuggestionProvider.standaloneCapitalization]. Reached once per word boundary, on the same terms
+     * as [continuesWord].
+     */
+    fun standaloneCapitalization(word: String): String? {
+        if (word.isEmpty()) return null
+        val subtype = subtypeManager.activeSubtype
+        return runBlocking { getSuggestionProvider(subtype) }.standaloneCapitalization(word, subtype)
+    }
+
     fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
         // Using a cache because I have no idea how fast the runBlocking is
         return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
