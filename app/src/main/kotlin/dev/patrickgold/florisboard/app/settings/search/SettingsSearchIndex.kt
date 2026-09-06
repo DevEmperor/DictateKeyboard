@@ -99,6 +99,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__clipboard__group_clipboard_suggestion__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard),
         SettingsSearchEntry(R.string.pref__clipboard__suggestion_enabled__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__suggestion_enabled__label"),
         SettingsSearchEntry(R.string.pref__clipboard__strip_tracking_params__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__strip_tracking_params__label"),
+        SettingsSearchEntry(R.string.pref__clipboard__trim_on_copy__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__trim_on_copy__label",
+            keywordsRes = R.string.settings__search__keywords__trim_on_copy),
         SettingsSearchEntry(R.string.pref__clipboard__suggestion_timeout__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__suggestion_timeout__label"),
         SettingsSearchEntry(R.string.pref__clipboard__group_clipboard_history__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard),
         SettingsSearchEntry(R.string.pref__clipboard__enable_clipboard_history__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__enable_clipboard_history__label"),

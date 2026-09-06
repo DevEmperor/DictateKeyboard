@@ -621,6 +621,8 @@
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniser vers le presse-papier système</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Suggestions du presse-papiers</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Rogner à la copie</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Supprime espaces et sauts de ligne aux extrémités</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggérer le contenu précédemment copié</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limiter les suggestions du presse-papier à</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Éléments copiés durant les {v} dernières sec</string>

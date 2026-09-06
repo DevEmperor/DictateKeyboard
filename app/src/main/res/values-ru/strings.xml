@@ -694,6 +694,8 @@
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Подсказки буфера обмена</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Обрезать при копировании</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Убирает пробелы и переносы по краям</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Количество столбцов в сетке</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничить предложения буфера обмена до</string>

@@ -617,6 +617,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniseer met systeemklembord</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Suggesties voor de klembord</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Bijsnijden bij kopiëren</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Verwijdert spaties en regeleinden aan de uiteinden</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Eerder gekopieerde klembordinhoud voorstellen</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Aantal kolommen</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Beperk klembordsuggesties tot</string>

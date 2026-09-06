@@ -114,6 +114,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__strip_tracking_params",
             default = false,
         )
+        // Same reasoning as above, and the same answer (issue #335): copying is the user's word for
+        // "this exactly", so changing what lands in the clipboard is only allowed on request.
+        val trimOnCopy = boolean(
+            key = "clipboard__trim_on_copy",
+            default = false,
+        )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
             default = true,

@@ -699,6 +699,8 @@
     <string name="pref__clipboard__sync_to_system_clipboard__label">同步到系统剪贴板</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">根据剪切板内容给出的建议</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">剪贴板内容建议</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">复制时去除空白</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">删除首尾的空格和换行</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">建议之前复制的内容</string>
     <string name="pref__clipboard__num_history_grid_columns__label">网格列数</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">将剪贴板建议限制为</string>

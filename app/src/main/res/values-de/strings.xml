@@ -636,6 +636,8 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__strip_tracking_params__label" comment="Preference title">Tracking aus Links entfernen</string>
     <string name="pref__clipboard__strip_tracking_params__summary" comment="Preference summary">Entfernt utm_, si, fbclid und Ähnliches beim Einfügen</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Beim Kopieren kürzen</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Entfernt Leerzeichen und Umbrüche an den Enden</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Beschränkung für die Vorschläge der Zwischenablage</string>

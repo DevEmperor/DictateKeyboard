@@ -661,6 +661,8 @@
     <string name="pref__clipboard__sync_to_system_clipboard__label">システムクリップボードへ同期</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">クリップボードの候補</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">クリップボードコンテンツ候補</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">コピー時にトリミング</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">前後の空白と改行を取り除きます</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">以前にコピーしたクリップボードコンテンツを提案します</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">クリップボード候補を制限する</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">過去{v}秒以内にコピーされたアイテム</string>

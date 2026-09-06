@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.util.ClipboardTrim
 import dev.patrickgold.florisboard.lib.util.UrlSanitizer
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -674,6 +675,14 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
+     * What actually goes onto the clipboard: the selected [text], with the padding the selection handles
+     * caught trimmed off if the user asked for that (issue #335). One funnel for cut and copy alike.
+     */
+    private fun outgoingClipText(text: CharSequence): String {
+        return if (prefs.clipboard.trimOnCopy.get()) ClipboardTrim.applyTo(text) else text.toString()
+    }
+
+    /**
      * Performs a cut command on this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
@@ -684,10 +693,12 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
-            clipboardManager.addNewPlaintext(text.toString())
+            clipboardManager.addNewPlaintext(outgoingClipText(text))
         } else {
             appContext.showShortToastSync("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
         }
+        // Deletes the *whole* selection, trimmed clip or not: the padding was part of what the user
+        // marked, and leaving it behind in the field would be a cut that didn't cut.
         return deleteBackwards(OperationUnit.CHARACTERS)
     }
 
@@ -702,7 +713,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
-            clipboardManager.addNewPlaintext(text.toString())
+            clipboardManager.addNewPlaintext(outgoingClipText(text))
         } else {
             appContext.showShortToastSync("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
         }

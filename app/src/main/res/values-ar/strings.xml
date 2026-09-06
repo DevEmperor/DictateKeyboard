@@ -578,6 +578,8 @@
     <string name="pref__clipboard__sync_to_system_clipboard__label">مزامنة الى حافظة النظام</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">إقتراحات الحافظة</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">إقتراحات محتوى الحافظة</string>
+    <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">اقتصاص عند النسخ</string>
+    <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">إزالة المسافات وفواصل الأسطر من الطرفين</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">اقتراح المحتويات المنسوخة في سجل الحافظة</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">تحديد حجم مخصص لاقتراحات الحافظة إلى</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">العناصر التي تم نسخها خلال آخر {v}</string>

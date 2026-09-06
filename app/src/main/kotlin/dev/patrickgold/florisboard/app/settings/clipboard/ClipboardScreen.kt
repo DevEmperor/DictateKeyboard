@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.settings.clipboard
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -71,6 +72,15 @@ fun ClipboardScreen() = FlorisScreen {
             modifier = Modifier.settingsSearchAnchor("pref__clipboard__strip_tracking_params__label"),
             title = stringRes(R.string.pref__clipboard__strip_tracking_params__label),
             summary = stringRes(R.string.pref__clipboard__strip_tracking_params__summary),
+        )
+
+        // The counterpart on the way out: cut and copy alike, whichever button was used (issue #335).
+        SwitchPreference(
+            prefs.clipboard.trimOnCopy,
+            icon = Icons.Default.ContentCut,
+            modifier = Modifier.settingsSearchAnchor("pref__clipboard__trim_on_copy__label"),
+            title = stringRes(R.string.pref__clipboard__trim_on_copy__label),
+            summary = stringRes(R.string.pref__clipboard__trim_on_copy__summary),
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_suggestion__label)) {
