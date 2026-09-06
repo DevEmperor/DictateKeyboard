@@ -125,6 +125,8 @@
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">شائعة</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">لم يتم العثور على إعدادات</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">توسيع النص اختصار قصاصة ماكرو نص تلقائي snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">عدد الكلمات عداد الأحرف الطول إحصائيات</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">اقتصاص مسافات إزالة تنظيف نسخ قص</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
@@ -338,6 +340,8 @@
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">خيارات التخطيط المخصص</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">تبديل ازرار التنقل</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">زر تبديل صف المهام</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">عدّاد التحديد</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">عدد الكلمات والأحرف المحددة</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">توسيع/طي تلقائي</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">توسيع/طي صف الإجراء المشترك تلقائيا استنادا إلى الحالة الحالية</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">مبدل إجراءات المهام</string>
@@ -939,6 +943,14 @@
         <item quantity="few">{v} أحرف</item>
         <item quantity="many">{v} احرف</item>
         <item quantity="other">{v} احرف</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="zero">{v} كلمة</item>
+        <item quantity="one">{v} كلمة</item>
+        <item quantity="two">{v} كلمتان</item>
+        <item quantity="few">{v} كلمات</item>
+        <item quantity="many">{v} كلمة</item>
+        <item quantity="other">{v} كلمة</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="zero">{v} مرشح</item>

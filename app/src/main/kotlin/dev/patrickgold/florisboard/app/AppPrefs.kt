@@ -1483,6 +1483,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "smartbar__extended_actions_placement",
             default = ExtendedActionsPlacement.ABOVE_CANDIDATES,
         )
+        // Word and character count of the selection, in the suggestion strip (issue #335). Off by
+        // default: the strip is the suggestions' place, and this borrows it for a moment.
+        val selectionMetrics = boolean(
+            key = "smartbar__selection_metrics",
+            default = false,
+        )
     }
 
     val spelling = Spelling()

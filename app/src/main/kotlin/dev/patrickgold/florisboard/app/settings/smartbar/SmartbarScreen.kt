@@ -60,6 +60,15 @@ fun SmartbarScreen() = FlorisScreen {
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
             )
+            // Shown in the suggestion strip, so it is offered exactly where that strip exists (issue #335).
+            SwitchPreference(
+                prefs.smartbar.selectionMetrics,
+                modifier = Modifier.settingsSearchAnchor("pref__smartbar__selection_metrics__label"),
+                title = stringRes(R.string.pref__smartbar__selection_metrics__label),
+                summary = stringRes(R.string.pref__smartbar__selection_metrics__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
+            )
             SwitchPreference(
                 prefs.smartbar.flipToggles,
                 modifier = Modifier.settingsSearchAnchor("pref__smartbar__flip_toggles__label"),

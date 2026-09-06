@@ -128,6 +128,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populer</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Tidak ada pengaturan yang ditemukan</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">ekspansi teks singkatan pintasan cuplikan makro teks otomatis templat snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Tampilkan label keyboard dalam bahasa subtipe</string>
@@ -437,6 +439,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Opsi spesifik tata letak</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan tombol alih</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris tindakan</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">Penghitung seleksi</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">Kata dan karakter yang dipilih</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan keadaan saat ini</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Penempatan baris tindakan</string>
@@ -1041,6 +1045,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     </plurals>
     <plurals name="unit__characters__written">
         <item quantity="other">Karakter {v}</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="other">{v} kata</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="other">Kandidat {v}</item>

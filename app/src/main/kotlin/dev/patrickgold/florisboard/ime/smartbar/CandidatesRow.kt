@@ -82,6 +82,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val scope = rememberCoroutineScope()
     val displayMode by prefs.suggestion.displayMode.collectAsState()
+    // Off by default — the strip belongs to the suggestions, and this only borrows it (issue #335).
+    val showSelectionCounter by prefs.smartbar.selectionMetrics.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     // Read once per composition instead of a synchronous pref get() per candidate on every keystroke
     // (the candidates row recomposes on each character — issue: typing jank).
@@ -113,6 +115,11 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             Arrangement.Center
         },
     ) {
+        // First in the row, and composed unconditionally: it draws nothing unless something is selected,
+        // and while something is selected there is no word being typed, so it usually has the row alone.
+        if (showSelectionCounter) {
+            SelectionCounterPill()
+        }
         if (candidates.isNotEmpty()) {
             val candidateModifier = if (candidates.size == 1) {
                 Modifier

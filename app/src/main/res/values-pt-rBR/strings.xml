@@ -123,6 +123,8 @@
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populares</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Nenhuma configuração encontrada</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansão de texto abreviação atalho trecho macro autotexto modelo snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Exibir nomes de idiomas em</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
@@ -345,6 +347,8 @@
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Opções específicas de layout</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte a linha de ação de alternância</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">Contador de seleção</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">Palavras e caracteres selecionados</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Auto-expandir/recolher</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação compartilhada com base no estado atual</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Posicionamento da linha de ação</string>
@@ -893,6 +897,10 @@
     <plurals name="unit__characters__written">
         <item quantity="one">{v} caractere</item>
         <item quantity="other">{v} caracteres</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="one">{v} palavra</item>
+        <item quantity="other">{v} palavras</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="one">{v} candidato</item>

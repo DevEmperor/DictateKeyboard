@@ -132,6 +132,8 @@
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">热门</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">未找到设置</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">文本扩展 短语 缩写 快捷短语 宏 自动文本 模板 snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">字数 词数 统计 字符数</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">去除空格 空白 修剪 复制 剪切</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">语言 &amp; 键盘布局</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">语言名称的显示语言</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">以键盘子类型的语言显示键盘标签</string>
@@ -451,6 +453,8 @@
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">特定布局的选项</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">翻转开关按钮位置</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">翻转操作栏开关按钮位置</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">选中内容统计</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">显示所选文字的词数和字符数</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠共用操作行</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">操作行位置</string>
@@ -1080,7 +1084,10 @@
         <item quantity="other">{v} 项</item>
     </plurals>
     <plurals name="unit__characters__written">
-        <item quantity="other">字符</item>
+        <item quantity="other">{v} 个字符</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="other">{v} 个词</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="other">候选</item>

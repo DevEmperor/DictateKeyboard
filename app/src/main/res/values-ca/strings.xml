@@ -125,6 +125,8 @@
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populars</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">No s\'ha trobat cap configuració</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansió de text abreviatura drecera fragment macro text automàtic plantilla snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">comptar paraules nombre de paraules caràcters longitud estadístiques</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">retallar espais eliminar netejar copiar tallar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostra els noms de les llengües en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostra les etiquetes del teclat en l\'idioma del subtipus</string>
@@ -354,6 +356,8 @@
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Opcions específiques de disposició</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Commuta els botons</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Commuta la posició dels botons a la fila d\'accions</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">Comptador de selecció</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">Paraules i caràcters seleccionats</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Desplega / Replega automàticament</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Desplega / Replega automàticament la fila d\'accions en relació amb l\'estat actual</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Ubicació de la fila d\'accions</string>
@@ -960,6 +964,10 @@
     <plurals name="unit__characters__written">
         <item quantity="one">{v} caràcter</item>
         <item quantity="other">{v} caràcters</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="one">{v} paraula</item>
+        <item quantity="other">{v} paraules</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="one">{v} suggeriment</item>

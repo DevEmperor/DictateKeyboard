@@ -317,6 +317,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__smartbar__layout__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__smartbar__layout__label"),
         SettingsSearchEntry(R.string.pref__smartbar__group_layout_specific__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar),
         SettingsSearchEntry(R.string.pref__suggestion__display_mode__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__suggestion__display_mode__label"),
+        SettingsSearchEntry(R.string.pref__smartbar__selection_metrics__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__smartbar__selection_metrics__label",
+            keywordsRes = R.string.settings__search__keywords__selection_metrics),
         SettingsSearchEntry(R.string.pref__smartbar__flip_toggles__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__smartbar__flip_toggles__label"),
         SettingsSearchEntry(R.string.pref__smartbar__shared_actions_auto_expand_collapse__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__smartbar__shared_actions_auto_expand_collapse__label"),
         SettingsSearchEntry(R.string.pref__smartbar__extended_actions_placement__label, R.string.settings__smartbar__title, Routes.Settings.Smartbar, anchor = "pref__smartbar__extended_actions_placement__label"),

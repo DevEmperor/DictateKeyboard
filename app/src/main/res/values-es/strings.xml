@@ -128,6 +128,8 @@
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populares</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">No se han encontrado ajustes</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansión de texto abreviatura atajo fragmento macro autotexto plantilla snippet text expansion</string>
+    <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palabras número de palabras caracteres longitud estadísticas</string>
+    <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">recortar espacios eliminar limpiar copiar cortar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas &amp; Distribuciones</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Muestra nombres de idiomas en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostrar las etiquetas del teclado en mismo idioma</string>
@@ -441,6 +443,8 @@
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Opciones específicas de distribución</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Mover botones de filas</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Mueve los botones de la fila de acción</string>
+    <string name="pref__smartbar__selection_metrics__label" comment="Preference title, keep short">Contador de selección</string>
+    <string name="pref__smartbar__selection_metrics__summary" comment="Preference summary, keep short (one line)">Palabras y caracteres seleccionados</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción según el estado actual</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Ubicación de la fila de acción</string>
@@ -1066,6 +1070,10 @@
     <plurals name="unit__characters__written">
         <item quantity="one">{v} carácter</item>
         <item quantity="other">{v} caracteres</item>
+    </plurals>
+    <plurals name="unit__words__written">
+        <item quantity="one">{v} palabra</item>
+        <item quantity="other">{v} palabras</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="one">{v} sugerencia</item>
