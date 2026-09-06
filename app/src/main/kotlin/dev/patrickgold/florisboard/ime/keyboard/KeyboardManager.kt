@@ -1408,10 +1408,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                 // follows every committed candidate put a space after it. Nothing about
                                 // the digit was wrong; the word simply was not over.
                                 //
-                                // The tap evidence still goes: no tap is recorded for a digit, so a trace
-                                // that no longer matches the word cannot decode it anyway (issue #242).
+                                // A digit used to throw the whole trace away, on the reasoning that a
+                                // trace which no longer matches the word cannot decode it anyway. That
+                                // was true when the trace was one thing; since issue #318 split the
+                                // *characters* from the *coordinates* it is only half true, and the half
+                                // it got wrong is the one that decides whether a word may be learned.
+                                // Dropping the record meant `wasFullyTyped("prateek99")` answered no, so
+                                // no word carrying a digit could ever be learned — which is exactly what
+                                // round 3 set out to allow. Recorded as deliberately chosen: on a layout
+                                // without a number row the digit comes off the symbol layer, where a
+                                // coordinate means nothing in the letter geometry the decoder reasons
+                                // about (issues #242, #311, #318).
                                 UCharacter.isDigit(codePoint) -> {
-                                    TouchTrace.reset()
+                                    TouchTrace.markPendingExact()
+                                    TouchTrace.commit(text)
                                     editorInstance.commitChar(text)
                                 }
                                 // A punctuation mark ends the word too, so it can expand a snippet
