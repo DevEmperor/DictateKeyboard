@@ -177,9 +177,10 @@ configure<ApplicationExtension> {
         }
     }
 
-    lint {
-        baseline = file("lint.xml")
-    }
+    // No `baseline` here on purpose: app/lint.xml is lint's *configuration* file, which lint picks up
+    // from the module directory on its own. Naming it as a baseline made lint read the severity
+    // overrides as recorded findings and left every real issue unbaselined, so any fatal one failed
+    // the release build (issue #332).
 
     testOptions {
         unitTests {

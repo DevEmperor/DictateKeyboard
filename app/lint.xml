@@ -1,3 +1,10 @@
 <lint>
     <issue id="ExtraTranslation" severity="warning"/>
+    <!--
+        Every activity in this app extends ComponentActivity from androidx.activity, so the broken
+        FragmentActivity this check warns about is never involved. The check fires anyway because
+        play-services-base drags androidx.fragment 1.1.0 onto the classpath and the check reads that
+        version rather than the class it is looking at (issue #332).
+    -->
+    <issue id="InvalidFragmentVersionForActivityResult" severity="ignore"/>
 </lint>
