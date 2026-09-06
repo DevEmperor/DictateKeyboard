@@ -35,7 +35,6 @@ import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPasteGo
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.FirstPage
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -44,8 +43,9 @@ import androidx.compose.material.icons.filled.KeyboardAlt
 import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.KeyboardVoice
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LastPage
 import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material.icons.filled.VerticalAlignBottom
+import androidx.compose.material.icons.filled.VerticalAlignTop
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.History
@@ -222,15 +222,14 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         KeyCode.ARROW_DOWN -> {
             Icons.Default.KeyboardArrowDown
         }
-        // Home/End (issue #335). Deliberately the non-mirrored pair, deprecation warning and all: Material
-        // ships an auto-mirrored LastPage but no auto-mirrored FirstPage, so taking the suggested
-        // replacement for one half would flip that arrow in RTL while the other stayed put — and both
-        // would then point the same way. Swap them together or not at all.
-        KeyCode.MOVE_START_OF_LINE -> {
-            Icons.Default.FirstPage
+        // Jump to the very start or end of the field (issue #335). Vertical icons on purpose: the jump
+        // is vertical too — it leaves the line — and unlike the horizontal pair these carry no
+        // handedness, so they read the same in a right-to-left script.
+        KeyCode.MOVE_START_OF_PAGE -> {
+            Icons.Default.VerticalAlignTop
         }
-        KeyCode.MOVE_END_OF_LINE -> {
-            Icons.Default.LastPage
+        KeyCode.MOVE_END_OF_PAGE -> {
+            Icons.Default.VerticalAlignBottom
         }
         KeyCode.CLIPBOARD_COPY -> {
             Icons.Default.ContentCopy

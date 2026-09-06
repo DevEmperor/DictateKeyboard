@@ -262,7 +262,13 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun RowScope.CenterContent() {
-        val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
+        // While something is selected and the counter is switched on, it takes the middle — even from an
+        // expanded actions row (issue #335). Otherwise the row that auto-expands whenever there are no
+        // suggestions would sit exactly where the count belongs, and marking text would show the same
+        // buttons as always instead of how much was marked.
+        val selectionCounterVisible = rememberSelectionCounterVisible()
+        val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED &&
+            !selectionCounterVisible
         Box(
             modifier = Modifier
                 .weight(1f)

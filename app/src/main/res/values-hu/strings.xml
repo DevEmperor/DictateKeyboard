@@ -58,10 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Balra nyíl végrehajtása</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Jobbra nyíl</string>
     <string name="quick_action__arrow_right__tooltip">Jobbra nyíl végrehajtása</string>
-    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Sor eleje</string>
-    <string name="quick_action__move_start_of_line__tooltip">Ugrás a sor elejére</string>
-    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Sor vége</string>
-    <string name="quick_action__move_end_of_line__tooltip">Ugrás a sor végére</string>
+    <string name="quick_action__move_start_of_page" comment="Please mind the limited available space for the quick action strings">Szöveg eleje</string>
+    <string name="quick_action__move_start_of_page__tooltip">Ugrás a szöveg elejére</string>
+    <string name="quick_action__move_end_of_page" comment="Please mind the limited available space for the quick action strings">Szöveg vége</string>
+    <string name="quick_action__move_end_of_page__tooltip">Ugrás a szöveg végére</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Billentyűzet elrejtése</string>
     <string name="quick_action__ime_hide_ui__tooltip">Billentyűzet elrejtésének végrehajtása</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Vágólapürítő</string>

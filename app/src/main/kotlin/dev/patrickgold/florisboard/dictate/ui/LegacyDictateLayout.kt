@@ -494,13 +494,13 @@ private fun LegacyActionKey(
         // shared "Delete key swipe left" setting) that are deleted on release. Its swipe consumes the
         // gesture, so it never flips to the modern keyboard.
         LegacyEditAction.BACKSPACE -> LegacyBackspaceKey(modifier = modifier)
-        // Home/End (#335): the same key codes the keyboard's action bar sends, so both layouts jump the
-        // same way — including extending an active selection instead of dropping it.
-        LegacyEditAction.HOME -> ThemedIconKey(KeyCode.MOVE_START_OF_LINE, action.icon, label, modifier) {
-            keyboardManager.tapKey(KeyCode.MOVE_START_OF_LINE)
+        // Start/end of the field (#335): the same key codes the keyboard's action bar sends, so both
+        // layouts jump the same way — including extending an active selection instead of dropping it.
+        LegacyEditAction.HOME -> ThemedIconKey(KeyCode.MOVE_START_OF_PAGE, action.icon, label, modifier) {
+            keyboardManager.tapKey(KeyCode.MOVE_START_OF_PAGE)
         }
-        LegacyEditAction.END -> ThemedIconKey(KeyCode.MOVE_END_OF_LINE, action.icon, label, modifier) {
-            keyboardManager.tapKey(KeyCode.MOVE_END_OF_LINE)
+        LegacyEditAction.END -> ThemedIconKey(KeyCode.MOVE_END_OF_PAGE, action.icon, label, modifier) {
+            keyboardManager.tapKey(KeyCode.MOVE_END_OF_PAGE)
         }
     }
 }

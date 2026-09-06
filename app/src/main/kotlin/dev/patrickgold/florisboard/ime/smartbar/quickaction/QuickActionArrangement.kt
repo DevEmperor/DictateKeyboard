@@ -96,11 +96,11 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
                 QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
                 QuickAction.InsertKey(TextKeyData.ARROW_RIGHT),
-                // Home/End (issue #335). The key codes and their handler have been here all along, but
-                // only a swipe gesture could reach them — next to the arrows, because that is what they
-                // are: the same journey, in one step instead of thirty.
-                QuickAction.InsertKey(TextKeyData.MOVE_START_OF_LINE),
-                QuickAction.InsertKey(TextKeyData.MOVE_END_OF_LINE),
+                // Jump to the very start or end of the field (issue #335). The key codes and their
+                // handler have been here all along, but only a swipe gesture could reach them — next to
+                // the arrows, because that is what they are: the same journey, in one step.
+                QuickAction.InsertKey(TextKeyData.MOVE_START_OF_PAGE),
+                QuickAction.InsertKey(TextKeyData.MOVE_END_OF_PAGE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CLEAR_PRIMARY_CLIP),
                 QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH),
                 // IME-switch actions (issue #122): one-tap return to the previously used keyboard, plus the
@@ -130,8 +130,10 @@ data class QuickActionArrangement(
 
         // Key codes of actions that were removed from the app; dropped from any existing stored
         // arrangement so they don't linger as "!! invalid !!". -245 = the old autocorrect-toggle
-        // placeholder (autocorrect is now fully automatic).
-        private val REMOVED_ACTION_CODES = setOf(-245)
+        // placeholder (autocorrect is now fully automatic). -27/-28 = the line-start/line-end buttons
+        // that existed for a day between two commits of #335 before they became field-start/field-end;
+        // they never reached a release, but a debug arrangement can still carry them.
+        private val REMOVED_ACTION_CODES = setOf(-245, -27, -28)
 
         override fun deserialize(value: String): QuickActionArrangement {
             val raw: QuickActionArrangement = QuickActionJsonConfig.decodeFromString(value)

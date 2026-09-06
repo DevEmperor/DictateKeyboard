@@ -19,14 +19,14 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.EmojiEmotions
-import androidx.compose.material.icons.filled.FirstPage
 import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.LastPage
 import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Numbers
 import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.SelectAll
+import androidx.compose.material.icons.filled.VerticalAlignBottom
+import androidx.compose.material.icons.filled.VerticalAlignTop
 import androidx.compose.material.icons.automirrored.outlined.Assignment
 import androidx.compose.material.icons.outlined.Gif
 import org.florisboard.lib.compose.icons.Sticker
@@ -56,8 +56,9 @@ enum class LegacyEditAction {
     CLIPBOARD,
     SWITCH,
     BACKSPACE,
-    // Home/End (issue #335). They matter more here than on the keyboard: this layout has no arrow keys
-    // at all, only the space bar's swipe, which walks the cursor one character at a time.
+    // Jump to the very start or end of the field (issue #335). They matter more here than on the
+    // keyboard: this layout has no arrow keys at all, only the space bar's swipe, which walks the
+    // cursor one character at a time.
     HOME,
     END;
 
@@ -79,10 +80,8 @@ enum class LegacyEditAction {
             CLIPBOARD -> Icons.AutoMirrored.Outlined.Assignment
             SWITCH -> Icons.Default.KeyboardHide
             BACKSPACE -> Icons.Default.Backspace
-            // The same non-mirrored pair as in the Smartbar — see the note in ComputingEvaluator for why
-            // the deprecation warning on LastPage is left standing.
-            HOME -> Icons.Default.FirstPage
-            END -> Icons.Default.LastPage
+            HOME -> Icons.Default.VerticalAlignTop
+            END -> Icons.Default.VerticalAlignBottom
         }
 
     @get:StringRes
@@ -106,8 +105,8 @@ enum class LegacyEditAction {
             // Reuses the existing backspace content-description string (already localised everywhere).
             BACKSPACE -> R.string.dictate__legacy_backspace
             // Same buttons as in the Smartbar, so they carry the same names rather than a second set.
-            HOME -> R.string.quick_action__move_start_of_line
-            END -> R.string.quick_action__move_end_of_line
+            HOME -> R.string.quick_action__move_start_of_page
+            END -> R.string.quick_action__move_end_of_page
         }
 
     companion object {

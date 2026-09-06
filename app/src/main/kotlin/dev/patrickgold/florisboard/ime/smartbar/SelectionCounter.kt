@@ -23,15 +23,40 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.pluralsRes
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+
+/**
+ * Whether the counter has something to show right now: the setting is on and something is selected.
+ *
+ * Hoisted out of the pill because the Smartbar has to know it too — while this is true the shared
+ * actions row stands aside, so that changing a selection shows the count rather than the buttons that
+ * happen to be expanded (issue #335).
+ */
+@Composable
+fun rememberSelectionCounterVisible(): Boolean {
+    val prefs by FlorisPreferenceStore
+    val enabled by prefs.smartbar.selectionMetrics.collectAsState()
+    if (!enabled) return false
+    val context = LocalContext.current
+    val editorInstance by context.editorInstance()
+    val initial = remember(editorInstance) { editorInstance.activeContent.selection.length > 0 }
+    val active by remember(editorInstance) {
+        editorInstance.activeContentFlow
+            .map { it.selection.length > 0 }
+            .distinctUntilChanged()
+    }.collectAsState(initial = initial)
+    return active
+}
 
 /**
  * How many words and characters are selected, shown in the Smartbar (issue #335).

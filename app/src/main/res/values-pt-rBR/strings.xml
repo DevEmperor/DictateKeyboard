@@ -57,10 +57,10 @@
     <string name="quick_action__arrow_left__tooltip">Aplicar seta para a esquerda</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Direita</string>
     <string name="quick_action__arrow_right__tooltip">Aplicar seta para a direita</string>
-    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Início da linha</string>
-    <string name="quick_action__move_start_of_line__tooltip">Ir para o início da linha</string>
-    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Fim da linha</string>
-    <string name="quick_action__move_end_of_line__tooltip">Ir para o fim da linha</string>
+    <string name="quick_action__move_start_of_page" comment="Please mind the limited available space for the quick action strings">Início do texto</string>
+    <string name="quick_action__move_start_of_page__tooltip">Ir para o início do texto</string>
+    <string name="quick_action__move_end_of_page" comment="Please mind the limited available space for the quick action strings">Fim do texto</string>
+    <string name="quick_action__move_end_of_page__tooltip">Ir para o fim do texto</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Limpar</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Aplica limpeza de área de transferência primária</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copiar</string>

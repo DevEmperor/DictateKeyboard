@@ -114,11 +114,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__strip_tracking_params",
             default = false,
         )
-        // Same reasoning as above, and the same answer (issue #335): copying is the user's word for
-        // "this exactly", so changing what lands in the clipboard is only allowed on request.
+        // On by default, unlike the link cleaner above (issue #335). The difference is what is at stake
+        // when it is wrong: dropping a tracking parameter can break a link, while dropping the space the
+        // selection handle caught costs nothing anyone wanted to keep — and a selection made of nothing
+        // but whitespace is left alone, so the one case where the padding *is* the content still works.
         val trimOnCopy = boolean(
             key = "clipboard__trim_on_copy",
-            default = false,
+            default = true,
         )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",

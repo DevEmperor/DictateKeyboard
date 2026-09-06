@@ -58,10 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Wykonaj strzałkę w lewo</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">W prawo</string>
     <string name="quick_action__arrow_right__tooltip">Wykonaj strzałkę w prawo</string>
-    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Początek wiersza</string>
-    <string name="quick_action__move_start_of_line__tooltip">Przejdź na początek wiersza</string>
-    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Koniec wiersza</string>
-    <string name="quick_action__move_end_of_line__tooltip">Przejdź na koniec wiersza</string>
+    <string name="quick_action__move_start_of_page" comment="Please mind the limited available space for the quick action strings">Początek tekstu</string>
+    <string name="quick_action__move_start_of_page__tooltip">Przejdź na początek tekstu</string>
+    <string name="quick_action__move_end_of_page" comment="Please mind the limited available space for the quick action strings">Koniec tekstu</string>
+    <string name="quick_action__move_end_of_page__tooltip">Przejdź na koniec tekstu</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ukryj klawiaturę</string>
     <string name="quick_action__ime_hide_ui__tooltip">Ukrywa klawiaturę</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Czyść schow.</string>

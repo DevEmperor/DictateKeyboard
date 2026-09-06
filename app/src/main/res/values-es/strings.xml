@@ -58,10 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Realizar flecha hacia la izquierda</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Derecha</string>
     <string name="quick_action__arrow_right__tooltip">Realizar flecha hacia la derecha</string>
-    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Inicio de línea</string>
-    <string name="quick_action__move_start_of_line__tooltip">Ir al inicio de la línea</string>
-    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Fin de línea</string>
-    <string name="quick_action__move_end_of_line__tooltip">Ir al final de la línea</string>
+    <string name="quick_action__move_start_of_page" comment="Please mind the limited available space for the quick action strings">Inicio del texto</string>
+    <string name="quick_action__move_start_of_page__tooltip">Ir al inicio del texto</string>
+    <string name="quick_action__move_end_of_page" comment="Please mind the limited available space for the quick action strings">Fin del texto</string>
+    <string name="quick_action__move_end_of_page__tooltip">Ir al final del texto</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ten en cuenta el limitado espacio disponible para la tira de acción rápida</string>
     <string name="quick_action__ime_hide_ui__tooltip">Ejecutar ocultar el teclado</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Borrar clip</string>

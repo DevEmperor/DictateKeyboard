@@ -58,10 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Izpildīt bultu pa kreisi</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pa labi</string>
     <string name="quick_action__arrow_right__tooltip">Izpildīt bultu pa labi</string>
-    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Rindas sākums</string>
-    <string name="quick_action__move_start_of_line__tooltip">Pāriet uz rindas sākumu</string>
-    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Rindas beigas</string>
-    <string name="quick_action__move_end_of_line__tooltip">Pāriet uz rindas beigām</string>
+    <string name="quick_action__move_start_of_page" comment="Please mind the limited available space for the quick action strings">Teksta sākums</string>
+    <string name="quick_action__move_start_of_page__tooltip">Pāriet uz teksta sākumu</string>
+    <string name="quick_action__move_end_of_page" comment="Please mind the limited available space for the quick action strings">Teksta beigas</string>
+    <string name="quick_action__move_end_of_page__tooltip">Pāriet uz teksta beigām</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Paslēpt tastatūru</string>
     <string name="quick_action__ime_hide_ui__tooltip">Veikt tastatūras paslēpšanu</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Izpildīt galvenā starliktuves vienuma notīrīšanu</string>

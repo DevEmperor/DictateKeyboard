@@ -14,8 +14,8 @@ package dev.patrickgold.florisboard.lib.util
  * Trims the padding off text on its way into the clipboard (issue #335).
  *
  * Selecting by hand is imprecise: the handles catch the space before a word, or the line break after the
- * last one, and that padding then travels into every place the clip is pasted. Opt-in, because it changes
- * what the user copied.
+ * last one, and that padding then travels into every place the clip is pasted. On by default, and
+ * switchable off under Settings → Clipboard.
  *
  * Two rules keep it from ever being surprising:
  *
