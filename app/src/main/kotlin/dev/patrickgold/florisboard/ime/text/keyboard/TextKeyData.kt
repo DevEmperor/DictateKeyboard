@@ -689,7 +689,7 @@ class DevanagariVowelKeyData(
             // अ is the inherent vowel: a consonant on its own already carries it, so the key shows that
             // consonant as the "no matra" option and sends nothing at all. Emitting the base a second
             // time would turn क into कक.
-            return ComposedMatraKeyData(type, KeyCode.NOOP, base, groupId, popup)
+            return ComposedMatraKeyData(type, KeyCode.PREVIEW_ONLY, base, groupId, popup)
         }
         val preview = buildString {
             append(base)
@@ -716,8 +716,8 @@ class DevanagariVowelKeyData(
  * any lone combining mark — right for a bare matra key, wrong here, where the label already carries a
  * real base to hang on. Never serialized; only ever produced by [DevanagariVowelKeyData.compute].
  *
- * A [code] of [KeyCode.NOOP] is the inherent-vowel face of अ: it shows the pending consonant and writes
- * nothing, because that consonant is already in the text.
+ * A [code] of [KeyCode.PREVIEW_ONLY] is the inherent-vowel face of अ: it shows the pending consonant and
+ * writes nothing, because that consonant is already in the text.
  */
 class ComposedMatraKeyData(
     override val type: KeyType,
@@ -731,7 +731,7 @@ class ComposedMatraKeyData(
     override fun asString(isForDisplay: Boolean): String {
         return when {
             isForDisplay -> label
-            code == KeyCode.NOOP -> ""
+            code == KeyCode.PREVIEW_ONLY -> ""
             else -> buildString { appendCodePoint(code) }
         }
     }

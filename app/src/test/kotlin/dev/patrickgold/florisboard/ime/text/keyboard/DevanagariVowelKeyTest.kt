@@ -77,7 +77,9 @@ class DevanagariVowelKeyTest {
         val computed = computed(a, "क")
         assertIs<ComposedMatraKeyData>(computed)
         assertEquals("क", computed.label)
-        assertEquals(KeyCode.NOOP, computed.code)
+        // Not KeyCode.NOOP: that one draws a cross over the label, which on a device turned the key
+        // into a struck-out क.
+        assertEquals(KeyCode.PREVIEW_ONLY, computed.code)
         assertEquals("", computed.asString(isForDisplay = false))
     }
 

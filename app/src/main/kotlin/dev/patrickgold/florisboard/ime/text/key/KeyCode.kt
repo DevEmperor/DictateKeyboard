@@ -132,6 +132,12 @@ object KeyCode {
     const val CURRENCY_SLOT_6 =             -806
 
     const val MULTIPLE_CODE_POINTS =        -902
+    /**
+     * A key whose label previews text that is already in the editor, so pressing it must write nothing
+     * (issue #315: the अ key wearing the pending consonant). Distinct from [NOOP], which draws a cross
+     * over the label to say "this key is dead".
+     */
+    const val PREVIEW_ONLY =                -903
     const val DRAG_MARKER =                 -991
     const val NOOP =                        -999
 
