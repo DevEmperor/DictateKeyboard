@@ -96,6 +96,11 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
                 QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
                 QuickAction.InsertKey(TextKeyData.ARROW_RIGHT),
+                // Home/End (issue #335). The key codes and their handler have been here all along, but
+                // only a swipe gesture could reach them — next to the arrows, because that is what they
+                // are: the same journey, in one step instead of thirty.
+                QuickAction.InsertKey(TextKeyData.MOVE_START_OF_LINE),
+                QuickAction.InsertKey(TextKeyData.MOVE_END_OF_LINE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CLEAR_PRIMARY_CLIP),
                 QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH),
                 // IME-switch actions (issue #122): one-tap return to the previously used keyboard, plus the

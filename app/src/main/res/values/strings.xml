@@ -175,6 +175,10 @@
     <string name="quick_action__arrow_left__tooltip">Perform arrow left</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Arrow right</string>
     <string name="quick_action__arrow_right__tooltip">Perform arrow right</string>
+    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Line start</string>
+    <string name="quick_action__move_start_of_line__tooltip">Jump to the start of the line</string>
+    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Line end</string>
+    <string name="quick_action__move_end_of_line__tooltip">Jump to the end of the line</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Hide keyboard</string>
     <string name="quick_action__ime_hide_ui__tooltip">Perform hide keyboard</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Clear primary clipboard clip</string>

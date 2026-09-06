@@ -58,6 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Перемістити курсор вліво</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Перемістити курсор вправо</string>
+    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Початок рядка</string>
+    <string name="quick_action__move_start_of_line__tooltip">Перейти на початок рядка</string>
+    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Кінець рядка</string>
+    <string name="quick_action__move_end_of_line__tooltip">Перейти в кінець рядка</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Стерти буфер</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Видалити останній копійований текст</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копіювати</string>

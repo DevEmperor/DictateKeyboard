@@ -58,6 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Vykonat šipku vlevo</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Šipka vpravo</string>
     <string name="quick_action__arrow_right__tooltip">Vykonat šipku vpravo</string>
+    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Začátek řádku</string>
+    <string name="quick_action__move_start_of_line__tooltip">Přejít na začátek řádku</string>
+    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Konec řádku</string>
+    <string name="quick_action__move_end_of_line__tooltip">Přejít na konec řádku</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Skrýt klávesnici</string>
     <string name="quick_action__ime_hide_ui__tooltip">Provést skrytí klávesnice</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primární položky schránky</string>

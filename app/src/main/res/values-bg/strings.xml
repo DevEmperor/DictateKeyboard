@@ -58,6 +58,10 @@
     <string name="quick_action__arrow_left__tooltip">Извършва стрелка наляво</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Надясно</string>
     <string name="quick_action__arrow_right__tooltip">Извършва стрелка надясно</string>
+    <string name="quick_action__move_start_of_line" comment="Please mind the limited available space for the quick action strings">Начало на реда</string>
+    <string name="quick_action__move_start_of_line__tooltip">Преход към началото на реда</string>
+    <string name="quick_action__move_end_of_line" comment="Please mind the limited available space for the quick action strings">Край на реда</string>
+    <string name="quick_action__move_end_of_line__tooltip">Преход към края на реда</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скриване на клавиатурата</string>
     <string name="quick_action__ime_hide_ui__tooltip">Извършва скриване на клавиатурата</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Изпр. памет</string>

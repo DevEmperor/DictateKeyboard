@@ -19,7 +19,9 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.EmojiEmotions
+import androidx.compose.material.icons.filled.FirstPage
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.LastPage
 import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Numbers
@@ -53,7 +55,11 @@ enum class LegacyEditAction {
     STICKER,
     CLIPBOARD,
     SWITCH,
-    BACKSPACE;
+    BACKSPACE,
+    // Home/End (issue #335). They matter more here than on the keyboard: this layout has no arrow keys
+    // at all, only the space bar's swipe, which walks the cursor one character at a time.
+    HOME,
+    END;
 
     val icon: ImageVector
         get() = when (this) {
@@ -73,6 +79,10 @@ enum class LegacyEditAction {
             CLIPBOARD -> Icons.AutoMirrored.Outlined.Assignment
             SWITCH -> Icons.Default.KeyboardHide
             BACKSPACE -> Icons.Default.Backspace
+            // The same non-mirrored pair as in the Smartbar — see the note in ComputingEvaluator for why
+            // the deprecation warning on LastPage is left standing.
+            HOME -> Icons.Default.FirstPage
+            END -> Icons.Default.LastPage
         }
 
     @get:StringRes
@@ -95,6 +105,9 @@ enum class LegacyEditAction {
             SWITCH -> R.string.dictate__legacy_action_switch
             // Reuses the existing backspace content-description string (already localised everywhere).
             BACKSPACE -> R.string.dictate__legacy_backspace
+            // Same buttons as in the Smartbar, so they carry the same names rather than a second set.
+            HOME -> R.string.quick_action__move_start_of_line
+            END -> R.string.quick_action__move_end_of_line
         }
 
     companion object {
