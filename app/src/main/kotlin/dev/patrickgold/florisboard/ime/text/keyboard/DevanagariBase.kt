@@ -22,7 +22,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
  */
 object DevanagariBase {
     /** No consonant is pending; the vowel keys show independent vowels. */
-    const val NONE: Int = 0
+    const val NONE: String = ""
 
     private const val CONSONANT_FIRST = 0x0915 // क
     private const val CONSONANT_LAST = 0x0939 // ह
@@ -33,19 +33,24 @@ object DevanagariBase {
     /**
      * Returns the consonant immediately before the cursor, or [NONE].
      *
-     * A trailing nukta is skipped, so क़ still counts as a base. Everything else — a matra, virama,
-     * anusvara, punctuation, whitespace, a digit, Latin text, or an empty field — yields [NONE]: after
-     * कि the vowel keys must go back to showing vowels, because a second matra never follows a first.
+     * A trailing nukta belongs to the base and is carried along, so क़ previews as क़ा rather than का —
+     * the key must show what the text will actually read. Everything else — a matra, virama, anusvara,
+     * punctuation, whitespace, a digit, Latin text, or an empty field — yields [NONE]: after कि the vowel
+     * keys must go back to showing vowels, because a second matra never follows a first.
      */
-    fun of(textBeforeCursor: CharSequence): Int {
+    fun of(textBeforeCursor: CharSequence): String {
         var end = textBeforeCursor.length
         if (end == 0) return NONE
-        if (textBeforeCursor[end - 1].code == NUKTA) {
+        val hasNukta = textBeforeCursor[end - 1].code == NUKTA
+        if (hasNukta) {
             end--
             if (end == 0) return NONE
         }
         val codePoint = codePointBefore(textBeforeCursor, end)
-        return if (isConsonant(codePoint)) codePoint else NONE
+        if (!isConsonant(codePoint)) return NONE
+        val start = end - Character.charCount(codePoint)
+        val stop = if (hasNukta) end + 1 else end
+        return textBeforeCursor.subSequence(start, stop).toString()
     }
 
     /** True for the 33 base consonants plus the seven precomposed nukta letters. */

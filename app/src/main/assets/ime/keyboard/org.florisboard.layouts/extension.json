@@ -67,13 +67,15 @@
         "id": "hindi_in",
         "label": "हिंदी",
         "authors": [ "npnpatidar" ],
-        "direction": "ltr"
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:devanagari"
       },
       {
         "id": "hindi_varnamala",
         "label": "हिंदी (वर्णमाला)",
         "authors": [ "DevEmperor" ],
-        "direction": "ltr"
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:devanagari"
       },
       {
         "id": "bepo",
@@ -522,6 +524,12 @@
         "id": "armenian",
         "label": "Armenian",
         "authors": [ "PJTSearch" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "devanagari",
+        "label": "Devanagari",
+        "authors": [ "DevEmperor" ],
         "direction": "ltr"
       },
       {

@@ -181,7 +181,7 @@
     },
 
     "~right": {
-      "main": { "code": 2404, "label": "।" },
+      "main": { "code": 46, "label": "." },
       "relevant": [
         { "code": 37, "label": "%" },
         { "code": 43, "label": "+" },

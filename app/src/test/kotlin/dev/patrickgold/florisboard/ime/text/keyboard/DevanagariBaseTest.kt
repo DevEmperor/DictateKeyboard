@@ -30,15 +30,15 @@ class DevanagariBaseTest {
 
     @Test
     fun `a consonant right before the cursor is the pending base`() {
-        assertEquals(ka, DevanagariBase.of("क"))
-        assertEquals(ha, DevanagariBase.of("ह"))
+        assertEquals("क", DevanagariBase.of("क"))
+        assertEquals("ह", DevanagariBase.of("ह"))
     }
 
     @Test
     fun `only the last character counts`() {
         // Mid-word: नमस् followed by क — the क is what the next vowel sign would attach to.
-        assertEquals(ka, DevanagariBase.of("नमस्क"))
-        assertEquals(0x092E /* म */, DevanagariBase.of("हिन्दी नम"))
+        assertEquals("क", DevanagariBase.of("नमस्क"))
+        assertEquals("म", DevanagariBase.of("हिन्दी नम"))
     }
 
     @Test
@@ -65,9 +65,12 @@ class DevanagariBaseTest {
     }
 
     @Test
-    fun `a nukta is skipped so the consonant under it still counts`() {
-        assertEquals(ka, DevanagariBase.of("क़")) // क + nukta, decomposed
-        assertEquals(qa, DevanagariBase.of("क़")) // precomposed क़
+    fun `a nukta belongs to the base instead of being dropped from it`() {
+        // The nukta has to travel with the consonant, or the preview reads का over text that says क़ा.
+        // Since #315 round 2 the nukta has a key of its own, so this is no longer a corner case.
+        assertEquals("क़", DevanagariBase.of("क़")) // क + nukta, decomposed
+        assertEquals("क़", DevanagariBase.of("क़")) // precomposed क़
+        assertEquals("ज़", DevanagariBase.of("बहुत ज़")) // mid-word ज + nukta
         assertEquals(DevanagariBase.NONE, DevanagariBase.of("़")) // a lone nukta is not a base
     }
 

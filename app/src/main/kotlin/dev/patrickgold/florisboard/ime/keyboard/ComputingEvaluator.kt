@@ -90,8 +90,11 @@ interface ComputingEvaluator {
     /**
      * The Devanagari consonant waiting for a vowel sign, or [DevanagariBase.NONE] (issue #315). Turns the
      * vowel row of an Indic layout into a matra row while a consonant is pending.
+     *
+     * A string rather than a code point, because a nukta belongs to the base: after क़ the keys have to
+     * preview क़ा, not का.
      */
-    val devanagariBase: Int
+    val devanagariBase: String
         get() = DevanagariBase.NONE
 
     fun context(): Context?

@@ -1325,6 +1325,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             // Repurposed for the transcription history panel (issue #140): opens the browsable list of
             // recent dictations to quickly re-insert or re-transcribe, superseding the one-shot reinsert.
             KeyCode.DICTATE_REINSERT -> { activeState.imeUiMode = ImeUiMode.HISTORY }
+            // A key that is there to be looked at, not pressed: the अ key wearing the pending consonant
+            // (issue #315). The consonant is already in the text, so writing anything would double it —
+            // and without this branch the fallthrough below would try to encode -999 as a code point.
+            KeyCode.NOOP -> { /* nothing to do */ }
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
@@ -1573,7 +1577,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         override val isGifSearchActive: Boolean
             get() = gifSearchQuery.value != null
 
-        override val devanagariBase: Int
+        override val devanagariBase: String
             get() = pendingDevanagariBase.value
 
         override fun context(): Context = appContext

@@ -9,7 +9,7 @@
     { "$": "case_selector", "lower": { "code": 2369, "label": "ु" }, "upper": { "code": 2370, "label": "ू" } },
     { "$": "case_selector", "lower": { "code": 2367, "label": "ि" }, "upper": { "code": 2368, "label": "ी" } },
     { "$": "case_selector", "lower": { "code": 2379, "label": "ो" }, "upper": { "code": 2380, "label": "ौ" } },
-    { "$": "case_selector", "lower": { "code": 2346, "label": "प" }, "upper": { "code": 2398, "label": "फ़" } }
+    { "$": "case_selector", "lower": { "code": 2346, "label": "प" }, "upper": { "$": "multi_text_key", "codePoints": [2347, 2364], "label": "फ़" } }
   ],
   [
     { "$": "case_selector", "lower": { "code": 2366, "label": "ा" }, "upper": { "code": 2309, "label": "अ" } },
@@ -26,7 +26,7 @@
     {
       "$": "case_selector",
       "lower": { "$": "multi_text_key", "codePoints": [2332, 2381, 2334], "label": "ज्ञ" },
-      "upper": { "code": 2395, "label": "ज़" }
+      "upper": { "$": "multi_text_key", "codePoints": [2332, 2364], "label": "ज़" }
     },
     {
       "$": "case_selector",

@@ -666,8 +666,8 @@ class MultiTextKeyData(
  * { "$": "devanagari_vowel_key", "code": 2310, "matra": 2366, "label": "आ" }
  * ```
  *
- * A [matra] of zero means the vowel has no sign of its own (अ carries the inherent vowel) and the key
- * never changes.
+ * A vowel with no sign of its own has no [matra] and stays put — unless it is marked [inherent], which
+ * is अ and only अ.
  */
 @Serializable
 @SerialName("devanagari_vowel_key")
@@ -675,17 +675,24 @@ class DevanagariVowelKeyData(
     override val type: KeyType = KeyType.CHARACTER,
     override val code: Int = KeyCode.UNSPECIFIED,
     val matra: Int = 0,
+    val inherent: Boolean = false,
     override val label: String = "",
     override val groupId: Int = KeyData.GROUP_DEFAULT,
     override val popup: PopupSet<AbstractKeyData>? = null,
 ) : KeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData {
         val base = evaluator.devanagariBase
-        if (matra == 0 || base == DevanagariBase.NONE) {
+        if (base == DevanagariBase.NONE || (matra == 0 && !inherent)) {
             return TextKeyData(type, code, label, groupId, popup)
         }
+        if (inherent) {
+            // अ is the inherent vowel: a consonant on its own already carries it, so the key shows that
+            // consonant as the "no matra" option and sends nothing at all. Emitting the base a second
+            // time would turn क into कक.
+            return ComposedMatraKeyData(type, KeyCode.NOOP, base, groupId, popup)
+        }
         val preview = buildString {
-            appendCodePoint(base)
+            append(base)
             appendCodePoint(matra)
         }
         return ComposedMatraKeyData(type, matra, preview, groupId, popup)
@@ -696,7 +703,8 @@ class DevanagariVowelKeyData(
     }
 
     override fun toString(): String {
-        return "${DevanagariVowelKeyData::class.simpleName} { type=$type code=$code matra=$matra label=\"$label\" groupId=$groupId }"
+        return "${DevanagariVowelKeyData::class.simpleName} { type=$type code=$code matra=$matra " +
+            "inherent=$inherent label=\"$label\" groupId=$groupId }"
     }
 }
 
@@ -707,6 +715,9 @@ class DevanagariVowelKeyData(
  * This exists instead of a plain [TextKeyData] because the shared [asString] prefixes a dotted circle to
  * any lone combining mark — right for a bare matra key, wrong here, where the label already carries a
  * real base to hang on. Never serialized; only ever produced by [DevanagariVowelKeyData.compute].
+ *
+ * A [code] of [KeyCode.NOOP] is the inherent-vowel face of अ: it shows the pending consonant and writes
+ * nothing, because that consonant is already in the text.
  */
 class ComposedMatraKeyData(
     override val type: KeyType,
@@ -718,7 +729,11 @@ class ComposedMatraKeyData(
     override fun compute(evaluator: ComputingEvaluator): KeyData = this
 
     override fun asString(isForDisplay: Boolean): String {
-        return if (isForDisplay) label else buildString { appendCodePoint(code) }
+        return when {
+            isForDisplay -> label
+            code == KeyCode.NOOP -> ""
+            else -> buildString { appendCodePoint(code) }
+        }
     }
 
     override fun toString(): String {

@@ -68,8 +68,13 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             computedData = computed
             computedPopups.clear()
             mergePopups(computed, evaluator, computedPopups::merge)
-            if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
-                keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
+            // Popups are looked up by the computed label, which is exactly wrong for a Devanagari key
+            // wearing a composed face (issue #315): while क is pending, the अ key reads "क" and would
+            // inherit क's popups — offering क़ and ख़ on a key whose whole point is that it inserts
+            // nothing. A composed face carries only what its own layout entry declared.
+            if ((keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
+                keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) &&
+                computed !is ComposedMatraKeyData) {
                 val computedLabel = computed.label.lowercase(evaluator.subtype.primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
