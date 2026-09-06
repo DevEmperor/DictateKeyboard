@@ -546,6 +546,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop infinito de travamento. Toque para ver os detalhes do erro</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Área de transferência</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Pesquisar na área de transferência</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Nenhum item contém isso</string>
     <string name="clipboard__disabled__title">O histórico da área de transferência está atualmente desativado</string>
     <string name="clipboard__disabled__message">O histórico da área de transferência do {app_name} permite que você armazene e acesse rapidamente textos e imagens copiados, com a capacidade de fixar itens, configurar a limpeza automática e definir um limite máximo de itens.</string>
     <string name="clipboard__disabled__enable_button">Ativar histórico da área de transferência</string>

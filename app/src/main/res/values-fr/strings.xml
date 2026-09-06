@@ -583,6 +583,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Retour au clavier précédent pour arrêter la boucle de plantage infinie. Appuyez pour afficher les détails de l\'erreur</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Presse-papier</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Rechercher dans le presse-papiers</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Aucun élément ne contient cela</string>
     <string name="clipboard__disabled__title">L\'historique du presse-papiers est actuellement désactivé</string>
     <string name="clipboard__disabled__message">L\'historique du presse-papiers de {app_name} vous permet de stocker et d\'accéder rapidement au texte et aux images que vous copiez, avec la possibilité d\'épingler des éléments, de configurer le nettoyage automatique et de définir une limite maximale d\'éléments.</string>
     <string name="clipboard__disabled__enable_button">Activer l\'historique du presse-papier</string>

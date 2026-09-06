@@ -158,6 +158,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     val stickerSearchQuery = MutableStateFlow<String?>(null)
 
+    /**
+     * The live query of the clipboard search (issue #333), or `null` when no search is running.
+     *
+     * Same shape as the sticker one, and for the same reason: the clips are already in memory, so the
+     * list narrows on every keystroke and there is nothing to submit. The clipboard panel replaces the
+     * keyboard, which is why searching it has to look like this at all — the query needs keys to type
+     * it with, so the search takes the Smartbar's slot and hands the layout below back to the user.
+     */
+    val clipboardSearchQuery = MutableStateFlow<String?>(null)
+
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion = AtomicInteger(0)
     val activeEvaluator: StateFlow<ComputingEvaluator>
@@ -487,6 +497,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         emojiSearchQuery.value?.let { emojiSearchQuery.value = joined(it); return true }
         gifSearchQuery.value?.let { gifSearchQuery.value = joined(it); return true }
         stickerSearchQuery.value?.let { stickerSearchQuery.value = joined(it); return true }
+        clipboardSearchQuery.value?.let { clipboardSearchQuery.value = joined(it); return true }
         return false
     }
 
@@ -1225,6 +1236,29 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         stickerSearchQuery.value = ""
     }
 
+    /** Empties the clipboard query without leaving the search — the ✕ inside the search bar. */
+    fun clearClipboardSearch() {
+        if (clipboardSearchQuery.value == null) return
+        clipboardSearchQuery.value = ""
+    }
+
+    /** Starts a clipboard search: shows the text keyboard so the user can type what to look for. */
+    fun activateClipboardSearch() {
+        clipboardSearchQuery.value = ""
+        activeState.imeUiMode = ImeUiMode.TEXT
+    }
+
+    /**
+     * Closes the clipboard search. [returnToPanel] separates backing out — which belongs back in the
+     * panel the search was opened from — from having just pasted a clip, after which the keyboard is
+     * where the user wants to be, because what follows a paste is usually more writing.
+     */
+    fun closeClipboardSearch(returnToPanel: Boolean = true) {
+        if (clipboardSearchQuery.value == null) return
+        clipboardSearchQuery.value = null
+        if (returnToPanel) activeState.imeUiMode = ImeUiMode.CLIPBOARD
+    }
+
     /** Starts a sticker search: shows the text keyboard so the user can type a file name. */
     fun activateStickerSearch() {
         stickerSearchQuery.value = ""
@@ -1313,6 +1347,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             data = data,
             onEnter = { /* swallow: the results are already filtered */ },
             onExit = { closeStickerSearch() },
+        ) || handleSearchKey(
+            query = clipboardSearchQuery,
+            data = data,
+            onEnter = { /* swallow: the results are already filtered */ },
+            onExit = { closeClipboardSearch() },
         )
         if (consumedBySearch) {
             return@batchEdit

@@ -650,6 +650,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Volviendo al teclado anterior para detener el bucle de cierre infinito. Toque para ver los detalles del error</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Portapapeles</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Buscar en el portapapeles</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Ningún elemento contiene eso</string>
     <string name="clipboard__disabled__title">El historial del portapapeles está actualmente deshabilitado</string>
     <string name="clipboard__disabled__message">El historial del portapapeles de {app_name} le permite almacenar y acceder a texto e imágenes que haya copiado, con la facultad de anclar, configurar borrado automático y definir un número máximo de elementos.</string>
     <string name="clipboard__disabled__enable_button">Habilitar historial de portapapeles</string>

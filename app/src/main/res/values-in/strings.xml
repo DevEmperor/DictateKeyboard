@@ -644,6 +644,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Mengembalikan ke papan ketik sebelumnya untuk menghentikan pengulangan kesalahan tidak terbatas. Ketuk untuk melihat detail kesalahan</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Papan klip</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Cari di papan klip</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Tidak ada klip yang memuat itu</string>
     <string name="clipboard__disabled__title">Riwayat papan klip saat ini dinonaktifkan</string>
     <string name="clipboard__disabled__message">Riwayat papan klip {app_name} memungkinkan Anda untuk menyimpan dan akses teks dan gambar yang Anda salin secara cepat, dengan kemampuan untuk menyematkan item, konfigurasi pembersihan otomatis, dan tetapkan batas jumlah item.</string>
     <string name="clipboard__disabled__enable_button">Aktifkan riwayat papan klip</string>

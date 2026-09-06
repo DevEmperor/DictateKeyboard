@@ -597,6 +597,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Um eine endlose Absturzschleife zu verhindern, wurde automatisch auf die zuvor benutzte Tastatur zurückgegriffen. Tippen, um die Fehlermeldung anzuzeigen</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Zwischenablage</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Ausschnitte durchsuchen</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Kein Ausschnitt enthält das</string>
     <string name="clipboard__disabled__title">Der Verlauf der Zwischenablage ist aktuell deaktiviert</string>
     <string name="clipboard__disabled__message">{app_name}\'s Zwischenablageverlauf ermöglicht es dir schnell kopierte Texte und Bilder zu speichern und abzurufen, mit der Möglichkeit, Elemente anzuheften, eine automatische Bereinigung einzurichten und eine maximale Anzahl von Elementen festzulegen.</string>
     <string name="clipboard__disabled__enable_button">Verlauf für Zwischenablage aktivieren</string>

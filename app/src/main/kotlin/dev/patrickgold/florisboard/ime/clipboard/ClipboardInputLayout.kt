@@ -60,6 +60,7 @@ import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
@@ -233,6 +234,18 @@ fun ClipboardInputLayout(
             ) {
                 SnyggIcon(
                     imageVector = Icons.Default.DeleteSweep,
+                )
+            }
+            // Searching leaves this panel behind — the keyboard has to come back to type the query with
+            // (issue #333) — so it sits next to the filter rather than inside the grid, and under the
+            // same conditions: a locked device or a switched-off history has nothing to search.
+            PanelHeaderButton(
+                onClick = { keyboardManager.activateClipboardSearch() },
+                modifier = sizeModifier,
+                enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.Default.Search,
                 )
             }
             PanelHeaderButton(

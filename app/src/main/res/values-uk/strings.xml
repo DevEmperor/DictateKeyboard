@@ -541,6 +541,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Повернення до попередньої клавіатури, щоб зупинити нескінченний цикл збою. Натисніть, щоб переглянути деталі про помилку</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Буфер обміну</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Пошук у буфері обміну</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Жоден запис цього не містить</string>
     <string name="clipboard__disabled__title">Журнал буфера обміну наразі вимкнено</string>
     <string name="clipboard__disabled__message">Історія буфера обміну {app_name} дозволяє швидко зберігати й отримувати доступ до скопійованого тексту та зображень з можливістю закріплення елементів, налаштування автоматичного очищення та встановлення максимального ліміту елементів.</string>
     <string name="clipboard__disabled__enable_button">Увімкнути історію буферу обміну</string>

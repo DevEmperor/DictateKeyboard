@@ -545,6 +545,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ripiega alla tastiera precedente per porre fine ai crash ripetuti. Tocca per visualizzare i dettagli dell\'errore</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Appunti</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Cerca negli appunti</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Nessun elemento contiene questo</string>
     <string name="clipboard__disabled__title">La cronologia della tastiera è disabilitata</string>
     <string name="clipboard__disabled__message">La cronologia degli appunti di {app_name} consente di salvare e accedere rapidamente a testo e immagini che copi, con la possibilità di fissare elementi, impostare la pulizia automatica e limitare il numero di elementi.</string>
     <string name="clipboard__disabled__enable_button">Attiva la cronologia degli appunti</string>

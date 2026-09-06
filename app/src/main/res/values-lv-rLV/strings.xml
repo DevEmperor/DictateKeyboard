@@ -612,6 +612,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Starpliktuve</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Meklēt starpliktuvē</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Neviens ieraksts to nesatur</string>
     <string name="clipboard__disabled__title">Starpliktuves vēsture pašreiz ir atspējota</string>
     <string name="clipboard__disabled__message">{app_name} starpliktuves vēsture ļauj ātri saglabāt un piekļūt saturam un attēliem, kas tiek kopēti, ar iespēju piespraust vienumus, uzstādīt pašattīrīšanos un uzstādīt lielāko pieļaujamo vienumu ierobežojumu.</string>
     <string name="clipboard__disabled__enable_button">Iespējot starpliktuves vēsturi</string>

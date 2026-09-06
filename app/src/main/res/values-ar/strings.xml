@@ -540,6 +540,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">تم العودة إلى لوحة المفاتيح السابقة لإيقاف التعطل المتكرر الغير منتهي. انقر لعرض تفاصيل الخطأ</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">الحافظة</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">البحث في الحافظة</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">لا يوجد عنصر يحتوي على ذلك</string>
     <string name="clipboard__disabled__title">سجل الحافظة معطل حاليا</string>
     <string name="clipboard__disabled__message">{app_name}\'يتيح لك تاريخ الحافظة تخزين النصوص والصور التي تقوم بتخزينها والوصول إليها بسرعة، مع إمكانية تثبيت العناصر، قم بتكوين التنظيف التلقائي وتعيين حدود عنصر أقصى.</string>
     <string name="clipboard__disabled__enable_button">تمكين سجل الحافظة</string>

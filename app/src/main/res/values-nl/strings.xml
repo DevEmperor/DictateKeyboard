@@ -579,6 +579,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Terugvallen op het vorige toetsenbord om oneindige crash-loop te stoppen. Tik om foutdetails te bekijken</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Klembord</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Zoeken in klembord</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Geen fragment bevat dat</string>
     <string name="clipboard__disabled__title">Klembordgeschiedenis is momenteel uitgeschakeld</string>
     <string name="clipboard__disabled__message">Met de klembordgeschiedenis van {app_name} kun je snel tekst en afbeeldingen die je kopieert opslaan en openen, met de mogelijkheid om items vast te zetten, automatische opschoning te configureren en een maximale itemlimiet in te stellen.</string>
     <string name="clipboard__disabled__enable_button">Schakel klembordgeschiedenis in</string>

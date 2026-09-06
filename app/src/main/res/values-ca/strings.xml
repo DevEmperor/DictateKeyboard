@@ -558,6 +558,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Tornant al teclat anterior per aturar el bucle de fallada infinit. Toca per veure els detalls de l\'error</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Porta-retalls</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Cerca al porta-retalls</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Cap element no conté això</string>
     <string name="clipboard__disabled__title">L\'historial del porta-retalls està inhabilitat actualment</string>
     <string name="clipboard__disabled__message">L\'historial del porta-retalls de {app_name} et permet emmagatzemar i accedir al text i a les imatges que has copiat ràpidament, amb la possibilitat de fixar entrades, configurar la neteja automàtica i definir un límit màxim d\'entrades.</string>
     <string name="clipboard__disabled__enable_button">Habilita l\'historial del porta-retalls</string>

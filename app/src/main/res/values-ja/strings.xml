@@ -623,6 +623,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">無限クラッシュループを停止するため、以前のキーボードにフォールバックしています。タップしてエラー詳細を表示</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">クリップボード</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">クリップボードを検索</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">その語を含む項目はありません</string>
     <string name="clipboard__disabled__title">クリップボード履歴は現在無効です</string>
     <string name="clipboard__disabled__message">{app_name}のクリップボード履歴を使用すると、コピーしたテキストや画像を素早く保存してアクセスできます。また、アイテムをピン留めしたり、自動クリーンアップを設定したり、アイテム数の上限を設定したりできます。</string>
     <string name="clipboard__disabled__enable_button">クリップボード履歴を有効にする</string>

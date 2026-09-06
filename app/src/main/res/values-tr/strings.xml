@@ -648,6 +648,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Sonsuz çökme döngüsünü durdurmak için önceki klavyeye geri dönülüyor. Hata ayrıntılarını görüntülemek için dokunun</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Pano</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Panoda ara</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Bunu içeren bir öge yok</string>
     <string name="clipboard__disabled__title">Pano geçmişi şu anda devre dışı</string>
     <string name="clipboard__disabled__message">{app_name}\'in pano geçmişi, kopyaladığınız metinleri ve resimleri hızlıca saklamanıza ve erişmenize olanak tanır, ögeleri sabitleme, otomatik temizlemeyi yapılandırma ve maksimum öge sınırı belirleme yeteneği sunar.</string>
     <string name="clipboard__disabled__enable_button">Pano geçmişini etkinleştir</string>

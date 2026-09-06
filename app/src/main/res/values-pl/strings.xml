@@ -661,6 +661,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schowek</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Szukaj w schowku</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Żaden wpis tego nie zawiera</string>
     <string name="clipboard__disabled__title">Historia schowka jest obecnie wyłączona</string>
     <string name="clipboard__disabled__message">Historia schowka {app_name} umożliwia szybkie przechowywanie i dostęp do tekstu i obrazów, które kopiujesz, z możliwością przypinania elementów, konfigurowania automatycznego czyszczenia i ustawiania maksymalnego limitu elementów.</string>
     <string name="clipboard__disabled__enable_button">Włącz historię schowka</string>

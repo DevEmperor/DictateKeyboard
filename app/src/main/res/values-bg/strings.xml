@@ -658,6 +658,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Междинна памет</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Търсене в клипборда</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Няма запис, който да съдържа това</string>
     <string name="clipboard__disabled__title">Междинната памет в момента е изключена</string>
     <string name="clipboard__disabled__message">Междинната памет на {app_name} ви дава възможност да използвате текстовете и изображенията които копирате. Също можете да ги закачате, да настройквате автоматично изтриване или да ги ограничавате на брой.</string>
     <string name="clipboard__disabled__enable_button">История</string>

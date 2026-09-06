@@ -659,6 +659,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">回退到上一个键盘以停止无限崩溃循环。点击查看错误详情</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">剪贴板</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">搜索剪贴板</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">没有包含该内容的剪贴项</string>
     <string name="clipboard__disabled__title">剪贴板历史记录当前已禁用</string>
     <string name="clipboard__disabled__message">{app_name} 的剪贴板历史记录允许您快速存储、访问您复制的文本和图像，并能够置顶条目、设置自动清理、限制最大条目数。</string>
     <string name="clipboard__disabled__enable_button">启用剪贴板历史记录</string>

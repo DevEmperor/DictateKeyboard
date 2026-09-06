@@ -654,6 +654,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Буфер обмена</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Поиск в буфере обмена</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Ни одна запись этого не содержит</string>
     <string name="clipboard__disabled__title">История буфера обмена отключена</string>
     <string name="clipboard__disabled__message">История буфера обмена {app_name} позволяет быстро сохранять и получать доступ к тексту и изображениям, которые вы копируете, с возможностью закреплять элементы, настраивать автоматическую очистку и устанавливать лимит количества записей.</string>
     <string name="clipboard__disabled__enable_button">Включить историю буфера обмена</string>

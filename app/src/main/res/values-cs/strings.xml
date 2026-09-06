@@ -660,6 +660,8 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schránka</string>
+    <string name="clipboard__search_placeholder" comment="Hint inside the clipboard search field">Hledat ve schránce</string>
+    <string name="clipboard__search_no_results" comment="Shown when no clip contains what was typed">Žádná položka to neobsahuje</string>
     <string name="clipboard__disabled__title">Historie schránky je momentálně zakázána</string>
     <string name="clipboard__disabled__message">Historie schránky {app_name} vám umoňuje rychle ukládat a přistupovat k textu a obrázkům které zkopírujete, s možností připínat položky, nastavovat automatická čištění a nastavit maximální limit položek.</string>
     <string name="clipboard__disabled__enable_button">Zapnout historii schránky</string>

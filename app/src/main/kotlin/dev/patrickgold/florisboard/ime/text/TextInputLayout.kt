@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.dictate.gif.GifSearchPanel
 import dev.patrickgold.florisboard.dictate.sticker.StickerSearchPanel
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSearchPanel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSearchPanel
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsStyleCache
@@ -63,6 +64,7 @@ fun TextInputLayout(
     val emojiSearchActive by keyboardManager.emojiSearchQuery.collectAsState()
     val gifSearchActive by keyboardManager.gifSearchQuery.collectAsState()
     val stickerSearchActive by keyboardManager.stickerSearchQuery.collectAsState()
+    val clipboardSearchActive by keyboardManager.clipboardSearchQuery.collectAsState()
 
     InlineSuggestionsStyleCache()
 
@@ -71,17 +73,19 @@ fun TextInputLayout(
             .fillMaxWidth()
             .wrapContentHeight(),
     ) {
-        // While a search is running (issues #110, #274, #317), its panel takes the Smartbar's slot so
-        // the keyboard layout below stays available for typing the query. All three are taller than the
-        // Smartbar — results above the search bar for emoji and stickers, earlier terms for GIF — and
-        // size themselves, so the keyboard grows for the duration of the search the way the GIF panel
-        // does. Only one can be open at a time: each is reached from its own panel.
+        // While a search is running (issues #110, #274, #317, #333), its panel takes the Smartbar's slot
+        // so the keyboard layout below stays available for typing the query. All four are taller than
+        // the Smartbar — results above the search bar for emoji, stickers and clips, earlier terms for
+        // GIF — and size themselves, so the keyboard grows for the duration of the search the way the
+        // GIF panel does. Only one can be open at a time: each is reached from its own panel.
         if (emojiSearchActive != null) {
             EmojiSearchPanel()
         } else if (gifSearchActive != null) {
             GifSearchPanel()
         } else if (stickerSearchActive != null) {
             StickerSearchPanel()
+        } else if (clipboardSearchActive != null) {
+            ClipboardSearchPanel()
         } else {
             Smartbar()
         }
