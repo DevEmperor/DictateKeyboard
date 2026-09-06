@@ -118,6 +118,7 @@
     <string name="settings__search__clear_recent" comment="Button to clear the recent searches">Esborra les cerques recents</string>
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populars</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">No s\'ha trobat cap configuració</string>
+    <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansió de text abreviatura drecera fragment macro text automàtic plantilla snippet text expansion</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostra els noms de les llengües en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostra les etiquetes del teclat en l\'idioma del subtipus</string>

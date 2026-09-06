@@ -118,6 +118,7 @@
     <string name="settings__search__clear_recent" comment="Button to clear the recent searches">最近の検索を消去</string>
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">人気</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">設定が見つかりません</string>
+    <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">定型文 テキスト展開 短縮 スニペット マクロ 単語登録 snippet text expansion</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">言語と入力</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">言語名の表示形式</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">サブタイプの言語でキーボードラベルを表示</string>

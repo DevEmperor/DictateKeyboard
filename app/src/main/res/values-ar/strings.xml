@@ -118,6 +118,7 @@
     <string name="settings__search__clear_recent" comment="Button to clear the recent searches">مسح عمليات البحث الأخيرة</string>
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">شائعة</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">لم يتم العثور على إعدادات</string>
+    <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">توسيع النص اختصار قصاصة ماكرو نص تلقائي snippet text expansion</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>

@@ -22,6 +22,10 @@ import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
  * that shows it, with [sectionRes] (the screen) and optional [parentRes] forming the breadcrumb.
  * When [anchor] is set the destination row is tagged with Modifier.settingsSearchAnchor and the
  * result scrolls to + highlights it; otherwise it lands on the screen.
+ *
+ * [keywordsRes] is for the handful of settings whose own name is not what anyone searches for. It is
+ * matched like the title but never displayed, so the result row still reads as the setting's real
+ * name. Set it only by hand — the generator cannot guess synonyms.
  */
 data class SettingsSearchEntry(
     @StringRes val titleRes: Int,
@@ -29,6 +33,7 @@ data class SettingsSearchEntry(
     val route: Any,
     @StringRes val parentRes: Int? = null,
     val anchor: String? = null,
+    @StringRes val keywordsRes: Int? = null,
 )
 
 object SettingsSearchIndex {
@@ -153,7 +158,11 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__manage_prompts_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__manage_prompts_title"),
         // Hand-added (issue #283): the typing shortcut lives inside the prompt editor dialog, which the
         // generator cannot see — and it is exactly what someone looking for text expansion searches for.
-        SettingsSearchEntry(R.string.dictate__prompt_trigger_title, R.string.dictate__prompts_title, Routes.Settings.DictatePrompts(), parentRes = R.string.dictate__title),
+        // The keywords are hand-added too (issue #333). The feature was complete and still went unfound,
+        // because it is filed under "Prompts" and named "Typing shortcut": nobody looking for a text
+        // expander types either of those words.
+        SettingsSearchEntry(R.string.dictate__prompt_trigger_title, R.string.dictate__prompts_title, Routes.Settings.DictatePrompts(), parentRes = R.string.dictate__title,
+            keywordsRes = R.string.settings__search__keywords__text_expansion),
         SettingsSearchEntry(R.string.dictate__auto_formatting_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__auto_formatting_title"),
         SettingsSearchEntry(R.string.dictate__reasoning_effort_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__reasoning_effort_title"),
         SettingsSearchEntry(R.string.dictate__system_prompt_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title),

@@ -127,7 +127,10 @@ fun SettingsSearchScreen() = FlorisScreen {
                 SettingsSearchIndex.entries.filter { e ->
                     context.getString(e.titleRes).contains(q, ignoreCase = true) ||
                         context.getString(e.sectionRes).contains(q, ignoreCase = true) ||
-                        (e.parentRes != null && context.getString(e.parentRes).contains(q, ignoreCase = true))
+                        (e.parentRes != null && context.getString(e.parentRes).contains(q, ignoreCase = true)) ||
+                        // Synonyms for a setting whose own name nobody would guess (issue #333). Matched,
+                        // never shown — the row still reads as the setting's real name.
+                        (e.keywordsRes != null && context.getString(e.keywordsRes).contains(q, ignoreCase = true))
                 }
                     // Cluster the hits under their top-level section (the breadcrumb root).
                     .sortedBy { context.getString(it.parentRes ?: it.sectionRes) }

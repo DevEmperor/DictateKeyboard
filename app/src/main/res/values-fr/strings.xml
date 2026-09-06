@@ -117,6 +117,7 @@
     <string name="settings__search__clear_recent" comment="Button to clear the recent searches">Effacer les recherches récentes</string>
     <string name="settings__search__popular" comment="Header above a small list of popular settings shortcuts">Populaires</string>
     <string name="settings__search__no_results" comment="Shown when a settings search returns nothing">Aucun paramètre trouvé</string>
+    <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansion de texte abréviation raccourci extrait macro texte automatique modèle snippet text expansion</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Langues &amp; Dispositions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Afficher les noms de langue dans</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Affiche les libellés de clavier dans le sous-type de langue</string>
