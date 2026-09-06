@@ -100,6 +100,15 @@ class LearnedSnapshotTest {
     }
 
     @Test
+    fun `a promoted word keeps its full count as its score, however old`() {
+        // The count is the record of how much the word is used, and since round 3 it keeps growing after
+        // promotion — the strip orders the user's own words by exactly this number, so decay must not
+        // touch it and the raw count must come back.
+        val snapshot = snapshotOf(entry("dariusz", count = 40, ageDays = 400, promoted = true))
+        assertEquals(40.0, snapshot.scoreOfKey("dariusz"))
+    }
+
+    @Test
     fun `an address survives the prefix scan unchanged`() {
         // DictFold.foldKey is a lowercase for English, so `@` and the dots pass through and the range
         // scan finds an address by the start of its local part (issue #318, round 3).

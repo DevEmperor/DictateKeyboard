@@ -1244,11 +1244,22 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             maxCandidateCount
         }
 
+        // The learned vocabulary, read once: the strip needs it below, and the ordering of the personal
+        // words needs it right here.
+        val learnedSnapshot = learnedSnapshotFor(subtype)
+
         // The user's own words that extend what is being typed. They used to go into the strip right here,
         // ahead of everything the dictionary had to offer, so a single typed letter put a contact's surname
         // in front of the word everybody writes (issue #264). They are merged into the ranked walk below
         // instead, at USER_DICTIONARY_RANK_FREQ — which means they surface exactly when the prefix has
         // narrowed the common words away, and never before.
+        //
+        // They all share that one rank, so the order *among* them used to be whatever the database
+        // returned — which is how a name typed every day could sit behind one typed twice (issue #318,
+        // round 3). Sorting by the sighting count fixes that without moving the band: nothing changes
+        // relative to the dictionary, only the user's own words are put in the order they earned. A word
+        // typed into the dictionary by hand has no count and stays at the front, because teaching a word
+        // deliberately still outranks anything we merely noticed.
         val personal = runCatching {
             val dm = DictionaryManager.default()
             dm.loadUserDictionariesIfNecessary()
@@ -1257,6 +1268,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             .map { it.text.toString() }
             .filter { index.fold(it).startsWith(index.fold(word)) }
             .distinctBy { it.lowercase() }
+            .sortedByDescending { text ->
+                val score = learnedSnapshot?.scoreOfKey(index.fold(text)) ?: 0.0
+                if (score > 0.0) score else Double.MAX_VALUE
+            }
 
         // What the user stored behind this exact word as a *shortcut* — an e-mail address behind "mail",
         // say. Deliberately exempt from the prefix filter above and offered first, because an expansion
@@ -1287,7 +1302,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // is remembered and nothing more — and always marked, so the strip can say where they came from.
         // A promoted word arrives through [personal] above instead, but is still marked here: it is no
         // less the user's word for having graduated into the dictionary.
-        val learnedSnapshot = learnedSnapshotFor(subtype)
         val learned = learnedSnapshot
             ?.entriesStartingWith(
                 prefix = index.fold(word),
@@ -1512,18 +1526,34 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         if (!enabled || origin != WordOrigin.TYPED || isPrivateSession) return LearnOutcome.NOTHING
         if (!WordLearningGate.isLearnableForm(trimmed)) return LearnOutcome.NOTHING
         val lang = dictLangFor(subtype) ?: return LearnOutcome.NOTHING
-        val known = isKnownWord(trimmed, subtype) || isInUserDictionary(trimmed, subtype)
-        if (known) return LearnOutcome.NOTHING
-
         val index = lowerIndexFor(subtype)
         val folded = index.fold(trimmed)
+        // A word the vocabulary already holds is normally none of our business — with one exception: the
+        // ones we put into the personal dictionary ourselves. Counting used to stop at promotion (and
+        // [isKnownWord] consults the personal dictionary, so it stopped here), which left a name typed
+        // every day indistinguishable from one typed three times in March — and the strip with nothing to
+        // order the user's own words by (issue #318, round 3). Those sightings are that record, so they
+        // keep accruing. The cheap in-memory test comes first: the personal-dictionary query behind
+        // [isInUserDictionary] must not run for every ordinary word.
+        val ourPromotedWord = if (!isKnownWord(trimmed, subtype)) {
+            false
+        } else {
+            val ours = (learnedSnapshotFor(subtype)?.scoreOfKey(folded) ?: 0.0) > 0.0 &&
+                isInUserDictionary(trimmed, subtype)
+            if (!ours) return LearnOutcome.NOTHING
+            true
+        }
+
         // An address gets no slip reasoning, and saying so out loud beats letting it run: neither witness
         // can see anything there. No dictionary word sits one edit from an eighteen-character string, and
         // the beam has no candidate to offer, so the test would answer "not a slip" for a mis-typed
         // address just as confidently as for a correct one. A gate that always says yes is not a gate —
         // what actually protects the vocabulary here is the ladder: an address typed wrong once sits at
         // one sighting, invisible to the strip, and decays away.
-        val slip = if (trustedByUser || WordRun.isAddressLike(trimmed)) {
+        // A promoted word does not face the gate again either: it passed once, it is in the user's
+        // dictionary now, and re-judging it would let a stray beam reading silently drop the very
+        // sightings that are supposed to record how much it is used.
+        val slip = if (trustedByUser || ourPromotedWord || WordRun.isAddressLike(trimmed)) {
             false
         } else {
             val reading = tapPoints?.let { beamReadingOf(trimmed, subtype, index, it) }
