@@ -467,7 +467,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">记住大写锁定状态</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">移动到另一个文本框时，大写锁定将保持原状态</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">双空格句号</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">在空格键上点击两次会插入一个句号加一个空格</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">连按两次空格键会将空格替换为下面选择的字符</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">双击输入的内容</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">句子结尾</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">所输入语言中用于结束句子的字符，后跟一个空格——多数为句号，印地语为丹达符（।）。</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">逗号</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">一个逗号，后跟一个空格。</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">换行</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">用换行代替空格。</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">斜杠</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">不带空格的斜杠，用于书写“和/或”之类的内容。</string>
     <string name="pref__spelling__title" comment="Preference group title">拼写</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
     <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>

@@ -466,7 +466,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha egy másik szövegmezőbe ugrik</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">A szóköz kétszeri megérintése a szóközt az alább választott karakterre cseréli</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Mit ír a dupla érintés</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Mondatvég</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Az a karakter, amellyel a gépelt nyelvben véget ér a mondat, majd egy szóköz — többnyire pont, hindiül a danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Vessző</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Vessző, utána szóköz.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Új sor</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Sortörés a szóköz helyett.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Perjel</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Perjel szóköz nélkül, például az és/vagy írásához.</string>
     <string name="pref__spelling__title" comment="Preference group title">Helyesírás</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Rendszerszintű kikapcsolás. Nem fognak piros vonalak megjelenni a szövegmezőkben a hibás szavak alatt. Érintse meg a változtatáshoz.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nincs kiválasztva helyesírás ellenőrző szolgáltatás. Érintse meg a változtatáshoz.</string>

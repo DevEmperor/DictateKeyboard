@@ -389,7 +389,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Onthoud CapsLock status</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punt na twee spaties</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebalk voegt een punt toe gevolgd door een spatie</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer op de spatiebalk tikken vervangt de spatie door het hieronder gekozen teken</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Wat een dubbele tik schrijft</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Zinseinde</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Het teken waarmee een zin eindigt in de taal die je typt, gevolgd door een spatie — meestal een punt, in het Hindi de danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Komma</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Een komma gevolgd door een spatie.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Nieuwe regel</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Een regeleinde in plaats van de spatie.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Schuine streep</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Een schuine streep zonder spaties, voor bijvoorbeeld en/of.</string>
     <string name="pref__spelling__title" comment="Preference group title">Spelling</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systeem-breed uitgeschakeld. Er zullen geen rode lijnen verschijnen in tekstvelden voor incorrecte woorden. Klik om te wijzigen.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Geen inline spellingscontrole ingesteld. Klik om te wijzigen.</string>

@@ -461,7 +461,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двойное нажатие пробела заменяет пробел выбранным ниже символом</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Что пишет двойное нажатие</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Конец предложения</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Символ, которым заканчивается предложение в набираемом языке, и пробел после него — чаще всего точка, в хинди данда (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Запятая</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Запятая и пробел после неё.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Новая строка</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Перенос строки вместо пробела.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Косая черта</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Косая черта без пробелов, например для записи и/или.</string>
     <string name="pref__spelling__title" comment="Preference group title">Орфография</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Не настроена служба проверки орфографии текстовых полей. Нажмите, чтобы изменить.</string>

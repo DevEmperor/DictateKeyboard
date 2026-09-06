@@ -382,7 +382,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppeltes Tippen auf die Leertaste fügt Punkt und ein Leerzeichen ein</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Zweimaliges Tippen auf die Leertaste ersetzt das Leerzeichen durch das unten gewählte Zeichen</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Was ein Doppeltipp schreibt</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Satzende</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Das Zeichen, mit dem in der getippten Sprache ein Satz endet, gefolgt von einem Leerzeichen — meist ein Punkt, im Hindi das Danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Komma</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Ein Komma, gefolgt von einem Leerzeichen.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Zeilenumbruch</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Ein Zeilenumbruch anstelle des Leerzeichens.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Schrägstrich</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Ein Schrägstrich ohne Leerzeichen, etwa für „und/oder“.</string>
     <string name="pref__spelling__title" comment="Preference group title">Rechtschreibung</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systemweit deaktiviert. Es werden keine roten Linien in Textfeldern für falsche Wörter angezeigt. Zum Ändern antippen.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Keinen Inline-Rechtschreibprüfungs-Service eingestellt. Zum Ändern antippen.</string>

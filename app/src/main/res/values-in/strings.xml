@@ -453,7 +453,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Ingat keadaan caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Kunci huruf kapital akan tetap aktif saat pindah ke bidang teks lain</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Titik spasi ganda</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Mengetuk batang spasi dua kali memasukkan titik yang diikuti oleh sebuah spasi</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Mengetuk bilah spasi dua kali mengganti spasi dengan karakter yang dipilih di bawah</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Yang ditulis ketukan ganda</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Akhir kalimat</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Karakter yang mengakhiri kalimat dalam bahasa yang Anda tulis, diikuti spasi — biasanya titik, danda (।) dalam bahasa Hindi.</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Koma</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Koma diikuti spasi.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Baris baru</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Ganti baris menggantikan spasi.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Garis miring</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Garis miring tanpa spasi, untuk menulis hal seperti dan/atau.</string>
     <string name="pref__spelling__title" comment="Preference group title">Ejaan</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Dinonaktifkan di sistem. Tidak ada lagi garis merah di kolom teks atau kata-kata yang tidak benar. Ketuk untuk mengubahnya.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Tidak ada pemeriksa ejaan teks inline yang diatur. Ketuk untuk mengubahnya.</string>

@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.keyboard.DoubleSpaceAction
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
@@ -206,6 +207,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",
             default = true,
+        )
+        // What that second tap writes (issue #333). Kept apart from the switch above rather than folded
+        // into it as an "off" value, so nobody's existing on/off choice has to be migrated to keep
+        // meaning what it meant. The default asks the language rather than naming a character — Hindi
+        // ends a sentence with the danda (issue #315).
+        val doubleSpaceAction = enum(
+            key = "correction__double_space_action",
+            default = DoubleSpaceAction.PUNCTUATION,
         )
         val rememberCapsLockState = boolean(
             key = "correction__remember_caps_lock_state",
@@ -1383,6 +1392,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // (issue #329). See DictateLegacyMigrator.migrateFrenchPunctuationRuleIfNeeded.
         val frenchPunctuationMigrated = boolean(
             key = "localization__french_punctuation_migrated",
+            default = false,
+        )
+        val devanagariPunctuationMigrated = boolean(
+            key = "localization__devanagari_punctuation_migrated",
             default = false,
         )
     }

@@ -467,7 +467,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav CapsLocku</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojí klepnutí na mezerník nahradí mezeru znakem zvoleným níže</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Co napíše dvojí klepnutí</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Konec věty</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Znak, kterým končí věta v psaném jazyce, a za ním mezera — obvykle tečka, v hindštině danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Čárka</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Čárka následovaná mezerou.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Nový řádek</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Zalomení řádku místo mezery.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Lomítko</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Lomítko bez mezer, například pro zápis a/nebo.</string>
     <string name="pref__spelling__title" comment="Preference group title">Pravopis</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systémově zakázáno. V textových polích se nebudou objevovat červené pruhy u nesprávných slov. Klepněte pro změnu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Není nastavena žádná služba kontroly pravopisu v textu. Klepnutím na tlačítko to změníte.</string>

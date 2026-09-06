@@ -458,7 +458,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock durumunu hatırla</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir metin alanına geçerken caps lock açık kalır</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukla nokta</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ara çubuğuna iki kez dokunmak, bir nokta ve ardından bir boşluk ekler</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk çubuğuna iki kez dokunmak boşluğu aşağıda seçilen karakterle değiştirir</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Çift dokunuşun yazdığı</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Cümle sonu</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Yazdığınız dilde cümleyi bitiren karakter ve ardından bir boşluk — çoğunlukla nokta, Hintçede danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Virgül</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Virgül ve ardından bir boşluk.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Yeni satır</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Boşluk yerine satır sonu.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Eğik çizgi</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Boşluksuz eğik çizgi, ve/veya gibi yazımlar için.</string>
     <string name="pref__spelling__title" comment="Preference group title">Yazım Denetimi</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı. Metin alanlarında yanlış kelimeler için kırmızı çizgiler görünmeyecek. Değiştirmek için dokunun.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmamış. Değiştirmek için dokunun.</string>

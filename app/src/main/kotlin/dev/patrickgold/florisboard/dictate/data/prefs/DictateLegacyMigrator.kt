@@ -421,8 +421,48 @@ object DictateLegacyMigrator {
         }
     }
 
+    /**
+     * Points saved Hindi subtypes at the new `devanagari` punctuation rule (issue #333).
+     *
+     * Hindi ends a sentence with the danda `।`, not a full stop, and until now nothing in this keyboard
+     * knew that: the double-tap shortcut wrote `. ` in every language, and the tightening and
+     * auto-space rules did not recognise a danda as the end of anything. The rule says so now and the
+     * presets name it — but a preset only ever seeds a *new* subtype, so every Hindi keyboard that
+     * already exists would keep the Latin one.
+     *
+     * Same shape and same restraint as [migrateFrenchPunctuationRuleIfNeeded]: only subtypes still
+     * carrying the untouched old default are rewritten.
+     */
+    suspend fun migrateDevanagariPunctuationRuleIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        if (prefs.localization.devanagariPunctuationMigrated.get()) return
+        prefs.localization.devanagariPunctuationMigrated.set(true)
+
+        val listRaw = prefs.localization.subtypes.get()
+        if (listRaw.isBlank()) return
+        val subtypes = runCatching {
+            SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
+        }.getOrNull() ?: return
+
+        var changed = false
+        val migrated = subtypes.map { subtype ->
+            val isUntouchedHindiDefault = subtype.primaryLocale.language == "hi" &&
+                subtype.punctuationRule == extCorePunctuationRule(LEGACY_DEFAULT_PUNCTUATION_ID)
+            if (isUntouchedHindiDefault) {
+                changed = true
+                subtype.copy(punctuationRule = extCorePunctuationRule(DEVANAGARI_PUNCTUATION_ID))
+            } else {
+                subtype
+            }
+        }
+        if (changed) {
+            prefs.localization.subtypes.set(SubtypeJsonConfig.encodeToString(migrated))
+        }
+    }
+
     private const val LEGACY_DEFAULT_PUNCTUATION_ID = "default"
     private const val FRENCH_PUNCTUATION_ID = "french"
+    private const val DEVANAGARI_PUNCTUATION_ID = "devanagari"
 
     private const val LEGACY_HINDI_CHARACTERS_ID = "hindi_in"
     private const val LEGACY_HINDI_NUMERIC_ROW_ID = "devanagari"

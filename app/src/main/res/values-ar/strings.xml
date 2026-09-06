@@ -354,7 +354,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">تذكر حالة زر الأحرف الكبيرة</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">النقر مرتين على مفتاح المسافة يستبدل المسافة بالحرف المختار أدناه</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">ما يكتبه النقر المزدوج</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">نهاية الجملة</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">الحرف الذي تنتهي به الجملة في اللغة التي تكتب بها، تليه مسافة — نقطة في الغالب، والدَندا (।) في الهندية.</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">فاصلة</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">فاصلة تليها مسافة.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">سطر جديد</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">سطر جديد بدل المسافة.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">شرطة مائلة</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">شرطة مائلة بلا مسافات، لكتابة مثل و/أو.</string>
     <string name="pref__spelling__title" comment="Preference group title">التدقيق الإملائي</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">معطل على مستوى النظام. لن تظهر أي خطوط حمراء في الحقول النصية للكلمات غير الصحيحة. انقر للتغيير.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">لم يتم تعيين خدمة المدقق الإملائي للنص المضمّن. انقر للتغيير.</string>

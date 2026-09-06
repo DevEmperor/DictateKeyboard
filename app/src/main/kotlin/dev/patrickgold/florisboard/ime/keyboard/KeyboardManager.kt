@@ -90,8 +90,6 @@ import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 
-private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
-
 /** How much of an expanded snippet must still stand before the cursor for the backspace undo (issue #283). */
 private const val TAIL_MATCH_LENGTH = 120
 
@@ -1025,10 +1023,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
             if (inputEventDispatcher.isConsecutiveUp(data)) {
+                // Both halves from the active language's punctuation rule (issue #333): the set that
+                // says a sentence is already finished, and the character that finishes one.
+                val terminators = nlpManager.getActivePunctuationRule().symbolsTerminatingSentence
                 val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
-                if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
+                if (DoubleSpace.triggersOn(text, terminators)) {
                     editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
-                    editorInstance.commitText(". ")
+                    editorInstance.commitText(
+                        DoubleSpace.replacementFor(prefs.correction.doubleSpaceAction.get(), terminators),
+                    )
                     return
                 }
             }

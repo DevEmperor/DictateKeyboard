@@ -661,7 +661,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar replaces the space with the character chosen below</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">What a double tap writes</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Sentence ending</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Whatever ends a sentence in the language you are typing, followed by a space — a full stop in most, the danda (।) in Hindi.</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Comma</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">A comma followed by a space.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">New line</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">A line break in place of the space.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Slash</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">A slash with no space around it, for writing things like and/or.</string>
     <string name="pref__spelling__title" comment="Preference group title">Spelling</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Disabled system-wide. No red lines will appear in text fields for incorrect words. Tap to change.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">No inline text spell checker service set. Tap to change.</string>

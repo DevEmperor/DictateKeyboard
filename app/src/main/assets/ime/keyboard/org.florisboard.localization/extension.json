@@ -33,6 +33,16 @@
       "symbolsFollowingPhantomSpace": "¿⸘¡([{",
       "symbolsTerminatingSentence": ".?‽!",
       "symbolsTighteningSpace": ".,"
+    },
+    {
+      "id": "devanagari",
+      "label": "Devanagari",
+      "symbolsPrecedingAutoSpace": "।॥.,?‽!\"&%)]}»",
+      "symbolsFollowingAutoSpace": "",
+      "symbolsPrecedingPhantomSpace": "।॥.,;:?‽!&%)]}»©®™",
+      "symbolsFollowingPhantomSpace": "¿⸘¡([{",
+      "symbolsTerminatingSentence": "।॥.?‽!",
+      "symbolsTighteningSpace": "।॥.,;:?!‽"
     }
   ],
   "popupMappings": [
@@ -798,6 +808,7 @@
       "languageTag": "hi-IN",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "punctuationRule": "org.florisboard.localization:devanagari",
       "popupMapping": "org.florisboard.localization:hi-IN",
       "preferred": {
         "characters": "org.florisboard.layouts:hindi_varnamala"
@@ -808,6 +819,7 @@
       "languageTag": "hi-IN",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "punctuationRule": "org.florisboard.localization:devanagari",
       "popupMapping": "org.florisboard.localization:hi-IN",
       "preferred": {
         "characters": "org.florisboard.layouts:hindi_in"

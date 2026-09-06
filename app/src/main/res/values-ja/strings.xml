@@ -439,7 +439,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">CapsLockの状態を記憶</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">別のテキストフィールドに移動してもCapsLockはオンのまま</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">ダブルスペースでピリオド入力</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">スペースバーを2回タップするとピリオドとスペースを挿入</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">スペースキーを2回タップすると、スペースが下で選んだ文字に置き換わります</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">ダブルタップで入力する文字</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">文の終わり</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">入力中の言語で文を終える文字とスペース。多くは句点、ヒンディー語ではダンダ（।）。</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">読点</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">読点とスペース。</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">改行</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">スペースの代わりに改行。</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">スラッシュ</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">スペースなしのスラッシュ。and/or のような表記に。</string>
     <string name="pref__spelling__title" comment="Preference group title">スペル</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">システム全体で無効。誤った単語のテキストフィールドに赤い線は表示されません。タップして変更。</string>
     <string name="pref__spelling__active_spellchecker__summary_none">インラインテキストスペルチェッカーサービスが設定されていません。タップして変更。</string>

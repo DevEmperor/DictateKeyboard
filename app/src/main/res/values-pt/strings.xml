@@ -456,7 +456,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Memorizar estado do CapsLock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock quando se muda para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Duplo espaço insere ponto final</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tocar duas vezes na barra de espaços substitui o espaço pelo carácter escolhido abaixo</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">O que escreve um toque duplo</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Fim de frase</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">O carácter que termina uma frase no idioma que está a escrever, seguido de um espaço — quase sempre um ponto, o danda (।) em hindi.</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Vírgula</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Uma vírgula seguida de um espaço.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Nova linha</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Uma quebra de linha em vez do espaço.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Barra</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Uma barra sem espaços, para escrever coisas como e/ou.</string>
     <string name="pref__spelling__title" comment="Preference group title">Ortografia</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado globalmente. Não serão mostradas riscas vermelhas se existirem palavras erradas. Toque para alterar.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Não definiu o serviço de verificação ortográfica. Toque para alterar.</string>

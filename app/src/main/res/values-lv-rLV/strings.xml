@@ -419,7 +419,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Atcerēties burtslēga stāvokli</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz pieskaroties atstarpes taustiņam, atstarpe tiek aizstāta ar zemāk izvēlēto rakstzīmi</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Ko raksta dubultpieskāriens</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Teikuma beigas</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Rakstzīme, ar kuru rakstāmajā valodā beidzas teikums, un aiz tās atstarpe — parasti punkts, hindi valodā danda (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Komats</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Komats un aiz tā atstarpe.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Jauna rinda</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Rindas pārtraukums atstarpes vietā.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Slīpsvītra</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Slīpsvītra bez atstarpēm, piemēram, rakstot un/vai.</string>
     <string name="pref__spelling__title" comment="Preference group title">Pareizrakstība</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>

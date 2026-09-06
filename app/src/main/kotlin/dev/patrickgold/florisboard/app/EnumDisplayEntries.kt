@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard.DoubleSpaceAction
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
@@ -364,6 +365,34 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 key = AutoCorrectStrength.AGGRESSIVE,
                 label = stringRes(R.string.enum__auto_correct_strength__aggressive),
                 description = stringRes(R.string.enum__auto_correct_strength__aggressive__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+        }
+    },
+    DoubleSpaceAction::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = DoubleSpaceAction.PUNCTUATION,
+                label = stringRes(R.string.enum__double_space_action__punctuation),
+                description = stringRes(R.string.enum__double_space_action__punctuation__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = DoubleSpaceAction.COMMA,
+                label = stringRes(R.string.enum__double_space_action__comma),
+                description = stringRes(R.string.enum__double_space_action__comma__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = DoubleSpaceAction.NEWLINE,
+                label = stringRes(R.string.enum__double_space_action__newline),
+                description = stringRes(R.string.enum__double_space_action__newline__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = DoubleSpaceAction.SLASH,
+                label = stringRes(R.string.enum__double_space_action__slash),
+                description = stringRes(R.string.enum__double_space_action__slash__description),
                 showDescriptionOnlyIfSelected = true,
             )
         }

@@ -395,7 +395,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Se souvenir de l\'état de verrouillage des majuscules</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Le verrouillage des majuscules reste activé lorsque l\'on passe à un autre champ de texte</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Point de double espace</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">En tapant deux fois sur la barre espace, insère un point suivi d\'un espace</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Appuyer deux fois sur la barre d’espace remplace l’espace par le caractère choisi ci-dessous</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Ce qu’écrit un double appui</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Fin de phrase</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Le caractère qui termine une phrase dans la langue utilisée, suivi d’une espace — un point le plus souvent, le danda (।) en hindi.</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Virgule</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Une virgule suivie d’une espace.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Saut de ligne</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Un saut de ligne à la place de l’espace.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Barre oblique</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Une barre oblique sans espace, pour écrire et/ou par exemple.</string>
     <string name="pref__spelling__title" comment="Preference group title">Orthographe</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Désactivé à l\'échelle du système. Aucune ligne rouge n\'apparaîtra dans les champs de texte pour les mots incorrects. Appuyez pour changer.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Aucun service de vérificateur d\'orthographe de texte en ligne activé. Appuyez pour changer.</string>

@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.keyboard.DoubleSpaceAction
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.nlp.latin.AutoCorrectStrength
@@ -186,6 +187,17 @@ fun TypingScreen() = FlorisScreen {
                 modifier = Modifier.settingsSearchAnchor("pref__correction__double_space_period__label"),
                 title = stringRes(R.string.pref__correction__double_space_period__label),
                 summary = stringRes(R.string.pref__correction__double_space_period__summary),
+            )
+            // Hidden rather than greyed out when the switch is off (issue #333): the shortcut itself is
+            // gone at that point, so a row still standing there would invite the reading that it does
+            // something — which is what went wrong in issue #297.
+            val isDoubleSpacePeriodEnabled by prefs.correction.doubleSpacePeriod.collectAsState()
+            ListPreference(
+                prefs.correction.doubleSpaceAction,
+                modifier = Modifier.settingsSearchAnchor("pref__correction__double_space_action__label"),
+                title = stringRes(R.string.pref__correction__double_space_action__label),
+                entries = enumDisplayEntriesOf(DoubleSpaceAction::class),
+                visibleIf = { isDoubleSpacePeriodEnabled },
             )
         }
 

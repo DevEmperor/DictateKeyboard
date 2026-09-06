@@ -339,6 +339,10 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__correction__tighten_punctuation_spacing__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__correction__tighten_punctuation_spacing__label"),
         SettingsSearchEntry(R.string.pref__correction__remember_caps_lock_state__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__correction__remember_caps_lock_state__label"),
         SettingsSearchEntry(R.string.pref__correction__double_space_period__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__correction__double_space_period__label"),
+        // Hand-added (issue #333): the row only exists while the switch above it is on, so the generator
+        // — which reads the screen's composable, not its state — would either miss it or record it as
+        // always present. It is worth finding either way, since it is where the danda lives.
+        SettingsSearchEntry(R.string.pref__correction__double_space_action__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__correction__double_space_action__label"),
         SettingsSearchEntry(R.string.pref__spelling__title, R.string.settings__typing__title, Routes.Settings.Typing),
         SettingsSearchEntry(R.string.pref__spelling__language_mode__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__spelling__language_mode__label"),
         SettingsSearchEntry(R.string.pref__spelling__use_contacts__label, R.string.settings__typing__title, Routes.Settings.Typing, anchor = "pref__spelling__use_contacts__label"),

@@ -468,7 +468,16 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното натискане на интервала заменя интервала с избрания по-долу знак</string>
+    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Какво изписва двойното натискане</string>
+    <string name="enum__double_space_action__punctuation" comment="Enum value label">Край на изречение</string>
+    <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Знакът, с който завършва изречение на изписвания език, следван от интервал — най-често точка, на хинди данда (।).</string>
+    <string name="enum__double_space_action__comma" comment="Enum value label">Запетая</string>
+    <string name="enum__double_space_action__comma__description" comment="Enum value description">Запетая, следвана от интервал.</string>
+    <string name="enum__double_space_action__newline" comment="Enum value label">Нов ред</string>
+    <string name="enum__double_space_action__newline__description" comment="Enum value description">Нов ред вместо интервала.</string>
+    <string name="enum__double_space_action__slash" comment="Enum value label">Наклонена черта</string>
+    <string name="enum__double_space_action__slash__description" comment="Enum value description">Наклонена черта без интервали, например за и/или.</string>
     <string name="pref__spelling__title" comment="Preference group title">Поверка на правописа</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Правописмите грешки няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа в текстови полета. Докоснете, за да промените.</string>
