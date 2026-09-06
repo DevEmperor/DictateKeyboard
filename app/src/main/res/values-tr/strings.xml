@@ -93,6 +93,8 @@
     <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Yüzen</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Tek el modu</string>
     <string name="quick_action__one_handed_mode__tooltip">Tek el modunu aç/kapat</string>
+    <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Sayı satırı</string>
+    <string name="quick_action__toggle_number_row__tooltip">Sayı satırını göster veya gizle</string>
     <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Yeniden Boyutlandırma</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">İmleci oynat</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Mevcut sürükleme işareti konumu</string>

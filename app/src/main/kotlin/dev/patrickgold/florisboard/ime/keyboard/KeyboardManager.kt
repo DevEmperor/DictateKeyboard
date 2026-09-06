@@ -1041,6 +1041,27 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles a [KeyCode.TOGGLE_NUMBER_ROW] event: folds the digit row away or brings it back
+     * (issue #333).
+     *
+     * Writes to whichever level currently decides, because that is the only version of this button
+     * that always does something. The row is a global preference that a subtype may overrule in either
+     * direction (issue #315, see LayoutManager) — so with an overruling subtype active, flipping the
+     * global setting would leave the keyboard looking exactly as it did, and the button would appear
+     * broken. Clearing the subtype's choice instead would work, but silently throws away a decision the
+     * user made per language; changing that same decision does not.
+     */
+    private suspend fun handleToggleNumberRow() {
+        val subtype = subtypeManager.activeSubtype
+        val override = subtype.numberRow
+        if (override != null) {
+            subtypeManager.modifySubtypeWithSameId(subtype.copy(numberRow = !override))
+        } else {
+            prefs.keyboard.numberRow.set(!prefs.keyboard.numberRow.get())
+        }
+    }
+
+    /**
      * Handles a [KeyCode.TOGGLE_INCOGNITO_MODE] event.
      */
     private suspend fun handleToggleIncognitoMode() {
@@ -1398,6 +1419,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
             KeyCode.TOGGLE_INCOGNITO_MODE -> scope.launch { handleToggleIncognitoMode() }
+            KeyCode.TOGGLE_NUMBER_ROW -> scope.launch { handleToggleNumberRow() }
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC

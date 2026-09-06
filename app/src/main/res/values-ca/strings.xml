@@ -90,6 +90,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Obre el proveïdor d\'entrada de veu</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Amb una mà</string>
     <string name="quick_action__one_handed_mode__tooltip">Passa al mode d\'Amb una mà</string>
+    <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">Fila de números</string>
+    <string name="quick_action__toggle_number_row__tooltip">Mostra o amaga la fila de números</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posició actual del cursor</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>

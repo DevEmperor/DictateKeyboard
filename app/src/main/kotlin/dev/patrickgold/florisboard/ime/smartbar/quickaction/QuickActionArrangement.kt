@@ -108,6 +108,10 @@ data class QuickActionArrangement(
                 // Re-insert / re-send the last transcription safety net (issue #111). Placed at the end
                 // so it is present in the action list without taking a prominent spot at the top of the bar.
                 QuickAction.InsertKey(TextKeyData.DICTATE_REINSERT),
+                // Fold the digit row away and back without a trip through settings (issue #333). At the
+                // end for the same reason: worth having in the list, not worth a Smartbar slot for
+                // everyone who never turned the row on in the first place.
+                QuickAction.InsertKey(TextKeyData.TOGGLE_NUMBER_ROW),
             ),
             hiddenActions = listOf(
             ),

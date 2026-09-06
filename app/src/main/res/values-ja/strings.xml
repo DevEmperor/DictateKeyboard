@@ -90,6 +90,8 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">音声入力プロバイダを開く</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">片手モード</string>
     <string name="quick_action__one_handed_mode__tooltip">片手モードの切り替え</string>
+    <string name="quick_action__toggle_number_row" comment="Quick action that shows or hides the row of digit keys above the letters. Please mind the limited available space for the quick action strings">数字キー行</string>
+    <string name="quick_action__toggle_number_row__tooltip">数字キーの行を表示/非表示</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">ドラッグマーカー</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">操作なし</string>
