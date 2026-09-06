@@ -230,7 +230,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Husk caps lock status</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock forblir på når du flytter til et annet tekstfelt</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbel-mellomrom punktum</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Om du trykker to ganger på mellomromstasten settes det inn et punktum etterfulgt av et mellomrom</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>

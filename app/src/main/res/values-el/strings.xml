@@ -138,7 +138,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Διατήρηση κατάστασης κεφαλαίων</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Τα κεφαλαία θα παραμείνουν ενεργοποιημένα όταν μεταβείτε σε διαφορετικό πεδίο κειμένου</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Τελεία με διπλό-κενό</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Το διπλό πάτημα του πλήκτρου διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα διάστημα</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>

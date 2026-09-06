@@ -220,7 +220,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">זכור את מצב ה-Caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock ישאר פעיל גם כאשר תעבור לשדה טקסט אחר</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">רווח-כפול סוף משפט</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">לחיצה על מקש הרווח פעמים תכניס נקודה ואחריה רווח</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">אפשר מילון משתמשי מערכת</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון משתמשי המערכת</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">נהל את מילון משתמשי המערכת</string>

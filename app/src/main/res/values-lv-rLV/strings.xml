@@ -418,9 +418,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automātiski ievietot atstarpi pēc pieturzīmes</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Atcerēties burtslēga stāvokli</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz pieskaroties atstarpes taustiņam, atstarpe tiek aizstāta ar zemāk izvēlēto rakstzīmi</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Ko raksta dubultpieskāriens</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dubultpieskāriens atstarpes taustiņam</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Teikuma beigas</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Rakstzīme, ar kuru rakstāmajā valodā beidzas teikums, un aiz tās atstarpe — parasti punkts, hindi valodā danda (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Komats</string>

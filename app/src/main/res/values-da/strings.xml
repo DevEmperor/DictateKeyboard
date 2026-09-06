@@ -359,7 +359,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Husk caps lock-tilstand</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock vil forblive aktiveret ved skift af tekstfelter</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbelt-mellemrumspunktum</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tast to gange på mellemrum for at indætte et punktum efterfulgt af mellemrum</string>
     <string name="pref__spelling__title" comment="Preference group title">Stavning</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Brugerordbøger</string>

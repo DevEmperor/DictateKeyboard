@@ -460,9 +460,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматически вставлять пробел после знака препинания</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двойное нажатие пробела заменяет пробел выбранным ниже символом</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Что пишет двойное нажатие</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Двойное нажатие пробела</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Конец предложения</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Символ, которым заканчивается предложение в набираемом языке, и пробел после него — чаще всего точка, в хинди данда (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Запятая</string>

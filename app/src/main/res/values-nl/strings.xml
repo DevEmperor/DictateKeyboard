@@ -388,9 +388,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatisch een spatie invoegen na leestekens</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Onthoud CapsLock status</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Punt na twee spaties</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer op de spatiebalk tikken vervangt de spatie door het hieronder gekozen teken</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Wat een dubbele tik schrijft</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dubbele tik op de spatiebalk</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Zinseinde</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Het teken waarmee een zin eindigt in de taal die je typt, gevolgd door een spatie — meestal een punt, in het Hindi de danda (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Komma</string>

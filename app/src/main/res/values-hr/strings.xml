@@ -208,7 +208,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Zapamti stanje tipke za velika slova</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Tipka za velika slova će ostati upaljena kada se pomaknete u drugi prostor za pisanje</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dvaput stisnuti razmak stvara točku</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvaput stisnuti razmak stvara točku koju slijedi razmak</string>
     <string name="pref__spelling__title" comment="Preference group title">Pravopis</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Sistemski onemogućeno. Crvene linije se neće prikazivati u slučaju pogrešno napisanih riječi. Kliknite kako biste to promijenili.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Usluga provjere pravopisa nije postavljena. Kliknite kako biste to promijenili.</string>

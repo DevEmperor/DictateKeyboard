@@ -316,7 +316,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">گەورەکردنی هەمیشەیی</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">سەرجەم پیتەکان هەمیشە بە گەورەیی(کاپیتاڵ) دەمێننەوە تەنها بۆ ئینگلیزی و زمانە لاتینییەکان</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">دانانی خاڵ بە دوگمەی بۆشایی</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">دووجار دەست بنێیت بە دوگمەی بۆشاییدا خاڵ یان هێمای کۆتایی ڕستە دەنوسێت</string>
     <string name="pref__spelling__title" comment="Preference group title">ڕاستکردنەوەی هەڵەی ڕێنووس</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">ناچالاککردنی ڕاستکەرەوەی سیستەم، هێڵی سوور پیشان نادرێت لەکاتی نووسینی ووشە هەڵەکاندا، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">هیچ ڕاستکەرەوەیەکی هەڵەی ڕێنووس دیارینەکراوە، پەنجە لێرە بدە بۆ ڕێکخستن.</string>

@@ -465,9 +465,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Szóköz automatikus beillesztése írásjel után</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha egy másik szövegmezőbe ugrik</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">A szóköz kétszeri megérintése a szóközt az alább választott karakterre cseréli</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Mit ír a dupla érintés</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla érintés a szóközre</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Mondatvég</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Az a karakter, amellyel a gépelt nyelvben véget ér a mondat, majd egy szóköz — többnyire pont, hindiül a danda (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Vessző</string>

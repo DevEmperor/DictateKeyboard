@@ -10,10 +10,9 @@
 
 package dev.patrickgold.florisboard.ime.clipboard
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -116,17 +115,25 @@ fun ClipboardSearchPanel(modifier: Modifier = Modifier) {
                 else -> LazyRow(
                     state = listState,
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     items(shown, key = { it.id }) { item ->
+                        // The type has to be declared, and not only for tidiness: the stylesheet puts the
+                        // inner padding on `clipboard-item[type=text]`, so a cell that does not say what
+                        // it holds gets the background and the shape but no breathing room, and its text
+                        // sits in the corner. The margin between cells comes from the same rule, which is
+                        // why this row adds no spacing of its own.
+                        val attributes = remember(item) {
+                            mapOf("type" to item.type.toString().lowercase())
+                        }
                         // A row hands its items an unbounded width, so each cell has to name its own.
                         SnyggBox(
                             elementName = FlorisImeUi.ClipboardItem.elementName,
+                            attributes = attributes,
+                            contentAlignment = Alignment.CenterStart,
                             modifier = Modifier
                                 .width(ResultWidth)
-                                .fillMaxSize(),
+                                .fillMaxHeight(),
                             clickAndSemanticsModifier = Modifier.rippleClickable {
                                 inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                 clipboardManager.pasteItem(item)

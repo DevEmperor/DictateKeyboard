@@ -457,9 +457,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Bir noktalama işaretinden sonra otomatik olarak boşluk ekler</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock durumunu hatırla</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir metin alanına geçerken caps lock açık kalır</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukla nokta</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk çubuğuna iki kez dokunmak boşluğu aşağıda seçilen karakterle değiştirir</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Çift dokunuşun yazdığı</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Boşluk çubuğuna çift dokunma</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Cümle sonu</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Yazdığınız dilde cümleyi bitiren karakter ve ardından bir boşluk — çoğunlukla nokta, Hintçede danda (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Virgül</string>

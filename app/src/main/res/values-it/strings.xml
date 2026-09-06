@@ -371,9 +371,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Inserisci automaticamente uno spazio dopo un segno di punteggiatura</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Ricorda lo stato del maiuscolo</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Il maiuscolo rimarrà attivo quando ti sposti ad un altro campo di testo</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco barra spaziatrice</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Toccare due volte la barra spaziatrice sostituisce lo spazio con il carattere scelto qui sotto</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Cosa scrive un doppio tocco</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco sulla barra spaziatrice</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Fine frase</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Il carattere che chiude una frase nella lingua che stai scrivendo, seguito da uno spazio: quasi sempre un punto, il danda (।) in hindi.</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Virgola</string>

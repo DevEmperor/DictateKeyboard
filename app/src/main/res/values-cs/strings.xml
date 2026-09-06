@@ -466,9 +466,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automaticky vložit mezeru za interpunkcí</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav CapsLocku</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojí klepnutí na mezerník nahradí mezeru znakem zvoleným níže</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Co napíše dvojí klepnutí</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dvojí klepnutí na mezerník</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Konec věty</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Znak, kterým končí věta v psaném jazyce, a za ním mezera — obvykle tečka, v hindštině danda (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Čárka</string>

@@ -360,9 +360,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Inserir um espaço automaticamente após uma pontuação</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Lembrar do estado do caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">O caps lock permanecerá ligado ao mudar para outro campo de texto</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Dois espaços para ponto final</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tocar duas vezes na barra de espaço substitui o espaço pelo caractere escolhido abaixo</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">O que um toque duplo escreve</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Toque duplo na barra de espaço</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Fim de frase</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">O caractere que termina uma frase no idioma que você está escrevendo, seguido de um espaço — quase sempre um ponto, o danda (।) em híndi.</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Vírgula</string>

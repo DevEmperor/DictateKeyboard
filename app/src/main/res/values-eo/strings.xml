@@ -283,7 +283,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Memori Fiks. Maj. staton</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Fiksa majuskligo restos aktiva kiam movinte al alia teksta kampo</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Duoblan spaceton punkto</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dufoje tuŝi la spacetklavo enigas punkton kaj spaceto sekve</string>
     <string name="pref__spelling__title" comment="Preference group title">Literumado</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Malŝaltita en la tuta sistemo. Neniu ruĝa linio aperos sub malĝustaj vortoj en tekstaj kampoj. Tuŝu ĉi tie por ŝanĝi tion.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingvoj</string>

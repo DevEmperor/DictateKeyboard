@@ -394,9 +394,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Insère automatiquement un espace après la ponctuation</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Se souvenir de l\'état de verrouillage des majuscules</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Le verrouillage des majuscules reste activé lorsque l\'on passe à un autre champ de texte</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Point de double espace</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Appuyer deux fois sur la barre d’espace remplace l’espace par le caractère choisi ci-dessous</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Ce qu’écrit un double appui</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Double appui sur la barre d’espace</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Fin de phrase</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Le caractère qui termine une phrase dans la langue utilisée, suivi d’une espace — un point le plus souvent, le danda (।) en hindi.</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Virgule</string>

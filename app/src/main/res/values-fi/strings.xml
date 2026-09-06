@@ -183,7 +183,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Muista caps lockin tila</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pysyy päällä, kun siirrytään seuraavaan tekstikenttään</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Piste tuplavälilyönnillä</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Kun välilyöntiä napautetaan kahdesti, lisätään piste ja välilyönti</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Poissa käytössä koko järjestelmässä. Punaisia viivoja ei näytetä tekstikentässä ilmaisemaan virheellisiä sanoja. Napauta muuttaaksesi.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Tekstin oikeinkirjoituksen tarkistusta ei ole asetettu. Napauta muuttaaksesi.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Kielet</string>

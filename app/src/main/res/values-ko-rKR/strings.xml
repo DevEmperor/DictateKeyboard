@@ -245,7 +245,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">캡스락 상태 기억</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">다른 텍스트 필드로 이동할 때 캡스락 상태 유지</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">스페이스 두 번으로 마침표 입력</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">스페이스 바를 두 번 눌러 마침표 입력</string>
     <string name="pref__spelling__title" comment="Preference group title">맞춤법 검사</string>
     <string name="pref__spelling__active_spellchecker__summary_none">설정한 맞춤법 검사기 서비스가 없습니다. 여기를 눌러 서비스를 설정하세요.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">언어</string>

@@ -182,22 +182,16 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
                 summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
             )
-            SwitchPreference(
-                prefs.correction.doubleSpacePeriod,
+            // Switch and choice in one row, the way the hinted number row and the feedback modes do it:
+            // whether the shortcut runs and what it writes are one question, and splitting them left a
+            // second row standing around saying nothing whenever the first was off (issue #333).
+            ListPreference(
+                listPref = prefs.correction.doubleSpaceAction,
+                switchPref = prefs.correction.doubleSpacePeriod,
                 modifier = Modifier.settingsSearchAnchor("pref__correction__double_space_period__label"),
                 title = stringRes(R.string.pref__correction__double_space_period__label),
-                summary = stringRes(R.string.pref__correction__double_space_period__summary),
-            )
-            // Hidden rather than greyed out when the switch is off (issue #333): the shortcut itself is
-            // gone at that point, so a row still standing there would invite the reading that it does
-            // something — which is what went wrong in issue #297.
-            val isDoubleSpacePeriodEnabled by prefs.correction.doubleSpacePeriod.collectAsState()
-            ListPreference(
-                prefs.correction.doubleSpaceAction,
-                modifier = Modifier.settingsSearchAnchor("pref__correction__double_space_action__label"),
-                title = stringRes(R.string.pref__correction__double_space_action__label),
+                summarySwitchDisabled = stringRes(R.string.state__disabled),
                 entries = enumDisplayEntriesOf(DoubleSpaceAction::class),
-                visibleIf = { isDoubleSpacePeriodEnabled },
             )
         }
 

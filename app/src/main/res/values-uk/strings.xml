@@ -353,9 +353,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматично додавати пробіл після знаків пунктуації</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запам\'ятовувати стан Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock буде залишатись при переході на інше текстове поле</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Період подвійного пробілу</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Подвійне натискання пробілу замінює пробіл вибраним нижче символом</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Що пише подвійне натискання</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Подвійне натискання пробілу</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Кінець речення</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">Символ, яким закінчується речення в мові, якою ви пишете, і пробіл після нього — найчастіше крапка, у гінді данда (।).</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Кома</string>

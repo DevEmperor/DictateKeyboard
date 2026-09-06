@@ -369,9 +369,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Insereix automàticament un espai després de posar un punt</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recorda l\'estat de bloqueig de les majúscules</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Es mantindrà el bloqueig de les majúscules en moure\'s a un altre camp de text</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Doble espai final de frase</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Prémer dues vegades la barra espaiadora substitueix l’espai pel caràcter triat a sota</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">Què escriu una doble pulsació</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Doble pulsació a la barra espaiadora</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">Final de frase</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">El caràcter que acaba una frase en la llengua que escrius, seguit d’un espai: gairebé sempre un punt, el danda (।) en hindi.</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">Coma</string>

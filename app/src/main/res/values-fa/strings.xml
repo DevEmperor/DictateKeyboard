@@ -174,7 +174,6 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">به یاد داشتن حالت caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock با رفتن به محل نوشتن بعدی همانگونه بماند</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">فاصله زمانی دوبار-فاصله</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">فشردن دو بار فاصله در فاصله زمانی باعث ادامه دادن فاصله گذاشتن شود</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فعالسازی سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پیشنهاد دادن کلمات ذخیره شده از سیستم لغتنامه کاربر</string>

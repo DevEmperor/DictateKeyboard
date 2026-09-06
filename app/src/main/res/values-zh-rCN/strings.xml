@@ -466,9 +466,7 @@
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">在标点符号后自动插入一个空格</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">记住大写锁定状态</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">移动到另一个文本框时，大写锁定将保持原状态</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">双空格句号</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">连按两次空格键会将空格替换为下面选择的字符</string>
-    <string name="pref__correction__double_space_action__label" comment="Preference title for the list of things a double tap on the spacebar can write">双击输入的内容</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">双击空格键</string>
     <string name="enum__double_space_action__punctuation" comment="Enum value label">句子结尾</string>
     <string name="enum__double_space_action__punctuation__description" comment="Enum value description. The character in brackets is the Devanagari danda, the Hindi full stop, and must stay as it is.">所输入语言中用于结束句子的字符，后跟一个空格——多数为句号，印地语为丹达符（।）。</string>
     <string name="enum__double_space_action__comma" comment="Enum value label">逗号</string>
