@@ -262,13 +262,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun RowScope.CenterContent() {
-        // While something is selected and the counter is switched on, it takes the middle — even from an
-        // expanded actions row (issue #335). Otherwise the row that auto-expands whenever there are no
-        // suggestions would sit exactly where the count belongs, and marking text would show the same
-        // buttons as always instead of how much was marked.
-        val selectionCounterVisible = rememberSelectionCounterVisible()
-        val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED &&
-            !selectionCounterVisible
+        // Nothing special for the selection counter here on purpose (issue #335): starting a selection
+        // collapses the actions row for real, in NlpManager.autoExpandCollapseSmartbarActions, so the
+        // chevron turns with it and tapping it brings the buttons back. Overriding the state here instead
+        // would show the count while the arrow still claimed the row was open, and that tap would do
+        // nothing anyone could see.
+        val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
         Box(
             modifier = Modifier
                 .weight(1f)

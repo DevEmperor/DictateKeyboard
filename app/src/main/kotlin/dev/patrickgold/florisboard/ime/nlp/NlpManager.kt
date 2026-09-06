@@ -93,6 +93,13 @@ class NlpManager(context: Context) {
     private val glideTypingManager = context.glideTypingManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    /**
+     * Whether a selection was already running the last time the Smartbar's expanded state was decided, so
+     * the start of one can be told apart from a change to one (issue #335).
+     */
+    private var wasSelectionActive = false
+
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
     private val emojiSuggestionProvider = EmojiSuggestionProvider(context)
     private val providers = guardedByLock {
@@ -592,6 +599,25 @@ class NlpManager(context: Context) {
                    // menu is visible to prevent annoying UI changes
         }*/
         val isSelection = editorInstance.activeContent.selection.isSelectionMode
+        val selectionJustStarted = isSelection && !wasSelectionActive
+        wasSelectionActive = isSelection
+        // With the selection counter switched on (issue #335), a selection is the one moment the strip has
+        // something of its own to say, so it must not also be the moment the actions take the row.
+        //
+        // Collapsed once, when the selection starts, and then left alone for as long as it lasts. That is
+        // the whole point: this method runs again on every change to the selection, and deciding the state
+        // afresh each time would flicker between the count and the buttons while dragging a handle — and
+        // would undo a deliberate tap on the chevron a moment after it was made. Not touching it means
+        // changing the selection only changes the numbers, and asking for the actions keeps them.
+        if (isSelection && prefs.smartbar.selectionMetrics.get()) {
+            if (selectionJustStarted && prefs.smartbar.sharedActionsExpanded.get()) {
+                scope.launch {
+                    prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
+                    prefs.smartbar.sharedActionsExpanded.set(false)
+                }
+            }
+            return
+        }
         val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
         // Only write when the expanded state actually changes. This runs on every keystroke (via
         // assembleCandidates); the state usually stays the same while typing a word, so the guard avoids
