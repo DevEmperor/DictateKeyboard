@@ -37,9 +37,8 @@ object ClipboardSearch {
      *    already refuses to display their contents. A search that matched them would report their
      *    contents by another route: type a guess, and the presence of a result answers it.
      *
-     * A blank query matches nothing rather than everything — [ClipboardHistory.pinned] and
-     * [ClipboardHistory.recent] are what the strip shows until something is typed, so that the space
-     * holds something worth tapping rather than the whole history in miniature.
+     * A blank query returns nothing from *here* — [fallback] is what the strip shows until something is
+     * typed, and it already holds everything this could match.
      */
     fun filter(items: List<ClipboardItem>, query: String): List<ClipboardItem> {
         val terms = query.trim().lowercase().split(' ').filter { it.isNotEmpty() }
@@ -54,9 +53,15 @@ object ClipboardSearch {
     }
 
     /**
-     * What the strip shows before anything is typed: pinned clips first, then whatever was copied in
-     * the last few minutes, with the same two refusals applied.
+     * What the strip shows before anything is typed: **every** searchable clip, pinned ones first and
+     * the rest newest first, with the same two refusals applied.
+     *
+     * Deliberately the whole list rather than the panel's "recent" group, which means the last few
+     * minutes and is usually one clip. A search that starts empty and fills up as you type reads as a
+     * search that found nothing; starting from everything and narrowing is what a filter is, and it
+     * means the strip is useful before the first keystroke — often the clip is simply there.
      */
     fun fallback(history: ClipboardHistory): List<ClipboardItem> =
-        (history.pinned + history.recent).filter { it.type == ItemType.TEXT && !it.isSensitive }
+        (history.pinned + history.unpinned.sortedByDescending { it.creationTimestampMs })
+            .filter { it.type == ItemType.TEXT && !it.isSensitive }
 }

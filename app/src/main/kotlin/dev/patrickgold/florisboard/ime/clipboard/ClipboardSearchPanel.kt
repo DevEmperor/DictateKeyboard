@@ -66,8 +66,8 @@ private val ResultWidth = 148.dp
  * scrolled sideways, sitting directly on the search bar — two rows of text boxes would take a third of
  * the screen away from the app being written in.
  *
- * With nothing typed the strip shows pinned and recent clips, so the space holds something worth
- * tapping instead of standing empty.
+ * With nothing typed the strip already holds every searchable clip, pinned ones first — so typing
+ * narrows a list that is useful before the first keystroke, rather than filling an empty one.
  */
 @Composable
 fun ClipboardSearchPanel(modifier: Modifier = Modifier) {
@@ -97,10 +97,15 @@ fun ClipboardSearchPanel(modifier: Modifier = Modifier) {
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier.fillMaxWidth(),
     ) {
+        // The cells bring 4dp of margin with them from the stylesheet, which is the whole gap at the top
+        // and at the left, while the bottom one is that margin plus the search bar's own inset. Adding
+        // the same amount on those two sides evens the three out — and stays even if a theme sets no
+        // margin at all, since it is added to both alike.
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(FlorisImeSizing.smartbarHeight * 1.6f),
+                .height(FlorisImeSizing.smartbarHeight * 1.6f)
+                .padding(start = 4.dp, top = 4.dp),
             contentAlignment = Alignment.Center,
         ) {
             when {

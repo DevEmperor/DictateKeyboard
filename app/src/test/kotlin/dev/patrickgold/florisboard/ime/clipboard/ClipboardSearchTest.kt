@@ -69,8 +69,8 @@ class ClipboardSearchTest {
 
     @Test
     fun `sensitive clips are kept out of the fallback strip too`() {
-        // The strip shows pinned and recent clips before anything is typed, and a pinned password would
-        // otherwise sit there permanently.
+        // The strip holds the whole history before anything is typed, so this is the refusal that has to
+        // hold in the place where every clip is on screen at once — a pinned password most of all.
         val secret = clip("card number", sensitive = true, pinned = true)
         val ordinary = clip("home address", pinned = true)
         val history = ClipboardHistory(listOf(secret, ordinary))
@@ -87,9 +87,10 @@ class ClipboardSearchTest {
     }
 
     @Test
-    fun `a blank query returns nothing rather than everything`() {
-        // The strip has room for a handful of clips; filling it with the whole history before a letter
-        // is typed would claim the search had done something.
+    fun `a blank query returns nothing from the filter itself`() {
+        // Not because the strip should be empty — fallback() fills it with everything — but because a
+        // filter with no terms has nothing to say, and answering "everything" from both places would
+        // mean two definitions of the same list.
         val items = listOf(clip("one"), clip("two"))
         assertEquals(emptyList(), ClipboardSearch.filter(items, ""))
         assertEquals(emptyList(), ClipboardSearch.filter(items, "   "))
@@ -133,12 +134,25 @@ class ClipboardSearchTest {
     }
 
     @Test
-    fun `an old unpinned clip is not in the fallback strip`() {
-        // "Recent" is a window, not a sort order: a clip from last week is reachable by typing a word
-        // from it, but it does not get to sit in the strip for free.
+    fun `the strip starts with every clip, however old`() {
+        // The first version showed the panel's "recent" group, which means the last few minutes and in
+        // practice held one clip: the search looked broken until you typed. Typing narrows a full list.
         val stale = clip("last week's note", ageMs = 7 * 24 * 60 * 60 * 1000L)
-        val history = ClipboardHistory(listOf(stale))
-        assertEquals(emptyList(), ClipboardSearch.fallback(history))
-        assertEquals(listOf(stale.text), textsOf(ClipboardSearch.filter(history.all, "note")))
+        val fresh = clip("just copied", ageMs = 10)
+        val history = ClipboardHistory(listOf(stale, fresh))
+        assertEquals(listOf(fresh.text, stale.text), textsOf(ClipboardSearch.fallback(history)))
+    }
+
+    @Test
+    fun `the strip is ordered newest first under the pinned ones`() {
+        val pinnedOld = clip("signature", pinned = true, ageMs = 999_999_999)
+        val middle = clip("second", ageMs = 60_000)
+        val newest = clip("third", ageMs = 10)
+        val oldest = clip("first", ageMs = 600_000)
+        val history = ClipboardHistory(listOf(middle, oldest, pinnedOld, newest))
+        assertEquals(
+            listOf(pinnedOld.text, newest.text, middle.text, oldest.text),
+            textsOf(ClipboardSearch.fallback(history)),
+        )
     }
 }
