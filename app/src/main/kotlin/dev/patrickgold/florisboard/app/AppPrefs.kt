@@ -441,11 +441,25 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = false,
         )
         // Hold-to-record instead of tap-to-start/tap-to-stop (issue #235): press and hold the mic, speak,
-        // release to send — slide left to discard, slide up to latch. Off by default because it replaces
-        // the mic's long-press shortcuts (file transcription, send-with-local-model) with the hold
-        // itself. Long-form segmented ignores it: a ten-minute dictation cannot be held down.
+        // release to send — slide left to discard, slide up to latch. Long-form segmented ignores it: a
+        // ten-minute dictation cannot be held down.
+        //
+        // ON by default since 2026-09-06. It shipped off because it takes the mic's *idle* long-press,
+        // which is how you pick a file to transcribe (#88) — but that has its own way in since #301: share
+        // the file to Dictate, or use the import row in the Dictate settings. Holding to speak is what
+        // almost everyone reaches for; transcribing a file is the rarer errand and no longer depends on
+        // this gesture. The send-button hold for the on-device model (#228) is not affected, since that
+        // one is only reachable while a recording is already running.
         val pushToTalk = boolean(
             key = "dictate__push_to_talk",
+            default = true,
+        )
+        // Guard for the one-time switch of existing users onto hold-to-record (the new default above).
+        // Fires once, so a keyboard already in use ends up behaving like a fresh install rather than
+        // keeping a default nobody chose; the setting is one tap away in Dictate › Recording for anyone
+        // who wants the old behaviour. See DictateLegacyMigrator.migratePushToTalkDefaultIfNeeded.
+        val pushToTalkDefaultMigrated = boolean(
+            key = "dictate__push_to_talk_default_migrated",
             default = false,
         )
         // Minutes the on-device model may sit idle before it is unloaded from RAM to free memory (models

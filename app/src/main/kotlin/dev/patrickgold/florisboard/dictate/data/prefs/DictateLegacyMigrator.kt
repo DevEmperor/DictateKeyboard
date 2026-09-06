@@ -340,6 +340,26 @@ object DictateLegacyMigrator {
     }
 
     /**
+     * One-time switch onto hold-to-record (issue #235), now the default.
+     *
+     * Same shape and same reasoning as the prompt-row switch above: a keyboard already in use would
+     * otherwise keep a default nobody ever chose, and go on behaving differently from every fresh
+     * install for as long as it exists. Holding the mic to speak is what nearly everyone reaches for;
+     * what it displaces — holding the *idle* mic to pick a file — has had its own way in since #301.
+     *
+     * This does write over a deliberate "off", and there is no way to tell that apart from a default
+     * never touched. That is why it belongs in the what's-new dialog: the setting is one tap away in
+     * Dictate › Recording, and the release has to say so. Idempotent via
+     * `prefs.dictate.pushToTalkDefaultMigrated`.
+     */
+    suspend fun migratePushToTalkDefaultIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        if (prefs.dictate.pushToTalkDefaultMigrated.get()) return
+        prefs.dictate.pushToTalk.set(true)
+        prefs.dictate.pushToTalkDefaultMigrated.set(true)
+    }
+
+    /**
      * Drops the Devanagari digit row (१२३…) from saved Hindi subtypes (issue #315). Hindi is written with
      * Western digits in practice, and the preset no longer asks for the localized row — but a subtype is
      * persisted with its full layout map, so the old choice would otherwise survive forever.
