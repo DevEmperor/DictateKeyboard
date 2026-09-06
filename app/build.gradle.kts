@@ -208,6 +208,12 @@ tasks.withType<Test> {
     testLogging {
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
     }
+    // Gradle hands a test JVM 512 MB unless told otherwise, and the property tests in
+    // ImeWindowControllerEditorMoveTest build a datastore and a controller per iteration — with the
+    // coverage agent attached that runs out of heap partway through the suite. On a memory-tight
+    // machine it surfaces as an OutOfMemoryError, on a roomier one as a test worker that never
+    // finishes shutting down (issue #331).
+    maxHeapSize = "2g"
     useJUnitPlatform()
 }
 
