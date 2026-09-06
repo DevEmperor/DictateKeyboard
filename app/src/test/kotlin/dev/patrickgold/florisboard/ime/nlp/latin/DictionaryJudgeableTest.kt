@@ -71,9 +71,36 @@ class DictionaryJudgeableTest {
 
     @Test
     fun `an apostrophe is part of the word, not a digit`() {
-        // dont → don't is a fix worth making (issue #212), so the rule is about digits and nothing else.
+        // dont → don't is a fix worth making (issue #212), so the hyphen and the apostrophe stay judgeable.
         assertTrue(judgeable("don't"))
         assertTrue(judgeable("I'm"))
+        assertTrue(judgeable("well-known"))
+    }
+
+    @Test
+    fun `an address is not the dictionary's business either`() {
+        // Once WordRun keeps an address in one piece (issue #318), the corrector is handed things like
+        // `mail@` mid-typing — one deletion from a very common word. Same trap as the digit, same answer.
+        assertFalse(judgeable("mail@"))
+        assertFalse(judgeable("jannis@example.com"))
+        assertFalse(judgeable("user_name"))
+        assertFalse(judgeable("a+b"))
+        assertFalse(judgeable("www.example.com"))
+        assertFalse(judgeable("http://x.com/y"))
+    }
+
+    @Test
+    fun `the at sign trap is real, in the shipped dictionary`() {
+        val freq = readDict("en.json")
+        // Each of these is a word someone types the first half of on the way to an address. Deleting the
+        // trailing `@` — one of the edits the corrector generates — lands on a frequent dictionary word,
+        // and nothing in the dictionary begins with the `@` form, so the classic gate would allow the swap.
+        for (typed in listOf("mail@", "info@", "hello@", "contact@", "support@", "team@", "name@")) {
+            val base = typed.dropLast(1)
+            val f = freq[base]
+            assertTrue(f != null && f >= MIN_FREQ, "$base is no longer a frequent dictionary word (freq=$f)")
+            assertFalse(judgeable(typed), "$typed must never be judged against the dictionary")
+        }
     }
 
     // ── The trap this rule exists to disarm ──────────────────────────────────────────────────────

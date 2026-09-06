@@ -231,6 +231,23 @@ interface SuggestionProvider : NlpProvider {
         }
     }
 
+    /**
+     * Whether [char] may be written into the word currently being composed without ending it.
+     *
+     * The counterpart to [determineLocalComposing], asked forwards by the input path at the moment a
+     * separator is pressed, where that one is asked backwards by the editor content. The two have to
+     * give the same answer — a keyboard whose halves disagree about where a word ends hands one half's
+     * work to the other (issue #311) — so a provider that overrides this must widen
+     * [determineLocalComposing] to match, and one that overrides neither keeps the behaviour it always
+     * had: every non-letter ends the word.
+     *
+     * Default false, so nothing changes for a provider that has no opinion. Only the Latin provider has
+     * one, and only for e-mail and web addresses (issue #318).
+     *
+     * @param composingWord the word as it stands before [char], not including it.
+     */
+    fun continuesWord(composingWord: String, char: Char): Boolean = false
+
     val forcesSuggestionOn
         get() = false
 

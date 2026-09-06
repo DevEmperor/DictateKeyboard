@@ -128,15 +128,30 @@ internal object WordLearningGate {
     /**
      * Whether [word] has the shape of vocabulary at all.
      *
-     * Digits are refused for the same reason the corrector refuses to judge them (issue #311): `top10`,
-     * `covid19` and `mp3` are codes, not words, and the dictionary has no business holding an opinion
-     * about them either way. An apostrophe or hyphen may stay — *don't* and *well-known* are words.
+     * The shape is allowed to say *no* only about things that are not words in any reading. It used to
+     * say a great deal more: anything with a digit or a punctuation mark was refused, which is how the
+     * feature came to be unable to learn an address or a username at all (issue #318, round 3). The
+     * reporter's point was the right one — deciding whether the typing was *deliberate* is
+     * [looksLikeASlip]'s job and it does it on evidence, while a rule about characters can only guess,
+     * and it guessed against exactly the words a personal vocabulary exists for.
+     *
+     * What is left:
+     *
+     *  - Something has to be a letter. `2020`, `3.14` and `---` are not vocabulary in any language.
+     *  - An address or web address (see [WordRun.isAddressLike]) is taken verbatim, `@`, dots, plus
+     *    signs, digits and all.
+     *  - Everything else is letters, digits and the two connectors Unicode itself keeps inside a word:
+     *    *don't*, *well-known*, and now also *prateek99*.
+     *
+     * The digit refusal was inherited from issue #311, and there it stays: the *corrector* still has no
+     * business judging `top10`, and [LatinLanguageProvider.isDictionaryJudgeable] still says so.
+     * Remembering a word and rewriting one are different questions, and only the second one can do harm.
      */
     fun isLearnableForm(word: String): Boolean {
         if (word.length < MIN_LENGTH) return false
-        if (word.any { it.isDigit() }) return false
         if (word.none { it.isLetter() }) return false
-        return word.all { it.isLetter() || it == '\'' || it == '’' || it == '-' }
+        if (WordRun.isAddressLike(word)) return true
+        return word.all { it.isLetter() || it.isDigit() || it == '\'' || it == '’' || it == '-' }
     }
 
     /**

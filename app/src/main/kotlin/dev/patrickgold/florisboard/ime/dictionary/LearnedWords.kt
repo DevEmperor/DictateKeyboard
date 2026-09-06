@@ -252,7 +252,17 @@ class LearnedSnapshot internal constructor(
      * Words whose fold key starts with [prefix] and whose score is at least [minScore], best first,
      * at most [limit] of them. [prefix] must already be folded by the caller's language rules.
      */
-    fun startingWith(prefix: String, minScore: Double, limit: Int): List<String> {
+    fun startingWith(prefix: String, minScore: Double, limit: Int): List<String> =
+        entriesStartingWith(prefix, minScore, limit).map { it.first }
+
+    /**
+     * The same, with each word's decayed score alongside it.
+     *
+     * The strip needs the score, not just the order: a word typed twenty times and one typed twice used
+     * to share a single rank band, so "the keyboard knows me" stopped at the point where it started
+     * mattering (issue #318, round 3). [startingWith] stays for the callers that only want the order.
+     */
+    fun entriesStartingWith(prefix: String, minScore: Double, limit: Int): List<Pair<String, Double>> {
         if (keys.isEmpty() || limit <= 0) return emptyList()
         var lo = lowerBound(prefix)
         val out = ArrayList<Pair<String, Double>>()
@@ -262,7 +272,7 @@ class LearnedSnapshot internal constructor(
         }
         if (out.isEmpty()) return emptyList()
         out.sortByDescending { it.second }
-        return out.take(limit).map { it.first }
+        return out.take(limit)
     }
 
     /**

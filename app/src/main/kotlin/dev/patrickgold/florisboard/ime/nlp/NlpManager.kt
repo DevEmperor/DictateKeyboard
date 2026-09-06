@@ -219,6 +219,21 @@ class NlpManager(context: Context) {
         )
     }
 
+    /**
+     * [SuggestionProvider.continuesWord] for the active subtype: may [char] be written into
+     * [composingWord] without ending it (issue #318)?
+     *
+     * Asked by the input path, which is neither a coroutine nor allowed to be slow, hence the
+     * `runBlocking` — the same trade [providerForcesSuggestionOn] makes, and a cheaper one, because this
+     * is only reached when a separator is pressed rather than on every keystroke. Uncached on purpose: a
+     * stale boolean is harmless, a stale provider instance is not.
+     */
+    fun continuesWord(composingWord: String, char: Char): Boolean {
+        if (composingWord.isEmpty()) return false
+        val subtype = subtypeManager.activeSubtype
+        return runBlocking { getSuggestionProvider(subtype) }.continuesWord(composingWord, char)
+    }
+
     fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
         // Using a cache because I have no idea how fast the runBlocking is
         return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {

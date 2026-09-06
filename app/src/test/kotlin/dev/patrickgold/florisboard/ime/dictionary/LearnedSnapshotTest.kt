@@ -87,6 +87,29 @@ class LearnedSnapshotTest {
     }
 
     @Test
+    fun `the score comes back with the word, so the strip can rank by usage`() {
+        // Without this the strip only knew the order, not the distance — which is why every learned word
+        // shared one rank band until issue #318 round 3.
+        val snapshot = snapshotOf(entry("klabautersteg", 9), entry("klaviatur", 2))
+        val entries = snapshot.entriesStartingWith("kla", 0.0, 5)
+        assertEquals(listOf("klabautersteg", "klaviatur"), entries.map { it.first })
+        assertEquals(9.0, entries[0].second)
+        assertEquals(2.0, entries[1].second)
+        // And the plain form still answers exactly what it always did.
+        assertEquals(entries.map { it.first }, snapshot.startingWith("kla", 0.0, 5))
+    }
+
+    @Test
+    fun `an address survives the prefix scan unchanged`() {
+        // DictFold.foldKey is a lowercase for English, so `@` and the dots pass through and the range
+        // scan finds an address by the start of its local part (issue #318, round 3).
+        val snapshot = snapshotOf(entry("jannis@example.com", 3))
+        assertEquals(listOf("jannis@example.com"), snapshot.startingWith("jan", 0.0, 5))
+        assertEquals(listOf("jannis@example.com"), snapshot.startingWith("jannis@", 0.0, 5))
+        assertEquals(3.0, snapshot.scoreOfKey("jannis@example.com"))
+    }
+
+    @Test
     fun `a word below the minimum score is not offered`() {
         val snapshot = snapshotOf(entry("klabautersteg", 1), entry("klaviatur", 3))
         val suggestable = WordLearningGate.SIGHTINGS_FOR_SUGGESTIONS.toDouble()

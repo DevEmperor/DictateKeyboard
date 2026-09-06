@@ -1417,7 +1417,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                                 // A punctuation mark ends the word too, so it can expand a snippet
                                 // trigger (issue #283) — and then it has already written itself.
                                 else -> {
-                                    if (!expandSnippet(text)) {
+                                    val composing = editorInstance.activeContent.composingText
+                                    if (text.length == 1 && nlpManager.continuesWord(composing, text[0])) {
+                                        // Not every separator separates. An e-mail or web address runs
+                                        // through its `@`, its dots and its slashes, and the provider is
+                                        // asked rather than told so that this decision and the composing
+                                        // region are the same decision (issue #318).
+                                        //
+                                        // Recorded as deliberately chosen rather than as a tap: the `@`
+                                        // key sits on the symbol layer, where a coordinate means nothing
+                                        // in the letter geometry the decoder reasons about. The character
+                                        // still has to be recorded, because the trace is what proves the
+                                        // whole run was typed and not dictated (issues #242, #318).
+                                        TouchTrace.markPendingExact()
+                                        TouchTrace.commit(text)
+                                        editorInstance.commitChar(text)
+                                    } else if (!expandSnippet(text)) {
                                         // Punctuation ends the word: correct it or learn it, then drop
                                         // the tap evidence (issues #242, #318).
                                         endOfWord()

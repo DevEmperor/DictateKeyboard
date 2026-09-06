@@ -104,17 +104,38 @@ class WordLearningGateTest {
     }
 
     @Test
-    fun `a word carrying a digit is a code, not vocabulary`() {
-        // Same refusal the corrector makes for top10 and covid19 (issue #311).
-        assertFalse(WordLearningGate.isLearnableForm("top10"))
-        assertFalse(WordLearningGate.isLearnableForm("mp3"))
+    fun `a word carrying a digit may be vocabulary after all`() {
+        // It used to be refused, borrowing the corrector's rule from issue #311 — but that rule answers
+        // "may we rewrite this?", and refusing to rewrite `top10` is not a reason to refuse to remember
+        // `prateek99` (issue #318, round 3). The corrector still does not judge either of them.
+        assertTrue(WordLearningGate.isLearnableForm("prateek99"))
+        assertTrue(WordLearningGate.isLearnableForm("covid19"))
+        assertFalse(LatinLanguageProvider.isDictionaryJudgeable("covid19"))
+    }
+
+    @Test
+    fun `something has to be a letter`() {
+        // The one thing that is not vocabulary in any language: a number, a date, a row of dashes.
+        assertFalse(WordLearningGate.isLearnableForm("2020"))
+        assertFalse(WordLearningGate.isLearnableForm("3.14"))
+        assertFalse(WordLearningGate.isLearnableForm("---"))
+    }
+
+    @Test
+    fun `an address is taken exactly as it was typed`() {
+        // The point of round 3: the shape may not veto what the evidence has already allowed.
+        assertTrue(WordLearningGate.isLearnableForm("jannis@example.com"))
+        assertTrue(WordLearningGate.isLearnableForm("user123+tag@gmail.com"))
+        assertTrue(WordLearningGate.isLearnableForm("www.example.com"))
+        // A fragment is not an address, and an underscore outside one is not a word either.
+        assertFalse(WordLearningGate.isLearnableForm("jannis@"))
+        assertFalse(WordLearningGate.isLearnableForm("foo_bar"))
     }
 
     @Test
     fun `an apostrophe or a hyphen stays part of a word`() {
         assertTrue(WordLearningGate.isLearnableForm("o'brien"))
         assertTrue(WordLearningGate.isLearnableForm("well-known"))
-        assertFalse(WordLearningGate.isLearnableForm("---"))
     }
 
     // ── The ladder ───────────────────────────────────────────────────────────────────────────────
