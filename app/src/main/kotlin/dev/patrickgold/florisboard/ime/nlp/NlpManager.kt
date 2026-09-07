@@ -33,6 +33,8 @@ import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.LearnedWordsStore
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
+import dev.patrickgold.florisboard.ime.media.emoji.emojiQuerySource
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.math.Calculator
@@ -61,6 +63,15 @@ private const val BLANK_STR_PATTERN = "^\\s*$"
 // Frequency stored for a word learned from the suggestion strip (issue #241) — the maximum, matching what
 // the user dictionary settings screen assigns to a hand-added word.
 private const val USER_DICTIONARY_FREQ = 255
+
+/**
+ * How many word slots the strip keeps for itself before an inline emoji takes one (issue #338). Two,
+ * because the classic strip renders three candidates in total.
+ */
+private const val INLINE_EMOJI_WORD_SLOTS = 2
+
+/** How many emoji a plainly typed word may add to the strip. */
+private const val INLINE_EMOJI_COUNT = 1
 
 /**
  * Whether the word provider should be asked at all, given the user's "Display suggestions" switch and
@@ -303,6 +314,12 @@ class NlpManager(context: Context) {
                 }
                 else -> emptyList()
             }
+            // A colon query is a *search* for an emoji, and a search takes the whole strip — that is
+            // what the mode is for. A plainly typed word is not a search (issue #338): there the emoji
+            // joins the words rather than replacing them. Read from the input rather than from the
+            // trigger setting, because the colon search stays available in both modes.
+            val emojiSearch = emojiQuerySource(content.composingText, content.currentWordText)
+                .startsWith(EmojiSuggestionType.LEADING_COLON.prefix)
             val suggestions = when {
                 // The switch that says "Display suggestions" was read nowhere below this line (issue
                 // #297): [isSuggestionOn] let emoji suggestions keep the gate open, and since turning
@@ -311,7 +328,7 @@ class NlpManager(context: Context) {
                 !wordSuggestionsWanted() -> {
                     emptyList()
                 }
-                emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
+                emojiSuggestions.isNotEmpty() && emojiSearch -> {
                     emptyList()
                 }
                 else -> {
@@ -327,9 +344,16 @@ class NlpManager(context: Context) {
             }
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
-                    internalSuggestions = reqTime to buildList {
-                        addAll(emojiSuggestions)
-                        addAll(suggestions)
+                    internalSuggestions = reqTime to when {
+                        emojiSuggestions.isEmpty() -> suggestions
+                        emojiSearch -> emojiSuggestions + suggestions
+                        // The classic strip renders exactly the first three candidates, so an emoji
+                        // appended to the end would simply fall off it. It takes the last of the three
+                        // instead and the words keep the rest — one word slot spent, never more, and in
+                        // the scrolling display modes the emoji sits in the same place (#338).
+                        else -> suggestions.take(INLINE_EMOJI_WORD_SLOTS) +
+                            emojiSuggestions.take(INLINE_EMOJI_COUNT) +
+                            suggestions.drop(INLINE_EMOJI_WORD_SLOTS)
                     }
                 }
             }

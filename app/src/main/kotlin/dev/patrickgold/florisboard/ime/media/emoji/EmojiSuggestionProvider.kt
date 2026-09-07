@@ -62,13 +62,22 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
 
     private val cachedEmojiMappings = Cache.Builder<FlorisLocale, EmojiDataBySkinTone>().build()
 
+    /**
+     * The word→emoji index per locale for the inline mode (issue #338), built from the very annotations
+     * loaded above — no extra asset, and every language that has a CLDR file gets one.
+     */
+    private val cachedIndexes = Cache.Builder<FlorisLocale, EmojiSuggestionIndex>().build()
+
     override suspend fun create() {
     }
 
     override suspend fun preload(subtype: Subtype) {
         subtype.locales().forEach { locale ->
-            cachedEmojiMappings.get(locale) {
+            val bySkinTone = cachedEmojiMappings.get(locale) {
                 EmojiData.annotated(context, locale).bySkinTone
+            }
+            cachedIndexes.get(locale) {
+                EmojiSuggestionIndex.build(bySkinTone?.get(EmojiSkinTone.DEFAULT).orEmpty())
             }
         }
     }
@@ -82,7 +91,16 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     ): List<SuggestionCandidate> {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
         val showName = prefs.emoji.suggestionCandidateShowName.get()
-        val query = validateInputQuery(emojiQuerySource(content.composingText, content.currentWordText))
+        val typed = emojiQuerySource(content.composingText, content.currentWordText)
+        // Inline mode (issue #338): a plain typed word is an exact lookup, not a search. The fuzzy
+        // sweep below stays reachable from either mode through the colon, so switching the trigger
+        // over costs nobody their `:heart`.
+        if (prefs.emoji.suggestionType.get() == EmojiSuggestionType.INLINE_TEXT &&
+            !typed.startsWith(EmojiSuggestionType.LEADING_COLON.prefix)
+        ) {
+            return suggestInline(subtype, content, typed, showName)
+        }
+        val query = validateInputQuery(typed, EmojiSuggestionType.LEADING_COLON.prefix)
             ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
@@ -132,10 +150,38 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     }
 
     /**
-     * Validates the user input query for emoji suggestions.
+     * The emojis for a plainly typed word (issue #338), best first — an exact lookup in the locale's
+     * index, never a search.
+     *
+     * Two moments are asked, in this order: the word being typed right now, and — when the cursor has
+     * just left one, i.e. a space or punctuation was typed — the word that was finished. The second is
+     * what makes "I love " keep offering ❤️ while the next word begins, which is the behaviour the
+     * request was about.
      */
-    private fun validateInputQuery(composingText: CharSequence): String? {
-        val prefix = prefs.emoji.suggestionType.get().prefix
+    private suspend fun suggestInline(
+        subtype: Subtype,
+        content: EditorContent,
+        typed: String,
+        showName: Boolean,
+    ): List<SuggestionCandidate> {
+        val index = cachedIndexes.get(subtype.primaryLocale) ?: return emptyList()
+        val minLength = prefs.emoji.suggestionQueryMinLength.get()
+        val word = typed.ifEmpty { EmojiSuggestionIndex.completedWordBefore(content.textBeforeSelection) }
+        if (word.length < minLength) return emptyList()
+        return index.lookup(word).map { emoji ->
+            EmojiSuggestionCandidate(
+                emoji = emoji,
+                showName = showName,
+                sourceProvider = this,
+            )
+        }
+    }
+
+    /**
+     * Validates the user input query for the fuzzy `:query` search. [prefix] is passed in rather than
+     * read from the setting because the colon search stays available in both trigger modes (#338).
+     */
+    private fun validateInputQuery(composingText: CharSequence, prefix: String): String? {
         val queryMinLength = prefs.emoji.suggestionQueryMinLength.get() + prefix.length
         if (prefix.isNotEmpty() && !composingText.startsWith(prefix)) {
             return null
