@@ -134,6 +134,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">文本扩展 短语 缩写 快捷短语 宏 自动文本 模板 snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">字数 词数 统计 字符数</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">去除空格 空白 修剪 复制 剪切</string>
+    <string name="settings__search__keywords__clear_cache">缓存 存储 空间 临时文件 释放 删除 清理</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">语言 &amp; 键盘布局</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">语言名称的显示语言</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">以键盘子类型的语言显示键盘标签</string>
@@ -565,6 +566,10 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">软件设置页中各控件(如开关、滑动条)的强调色    </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">软件设置页的显示语言</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">在系统桌面显示软件logo图标</string>
+    <string name="pref__other__clear_cache__label">清除缓存</string>
+    <string name="pref__other__clear_cache__summary">临时文件：{size}</string>
+    <string name="pref__other__clear_cache__confirm">清除</string>
+    <string name="pref__other__clear_cache__message">删除应用可以重新生成的临时文件：正在转录的共享文件、下载的 GIF 和贴纸、解码后的图片。语音输入历史、录音、设置和词典不受影响。正在进行的录音或转录可能会中断。</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">由于系统限制，在Android 10及以上版本中将始终启用</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>

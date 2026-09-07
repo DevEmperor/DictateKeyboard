@@ -130,6 +130,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansión de texto abreviatura atajo fragmento macro autotexto plantilla snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palabras número de palabras caracteres longitud estadísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">recortar espacios eliminar limpiar copiar cortar</string>
+    <string name="settings__search__keywords__clear_cache">caché almacenamiento espacio archivos temporales liberar borrar limpiar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas &amp; Distribuciones</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Muestra nombres de idiomas en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostrar las etiquetas del teclado en mismo idioma</string>
@@ -556,6 +557,10 @@
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Ajustes del idioma</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Mostrar el icono de la aplicación en el launcher</string>
+    <string name="pref__other__clear_cache__label">Borrar caché</string>
+    <string name="pref__other__clear_cache__summary">Archivos temporales: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Borrar</string>
+    <string name="pref__other__clear_cache__message">Elimina los archivos temporales que la aplicación puede volver a crear: un archivo compartido que se está transcribiendo, GIF y adhesivos descargados, imágenes descodificadas. El historial de dictados, las grabaciones, los ajustes y los diccionarios no se tocan. Una grabación o transcripción en curso puede interrumpirse.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Siempre habilitado en Android 10 y superior debido a las restricciones del sistema</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca de</string>

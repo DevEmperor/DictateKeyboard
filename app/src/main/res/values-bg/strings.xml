@@ -134,6 +134,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">текстов шаблон разширяване на текст съкращение макрос автотекст snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">брой думи брояч на думи знаци дължина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">изрязване интервали премахване почистване копиране</string>
+    <string name="settings__search__keywords__clear_cache">кеш памет място временни файлове освобождаване изтриване почистване</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Изписване на езиците на</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Етикети на клавиатурата на езика на подредбата</string>
@@ -566,6 +567,10 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">Допълнителен цвят на настройките</string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Език на настройките</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Пиктограма на приложението на началния екран</string>
+    <string name="pref__other__clear_cache__label">Изчистване на кеша</string>
+    <string name="pref__other__clear_cache__summary">Временни файлове: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Изчисти</string>
+    <string name="pref__other__clear_cache__message">Изтрива временните файлове, които приложението може да създаде отново: споделен файл, който се транскрибира, изтеглени GIF файлове и стикери, декодирани изображения. Историята на диктовките, записите, настройките и речниците остават непокътнати. Текущ запис или транскрипция може да бъде прекъснат.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>

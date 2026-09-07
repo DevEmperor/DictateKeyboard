@@ -131,6 +131,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">metin genişletme kısaltma kısayol parçacık makro otomatik metin şablon snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">kelime sayısı karakter sayısı uzunluk istatistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">kırpma boşluk silme temizleme kopyalama kesme</string>
+    <string name="settings__search__keywords__clear_cache">önbellek depolama alan geçici dosyalar boşaltma silme temizleme</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Diller &amp; Düzenler</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Dil adlarını şu dilde göster</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Klavye etiketlerini alt tür dilinde göster</string>
@@ -557,6 +558,10 @@
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Ayarlar dili</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Uygulama simgesini başlatıcıda göster</string>
+    <string name="pref__other__clear_cache__label">Önbelleği temizle</string>
+    <string name="pref__other__clear_cache__summary">Geçici dosyalar: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Temizle</string>
+    <string name="pref__other__clear_cache__message">Uygulamanın yeniden oluşturabileceği geçici dosyaları siler: yazıya dökülmekte olan paylaşılmış bir dosya, indirilen GIF\'ler ve çıkartmalar, çözümlenmiş görseller. Dikte geçmişiniz, kayıtlarınız, ayarlarınız ve sözlükleriniz etkilenmez. Şu anda süren bir kayıt veya yazıya dökme kesilebilir.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Sistem kısıtlamaları nedeniyle Android 10+ üzerinde her zaman etkindir</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>

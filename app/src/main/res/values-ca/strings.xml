@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansió de text abreviatura drecera fragment macro text automàtic plantilla snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">comptar paraules nombre de paraules caràcters longitud estadístiques</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">retallar espais eliminar netejar copiar tallar</string>
+    <string name="settings__search__keywords__clear_cache">memòria cau espai emmagatzematge fitxers temporals alliberar esborrar netejar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostra els noms de les llengües en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostra les etiquetes del teclat en l\'idioma del subtipus</string>
@@ -469,6 +470,10 @@
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Paràmetres d\'idioma</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Mostra la icona de l\'aplicació al llançador</string>
+    <string name="pref__other__clear_cache__label">Buida la memòria cau</string>
+    <string name="pref__other__clear_cache__summary">Fitxers temporals: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Buida</string>
+    <string name="pref__other__clear_cache__message">Esborra els fitxers temporals que l\'aplicació pot tornar a crear: un fitxer compartit que s\'està transcrivint, GIF i adhesius baixats, imatges descodificades. L\'historial de dictats, els enregistraments, la configuració i els diccionaris no es toquen. Un enregistrament o una transcripció en curs es pot interrompre.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Habilitat sempre a Android 10 i posteriors a conseqüència de les restriccions del sistema</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Quant a</string>

@@ -129,6 +129,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansão de texto abreviatura atalho excerto macro texto automático modelo snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
+    <string name="settings__search__keywords__clear_cache">cache armazenamento espaço ficheiros temporários libertar apagar limpar</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e esquemas</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostrar nome dos idiomas em</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostrar as etiquetas do teclado no mesmo idioma</string>
@@ -554,6 +555,10 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">Cor de destaque das definições    </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Definições de idioma</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Mostrar ícone na página inicial</string>
+    <string name="pref__other__clear_cache__label">Limpar cache</string>
+    <string name="pref__other__clear_cache__summary">Ficheiros temporários: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Limpar</string>
+    <string name="pref__other__clear_cache__message">Elimina os ficheiros temporários que a aplicação pode voltar a criar: um ficheiro partilhado a ser transcrito, GIFs e autocolantes transferidos, imagens descodificadas. O histórico de ditados, as gravações, as definições e os dicionários não são tocados. Uma gravação ou transcrição em curso pode ser interrompida.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Sempre ativa em Android 10+ devido a restrições do sistema</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre o {app_name}</string>

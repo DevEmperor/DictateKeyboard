@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">tekstuitbreiding afkorting snelkoppeling fragment macro autotekst sjabloon snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">woorden tellen aantal woorden tekens lengte statistieken</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">bijsnijden spaties verwijderen opschonen kopiëren knippen</string>
+    <string name="settings__search__keywords__clear_cache">cache opslag ruimte tijdelijke bestanden vrijmaken verwijderen opschonen</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Talen &amp; Indelingen</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Taalnamen weergeven in</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Toetsenbordlabels weergeven in subtypetaal</string>
@@ -488,6 +489,10 @@
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Instellingen taal</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">App-pictogram weergeven in launcher</string>
+    <string name="pref__other__clear_cache__label">Cache wissen</string>
+    <string name="pref__other__clear_cache__summary">Tijdelijke bestanden: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Wissen</string>
+    <string name="pref__other__clear_cache__message">Verwijdert tijdelijke bestanden die de app opnieuw kan maken: een gedeeld bestand dat wordt getranscribeerd, gedownloade GIF\'s en stickers, gedecodeerde afbeeldingen. Je dicteergeschiedenis, opnamen, instellingen en woordenboeken blijven ongemoeid. Een lopende opname of transcriptie kan worden onderbroken.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Altijd ingeschakeld op Android 10+ vanwege systeembeperkingen</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>

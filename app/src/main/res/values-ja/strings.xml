@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">定型文 テキスト展開 短縮 スニペット マクロ 単語登録 snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">文字数 単語数 カウント 統計</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">トリミング 空白 削除 コピー 切り取り</string>
+    <string name="settings__search__keywords__clear_cache">キャッシュ ストレージ 空き容量 一時ファイル 削除 クリア 掃除</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">言語と入力</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">言語名の表示形式</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">サブタイプの言語でキーボードラベルを表示</string>
@@ -537,6 +538,10 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other"> 設定アクセントカラー </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">設定言語</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">ランチャーにアプリアイコンを表示</string>
+    <string name="pref__other__clear_cache__label">キャッシュを削除</string>
+    <string name="pref__other__clear_cache__summary">一時ファイル: {size}</string>
+    <string name="pref__other__clear_cache__confirm">削除</string>
+    <string name="pref__other__clear_cache__message">アプリが作り直せる一時ファイルを削除します。文字起こし中の共有ファイル、ダウンロードした GIF やステッカー、展開した画像などです。音声入力の履歴、録音、設定、辞書はそのまま残ります。実行中の録音や文字起こしは中断されることがあります。</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">システムの制限により、Android 10以降では常に有効です</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">アプリについて</string>

@@ -16,16 +16,24 @@
 
 package dev.patrickgold.florisboard.app.settings.advanced
 
+import android.text.format.Formatter
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adb
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.FormatColorFill
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.SettingsBackupRestore
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -40,6 +48,7 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.cache.AppCache
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
@@ -49,8 +58,13 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 
 
@@ -63,6 +77,16 @@ fun OtherScreen() = FlorisScreen {
     val context = LocalContext.current
 
     content {
+        val scope = rememberCoroutineScope()
+        // Walked rather than remembered: nothing counts the cache as it grows, and the walk is cheap
+        // enough to redo whenever this screen opens or the cache is emptied (issue #337).
+        var cacheBytes by remember { mutableStateOf(0L) }
+        var cacheGeneration by remember { mutableStateOf(0) }
+        var confirmClearCache by remember { mutableStateOf(false) }
+        LaunchedEffect(cacheGeneration) {
+            cacheBytes = withContext(Dispatchers.IO) { AppCache.sizeBytes(context) }
+        }
+
         ListPreference(
             prefs.other.settingsTheme,
             icon = Icons.Default.Palette,
@@ -169,6 +193,20 @@ fun OtherScreen() = FlorisScreen {
             title = stringRes(R.string.physical_keyboard__title),
             onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
         )
+        // What the app made and can make again: a shared file on its way through, downloaded GIFs,
+        // decoded images (issue #337). Emptied on every cold start anyway, so the row exists for the
+        // hours in between — and it says how much there is, because a cleaning button that will not
+        // tell you what it cleans is a button nobody trusts.
+        Preference(
+            icon = Icons.Default.CleaningServices,
+            modifier = Modifier.settingsSearchAnchor("pref__other__clear_cache__label"),
+            title = stringRes(R.string.pref__other__clear_cache__label),
+            summary = stringRes(
+                R.string.pref__other__clear_cache__summary,
+                "size" to Formatter.formatShortFileSize(context, cacheBytes),
+            ),
+            onClick = { confirmClearCache = true },
+        )
         // Developer tools (FlorisBoard debug overlays + debug-log export) are a development-only
         // leftover and must not ship in beta/release builds for a consumer keyboard (roadmap 11.5).
         if (BuildConfig.DEBUG) {
@@ -195,6 +233,27 @@ fun OtherScreen() = FlorisScreen {
                 title = stringRes(R.string.backup_and_restore__restore__title),
                 summary = stringRes(R.string.backup_and_restore__restore__summary),
             )
+        }
+
+        if (confirmClearCache) {
+            JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
+                title = stringRes(R.string.pref__other__clear_cache__label),
+                confirmLabel = stringRes(R.string.pref__other__clear_cache__confirm),
+                onConfirm = {
+                    scope.launch {
+                        withContext(Dispatchers.IO) { AppCache.clear(context) }
+                        cacheGeneration++
+                    }
+                    confirmClearCache = false
+                },
+                dismissLabel = stringRes(android.R.string.cancel),
+                onDismiss = { confirmClearCache = false },
+            ) {
+                // Says what survives, not only what goes: "clear" next to a keyboard that stores
+                // dictation history and recordings is a word worth defusing.
+                Text(stringRes(R.string.pref__other__clear_cache__message))
+            }
         }
     }
 }

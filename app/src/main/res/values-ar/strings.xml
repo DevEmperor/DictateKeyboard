@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">توسيع النص اختصار قصاصة ماكرو نص تلقائي snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">عدد الكلمات عداد الأحرف الطول إحصائيات</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">اقتصاص مسافات إزالة تنظيف نسخ قص</string>
+    <string name="settings__search__keywords__clear_cache">ذاكرة مؤقتة تخزين مساحة ملفات مؤقتة تحرير حذف تنظيف</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
@@ -452,6 +453,10 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">اللون الثانوي للإعدادات    </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">إعدادات اللغة</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">إظهار أيقونة البرنامج في درج التطبيقات</string>
+    <string name="pref__other__clear_cache__label">مسح ذاكرة التخزين المؤقت</string>
+    <string name="pref__other__clear_cache__summary">الملفات المؤقتة: {size}</string>
+    <string name="pref__other__clear_cache__confirm">مسح</string>
+    <string name="pref__other__clear_cache__message">يحذف الملفات المؤقتة التي يمكن للتطبيق إنشاؤها مجددًا: ملف تجري تفريغه، وصور GIF وملصقات تم تنزيلها، وصور مفكوكة. لا يمس هذا سجل الإملاء ولا التسجيلات ولا الإعدادات ولا القواميس. قد يتوقف تسجيل أو تفريغ يعمل الآن.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>

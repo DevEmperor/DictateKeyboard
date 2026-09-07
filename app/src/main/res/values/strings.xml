@@ -269,6 +269,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">text expansion expander snippet abbreviation macro autotext boilerplate canned response</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">word count character counter length statistics how many words</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">trim whitespace strip spaces clean copy cut trailing leading</string>
+    <string name="settings__search__keywords__clear_cache" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which empties the app\'s temporary files. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cache storage space temporary files free up delete clean</string>
 
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
@@ -784,6 +785,12 @@
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Settings language</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Show app icon in launcher</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
+    <!-- Emptying the app\'s scratch space (issue #337): a shared file on its way through can be a
+         hundred megabytes, and until now there was no way to get rid of it from inside the app. -->
+    <string name="pref__other__clear_cache__label" comment="Label of the preference that empties the app\'s temporary files">Clear cache</string>
+    <string name="pref__other__clear_cache__summary" comment="Summary under \'Clear cache\'; {size} is a formatted file size such as 12 MB">Temporary files: {size}</string>
+    <string name="pref__other__clear_cache__confirm" comment="Button that confirms emptying the cache">Clear</string>
+    <string name="pref__other__clear_cache__message" comment="Dialog text before the cache is emptied. Names what survives, because \'clear\' next to a keyboard that stores dictation history needs defusing.">Deletes temporary files the app can create again: a shared file being transcribed, downloaded GIFs and stickers, decoded images. Your dictation history, recordings, settings and dictionaries are not touched. A recording or transcription running right now may be interrupted.</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>

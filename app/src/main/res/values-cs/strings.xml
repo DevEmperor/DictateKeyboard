@@ -133,6 +133,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">textová zkratka rozbalení textu úryvek makro automatický text šablona snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">počet slov počítadlo slov znaky délka statistika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">oříznutí mezery odstranit vyčistit kopírovat vyjmout</string>
+    <string name="settings__search__keywords__clear_cache">mezipaměť cache úložiště místo dočasné soubory uvolnit smazat vyčistit</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zobrazovat názvy jazyků v</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Zobrazit popisky kláves v jazyce podtypu</string>
@@ -566,6 +567,10 @@
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Jazyk nastavení</string>
     <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Zobrazit ikonu aplikace na domovské obrazovce</string>
+    <string name="pref__other__clear_cache__label">Vymazat mezipaměť</string>
+    <string name="pref__other__clear_cache__summary">Dočasné soubory: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Vymazat</string>
+    <string name="pref__other__clear_cache__message">Smaže dočasné soubory, které aplikace dokáže vytvořit znovu: sdílený soubor, který se právě přepisuje, stažené GIFy a nálepky, dekódované obrázky. Historie diktování, nahrávky, nastavení ani slovníky se nemění. Právě probíhající nahrávání nebo přepis se může přerušit.</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Vždy povoleno v systému Android 10+ kvůli systémovým omezením</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>

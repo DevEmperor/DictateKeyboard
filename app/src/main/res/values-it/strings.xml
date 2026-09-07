@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">espansione testo abbreviazione scorciatoia frammento macro testo automatico modello snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">conta parole numero di parole caratteri lunghezza statistiche</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">rifilare spazi rimuovere pulire copiare tagliare</string>
+    <string name="settings__search__keywords__clear_cache">cache archiviazione spazio file temporanei liberare eliminare pulire</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingue &amp; Layout</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Visualizza i nomi delle lingue in</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Visualizza le etichette della tastiera nella lingua secondaria</string>
@@ -467,6 +468,10 @@
     <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Chiaro</string>
     <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Scuro</string>
     <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Scuro</string>
+    <string name="pref__other__clear_cache__label">Svuota la cache</string>
+    <string name="pref__other__clear_cache__summary">File temporanei: {size}</string>
+    <string name="pref__other__clear_cache__confirm">Svuota</string>
+    <string name="pref__other__clear_cache__message">Elimina i file temporanei che l\'app può ricreare: un file condiviso in corso di trascrizione, GIF e adesivi scaricati, immagini decodificate. La cronologia delle dettature, le registrazioni, le impostazioni e i dizionari non vengono toccati. Una registrazione o trascrizione in corso può interrompersi.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app {app_name}</string>

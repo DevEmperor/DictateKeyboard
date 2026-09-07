@@ -87,6 +87,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__other__settings_language__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__settings_language__label"),
         SettingsSearchEntry(R.string.pref__other__show_app_icon__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__show_app_icon__label"),
         SettingsSearchEntry(R.string.physical_keyboard__title, R.string.settings__other__title, Routes.Settings.Other, anchor = "physical_keyboard__title"),
+        SettingsSearchEntry(R.string.pref__other__clear_cache__label, R.string.settings__other__title, Routes.Settings.Other, anchor = "pref__other__clear_cache__label",
+            keywordsRes = R.string.settings__search__keywords__clear_cache),
         SettingsSearchEntry(R.string.devtools__title, R.string.settings__other__title, Routes.Settings.Other, anchor = "devtools__title"),
         SettingsSearchEntry(R.string.backup_and_restore__title, R.string.settings__other__title, Routes.Settings.Other),
         SettingsSearchEntry(R.string.backup_and_restore__back_up__title, R.string.settings__other__title, Routes.Settings.Other, anchor = "backup_and_restore__back_up__title"),
