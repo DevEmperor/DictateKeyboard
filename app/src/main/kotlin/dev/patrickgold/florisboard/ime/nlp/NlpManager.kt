@@ -65,15 +65,6 @@ private const val BLANK_STR_PATTERN = "^\\s*$"
 private const val USER_DICTIONARY_FREQ = 255
 
 /**
- * How many word slots the strip keeps for itself before an inline emoji takes one (issue #338). Two,
- * because the classic strip renders three candidates in total.
- */
-private const val INLINE_EMOJI_WORD_SLOTS = 2
-
-/** How many emoji a plainly typed word may add to the strip. */
-private const val INLINE_EMOJI_COUNT = 1
-
-/**
  * Whether the word provider should be asked at all, given the user's "Display suggestions" switch and
  * whether the active provider insists (issue #297).
  *
@@ -344,16 +335,13 @@ class NlpManager(context: Context) {
             }
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
+                    // Words first, emoji after — a flat list, because where they end up on screen is
+                    // the strip's business, not this one's: [CandidatesRow] gives an emoji a narrow
+                    // cell of its own so it costs no word its place (#338).
                     internalSuggestions = reqTime to when {
                         emojiSuggestions.isEmpty() -> suggestions
                         emojiSearch -> emojiSuggestions + suggestions
-                        // The classic strip renders exactly the first three candidates, so an emoji
-                        // appended to the end would simply fall off it. It takes the last of the three
-                        // instead and the words keep the rest — one word slot spent, never more, and in
-                        // the scrolling display modes the emoji sits in the same place (#338).
-                        else -> suggestions.take(INLINE_EMOJI_WORD_SLOTS) +
-                            emojiSuggestions.take(INLINE_EMOJI_COUNT) +
-                            suggestions.drop(INLINE_EMOJI_WORD_SLOTS)
+                        else -> suggestions + emojiSuggestions
                     }
                 }
             }

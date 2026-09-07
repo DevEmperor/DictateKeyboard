@@ -78,7 +78,7 @@ class EmojiSuggestionIndexTest {
     @Test
     fun `the priority list breaks the tie`() {
         // 😂 sits ahead of 😅 and 🤣 in the list, and all three carry the keyword "laugh".
-        assertEquals(listOf("😂", "😅"), lookup("laugh"))
+        assertEquals(listOf("😂", "😅", "🤣"), lookup("laugh"))
     }
 
     /** A whole-name match outranks a keyword match, whatever the priority order says. */
@@ -117,7 +117,7 @@ class EmojiSuggestionIndexTest {
     }
 
     @Test
-    fun `a word carries at most two emoji`() {
+    fun `a word carries no more emoji than the index allows`() {
         for (word in listOf("heart", "laugh", "fire", "red")) {
             assertTrue(
                 index.lookup(word).size <= EmojiSuggestionIndex.MAX_PER_WORD,
@@ -130,6 +130,27 @@ class EmojiSuggestionIndexTest {
     fun `words below the minimum length are not indexed`() {
         val short = EmojiSuggestionIndex.build(listOf(emoji("🔥", "fire", "up")))
         assertTrue(short.lookup("up").isEmpty())
+    }
+
+    /**
+     * A keyword may only reach the everyday emoji at the head of the priority list. The far end of that
+     * list carries associations that read as absurd out of context — the trash can lists "can", the
+     * koala "down" — and this is what keeps them from firing on ordinary words.
+     */
+    @Test
+    fun `a keyword cannot reach the far end of the priority list`() {
+        val core = EmojiSuggestionIndex.PRIORITY[0]
+        val faraway = EmojiSuggestionIndex.PRIORITY.last()
+        val built = EmojiSuggestionIndex.build(
+            listOf(
+                emoji(core, "core emoji", "shared"),
+                emoji(faraway, "faraway emoji", "shared", "lonely"),
+            ),
+        )
+        assertEquals(listOf(core), built.lookup("shared").map { it.value })
+        assertTrue(built.lookup("lonely").isEmpty(), "a tail emoji contributes no keywords at all")
+        // Its name still works — that is what a name is for.
+        assertEquals(listOf(faraway), built.lookup("faraway emoji").map { it.value })
     }
 
     /** Names in scripts that use combining marks must not be torn apart mid-word (see #265). */

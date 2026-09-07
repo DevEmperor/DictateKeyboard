@@ -98,7 +98,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         if (prefs.emoji.suggestionType.get() == EmojiSuggestionType.INLINE_TEXT &&
             !typed.startsWith(EmojiSuggestionType.LEADING_COLON.prefix)
         ) {
-            return suggestInline(subtype, content, typed, showName)
+            return suggestInline(subtype, content, typed, showName, maxCandidateCount)
         }
         val query = validateInputQuery(typed, EmojiSuggestionType.LEADING_COLON.prefix)
             ?: return emptyList()
@@ -163,12 +163,15 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         content: EditorContent,
         typed: String,
         showName: Boolean,
+        maxCandidateCount: Int,
     ): List<SuggestionCandidate> {
         val index = cachedIndexes.get(subtype.primaryLocale) ?: return emptyList()
         val minLength = prefs.emoji.suggestionQueryMinLength.get()
         val word = typed.ifEmpty { EmojiSuggestionIndex.completedWordBefore(content.textBeforeSelection) }
         if (word.length < minLength) return emptyList()
-        return index.lookup(word).map { emoji ->
+        // The same "maximum candidate count" the colon search obeys. A typed word rarely has more than
+        // two or three emoji worth offering, so the slider is a ceiling here rather than a quota.
+        return index.lookup(word).take(maxCandidateCount).map { emoji ->
             EmojiSuggestionCandidate(
                 emoji = emoji,
                 showName = showName,

@@ -72,8 +72,26 @@ class EmojiSuggestionIndex private constructor(private val byWord: Map<String, L
         /** Below this, a word is too short to mean anything on its own ("ok", "hi"). */
         internal const val MIN_WORD_LENGTH = 3
 
-        /** At most this many emoji per word; the strip only ever shows one of them anyway. */
-        internal const val MAX_PER_WORD = 2
+        /**
+         * At most this many emoji per word. The strip shows as many as the user's "maximum candidate
+         * count" allows, so this only has to be generous enough not to be the binding limit at the
+         * top of that slider's useful range — measured, the quality holds this far: `love` gives
+         * ❤️😍🥰😘🌹, `happy` gives 😂🙂😁😄🤣🥳.
+         */
+        internal const val MAX_PER_WORD = 6
+
+        /**
+         * How much of [PRIORITY] a mere *keyword* may reach. The list is ordered by everyday use, so
+         * this says: a keyword can only summon an emoji people actually send.
+         *
+         * It exists because the two kinds of match are not equally trustworthy. A name is what an
+         * emoji *is* — "unicorn" is 🦄, and no ranking should stand in the way of that. A keyword is a
+         * loose association, and the far end of the list is full of ones that read as absurd out of
+         * context: the trash can lists "can", the koala "down" (as in *down under*), the frying pan
+         * "over" (as in *over easy*). Measured against the 250 most frequent English and German words,
+         * this one line is the difference between 23 of them firing and 14.
+         */
+        internal const val KEYWORD_CORE_SIZE = 172
 
         /**
          * The emoji a suggestion may ever produce, in order of how much people use them.
@@ -91,21 +109,52 @@ class EmojiSuggestionIndex private constructor(private val byWord: Map<String, L
             "❤️", "😂", "😍", "🔥", "👍", "😊", "🎉", "😢", "😭", "😅",
             "🙏", "💀", "🥰", "😘", "😎", "🤔", "😉", "🙂", "😁", "😄",
             "🤣", "😡", "😱", "🥳", "😴", "🤗", "🤝", "👏", "💪", "🙌",
-            "👋", "✌️", "🤞", "👌", "💯", "✨", "⭐", "🌟", "💥", "💫",
-            "☀️", "🌙", "⛅", "🌧️", "❄️", "🌈", "🌻", "🌹", "🌸", "🌵",
-            "🌲", "🍀", "🍎", "🍌", "🍕", "🍔", "🍟", "🌮", "🍣", "🍩",
-            "🍪", "🎂", "🍰", "☕", "🍵", "🍺", "🍷", "🥂", "🍾", "🥤",
-            "🍫", "🍦", "🐶", "🐱", "🐭", "🐰", "🦊", "🐻", "🐼", "🦁",
-            "🐮", "🐷", "🐸", "🐵", "🐔", "🐦", "🦉", "🐝", "🦋", "🐟",
-            "🐬", "🐳", "🐢", "🐍", "🕷️", "🚗", "🚕", "🚌", "🚲", "✈️",
-            "🚀", "🚂", "🚢", "🏠", "🏢", "🏥", "🏫", "⚽", "🏀", "🏈",
-            "🎾", "🏏", "🎯", "🎮", "🎲", "🎸", "🎵", "🎤", "🎧", "📚",
-            "✏️", "📱", "💻", "⌚", "📷", "🔑", "💰", "💸", "💳", "🎁",
-            "🎈", "🎄", "🎃", "💍", "👗", "👕", "👟", "🧢", "🕶️", "⏰",
-            "📅", "✅", "❌", "⚠️", "❓", "❗", "💤", "🚿", "🛏️", "🧹",
-            "🔨", "💡", "🔒", "📞", "✉️", "📦", "🩺", "💊", "🚑", "🚒",
-            "👶", "👵", "👑", "💃", "🕺", "🏃", "🚶", "🧘", "🏊", "🚴",
-            "⛰️", "🏖️", "🌊",
+            "👋", "✌️", "🤞", "💯", "✨", "⭐", "🌟", "💥", "💫", "🌈",
+            "☀️", "🌙", "⛅", "🌧️", "❄️", "☃️", "🌊", "💧", "🌸", "🌹",
+            "🌻", "🌵", "🌲", "🌳", "🍀", "🍁", "🎂", "🍰", "🍕", "🍔",
+            "🍟", "🌮", "🍣", "🍩", "🍪", "🍫", "🍦", "🍎", "🍌", "🍓",
+            "🍞", "🧀", "🥚", "🍳", "☕", "🍵", "🍺", "🍷", "🥂", "🥤",
+            "🍾", "🐶", "🐱", "🐻", "🐰", "🦊", "🐼", "🦁", "🐮", "🐷",
+            "🐸", "🐵", "🐦", "🦄", "🐴", "🐝", "🦋", "🐟", "🐬", "🏠",
+            "🏫", "🏥", "🏢", "🚗", "🚕", "🚌", "🚲", "✈️", "🚀", "🚂",
+            "🚢", "⛰️", "🏖️", "📱", "💻", "📞", "📷", "⌚", "⏰", "📅",
+            "📚", "📖", "📝", "✏️", "✉️", "📦", "🔑", "🔒", "💡", "🎧",
+            "🎤", "💰", "💸", "💳", "🎁", "🎈", "🎄", "🎃", "💍", "👑",
+            "🎵", "🎸", "🎮", "⚽", "🏀", "🏆", "🎯", "✅", "❌", "⚠️",
+            "❓", "❗", "💤", "💭", "💬", "💊", "🩺", "🚑", "👶", "👵",
+            "💃", "🕺", "🏃", "🚶", "🧘", "🏊", "🚴", "👗", "👕", "👟",
+            "🧢", "🕶️", "👌", "🐭", "🐔", "🦉", "🐳", "🐢", "🐍", "🕷️",
+            "🏈", "🎾", "🏏", "🎲", "🚿", "🛏️", "🧹", "🔨", "🚒", "😔",
+            "😕", "😳", "🤯", "😬", "😩", "🥺", "🤤", "🤒", "🤕", "🤧",
+            "😷", "🥱", "🤫", "🤭", "🙄", "😏", "😒", "😌", "🤠", "🥸",
+            "🤓", "🧐", "😇", "🤡", "👻", "👽", "🤖", "👼", "🧙", "🧚",
+            "🧜", "👦", "👧", "👴", "🤰", "👪", "👀", "👁️", "👂", "👃",
+            "👄", "👅", "🦷", "🧠", "🦴", "🦵", "🦶", "🐎", "🐺", "🐗",
+            "🦌", "🐇", "🐁", "🐹", "🐨", "🐯", "🦒", "🦓", "🐘", "🦏",
+            "🦛", "🐪", "🦙", "🐂", "🐄", "🐖", "🐑", "🐐", "🦔", "🦇",
+            "🦥", "🦦", "🦘", "🐓", "🐧", "🕊️", "🦅", "🦆", "🦢", "🦜",
+            "🦚", "🐊", "🦎", "🐉", "🦕", "🦖", "🦈", "🐙", "🦀", "🦞",
+            "🦐", "🐌", "🐛", "🐜", "🪲", "🦗", "🌴", "🌱", "🌿", "☘️",
+            "🍂", "🍃", "💐", "🌺", "🌼", "🌷", "🌾", "🍄", "🍇", "🍈",
+            "🍉", "🍊", "🍋", "🍍", "🥭", "🍐", "🍑", "🍒", "🫐", "🍅",
+            "🥑", "🍆", "🥔", "🥕", "🥒", "🥦", "🧄", "🧅", "🥜", "🌰",
+            "🥐", "🥨", "🥯", "🥞", "🧇", "🥓", "🥪", "🌯", "🍿", "🧂",
+            "🍝", "🍡", "🥟", "🍮", "🧁", "🥧", "🍬", "🍭", "🧊", "🍶",
+            "🧉", "🥛", "🏦", "🏨", "🏭", "🏰", "⛪", "🕌", "⛲", "⛺",
+            "🏕️", "🏜️", "🌋", "🏟️", "🧱", "🪨", "🌅", "🌇", "🏙️", "🚆",
+            "🚇", "🚉", "🚜", "🏍️", "🛹", "⚓", "⛵", "🚤", "🚁", "🛰️",
+            "🧳", "🚧", "⏱️", "🌡️", "☁️", "🌪️", "🌀", "☂️", "☄️", "🎆",
+            "🎇", "🧨", "🎀", "🎫", "🏐", "🏸", "🎿", "🛷", "🪀", "🪁",
+            "🕹️", "🃏", "🧵", "🧶", "👓", "👔", "👖", "🧣", "🧤", "🧥",
+            "🧦", "👘", "👙", "👛", "👜", "🎒", "💄", "📢", "🔔", "📻",
+            "🎷", "🎺", "🪗", "🎻", "🥁", "☎️", "🔋", "🖨️", "⌨️", "📀",
+            "🧮", "📺", "📼", "🕯️", "🔦", "📓", "📜", "📰", "🔖", "🏷️",
+            "🪙", "🧾", "📧", "📮", "🖊️", "🖌️", "🖍️", "💼", "📋", "📌",
+            "📎", "✂️", "🗑️", "🔓", "🪓", "⛏️", "🗡️", "💣", "🛡️", "🔧",
+            "🪛", "⚙️", "🔗", "⛓️", "🧰", "🧲", "🪜", "⚗️", "🧬", "🔬",
+            "🔭", "💉", "🩻", "🚪", "🪞", "🪟", "🪑", "🚽", "🛁", "🪒",
+            "🧺", "🪣", "🧼", "🪥", "🧽", "🗿", "✖️", "➕", "➖", "➗",
+            "♾️", "🚫",
         )
 
         /**
@@ -116,6 +165,10 @@ class EmojiSuggestionIndex private constructor(private val byWord: Map<String, L
         internal val BLOCKED: Set<String> = setOf(
             // English: all of these arrive as keywords of a perfectly ordinary emoji.
             "you", "where", "open", "body", "face", "hand", "eyes", "mouth", "people", "person",
+            "over", "well", "man", "high", "keep", "four", "point",
+            // German. "man" is above and covers both languages; "mal" and "durch" are the arithmetic
+            // keywords of ✖️ and ➗, and "zwei" reaches 🙌 through "two hands".
+            "mal", "zwei", "durch", "schön",
             // Hindi: "साथ" (with) is a keyword of the cup with straw.
             "साथ",
         )
@@ -190,9 +243,11 @@ class EmojiSuggestionIndex private constructor(private val byWord: Map<String, L
                 if (nameWords.size <= NAME_TOKEN_LIMIT) {
                     for (word in nameWords.toSet()) add(word, 1, rank, emoji)
                 }
-                for (keyword in emoji.keywords.mapTo(HashSet()) { it.trim().lowercase() }) {
-                    if ((keywordEmojiCount[keyword] ?: 0) <= KEYWORD_EMOJI_LIMIT) {
-                        add(keyword, 2, rank, emoji)
+                if (rank < KEYWORD_CORE_SIZE) {
+                    for (keyword in emoji.keywords.mapTo(HashSet()) { it.trim().lowercase() }) {
+                        if ((keywordEmojiCount[keyword] ?: 0) <= KEYWORD_EMOJI_LIMIT) {
+                            add(keyword, 2, rank, emoji)
+                        }
                     }
                 }
             }

@@ -48,7 +48,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import kotlinx.coroutines.launch
@@ -71,6 +73,20 @@ import androidx.compose.ui.text.font.FontWeight
 import org.florisboard.lib.snygg.ui.SnyggText
 
 val CandidatesRowScrollbarHeight = 2.dp
+
+/**
+ * How many word candidates the classic strip shows. Emoji suggested for a typed word are added beside
+ * these rather than counted among them (issue #338).
+ */
+private const val CLASSIC_WORD_SLOTS = 3
+
+/**
+ * How many of those emoji the classic strip will take. The words share whatever width the emoji cells
+ * leave, so this is not a preference but a physical limit: at the top of the "maximum candidate count"
+ * slider, six square cells would squeeze three words into nothing. The scrolling display modes have no
+ * such ceiling and show the full count.
+ */
+private const val CLASSIC_MAX_EMOJI = 3
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
@@ -121,25 +137,36 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             SelectionCounterPill()
         }
         if (candidates.isNotEmpty()) {
-            val candidateModifier = if (candidates.size == 1) {
-                Modifier
-                    .fillMaxHeight()
-                    .weight(1f, fill = false)
+            // An emoji suggested for a typed word annexes the row rather than taking a word's place
+            // (issue #338): the three word slots stay three, and the emoji ride along in narrow cells
+            // of their own. Only when there are words to protect — a colon *search* returns nothing but
+            // emoji, and those go on filling the row the way they always have.
+            val words = candidates.filterNot { it is EmojiSuggestionCandidate }
+            val annexedEmojis = if (words.isEmpty()) {
+                emptyList()
             } else {
-                Modifier
-                    .fillMaxHeight()
-                    .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
-                        weight(1f)
-                    }
-                    .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
-                        wrapContentWidth().widthIn(max = 160.dp)
-                    }
+                candidates.filterIsInstance<EmojiSuggestionCandidate>()
             }
-            val list = when (displayMode) {
-                CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
-                else -> candidates
+            val list = when {
+                annexedEmojis.isEmpty() && displayMode == CandidatesDisplayMode.CLASSIC ->
+                    candidates.subList(0, 3.coerceAtMost(candidates.size))
+                annexedEmojis.isEmpty() -> candidates
+                // The classic strip renders what it is given, so the words are cut to their three
+                // slots here; the scrolling modes keep every word and simply carry the emoji at a
+                // position where they are visible without scrolling.
+                displayMode == CandidatesDisplayMode.CLASSIC ->
+                    words.take(CLASSIC_WORD_SLOTS) + annexedEmojis.take(CLASSIC_MAX_EMOJI)
+                else ->
+                    words.take(CLASSIC_WORD_SLOTS) + annexedEmojis + words.drop(CLASSIC_WORD_SLOTS)
             }
+            // A square cell for an annexed emoji, the same shape the emoji row uses, so it costs the
+            // words a sliver of width instead of a whole slot. Read out here: it comes from a
+            // composition local and cannot be asked for from inside a plain helper function.
+            val emojiCellSize = FlorisImeSizing.smartbarHeight
             for ((n, candidate) in list.withIndex()) {
+                // Held in a local: the row is no longer a prefix of [candidates] once an emoji annexes
+                // it, so an index back into that list would commit the wrong thing.
+                val item = candidate
                 if (n > 0) {
                     SnyggSpacer(
                         elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
@@ -149,18 +176,31 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             .align(Alignment.CenterVertically),
                     )
                 }
+                val itemModifier = when {
+                    candidates.size == 1 -> Modifier
+                        .fillMaxHeight()
+                        .weight(1f, fill = false)
+                    item in annexedEmojis -> Modifier
+                        .fillMaxHeight()
+                        .width(emojiCellSize)
+                    displayMode == CandidatesDisplayMode.CLASSIC -> Modifier
+                        .fillMaxHeight()
+                        .weight(1f)
+                    else -> Modifier
+                        .fillMaxHeight()
+                        .wrapContentWidth()
+                        .widthIn(max = 160.dp)
+                }
                 CandidateItem(
-                    modifier = candidateModifier,
+                    modifier = itemModifier,
                     candidate = candidate,
                     displayMode = displayMode,
                     onClick = {
                         FlorisImeService.inputFeedbackController()?.keyPress()
-                        // Can't use candidate directly
-                        keyboardManager.commitCandidate(candidates[n])
+                        keyboardManager.commitCandidate(item)
                     },
                     onLongPress = {
-                        // Can't use candidate directly
-                        val candidateItem = candidates[n]
+                        val candidateItem = item
                         when {
                             // Clipboard suggestions keep their existing "long-press to forget" behaviour.
                             candidateItem is ClipboardSuggestionCandidate -> {
