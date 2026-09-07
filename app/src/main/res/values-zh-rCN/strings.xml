@@ -135,6 +135,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">字数 词数 统计 字符数</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">去除空格 空白 修剪 复制 剪切</string>
     <string name="settings__search__keywords__clear_cache">缓存 存储 空间 临时文件 释放 删除 清理</string>
+    <string name="settings__search__keywords__request_timeout">超时 等待 慢 连接 秒 断开</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">语言 &amp; 键盘布局</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">语言名称的显示语言</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">以键盘子类型的语言显示键盘标签</string>
@@ -1322,6 +1323,8 @@
     <string name="dictate__providers_test_success">已连接 · {count} 个模型</string>
     <string name="dictate__providers_test_failed">连接失败</string>
     <string name="dictate__providers_network_group">网络</string>
+    <string name="dictate__request_timeout_title">请求超时</string>
+    <string name="dictate__request_timeout_summary">{v} 秒 · 自建服务器较慢时可调高</string>
     <string name="dictate__proxy_title">代理</string>
     <string name="dictate__proxy_summary_off">关闭 · 直接连接</string>
     <string name="dictate__proxy_enabled_title">使用代理</string>

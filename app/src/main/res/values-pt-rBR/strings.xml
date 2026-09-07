@@ -126,6 +126,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
     <string name="settings__search__keywords__clear_cache">cache armazenamento espaço arquivos temporários liberar excluir limpar</string>
+    <string name="settings__search__keywords__request_timeout">tempo limite timeout lento espera conexão segundos</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Exibir nomes de idiomas em</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
@@ -1136,6 +1137,8 @@
     <string name="dictate__providers_test_success">Conectado · {count} modelos</string>
     <string name="dictate__providers_test_failed">Falha na conexão</string>
     <string name="dictate__providers_network_group">Rede</string>
+    <string name="dictate__request_timeout_title">Tempo limite da solicitação</string>
+    <string name="dictate__request_timeout_summary">{v} s · aumente para um servidor próprio lento</string>
     <string name="dictate__proxy_title">Proxy</string>
     <string name="dictate__proxy_summary_off">Desativado · conexão direta</string>
     <string name="dictate__proxy_enabled_title">Usar um proxy</string>

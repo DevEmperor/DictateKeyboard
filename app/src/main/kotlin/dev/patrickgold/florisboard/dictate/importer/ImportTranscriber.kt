@@ -288,8 +288,17 @@ object ImportTranscriber {
                 } else null,
                 proxy = prefs.dictate.dictateProxyConfig(),
                 trustUserCerts = prefs.dictate.trustUserCertificates.get(),
-                timeoutSeconds = IMPORT_OPERATION_TIMEOUT_SECONDS,
-                callTimeoutSeconds = IMPORT_CALL_TIMEOUT_SECONDS,
+                // The user's own limit applies here too, but only upwards: someone who raised it for a
+                // slow machine of their own means it here as well, while the default two minutes is
+                // shorter than a file this size can honestly need.
+                timeoutSeconds = maxOf(
+                    IMPORT_OPERATION_TIMEOUT_SECONDS,
+                    prefs.dictate.requestTimeout.get().toLong(),
+                ),
+                callTimeoutSeconds = maxOf(
+                    IMPORT_CALL_TIMEOUT_SECONDS,
+                    prefs.dictate.requestTimeout.get().toLong(),
+                ),
             ).transcribe(request).text.trim()
         }
     }

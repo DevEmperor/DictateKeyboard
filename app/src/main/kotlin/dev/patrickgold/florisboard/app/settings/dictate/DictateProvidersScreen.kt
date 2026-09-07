@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.filled.Lan
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SmartToy
@@ -83,6 +84,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -263,6 +265,20 @@ fun DictateProvidersScreen() = FlorisScreen {
                     proxyOff
                 },
                 onClick = { navController.navigate(Routes.Settings.DictateProxy) },
+            )
+            // One number for both halves of the wait (issue #337). Two minutes is right for a cloud
+            // provider and this exists for the other end of the range: a model on one's own machine
+            // can think for longer than that before the first byte of the answer arrives.
+            DialogSliderPreference(
+                pref = prefs.dictate.requestTimeout,
+                icon = Icons.Default.Timer,
+                modifier = Modifier.settingsSearchAnchor("dictate__request_timeout_title"),
+                title = stringRes(R.string.dictate__request_timeout_title),
+                summary = { stringRes(R.string.dictate__request_timeout_summary, "v" to it) },
+                valueLabel = { stringRes(R.string.unit__seconds__symbol, "v" to it) },
+                min = 30,
+                max = 600,
+                stepIncrement = 10,
             )
         }
 
@@ -947,6 +963,9 @@ private fun ConnectionTestRow(preset: ProviderPreset, apiKey: String) {
                 result = null
                 scope.launch {
                     result = try {
+                        // Left on the default two minutes even when the user raised their own limit
+                        // (#337): the point of a test button is a quick verdict, and one that can sit
+                        // there for ten minutes answers a different question than the one being asked.
                         val count = OpenAiCompatibleClient
                             .from(
                                 preset, apiKey.trim(),

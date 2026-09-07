@@ -95,6 +95,7 @@ fun ModelPickerDialog(
                     preset, apiKey,
                     baseUrlOverride = preset.baseUrl,
                     trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                    timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                 )
                 .listModels()
             val ids = models.map { it.id }

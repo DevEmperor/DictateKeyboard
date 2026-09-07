@@ -135,6 +135,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">брой думи брояч на думи знаци дължина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">изрязване интервали премахване почистване копиране</string>
     <string name="settings__search__keywords__clear_cache">кеш памет място временни файлове освобождаване изтриване почистване</string>
+    <string name="settings__search__keywords__request_timeout">изчакване таймаут бавно чакане връзка секунди прекъсване</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Изписване на езиците на</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Етикети на клавиатурата на езика на подредбата</string>
@@ -1328,6 +1329,8 @@
     <string name="dictate__providers_test_success">Свързано · {count} модела</string>
     <string name="dictate__providers_test_failed">Връзката е неуспешна</string>
     <string name="dictate__providers_network_group">Мрежа</string>
+    <string name="dictate__request_timeout_title">Време за изчакване на заявка</string>
+    <string name="dictate__request_timeout_summary">{v} с · увеличете при бавен собствен сървър</string>
     <string name="dictate__proxy_title">Прокси</string>
     <string name="dictate__proxy_summary_off">Изкл. · директна връзка</string>
     <string name="dictate__proxy_enabled_title">Използвай прокси</string>

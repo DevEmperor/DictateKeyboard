@@ -270,6 +270,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">word count character counter length statistics how many words</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">trim whitespace strip spaces clean copy cut trailing leading</string>
     <string name="settings__search__keywords__clear_cache" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which empties the app\'s temporary files. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cache storage space temporary files free up delete clean</string>
+    <string name="settings__search__keywords__request_timeout" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting for how long a request may take. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">timeout timed out slow waiting connection seconds gave up</string>
 
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
@@ -1948,6 +1949,11 @@
     <string name="dictate__cloud_other_way_body">You can switch to your own API key at any time, and back again. Your credit stays where it is.</string>
 
     <string name="dictate__providers_network_group" comment="Group title for network-level provider settings (proxy)">Network</string>
+    <!-- How long a request to the AI provider may take (issue #337). One number for the gap between
+         bytes and for the whole call: telling those two apart takes knowing how the HTTP client works,
+         and the person waiting only has one question. -->
+    <string name="dictate__request_timeout_title" comment="Title of the slider setting how long a request to the AI provider may take before it counts as failed">Request timeout</string>
+    <string name="dictate__request_timeout_summary" comment="Summary under the request timeout slider; {v} is the chosen number of seconds">{v} s · raise this for a slow server of your own</string>
 
     <string name="dictate__wear_title" comment="Title of the Wear OS companion settings screen">Wear OS</string>
     <string name="dictate__wear_summary" comment="Summary of the Wear OS settings entry on the main Dictate screen">Options for dictating from a paired watch</string>

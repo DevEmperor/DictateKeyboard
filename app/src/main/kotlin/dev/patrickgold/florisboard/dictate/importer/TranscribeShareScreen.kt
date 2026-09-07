@@ -725,6 +725,7 @@ private suspend fun rewordWith(context: Context, promptBody: String, transcript:
         } else null,
         proxy = prefs.dictate.dictateProxyConfig(),
         trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+        timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
     )
     return DictateRewording.apply(
         client = client,

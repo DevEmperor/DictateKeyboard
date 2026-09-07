@@ -131,6 +131,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
     <string name="settings__search__keywords__clear_cache">cache penyimpanan ruang berkas sementara mengosongkan hapus bersihkan</string>
+    <string name="settings__search__keywords__request_timeout">batas waktu timeout lambat menunggu koneksi detik</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Tampilkan label keyboard dalam bahasa subtipe</string>
@@ -1282,6 +1283,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_test_success">Terhubung · {count} model</string>
     <string name="dictate__providers_test_failed">Koneksi gagal</string>
     <string name="dictate__providers_network_group">Jaringan</string>
+    <string name="dictate__request_timeout_title">Batas waktu permintaan</string>
+    <string name="dictate__request_timeout_summary">{v} dtk · naikkan jika server Anda sendiri lambat</string>
     <string name="dictate__proxy_title">Proksi</string>
     <string name="dictate__proxy_summary_off">Nonaktif · koneksi langsung</string>
     <string name="dictate__proxy_enabled_title">Gunakan proksi</string>

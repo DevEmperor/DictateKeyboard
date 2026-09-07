@@ -1658,6 +1658,7 @@ object DictateController {
                             // Single-call multimodal (issue #130): route audio through chat/completions.
                             useChatAudio = chatAudio,
                             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                            timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                         ).transcribe(
                             request,
                             onRetry = { attempt -> _state.value = UiState.Transcribing(attempt) },
@@ -1674,6 +1675,7 @@ object DictateController {
                                 proxy = prefs.dictate.dictateProxyConfig(),
                                 useChatAudio = chatAudio,
                                 trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                                timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                             ).transcribe(
                                 request.copy(audioFile = packedFrom!!),
                                 onRetry = { attempt -> _state.value = UiState.Transcribing(attempt) },
@@ -2457,6 +2459,7 @@ object DictateController {
                         proxy = prefs.dictate.dictateProxyConfig(),
                         useChatAudio = false,
                         trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                        timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                     ).transcribe(request)
                 } catch (e: DictateApiException) {
                     // A provider that will not take the m4a gets the WAV instead (#281); everything else
@@ -2468,6 +2471,7 @@ object DictateController {
                             proxy = prefs.dictate.dictateProxyConfig(),
                             useChatAudio = false,
                             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                            timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                         ).transcribe(request.copy(audioFile = toUpload))
                     } else {
                         val fallback = localFallbackProvider(appContext, preset, e) ?: throw e
@@ -3581,6 +3585,9 @@ object DictateController {
         val baseUrl = baseUrlOverrideFor(account)
         scope.launch(Dispatchers.IO) {
             runCatching {
+                // Deliberately not on the user's request timeout (#337): this request exists to make
+                // noise on the network, and nobody is waiting for its answer. A raised limit would only
+                // keep a pointless call alive for longer.
                 OpenAiCompatibleClient.from(
                     preset, apiKey,
                     baseUrlOverride = baseUrl,
@@ -3638,6 +3645,7 @@ object DictateController {
             baseUrlOverride = baseUrlOverrideFor(account),
             proxy = prefs.dictate.dictateProxyConfig(),
             trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+            timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
         )
         // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
         // setting (#155). OFF → null → field omitted. CUSTOM (#186) uses a user-entered wire value —

@@ -127,6 +127,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">кількість слів лічильник слів символи довжина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">обрізати пробіли видалити очистити копіювати вирізати</string>
     <string name="settings__search__keywords__clear_cache">кеш памʼять місце тимчасові файли звільнити видалити очистити</string>
+    <string name="settings__search__keywords__request_timeout">час очікування таймаут повільно чекання зʼєднання секунди</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Мови &amp; Розкладки</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Показувати назви мов у</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Підтипи</string>
@@ -1177,6 +1178,8 @@
     <string name="dictate__providers_test_success">Підключено · {count} моделей</string>
     <string name="dictate__providers_test_failed">Не вдалося підключитися</string>
     <string name="dictate__providers_network_group">Мережа</string>
+    <string name="dictate__request_timeout_title">Час очікування запиту</string>
+    <string name="dictate__request_timeout_summary">{v} с · збільште для повільного власного сервера</string>
     <string name="dictate__proxy_title">Проксі</string>
     <string name="dictate__proxy_summary_off">Вимкнено · пряме підключення</string>
     <string name="dictate__proxy_enabled_title">Використовувати проксі</string>

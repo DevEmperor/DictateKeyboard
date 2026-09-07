@@ -128,6 +128,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">عدد الكلمات عداد الأحرف الطول إحصائيات</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">اقتصاص مسافات إزالة تنظيف نسخ قص</string>
     <string name="settings__search__keywords__clear_cache">ذاكرة مؤقتة تخزين مساحة ملفات مؤقتة تحرير حذف تنظيف</string>
+    <string name="settings__search__keywords__request_timeout">مهلة انتهت المهلة بطيء انتظار اتصال ثواني</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
@@ -1190,6 +1191,8 @@
     <string name="dictate__providers_test_success">متصل · {count} نماذج</string>
     <string name="dictate__providers_test_failed">فشل الاتصال</string>
     <string name="dictate__providers_network_group">الشبكة</string>
+    <string name="dictate__request_timeout_title">مهلة الطلب</string>
+    <string name="dictate__request_timeout_summary">{v} ثانية · ارفعها إذا كان خادمك بطيئًا</string>
     <string name="dictate__proxy_title">الوكيل</string>
     <string name="dictate__proxy_summary_off">مُعطّل · اتصال مباشر</string>
     <string name="dictate__proxy_enabled_title">استخدام وكيل</string>
