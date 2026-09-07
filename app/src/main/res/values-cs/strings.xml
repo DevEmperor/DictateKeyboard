@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Historie emotikonů</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Zapnout historii emotikonů</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Uchovávat nedávno použité emotikony pro rychlý přístup</string>
+    <string name="prefs__media__emoji_row_enabled">Řádek emodži</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Zobrazit nad klávesnicí řádek s připnutými a nedávno použitými emodži</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Strategie aktualizace (připnuté)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Strategie aktualizace (nedávné)</string>
     <string name="prefs__media__emoji_history_max_size">Maximální počet položek k uchování</string>
@@ -134,6 +136,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">počet slov počítadlo slov znaky délka statistika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">oříznutí mezery odstranit vyčistit kopírovat vyjmout</string>
     <string name="settings__search__keywords__clear_cache">mezipaměť cache úložiště místo dočasné soubory uvolnit smazat vyčistit</string>
+    <string name="settings__search__keywords__emoji_row">emodži emoji řádek lišta nedávné použité nad klávesnicí rychlý</string>
     <string name="settings__search__keywords__request_timeout">časový limit timeout pomalé čekání spojení sekundy</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zobrazovat názvy jazyků v</string>
@@ -1649,6 +1652,7 @@
     <string name="dictate__wear_standalone_summary">Odešlete svůj API klíč do hodinek, aby mohly diktovat i bez telefonu poblíž.</string>
     <string name="dictate__wear_standalone_title">Synchronizovat klíč do hodinek</string>
     <string name="emoji__search__hint">Hledat emoji</string>
+    <string name="emoji__row__open_panel">Otevřít všechna emodži</string>
     <string name="emoji__search__no_results">Žádné odpovídající emoji</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Návrhy automatického vyplňování systému</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Zabraňuje navrhování potenciálně urážlivých slov při psaní</string>

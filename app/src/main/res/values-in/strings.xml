@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Riwayat emoji</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktifkan riwayat emoji</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Simpan emoji yang baru saja digunakan agar mudah diakses dengan cepat</string>
+    <string name="prefs__media__emoji_row_enabled">Baris emoji</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Tampilkan baris emoji yang disematkan dan baru digunakan di atas papan ketik</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Perbarui strategi (disematkan)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Strategi pembaruan (terbaru)</string>
     <string name="prefs__media__emoji_history_max_size">Jumlah maksimum item yang dapat disimpan</string>
@@ -131,6 +133,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
     <string name="settings__search__keywords__clear_cache">cache penyimpanan ruang berkas sementara mengosongkan hapus bersihkan</string>
+    <string name="settings__search__keywords__emoji_row">emoji baris deret terbaru digunakan di atas papan ketik cepat</string>
     <string name="settings__search__keywords__request_timeout">batas waktu timeout lambat menunggu koneksi detik</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
@@ -1587,6 +1590,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__wear_standalone_summary">Kirim kunci API ke jam tangan agar bisa mendikte tanpa ponsel di dekatnya.</string>
     <string name="dictate__wear_standalone_title">Sinkronkan kunci ke jam</string>
     <string name="emoji__search__hint">Cari emoji</string>
+    <string name="emoji__row__open_panel">Buka semua emoji</string>
     <string name="emoji__search__no_results">Tidak ada emoji yang cocok</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Saran isi otomatis sistem</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Mencegah kata yang mungkin menyinggung disarankan saat Anda mengetik</string>

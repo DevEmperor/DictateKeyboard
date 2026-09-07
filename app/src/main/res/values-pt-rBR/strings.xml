@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Histórico de emojis</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Ativar histórico de emojis</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Lembrar emojis usados para acesso rápido</string>
+    <string name="prefs__media__emoji_row_enabled">Linha de emojis</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Mostrar acima do teclado uma linha com os emojis fixados e os usados recentemente</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Estratégia de atualização (Fixado)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Estratégia de atualização (Recente)</string>
     <string name="prefs__media__emoji_history_max_size">Quantos itens manter no histórico</string>
@@ -126,6 +128,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palavras número de palavras caracteres comprimento estatísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">cortar espaços remover limpar copiar recortar</string>
     <string name="settings__search__keywords__clear_cache">cache armazenamento espaço arquivos temporários liberar excluir limpar</string>
+    <string name="settings__search__keywords__emoji_row">emoji linha barra recentes usados acima teclado rápido</string>
     <string name="settings__search__keywords__request_timeout">tempo limite timeout lento espera conexão segundos</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Exibir nomes de idiomas em</string>
@@ -1441,6 +1444,7 @@
     <string name="dictate__wear_standalone_summary">Envie sua chave de API para o relógio para ditar sem o celular por perto.</string>
     <string name="dictate__wear_standalone_title">Sincronizar chave com o relógio</string>
     <string name="emoji__search__hint">Pesquisar emoji</string>
+    <string name="emoji__row__open_panel">Abrir todos os emojis</string>
     <string name="emoji__search__no_results">Nenhum emoji correspondente</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Sugestões de preenchimento automático do sistema</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Impede que palavras possivelmente ofensivas sejam sugeridas enquanto você digita</string>

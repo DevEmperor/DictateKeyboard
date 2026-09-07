@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emodzsik előzményei</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Emodzsik előzményeinek engedélyezése</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">A legutóbb használt emodzsik megtartása a könnyű elérés érdekében</string>
+    <string name="prefs__media__emoji_row_enabled">Emodzsisor</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Egy sor megjelenítése a billentyűzet felett a kitűzött és a nemrég használt emodzsikkal</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Frissítési stratégia (kitűzött)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Frissítési stratégia (legutóbbi)</string>
     <string name="prefs__media__emoji_history_max_size">Maximálisan megtartandó elem</string>
@@ -135,6 +137,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">szavak száma karakterszám hossz statisztika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">vágás szóköz eltávolítás tisztítás másolás kivágás</string>
     <string name="settings__search__keywords__clear_cache">gyorsítótár tárhely hely ideiglenes fájlok felszabadítás törlés takarítás</string>
+    <string name="settings__search__keywords__emoji_row">emodzsi emoji sor sáv nemrég használt billentyűzet felett gyors</string>
     <string name="settings__search__keywords__request_timeout">időkorlát időtúllépés lassú várakozás kapcsolat másodperc</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Nyelvek neveinek megjelenítése ebben</string>
@@ -1631,6 +1634,7 @@
     <string name="dictate__wear_standalone_summary">Küldd el az API-kulcsod az órának, hogy telefon nélkül is diktálhasson.</string>
     <string name="dictate__wear_standalone_title">Kulcs szinkronizálása az órára</string>
     <string name="emoji__search__hint">Emoji keresése</string>
+    <string name="emoji__row__open_panel">Összes emodzsi megnyitása</string>
     <string name="emoji__search__no_results">Nincs találat az emojikra</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Rendszer automatikus kitöltési javaslatai</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Megakadályozza, hogy esetlegesen sértő szavak jelenjenek meg a gépelés közbeni javaslatokban</string>

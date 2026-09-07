@@ -997,6 +997,17 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "emoji__history_recent_max_size",
             default = 90,
         )
+
+        /**
+         * The row of recently used emojis between the Smartbar and the keyboard (issue #340).
+         *
+         * Off by default on purpose: it makes the keyboard one row taller, and growing everyone's
+         * keyboard unasked on an update is the kind of surprise that gets reported as a bug.
+         */
+        val rowEnabled = boolean(
+            key = "emoji__row_enabled",
+            default = false,
+        )
         val suggestionEnabled = boolean(
             key = "emoji__suggestion_enabled",
             default = true,

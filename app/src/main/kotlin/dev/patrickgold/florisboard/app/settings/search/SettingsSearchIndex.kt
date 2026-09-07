@@ -295,6 +295,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.prefs__media__sticker__title, R.string.settings__media__title, Routes.Settings.Media),
         SettingsSearchEntry(R.string.prefs__media__emoji_history__title, R.string.settings__media__title, Routes.Settings.Media),
         SettingsSearchEntry(R.string.prefs__media__emoji_history_enabled, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_history_enabled"),
+        SettingsSearchEntry(R.string.prefs__media__emoji_row_enabled, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_row_enabled", keywordsRes = R.string.settings__search__keywords__emoji_row),
         SettingsSearchEntry(R.string.prefs__media__emoji_history_pinned_update_strategy, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_history_pinned_update_strategy"),
         SettingsSearchEntry(R.string.prefs__media__emoji_history_recent_update_strategy, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_history_recent_update_strategy"),
         SettingsSearchEntry(R.string.prefs__media__emoji_history_max_size, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_history_max_size"),

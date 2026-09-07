@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
+import dev.patrickgold.florisboard.ime.media.emoji.emojiRowVisible
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsChipMargin
@@ -153,7 +154,12 @@ object FlorisImeSizing {
             } else {
                 0.dp
             }
-        return keyboardRowBaseHeight * rowCount.coerceAtLeast(4) + smartbarUiHeight() + promptRowHeight
+        // Same reasoning for the recent-emoji row (#340), which sits below the Smartbar and is one
+        // [smartbarHeight] tall. Asked through the very predicate the row itself uses, so the two can
+        // never disagree — a panel one row off is a keyboard that jumps when it opens.
+        val emojiRowHeight = if (emojiRowVisible()) smartbarHeight else 0.dp
+        return keyboardRowBaseHeight * rowCount.coerceAtLeast(4) + smartbarUiHeight() +
+            promptRowHeight + emojiRowHeight
     }
 }
 

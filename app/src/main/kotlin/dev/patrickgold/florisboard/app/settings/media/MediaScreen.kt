@@ -45,6 +45,7 @@ import androidx.compose.material.icons.outlined.LinkOff
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Gif
+import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Visibility
@@ -153,6 +154,14 @@ fun MediaScreen() = FlorisScreen {
                 modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_history_enabled"),
                 title = stringRes(R.string.prefs__media__emoji_history_enabled),
                 summary = stringRes(R.string.prefs__media__emoji_history_enabled__summary),
+            )
+            SwitchPreference(
+                prefs.emoji.rowEnabled,
+                icon = Icons.Outlined.Keyboard,
+                modifier = Modifier.settingsSearchAnchor("prefs__media__emoji_row_enabled"),
+                title = stringRes(R.string.prefs__media__emoji_row_enabled),
+                summary = stringRes(R.string.prefs__media__emoji_row_enabled__summary),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
             ListPreference(
                 prefs.emoji.historyPinnedUpdateStrategy,

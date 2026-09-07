@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emocijzīmju vēsture</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Iespējot emocijzīmju vēsturi</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Paturēt nesen izmantotās emocijzīmes ātrai piekļuvei</string>
+    <string name="prefs__media__emoji_row_enabled">Emocijzīmju rinda</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Rādīt virs tastatūras rindu ar piespraustajām un nesen izmantotajām emocijzīmēm</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Piesprausta)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Nesena)</string>
     <string name="prefs__media__emoji_history_max_size">Lielākais paturamo vienumu skaits</string>
@@ -128,6 +130,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">vārdu skaits rakstzīmju skaits garums statistika</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">apgriezt atstarpes noņemt tīrīt kopēt izgriezt</string>
     <string name="settings__search__keywords__clear_cache">kešatmiņa krātuve vieta pagaidu faili atbrīvot dzēst tīrīt</string>
+    <string name="settings__search__keywords__emoji_row">emocijzīmes rinda josla nesen izmantotās virs tastatūras ātri</string>
     <string name="settings__search__keywords__request_timeout">noildze taimauts lēns gaidīšana savienojums sekundes</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Valodas un izkārtojumi</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Attēlot valodu nosaukumu</string>
@@ -1577,6 +1580,7 @@
     <string name="dictate__wear_standalone_summary">Nosūtiet API atslēgu pulkstenim, lai tas var diktēt bez tālruņa tuvumā.</string>
     <string name="dictate__wear_standalone_title">Sinhronizēt atslēgu ar pulksteni</string>
     <string name="emoji__search__hint">Meklēt emocijzīmes</string>
+    <string name="emoji__row__open_panel">Atvērt visas emocijzīmes</string>
     <string name="emoji__search__no_results">Nav atbilstošu emocijzīmju</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Sistēmas automātiskās aizpildes ieteikumi</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Neļauj rakstīšanas laikā ieteikt iespējami aizskarošus vārdus</string>

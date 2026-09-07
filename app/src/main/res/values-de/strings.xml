@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji-Historie</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktiviere Emoji-Historie</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Behalte kürzlich genutzte Emojis für einen schnellen Zugriff</string>
+    <string name="prefs__media__emoji_row_enabled">Emoji-Reihe</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Zeigt über der Tastatur eine Reihe mit angepinnten und zuletzt benutzten Emojis</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update Strategie (gepinnt)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update Strategie (kürzlich)</string>
     <string name="prefs__media__emoji_history_max_size">Maximale zu behaltende Emojis</string>
@@ -127,6 +129,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">Wörter zählen Wortanzahl Zeichenzahl Länge Statistik wie viele Wörter</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">kürzen Leerzeichen entfernen bereinigen kopieren ausschneiden Umbruch</string>
     <string name="settings__search__keywords__clear_cache">Cache Zwischenspeicher Speicher Speicherplatz temporäre Dateien freigeben löschen aufräumen</string>
+    <string name="settings__search__keywords__emoji_row">emoji reihe zeile leiste zuletzt benutzt über tastatur schnell smiley</string>
     <string name="settings__search__keywords__request_timeout">Zeitlimit Timeout Zeitüberschreitung langsam warten Verbindung Sekunden abgebrochen</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Sprachen &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Sprachnamen anzeigen in</string>
@@ -1595,6 +1598,7 @@
     <string name="dictate__wear_standalone_summary">Sende deinen API-Key an die Uhr, damit sie auch ohne Handy in der Nähe diktieren kann.</string>
     <string name="dictate__wear_standalone_title">Schlüssel mit Uhr synchronisieren</string>
     <string name="emoji__search__hint">Emoji suchen</string>
+    <string name="emoji__row__open_panel">Alle Emojis öffnen</string>
     <string name="emoji__search__no_results">Keine passenden Emojis</string>
     <string name="pref__suggestion__math_suggestions__label" comment="Preference title">Rechner in der Vorschlagsleiste</string>
     <string name="pref__suggestion__math_suggestions__summary" comment="Preference summary">Rechenaufgabe und = eintippen, das Ergebnis wird vorgeschlagen</string>

@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji-geschiedenis</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Emoji-geschiedenis inschakelen</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Recent gebruikte emoji\'s bewaren voor snelle toegang</string>
+    <string name="prefs__media__emoji_row_enabled">Emojirij</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Toon boven het toetsenbord een rij met je vastgezette en onlangs gebruikte emoji</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Strategie bijwerken (Vastgemaakt)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Strategie bijwerken (Recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximaal aantal items</string>
@@ -128,6 +130,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">woorden tellen aantal woorden tekens lengte statistieken</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">bijsnijden spaties verwijderen opschonen kopiëren knippen</string>
     <string name="settings__search__keywords__clear_cache">cache opslag ruimte tijdelijke bestanden vrijmaken verwijderen opschonen</string>
+    <string name="settings__search__keywords__emoji_row">emoji rij balk recent gebruikt boven toetsenbord snel</string>
     <string name="settings__search__keywords__request_timeout">time-out verlopen traag wachten verbinding seconden</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Talen &amp; Indelingen</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Taalnamen weergeven in</string>
@@ -1532,6 +1535,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__wear_standalone_summary">Stuur je API-sleutel naar het horloge zodat het zonder telefoon kan dicteren.</string>
     <string name="dictate__wear_standalone_title">Sleutel synchroniseren met horloge</string>
     <string name="emoji__search__hint">Emoji zoeken</string>
+    <string name="emoji__row__open_panel">Alle emoji openen</string>
     <string name="emoji__search__no_results">Geen overeenkomende emoji</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Suggesties voor automatisch invullen van systeem</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Voorkomt dat mogelijk aanstootgevende woorden worden voorgesteld terwijl je typt</string>

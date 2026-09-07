@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Historique des émojis</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Activer l\'historique des émojis</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Garder les émojis utilisés récemment pour accès rapide</string>
+    <string name="prefs__media__emoji_row_enabled">Rangée d\'émojis</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Affiche au-dessus du clavier une rangée avec vos émojis épinglés et récemment utilisés</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Stratégie de mise à jour (épinglé)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Stratégie de mise à jour (récent)</string>
     <string name="prefs__media__emoji_history_max_size">Nombre d\'éléments maximum à garder</string>
@@ -127,6 +129,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">compter les mots nombre de mots caractères longueur statistiques</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">rogner espaces supprimer nettoyer copier couper</string>
     <string name="settings__search__keywords__clear_cache">cache stockage espace fichiers temporaires libérer supprimer nettoyer</string>
+    <string name="settings__search__keywords__emoji_row">emoji émoji rangée ligne barre récents utilisés au-dessus clavier rapide</string>
     <string name="settings__search__keywords__request_timeout">délai timeout lent attente connexion secondes expiré</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Langues &amp; Dispositions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Afficher les noms de langue dans</string>
@@ -1510,6 +1513,7 @@
     <string name="dictate__wear_standalone_summary">Envoyez votre clé API à la montre pour qu\'elle puisse dicter sans le téléphone.</string>
     <string name="dictate__wear_standalone_title">Synchroniser la clé avec la montre</string>
     <string name="emoji__search__hint">Rechercher un emoji</string>
+    <string name="emoji__row__open_panel">Ouvrir tous les émojis</string>
     <string name="emoji__search__no_results">Aucun emoji correspondant</string>
     <string name="quick_action__dictate_reinsert">Historique</string>
     <string name="quick_action__dictate_reinsert__tooltip">Ouvrir votre historique de dictée</string>

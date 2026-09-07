@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">絵文字履歴</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">絵文字履歴を有効化</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">最近使用した絵文字を保存して素早くアクセスできるようにします</string>
+    <string name="prefs__media__emoji_row_enabled">絵文字の行</string>
+    <string name="prefs__media__emoji_row_enabled__summary">ピン留めした絵文字と最近使った絵文字をキーボードの上に一列で表示します</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">更新方法（ピン留め）</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">更新方法（最近使用）</string>
     <string name="prefs__media__emoji_history_max_size">保持できる最大アイテム数</string>
@@ -128,6 +130,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">文字数 単語数 カウント 統計</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">トリミング 空白 削除 コピー 切り取り</string>
     <string name="settings__search__keywords__clear_cache">キャッシュ ストレージ 空き容量 一時ファイル 削除 クリア 掃除</string>
+    <string name="settings__search__keywords__emoji_row">絵文字 行 バー 最近 使った キーボード 上 クイック</string>
     <string name="settings__search__keywords__request_timeout">タイムアウト 時間切れ 遅い 待機 接続 秒</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">言語と入力</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">言語名の表示形式</string>
@@ -1564,6 +1567,7 @@
     <string name="dictate__wear_standalone_summary">API キーを時計に送れば、近くにスマートフォンがなくても音声入力できます。</string>
     <string name="dictate__wear_standalone_title">キーを時計に同期</string>
     <string name="emoji__search__hint">絵文字を検索</string>
+    <string name="emoji__row__open_panel">すべての絵文字を開く</string>
     <string name="emoji__search__no_results">一致する絵文字がありません</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">システムの自動入力候補</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">入力中に不適切と思われる単語が候補に表示されないようにします</string>

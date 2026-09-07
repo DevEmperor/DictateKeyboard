@@ -18,6 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">История эмодзи</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Включить историю эмодзи</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Сохраняйте недавно использованные эмодзи для быстрого доступа</string>
+    <string name="prefs__media__emoji_row_enabled">Ряд эмодзи</string>
+    <string name="prefs__media__emoji_row_enabled__summary">Показывать над клавиатурой ряд закреплённых и недавно использованных эмодзи</string>
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Обновление истории (закрепленного)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Обновление истории (недавнего)</string>
     <string name="prefs__media__emoji_history_max_size">Максимум элементов, которые можно сохранить</string>
@@ -133,6 +135,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">количество слов счётчик слов символы длина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">обрезать пробелы удалить очистить копировать вырезать</string>
     <string name="settings__search__keywords__clear_cache">кэш память место временные файлы освободить удалить очистить</string>
+    <string name="settings__search__keywords__emoji_row">эмодзи ряд строка панель недавние использованные над клавиатурой быстрый смайлик</string>
     <string name="settings__search__keywords__request_timeout">тайм-аут время ожидания медленно ждать соединение секунды</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и раскладки</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Подписи к языкам</string>
@@ -1638,6 +1641,7 @@
     <string name="dictate__wear_standalone_summary">Отправьте свой ключ API на часы, чтобы диктовать без телефона рядом.</string>
     <string name="dictate__wear_standalone_title">Синхронизировать ключ с часами</string>
     <string name="emoji__search__hint">Поиск эмодзи</string>
+    <string name="emoji__row__open_panel">Открыть все эмодзи</string>
     <string name="emoji__search__no_results">Нет подходящих эмодзи</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label">Системные подсказки автозаполнения</string>
     <string name="pref__suggestion__block_possibly_offensive__summary">Не предлагать потенциально оскорбительные слова при наборе текста</string>

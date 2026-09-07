@@ -34,7 +34,9 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.dictate.gif.GifSearchPanel
 import dev.patrickgold.florisboard.dictate.sticker.StickerSearchPanel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSearchPanel
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiRow
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSearchPanel
+import dev.patrickgold.florisboard.ime.media.emoji.emojiRowVisible
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsStyleCache
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
@@ -88,6 +90,13 @@ fun TextInputLayout(
             ClipboardSearchPanel()
         } else {
             Smartbar()
+            // The recent-emoji row (#340) sits between the Smartbar and the keys, exactly where a
+            // number row would. Not while a search has taken the Smartbar's slot (those panels are
+            // taller than the Smartbar and the keyboard below them is there to type the query), and
+            // not over the actions overflow, which replaces the keys with a grid of its own.
+            if (!state.isActionsOverflowVisible && emojiRowVisible()) {
+                EmojiRow()
+            }
         }
         if (state.isActionsOverflowVisible) {
             QuickActionsOverflowPanel()
