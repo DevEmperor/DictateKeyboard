@@ -13,9 +13,9 @@ package dev.patrickgold.florisboard.dictate.importer
 /**
  * The stages of one import, in the order they run (issue #337).
  *
- * The declaration order **is** the running order — [ImportStages.stateOf] compares ordinals to decide
- * what is already done — so nothing may be inserted here without checking that it really happens at
- * that point.
+ * They exist to be *named* on screen while they happen — one line at a time, not a checklist. Before
+ * this the whole run up to the upload was called "Preparing…", which made the longest phase of a
+ * shared video look like a hang.
  */
 enum class ImportStage {
     /** Out of the temporary share grant and into our own cache. */
@@ -24,7 +24,7 @@ enum class ImportStage {
     /** Decode, run the VAD over it, cut it into pieces: whatever [ImportTranscriber] does before sending. */
     PREPARE,
 
-    /** The bytes going up. Absent entirely for the on-device engine, where nothing leaves the phone. */
+    /** The bytes going up. Never reported for the on-device engine, where nothing leaves the phone. */
     UPLOAD,
 
     /** Waiting for the provider (or the local engine) to answer. */
@@ -33,9 +33,6 @@ enum class ImportStage {
     /** The history entry, with its copy of the audio. */
     FINISH,
 }
-
-/** How a stage stands relative to the one currently running. */
-enum class StageState { PENDING, ACTIVE, DONE }
 
 /**
  * Where an import currently is.
@@ -53,24 +50,11 @@ data class ImportProgress(
 )
 
 /**
- * The list of stages an import will really go through, decided **before** it starts.
+ * The two questions the progress line has to answer before it can name a step (issue #337).
  *
- * [fromVideo] only picks the wording for [ImportStage.PREPARE]: the same decode-and-cut pass is
- * "getting the sound out of the video" for a shared clip and "getting the audio ready" for an
- * oversized recording, and saying which one is the whole point of showing the step at all.
- */
-data class ImportPlan(
-    val stages: List<ImportStage>,
-    val fromVideo: Boolean,
-)
-
-/**
- * Which steps an import takes, and which of them are already behind it (issue #337).
- *
- * Kept apart from [ImportTranscriber] and free of Android so the answer can be tested: the screen
- * promises this list to the user the moment the file arrives, so it has to match what the transcriber
- * actually does — the conditions below are the ones in `ImportTranscriber.split`, not a second guess
- * at them.
+ * Kept apart from [ImportTranscriber] and free of Android so the answers can be tested: whether there
+ * is a video to unpack, and whether anything is decoded and cut at all — the latter being the exact
+ * condition in `ImportTranscriber.split`, not a second guess at it.
  */
 object ImportStages {
 
@@ -81,41 +65,20 @@ object ImportStages {
         fileName.substringAfterLast('.', "").lowercase() in VIDEO_EXTENSIONS
 
     /**
-     * The stages for a file of [sizeBytes] going to a provider capped at [uploadLimitBytes].
+     * Whether a file of [sizeBytes] going to a provider capped at [uploadLimitBytes] gets decoded and
+     * cut before it is sent — the [ImportStage.PREPARE] step.
      *
-     * [uploadLimitBytes] of 0 means the cap is **unknown**, never "unlimited" — the same rule the
-     * transcriber follows, and the reason an unknown limit alone never puts the cutting step on the
-     * list. On-device skips the upload, and skips the cutting too unless the file is a video, which
-     * has to be unpacked whether or not anything is ever sent.
+     * [uploadLimitBytes] of 0 means the cap is **unknown**, never "unlimited", which is why an unknown
+     * limit alone is not a reason to cut anything. On-device sends nothing, so a size limit means
+     * nothing there either — but a video still has to be unpacked before the engine can read it.
      */
-    fun plan(
+    fun prepares(
         isVideo: Boolean,
         sizeBytes: Long,
         uploadLimitBytes: Long,
         onDevice: Boolean,
-    ): ImportPlan {
+    ): Boolean {
         val overLimit = uploadLimitBytes > 0L && sizeBytes > uploadLimitBytes
-        val prepares = isVideo || (overLimit && !onDevice)
-        val stages = buildList {
-            add(ImportStage.COPY)
-            if (prepares) add(ImportStage.PREPARE)
-            if (!onDevice) add(ImportStage.UPLOAD)
-            add(ImportStage.TRANSCRIBE)
-            add(ImportStage.FINISH)
-        }
-        return ImportPlan(stages = stages, fromVideo = isVideo)
-    }
-
-    /**
-     * [stage] seen from [current].
-     *
-     * With several pieces the run goes upload → transcribe → upload again, so a stage that was done a
-     * moment ago legitimately becomes pending again. That is not a glitch to smooth over: the piece
-     * counter next to it says which round this is.
-     */
-    fun stateOf(stage: ImportStage, current: ImportStage): StageState = when {
-        stage.ordinal < current.ordinal -> StageState.DONE
-        stage == current -> StageState.ACTIVE
-        else -> StageState.PENDING
+        return isVideo || (overLimit && !onDevice)
     }
 }

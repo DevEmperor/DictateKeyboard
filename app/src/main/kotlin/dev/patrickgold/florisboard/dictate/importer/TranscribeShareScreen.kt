@@ -53,6 +53,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -72,6 +73,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -122,13 +124,10 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     var busy by remember { mutableStateOf(true) }
     /** The one-line note for a rewording running over a transcript that is already on screen. */
     var status by remember { mutableStateOf("") }
-    /**
-     * The steps this file will take, settled before the first of them runs (issue #337), and where it
-     * currently stands. Fixed up front on purpose: a list that grew a row halfway through would be the
-     * same surprise as the "Preparing…" it replaces.
-     */
-    var stagePlan by remember { mutableStateOf<ImportPlan?>(null) }
+    /** Which step the import is on, shown as one line over the progress bar (issue #337). */
     var progress by remember { mutableStateOf(ImportProgress(ImportStage.COPY)) }
+    /** Only picks the wording of the preparing step: unpacking a video, or getting audio ready. */
+    var fromVideo by remember { mutableStateOf(false) }
     /** Who will be doing the transcribing, read fresh whenever a run starts — the user may have gone to
      *  the provider settings and changed it in between. */
     var providerLabel by remember { mutableStateOf("") }
@@ -197,10 +196,6 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         val account = ImportTranscriber.accountFor(prefs)
         val preset = ImportTranscriber.presetFor(account)
         refreshProvider()
-        // Re-planned rather than reused: this is also the retry path, and between the two runs the user
-        // may have gone off to the settings and picked a provider with a different upload limit — or the
-        // on-device engine, which has no upload step at all.
-        stagePlan = ImportTranscriber.planFor(file, account.providerId, onDeviceProvider)
         if (account.apiKey.isBlank() && preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
             // Checked before the file is touched: failing at the upload would say the same thing three
             // seconds later and with a worse message.
@@ -210,10 +205,16 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             return
         }
         busy = true
-        // Retry arrives here too, with the copy long finished — so the list resumes at the first step
-        // that still has work in it, and the ones before it stay ticked.
+        // Retry arrives here too, with the copy long finished, so the line starts at the first step
+        // that still has work in it. The transcriber overwrites this on its own within a moment.
         progress = ImportProgress(
-            stagePlan?.stages?.firstOrNull { it != ImportStage.COPY } ?: ImportStage.TRANSCRIBE,
+            if (ImportTranscriber.preparesFor(file, account.providerId, onDeviceProvider)) {
+                ImportStage.PREPARE
+            } else if (onDeviceProvider) {
+                ImportStage.TRANSCRIBE
+            } else {
+                ImportStage.UPLOAD
+            }
         )
         job = scope.launch {
             try {
@@ -265,12 +266,12 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             error = context.getString(R.string.dictate__import_no_file)
             return@LaunchedEffect
         }
-        // Name and size first, without moving a byte: they are all it takes to know whether there is a
-        // video to unpack and whether the file will have to be cut, which is the list the user is shown
-        // while the copy is still running (issue #337).
+        // Name and size first, without moving a byte: the name is what says whether there is a video
+        // to unpack, and the copy that follows can then report its own progress against the size
+        // (issue #337).
         val header = withContext(Dispatchers.IO) { readSharedFileHeader(context, uri) }
         refreshProvider()
-        stagePlan = ImportTranscriber.planFor(header.displayName, header.sizeBytes, prefs)
+        fromVideo = ImportStages.looksLikeVideo(header.displayName)
         progress = ImportProgress(ImportStage.COPY, fraction = 0f)
         val copied = withContext(Dispatchers.IO) {
             copySharedFile(context, uri, header) { moved, total ->
@@ -351,26 +352,33 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         Box(modifier) {
             when {
                 busy && text.isEmpty() -> Column(
-                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    ImportStepList(
-                        plan = stagePlan ?: ImportStages.plan(
-                            // Only until the header has been read, which is the first thing that
-                            // happens — a list without rows would flash otherwise.
-                            isVideo = false,
-                            sizeBytes = 0L,
-                            uploadLimitBytes = 0L,
-                            onDevice = onDeviceProvider,
-                        ),
-                        progress = progress,
-                        providerName = providerLabel,
-                        onDevice = onDeviceProvider,
-                        modifier = Modifier.fillMaxWidth(),
+                    // One line saying which step is running, over the bar that shows how far it has
+                    // got (issue #337). The percentage only exists where something can be counted;
+                    // everywhere else the bar keeps moving without claiming a number.
+                    Text(
+                        text = importStatusLine(progress, fromVideo, providerLabel, onDeviceProvider),
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
                     )
                     Spacer(Modifier.height(16.dp))
-                    TextButton(onClick = { job?.cancel(); busy = false; status = "" }) {
+                    val fraction = progress.fraction
+                    if (fraction != null) {
+                        LinearProgressIndicator(
+                            progress = { fraction },
+                            modifier = Modifier.fillMaxWidth(PROGRESS_WIDTH),
+                        )
+                    } else {
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth(PROGRESS_WIDTH))
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    // Cancel means cancel: the work stops, the copy is thrown away and the screen goes,
+                    // which puts the user back in the app they shared from. Leaving a blank screen
+                    // behind — with the file still in the cache — was the worst of both.
+                    TextButton(onClick = { job?.cancel(); onClose() }) {
                         Text(stringRes(R.string.action__cancel))
                     }
                 }
@@ -767,3 +775,6 @@ private fun shareText(context: Context, text: String) {
     }
     context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 }
+
+/** How much of the width the progress bar takes: wide enough to read, narrow enough to look placed. */
+private const val PROGRESS_WIDTH = 0.7f

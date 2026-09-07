@@ -55,15 +55,34 @@ object ImportTranscriber {
      */
     private const val IMPORT_CALL_TIMEOUT_SECONDS = 900L
 
+    /** Cache directory holding the copy of the shared file, out of reach of the expiring grant. */
+    const val SHARE_DIR = "dictate_share"
+
+    /** Cache directory holding the pieces a long file was cut into. */
+    const val PARTS_DIR = "dictate_share_parts"
+
     class NoSpeechException : Exception()
+
+    /**
+     * Throws away everything an import left in the cache.
+     *
+     * Called when the screen is finished with, because the copy is only ever for this screen —
+     * playback, a retry, and the history entry, which keeps a copy of its own in `filesDir`. A shared
+     * video can be a hundred megabytes; leaving it lying around until the next cold start (when
+     * `FlorisApplication` wipes the cache anyway) is a lot of somebody's storage for nothing.
+     */
+    fun clearCache(context: Context) {
+        runCatching { File(context.cacheDir, SHARE_DIR).deleteRecursively() }
+        runCatching { File(context.cacheDir, PARTS_DIR).deleteRecursively() }
+    }
 
     /**
      * Transcribes [audio], splitting it first when it cannot be sent in one piece.
      *
-     * [onProgress] names the stage the import is in, so the screen can tick off a list instead of
-     * spinning (issue #337). The stages reported here are the ones this function owns — preparing,
-     * uploading, waiting for the answer; the copy before it and the history entry after it belong to
-     * the caller. Cancellation is cooperative: the coroutine is checked between pieces, so stopping a
+     * [onProgress] names the stage the import is in, so the screen can say which of them is running
+     * instead of calling all of it "Preparing…" (issue #337). The stages reported here are the ones
+     * this function owns — preparing, uploading, waiting for the answer; the copy before it and the
+     * history entry after it belong to the caller. Cancellation is cooperative: the coroutine is checked between pieces, so stopping a
      * ten-part job never costs more than the part in flight.
      */
     suspend fun transcribe(
@@ -78,10 +97,11 @@ object ImportTranscriber {
         val onDevice = preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE
         val model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" }
 
-        // The same plan the screen showed the user when the file arrived, so a step is only announced
-        // here if there is a row waiting for it.
-        val plan = planFor(audio, account.providerId, onDevice)
-        if (ImportStage.PREPARE in plan.stages) onProgress(ImportProgress(ImportStage.PREPARE))
+        // Only announced when it is really about to happen: a short voice note has nothing to unpack,
+        // and naming a step that takes no time is how "Preparing…" got its reputation.
+        if (preparesFor(audio, account.providerId, onDevice)) {
+            onProgress(ImportProgress(ImportStage.PREPARE))
+        }
         val pieces = split(appContext, audio, account.providerId, onDevice)
         val parts = ArrayList<String>(pieces.size)
         try {
@@ -130,34 +150,18 @@ object ImportTranscriber {
     }
 
     /**
-     * The steps [audio] will take on its way to [providerId], decided before the first of them runs.
+     * Whether [audio] gets decoded and cut before it goes to [providerId] — the preparing step.
      *
      * Lives here rather than in the screen because the conditions are this object's: the upload cap it
      * asks the registry for, and the rule in [split] that decides whether anything has to be unpacked
      * or cut at all.
      */
-    fun planFor(audio: File, providerId: String, onDevice: Boolean): ImportPlan = ImportStages.plan(
+    fun preparesFor(audio: File, providerId: String, onDevice: Boolean): Boolean = ImportStages.prepares(
         isVideo = ImportStages.looksLikeVideo(audio.name),
         sizeBytes = audio.length(),
         uploadLimitBytes = ProviderRegistry.maxUploadBytes(providerId),
         onDevice = onDevice,
     )
-
-    /** [planFor] for a file that has not been copied out of the share grant yet. */
-    fun planFor(
-        fileName: String,
-        sizeBytes: Long,
-        prefs: FlorisPreferenceModel,
-    ): ImportPlan {
-        val account = accountFor(prefs)
-        val preset = presetFor(account)
-        return ImportStages.plan(
-            isVideo = ImportStages.looksLikeVideo(fileName),
-            sizeBytes = sizeBytes,
-            uploadLimitBytes = ProviderRegistry.maxUploadBytes(account.providerId),
-            onDevice = preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE,
-        )
-    }
 
     /**
      * The whole file as one piece, or several written to the cache.
@@ -198,7 +202,7 @@ object ImportTranscriber {
         val ranges = ImportChunkPlanner.plan(analysis.segments, analysis.samples.size, maxSamples)
         if (ranges.isEmpty()) return emptyList()
 
-        val dir = File(appContext.cacheDir, "dictate_share_parts").apply { deleteRecursively(); mkdirs() }
+        val dir = File(appContext.cacheDir, PARTS_DIR).apply { deleteRecursively(); mkdirs() }
         val out = ArrayList<File>(ranges.size)
         for ((i, range) in ranges.withIndex()) {
             val file = File(dir, "part_${i + 1}.wav")

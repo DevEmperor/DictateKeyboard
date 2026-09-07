@@ -68,6 +68,15 @@ class TranscribeShareActivity : ComponentActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Finished with, one way or another: transcript read, cancelled, or backed out of. The copy in
+        // the cache existed for this screen alone — the history keeps its own in filesDir — and a
+        // shared video can be a hundred megabytes, so it goes with the screen rather than lying there
+        // until the next cold start clears the cache.
+        if (isFinishing) ImportTranscriber.clearCache(this)
+    }
+
     companion object {
         /** Extra carrying an already-picked file, used by the in-app "Transcribe a file" entry. */
         const val EXTRA_PICKED_URI = "dictate.pickedUri"
@@ -125,10 +134,9 @@ private const val COPY_REPORT_INTERVAL_NANOS = 80_000_000L
 /**
  * What the sharing app says about [uri] before anything is read from it.
  *
- * Asked on its own so the screen can list the steps ahead *before* the copy starts (issue #337):
- * whether there is a video to unpack and whether the file is too big to send in one piece are both
- * answers this pair already contains. [sizeBytes] is 0 when the provider does not say — never a
- * reason to guess one.
+ * Asked on its own so the screen knows what it is dealing with *before* the copy starts (issue #337):
+ * whether there is a video to unpack, and what to count the copy's progress against. [sizeBytes] is 0
+ * when the provider does not say — never a reason to guess one.
  */
 data class SharedFileHeader(val displayName: String, val sizeBytes: Long)
 
@@ -170,7 +178,7 @@ fun copySharedFile(
     val resolved = header ?: readSharedFileHeader(context, uri)
     val safeName = resolved.displayName
     var size = resolved.sizeBytes
-    val dir = File(context.cacheDir, "dictate_share").apply { deleteRecursively(); mkdirs() }
+    val dir = File(context.cacheDir, ImportTranscriber.SHARE_DIR).apply { deleteRecursively(); mkdirs() }
     val target = File(dir, safeName)
     val copied = runCatching {
         context.contentResolver.openInputStream(uri)?.use { input ->
