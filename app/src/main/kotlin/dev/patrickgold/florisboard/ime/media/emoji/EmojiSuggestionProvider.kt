@@ -168,7 +168,9 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val index = cachedIndexes.get(subtype.primaryLocale) ?: return emptyList()
         val minLength = prefs.emoji.suggestionQueryMinLength.get()
         val word = typed.ifEmpty { EmojiSuggestionIndex.completedWordBefore(content.textBeforeSelection) }
-        if (word.length < minLength) return emptyList()
+        // The user's floor, read as what it means rather than as a character count: two characters is a
+        // whole word in Han, kana and Hangul.
+        if (word.length < EmojiSuggestionIndex.minimumLengthFor(word, minLength)) return emptyList()
         // The same "maximum candidate count" the colon search obeys. A typed word rarely has more than
         // two or three emoji worth offering, so the slider is a ceiling here rather than a quota.
         return index.lookup(word).take(maxCandidateCount).map { emoji ->
