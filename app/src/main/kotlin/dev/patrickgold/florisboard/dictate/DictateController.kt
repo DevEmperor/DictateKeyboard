@@ -1921,7 +1921,13 @@ object DictateController {
         discardRetainedAudio()
         if (reportSwallowedRewording(appContext)) return
         _state.value = UiState.Idle
-        if (outputTarget != OutputTarget.IME || !showMilestoneNudge(appContext)) {
+        // Both nudges are Smartbar chips: they can only be seen, tapped and dismissed on the keyboard.
+        // Arming one after a dictation that did not come from the keyboard parked the state machine in a
+        // state nothing outside the keyboard can clear — which, for the floating button, meant it read
+        // "a dictation is running" and stayed on screen over every app for good (#339). The nudges are
+        // not lost: the keyboard asks for them again on every open, and a milestone stays pending until
+        // it is actually shown.
+        if (outputTarget == OutputTarget.IME && !showMilestoneNudge(appContext)) {
             maybePromptForReview()
         }
     }
@@ -3321,7 +3327,7 @@ object DictateController {
      *  - a `requiresSelection` prompt operates on [selectionOverride] (or the current selection) and
      *    replaces it with the reworded result;
      *  - a free prompt generates from the instruction alone and inserts at the cursor.
-     * No-op unless idle (or recovering from a transient error).
+     * No-op unless nothing is in flight: idle, recovering from a transient error, or holding a nudge.
      */
     fun applyPrompt(
         context: Context,
@@ -3329,7 +3335,14 @@ object DictateController {
         selectionOverride: String? = null,
         target: OutputTarget? = null,
     ) {
-        if (_state.value !is UiState.Idle && _state.value !is UiState.Error) return
+        // A nudge is a notice, not work: it must not swallow an action the user asked for. Left over from
+        // #339, where a rate/donate chip parked the state machine and the floating button's long-press
+        // menu quietly did nothing. Interrupted stays out — an offer of kept audio hangs on it.
+        if (_state.value !is UiState.Idle && _state.value !is UiState.Error &&
+            _state.value !is UiState.Promo
+        ) {
+            return
+        }
         // Tapping a prompt is the other moment a rewording is certain (#189). The head start is only the
         // selection read and the request build, but if the server was asleep it means the retry lands on a
         // machine that is already coming up instead of one that has not been told yet.

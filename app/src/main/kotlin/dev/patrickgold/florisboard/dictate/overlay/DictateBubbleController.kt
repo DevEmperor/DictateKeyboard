@@ -251,7 +251,6 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                     accentColor = accent
                     rebuildSkin()
                 }
-                val active = state !is DictateController.UiState.Idle
                 // The Dictate keyboard is on screen when it is the selected IME *and* an IME window is
                 // visible. While it is up it already has its own mic, so hide the bubble (unless the user
                 // opted in). Using the IME-visible signal (not the dictation state) means a keyboard-driven
@@ -259,15 +258,17 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
                 // still keeps it shown.
                 val dictateKeyboardShown = dictateKeyboard && imeVisible
                 val hiddenByOwnKeyboard = dictateKeyboardShown && !showWithKeyboard
-                // Hide the bubble entirely while another keyboard/app drives a system voice-input session
-                // (#67) — its own overlay/panel is showing, and the recording isn't the bubble's (RECOGNITION
-                // target), so a floating mic on top would be confusing.
-                // A dark screen is no place for a floating window (#269). This layer deliberately outlives the
-                // keyguard, so nobody takes the bubble away for us, and an always-on display will happily
-                // draw a button on a phone its owner believes to be off. The window is *removed* rather than
-                // faded: alpha or GONE is a request to a compositor we do not control, and that compositor is
-                // exactly the part behaving unexpectedly here.
-                val show = enabled && (focused || active) && !hiddenByOwnKeyboard && !recogActive && screenOn
+                // The rule itself lives in [BubbleVisibility], where it can be asked without a phone. Note
+                // that a bubble is *removed* rather than faded: alpha or GONE is a request to a compositor
+                // we do not control, and that compositor is exactly the part behaving unexpectedly here.
+                val show = BubbleVisibility.shouldShow(
+                    enabled = enabled,
+                    focused = focused,
+                    state = state,
+                    hiddenByOwnKeyboard = hiddenByOwnKeyboard,
+                    recognitionActive = recogActive,
+                    screenOn = screenOn,
+                )
                 if (show) ensureShown() else hide()
                 // The rewording menu is a window of its own and does not come down with hide(). Tied to the
                 // screen alone on purpose: taking it away whenever the bubble hides would be a different
@@ -488,8 +489,13 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             DictateController.holdForLocalModel(context)
             return
         }
-        // Rewording only makes sense when not already recording/transcribing.
-        if (state !is DictateController.UiState.Idle && state !is DictateController.UiState.Error) return
+        // Rewording only makes sense when not already recording/transcribing. A parked nudge is neither —
+        // and used to make this menu open into nothing, the same way it blocked [applyPrompt] (#339).
+        if (state !is DictateController.UiState.Idle && state !is DictateController.UiState.Error &&
+            state !is DictateController.UiState.Promo
+        ) {
+            return
+        }
         if (prefs.dictate.floatingButtonHaptic.get()) vibrateTap()
         cancelDim()
         applyDim(false)
@@ -1076,7 +1082,12 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         // Promote the service to a microphone foreground service *before* recording starts, so the mic
         // capture is allowed while the app is in the background (Android 14+). Demoted again when the
         // dictation finishes (see manageForeground).
-        val starting = current is DictateController.UiState.Idle
+        //
+        // Asked as "would this tap start a recording", not as "is the state exactly idle": every resting
+        // state the machine can hold — a nudge, an interrupted recording, a failure with nothing to
+        // resend — starts one just the same, and getting that wrong means recording without the
+        // promotion, which is where Android 14 refuses the microphone in the background (#339).
+        val starting = DictateController.canStartRecording()
         if (starting) {
             service.startMicForeground()
             weStartedDictation = true
