@@ -27,6 +27,21 @@ data class ProviderConfig(
     val extraHeaders: Map<String, String> = emptyMap(),
     val proxy: ProxyConfig? = null,
     val timeoutSeconds: Long = 120,
+    /**
+     * Budget for a whole call — connect, upload, wait, read — where it must differ from
+     * [timeoutSeconds] (issue #337).
+     *
+     * The two were the same number until a shared file went up: [timeoutSeconds] is a *per-operation*
+     * limit and is right at two minutes, because a socket that has not moved for that long is dead. A
+     * whole call is a different question, and for an import it can honestly take longer than two
+     * minutes — 25 MB of audio on a mobile connection, then a model reading ten minutes of speech.
+     * Worse, a timeout counts as retryable, so the same bytes went up four times before the failure
+     * appeared.
+     *
+     * Null keeps the old behaviour: the call budget is [timeoutSeconds]. Only the file import raises
+     * it, and only because it runs on a screen with visible progress and a cancel button.
+     */
+    val callTimeoutSeconds: Long? = null,
     val transcriptionApi: TranscriptionApi = TranscriptionApi.OPENAI_MULTIPART,
     /**
      * Single-call multimodal transcription (issue #130): when true, audio is sent to `chat/completions`

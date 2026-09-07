@@ -72,6 +72,7 @@ class OpenAiCompatibleClient(
         sharedClientFor(
             HttpClientKey(
                 timeoutSeconds = config.timeoutSeconds,
+                callTimeoutSeconds = config.callTimeoutSeconds,
                 proxy = config.proxy,
                 trustUserCerts = config.trustUserCerts,
             )
@@ -1103,7 +1104,9 @@ class OpenAiCompatibleClient(
     internal fun buildClient(): OkHttpClient {
         val timeout = Duration.ofSeconds(config.timeoutSeconds)
         val builder = OkHttpClient.Builder()
-            .callTimeout(timeout)
+            // The only budget that covers the whole journey, so the only one a long upload can exhaust
+            // while everything is working perfectly (issue #337). Per-operation limits stay below.
+            .callTimeout(Duration.ofSeconds(config.callTimeoutSeconds ?: config.timeoutSeconds))
             // Connection establishment needs a short budget per route. Uploading a long recording and
             // waiting for the model keep the full configured call/read/write timeout below.
             .connectTimeout(NETWORK_CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
@@ -1520,6 +1523,10 @@ class OpenAiCompatibleClient(
 
         private data class HttpClientKey(
             val timeoutSeconds: Long,
+            // Part of the key, not an afterthought: clients are cached and shared, so leaving it out
+            // would hand the import the two-minute client the keyboard built first — or the other way
+            // round (issue #337).
+            val callTimeoutSeconds: Long?,
             val proxy: ProxyConfig?,
             val trustUserCerts: Boolean,
         )
@@ -1573,12 +1580,15 @@ class OpenAiCompatibleClient(
             proxy: ProxyConfig? = null,
             useChatAudio: Boolean = false,
             trustUserCerts: Boolean = false,
+            /** Whole-call budget where the default two minutes is too short — see [ProviderConfig.callTimeoutSeconds]. */
+            callTimeoutSeconds: Long? = null,
         ): OpenAiCompatibleClient = OpenAiCompatibleClient(
             ProviderConfig(
                 baseUrl = baseUrlOverride ?: preset.baseUrl,
                 apiKey = apiKey,
                 extraHeaders = preset.extraHeaders,
                 proxy = proxy,
+                callTimeoutSeconds = callTimeoutSeconds,
                 transcriptionApi = preset.transcriptionApi,
                 useChatAudio = useChatAudio,
                 trustUserCerts = trustUserCerts,
