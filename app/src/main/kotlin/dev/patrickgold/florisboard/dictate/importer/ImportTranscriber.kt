@@ -17,6 +17,7 @@ import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.audio.AudioConvert
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioWav
+import dev.patrickgold.florisboard.dictate.audio.AudioSpeedUp
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
@@ -94,8 +95,8 @@ object ImportTranscriber {
      * [onProgress] names the stage the import is in, so the screen can say which of them is running
      * instead of calling all of it "Preparing…" (issue #337). The stages reported here are the ones
      * this function owns — preparing, uploading, waiting for the answer; the copy before it and the
-     * history entry after it belong to the caller. Cancellation is cooperative: the coroutine is checked between pieces, so stopping a
-     * ten-part job never costs more than the part in flight.
+     * history entry after it belong to the caller. Cancellation is cooperative: the coroutine is
+     * checked between pieces, so stopping a ten-part job never costs more than the part in flight.
      */
     suspend fun transcribe(
         context: Context,
@@ -238,19 +239,41 @@ object ImportTranscriber {
         onDevice: Boolean,
         onUpload: ((sent: Long, total: Long) -> Unit)?,
     ): String {
+        // Time compression (issue #272), on the user's own setting and nothing else. It belongs here for
+        // the same reason it belongs in the keyboard — every provider bills by duration — except that an
+        // import is where the minutes actually add up: a dictation is a sentence, a shared recording is
+        // a meeting. It stays off unless it was switched on, because of the three ways this app shortens
+        // an upload it is the only one that changes what the model hears.
+        //
+        // Per piece rather than over the whole file: a piece is bounded by the upload limit, and this
+        // decodes what it is given into memory. On-device is skipped exactly as in the dictation path —
+        // nothing is billed there, and the trade would be accuracy for nothing.
+        val speedPercent = prefs.dictate.audioSpeedUpPercent.get()
+        val spedUp = if (!onDevice && speedPercent > AudioSpeedUp.MIN_PERCENT) {
+            AudioSpeedUp.process(
+                audio,
+                File(appContext.cacheDir, "spd_${audio.nameWithoutExtension}.wav"),
+                speedPercent / 100f,
+            )
+        } else {
+            null
+        }
+        val source = spedUp ?: audio
         // The container the user brought is the whole point of this screen, so it is also where a
         // provider is most likely to be handed something it does not take (issue #322). A slice this
         // function made is already WAV and passes straight through; a file small enough to go up whole
         // is whatever the sharing app wrote. On-device decodes anything and needs no conversion.
         val converted = if (onDevice) null else {
-            AudioConvert.toAccepted(appContext.cacheDir, audio, preset.acceptedAudioContainers)
+            AudioConvert.toAccepted(appContext.cacheDir, source, preset.acceptedAudioContainers)
         }
         try {
             return transcribeFile(
-                appContext, prefs, account, preset, model, converted ?: audio, onDevice, onUpload,
+                appContext, prefs, account, preset, model, converted ?: source, onDevice, onUpload,
             )
         } finally {
             converted?.let { runCatching { it.delete() } }
+            // Never the original: it is the caller's, and the history entry is made from it.
+            spedUp?.let { runCatching { it.delete() } }
         }
     }
 
