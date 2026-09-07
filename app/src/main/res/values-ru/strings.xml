@@ -1746,6 +1746,10 @@
     <string name="dictate__action_save_audio">Сохранить аудио</string>
     <string name="dictate__audio_saved">Аудио сохранено в Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Не удалось сохранить аудио</string>
+    <string name="dictate__instant_recording_mode_off">Выключено</string>
+    <string name="dictate__instant_recording_mode_always">При каждом открытии клавиатуры</string>
+    <string name="dictate__instant_recording_mode_after_switch">Только после переключения на {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">Также в числовых полях</string>
     <string name="dictate__instant_recording_skip_numeric_title">Пропускать числовые поля</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Не запускать автоматически в полях чисел, телефона или PIN</string>
     <string name="settings__localization__subtype_status_words">Подсказки</string>

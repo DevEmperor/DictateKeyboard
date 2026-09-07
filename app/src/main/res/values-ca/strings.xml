@@ -1616,6 +1616,10 @@
     <string name="dictate__action_save_audio">Desa l\'àudio</string>
     <string name="dictate__audio_saved">Àudio desat a Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">No s\'ha pogut desar l\'àudio</string>
+    <string name="dictate__instant_recording_mode_off">Desactivat</string>
+    <string name="dictate__instant_recording_mode_always">Cada cop que s\'obre el teclat</string>
+    <string name="dictate__instant_recording_mode_after_switch">Només després de canviar a {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">També als camps numèrics</string>
     <string name="dictate__instant_recording_skip_numeric_title">Omet camps numèrics</string>
     <string name="dictate__instant_recording_skip_numeric_summary">No iniciïs automàticament en camps de números, telèfon o PIN</string>
     <string name="settings__localization__subtype_status_words">Suggeriments</string>

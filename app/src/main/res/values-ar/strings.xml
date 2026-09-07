@@ -1603,6 +1603,10 @@
     <string name="dictate__action_save_audio">حفظ الصوت</string>
     <string name="dictate__audio_saved">تم حفظ الصوت في Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">تعذّر حفظ الصوت</string>
+    <string name="dictate__instant_recording_mode_off">إيقاف</string>
+    <string name="dictate__instant_recording_mode_always">في كل مرة تُفتح فيها لوحة المفاتيح</string>
+    <string name="dictate__instant_recording_mode_after_switch">فقط بعد التبديل إلى {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">وأيضًا في حقول الأرقام</string>
     <string name="dictate__instant_recording_skip_numeric_title">تخطي حقول الأرقام</string>
     <string name="dictate__instant_recording_skip_numeric_summary">لا تبدأ تلقائيًا في حقول الأرقام أو الهاتف أو رمز PIN</string>
     <string name="settings__localization__subtype_status_words">الاقتراحات</string>

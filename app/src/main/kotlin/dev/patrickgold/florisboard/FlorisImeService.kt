@@ -43,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import android.view.WindowManager
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -186,11 +187,12 @@ class FlorisImeService : LifecycleInputMethodService() {
         val imm = systemServiceOrNull(InputMethodManager::class)
         try {
             if (AndroidVersion.ATLEAST_API28_P) {
-                return switchToPreviousInputMethod()
+                return switchToPreviousInputMethod().also { armInstantRecordingIfSwitched(it) }
             } else {
                 window.window?.let { window ->
                     @Suppress("DEPRECATION")
-                    return imm?.switchToLastInputMethod(window.attributes.token) == true
+                    return (imm?.switchToLastInputMethod(window.attributes.token) == true)
+                        .also { armInstantRecordingIfSwitched(it) }
                 }
             }
         } catch (e: Exception) {
@@ -208,15 +210,26 @@ class FlorisImeService : LifecycleInputMethodService() {
      *
      * @return true if the switch was successful
      */
+    /**
+     * Notes that the user is leaving through our own switch key, so the next open can be recognised as
+     * coming back (issue #224). Only a successful switch counts, so the worst case is a missed
+     * auto-start, never a surprising one. See [InstantRecordingArm] for why this is not a preference.
+     */
+    private fun armInstantRecordingIfSwitched(switched: Boolean) {
+        if (!switched) return
+        dev.patrickgold.florisboard.dictate.InstantRecordingArm.arm(this)
+    }
+
     fun switchToNextInputMethod(): Boolean {
         val imm = systemServiceOrNull(InputMethodManager::class)
         try {
             if (AndroidVersion.ATLEAST_API28_P) {
-                return switchToNextInputMethod(false)
+                return switchToNextInputMethod(false).also { armInstantRecordingIfSwitched(it) }
             } else {
                 window.window?.let { window ->
                     @Suppress("DEPRECATION")
-                    return imm?.switchToNextInputMethod(window.attributes.token, false) == true
+                    return (imm?.switchToNextInputMethod(window.attributes.token, false) == true)
+                        .also { armInstantRecordingIfSwitched(it) }
                 }
             }
         } catch (e: Exception) {
@@ -251,6 +264,12 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+        // A keyboard service is created when it becomes the selected input method and destroyed when
+        // another one takes over, so being created *is* the "the user came to me" signal instant
+        // recording's third mode asks for (issue #224) — and unlike watching our own switch key, it sees
+        // the switch however it was made: our globe, the system picker, the notification shade. A plain
+        // field tap never reaches here, because the service is already alive by then.
+        dev.patrickgold.florisboard.dictate.InstantRecordingArm.arm(this)
         systemLocalesFlow.value = resources.configuration.locales
 
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
@@ -392,6 +411,14 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         val instantRecordingOn = prefs.dictate.instantRecording.get()
 
+        // "Only after switching to Dictate" (issue #224). The IME API cannot say how the keyboard was
+        // opened, so the question is answered from the other side: leaving through our own switch key is
+        // something we can see, and this open is the return trip. Consumed on *every* open, whether or
+        // not it fires — see [InstantRecordingArm].
+        val armedForSwitchIn = dev.patrickgold.florisboard.dictate.InstantRecordingArm.consume(this)
+        val instantRecordingAllowedHere =
+            instantRecordingOn && (!prefs.dictate.instantRecordingAfterSwitchOnly.get() || armedForSwitchIn)
+
         // Don't auto-start on number-only fields (number/phone/PIN/date-time), where dictation rarely
         // makes sense, when the user opted to skip them (issue #146).
         val isNumericField = editorInfo.inputAttributes.type in setOf(
@@ -413,7 +440,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (!startedFileTranscription &&
             !offeredInterrupted &&
             !restarting &&
-            instantRecordingOn &&
+            instantRecordingAllowedHere &&
             !skipInstantForNumeric &&
             dev.patrickgold.florisboard.dictate.DictateController.state.value is
                 dev.patrickgold.florisboard.dictate.DictateController.UiState.Idle &&

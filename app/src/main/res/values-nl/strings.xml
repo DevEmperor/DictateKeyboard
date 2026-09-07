@@ -1640,6 +1640,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__action_save_audio">Audio opslaan</string>
     <string name="dictate__audio_saved">Audio opgeslagen in Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Kan de audio niet opslaan</string>
+    <string name="dictate__instant_recording_mode_off">Uit</string>
+    <string name="dictate__instant_recording_mode_always">Elke keer als het toetsenbord opent</string>
+    <string name="dictate__instant_recording_mode_after_switch">Alleen na overschakelen naar {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">Ook in numerieke velden</string>
     <string name="dictate__instant_recording_skip_numeric_title">Numerieke velden overslaan</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Niet automatisch starten bij cijfer-, telefoon- of pinvelden</string>
     <string name="settings__localization__subtype_status_words">Suggesties</string>

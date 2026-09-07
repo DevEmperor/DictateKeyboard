@@ -1757,6 +1757,10 @@
     <string name="dictate__action_save_audio">Uložit zvuk</string>
     <string name="dictate__audio_saved">Zvuk uložen do Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Zvuk se nepodařilo uložit</string>
+    <string name="dictate__instant_recording_mode_off">Vypnuto</string>
+    <string name="dictate__instant_recording_mode_always">Při každém otevření klávesnice</string>
+    <string name="dictate__instant_recording_mode_after_switch">Jen po přepnutí na {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">Také v číselných polích</string>
     <string name="dictate__instant_recording_skip_numeric_title">Přeskočit číselná pole</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Nespouštět automaticky u polí pro čísla, telefon nebo PIN</string>
     <string name="settings__localization__subtype_status_words">Návrhy</string>

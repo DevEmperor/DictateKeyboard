@@ -514,6 +514,20 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__instant_recording_skip_numeric",
             default = true,
         )
+
+        /**
+         * Narrows instant recording to the one moment the user clearly meant it: having just switched
+         * *to* Dictate from another keyboard (issue #224). With this off it fires on every field the
+         * keyboard opens on, which as a default keyboard is most taps into most fields.
+         *
+         * Stored beside [instantRecording] rather than folded into one enum so that nobody's existing
+         * setting has to be migrated; the settings screen presents the two as a single three-way choice.
+         */
+        val instantRecordingAfterSwitchOnly = boolean(
+            key = "dictate__instant_recording_after_switch_only",
+            default = false,
+        )
+
         // Floating dictation button (issue #88): the in-app master toggle. The bubble only shows when
         // this is on AND the DictateAccessibilityService is enabled in the system accessibility settings
         // (the latter is the actual permission; this lets the user hide the bubble without digging into

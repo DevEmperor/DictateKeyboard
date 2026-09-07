@@ -2088,6 +2088,10 @@
     <string name="dictate__longform_mode_manual_summary" comment="Summary for the manual long-form mode">Send each part with the Next button while recording.</string>
     <string name="dictate__instant_recording_title" comment="Setting: start recording when the keyboard opens">Instant recording</string>
     <string name="dictate__instant_recording_summary" comment="Summary for the instant recording setting">Start recording automatically when the keyboard opens</string>
+    <string name="dictate__instant_recording_mode_off" comment="Instant recording: the feature is switched off">Off</string>
+    <string name="dictate__instant_recording_mode_always" comment="Instant recording: start recording whenever the keyboard opens on a text field">Every time the keyboard opens</string>
+    <string name="dictate__instant_recording_mode_after_switch" comment="Instant recording: start recording only when the user has just switched to this keyboard from another one">Only after switching to {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric" comment="Checkbox inside the instant-recording dialog: whether it also starts in number-only fields (phone, PIN, date)">Also in number fields</string>
     <string name="dictate__instant_recording_skip_numeric_title" comment="Setting: don't auto-start recording on number-only fields">Skip number fields</string>
     <string name="dictate__instant_recording_skip_numeric_summary" comment="Summary: instant recording won't auto-start on number/phone/PIN fields">Don\'t auto-start on number, phone or PIN fields</string>
     <string name="dictate__instant_recording_info_title" comment="Title of the dialog shown when enabling instant recording">Heads up</string>

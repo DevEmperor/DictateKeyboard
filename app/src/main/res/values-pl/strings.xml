@@ -1758,6 +1758,10 @@
     <string name="dictate__action_save_audio">Zapisz audio</string>
     <string name="dictate__audio_saved">Audio zapisane w Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Nie udało się zapisać audio</string>
+    <string name="dictate__instant_recording_mode_off">Wyłączone</string>
+    <string name="dictate__instant_recording_mode_always">Przy każdym otwarciu klawiatury</string>
+    <string name="dictate__instant_recording_mode_after_switch">Tylko po przełączeniu na {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">Także w polach liczbowych</string>
     <string name="dictate__instant_recording_skip_numeric_title">Pomijaj pola liczbowe</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Nie uruchamiaj automatycznie w polach liczb, telefonu lub PIN</string>
     <string name="settings__localization__subtype_status_words">Podpowiedzi</string>

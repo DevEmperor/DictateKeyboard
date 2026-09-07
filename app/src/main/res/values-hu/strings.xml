@@ -1739,6 +1739,10 @@
     <string name="dictate__action_save_audio">Hang mentése</string>
     <string name="dictate__audio_saved">Hang mentve ide: Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Nem sikerült menteni a hangot</string>
+    <string name="dictate__instant_recording_mode_off">Ki</string>
+    <string name="dictate__instant_recording_mode_always">A billentyűzet minden megnyitásakor</string>
+    <string name="dictate__instant_recording_mode_after_switch">Csak a {app_name} billentyűzetre váltás után</string>
+    <string name="dictate__instant_recording_in_numeric">Számmezőkben is</string>
     <string name="dictate__instant_recording_skip_numeric_title">Számmezők kihagyása</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Ne induljon automatikusan szám-, telefon- vagy PIN-mezőknél</string>
     <string name="settings__localization__subtype_status_words">Javaslatok</string>

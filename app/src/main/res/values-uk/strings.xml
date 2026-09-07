@@ -1590,6 +1590,10 @@
     <string name="dictate__action_save_audio">Зберегти аудіо</string>
     <string name="dictate__audio_saved">Аудіо збережено в Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">Не вдалося зберегти аудіо</string>
+    <string name="dictate__instant_recording_mode_off">Вимкнено</string>
+    <string name="dictate__instant_recording_mode_always">Щоразу, коли відкривається клавіатура</string>
+    <string name="dictate__instant_recording_mode_after_switch">Лише після переходу на {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">Також у числових полях</string>
     <string name="dictate__instant_recording_skip_numeric_title">Пропускати числові поля</string>
     <string name="dictate__instant_recording_skip_numeric_summary">Не запускати автоматично в полях чисел, телефону або PIN</string>
     <string name="settings__localization__subtype_status_words">Підказки</string>

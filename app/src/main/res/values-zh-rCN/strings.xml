@@ -1734,6 +1734,10 @@
     <string name="dictate__action_save_audio">保存音频</string>
     <string name="dictate__audio_saved">音频已保存到 Downloads/Dictate：%s</string>
     <string name="dictate__audio_save_failed">无法保存音频</string>
+    <string name="dictate__instant_recording_mode_off">关闭</string>
+    <string name="dictate__instant_recording_mode_always">每次打开键盘时</string>
+    <string name="dictate__instant_recording_mode_after_switch">仅在切换到 {app_name} 后</string>
+    <string name="dictate__instant_recording_in_numeric">在数字输入框中也启用</string>
     <string name="dictate__instant_recording_skip_numeric_title">跳过数字输入框</string>
     <string name="dictate__instant_recording_skip_numeric_summary">在数字、电话或 PIN 输入框中不自动开始</string>
     <string name="settings__localization__subtype_status_words">候选词</string>

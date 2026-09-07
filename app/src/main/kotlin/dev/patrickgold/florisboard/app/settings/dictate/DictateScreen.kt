@@ -492,32 +492,17 @@ fun DictateRecordingScreen() = FlorisScreen {
             max = AudioSpeedUp.MAX_PERCENT,
             stepIncrement = 5,
         )
-        SwitchPreference(
-            prefs.dictate.instantRecording,
+        // One row, three states and a detail — see [InstantRecordingPreference] (issue #224).
+        var showInstantRecordingInfo by remember { mutableStateOf(false) }
+        InstantRecordingPreference(
+            enabled = prefs.dictate.instantRecording,
+            afterSwitchOnly = prefs.dictate.instantRecordingAfterSwitchOnly,
+            skipNumeric = prefs.dictate.instantRecordingSkipNumeric,
+            title = stringRes(R.string.dictate__instant_recording_title),
             icon = Icons.Default.Bolt,
             modifier = Modifier.settingsSearchAnchor("dictate__instant_recording_title"),
-            title = stringRes(R.string.dictate__instant_recording_title),
-            summary = stringRes(R.string.dictate__instant_recording_summary),
+            onTurnedOn = { showInstantRecordingInfo = true },
         )
-        SwitchPreference(
-            prefs.dictate.instantRecordingSkipNumeric,
-            icon = Icons.Default.Dialpad,
-            modifier = Modifier.settingsSearchAnchor("dictate__instant_recording_skip_numeric_title"),
-            title = stringRes(R.string.dictate__instant_recording_skip_numeric_title),
-            summary = stringRes(R.string.dictate__instant_recording_skip_numeric_summary),
-            enabledIf = { prefs.dictate.instantRecording.isTrue() },
-        )
-        // Inform the user once, when they switch instant recording on, that it disables the
-        // interrupted-recording recovery (mutually exclusive — issue #120).
-        val instantRecordingEnabled by prefs.dictate.instantRecording.collectAsState()
-        var showInstantRecordingInfo by remember { mutableStateOf(false) }
-        var prevInstantRecording by remember { mutableStateOf(instantRecordingEnabled) }
-        LaunchedEffect(instantRecordingEnabled) {
-            if (instantRecordingEnabled && !prevInstantRecording) {
-                showInstantRecordingInfo = true
-            }
-            prevInstantRecording = instantRecordingEnabled
-        }
         if (showInstantRecordingInfo) {
             AlertDialog(
                 onDismissRequest = { showInstantRecordingInfo = false },

@@ -1672,6 +1672,10 @@
     <string name="dictate__action_save_audio">音声を保存</string>
     <string name="dictate__audio_saved">音声を Downloads/Dictate に保存しました: %s</string>
     <string name="dictate__audio_save_failed">音声を保存できませんでした</string>
+    <string name="dictate__instant_recording_mode_off">オフ</string>
+    <string name="dictate__instant_recording_mode_always">キーボードを開くたびに</string>
+    <string name="dictate__instant_recording_mode_after_switch">{app_name} に切り替えたときだけ</string>
+    <string name="dictate__instant_recording_in_numeric">数字入力欄でも有効にする</string>
     <string name="dictate__instant_recording_skip_numeric_title">数字入力欄をスキップ</string>
     <string name="dictate__instant_recording_skip_numeric_summary">数字・電話・PIN入力欄では自動開始しない</string>
     <string name="settings__localization__subtype_status_words">予測変換</string>

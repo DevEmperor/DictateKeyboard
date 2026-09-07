@@ -1722,6 +1722,10 @@
     <string name="dictate__action_save_audio">Guardar audio</string>
     <string name="dictate__audio_saved">Audio guardado en Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed">No se pudo guardar el audio</string>
+    <string name="dictate__instant_recording_mode_off">Desactivado</string>
+    <string name="dictate__instant_recording_mode_always">Cada vez que se abre el teclado</string>
+    <string name="dictate__instant_recording_mode_after_switch">Solo tras cambiar a {app_name}</string>
+    <string name="dictate__instant_recording_in_numeric">También en campos numéricos</string>
     <string name="dictate__instant_recording_skip_numeric_title">Omitir campos numéricos</string>
     <string name="dictate__instant_recording_skip_numeric_summary">No iniciar automáticamente en campos de números, teléfono o PIN</string>
     <string name="settings__localization__subtype_status_words">Sugerencias</string>
