@@ -62,6 +62,11 @@ import org.florisboard.lib.compose.stringRes
  * cancel actions and a live download progress bar, and lets the user pick which installed model is
  * active. The active model id is reported via [onActiveModelChange] and persisted by the caller when the
  * dialog is confirmed; installs/deletes take effect immediately on disk.
+ *
+ * [onModelChosen] is the narrower signal: the user *decided* to use an on-device model, by tapping an
+ * installed one or by downloading one while looking at this list (issue #343). It is deliberately not
+ * fired by every [onActiveModelChange] — that one also repairs a pick whose model was deleted, and
+ * repairing a dangling id must never change who transcribes.
  */
 @Composable
 fun LocalModelSection(
@@ -69,6 +74,7 @@ fun LocalModelSection(
     activeStreamingModelId: String,
     onActiveModelChange: (String) -> Unit,
     onActiveStreamingModelChange: (String) -> Unit,
+    onModelChosen: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
@@ -93,6 +99,9 @@ fun LocalModelSection(
         val installedNow = ids.toSet()
         (installedNow - known).forEach { id ->
             if (LocalModelCatalog.isStreaming(id)) onActiveStreamingModelChange(id) else onActiveModelChange(id)
+            // Several hundred megabytes are not downloaded by accident, and not while looking at
+            // something else: on this page, a model that lands is one the user asked for (issue #343).
+            onModelChosen()
         }
         known = installedNow
         // Safety net for a pick that is gone (deleted, or a leftover id from an older version): fall back
@@ -200,6 +209,8 @@ fun LocalModelSection(
                     if (spec.id in installed) {
                         if (spec.isStreaming) onActiveStreamingModelChange(spec.id)
                         else onActiveModelChange(spec.id)
+                        // The row says "tap to use", so it had better be the thing that transcribes.
+                        onModelChosen()
                     }
                 },
                 onInstall = {

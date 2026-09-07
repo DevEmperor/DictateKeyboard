@@ -291,7 +291,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                     editingId = null
                     activateOnSave = false
                 },
-                onSave = { updated ->
+                onSave = { updated, makeActive ->
                     writeKeyring(accounts.put(updated))
                     // A server of the user's own speaks both halves of the OpenAI API, and someone who
                     // added one during setup meant it to be the way the app works from now on.
@@ -300,6 +300,13 @@ fun DictateProvidersScreen() = FlorisScreen {
                             prefs.dictate.transcriptionProviderId.set(id)
                             prefs.dictate.rewordingProviderId.set(id)
                         }
+                    } else if (makeActive) {
+                        // Picking an on-device model is picking the engine (issue #343). The setup wizard
+                        // has always read it that way; this screen used to store the model and leave the
+                        // dictation going to whatever provider was configured before — or to nothing at
+                        // all, which came back as "no API key" after downloading half a gigabyte.
+                        // Rewording is left alone: the on-device engine has no chat side to offer.
+                        scope.launch { prefs.dictate.transcriptionProviderId.set(id) }
                     }
                     editingId = null
                     activateOnSave = false
@@ -539,7 +546,11 @@ private fun ProviderEditorDialog(
     preset: ProviderPreset?,
     account: ProviderAccount,
     onDismiss: () -> Unit,
-    onSave: (ProviderAccount) -> Unit,
+    /**
+     * [makeActive] means the user chose an on-device model in this dialog (issue #343), which is a
+     * decision about who transcribes and not only about which model — the caller acts on it.
+     */
+    onSave: (account: ProviderAccount, makeActive: Boolean) -> Unit,
     onDelete: (() -> Unit)?,
 ) {
     val prefs by FlorisPreferenceStore
@@ -552,6 +563,10 @@ private fun ProviderEditorDialog(
 
     var displayName by remember { mutableStateOf(account.displayName) }
     var apiKey by remember { mutableStateOf(account.apiKey) }
+    // Whether an on-device model was actually chosen in here, as opposed to merely looked at or deleted
+    // (issue #343). Reported on confirm, because that is when the choice of model is stored too — the
+    // two are one decision and must not be able to land separately.
+    var chosenOnDevice by remember { mutableStateOf(false) }
     var baseUrl by remember {
         mutableStateOf(
             account.customBaseUrl.ifBlank { if (preset?.allowsCustomBaseUrl == true) preset.baseUrl else "" },
@@ -644,7 +659,8 @@ private fun ProviderEditorDialog(
                     } else {
                         account.cachedModelsAt
                     },
-                )
+                ),
+                chosenOnDevice,
             )
         },
         onDismiss = onDismiss,
@@ -660,6 +676,7 @@ private fun ProviderEditorDialog(
                 activeStreamingModelId = realtimeModel,
                 onActiveModelChange = { transcriptionModel = it },
                 onActiveStreamingModelChange = { realtimeModel = it },
+                onModelChosen = { chosenOnDevice = true },
             )
         } else {
         Column {
