@@ -26,17 +26,23 @@ data class ProviderConfig(
     val apiKey: String,
     val extraHeaders: Map<String, String> = emptyMap(),
     val proxy: ProxyConfig? = null,
-    val timeoutSeconds: Long = 120,
+    /**
+     * How long a single read or write may take no bytes at all before the connection counts as dead.
+     *
+     * **Not a budget for the whole request.** It is the gap between bytes, which is why it also decides
+     * how long a model may think: while the server works on the audio it sends nothing, and that
+     * silence is one long read. Two minutes suits a dictation; an import raises it, because a piece of
+     * one can be ten minutes of speech for the model to get through.
+     */
+    val timeoutSeconds: Long = DEFAULT_TIMEOUT_SECONDS,
     /**
      * Budget for a whole call — connect, upload, wait, read — where it must differ from
      * [timeoutSeconds] (issue #337).
      *
-     * The two were the same number until a shared file went up: [timeoutSeconds] is a *per-operation*
-     * limit and is right at two minutes, because a socket that has not moved for that long is dead. A
-     * whole call is a different question, and for an import it can honestly take longer than two
-     * minutes — 25 MB of audio on a mobile connection, then a model reading ten minutes of speech.
-     * Worse, a timeout counts as retryable, so the same bytes went up four times before the failure
-     * appeared.
+     * The two were the same number until a shared file went up. A whole call is a different question
+     * from a stalled socket, and for an import it can honestly take longer than two minutes: 25 MB of
+     * audio on a mobile connection, and then a model reading ten minutes of speech. Worse, a timeout
+     * counts as retryable, so the same bytes went up four times before the failure appeared.
      *
      * Null keeps the old behaviour: the call budget is [timeoutSeconds]. Only the file import raises
      * it, and only because it runs on a screen with visible progress and a cancel button.
@@ -69,6 +75,11 @@ data class ProviderConfig(
     /** Base URL guaranteed to end with a single trailing slash. */
     val normalizedBaseUrl: String
         get() = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
+
+    companion object {
+        /** Two minutes per read or write, which is the app's answer to "is this connection alive?". */
+        const val DEFAULT_TIMEOUT_SECONDS = 120L
+    }
 }
 
 /**

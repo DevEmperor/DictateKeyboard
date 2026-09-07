@@ -1598,6 +1598,8 @@ class OpenAiCompatibleClient(
             proxy: ProxyConfig? = null,
             useChatAudio: Boolean = false,
             trustUserCerts: Boolean = false,
+            /** Per-read/write limit, which also caps how long the model may stay silent — see [ProviderConfig.timeoutSeconds]. */
+            timeoutSeconds: Long = ProviderConfig.DEFAULT_TIMEOUT_SECONDS,
             /** Whole-call budget where the default two minutes is too short — see [ProviderConfig.callTimeoutSeconds]. */
             callTimeoutSeconds: Long? = null,
         ): OpenAiCompatibleClient = OpenAiCompatibleClient(
@@ -1606,6 +1608,7 @@ class OpenAiCompatibleClient(
                 apiKey = apiKey,
                 extraHeaders = preset.extraHeaders,
                 proxy = proxy,
+                timeoutSeconds = timeoutSeconds,
                 callTimeoutSeconds = callTimeoutSeconds,
                 transcriptionApi = preset.transcriptionApi,
                 useChatAudio = useChatAudio,

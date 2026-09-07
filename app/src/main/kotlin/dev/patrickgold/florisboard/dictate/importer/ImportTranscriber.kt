@@ -55,6 +55,18 @@ object ImportTranscriber {
      */
     private const val IMPORT_CALL_TIMEOUT_SECONDS = 900L
 
+    /**
+     * How long a provider may stay silent during an import before the connection counts as dead.
+     *
+     * The call budget above is not enough on its own: while a model works through a piece of audio it
+     * sends nothing at all, and that silence is a single read. At the dictation's two minutes, a ten
+     * minute piece would be cut off mid-thought however generous the whole-call budget was. Five
+     * minutes covers every cloud provider measured so far with room to spare; a self-hosted engine on
+     * a slow machine can still outlast it, which is an argument for letting that be configurable
+     * rather than for guessing higher here.
+     */
+    private const val IMPORT_OPERATION_TIMEOUT_SECONDS = 300L
+
     /** Cache directory holding the copy of the shared file, out of reach of the expiring grant. */
     const val SHARE_DIR = "dictate_share"
 
@@ -276,6 +288,7 @@ object ImportTranscriber {
                 } else null,
                 proxy = prefs.dictate.dictateProxyConfig(),
                 trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                timeoutSeconds = IMPORT_OPERATION_TIMEOUT_SECONDS,
                 callTimeoutSeconds = IMPORT_CALL_TIMEOUT_SECONDS,
             ).transcribe(request).text.trim()
         }
