@@ -137,6 +137,12 @@ fun DictateProvidersScreen() = FlorisScreen {
         // server while being asked how the app should transcribe means to use it, so saving it makes it
         // active instead of leaving them to go and select it by hand.
         var activateOnSave by remember { mutableStateOf(false) }
+        // Set when the wizard sent the user here to pick an on-device model from the full list, which is
+        // the only situation where choosing one also switches the engine (issue #343). During setup that
+        // is the whole question being asked. Later it would move a working configuration underneath
+        // someone who only came to download a second model — quietly, on a screen they may not look at
+        // again.
+        var localFromSetup by remember { mutableStateOf(false) }
 
         fun writeKeyring(updated: ProviderAccounts) {
             scope.launch { prefs.dictate.providerAccounts.set(updated) }
@@ -151,7 +157,10 @@ fun DictateProvidersScreen() = FlorisScreen {
                     activateOnSave = true
                     editingId = ProviderAccount.newCustomId()
                 }
-                else -> editingId = target
+                else -> {
+                    editingId = target
+                    localFromSetup = target == ProviderRegistry.LOCAL.id
+                }
             }
             ProviderSetupHandoff.openEditorFor = null
         }
@@ -290,6 +299,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                 onDismiss = {
                     editingId = null
                     activateOnSave = false
+                    localFromSetup = false
                 },
                 onSave = { updated, makeActive ->
                     writeKeyring(accounts.put(updated))
@@ -300,22 +310,28 @@ fun DictateProvidersScreen() = FlorisScreen {
                             prefs.dictate.transcriptionProviderId.set(id)
                             prefs.dictate.rewordingProviderId.set(id)
                         }
-                    } else if (makeActive) {
-                        // Picking an on-device model is picking the engine (issue #343). The setup wizard
-                        // has always read it that way; this screen used to store the model and leave the
-                        // dictation going to whatever provider was configured before — or to nothing at
-                        // all, which came back as "no API key" after downloading half a gigabyte.
-                        // Rewording is left alone: the on-device engine has no chat side to offer.
+                    } else if (makeActive && localFromSetup) {
+                        // Coming out of the setup wizard, picking an on-device model *is* answering "how
+                        // should this app transcribe" — the wizard's own two recommendations already work
+                        // that way, and the full list, one tap further on, used to leave the user with a
+                        // downloaded model and a "no API key" error (issue #343).
+                        //
+                        // Only there. Anywhere else this would switch a working configuration under
+                        // someone who came to try a second model, on a screen they might not look at
+                        // again. Rewording is left alone in any case: the on-device engine has no chat
+                        // side to offer.
                         scope.launch { prefs.dictate.transcriptionProviderId.set(id) }
                     }
                     editingId = null
                     activateOnSave = false
+                    localFromSetup = false
                 },
                 onDelete = if (preset == null) {
                     {
                         writeKeyring(accounts.remove(id))
                         editingId = null
                         activateOnSave = false
+                        localFromSetup = false
                     }
                 } else {
                     null

@@ -966,9 +966,23 @@ private fun FlorisStepLayoutScope.OnDeviceChoice(
     // wizard declare itself finished and move on while several hundred megabytes were still coming.
     // Seeding from what is installed right now is what makes merely opening this page change nothing.
     var known by remember { mutableStateOf(installed) }
+    // Whether anything usable is set up at all — a key entered on the way past, or an on-device model
+    // already chosen. It is what keeps the repair below from ever overriding a decision.
+    val anythingConfigured = remember(accounts, activeProviderId, installedTick) {
+        isProviderConfigured(accounts, activeProviderId) { LocalModelManager.isInstalled(context, it) }
+    }
     LaunchedEffect(installed) {
         (installed - known).firstOrNull()?.let(onActivateModel)
         known = installed
+        // Several hundred megabytes take minutes, and nobody watches them arrive. Leaving this page and
+        // coming back re-seeds [known] from disk, so the model that landed in the meantime is no longer
+        // "new" and was never made the engine — which is how someone ends up with a downloaded model and
+        // a "no API key" error (issue #343). Repaired here rather than guessed at later: it only fires
+        // while nothing usable is configured at all, so it can fill a hole but never take a decision
+        // away from anyone.
+        if (activeModelId == null && !anythingConfigured) {
+            installed.firstOrNull()?.let(onActivateModel)
+        }
     }
 
     TextButton(

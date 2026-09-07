@@ -66,7 +66,10 @@ import org.florisboard.lib.compose.stringRes
  * [onModelChosen] is the narrower signal: the user *decided* to use an on-device model, by tapping an
  * installed one or by downloading one while looking at this list (issue #343). It is deliberately not
  * fired by every [onActiveModelChange] — that one also repairs a pick whose model was deleted, and
- * repairing a dangling id must never change who transcribes.
+ * repairing a dangling id is not a decision about anything.
+ *
+ * What the decision is worth is the caller's to judge: during setup it settles which engine dictates,
+ * while later it is just a model being chosen and must not move a working configuration.
  */
 @Composable
 fun LocalModelSection(
