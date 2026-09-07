@@ -103,6 +103,14 @@ data class TranscriptionRequest(
     val expectedLanguages: List<String> = emptyList(),
     /** Optional style/punctuation prompt to bias recognition. */
     val prompt: String? = null,
+    /**
+     * Called while the audio is going out, with the bytes sent and the total (issue #337).
+     *
+     * Only the file-import screen sets one: it is the single place with room to show a percentage and
+     * files big enough to need it. Left null everywhere else — a dictation is short and its wait is the
+     * model thinking, not the upload — so the wrapping in [ProgressRequestBody] never happens there.
+     */
+    val onUpload: ((sent: Long, total: Long) -> Unit)? = null,
 )
 
 data class TranscriptionResult(
