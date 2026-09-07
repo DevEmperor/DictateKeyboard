@@ -2329,9 +2329,17 @@
     <string name="dictate__import_title" comment="Title of the screen that transcribes a shared or picked audio file">Transcribe file</string>
     <string name="dictate__import_menu" comment="Entry on the Dictate settings home that opens the file picker">Transcribe a file</string>
     <string name="dictate__import_menu_summary" comment="Summary under the \'Transcribe a file\' entry">Pick an audio or video file and read what it says</string>
-    <string name="dictate__import_status_preparing" comment="Progress line while the shared file is being copied and examined">Preparing…</string>
-    <string name="dictate__import_status_transcribing" comment="Progress line while the file is being transcribed">Transcribing…</string>
-    <string name="dictate__import_status_part" comment="Progress line for a long file split into pieces; %1$d is the piece being worked on, %2$d the total">Part %1$d of %2$d…</string>
+    <!-- The steps of an import, listed from the start and ticked off as they finish (issue #337). One
+         "Preparing…" used to cover four different jobs, which made the longest of them look like a hang. -->
+    <string name="dictate__import_step_copy" comment="Step in the import progress list: the shared file is copied out of the temporary share into the app">Receiving the file</string>
+    <string name="dictate__import_step_extract" comment="Step in the import progress list: the sound track is taken out of a shared video">Extracting the audio</string>
+    <string name="dictate__import_step_prepare" comment="Step in the import progress list: the audio is decoded and cut into pieces small enough to send">Preparing the audio</string>
+    <string name="dictate__import_step_upload" comment="Step in the import progress list: the audio is being sent to the transcription service">Uploading</string>
+    <string name="dictate__import_step_transcribe" comment="Step in the import progress list; {provider} is the transcription service, e.g. Gemini">Transcribing with {provider}</string>
+    <string name="dictate__import_step_transcribe_local" comment="Step in the import progress list when transcription runs offline on the phone itself">Transcribing on this device</string>
+    <string name="dictate__import_step_finish" comment="Step in the import progress list: the transcript is saved to the history">Finishing up</string>
+    <string name="dictate__import_step_percent" comment="Progress of the step currently running; {v} is a number between 0 and 100">{v}%</string>
+    <string name="dictate__import_step_part" comment="Which piece of a split file is being worked on; {current} is the piece, {total} how many there are">Part {current} of {total}</string>
     <string name="dictate__import_result_label" comment="Label above the editable transcript on the import screen">Transcript</string>
     <string name="dictate__import_prompt_button" comment="Button that opens the menu of prompts to run over the transcript">Rewording</string>
     <string name="dictate__import_revert" comment="Button that puts the raw transcript back after a prompt rewrote it">Undo</string>
