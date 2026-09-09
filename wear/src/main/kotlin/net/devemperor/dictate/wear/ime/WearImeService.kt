@@ -182,7 +182,9 @@ class WearImeService :
         val ic = ic() ?: return
         val action = editorAction()
         if (action != null) {
-            ic.performEditorAction(action)
+            // The action *is* the submit, so the keyboard is done once it lands: the app is already
+            // showing its result, and the opaque input view would otherwise sit on top of it.
+            if (ic.performEditorAction(action)) requestHideSelf(0)
             return
         }
         val multiline = (currentInputEditorInfo?.inputType ?: 0) and
@@ -313,9 +315,11 @@ class WearImeService :
                     ic()?.commitText(text, 1)
                     recordingInfo.value = WearRecordingInfo()
                     dictationState.value = WearDictationState.IDLE
-                    // Dictation is the primary action — once the text is in, get out of the way so the
-                    // user sees their field again instead of a keyboard stuck open over it.
-                    requestHideSelf(0)
+                    // Dictation is the primary action, so getting out of the way is the right default —
+                    // but not over a field that declares a submit action. There the dictation is only
+                    // half the job: hiding steals the ⏎ the user still needs, and the teardown races the
+                    // commit we just made, which Samsung's browser loses the text to entirely (#294).
+                    if (editorAction() == null) requestHideSelf(0)
                 }
             }
         }
