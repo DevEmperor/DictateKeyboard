@@ -300,8 +300,16 @@ object ImportTranscriber {
             ),
         )
         return if (onDevice) {
-            LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model))
-                .transcribe(request).text.trim()
+            LocalTranscriptionProvider(
+                LocalTranscriptionProvider.modelDir(appContext, model),
+                // Bounded like every other on-device decode (#354), on the same upwards-only terms as the
+                // cloud branch below: a piece of a shared file is a bigger job than a dictation, so the
+                // default two minutes would cut short work that is going perfectly well.
+                timeoutMillis = maxOf(
+                    IMPORT_CALL_TIMEOUT_SECONDS,
+                    prefs.dictate.requestTimeout.get().toLong(),
+                ) * 1000L,
+            ).transcribe(request).text.trim()
         } else {
             OpenAiCompatibleClient.from(
                 preset,

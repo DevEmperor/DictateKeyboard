@@ -511,6 +511,40 @@ private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
             contentDescription = stringRes(R.string.dictate__status_transcribing_local),
         )
     }
+    // How long this has been going (#355). A spinner looks identical at second two and at minute seven,
+    // and the wait really can reach minutes — four attempts on a 120 s budget is about eight of them — so
+    // without a number there is no way to tell a slow answer from a dead one. Smaller than the status it
+    // trails, because it is the detail and not the message.
+    //
+    // Last, after the phone icon rather than before it: the icon qualifies the status word ("transcribing
+    // — here"), so splitting the two with a number breaks a phrase apart. The clock belongs at the end.
+    TranscribingElapsed(startedAtMs = state.startedAtMs)
+}
+
+/**
+ * The seconds a transcription has been running, as `12 s` (issue #355).
+ *
+ * Nothing is drawn for the first second: almost every dictation is answered inside it, and a counter
+ * that flashes "0 s" on its way past would be noise on the common path rather than reassurance on the
+ * slow one. [startedAtMs] survives retries and the on-device handover, so this is the whole wait.
+ */
+@Composable
+private fun TranscribingElapsed(startedAtMs: Long) {
+    var seconds by remember(startedAtMs) { mutableLongStateOf(0L) }
+    LaunchedEffect(startedAtMs) {
+        while (true) {
+            seconds = (SystemClock.elapsedRealtime() - startedAtMs) / 1000L
+            delay(250L)
+        }
+    }
+    if (seconds < 1L) return
+    Spacer(modifier = Modifier.width(6.dp))
+    // The Smartbar row centers its children vertically, so the smaller size sits centered against the
+    // status text rather than dropping onto its baseline.
+    SnyggText(
+        fontSizeMultiplier = 0.75f,
+        text = stringRes(R.string.unit__seconds__symbol, "v" to seconds),
+    )
 }
 
 /**

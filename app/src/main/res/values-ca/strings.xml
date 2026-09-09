@@ -1145,6 +1145,7 @@
     <string name="dictate__error_text_size_limit">Text massa llarg per reformular</string>
     <string name="dictate__error_format_not_supported">Format d\'àudio no compatible</string>
     <string name="dictate__error_timeout">La sol·licitud ha excedit el temps d\'espera</string>
+    <string name="dictate__error_timeout_on_device">Transcripció al dispositiu massa lenta</string>
     <string name="dictate__error_network">Sense connexió a internet</string>
     <string name="dictate__error_server">Proveïdor no disponible – torna-ho a provar</string>
     <string name="dictate__error_try_on_device">Sense connexió – prova al dispositiu</string>

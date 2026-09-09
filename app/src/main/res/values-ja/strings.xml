@@ -1201,6 +1201,7 @@
     <string name="dictate__error_text_size_limit">テキストが長すぎて言い換えできません</string>
     <string name="dictate__error_format_not_supported">音声形式がサポートされていません</string>
     <string name="dictate__error_timeout">リクエストがタイムアウトしました</string>
+    <string name="dictate__error_timeout_on_device">端末での文字起こしが遅すぎます</string>
     <string name="dictate__error_network">インターネット接続がありません</string>
     <string name="dictate__error_server">プロバイダーが利用できません – もう一度お試しください</string>
     <string name="dictate__error_try_on_device">接続なし – 端末内で試す</string>

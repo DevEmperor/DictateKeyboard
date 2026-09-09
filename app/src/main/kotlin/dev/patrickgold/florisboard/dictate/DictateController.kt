@@ -161,8 +161,18 @@ object DictateController {
          * because the offline fallback took over (#104), or because the user held the button to send this
          * one dictation locally (#228/#270). The bar says so: which engine is running is the difference
          * between waiting on a network and waiting on this phone.
+         *
+         * [startedAtMs] is an [SystemClock.elapsedRealtime] stamp driving the elapsed-seconds readout
+         * (#355) — the moment the *wait* began, not the moment this particular state object was made, so
+         * a retry or a handover to the fallback keeps counting up instead of starting over. It carries no
+         * default for that reason: only [setTranscribing] knows whether this continues a wait or starts
+         * one, so go through it rather than constructing this directly.
          */
-        data class Transcribing(val attempt: Int = 1, val onDevice: Boolean = false) : UiState
+        data class Transcribing(
+            val attempt: Int = 1,
+            val onDevice: Boolean = false,
+            val startedAtMs: Long,
+        ) : UiState
         /** A rewording/GPT request is in flight (manual prompt, auto-apply, auto-format or live). */
         data class Rewording(val label: String) : UiState
         /**
@@ -849,6 +859,21 @@ object DictateController {
     private fun stageOf(state: UiState): Stage =
         if (state is UiState.Rewording) Stage.REWORDING else Stage.TRANSCRIPTION
 
+    /**
+     * Enters (or updates) [UiState.Transcribing], keeping the clock that the wait actually started with
+     * (issue #355).
+     *
+     * A retry and the handover to the on-device fallback both publish a fresh state object, but neither
+     * is a fresh wait — the person watching has been waiting since the recording stopped, and that total
+     * is the number worth showing. So the stamp is inherited whenever we are already transcribing, and
+     * only a transition from another state (Recording, Idle) starts a new one.
+     */
+    private fun setTranscribing(attempt: Int = 1, onDevice: Boolean = false) {
+        val startedAtMs = (_state.value as? UiState.Transcribing)?.startedAtMs
+            ?: SystemClock.elapsedRealtime()
+        _state.value = UiState.Transcribing(attempt, onDevice, startedAtMs)
+    }
+
     /** Localized one-line headline for an API error [kind] (roadmap 1.12 specific error messages). */
     private fun errorMessageRes(kind: DictateApiException.Kind, stage: Stage): Int = when (kind) {
         DictateApiException.Kind.INVALID_API_KEY -> R.string.dictate__error_invalid_api_key
@@ -937,6 +962,9 @@ object DictateController {
         canResend: Boolean,
         suggestOnDevice: Boolean = false,
         stage: Stage = Stage.TRANSCRIPTION,
+        // True when the local engine did the work (#354). Only a timeout reads differently for it:
+        // "Request timed out" is a sentence about a server, and nothing was requested from one.
+        onDevice: Boolean = false,
     ): UiState.Error {
         // Dictate Cloud running out of credit is checked first, and before the resend branches: it is
         // classified as QUOTA_EXCEEDED like every other provider's rate limit, but unlike those it is
@@ -962,6 +990,8 @@ object DictateController {
             message = when {
                 outOfCredit -> context.getString(R.string.dictate__error_out_of_credit)
                 hint -> context.getString(R.string.dictate__error_try_on_device)
+                onDevice && e.kind == DictateApiException.Kind.TIMEOUT ->
+                    context.getString(R.string.dictate__error_timeout_on_device)
                 else -> context.getString(errorMessageRes(e.kind, stage))
             },
             kind = e.kind,
@@ -1486,7 +1516,7 @@ object DictateController {
 
         ensureHapticObserver(appContext)
         val localEngine = preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE
-        _state.value = UiState.Transcribing(onDevice = localEngine)
+        setTranscribing(onDevice = localEngine)
         // What a held button can still rescue (#270): the recording this request is carrying, for as long
         // as it is in flight. Cleared in the finally below, so the offer disappears with the request.
         inFlightAudio = if (localEngine) null else audioFile
@@ -1498,6 +1528,9 @@ object DictateController {
         transcribeJob = scope.launch {
             var keepAudio = false
             var outcome = "failed"
+            // Which engine a failure belongs to (#354). Starts as the configured one and flips when the
+            // offline fallback takes over, so an error can name where it actually happened.
+            var ranOnDevice = localEngine
             // The file actually uploaded. Normally the original recording; the silence trimmer (#232) may
             // swap in a shorter copy, while history/retention/cleanup keep referencing the original audioFile.
             var uploadFile = audioFile
@@ -1647,8 +1680,10 @@ object DictateController {
                     LocalTranscriptionProvider.setIdleUnloadMillis(
                         prefs.dictate.localModelUnloadMinutes.get() * 60_000L,
                     )
-                    LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model))
-                        .transcribe(request)
+                    LocalTranscriptionProvider(
+                        LocalTranscriptionProvider.modelDir(appContext, model),
+                        timeoutMillis = localTimeoutMillis(),
+                    ).transcribe(request)
                 } else {
                     try {
                         OpenAiCompatibleClient.from(
@@ -1661,7 +1696,7 @@ object DictateController {
                             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                         ).transcribe(
                             request,
-                            onRetry = { attempt -> _state.value = UiState.Transcribing(attempt) },
+                            onRetry = { attempt -> setTranscribing(attempt) },
                         )
                     } catch (e: DictateApiException) {
                         // A provider that will not take the m4a gets the WAV instead (#281). Three of the
@@ -1678,7 +1713,7 @@ object DictateController {
                                 timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                             ).transcribe(
                                 request.copy(audioFile = packedFrom!!),
-                                onRetry = { attempt -> _state.value = UiState.Transcribing(attempt) },
+                                onRetry = { attempt -> setTranscribing(attempt) },
                             )
                         } else {
                         // Offline fallback (#104): the cloud call failed because we're offline (after its
@@ -1689,7 +1724,11 @@ object DictateController {
                         )
                         // Sped-up audio (#272) is for the provider that charges by the second, not for the
                         // engine on this phone: the fallback gets the recording as it was.
-                        _state.value = UiState.Transcribing(onDevice = true)
+                        setTranscribing(onDevice = true)
+                        // From here on any failure is the local engine's, not the provider's — which
+                        // decides both the wording of a timeout and whether offering "try on-device"
+                        // would be advice to do the thing that just ran out of time (#354).
+                        ranOnDevice = true
                         fallback.transcribe(
                             localFallbackFile?.let { request.copy(audioFile = it) } ?: request,
                         )
@@ -1756,8 +1795,9 @@ object DictateController {
                 }
                 _state.value = apiError(
                     e, appContext, canResend = keepAudio,
-                    suggestOnDevice = shouldSuggestOnDevice(appContext, e.kind, preset),
+                    suggestOnDevice = !ranOnDevice && shouldSuggestOnDevice(appContext, e.kind, preset),
                     stage = stage,
+                    onDevice = ranOnDevice,
                 )
             } catch (t: Throwable) {
                 outcome = "unexpectedError"
@@ -2122,7 +2162,7 @@ object DictateController {
         livePromptArmed = false
         val closed = realtimeClosed
         realtimeClosed = null
-        _state.value = UiState.Transcribing()
+        setTranscribing()
         val appContext = context.applicationContext
         transcribeJob = scope.launch {
             try {
@@ -2295,7 +2335,7 @@ object DictateController {
         unregisterScreenOffReceiver()
         segmentRecordedSeconds = recordedSecondsOf(_state.value)
         _segmentedRecording.value = false
-        _state.value = UiState.Transcribing()
+        setTranscribing()
         scope.launch {
             val assigned = segmentMutex.withLock {
                 val i = segmentNextIndex++
@@ -2454,7 +2494,10 @@ object DictateController {
             val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
                 if (!LocalModelManager.isInstalled(appContext, model)) return null
                 withContext(Dispatchers.IO) {
-                    LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model)).transcribe(request)
+                    LocalTranscriptionProvider(
+                        LocalTranscriptionProvider.modelDir(appContext, model),
+                        timeoutMillis = localTimeoutMillis(),
+                    ).transcribe(request)
                 }
             } else {
                 if (apiKey.isBlank() && requiresKey(account)) return null
@@ -3929,6 +3972,19 @@ object DictateController {
         val localModel = transcriptionModelFor(context, localAccount, ProviderRegistry.LOCAL)
             .takeIf { it.isNotBlank() } ?: return null
         if (!LocalModelManager.isInstalled(context, localModel)) return null
-        return LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(context, localModel))
+        return LocalTranscriptionProvider(
+            LocalTranscriptionProvider.modelDir(context, localModel),
+            timeoutMillis = localTimeoutMillis(),
+        )
     }
+
+    /**
+     * The budget an on-device transcription gets, from the same "Request timeout" setting a provider call
+     * uses (issue #354). One number for "how long am I willing to wait", whichever engine is working.
+     *
+     * The trade-off is deliberate and the setting is where it is answered: decoding on the phone is far
+     * slower than a cloud round-trip, so a long dictation on an older device may now time out where it
+     * would eventually have finished. The slider goes to 600 s for exactly that case.
+     */
+    private fun localTimeoutMillis(): Long = prefs.dictate.requestTimeout.get() * 1000L
 }

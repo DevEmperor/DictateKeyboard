@@ -1169,6 +1169,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__error_text_size_limit">Tekst te lang om te herformuleren</string>
     <string name="dictate__error_format_not_supported">Audioformaat niet ondersteund</string>
     <string name="dictate__error_timeout">Time-out van verzoek</string>
+    <string name="dictate__error_timeout_on_device">Transcriptie op apparaat te traag</string>
     <string name="dictate__error_network">Geen internetverbinding</string>
     <string name="dictate__error_server">Aanbieder niet beschikbaar – probeer het opnieuw</string>
     <string name="dictate__error_try_on_device">Geen verbinding – probeer op apparaat</string>

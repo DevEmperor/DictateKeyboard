@@ -62,6 +62,9 @@ fun SnyggText(
     // instead of the themed values; null falls back to the stylesheet.
     maxLines: Int? = null,
     overflow: TextOverflow? = null,
+    // Scales the themed size instead of replacing it, so a caller can ask for "smaller than the text next
+    // to it" without stepping outside the theme or the user's font-scale setting (issue #355).
+    fontSizeMultiplier: Float = 1f,
     text: String,
 ) {
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
@@ -78,7 +81,7 @@ fun SnyggText(
             // scale multiplies every sp size, a NaN/∞ would reach Compose's Text and crash it on measure
             // ("lineHeight can't be negative (NaN)"). Coerce those to Unspecified so a bad theme can't crash
             // the keyboard (issue: SnyggText NaN lineHeight).
-            fontSize = style.fontSize().finiteOrUnspecified(),
+            fontSize = style.fontSize().scaledBy(fontSizeMultiplier),
             // Optional override, same shape as the weight below: italics mark a word that came from the
             // user's own vocabulary rather than the bundled dictionary (issue #318).
             fontStyle = fontStyle ?: style.fontStyle(),
@@ -99,6 +102,15 @@ fun SnyggText(
 /** Returns [TextUnit.Unspecified] when this size is specified but non-finite (NaN/∞), else the value. */
 private fun TextUnit.finiteOrUnspecified(): TextUnit =
     if (isSpecified && !value.isFinite()) TextUnit.Unspecified else this
+
+/**
+ * Multiplies a themed size, leaving anything the arithmetic would reject untouched — `TextUnit.times`
+ * requires a specified, finite value, and a malformed theme can supply neither.
+ */
+private fun TextUnit.scaledBy(factor: Float): TextUnit {
+    val size = finiteOrUnspecified()
+    return if (factor == 1f || !size.isSpecified) size else (size * factor).finiteOrUnspecified()
+}
 
 @Preview
 @Composable

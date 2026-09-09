@@ -1286,6 +1286,7 @@
     <string name="dictate__error_text_size_limit">Text je příliš dlouhý na přeformulování</string>
     <string name="dictate__error_format_not_supported">Nepodporovaný formát zvuku</string>
     <string name="dictate__error_timeout">Vypršel časový limit požadavku</string>
+    <string name="dictate__error_timeout_on_device">Přepis v zařízení je příliš pomalý</string>
     <string name="dictate__error_network">Žádné připojení k internetu</string>
     <string name="dictate__error_server">Poskytovatel není dostupný – zkuste to znovu</string>
     <string name="dictate__error_try_on_device">Bez připojení – zkuste v zařízení</string>

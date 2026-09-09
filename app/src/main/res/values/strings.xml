@@ -1799,6 +1799,7 @@
     <string name="dictate__error_text_size_limit" comment="Short error: a text was too long to reword — distinct from an over-long audio recording">Text too long to reword</string>
     <string name="dictate__error_format_not_supported" comment="Short error: the provider rejected the audio format">Audio format not supported</string>
     <string name="dictate__error_timeout" comment="Short error: the request timed out">Request timed out</string>
+    <string name="dictate__error_timeout_on_device" comment="Short error replacing the timeout headline when the on-device engine, not a provider, ran out of the configured time budget. Nothing was requested from a server here, so avoid the word 'request'. Keep it short – it has one line on the keyboard.">On-device transcription too slow</string>
     <string name="dictate__error_network" comment="Short error: no network connection reached the provider">No internet connection</string>
     <string name="dictate__error_server" comment="Short error: the provider returned a 5xx server error">Provider unavailable – try again</string>
     <string name="dictate__error_try_on_device" comment="Short error replacing the timeout/no-connection headline when the recording never reached the provider and on-device transcription is not set up yet. Keep it short – it has one line on the keyboard.">No connection – try on-device</string>

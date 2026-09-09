@@ -1268,6 +1268,7 @@
     <string name="dictate__error_text_size_limit">A szöveg túl hosszú az átfogalmazáshoz</string>
     <string name="dictate__error_format_not_supported">A hangformátum nem támogatott</string>
     <string name="dictate__error_timeout">A kérés időtúllépést okozott</string>
+    <string name="dictate__error_timeout_on_device">Az eszközön futó átírás túl lassú</string>
     <string name="dictate__error_network">Nincs internetkapcsolat</string>
     <string name="dictate__error_server">A szolgáltató nem érhető el – próbálja újra</string>
     <string name="dictate__error_try_on_device">Nincs kapcsolat – próbálja eszközön</string>

@@ -1251,6 +1251,7 @@
     <string name="dictate__error_text_size_limit">Texto demasiado largo para reformular</string>
     <string name="dictate__error_format_not_supported">Formato de audio no compatible</string>
     <string name="dictate__error_timeout">Tiempo de espera agotado</string>
+    <string name="dictate__error_timeout_on_device">Transcripción en el dispositivo demasiado lenta</string>
     <string name="dictate__error_network">Sin conexión a internet</string>
     <string name="dictate__error_server">Proveedor no disponible: inténtalo de nuevo</string>
     <string name="dictate__error_try_on_device">Sin conexión: prueba en el dispositivo</string>

@@ -1275,6 +1275,7 @@
     <string name="dictate__error_text_size_limit">Текст слишком длинный для переформулировки</string>
     <string name="dictate__error_format_not_supported">Аудиоформат не поддерживается</string>
     <string name="dictate__error_timeout">Истекло время ожидания запроса</string>
+    <string name="dictate__error_timeout_on_device">Локальная расшифровка слишком медленная</string>
     <string name="dictate__error_network">Нет подключения к интернету</string>
     <string name="dictate__error_server">Поставщик недоступен — повторите попытку</string>
     <string name="dictate__error_try_on_device">Нет связи — попробуйте на устройстве</string>

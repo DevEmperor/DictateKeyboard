@@ -1264,6 +1264,7 @@
     <string name="dictate__error_text_size_limit">文本太长，无法改写</string>
     <string name="dictate__error_format_not_supported">不支持该音频格式</string>
     <string name="dictate__error_timeout">请求超时</string>
+    <string name="dictate__error_timeout_on_device">设备端转录过慢</string>
     <string name="dictate__error_network">无网络连接</string>
     <string name="dictate__error_server">服务商不可用——请重试</string>
     <string name="dictate__error_try_on_device">无法连接——试试本机转写</string>

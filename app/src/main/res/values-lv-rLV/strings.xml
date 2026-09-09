@@ -1214,6 +1214,7 @@
     <string name="dictate__error_text_size_limit">Teksts pārāk garš pārformulēšanai</string>
     <string name="dictate__error_format_not_supported">Audio formāts netiek atbalstīts</string>
     <string name="dictate__error_timeout">Pieprasījuma noildze</string>
+    <string name="dictate__error_timeout_on_device">Ierīcē veiktā transkripcija ir pārāk lēna</string>
     <string name="dictate__error_network">Nav interneta savienojuma</string>
     <string name="dictate__error_server">Pakalpojuma sniedzējs nav pieejams – mēģiniet vēlreiz</string>
     <string name="dictate__error_try_on_device">Nav savienojuma – mēģiniet ierīcē</string>

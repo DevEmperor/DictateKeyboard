@@ -1119,6 +1119,7 @@
     <string name="dictate__error_text_size_limit">Текст задовгий для перефразування</string>
     <string name="dictate__error_format_not_supported">Аудіоформат не підтримується</string>
     <string name="dictate__error_timeout">Час очікування запиту вичерпано</string>
+    <string name="dictate__error_timeout_on_device">Локальна транскрипція надто повільна</string>
     <string name="dictate__error_network">Немає підключення до інтернету</string>
     <string name="dictate__error_server">Постачальник недоступний — повторіть спробу</string>
     <string name="dictate__error_try_on_device">Немає зв\'язку — спробуйте на пристрої</string>

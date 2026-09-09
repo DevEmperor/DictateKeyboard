@@ -1147,6 +1147,7 @@
     <string name="dictate__error_text_size_limit">Texte trop long pour être reformulé</string>
     <string name="dictate__error_format_not_supported">Format audio non pris en charge</string>
     <string name="dictate__error_timeout">Délai d\'attente dépassé</string>
+    <string name="dictate__error_timeout_on_device">Transcription locale trop lente</string>
     <string name="dictate__error_network">Pas de connexion internet</string>
     <string name="dictate__error_server">Fournisseur indisponible – réessayez</string>
     <string name="dictate__error_try_on_device">Pas de connexion – essayez en local</string>

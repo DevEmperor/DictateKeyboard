@@ -1248,6 +1248,7 @@
     <string name="dictate__error_text_size_limit">Metin yeniden ifade edilemeyecek kadar uzun</string>
     <string name="dictate__error_format_not_supported">Ses formatı desteklenmiyor</string>
     <string name="dictate__error_timeout">İstek zaman aşımına uğradı</string>
+    <string name="dictate__error_timeout_on_device">Cihazdaki yazıya dökme çok yavaş</string>
     <string name="dictate__error_network">İnternet bağlantısı yok</string>
     <string name="dictate__error_server">Sağlayıcı kullanılamıyor – tekrar deneyin</string>
     <string name="dictate__error_try_on_device">Bağlantı yok – cihazda deneyin</string>

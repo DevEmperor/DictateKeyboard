@@ -1287,6 +1287,7 @@
     <string name="dictate__error_text_size_limit">Tekst za długi do przeformułowania</string>
     <string name="dictate__error_format_not_supported">Nieobsługiwany format audio</string>
     <string name="dictate__error_timeout">Przekroczono limit czasu żądania</string>
+    <string name="dictate__error_timeout_on_device">Transkrypcja na urządzeniu jest zbyt wolna</string>
     <string name="dictate__error_network">Brak połączenia z internetem</string>
     <string name="dictate__error_server">Dostawca niedostępny – spróbuj ponownie</string>
     <string name="dictate__error_try_on_device">Brak połączenia – spróbuj lokalnie</string>

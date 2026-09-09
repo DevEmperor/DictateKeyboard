@@ -53,8 +53,12 @@ object PhoneTranscriber {
 
         val transcript = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
             // The phone is configured for on-device STT: transcribe locally, no network/key needed.
-            LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(context.applicationContext, model))
-                .transcribe(request).text.trim()
+            LocalTranscriptionProvider(
+                LocalTranscriptionProvider.modelDir(context.applicationContext, model),
+                // Same budget as the cloud branch below (#354) — a watch waiting on a phone that never
+                // answers is the worst place for an unbounded decode.
+                timeoutMillis = prefs.dictate.requestTimeout.get() * 1000L,
+            ).transcribe(request).text.trim()
         } else {
             val client = OpenAiCompatibleClient.from(
                 preset,

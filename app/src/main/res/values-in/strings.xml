@@ -1224,6 +1224,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__error_text_size_limit">Teks terlalu panjang untuk ditulis ulang</string>
     <string name="dictate__error_format_not_supported">Format audio tidak didukung</string>
     <string name="dictate__error_timeout">Waktu permintaan habis</string>
+    <string name="dictate__error_timeout_on_device">Transkripsi di perangkat terlalu lambat</string>
     <string name="dictate__error_network">Tidak ada koneksi internet</string>
     <string name="dictate__error_server">Penyedia tidak tersedia – coba lagi</string>
     <string name="dictate__error_try_on_device">Tidak ada koneksi – coba di perangkat</string>

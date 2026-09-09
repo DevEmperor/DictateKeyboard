@@ -709,6 +709,11 @@ private fun LegacyRecordRow(
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), color = onAccent, strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(text = stringRes(R.string.dictate__status_transcribing), color = onAccent)
+                        // Same elapsed readout as the Smartbar (#355) — this layout replaces the keyboard
+                        // entirely, so it is the only thing the user has to look at while waiting.
+                        (dictateState as? DictateController.UiState.Transcribing)?.let {
+                            LegacyTranscribingElapsed(startedAtMs = it.startedAtMs, color = onAccent)
+                        }
                         Spacer(modifier = Modifier.width(10.dp))
                         Icon(Icons.Default.Stop, contentDescription = null, tint = onAccent, modifier = Modifier.size(20.dp))
                     }
@@ -754,6 +759,29 @@ private fun LegacyRecordRow(
             else -> LegacyBackspaceKey(modifier = sideKey)
         }
     }
+}
+
+/**
+ * The seconds a transcription has been running (issue #355), trailing the status text in a smaller
+ * size. Silent for the first second — a counter blinking "0 s" past every quick dictation would cost
+ * the common case to serve the slow one.
+ */
+@Composable
+private fun LegacyTranscribingElapsed(startedAtMs: Long, color: Color) {
+    var seconds by remember(startedAtMs) { mutableLongStateOf(0L) }
+    LaunchedEffect(startedAtMs) {
+        while (true) {
+            seconds = (SystemClock.elapsedRealtime() - startedAtMs) / 1000L
+            delay(250L)
+        }
+    }
+    if (seconds < 1L) return
+    Spacer(modifier = Modifier.width(6.dp))
+    Text(
+        text = stringRes(R.string.unit__seconds__symbol, "v" to seconds),
+        color = color,
+        fontSize = 12.sp,
+    )
 }
 
 /** Bottom row: switch-keyboard · space (cursor-move swipe) · enter. */

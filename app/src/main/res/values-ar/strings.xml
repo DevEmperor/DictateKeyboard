@@ -1132,6 +1132,7 @@
     <string name="dictate__error_text_size_limit">النص أطول من أن يُعاد صياغته</string>
     <string name="dictate__error_format_not_supported">تنسيق الصوت غير مدعوم</string>
     <string name="dictate__error_timeout">انتهت مهلة الطلب</string>
+    <string name="dictate__error_timeout_on_device">النسخ على الجهاز بطيء جدًا</string>
     <string name="dictate__error_network">لا يوجد اتصال بالإنترنت</string>
     <string name="dictate__error_server">المزوّد غير متاح – أعد المحاولة</string>
     <string name="dictate__error_try_on_device">لا يوجد اتصال – جرّب على الجهاز</string>

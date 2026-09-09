@@ -1186,6 +1186,7 @@
     <string name="dictate__error_text_size_limit">Text zu lang zum Umformulieren</string>
     <string name="dictate__error_format_not_supported">Audioformat nicht unterstützt</string>
     <string name="dictate__error_timeout">Zeitüberschreitung der Anfrage</string>
+    <string name="dictate__error_timeout_on_device">Lokale Transkription zu langsam</string>
     <string name="dictate__error_network">Keine Internetverbindung</string>
     <string name="dictate__error_server">Anbieter nicht erreichbar – versuche es erneut</string>
     <string name="dictate__error_try_on_device">Keine Verbindung – On-Device nutzen</string>

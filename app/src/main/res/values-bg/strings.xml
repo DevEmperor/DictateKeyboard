@@ -1270,6 +1270,7 @@
     <string name="dictate__error_text_size_limit">Текстът е твърде дълъг за преформулиране</string>
     <string name="dictate__error_format_not_supported">Аудио форматът не се поддържа</string>
     <string name="dictate__error_timeout">Времето на заявката изтече</string>
+    <string name="dictate__error_timeout_on_device">Твърде бавна локална транскрипция</string>
     <string name="dictate__error_network">Няма интернет връзка</string>
     <string name="dictate__error_server">Доставчикът е недостъпен – опитайте отново</string>
     <string name="dictate__error_try_on_device">Няма връзка – опитайте локално</string>
