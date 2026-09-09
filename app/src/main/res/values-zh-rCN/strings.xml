@@ -1317,6 +1317,7 @@
     <string name="dictate__providers_cap_chat">改写</string>
     <string name="dictate__providers_add_custom">添加你自己的服务器</string>
     <string name="dictate__providers_add_custom_summary">自建服务器或任何兼容 OpenAI 的端点——可用于语音识别和改写</string>
+    <string name="dictate__providers_azure_endpoint">终结点就在门户“Keys and Endpoint”页面上密钥的旁边。MAI-Transcribe 仅在 East US、West US、West US 2、North Europe、Southeast Asia 和 Central India 运行。</string>
     <string name="dictate__providers_ollama_no_stt">Ollama 没有语音识别端点，因此只能改写。若要通过自己的服务器听写，请运行一个语音服务器（例如 Speaches、faster-whisper-server 或 whisper.cpp），并在“添加你自己的服务器”中添加——或者使用设备端识别，它完全不需要服务器。</string>
     <string name="dictate__providers_custom_title">自定义服务器</string>
     <string name="dictate__providers_field_name">名称</string>

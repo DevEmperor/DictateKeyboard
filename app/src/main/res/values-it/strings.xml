@@ -1110,6 +1110,7 @@
     <string name="dictate__providers_cap_chat">Riformulazione</string>
     <string name="dictate__providers_add_custom">Aggiungi un server tuo</string>
     <string name="dictate__providers_add_custom_summary">Self-hosted o qualsiasi endpoint compatibile con OpenAI — per trascrizione e riformulazione</string>
+    <string name="dictate__providers_azure_endpoint">L\'endpoint si trova accanto alla chiave nella pagina «Keys and Endpoint» del portale. MAI-Transcribe funziona solo in East US, West US, West US 2, North Europe, Southeast Asia e Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama non ha un endpoint di riconoscimento vocale, quindi può solo riformulare. Per dettare tramite un server tuo, avvia un server vocale (ad esempio Speaches, faster-whisper-server o whisper.cpp) e aggiungilo da «Aggiungi un server tuo» — oppure usa il motore sul dispositivo, che non richiede alcun server.</string>
     <string name="dictate__providers_custom_title">Server personalizzato</string>
     <string name="dictate__providers_field_name">Nome</string>

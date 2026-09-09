@@ -1277,6 +1277,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_cap_chat">Penyusunan ulang</string>
     <string name="dictate__providers_add_custom">Tambah server milikmu sendiri</string>
     <string name="dictate__providers_add_custom_summary">Dihosting sendiri atau endpoint apa pun yang kompatibel dengan OpenAI — untuk pengenalan suara dan penulisan ulang</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint ada di sebelah kunci pada halaman “Keys and Endpoint” di portal. MAI-Transcribe hanya berjalan di East US, West US, West US 2, North Europe, Southeast Asia, dan Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama tidak punya endpoint pengenalan suara, jadi hanya bisa menulis ulang. Untuk mendikte lewat server sendiri, jalankan server suara (misalnya Speaches, faster-whisper-server, atau whisper.cpp) dan tambahkan lewat “Tambah server milikmu sendiri” — atau pakai mesin di perangkat, yang sama sekali tidak butuh server.</string>
     <string name="dictate__providers_custom_title">Server kustom</string>
     <string name="dictate__providers_field_name">Nama</string>

@@ -1339,6 +1339,7 @@
     <string name="dictate__providers_cap_chat">Přeformulování</string>
     <string name="dictate__providers_add_custom">Přidat vlastní server</string>
     <string name="dictate__providers_add_custom_summary">Vlastní hosting nebo jakýkoli koncový bod kompatibilní s OpenAI — pro rozpoznávání řeči i přeformulování</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint najdete vedle klíče na stránce „Keys and Endpoint“ v portálu. MAI-Transcribe běží jen v regionech East US, West US, West US 2, North Europe, Southeast Asia a Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama nemá koncový bod pro rozpoznávání řeči, umí tedy jen přeformulovat. Pro diktování přes vlastní server spusťte řečový server (například Speaches, faster-whisper-server nebo whisper.cpp) a přidejte ho přes „Přidat vlastní server“ — nebo použijte rozpoznávání v zařízení, které žádný server nepotřebuje.</string>
     <string name="dictate__providers_custom_title">Vlastní server</string>
     <string name="dictate__providers_field_name">Název</string>

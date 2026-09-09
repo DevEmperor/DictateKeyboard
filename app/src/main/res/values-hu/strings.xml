@@ -1321,6 +1321,7 @@
     <string name="dictate__providers_cap_chat">Átfogalmazás</string>
     <string name="dictate__providers_add_custom">Saját szerver hozzáadása</string>
     <string name="dictate__providers_add_custom_summary">Saját üzemeltetésű vagy bármilyen OpenAI-kompatibilis végpont — beszédfelismeréshez és újrafogalmazáshoz</string>
+    <string name="dictate__providers_azure_endpoint">A végpont a portál „Keys and Endpoint” oldalán a kulcs mellett áll. A MAI-Transcribe csak az East US, West US, West US 2, North Europe, Southeast Asia és Central India régiókban fut.</string>
     <string name="dictate__providers_ollama_no_stt">Az Ollamának nincs beszédfelismerő végpontja, ezért csak újrafogalmazni tud. Ha saját szerverrel szeretne diktálni, indítson egy beszédszervert (például Speaches, faster-whisper-server vagy whisper.cpp), és adja hozzá a „Saját szerver hozzáadása” alatt — vagy használja a készüléken futó felismerést, amelyhez egyáltalán nem kell szerver.</string>
     <string name="dictate__providers_custom_title">Egyéni szerver</string>
     <string name="dictate__providers_field_name">Név</string>

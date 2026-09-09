@@ -139,7 +139,7 @@ Dictate nothing and are not going anywhere.
 - **Your own stickers** — point the keyboard at a folder of your own images and insert them straight into a chat. Subfolders become tabs, long-press pins a favourite or deletes the file, and nothing leaves the device. Share a sticker to Dictate from WhatsApp, Telegram or anywhere else and it lands in the folder.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
 - **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
-- **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs and other compatible endpoints, so you stay in control of usage and cost. Gemini transcribes with Google's dedicated speech-to-text models rather than a chat model under instruction, and if you speak more than one language you can say which ones instead of picking one and hoping.
+- **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, Soniox, Deepgram, AssemblyAI, ElevenLabs, Azure Speech and other compatible endpoints, so you stay in control of usage and cost. Azure runs Microsoft's own MAI-Transcribe, which detects across 60 languages, follows a switch mid-sentence, and hands back a clean transcript with the fillers and false starts already gone. Gemini transcribes with Google's dedicated speech-to-text models rather than a chat model under instruction, and if you speak more than one language you can say which ones instead of picking one and hoping.
 - **Self-hosting friendly** — point Dictate at a server of your own for transcription, rewording and even live streaming, and let it wake a sleeping GPU machine before the first request arrives.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
   - Huge variety of keyboard layouts and easy language/subtype switching, including **phonetic Russian** (ЯШЕРТЫ) beside ЙЦУКЕН
@@ -159,6 +159,7 @@ Dictate nothing and are not going anywhere.
   <img alt="AssemblyAI" src="https://img.shields.io/badge/AssemblyAI-5D5DFF">
   <img alt="ElevenLabs" src="https://img.shields.io/badge/ElevenLabs-111111">
   <img alt="Soniox" src="https://img.shields.io/badge/Soniox-2A6DF4">
+  <img alt="Azure Speech" src="https://img.shields.io/badge/Azure%20Speech-0078D4?logo=microsoftazure&logoColor=white">
   <img alt="Mistral" src="https://img.shields.io/badge/Mistral-FA520F">
   <img alt="OpenRouter" src="https://img.shields.io/badge/OpenRouter-6467F2">
   <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-D97757?logo=anthropic&logoColor=white">

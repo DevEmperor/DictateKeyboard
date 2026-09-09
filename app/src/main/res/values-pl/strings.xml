@@ -1340,6 +1340,7 @@
     <string name="dictate__providers_cap_chat">Przeformułowanie</string>
     <string name="dictate__providers_add_custom">Dodaj własny serwer</string>
     <string name="dictate__providers_add_custom_summary">Własny hosting lub dowolny punkt końcowy zgodny z OpenAI — do rozpoznawania mowy i przeformułowania</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint znajdziesz obok klucza na stronie „Keys and Endpoint” w portalu. MAI-Transcribe działa tylko w regionach East US, West US, West US 2, North Europe, Southeast Asia i Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama nie ma punktu końcowego rozpoznawania mowy, więc potrafi tylko przeformułowywać. Aby dyktować przez własny serwer, uruchom serwer mowy (na przykład Speaches, faster-whisper-server lub whisper.cpp) i dodaj go w „Dodaj własny serwer” — albo użyj rozpoznawania na urządzeniu, które nie potrzebuje żadnego serwera.</string>
     <string name="dictate__providers_custom_title">Serwer niestandardowy</string>
     <string name="dictate__providers_field_name">Nazwa</string>

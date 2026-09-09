@@ -1185,6 +1185,7 @@
     <string name="dictate__providers_cap_chat">إعادة الصياغة</string>
     <string name="dictate__providers_add_custom">إضافة خادمك الخاص</string>
     <string name="dictate__providers_add_custom_summary">مستضاف ذاتيًا أو أي نقطة نهاية متوافقة مع OpenAI — للتعرّف على الكلام وإعادة الصياغة</string>
+    <string name="dictate__providers_azure_endpoint">تظهر نقطة النهاية بجوار المفتاح في صفحة «Keys and Endpoint» في البوابة. يعمل MAI-Transcribe فقط في East US وWest US وWest US 2 وNorth Europe وSoutheast Asia وCentral India.</string>
     <string name="dictate__providers_ollama_no_stt">لا يوفّر Ollama نقطة نهاية للتعرّف على الكلام، لذا يمكنه إعادة الصياغة فقط. للإملاء عبر خادم خاص بك، شغّل خادم تعرّف على الكلام (مثل Speaches أو faster-whisper-server أو whisper.cpp) وأضفه من “إضافة خادمك الخاص” — أو استخدم المحرّك على الجهاز، الذي لا يحتاج إلى خادم إطلاقًا.</string>
     <string name="dictate__providers_custom_title">خادم مخصّص</string>
     <string name="dictate__providers_field_name">الاسم</string>

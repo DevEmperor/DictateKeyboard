@@ -1254,6 +1254,7 @@
     <string name="dictate__providers_cap_chat">言い換え</string>
     <string name="dictate__providers_add_custom">自分のサーバーを追加</string>
     <string name="dictate__providers_add_custom_summary">セルフホストまたは OpenAI 互換の任意のエンドポイント — 音声認識と言い換えの両方に</string>
+    <string name="dictate__providers_azure_endpoint">エンドポイントはポータルの「Keys and Endpoint」ページでキーの隣にあります。MAI-Transcribe が動くのは East US、West US、West US 2、North Europe、Southeast Asia、Central India だけです。</string>
     <string name="dictate__providers_ollama_no_stt">Ollama には音声認識のエンドポイントがないため、言い換えしかできません。自分のサーバーで音声入力するには、音声サーバー（Speaches、faster-whisper-server、whisper.cpp など）を動かし、「自分のサーバーを追加」から登録してください。サーバーが一切不要な端末上の認識を使うこともできます。</string>
     <string name="dictate__providers_custom_title">カスタムサーバー</string>
     <string name="dictate__providers_field_name">名前</string>

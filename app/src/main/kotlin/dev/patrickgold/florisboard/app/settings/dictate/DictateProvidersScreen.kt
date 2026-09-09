@@ -708,6 +708,18 @@ private fun ProviderEditorDialog(
                     modifier = Modifier.padding(bottom = 12.dp),
                 )
             }
+            // Azure is the one provider whose address is the user's own (#349): a Speech resource answers
+            // on its own hostname, so the field below starts empty with the shape as its hint. The
+            // regions matter as much as the URL — a resource outside the six that host MAI-Transcribe
+            // answers the endpoint but not with this model, and that failure looks like a typo.
+            if (preset?.id == ProviderRegistry.AZURE.id) {
+                Text(
+                    text = stringRes(R.string.dictate__providers_azure_endpoint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 12.dp),
+                )
+            }
             if (isCustom) {
                 EditorField(
                     label = stringRes(R.string.dictate__providers_field_name),
@@ -720,7 +732,15 @@ private fun ProviderEditorDialog(
                     label = stringRes(R.string.dictate__base_url_title),
                     value = baseUrl,
                     onValueChange = { baseUrl = it },
-                    placeholder = stringRes(R.string.dictate__base_url_placeholder),
+                    // Azure's shape is unlike every other endpoint here — the resource's own name is
+                    // part of the hostname — so the hint shows one rather than a generic server (#349).
+                    placeholder = stringRes(
+                        if (preset?.id == ProviderRegistry.AZURE.id) {
+                            R.string.dictate__base_url_placeholder_azure
+                        } else {
+                            R.string.dictate__base_url_placeholder
+                        },
+                    ),
                     keyboardType = KeyboardType.Uri,
                 )
             }

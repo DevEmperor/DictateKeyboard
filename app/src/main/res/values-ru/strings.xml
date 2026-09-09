@@ -1328,6 +1328,7 @@
     <string name="dictate__providers_cap_chat">Переформулирование</string>
     <string name="dictate__providers_add_custom">Добавить свой сервер</string>
     <string name="dictate__providers_add_custom_summary">Собственный хостинг или любая конечная точка, совместимая с OpenAI — для распознавания речи и переформулирования</string>
+    <string name="dictate__providers_azure_endpoint">Endpoint указан рядом с ключом на странице «Keys and Endpoint» в портале. MAI-Transcribe работает только в регионах East US, West US, West US 2, North Europe, Southeast Asia и Central India.</string>
     <string name="dictate__providers_ollama_no_stt">У Ollama нет конечной точки распознавания речи, поэтому он умеет только переформулировать. Чтобы диктовать через свой сервер, запустите речевой сервер (например, Speaches, faster-whisper-server или whisper.cpp) и добавьте его через «Добавить свой сервер» — или используйте распознавание на устройстве, которому сервер не нужен вовсе.</string>
     <string name="dictate__providers_custom_title">Пользовательский сервер</string>
     <string name="dictate__providers_field_name">Имя</string>

@@ -515,4 +515,209 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             server.requestCount shouldBe 1
         }
     }
+
+    // --- Azure Speech / MAI-Transcribe (issue #349) ---
+
+    test("Azure carries every option in the definition part, with MAI switched on") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """
+                    {"durationMilliseconds":1820,
+                     "combinedPhrases":[{"channel":0,"text":"Hallo Welt","locale":"de"}],
+                     "phrases":[{"text":"Hallo Welt","offsetMilliseconds":0}]}
+                    """.trimIndent(),
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(
+                    baseUrl = server.url("/").toString(),
+                    apiKey = "resource-key",
+                    transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+                ),
+            )
+
+            val result = client.transcribe(
+                TranscriptionRequest(
+                    audioFile = audio,
+                    model = "MAI-Transcribe-2",
+                    language = "de",
+                    // The hint the app actually composes: the punctuation sample sentence with the
+                    // user's glossary appended behind it (DictatePromptDefaults.appendCustomWords).
+                    prompt = "Hallo. Vielen Dank. DevEmperor, Dictate",
+                ),
+            )
+            val recorded = server.takeRequest()
+            val body = recorded.body.readUtf8()
+
+            result.text shouldBe "Hallo Welt"
+            // The api-version is not decoration: `enhancedMode` — the switch that selects MAI at all —
+            // arrived with it, and an older one would run the request on Azure's ordinary model instead.
+            recorded.path shouldBe "/speechtotext/transcriptions:transcribe?api-version=2025-10-15"
+            // Azure authenticates with its own header; a Bearer token is not accepted here.
+            recorded.getHeader("Ocp-Apim-Subscription-Key") shouldBe "resource-key"
+            recorded.getHeader("Authorization") shouldBe null
+            body shouldContain "name=\"audio\""
+            body shouldContain "name=\"definition\""
+            body shouldContain "RIFF-test-audio"
+            body shouldContain "\"enabled\":true"
+            body shouldContain "\"model\":\"MAI-Transcribe-2\""
+            // The point of the whole provider: fillers and false starts dropped before we ever see them.
+            body shouldContain "\"transcribeStyle\":\"clean\""
+            body shouldContain "\"locales\":[\"de\"]"
+            // The style hint has no prose slot on a dedicated STT model, so its terms bias recognition —
+            // and the sample sentence in front of them must not come along. Azure calls this field
+            // keyword biasing, so "Hallo. Vielen Dank." in it would nudge every dictation towards a
+            // greeting nobody asked for.
+            body shouldContain "\"phrases\":[\"DevEmperor\",\"Dictate\"]"
+            body shouldNotContain "Vielen Dank"
+        }
+    }
+
+    test("Azure auto-detect pins no language at all, and the older generation gets no style") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200)
+                    .setBody("""{"combinedPhrases":[{"text":"Hello"}]}"""),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(
+                    baseUrl = server.url("/").toString(),
+                    apiKey = "resource-key",
+                    transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+                ),
+            )
+
+            client.transcribe(
+                TranscriptionRequest(audioFile = audio, model = "MAI-Transcribe-1.5", language = "detect"),
+            )
+            val body = server.takeRequest().body.readUtf8()
+
+            // Microsoft calls a pinned locale "a very strong hint" and advises against one without cause;
+            // detecting across 60 languages is what this model is for.
+            body shouldNotContain "locales"
+            // transcribeStyle is documented for the 2 generation alone, so 1.5 is asked for nothing.
+            body shouldNotContain "transcribeStyle"
+            body shouldNotContain "phraseList"
+        }
+    }
+
+    test("Azure reads the whole transcript, not the first piece of it") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        MockWebServer().use { server ->
+            // Code switching is what MAI is good at, and it comes back as one entry per language —
+            // reading `first()` would drop half the sentence.
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"combinedPhrases":[{"text":"Ich schicke dir"},{"text":"the invoice tomorrow"}]}""",
+                ),
+            )
+            // A response with no combined text at all still has the timed pieces to fall back on.
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """{"combinedPhrases":[],"phrases":[{"text":"Guten"},{"text":"Morgen"}]}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(
+                    baseUrl = server.url("/").toString(),
+                    apiKey = "k",
+                    transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+                ),
+            )
+            val request = TranscriptionRequest(audioFile = audio, model = "MAI-Transcribe-2")
+
+            client.transcribe(request).text shouldBe "Ich schicke dir the invoice tomorrow"
+            client.transcribe(request).text shouldBe "Guten Morgen"
+        }
+    }
+
+    test("an Azure endpoint that was never filled in is refused before anything is sent") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        // Every other provider has one address for everyone; an Azure resource has its own, so the preset
+        // carries none and the settings field stands open. Both ways of leaving it that way have to be
+        // caught here: an empty box, and the shape pasted in from the hint or from Microsoft's sample.
+        // Neither resolves to anything, and the failure would otherwise read as "no internet".
+        ProviderRegistry.AZURE.baseUrl shouldBe ""
+        listOf(ProviderRegistry.AZURE.baseUrl, "https://<your-resource>.cognitiveservices.azure.com/")
+            .forAll { unusable ->
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(
+                        baseUrl = unusable,
+                        apiKey = "resource-key",
+                        transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+                    ),
+                )
+
+                val error = shouldThrow<DictateApiException> {
+                    client.transcribe(TranscriptionRequest(audioFile = audio, model = "MAI-Transcribe-2"))
+                }
+
+                error.message.orEmpty() shouldContain "Keys and Endpoint"
+                // The kind that offers to open the provider's settings — the one screen where this is fixed.
+                error.kind shouldBe DictateApiException.Kind.INVALID_API_KEY
+
+                // And the connection test says the same thing, rather than counting the two curated ids
+                // and reporting a success it never verified.
+                shouldThrow<DictateApiException> { client.listModels() }
+                    .message.orEmpty() shouldContain "Keys and Endpoint"
+            }
+    }
+
+    test("Azure asks no catalog and offers the two ids that exist") {
+        val client = OpenAiCompatibleClient(
+            ProviderConfig(
+                baseUrl = "https://my-speech.cognitiveservices.azure.com/",
+                apiKey = "resource-key",
+                transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+                curatedModels = ProviderRegistry.AZURE.curatedTranscriptionModels,
+            ),
+        )
+
+        // No server is running: reaching for one would fail the test rather than time out silently.
+        client.listModels().map { it.id } shouldBe listOf("MAI-Transcribe-2", "MAI-Transcribe-1.5")
+    }
+
+    test("the Chinese variants the app offers are narrowed to the codes MAI's table holds") {
+        // The app distinguishes zh-CN from zh-TW for the providers that care; MAI's language table is
+        // written in bare codes, and a code it does not hold is worse than none at all.
+        OpenAiCompatibleClient.azureLocale("zh-CN") shouldBe "zh"
+        OpenAiCompatibleClient.azureLocale("yue-HK") shouldBe "yue"
+        OpenAiCompatibleClient.azureLocale("de") shouldBe "de"
+        OpenAiCompatibleClient.azureLocale("detect") shouldBe null
+        OpenAiCompatibleClient.azureLocale(null) shouldBe null
+        OpenAiCompatibleClient.azureLocale("") shouldBe null
+    }
+
+    test("a later MAI generation inherits the clean transcript instead of losing it") {
+        OpenAiCompatibleClient.azureSupportsTranscribeStyle("MAI-Transcribe-2") shouldBe true
+        OpenAiCompatibleClient.azureSupportsTranscribeStyle("MAI-Transcribe-3") shouldBe true
+        OpenAiCompatibleClient.azureSupportsTranscribeStyle("mai-transcribe-1.5") shouldBe false
+        OpenAiCompatibleClient.azureSupportsTranscribeStyle("MAI-Transcribe-1") shouldBe false
+    }
+
+    // A vocabulary term is a name, and a name has no full stop with a space behind it. Shared by Azure's
+    // phraseList (#349) and Google's custom_vocabulary (#292), which had the same leak.
+    test("a bias term never carries the sentence that stood in front of it") {
+        // What the leak looked like: the glossary's first entry arrives welded to the sample sentence.
+        OpenAiCompatibleClient.afterLastSentenceEnd("Hallo. Vielen Dank. DevEmperor") shouldBe "DevEmperor"
+        OpenAiCompatibleClient.afterLastSentenceEnd("你好。谢谢。 Dictate") shouldBe "Dictate"
+        OpenAiCompatibleClient.afterLastSentenceEnd("नमस्ते। धन्यवाद। Dictate") shouldBe "Dictate"
+
+        // Everything that was already a term comes through untouched — including the abbreviation that
+        // ends in a stop, which is why the rule asks for the space rather than the stop alone.
+        listOf("DevEmperor", "FlorisBoard", "Dr.", "z.B.", "Anna-Lena Müller").forAll {
+            OpenAiCompatibleClient.afterLastSentenceEnd(it) shouldBe it
+        }
+    }
 })

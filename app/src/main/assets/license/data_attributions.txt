@@ -119,7 +119,7 @@ remains the property of its owner, and their use here implies no affiliation or 
 The monochrome outlines come from two collections, both freely licensed:
 
   - Simple Icons, CC0-1.0 — OpenAI, OpenRouter, Google Gemini, Anthropic, Mistral AI, ElevenLabs,
-    Deepgram, DeepSeek, Ollama. https://github.com/simple-icons/simple-icons
+    Deepgram, DeepSeek, Ollama, Microsoft Azure. https://github.com/simple-icons/simple-icons
   - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI, SiliconFlow (filed
     there under SiliconCloud, the name of their platform).
     https://github.com/lobehub/lobe-icons

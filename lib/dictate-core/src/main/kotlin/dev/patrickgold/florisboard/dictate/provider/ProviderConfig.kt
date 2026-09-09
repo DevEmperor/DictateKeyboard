@@ -130,6 +130,21 @@ enum class TranscriptionApi {
     ASSEMBLYAI_ASYNC,
 
     /**
+     * Azure Speech, Fast Transcription with MAI-Transcribe (issue #349): one `multipart/form-data` POST
+     * to `speechtotext/transcriptions:transcribe?api-version=…` carrying an `audio` file part and a
+     * `definition` part holding the options as JSON, authenticated with `Ocp-Apim-Subscription-Key`.
+     *
+     * The `definition` part is what makes this its own wire format rather than another multipart
+     * variant: every option — the model, the language, the vocabulary — lives inside one JSON string
+     * instead of beside the file as its own form field. Selecting MAI is itself two of those options
+     * (`enhancedMode.enabled` and `enhancedMode.model`), not a value the endpoint takes on its own.
+     *
+     * The transcript comes back as `combinedPhrases[].text`, one entry per channel, speaker or
+     * language rather than one per response. See [OpenAiCompatibleClient].
+     */
+    AZURE_FAST_TRANSCRIPTION,
+
+    /**
      * On-device transcription (issue #104): no network call at all. Handled by
      * [dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider] (sherpa-onnx), not by
      * [OpenAiCompatibleClient]; this value only marks a provider preset as local so the dictation flow

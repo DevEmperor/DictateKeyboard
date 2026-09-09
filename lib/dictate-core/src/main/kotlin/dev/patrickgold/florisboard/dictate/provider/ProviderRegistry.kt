@@ -469,6 +469,64 @@ object ProviderRegistry {
         curatedRealtimeModels = listOf("universal-streaming"),
     )
 
+    /**
+     * Azure Speech with Microsoft's own MAI-Transcribe models (issue #349).
+     *
+     * MAI-Transcribe was already reachable here through OpenRouter, and the reporter's question was
+     * whether it could be reached directly. It can, and the direct route is not merely one hop shorter:
+     * OpenRouter fronts the model with the plain OpenAI transcription endpoint, which has nowhere to
+     * put MAI's own options, so `transcribeStyle` — the "clean transcript" the request was really
+     * about — is unreachable there. See [TranscriptionApi.AZURE_FAST_TRANSCRIPTION].
+     *
+     * **The base URL is the user's own and there is no useful default.** An Azure Speech resource
+     * answers on its own hostname, printed next to the key on the portal's *Keys and Endpoint* page, so
+     * [baseUrl] is deliberately **empty** and the field stands open with the shape as its hint
+     * ([allowsCustomBaseUrl]). A template pre-filled into the box would only look like an address that
+     * had already been set — Ollama's localhost default is a working server, this would be a decoy.
+     * MAI-Transcribe itself runs in six regions — `eastus`, `westus`, `westus2`, `northeurope`,
+     * `southeastasia`, `centralindia` (read 2026-09-09) — and a resource anywhere else answers the
+     * endpoint but not with this model, which is worth knowing before hunting for a typo.
+     *
+     * Model ids read from Microsoft's own page on 2026-09-09: `MAI-Transcribe-2` (60 languages,
+     * code-switching, in public preview) and the older `MAI-Transcribe-1.5`. `MAI-Transcribe-1` was
+     * deprecated on 2026-08-20 and is deliberately not offered.
+     */
+    val AZURE = ProviderPreset(
+        id = "azure",
+        // The service, not the model: the row is what you sign up for, and the model is a choice inside
+        // it — the same way "OpenAI" does not read "OpenAI (gpt-transcribe)".
+        displayName = "Azure Speech",
+        baseUrl = "",
+        capabilities = STT_ONLY,
+        transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
+        // Azure's model catalog is a deployment API, not a list of speech models, and needs an ARM token
+        // rather than the resource key. The two ids below are the whole catalog for this endpoint.
+        supportsDynamicModels = false,
+        // A resource has to exist before it has a key, so this is the page that creates one; the portal
+        // is one click from there for anyone who already has one.
+        apiKeyUrl = "https://portal.azure.com/#create/Microsoft.CognitiveServicesAIFoundry",
+        allowsCustomBaseUrl = true,
+        defaultTranscriptionModel = "MAI-Transcribe-2",
+        curatedTranscriptionModels = listOf("MAI-Transcribe-2", "MAI-Transcribe-1.5"),
+        // Two of Microsoft's pages describe the same endpoint differently, and this list follows the
+        // wider one. The MAI page's prerequisites name WAV, MP3 and FLAC — the formats of its sample
+        // file; the Fast Transcription page, which is the API MAI is invoked through, names WAV, MP3,
+        // Opus/Ogg, FLAC, WMA, AAC, A-law and µ-law in WAV, AMR, WebM and Speex (both read 2026-09-09).
+        // Neither names MP4/M4A, and it is here anyway for two reasons that outweigh the omission: it is
+        // AAC in an MP4 container, which the wider list does name, and leaving it out would make every
+        // dictation past the packing threshold transcode straight back to WAV after being packed. A
+        // refusal costs one request and no dictation — FORMAT_NOT_SUPPORTED resends the untouched WAV
+        // (#281). Unmeasured: nobody here has an Azure key to ask the endpoint with.
+        acceptedAudioContainers = setOf(
+            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.FLAC, AudioContainer.OGG,
+            AudioContainer.M4A, AudioContainer.AAC, AudioContainer.WEBM, AudioContainer.AMR,
+        ),
+        // Realtime is off, and not by omission. Azure streams MAI-Transcribe through the Voice Live API,
+        // which is a different protocol on a different host and expects a Foundry deployment rather than
+        // a Speech resource key — a feature of its own, not a flag on this one.
+        supportsRealtime = false,
+    )
+
     val XAI = ProviderPreset(
         id = "xai",
         displayName = "xAI (Grok)",
@@ -567,7 +625,7 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, XAI, DEEPSEEK, SILICONFLOW, OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
@@ -609,11 +667,15 @@ object ProviderRegistry {
      *    how much speech fits depends on the chosen model's speed rather than on anything we control.
      *  - Mistral and Soniox document a *duration* (3 hours, 300 minutes) but no size, so they stay 0.
      *    Do not translate a duration into bytes here: the encoding is not theirs to assume.
+     *  - Azure 300 MB, from the MAI-Transcribe page's prerequisites (read 2026-09-09). The Fast
+     *    Transcription API it travels allows 500 MB in general; the model's own page is the stricter
+     *    of the two and is the one that governs a MAI request.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
         "openai", "cloud", "groq", "openrouter" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
         "siliconflow" -> 50L * 1024 * 1024
+        "azure" -> 300L * 1024 * 1024
         "elevenlabs" -> 3L * 1024 * 1024 * 1024
         "deepgram" -> 2L * 1024 * 1024 * 1024
         "assemblyai" -> 2252L * 1024 * 1024

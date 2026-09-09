@@ -1222,6 +1222,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_cap_chat">Herformulering</string>
     <string name="dictate__providers_add_custom">Je eigen server toevoegen</string>
     <string name="dictate__providers_add_custom_summary">Zelf gehost of elk OpenAI-compatibel endpoint — voor spraakherkenning en herformuleren</string>
+    <string name="dictate__providers_azure_endpoint">Het endpoint staat naast de sleutel op de pagina ‘Keys and Endpoint’ in de portal. MAI-Transcribe draait alleen in East US, West US, West US 2, North Europe, Southeast Asia en Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama heeft geen endpoint voor spraakherkenning en kan dus alleen herformuleren. Wil je dicteren via een eigen server, draai dan een spraakserver (zoals Speaches, faster-whisper-server of whisper.cpp) en voeg die toe via “Je eigen server toevoegen” — of gebruik de herkenning op het toestel, waarvoor helemaal geen server nodig is.</string>
     <string name="dictate__providers_custom_title">Aangepaste server</string>
     <string name="dictate__providers_field_name">Naam</string>

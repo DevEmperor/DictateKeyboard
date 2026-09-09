@@ -227,6 +227,7 @@ class OpenAiCompatibleClient(
         TranscriptionApi.ELEVENLABS_MULTIPART -> transcribeElevenLabs(request, onRetry)
         TranscriptionApi.DEEPGRAM -> transcribeDeepgram(request, onRetry)
         TranscriptionApi.ASSEMBLYAI_ASYNC -> transcribeAssemblyAi(request, onRetry)
+        TranscriptionApi.AZURE_FAST_TRANSCRIPTION -> transcribeAzure(request, onRetry)
         // On-device transcription never uses this HTTP client; the dictation flow routes local providers
         // to LocalTranscriptionProvider before one is ever constructed.
         TranscriptionApi.LOCAL_ONDEVICE -> error("LOCAL_ONDEVICE is handled by LocalTranscriptionProvider")
@@ -689,6 +690,90 @@ class OpenAiCompatibleClient(
     }
 
     /**
+     * Azure Speech, Fast Transcription with MAI-Transcribe (issue #349): one multipart POST carrying the
+     * audio beside a `definition` part that holds every option as JSON.
+     *
+     * Three of those options are filled in here rather than left to the endpoint:
+     *  - `enhancedMode` is what selects MAI at all, and without it the request quietly runs on Azure's
+     *    ordinary speech model instead — a wrong transcript rather than an error.
+     *  - `transcribeStyle` is set to `clean` for the reason the whole feature was asked for: it drops
+     *    the "ähm"s, the false starts and the self-corrections. Microsoft defaults to `verbatim`
+     *    because their reference customers are compliance and QA; a keyboard's user is writing a
+     *    message, and nobody sends the false start on purpose. This is the same call the app already
+     *    makes for Deepgram's `smart_format`, and it is fixed rather than a setting for the same reason.
+     *  - `phraseList` carries the user's own names and jargon, read out of the style hint by
+     *    [vocabularyFromPrompt] exactly as Google's dedicated model gets it (#292). A dedicated
+     *    speech-to-text model has nowhere to put prose, so the terms are the part of a hint that can
+     *    still do something.
+     */
+    private suspend fun transcribeAzure(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult {
+        // Asked first, because it is the one thing here that can be wrong before a byte moves.
+        val url = azureTranscribeUrl()
+        val definition = AzureDefinitionDto(
+            // Omitted for auto-detect, which is the documented default and the mode MAI is built for —
+            // it detects across 60 languages and follows a switch mid-sentence. Microsoft calls a pinned
+            // locale "a very strong hint" and advises against setting one without cause, so the app's own
+            // auto-detect passes nothing at all rather than guessing.
+            locales = azureLocale(request.language)?.let { listOf(it) },
+            enhancedMode = AzureEnhancedModeDto(
+                enabled = true,
+                model = request.model,
+                modelOptions = if (azureSupportsTranscribeStyle(request.model)) {
+                    AzureModelOptionsDto(transcribeStyle = AZURE_TRANSCRIBE_STYLE_CLEAN)
+                } else {
+                    null
+                },
+            ),
+            phraseList = vocabularyFromPrompt(request.prompt)?.let { AzurePhraseListDto(it) },
+        )
+        val multipart = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("audio", audioUploadNameOf(request.audioFile), request.audioBody())
+            .addFormDataPart("definition", json.encodeToString(AzureDefinitionDto.serializer(), definition))
+            .build()
+        val httpRequest = Request.Builder()
+            .url(url)
+            .header("Ocp-Apim-Subscription-Key", config.apiKey)
+            .post(multipart)
+            .build()
+        val body = executeForBody(httpRequest, onRetry = onRetry)
+        return TranscriptionResult(azureTranscriptOf(decode(AzureTranscriptionDto.serializer(), body)))
+    }
+
+    /**
+     * The transcribe URL for this account's own Azure resource — or a refusal that says what to do.
+     *
+     * Every other provider here has one address for everybody; an Azure Speech resource answers on a
+     * hostname of its own, so the preset ships none at all and the settings field stands open. An
+     * empty one has to be caught here, because [ProviderConfig.normalizedBaseUrl] turns it into `"/"`
+     * — a relative path OkHttp would reject much later and much less clearly. The angle brackets are
+     * caught too, for anyone who pastes the placeholder shape or Microsoft's own `<your-resource>`
+     * sample: that resolves to nothing and reads like "no internet".
+     *
+     * Thrown as [DictateApiException.Kind.INVALID_API_KEY] on purpose, and not because a key is
+     * missing: that kind is the one that offers to open the provider's settings, which is the single
+     * screen where the endpoint is edited — right above the key. The headline it carries is a little
+     * off; the action and the detail underneath it are exactly right.
+     */
+    private fun azureTranscribeUrl(): String {
+        if (config.baseUrl.isBlank() ||
+            config.baseUrl.contains('<') ||
+            config.baseUrl.contains('>')
+        ) {
+            throw DictateApiException(
+                DictateApiException.Kind.INVALID_API_KEY,
+                "Set the endpoint of your Azure Speech resource — the URL shown next to the key on the " +
+                    "portal's Keys and Endpoint page, e.g. https://my-speech.cognitiveservices.azure.com/",
+            )
+        }
+        return config.normalizedBaseUrl +
+            "speechtotext/transcriptions:transcribe?api-version=$AZURE_API_VERSION"
+    }
+
+    /**
      * Google Gemini transcription, which since 2026-08 comes in two shapes and picks by model (#292).
      *
      * A dedicated speech-to-text model (`gemini-3.5-transcribe`) is reached over the Interactions API and
@@ -822,18 +907,31 @@ class OpenAiCompatibleClient(
         }
 
     /**
-     * Turns the transcription style hint into `custom_vocabulary` terms, or nothing.
+     * Turns the transcription style hint into vocabulary terms, or nothing — Google's
+     * `custom_vocabulary` (#292) and Azure's `phraseList.phrases` (#349) ask the same question.
      *
      * A dedicated STT model has nowhere to put prose — it takes no instruction. The one part of a hint
      * that still does something here is the names and jargon in it, which is exactly what custom
      * vocabulary biases towards. So the hint is read as a list (commas, semicolons, line breaks) and
      * anything longer than four words is dropped as a sentence rather than a term. Google caps the field
      * at 1000 entries but recommends staying near 100, which is also far more than a hint ever holds.
+     *
+     * **The sentence in front has to go, and the word-count rule does not remove it.** The app's own
+     * hint is a short sample sentence demonstrating punctuation, with the user's glossary appended
+     * behind it — `"Hallo. Vielen Dank. DevEmperor, Dictate"` — so the first comma-separated piece is
+     * the whole greeting *plus* the first real term, four words in total and therefore kept. As a
+     * bias phrase that is not merely useless: Azure calls this field keyword biasing and would nudge
+     * every dictation towards "Hallo. Vielen Dank."
+     *
+     * Hence [afterLastSentenceEnd]: a term never contains a full stop followed by a space, so cutting
+     * there recovers `DevEmperor` and leaves anything that was already a plain term untouched. The one
+     * thing it costs is the front of a term with a stop inside it — `"Dr. Meier"` biases towards
+     * `Meier` — which still biases towards the right name.
      */
     private fun vocabularyFromPrompt(prompt: String?): List<String>? {
         val terms = prompt.orEmpty()
             .split(',', ';', '\n')
-            .map { it.trim() }
+            .map { afterLastSentenceEnd(it).trim() }
             .filter { term -> term.isNotEmpty() && term.count { it == ' ' } < 4 }
             .distinct()
             .take(100)
@@ -872,6 +970,13 @@ class OpenAiCompatibleClient(
         // Providers without a model-list endpoint (ElevenLabs, AssemblyAI, #143) ship a curated list
         // instead; return it offline so the picker/connection test work (key validated on first use).
         if (config.transcriptionApi in NO_MODELS_CATALOG_APIS) {
+            // Azure is the only one of them whose address is the user's own, so it is the only one with
+            // something to get wrong here. Nothing is fetched either way — this just lets the connection
+            // test answer the question its label promises instead of counting two ids and calling it a
+            // success while the endpoint is still a template (#349).
+            if (config.transcriptionApi == TranscriptionApi.AZURE_FAST_TRANSCRIPTION) {
+                azureTranscribeUrl()
+            }
             return config.curatedModels.map { ModelInfo(it) }
         }
         // Deepgram has its own catalog: GET /v1/models with a `Token` header returns `{ stt: [...] }`;
@@ -1362,6 +1467,62 @@ class OpenAiCompatibleClient(
         val error: String? = null,
     )
 
+    // --- Azure Fast Transcription DTOs (issue #349, see transcribeAzure) ---
+
+    /**
+     * The `definition` form part. Everything optional is nullable so `encodeDefaults = false` leaves it
+     * out entirely; `enabled` and `model` carry no default precisely so they are always written.
+     */
+    @Serializable
+    private data class AzureDefinitionDto(
+        val locales: List<String>? = null,
+        val enhancedMode: AzureEnhancedModeDto,
+        val phraseList: AzurePhraseListDto? = null,
+    )
+
+    @Serializable
+    private data class AzureEnhancedModeDto(
+        val enabled: Boolean,
+        val model: String,
+        val modelOptions: AzureModelOptionsDto? = null,
+    )
+
+    @Serializable
+    private data class AzureModelOptionsDto(val transcribeStyle: String)
+
+    @Serializable
+    private data class AzurePhraseListDto(val phrases: List<String>)
+
+    /**
+     * `combinedPhrases` is the whole transcript, and `phrases` the same words cut into timed pieces —
+     * so the second is a fallback for a response shaped in a way the first does not cover, never an
+     * addition to it.
+     */
+    @Serializable
+    private data class AzureTranscriptionDto(
+        val combinedPhrases: List<AzurePhraseTextDto> = emptyList(),
+        val phrases: List<AzurePhraseTextDto> = emptyList(),
+    )
+
+    @Serializable
+    private data class AzurePhraseTextDto(val text: String = "")
+
+    /**
+     * The transcript out of an Azure response.
+     *
+     * `combinedPhrases` is not one entry per response: Azure returns one per channel, and with
+     * diarization or a language switch one per speaker or language too. A dictation is mono and
+     * undiarized, so in practice there is exactly one — but reading `first()` would silently drop
+     * half of a code-switched sentence, which is a thing MAI is specifically good at.
+     */
+    private fun azureTranscriptOf(response: AzureTranscriptionDto): String {
+        val combined = response.combinedPhrases.joinToTranscript()
+        return combined.ifEmpty { response.phrases.joinToTranscript() }
+    }
+
+    private fun List<AzurePhraseTextDto>.joinToTranscript(): String =
+        mapNotNull { it.text.trim().takeIf(String::isNotEmpty) }.joinToString(" ")
+
     // --- Gemini native generateContent DTOs (see transcribeGeminiGenerateContent) ---
 
     @Serializable
@@ -1588,7 +1749,61 @@ class OpenAiCompatibleClient(
         private val NO_MODELS_CATALOG_APIS = setOf(
             TranscriptionApi.ELEVENLABS_MULTIPART,
             TranscriptionApi.ASSEMBLYAI_ASYNC,
+            // Azure's catalog is a deployment API behind an ARM token, not something a resource key can
+            // ask; the two MAI ids are the whole list for this endpoint (#349).
+            TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
         )
+
+        /**
+         * The Azure Speech API version that introduced `enhancedMode` — the switch that selects MAI —
+         * so it is not a version to keep current but the one this wire format is (read 2026-09-09).
+         */
+        private const val AZURE_API_VERSION = "2025-10-15"
+
+        /** Azure's readable style: fillers, false starts and self-corrections dropped. See [transcribeAzure]. */
+        private const val AZURE_TRANSCRIBE_STYLE_CLEAN = "clean"
+
+        /**
+         * Sentence-ending marks in the scripts this app dictates in — Latin, CJK, Arabic and Devanagari
+         * — plus the ellipsis, which ends one just as firmly.
+         */
+        private val SENTENCE_END = Regex("[.!?。！？؟।…]+\\s+")
+
+        /**
+         * [text] from after the last sentence that ended inside it, or all of [text] when none did.
+         *
+         * The rule a term obeys and a sentence does not: a name has no full stop with a space behind
+         * it. See [vocabularyFromPrompt], which is the only caller and carries the reasoning.
+         */
+        internal fun afterLastSentenceEnd(text: String): String =
+            SENTENCE_END.findAll(text).lastOrNull()?.let { text.substring(it.range.last + 1) } ?: text
+
+        /**
+         * The single language to pin for Azure, or null to let MAI detect it.
+         *
+         * MAI's language table is written in bare codes (`de`, `zh`, `yue`) and its own example pins
+         * `["en"]`, while the app offers `zh-CN`/`zh-TW`/`yue-CN`/`yue-HK` for the providers that tell
+         * those apart. Sending a code the table does not hold is worse than sending none, so the region
+         * is dropped rather than passed on — MAI transcribes Chinese either way, and the script it
+         * writes is not something this field decides.
+         */
+        internal fun azureLocale(language: String?): String? = language
+            ?.takeIf { it.isNotEmpty() && it != "detect" }
+            ?.substringBefore('-')
+            ?.takeIf { it.isNotEmpty() }
+
+        /**
+         * Whether [model] takes `modelOptions.transcribeStyle`.
+         *
+         * Microsoft documents the option for MAI-Transcribe-2 alone, and says nothing about the 1.5
+         * generation either way. Phrased as "everything except the older generations" rather than a
+         * list of one, so a future MAI-Transcribe-3 inherits it instead of quietly losing the clean
+         * transcript that is the point of this provider.
+         */
+        internal fun azureSupportsTranscribeStyle(model: String): Boolean {
+            val normalized = model.trim().lowercase()
+            return !normalized.startsWith("mai-transcribe-1")
+        }
 
         /** Builds a client from a registry [preset] plus the user's key/proxy. */
         fun from(

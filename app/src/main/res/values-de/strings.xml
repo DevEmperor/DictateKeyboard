@@ -1243,6 +1243,7 @@
     <string name="dictate__providers_cap_chat">Umformulierung</string>
     <string name="dictate__providers_add_custom">Eigenen Server hinzufügen</string>
     <string name="dictate__providers_add_custom_summary">Selbst gehostet oder jeder OpenAI-kompatible Endpunkt — für Spracherkennung und Umformulierung</string>
+    <string name="dictate__providers_azure_endpoint">Der Endpunkt steht im Portal neben dem Schlüssel auf der Seite „Keys and Endpoint“. MAI-Transcribe läuft nur in East US, West US, West US 2, North Europe, Southeast Asia und Central India.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama hat keinen Endpunkt für Spracherkennung und kann deshalb nur umformulieren. Zum Diktieren über einen eigenen Server richte einen Spracherkennungs-Server ein (etwa Speaches, faster-whisper-server oder whisper.cpp) und trage ihn unter „Eigenen Server hinzufügen“ ein — oder nutze die Erkennung auf dem Gerät, die ganz ohne Server auskommt.</string>
     <string name="dictate__providers_custom_title">Benutzerdefinierter Server</string>
     <string name="dictate__providers_field_name">Name</string>

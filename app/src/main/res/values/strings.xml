@@ -1857,6 +1857,7 @@
     <string name="dictate__custom_server_title" comment="Group title for custom server settings">Custom server</string>
     <string name="dictate__base_url_title" comment="Label for the custom server base URL field">Base URL</string>
     <string name="dictate__base_url_placeholder" translatable="false">https://your-server/v1/</string>
+    <string name="dictate__base_url_placeholder_azure" translatable="false">https://my-speech.cognitiveservices.azure.com/</string>
     <string name="dictate__base_url_required" comment="Summary shown when the custom base URL is not yet set">Required for the custom provider</string>
     <string name="dictate__value_not_set" comment="Generic summary for an unset text setting">Not set</string>
 
@@ -1877,6 +1878,7 @@
          their speech goes has no reason to open something called "custom endpoint" (issue #273). -->
     <string name="dictate__providers_add_custom" comment="Button to add a user-defined OpenAI-compatible endpoint">Add your own server</string>
     <string name="dictate__providers_add_custom_summary" comment="Summary under the add-your-own-server button">Self-hosted or any OpenAI-compatible endpoint — for speech-to-text and rewording</string>
+    <string name="dictate__providers_azure_endpoint" comment="Note at the top of the Azure provider editor: where the endpoint comes from, and the only regions that host the model">The endpoint is next to the key on the portal’s “Keys and Endpoint” page. MAI-Transcribe runs only in East US, West US, West US 2, North Europe, Southeast Asia and Central India.</string>
     <string name="dictate__providers_ollama_no_stt" comment="Note at the top of the Ollama provider editor; Ollama serves no transcription endpoint">Ollama has no speech-to-text endpoint, so it can only reword. To dictate through a server of your own, run a speech server (such as Speaches, faster-whisper-server or whisper.cpp) and add it under “Add your own server” — or use the on-device engine, which needs no server at all.</string>
     <string name="dictate__providers_custom_title" comment="Dialog title when editing a custom endpoint">Custom server</string>
     <string name="dictate__providers_field_name" comment="Label for the custom endpoint display name field">Name</string>
