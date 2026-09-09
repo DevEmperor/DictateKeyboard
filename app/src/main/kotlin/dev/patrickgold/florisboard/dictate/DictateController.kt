@@ -1694,6 +1694,7 @@ object DictateController {
                     LocalTranscriptionProvider(
                         LocalTranscriptionProvider.modelDir(appContext, model),
                         timeoutMillis = localTimeoutMillis(),
+                        tighteningSymbols = appContext.transcriptTighteningSymbols(),
                     ).transcribe(request)
                 } else {
                     try {
@@ -2109,20 +2110,18 @@ object DictateController {
             realtimeShown.setLength(0)
             realtimeShown.append(full)
         }
+        // Read once for the whole session rather than per piece, so a subtype switch mid-dictation cannot
+        // leave one transcript joined by two different conventions.
+        val tightening = appContext.transcriptTighteningSymbols()
         val callbacks = object : RealtimeCallbacks {
             override fun onPartial(text: String) {
                 scope.launch {
-                    val head = realtimeFinal.toString()
-                    showLive((if (head.isEmpty()) text else "$head $text").trim())
+                    showLive(TranscriptJoin.join(realtimeFinal.toString(), text, tightening))
                 }
             }
             override fun onFinalSegment(text: String) {
                 scope.launch {
-                    val t = text.trim()
-                    if (t.isNotEmpty()) {
-                        if (realtimeFinal.isNotEmpty()) realtimeFinal.append(' ')
-                        realtimeFinal.append(t)
-                    }
+                    TranscriptJoin.appendPiece(realtimeFinal, text, tightening)
                     showLive(realtimeFinal.toString())
                 }
             }
@@ -2413,6 +2412,7 @@ object DictateController {
      * segment to the field's live preview. When the last segment lands after a stop, runs the end finalize.
      */
     private suspend fun onSegmentResult(appContext: Context, idx: Int, text: String) {
+        val tightening = appContext.transcriptTighteningSymbols()
         val shouldFinish = segmentMutex.withLock {
             segmentResults[idx] = text
             while (segmentResults.containsKey(segmentCommitIndex)) {
@@ -2420,7 +2420,7 @@ object DictateController {
                 segmentCommitIndex++
                 if (raw.isNotEmpty()) {
                     val prev = realtimeShown.toString()
-                    val full = if (prev.isEmpty()) raw else "$prev $raw"
+                    val full = TranscriptJoin.join(prev, raw, tightening)
                     runCatching { sink(appContext).setDictationPreview(full, prev) }
                     realtimeShown.setLength(0)
                     realtimeShown.append(full)
@@ -2526,6 +2526,7 @@ object DictateController {
                     LocalTranscriptionProvider(
                         LocalTranscriptionProvider.modelDir(appContext, model),
                         timeoutMillis = localTimeoutMillis(),
+                        tighteningSymbols = appContext.transcriptTighteningSymbols(),
                     ).transcribe(request)
                 }
             } else {
@@ -4005,6 +4006,7 @@ object DictateController {
         return LocalTranscriptionProvider(
             LocalTranscriptionProvider.modelDir(context, localModel),
             timeoutMillis = localTimeoutMillis(),
+            tighteningSymbols = context.transcriptTighteningSymbols(),
         )
     }
 

@@ -22,6 +22,7 @@ import com.k2fsa.sherpa.onnx.OfflineWhisperModelConfig
 import com.k2fsa.sherpa.onnx.SileroVadModelConfig
 import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
+import dev.patrickgold.florisboard.dictate.TranscriptJoin
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -67,6 +68,13 @@ class LocalTranscriptionProvider(
      * the kept recording, the resend button, the history entry that still holds the audio.
      */
     private val timeoutMillis: Long = 0L,
+    /**
+     * The marks that bind to the word in front of them, used when a multi-pass decode joins its pieces
+     * back together (issue #356). Handed in rather than looked up: which marks those are belongs to the
+     * active punctuation rule, and a provider has no keyboard to ask. The default is the conservative
+     * one, which is what the callers with no field in sight (Wear, tests) want anyway.
+     */
+    private val tighteningSymbols: String = TranscriptJoin.DEFAULT_TIGHTENING_SYMBOLS,
 ) : TranscriptionProvider {
 
     /** When the current decode started, as a [System.nanoTime] stamp. Set once per [transcribe] call. */
@@ -165,11 +173,7 @@ class LocalTranscriptionProvider(
             val stream = recognizer.createStream()
             val parts = StringBuilder()
             fun collect() {
-                val text = recognizer.getResult(stream).text.trim()
-                if (text.isNotEmpty()) {
-                    if (parts.isNotEmpty()) parts.append(' ')
-                    parts.append(text)
-                }
+                TranscriptJoin.appendPiece(parts, recognizer.getResult(stream).text, tighteningSymbols)
             }
             try {
                 var offset = 0
@@ -278,11 +282,7 @@ class LocalTranscriptionProvider(
             checkDeadline()
             val end = minOf(offset + MAX_SEGMENT_SAMPLES, samples.size)
             val piece = if (offset == 0 && end == samples.size) samples else samples.copyOfRange(offset, end)
-            val text = decodeOnce(recognizer, piece).trim()
-            if (text.isNotEmpty()) {
-                if (out.isNotEmpty()) out.append(' ')
-                out.append(text)
-            }
+            TranscriptJoin.appendPiece(out, decodeOnce(recognizer, piece), tighteningSymbols)
             offset = end
         }
     }
