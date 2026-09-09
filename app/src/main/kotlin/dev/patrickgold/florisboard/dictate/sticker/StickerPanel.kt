@@ -136,8 +136,8 @@ fun StickerPanel(
     val history by prefs.sticker.historyData.collectPrefAsState()
     val packSettings by prefs.sticker.packSettings.collectPrefAsState()
     val scope = rememberCoroutineScope()
-    // The header's search field is a plain clickable rather than a PanelHeaderButton, so its tick has
-    // to be asked for by hand — a button that used to answer and now does not reads as broken (#326).
+    // The header's search field and the pack tabs are plain clickables rather than PanelHeaderButtons,
+    // so their tick has to be asked for by hand — a control that does not answer reads as broken (#326).
     val inputFeedbackController = LocalInputFeedbackController.current
 
     var index by remember { mutableStateOf<StickerIndex?>(null) }
@@ -464,6 +464,10 @@ fun StickerPanel(
                                             if (selected) accent.copy(alpha = 0.28f) else Color(0x18808080)
                                         )
                                         .clickable {
+                                            // The emoji categories have always ticked; these tabs are
+                                            // the same gesture in the same place and were the one
+                                            // control in this panel that #326 did not reach.
+                                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                                             scope.launch { pagerState.animateScrollToPage(position) }
                                         }
                                         .padding(horizontal = 12.dp, vertical = 6.dp),
