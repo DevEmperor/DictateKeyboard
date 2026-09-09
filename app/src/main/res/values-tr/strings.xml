@@ -1367,7 +1367,10 @@
     <string name="dictate__paragraph_split_off">Kapalı</string>
     <string name="dictate__paragraph_split_value">{n} kelimeden sonra</string>
     <string name="dictate__realtime_title">Gerçek zamanlı transkripsiyon</string>
-    <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda konuşurken metni canlı gösterir</string>
+    <string name="dictate__realtime_summary">Bunu destekleyen sağlayıcılarda, durdurduktan sonra değil konuşurken yazıya döker</string>
+    <string name="dictate__realtime_mode_off">Kapalı</string>
+    <string name="dictate__realtime_mode_live">Metni konuşurken göster</string>
+    <string name="dictate__realtime_mode_at_end">Metni yalnızca durdurunca göster</string>
     <string name="dictate__longform_title">Uzun dikte</string>
     <string name="dictate__longform_summary">Uzun dikteleri arka planda, konuşmaya devam ederken parça parça yazıya dök — kayıt sırasında geçerli parçayı göndermek için İleri\'ye dokun, böylece sonda uzun bir bekleme olmaz.</string>
     <string name="dictate__longform_autosplit_title">Akıllı otomatik bölme</string>

@@ -1320,7 +1320,10 @@
     <string name="dictate__paragraph_split_off">オフ</string>
     <string name="dictate__paragraph_split_value">{n}語以降</string>
     <string name="dictate__realtime_title">リアルタイム文字起こし</string>
-    <string name="dictate__realtime_summary">対応するプロバイダーで、話しながらテキストをリアルタイム表示します。</string>
+    <string name="dictate__realtime_summary">対応するプロバイダーで、停止後ではなく話しながら文字起こしします。</string>
+    <string name="dictate__realtime_mode_off">オフ</string>
+    <string name="dictate__realtime_mode_live">話しながらテキストを表示</string>
+    <string name="dictate__realtime_mode_at_end">停止したときにだけテキストを表示</string>
     <string name="dictate__longform_title">長文ディクテーション</string>
     <string name="dictate__longform_summary">長い音声入力をバックグラウンドで少しずつ文字起こしします。話し続けながら録音中に「次へ」をタップすると現在の部分を送信でき、最後に長く待つ必要がありません。</string>
     <string name="dictate__longform_autosplit_title">スマート自動分割</string>

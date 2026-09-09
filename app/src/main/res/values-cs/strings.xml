@@ -1405,7 +1405,10 @@
     <string name="dictate__paragraph_split_off">Vypnuto</string>
     <string name="dictate__paragraph_split_value">Po {n} slovech</string>
     <string name="dictate__realtime_title">Přepis v reálném čase</string>
-    <string name="dictate__realtime_summary">Zobrazuje text živě během mluvení u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__realtime_summary">Přepisuje už během mluvení, ne až po zastavení, u poskytovatelů, kteří to podporují</string>
+    <string name="dictate__realtime_mode_off">Vypnuto</string>
+    <string name="dictate__realtime_mode_live">Zobrazovat text během mluvení</string>
+    <string name="dictate__realtime_mode_at_end">Zobrazit text až po zastavení</string>
     <string name="dictate__longform_title">Dlouhé diktování</string>
     <string name="dictate__longform_summary">Přepisuj dlouhá diktování na pozadí, část po části, zatímco mluvíš dál — během nahrávání klepni na Další pro odeslání aktuální části, takže na konci není dlouhé čekání.</string>
     <string name="dictate__longform_autosplit_title">Chytré automatické dělení</string>

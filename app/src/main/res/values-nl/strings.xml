@@ -1288,7 +1288,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__paragraph_split_off">Uit</string>
     <string name="dictate__paragraph_split_value">Na {n} woorden</string>
     <string name="dictate__realtime_title">Realtime-transcriptie</string>
-    <string name="dictate__realtime_summary">Toont tekst live terwijl je spreekt, voor providers die dit ondersteunen</string>
+    <string name="dictate__realtime_summary">Transcribeert al tijdens het spreken in plaats van pas na het stoppen, voor providers die dit ondersteunen</string>
+    <string name="dictate__realtime_mode_off">Uit</string>
+    <string name="dictate__realtime_mode_live">Tekst tonen tijdens het spreken</string>
+    <string name="dictate__realtime_mode_at_end">Tekst pas tonen bij stoppen</string>
     <string name="dictate__longform_title">Lange dictaten</string>
     <string name="dictate__longform_summary">Transcribeer lange dictaten op de achtergrond, deel voor deel terwijl je blijft praten — tik tijdens het opnemen op Volgende om het huidige deel te versturen, zodat er aan het eind geen lange wachttijd is.</string>
     <string name="dictate__longform_autosplit_title">Slim automatisch splitsen</string>

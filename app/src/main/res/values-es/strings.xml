@@ -1370,7 +1370,10 @@
     <string name="dictate__paragraph_split_off">Desactivado</string>
     <string name="dictate__paragraph_split_value">Tras {n} palabras</string>
     <string name="dictate__realtime_title">Transcripción en tiempo real</string>
-    <string name="dictate__realtime_summary">Muestra el texto en vivo mientras hablas, para proveedores compatibles</string>
+    <string name="dictate__realtime_summary">Transcribe mientras hablas en lugar de hacerlo al parar, para proveedores compatibles</string>
+    <string name="dictate__realtime_mode_off">Desactivado</string>
+    <string name="dictate__realtime_mode_live">Mostrar el texto mientras hablo</string>
+    <string name="dictate__realtime_mode_at_end">Mostrar el texto solo al parar</string>
     <string name="dictate__longform_title">Dictado largo</string>
     <string name="dictate__longform_summary">Transcribe dictados largos en segundo plano, parte por parte mientras sigues hablando: toca Siguiente durante la grabación para enviar la parte actual, así no hay una larga espera al final.</string>
     <string name="dictate__longform_autosplit_title">División automática inteligente</string>

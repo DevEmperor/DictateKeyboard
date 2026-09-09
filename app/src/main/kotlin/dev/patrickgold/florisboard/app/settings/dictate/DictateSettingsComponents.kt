@@ -441,3 +441,100 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.InstantRecordingPreference
         }
     }
 }
+
+/**
+ * Real-time transcription as one row with three answers instead of a switch (issue #345).
+ *
+ * Streaming used to be a yes/no question, and "yes" carried a second decision nobody was asked: the
+ * provisional words were typed into the field as they arrived. That is the right answer for people who
+ * want to watch the transcript build, and the wrong one for people who only want the speed — the
+ * constant re-writing reads as stuttering, and a half-finished sentence in a chat box is a distraction.
+ * Both wants are now nameable: stream and show it, or stream and stay quiet until the recording stops.
+ *
+ * Stored as the two booleans they are ([enabled] and [hidePreview]), so an existing on/off choice keeps
+ * meaning what it meant — anyone who had realtime on lands on "show while speaking", which is what they
+ * already had.
+ */
+@Composable
+internal fun PreferenceUiScope<FlorisPreferenceModel>.RealtimeTranscriptionPreference(
+    enabled: PreferenceData<Boolean>,
+    hidePreview: PreferenceData<Boolean>,
+    title: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    val isEnabled by enabled.collectAsState()
+    val isHidePreview by hidePreview.collectAsState()
+    var dialogOpen by remember { mutableStateOf(false) }
+
+    val modeOff = stringRes(R.string.dictate__realtime_mode_off)
+    val modeLive = stringRes(R.string.dictate__realtime_mode_live)
+    val modeAtEnd = stringRes(R.string.dictate__realtime_mode_at_end)
+
+    Preference(
+        icon = icon,
+        modifier = modifier,
+        title = title,
+        summary = when {
+            !isEnabled -> modeOff
+            isHidePreview -> modeAtEnd
+            else -> modeLive
+        },
+        onClick = { dialogOpen = true },
+    )
+
+    if (dialogOpen) {
+        // 0 = off, 1 = stream and show the words as they arrive, 2 = stream but only show the result.
+        val current = when {
+            !isEnabled -> 0
+            isHidePreview -> 2
+            else -> 1
+        }
+        var tmpMode by remember(current) { mutableStateOf(current) }
+        JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
+            title = title,
+            confirmLabel = stringRes(R.string.action__ok),
+            onConfirm = {
+                scope.launch {
+                    enabled.set(tmpMode != 0)
+                    // Only meaningful while streaming is on, but written unconditionally so the choice
+                    // survives switching the feature off and on again.
+                    if (tmpMode != 0) hidePreview.set(tmpMode == 2)
+                }
+                dialogOpen = false
+            },
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = { dialogOpen = false },
+            contentPadding = PaddingValues(horizontal = 8.dp),
+        ) {
+            Column {
+                // What the feature is, kept where the row used to say it — the summary now names the
+                // chosen mode, so without this the explanation would have nowhere left to live.
+                Text(
+                    text = stringRes(R.string.dictate__realtime_summary),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+                listOf(modeOff, modeLive, modeAtEnd).forEachIndexed { index, label ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(selected = index == tmpMode, onClick = { tmpMode = index })
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = index == tmpMode,
+                            onClick = null,
+                            modifier = Modifier.padding(end = 12.dp),
+                        )
+                        Text(text = label)
+                    }
+                }
+            }
+        }
+    }
+}

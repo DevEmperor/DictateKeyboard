@@ -1343,7 +1343,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__paragraph_split_off">Nonaktif</string>
     <string name="dictate__paragraph_split_value">Setelah {n} kata</string>
     <string name="dictate__realtime_title">Transkripsi waktu nyata</string>
-    <string name="dictate__realtime_summary">Menampilkan teks secara langsung saat Anda berbicara, untuk penyedia yang mendukungnya</string>
+    <string name="dictate__realtime_summary">Mentranskripsi saat Anda berbicara, bukan setelah berhenti, untuk penyedia yang mendukungnya</string>
+    <string name="dictate__realtime_mode_off">Nonaktif</string>
+    <string name="dictate__realtime_mode_live">Tampilkan teks saat saya berbicara</string>
+    <string name="dictate__realtime_mode_at_end">Tampilkan teks hanya saat berhenti</string>
     <string name="dictate__longform_title">Dikte panjang</string>
     <string name="dictate__longform_summary">Transkripsikan dikte panjang di latar belakang, bagian demi bagian sambil terus berbicara — ketuk Berikutnya saat merekam untuk mengirim bagian saat ini, sehingga tidak ada tunggu lama di akhir.</string>
     <string name="dictate__longform_autosplit_title">Pembagian otomatis cerdas</string>

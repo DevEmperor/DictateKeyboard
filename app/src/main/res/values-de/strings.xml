@@ -1371,7 +1371,10 @@
     <string name="dictate__paragraph_split_off">Aus</string>
     <string name="dictate__paragraph_split_value">Nach {n} Wörtern</string>
     <string name="dictate__realtime_title">Echtzeit-Transkription</string>
-    <string name="dictate__realtime_summary">Zeigt Text live beim Sprechen an, für Anbieter, die das unterstützen</string>
+    <string name="dictate__realtime_summary">Transkribiert schon beim Sprechen statt erst nach dem Stoppen, für Anbieter, die das unterstützen</string>
+    <string name="dictate__realtime_mode_off">Aus</string>
+    <string name="dictate__realtime_mode_live">Text beim Sprechen anzeigen</string>
+    <string name="dictate__realtime_mode_at_end">Text erst beim Stoppen anzeigen</string>
     <string name="dictate__longform_title">Langform-Diktat</string>
     <string name="dictate__longform_summary">Transkribiere lange Diktate im Hintergrund, Stück für Stück, während du weiterredest – tippe während der Aufnahme auf „Weiter“, um den aktuellen Teil zu senden, sodass am Ende keine lange Wartezeit entsteht.</string>
     <string name="dictate__longform_autosplit_title">Intelligentes Auto-Teilen</string>

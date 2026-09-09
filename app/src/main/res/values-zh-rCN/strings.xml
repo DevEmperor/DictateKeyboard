@@ -1383,7 +1383,10 @@
     <string name="dictate__paragraph_split_off">关闭</string>
     <string name="dictate__paragraph_split_value">{n} 个词后</string>
     <string name="dictate__realtime_title">实时转录</string>
-    <string name="dictate__realtime_summary">在您说话时实时显示文本，适用于支持此功能的提供商</string>
+    <string name="dictate__realtime_summary">在您说话时即时转写，而不是停止后才开始，适用于支持此功能的提供商</string>
+    <string name="dictate__realtime_mode_off">关闭</string>
+    <string name="dictate__realtime_mode_live">说话时显示文本</string>
+    <string name="dictate__realtime_mode_at_end">仅在停止时显示文本</string>
     <string name="dictate__longform_title">长篇听写</string>
     <string name="dictate__longform_summary">在后台逐段转写长语音输入，你可以边说边处理——录音时点按「下一段」发送当前部分，这样结束时无需长时间等待。</string>
     <string name="dictate__longform_autosplit_title">智能自动分段</string>

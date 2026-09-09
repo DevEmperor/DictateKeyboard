@@ -306,6 +306,16 @@ object DictateController {
     private var realtimeClosed: CompletableDeferred<Unit>? = null
     private var realtimeContext: Context? = null     // app context to edit the field's provisional text
     private val realtimeShown = StringBuilder()       // text currently committed to the field this session
+    /**
+     * Everything the stream has produced so far, whether or not any of it was put into the field (#345).
+     *
+     * [realtimeShown] cannot answer that on its own: it means *what is in the field right now*, and the
+     * cancel/fallback paths delete exactly that much text — so with the preview hidden it has to stay
+     * empty, or stopping would eat the user's own words. This buffer is what gets committed on stop.
+     */
+    private val realtimeTranscript = StringBuilder()
+    /** Hold the streamed words back until stop (`realtimeHidePreview`), instead of typing them live. */
+    private var realtimeHidden = false
     @Volatile private var realtimeCancelled = false   // block late stream callbacks from re-adding text
 
     // --- Long-form segmented dictation (issue #170) ---------------------------------------------
@@ -1074,6 +1084,7 @@ object DictateController {
         _interimText.value = ""
         realtimeContext?.let { ctx -> runCatching { sink(ctx).clearDictationPreview(realtimeShown.toString()) } }
         realtimeShown.setLength(0)
+        realtimeTranscript.setLength(0)
         realtimeContext = null
         unregisterScreenOffReceiver()
         cleanupAudioRouting()
@@ -1909,6 +1920,7 @@ object DictateController {
                 outSink.commitDictationFinal(outputText, realtimeShown.toString())
             }
             realtimeShown.setLength(0)
+            realtimeTranscript.setLength(0)
             // This branch never went through commitOutput, so it never saw the insert-failure check
             // either (issue #277) — a swallowed write finished as Idle, i.e. a green check.
             if (reportOverlayInsertFailure(appContext, landed, outputText)) {
@@ -2053,6 +2065,7 @@ object DictateController {
      * apply or the session can't be created — the caller then records normally (batch).
      */
     private fun openRealtimeSession(appContext: Context): ((ByteArray, Int) -> Unit)? {
+        realtimeHidden = false
         // System voice input (#67) always records in plain batch mode — the RecognitionService callback
         // returns one final result, so there's no realtime streaming/composing to wire up here.
         if (outputTarget == OutputTarget.RECOGNITION_SERVICE) return null
@@ -2078,12 +2091,20 @@ object DictateController {
         _interimText.value = ""
         realtimeContext = appContext
         realtimeShown.setLength(0)
+        realtimeTranscript.setLength(0)
+        realtimeHidden = prefs.dictate.realtimeHidePreview.get()
         val closed = CompletableDeferred<Unit>()
         realtimeClosed = closed
-        // Type the growing transcript live into the field, applying only the minimal diff each time (#128).
+        // Type the growing transcript live into the field, applying only the minimal diff each time (#128) —
+        // unless the preview is held back (#345), in which case the words are only remembered and the field
+        // sees nothing until stop. The stream itself runs identically either way; this is purely what the
+        // user is shown, so hiding it costs no speed and removes the word-by-word churn.
         fun showLive(full: String) {
             if (realtimeCancelled) return   // a late callback must not re-add text after a cancel
             _interimText.value = full
+            realtimeTranscript.setLength(0)
+            realtimeTranscript.append(full)
+            if (realtimeHidden) return
             runCatching { sink(appContext).setDictationPreview(full, realtimeShown.toString()) }
             realtimeShown.setLength(0)
             realtimeShown.append(full)
@@ -2172,14 +2193,17 @@ object DictateController {
                 // stalls us until the timeout and later trips a ping/pong failure.
                 withTimeoutOrNull(REALTIME_FINALIZE_TIMEOUT_MS) { closed?.await() }
                 runCatching { session?.cancel() }
-                // The transcript is what we already streamed into the field (finals + last partial); fall
-                // back to the finalized-segments buffer only if nothing was shown.
-                val transcript = realtimeShown.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
+                // The transcript is everything the stream produced (finals + last partial), which with a
+                // hidden preview (#345) is the only place it exists; fall back to the finalized-segments
+                // buffer only if the stream produced nothing at all.
+                val transcript = realtimeTranscript.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
                 _interimText.value = ""
                 if (realtimeFailed || transcript.isEmpty()) {
-                    // Drop the live provisional text; the batch path commits fresh from the WAV.
+                    // Drop the live provisional text; the batch path commits fresh from the WAV. With the
+                    // preview hidden there is nothing in the field to take back, and realtimeShown says so.
                     runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
                     realtimeShown.setLength(0)
+                    realtimeTranscript.setLength(0)
                     if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
                         livePromptArmed = live
                         transcribe(context, wavFile, recordedSeconds, gate = false)
@@ -2210,6 +2234,7 @@ object DictateController {
                 _interimText.value = ""
                 runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
                 realtimeShown.setLength(0)
+                realtimeTranscript.setLength(0)
                 if (wavFile != null && wavFile.exists() && wavFile.length() > 0L) {
                     livePromptArmed = live
                     transcribe(context, wavFile, recordedSeconds, gate = false)
@@ -2247,6 +2272,10 @@ object DictateController {
         // Keep + merge the segment audio only when the history feature would actually store it.
         segmentKeepAudio = prefs.dictate.historyEnabled.get() && prefs.dictate.historyAudioRetention.get()
         realtimeShown.setLength(0)
+        realtimeTranscript.setLength(0)
+        // Segmented dictation shows its assembled text as it goes; the hidden-preview mode belongs to
+        // realtime alone, and the two are mutually exclusive (see [isSegmentedMode]).
+        realtimeHidden = false
         // Reuse the realtime shown-text context so the existing cancel/interrupt cleanup clears the preview.
         realtimeContext = appContext
         realtimeCancelled = false
@@ -2852,6 +2881,7 @@ object DictateController {
         _interimText.value = ""
         realtimeContext?.let { ctx -> runCatching { sink(ctx).clearDictationPreview(realtimeShown.toString()) } }
         realtimeShown.setLength(0)
+        realtimeTranscript.setLength(0)
         realtimeContext = null
         unregisterScreenOffReceiver()
         val seconds = recordedSecondsOf(current)

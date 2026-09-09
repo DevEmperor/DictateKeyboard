@@ -2067,7 +2067,10 @@
     <string name="dictate__paragraph_split_value" comment="Slider value label: after how many words a paragraph break may start. {n} is the word count">After {n} words</string>
 
     <string name="dictate__realtime_title" comment="Setting: real-time streaming transcription">Real-time transcription</string>
-    <string name="dictate__realtime_summary" comment="Summary for the real-time transcription setting">Show text live while you speak, for providers that support it</string>
+    <string name="dictate__realtime_summary" comment="Explanation shown inside the real-time transcription dialog">Transcribes while you speak instead of after you stop, for providers that support it</string>
+    <string name="dictate__realtime_mode_off" comment="Real-time transcription: the feature is switched off">Off</string>
+    <string name="dictate__realtime_mode_live" comment="Real-time transcription: the streamed words appear in the text field as they arrive">Show the text while I speak</string>
+    <string name="dictate__realtime_mode_at_end" comment="Real-time transcription: the words are transcribed while speaking but only inserted once the recording is stopped">Show the text only when I stop</string>
     <string name="dictate__providers_field_realtime_model" comment="Label for the real-time streaming model picker">Real-time model</string>
     <string name="dictate__providers_custom_realtime" comment="Switch label: a self-hosted server that supports realtime streaming (#249)">Real-time streaming</string>
     <string name="dictate__providers_custom_realtime_summary" comment="Explains what the server must support for realtime streaming">This server speaks the OpenAI realtime protocol at /v1/realtime</string>

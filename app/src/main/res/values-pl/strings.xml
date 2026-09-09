@@ -1406,7 +1406,10 @@
     <string name="dictate__paragraph_split_off">Wył.</string>
     <string name="dictate__paragraph_split_value">Po {n} słowach</string>
     <string name="dictate__realtime_title">Transkrypcja w czasie rzeczywistym</string>
-    <string name="dictate__realtime_summary">Pokazuje tekst na żywo podczas mówienia u dostawców, którzy to obsługują</string>
+    <string name="dictate__realtime_summary">Transkrybuje już podczas mówienia, a nie dopiero po zatrzymaniu, u dostawców, którzy to obsługują</string>
+    <string name="dictate__realtime_mode_off">Wyłączone</string>
+    <string name="dictate__realtime_mode_live">Pokazuj tekst podczas mówienia</string>
+    <string name="dictate__realtime_mode_at_end">Pokazuj tekst dopiero po zatrzymaniu</string>
     <string name="dictate__longform_title">Długie dyktowanie</string>
     <string name="dictate__longform_summary">Transkrybuj długie dyktowania w tle, część po części, gdy mówisz dalej — dotknij Dalej podczas nagrywania, aby wysłać bieżącą część, dzięki czemu nie ma długiego oczekiwania na końcu.</string>
     <string name="dictate__longform_autosplit_title">Inteligentny autopodział</string>

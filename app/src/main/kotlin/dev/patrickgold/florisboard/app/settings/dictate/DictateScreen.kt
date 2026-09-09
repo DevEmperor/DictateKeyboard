@@ -354,12 +354,13 @@ fun DictateRecordingScreen() = FlorisScreen {
             summaryOn = stringRes(R.string.dictate__push_to_talk_summary),
             summaryOff = stringRes(R.string.dictate__push_to_talk_summary_off),
         )
-        SwitchPreference(
-            prefs.dictate.realtimeTranscription,
+        // One row, three states: off, stream and show it live, stream and only show the result (#345).
+        RealtimeTranscriptionPreference(
+            enabled = prefs.dictate.realtimeTranscription,
+            hidePreview = prefs.dictate.realtimeHidePreview,
             icon = Icons.Default.GraphicEq,
             modifier = Modifier.settingsSearchAnchor("dictate__realtime_title"),
             title = stringRes(R.string.dictate__realtime_title),
-            summary = stringRes(R.string.dictate__realtime_summary),
         )
         // All long-form settings live behind one entry that opens a single dialog (#170).
         val longformMode by prefs.dictate.longformMode.collectAsState()

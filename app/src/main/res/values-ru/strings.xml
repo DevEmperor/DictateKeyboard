@@ -1394,7 +1394,10 @@
     <string name="dictate__paragraph_split_off">Выкл.</string>
     <string name="dictate__paragraph_split_value">После {n} слов</string>
     <string name="dictate__realtime_title">Транскрипция в реальном времени</string>
-    <string name="dictate__realtime_summary">Показывает текст вживую во время речи для поддерживающих это провайдеров</string>
+    <string name="dictate__realtime_summary">Расшифровывает уже во время речи, а не после остановки, для поддерживающих это провайдеров</string>
+    <string name="dictate__realtime_mode_off">Выключено</string>
+    <string name="dictate__realtime_mode_live">Показывать текст во время речи</string>
+    <string name="dictate__realtime_mode_at_end">Показывать текст только после остановки</string>
     <string name="dictate__longform_title">Длинная диктовка</string>
     <string name="dictate__longform_summary">Транскрибируйте длинные диктовки в фоне, часть за частью, пока вы продолжаете говорить — нажмите «Далее» во время записи, чтобы отправить текущую часть, чтобы не было долгого ожидания в конце.</string>
     <string name="dictate__longform_autosplit_title">Умное авторазделение</string>

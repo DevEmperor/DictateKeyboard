@@ -1333,7 +1333,10 @@
     <string name="dictate__paragraph_split_off">Izslēgts</string>
     <string name="dictate__paragraph_split_value">Pēc {n} vārdiem</string>
     <string name="dictate__realtime_title">Reāllaika transkripcija</string>
-    <string name="dictate__realtime_summary">Rāda tekstu tiešraidē, kamēr runājat, pakalpojumiem, kas to atbalsta</string>
+    <string name="dictate__realtime_summary">Atšifrē jau runāšanas laikā, nevis pēc apturēšanas, pakalpojumiem, kas to atbalsta</string>
+    <string name="dictate__realtime_mode_off">Izslēgts</string>
+    <string name="dictate__realtime_mode_live">Rādīt tekstu runāšanas laikā</string>
+    <string name="dictate__realtime_mode_at_end">Rādīt tekstu tikai pēc apturēšanas</string>
     <string name="dictate__longform_title">Gara diktēšana</string>
     <string name="dictate__longform_summary">Transkribē garus diktātus fonā, daļu pa daļai, kamēr turpini runāt — ierakstīšanas laikā pieskaries Tālāk, lai nosūtītu pašreizējo daļu, tā beigās nav ilgi jāgaida.</string>
     <string name="dictate__longform_autosplit_title">Vieda automātiskā dalīšana</string>

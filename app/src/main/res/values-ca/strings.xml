@@ -1264,7 +1264,10 @@
     <string name="dictate__paragraph_split_off">Desactivat</string>
     <string name="dictate__paragraph_split_value">Després de {n} paraules</string>
     <string name="dictate__realtime_title">Transcripció en temps real</string>
-    <string name="dictate__realtime_summary">Mostra el text en directe mentre parles, per als proveïdors que ho admeten</string>
+    <string name="dictate__realtime_summary">Transcriu mentre parles en lloc de fer-ho en aturar, per als proveïdors que ho admeten</string>
+    <string name="dictate__realtime_mode_off">Desactivat</string>
+    <string name="dictate__realtime_mode_live">Mostra el text mentre parlo</string>
+    <string name="dictate__realtime_mode_at_end">Mostra el text només en aturar</string>
     <string name="dictate__longform_title">Dictat llarg</string>
     <string name="dictate__longform_summary">Transcriu dictats llargs en segon pla, part a part mentre continues parlant: toca Següent durant l\'enregistrament per enviar la part actual, així no hi ha una llarga espera al final.</string>
     <string name="dictate__longform_autosplit_title">Divisió automàtica intel·ligent</string>

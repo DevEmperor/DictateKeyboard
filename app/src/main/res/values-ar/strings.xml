@@ -1251,7 +1251,10 @@
     <string name="dictate__paragraph_split_off">إيقاف</string>
     <string name="dictate__paragraph_split_value">بعد {n} كلمة</string>
     <string name="dictate__realtime_title">النسخ الفوري</string>
-    <string name="dictate__realtime_summary">أظهِر النص مباشرةً أثناء التحدث، للمزوّدين الذين يدعمونه</string>
+    <string name="dictate__realtime_summary">يُفرِّغ الكلام أثناء التحدث بدلاً من الانتظار حتى التوقف، للمزوّدين الذين يدعمون ذلك</string>
+    <string name="dictate__realtime_mode_off">إيقاف</string>
+    <string name="dictate__realtime_mode_live">إظهار النص أثناء التحدث</string>
+    <string name="dictate__realtime_mode_at_end">إظهار النص عند التوقف فقط</string>
     <string name="dictate__longform_title">الإملاء الطويل</string>
     <string name="dictate__longform_summary">فرّغ الإملاءات الطويلة في الخلفية جزءًا بجزء بينما تواصل التحدث — انقر على «التالي» أثناء التسجيل لإرسال الجزء الحالي، حتى لا يكون هناك انتظار طويل في النهاية.</string>
     <string name="dictate__longform_autosplit_title">تقسيم تلقائي ذكي</string>

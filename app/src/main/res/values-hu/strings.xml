@@ -1387,7 +1387,10 @@
     <string name="dictate__paragraph_split_off">Ki</string>
     <string name="dictate__paragraph_split_value">{n} szó után</string>
     <string name="dictate__realtime_title">Valós idejű átírás</string>
-    <string name="dictate__realtime_summary">Élőben mutatja a szöveget beszéd közben az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__realtime_summary">Már beszéd közben átírja a szöveget, nem csak a leállítás után, az ezt támogató szolgáltatóknál</string>
+    <string name="dictate__realtime_mode_off">Ki</string>
+    <string name="dictate__realtime_mode_live">Szöveg megjelenítése beszéd közben</string>
+    <string name="dictate__realtime_mode_at_end">Szöveg megjelenítése csak leállításkor</string>
     <string name="dictate__longform_title">Hosszú diktálás</string>
     <string name="dictate__longform_summary">Írd át a hosszú diktálásokat a háttérben, részenként, miközben tovább beszélsz — felvétel közben koppints a Tovább gombra az aktuális rész elküldéséhez, így a végén nincs hosszú várakozás.</string>
     <string name="dictate__longform_autosplit_title">Okos automatikus felosztás</string>

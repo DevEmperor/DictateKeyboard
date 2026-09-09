@@ -628,11 +628,22 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__instant_output",
             default = true,
         )
-        // Real-time (streaming) transcription (issue #128): show text live while speaking, for providers
+        // Real-time (streaming) transcription (issue #128): transcribe while speaking, for providers
         // that support it (OpenAI realtime, Soniox, Deepgram, …). Global switch; falls back to batch when
         // the selected provider has no realtime support. Default off.
         val realtimeTranscription = boolean(
             key = "dictate__realtime_transcription",
+            default = false,
+        )
+        // Whether the streaming transcript stays out of sight until the recording is stopped (issue #345).
+        // The stream runs either way — this only decides whether its provisional words are typed into the
+        // field as they arrive or held back and inserted in one piece at the end, which reads like a batch
+        // dictation at streaming speed.
+        //
+        // Stored beside [realtimeTranscription] rather than folded into one enum so that nobody's existing
+        // on/off choice needs migrating; false keeps exactly the behaviour realtime has always had.
+        val realtimeHidePreview = boolean(
+            key = "dictate__realtime_hide_preview",
             default = false,
         )
         // --- Long-form segmented dictation (issue #170) ------------------------------------------
