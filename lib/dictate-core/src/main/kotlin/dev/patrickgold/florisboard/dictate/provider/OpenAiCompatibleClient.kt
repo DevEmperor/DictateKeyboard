@@ -1749,8 +1749,9 @@ class OpenAiCompatibleClient(
         private val NO_MODELS_CATALOG_APIS = setOf(
             TranscriptionApi.ELEVENLABS_MULTIPART,
             TranscriptionApi.ASSEMBLYAI_ASYNC,
-            // Azure's catalog is a deployment API behind an ARM token, not something a resource key can
-            // ask; the two MAI ids are the whole list for this endpoint (#349).
+            // Azure has a models endpoint the resource key opens, but it lists the wrong namespace —
+            // per-locale custom-speech base models, none of which `enhancedMode.model` accepts. See
+            // [ProviderRegistry.AZURE], which carries the measurement (#349).
             TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
         )
 

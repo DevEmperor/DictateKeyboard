@@ -499,8 +499,13 @@ object ProviderRegistry {
         baseUrl = "",
         capabilities = STT_ONLY,
         transcriptionApi = TranscriptionApi.AZURE_FAST_TRANSCRIPTION,
-        // Azure's model catalog is a deployment API, not a list of speech models, and needs an ARM token
-        // rather than the resource key. The two ids below are the whole catalog for this endpoint.
+        // No live catalog, and the reason is not that Azure has no models endpoint — it has one, and the
+        // resource key opens it: `GET {endpoint}/speechtotext/models/base?api-version=…`. It answers with
+        // the wrong namespace. Those are the *custom speech* base models — one per locale, named
+        // "en-US Base model", addressed by a GUID — and none of them is a value `enhancedMode.model`
+        // accepts, which takes the literal string "MAI-Transcribe-2". Fetching it would fill the picker
+        // with dozens of entries that every one of them fails on. The field stays a free text box, so a
+        // future MAI-Transcribe-3 can be typed in without waiting for an app update (read 2026-09-09).
         supportsDynamicModels = false,
         // A resource has to exist before it has a key, so this is the page that creates one; the portal
         // is one click from there for anyone who already has one.
