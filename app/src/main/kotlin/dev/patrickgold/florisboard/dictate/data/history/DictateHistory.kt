@@ -273,6 +273,42 @@ object DictateHistoryStore {
         db(context).dao().updateText(id, text, originalText)
     }
 
+    /**
+     * Turns the placeholder row written when the audio was sent (issue #358) into the finished dictation:
+     * the transcript replaces the placeholder and [DictateHistoryDao.updateText] clears the failed flag.
+     *
+     * [keepAudio] is the audio-retention preference. The placeholder had to force the WAV in — a
+     * dictation that never comes back has nothing else to recover from — but retention governs
+     * *successful* dictations, so a success with retention off drops it again here. Without this the
+     * change would quietly start keeping everyone's audio.
+     */
+    suspend fun completePending(
+        context: Context,
+        id: Long,
+        text: String,
+        originalText: String = "",
+        keepAudio: Boolean,
+    ) {
+        if (text.isBlank()) return
+        val dao = db(context).dao()
+        dao.updateText(id, text, originalText)
+        if (keepAudio) return
+        dao.getById(id)?.audioPath?.let { runCatching { File(it).delete() } }
+        dao.clearAudio(id)
+    }
+
+    /**
+     * Drops the placeholder row again (issue #358) for an attempt that ended in neither a transcript nor
+     * a failure — silence, or a model echoing the style prompt back. Neither logs anything today, and a
+     * red "failed" entry for a recording that simply had no words in it would be a lie with a retry
+     * button on it.
+     */
+    suspend fun deleteById(context: Context, id: Long) {
+        val dao = db(context).dao()
+        dao.getById(id)?.audioPath?.let { runCatching { File(it).delete() } }
+        dao.delete(id)
+    }
+
     /** Pins or unpins an entry; pinned entries survive pruning and are marked in the UI. */
     suspend fun setPinned(context: Context, id: Long, pinned: Boolean) {
         db(context).dao().setPinned(id, pinned)
