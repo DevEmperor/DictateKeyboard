@@ -226,7 +226,13 @@ fun GifPanel(
                     .padding(vertical = 7.dp)
                     .clip(RoundedCornerShape(50))
                     .background(Color(0x22808080))
-                    .clickable(enabled = hasKey) { keyboardManager.activateGifSearch() }
+                    // Silent since this field shipped: a plain clickable is not a PanelHeaderButton and
+                    // does not tick on its own, which #326 only caught for the panels it went looking
+                    // through. The sticker panel's field is the same shape and asks the same way.
+                    .clickable(enabled = hasKey) {
+                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        keyboardManager.activateGifSearch()
+                    }
                     .padding(horizontal = 12.dp),
                 contentAlignment = Alignment.CenterStart,
             ) {

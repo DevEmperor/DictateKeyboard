@@ -51,7 +51,7 @@
     <string name="prefs__media__sticker_confirm_before_insert__summary" comment="Preference summary">Tap a sticker once to select it, again to send. A quick double tap sends straight away</string>
     <string name="prefs__media__sticker_pinned_reset" comment="Preference title">Clear favourite stickers</string>
     <string name="prefs__media__sticker_history_reset" comment="Preference title">Clear recently used stickers</string>
-    <string name="sticker__title" comment="Title of the sticker panel">Stickers</string>
+    <string name="sticker__title" comment="Name of the sticker panel, shown on the legacy layout's action">Stickers</string>
     <string name="sticker__category_all" comment="Tab holding the files that are not in a subfolder">All</string>
     <string name="sticker__section_favorites" comment="Section heading above pinned stickers">Favourites</string>
     <string name="sticker__section_recent" comment="Section heading above recently used stickers">Recently used</string>
@@ -62,7 +62,7 @@
     <string name="sticker__reorder_hint" comment="Header text while a favourite is being moved with the arrows">Move with the arrows</string>
     <string name="sticker__reorder_earlier" comment="Screen reader label for the arrow that moves a favourite towards the start">Move towards the start</string>
     <string name="sticker__reorder_later" comment="Screen reader label for the arrow that moves a favourite towards the end">Move towards the end</string>
-    <string name="sticker__search" comment="Screen reader label for the button that opens the sticker search">Search stickers</string>
+    <string name="sticker__search" comment="Label inside the sticker panel's search field, and what a screen reader announces for it">Search stickers</string>
     <string name="sticker__search_placeholder" comment="Hint inside the sticker search field">Search by file name</string>
     <string name="sticker__search_no_results" comment="Shown when no file name matches what was typed">No sticker with that name</string>
     <string name="sticker__setup_needed" comment="Empty state when no folder has been chosen">Choose a folder to use your own stickers</string>

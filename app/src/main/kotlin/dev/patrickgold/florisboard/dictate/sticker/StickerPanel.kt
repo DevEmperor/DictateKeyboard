@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -107,6 +108,7 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
  * The user's own stickers, read from a folder they picked (issue #280) — its own [ImeUiMode.STICKER]
@@ -134,6 +136,9 @@ fun StickerPanel(
     val history by prefs.sticker.historyData.collectPrefAsState()
     val packSettings by prefs.sticker.packSettings.collectPrefAsState()
     val scope = rememberCoroutineScope()
+    // The header's search field is a plain clickable rather than a PanelHeaderButton, so its tick has
+    // to be asked for by hand — a button that used to answer and now does not reads as broken (#326).
+    val inputFeedbackController = LocalInputFeedbackController.current
 
     var index by remember { mutableStateOf<StickerIndex?>(null) }
     var loading by remember { mutableStateOf(true) }
@@ -334,28 +339,47 @@ fun StickerPanel(
                         modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
                     )
                 }
-                SnyggText(
-                    // The clipboard's title element, and no padding of its own: the 8 dp that used
-                    // to be here is exactly why the gap after the back arrow was wider here than
-                    // there (#317).
-                    elementName = FlorisImeUi.ClipboardHeaderText.elementName,
-                    text = stringRes(R.string.sticker__title),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                if (index?.isEmpty == false) {
-                    // Typing a name means the keyboard, and the keyboard is what this panel replaced —
-                    // so the search hands the screen back to it and shows its results in the strip
-                    // above (#317), the same way the emoji search does.
-                    PanelHeaderButton(
-                        onClick = { keyboardManager.activateStickerSearch() },
-                        modifier = Modifier.size(FlorisImeSizing.smartbarHeight),
-                    ) {
+                // The GIF panel's search field, in the place the title used to hold (#336). The title
+                // read "Stickers" above a screen full of stickers, and the 16 dp lupe it made room for
+                // sat against the gear — so the one mis-tap this header could produce was the one that
+                // leaves the chat for the settings app. A field in the title's dead space is the same
+                // target the GIF panel already offers and leaves nothing beside the gear to miss.
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .padding(vertical = 7.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(Color(0x22808080))
+                        // Typing a name means the keyboard, and the keyboard is what this panel replaced —
+                        // so the search hands the screen back to it and shows its results in the strip
+                        // above (#317), the same way the emoji search does. Dead rather than hidden while
+                        // there is nothing to search, which is how the GIF field waits for its API key.
+                        .clickable(enabled = index?.isEmpty == false) {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                            keyboardManager.activateStickerSearch()
+                        }
+                        .padding(horizontal = 12.dp),
+                    contentAlignment = Alignment.CenterStart,
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            contentDescription = stringRes(R.string.sticker__search),
-                            modifier = Modifier.size(FlorisImeSizing.mediaHeaderIconSize),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .padding(end = 8.dp),
+                        )
+                        // Lettered like the GIF panel's field and for the same reason: a SnyggText would
+                        // inherit the header's 16sp and read a size larger than the search bar it stands
+                        // in for (#317). The visible text is also what a screen reader announces for the
+                        // whole field, which is why the icon above carries no description of its own.
+                        val headerStyle = rememberSnyggThemeQuery(FlorisImeUi.ClipboardHeader.elementName)
+                        Text(
+                            text = stringRes(R.string.sticker__search),
+                            color = headerStyle.foreground(),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }
