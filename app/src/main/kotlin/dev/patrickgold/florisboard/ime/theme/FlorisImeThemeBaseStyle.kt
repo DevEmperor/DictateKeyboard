@@ -240,7 +240,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         foreground = `var`("--on-background")
         fontSize = fontSize(14.sp)
         margin = padding(4.dp)
-        padding = padding(8.dp, 0.dp)
+        // 4dp rather than 8dp: with the margin on top of it, a third of the strip was spending 24dp on
+        // whitespace, which is most of what a long word was missing (issue #346). Here as well as in
+        // every bundled stylesheet, because this is what a theme that says nothing about it falls back to.
+        padding = padding(4.dp, 0.dp)
         shape = rectangleShape()
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
@@ -267,18 +270,24 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(8.sp)
         margin = padding(0.dp, 2.dp, 0.dp, 0.dp)
     }
+    // A pill, not bare text (issue #346). What is on the clipboard is not another guess at the word being
+    // typed, and a strip that shows it in the same shape as one says the opposite: every other keyboard
+    // puts it in a container so it can be told apart at a glance. The fill is what makes the icon and the
+    // label read as one object; the 8dp padding the words just gave up is what the pill needs to look
+    // like one. Written literally rather than as var(--shape-chip) because this set is the fallback for a
+    // theme that defines nothing at all, and it must not depend on a variable existing.
     FlorisImeUi.SmartbarCandidateClip.elementName {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(220, 220, 220)
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
         fontSize = fontSize(14.sp)
         margin = padding(4.dp)
         padding = padding(8.dp, 0.dp)
-        shape = roundedCornerShape(8)
+        shape = roundedCornerShape(50)
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarCandidateClip.elementName(selector = SnyggSelector.PRESSED) {
-        background = `var`("--surface")
+        background = `var`("--surface-variant")
         foreground = `var`("--on-surface")
     }
     FlorisImeUi.SmartbarCandidateClipIcon.elementName {

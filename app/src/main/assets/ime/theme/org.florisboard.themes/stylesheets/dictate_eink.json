@@ -240,7 +240,7 @@
     "foreground": "var(--on-background)",
     "font-size": "14sp",
     "margin": "4dp",
-    "padding": "8dp 0dp",
+    "padding": "4dp 0dp",
     "shape": "rectangle()",
     "text-max-lines": "1",
     "text-overflow": "ellipsis"
@@ -264,9 +264,11 @@
     "font-size": "14sp",
     "margin": "4dp",
     "padding": "8dp 0dp",
-    "shape": "rounded-corner(8%, 8%, 8%, 8%)",
+    "shape": "var(--shape-chip)",
     "text-max-lines": "1",
-    "text-overflow": "ellipsis"
+    "text-overflow": "ellipsis",
+    "border-color": "#000000",
+    "border-width": "1.5dp"
   },
   "smartbar-candidate-clip:pressed": {
     "background": "var(--ink)",

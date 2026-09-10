@@ -242,7 +242,7 @@
     "foreground": "var(--on-background)",
     "font-size": "14sp",
     "margin": "4dp",
-    "padding": "8dp 0dp",
+    "padding": "4dp 0dp",
     "shape": "rectangle()",
     "text-max-lines": "1",
     "text-overflow": "ellipsis"
@@ -263,18 +263,18 @@
     "margin": "0dp 2dp 0dp 0dp"
   },
   "smartbar-candidate-clip": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
     "font-size": "14sp",
     "margin": "4dp",
     "padding": "8dp 0dp",
-    "shape": "rounded-corner(8%, 8%, 8%, 8%)",
+    "shape": "var(--shape-chip)",
     "text-max-lines": "1",
     "text-overflow": "ellipsis"
   },
   "smartbar-candidate-clip:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-background)"
+    "background": "var(--surface-variant)",
+    "foreground": "var(--on-surface)"
   },
   "smartbar-candidate-clip-icon": {
     "margin": "0dp 0dp 4dp 0dp"

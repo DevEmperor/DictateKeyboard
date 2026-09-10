@@ -76,6 +76,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import org.florisboard.lib.snygg.ui.SnyggText
 
 val CandidatesRowScrollbarHeight = 2.dp
@@ -93,6 +94,17 @@ private const val CLASSIC_WORD_SLOTS = 3
  * such ceiling and show the full count.
  */
 private const val CLASSIC_MAX_EMOJI = 3
+
+/**
+ * How far a candidate's label may shrink to fit its cell before the ellipsis takes over, as a fraction
+ * of whatever size the theme and the user's font scale resolved to (issue #346).
+ *
+ * Measured against the case that was reported: a classic-mode cell is about a third of the strip, which
+ * leaves the label roughly 94 dp once the margin and padding are paid, and "Misunderstanding" wants about
+ * 116 dp at the default 14 sp — 81 % of it. Three quarters clears that with room for a wider font or a
+ * raised font scale, and stops well short of the size at which a shrunk label is worse than a cut one.
+ */
+private const val CANDIDATE_MIN_FONT_RATIO = 0.75f
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
@@ -173,7 +185,10 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 // Held in a local: the row is no longer a prefix of [candidates] once an emoji annexes
                 // it, so an index back into that list would commit the wrong thing.
                 val item = candidate
-                if (n > 0) {
+                // No hairline between two clipboard chips: they are pills with outlines of their own, and
+                // a clip that yields several chips (the clip plus the address, link or number pulled out of
+                // it) is one offer, not a list of alternatives to be ruled off from each other.
+                if (n > 0 && candidate !is ClipboardSuggestionCandidate) {
                     SnyggSpacer(
                         elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
                         modifier = Modifier
@@ -326,6 +341,8 @@ private fun CandidateItem(
     val currentOnLongPress by rememberUpdatedState(onLongPress)
     val currentLongPressDelay by rememberUpdatedState(longPressDelay)
 
+    val isClip = candidate is ClipboardSuggestionCandidate
+
     SnyggRow(
         elementName = elementName,
         attributes = attributes,
@@ -356,6 +373,10 @@ private fun CandidateItem(
                 }
             },
         verticalAlignment = Alignment.CenterVertically,
+        // The clipboard chip is a pill and has to read as one thing: icon and label sit next to each
+        // other and the pair is centred (issue #346). Words keep the default, because a word is centred
+        // in its own cell by the weight on the column below.
+        horizontalArrangement = if (isClip) Arrangement.Center else Arrangement.Start,
     ) {
         if (candidate.icon != null) {
             SnyggBox(
@@ -367,7 +388,16 @@ private fun CandidateItem(
             }
         }
         SnyggColumn(
-            modifier = if (displayMode == CandidatesDisplayMode.CLASSIC) Modifier.weight(1f) else Modifier,
+            // `fill = false` for the clip, and that is the whole of what used to push its icon to the far
+            // edge of the strip: a filled weight forces the chip's row out to the width it was offered, so
+            // in the classic display mode the icon ended up against the left edge with the text centred a
+            // finger's width away, looking like two unrelated things. Words still fill — a word is meant to
+            // be centred in its third — and the scrolling modes never weighted this at all.
+            modifier = when {
+                isClip -> Modifier.weight(1f, fill = false)
+                displayMode == CandidatesDisplayMode.CLASSIC -> Modifier.weight(1f)
+                else -> Modifier
+            },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -382,6 +412,15 @@ private fun CandidateItem(
                 // (issue #318), so it is visible where a suggestion came from — and so the feature can be
                 // seen working at all without waiting for autocorrect to stop interfering.
                 fontStyle = if (candidate.isLearned) FontStyle.Italic else null,
+                // A cell is a third of the strip, which is about thirty dp short of "Misunderstanding" at
+                // the themed size — so the word was cut off with space still visible beside it (issue #346).
+                // Shrinking to fit is what every other keyboard does before it gives up; the floor keeps a
+                // long clipboard paragraph from turning into something nobody can read, and past it the
+                // ellipsis takes over as before.
+                autoSizeMinRatio = CANDIDATE_MIN_FONT_RATIO,
+                // Past the floor, an address loses its middle instead of its tail: what identifies
+                // prateeksingh8997@gmail.com is the domain, not the leading half of the name.
+                overflow = if (candidate.keepsTailWhenShortened) TextOverflow.MiddleEllipsis else null,
                 text = candidate.text.toString(),
             )
             if (candidate.secondaryText != null) {

@@ -17,6 +17,7 @@
 package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -65,9 +66,15 @@ fun SnyggText(
     // Scales the themed size instead of replacing it, so a caller can ask for "smaller than the text next
     // to it" without stepping outside the theme or the user's font-scale setting (issue #355).
     fontSizeMultiplier: Float = 1f,
+    // Lets the text shrink to fit the width it is given instead of ellipsizing at the themed size, down
+    // to this fraction of it; null keeps the size fixed (issue #346). Expressed as a fraction rather than
+    // an absolute floor so it stays relative to whatever the theme and the font-scale setting resolved to.
+    autoSizeMinRatio: Float? = null,
     text: String,
 ) {
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        val themedSize = style.fontSize().scaledBy(fontSizeMultiplier)
+        val autoSize = autoSizeFor(themedSize, autoSizeMinRatio)
         Text(
             modifier = modifier
                 .snyggMargin(style)
@@ -81,7 +88,10 @@ fun SnyggText(
             // scale multiplies every sp size, a NaN/∞ would reach Compose's Text and crash it on measure
             // ("lineHeight can't be negative (NaN)"). Coerce those to Unspecified so a bad theme can't crash
             // the keyboard (issue: SnyggText NaN lineHeight).
-            fontSize = style.fontSize().scaledBy(fontSizeMultiplier),
+            //
+            // An auto-size range supersedes a fixed size — the themed value is its upper bound instead.
+            autoSize = autoSize,
+            fontSize = if (autoSize != null) TextUnit.Unspecified else themedSize,
             // Optional override, same shape as the weight below: italics mark a word that came from the
             // user's own vocabulary rather than the bundled dictionary (issue #318).
             fontStyle = fontStyle ?: style.fontStyle(),
@@ -110,6 +120,23 @@ private fun TextUnit.finiteOrUnspecified(): TextUnit =
 private fun TextUnit.scaledBy(factor: Float): TextUnit {
     val size = finiteOrUnspecified()
     return if (factor == 1f || !size.isSpecified) size else (size * factor).finiteOrUnspecified()
+}
+
+/**
+ * The auto-size range for a themed [size] and a caller's [minRatio], or `null` when the text should keep
+ * the themed size — because no ratio was asked for, because the ratio would not shrink anything, or
+ * because the theme resolved a size the arithmetic cannot use (the same malformed-theme case
+ * [finiteOrUnspecified] exists for; a NaN bound would crash Compose on measure).
+ */
+internal fun autoSizeFor(size: TextUnit, minRatio: Float?): TextAutoSize? {
+    if (minRatio == null || minRatio <= 0f || minRatio >= 1f) return null
+    val max = size.finiteOrUnspecified()
+    if (!max.isSpecified) return null
+    val min = (max * minRatio).finiteOrUnspecified()
+    if (!min.isSpecified) return null
+    // Half a point: fine enough that the shrink is never visible as a step, coarse enough to bound the
+    // search Compose runs in the layout pass — this text is re-laid out on every keystroke.
+    return TextAutoSize.StepBased(minFontSize = min, maxFontSize = max, stepSize = 0.5.sp)
 }
 
 @Preview
@@ -154,6 +181,10 @@ private fun SimpleSnyggText() {
             SnyggText("preview-text", mapOf("attr" to 1), text = "red text")
             SnyggText("preview-text", mapOf("long" to 1),
                 text = "this is a very long paragraph that will definitely not fit")
+            // The same text twice: ellipsized at the themed size, then shrunk to fit instead.
+            SnyggText("preview-text", mapOf("long" to 1), text = "Misunderstanding")
+            SnyggText("preview-text", mapOf("long" to 1), autoSizeMinRatio = 0.75f,
+                text = "Misunderstanding")
         }
     }
 }

@@ -109,6 +109,18 @@ interface SuggestionCandidate {
      */
     val isLearned: Boolean
         get() = false
+
+    /**
+     * True when the end of [text] identifies it as much as the beginning does, so a label too long for its
+     * cell should lose its middle rather than its tail (issue #346).
+     *
+     * An address is the case that matters: cutting `prateeksingh8997@gmail.com` at the front leaves a name
+     * without a domain, which could be anyone's, while `prateeksin…@gmail.com` still says who it is. A word
+     * suggestion is the opposite — it is matched against the prefix being typed, so its head is the part
+     * the reader is checking.
+     */
+    val keepsTailWhenShortened: Boolean
+        get() = false
 }
 
 /**
@@ -149,15 +161,55 @@ data class ClipboardSuggestionCandidate(
 
     override val isEligibleForUserRemoval: Boolean = true
 
+    /**
+     * Answered once, because the [NetworkUtils] regexes run over the whole clip — which can be a
+     * paragraph — and both the icon and the shortening rule below ask the same question of it.
+     */
+    private val textKind =
+        if (clipboardItem.type == ItemType.TEXT) ClipboardTextKind.of(text) else null
+
     override val icon: ImageVector = when (clipboardItem.type) {
-        ItemType.TEXT -> when {
-            NetworkUtils.isEmailAddress(text) -> Icons.Default.Email
-            NetworkUtils.isUrl(text) -> Icons.Default.Link
-            NetworkUtils.isPhoneNumber(text) -> Icons.Default.Phone
+        ItemType.TEXT -> when (textKind) {
+            ClipboardTextKind.EMAIL -> Icons.Default.Email
+            ClipboardTextKind.URL -> Icons.Default.Link
+            ClipboardTextKind.PHONE -> Icons.Default.Phone
             else -> Icons.AutoMirrored.Outlined.Assignment
         }
         ItemType.IMAGE -> Icons.Default.Image
         ItemType.VIDEO -> Icons.Default.Videocam
+    }
+
+    override val keepsTailWhenShortened: Boolean = textKind?.keepsTail == true
+}
+
+/**
+ * What a text clip turns out to be, as far as the suggestion strip cares.
+ *
+ * Separate from [ClipboardSuggestionCandidate] so the classification can be tested without a Context and
+ * a database row, and so the icon and the shortening rule cannot drift apart by being decided twice.
+ */
+internal enum class ClipboardTextKind {
+    EMAIL,
+    URL,
+    PHONE,
+    PLAIN;
+
+    /**
+     * Whether the end of the text identifies it as much as the beginning does. True for an address:
+     * `prateeksin…@gmail.com` still says who it is, `prateeksingh8997@gm…` could be anyone. A phone
+     * number is short enough to fit anyway, and it is its *leading* digits — country and area code —
+     * that would go missing if the front were eaten.
+     */
+    val keepsTail: Boolean
+        get() = this == EMAIL || this == URL
+
+    companion object {
+        fun of(text: CharSequence): ClipboardTextKind = when {
+            NetworkUtils.isEmailAddress(text) -> EMAIL
+            NetworkUtils.isUrl(text) -> URL
+            NetworkUtils.isPhoneNumber(text) -> PHONE
+            else -> PLAIN
+        }
     }
 }
 
