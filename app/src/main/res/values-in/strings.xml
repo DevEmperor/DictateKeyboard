@@ -312,6 +312,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikon kandidat klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Teks kandidat klip smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Tombol tutup kandidat klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>
     <string name="snygg__rule_element__subtype_panel">Panel subtipe</string>
     <string name="snygg__rule_element__subtype_panel_header">Judul panel subtipe</string>

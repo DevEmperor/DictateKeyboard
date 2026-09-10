@@ -246,6 +246,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">صف المرشحين لشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_word">مرشح كلمة الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">مرشح مقطع الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">زر تجاهل مقترح الحافظة في الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">مرشح فاصل الشريط الذكي</string>
     <string name="snygg__rule_selector__pressed">مضغوط</string>
     <string name="snygg__rule_selector__focus">تركيز</string>

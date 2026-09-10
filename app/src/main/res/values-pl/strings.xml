@@ -326,6 +326,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Sugestia schowka inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikona klipu słowa kandydującego na inteligentnym pasku</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Tekst klipu słowa kandydującego na inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Przycisk zamknięcia propozycji ze schowka na inteligentnym pasku</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>
     <string name="snygg__rule_element__subtype_panel">Podtyp panelu</string>
     <string name="snygg__rule_element__subtype_panel_header">Podtyp nagłówka panelu</string>

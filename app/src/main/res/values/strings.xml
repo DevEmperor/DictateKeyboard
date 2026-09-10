@@ -487,6 +487,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Smartbar candidate clip icon</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Smartbar candidate clip text</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Smartbar candidate clip dismiss button</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
 
     <string name="snygg__rule_element__subtype_panel">Subtype panel</string>

@@ -325,6 +325,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Navržená položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikona navržené položky v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Text navržené položky v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Tlačítko zavření navržené položky ve chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení návrhu v chytré liště</string>
     <string name="snygg__rule_element__subtype_panel">Panel podtypu</string>
     <string name="snygg__rule_element__subtype_panel_header">Záhlaví panelu podtypu</string>

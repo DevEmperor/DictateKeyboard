@@ -294,6 +294,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Viedjoslas ieteikumu starpliktuves vienuma ikona</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Viedjoslas ieteikumu starpliktuves vienuma teksts</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Viedjoslas starpliktuves ieteikuma aizvēršanas poga</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
     <string name="snygg__rule_element__subtype_panel_list">Apakšveida paneļu saraksts</string>
     <string name="snygg__rule_element__subtype_panel_list_item">Apakšveida paneļu saraksta vienums</string>

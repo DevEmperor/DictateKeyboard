@@ -263,6 +263,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar Kandidatenzeile</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar Kandidatenclip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Verwerfen-Schaltfläche des Smartbar-Zwischenablage-Vorschlags</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar Kandidaten-Abstandshalter</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>
     <string name="snygg__rule_selector__focus">Fokussiert</string>

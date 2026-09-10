@@ -262,6 +262,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Riga candidati della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Pulsante di chiusura degli appunti suggeriti nella barra intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
     <string name="snygg__rule_selector__pressed">Premuto</string>
     <string name="snygg__rule_selector__focus">Focalizzato</string>

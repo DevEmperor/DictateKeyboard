@@ -280,7 +280,9 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(14.sp)
-        margin = padding(4.dp)
+        // Taller margins than the words get: a pill that fills the row's full height reads as a bar
+        // rather than as an object sitting on it, and the row is what the clip is being offered *in*.
+        margin = padding(4.dp, 7.dp)
         padding = padding(8.dp, 0.dp)
         shape = roundedCornerShape(50)
         textMaxLines = textMaxLines(1)
@@ -292,6 +294,17 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
     FlorisImeUi.SmartbarCandidateClipIcon.elementName {
         margin = padding(0.dp, 0.dp, 4.dp, 0.dp)
+    }
+    // The dismiss button lives inside the pill, so it cannot be a bare glyph: on a filled chip an
+    // unbounded × reads as part of the text. It takes the background colour rather than a lighter
+    // surface, which makes it a hole punched through the pill — and a hole is guaranteed to be
+    // visible, because the pill's own fill was chosen to stand out against exactly that colour.
+    FlorisImeUi.SmartbarCandidateClipDismiss.elementName {
+        background = `var`("--background")
+        foreground = `var`("--on-background")
+        fontSize = fontSize(14.sp)
+        margin = padding(6.dp, 3.dp, 0.dp, 3.dp)
+        shape = circleShape()
     }
     FlorisImeUi.SmartbarCandidateSpacer.elementName {
         foreground = rgbaColor(255, 255, 255, 0.25f)

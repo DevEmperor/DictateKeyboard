@@ -357,6 +357,10 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "smartbar-candidate-clip-text",
         resId = R.string.snygg__rule_element__smartbar_candidate_clip_text,
     ),
+    SmartbarCandidateClipDismiss(
+        elementName = "smartbar-candidate-clip-dismiss",
+        resId = R.string.snygg__rule_element__smartbar_candidate_clip_dismiss,
+    ),
     SmartbarCandidateSpacer(
         elementName = "smartbar-candidate-spacer",
         resId = R.string.snygg__rule_element__smartbar_candidate_spacer,

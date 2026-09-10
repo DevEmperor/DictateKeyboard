@@ -260,6 +260,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar kandidatenrij</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar kandidaat woord</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar kandidaat clip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Sluitknop van klembordsuggestie in de smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar kandidaat spacer</string>
     <string name="snygg__rule_selector__pressed">ingedrukt</string>
     <string name="snygg__rule_selector__focus">Gefocust</string>

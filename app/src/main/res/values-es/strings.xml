@@ -316,6 +316,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Icono de clip candidato de la barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Texto de clip candidato de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Botón de descartar del portapapeles candidato de la barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaciado candidato de barra inteligente</string>
     <string name="snygg__rule_element__subtype_panel">Panel subtipo</string>
     <string name="snygg__rule_element__subtype_panel_header">Encabezado de panel subtipo</string>

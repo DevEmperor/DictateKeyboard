@@ -278,6 +278,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Rangée de suggestions à la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Suggestion du presse-papier dans la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Bouton de fermeture du presse-papiers suggéré de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espacement des suggestions dans la Smartbar</string>
     <string name="snygg__rule_element__subtype_panel_header">Sous-type d\'en-tête de panneau</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>

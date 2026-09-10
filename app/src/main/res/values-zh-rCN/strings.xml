@@ -326,6 +326,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">智能栏候选剪贴板图标</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">智能栏候选剪贴板文本</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">智能栏候选剪贴板关闭按钮</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
     <string name="snygg__rule_element__subtype_panel">子类型面板</string>
     <string name="snygg__rule_element__subtype_panel_header">子类型面板标题</string>

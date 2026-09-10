@@ -325,6 +325,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Okossáv javaslat vágólapról</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Okossáv megjelölt kapocs ikonja</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Okossáv megjelölt kapocs szövege</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Okossáv vágólap-javaslat elvetés gombja</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Okossáv javaslat elválasztó</string>
     <string name="snygg__rule_element__subtype_panel">Altípuspanel</string>
     <string name="snygg__rule_element__subtype_panel_header">Altípuspanel-fejléc</string>

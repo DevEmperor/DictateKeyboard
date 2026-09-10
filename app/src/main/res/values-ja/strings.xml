@@ -298,6 +298,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">スマートバー候補クリップ</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">スマートバー候補クリップアイコン</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">スマートバー候補クリップテキスト</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">スマートバー候補クリップの閉じるボタン</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">スマートバー候補スペーサー</string>
     <string name="snygg__rule_element__subtype_panel">サブタイプパネル</string>
     <string name="snygg__rule_element__subtype_panel_header">サブタイプパネルヘッダー</string>

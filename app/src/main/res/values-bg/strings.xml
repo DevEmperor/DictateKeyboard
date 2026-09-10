@@ -326,6 +326,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Интелигентна лента, пиктограма на контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Интелигентна лента, текст на контейнер с кандидати</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Бутон за отхвърляне на кандидата от клипборда в интелигентната лента</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидати</string>
     <string name="snygg__rule_element__subtype_panel">Панел с подвидове</string>
     <string name="snygg__rule_element__subtype_panel_header">Заглавие на панела с подвидове</string>

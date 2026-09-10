@@ -317,6 +317,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Akıllı Çubuk aday klip</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Akıllı Çubuk aday klip simgesi</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Akıllı Çubuk aday klip metni</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Akıllı çubuk pano önerisini kapatma düğmesi</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Akıllı Çubuk aday ayırıcı</string>
     <string name="snygg__rule_element__subtype_panel">Alt tür paneli</string>
     <string name="snygg__rule_element__subtype_panel_header">Alt tür panel başlığı</string>

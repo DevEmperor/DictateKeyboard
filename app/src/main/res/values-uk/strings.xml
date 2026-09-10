@@ -245,6 +245,7 @@
     <string name="snygg__rule_element__smartbar_candidates_row">Ряд кандидатів розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запис-кандидат розумної панелі</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Кнопка закриття пропозиції з буфера обміну на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Роздільник-кандидат розумної панелі</string>
     <string name="snygg__rule_selector__pressed">Натиснуто</string>
     <string name="snygg__rule_selector__focus">У фокусі</string>

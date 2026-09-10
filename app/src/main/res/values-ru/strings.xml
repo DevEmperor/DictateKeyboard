@@ -320,6 +320,7 @@
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-предложение умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_icon">Значок клипа кандидата на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip_text">Текст клипа кандидата на Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_dismiss">Кнопка закрытия предложения из буфера обмена на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-предложение умной панели</string>
     <string name="snygg__rule_element__subtype_panel">Панель раскладок</string>
     <string name="snygg__rule_element__subtype_panel_header">Заголовок панели раскладок</string>
