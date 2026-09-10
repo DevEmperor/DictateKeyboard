@@ -279,17 +279,22 @@ private fun HistoryPanelRow(
                 )
             }
         }
-        SnyggIconButton(
-            elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-            onClick = onInsert,
-            enabled = !entry.failed,
-            modifier = Modifier.size(buttonSize),
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardReturn,
-                contentDescription = null,
-                modifier = Modifier.size(iconSize),
-            )
+        // Left out entirely for an entry with no transcript yet, the way the ↻ above is left out for one
+        // with no audio: `enabled = false` styles a button the themes have no disabled rule for, so it
+        // looked like every other insert button and simply ignored the tap. A row that has nothing to
+        // insert should not be offering to (#358).
+        if (!entry.failed) {
+            SnyggIconButton(
+                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                onClick = onInsert,
+                modifier = Modifier.size(buttonSize),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardReturn,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize),
+                )
+            }
         }
     }
 }

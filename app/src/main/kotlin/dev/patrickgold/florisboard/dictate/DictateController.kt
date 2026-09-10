@@ -473,6 +473,12 @@ object DictateController {
         val reason: RetainReason,
         val wasLive: Boolean,
         val seconds: Long,
+        /**
+         * The history row this audio already has (issue #358), so the chip's resend rewrites that entry
+         * instead of adding a second one beside it — the same thing the ↻ in the History panel does with
+         * the same recording. Null for an interrupted recording, which was never sent and has no row.
+         */
+        val historyId: Long? = null,
     )
 
     /** The currently kept audio (failed or interrupted), or null when there is nothing to re-send. */
@@ -1853,15 +1859,20 @@ object DictateController {
                 // well as the live prompt's rewording inside finalizeAndCommit (issue #284).
                 val stage = stageOf(_state.value)
                 _pendingPrompts.value = emptyList()
-                // Exportable failures (too large / bad format) keep the audio regardless of the resend
-                // pref, so it can be saved instead of lost (issue #144).
-                keepAudio = retainFailedAudio(audioFile, live, recordedSeconds, force = e.kind in EXPORTABLE_ERROR_KINDS)
                 // Safety net (issue #140): log the failed dictation with its audio so it can be recovered
                 // later; not for replays (the entry already exists) and not when the row written at send
-                // time (#358) is already saying exactly this — it only ever had to be left alone.
+                // time (#358) is already saying exactly this — it only ever had to be left alone. Left
+                // ahead of the retain below so the chip is handed the row either of them produced.
                 if (replayHistoryId == null && pendingHistoryId == null) {
-                    recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
+                    pendingHistoryId = recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
                 }
+                // Exportable failures (too large / bad format) keep the audio regardless of the resend
+                // pref, so it can be saved instead of lost (issue #144).
+                keepAudio = retainFailedAudio(
+                    audioFile, live, recordedSeconds,
+                    historyId = pendingHistoryId ?: replayHistoryId,
+                    force = e.kind in EXPORTABLE_ERROR_KINDS,
+                )
                 _state.value = apiError(
                     e, appContext, canResend = keepAudio,
                     suggestOnDevice = !ranOnDevice && shouldSuggestOnDevice(appContext, e.kind, preset),
@@ -1872,10 +1883,13 @@ object DictateController {
                 outcome = "unexpectedError"
                 val stage = stageOf(_state.value)
                 _pendingPrompts.value = emptyList()
-                keepAudio = retainFailedAudio(audioFile, live, recordedSeconds)
                 if (replayHistoryId == null && pendingHistoryId == null) {
-                    recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
+                    pendingHistoryId = recordFailedHistory(appContext, audioFile, account.providerId, historyProviderName, model, historyLanguage, recordedSeconds, historySource)
                 }
+                keepAudio = retainFailedAudio(
+                    audioFile, live, recordedSeconds,
+                    historyId = pendingHistoryId ?: replayHistoryId,
+                )
                 _state.value = UiState.Error(
                     message = appContext.getString(errorMessageRes(DictateApiException.Kind.UNKNOWN, stage)),
                     kind = DictateApiException.Kind.UNKNOWN,
@@ -2726,6 +2740,8 @@ object DictateController {
         audioFile: File,
         wasLive: Boolean,
         recordedSeconds: Long,
+        // The history row this failure already wrote (issue #358), carried so a resend can finish it.
+        historyId: Long?,
         // Keep even when the resend button is off — used for exportable failures so the recording can be
         // saved (issue #144); otherwise retention is gated on the resend-button preference.
         force: Boolean = false,
@@ -2733,7 +2749,7 @@ object DictateController {
         if (!force && !prefs.dictate.resendButton.get()) return false
         if (!audioFile.exists() || audioFile.length() == 0L) return false
         if (retained?.file != audioFile) discardRetainedAudio()
-        retained = RetainedAudio(audioFile, RetainReason.FAILED, wasLive, recordedSeconds)
+        retained = RetainedAudio(audioFile, RetainReason.FAILED, wasLive, recordedSeconds, historyId)
         return true
     }
 
@@ -2764,7 +2780,10 @@ object DictateController {
         if (r.reason == RetainReason.INTERRUPTED) scope.launch { clearInterruptedAudioPref() }
         livePromptArmed = r.wasLive
         // A user-initiated resend of already-captured audio is sent as-is (no silence gate — issue #93).
-        transcribe(context, r.file, r.seconds, gate = false)
+        // The failure it is retrying already has a history row, so this rewrites that one (#358) rather
+        // than filing a second entry for the same recording — the chip and the ↻ in the History panel are
+        // the same button on the same audio, and they were disagreeing about that.
+        transcribe(context, r.file, r.seconds, gate = false, replayHistoryId = r.historyId)
     }
 
     /**
