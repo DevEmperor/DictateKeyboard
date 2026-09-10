@@ -2,20 +2,26 @@
 """
 Build the context tables for every shipped language (issue #334).
 
-    python3 generate_ngrams_all.py            # all of them, resuming where it left off
-    python3 generate_ngrams_all.py de fr      # only these
+    python3 generate_ngrams_all.py                 # all of them, resuming where it left off
+    python3 generate_ngrams_all.py --jobs 3        # three at a time
+    python3 generate_ngrams_all.py de fr           # only these
 
-One language is a ~250 MB download and a few minutes of counting, so the whole set is hours rather
-than minutes. It is resumable on purpose: a language whose two output files already exist is skipped,
-and the corpus cache under dist/corpora survives too, so an interrupted run costs only the language it
-was in the middle of.
+    python3 ngram_status.py                        # how far along it is
+
+One language is a ~250 MB download and about four minutes of counting. Several run at once because
+most of that is a single-threaded count on one core and a download on none: measured, one language
+peaks well under a gigabyte, so three fit alongside each other on an ordinary machine while a single
+one leaves seven cores idle.
+
+It is resumable on purpose: a language whose two output files already exist is skipped, and the corpus
+cache under dist/corpora survives too, so an interrupted run costs only the languages in flight.
 
 Prints the catalog lines for every language it built, collected into dist/ngram_catalog.txt. That file
 is rewritten to hold **every** table currently in dist/, not just this run's — the old
 generate_all.py overwrote it with the last run's languages only, which is how the full list stopped
 existing.
 """
-import os, subprocess, sys, glob
+import concurrent.futures, os, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(HERE, "dist")
@@ -92,30 +98,51 @@ def collect_catalog():
         f.write("\n".join(lines) + "\n")
 
 
+def build(lang):
+    """Run one language to completion. Its own log goes to dist/<lang>.log, because several of these
+    run at once and interleaved progress lines would be unreadable."""
+    with open(os.path.join(DIST, f"{lang}.log"), "w", encoding="utf-8") as log:
+        proc = subprocess.run(
+            [sys.executable, "-u", os.path.join(HERE, "generate_ngrams.py"), lang,
+             "--pkg", PACKAGES[lang], "--bigrams", str(BIGRAMS), "--trigrams", str(TRIGRAMS)],
+            stdout=subprocess.PIPE, stderr=log, text=True,
+        )
+    if proc.returncode != 0:
+        return lang, proc.returncode
+    with open(os.path.join(DIST, f"{lang}.catalog"), "w", encoding="utf-8") as f:
+        f.write(proc.stdout)
+    return lang, 0
+
+
 def main():
-    langs = sys.argv[1:] or sorted(PACKAGES)
+    args = [a for a in sys.argv[1:]]
+    jobs = 3
+    if "--jobs" in args:
+        i = args.index("--jobs")
+        jobs = int(args[i + 1])
+        del args[i:i + 2]
+
+    langs = args or sorted(PACKAGES)
     unknown = [l for l in langs if l not in PACKAGES]
     if unknown:
         sys.exit(f"error: no package recorded for {', '.join(unknown)}")
 
-    for i, lang in enumerate(langs, 1):
+    todo = []
+    for lang in langs:
         big, tri = outputs(lang)
         if os.path.isfile(big) and os.path.isfile(tri):
-            sys.stderr.write(f"[{i}/{len(langs)}] {lang}: already built, skipping\n")
-            continue
-        sys.stderr.write(f"[{i}/{len(langs)}] {lang} from {PACKAGES[lang]}\n")
-        proc = subprocess.run(
-            [sys.executable, "-u", os.path.join(HERE, "generate_ngrams.py"), lang,
-             "--pkg", PACKAGES[lang], "--bigrams", str(BIGRAMS), "--trigrams", str(TRIGRAMS)],
-            capture_output=True, text=True,
-        )
-        sys.stderr.write(proc.stderr)
-        if proc.returncode != 0:
-            sys.stderr.write(f"  FAILED ({proc.returncode}), moving on\n")
-            continue
-        with open(os.path.join(DIST, f"{lang}.catalog"), "w", encoding="utf-8") as f:
-            f.write(proc.stdout)
-        collect_catalog()
+            sys.stderr.write(f"{lang}: already built, skipping\n")
+        else:
+            todo.append(lang)
+
+    sys.stderr.write(f"building {len(todo)} languages, {jobs} at a time\n")
+    done = 0
+    with concurrent.futures.ThreadPoolExecutor(max_workers=jobs) as pool:
+        for lang, rc in pool.map(build, todo):
+            done += 1
+            state = "ok" if rc == 0 else f"FAILED ({rc}), see dist/{lang}.log"
+            sys.stderr.write(f"[{done}/{len(todo)}] {lang}: {state}\n")
+            collect_catalog()
 
     collect_catalog()
     sys.stderr.write(f"\ncatalog lines in {os.path.join(DIST, 'ngram_catalog.txt')}\n")
