@@ -81,6 +81,37 @@ internal fun wantsWordSuggestions(
     providerForcesSuggestionOn: Boolean,
 ): Boolean = displaySuggestions || providerForcesSuggestionOn
 
+/**
+ * Which of the two things the strip could hold it actually holds, once a math result has been ruled out
+ * (issue #360).
+ *
+ * The clipboard offer used to be reachable only in an empty field, so the first character typed took it
+ * away and nothing ever brought it back — not a space, not a new line, not an hour of the clip sitting
+ * unused on the clipboard. That reads as the offer being *withdrawn* when what actually happened is that
+ * the word suggestions borrowed the strip. Every other keyboard treats the clip as what is shown when
+ * there is nothing better, and that is what this does.
+ *
+ * The blank field keeps its old precedence: there the clip is the whole point, and a generic prediction
+ * must not push it out.
+ *
+ * [isAtWordBoundary] is the part that is a judgement rather than a rule. Falling back mid-word would put
+ * the chip on screen for exactly as long as the dictionary has nothing for the letters typed so far, so
+ * it would blink in and out under the user's hands while they write an unknown word. Waiting for the word
+ * to be finished costs the user nothing — one more keystroke and the offer is back — and keeps the strip
+ * still while it is being read.
+ */
+internal fun <T> chooseStripCandidates(
+    words: List<T>,
+    clip: List<T>,
+    isFieldBlank: Boolean,
+    isAtWordBoundary: Boolean,
+): List<T> = when {
+    isFieldBlank -> clip.ifEmpty { words }
+    words.isNotEmpty() -> words
+    isAtWordBoundary -> clip
+    else -> emptyList()
+}
+
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
 
@@ -576,19 +607,25 @@ class NlpManager(context: Context) {
         runBlocking {
             val candidates = when {
                 isSuggestionOn() -> mathCandidates().ifEmpty {
-                    clipboardSuggestionProvider.suggest(
-                        subtype = Subtype.DEFAULT,
-                        content = editorInstance.activeContent,
-                        maxCandidateCount = 8,
-                        allowPossiblyOffensive = true,
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-                    ).ifEmpty {
-                        buildList {
+                    val content = editorInstance.activeContent
+                    chooseStripCandidates(
+                        words = buildList {
                             internalSuggestionsGuard.withLock {
                                 addAll(internalSuggestions.second)
                             }
-                        }
-                    }
+                        },
+                        clip = clipboardSuggestionProvider.suggest(
+                            subtype = Subtype.DEFAULT,
+                            content = content,
+                            maxCandidateCount = 8,
+                            allowPossiblyOffensive = true,
+                            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                        ),
+                        isFieldBlank = content.text.isBlank(),
+                        // A promised space finishes a word as surely as a typed one (issue #266), which is
+                        // the same reading [LatinLanguageProvider.isAtPredictionPoint] takes.
+                        isAtWordBoundary = content.currentWordText.isEmpty() || content.phantomSpacePending,
+                    )
                 }
                 else -> emptyList()
             }
@@ -670,7 +707,29 @@ class NlpManager(context: Context) {
     }
 
     inner class ClipboardSuggestionProvider internal constructor(private val context: Context) : SuggestionProvider {
-        private var lastClipboardItemId: Long = -1
+        /**
+         * The clip the user is finished with — pasted or dismissed — identified by the moment it was
+         * copied.
+         *
+         * Not by [ClipboardItem.id], which is what this was (issue #360). That is the Room row id, and
+         * Room only ever sees a clip while the clipboard *history* is enabled — off by default. Without
+         * it every clip carries id 0, so the first paste or dismiss pinned this to 0 and every later copy
+         * was then rejected as "already used": the clipboard suggestion silently stopped existing for the
+         * rest of the process. Even with history on, a re-copied duplicate takes the `moveToTheBeginning`
+         * path, which never writes the new row id back into the item.
+         *
+         * [ClipboardItem.creationTimestampMs] is stamped per copy event and is always populated. It also
+         * keeps the one thing the row id got right: the address/link/number chips extracted below are
+         * copies of the same item and carry its timestamp, so accepting one still retires the whole clip.
+         */
+        private var lastUsedClipTimestamp: Long = -1
+
+        // The strip is reassembled on every keystroke, and building the candidates walks the whole clip
+        // text with three regexes. That was affordable while the blank-field check rejected almost every
+        // call before reaching it; now that the clip is offered as a fallback too, the work is memoised
+        // per copy so it is paid once instead of per character.
+        private var cachedForItem: ClipboardItem? = null
+        private var cachedCandidates: List<SuggestionCandidate> = emptyList()
 
         override val providerId = "org.florisboard.nlp.providers.clipboard"
 
@@ -692,51 +751,59 @@ class NlpManager(context: Context) {
             // Check if enabled
             if (!prefs.clipboard.suggestionEnabled.get()) return emptyList()
 
-            val currentItem = validateClipboardItem(clipboardManager.primaryClip, lastClipboardItemId, content.text)
+            val currentItem = validateClipboardItem(clipboardManager.primaryClip, lastUsedClipTimestamp)
                 ?: return emptyList()
 
-            return buildList {
-                val now = System.currentTimeMillis()
-                if ((now - currentItem.creationTimestampMs) < prefs.clipboard.suggestionTimeout.get() * 1000) {
-                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
-                    if (currentItem.isSensitive) {
-                        return@buildList
+            val now = System.currentTimeMillis()
+            if ((now - currentItem.creationTimestampMs) >= prefs.clipboard.suggestionTimeout.get() * 1000) {
+                return emptyList()
+            }
+            // Identity, not equality: the primary clip is one instance per copy, and the same instance
+            // always yields the same chips.
+            if (cachedForItem === currentItem) return cachedCandidates
+
+            val candidates = buildList {
+                add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
+                if (currentItem.isSensitive) {
+                    return@buildList
+                }
+                if (currentItem.type == ItemType.TEXT) {
+                    val text = currentItem.stringRepresentation()
+                    val matches = buildList {
+                        addAll(NetworkUtils.getEmailAddresses(text))
+                        addAll(NetworkUtils.getUrls(text))
+                        addAll(NetworkUtils.getPhoneNumbers(text))
                     }
-                    if (currentItem.type == ItemType.TEXT) {
-                        val text = currentItem.stringRepresentation()
-                        val matches = buildList {
-                            addAll(NetworkUtils.getEmailAddresses(text))
-                            addAll(NetworkUtils.getUrls(text))
-                            addAll(NetworkUtils.getPhoneNumbers(text))
+                    matches.forEachIndexed { i, match ->
+                        val isUniqueMatch = matches.subList(0, i).all { prevMatch ->
+                            prevMatch.value != match.value && prevMatch.range.intersect(match.range).isEmpty()
                         }
-                        matches.forEachIndexed { i, match ->
-                            val isUniqueMatch = matches.subList(0, i).all { prevMatch ->
-                                prevMatch.value != match.value && prevMatch.range.intersect(match.range).isEmpty()
-                            }
-                            if (match.value != text && isUniqueMatch) {
-                                add(ClipboardSuggestionCandidate(
-                                    clipboardItem = currentItem.copy(
-                                        // TODO: adjust regex of phone number so we don't need to manually strip the
-                                        //  parentheses from the match results
-                                        text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
-                                            match.value.substring(1, match.value.length - 1)
-                                        } else {
-                                            match.value
-                                        }
-                                    ),
-                                    sourceProvider = this@ClipboardSuggestionProvider,
-                                    context = context,
-                                ))
-                            }
+                        if (match.value != text && isUniqueMatch) {
+                            add(ClipboardSuggestionCandidate(
+                                clipboardItem = currentItem.copy(
+                                    // TODO: adjust regex of phone number so we don't need to manually strip the
+                                    //  parentheses from the match results
+                                    text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
+                                        match.value.substring(1, match.value.length - 1)
+                                    } else {
+                                        match.value
+                                    }
+                                ),
+                                sourceProvider = this@ClipboardSuggestionProvider,
+                                context = context,
+                            ))
                         }
                     }
                 }
             }
+            cachedForItem = currentItem
+            cachedCandidates = candidates
+            return candidates
         }
 
         override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
             if (candidate is ClipboardSuggestionCandidate) {
-                lastClipboardItemId = candidate.clipboardItem.id
+                lastUsedClipTimestamp = candidate.clipboardItem.creationTimestampMs
             }
         }
 
@@ -746,7 +813,7 @@ class NlpManager(context: Context) {
 
         override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
             if (candidate is ClipboardSuggestionCandidate) {
-                lastClipboardItemId = candidate.clipboardItem.id
+                lastUsedClipTimestamp = candidate.clipboardItem.creationTimestampMs
                 return true
             }
             return false
@@ -764,12 +831,12 @@ class NlpManager(context: Context) {
             // Do nothing
         }
 
-        private fun validateClipboardItem(currentItem: ClipboardItem?, lastItemId: Long, contentText: String) =
+        // Nothing here looks at the editor any more: where the clip may show is [chooseStripCandidates]'
+        // decision, and this one only answers whether there is a clip worth offering at all.
+        private fun validateClipboardItem(currentItem: ClipboardItem?, lastUsedTimestamp: Long) =
             currentItem?.takeIf {
                 // Check if already used
-                it.id != lastItemId
-                    // Check if content is empty
-                    && contentText.isBlank()
+                it.creationTimestampMs != lastUsedTimestamp
                     // Check if clipboard content has any valid characters
                     && !currentItem.text.isNullOrBlank()
                     && !blankStrRegex.matches(currentItem.text)

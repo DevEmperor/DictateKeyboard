@@ -22,11 +22,14 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -63,10 +66,12 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
 import androidx.compose.ui.text.font.FontStyle
@@ -253,6 +258,34 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     },
                     longPressDelay = longPressDelay.toLong(),
                 )
+            }
+            // A visible way out of the clipboard offer (issue #360). Dismissing it was a long-press and
+            // nothing else, which nobody finds — and it stopped being a detail the moment the chip began
+            // holding the strip whenever there is nothing else to show instead of vanishing at the first
+            // keystroke.
+            //
+            // A sibling of the chip rather than something inside it: [CandidateItem] owns an
+            // awaitEachGesture block that consumes the press, and a second pointer consumer nested inside
+            // that is exactly the dispatch arrangement that has already cost this keyboard a working
+            // gesture. One button for the whole offer, because the address/link/number chips beside the
+            // clip are the same clip and go with it.
+            val clipCandidate = list.firstOrNull() as? ClipboardSuggestionCandidate
+            if (clipCandidate != null) {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.SmartbarActionKey.elementName,
+                    onClick = {
+                        FlorisImeService.inputFeedbackController()?.keyPress()
+                        nlpManager.removeSuggestion(subtypeManager.activeSubtype, clipCandidate)
+                    },
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1f),
+                ) {
+                    SnyggIcon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringRes(R.string.dictate__action_dismiss),
+                    )
+                }
             }
         }
     }
