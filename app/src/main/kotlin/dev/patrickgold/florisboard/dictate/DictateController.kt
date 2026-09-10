@@ -2166,7 +2166,19 @@ object DictateController {
         realtimeContext = appContext
         realtimeShown.setLength(0)
         realtimeTranscript.setLength(0)
-        realtimeHidden = prefs.dictate.realtimeHidePreview.get()
+        // The floating button always holds the words back, whatever the preference says (#357).
+        //
+        // Live typing rewrites the field several times a second, and outside our own keyboard that goes
+        // through the accessibility route: every update is a diff against what we *believe* is in the
+        // field, and the moment one write is refused or the app edits the field itself, the rest of the
+        // dictation is computed against a fiction — which shows up as the text stopping mid-sentence and
+        // never catching up. Inside the keyboard there is a real InputConnection and the same updates are
+        // cheap and exact; over the overlay they are neither.
+        //
+        // The stream itself still runs, so this costs nothing: the transcript is already there when the
+        // button is tapped and lands in one commit — the same verified insert a batch dictation does, and
+        // without the provider round trip a batch dictation would still be waiting for.
+        realtimeHidden = prefs.dictate.realtimeHidePreview.get() || outputTarget == OutputTarget.OVERLAY
         val closed = CompletableDeferred<Unit>()
         realtimeClosed = closed
         // Type the growing transcript live into the field, applying only the minimal diff each time (#128) —
