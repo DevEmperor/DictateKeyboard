@@ -136,6 +136,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar formato de digitação</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gerenciar pacotes de linguagem instalados</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Extensões que adicionam um método de entrada: pinyin chinês e os métodos baseados em formas.</string>
+    <string name="settings__localization__download_language_data_on_wifi_only__label">Baixar dados de idioma somente no Wi-Fi</string>
+    <string name="settings__localization__download_language_data_on_wifi_only__summary">As listas de palavras e os dados de contexto são baixados automaticamente e podem ter vários megabytes por idioma. Desative para permitir também nos dados móveis.</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar formato de digitação</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Idioma principal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapeamento de popup</string>

@@ -21,15 +21,17 @@ package dev.patrickgold.florisboard.ime.nlp.latin
  * `tools/glide-dict/generate_ngrams.py`, which also writes that language's trigram table; paste the
  * script-printed catalog line here after uploading the files as assets of the release named below.
  *
- * ### Two generations of file live in this list
+ * ### 150,000 pairs, counted from sentences
  *
- * Entries regenerated for issue #334 hold **150,000** pairs counted from the corpus sentences; the rest
- * still hold the **60,000** that `generate_bigrams.py` took from Leipzig's pre-computed `co_n.txt`. The
- * difference is not cosmetic — measured, the larger table nearly triples top-3 prediction after a word
- * the small one has no continuations for (6.8 % → 19.2 % in English) — but a language keeps working
- * either way, so the remaining ones can be pulled across a pipeline run at a time. A regenerated entry
- * is recognisable by its size; the size is also what makes devices re-fetch it (see
- * [GlideDictionaryManager.bigramInstalled]).
+ * Every entry was rebuilt for issue #334: **150,000** pairs, counted from the corpus text rather than
+ * from Leipzig's pre-computed `co_n.txt`, which the old 60,000-pair files came from. The larger table
+ * is not cosmetic — measured, it nearly triples top-3 prediction after a word the small one had no
+ * continuations for (6.8 % → 19.2 % in English) — and counting it from sentences is what makes it
+ * comparable with the trigram table that backs off to it.
+ *
+ * Sizes run from 2.2 MB to 7.1 MB, and that spread is script rather than vocabulary: the tables all
+ * hold the same number of entries, but a Georgian or Tamil character costs three UTF-8 bytes where a
+ * Latin one costs one.
  *
  * ### A regenerated table gets a new file name, never a replaced asset
  *
@@ -55,47 +57,47 @@ object BigramCatalog {
     val BUNDLED = setOf("en")
 
     val all: List<BigramDict> = listOf(
-        BigramDict("ar", "$REL/ar_bigrams.txt", 1439143, "804287ba165e52fdcb52659e79869841209626de83fd07f18ef1dfb2b9105925"),
-        BigramDict("bg", "$REL/bg_bigrams.txt", 1500236, "9393406839a3ef2f61dddedcde1ba670ddb010ad021471dce54193f18c7c3236"),
-        BigramDict("bn", "$REL/bn_bigrams.txt", 2250979, "bf1d83c9497be706c8246dbc6f85eb2c70103a35fc7acf6ad9cbb78c1c367357"),
-        BigramDict("ca", "$REL/ca_bigrams.txt", 938858, "82b4af96057cee467a164ffa73680fc9cb25ee0d9f4cea1a8eb06b1ac56ff164"),
-        BigramDict("cs", "$REL/cs_bigrams.txt", 960186, "ed2a6551735c0dadb60ad78934784a5e16188af0c31835ea484b5d4eb7ac3899"),
-        BigramDict("da", "$REL/da_bigrams.txt", 922016, "eb07fb6ac80c53e09485b6dbae210dc7917fee61bbedd6de096d553a78e2672a"),
+        BigramDict("ar", "$REL/ar_bigrams_150k.txt", 3603741, "8274541df961d87fc35bd1197478d18a27e8caf3fec9ae923b5fc9907d874d01"),
+        BigramDict("bg", "$REL/bg_bigrams_150k.txt", 3906960, "a63b6fbd4358b6cb25439f695977e7d0efe4921c671ae57cff9f44ae9620fe7a"),
+        BigramDict("bn", "$REL/bn_bigrams_150k.txt", 5559168, "796c2461d295a3d1fb932ea6fdbfbdb39ee2456fb07344a69127705b9391d501"),
+        BigramDict("ca", "$REL/ca_bigrams_150k.txt", 2337008, "295bc7246c996b1ddff9d9e95bf4eac605682c9e33b842a7cdbc81469b322b93"),
+        BigramDict("cs", "$REL/cs_bigrams_150k.txt", 2443020, "b6c732b3d59a70cd2f7246b487934726d39a6aa187bc17d1fdc5cf89dc3108a5"),
+        BigramDict("da", "$REL/da_bigrams_150k.txt", 2372283, "7a2275ae478c99407f8d6b9a33f34520412c521fdcb3cf4b1af2d0c318fe3dd2"),
         BigramDict("de", "$REL/de_bigrams_150k.txt", 2479539, "f86806430c7293d2b7d5fefadeec920d865f74c725b7087c44f6bff01ba22ae3"),
-        BigramDict("el", "$REL/el_bigrams.txt", 1619772, "ba6e8834112083c9257ab1dc09a27270f7b7868f0e9df6192faf20480f68c56d"),
-        BigramDict("eo", "$REL/eo_bigrams.txt", 955857, "1096a6eccc275223a14e4dd5fa288fa13a5b986fa5040815ad919eae2f46ddb9"),
-        BigramDict("es", "$REL/es_bigrams.txt", 949805, "b7cd13759f0dc7249f7f928ce8aff15077b4b112726ff3a0c5bfa182f045d7f4"),
-        BigramDict("et", "$REL/et_bigrams.txt", 986103, "05682addfe5cae9b8bafa606d63828a422c55a76c0cd9d1909aad0552d0fc08b"),
-        BigramDict("fa", "$REL/fa_bigrams.txt", 1276906, "1fbbd502d1ab923ea8e605086f586460a30c7eefd5e87309c5cd283e87acf20d"),
-        BigramDict("fi", "$REL/fi_bigrams.txt", 1127890, "1aeda50f4e0e76d12638efe8e73807c263cbdc6ce87afd9f4d9fab99578b86ce"),
-        BigramDict("fr", "$REL/fr_bigrams.txt", 969735, "a7c6f7cac5b8ec00db2435c9431fb25dd936bcbb10c1d0bb06398326128ea1e9"),
-        BigramDict("he", "$REL/he_bigrams.txt", 1304054, "0f5189b27e88533527cd32d7497252b003bf43fbe6af9ccf34edc4e206cba7a9"),
-        BigramDict("hi", "$REL/hi_bigrams.txt", 1787652, "e70af1ffe068a47765ce8d7cab20cb87a53ff3470bb721115b325e1e5806209e"),
-        BigramDict("hr", "$REL/hr_bigrams.txt", 922250, "9967f976ad960d3ab0cd4be33e6e1a664718b8415e5d8ce736c0daa138f4cec4"),
-        BigramDict("hu", "$REL/hu_bigrams.txt", 1039602, "70298f46cd41f39140a73042576b1584cc835724ab38fadeda70e4ed142363d5"),
-        BigramDict("hy", "$REL/hy_bigrams.txt", 1741206, "0a1643ae806a3ae4b521845c06cc6a49e8aecbdd092fbffd8c5c43f4bb8ef0dc"),
-        BigramDict("id", "$REL/id_bigrams.txt", 1047379, "c8cbf3d9692ded6545d40b98f354c44ba5b5cc2e82595cf7add7d2b73a104562"),
-        BigramDict("is", "$REL/is_bigrams.txt", 986807, "bd9fb27249702ff84ce4dc5ed9ba3b5c8bc02a1ee7cbdb19bc304f470ed96152"),
-        BigramDict("it", "$REL/it_bigrams.txt", 940777, "4f626dea5e4c4840ab7ee54c5d9e065ca8b49af2e3ce15da5f97402b5610d7e0"),
-        BigramDict("ka", "$REL/ka_bigrams.txt", 2873715, "936dfdd90c481068eb59979bdde9edce14447d71a0b9ce60d4b0f0f6d01f1085"),
-        BigramDict("lt", "$REL/lt_bigrams.txt", 1067694, "ae46fb8f69ff1d011c02dca439a153b6d9a29fc5f00acbd002bf285e3de22558"),
-        BigramDict("lv", "$REL/lv_bigrams.txt", 1067669, "d4bb1381f98290593c37606082c7b0a2f2cdb4e0d1924ec3990395353ec3c613"),
-        BigramDict("nb", "$REL/nb_bigrams.txt", 924745, "810e184a79fb9b54549cdf57dbe6ba4d356e26fce85d35a70175882d22adbed2"),
-        BigramDict("nl", "$REL/nl_bigrams.txt", 921682, "e3daa8421fd4a0fd8b73dabd3cfcd34bf4b65329df1608b556442c8052c3c930"),
-        BigramDict("nn", "$REL/nn_bigrams.txt", 884866, "33460825c138eb6ae6279f8f8a5cf4e1cdd1a900fb0451fb62a421ffc5c8e17c"),
-        BigramDict("pl", "$REL/pl_bigrams.txt", 1008318, "b31f7bf58f3e23ce269212d54fece5dd7ee7a30de63fd97b028c0e13bd8160c2"),
-        BigramDict("pt", "$REL/pt_bigrams.txt", 947388, "4ffc62080866d7651d403201a40b38baec5703736233c4048eeeabb61322838d"),
-        BigramDict("ro", "$REL/ro_bigrams.txt", 926789, "33d7efda514a43db842301b9c54125744716ca2e0e61a3daa7955f379fb7811a"),
-        BigramDict("ru", "$REL/ru_bigrams.txt", 1699036, "55c587d1b676bc8237839718108e14a1a8ca4cccb1a3534d84434de38586bd74"),
-        BigramDict("sk", "$REL/sk_bigrams.txt", 976317, "6d9b582c84741931e61091899941a9c4b078aca688aed2d96be25b387f4f908f"),
-        BigramDict("sl", "$REL/sl_bigrams.txt", 925016, "1c3a9f8971220ace0a4e778e9ccea46072f19bdc5e926bd6673b53dbea27cf31"),
-        BigramDict("sr", "$REL/sr_bigrams.txt", 1473306, "aad44c86dab972cd2e955ccb0e894dde2bd1e75f140c2b6d76d7dbaaacdef2a1"),
-        BigramDict("sv", "$REL/sv_bigrams.txt", 936521, "971683aa408ba6bce39c9fc25f30adc28e1cf3c91a119a3138c3dcbee7837f86"),
-        BigramDict("ta", "$REL/ta_bigrams.txt", 2850349, "a0cf27ec98801d4884273169728cef1326190c6c483bb54e4aacb1a5a2d0d4c0"),
-        BigramDict("tr", "$REL/tr_bigrams.txt", 1083480, "f18782859638baa7ad14c2801a995b4e4b87b1df61b24b081bc85ea1de50f79e"),
-        BigramDict("uk", "$REL/uk_bigrams.txt", 1650695, "3d76653f06affb1c6c6e04654d2cedc6da3b7de324238432643d661820549cf5"),
-        BigramDict("ur", "$REL/ur_bigrams.txt", 1287272, "6172df1a88c390c7ee872aee3589abc1190667c5c2d747d0c7f4a0dc87073676"),
-        BigramDict("vi", "$REL/vi_bigrams.txt", 872623, "60e1a7c46e9be547deaf3aac799c13304974b0587410373d0204df3e5bfff850"),
+        BigramDict("el", "$REL/el_bigrams_150k.txt", 4103910, "ae39b9a55ac121fa5c24f585fcc6b98b31e12f8254ee77b6950de61a9873ea66"),
+        BigramDict("eo", "$REL/eo_bigrams_150k.txt", 2392708, "e0e86a4b4d279b0552f087cb70f6174b4c945fcd63c87d2ee85592b1ed3f06a4"),
+        BigramDict("es", "$REL/es_bigrams_150k.txt", 2390341, "2760f1b379ae8c153ce0aeed6975f8527ce4aa3e9830805178cb02dcbd3c2079"),
+        BigramDict("et", "$REL/et_bigrams_150k.txt", 2426766, "2b9f9a8ae69fe17ec97487a1be10f90a86b3362a6b7c58a3d637c8aa97644bd2"),
+        BigramDict("fa", "$REL/fa_bigrams_150k.txt", 3284610, "4a61a5d26b930fcd9e0d2e525de0fbc20ab317a6b21e0ee228e32cbcb81cc7a0"),
+        BigramDict("fi", "$REL/fi_bigrams_150k.txt", 2768864, "31daa91168040b693eea0ef221b12cbf5b57e3ef42d7b66af1091f1b9a127e33"),
+        BigramDict("fr", "$REL/fr_bigrams_150k.txt", 2463147, "c89218c92a5adb9c2b93d9ccb3a20215ab22be8874fa6fd15c18cf02d46039ae"),
+        BigramDict("he", "$REL/he_bigrams_150k.txt", 3313088, "5a3d7c9c64be2b76a81c0142f096c5ff613a515395692b5e0a7d38cbfcf276d1"),
+        BigramDict("hi", "$REL/hi_bigrams_150k.txt", 4479839, "d1a6ad274c56fa5339f2c4a2b4b54b65a3d5db45e8cebc19690251cc715f6eec"),
+        BigramDict("hr", "$REL/hr_bigrams_150k.txt", 2344424, "d4da046c4e43bb86407630898e486a94b6f98b61203abe51c856b1fbe1ede9b2"),
+        BigramDict("hu", "$REL/hu_bigrams_150k.txt", 2679337, "20f3a206b8e95d68d49d3afa0db304f289f0d991c0aaaaa80828c84bb8df48b3"),
+        BigramDict("hy", "$REL/hy_bigrams_150k.txt", 4304023, "5e285e371c6ea11c6f54dcb0f838d021950f16f3f7070877ade3ab3861b1366d"),
+        BigramDict("id", "$REL/id_bigrams_150k.txt", 2597584, "24f867fb6ac6b96ffe9e7021eb703268cfc4a959330081b3593ecf37e7804d89"),
+        BigramDict("is", "$REL/is_bigrams_150k.txt", 2502238, "ca2a91017f51928b6c101ebc678630e8c726feea0a03c157b8ebdd9b88ba8b7c"),
+        BigramDict("it", "$REL/it_bigrams_150k.txt", 2385437, "9b98bffb279f8b2a20000579f3e9c8f3cc08baeeca8d90611c2464c3076e150a"),
+        BigramDict("ka", "$REL/ka_bigrams_150k.txt", 7060477, "b79a70744973b57892d563461267583ef08fce2927ff513127e91c4ef4b86f15"),
+        BigramDict("lt", "$REL/lt_bigrams_150k.txt", 2668801, "0bae036ec146bf4a8e5d40e243a474dfc11d4d2f5071eed5ef40a608a1d516d4"),
+        BigramDict("lv", "$REL/lv_bigrams_150k.txt", 2637360, "aab3c54d0e79b827dabe5801b6e087db06cb3c8b7d2c9090c3e5e282ed41d548"),
+        BigramDict("nb", "$REL/nb_bigrams_150k.txt", 2314564, "c9dc254f2e024d60dbfa27720ab6b0289d773f3cea2779e3cc8588fc3b9fc84c"),
+        BigramDict("nl", "$REL/nl_bigrams_150k.txt", 2300477, "501ca84d1823f92218acb7a08ca89a41cbf3b09ee9641fe703d8a889afdd369c"),
+        BigramDict("nn", "$REL/nn_bigrams_150k.txt", 2178758, "cf78004a09cfdfd78c5cefe1b3f5826087a4ceba3bf2db468f3fc107068d22de"),
+        BigramDict("pl", "$REL/pl_bigrams_150k.txt", 2563078, "ba911f770dfb9fb84f4019f75925780befe50aec15aa64da7c177374d4335a34"),
+        BigramDict("pt", "$REL/pt_bigrams_150k.txt", 2392332, "8e917f93571f009dbaea07098469ca2c604d5a4e8085a6951536fb1ff8e8f8af"),
+        BigramDict("ro", "$REL/ro_bigrams_150k.txt", 2426155, "1b9a27f83e19c3f15284c4c6d9ec1d492ae8b993947c21b240379d36bf2ab06b"),
+        BigramDict("ru", "$REL/ru_bigrams_150k.txt", 4320336, "1628e2b03df78971ac297a40552605156ed2b838a48f06852f4f8ccd1160089f"),
+        BigramDict("sk", "$REL/sk_bigrams_150k.txt", 2447852, "95eb7d51e946f23496f633643682c20fb4d8107a1c83aa5479e12afee47b6666"),
+        BigramDict("sl", "$REL/sl_bigrams_150k.txt", 2364942, "c387e06e7279858c7b09a69dd0d80f924c6e5e6a9d7aa4d1d165a717bc4b34c8"),
+        BigramDict("sr", "$REL/sr_bigrams_150k.txt", 3692133, "f8e54da9fe8aea908b94ff5c04c20c26168bbbc19a7b8dcfc8974078bd42f731"),
+        BigramDict("sv", "$REL/sv_bigrams_150k.txt", 2396247, "f413d0743258d3685d518a8b997e7388c1f1c68869ba7c99d41ad22011dc7d1b"),
+        BigramDict("ta", "$REL/ta_bigrams_150k.txt", 7065645, "f15a572b290a15776b4002eadf78883a0e293d69c9f7f39192945f7834b6ec6f"),
+        BigramDict("tr", "$REL/tr_bigrams_150k.txt", 2857189, "bff3a822f99ddc6adfef0e50dc01cc8c24905e34fbbd83ca07de2b2ff59d83ae"),
+        BigramDict("uk", "$REL/uk_bigrams_150k.txt", 4165043, "f6dfb40011d67906b45fd629c7d96c9583c7de0927677e586a00b92b0d155784"),
+        BigramDict("ur", "$REL/ur_bigrams_150k.txt", 3186074, "cbbc2dab2580f7d2a811154e7979ccbc4c1fa9b4815e4d6e5059ef6749adfd78"),
+        BigramDict("vi", "$REL/vi_bigrams_150k.txt", 2252738, "97617c14eec6e5683a4b83c47ad07255f2b3d571964cb2070092faad376ada3b"),
     )
 
     private val byLang = all.associateBy { it.lang }

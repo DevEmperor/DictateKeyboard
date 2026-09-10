@@ -5,6 +5,10 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Only to tell a metered connection from an unmetered one, so the language data the keyboard
+         fetches by itself can wait for Wi-Fi (issue #334). Never used to inspect what is on the
+         network, only whether the current one costs money. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <!-- Buying credit packs for Dictate Cloud. The billing library declares this itself, but
          stating it here keeps it visible: without it in the uploaded build, the Play Console
          will not let in-app products be created at all. -->

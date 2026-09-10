@@ -1447,6 +1447,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "localization__display_keyboard_labels_in_subtype_language",
             default = false,
         )
+        // Whether the word lists, context tables and Pinyin pack may fetch themselves over a metered
+        // connection (issue #334). On by default: these downloads are automatic and unannounced, and
+        // with the context tables a single language runs from four to fourteen megabytes depending on
+        // its script. See [dev.patrickgold.florisboard.ime.nlp.DownloadPolicy] for what it does not
+        // cover — a download somebody tapped is not one to second-guess.
+        val downloadLanguageDataOnWifiOnly = boolean(
+            key = "localization__download_language_data_on_wifi_only",
+            default = true,
+        )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,

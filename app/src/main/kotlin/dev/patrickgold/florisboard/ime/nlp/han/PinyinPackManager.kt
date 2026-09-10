@@ -28,6 +28,7 @@ import okhttp3.Request
 import java.io.File
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
+import dev.patrickgold.florisboard.ime.nlp.DownloadPolicy
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.coroutineContext
 
@@ -109,6 +110,9 @@ object PinyinPackManager {
      */
     fun ensureDownloaded(context: Context, locale: FlorisLocale) {
         if (!handles(locale) || isInstalled(context)) return
+        // Same rule as the word lists: a three-megabyte fetch nobody asked for waits for a connection
+        // that costs nothing, and tries again on the next activation (issue #334).
+        if (!DownloadPolicy.allowsAutomaticDownload(context)) return
         if (!downloading.compareAndSet(false, true)) return
         val appContext = context.applicationContext
         _progress.value = 0
