@@ -33,6 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -281,6 +282,17 @@ private fun CandidateItem(
     val attributes = remember(autoCommit) { mapOf(FlorisImeUi.Attr.AutoCommit to if (autoCommit) 1 else 0) }
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
 
+    // The gesture block below is keyed on `Unit` on purpose — restarting it whenever this cell
+    // recomposes would cancel a press that is still in progress, which is the failure
+    // [dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout] already works around. But a
+    // block that never restarts also never sees a new [onClick], and a candidate cell is reused: slot
+    // one holds "und" while a word is being typed and "Kuchen" a moment later, and the frozen lambda
+    // went on committing "und" — the word before the one on screen. These three are read through
+    // [rememberUpdatedState] so the long-lived block always calls the current ones.
+    val currentOnClick by rememberUpdatedState(onClick)
+    val currentOnLongPress by rememberUpdatedState(onLongPress)
+    val currentLongPressDelay by rememberUpdatedState(longPressDelay)
+
     SnyggRow(
         elementName = elementName,
         attributes = attributes,
@@ -293,19 +305,19 @@ private fun CandidateItem(
                     if (down.pressed != down.previousPressed) down.consume()
                     var upOrCancel: PointerInputChange? = null
                     try {
-                        upOrCancel = withTimeout(longPressDelay) {
+                        upOrCancel = withTimeout(currentLongPressDelay) {
                             waitForUpOrCancellation()
                         }
                         upOrCancel?.let { if (it.pressed != it.previousPressed) it.consume() }
                     } catch (_: PointerEventTimeoutCancellationException) {
-                        if (onLongPress()) {
+                        if (currentOnLongPress()) {
                             upOrCancel = null
                             isPressed = false
                         }
                         waitForUpOrCancellation()?.let { if (it.pressed != it.previousPressed) it.consume() }
                     }
                     if (upOrCancel != null) {
-                        onClick()
+                        currentOnClick()
                     }
                     isPressed = false
                 }

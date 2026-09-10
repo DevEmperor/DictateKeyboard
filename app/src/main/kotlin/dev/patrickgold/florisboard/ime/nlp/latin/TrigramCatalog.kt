@@ -34,9 +34,7 @@ package dev.patrickgold.florisboard.ime.nlp.latin
  * replacement on corpus context was measured to mangle 2.4–9.2 % of correctly typed words, and the
  * harness that would have to clear a deeper model has no running text in it at all.
  *
- * English is not bundled: unlike the bigram table, which the corrector also reads and which therefore
- * has to be there on the first keystroke after install, this one only improves suggestions and can
- * arrive later. Data is generated from the Leipzig Corpora Collection (wortschatz-leipzig.de, CC BY) by
+ * Data is generated from the Leipzig Corpora Collection (wortschatz-leipzig.de, CC BY) by
  * `tools/glide-dict/generate_ngrams.py`; paste the script-printed catalog line here after uploading the
  * files as assets of the release named below.
  */
@@ -51,17 +49,21 @@ object TrigramCatalog {
     const val REL = "https://github.com/DevEmperor/DictateKeyboard/releases/download/trigram-dicts-v1"
 
     /**
-     * Languages whose trigram file ships in the APK — none, deliberately. See the class comment.
-     * Kept as a set rather than dropped so the download and deletion paths read the same as the
-     * bigram ones next to them.
+     * Languages whose trigram file ships in the APK ([ime/dict/<lang>_trigrams.txt]) — never
+     * downloaded, never deleted.
+     *
+     * English, so the keyboard is whole the moment it is installed: its word list and both context
+     * tables are all in the APK, and someone who types English on a fresh phone with no connection
+     * gets the finished engine rather than a version of it that improves later. It costs 1.8 MB of
+     * download size once, against 1.8 MB fetched by nearly every user anyway.
      */
-    val BUNDLED = emptySet<String>()
+    val BUNDLED = setOf("en")
 
     /**
-     * Every language the keyboard has a word list for, English included. A language that is *not* here
-     * simply has no second word of context: [NgramIndex.EMPTY] answers nothing, the prediction falls
-     * back to the bigram table, and the keyboard behaves exactly as it did before this existed — which
-     * is what made it safe to add these one pipeline run at a time.
+     * Every downloadable language; English is absent because it is bundled, see [BUNDLED]. A language
+     * missing from both simply has no second word of context: [NgramIndex.EMPTY] answers nothing, the
+     * prediction falls back to the bigram table, and the keyboard behaves exactly as it did before this
+     * existed — which is what made it safe to add these one pipeline run at a time.
      *
      * Tamil's table is the one short one (66,149 entries rather than 100,000): its corpus is Wikipedia
      * and the language is agglutinative, so fewer triples reach the minimum count. The floor is doing
@@ -76,7 +78,6 @@ object TrigramCatalog {
         TrigramDict("da", "$REL/da_trigrams_100k.txt", 1863315, "bcd6ad0a35613087ed6dd387f91c21bc2768f6b6ac92dbb57dda529237c5706d"),
         TrigramDict("de", "$REL/de_trigrams_100k.txt", 1986190, "e7e5b18a10e2eeecbcb43b4002d3583fc8960705abab135b6adbb5bd59ba2e89"),
         TrigramDict("el", "$REL/el_trigrams_100k.txt", 3420631, "d2a47de1dc7b87d0b4d674c50e494b24cfa0803aeb809be7798405c0a8e1b216"),
-        TrigramDict("en", "$REL/en_trigrams_100k.txt", 1826210, "947acde30d23ffcd28d2f01ae3225317df86bbf684e9237ba6a50f35cc394b14"),
         TrigramDict("eo", "$REL/eo_trigrams_100k.txt", 1931420, "de90216ad47d9ddf457fdd467f0a1349f0b2bf9a145ec2767003ca746b5cbf96"),
         TrigramDict("es", "$REL/es_trigrams_100k.txt", 1920598, "d1648461324fb76cf3cfe18f39a5358fc0fc6a19096cfebd2bcb861c9d9e9f14"),
         TrigramDict("et", "$REL/et_trigrams_100k.txt", 2019108, "2184490a517250c3a3194698c39e509b1df26410bb8adb43a161fd20a2fe45a4"),
