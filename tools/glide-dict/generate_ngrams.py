@@ -68,10 +68,16 @@ def main():
 
     for kind, counts, top, cls in (("bigrams", bi, a.bigrams, "BigramDict"),
                                    ("trigrams", tri, a.trigrams, "TrigramDict")):
-        path = os.path.join(a.out, f"{a.lang}_{kind}.txt")
+        # The prune size is part of the file name, so a regenerated table is always a *new* asset
+        # rather than a replacement for one. Replacing an asset in place breaks every device still
+        # running the previous app version: its catalog knows the old byte size, the download's size
+        # check fails against the new file, and because ensureDownloaded runs on every subtype
+        # activation it re-fetches and discards those megabytes over and over.
+        name = f"{a.lang}_{kind}_{top // 1000}k.txt"
+        path = os.path.join(a.out, name)
         size, entries, sha = write_table(counts, top, path)
         sys.stderr.write(f"  wrote {path} ({size} bytes, {entries} entries)\n")
-        print(f'{cls}("{a.lang}", "$REL/{a.lang}_{kind}.txt", {size}, "{sha}"),')
+        print(f'{cls}("{a.lang}", "$REL/{name}", {size}, "{sha}"),')
 
 
 if __name__ == "__main__":

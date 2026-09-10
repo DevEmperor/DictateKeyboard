@@ -30,6 +30,16 @@ package dev.patrickgold.florisboard.ime.nlp.latin
  * either way, so the remaining ones can be pulled across a pipeline run at a time. A regenerated entry
  * is recognisable by its size; the size is also what makes devices re-fetch it (see
  * [GlideDictionaryManager.bigramInstalled]).
+ *
+ * ### A regenerated table gets a new file name, never a replaced asset
+ *
+ * Hence `de_bigrams_150k.txt` beside the older `de_bigrams.txt`. Overwriting an asset in place — which
+ * is what was done when the Icelandic and Georgian *word lists* were corrected — is safe only when the
+ * old file is one nobody should keep. Here it is not: a device still running the previous app version
+ * holds the previous catalog, so it would download the new file, fail the byte-size check in
+ * [GlideDictionaryManager] against the size it knows, throw the file away, and — since
+ * `ensureDownloaded` runs on every subtype activation — do that again and again. The prune size in the
+ * name comes from `generate_ngrams.py`, so this happens by itself rather than by remembering to.
  */
 data class BigramDict(
     val lang: String,
@@ -51,7 +61,7 @@ object BigramCatalog {
         BigramDict("ca", "$REL/ca_bigrams.txt", 938858, "82b4af96057cee467a164ffa73680fc9cb25ee0d9f4cea1a8eb06b1ac56ff164"),
         BigramDict("cs", "$REL/cs_bigrams.txt", 960186, "ed2a6551735c0dadb60ad78934784a5e16188af0c31835ea484b5d4eb7ac3899"),
         BigramDict("da", "$REL/da_bigrams.txt", 922016, "eb07fb6ac80c53e09485b6dbae210dc7917fee61bbedd6de096d553a78e2672a"),
-        BigramDict("de", "$REL/de_bigrams.txt", 2479539, "f86806430c7293d2b7d5fefadeec920d865f74c725b7087c44f6bff01ba22ae3"),
+        BigramDict("de", "$REL/de_bigrams_150k.txt", 2479539, "f86806430c7293d2b7d5fefadeec920d865f74c725b7087c44f6bff01ba22ae3"),
         BigramDict("el", "$REL/el_bigrams.txt", 1619772, "ba6e8834112083c9257ab1dc09a27270f7b7868f0e9df6192faf20480f68c56d"),
         BigramDict("eo", "$REL/eo_bigrams.txt", 955857, "1096a6eccc275223a14e4dd5fa288fa13a5b986fa5040815ad919eae2f46ddb9"),
         BigramDict("es", "$REL/es_bigrams.txt", 949805, "b7cd13759f0dc7249f7f928ce8aff15077b4b112726ff3a0c5bfa182f045d7f4"),

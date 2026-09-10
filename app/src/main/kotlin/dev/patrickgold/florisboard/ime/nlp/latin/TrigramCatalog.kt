@@ -64,8 +64,8 @@ object TrigramCatalog {
      * remaining languages out one pipeline run at a time safe.
      */
     val all: List<TrigramDict> = listOf(
-        TrigramDict("de", "$REL/de_trigrams.txt", 1986190, "e7e5b18a10e2eeecbcb43b4002d3583fc8960705abab135b6adbb5bd59ba2e89"),
-        TrigramDict("en", "$REL/en_trigrams.txt", 1826210, "947acde30d23ffcd28d2f01ae3225317df86bbf684e9237ba6a50f35cc394b14"),
+        TrigramDict("de", "$REL/de_trigrams_100k.txt", 1986190, "e7e5b18a10e2eeecbcb43b4002d3583fc8960705abab135b6adbb5bd59ba2e89"),
+        TrigramDict("en", "$REL/en_trigrams_100k.txt", 1826210, "947acde30d23ffcd28d2f01ae3225317df86bbf684e9237ba6a50f35cc394b14"),
     )
 
     private val byLang = all.associateBy { it.lang }
