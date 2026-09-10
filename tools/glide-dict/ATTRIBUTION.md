@@ -14,7 +14,18 @@ themselves (they are consulted only at build time to decide casing and to filter
   (LREC 2012). Merged with OPUS by relative share for `hi`, `ta` and `ur`, where OpenSubtitles alone yields
   too few words to correct against, and the **sole** source for `ka`, whose OPUS list is not Georgian
   (its most frequent entries are single letters and obsolete characters). (The same collection is also
-  the sole source of the bigram files.)
+  the sole source of the context tables below.)
+
+## Context tables (bigrams and trigrams)
+The same Leipzig packages, under the same CC BY terms and the same citation, but a different file inside
+them: `generate_ngrams.py` counts word n-grams from **`*-sentences.txt`**, the corpus text itself.
+
+The older `generate_bigrams.py` read `*-co_n.txt`, Leipzig's pre-computed adjacent co-occurrences. That
+file holds *pairs* and can say nothing about triples, so the trigram tables had to be counted from the
+sentences — and the bigram tables are counted from there too, because a trigram and the bigram it backs
+off to are weighed against each other at prediction time and two different notions of adjacency are not
+comparable. Languages still carrying a `co_n`-derived bigram file are simply the ones the new pipeline
+has not reached yet.
 - `is` is built from OPUS with `--fix-opus-encoding iso8859_4:latin1`: that list was written as Latin-1
   and read as ISO-8859-4 at the source, turning þ→ū, ð→đ and ó→ķ. The substitution is single-byte and
   exactly invertible, so the words are repaired rather than dropped.

@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.ime.nlp.latin
 
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -76,5 +77,49 @@ class NextWordPredictionPointTest {
     fun `several spaces are looked past`() {
         assertTrue(atPoint("das ist   "))
         assertFalse(atPoint("das ist gut.   "))
+    }
+
+    // ── What the strip ends up showing (issue #334) ──────────────────────────────────────────────
+
+    private fun merge(learned: List<String>, deep: List<String>, shallow: List<String>, max: Int = 3) =
+        LatinLanguageProvider.mergePredictions(learned, deep, shallow, max)
+
+    @Test
+    fun `the user's own pairs come before any corpus`() {
+        val out = merge(listOf("Dario"), listOf("world", "end"), listOf("same", "first"))
+        assertEquals(listOf("Dario" to true, "world" to false, "end" to false), out)
+    }
+
+    /**
+     * The whole point of the second word of context: where it has an answer it goes in front of the
+     * one-word table, because it was measured to be right more often exactly there.
+     */
+    @Test
+    fun `two words of context outrank one`() {
+        val out = merge(emptyList(), listOf("world", "end"), listOf("same", "first", "most"))
+        assertEquals(listOf("world" to false, "end" to false, "same" to false), out)
+    }
+
+    /** With no trigram evidence the strip is what it was before the tier existed. */
+    @Test
+    fun `without deep evidence nothing changes`() {
+        val out = merge(emptyList(), emptyList(), listOf("same", "first", "most", "other"))
+        assertEquals(listOf("same" to false, "first" to false, "most" to false), out)
+    }
+
+    /**
+     * A word both tables offer must not take two slots — and it keeps the mark of the best evidence
+     * that produced it, so a learned word stays italic even when the corpus suggests it too.
+     */
+    @Test
+    fun `a word offered twice keeps its first position`() {
+        val out = merge(listOf("end"), listOf("end", "world"), listOf("end", "same"))
+        assertEquals(listOf("end" to true, "world" to false, "same" to false), out)
+    }
+
+    @Test
+    fun `blank candidates never reach the strip`() {
+        val out = merge(listOf(""), listOf(" ", "world"), listOf("", "same"))
+        assertEquals(listOf("world" to false, "same" to false), out)
     }
 }

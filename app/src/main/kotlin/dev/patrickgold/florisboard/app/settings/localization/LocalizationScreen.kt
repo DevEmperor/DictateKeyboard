@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.BigramCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryManager
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.latin.TrigramCatalog
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.subtypeManager
@@ -164,10 +165,17 @@ fun LocalizationScreen() = FlorisScreen {
                         GlideDictionaryCatalog.forLang(glideLang) != null -> "⤓"
                         else -> "✕"
                     }
+                    // "Context" covers both orders since issue #334, and only says ✓ when everything
+                    // this language has to offer is on the device. A language the trigram pipeline has
+                    // not reached has no entry and is therefore complete without one — the second word
+                    // of context is not a promise made to every language at once.
+                    val bigramReady = glideLang in BigramCatalog.BUNDLED ||
+                        GlideDictionaryManager.bigramInstalled(context, glideLang)
+                    val trigramPending = TrigramCatalog.forLang(glideLang) != null &&
+                        !GlideDictionaryManager.trigramInstalled(context, glideLang)
                     val contextIcon = when {
-                        glideLang in BigramCatalog.BUNDLED ||
-                            GlideDictionaryManager.bigramInstalled(context, glideLang) -> "✓"
-                        BigramCatalog.forLang(glideLang) != null -> "⤓"
+                        bigramReady && !trigramPending -> "✓"
+                        bigramReady || BigramCatalog.forLang(glideLang) != null -> "⤓"
                         else -> "✕"
                     }
                     val summary = baseSummary + "\n" +

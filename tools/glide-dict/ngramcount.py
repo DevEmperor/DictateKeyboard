@@ -178,10 +178,18 @@ def count_ngrams(path: str, keep_bi: int, keep_tri: int, want_uni: bool = False)
 
 
 def write_table(counts: dict, top: int, path: str) -> tuple:
-    """Write the top [top] n-grams as `<key>\\t<count>`, count-descending — the format the app reads
-    for both orders. Returns `(bytes, entries, sha256)`."""
+    """Write the top [top] n-grams as `<key>\\t<count>`, **sorted by key**. Returns `(bytes, entries,
+    sha256)`.
+
+    Which n-grams are kept is decided by count; the order they are written in is not. The app holds
+    these tables as a flat blob it binary-searches, so a file that arrives in key order can be loaded
+    by a linear scan, while the count-descending order the old bigram files used would make it sort a
+    quarter of a million keys on first use of every language. It costs the ability to `head` the file
+    and see the commonest phrases; `sort -t$'\\t' -k2 -rn` gives that back.
+    """
     import hashlib
     ranked = heapq.nlargest(top, counts.items(), key=lambda kv: kv[1])
+    ranked.sort(key=lambda kv: kv[0])
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         for key, c in ranked:

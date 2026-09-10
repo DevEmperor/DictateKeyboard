@@ -70,11 +70,16 @@ object GlideDictionaryManager {
         val code = LatinLanguageProvider.normalizeLang(lang)
         val dictSpec = GlideDictionaryCatalog.forLang(code)
         val bigramSpec = BigramCatalog.forLang(code)
+        val trigramSpec = TrigramCatalog.forLang(code)
         val needDict = !dictBundled && dictSpec != null && !isInstalled(context, code)
         // The bigram file (autocorrect context, Tier 2) is fetched together with the glide dictionary when
         // an input language is added; also downloads on its own if the dict is already present from before.
         val needBigram = bigramSpec != null && !bigramInstalled(context, code)
-        if (!needDict && !needBigram) return
+        // The trigram file (issue #334) rides along on the same trigger. It has no bundled languages —
+        // English included — because unlike the bigram table it feeds nothing but suggestions, so a
+        // language it has not reached yet simply predicts the way it did before.
+        val needTrigram = trigramSpec != null && !trigramInstalled(context, code)
+        if (!needDict && !needBigram && !needTrigram) return
         if (!active.add(code)) return
         val appContext = context.applicationContext
         _progress.value = _progress.value + (code to 0)
@@ -90,6 +95,11 @@ object GlideDictionaryManager {
                     // Best effort — a missing bigram file just means no context model for this language.
                     runCatching {
                         downloadTo(bigramFile(appContext, code), bigramSpec!!.url, bigramSpec.sizeBytes, bigramSpec.sha256)
+                    }
+                }
+                if (needTrigram) {
+                    runCatching {
+                        downloadTo(trigramFile(appContext, code), trigramSpec!!.url, trigramSpec.sizeBytes, trigramSpec.sha256)
                     }
                 }
                 _installedVersion.value += 1
@@ -110,6 +120,10 @@ object GlideDictionaryManager {
     /** The downloaded bigram file for [lang] (autocorrect Tier 2), kept next to the glide dictionary. */
     fun bigramFile(context: Context, lang: String): File =
         File(dictsRoot(context), "${lang.lowercase()}_bigrams.txt")
+
+    /** The downloaded trigram file for [lang] (next-word prediction, issue #334). */
+    fun trigramFile(context: Context, lang: String): File =
+        File(dictsRoot(context), "${lang.lowercase()}_trigrams.txt")
 
     /**
      * True if a downloaded dictionary for [lang] is present on disk **and matches the catalog**.
@@ -136,6 +150,20 @@ object GlideDictionaryManager {
         return file.length() == expected
     }
 
+    /**
+     * True if a downloaded trigram file for [lang] is present on disk and matches the catalog.
+     *
+     * A language with no catalog entry answers **false**, not true as the two checks above do: those
+     * mean "there is nothing better to fetch, leave what is here alone", while a language the trigram
+     * pipeline has not reached yet genuinely has no such file, and saying it were installed would put
+     * a ✓ next to data that does not exist.
+     */
+    fun trigramInstalled(context: Context, lang: String): Boolean {
+        val spec = TrigramCatalog.forLang(lang) ?: return false
+        val file = trigramFile(context, lang)
+        return file.isFile && file.length() == spec.sizeBytes
+    }
+
     /** Language codes of all downloaded dictionaries currently on disk. */
     fun installedLangs(context: Context): List<String> =
         dictsRoot(context).listFiles()
@@ -160,6 +188,11 @@ object GlideDictionaryManager {
         // context data as well.
         if (code !in BigramCatalog.BUNDLED && bigramInstalled(context, code)) {
             changed = bigramFile(context, code).delete() || changed
+        }
+        if (code !in TrigramCatalog.BUNDLED && trigramFile(context, code).isFile) {
+            // Deleted on presence rather than on trigramInstalled: a file left behind by an earlier
+            // catalog entry is exactly the one nothing else will ever clean up.
+            changed = trigramFile(context, code).delete() || changed
         }
         if (code !in GlideDictionaryCatalog.BUNDLED && isInstalled(context, code) && delete(context, code)) {
             changed = true

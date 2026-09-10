@@ -22,9 +22,10 @@ build-time oracle only (github.com/wooorm/dictionaries and, for Arabic and the I
 languages, github.com/LibreOffice/dictionaries); their word lists are not redistributed.
 
 
-2. Bigram (word-pair) frequency data for autocorrect context (Tier 2)
----------------------------------------------------------------------
-Files: ime/dict/<lang>_bigrams.txt  (bundled English; other languages downloaded on demand)
+2. Word-pair and word-triple frequency data for context (autocorrect Tier 2, prediction)
+----------------------------------------------------------------------------------------
+Files: ime/dict/<lang>_bigrams.txt   (bundled English; other languages downloaded on demand)
+       ime/dict/<lang>_trigrams.txt  (downloaded on demand, all languages)
 
 Derived from the Leipzig Corpora Collection (Wortschatz), used under CC BY.
   - © Universität Leipzig / Sächsische Akademie der Wissenschaften / InfAI

@@ -194,6 +194,35 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
          * doing — the bigram context in `correctionsFor` wants exactly that), the full stop would quietly
          * start being crossed too. The decision belongs where predictions are decided.
          */
+        /**
+         * Which words the strip offers, out of the three places a continuation can come from, and in
+         * what order. Split out of `nextWordPredictions` for the same reason [isAtPredictionPoint] was:
+         * everything around it is table lookup, and this is the decision.
+         *
+         * The order is an argument about evidence, not about table size. [learned] comes first because
+         * a pair the user has actually written outranks any corpus — that is the half of word learning
+         * people recognise as the keyboard knowing them (issue #318). [deep] comes next because two
+         * words of context, where they are available at all, are strictly more informative than one:
+         * measured, they lift the band where 46 % of predictions are asked for by 4.6 pp while a
+         * five-times-larger bigram table lifts it by nothing (issue #334). [shallow] fills what is
+         * left, which is most of the strip most of the time.
+         *
+         * A word offered by more than one source keeps its first, best-evidenced position, and only a
+         * word from [learned] is marked as the user's own.
+         */
+        internal fun mergePredictions(
+            learned: List<String>,
+            deep: List<String>,
+            shallow: List<String>,
+            max: Int,
+        ): List<Pair<String, Boolean>> {
+            val seen = LinkedHashMap<String, Boolean>() // candidate -> came from the user's own writing
+            for (candidate in learned) if (candidate.isNotBlank()) seen.putIfAbsent(candidate, true)
+            for (candidate in deep) if (candidate.isNotBlank()) seen.putIfAbsent(candidate, false)
+            for (candidate in shallow) if (candidate.isNotBlank()) seen.putIfAbsent(candidate, false)
+            return seen.entries.take(max).map { it.key to it.value }
+        }
+
         internal fun isAtPredictionPoint(textBeforeCursor: String, phantomSpacePending: Boolean): Boolean {
             if (!textBeforeCursor.endsWith(" ") && !phantomSpacePending) return false
             val settled = textBeforeCursor.trimEnd()
@@ -378,56 +407,83 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
-    // Bigram context model (Tier 2). Per-language "w1 w2" -> count maps loaded from the bundled
-    // ime/dict/<lang>_bigrams.txt (currently English only); languages without a file get an empty map so
-    // context simply doesn't apply. Used to re-rank corrections by the previous word.
-    private val bigramsByLang = guardedByLock { mutableMapOf<String, Map<String, Long>>() }
+    // Context model. Per-language "w1 w2" -> count and "w1 w2 w3" -> count tables, read from a
+    // downloaded <lang>_bigrams.txt / <lang>_trigrams.txt or the bundled English bigram asset. A
+    // language without a file gets [NgramIndex.EMPTY] and context simply doesn't apply.
+    //
+    // The bigram table re-ranks corrections by the previous word AND feeds prediction; the trigram
+    // table (issue #334) feeds prediction only — see [nextWordPredictions] for why it goes no further.
+    private val bigramsByLang = guardedByLock { mutableMapOf<String, NgramIndex>() }
+    private val trigramsByLang = guardedByLock { mutableMapOf<String, NgramIndex>() }
 
-    private suspend fun bigramsFor(subtype: Subtype): Map<String, Long> {
-        val lang = dictLangFor(subtype) ?: return emptyMap()
+    private suspend fun bigramsFor(subtype: Subtype): NgramIndex {
+        val lang = dictLangFor(subtype) ?: return NgramIndex.EMPTY
         return bigramsByLang.withLock { cache ->
-            cache[lang] ?: loadBigrams(lang).also { cache[lang] = it }
+            cache[lang] ?: loadTable(lang, "bigrams", GlideDictionaryManager.bigramFile(appContext, lang))
+                .also { cache[lang] = it }
         }
     }
 
-    private fun loadBigrams(lang: String): Map<String, Long> = runCatching {
-        // A downloaded per-language bigram file (issue: per-language Tier 2) takes precedence over the
-        // bundled English asset — mirrors readDict for the unigram dictionaries.
-        val downloaded = GlideDictionaryManager.bigramFile(appContext, lang)
+    private suspend fun trigramsFor(subtype: Subtype): NgramIndex {
+        val lang = dictLangFor(subtype) ?: return NgramIndex.EMPTY
+        return trigramsByLang.withLock { cache ->
+            cache[lang] ?: loadTable(lang, "trigrams", GlideDictionaryManager.trigramFile(appContext, lang))
+                .also { cache[lang] = it }
+        }
+    }
+
+    /**
+     * Read one context table. A downloaded per-language file takes precedence over a bundled asset —
+     * mirrors readDict for the unigram dictionaries. Only English bundles one, and only for bigrams.
+     *
+     * The file stores its keys lowercased; the lookup happens in fold space, so a language with
+     * non-trivial folding has to fold the keys on the way in or no key would ever match. Folding the
+     * whole key at once is safe — every fold passes the separating spaces through untouched — and
+     * [NgramIndex.parse] re-sorts afterwards, because folding can reorder keys and collide them.
+     */
+    private fun loadTable(lang: String, kind: String, downloaded: java.io.File): NgramIndex = runCatching {
         val text = if (downloaded.isFile && downloaded.length() > 0) {
             downloaded.readText()
         } else {
-            appContext.assets.readText("ime/dict/${lang}_bigrams.txt")
+            appContext.assets.readText("ime/dict/${lang}_$kind.txt")
         }
-        val map = HashMap<String, Long>(45_000)
-        // The file stores "w1 w2" lowercased; the lookup happens in fold space, so a language with
-        // non-trivial folding has to fold the key too or no pair would ever match. Folding the whole key
-        // at once is safe — each fold passes the separating space through untouched.
-        val folds = DictFold.hasNonTrivialFold(lang)
-        text.lineSequence().forEach { line ->
-            val tab = line.indexOf('\t')
-            if (tab > 0) {
-                val key = line.substring(0, tab)
-                line.substring(tab + 1).toLongOrNull()?.let {
-                    map[if (folds) DictFold.foldKey(lang, key) else key] = it
-                }
-            }
-        }
-        map
-    }.getOrDefault(emptyMap())
+        val fold = if (DictFold.hasNonTrivialFold(lang)) { key: String -> DictFold.foldKey(lang, key) } else null
+        NgramIndex.parse(text, fold)
+    }.getOrDefault(NgramIndex.EMPTY)
 
-    /** The word right before the one being composed, folded — the context for the bigram model. */
-    private fun previousWordOf(content: EditorContent, index: LowerIndex): String? {
-        val before = content.textBeforeSelection.removeSuffix(content.composingText).trimEnd()
-        return before.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
-            .let { index.fold(it) }
-            .takeIf { it.isNotEmpty() }
+    /**
+     * The [n] words right before the one being composed, folded, oldest first — the context the
+     * prediction and the corrector condition on.
+     *
+     * The walk stops at anything that is not a word character, so it never crosses a comma, a digit or
+     * a full stop. That is deliberate and it is the same rule the corpus tables were counted under: a
+     * pair the keyboard can never look up is a pair worth no bytes. Whether a *prediction* may be
+     * offered at all is a separate question and stays in [isAtPredictionPoint], so that widening this
+     * walk can never quietly start predicting across the end of a sentence.
+     */
+    private fun previousWordsOf(content: EditorContent, index: LowerIndex, n: Int): List<String> {
+        var before = content.textBeforeSelection.removeSuffix(content.composingText)
+        val out = ArrayList<String>(n)
+        while (out.size < n) {
+            before = before.trimEnd()
+            val word = before.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
+            if (word.isEmpty()) break
+            before = before.dropLast(word.length)
+            val folded = index.fold(word)
+            if (folded.isEmpty()) break
+            out.add(folded)
+        }
+        return out.asReversed()
     }
 
+    /** The word right before the one being composed, folded — the context for the bigram model. */
+    private fun previousWordOf(content: EditorContent, index: LowerIndex): String? =
+        previousWordsOf(content, index, 1).firstOrNull()
+
     /** Context-score function for [correctionsFor]: boosts candidates that commonly follow [prevWord]. */
-    private fun bigramContextScore(prevWord: String?, bigrams: Map<String, Long>): (String) -> Double {
-        if (prevWord == null || bigrams.isEmpty()) return { 0.0 }
-        return { cand -> CONTEXT_WEIGHT * ln(((bigrams["$prevWord $cand"] ?: 0L) + 1L).toDouble()) }
+    private fun bigramContextScore(prevWord: String?, bigrams: NgramIndex): (String) -> Double {
+        if (prevWord == null || bigrams.isEmpty) return { 0.0 }
+        return { cand -> CONTEXT_WEIGHT * ln((bigrams.countOf("$prevWord $cand") + 1L).toDouble()) }
     }
 
     /** Frequency-sorted (descending) word list for [subtype]'s dictionary language, cached per language. */
@@ -531,6 +587,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 rankedFoldKeysByLang.withLock { it.clear() }
                 lowerIndexByLang.withLock { it.clear() }
                 bigramsByLang.withLock { it.clear() }
+                trigramsByLang.withLock { it.clear() }
                 prefixIndexByLang.withLock { it.clear() }
             }
         }
@@ -700,7 +757,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         if (!prefs.suggestion.nextWordPrediction.get()) return emptyList()
         if (!isAtPredictionPoint(content.textBeforeSelection, content.phantomSpacePending)) return emptyList()
         val index = lowerIndexFor(subtype)
-        val prevWord = previousWordOf(content, index) ?: return emptyList()
+        val context = previousWordsOf(content, index, 2)
+        val prevWord = context.lastOrNull() ?: return emptyList()
         val bigrams = bigramsFor(subtype)
         val prefix = "$prevWord "
 
@@ -726,21 +784,25 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         } else {
             emptyList()
         }
-        if (bigrams.isEmpty() && learnedPairs.isEmpty()) return emptyList()
+        // Two words of context before one (issue #334). Measured on held-out text, this is the only
+        // thing that helps where most predictions are asked for: after "the", "to", "of" — 46 % of all
+        // prediction points — a five-times-larger bigram table is worth *exactly nothing*, because
+        // those pairs are all in it already and "the" cannot tell "in the" from "at the". The trigram
+        // answers about half the time; where it does not, the bigram table is unchanged from before.
+        val trigrams = trigramsFor(subtype)
+        val deepPrefix = if (context.size >= 2) context.joinToString(" ") else null
+        val deepPairs = if (deepPrefix != null && !trigrams.isEmpty) {
+            trigrams.topContinuations(deepPrefix, maxCandidateCount)
+        } else {
+            emptyList()
+        }
+        if (bigrams.isEmpty && deepPairs.isEmpty() && learnedPairs.isEmpty()) return emptyList()
 
         // No unigram fallback on purpose: without a matching bigram the strip would fill with generic filler
         // ("the", "and", "of") that carries no information about what the user is writing.
-        val corpusPairs = bigrams.asSequence()
-            .filter { it.key.startsWith(prefix) }
-            .sortedByDescending { it.value }
-            .take(maxCandidateCount)
-            .map { it.key.substring(prefix.length) }
-            .filter { it.isNotBlank() }
+        val corpusPairs = bigrams.topContinuations(prevWord, maxCandidateCount)
 
-        val seen = LinkedHashMap<String, Boolean>() // candidate -> came from the user's own writing
-        for (candidate in learnedPairs) seen.putIfAbsent(candidate, true)
-        for (candidate in corpusPairs) seen.putIfAbsent(candidate, false)
-        return seen.entries.take(maxCandidateCount).map { (candidate, isLearned) ->
+        return mergePredictions(learnedPairs, deepPairs, corpusPairs, maxCandidateCount).map { (candidate, isLearned) ->
             val text = index.canonical[candidate] ?: candidate
             WordSuggestionCandidate(
                 text = text,
@@ -1026,7 +1088,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val prevWord = precedingWords.lastOrNull()
             ?.takeLastWhile { DictFold.isWordChar(it) || it == '\'' }
             ?.let { index.fold(it) }?.takeIf { it.isNotEmpty() }
-        val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+        val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
         val suggestions = correctionsFor(
             trimmed, index, maxSuggestionCount, allowDistance2 = true,
             bigramContextScore(prevWord, bigrams),
@@ -1126,7 +1188,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
             if (variants.isNotEmpty()) {
                 val prevWord = previousWordOf(content, index)
-                val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+                val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
                 val ctx = bigramContextScore(prevWord, bigrams)
                 val ranked = variants.sortedByDescending { (v, f, _) -> ln((f + 1).toDouble()) + ctx(v.lowercase()) }
                 val typedIsWord = index.freq.containsKey(word.lowercase())
@@ -1436,7 +1498,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         if (mayCorrect) {
             val hadCandidatesBefore = out.isNotEmpty() // German restoration and/or prefix completions
             val prevWord = previousWordOf(content, index)
-            val bigrams = if (prevWord != null) bigramsFor(subtype) else emptyMap()
+            val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
             val ctx = bigramContextScore(prevWord, bigrams)
             // Preferred: decode from the actual tap positions (issue #242). Falls back to edit distance
             // whenever no usable tap evidence exists — hardware keyboard, glide, pasted or dictated text,

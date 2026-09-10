@@ -18,8 +18,18 @@ package dev.patrickgold.florisboard.ime.nlp.latin
  *
  * English ships bundled in the APK ([ime/dict/en_bigrams.txt]); every other language is downloaded on
  * demand. Data is generated from the Leipzig Corpora Collection (wortschatz-leipzig.de, CC BY) by
- * `tools/glide-dict/generate_bigrams.py`; paste the script-printed catalog line here after uploading the
- * `<lang>_bigrams.txt` files as assets of the release named below.
+ * `tools/glide-dict/generate_ngrams.py`, which also writes that language's trigram table; paste the
+ * script-printed catalog line here after uploading the files as assets of the release named below.
+ *
+ * ### Two generations of file live in this list
+ *
+ * Entries regenerated for issue #334 hold **150,000** pairs counted from the corpus sentences; the rest
+ * still hold the **60,000** that `generate_bigrams.py` took from Leipzig's pre-computed `co_n.txt`. The
+ * difference is not cosmetic — measured, the larger table nearly triples top-3 prediction after a word
+ * the small one has no continuations for (6.8 % → 19.2 % in English) — but a language keeps working
+ * either way, so the remaining ones can be pulled across a pipeline run at a time. A regenerated entry
+ * is recognisable by its size; the size is also what makes devices re-fetch it (see
+ * [GlideDictionaryManager.bigramInstalled]).
  */
 data class BigramDict(
     val lang: String,
@@ -41,7 +51,7 @@ object BigramCatalog {
         BigramDict("ca", "$REL/ca_bigrams.txt", 938858, "82b4af96057cee467a164ffa73680fc9cb25ee0d9f4cea1a8eb06b1ac56ff164"),
         BigramDict("cs", "$REL/cs_bigrams.txt", 960186, "ed2a6551735c0dadb60ad78934784a5e16188af0c31835ea484b5d4eb7ac3899"),
         BigramDict("da", "$REL/da_bigrams.txt", 922016, "eb07fb6ac80c53e09485b6dbae210dc7917fee61bbedd6de096d553a78e2672a"),
-        BigramDict("de", "$REL/de_bigrams.txt", 989807, "52d906c15bab021d386e6bf2537a2090c321959f16f814de3b64357dffb33c67"),
+        BigramDict("de", "$REL/de_bigrams.txt", 2479539, "f86806430c7293d2b7d5fefadeec920d865f74c725b7087c44f6bff01ba22ae3"),
         BigramDict("el", "$REL/el_bigrams.txt", 1619772, "ba6e8834112083c9257ab1dc09a27270f7b7868f0e9df6192faf20480f68c56d"),
         BigramDict("eo", "$REL/eo_bigrams.txt", 955857, "1096a6eccc275223a14e4dd5fa288fa13a5b986fa5040815ad919eae2f46ddb9"),
         BigramDict("es", "$REL/es_bigrams.txt", 949805, "b7cd13759f0dc7249f7f928ce8aff15077b4b112726ff3a0c5bfa182f045d7f4"),
