@@ -177,7 +177,7 @@ def count_ngrams(path: str, keep_bi: int, keep_tri: int, want_uni: bool = False)
     return uni, bi_top, tri_top, n
 
 
-def write_table(counts: dict, top: int, path: str) -> tuple:
+def write_table(counts: dict, top: int, path: str, min_count: int = 3) -> tuple:
     """Write the top [top] n-grams as `<key>\\t<count>`, **sorted by key**. Returns `(bytes, entries,
     sha256)`.
 
@@ -186,8 +186,15 @@ def write_table(counts: dict, top: int, path: str) -> tuple:
     by a linear scan, while the count-descending order the old bigram files used would make it sort a
     quarter of a million keys on first use of every language. It costs the ability to `head` the file
     and see the commonest phrases; `sort -t$'\\t' -k2 -rn` gives that back.
+
+    [min_count] drops anything seen fewer times than that. It changes nothing for a 1M-sentence corpus
+    — English cuts at 11 occurrences and German at 7 long before the floor is reached — and exists for
+    the languages Leipzig only has a small corpus for. Nynorsk has 300,000 sentences, where filling a
+    100,000-entry table means writing down phrases seen twice; a table of coincidences is worse than a
+    short table, because every row of it is a suggestion offered to somebody.
     """
     import hashlib
+    counts = {k: c for k, c in counts.items() if c >= min_count}
     ranked = heapq.nlargest(top, counts.items(), key=lambda kv: kv[1])
     ranked.sort(key=lambda kv: kv[0])
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)

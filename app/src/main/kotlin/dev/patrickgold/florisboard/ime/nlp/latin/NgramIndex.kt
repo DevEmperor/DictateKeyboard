@@ -20,11 +20,13 @@ package dev.patrickgold.florisboard.ime.nlp.latin
  * 60,000 entries. Two things stop being fine when the tables grow to the sizes the measurement chose
  * (150k bigrams + 100k trigrams per language):
  *
- * * **Memory.** Every entry costs a `String` object, a boxed `Long` and a hash node — on the order of
- *   150 bytes for a key of twenty characters, so a quarter of a million entries is tens of megabytes
- *   of heap inside an input method. Here the keys stay in the bytes they were read as, and the only
- *   per-entry cost is three ints: about 7 MB for both tables, roughly what the old 60k bigram map
- *   alone occupied, for five times the data.
+ * * **Memory.** Every entry costs a `String` object, a boxed `Long` and a hash node. Here the keys
+ *   stay in the bytes they were read as, and the only per-entry cost is three ints. Measured by
+ *   [NgramMemoryTest] on the shipped English table: the 150k bigrams cost **5.25 MB** as an index
+ *   against **15.48 MB** as a map — and against **6.39 MB** for the 60k map that used to ship, so
+ *   two and a half times the data now costs less than the small table did. Both tables together come
+ *   to 8.54 MB, which is 34 % more than that old single table rather than the same; the saving is
+ *   real but it is not free.
  * * **Prefix lookup.** Next-word prediction needs "every continuation of these words", and against a
  *   map that is a scan of all 60,000 keys on every prediction point. Sorted, it is a binary search
  *   for the range and a walk of the handful of entries inside it.
