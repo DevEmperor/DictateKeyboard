@@ -72,6 +72,7 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.nlp.LanguageDataDownload
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.han.PinyinPackManager
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
@@ -231,6 +232,11 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(id == null) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var errorDialogStrId by rememberSaveable { mutableStateOf<Int?>(null) }
+    // The subtype waiting behind the download question, and what that download costs. Both are needed
+    // at once: the dialog names the size, and confirming has to add exactly the subtype it was asked
+    // about rather than re-deriving it from fields that may have been edited behind the dialog.
+    var pendingSubtype: Subtype? by rememberSaveable(saver = SubtypeSaver) { mutableStateOf(null) }
+    var pendingBytes by rememberSaveable { mutableStateOf(0L) }
 
     val selectLocaleScreenResult = navController.currentBackStackEntry
         ?.savedStateHandle
@@ -290,6 +296,16 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             ButtonBarButton(text = stringRes(R.string.action__save)) {
                 subtypeEditor.toSubtype().onSuccess { subtype ->
                     if (id == null) {
+                        // Adding a language fetches its word list and context tables, which run from
+                        // four to fourteen megabytes depending on the script (issue #334). The app
+                        // cannot see whether the connection is metered — that needs a permission it
+                        // does not ask for — so it says the number and waits instead of deciding.
+                        val bytes = LanguageDataDownload.pendingBytes(context, subtype.primaryLocale)
+                        if (bytes > 0) {
+                            pendingSubtype = subtype
+                            pendingBytes = bytes
+                            return@ButtonBarButton
+                        }
                         if (!subtypeManager.addSubtype(subtype)) {
                             errorDialogStrId = R.string.settings__localization__subtype_error_already_exists
                             return@ButtonBarButton
@@ -680,6 +696,36 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 },
             ) {
                 Text(text = stringRes(strId))
+            }
+        }
+
+        // What the language costs, before it starts costing it (issue #334). Dismissing leaves the
+        // editor open with everything still filled in, so "not now" is not "start over".
+        pendingSubtype?.let { subtype ->
+            JetPrefAlertDialog(
+                scrollModifier = florisDialogScroll(),
+                title = stringRes(R.string.settings__localization__subtype_download_title),
+                confirmLabel = stringRes(R.string.action__add),
+                dismissLabel = stringRes(R.string.action__cancel),
+                onConfirm = {
+                    pendingSubtype = null
+                    if (!subtypeManager.addSubtype(subtype)) {
+                        errorDialogStrId = R.string.settings__localization__subtype_error_already_exists
+                    } else {
+                        navController.popBackStack()
+                    }
+                },
+                onDismiss = {
+                    pendingSubtype = null
+                },
+            ) {
+                Text(
+                    text = stringRes(
+                        R.string.settings__localization__subtype_download_message,
+                        "language_name" to subtype.primaryLocale.displayName(),
+                        "size" to LanguageDataDownload.formatMegabytes(pendingBytes),
+                    ),
+                )
             }
         }
     }

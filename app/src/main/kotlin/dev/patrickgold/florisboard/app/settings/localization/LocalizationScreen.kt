@@ -44,7 +44,6 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
-import dev.patrickgold.florisboard.ime.nlp.DownloadPolicy
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.BigramCatalog
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryManager
@@ -124,12 +123,6 @@ fun LocalizationScreen() = FlorisScreen {
                 navController.navigate(Routes.Settings.LanguagePackManager(LanguagePackManagerScreenAction.MANAGE))
             },
         )
-        SwitchPreference(
-            prefs.localization.downloadLanguageDataOnWifiOnly,
-            modifier = Modifier.settingsSearchAnchor("settings__localization__download_language_data_on_wifi_only"),
-            title = stringRes(R.string.settings__localization__download_language_data_on_wifi_only__label),
-            summary = stringRes(R.string.settings__localization__download_language_data_on_wifi_only__summary),
-        )
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
             val subtypes by subtypeManager.subtypesFlow.collectAsState()
             if (subtypes.isEmpty()) {
@@ -165,17 +158,12 @@ fun LocalizationScreen() = FlorisScreen {
                     // finds out that the feature is absent for their language rather than broken.
                     val glideLang = LatinLanguageProvider.normalizeLang(subtype.primaryLocale.language)
                     @Suppress("UNUSED_EXPRESSION") glideInstalledVersion // re-read installed state on change
-                    // "⤓" promises a download that happens on next use. While the connection is metered
-                    // and the Wi-Fi rule is on, that promise is false — the fetch will not start — so
-                    // those rows say "⏸" instead. A mark that means "soon" where nothing is coming is
-                    // the same failure as a switch that looks off while it is still running (#297).
-                    val heldBack = DownloadPolicy.isWaitingForUnmeteredConnection(context)
-                    val pending = if (heldBack) "⏸" else "⤓"
+
                     val glideIcon = when {
                         glideProgress[glideLang] != null -> "⬇${glideProgress[glideLang]}%"
                         glideLang in GlideDictionaryCatalog.BUNDLED ||
                             GlideDictionaryManager.isInstalled(context, glideLang) -> "✓"
-                        GlideDictionaryCatalog.forLang(glideLang) != null -> pending
+                        GlideDictionaryCatalog.forLang(glideLang) != null -> "⤓"
                         else -> "✕"
                     }
                     // "Context" covers both orders since issue #334, and only says ✓ when everything
@@ -188,7 +176,7 @@ fun LocalizationScreen() = FlorisScreen {
                         !GlideDictionaryManager.trigramInstalled(context, glideLang)
                     val contextIcon = when {
                         bigramReady && !trigramPending -> "✓"
-                        bigramReady || BigramCatalog.forLang(glideLang) != null -> pending
+                        bigramReady || BigramCatalog.forLang(glideLang) != null -> "⤓"
                         else -> "✕"
                     }
                     val summary = baseSummary + "\n" +

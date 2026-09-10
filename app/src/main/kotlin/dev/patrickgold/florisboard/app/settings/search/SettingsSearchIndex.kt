@@ -284,7 +284,6 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.settings__localization__display_language_names_in__label, R.string.settings__localization__title, Routes.Settings.Localization, anchor = "settings__localization__display_language_names_in__label"),
         SettingsSearchEntry(R.string.settings__localization__display_keyboard_labels_in_subtype_language, R.string.settings__localization__title, Routes.Settings.Localization, anchor = "settings__localization__display_keyboard_labels_in_subtype_language"),
         SettingsSearchEntry(R.string.settings__localization__language_pack_title, R.string.settings__localization__title, Routes.Settings.Localization, anchor = "settings__localization__language_pack_title"),
-        SettingsSearchEntry(R.string.settings__localization__download_language_data_on_wifi_only__label, R.string.settings__localization__title, Routes.Settings.Localization, anchor = "settings__localization__download_language_data_on_wifi_only"),
         SettingsSearchEntry(R.string.settings__localization__group_subtypes__label, R.string.settings__localization__title, Routes.Settings.Localization),
         SettingsSearchEntry(R.string.prefs__media__emoji_preferred_skin_tone, R.string.settings__media__title, Routes.Settings.Media, anchor = "prefs__media__emoji_preferred_skin_tone"),
         // The three group headings of the media screen. Hand-added: the generator only indexes a

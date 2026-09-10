@@ -24,7 +24,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
 import java.security.MessageDigest
-import dev.patrickgold.florisboard.ime.nlp.DownloadPolicy
 import java.util.Collections
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.coroutineContext
@@ -81,10 +80,6 @@ object GlideDictionaryManager {
         // language it has not reached yet simply predicts the way it did before.
         val needTrigram = trigramSpec != null && !trigramInstalled(context, code)
         if (!needDict && !needBigram && !needTrigram) return
-        // Nobody asked for this download and nobody is watching it, so it waits for a connection that
-        // costs nothing (issue #334). Checked here rather than inside the loop below: the point is not
-        // to start, and a partial fetch abandoned mid-file would be the one outcome worse than waiting.
-        if (!DownloadPolicy.allowsAutomaticDownload(context)) return
         if (!active.add(code)) return
         val appContext = context.applicationContext
         _progress.value = _progress.value + (code to 0)

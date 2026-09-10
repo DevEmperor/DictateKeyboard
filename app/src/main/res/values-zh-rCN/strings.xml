@@ -146,8 +146,8 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">添加键盘子类型</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">管理已安装的语言包</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">添加输入法的扩展：中文拼音以及形码输入法。</string>
-    <string name="settings__localization__download_language_data_on_wifi_only__label">仅在 Wi-Fi 下下载语言数据</string>
-    <string name="settings__localization__download_language_data_on_wifi_only__summary">词库和上下文数据会自动下载，每种语言可能有数兆字节。关闭后也会使用移动数据下载。</string>
+    <string name="settings__localization__subtype_download_title">语言数据</string>
+    <string name="settings__localization__subtype_download_message">添加 {language_name} 将下载 {size} 的词库和上下文数据。输入建议和自动更正需要它们。下载会立即开始，可能使用移动数据。</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">编辑键盘子类型</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要语言</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">弹出键映射表</string>

@@ -28,7 +28,6 @@ import okhttp3.Request
 import java.io.File
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
-import dev.patrickgold.florisboard.ime.nlp.DownloadPolicy
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.coroutineContext
 
@@ -63,7 +62,8 @@ object PinyinPackManager {
     private const val RELEASE =
         "https://github.com/DevEmperor/DictateKeyboard/releases/download/language-packs-v1"
     private const val URL = "$RELEASE/$FILE_NAME"
-    private const val SIZE_BYTES = 3_030_654L
+    /** Exposed so the add-a-language dialog can name what it costs (issue #334). */
+    const val SIZE_BYTES = 3_030_654L
     private const val SHA256 = "861309d3c2f5461808b3f1dcb28eeb284e9a67c27b2130d03233d927b0eb0159"
 
     /**
@@ -110,9 +110,6 @@ object PinyinPackManager {
      */
     fun ensureDownloaded(context: Context, locale: FlorisLocale) {
         if (!handles(locale) || isInstalled(context)) return
-        // Same rule as the word lists: a three-megabyte fetch nobody asked for waits for a connection
-        // that costs nothing, and tries again on the next activation (issue #334).
-        if (!DownloadPolicy.allowsAutomaticDownload(context)) return
         if (!downloading.compareAndSet(false, true)) return
         val appContext = context.applicationContext
         _progress.value = 0
