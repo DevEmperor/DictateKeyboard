@@ -36,6 +36,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -48,6 +49,48 @@ import org.florisboard.lib.android.setOrClearPrimaryClip
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.tryOrNull
+
+/**
+ * What a callback from the system clipboard actually reports (issue #352).
+ *
+ * The system can deliver more than one callback for a single copy, and by content alone that is
+ * indistinguishable from the user copying the same text a second time — which is why both used to be
+ * dropped. Dropping the second one costs the suggestion chip: the clip keeps the timestamp of the first
+ * copy, so a chip that was already used or dismissed stays retired and its timeout keeps running, for a
+ * clip the user has just re-copied precisely because nothing showed up the first time.
+ *
+ * The discriminator is the stamp the system writes on every `setPrimaryClip`
+ * ([android.content.ClipDescription.getTimestamp]): one copy event carries one stamp, however many
+ * callbacks it produces. Where no stamp is available (0 on both sides) the old content comparison stands.
+ */
+internal enum class SystemClipEvent {
+    /** The same copy event, reported again. Nothing to do. */
+    DUPLICATE_CALLBACK,
+
+    /** The same content, copied again — the clip is unchanged, only its recency is not. */
+    REPEATED_COPY,
+
+    /** Something else is on the clipboard now, or it was cleared. */
+    NEW_CLIP,
+}
+
+/** The parts of a system clip that decide which [SystemClipEvent] a callback is. */
+internal data class SystemClipFingerprint(
+    val text: String?,
+    val uri: String?,
+    val timestamp: Long,
+)
+
+/** @see SystemClipEvent */
+internal fun classifySystemClipEvent(
+    last: SystemClipFingerprint?,
+    new: SystemClipFingerprint?,
+): SystemClipEvent = when {
+    last == null || new == null -> SystemClipEvent.NEW_CLIP
+    last.text != new.text || last.uri != new.uri -> SystemClipEvent.NEW_CLIP
+    last.timestamp == new.timestamp -> SystemClipEvent.DUPLICATE_CALLBACK
+    else -> SystemClipEvent.REPEATED_COPY
+}
 
 /**
  * [ClipboardManager] manages the clipboard and clipboard history.
@@ -118,6 +161,7 @@ class ClipboardManager(
 
     init {
         systemClipboardManager.addPrimaryClipChangedListener(this)
+        seedPrimaryClipFromSystem()
         cleanUpJob = ioScope.launch {
             while (isActive) {
                 delay(INTERVAL)
@@ -172,18 +216,24 @@ class ClipboardManager(
         if (!prefs.clipboard.useInternalClipboard.get() || syncBehavior != ClipboardSyncBehavior.NO_EVENTS) {
             val systemPrimaryClip = systemClipboardManager.primaryClip
             ioScope.launch {
-                val isDuplicate: Boolean
+                val event: SystemClipEvent
                 primaryClipLastFromCallbackGuard.withLock {
-                    val a = primaryClipLastFromCallback?.getItemAt(0)
-                    val b = systemPrimaryClip?.getItemAt(0)
-                    isDuplicate = when {
-                        a === b -> true
-                        a == null || b == null -> false
-                        else -> a.text == b.text && a.uri == b.uri
-                    }
+                    event = classifySystemClipEvent(
+                        last = primaryClipLastFromCallback.fingerprint(),
+                        new = systemPrimaryClip.fingerprint(),
+                    )
                     primaryClipLastFromCallback = systemPrimaryClip
                 }
-                if (isDuplicate) return@launch
+                when (event) {
+                    SystemClipEvent.DUPLICATE_CALLBACK -> return@launch
+                    // A repeat only needs a new timestamp. If it turns out we are not holding that clip
+                    // at all — cleared away, or copied while we were not listening — it is new work after
+                    // all and takes the path below.
+                    SystemClipEvent.REPEATED_COPY -> if (refreshPrimaryClipRecency(systemPrimaryClip)) {
+                        return@launch
+                    }
+                    SystemClipEvent.NEW_CLIP -> Unit
+                }
 
                 val internalPrimaryClip = primaryClip
 
@@ -211,6 +261,73 @@ class ClipboardManager(
                     primaryClip = item
                     insertOrMoveBeginning(item)
                 }
+            }
+        }
+    }
+
+    /** The parts of a [ClipData] that [classifySystemClipEvent] compares. */
+    private fun ClipData?.fingerprint(): SystemClipFingerprint? {
+        val data = this ?: return null
+        val item = tryOrNull { data.getItemAt(0) } ?: return null
+        return SystemClipFingerprint(
+            // Compared as strings on purpose: the same text can come back as a different CharSequence
+            // implementation, and two of those are unequal however identical they read.
+            text = item.text?.toString(),
+            uri = item.uri?.toString(),
+            timestamp = tryOrNull { data.description?.timestamp } ?: 0L,
+        )
+    }
+
+    /**
+     * Restamps the current primary clip after the same content was copied a second time (issue #352).
+     *
+     * Only the recency changes. The item is the same one, and so is the history row it may already have —
+     * moving that row back to the top would be a change to the history nobody asked for, while the chip's
+     * idea of "just copied" is the part that was reported broken.
+     *
+     * Returns false when there is no such clip to restamp, which makes the repeat new work instead.
+     */
+    private fun refreshPrimaryClipRecency(systemPrimaryClip: ClipData?): Boolean {
+        val current = primaryClip ?: return false
+        if (!(current isEqualTo systemPrimaryClip)) return false
+        primaryClip = current.copy(creationTimestampMs = System.currentTimeMillis())
+        return true
+    }
+
+    /**
+     * Adopts whatever is already on the system clipboard when this manager comes up (issue #352).
+     *
+     * The listener is the only source of clips there is, and it can only report changes that happen while
+     * this process is alive. An IME process gets killed freely, so a clip copied while it was gone stayed
+     * invisible until the next copy: the paste key acted as if the clipboard were empty, and no suggestion
+     * appeared for something demonstrably on the clipboard.
+     *
+     * Its age comes from the system's own stamp rather than from now, so a clip copied an hour ago cannot
+     * present itself as fresh and put a chip — possibly of something private — on the strip merely because
+     * the keyboard was opened. Where there is no stamp the clip counts as old.
+     *
+     * Text only: the media path clones the uri into our own provider, and that is a file written for a
+     * clip the user has not asked us to do anything with. The next copy event picks media up.
+     */
+    private fun seedPrimaryClipFromSystem() {
+        ioScope.launch {
+            // The preference store loads asynchronously while this manager is being constructed, and
+            // seeding against a default the user has overridden would read a clipboard they asked us to
+            // leave alone.
+            appContext.preferenceStoreLoaded.first { it }
+            if (!prefs.clipboard.syncToFloris.get().shouldSyncSet) return@launch
+            val systemPrimaryClip = tryOrNull { systemClipboardManager.primaryClip } ?: return@launch
+            val item = tryOrNull {
+                ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = false)
+            } ?: return@launch
+            if (item.type != ItemType.TEXT || item.text.isNullOrBlank()) return@launch
+            val timestamp = tryOrNull { systemPrimaryClip.description?.timestamp } ?: 0L
+            primaryClipLastFromCallbackGuard.withLock {
+                // A copy that arrived while we were reading is the newer truth: this fills a gap, it never
+                // overwrites.
+                if (primaryClip != null || primaryClipLastFromCallback != null) return@launch
+                primaryClipLastFromCallback = systemPrimaryClip
+                primaryClip = item.copy(creationTimestampMs = timestamp)
             }
         }
     }
