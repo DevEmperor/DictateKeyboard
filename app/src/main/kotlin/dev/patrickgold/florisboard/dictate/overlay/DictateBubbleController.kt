@@ -544,7 +544,9 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
         card.addView(
             menuItem(context.getString(R.string.quick_action__dictate_live_prompt), bold = true) {
                 hidePromptMenu()
-                DictateController.startLivePrompt(context, DictateController.OutputTarget.OVERLAY)
+                startingDictation {
+                    DictateController.startLivePrompt(context, DictateController.OutputTarget.OVERLAY)
+                }
             },
             wrapParams,
         )
@@ -1079,20 +1081,29 @@ class DictateBubbleController(private val service: DictateAccessibilityService) 
             DictateController.sendRetainedAudio(context)
             return
         }
-        // Promote the service to a microphone foreground service *before* recording starts, so the mic
-        // capture is allowed while the app is in the background (Android 14+). Demoted again when the
-        // dictation finishes (see manageForeground).
-        //
-        // Asked as "would this tap start a recording", not as "is the state exactly idle": every resting
-        // state the machine can hold — a nudge, an interrupted recording, a failure with nothing to
-        // resend — starts one just the same, and getting that wrong means recording without the
-        // promotion, which is where Android 14 refuses the microphone in the background (#339).
-        val starting = DictateController.canStartRecording()
-        if (starting) {
+        startingDictation { DictateController.onMicClick(context, DictateController.OutputTarget.OVERLAY) }
+    }
+
+    /**
+     * Runs anything that may start a bubble dictation, with the microphone promoted to a foreground
+     * service first — Android 14 refuses the microphone to a background service, so the promotion has to
+     * be in place *before* capture starts. Demoted again when the dictation finishes, see
+     * [manageForeground].
+     *
+     * Asked as "would this start a recording", not as "is the state exactly idle": every resting state the
+     * machine can hold — a nudge, an interrupted recording, a failure with nothing to resend — starts one
+     * just the same, and getting that wrong means recording without the promotion (#339).
+     *
+     * Every entry point that records goes through here. The prompt menu's Live Prompt (#230) did not, and
+     * so recorded a spoken instruction with no promotion at all — the tap was the only path that had ever
+     * been given one.
+     */
+    private inline fun startingDictation(start: () -> Unit) {
+        if (DictateController.canStartRecording()) {
             service.startMicForeground()
             weStartedDictation = true
         }
-        DictateController.onMicClick(context, DictateController.OutputTarget.OVERLAY)
+        start()
     }
 
     // --- State → visuals -------------------------------------------------------------------------
