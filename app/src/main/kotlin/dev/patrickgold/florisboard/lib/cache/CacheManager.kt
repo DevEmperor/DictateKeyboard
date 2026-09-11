@@ -219,6 +219,14 @@ class CacheManager(context: Context) {
         lateinit var metadata: Backup.Metadata
         var restoreWarningId: Int? = null
         var restoreErrorId: Int? = null
+        /**
+         * Whether the selected archive was written without the provider credentials (issue #367).
+         *
+         * Its own flag rather than a third [restoreWarningId] value, because it is not a warning and not
+         * mutually exclusive with one: an archive can be both from another version and credential-free, and
+         * both are worth saying.
+         */
+        var restoreCredentialsMissing: Boolean = false
 
         override fun mkdirs() {
             super.mkdirs()

@@ -640,6 +640,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Más alkalmazás a megosztás menün keresztül</string>
     <string name="backup_and_restore__back_up__files">Válassza ki, hogy miről készít biztonsági mentést</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Beállítások</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API-kulcsok és jelszavak</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Ez az archívum tisztán olvasható formában tartalmazza az API-kulcsaidat és jelszavaidat, valamint a Dictate Cloud egyenlegedet — aki megkapja, a te költségedre diktálhat. Ne add tovább, és ha már megtetted, változtasd meg a kulcsot a szolgáltatónál. Minden más, ami alább be van jelölve, vele együtt utazik, beleértve az átírási előzményeket és a vágólapot.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Ez az archívum nem tartalmaz API-kulcsot, jelszót és Dictate Cloud egyenleget, így továbbadható, de a tiédet sem állítja vissza. Minden más, ami alább be van jelölve, továbbra is benne van, az átírási előzmények és a vágólap is.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Ez az archívum nem tartalmaz API-kulcsot és jelszót, de tartalmaz mindent, ami alább be van jelölve: az átírási előzményeket a megtartott felvételekkel, a vágólapot, a promptjaidat és azokat a szavakat, amelyeket a billentyűzet tőled tanult.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Billentyűzetkiterjesztések</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Helyesírási kiterjesztések / szótárak</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Témakiterjesztések</string>
@@ -655,6 +659,7 @@
     <string name="backup_and_restore__restore__metadata">Kiválasztott biztonsági mentési archívum</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Ez az archívum egy korábbi verzióból került mentésre, amely általában támogatott. Azonban felmerülhetnek problémák, vagy egyes beállítások nem feltétlenül töltődnek vissza az eltérő funkciók miatt.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Az archívum egy harmadik féltől származó alkalmazással készült, amely általában nem támogatott. Adatvesztés történhet, ezért csak a saját felelősségére állítsa helyre.</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Ez a biztonsági mentés nem tartalmaz API-kulcsot és jelszót. Minden más visszaáll. Az összefésülés megtartja az eszközön már meglévő kulcsokat; a felülírás törli őket, a Dictate Cloud helyreállítási kódot is, amelyet nem lehet újra beírni.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Ez az archívum nem megfelelő metaadatokat tartalmaz. Megsérült, vagy hibásan lett módosítva. Az archívumból való helyreállítás nem lehetséges, válasszon egy másikat.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Ez az archívum nem tartalmaz helyreállítható adatokat, válasszon másikat.</string>
     <string name="backup_and_restore__restore__mode">Helyreállítási mód</string>

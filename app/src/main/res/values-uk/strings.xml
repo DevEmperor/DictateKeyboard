@@ -521,6 +521,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Сторонній застосунок через меню «Поділитися»</string>
     <string name="backup_and_restore__back_up__files">Виберіть, що зберегти в резервну копію</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Параметри</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Ключі API та паролі</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Цей архів містить ваші ключі API та паролі у відкритому вигляді, а також баланс Dictate Cloud — кожен, хто його отримає, зможе диктувати за ваш рахунок. Не передавайте його, а якщо вже передали, змініть ключ у свого постачальника. Усе інше, що позначено нижче, вирушає разом із ним, включно з історією транскрипцій і буфером обміну.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">У цьому архіві немає ні ключів API, ні паролів, ні балансу Dictate Cloud, тож його можна передати, але й ваші він не відновить. Усе інше, що позначено нижче, у ньому залишається, включно з історією транскрипцій і буфером обміну.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">У цьому архіві немає ключів API та паролів, але є все, що позначено нижче: історія транскрипцій разом зі збереженими записами, буфер обміну, ваші промпти та слова, які клавіатура у вас вивчила.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Розширення клавіатури</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Орфографічні розширення / словники</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Розширення тем</string>
@@ -536,6 +540,7 @@
     <string name="backup_and_restore__restore__metadata">Обраний архів резервної копії</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Цей архів резервної копії було створено у версії, відмінній від поточної, яка зазвичай підтримується. Однак зауважте, що можуть виникнути незначні проблеми або деякі налаштування не будуть перенесені належним чином через відмінності у функціоналі.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Цей архів резервної копії було створено в сторонньому застосунку, який зазвичай не підтримується. Можливі втрати даних, відновлюйте на свій страх і ризик!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">У цьому архіві резервної копії немає ключів API та паролів. Усе інше відновлюється. Об’єднання зберігає ключі, які вже є на цьому пристрої; перезапис їх видаляє — разом із кодом відновлення Dictate Cloud, який не можна ввести знову.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Цей архів резервної копії містить невірні метадані. Він був пошкоджений або погано модифікований. Відновлення з цього архіву неможливе, виберіть інший.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Цей архів не містить файлів для відновлення, виберіть інший.</string>
     <string name="backup_and_restore__restore__mode">Режим відновлення</string>

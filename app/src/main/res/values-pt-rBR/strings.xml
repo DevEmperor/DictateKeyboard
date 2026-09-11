@@ -526,6 +526,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Aplicativo de terceiros via menu de compartilhamento</string>
     <string name="backup_and_restore__back_up__files">Selecionar o que fazer backup</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferências</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Chaves de API e senhas</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Este arquivo contém suas chaves de API e senhas em texto simples, além do seu saldo do Dictate Cloud: quem o receber pode ditar à sua custa. Não o compartilhe e, se já fez isso, troque a chave no seu provedor. Todo o resto que estiver marcado abaixo vai junto, incluindo seu histórico de transcrição e sua área de transferência.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Este arquivo não contém chaves de API, senhas nem saldo do Dictate Cloud, então pode ser compartilhado, mas também não vai restaurar as suas. Todo o resto que estiver marcado abaixo continua incluído, inclusive seu histórico de transcrição e sua área de transferência.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Este arquivo não contém chaves de API nem senhas, mas contém tudo o que estiver marcado abaixo: seu histórico de transcrição com as gravações guardadas, sua área de transferência, seus prompts e as palavras que o teclado aprendeu com você.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensões do teclado</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensões de ortografia / dicionários</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensões de tema</string>
@@ -541,6 +545,7 @@
     <string name="backup_and_restore__restore__metadata">Arquivo de backup selecionado</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Este arquivo de backup foi gerado em outra versão que não a atual, que geralmente é suportada. Esteja ciente de que pequenos problemas podem ocorrer ou algumas preferências podem não ser transferidas corretamente devido a diferenças de recursos.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Esse arquivo de backup foi gerado em um aplicativo de terceiros, que geralmente não é compatível. Podem ocorrer perdas de dados, restaure por sua conta e risco!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Este arquivo de backup não contém chaves de API nem senhas. Todo o resto é restaurado. A mesclagem mantém as chaves que já estão neste dispositivo; a substituição remove-as, inclusive um código de recuperação do Dictate Cloud, que não pode ser digitado novamente.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Este arquivo de backup contém metadados inválidos. Ou ele foi corrompido ou mal modificado. Não é possível restaurar a partir deste arquivo, selecione outro.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Este arquivo de backup não contém nenhum arquivo para restaurar, selecione outro.</string>
     <string name="backup_and_restore__restore__mode">Modo de restauração</string>

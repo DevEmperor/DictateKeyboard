@@ -52,6 +52,8 @@ import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
+import dev.patrickgold.florisboard.dictate.provider.hasNoSecrets
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -60,6 +62,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.DataStoreReader
 import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -98,11 +101,26 @@ object Restore {
     const val BACKUP_ARCHIVE_FILE_NAME = "backup.zip"
 }
 
+/**
+ * The preference import with the device's own credentials filled into whatever gaps the archive leaves
+ * (issue #367).
+ *
+ * JetPref hands the whole document over in one `read`, so one pass is the whole job — and doing it here
+ * rather than by rewriting the unpacked file leaves the archive in the cache exactly as it arrived.
+ */
+private class SecretPreservingReader(
+    private val delegate: DataStoreReader,
+    private val local: ProviderAccounts,
+) : DataStoreReader {
+    override suspend fun read() = BackupRedaction.restoreSecrets(delegate.read(), local)
+}
+
 @Composable
 fun RestoreScreen() = FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
@@ -147,6 +165,16 @@ fun RestoreScreen() = FlorisScreen {
                     }
                     else -> null
                 }
+                // Say up front that no keys will come back from this one (issue #367). Found by looking at
+                // the keyring the archive carries rather than at a flag, so it is equally true of an archive
+                // written by any version — and of one whose owner simply never set a key up.
+                workspace.restoreCredentialsMissing = runCatching {
+                    val prefsFile = workspace.outputDir
+                        .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
+                        .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+                    prefsFile.exists() &&
+                        BackupRedaction.accountsFrom(prefsFile.readText())?.hasNoSecrets == true
+                }.getOrDefault(false)
                 restoreWorkspace = workspace
             }.onFailure { error ->
                 context.showLongToastSync(
@@ -166,7 +194,15 @@ fun RestoreScreen() = FlorisScreen {
                 .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
             if (file.exists()) {
                 val fileBasedStorage = FileBasedStorage(file.path)
-                FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
+                // The keyring is a single preference, so merging an archive whose keys were left out would
+                // replace real keys with nothing (issue #367). Fill its gaps from what is already here on
+                // the way in. Erase is left alone: wiping is what that mode was chosen for.
+                val reader = if (importStrategy == ImportStrategy.Merge) {
+                    SecretPreservingReader(fileBasedStorage, prefs.dictate.providerAccounts.get())
+                } else {
+                    fileBasedStorage
+                }
+                FlorisPreferenceStore.import(importStrategy, reader).getOrThrow()
             }
         }
         if (restoreFilesSelector.dictatePrompts) {
@@ -437,11 +473,22 @@ fun RestoreScreen() = FlorisScreen {
                         )
                     }
                 }
+                // A plain statement of fact, not a warning: an archive can legitimately carry no keys, and
+                // the point is only that the user learns it here rather than after the device change.
+                if (workspace.restoreErrorId == null && workspace.restoreCredentialsMissing) {
+                    Text(
+                        modifier = Modifier.padding(FlorisCardDefaults.ContentPadding),
+                        text = stringRes(R.string.backup_and_restore__restore__metadata_note_no_credentials),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontStyle = FontStyle.Italic,
+                    )
+                }
             }
             if (workspace.restoreErrorId == null) {
                 BackupFilesSelector(
                     filesSelector = restoreFilesSelector,
                     title = stringRes(R.string.backup_and_restore__restore__files),
+                    showCredentials = false,
                 )
             }
         }

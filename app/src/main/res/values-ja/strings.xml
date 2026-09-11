@@ -603,6 +603,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">共有メニュー経由のサードパーティアプリ</string>
     <string name="backup_and_restore__back_up__files">バックアップするものを選択</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">設定</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API キーとパスワード</string>
+    <string name="backup_and_restore__back_up__credentials_warning">このアーカイブには API キーとパスワードが平文で入っており、Dictate Cloud の残高も含まれます。受け取った人は誰でもあなたの負担で音声入力できます。他人に渡さないでください。すでに渡してしまった場合は、プロバイダー側でキーを変更してください。下でチェックされているものはすべて一緒に入ります。文字起こしの履歴やクリップボードも含まれます。</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">このアーカイブには API キー、パスワード、Dictate Cloud の残高は含まれていないので、他人に渡せます。ただし、あなたのキーも復元されません。下でチェックされているものはそのまま入っており、文字起こしの履歴やクリップボードも含まれます。</string>
+    <string name="backup_and_restore__back_up__personal_content_note">このアーカイブに API キーとパスワードは含まれていませんが、下でチェックされているものはすべて入ります。保存された録音を含む文字起こしの履歴、クリップボード、プロンプト、キーボードがあなたから学習した単語です。</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">キーボード拡張機能</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">スペル拡張機能 / 辞書</string>
     <string name="backup_and_restore__back_up__files_ime_theme">テーマ拡張機能</string>
@@ -618,6 +622,7 @@
     <string name="backup_and_restore__restore__metadata">選択されたバックアップアーカイブ</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">このバックアップアーカイブは、通常サポートされている現在のバージョンとは異なるバージョンで生成されました。機能の違いにより、軽微な問題が発生したり、一部の設定が正しく転送されない場合があることに注意してください。</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">このバックアップアーカイブはサードパーティ製アプリで生成されたものであり、通常はサポートされていません。データ損失が発生する可能性があります。自己責任で復元してください！</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">このバックアップに API キーとパスワードは含まれていません。それ以外はすべて復元されます。結合ではこの端末にあるキーがそのまま残り、上書きでは削除されます。入力し直せない Dictate Cloud の復旧コードも失われます。</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">このバックアップアーカイブには無効なメタデータが含まれています。破損しているか、不適切に変更された可能性があります。このアーカイブからの復元はできません。別のものを選択してください。</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">このバックアップアーカイブには復元するファイルが含まれていません。別のものを選択してください。</string>
     <string name="backup_and_restore__restore__mode">復元モード</string>

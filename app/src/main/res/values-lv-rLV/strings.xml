@@ -592,6 +592,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Trešās puses lietotne ar kopīgošanas izvēlni</string>
     <string name="backup_and_restore__back_up__files">Atlasīt, kam veidot rezerves kopiju</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Uzstādījumi</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API atslēgas un paroles</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Šis arhīvs satur tavas API atslēgas un paroles atklātā tekstā, kā arī tavu Dictate Cloud kredītu — ikviens, kas to saņem, var diktēt uz tava rēķina. Nenodod to tālāk, un, ja jau esi nodevis, nomaini atslēgu pie sava pakalpojuma sniedzēja. Viss pārējais, kas atzīmēts zemāk, ceļo kopā ar to, tostarp transkripcijas vēsture un starpliktuve.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Šajā arhīvā nav ne API atslēgu, ne paroļu, ne Dictate Cloud kredīta, tāpēc to var nodot tālāk, taču tavas tas arī neatjaunos. Viss pārējais, kas atzīmēts zemāk, tajā joprojām ir, tostarp transkripcijas vēsture un starpliktuve.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Šajā arhīvā nav API atslēgu un paroļu, bet ir viss, kas atzīmēts zemāk: transkripcijas vēsture kopā ar saglabātajiem ierakstiem, starpliktuve, tavi uzvedņi un vārdi, ko tastatūra no tevis iemācījusies.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastatūras paplašinājumi</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Pareizrakstības paplašinājumi / vārdnīcas</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Izskata paplašinājumi</string>
@@ -607,6 +611,7 @@
     <string name="backup_and_restore__restore__metadata">Atlasīts rezerves kopiju arhīvs</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Šis rezerves kopiju arhīvs tika izveidots ne pašreizējā lietotnes laidienā, kas kopumā ir atbalstīts. Jāņem vērā, ka var būt mazas nepilnības vai atsevišķi uzstādījumi var netikt pienācīgi pārsūtīti iespēju atšķirību dēļ.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Šis rezerves kopiju arhīvs tika izveidots trešās puses lietotnē, kas kopumā netiek atbalstīts. Ir iespējami datu zudumi, un šāda veida atjaunošana ir katra paša ziņā.</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Šajā dublējuma arhīvā nav API atslēgu un paroļu. Viss pārējais tiek atjaunots. Apvienošana saglabā atslēgas, kas šajā ierīcē jau ir; pārrakstīšana tās izdzēš — arī Dictate Cloud atjaunošanas kodu, ko nevar ievadīt vēlreiz.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Šis rezerves kopiju arhīvs satur nederīgus metadatus. Vai nu tas ir bojāts, vai arī nepienācīgi pārveidots. Atjaunošana no šī arhīva nav iespējama, lūgums atlasīt citu.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Šis rezerves kopiju arhīvs nesatur atjaunojamas datnes, lūgums atlasīt citu.</string>
     <string name="backup_and_restore__restore__mode">Atjaunošanas veids</string>

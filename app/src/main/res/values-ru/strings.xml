@@ -634,6 +634,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Стороннее приложение через меню \'Поделиться\'</string>
     <string name="backup_and_restore__back_up__files">Выберите сохраняемые данные</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Настройки</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Ключи API и пароли</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Этот архив содержит ваши ключи API и пароли в открытом виде, а также баланс Dictate Cloud — любой, кто его получит, сможет диктовать за ваш счёт. Не передавайте его, а если уже передали, смените ключ у провайдера. Всё остальное, что отмечено ниже, уезжает вместе с ним, включая историю расшифровок и буфер обмена.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">В этом архиве нет ни ключей API, ни паролей, ни баланса Dictate Cloud, поэтому его можно передать, но и ваши он не восстановит. Всё остальное, что отмечено ниже, в нём остаётся, включая историю расшифровок и буфер обмена.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">В этом архиве нет ключей API и паролей, но есть всё, что отмечено ниже: история расшифровок вместе с сохранёнными записями, буфер обмена, ваши промпты и слова, которые клавиатура выучила у вас.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Клавиатурные расширения</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Расширения для правописания / словари</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Расширения оформления</string>
@@ -649,6 +653,7 @@
     <string name="backup_and_restore__restore__metadata">Выберите файл резервной копии</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Этот файл резервной копии был создан в версии приложения, отличной от текущей поддерживаемой. Имейте в виду, что могут возникнуть незначительные проблемы или некоторые настройки могут быть восстановлены неправильно из-за различий в функционале.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Файл резервной копии был создан в стороннем приложении, которое поддерживается не полностью. Возможна потеря данных, восстанавливайте на свой страх и риск!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">В этом архиве резервной копии нет ключей API и паролей. Всё остальное восстанавливается. При объединении ключи, уже имеющиеся на устройстве, сохраняются; при перезаписи они удаляются — вместе с кодом восстановления Dictate Cloud, который нельзя ввести заново.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Этот файл резервной копии содержит недопустимые метаданные. Либо он повреждён, либо неправильно изменён. Восстановление из этого файла невозможно, выберите другой.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Этот файл резервной копии не содержит данных для восстановления, выберите другой.</string>
     <string name="backup_and_restore__restore__mode">Режим восстановления</string>

@@ -639,6 +639,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">通过共享菜单保存到第三方应用</string>
     <string name="backup_and_restore__back_up__files">选择要备份的内容</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">选项</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API 密钥和密码</string>
+    <string name="backup_and_restore__back_up__credentials_warning">该归档以明文保存你的 API 密钥和密码，还包含你的 Dictate Cloud 余额——拿到它的人都能用你的账户来听写。不要转交；如果已经转交过，请在服务商处更换密钥。下面勾选的其他内容也会一同带走，包括听写历史和剪贴板。</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">该归档不含 API 密钥、密码和 Dictate Cloud 余额，因此可以转交——但也不会恢复你的密钥。下面勾选的其他内容仍在其中，包括听写历史和剪贴板。</string>
+    <string name="backup_and_restore__back_up__personal_content_note">该归档不含 API 密钥和密码，但包含下面勾选的一切：听写历史及保留的录音、剪贴板、你的提示词，以及键盘从你这里学到的词。</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">键盘扩展</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">拼写扩展 / 词典</string>
     <string name="backup_and_restore__back_up__files_ime_theme">主题扩展</string>
@@ -654,6 +658,7 @@
     <string name="backup_and_restore__restore__metadata">选定的备份档案</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">这个备份档案是在其他版本中生成的，本应用一般支持这一操作。但请注意，这样可能会出现一些小问题，或者可能由于功能差异某些偏好设置无法正确导入。</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">这个备份档案是在第三方应用中生成的，本应用一般不支持这一操作。可能会发生数据丢失，进行还原需要您自担风险！</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">该备份归档不含 API 密钥和密码。其他内容都会恢复。合并会保留本机已有的密钥；覆盖则会删除它们——包括无法重新输入的 Dictate Cloud 恢复码。</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">这个备份档案包含无效的元数据。可能它已损坏，或者修改不当。无法从这个档案还原，请选择其他档案。</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">这个备份档案不包含任何可以还原的文件，请选择其他档案。</string>
     <string name="backup_and_restore__restore__mode">还原模式</string>

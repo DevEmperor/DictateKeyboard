@@ -1120,6 +1120,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Third-party app via share menu</string>
     <string name="backup_and_restore__back_up__files">Select what to back up</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferences</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API keys and passwords</string>
+    <string name="backup_and_restore__back_up__credentials_warning">This archive contains your API keys and passwords in plain text, along with your Dictate Cloud credit — anyone you give it to can dictate at your expense. Do not pass it on, and if you already have, change the key at your provider. Whatever else is ticked below travels with it, including your transcription history and your clipboard.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">This archive carries no API keys, passwords or Dictate Cloud credit, so it can be passed on — but it will not restore yours either. Whatever else is ticked below is still in it, including your transcription history and your clipboard.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">This archive carries no API keys or passwords, but it does carry what is ticked below — your transcription history with any kept recordings, your clipboard, your prompts and the words the keyboard has learned from you.</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Saved rewording prompts</string>
     <string name="backup_and_restore__back_up__files_personal_dictionary">Personal dictionary and learned words</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
@@ -1137,6 +1141,7 @@
     <string name="backup_and_restore__restore__metadata">Selected backup archive</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">This backup archive was generated in another version than current, which is generally supported. Be aware though that minor issues can occur or some preferences may not get transferred properly due to feature differences.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">This backup archive was generated in a third-party app, which is generally not supported. Data losses may occur, restore at your own risk!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">This backup archive contains no API keys or passwords. Everything else is restored. Merging keeps the keys already on this device; erasing removes them — including a Dictate Cloud recovery code, which cannot be typed back in.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">This backup archive contains invalid metadata. Either it has been corrupted or poorly modified. Restoring from this archive is not possible, please select another one.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">This backup archive does not contain any files to restore, please select another one.</string>
     <string name="backup_and_restore__restore__mode">Restore mode</string>

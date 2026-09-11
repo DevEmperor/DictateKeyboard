@@ -640,6 +640,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Aplikace třetí strany pomocí nabídky sdílení</string>
     <string name="backup_and_restore__back_up__files">Vyberte, co chcete zálohovat</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Předvolby</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Klíče API a hesla</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Tento archiv obsahuje tvoje klíče API a hesla v čitelné podobě i tvůj kredit Dictate Cloud — kdokoli ho dostane, může diktovat na tvůj účet. Nepředávej ho dál, a pokud jsi to už udělal, změň klíč u svého poskytovatele. Všechno ostatní zaškrtnuté níže jde s ním, včetně historie přepisů a schránky.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Tento archiv neobsahuje žádné klíče API, hesla ani kredit Dictate Cloud, takže ho můžeš předat dál, ale tvoje také neobnoví. Všechno ostatní zaškrtnuté níže v něm zůstává, včetně historie přepisů a schránky.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Tento archiv neobsahuje klíče API ani hesla, ale obsahuje všechno zaškrtnuté níže: historii přepisů i s uchovanými nahrávkami, schránku, tvoje prompty a slova, která se klávesnice od tebe naučila.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšíření klávesnice</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozšíření kontroly pravopisu / slovníky</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozšíření témat</string>
@@ -655,6 +659,7 @@
     <string name="backup_and_restore__restore__metadata">Vybraný archiv zálohy</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Tento archiv zálohy byl vygenerován v jiné verzi, než jakou aktuálně používáte, což je většinou podporováno. Mějte ale prosím na vědomí, že se mohou vyskytnout menší problémy nebo se některé předvolby nemusí správně převést kvůli rozdílům ve funkcích.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Tento archiv zálohy byl vygenerován v aplikaci třetí strany, což většinou není podporováno. Mohou se vyskytnout ztráty dat, obnovte na vlastní nebezpečí!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Tento záložní archiv neobsahuje klíče API ani hesla. Všechno ostatní se obnoví. Sloučení zachová klíče, které už v tomto zařízení jsou; přepsání je odstraní, včetně kódu pro obnovení Dictate Cloud, který nelze zadat znovu.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Tento archiv zálohy obsahuje neplatná metadata. Buď byl poškozen, nebo nesprávně upraven. Obnovení zálohy z tohoto archivu není možné, zvolte prosím jiný.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Tento archiv zálohy neobsahuje žádné soubory k obnovení, vyberte prosím jiný.</string>
     <string name="backup_and_restore__restore__mode">Obnovovací reřim</string>

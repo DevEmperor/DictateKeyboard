@@ -563,6 +563,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Application tierce via le menu de partage</string>
     <string name="backup_and_restore__back_up__files">Sélectionner les informations à sauvegarder</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Paramètres</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Clés API et mots de passe</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Cette archive contient vos clés API et vos mots de passe en clair, ainsi que votre crédit Dictate Cloud — quiconque la reçoit peut dicter à vos frais. Ne la transmettez pas, et si vous l’avez déjà fait, changez la clé chez votre fournisseur. Tout ce qui est coché ci-dessous part avec elle, y compris votre historique de transcription et votre presse-papiers.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Cette archive ne contient aucune clé API, aucun mot de passe ni crédit Dictate Cloud : vous pouvez la transmettre, mais elle ne restaurera pas les vôtres non plus. Tout ce qui est coché ci-dessous y figure toujours, y compris votre historique de transcription et votre presse-papiers.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Cette archive ne contient aucune clé API ni mot de passe, mais bien tout ce qui est coché ci-dessous — votre historique de transcription avec les enregistrements conservés, votre presse-papiers, vos prompts et les mots que le clavier a appris de vous.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensions de clavier</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensions de dictionnaires</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensions de thème</string>
@@ -578,6 +582,7 @@
     <string name="backup_and_restore__restore__metadata">Archive de sauvegarde sélectionnée</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Cette archive de sauvegarde a été générée dans une autre version, ce qui est en général supporté. Faites attention cependant : des problèmes mineurs peuvent apparaitre et quelques paramètres peuvent être perdus à cause des différence de fonctionnalité.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Cette archive de sauvegarde a été générée par une application tierce, ce qui est en général non supporté. Des pertes de données peuvent avoir lieu, restaurez à vos risques et périls !</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Cette archive de sauvegarde ne contient aucune clé API ni mot de passe. Tout le reste est restauré. La fusion conserve les clés déjà présentes sur cet appareil ; l’effacement les supprime, y compris un code de récupération Dictate Cloud, qui ne peut pas être saisi à nouveau.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Cette archive de sauvegarde contient des métadonnées invalides. Elle a été corrompue ou mal modifiée. Il est impossible de restaurer depuis cette archive, merci d\'en sélectionner une autre.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Cette archive de sauvegarde ne contient aucun fichier à restaurer, merci d\'en sélectionner une autre.</string>
     <string name="backup_and_restore__restore__mode">Mode de restauration</string>

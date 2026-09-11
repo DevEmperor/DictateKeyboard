@@ -638,6 +638,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Друго приложение чрез меню споделяне</string>
     <string name="backup_and_restore__back_up__files">Изберете какво да бъде архивирано</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Настройки</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API ключове и пароли</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Този архив съдържа вашите API ключове и пароли в явен текст, както и кредита ви в Dictate Cloud — всеки, който го получи, може да диктува за ваша сметка. Не го предавайте, а ако вече сте го направили, сменете ключа при доставчика си. Всичко друго, отметнато по-долу, пътува с него, включително историята на транскрипциите и клипборда.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Този архив не съдържа API ключове, пароли или кредит в Dictate Cloud, така че може да бъде предаден, но и вашите няма да възстанови. Всичко друго, отметнато по-долу, остава в него, включително историята на транскрипциите и клипборда.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Този архив не съдържа API ключове и пароли, но съдържа всичко, отметнато по-долу: историята на транскрипциите заедно със запазените записи, клипборда, вашите промптове и думите, които клавиатурата е научила от вас.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Добавки за клавиатури</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Добавки за правопис / речници</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Добавки за теми</string>
@@ -653,6 +657,7 @@
     <string name="backup_and_restore__restore__metadata">Избор на резервно копие</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Резервното копие е създадено от издание, различно от текущото, което, като цяло, се поддържа от приложението. Въпреки това, може да възникнат незначителни проблеми или някои настройки може да не се прехвърлят изцяло, поради разлики във възможностите.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Резервното копие е създадено от друго приложение, което, като цяло, не се поддържа от приложението. Въможна е загуба на данни, възстановете на ваша отговорност!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Този архив с резервно копие не съдържа API ключове и пароли. Всичко останало се възстановява. Обединяването запазва ключовете, които вече са на устройството; презаписването ги премахва — включително код за възстановяване на Dictate Cloud, който не може да бъде въведен отново.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Резервното копие съдържа грешна описателна информация. Или е била повредена, или неправилно променена. Да възстановите това резервно копие е невъзможно. Изберете друго.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Резервното копие не съдържа файлове, които да бъдат възстановени. Изберете друго.</string>
     <string name="backup_and_restore__restore__mode">Режим на възстановяване</string>

@@ -58,16 +58,21 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.DataStoreWriter
 import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.writeFromFile
 import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisInfoCard
 import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisWarningCard
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.compose.stringRes
@@ -111,6 +116,16 @@ object Backup {
 
     class FilesSelector {
         var jetprefDatastore by mutableStateOf(true)
+        /**
+         * Whether the exported preferences keep the provider credentials (issue #367).
+         *
+         * Not a component of its own but a modifier on [jetprefDatastore] — which is why it is deliberately
+         * absent from [atLeastOneSelected]: unticking it must never be able to leave the Back up button
+         * enabled with nothing behind it, nor disabled with preferences still selected. Defaults to on,
+         * because the ordinary reason to make a backup is to restore it on your own next phone; the share
+         * destination turns it off (see BackupScreen's destination radios).
+         */
+        var providerCredentials by mutableStateOf(true)
         var dictatePrompts by mutableStateOf(true)
         var dictateHistory by mutableStateOf(true)
         var personalDictionary by mutableStateOf(true)
@@ -155,6 +170,16 @@ object Backup {
         val versionName: String,
         val timestamp: Long,
     )
+}
+
+/**
+ * The preference export with every credential taken out of it (issue #367).
+ *
+ * JetPref calls `write` exactly once with the complete document, so one pass over it is the whole job —
+ * and doing it here rather than over the written file is what keeps the keys from ever existing on disk.
+ */
+private class RedactingWriter(private val delegate: DataStoreWriter) : DataStoreWriter {
+    override suspend fun write(content: String) = delegate.write(BackupRedaction.redact(content))
 }
 
 @Composable
@@ -202,7 +227,15 @@ fun BackupScreen() = FlorisScreen {
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
                 .let { FileBasedStorage(it.path) }
-            FlorisPreferenceStore.export(fileBasedStorage).getOrThrow()
+            // Without the credentials, the export goes through the redacting writer instead, so the keys
+            // never reach the disk at all — not even for the moment a rewrite-afterwards would need. With
+            // them, the writer is the plain one and the file stays byte-for-byte what it has always been.
+            val writer = if (backupFilesSelector.providerCredentials) {
+                fileBasedStorage
+            } else {
+                RedactingWriter(fileBasedStorage)
+            }
+            FlorisPreferenceStore.export(writer).getOrThrow()
         }
         if (backupFilesSelector.dictatePrompts) {
             val prompts = PromptsDatabaseHelper.getInstance(context).getAll()
@@ -313,9 +346,16 @@ fun BackupScreen() = FlorisScreen {
 
     suspend fun prepareAndPerformBackup() {
         runCatching {
-            if (backupWorkspace == null || backupWorkspace!!.isClosed()) {
-                prepareBackupWorkspace()
-            }
+            // Always build a fresh archive. A reused one is an archive assembled from an older set of
+            // checkboxes, and since issue #367 that is a leak and not just a surprise: the share
+            // destination never closes its workspace, so sharing once with the credentials in and then
+            // unticking them and sharing again would hand out the very keys that were just excluded.
+            // Re-zipping a cancelled backup costs a second; getting this wrong costs someone's API key.
+            backupWorkspace?.close()
+            backupWorkspace = null
+            // Off the main thread: assembling the archive copies history audio and zips the lot, which is
+            // long enough to be felt now that it happens on every press rather than once.
+            withContext(Dispatchers.IO) { prepareBackupWorkspace() }
             when (backupDestination) {
                 Backup.Destination.FILE_SYS -> {
                     backUpToFileSystemLauncher.launch(backupWorkspace!!.zipFile.name)
@@ -360,20 +400,65 @@ fun BackupScreen() = FlorisScreen {
     }
 
     content {
+        // What is actually in the archive, said before the user picks where to send it (issue #367).
+        //
+        // Three wordings, one card. Only the preferences carry credentials, so that is the one state that
+        // warns — but an archive of nothing but the history is transcripts and recordings of someone's
+        // voice, and saying nothing at all about that would be the same mistake one level down. The third
+        // state is for exactly that case: personal content, no credentials.
+        val credentialsInArchive = backupFilesSelector.jetprefDatastore &&
+            backupFilesSelector.providerCredentials
+        val contentNoticeId = when {
+            credentialsInArchive -> R.string.backup_and_restore__back_up__credentials_warning
+            backupFilesSelector.jetprefDatastore ->
+                R.string.backup_and_restore__back_up__credentials_excluded_note
+            backupFilesSelector.atLeastOneSelected() ->
+                R.string.backup_and_restore__back_up__personal_content_note
+            else -> null
+        }
+        if (contentNoticeId != null) {
+            // Only one of the three is a warning, and only it gets the warning card. The other two say the
+            // archive is safe to hand on, and saying that on a yellow alarm background contradicts itself —
+            // the colour is read before the sentence is.
+            if (credentialsInArchive) {
+                FlorisWarningCard(
+                    modifier = Modifier.defaultFlorisOutlinedBox(),
+                    text = stringRes(contentNoticeId),
+                )
+            } else {
+                FlorisInfoCard(
+                    modifier = Modifier.defaultFlorisOutlinedBox(),
+                    text = stringRes(contentNoticeId),
+                )
+            }
+        }
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__destination),
         ) {
+            // The destination sets the starting point for the credentials, because it is the destination
+            // that says whether this archive is going to someone else. Only on an actual change, though:
+            // tapping the radio that is already selected has to stay the no-op it looks like, or it would
+            // quietly undo a deliberate choice made after it.
             RadioListItem(
                 onClick = {
-                    backupDestination = Backup.Destination.FILE_SYS
+                    if (backupDestination != Backup.Destination.FILE_SYS) {
+                        backupDestination = Backup.Destination.FILE_SYS
+                        backupFilesSelector.providerCredentials = true
+                    }
                 },
                 selected = backupDestination == Backup.Destination.FILE_SYS,
                 text = stringRes(R.string.backup_and_restore__back_up__destination_file_sys),
             )
             RadioListItem(
                 onClick = {
-                    backupDestination = Backup.Destination.SHARE_INTENT
+                    if (backupDestination != Backup.Destination.SHARE_INTENT) {
+                        backupDestination = Backup.Destination.SHARE_INTENT
+                        // Sharing hands the archive to someone else, so it starts from the variant that is
+                        // safe to hand over. Still a checkbox and still the user's call — the card above
+                        // says what re-ticking it means.
+                        backupFilesSelector.providerCredentials = false
+                    }
                 },
                 selected = backupDestination == Backup.Destination.SHARE_INTENT,
                 text = stringRes(R.string.backup_and_restore__back_up__destination_share_intent),
@@ -391,6 +476,9 @@ internal fun BackupFilesSelector(
     modifier: Modifier = Modifier,
     filesSelector: Backup.FilesSelector,
     title: String,
+    // Backup only (issue #367). Leaving the keys out of an archive that has them is a question for the
+    // person writing it; restoring selectively around them is a different feature and not this one.
+    showCredentials: Boolean = true,
 ) {
     FlorisOutlinedBox(
         modifier = modifier.defaultFlorisOutlinedBox(),
@@ -401,6 +489,17 @@ internal fun BackupFilesSelector(
             checked = filesSelector.jetprefDatastore,
             text = stringRes(R.string.backup_and_restore__back_up__files_jetpref_datastore),
         )
+        // Gone entirely while the preferences are not being backed up, rather than greyed out: there is
+        // nothing for it to modify then, and a disabled box that is still ticked reads as "the keys are
+        // coming along" — the same ambiguity that made issue #297 a bug report.
+        if (showCredentials && filesSelector.jetprefDatastore) {
+            CheckboxListItem(
+                onClick = { filesSelector.providerCredentials = !filesSelector.providerCredentials },
+                checked = filesSelector.providerCredentials,
+                text = stringRes(R.string.backup_and_restore__back_up__files_provider_credentials),
+                isSecondaryListItem = true,
+            )
+        }
         CheckboxListItem(
             onClick = { filesSelector.dictatePrompts = !filesSelector.dictatePrompts },
             checked = filesSelector.dictatePrompts,

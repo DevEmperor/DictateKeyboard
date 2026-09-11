@@ -628,6 +628,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Paylaşım menüsü aracılığıyla üçüncü taraf uygulama</string>
     <string name="backup_and_restore__back_up__files">Nelerin yedekleneceğini seç</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Tercihler</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API anahtarları ve şifreler</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Bu arşiv API anahtarlarınızı ve şifrelerinizi düz metin olarak, Dictate Cloud bakiyenizle birlikte içerir — onu alan herkes sizin hesabınıza dikte edebilir. Başkasına vermeyin; verdiyseniz sağlayıcınızdaki anahtarı değiştirin. Aşağıda işaretli olan her şey onunla birlikte gider, dikte geçmişiniz ve panonuz da dahil.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Bu arşivde API anahtarı, şifre veya Dictate Cloud bakiyesi yok, bu yüzden paylaşılabilir; ama sizinkileri de geri yüklemez. Aşağıda işaretli olan her şey hâlâ içindedir, dikte geçmişiniz ve panonuz da dahil.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Bu arşivde API anahtarı ve şifre yok, ama aşağıda işaretli olan her şey var: saklanan kayıtlarla birlikte dikte geçmişiniz, panonuz, istemleriniz ve klavyenin sizden öğrendiği kelimeler.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Klavye eklentileri</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Yazım denetimi eklentileri / sözlükler</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Tema eklentileri</string>
@@ -643,6 +647,7 @@
     <string name="backup_and_restore__restore__metadata">Seçilen yedek arşivi</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Bu yedek arşivi mevcut sürümden farklı bir sürümde oluşturulmuştur, bu genellikle desteklenir. Ancak küçük sorunların ortaya çıkabileceğini veya özellik farklılıkları nedeniyle bazı tercihlerin düzgün aktarılamayabileceğini unutmayın.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Bu yedek arşivi üçüncü taraf bir uygulamada oluşturulmuştur, bu genellikle desteklenmez. Veri kayıpları meydana gelebilir, riski size ait olmak üzere geri yükleyin!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Bu yedek arşivinde API anahtarı ve şifre yok. Diğer her şey geri yüklenir. Birleştirme bu cihazdaki anahtarları korur; üzerine yazma ise onları siler — yeniden yazılamayan Dictate Cloud kurtarma kodu da dahil.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Bu yedek arşivi geçersiz meta veriler içeriyor. Ya bozulmuş ya da kötü bir şekilde değiştirilmiş. Bu arşivden geri yükleme yapmak mümkün değil, lütfen başka bir tane seçin.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Bu yedek arşivi geri yüklenecek herhangi bir dosya içermiyor, lütfen başka bir tane seçin.</string>
     <string name="backup_and_restore__restore__mode">Geri yükleme modu</string>

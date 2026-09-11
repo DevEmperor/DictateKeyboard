@@ -641,6 +641,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Inna aplikacja za pomocą menu udostępniania</string>
     <string name="backup_and_restore__back_up__files">Wybierz, co chcesz zapisać w kopii bezpieczeństwa</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferencje</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">Klucze API i hasła</string>
+    <string name="backup_and_restore__back_up__credentials_warning">To archiwum zawiera twoje klucze API i hasła w postaci jawnej, a także twoje środki Dictate Cloud — każdy, kto je otrzyma, może dyktować na twój koszt. Nie przekazuj go dalej, a jeśli już to zrobiłeś, zmień klucz u swojego dostawcy. Wszystko inne zaznaczone poniżej jedzie razem z nim, w tym historia transkrypcji i schowek.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">To archiwum nie zawiera kluczy API, haseł ani środków Dictate Cloud, więc można je przekazać dalej, ale nie przywróci też twoich. Wszystko inne zaznaczone poniżej nadal w nim jest, w tym historia transkrypcji i schowek.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">To archiwum nie zawiera kluczy API ani haseł, ale zawiera wszystko, co zaznaczono poniżej: historię transkrypcji wraz z zachowanymi nagraniami, schowek, twoje prompty i słowa, których klawiatura się od ciebie nauczyła.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozszerzenia klawiatury</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozszerzenia pisowni / słowniki</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozszerzenia motywów</string>
@@ -656,6 +660,7 @@
     <string name="backup_and_restore__restore__metadata">Wybrane archiwum kopii zapasowej</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">To archiwum kopii zapasowej zostało wygenerowane w wersji innej niż bieżąca, jest to ogólnie wspierane przez aplikacje. Należy jednak pamiętać, że mogą wystąpić drobne problemy lub niektóre preferencje mogą nie zostać poprawnie przeniesione z powodu różnic w funkcjach.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">To archiwum kopii zapasowej zostało wygenerowane w innej aplikacji, co nie jest wspierane. Może dojść do utraty danych, przywracasz na własne ryzyko!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">To archiwum kopii zapasowej nie zawiera kluczy API ani haseł. Wszystko inne zostanie przywrócone. Scalanie zachowuje klucze już obecne na tym urządzeniu; nadpisanie je usuwa, w tym kod odzyskiwania Dictate Cloud, którego nie da się wpisać ponownie.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">To archiwum kopii zapasowej zawiera nieprawidłowe metadane. Albo zostało ono uszkodzone, albo źle zmodyfikowane. Przywrócenie z tego archiwum nie jest możliwe, wybierz inne.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">To archiwum kopii zapasowej nie zawiera żadnych plików do przywrócenia, wybierz inne.</string>
     <string name="backup_and_restore__restore__mode">Tryb przywracania</string>

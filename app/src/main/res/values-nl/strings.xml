@@ -559,6 +559,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="backup_and_restore__back_up__destination_share_intent">App van derden via menu delen</string>
     <string name="backup_and_restore__back_up__files">Selecteer waarvan u een back-up wilt maken</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Voorkeuren</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API-sleutels en wachtwoorden</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Dit archief bevat je API-sleutels en wachtwoorden in leesbare tekst, plus je Dictate Cloud-krediet: wie het krijgt, kan op jouw kosten dicteren. Geef het niet door, en als je dat al hebt gedaan, wijzig dan de sleutel bij je aanbieder. Al het andere dat hieronder is aangevinkt gaat mee, ook je transcriptiegeschiedenis en je klembord.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Dit archief bevat geen API-sleutels, wachtwoorden of Dictate Cloud-krediet, dus je kunt het doorgeven, maar het zet die van jou ook niet terug. Al het andere dat hieronder is aangevinkt zit er nog in, ook je transcriptiegeschiedenis en je klembord.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Dit archief bevat geen API-sleutels of wachtwoorden, maar wel alles wat hieronder is aangevinkt: je transcriptiegeschiedenis met bewaarde opnames, je klembord, je prompts en de woorden die het toetsenbord van je heeft geleerd.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Toetsenbordextensies</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spellingextensies /woordenboeken</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Thema-extensies</string>
@@ -574,6 +578,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="backup_and_restore__restore__metadata">Geselecteerd back-uparchief</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Dit back-uparchief is gegenereerd in een andere versie dan de huidige, die over het algemeen wordt ondersteund. Houd er echter rekening mee dat er kleine problemen kunnen optreden of dat sommige voorkeuren mogelijk niet correct worden overgedragen vanwege functieverschillen.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Dit back-uparchief is gegenereerd in een app van derden, die over het algemeen niet wordt ondersteund. Gegevensverlies kan optreden, herstel op eigen risico!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Dit back-uparchief bevat geen API-sleutels of wachtwoorden. Al het andere wordt teruggezet. Samenvoegen behoudt de sleutels die al op dit apparaat staan; wissen verwijdert ze, ook een Dictate Cloud-herstelcode, die je niet opnieuw kunt intypen.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Dit back-uparchief bevat ongeldige metadata. Of het is beschadigd of slecht gewijzigd. Herstellen vanuit dit archief is niet mogelijk, selecteer een andere.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Dit back-uparchief bevat geen bestanden om te herstellen, selecteer een andere.</string>
     <string name="backup_and_restore__restore__mode">Herstelmodus</string>

@@ -575,6 +575,10 @@
     <string name="backup_and_restore__back_up__destination_share_intent">Drittanbieter-Apps über das Teilen-Menü</string>
     <string name="backup_and_restore__back_up__files">Auswählen, wovon eine Sicherung erstellt werden soll</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Einstellungen</string>
+    <string name="backup_and_restore__back_up__files_provider_credentials">API-Schlüssel und Passwörter</string>
+    <string name="backup_and_restore__back_up__credentials_warning">Dieses Archiv enthält deine API-Schlüssel und Passwörter im Klartext, dazu dein Dictate-Cloud-Guthaben – wer es bekommt, kann auf deine Kosten diktieren. Gib es nicht weiter, und wenn du das schon getan hast, ändere den Schlüssel bei deinem Anbieter. Alles andere, was unten angehakt ist, geht mit – auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">Dieses Archiv enthält keine API-Schlüssel, Passwörter und kein Dictate-Cloud-Guthaben, du kannst es also weitergeben – es stellt deine aber auch nicht wieder her. Alles andere, was unten angehakt ist, ist weiterhin enthalten, auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
+    <string name="backup_and_restore__back_up__personal_content_note">Dieses Archiv enthält keine API-Schlüssel und Passwörter, aber alles, was unten angehakt ist – deinen Transkriptionsverlauf samt aufbewahrter Aufnahmen, deine Zwischenablage, deine Prompts und die Wörter, die die Tastatur von dir gelernt hat.</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Gespeicherte Umformulierungs-Prompts</string>
     <string name="backup_and_restore__back_up__files_personal_dictionary">Persönliches Wörterbuch und gelernte Wörter</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastaturerweiterungen</string>
@@ -592,6 +596,7 @@
     <string name="backup_and_restore__restore__metadata">Ausgewählte Sicherungsarchive</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Dieses Sicherungsarchiv wurde in einer anderen als der aktuellen Version erstellt, was grundsätzlich unterstützt wird. Beachte jedoch, dass kleinere Probleme auftreten können oder einige Einstellungen aufgrund von Funktionsunterschieden möglicherweise nicht richtig übertragen werden.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Dieses Sicherungsarchiv wurde in einer Drittanbieter-App erstellt, was grundsätzlich nicht unterstützt wird. Es kann zu Datenverlust kommen, Wiederherstellung auf eigene Gefahr!</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">Diese Datensicherung enthält keine API-Schlüssel und Passwörter. Alles andere wird wiederhergestellt. Beim Zusammenführen bleiben die Schlüssel auf diesem Gerät erhalten; beim Überschreiben verschwinden sie – auch ein Dictate-Cloud-Wiederherstellungscode, den man nicht neu eintippen kann.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Dieses Sicherungsarchiv enthält ungültige Metadaten. Entweder ist die Datei beschädigt oder sie wurde falsch modifiziert. Das Wiederherstellen dieser Datei ist nicht möglich, bitte eine andere wählen.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Dieses Sicherungsarchiv enthält keine wiederherstellbaren Dateien, bitte ein anderes auswählen.</string>
     <string name="backup_and_restore__restore__mode">Wiederherstellungsmodus</string>
