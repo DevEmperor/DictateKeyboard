@@ -74,3 +74,7 @@ tools/pinyin-dict/generate.py; see tools/pinyin-dict/ATTRIBUTION.md.
     P. Lison & J. Tiedemann (2016), "OpenSubtitles2016: Extracting Large Parallel
     Corpora from Movie and TV Subtitles", LREC 2016. Only aggregate word counts
     are used; no source text is redistributed.
+
+Orukeet v0.1.0 (optional on-device model): © Oruk, derived from NVIDIA Parakeet TDT 0.6B v3.
+Weights: CC BY-SA 4.0. https://huggingface.co/oruk/orukeet
+The installer retains LICENSE-WEIGHTS and NOTICE.md with the model files.

@@ -65,6 +65,8 @@ data class LocalModelSpec(
      * streaming transducer and an offline NeMo transducer both ship a joiner.
      */
     val isStreaming: Boolean = false,
+    /** Optional SHA-pinned JSON manifest checked against the downloaded file catalog before install. */
+    val verificationManifest: String? = null,
 ) {
     val totalBytes: Long get() = files.sumOf { it.sizeBytes }
 }
@@ -75,12 +77,14 @@ data class LocalModelSpec(
  * sherpa-onnx builds.
  *
  * **Attribution / licensing:** every model here comes from an upstream project under a license that
- * permits redistribution (see each entry, and NOTICE). The files are mirrored on the project's own
+ * permits redistribution (see each entry, and NOTICE). Most files are mirrored on the project's own
  * GitHub release ([REL]) for a stable, project-controlled source instead of depending on a third party
- * at runtime. To re-point hosting, change [REL] only. The runtime never fetches this list — it is
+ * at runtime. Orukeet uses a pinned upstream Hugging Face revision and its integrity manifest. The runtime never fetches this list — it is
  * shipped in the app.
  */
 object LocalModelCatalog {
+
+    private const val ORUKEET_BASE = "https://huggingface.co/oruk/orukeet/resolve/eac739d754bb171287930e6e63386f5b88f8179e/onnx/sherpa-v0.1.0-int8"
 
     /** Project-hosted mirror of the model files (GitHub release assets). Single re-point for hosting. */
     private const val REL = "https://github.com/DevEmperor/DictateKeyboard/releases/download/whisper-models-v1"
@@ -188,6 +192,29 @@ object LocalModelCatalog {
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_275, "179e50c43d1a9de79c8a24149a2f9bac6eb5981823f2a2ed88d655b24248db4e"),
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 6_355_277, "3164c13fc2821009440d20fcb5fdc78bff28b4db2f8d0f0b329101719c0948b3"),
             LocalModelFile("$REL/parakeet-tdt-0.6b-v3-tokens.txt", LocalTranscriptionProvider.TOKENS, 93_939, "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * Orukeet v0.1.0, a multilingual Parakeet TDT v3 fine-tune (25 European languages).
+     * Uses the existing offline NeMo recognizer, not the live streaming path. The source weights
+     * are CC BY-SA 4.0; attribution and license are installed alongside the model.
+     */
+    val ORUKEET = LocalModelSpec(
+        id = "orukeet-v0.1.0",
+        displayName = "Orukeet v0.1.0",
+        description = "25 European languages · ~672 MB · CC BY-SA 4.0",
+        kind = LocalModelKind.NEMO_TRANSDUCER,
+        verificationManifest = "manifest.json",
+        files = listOf(
+            LocalModelFile("$ORUKEET_BASE/manifest.json", "manifest.json", 1_867, "7e80f93f0e9b923c392424b0f85d28a717feee0a4d2a6aa9bfa723693868e727"),
+            LocalModelFile("$ORUKEET_BASE/encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 653_182_378, "7b55f2a504a20a8e462899f5befd45f4a1784948d76ed0127902d9cf39405487"),
+            LocalModelFile("$ORUKEET_BASE/decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_332, "c185c2afb4c77c94bb1314807ecb3dc1623057a3dc540b83e10301af9bf4cfca"),
+            LocalModelFile("$ORUKEET_BASE/joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 6_355_335, "1a7e90abf7172d926dd7e2edac2a5d5035c24dfb641a15e131d57b6a5f63cdd3"),
+            LocalModelFile("$ORUKEET_BASE/tokens.txt", LocalTranscriptionProvider.TOKENS, 93_939, "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"),
+            LocalModelFile("$ORUKEET_BASE/LICENSE-WEIGHTS", "LICENSE-WEIGHTS", 20_137, "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"),
+            LocalModelFile("$ORUKEET_BASE/NOTICE.md", "NOTICE.md", 5_271, "440361d963edd9621e744f251332b47f2c4de2e2594ecfe42b215e3f6223fa44"),
             VAD_FILE,
         ),
     )
@@ -463,6 +490,7 @@ object LocalModelCatalog {
      */
     val all: List<LocalModelSpec> = listOf(
         PARAKEET_TDT_V3,
+        ORUKEET,
         CANARY_180M_FLASH,
         PARAKEET_PRIMELINE_DE,
         GIGAAM_V2_RU,

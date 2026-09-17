@@ -85,6 +85,7 @@ object LocalModelManager {
                 completed += f.sizeBytes
                 onProgress(completed, total)
             }
+            verifyDownloadManifest(spec, tmpDir)
             // Swap staging dir into place atomically (same filesystem); copy-fallback if rename fails.
             finalDir.deleteRecursively()
             finalDir.parentFile?.mkdirs()

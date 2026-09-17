@@ -10,6 +10,8 @@
 
 package dev.patrickgold.florisboard.dictate.provider
 
+import java.nio.file.Files
+import kotlin.test.assertFailsWith
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -32,6 +34,38 @@ class LocalModelCatalogTest {
     private val vad = LocalTranscriptionProvider.VAD
 
     private fun names(spec: LocalModelSpec) = spec.files.map { it.destName }
+
+    @Test
+    fun `orukeet stays optional and uses the offline transducer with VAD`() {
+        val spec = assertNotNull(LocalModelCatalog.byId("orukeet-v0.1.0"))
+        assertEquals(LocalModelKind.NEMO_TRANSDUCER, spec.kind)
+        assertTrue(spec in LocalModelCatalog.batchOnly)
+        assertTrue(spec !in LocalModelCatalog.streaming)
+        assertTrue(vad in names(spec))
+        assertTrue("LICENSE-WEIGHTS" in names(spec) && "NOTICE.md" in names(spec))
+        assertTrue(spec !in LocalModelCatalog.onboardingPicks("en"))
+    }
+
+    @Test
+    fun `download manifest accepts matching files and rejects mismatched integrity data`() {
+        val directory = Files.createTempDirectory("model-manifest-").toFile()
+        val file = LocalModelFile("https://huggingface.co/example/encoder.onnx", encoder, 42, "a".repeat(64))
+        val spec = LocalModelSpec("test", "Test", "", listOf(
+            LocalModelFile("https://huggingface.co/example/manifest.json", "manifest.json", 1, "b".repeat(64)),
+            file,
+        ), verificationManifest = "manifest.json")
+        try {
+            val manifest = directory.resolve("manifest.json")
+            manifest.writeText("""{"files":[{"path":"encoder.onnx","bytes":42,"sha256":"${file.sha256}"}]}""")
+            verifyDownloadManifest(spec, directory)
+            manifest.writeText("""{"files":[{"path":"encoder.onnx","bytes":41,"sha256":"${file.sha256}"}]}""")
+            assertFailsWith<IllegalStateException> { verifyDownloadManifest(spec, directory) }
+            manifest.writeText("""{"files":[]}""")
+            assertFailsWith<NoSuchElementException> { verifyDownloadManifest(spec, directory) }
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
 
     @Test
     fun `every model declares its tokens and nothing twice`() {

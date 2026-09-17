@@ -143,3 +143,7 @@ not even on first use.
 
 No camera permission is declared for this: the system camera app takes the picture and hands the file
 back, and the photo is deleted from our cache as soon as it has been read.
+
+Orukeet v0.1.0 (optional on-device model): © Oruk, derived from NVIDIA Parakeet TDT 0.6B v3.
+Weights: CC BY-SA 4.0. https://huggingface.co/oruk/orukeet
+The installer retains LICENSE-WEIGHTS and NOTICE.md with the model files.
