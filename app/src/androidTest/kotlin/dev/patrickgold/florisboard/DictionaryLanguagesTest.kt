@@ -254,6 +254,37 @@ class DictionaryLanguagesTest {
         assertTrue("expected morning offered for morninh, got $corrections", corrections.contains("morning"))
     }
 
+    // --- French elisions --------------------------------------------------------------------------
+
+    @Test
+    fun frenchAutoCommitsUnambiguousElisionsMissingFromTheWordList() {
+        ensureDictionary("fr")
+        val fr = subtypeFor("fr-CA", "canadian_french")
+        val cases = mapOf(
+            "jaime" to "j'aime",
+            "jai" to "j'ai",
+            "cest" to "c'est",
+            "daccord" to "d'accord",
+            "quon" to "qu'on",
+        )
+        for ((typed, expected) in cases) {
+            val committed = autoCommitted(fr, typed)?.replace('’', '\'')
+            Log.i(TAG, "fr  $typed -> auto-commit ${committed ?: "(none)"}")
+            assertEquals("$typed must restore its apostrophe", expected, committed)
+        }
+    }
+
+    @Test
+    fun frenchLeavesRealWordsAloneWhenAnElisionAlsoExists() {
+        ensureDictionary("fr")
+        val fr = subtypeFor("fr-CA", "canadian_french")
+        for (word in listOf("dune", "lame", "quelle")) {
+            val committed = autoCommitted(fr, word)
+            Log.i(TAG, "fr  $word -> auto-commit ${committed ?: "(none)"}")
+            assertTrue("$word must not be replaced, got $committed", committed == null || committed == word)
+        }
+    }
+
     private companion object {
         const val TAG = "DictLangTest"
         const val DOWNLOAD_TIMEOUT_MS = 120_000L

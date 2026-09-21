@@ -77,6 +77,49 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         private const val CORRECTION_RESERVE = 3
         private const val MAX_DISTANCE2_LEN = 12
 
+        // French elisions are mostly absent from the generated word list: the corpus tokeniser keeps the
+        // word after the apostrophe ("aime", "accord", "on") but usually drops the complete surface form
+        // ("j'aime", "d'accord", "qu'on"). These are the productive prefixes that may be rebuilt from that
+        // suffix. Longest first is not required for correctness, but makes tests and debugger output put the
+        // useful `quelqu'un` split before the incidental `qu'…` attempt.
+        private val FRENCH_ELISION_PREFIXES = listOf(
+            "lorsqu", "puisqu", "jusqu", "quelqu", "presqu", "qu",
+            "j", "c", "d", "l", "m", "n", "s", "t",
+        )
+        private val FRENCH_ELISION_INITIALS = setOf('a', 'e', 'i', 'o', 'u', 'y', 'h')
+        private val FRENCH_ELISION_AUTO_INITIALS = FRENCH_ELISION_INITIALS - 'h'
+
+        /** Productive French elisions [word] can form, as prefix → suffix pairs. */
+        internal fun frenchElisionSplits(word: String): List<Pair<String, String>> {
+            val lower = word.lowercase()
+            return FRENCH_ELISION_PREFIXES.mapNotNull { prefix ->
+                if (!lower.startsWith(prefix) || word.length <= prefix.length) return@mapNotNull null
+                val suffix = word.substring(prefix.length)
+                val initial = DictFold.foldFrench(suffix).firstOrNull() ?: return@mapNotNull null
+                if (initial in FRENCH_ELISION_INITIALS) prefix to suffix else null
+            }
+        }
+
+        /**
+         * Whether one reconstructed French elision is safe to take on Space.
+         *
+         * A real apostrophe-less word always wins (`dune`, `lame`, `quelle`), as does ambiguity between two
+         * possible elisions. The suffix must carry the same minimum frequency as every other automatic fix.
+         * Words beginning with h stay tap suggestions: the word list cannot distinguish h muet (`l'homme`)
+         * from h aspiré (`le héros`), so silently choosing would introduce grammatical errors.
+         */
+        internal fun shouldAutoCommitFrenchElision(
+            typedFrequency: Int,
+            candidateFrequencies: List<Int>,
+            suffix: String,
+        ): Boolean = typedFrequency == 0 &&
+            candidateFrequencies.size == 1 &&
+            candidateFrequencies.single() >= AUTOCORRECT_MIN_FREQ &&
+            DictFold.foldFrench(suffix).firstOrNull()?.let { it in FRENCH_ELISION_AUTO_INITIALS } == true
+
+        /** Straight and typographic apostrophes are one suggestion for de-duplication purposes. */
+        private fun apostropheKey(word: String): String = word.lowercase().replace('’', '\'')
+
         // Keyboard-proximity noisy-channel model (Tier 1). Distances are in key-width² units.
         private const val PROX_SIGMA2 = 1.0         // touch variance (~1 key-width std): near mis-taps cost little
         private const val NEUTRAL_SUB_SQDIST = 2.0  // fallback substitution distance² when key geometry is unknown
@@ -1322,27 +1365,82 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         // Apostrophe/contraction restoration (issue #212): "whats"→"what's", "cant"→"can't", "dont"→"don't",
         // "im"→"I'm". The apostrophe-less form is often itself a dictionary word (so the generic correction
-        // path below skips it), yet the apostrophe form is usually what was meant and more common. Offered at
-        // the front of the strip as a tap suggestion — not auto-committed, so a genuine "ill"/"well" is never
-        // silently turned into "i'll"/"we'll".
-        if (autoCorrectOn && word.length >= 3 && !word.contains('\'')) {
+        // path below skips it), yet the apostrophe form is usually what was meant and more common.
+        //
+        // English and the other languages remain tap-only: `ill`, `well` and `its` show why frequency is not
+        // enough evidence to rewrite them. French additionally rebuilds productive elisions from a known
+        // suffix because its generated dictionary contains `aime`/`accord`/`on`, but generally not the full
+        // `j'aime`/`d'accord`/`qu'on` forms. One unambiguous, frequent reconstruction of a non-word may be
+        // auto-committed; a real word (`dune`, `lame`, `quelle`) remains only a suggestion.
+        if (autoCorrectOn && word.length >= 3 && word.none { it == '\'' || it == '’' }) {
             val typedFreq = index.freq[index.fold(word)] ?: 0
-            (1 until word.length)
-                .map { word.substring(0, it) + "'" + word.substring(it) }
-                .mapNotNull { v -> index.fold(v).let { k -> index.freq[k]?.let { f -> f to (index.canonical[k] ?: v) } } }
+            // frequency, canonical spelling, reconstructed French suffix (null for dictionary-only forms)
+            val bySpelling = LinkedHashMap<String, Triple<Int, String, String?>>()
+            fun addApostropheCandidate(freq: Int, canonical: String, frenchSuffix: String? = null) {
+                val key = apostropheKey(canonical)
+                val previous = bySpelling[key]
+                if (previous == null || freq > previous.first) {
+                    bySpelling[key] = Triple(freq, canonical, frenchSuffix ?: previous?.third)
+                } else if (previous.third == null && frenchSuffix != null) {
+                    bySpelling[key] = Triple(previous.first, previous.second, frenchSuffix)
+                }
+            }
+
+            for (i in 1 until word.length) {
+                for (apostrophe in charArrayOf('\'', '’')) {
+                    val variant = word.substring(0, i) + apostrophe + word.substring(i)
+                    val key = index.fold(variant)
+                    index.freq[key]?.let { freq ->
+                        addApostropheCandidate(freq, index.canonical[key] ?: variant)
+                    }
+                }
+            }
+
+            if (index.lang == "fr") {
+                for ((prefix, suffix) in frenchElisionSplits(word)) {
+                    val suffixKey = index.fold(suffix)
+                    val suffixFreq = index.freq[suffixKey] ?: continue
+                    val suffixCanonical = index.canonical[suffixKey] ?: suffix
+                    addApostropheCandidate(suffixFreq, "$prefix'$suffixCanonical", suffixCanonical)
+                }
+            }
+
+            val candidates = bySpelling.values
                 .filter { it.first > typedFreq }
                 .sortedByDescending { it.first }
-                .forEach { (freq, canonical) ->
-                    // English "I" contractions are stored lowercase in the dictionary; show them capitalised.
-                    val display = if (canonical.startsWith("i'")) "I" + canonical.substring(1) else cased(canonical)
-                    out.putIfAbsent(
-                        display.lowercase(),
-                        WordSuggestionCandidate(
-                            text = display, confidence = freq / 255.0,
-                            isEligibleForAutoCommit = false, sourceProvider = this,
-                        ),
-                    )
+            val candidateFrequencies = candidates.map { it.first }
+            val autoCommitKey = candidates.singleOrNull()?.let { (_, canonical, suffix) ->
+                if (index.lang == "fr" && suffix != null &&
+                    shouldAutoCommitFrenchElision(typedFreq, candidateFrequencies, suffix)
+                ) apostropheKey(canonical) else null
+            }
+            if (autoCommitKey != null) {
+                // Match every other automatic restoration: keep exactly what was typed available to refuse
+                // the replacement, and let the ordinary one-backspace undo restore it after Space.
+                out.putIfAbsent(
+                    TYPED_WORD_KEY + index.fold(word),
+                    WordSuggestionCandidate(
+                        text = word, confidence = 1.0,
+                        isEligibleForAutoCommit = false, sourceProvider = this,
+                    ),
+                )
+            }
+            candidates.forEach { (freq, canonical, _) ->
+                // English "I" contractions are stored lowercase in the dictionary; show them capitalised.
+                val display = if (apostropheKey(canonical).startsWith("i'")) {
+                    "I" + canonical.substring(1)
+                } else {
+                    cased(canonical)
                 }
+                out.putIfAbsent(
+                    apostropheKey(display),
+                    WordSuggestionCandidate(
+                        text = display, confidence = freq / 255.0,
+                        isEligibleForAutoCommit = apostropheKey(canonical) == autoCommitKey,
+                        sourceProvider = this,
+                    ),
+                )
+            }
         }
 
         // Noun capitalisation (issue #242 follow-up). German capitalises every noun, but typing one
