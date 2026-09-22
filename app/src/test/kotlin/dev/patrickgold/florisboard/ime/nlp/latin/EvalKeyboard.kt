@@ -91,8 +91,10 @@ internal object EvalKeyboard {
     }
 
     /** `{"word": 231, …}` into a map. Hand-parsed to keep the test off the serialization runtime. */
-    fun readDict(name: String): Map<String, Int> {
-        val text = dictFile(name).readText()
+    fun readDict(name: String): Map<String, Int> = parseDict(dictFile(name).readText())
+
+    /** The word→frequency map in a `<lang>.json`, for a file that is not a bundled asset. */
+    fun parseDict(text: String): Map<String, Int> {
         val out = HashMap<String, Int>(70_000)
         var i = 0
         while (i < text.length) {

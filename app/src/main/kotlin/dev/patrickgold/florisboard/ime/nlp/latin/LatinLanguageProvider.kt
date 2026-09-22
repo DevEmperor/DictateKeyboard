@@ -77,6 +77,40 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         private const val CORRECTION_RESERVE = 3
         private const val MAX_DISTANCE2_LEN = 12
 
+        // The one language whose apostrophe forms are rebuilt rather than looked up — see the restoration
+        // block in [suggest] and [ElisionEvidence] for why French alone needs it.
+        private const val ELISION_LANG = "fr"
+
+        // Every word that can stand before an elided vowel in French. Only these: the elision is a closed
+        // class, so a list is the whole rule and a wrong entry cannot invent a prefix that does not exist.
+        // Longest first, so `quelqu'un` is split there rather than at the `qu` inside it.
+        private val FRENCH_ELISION_PREFIXES = listOf(
+            "lorsqu", "puisqu", "jusqu", "quelqu", "presqu", "qu",
+            "j", "c", "d", "l", "m", "n", "s", "t",
+        )
+
+        // What an elided suffix may start with. h is in the set although only h muet elides (l'homme, not
+        // "lhéros"): the corpus decides that case, and this only has to be cheap enough to run per
+        // keystroke — it exists to reject `jchat` and `ltrain` before anything is looked up at all.
+        private val FRENCH_ELISION_INITIALS = setOf('a', 'e', 'i', 'o', 'u', 'y', 'h')
+
+        /**
+         * The French elisions [word] could be, as prefix → suffix pairs, for a word typed without its
+         * apostrophe. Says nothing about whether any of them is a real word — [ElisionEvidence] answers
+         * that, and without it this produces `n'on` from `non` as readily as `j'aime` from `jaime`.
+         */
+        internal fun frenchElisionSplits(word: String): List<Pair<String, String>> {
+            val lower = word.lowercase()
+            return FRENCH_ELISION_PREFIXES.mapNotNull { prefix ->
+                if (word.length <= prefix.length || !lower.startsWith(prefix)) return@mapNotNull null
+                val suffix = word.substring(prefix.length)
+                // Fold one character rather than the whole suffix: this runs on every keystroke, and
+                // Normalizer.normalize is the expensive half of [DictFold.foldFrench].
+                val initial = DictFold.foldFrench(suffix.take(1)).firstOrNull() ?: return@mapNotNull null
+                if (initial in FRENCH_ELISION_INITIALS) prefix to suffix else null
+            }
+        }
+
         // Keyboard-proximity noisy-channel model (Tier 1). Distances are in key-width² units.
         private const val PROX_SIGMA2 = 1.0         // touch variance (~1 key-width std): near mis-taps cost little
         private const val NEUTRAL_SUB_SQDIST = 2.0  // fallback substitution distance² when key geometry is unknown
@@ -448,16 +482,56 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     //
     // The bigram table re-ranks corrections by the previous word AND feeds prediction; the trigram
     // table (issue #334) feeds prediction only — see [nextWordPredictions] for why it goes no further.
-    private val bigramsByLang = guardedByLock { mutableMapOf<String, NgramIndex>() }
+    private val bigramsByLang = guardedByLock { mutableMapOf<String, Bigrams>() }
     private val trigramsByLang = guardedByLock { mutableMapOf<String, NgramIndex>() }
 
-    private suspend fun bigramsFor(subtype: Subtype): NgramIndex {
-        val lang = dictLangFor(subtype) ?: return NgramIndex.EMPTY
-        return bigramsByLang.withLock { cache ->
-            cache[lang] ?: loadTable(lang, "bigrams", GlideDictionaryManager.bigramFile(appContext, lang))
-                .also { cache[lang] = it }
+    /**
+     * The bigram table and, for the one language that needs it, the per-word counts the apostrophe
+     * restoration reads out of the same text ([ElisionEvidence]).
+     *
+     * Together rather than in two caches because the file is 2.4 MB and reading it twice to answer two
+     * questions about the same sentences would be the only cost either of them has.
+     */
+    private class Bigrams(val index: NgramIndex, val elisions: Map<String, Int>) {
+        companion object {
+            val EMPTY = Bigrams(NgramIndex.EMPTY, emptyMap())
         }
     }
+
+    private suspend fun bigramDataFor(subtype: Subtype): Bigrams {
+        val lang = dictLangFor(subtype) ?: return Bigrams.EMPTY
+        return bigramsByLang.withLock { cache ->
+            cache[lang] ?: run {
+                val text = tableText(lang, "bigrams", GlideDictionaryManager.bigramFile(appContext, lang))
+                val fold = if (DictFold.hasNonTrivialFold(lang)) { key: String -> DictFold.foldKey(lang, key) } else null
+                Bigrams(
+                    index = text?.let { runCatching { NgramIndex.parse(it, fold) }.getOrNull() } ?: NgramIndex.EMPTY,
+                    elisions = if (lang != ELISION_LANG || text == null) {
+                        emptyMap()
+                    } else {
+                        runCatching { ElisionEvidence.parse(text) { key -> DictFold.foldKey(lang, key) } }
+                            .getOrDefault(emptyMap())
+                    },
+                ).also { cache[lang] = it }
+            }
+        }
+    }
+
+    private suspend fun bigramsFor(subtype: Subtype): NgramIndex = bigramDataFor(subtype).index
+
+    /**
+     * How often each apostrophe form and its apostrophe-less spelling appear in [subtype]'s corpus.
+     *
+     * Empty for every language but French, and empty for French too when the bigram file never arrived —
+     * it is a best-effort download ([GlideDictionaryManager.ensureDownloaded]). Both cases leave the
+     * restoration exactly as it was before there was one: suggestions only, nothing swapped in.
+     *
+     * The language is checked before the table is touched, because this is asked on every keystroke and
+     * the bigram file is otherwise only read once there is a word of context — no other language should
+     * start paying for its 2.4 MB one word earlier than it used to.
+     */
+    private suspend fun elisionsFor(subtype: Subtype): Map<String, Int> =
+        if (dictLangFor(subtype) != ELISION_LANG) emptyMap() else bigramDataFor(subtype).elisions
 
     private suspend fun trigramsFor(subtype: Subtype): NgramIndex {
         val lang = dictLangFor(subtype) ?: return NgramIndex.EMPTY
@@ -468,8 +542,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     /**
-     * Read one context table. A downloaded per-language file takes precedence over a bundled asset —
-     * mirrors readDict for the unigram dictionaries. Only English bundles one, and only for bigrams.
+     * The raw text of one context table, or null when the language has none. A downloaded per-language
+     * file takes precedence over a bundled asset — mirrors readDict for the unigram dictionaries. Only
+     * English bundles one, and only for bigrams.
+     */
+    private fun tableText(lang: String, kind: String, downloaded: java.io.File): String? = runCatching {
+        if (downloaded.isFile && downloaded.length() > 0) {
+            downloaded.readText()
+        } else {
+            appContext.assets.readText("ime/dict/${lang}_$kind.txt")
+        }
+    }.getOrNull()
+
+    /**
+     * Read one context table.
      *
      * The file stores its keys lowercased; the lookup happens in fold space, so a language with
      * non-trivial folding has to fold the keys on the way in or no key would ever match. Folding the
@@ -477,11 +563,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * [NgramIndex.parse] re-sorts afterwards, because folding can reorder keys and collide them.
      */
     private fun loadTable(lang: String, kind: String, downloaded: java.io.File): NgramIndex = runCatching {
-        val text = if (downloaded.isFile && downloaded.length() > 0) {
-            downloaded.readText()
-        } else {
-            appContext.assets.readText("ime/dict/${lang}_$kind.txt")
-        }
+        val text = tableText(lang, kind, downloaded) ?: return NgramIndex.EMPTY
         val fold = if (DictFold.hasNonTrivialFold(lang)) { key: String -> DictFold.foldKey(lang, key) } else null
         NgramIndex.parse(text, fold)
     }.getOrDefault(NgramIndex.EMPTY)
@@ -701,6 +783,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         for (lang in acceptedDictLangs(subtype)) {
             val index = lowerIndexForLang(lang)
             if (index.freq.containsKey(index.fold(word))) return true
+        }
+        // A French elision is a word the language writes constantly and the word list does not hold — 13
+        // apostrophe entries in 68,605 — so asking the word list alone underlines `d'une` and `qu'il` as
+        // misspellings while `c'est` passes, purely by which ones survived the generator's Hunspell pass.
+        // It matters more now that the restoration commits them: correcting into a word the spell checker
+        // then marks wrong would be the keyboard contradicting itself. The corpus is the same evidence the
+        // restoration uses, so the two can never disagree about what a French word is.
+        if (word.any { it == '\'' || it == '’' }) {
+            val elisions = elisionsFor(subtype)
+            if (elisions.isNotEmpty() &&
+                ElisionEvidence.isAttested(elisions, ElisionEvidence.key(DictFold.foldKey(ELISION_LANG, word)))
+            ) {
+                return true
+            }
         }
         return isInUserDictionary(word, subtype)
     }
@@ -1325,24 +1421,80 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // path below skips it), yet the apostrophe form is usually what was meant and more common. Offered at
         // the front of the strip as a tap suggestion — not auto-committed, so a genuine "ill"/"well" is never
         // silently turned into "i'll"/"we'll".
-        if (autoCorrectOn && word.length >= 3 && !word.contains('\'')) {
+        //
+        // French gets nothing at all out of that loop and needs the most: elisions are 4 % of everything
+        // written in the language, and the word list holds 13 apostrophe entries in 68,605 words, because
+        // the generator's Hunspell pass splits on the apostrophe and keeps only what follows it. So the
+        // forms are rebuilt from a prefix and a known suffix — and rebuilding is exactly as able to produce
+        // "n'on" from "non" as "j'aime" from "jaime", since "on" is a word and `n'` is a prefix. The corpus
+        // is what tells the two apart, and it decides both whether a form is offered at all and whether it
+        // may be taken silently; [ElisionEvidence] carries the measurements.
+        if (autoCorrectOn && word.length >= 3 && word.none { it == '\'' || it == '’' }) {
             val typedFreq = index.freq[index.fold(word)] ?: 0
+            // Corpus key → its frequency on the dictionary's 128..255 scale and the spelling to show.
+            // Insertion order is the order they reach the strip.
+            val forms = LinkedHashMap<String, Pair<Int, String>>()
             (1 until word.length)
                 .map { word.substring(0, it) + "'" + word.substring(it) }
                 .mapNotNull { v -> index.fold(v).let { k -> index.freq[k]?.let { f -> f to (index.canonical[k] ?: v) } } }
                 .filter { it.first > typedFreq }
                 .sortedByDescending { it.first }
                 .forEach { (freq, canonical) ->
-                    // English "I" contractions are stored lowercase in the dictionary; show them capitalised.
-                    val display = if (canonical.startsWith("i'")) "I" + canonical.substring(1) else cased(canonical)
-                    out.putIfAbsent(
-                        display.lowercase(),
-                        WordSuggestionCandidate(
-                            text = display, confidence = freq / 255.0,
-                            isEligibleForAutoCommit = false, sourceProvider = this,
-                        ),
-                    )
+                    forms.putIfAbsent(ElisionEvidence.key(index.fold(canonical)), freq to canonical)
                 }
+
+            // French elisions, rebuilt because the word list does not hold them, and kept only when the
+            // corpus is on record as writing them. The frequency shown is the suffix's — the full form has
+            // none of its own — which is also what orders them among themselves.
+            val corpus = elisionsFor(subtype)
+            var rebuilt = false
+            if (corpus.isNotEmpty()) {
+                frenchElisionSplits(word)
+                    .mapNotNull { (prefix, suffix) ->
+                        val suffixKey = index.fold(suffix)
+                        val canonical = index.canonical[suffixKey] ?: return@mapNotNull null
+                        val display = "$prefix'$canonical"
+                        val key = ElisionEvidence.key(index.fold(display))
+                        if (ElisionEvidence.isAttested(corpus, key)) Triple(key, index.freq[suffixKey] ?: 0, display)
+                        else null
+                    }
+                    .sortedByDescending { it.second }
+                    .forEach { (key, freq, display) ->
+                        if (forms.putIfAbsent(key, freq to display) == null) rebuilt = true
+                    }
+            }
+
+            // What may be swapped in silently. Only a single unambiguous reading, and only when the corpus
+            // is lopsided enough to say the apostrophe-less spelling was a slip rather than a word
+            // ([ElisionEvidence.DOMINANCE]). Every other language stays tap-only, because "ill", "well" and
+            // "its" are exactly as common as the contractions they would be rewritten into.
+            val autoCommitKey = forms.keys.singleOrNull()?.takeIf {
+                index.lang == ELISION_LANG &&
+                    ElisionEvidence.mayReplace(corpus, ElisionEvidence.key(index.fold(word)), it)
+            }
+            if (rebuilt || autoCommitKey != null) {
+                // Keep the typed spelling tappable and left-most, so an elision can be refused before it is
+                // taken and a real word is never pushed out of the strip by one (issue #150). Under its own
+                // plain key, like the German restoration above, so the completion walk does not add it twice.
+                out.putIfAbsent(
+                    word.lowercase(),
+                    WordSuggestionCandidate(
+                        text = word, confidence = 1.0, isEligibleForAutoCommit = false, sourceProvider = this,
+                    ),
+                )
+            }
+            forms.forEach { (key, entry) ->
+                val (freq, canonical) = entry
+                // English "I" contractions are stored lowercase in the dictionary; show them capitalised.
+                val display = if (canonical.startsWith("i'")) "I" + canonical.substring(1) else cased(canonical)
+                out.putIfAbsent(
+                    display.lowercase(),
+                    WordSuggestionCandidate(
+                        text = display, confidence = freq / 255.0,
+                        isEligibleForAutoCommit = key == autoCommitKey, sourceProvider = this,
+                    ),
+                )
+            }
         }
 
         // Noun capitalisation (issue #242 follow-up). German capitalises every noun, but typing one
@@ -1375,7 +1527,14 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 out[lower] = WordSuggestionCandidate(
                     text = canonical,
                     confidence = (index.freq[lower] ?: 0) / 255.0,
-                    isEligibleForAutoCommit = true,
+                    // Not when a restoration above already claimed the slot. This rule carries no
+                    // frequency threshold of its own — the dictionary's capitalisation *is* the evidence,
+                    // which is the right weight for a German noun and the wrong one for a name that
+                    // happens to spell an elision: fr.json holds `Jaime`, so `jaime` was capitalised into
+                    // somebody's name rather than restored to `j'aime`, which the corpus attests 450 times
+                    // and the name not at all. First claim wins, and the apostrophe block's is the one
+                    // backed by a measurement.
+                    isEligibleForAutoCommit = out.values.none { it.isEligibleForAutoCommit },
                     sourceProvider = this,
                 )
             }
@@ -1621,7 +1780,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
             // What may be swapped in *silently* (the strip always shows everything either way).
             val topTouchCost = touchCorrections?.topCost
-            val allowAutoCommit = when {
+            // A restoration above (umlaut, spelling, apostrophe) that already claimed the slot keeps it:
+            // [NlpManager.getAutoCommitCandidate] takes the first eligible candidate, so a second one is
+            // never committed — it is only drawn bold, which is a lie about what Space is going to take.
+            // The dictionary fixes below already follow this rule against the personal ones.
+            val slotClaimed = out.values.any { it.isEligibleForAutoCommit }
+            val allowAutoCommit = !slotClaimed && when {
                 // Decoded from the taps: act only when the fingers really were near that key. This replaces
                 // the `hadCandidatesBefore` gate, which suppressed 2.7 % of otherwise correct fixes merely
                 // because the typo prefixed some dictionary word — while a bare "a correction exists" rule

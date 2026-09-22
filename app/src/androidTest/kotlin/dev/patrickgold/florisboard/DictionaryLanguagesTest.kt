@@ -254,6 +254,112 @@ class DictionaryLanguagesTest {
         assertTrue("expected morning offered for morninh, got $corrections", corrections.contains("morning"))
     }
 
+    // --- French elisions (issue #212 follow-up) ----------------------------------------------------
+    //
+    // The rule itself is measured by FrenchElisionEvalTest; these four check that the engine is wired to
+    // it — that the corpus really reaches [LatinLanguageProvider.suggest] on a device, which no unit test
+    // can say. They need the bigram file as well as the word list, so they wait for both.
+
+    /** Waits for [lang]'s context table too — the elision evidence lives in it. */
+    private fun ensureContext(lang: String) {
+        ensureDictionary(lang)
+        val deadline = System.currentTimeMillis() + DOWNLOAD_TIMEOUT_MS
+        while (System.currentTimeMillis() < deadline) {
+            if (GlideDictionaryManager.bigramInstalled(context, lang)) return
+            Thread.sleep(500)
+        }
+        throw AssertionError("$lang bigram table did not download within ${DOWNLOAD_TIMEOUT_MS}ms")
+    }
+
+    /**
+     * Fails unless [subtype] really reaches the French dictionary.
+     *
+     * A subtype built the wrong way gets no dictionary at all and an empty strip, which reads as "nothing
+     * was invented" and passes the test below without exercising a line of it. That is not hypothetical:
+     * [FlorisLocale.from] takes a *language*, so `from("fr-CA")` yields the language `fr-ca` and no
+     * dictionary — `fromTag` is the one that parses a tag.
+     */
+    private fun assertDictionaryLive(subtype: Subtype) {
+        val out = suggestionsFor(subtype, "bonjou")
+        assertTrue("no French dictionary behind this subtype: bonjou -> $out", out.contains("bonjour"))
+    }
+
+    private fun apostropheFormsIn(suggestions: List<String>): List<String> =
+        suggestions.filter { it.any { ch -> ch == '\'' || ch == '’' } }
+
+    @Test
+    fun frenchRestoresElisionsTheWordListDoesNotHold() {
+        ensureContext("fr")
+        val fr = subtypeFor("fr", "azerty")
+        // Right of the arrow is what the corpus says people write. None of these is in fr.json except
+        // aujourd'hui, and "jaime" is the case that only works because the evidence is the corpus: the
+        // word list holds the name Jaime, so asking it whether the typed form is a word says yes.
+        val cases = mapOf(
+            "jaime" to "j'aime",
+            "jai" to "j'ai",
+            "cest" to "c'est",
+            "daccord" to "d'accord",
+            "quon" to "qu'on",
+            "sil" to "s'il",
+            "aujourdhui" to "aujourd'hui",
+            // h muet: the word list cannot tell it from h aspiré, the corpus can.
+            "lhomme" to "l'homme",
+        )
+        for ((typed, expected) in cases) {
+            val committed = autoCommitted(fr, typed)?.replace('’', '\'')
+            Log.i(TAG, "fr  $typed -> auto-commit ${committed ?: "(none)"}")
+            assertEquals("$typed must restore its apostrophe", expected, committed)
+        }
+    }
+
+    @Test
+    fun frenchNeverInventsAnElisionForAnOrdinaryWord() {
+        ensureContext("fr")
+        val fr = subtypeFor("fr", "azerty")
+        assertDictionaryLive(fr)
+        // Every one of these splits into a prefix and a word the dictionary knows — non→n'+on,
+        // test→t'+est, savoir→s'+avoir, Meaux→m'+eaux — and none is a thing French writes. They must not
+        // be committed, and must not reach the strip at all: a nonsense suggestion in the first cell is
+        // the everyday cost this feature could have had.
+        for (word in listOf("non", "mon", "son", "ton", "test", "savoir", "centre", "thé", "Meaux", "lhéros")) {
+            val suggestions = suggestionsFor(fr, word)
+            val apostrophes = apostropheFormsIn(suggestions)
+            Log.i(TAG, "fr  $word -> $suggestions")
+            assertTrue("$word must not be offered an apostrophe form, got $apostrophes", apostrophes.isEmpty())
+        }
+    }
+
+    @Test
+    fun frenchOffersAnAmbiguousElisionWithoutTakingIt() {
+        ensureContext("fr")
+        val fr = subtypeFor("fr", "azerty")
+        // Real words whose elision is also real. Both readings belong in the strip; choosing between them
+        // is the writer's, so the typed word leads and nothing is committed.
+        for ((word, elision) in mapOf("quelle" to "qu'elle", "lune" to "l'une", "lame" to "l'âme")) {
+            val suggestions = suggestionsFor(fr, word)
+            Log.i(TAG, "fr  $word -> $suggestions  auto-commit ${autoCommitted(fr, word) ?: "(none)"}")
+            assertEquals("$word must lead its own strip", word, suggestions.firstOrNull())
+            assertTrue(
+                "$elision must still be offered for $word, got $suggestions",
+                suggestions.any { it.replace('’', '\'') == elision },
+            )
+            assertTrue("$word must not be replaced", autoCommitted(fr, word).let { it == null || it == word })
+        }
+    }
+
+    @Test
+    fun frenchCountsAnElisionAsCorrectlySpelled() {
+        ensureContext("fr")
+        val fr = subtypeFor("fr", "azerty")
+        // The other half of the same evidence: what the restoration is willing to commit, the spell
+        // checker has to accept. Only c'est is in the word list, so without the corpus the rest underline.
+        for (word in listOf("c'est", "d'une", "qu'il", "l'homme", "aujourd'hui")) {
+            val result = runBlocking { provider.spell(fr, word, emptyList(), emptyList(), 4, true, false) }
+            Log.i(TAG, "fr  spell($word) -> valid=${result.isValidWord}")
+            assertTrue("$word must not be flagged as a typo", result.isValidWord)
+        }
+    }
+
     private companion object {
         const val TAG = "DictLangTest"
         const val DOWNLOAD_TIMEOUT_MS = 120_000L
