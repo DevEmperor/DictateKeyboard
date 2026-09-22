@@ -14,8 +14,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
+import android.text.InputType
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
@@ -90,7 +93,7 @@ class WearImeService :
         WearSettingsStore.load(applicationContext)
     }
 
-    override fun onStartInputView(info: android.view.inputmethod.EditorInfo?, restarting: Boolean) {
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         // Opening the keyboard is a good moment to reconcile with the phone: read the latest replicated
         // settings DataItem (accent/provider/key/prompt) and nudge a republish. The cached copy is used
@@ -146,7 +149,7 @@ class WearImeService :
     private val actions = WearImeActions(
         commitText = { text -> ic()?.commitText(text, 1) },
         deleteBackward = { ic()?.deleteSurroundingText(1, 0) },
-        performEnter = { ic()?.commitText("\n", 1) },
+        performEnter = { performEnter() },
         toggleDictation = { toggleDictation() },
         togglePause = { togglePause() },
         cancelDictation = { cancelDictation() },
@@ -154,6 +157,40 @@ class WearImeService :
     )
 
     private fun ic(): InputConnection? = currentInputConnection
+
+    /**
+     * The submit action the focused field declares (SEND / SEARCH / GO / DONE …), or null when it has
+     * none for the IME to fire — either because it declares no action, or because it asked the IME to
+     * leave Enter alone with [EditorInfo.IME_FLAG_NO_ENTER_ACTION].
+     */
+    private fun editorAction(): Int? {
+        val imeOptions = currentInputEditorInfo?.imeOptions ?: return null
+        if (imeOptions and EditorInfo.IME_FLAG_NO_ENTER_ACTION != 0) return null
+        return (imeOptions and EditorInfo.IME_MASK_ACTION).takeUnless {
+            it == EditorInfo.IME_ACTION_NONE || it == EditorInfo.IME_ACTION_UNSPECIFIED
+        }
+    }
+
+    /**
+     * The ⏎ key. Committing a literal newline is the wrong thing for most fields: WhatsApp's compose box
+     * and the browser's search bar declare an *editor action* (SEND / SEARCH) and act on that, never on
+     * "\n", which is why Enter looked dead in those apps (#294). So fire the declared action when there
+     * is one, fall back to a real ENTER key event for fields that want the key press, and only insert a
+     * newline into genuinely multi-line editors.
+     */
+    private fun performEnter() {
+        val ic = ic() ?: return
+        val action = editorAction()
+        if (action != null) {
+            // The action *is* the submit, so the keyboard is done once it lands: the app is already
+            // showing its result, and the opaque input view would otherwise sit on top of it.
+            if (ic.performEditorAction(action)) requestHideSelf(0)
+            return
+        }
+        val multiline = (currentInputEditorInfo?.inputType ?: 0) and
+            InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0
+        if (multiline) ic.commitText("\n", 1) else sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER)
+    }
 
     /**
      * Voice-page record button. Tap once to start recording, tap again to stop; on stop the audio is
@@ -278,9 +315,11 @@ class WearImeService :
                     ic()?.commitText(text, 1)
                     recordingInfo.value = WearRecordingInfo()
                     dictationState.value = WearDictationState.IDLE
-                    // Dictation is the primary action — once the text is in, get out of the way so the
-                    // user sees their field again instead of a keyboard stuck open over it.
-                    requestHideSelf(0)
+                    // Dictation is the primary action, so getting out of the way is the right default —
+                    // but not over a field that declares a submit action. There the dictation is only
+                    // half the job: hiding steals the ⏎ the user still needs, and the teardown races the
+                    // commit we just made, which Samsung's browser loses the text to entirely (#294).
+                    if (editorAction() == null) requestHideSelf(0)
                 }
             }
         }
