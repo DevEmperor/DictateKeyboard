@@ -45,6 +45,8 @@ One-shot models — these transcribe after you stop speaking:
 
   - Whisper (tiny/base/small, multilingual and English) — © OpenAI, MIT License.
     https://github.com/openai/whisper
+  - Parakeet Ultra — a post-train of NVIDIA Parakeet TDT 0.6B v3 covering the same 25 European
+    languages, © moondream, licensed CC BY 4.0. https://huggingface.co/moondream/parakeet-ultra
   - Parakeet TDT 0.6B v3 — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
   - Parakeet TDT 110M (English) — © NVIDIA, licensed CC BY 4.0.

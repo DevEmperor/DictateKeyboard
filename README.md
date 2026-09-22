@@ -274,14 +274,16 @@ Dictate Keyboard is released under the terms of the
 - On-device transcription uses [OpenAI Whisper](https://openai.com/index/whisper/) (MIT),
   NVIDIA's [Parakeet](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3),
   [Canary](https://huggingface.co/nvidia/canary-180m-flash) and
-  [FastConformer](https://huggingface.co/nvidia/stt_de_fastconformer_hybrid_large_pc) models and the
+  [FastConformer](https://huggingface.co/nvidia/stt_de_fastconformer_hybrid_large_pc) models,
+  moondream's [Parakeet Ultra](https://huggingface.co/moondream/parakeet-ultra) post-train and the
   primeline German fine-tune (CC-BY-4.0),
   [GigaAM](https://github.com/salute-developers/GigaAM) for Russian (MIT),
   [Dolphin](https://github.com/DataoceanAI/Dolphin) by DataoceanAI and Tsinghua University for 40
   Eastern languages (Apache-2.0),
   and — for live transcription — the [Kroko ASR](https://huggingface.co/Banafo/Kroko-ASR)
-  community models by Banafo (CC-BY-SA). All of them are exported to ONNX by
-  [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx).
+  community models by Banafo (CC-BY-SA). They are exported to ONNX by
+  [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) — except Parakeet Ultra, whose weights are
+  substituted into sherpa-onnx's own Parakeet graph, since upstream publishes no ONNX build.
 - The Lattice button design is ported from
   [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs) by Jakub Antalik (MIT).
 - GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.

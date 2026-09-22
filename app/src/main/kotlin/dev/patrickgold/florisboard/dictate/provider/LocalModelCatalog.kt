@@ -237,6 +237,9 @@ object LocalModelCatalog {
         val PRIMELINE = ModelCredit(
             "primeline", "CC-BY-4.0", "https://huggingface.co/primeline/parakeet-primeline",
         )
+        val MOONDREAM = ModelCredit(
+            "moondream", "CC-BY-4.0", "https://huggingface.co/moondream/parakeet-ultra",
+        )
 
         /** NVIDIA publishes under CC-BY-4.0 per model, never per family — hence the URL per entry. */
         fun nvidia(url: String) = ModelCredit("NVIDIA", "CC-BY-4.0", url)
@@ -348,14 +351,60 @@ object LocalModelCatalog {
     )
 
     /**
+     * ~670 MB. Parakeet Ultra (issue #414) — moondream's post-train of [PARAKEET_TDT_V3], which it
+     * replaces at the same size, the same speed and the same 25 languages. Identical architecture and a
+     * byte-identical tokenizer, so `tokens.txt` is v3's file unchanged.
+     *
+     * **What it is really worth is not what its model card says.** In full precision it beats the
+     * original by ~9 % on German, which is roughly the advertised margin. The gap that matters here
+     * opens only under the int8 quantisation everything in this catalog ships as: measured on 40 FLEURS
+     * dev files through the vendored sherpa-onnx 1.13.3, German goes 3,95 → 8,62 % for v3 but 3,59 →
+     * 3,71 % for this one, and Latvian 22,19 → 38,46 % against 17,90 → 25,15 %. So the shipped file
+     * improves by 57 % (de), 35 % (lv) and 31 % (en) while the fp32 models are nearly level. The same
+     * training that lets moondream publish a 1.58-bit sibling is the plausible reason.
+     *
+     * **Not exported by sherpa-onnx** — the only such entry. moondream publishes PyTorch weights and a
+     * closed runtime, no ONNX. Since the architecture is the original's, the weights were substituted
+     * into sherpa's own v3 graph instead of exporting a new one, so every property the runtime reads
+     * (I/O names, TDT durations, subsampling factor, the `tdt` marker in the url metadata — see #176)
+     * is the file sherpa published. The mapping was proved by replaying it with NVIDIA's own weights,
+     * which reproduced both the fp32 export and the shipped `encoder.int8.onnx` bit for bit.
+     *
+     * Licensing: CC-BY-4.0 (moondream, over NVIDIA's CC-BY-4.0 base).
+     */
+    val PARAKEET_ULTRA = LocalModelSpec(
+        id = "parakeet-ultra",
+        displayName = "Parakeet Ultra",
+        // Same encoder as v3, so the same reasoning about attention memory on a phone applies.
+        maxSegmentSeconds = 120,
+        languages = Langs.PARAKEET_V3,
+        punctuates = true,
+        credit = Credits.MOONDREAM,
+        kind = LocalModelKind.NEMO_TRANSDUCER,
+        files = listOf(
+            LocalModelFile("$REL/parakeet-ultra-encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 652_184_240, "9f7435fa791c00b7b596cfd98878dbc0006e1059e7fc1b1884331d6828611ef6"),
+            LocalModelFile("$REL/parakeet-ultra-decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 11_845_274, "1fab98fe6c12aded87d2da66272cc9e148d0a0044ce3850a12fe56302ec4a922"),
+            LocalModelFile("$REL/parakeet-ultra-joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 6_355_277, "8ba94c6919c17a6bd27368fb89533628a72ffc81d4acedebf3cdcb2cae331dbb"),
+            LocalModelFile("$REL/parakeet-ultra-tokens.txt", LocalTranscriptionProvider.TOKENS, 93_939, "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d"),
+            VAD_FILE,
+        ),
+    )
+
+    /**
      * ~670 MB. NVIDIA Parakeet TDT 0.6B v3 (issue #154) — a NeMo *transducer* (encoder/decoder/joiner),
      * not Whisper. Covers 25 European languages; typically faster and more accurate than the small
      * Whisper variants. Exported to ONNX (int8) by the sherpa-onnx project. Licensing: the Parakeet
      * weights are CC-BY-4.0 (NVIDIA); sherpa-onnx export is Apache-2.0 — both allow redistribution.
+     *
+     * **Retired by [PARAKEET_ULTRA]** (#414), which is the same model trained further: same size, same
+     * languages, same speed, and it keeps its accuracy through int8 where this one loses half of it.
+     * It stays here for everyone who already has it — see [visibleTopLevel]; dropping the id would
+     * orphan 670 MB on their disk and build the wrong recognizer for their saved pick.
      */
     val PARAKEET_TDT_V3 = LocalModelSpec(
         id = "parakeet-tdt-0.6b-v3",
         displayName = "Parakeet TDT 0.6B v3",
+        supersededBy = "parakeet-ultra",
         // NVIDIA: "up to 24 minutes long with full attention" — on an A100 80 GB. Two minutes is
         // what a phone is offered instead: attention memory grows with the square of the length,
         // and a pause every few seconds means the VAD rarely builds a piece this long anyway.
@@ -817,8 +866,8 @@ object LocalModelCatalog {
      * what most people will end up downloading rather than by architecture or by when a model was added.
      *
      * Broad coverage and a small download come first: the English Parakeet at 137 MB, then Canary with
-     * the four biggest European languages at 208 MB, then Parakeet v3, which speaks twenty-five but
-     * costs 670 MB. The language specialists follow, and the two 670 MB entries sink towards the bottom.
+     * the four biggest European languages at 208 MB, then Parakeet Ultra, which speaks twenty-five but
+     * costs 670 MB — with the v3 it retired directly behind it, where only its existing owners see it. The language specialists follow, and the two 670 MB entries sink towards the bottom.
      *
      * **Whisper last**, before the live models. It is the one everybody recognises, which is exactly why
      * it should not be the first thing offered: for almost every language in this catalog there is now
@@ -832,6 +881,7 @@ object LocalModelCatalog {
     val all: List<LocalModelSpec> = listOf(
         PARAKEET_TDT_110M_EN,
         CANARY_180M_FLASH,
+        PARAKEET_ULTRA,
         PARAKEET_TDT_V3,
         FASTCONFORMER_DE,
         SENSE_VOICE_SMALL,
@@ -878,8 +928,9 @@ object LocalModelCatalog {
 
     /**
      * [all] folded into the rows the picker's first level shows: a family appears once, in the place of
-     * its first member, and everything else stands for itself. Twenty-four entries become ten: eight
-     * models that are their own choice, plus Whisper and Kroko.
+     * its first member, and everything else stands for itself. Twenty-six entries become twelve rows,
+     * of which [visibleTopLevel] shows ten to anyone new: eight models that are their own choice, plus
+     * Whisper and Kroko — the two retired entries are seen only by the people who have them.
      *
      * Order is [all]'s, which is what keeps the streaming rows a contiguous tail and the "Live" heading
      * where it belongs. Relies on a family's members sitting next to each other — asserted by a test,
