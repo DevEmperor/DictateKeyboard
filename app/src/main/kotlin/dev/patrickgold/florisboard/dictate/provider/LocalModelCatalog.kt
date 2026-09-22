@@ -921,7 +921,14 @@ object LocalModelCatalog {
             // Until #406 the German offer was Whisper Base or 670 MB, and the specialized model was the
             // expensive one. FastConformer is specialized *and* the cheaper of the two, so the shape of
             // this pair finally matches every other language: the one that fits, then the bigger one.
-            "de" -> listOf(FASTCONFORMER_DE, PARAKEET_PRIMELINE_DE)
+            //
+            // The bigger one is [PARAKEET_ULTRA] rather than the German [PARAKEET_PRIMELINE_DE] since
+            // #414: on 200 FLEURS dev files it reads German at 5,23 % WER against primeline's 6,57 %, at
+            // the same 670 MB and the same speed, and it covers the other 24 languages besides — which
+            // matters for the many people who dictate in more than one. primeline stays in the picker
+            // for anyone who wants it: that measurement is read speech, and its own claim rests on
+            // Tuda-De, so it is enough to choose a default with and not enough to retire a specialist.
+            "de" -> listOf(FASTCONFORMER_DE, PARAKEET_ULTRA)
             "en" -> listOf(PARAKEET_TDT_110M_EN, WHISPER_SMALL_EN)
             else -> listOf(WHISPER_BASE, WHISPER_SMALL)
         }

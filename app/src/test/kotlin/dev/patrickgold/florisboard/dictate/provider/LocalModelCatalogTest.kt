@@ -14,6 +14,7 @@ import dev.patrickgold.florisboard.dictate.DictateLanguages
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -133,6 +134,12 @@ class LocalModelCatalogTest {
                     spec.kind != LocalModelKind.CANARY,
                     "${spec.id} must be told its language, which setup has not asked for yet",
                 )
+                // The shortlist is the one place a retired model could still reach somebody brand new:
+                // visibleTopLevel hides them from the picker, but this list bypasses it entirely.
+                assertNull(
+                    spec.supersededBy,
+                    "${spec.id} was retired in favour of ${spec.supersededBy}, so setup must not offer it",
+                )
             }
         }
     }
@@ -145,7 +152,9 @@ class LocalModelCatalogTest {
         assertEquals("gigaam-v3-ru", LocalModelCatalog.onboardingPicks("ru").first().id)
         // German is offered its own specialized model first and the 670 MB one as the bigger alternative.
         assertEquals("fastconformer-de", LocalModelCatalog.onboardingPicks("de").first().id)
-        assertEquals("parakeet-primeline-de", LocalModelCatalog.onboardingPicks("de")[1].id)
+        // The bigger German offer is the multilingual Parakeet, not the German-only primeline, because
+        // it reads German better at the same size and speaks 24 more languages (#414).
+        assertEquals("parakeet-ultra", LocalModelCatalog.onboardingPicks("de")[1].id)
         assertEquals("parakeet-tdt-110m-en", LocalModelCatalog.onboardingPicks("en").first().id)
         assertEquals("whisper-base", LocalModelCatalog.onboardingPicks("fr").first().id)
         // A region or script suffix must not fall through to the default.
