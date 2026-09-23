@@ -168,6 +168,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__rewording_enabled_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__rewording_enabled_title"),
         SettingsSearchEntry(R.string.dictate__prompts_layout_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__prompts_layout_title"),
         SettingsSearchEntry(R.string.dictate__manage_prompts_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__manage_prompts_title"),
+        SettingsSearchEntry(R.string.dictate__command_word_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__command_word_title"),
         // Hand-added (issue #283): the typing shortcut lives inside the prompt editor dialog, which the
         // generator cannot see — and it is exactly what someone looking for text expansion searches for.
         // The keywords are hand-added too (issue #333). The feature was complete and still went unfound,
@@ -178,7 +179,6 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__auto_formatting_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__auto_formatting_title"),
         SettingsSearchEntry(R.string.dictate__reasoning_effort_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__reasoning_effort_title"),
         SettingsSearchEntry(R.string.dictate__system_prompt_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title),
-        SettingsSearchEntry(R.string.dictate__system_prompt_custom_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__stats_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__stats_title"),
         SettingsSearchEntry(R.string.dictate__history_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__history_title"),
         SettingsSearchEntry(R.string.dictate__layout_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__layout_title"),
@@ -191,7 +191,6 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__floating_button_enable_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__floating_button_enable_title"),
         SettingsSearchEntry(R.string.dictate__wear_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__wear_title"),
         SettingsSearchEntry(R.string.dictate__style_prompt_title, R.string.dictate__formatting_title, Routes.Settings.DictateFormatting, parentRes = R.string.dictate__title),
-        SettingsSearchEntry(R.string.dictate__style_prompt_custom_title, R.string.dictate__formatting_title, Routes.Settings.DictateFormatting, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__custom_words_title, R.string.dictate__formatting_title, Routes.Settings.DictateFormatting, parentRes = R.string.dictate__title),
         // Hand-added (issue #389); the generator is lossy, so a rerun of it must be diffed before keeping.
         // Both point at the custom-words row: importing and exporting live inside its dialog, so the

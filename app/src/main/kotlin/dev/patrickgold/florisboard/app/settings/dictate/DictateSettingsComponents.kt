@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
+import dev.patrickgold.jetpref.datastore.model.PreferenceDataEvaluator
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
@@ -90,6 +91,12 @@ internal fun promptSelectionEntries(): List<ListPreferenceEntry<Int>> = listPref
  * because JetPref's `ListPreference` reserves its trailing slot for an optional switch and does not
  * expose it to callers.
  *
+ * With [customPref] given, the custom text is written *inside this dialog*: picking "custom" grows the
+ * dialog by a text area, and confirming saves the choice and the text together. It used to be a second
+ * settings row that appeared underneath — which meant the row said "custom" while the prompt itself was
+ * somewhere else, and picking the option left the user on a screen with nothing obviously to do next.
+ * Cancelling now also discards both halves, which two separate rows could never manage.
+ *
  * @param infoPromptText the built-in prompt revealed by the info button; for per-language prompts the
  *  caller passes the resolved text for the active language.
  */
@@ -102,6 +109,8 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
     infoTitle: String,
     infoDescription: String,
     infoPromptText: String,
+    customPref: PreferenceData<String>? = null,
+    customPlaceholder: String = "",
 ) {
     val scope = rememberCoroutineScope()
     val value by pref.collectAsState()
@@ -126,12 +135,18 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
 
     if (selectionDialogOpen) {
         var tmpValue by remember(value) { mutableStateOf(value) }
+        // Read once as the dialog opens rather than collected: this is a draft the user is editing, and
+        // it must not be overwritten by the store underneath it.
+        var tmpCustom by remember { mutableStateOf(customPref?.get().orEmpty()) }
         JetPrefAlertDialog(
             scrollModifier = florisDialogScroll(),
             title = title,
             confirmLabel = stringRes(R.string.action__ok),
             onConfirm = {
-                scope.launch { pref.set(tmpValue) }
+                scope.launch {
+                    pref.set(tmpValue)
+                    customPref?.set(tmpCustom.trim())
+                }
                 selectionDialogOpen = false
             },
             dismissLabel = stringRes(R.string.action__cancel),
@@ -157,6 +172,21 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
                         )
                         Text(text = entry.label)
                     }
+                }
+                if (customPref != null && tmpValue == DictatePromptDefaults.SELECTION_CUSTOM) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            // Room for a real prompt, and capped so a long one scrolls inside the field
+                            // instead of pushing the radio buttons off the top (issue #149).
+                            .heightIn(min = 160.dp, max = 280.dp),
+                        value = tmpCustom,
+                        onValueChange = { tmpCustom = it },
+                        singleLine = false,
+                        placeholder = { Text(customPlaceholder) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    )
                 }
             }
         }
@@ -185,29 +215,68 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
  * A [Preference] row that edits a string preference through a text dialog. Shared across the Dictate
  * settings screens (API key, model, base URL, custom prompts). Secret fields are masked while typing;
  * pass [multiline] for longer free-text values such as custom prompts.
+ *
+ * [keyboardType] overrides the default the flags pick — the default suits the addresses and model ids
+ * this row was written for, and a value that is ordinary prose (a spoken trigger word) needs a normal
+ * text keyboard with a space bar instead.
+ *
+ * [infoText] adds the same trailing "i" button [PromptSelectionPreference] has, for a setting whose
+ * value says nothing about what it does: the row shows the word, the info box says what saying it
+ * brings about.
  */
 @Composable
 internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
     pref: PreferenceData<String>,
     title: String,
+    modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     placeholder: String = "",
     isSecret: Boolean = false,
     multiline: Boolean = false,
+    keyboardType: KeyboardType? = null,
+    enabledIf: PreferenceDataEvaluator = { true },
+    infoTitle: String? = null,
+    infoText: String? = null,
     notSetSummary: String = stringRes(R.string.dictate__value_not_set),
     summaryProvider: (String) -> String = { it.ifBlank { notSetSummary } },
 ) {
     val value by pref.collectAsState()
     val scope = rememberCoroutineScope()
     var dialogOpen by remember { mutableStateOf(false) }
+    var infoDialogOpen by remember { mutableStateOf(false) }
     val summary = summaryProvider(value)
 
     Preference(
+        modifier = modifier,
         icon = icon,
         title = title,
         summary = summary,
+        enabledIf = enabledIf,
+        trailing = if (infoText != null) {
+            {
+                IconButton(onClick = { infoDialogOpen = true }) {
+                    Icon(imageVector = Icons.Outlined.Info, contentDescription = infoTitle ?: title)
+                }
+            }
+        } else {
+            null
+        },
         onClick = { dialogOpen = true },
     )
+
+    if (infoDialogOpen && infoText != null) {
+        JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
+            title = infoTitle ?: title,
+            confirmLabel = stringRes(R.string.action__ok),
+            onConfirm = { infoDialogOpen = false },
+            onDismiss = { infoDialogOpen = false },
+        ) {
+            SelectionContainer {
+                Text(text = infoText)
+            }
+        }
+    }
 
     if (dialogOpen) {
         var text by remember(value) { mutableStateOf(value) }
@@ -234,7 +303,7 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
                 placeholder = { Text(placeholder) },
                 visualTransformation = if (isSecret) PasswordVisualTransformation() else VisualTransformation.None,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = when {
+                    keyboardType = keyboardType ?: when {
                         isSecret -> KeyboardType.Password
                         multiline -> KeyboardType.Text
                         else -> KeyboardType.Uri

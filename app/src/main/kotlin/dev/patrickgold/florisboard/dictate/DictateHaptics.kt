@@ -23,6 +23,9 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
  *
  * Patterns (the reporter's suggestion): a short buzz on record start/stop, a double-short when the
  * transcription is ready, and a longer single buzz when a rewording/LLM prompt has been applied. The
+ * start/stop buzz is skipped whenever the press that caused it has already buzzed by itself — see
+ * `DictateController.pressAlreadyBuzzed`; the other two always fire, and they are the ones that carry
+ * news the user has no other way of getting. The
  * amplitude uses [VibrationEffect.DEFAULT_AMPLITUDE], which honours the system's haptic-intensity setting
  * — that is the intensity control, so there's no separate slider. Driven from [DictateController]'s state
  * transitions; the watch mirrors the same signals in `WearImeService`.

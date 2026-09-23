@@ -1202,7 +1202,7 @@
     <string name="dictate__floating_button_snap_title">端に吸着</string>
     <string name="dictate__interrupted_recording">中断されました ({time})</string>
     <string name="dictate__providers_summary_both">文字起こし: {transcription} · 言い換え: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">最後の音声入力を保持し、Smartbar の「再挿入」ボタンで再び挿入できます。</string>
+    <string name="dictate__remember_last_dictation_summary">直前の音声入力を保持し、フローティングボタンで取り消したり、クラシックレイアウトで再挿入したりできるようにします。</string>
     <string name="dictate__remember_last_dictation_title">最後の音声入力を記憶</string>
     <string name="changelog__v4_2_0">• 新機能: フローティング音声入力ボタン — 別のキーボードが有効でも、どのアプリにも直接音声入力できます。3つのスタイル（ピル、リング、オーブ）から選び、話すとライブ波形が表示され、端に吸着させながらどこへでもドラッグでき、色とサイズを設定し、長押しで言い換えられます。設定 ▸ Dictate ▸ フローティングボタンでオンにできます。\n• 新機能：Google Gemini — 文字起こしと書き換えに自分の AI Studio API キーを使えます。\n• プロンプトがデフォルトでキーの上の常時表示の行に表示されるようになりました。\n• ブラウザーや他のキーボードを含む、アプリ全体でのより確実なテキスト挿入。</string>
     <string name="dictate__promo_floating_button_message">新機能：どのアプリでも音声入力</string>
@@ -1492,6 +1492,12 @@
     <string name="dictate__manage_prompts_title">プロンプトを管理</string>
     <string name="dictate__manage_prompts_summary">{count}個のプロンプト</string>
     <string name="dictate__manage_prompts_summary_loading">プロンプトの追加・編集・削除</string>
+    <string name="dictate__command_word_title">コマンドワード</string>
+    <string name="dictate__command_word_off">オフ</string>
+    <string name="dictate__command_word_summary">「{word}」で始まる音声入力は音声指示として実行されます</string>
+    <string name="dictate__command_word_placeholder">ジャービス</string>
+    <string name="dictate__command_word_info_title">コマンドワードについて</string>
+    <string name="dictate__command_word_info_description">Dictate は通常、話した内容をそのまま書き取ります。コマンドワードを設定すると、その語で始まる音声入力は指示として扱われます。語は取り除かれ、残りが（選択中のテキストがあればそれと一緒に）AI へ送られます。\n\n「ジャービス、もっと丁寧にして」は選択範囲を書き換えます。「ジャービス、日本の首都はどこ」は答えを入力欄に書き込みます。つまり、タップする代わりに名前を呼んで使う音声指示ボタンです。\n\nこの語は音声入力のいちばん最初にあるときだけ、しかも単独の語としてのみ有効です。文の書き出しにめったに使わない語を選んでください。</string>
     <string name="dictate__auto_formatting_title">自動書式設定</string>
     <string name="dictate__auto_formatting_summary">話した書式の指示をMarkdown（見出し、リストなど）に変換します</string>
     <string name="dictate__system_prompt_title">言い換えの指示</string>

@@ -1215,7 +1215,7 @@
     <string name="dictate__floating_button_snap_title">Pieķerties malai</string>
     <string name="dictate__interrupted_recording">Pārtraukts ({time})</string>
     <string name="dictate__providers_summary_both">Transkripcija: {transcription} · Pārformulēšana: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Saglabā pēdējo diktātu, lai to varētu ievietot atkārtoti ar Smartbar pogu „Ievietot atkārtoti“.</string>
+    <string name="dictate__remember_last_dictation_summary">Saglabā jūsu pēdējo diktātu, lai peldošā poga to varētu atsaukt un klasiskais izkārtojums — ievietot atkārtoti.</string>
     <string name="dictate__remember_last_dictation_title">Atcerēties pēdējo diktātu</string>
     <string name="changelog__v4_2_0">• JAUNS: peldošā diktēšanas poga — diktējiet tieši jebkurā lietotnē, pat ja aktīva ir cita tastatūra. Izvēlieties no trim stiliem (Kapsula, Gredzens, Lode), vērojiet tiešraides viļņu formu runājot, velciet to jebkur ar piesaisti malām, iestatiet tās krāsu un izmēru un turiet nospiestu, lai pārformulētu. Ieslēdziet to sadaļā Iestatījumi ▸ Dictate ▸ Peldošā poga.\n• JAUNS: Google Gemini — izmanto savu AI Studio API atslēgu transkripcijai un pārformulēšanai.\n• Uzvednes tagad pēc noklusējuma tiek rādītas pastāvīgā rindā virs taustiņiem.\n• Uzticamāka teksta ievietošana lietotnēs, tostarp pārlūkos un citās tastatūrās.</string>
     <string name="dictate__promo_floating_button_message">Jauns: diktē jebkurā lietotnē</string>
@@ -1505,6 +1505,12 @@
     <string name="dictate__manage_prompts_title">Pārvaldīt uzvednes</string>
     <string name="dictate__manage_prompts_summary">{count} uzvednes</string>
     <string name="dictate__manage_prompts_summary_loading">Pievienojiet, rediģējiet un noņemiet savas uzvednes</string>
+    <string name="dictate__command_word_title">Komandas vārds</string>
+    <string name="dictate__command_word_off">Izslēgts</string>
+    <string name="dictate__command_word_summary">Diktāti, kas sākas ar “{word}”, tiek izpildīti kā balss norādījums</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Par komandas vārdu</string>
+    <string name="dictate__command_word_info_description">Parasti Dictate pieraksta to, ko jūs sakāt. Ja ir iestatīts komandas vārds, diktāts, kas sākas ar to, kļūst par norādījumu: vārds tiek noņemts un pārējais tiek nosūtīts MI kopā ar atlasīto tekstu, ja tāds ir.\n\n“Jarvis, padari šo formālāku” pārraksta atlasi. “Jarvis, kāda ir Japānas galvaspilsēta” ieraksta atbildi laukā. Tā ir tā pati balss norādījuma poga, tikai izsaukta ar vārdu, nevis pieskārienu.\n\nVārds skaitās tikai pašā diktāta sākumā un tikai kā vesels vārds, tāpēc izvēlieties ko tādu, ar ko reti sākat teikumu.</string>
     <string name="dictate__auto_formatting_title">Automātiska formatēšana</string>
     <string name="dictate__auto_formatting_summary">Pārvērst izrunātos formatēšanas norādījumus Markdown formātā (virsraksti, saraksti, …)</string>
     <string name="dictate__system_prompt_title">Pārformulēšanas norādījums</string>

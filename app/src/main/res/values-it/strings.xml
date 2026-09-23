@@ -1053,7 +1053,7 @@
     <string name="dictate__floating_button_snap_title">Aggancia al bordo</string>
     <string name="dictate__interrupted_recording">Interrotto ({time})</string>
     <string name="dictate__providers_summary_both">Trascrizione: {transcription} · Riformulazione: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Conserva l\'ultima dettatura per reinserirla con il pulsante Reinserisci della Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Conserva l’ultima dettatura così il pulsante flottante può annullarla e il layout classico può reinserirla.</string>
     <string name="dictate__remember_last_dictation_title">Ricorda ultima dettatura</string>
     <string name="changelog__v4_2_0">• NOVITÀ: pulsante di dettatura flottante — detta direttamente in qualsiasi app, anche con un’altra tastiera attiva. Scegli tra tre stili (Pillola, Anello, Sfera), guarda una forma d’onda in tempo reale mentre parli, trascinalo ovunque con l’aggancio ai bordi, imposta colore e dimensione e tieni premuto per riformulare. Attivalo in Impostazioni ▸ Dictate ▸ Pulsante flottante.\n• NOVITÀ: Google Gemini — usa la tua chiave API di AI Studio per trascrizione e riformulazione.\n• I prompt ora appaiono per impostazione predefinita in una riga sempre visibile sopra i tasti.\n• Inserimento del testo più affidabile tra le app, inclusi browser e altre tastiere.</string>
     <string name="dictate__promo_floating_button_message">Novità: detta ovunque</string>
@@ -1343,6 +1343,12 @@
     <string name="dictate__manage_prompts_title">Gestisci prompt</string>
     <string name="dictate__manage_prompts_summary">{count} prompt</string>
     <string name="dictate__manage_prompts_summary_loading">Aggiungi, modifica ed elimina i tuoi prompt</string>
+    <string name="dictate__command_word_title">Parola di comando</string>
+    <string name="dictate__command_word_off">Disattivato</string>
+    <string name="dictate__command_word_summary">Le dettature che iniziano con «{word}» vengono eseguite come istruzione dal vivo</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Informazioni sulla parola di comando</string>
+    <string name="dictate__command_word_info_description">Normalmente Dictate scrive quello che dici. Se imposti una parola di comando, una dettatura che inizia con essa diventa un’istruzione: la parola viene rimossa e il resto viene inviato all’IA, insieme al testo selezionato se presente.\n\n«Jarvis, rendilo più formale» riscrive la selezione. «Jarvis, qual è la capitale del Giappone» scrive la risposta nel campo. È il pulsante Istruzione dal vivo, raggiunto pronunciandone il nome invece di toccarlo.\n\nLa parola vale solo all’inizio della dettatura e solo come parola intera: scegli quindi qualcosa con cui inizi raramente una frase.</string>
     <string name="dictate__auto_formatting_title">Formattazione automatica</string>
     <string name="dictate__auto_formatting_summary">Converti gli indizi di formattazione dettati in Markdown (titoli, elenchi, …)</string>
     <string name="dictate__system_prompt_title">Istruzione di riformulazione</string>

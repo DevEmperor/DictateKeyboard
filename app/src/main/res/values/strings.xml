@@ -2289,7 +2289,7 @@
     <string name="dictate__haptic_feedback_title" comment="Setting: vibrate on dictation state changes">Haptic feedback</string>
     <string name="dictate__haptic_feedback_summary" comment="Summary for the haptic feedback setting">Vibrate on record start/stop, when a transcription is ready, and on rewording.</string>
     <string name="dictate__remember_last_dictation_title" comment="Setting: keep the last dictation so it can be re-inserted">Remember last dictation</string>
-    <string name="dictate__remember_last_dictation_summary" comment="Summary explaining the re-insert safety net">Keep your last dictation so you can re-insert it via the Smartbar\'s Re-insert button.</string>
+    <string name="dictate__remember_last_dictation_summary" comment="Summary explaining the re-insert safety net">Keep your last dictation so the floating button can undo it and the classic layout can re-insert it.</string>
 
     <!-- Dictate main screen pipeline groups -->
     <string name="dictate__transcription_group" comment="Group title for the transcription (speech-to-text) stage on the main Dictate screen">Transcription (speech → text)</string>
@@ -2479,6 +2479,12 @@
     <string name="dictate__manage_prompts_title" comment="Setting: open the prompt management screen">Manage prompts</string>
     <string name="dictate__manage_prompts_summary" comment="Summary showing how many prompts exist. {count} is a number.">{count} prompts</string>
     <string name="dictate__manage_prompts_summary_loading" comment="Summary shown while the prompt count is loading">Add, edit and remove your prompts</string>
+    <string name="dictate__command_word_title" comment="Setting: a spoken word that turns a dictation into an instruction">Command word</string>
+    <string name="dictate__command_word_off" comment="Summary shown when no command word is set, i.e. the feature is off">Off</string>
+    <string name="dictate__command_word_summary" comment="Summary for the command word setting. {word} is the word the user picked.">Dictations starting with “{word}” run as a live prompt</string>
+    <string name="dictate__command_word_placeholder" comment="Example command word shown in the empty input field">Jarvis</string>
+    <string name="dictate__command_word_info_title" comment="Title of the info box explaining the command word">About the command word</string>
+    <string name="dictate__command_word_info_description" comment="Info box explaining what the command word does">Normally Dictate writes down what you say. With a command word set, a dictation that begins with it becomes an instruction instead: the word is removed and the rest is sent to the AI, together with the selected text if there is any.\n\n“Jarvis, make this more formal” rewrites the selection. “Jarvis, what is the capital of Japan” writes the answer into the field. It is the Live prompt button, reached by saying its name instead of tapping it.\n\nThe word only counts at the very start of a dictation and only as a whole word, so pick something you rarely begin a sentence with.</string>
     <string name="dictate__auto_formatting_title" comment="Setting: turn spoken formatting cues into Markdown">Auto-formatting</string>
     <string name="dictate__auto_formatting_summary" comment="Summary for the auto-formatting setting">Turn spoken formatting cues into Markdown (headings, lists, …)</string>
     <string name="dictate__system_prompt_title" comment="Setting: base instruction sent with every rewording request">Rewording instruction</string>

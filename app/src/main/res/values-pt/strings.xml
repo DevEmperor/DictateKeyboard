@@ -1250,7 +1250,7 @@
     <string name="dictate__floating_button_snap_title">Encaixar na margem</string>
     <string name="dictate__interrupted_recording">Interrompido ({time})</string>
     <string name="dictate__providers_summary_both">Transcrição: {transcription} · Reformulação: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Guarda o seu último ditado para o reinserir com o botão Reinserir da Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Mantém o seu último ditado para que o botão flutuante o possa anular e o esquema clássico o possa reinserir.</string>
     <string name="dictate__remember_last_dictation_title">Memorizar último ditado</string>
     <string name="changelog__v4_2_0">• NOVO: botão de ditado flutuante — dite diretamente em qualquer app, mesmo com outro teclado ativo. Escolha entre três estilos (Cápsula, Anel, Esfera), veja uma forma de onda ao vivo enquanto fala, arraste-o para qualquer lugar com encaixe nas margens, defina a cor e o tamanho e mantenha premido para reformular. Ative-o em Definições ▸ Dictate ▸ Botão flutuante.\n• NOVO: Google Gemini — use a sua própria chave de API do AI Studio para transcrição e reformulação.\n• Os prompts agora aparecem por predefinição numa linha fixa acima das teclas.\n• Inserção de texto mais fiável entre apps, incluindo navegadores e outros teclados.</string>
     <string name="dictate__promo_floating_button_message">Novo: dite em qualquer app</string>
@@ -1540,6 +1540,12 @@
     <string name="dictate__manage_prompts_title">Gerir prompts</string>
     <string name="dictate__manage_prompts_summary">{count} prompts</string>
     <string name="dictate__manage_prompts_summary_loading">Adicione, edite e remova os seus prompts</string>
+    <string name="dictate__command_word_title">Palavra de comando</string>
+    <string name="dictate__command_word_off">Desligado</string>
+    <string name="dictate__command_word_summary">Os ditados que começam por «{word}» são executados como instrução em direto</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Acerca da palavra de comando</string>
+    <string name="dictate__command_word_info_description">Normalmente o Dictate escreve o que diz. Se definir uma palavra de comando, um ditado que comece por ela passa a ser uma instrução: a palavra é removida e o resto é enviado à IA, juntamente com o texto selecionado, se existir.\n\n«Jarvis, torna isto mais formal» reescreve a seleção. «Jarvis, qual é a capital do Japão» escreve a resposta no campo. É o botão de instrução em direto, alcançado dizendo o seu nome em vez de lhe tocar.\n\nA palavra só conta no início do ditado e apenas como palavra inteira, por isso escolha algo com que raramente comece uma frase.</string>
     <string name="dictate__auto_formatting_title">Formatação automática</string>
     <string name="dictate__auto_formatting_summary">Converter indicações de formatação faladas em Markdown (títulos, listas, …)</string>
     <string name="dictate__system_prompt_title">Instrução de reformulação</string>

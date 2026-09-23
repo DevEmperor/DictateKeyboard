@@ -1128,7 +1128,7 @@
     <string name="dictate__floating_button_snap_title">الالتصاق بالحافة</string>
     <string name="dictate__interrupted_recording">تمت المقاطعة ({time})</string>
     <string name="dictate__providers_summary_both">النسخ: {transcription} · إعادة الصياغة: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">يحتفظ بآخر إملاء لك لتتمكن من إعادة إدراجه عبر زر «إعادة الإدراج» في Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">يحتفظ بآخر إملاء لك حتى يتمكن الزر العائم من التراجع عنه والتخطيط الكلاسيكي من إدراجه مجددًا.</string>
     <string name="dictate__remember_last_dictation_title">تذكّر آخر إملاء</string>
     <string name="changelog__v4_2_0">• جديد: زر إملاء عائم — أملِ مباشرةً في أي تطبيق، حتى عندما تكون لوحة مفاتيح أخرى نشطة. اختر من بين ثلاثة أنماط (كبسولة، حلقة، كرة)، وشاهد موجة صوتية حية أثناء التحدث، واسحبه إلى أي مكان مع الالتصاق بالحواف، واضبط لونه وحجمه، واضغط مطولاً لإعادة الصياغة. فعّله من الإعدادات ▸ Dictate ▸ الزر العائم.\n• جديد: Google Gemini — استخدم مفتاح API الخاص بك من AI Studio للنسخ وإعادة الصياغة.\n• تظهر المطالبات الآن افتراضيًا في صف ثابت فوق المفاتيح.\n• إدراج نص أكثر موثوقية عبر التطبيقات، بما في ذلك المتصفحات ولوحات المفاتيح الأخرى.</string>
     <string name="dictate__promo_floating_button_message">جديد: أملِ في أي تطبيق</string>
@@ -1418,6 +1418,12 @@
     <string name="dictate__manage_prompts_title">إدارة المطالبات</string>
     <string name="dictate__manage_prompts_summary">{count} مطالبات</string>
     <string name="dictate__manage_prompts_summary_loading">أضِف مطالباتك وحرّرها واحذفها</string>
+    <string name="dictate__command_word_title">كلمة الأمر</string>
+    <string name="dictate__command_word_off">إيقاف</string>
+    <string name="dictate__command_word_summary">الإملاءات التي تبدأ بـ «{word}» تُنفَّذ كأمر صوتي</string>
+    <string name="dictate__command_word_placeholder">جارفيس</string>
+    <string name="dictate__command_word_info_title">حول كلمة الأمر</string>
+    <string name="dictate__command_word_info_description">يكتب Dictate عادةً ما تقوله. عند ضبط كلمة أمر، يتحوّل الإملاء الذي يبدأ بها إلى تعليمة بدلاً من ذلك: تُحذف الكلمة ويُرسل الباقي إلى الذكاء الاصطناعي، مع النص المحدد إن وُجد.\n\n«جارفيس، اجعل هذا أكثر رسمية» يعيد صياغة التحديد. «جارفيس، ما عاصمة اليابان» يكتب الإجابة في الحقل. إنه زر الأمر الصوتي نفسه، تصل إليه بنطق اسمه بدل الضغط عليه.\n\nلا تُحتسب الكلمة إلا في بداية الإملاء تمامًا وككلمة كاملة فقط، فاختر شيئًا نادرًا ما تبدأ به جملة.</string>
     <string name="dictate__auto_formatting_title">التنسيق التلقائي</string>
     <string name="dictate__auto_formatting_summary">حوّل إشارات التنسيق المنطوقة إلى Markdown (عناوين، قوائم، …)</string>
     <string name="dictate__system_prompt_title">تعليمات إعادة الصياغة</string>

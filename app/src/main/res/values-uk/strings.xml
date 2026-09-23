@@ -1115,7 +1115,7 @@
     <string name="dictate__floating_button_snap_title">Прилипати до краю</string>
     <string name="dictate__interrupted_recording">Перервано ({time})</string>
     <string name="dictate__providers_summary_both">Транскрипція: {transcription} · Переформулювання: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Зберігає останнє диктування, щоб вставити його знову кнопкою «Вставити знову» на Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Зберігає останнє диктування, щоб плаваюча кнопка могла його скасувати, а класична розкладка — вставити знову.</string>
     <string name="dictate__remember_last_dictation_title">Запам’ятовувати останнє диктування</string>
     <string name="changelog__v4_2_0">• НОВЕ: плаваюча кнопка диктування — диктуйте прямо в будь-якому застосунку, навіть коли активна інша клавіатура. Виберіть один із трьох стилів (Капсула, Кільце, Сфера), дивіться живу форму хвилі під час мовлення, перетягуйте будь-куди з прилипанням до країв, задавайте колір і розмір та утримуйте для переформулювання. Увімкніть у Налаштуваннях ▸ Dictate ▸ Плаваюча кнопка.\n• НОВЕ: Google Gemini — використовуйте власний ключ API з AI Studio для транскрипції та переформулювання.\n• Запити тепер за замовчуванням показуються в постійному рядку над клавішами.\n• Надійніша вставка тексту в застосунках, включно з браузерами та іншими клавіатурами.</string>
     <string name="dictate__promo_floating_button_message">Нове: диктуйте всюди</string>
@@ -1405,6 +1405,12 @@
     <string name="dictate__manage_prompts_title">Керування промптами</string>
     <string name="dictate__manage_prompts_summary">Промптів: {count}</string>
     <string name="dictate__manage_prompts_summary_loading">Додавайте, редагуйте та видаляйте свої промпти</string>
+    <string name="dictate__command_word_title">Командне слово</string>
+    <string name="dictate__command_word_off">Вимк.</string>
+    <string name="dictate__command_word_summary">Диктування, що починаються з «{word}», виконуються як голосова інструкція</string>
+    <string name="dictate__command_word_placeholder">Джарвіс</string>
+    <string name="dictate__command_word_info_title">Про командне слово</string>
+    <string name="dictate__command_word_info_description">Зазвичай Dictate записує те, що ви кажете. Якщо задано командне слово, диктування, яке починається з нього, стає інструкцією: слово прибирається, а решта йде до ШІ разом із виділеним текстом, якщо він є.\n\n«Джарвіс, зроби це офіційнішим» перепише виділення. «Джарвіс, яка столиця Японії» впише відповідь у поле. Це та сама кнопка голосової інструкції, лише викликана словом, а не дотиком.\n\nСлово зараховується лише на самому початку диктування і лише як ціле слово — оберіть те, з чого ви рідко починаєте речення.</string>
     <string name="dictate__auto_formatting_title">Автоформатування</string>
     <string name="dictate__auto_formatting_summary">Перетворювати озвучені вказівки щодо форматування на Markdown (заголовки, списки, …)</string>
     <string name="dictate__system_prompt_title">Інструкція переформулювання</string>

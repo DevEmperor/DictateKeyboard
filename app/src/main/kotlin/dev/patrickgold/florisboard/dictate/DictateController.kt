@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
+import dev.patrickgold.florisboard.dictate.data.prompts.CommandTrigger
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
@@ -471,6 +472,18 @@ object DictateController {
     // Haptic feedback (#166) fires on dictation state transitions. Started lazily on the first dictation
     // (so we have an application context for the vibrator), then it observes for the whole process life.
     private var hapticObserverStarted = false
+
+    /**
+     * Whether the tap that drove this transition has already produced a buzz of its own — the floating
+     * button's own haptic, or the keyboard's ordinary key feedback. Read at the moment of the
+     * transition, so a user who turns either off starts getting the dictation buzz instead.
+     */
+    private fun pressAlreadyBuzzed(): Boolean = when (outputTarget) {
+        OutputTarget.OVERLAY -> prefs.dictate.floatingButtonHaptic.get()
+        OutputTarget.IME -> prefs.inputFeedback.hapticEnabled.get()
+        OutputTarget.RECOGNITION_SERVICE -> false
+    }
+
     private fun ensureHapticObserver(context: Context) {
         if (hapticObserverStarted) return
         hapticObserverStarted = true
@@ -482,15 +495,22 @@ object DictateController {
             var prev: UiState = initial
             _state.collect { new ->
                 when {
-                    // Record started — skipped for the floating button when its own tap already buzzed
-                    // (no double buzz); a resend enters at Transcribing so it never matches here.
-                    new is UiState.Recording && prev !is UiState.Recording -> {
-                        val buttonAlreadyBuzzed = outputTarget == OutputTarget.OVERLAY &&
-                            prefs.dictate.floatingButtonHaptic.get()
-                        if (!buttonAlreadyBuzzed) DictateHaptics.short(appContext)
+                    // Record started/stopped — but only when the press that did it did not already
+                    // buzz. The floating button buzzes on its own tap; on the keyboard the mic is an
+                    // ordinary key and the normal key feedback fires for it. Buzzing again a few
+                    // milliseconds later is not a second signal, it is a stutter, and it was the one
+                    // thing people noticed about this feature. The floating button was already spared;
+                    // the keyboard was not, which is why starting a dictation there buzzed twice.
+                    //
+                    // What is left is what the feature is actually for: the two signals that arrive
+                    // while nobody is touching anything (see below). A push-to-talk release loses its
+                    // buzz to this rule, which is the accepted cost — the finger was on the button.
+                    //
+                    // A resend enters at Transcribing, so neither branch matches for it.
+                    (new is UiState.Recording && prev !is UiState.Recording) ||
+                        (prev is UiState.Recording && new is UiState.Transcribing) -> {
+                        if (!pressAlreadyBuzzed()) DictateHaptics.short(appContext)
                     }
-                    // Record stopped → transcribing (a resend is Idle→Transcribing and is ignored).
-                    prev is UiState.Recording && new is UiState.Transcribing -> DictateHaptics.short(appContext)
                     // Transcription ready (heading to commit/idle or on to a rewording pass) — not on failure.
                     prev is UiState.Transcribing && (new is UiState.Idle || new is UiState.Rewording) ->
                         DictateHaptics.double(appContext)
@@ -2036,7 +2056,15 @@ object DictateController {
         latencyTrace: BatchLatencyTrace? = null,
     ) {
         swallowedRewording = null // this dictation's own slate (issue #284)
-        val finalText = if (live) {
+        // The spoken command word (#139): a transcript that opens with the user's trigger is an
+        // instruction, not something to write down — the same thing the live-prompt chip does, said
+        // instead of tapped. Checked here rather than per path so every route into this function is
+        // covered by one rule: batch, realtime (which has usually armed it mid-stream already, and
+        // re-reads the same transcript here to take the word off), segmented and the on-device model.
+        val spokenCommand = commandTrigger().takeIf { it.isNotEmpty() }
+            ?.let { CommandTrigger.instructionFor(rawText, it) }
+        val isLive = live || spokenCommand != null
+        val finalText = if (isLive) {
             // The spoken transcript is an instruction; send it to GPT (optionally operating on the current
             // selection) and insert the answer instead of the transcript.
             //
@@ -2045,9 +2073,13 @@ object DictateController {
             // failure stays fatal and travels to [transcribe]'s catch, which keeps the audio for a resend
             // and, since this ran as UiState.Rewording, now names the rewording rather than transcription.
             _pendingPrompts.value = emptyList() // a live prompt ignores any queued prompts
+            // The chip is not lit here, and that is the whole rule: it marks a live-prompt *recording*
+            // and nothing else. A tapped live prompt has always gone dark at the stop, so a spoken one
+            // that stayed lit through the rewording would be the same state shown two ways. The stage
+            // after the stop is what UiState.Rewording is for, and the Smartbar already says it.
             _state.value = UiState.Rewording(appContext.getString(R.string.dictate__status_rewording))
             val selection = sink(appContext).selectedText().takeIf { it.isNotEmpty() }
-            requestReword(rawText, selection)
+            requestReword(spokenCommand ?: rawText, selection)
         } else {
             // Normal dictation: auto-formatting + auto-apply prompts, then the prompts the user queued by
             // tapping the prompt row while recording, in tap order; then commit. [alreadyFormatted] skips
@@ -2060,7 +2092,7 @@ object DictateController {
         // multimodal, or an auto-format/prompt pass that actually changed it) — that output already carries
         // its own paragraphing and must not be second-guessed.
         val splitWords = prefs.dictate.paragraphSplitWords.get()
-        val isPureTranscript = !live && !alreadyFormatted && finalText == rawText
+        val isPureTranscript = !isLive && !alreadyFormatted && finalText == rawText
         // Keep the raw transcript for the history when a prompt actually rewrote it (issue #240), so the
         // original wording stays recoverable without re-running (and paying for) the transcription. Only
         // the prompt chain counts: the deterministic steps below (paragraph splitting, custom mappings)
@@ -2092,7 +2124,7 @@ object DictateController {
             // either (issue #277) — a swallowed write finished as Idle, i.e. a green check.
             if (reportOverlayInsertFailure(appContext, landed, outputText)) {
                 rememberLastDictation(outputText)
-                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
+                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = isLive)
                 discardRetainedAudio()
                 return
             }
@@ -2119,7 +2151,7 @@ object DictateController {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
                     if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
                 }
-                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
+                recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = isLive)
                 discardRetainedAudio()
                 // The clipboard is the recovery route, and only here (issue #277). The old message sent
                 // people to "Reinsert", which lives in the Dictate keyboard — unreachable for exactly the
@@ -2136,7 +2168,7 @@ object DictateController {
             DictateStats.recordDictation(prefs, outputText, recordedSeconds)
             if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
         }
-        recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = live)
+        recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = isLive)
         discardRetainedAudio()
         if (reportSwallowedRewording(appContext)) return
         _state.value = UiState.Idle
@@ -2271,7 +2303,16 @@ object DictateController {
         // The stream itself still runs, so this costs nothing: the transcript is already there when the
         // button is tapped and lands in one commit — the same verified insert a batch dictation does, and
         // without the provider round trip a batch dictation would still be waiting for.
-        realtimeHidden = prefs.dictate.realtimeHidePreview.get() || outputTarget == OutputTarget.OVERLAY
+        //
+        // A live prompt holds them back too, whatever the preference says: those words are an
+        // instruction, and typing "make this more formal" into the field only to replace it a moment
+        // later shows the user a sentence they never asked to write.
+        realtimeHidden = prefs.dictate.realtimeHidePreview.get() ||
+            outputTarget == OutputTarget.OVERLAY ||
+            livePromptArmed
+        // Read once for the session: a trigger word changed mid-dictation would judge its own first
+        // words by one rule and the rest by another.
+        val commandWord = commandTrigger()
         val closed = CompletableDeferred<Unit>()
         realtimeClosed = closed
         // Type the growing transcript live into the field, applying only the minimal diff each time (#128) —
@@ -2283,6 +2324,39 @@ object DictateController {
             _interimText.value = full
             realtimeTranscript.setLength(0)
             realtimeTranscript.append(full)
+            // The spoken command word (#139). Unlike batch, streaming can act on it while the user is
+            // still talking — which is also why it has to: the words are being typed into the field as
+            // they arrive, so the decision has to be made before the first of them lands there.
+            //
+            // PARTIAL is the whole reason this is not a plain prefix check. "Ja" is either the start of
+            // "Jarvis" or the start of "Ja, das passt", and nothing yet says which, so the preview waits
+            // — a fraction of a second, until the next piece of text settles it. Without that wait a
+            // command would type its own trigger word into the field and take it back out again.
+            //
+            // Only while the recording actually runs. A finished stream keeps delivering for a moment —
+            // that is the tail wait (#372), and those late callbacks land here with the *whole*
+            // transcript, trigger word and all. [stopRealtimeAndFinalize] has by then read
+            // livePromptArmed and cleared it, so arming again from one of them set a flag nothing was
+            // going to read: the next recording started with the chip lit and ran as a rewording,
+            // without a command word having been said.
+            if (commandWord.isNotEmpty() && !livePromptArmed && _state.value is UiState.Recording) {
+                when (CommandTrigger.match(full, commandWord)) {
+                    CommandTrigger.Match.PARTIAL -> return
+                    CommandTrigger.Match.MATCHED -> {
+                        // From here this recording is a live prompt: [stopRealtimeAndFinalize] reads
+                        // livePromptArmed, and finalizeAndCommit takes the trigger off the transcript.
+                        livePromptArmed = true
+                        _livePromptActive.value = true // the chip lights up as if it had been tapped
+                        realtimeHidden = true
+                        if (realtimeShown.isNotEmpty()) {
+                            runCatching { sink(appContext).clearDictationPreview(realtimeShown.toString()) }
+                            realtimeShown.setLength(0)
+                        }
+                        return
+                    }
+                    CommandTrigger.Match.NONE -> Unit
+                }
+            }
             if (realtimeHidden) return
             runCatching { sink(appContext).setDictationPreview(full, realtimeShown.toString()) }
             realtimeShown.setLength(0)
@@ -4040,6 +4114,13 @@ object DictateController {
         DictateStats.recordRewording(prefs)
         return result
     }
+
+    /**
+     * The spoken command word (#139), or "" when the feature is off. Tied to the rewording master
+     * switch: recognising the word would otherwise arm a live prompt that has nothing to run it.
+     */
+    private fun commandTrigger(): String =
+        if (!prefs.dictate.rewordingEnabled.get()) "" else prefs.dictate.commandTriggerWord.get().trim()
 
     private fun systemPrompt(): String = when (prefs.dictate.systemPromptSelection.get()) {
         DictatePromptDefaults.SELECTION_PREDEFINED -> DictatePromptDefaults.REWORDING_BE_PRECISE

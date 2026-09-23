@@ -1265,7 +1265,7 @@
     <string name="dictate__floating_button_snap_title">吸附到边缘</string>
     <string name="dictate__interrupted_recording">已中断（{time}）</string>
     <string name="dictate__providers_summary_both">转写：{transcription} · 改写：{rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">保留上次听写，可用 Smartbar 的“重新插入”按钮再次插入。</string>
+    <string name="dictate__remember_last_dictation_summary">保留你最近一次的听写，以便悬浮按钮可以撤销它、经典布局可以重新插入它。</string>
     <string name="dictate__remember_last_dictation_title">记住上次听写</string>
     <string name="changelog__v4_2_0">• 新功能：悬浮听写按钮——即使其他键盘处于激活状态，也能直接在任何应用中听写。可从三种样式（胶囊、圆环、光球）中选择，说话时显示实时波形，可拖到任意位置并吸附到边缘，设置颜色和大小，长按即可改写。在 设置 ▸ Dictate ▸ 悬浮按钮 中开启。\n• 新功能：Google Gemini — 使用你自己的 AI Studio API 密钥进行转录和改写。\n• 提示词现在默认显示在按键上方的常驻行中。\n• 跨应用的文本插入更可靠，包括浏览器和其他键盘。</string>
     <string name="dictate__promo_floating_button_message">新功能：在任何应用中听写</string>
@@ -1555,6 +1555,12 @@
     <string name="dictate__manage_prompts_title">管理提示词</string>
     <string name="dictate__manage_prompts_summary">{count} 条提示词</string>
     <string name="dictate__manage_prompts_summary_loading">添加、编辑和删除您的提示词</string>
+    <string name="dictate__command_word_title">指令唤醒词</string>
+    <string name="dictate__command_word_off">关闭</string>
+    <string name="dictate__command_word_summary">以“{word}”开头的听写将作为实时指令执行</string>
+    <string name="dictate__command_word_placeholder">贾维斯</string>
+    <string name="dictate__command_word_info_title">关于指令唤醒词</string>
+    <string name="dictate__command_word_info_description">Dictate 通常会把你说的话原样写下来。设置唤醒词后，以它开头的听写会改为按指令处理：该词被去掉，其余内容连同选中的文本（如果有）一起发送给 AI。\n\n“贾维斯，把这段改得正式一点”会改写选中的文本；“贾维斯，日本的首都是哪里”会把答案写进输入框。也就是把实时指令按钮从“点一下”变成“叫一声”。\n\n该词只有位于听写最开头、且作为完整词出现时才生效，所以请挑一个你很少用来起头的词。</string>
     <string name="dictate__auto_formatting_title">自动格式化</string>
     <string name="dictate__auto_formatting_summary">将口述的格式提示转换为 Markdown（标题、列表等）</string>
     <string name="dictate__system_prompt_title">改写指令</string>

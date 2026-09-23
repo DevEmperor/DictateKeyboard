@@ -1249,7 +1249,7 @@
     <string name="dictate__floating_button_snap_title">Kenara yapıştır</string>
     <string name="dictate__interrupted_recording">Kesildi ({time})</string>
     <string name="dictate__providers_summary_both">Yazıya dökme: {transcription} · Yeniden ifade: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Son diktenizi saklar, Smartbar üzerindeki „Yeniden ekle” düğmesiyle tekrar ekleyebilirsiniz.</string>
+    <string name="dictate__remember_last_dictation_summary">Son diktenizi saklar; böylece yüzen düğme geri alabilir, klasik düzen yeniden ekleyebilir.</string>
     <string name="dictate__remember_last_dictation_title">Son dikteyi hatırla</string>
     <string name="changelog__v4_2_0">• YENİ: kayan dikte düğmesi — başka bir klavye etkin olsa bile herhangi bir uygulamaya doğrudan dikte edin. Üç stilden birini seçin (Hap, Halka, Küre), konuşurken canlı dalga biçimini izleyin, kenara yapışmayla istediğiniz yere sürükleyin, rengini ve boyutunu ayarlayın ve yeniden ifade etmek için basılı tutun. Ayarlar ▸ Dictate ▸ Kayan düğme bölümünden açın.\n• YENİ: Google Gemini — transkripsiyon ve yeniden ifade için kendi AI Studio API anahtarını kullan.\n• İstemler artık varsayılan olarak tuşların üzerinde sabit bir sırada görünür.\n• Tarayıcılar ve diğer klavyeler dahil uygulamalar arası daha güvenilir metin ekleme.</string>
     <string name="dictate__promo_floating_button_message">Yeni: her yerde dikte et</string>
@@ -1539,6 +1539,12 @@
     <string name="dictate__manage_prompts_title">Komutları yönet</string>
     <string name="dictate__manage_prompts_summary">{count} komut</string>
     <string name="dictate__manage_prompts_summary_loading">Komutlarınızı ekleyin, düzenleyin ve kaldırın</string>
+    <string name="dictate__command_word_title">Komut kelimesi</string>
+    <string name="dictate__command_word_off">Kapalı</string>
+    <string name="dictate__command_word_summary">“{word}” ile başlayan dikteler canlı komut olarak çalıştırılır</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Komut kelimesi hakkında</string>
+    <string name="dictate__command_word_info_description">Dictate normalde söylediğinizi yazar. Bir komut kelimesi ayarlarsanız, onunla başlayan bir dikte bunun yerine bir talimata dönüşür: kelime çıkarılır, kalanı seçili metinle birlikte (varsa) yapay zekâya gönderilir.\n\n“Jarvis, bunu daha resmî yap” seçimi yeniden yazar. “Jarvis, Japonya’nın başkenti neresi” cevabı alana yazar. Bu, dokunmak yerine adını söyleyerek ulaşılan canlı komut düğmesidir.\n\nKelime yalnızca diktenin en başında ve yalnızca tam kelime olarak sayılır; bu yüzden cümleye nadiren başladığınız bir şey seçin.</string>
     <string name="dictate__auto_formatting_title">Otomatik biçimlendirme</string>
     <string name="dictate__auto_formatting_summary">Sözlü biçimlendirme ipuçlarını Markdown\'a dönüştür (başlıklar, listeler, …)</string>
     <string name="dictate__system_prompt_title">Yeniden ifade etme talimatı</string>

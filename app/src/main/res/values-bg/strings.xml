@@ -1270,7 +1270,7 @@
     <string name="dictate__floating_button_snap_title">Прилепване към ръба</string>
     <string name="dictate__interrupted_recording">Прекъснато ({time})</string>
     <string name="dictate__providers_summary_both">Транскрипция: {transcription} · Преформулиране: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Запазва последното ви диктуване, за да го вмъкнете отново с бутона „Вмъкни отново“ в Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Запазва последната диктовка, за да може плаващият бутон да я отмени, а класическата подредба да я вмъкне отново.</string>
     <string name="dictate__remember_last_dictation_title">Запомни последното диктуване</string>
     <string name="changelog__v4_2_0">• НОВО: плаващ бутон за диктовка — диктувайте директно във всяко приложение, дори когато е активна друга клавиатура. Изберете от три стила (Капсула, Пръстен, Сфера), гледайте форма на вълната на живо, докато говорите, плъзгайте го навсякъде с прилепване към ръбовете, задайте цвят и размер и задръжте за преформулиране. Включете го в Настройки ▸ Dictate ▸ Плаващ бутон.\n• НОВО: Google Gemini — използвайте свой собствен API ключ от AI Studio за транскрипция и преформулиране.\n• Подканите вече се показват по подразбиране в постоянен ред над клавишите.\n• По-надеждно вмъкване на текст в приложенията, включително браузъри и други клавиатури.</string>
     <string name="dictate__promo_floating_button_message">Ново: диктувайте навсякъде</string>
@@ -1560,6 +1560,12 @@
     <string name="dictate__manage_prompts_title">Управление на подканите</string>
     <string name="dictate__manage_prompts_summary">{count} подкани</string>
     <string name="dictate__manage_prompts_summary_loading">Добавяйте, редактирайте и премахвайте подканите си</string>
+    <string name="dictate__command_word_title">Командна дума</string>
+    <string name="dictate__command_word_off">Изкл.</string>
+    <string name="dictate__command_word_summary">Диктовките, започващи с „{word}“, се изпълняват като гласова инструкция</string>
+    <string name="dictate__command_word_placeholder">Джарвис</string>
+    <string name="dictate__command_word_info_title">За командната дума</string>
+    <string name="dictate__command_word_info_description">Обикновено Dictate записва това, което казвате. Ако е зададена командна дума, диктовка, която започва с нея, става инструкция: думата се премахва, а останалото се изпраща към ИИ заедно с избрания текст, ако има такъв.\n\n„Джарвис, направи това по-официално“ пренаписва селекцията. „Джарвис, коя е столицата на Япония“ изписва отговора в полето. Това е същият бутон за гласова инструкция, само че извикан с дума вместо с докосване.\n\nДумата важи само в самото начало на диктовката и само като цяла дума — изберете нещо, с което рядко започвате изречение.</string>
     <string name="dictate__auto_formatting_title">Автоматично форматиране</string>
     <string name="dictate__auto_formatting_summary">Превръщай изговорени указания за форматиране в Markdown (заглавия, списъци, …)</string>
     <string name="dictate__system_prompt_title">Инструкция за преформулиране</string>

@@ -928,6 +928,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__rewording_enabled",
             default = true,
         )
+        // The spoken command word (issue #139): a dictation opening with it runs as a live prompt
+        // instead of being inserted. Blank (the default) switches the whole recognition off — there is
+        // no word everyone says rarely enough to be a safe default, so the user picks their own.
+        val commandTriggerWord = string(
+            key = "dictate__command_trigger_word",
+            default = "",
+        )
         // Reasoning effort sent as OpenAI-compatible `reasoning_effort` on rewording chat calls for
         // reasoning models (issue #141). OFF omits the field, so non-reasoning models are unaffected.
         val rewordingReasoningEffort = enum(

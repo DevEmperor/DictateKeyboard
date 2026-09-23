@@ -14,11 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dns
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.ModelTraining
 import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
@@ -111,6 +112,25 @@ fun DictateRewordingScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.DictatePrompts()) },
         )
 
+        // The spoken command word (#139): the live-prompt chip, reached by saying its name instead of
+        // tapping it. Blank switches the recognition off, and that is the default — no word is rare
+        // enough in everyone's speech to be safe unasked, so the user names their own.
+        val commandWord by prefs.dictate.commandTriggerWord.collectAsState()
+        val commandWordOff = stringRes(R.string.dictate__command_word_off)
+        val commandWordSummary = stringRes(R.string.dictate__command_word_summary, "word" to commandWord)
+        TextInputPreference(
+            pref = prefs.dictate.commandTriggerWord,
+            icon = Icons.Default.RecordVoiceOver,
+            modifier = Modifier.settingsSearchAnchor("dictate__command_word_title"),
+            title = stringRes(R.string.dictate__command_word_title),
+            placeholder = stringRes(R.string.dictate__command_word_placeholder),
+            keyboardType = KeyboardType.Text,
+            summaryProvider = { value -> if (value.isBlank()) commandWordOff else commandWordSummary },
+            enabledIf = { prefs.dictate.rewordingEnabled isEqualTo true },
+            infoTitle = stringRes(R.string.dictate__command_word_info_title),
+            infoText = stringRes(R.string.dictate__command_word_info_description),
+        )
+
         SwitchPreference(
             prefs.dictate.autoFormattingEnabled,
             icon = Icons.Default.AutoFixHigh,
@@ -155,7 +175,6 @@ fun DictateRewordingScreen() = FlorisScreen {
             )
         }
 
-        val systemSelection by prefs.dictate.systemPromptSelection.collectAsState()
         PromptSelectionPreference(
             pref = prefs.dictate.systemPromptSelection,
             icon = Icons.Default.Psychology,
@@ -164,15 +183,8 @@ fun DictateRewordingScreen() = FlorisScreen {
             infoTitle = stringRes(R.string.dictate__system_prompt_info_title),
             infoDescription = stringRes(R.string.dictate__system_prompt_info_description),
             infoPromptText = DictatePromptDefaults.REWORDING_BE_PRECISE,
+            customPref = prefs.dictate.systemPromptCustom,
+            customPlaceholder = stringRes(R.string.dictate__system_prompt_custom_placeholder),
         )
-        if (systemSelection == DictatePromptDefaults.SELECTION_CUSTOM) {
-            TextInputPreference(
-                pref = prefs.dictate.systemPromptCustom,
-                icon = Icons.Default.Edit,
-                title = stringRes(R.string.dictate__system_prompt_custom_title),
-                placeholder = stringRes(R.string.dictate__system_prompt_custom_placeholder),
-                multiline = true,
-            )
-        }
     }
 }

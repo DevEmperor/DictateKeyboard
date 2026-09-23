@@ -1269,7 +1269,7 @@
     <string name="dictate__floating_button_snap_title">Illesztés a szélhez</string>
     <string name="dictate__interrupted_recording">Megszakítva ({time})</string>
     <string name="dictate__providers_summary_both">Átírás: {transcription} · Átfogalmazás: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Megőrzi a legutóbbi diktálást, hogy a Smartbar „Újrabeszúrás” gombjával ismét beszúrhassa.</string>
+    <string name="dictate__remember_last_dictation_summary">Megőrzi az utolsó diktálást, hogy a lebegő gomb visszavonhassa, a klasszikus elrendezés pedig újra beszúrhassa.</string>
     <string name="dictate__remember_last_dictation_title">Utolsó diktálás megjegyzése</string>
     <string name="changelog__v4_2_0">• ÚJ: lebegő diktálógomb — diktáljon közvetlenül bármelyik appba, akkor is, ha másik billentyűzet aktív. Válasszon a három stílus közül (Pirula, Gyűrű, Gömb), nézze az élő hullámformát beszéd közben, húzza bárhová a szélhez illesztéssel, állítsa be a színét és méretét, és tartsa lenyomva az átfogalmazáshoz. Kapcsolja be a Beállítások ▸ Dictate ▸ Lebegő gomb alatt.\n• ÚJ: Google Gemini — használd saját AI Studio API-kulcsodat átíráshoz és újrafogalmazáshoz.\n• A parancsok mostantól alapértelmezetten egy állandó sorban jelennek meg a billentyűk fölött.\n• Megbízhatóbb szövegbeszúrás az appokban, beleértve a böngészőket és más billentyűzeteket.</string>
     <string name="dictate__promo_floating_button_message">Új: diktálj bárhol</string>
@@ -1559,6 +1559,12 @@
     <string name="dictate__manage_prompts_title">Utasítások kezelése</string>
     <string name="dictate__manage_prompts_summary">{count} utasítás</string>
     <string name="dictate__manage_prompts_summary_loading">Adja hozzá, szerkessze és távolítsa el az utasításait</string>
+    <string name="dictate__command_word_title">Parancsszó</string>
+    <string name="dictate__command_word_off">Ki</string>
+    <string name="dictate__command_word_summary">A „{word}” szóval kezdődő diktálások élő utasításként futnak</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">A parancsszóról</string>
+    <string name="dictate__command_word_info_description">A Dictate alapesetben leírja, amit mond. Ha be van állítva egy parancsszó, az azzal kezdődő diktálás utasítássá válik: a szó lekerül, a többi pedig az MI-hez megy, a kijelölt szöveggel együtt, ha van ilyen.\n\nA „Jarvis, fogalmazd ezt hivatalosabban” átírja a kijelölést. A „Jarvis, mi Japán fővárosa” a választ írja a mezőbe. Ez az élő utasítás gomb, csak a nevét mondja ki ahelyett, hogy megérintené.\n\nA szó csak a diktálás legelején és csak egész szóként számít — olyat válasszon, amivel ritkán kezd mondatot.</string>
     <string name="dictate__auto_formatting_title">Automatikus formázás</string>
     <string name="dictate__auto_formatting_summary">A kimondott formázási utasítások Markdownná alakítása (címsorok, listák, …)</string>
     <string name="dictate__system_prompt_title">Átfogalmazási utasítás</string>

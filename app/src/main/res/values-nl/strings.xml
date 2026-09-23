@@ -1170,7 +1170,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__floating_button_snap_title">Aan rand vastklikken</string>
     <string name="dictate__interrupted_recording">Onderbroken ({time})</string>
     <string name="dictate__providers_summary_both">Transcriptie: {transcription} · Herformulering: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Bewaart je laatste dictaat zodat je het opnieuw kunt invoegen met de knop Opnieuw invoegen op de Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Bewaart je laatste dictaat zodat de zwevende knop het ongedaan kan maken en de klassieke lay-out het opnieuw kan invoegen.</string>
     <string name="dictate__remember_last_dictation_title">Laatste dictaat onthouden</string>
     <string name="changelog__v4_2_0">• NIEUW: zwevende dicteerknop — dicteer rechtstreeks in elke app, zelfs met een ander toetsenbord actief. Kies uit drie stijlen (Pil, Ring, Bol), zie een live golfvorm terwijl je praat, sleep hem overal heen met randmagnetisme, stel kleur en grootte in en houd ingedrukt om te herformuleren. Schakel hem in via Instellingen ▸ Dictate ▸ Zwevende knop.\n• NIEUW: Google Gemini — gebruik je eigen AI Studio-API-sleutel voor transcriptie en herformuleren.\n• Prompts verschijnen nu standaard in een vaste rij boven de toetsen.\n• Betrouwbaardere tekstinvoer in apps, inclusief browsers en andere toetsenborden.</string>
     <string name="dictate__promo_floating_button_message">Nieuw: overal dicteren</string>
@@ -1460,6 +1460,12 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__manage_prompts_title">Prompts beheren</string>
     <string name="dictate__manage_prompts_summary">{count} prompts</string>
     <string name="dictate__manage_prompts_summary_loading">Voeg je prompts toe, bewerk en verwijder ze</string>
+    <string name="dictate__command_word_title">Commandowoord</string>
+    <string name="dictate__command_word_off">Uit</string>
+    <string name="dictate__command_word_summary">Dictaten die met “{word}” beginnen, worden als live-instructie uitgevoerd</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Over het commandowoord</string>
+    <string name="dictate__command_word_info_description">Normaal schrijft Dictate op wat je zegt. Met een ingesteld commandowoord wordt een dictaat dat ermee begint in plaats daarvan een instructie: het woord wordt verwijderd en de rest gaat naar de AI, samen met de geselecteerde tekst als die er is.\n\n“Jarvis, maak dit formeler” herschrijft de selectie. “Jarvis, wat is de hoofdstad van Japan” schrijft het antwoord in het veld. Het is de knop Live-instructie, bereikt door zijn naam te zeggen in plaats van erop te tikken.\n\nHet woord telt alleen helemaal aan het begin van een dictaat en alleen als heel woord — kies dus iets waarmee je zelden een zin begint.</string>
     <string name="dictate__auto_formatting_title">Automatische opmaak</string>
     <string name="dictate__auto_formatting_summary">Gesproken opmaakaanwijzingen omzetten naar Markdown (koppen, lijsten, …)</string>
     <string name="dictate__system_prompt_title">Herformuleringsinstructie</string>
