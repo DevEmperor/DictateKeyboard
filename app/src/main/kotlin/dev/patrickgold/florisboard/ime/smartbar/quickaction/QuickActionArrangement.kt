@@ -104,15 +104,16 @@ data class QuickActionArrangement(
                 // it is one of the few actions people go looking for, and unlike the split or language
                 // actions it is never greyed out — without an API key the panel itself says so.
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_GIF),
+                // Scan text (issue #390): camera → recognised lines → the one you tap. Fifth, ahead of
+                // Settings, for discovery rather than frequency: it is the feature nobody guesses a keyboard
+                // has, so it only gets found where it is seen — and five is what a 360 dp phone shows.
+                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN),
                 // A keyboard with this much behind it — the provider, the key, the prompts, the languages
                 // — needs a door of its own; without one the way in is hunting for the app icon in the
-                // launcher, which is a long walk from the field the user is standing in. Fifth, so it is
-                // on screen on a 360 dp phone too, where only five fit (it was sixth, and so hidden there).
+                // launcher, which is a long walk from the field the user is standing in. Sixth, after Scan:
+                // somebody who wants the settings goes looking for them, and on a 360 dp phone this is the
+                // first tile of the overflow grid, one tap further.
                 QuickAction.InsertKey(TextKeyData.SETTINGS),
-                // Scan text (issue #390): camera → recognised lines → the one you tap. The last visible slot
-                // on a 411 dp phone, for discovery rather than frequency — it is the feature nobody guesses
-                // a keyboard has.
-                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN),
                 // First of the overflow grid rather than in the bar (#424 moved it out). The actions row is
                 // on screen when the field is idle; while typing, the strip shows suggestions — so Undo was
                 // rarely there at the moment it was wanted, and one tap into the grid costs little more.
