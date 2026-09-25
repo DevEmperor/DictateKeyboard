@@ -9,6 +9,7 @@ SCREEN_ROUTE = {
     "DictateScreen": "Routes.Settings.Dictate",
     "DictateLanguagesScreen": "Routes.Settings.DictateLanguages",
     "DictateProvidersScreen": "Routes.Settings.DictateProviders",
+    "DictateAddProviderScreen": "Routes.Settings.DictateProvidersAdd",
     "DictateMappingsScreen": "Routes.Settings.DictateMappings",
     "DictateProxyScreen": "Routes.Settings.DictateProxy",
     "DictateWearScreen": "Routes.Settings.DictateWear",
@@ -51,6 +52,7 @@ for s in ["DictateLanguagesScreen","DictateProvidersScreen","DictateMappingsScre
     PARENT[s] = DICTATE
 for s in ["PhysicalKeyboardScreen","BackupScreen","RestoreScreen"]:
     PARENT[s] = "R.string.settings__other__title"
+PARENT["DictateAddProviderScreen"] = "R.string.dictate__providers_title"
 PARENT["InputFeedbackScreen"] = "R.string.settings__keyboard__title"
 PARENT["SmartbarSecondActionsScreen"] = "R.string.settings__smartbar__title"
 for s in ["ProjectLicenseScreen","ThirdPartyLicensesScreen","DataAttributionsScreen"]:

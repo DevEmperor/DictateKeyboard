@@ -2019,6 +2019,10 @@
          their speech goes has no reason to open something called "custom endpoint" (issue #273). -->
     <string name="dictate__providers_add_custom" comment="Button to add a user-defined OpenAI-compatible endpoint">Add your own server</string>
     <string name="dictate__providers_add_custom_summary" comment="Summary under the add-your-own-server button">Self-hosted or any OpenAI-compatible endpoint — for speech-to-text and rewording</string>
+    <string name="dictate__providers_add" comment="Row at the end of the providers list, and title of the screen it opens, listing every provider not set up yet">Add a provider</string>
+    <string name="dictate__providers_search" comment="Placeholder of the search field on the add-a-provider screen">Search providers</string>
+    <string name="dictate__providers_filter_eu" comment="Filter chip: providers that keep data in the European Union. Use the usual abbreviation.">EU</string>
+    <string name="dictate__providers_add_none" comment="Shown when the search and filters on the add-a-provider screen leave no provider">No provider matches</string>
     <string name="dictate__providers_azure_endpoint" comment="Note at the top of the Azure provider editor: where the endpoint comes from, and the only regions that host the model">The endpoint is next to the key on the portal’s “Keys and Endpoint” page. MAI-Transcribe runs only in East US, West US, West US 2, North Europe, Southeast Asia and Central India.</string>
     <string name="dictate__providers_ollama_no_stt" comment="Note at the top of the Ollama provider editor; Ollama serves no transcription endpoint">Ollama has no speech-to-text endpoint, so it can only reword. To dictate through a server of your own, run a speech server (such as Speaches, faster-whisper-server or whisper.cpp) and add it under “Add your own server” — or use the on-device engine, which needs no server at all.</string>
     <!-- Data residency (issue #403). The region is picked from a list because the valid addresses are the

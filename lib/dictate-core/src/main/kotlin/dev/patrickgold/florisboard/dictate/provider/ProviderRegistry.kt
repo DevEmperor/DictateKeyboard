@@ -111,7 +111,17 @@ data class ProviderPreset(
      * Empty for everyone who serves the world from one address.
      */
     val regions: List<ProviderRegion> = emptyList(),
-)
+    /**
+     * True where the provider keeps the data in the EU **by default**, in its own published words, so
+     * the "EU" filter of the add-provider list can offer it. A provider that merely *offers* an EU
+     * region says so through [regions] instead and is found by [servesFromEu] all the same.
+     */
+    val hostedInEu: Boolean = false,
+) {
+    /** Whether the audio and text can stay in the EU with this provider — by default, or by region. */
+    val servesFromEu: Boolean
+        get() = hostedInEu || regions.any { it.id == "eu" }
+}
 
 /**
  * Catalog of built-in OpenAI-compatible providers plus a factory for user-defined custom endpoints.
@@ -430,6 +440,10 @@ object ProviderRegistry {
         realtimeApi = RealtimeApi.MISTRAL_VOXTRAL,
         defaultRealtimeModel = "voxtral-mini-transcribe-realtime-2602",
         curatedRealtimeModels = listOf("voxtral-mini-transcribe-realtime-2602"),
+        // "By default, your data is hosted in the European Union" (Mistral help centre, updated
+        // 2026-08-12). The same page names a separate US endpoint, which this base URL is not, and
+        // subprocessors outside the EU for some features.
+        hostedInEu = true,
     )
 
     val SONIOX = ProviderPreset(
@@ -749,6 +763,7 @@ object ProviderRegistry {
         ),
         // Batch only: Scaleway has no streaming transcription.
         supportsRealtime = false,
+        hostedInEu = true,
     )
 
     /**
@@ -812,6 +827,7 @@ object ProviderRegistry {
         ),
         // Batch only: the guide says streaming is "not yet supported" for transcription.
         supportsRealtime = false,
+        hostedInEu = true,
     )
 
     /**
