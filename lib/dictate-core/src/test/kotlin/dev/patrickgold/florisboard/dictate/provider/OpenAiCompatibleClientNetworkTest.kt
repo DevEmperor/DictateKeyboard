@@ -847,4 +847,67 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             server.takeRequest().path shouldBe "/v1/models"
         }
     }
+
+    // --- OVHcloud (issue #423) ---
+
+    // One base URL for the whole catalog, which is what made OVHcloud the same plain preset as Scaleway
+    // rather than the per-model editor the reporter expected.
+    test("OVHcloud transcribes over plain OpenAI multipart with a Bearer key") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Guten Morgen"}"""))
+                val preset = ProviderRegistry.OVHCLOUD
+                val client = OpenAiCompatibleClient.from(
+                    preset, "ovh-token", baseUrlOverride = server.url("/v1/").toString(),
+                )
+
+                val result = client.transcribe(
+                    TranscriptionRequest(audio, preset.defaultTranscriptionModel.orEmpty(), language = "de"),
+                )
+                val recorded = server.takeRequest()
+                val body = recorded.body.readUtf8()
+
+                result.text shouldBe "Guten Morgen"
+                recorded.path shouldBe "/v1/audio/transcriptions"
+                recorded.getHeader("Authorization") shouldBe "Bearer ovh-token"
+                body shouldContain "name=\"model\"\r\n\r\nwhisper-large-v3"
+                body shouldContain "name=\"language\"\r\n\r\nde"
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    // OVHcloud serves anonymous requests, so the worry is a wrong key being served as no key at all — a
+    // connection test that could never fail. It is not: both bodies are what the gateway answered on
+    // 2026-09-25, flat rather than enveloped, and each has to arrive as its own kind with its own words.
+    test("OVHcloud's gateway names a wrong key and a spent rate limit as what they are") {
+        listOf(
+            403 to """{"message":"Forbidden: authentication failed.  Please generate a new one at """ +
+                """https://kepler.ai.cloud.ovh.net/v1/oauth/ovh/authorize?iam_action=publicCloudProject:""" +
+                """ai:endpoints/call"}""",
+            429 to """{"message":"API rate limit exceeded","request_id":"698f0f1a6059fc751c903236eec22a05"}""",
+        ).forAll { (status, body) ->
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(status).setBody(body))
+                val client = OpenAiCompatibleClient.from(
+                    ProviderRegistry.OVHCLOUD, "not-a-key", baseUrlOverride = server.url("/v1/").toString(),
+                )
+
+                val error = shouldThrow<DictateApiException> { client.listModels() }
+
+                if (status == 403) {
+                    error.kind shouldBe DictateApiException.Kind.INVALID_API_KEY
+                    error.message.orEmpty() shouldStartWith "Forbidden: authentication failed."
+                } else {
+                    error.kind shouldBe DictateApiException.Kind.QUOTA_EXCEEDED
+                    error.message shouldBe "API rate limit exceeded"
+                }
+                server.requestCount shouldBe 1
+            }
+        }
+    }
 })

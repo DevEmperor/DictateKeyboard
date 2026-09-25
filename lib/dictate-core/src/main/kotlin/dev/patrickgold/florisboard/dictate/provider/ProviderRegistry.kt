@@ -752,6 +752,69 @@ object ProviderRegistry {
     )
 
     /**
+     * OVHcloud AI Endpoints — the second EU-hosted provider of issue #423, after [SCALEWAY].
+     *
+     * Served from Gravelines, France, and in OVHcloud's own words "data is not stored or shared during or
+     * after model use" (capabilities page, updated 2026-02-03). The reporter remembered one endpoint URL per
+     * model and expected a different editor for it; that is out of date. One OpenAI-compatible base URL now
+     * serves the whole catalog, chat and `audio/transcriptions` alike, so this is the same plain preset as
+     * Scaleway's.
+     *
+     * **Everything here was asked of the endpoint without a key.** OVHcloud serves anonymous requests at 2
+     * a minute per IP and per model, capped at 10 MB or 60 seconds of audio — far too little to dictate
+     * with, which is why the app still asks for a key, but enough to measure the facts below on
+     * 2026-09-25. A key lifts that to 400 requests a minute per project and model.
+     *
+     * A wrong key is refused, not quietly served as anonymous: `/models` answers 403 "Forbidden:
+     * authentication failed", so the credentials step of the connection test can fail as it must. Gateway
+     * errors are flat (`{"message":"…","request_id":"…"}`), the model server's are OpenAI's envelope; the
+     * client reads both.
+     */
+    val OVHCLOUD = ProviderPreset(
+        id = "ovhcloud",
+        displayName = "OVHcloud",
+        baseUrl = "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/",
+        capabilities = CHAT_AND_STT,
+        // The live list mixes chat, embedding, image, text-to-speech and safety-classifier models, with
+        // nothing to tell them apart (2026-09-25: 24 ids). The picker's name filter learned the three it did
+        // not know yet — bge-m3, stable-diffusion-xl and Qwen3Guard.
+        supportsDynamicModels = true,
+        // A key belongs to a Public Cloud project, so the page that creates one sits under a project id no
+        // link can know. This is the deepest address OVHcloud's own documentation links for it, on the EU
+        // control panel, which is where an account for these endpoints lives (their docs' link table, read
+        // 2026-09-25).
+        apiKeyUrl = "https://manager.eu.ovhcloud.com/#/public-cloud/pci/projects",
+        // Both measured with the app's own Fix Grammar prompt; each returned the corrected sentence alone.
+        // Mistral-Small-3.2 took 0.9 s, Llama-3.3-70B 4.8 s. gpt-oss-120b and Qwen3.8-27B are in the catalog
+        // but only ever answered the anonymous probe with 429, so nothing is claimed for them and the live
+        // list offers them unvouched. OVHcloud's ids are capitalised, unlike Scaleway's for the same models.
+        defaultChatModel = "Mistral-Small-3.2-24B-Instruct-2506",
+        curatedChatModels = listOf(
+            "Mistral-Small-3.2-24B-Instruct-2506", "Meta-Llama-3_3-70B-Instruct",
+        ),
+        // whisper-large-v3 rather than the turbo as the default because the turbo is the one that got words
+        // wrong: on the same German sample it wrote "Sprachkennung" in five containers out of five, where
+        // the full model heard "Spracherkennung" — at 0.5 against 0.8 seconds for ten seconds of audio, a
+        // difference nobody dictating waits for. Both read `prompt` (a lowercase, unpunctuated prompt made
+        // the answer lowercase and unpunctuated) and detect the language when none is sent.
+        defaultTranscriptionModel = "whisper-large-v3",
+        curatedTranscriptionModels = listOf("whisper-large-v3", "whisper-large-v3-turbo"),
+        // Documented: mp3, mp4, aac, m4a, wav, flac, ogg, opus, webm, mpeg, mpga (speech-to-text guide,
+        // updated 2026-05-11). Asked on 2026-09-25 with one German sample per container: these six came back
+        // correct, and so did an Ogg file named `.opus`, which OpenAI and Scaleway both refuse; amr is refused
+        // outright. AAC is left out although it is documented and accepted: the turbo model turned the second
+        // half of the ADTS sample into "und das Worttast 23" repeated, twice out of twice, while the full
+        // model read the same bytes correctly. A container that transcribes into a loop on one of the two
+        // models is not one to send untouched — a transcode costs a moment, a looped transcript a dictation.
+        acceptedAudioContainers = setOf(
+            AudioContainer.FLAC, AudioContainer.M4A, AudioContainer.MP3,
+            AudioContainer.OGG, AudioContainer.WAV, AudioContainer.WEBM,
+        ),
+        // Batch only: the guide says streaming is "not yet supported" for transcription.
+        supportsRealtime = false,
+    )
+
+    /**
      * Ollama server (OpenAI-compatible). No API key required by default. The base URL is user-editable
      * (issue #136) and defaults to localhost — point it at `http://<lan-ip>:11434/v1/` for a server on
      * another machine (localhost resolves to the phone itself).
@@ -789,7 +852,8 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OVHCLOUD,
+        OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
@@ -844,6 +908,9 @@ object ProviderRegistry {
      *    of 26,214,444 bytes came back 400 "Maximum file size exceeded (…, value=25.000041961669922)". Its
      *    rate limit counts audio seconds, 1800 a minute once a payment method is on file; a single upload
      *    at this ceiling is about 820 seconds of 16 kHz WAV, so the size, not the rate, is met first.
+     *  - OVHcloud 2048 MB or three hours per request with a key (speech-to-text guide, updated
+     *    2026-05-11) — with Deepgram's, since a keyboard never gets near it. Unmeasured: the anonymous
+     *    probe is capped at 10 MB, and the app never sends without a key.
      *  - OpenRouter 25 MB for a multipart upload, added 2026-09-04 while checking #321 — it was simply
      *    missing, which meant the file-import path never split anything for it and a shared recording
      *    went out whole to be refused. Its harder limit is not a size at all: a request gets about 60
@@ -861,7 +928,7 @@ object ProviderRegistry {
         "siliconflow" -> 50L * 1024 * 1024
         "azure" -> 300L * 1024 * 1024
         "elevenlabs" -> 3L * 1024 * 1024 * 1024
-        "deepgram" -> 2L * 1024 * 1024 * 1024
+        "deepgram", "ovhcloud" -> 2L * 1024 * 1024 * 1024
         "assemblyai" -> 2252L * 1024 * 1024
         else -> 0L
     }

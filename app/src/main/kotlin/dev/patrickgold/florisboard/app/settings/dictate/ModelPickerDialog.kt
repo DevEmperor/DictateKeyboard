@@ -262,6 +262,9 @@ private fun matchesKind(id: String, kind: ModelKind): Boolean {
             !l.contains("embedding") && !l.contains("tts") && !l.contains("dall-e") &&
             !l.contains("image") && !l.contains("moderation") && !l.contains("rerank") &&
             // BAAI's embedding family, whose ids do not say "embedding" (Scaleway's bge-multilingual-gemma2).
-            !l.contains("bge-")
+            !l.contains("bge-") &&
+            // An image generator and a safety classifier, both in OVHcloud's catalog: stable-diffusion-xl,
+            // and Qwen3Guard, which answers with a verdict on the text rather than the text.
+            !l.contains("diffusion") && !l.contains("guard")
     }
 }

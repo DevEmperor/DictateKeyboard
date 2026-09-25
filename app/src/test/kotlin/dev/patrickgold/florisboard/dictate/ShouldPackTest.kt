@@ -90,7 +90,7 @@ class ShouldPackTest {
     @Test
     fun `providers with room to spare never trip the limit clause`() {
         // Their ceilings are in gigabytes, so only the general threshold can ever decide for them.
-        for (id in listOf("elevenlabs", "deepgram", "assemblyai")) {
+        for (id in listOf("elevenlabs", "deepgram", "assemblyai", "ovhcloud")) {
             val limit = ProviderRegistry.maxUploadBytes(id)
             assertTrue(limit > mib(1024), "$id should have a documented ceiling far above a dictation")
             assertFalse(pack(mib(10), limit), "$id packed a 10 MiB recording it had no trouble with")
