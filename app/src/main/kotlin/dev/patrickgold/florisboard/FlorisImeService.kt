@@ -397,10 +397,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             // A new editor field invalidates any in-progress emoji search (issue #110); drop it so we
             // don't reappear on an unrelated field. imeUiMode is reset to TEXT just below anyway.
             keyboardManager.closeEmojiSearch(returnToMedia = false)
-            // The translate bar writes into the field it was opened on (issue #424). A new field ends it
-            // without a last write — that would land in the wrong place. A restart of the same field
-            // (an app changing its input type) leaves it open.
-            if (!restarting) keyboardManager.closeTranslate(finish = false)
+            // The same for every other field of the keyboard's own (issue #424) — the GIF, sticker and
+            // clipboard searches used to survive into the next app's field. The translate bar writes into
+            // the field it was opened on, so a new field ends it without a last write, which would land in
+            // the wrong place. A restart of the same field (an app changing its input type) leaves them.
+            if (!restarting) keyboardManager.closeInternalFields(finishTranslate = false)
             if (activeState.imeUiMode != ImeUiMode.CLIPBOARD || prefs.clipboard.historyHideOnNextTextField.get()) {
                 activeState.imeUiMode = ImeUiMode.TEXT
             }
@@ -557,9 +558,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         // an active recording this is the normal teardown. A recording the keyboard does not own — the
         // floating button's, or the system voice input's — is left running (issue #293).
         dev.patrickgold.florisboard.dictate.DictateController.stashRecordingOnHide(this)
-        // Hiding the keyboard ends a translation the way closing the bar does: what was typed is still
-        // translated into the field, which has not changed (issue #424).
-        keyboardManager.closeTranslate(finish = true)
+        // Hiding the keyboard closes its own fields (issue #424). A translation ends the way closing the
+        // bar does: what was typed is still translated into the field, which has not changed.
+        keyboardManager.closeInternalFields(finishTranslate = true)
         if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)
             // The scan session deliberately survives a hidden window: the trip to the camera is itself

@@ -61,7 +61,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
- * The in-keyboard emoji search panel (issues #110, #274). Shown in place of the Smartbar while a search
+ * The in-keyboard emoji search panel (issues #110, #274). Shown above the Smartbar while a search
  * is active (see [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.emojiSearchQuery]); the
  * user's own keyboard layout below it types the query, which is intercepted in the input pipeline.
  *

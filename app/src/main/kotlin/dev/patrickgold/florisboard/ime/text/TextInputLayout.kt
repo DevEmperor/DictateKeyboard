@@ -77,32 +77,31 @@ fun TextInputLayout(
             .fillMaxWidth()
             .wrapContentHeight(),
     ) {
-        // While a search is running (issues #110, #274, #317, #333), its panel takes the Smartbar's slot
-        // so the keyboard layout below stays available for typing the query. All four are taller than
-        // the Smartbar — results above the search bar for emoji, stickers and clips, earlier terms for
-        // GIF — and size themselves, so the keyboard grows for the duration of the search the way the
-        // GIF panel does. Only one can be open at a time: each is reached from its own panel.
-        // The translate bar (issue #424) takes the same slot for the same reason: the keys below type
-        // into it. Two rows tall, and like the searches it sizes itself.
-        if (translateActive != null) {
-            TranslateBar()
-        } else if (emojiSearchActive != null) {
-            EmojiSearchPanel()
-        } else if (gifSearchActive != null) {
-            GifSearchPanel()
-        } else if (stickerSearchActive != null) {
-            StickerSearchPanel()
-        } else if (clipboardSearchActive != null) {
-            ClipboardSearchPanel()
-        } else {
-            Smartbar()
-            // The recent-emoji row (#340) sits between the Smartbar and the keys, exactly where a
-            // number row would. Not while a search has taken the Smartbar's slot (those panels are
-            // taller than the Smartbar and the keyboard below them is there to type the query), and
-            // not over the actions overflow, which replaces the keys with a grid of its own.
-            if (!state.isActionsOverflowVisible && emojiRowVisible()) {
-                EmojiRow()
+        // While one of the keyboard's own fields is open — a search (issues #110, #274, #317, #333) or the
+        // translate bar (#424) — it sits on top, where the rewording prompt row otherwise is, and the
+        // Smartbar stays below it, as in Gboard: its strip then suggests words for the field being typed
+        // in, and its mic dictates into it. The keys below type into the field. Each field sizes itself,
+        // so the keyboard grows for as long as it is open. Only one is ever open: every one of them, and
+        // every panel opener, closes the rest first.
+        val fieldOpen = translateActive != null || emojiSearchActive != null || gifSearchActive != null ||
+            stickerSearchActive != null || clipboardSearchActive != null
+        if (fieldOpen) {
+            when {
+                translateActive != null -> TranslateBar()
+                emojiSearchActive != null -> EmojiSearchPanel()
+                gifSearchActive != null -> GifSearchPanel()
+                stickerSearchActive != null -> StickerSearchPanel()
+                clipboardSearchActive != null -> ClipboardSearchPanel()
             }
+        }
+        // Called in the same place whether a field is open or not, so opening one does not rebuild it.
+        Smartbar(showPromptRow = !fieldOpen)
+        // The recent-emoji row (#340) sits between the Smartbar and the keys, exactly where a number row
+        // would. Not while a field is open — its taps are character keys and would land in the field,
+        // and the field has already made the keyboard taller — and not over the actions overflow, which
+        // replaces the keys with a grid of its own.
+        if (!fieldOpen && !state.isActionsOverflowVisible && emojiRowVisible()) {
+            EmojiRow()
         }
         if (state.isActionsOverflowVisible) {
             QuickActionsOverflowPanel()

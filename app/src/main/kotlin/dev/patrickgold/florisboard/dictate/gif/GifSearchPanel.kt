@@ -61,7 +61,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
 /**
- * The GIF search bar shown in the Smartbar's slot while the user is typing a query (the keyboard below
+ * The GIF search bar shown above the Smartbar while the user is typing a query (the keyboard below
  * does the typing; keystrokes are folded into
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.gifSearchQuery]). Unlike emoji search, GIFs
  * are too small for an inline results strip — so this bar only captures the query; Enter opens a full

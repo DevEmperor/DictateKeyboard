@@ -53,7 +53,7 @@ import org.florisboard.lib.snygg.ui.SnyggText
 private val ResultWidth = 148.dp
 
 /**
- * Finding a clip by what it says (issue #333), shown in the Smartbar's slot while the search is open
+ * Finding a clip by what it says (issue #333), shown above the Smartbar while the search is open
  * so the keyboard below can type the query — see
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.clipboardSearchQuery].
  *

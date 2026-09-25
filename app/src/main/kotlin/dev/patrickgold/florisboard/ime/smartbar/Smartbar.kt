@@ -102,8 +102,12 @@ private val NoExitTransition = ExitTransition.horizontalTween(0)
 private val AnimationTween = tween<Float>(AnimationDuration)
 private val NoAnimationTween = tween<Float>(0)
 
+/**
+ * @param showPromptRow false while one of the keyboard's own fields is open (issue #424): the field takes
+ *  the prompt row's place above the Smartbar.
+ */
 @Composable
-fun Smartbar() {
+fun Smartbar(showPromptRow: Boolean = true) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val smartbarEnabled by prefs.smartbar.enabled.collectAsState()
@@ -115,7 +119,7 @@ fun Smartbar() {
     val dictatePromptsLayout by prefs.dictate.promptsLayout.collectAsState()
     val dictateRewordingEnabled by prefs.dictate.rewordingEnabled.collectAsState()
     val dictatePrompts by DictateController.prompts.collectAsState()
-    val showDictatePromptRow = dictateRewordingEnabled && dictatePromptsLayout == DictatePromptsLayout.ROW
+    val showDictatePromptRow = showPromptRow && dictateRewordingEnabled && dictatePromptsLayout == DictatePromptsLayout.ROW
     LaunchedEffect(showDictatePromptRow) {
         if (showDictatePromptRow) DictateController.refreshPrompts(context)
     }

@@ -581,8 +581,8 @@ private class TextKeyboardLayoutController(
                     pointer.index = pointerIndex
                     if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
-                            if (keyboardManager.translateTakesKeys) {
-                                keyboardManager.finishTranslateSwipeDelete()
+                            if (keyboardManager.fieldTakesKeys) {
+                                keyboardManager.finishFieldSwipeDelete()
                             } else {
                                 val selection = editorInstance.activeContent.selection
                                 if (selection.isSelectionMode) {
@@ -608,9 +608,9 @@ private class TextKeyboardLayoutController(
                                 pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
-                                // The translate bar's field has its own marked stretch (issue #424).
-                                if (keyboardManager.translateTakesKeys) {
-                                    keyboardManager.finishTranslateSwipeDelete()
+                                // The keyboard's own fields have their own marked stretch (issue #424).
+                                if (keyboardManager.fieldTakesKeys) {
+                                    keyboardManager.finishFieldSwipeDelete()
                                 } else {
                                     val selection = editorInstance.activeContent.selection
                                     if (selection.isSelectionMode) {
@@ -952,9 +952,9 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
-                    // While the translate bar has the keys the swipe marks its text, not the app's (#424).
-                    if (keyboardManager.translateTakesKeys) {
-                        keyboardManager.selectInTranslate(
+                    // While one of the keyboard's own fields has the keys, the swipe marks its text, not the app's (#424).
+                    if (keyboardManager.fieldTakesKeys) {
+                        keyboardManager.selectInField(
                             units = -event.absUnitCountX - 1,
                             words = false,
                             forward = inputEventDispatcher.isPressed(KeyCode.SHIFT),
@@ -985,8 +985,8 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
-                    if (keyboardManager.translateTakesKeys) {
-                        keyboardManager.selectInTranslate(
+                    if (keyboardManager.fieldTakesKeys) {
+                        keyboardManager.selectInField(
                             units = -event.absUnitCountX / 2 - 1,
                             words = true,
                             forward = inputEventDispatcher.isPressed(KeyCode.SHIFT),

@@ -324,59 +324,88 @@ class NlpManager(context: Context) {
         }
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
-            val emojiSuggestions = when {
-                prefs.emoji.suggestionEnabled.get() -> {
-                    emojiSuggestionProvider.suggest(
-                        subtype = subtype,
-                        content = content,
-                        maxCandidateCount = prefs.emoji.suggestionCandidateMaxCount.get(),
-                        allowPossiblyOffensive = true,
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-                    )
-                }
-                else -> emptyList()
-            }
-            // A colon query is a *search* for an emoji, and a search takes the whole strip — that is
-            // what the mode is for. A plainly typed word is not a search (issue #338): there the emoji
-            // joins the words rather than replacing them. Read from the input rather than from the
-            // trigger setting, because the colon search stays available in both modes.
-            val emojiSearch = emojiQuerySource(content.composingText, content.currentWordText)
-                .startsWith(EmojiSuggestionType.LEADING_COLON.prefix)
-            val suggestions = when {
-                // The switch that says "Display suggestions" was read nowhere below this line (issue
-                // #297): [isSuggestionOn] let emoji suggestions keep the gate open, and since turning
-                // words off also turns composing off, the provider fell straight through to next-word
-                // predictions — the one kind of suggestion nothing was gating.
-                !wordSuggestionsWanted() -> {
-                    emptyList()
-                }
-                emojiSuggestions.isNotEmpty() && emojiSearch -> {
-                    emptyList()
-                }
-                else -> {
-                    val provider = getSuggestionProvider(subtype)
-                    provider.suggest(
-                        subtype = subtype,
-                        content = content,
-                        maxCandidateCount = provider.maxCandidates,
-                        allowPossiblyOffensive = true,
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-                    )
-                }
-            }
+            val candidates = computeSuggestions(subtype, content)
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
-                    // Words first, emoji after — a flat list, because where they end up on screen is
-                    // the strip's business, not this one's: [CandidatesRow] gives an emoji a narrow
-                    // cell of its own so it costs no word its place (#338).
-                    internalSuggestions = reqTime to when {
-                        emojiSuggestions.isEmpty() -> suggestions
-                        emojiSearch -> emojiSuggestions + suggestions
-                        else -> suggestions + emojiSuggestions
-                    }
+                    internalSuggestions = reqTime to candidates
                 }
             }
         }
+    }
+
+    /**
+     * The candidates for a keyboard-internal field (issue #424) — the translate bar or one of the searches —
+     * computed exactly as for the app's field but not published: the strip shows them only through
+     * [showFieldCandidates], so the app's suggestions and this list never overwrite each other.
+     */
+    suspend fun suggestionsFor(subtype: Subtype, content: EditorContent): List<SuggestionCandidate> =
+        computeSuggestions(subtype, content)
+
+    private suspend fun computeSuggestions(subtype: Subtype, content: EditorContent): List<SuggestionCandidate> {
+        val emojiSuggestions = when {
+            prefs.emoji.suggestionEnabled.get() -> {
+                emojiSuggestionProvider.suggest(
+                    subtype = subtype,
+                    content = content,
+                    maxCandidateCount = prefs.emoji.suggestionCandidateMaxCount.get(),
+                    allowPossiblyOffensive = true,
+                    isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                )
+            }
+            else -> emptyList()
+        }
+        // A colon query is a *search* for an emoji, and a search takes the whole strip — that is
+        // what the mode is for. A plainly typed word is not a search (issue #338): there the emoji
+        // joins the words rather than replacing them. Read from the input rather than from the
+        // trigger setting, because the colon search stays available in both modes.
+        val emojiSearch = emojiQuerySource(content.composingText, content.currentWordText)
+            .startsWith(EmojiSuggestionType.LEADING_COLON.prefix)
+        val suggestions = when {
+            // The switch that says "Display suggestions" was read nowhere below this line (issue
+            // #297): [isSuggestionOn] let emoji suggestions keep the gate open, and since turning
+            // words off also turns composing off, the provider fell straight through to next-word
+            // predictions — the one kind of suggestion nothing was gating.
+            !wordSuggestionsWanted() -> {
+                emptyList()
+            }
+            emojiSuggestions.isNotEmpty() && emojiSearch -> {
+                emptyList()
+            }
+            else -> {
+                val provider = getSuggestionProvider(subtype)
+                provider.suggest(
+                    subtype = subtype,
+                    content = content,
+                    maxCandidateCount = provider.maxCandidates,
+                    allowPossiblyOffensive = true,
+                    isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                )
+            }
+        }
+        // Words first, emoji after — a flat list, because where they end up on screen is
+        // the strip's business, not this one's: [CandidatesRow] gives an emoji a narrow
+        // cell of its own so it costs no word its place (#338).
+        return when {
+            emojiSuggestions.isEmpty() -> suggestions
+            emojiSearch -> emojiSuggestions + suggestions
+            else -> suggestions + emojiSuggestions
+        }
+    }
+
+    /**
+     * What the strip shows while one of the keyboard's own fields has the keys (issue #424), or `null`
+     * while none does. Set, it takes the strip over from the app's suggestions — which go on being
+     * computed underneath, since the translate bar keeps writing into the app's field — and the actions
+     * row follows it the way it follows those: shown while the list is empty, folded away while it is not.
+     */
+    @Volatile
+    private var fieldCandidates: List<SuggestionCandidate>? = null
+
+    val isFieldMode: Boolean get() = fieldCandidates != null
+
+    fun showFieldCandidates(candidates: List<SuggestionCandidate>?) {
+        fieldCandidates = candidates
+        scope.launch { assembleCandidates() }
     }
 
     fun suggestDirectly(suggestions: List<SuggestionCandidate>, holdNext: Boolean = false) {
@@ -386,6 +415,12 @@ class NlpManager(context: Context) {
         // still committed; only the alternatives are withheld, and holding the next suggest is left alone
         // so nothing changes for the case this was written for (#127).
         val wanted = wordSuggestionsWanted()
+        // A glide into one of the keyboard's own fields: the alternatives belong to that field's strip,
+        // and holding the app's next suggest would only swallow the first one after the field closes.
+        if (fieldCandidates != null) {
+            showFieldCandidates(if (wanted) suggestions else emptyList())
+            return
+        }
         val reqTime = SystemClock.uptimeMillis()
         holdNextSuggest = holdNext
         runBlocking {
@@ -624,6 +659,13 @@ class NlpManager(context: Context) {
 
     private fun assembleCandidates() {
         runBlocking {
+            fieldCandidates?.let { field ->
+                // No clipboard offer and no sum here: both read the app's field, not the one being typed in.
+                val shown = if (isSuggestionOn()) field else emptyList()
+                activeCandidates = shown
+                autoExpandCollapseSmartbarActions(shown, null)
+                return@runBlocking
+            }
             val candidates = when {
                 isSuggestionOn() -> mathCandidates().ifEmpty {
                     val content = editorInstance.activeContent

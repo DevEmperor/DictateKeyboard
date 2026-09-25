@@ -18,55 +18,66 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import kotlin.math.roundToInt
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
-/** Half a second on, half a second off — the familiar text-cursor cadence. */
 private const val CaretBlinkMillis = 1000
 
+/** Room kept clear at the field's ends when scrolling the cursor into view. */
+private val CaretMargin = 24.dp
+
 /**
- * The search bar shared by the emoji search and the GIF search (issue #274), and the input line of the
- * translate bar (issue #424), which passes its own [icon].
- *
- * Neither search owns a real text field: the query is typed on the keyboard below and intercepted in
- * the input pipeline (see `KeyboardManager.handleEmojiSearchKey`), so this bar only *renders* a query
- * that lives elsewhere. That is exactly why it carries a blinking caret — without one, a keyboard whose
- * keystrokes no longer reach the app looks broken rather than busy.
- *
- * It replaces two near-identical hand-rolled rows that had drifted apart: the emoji one squeezed the
- * query into 120 dp beside its results and had no way to clear it, the GIF one had no caret and a
- * different pill.
+ * The search bar shared by the emoji, GIF, sticker and clipboard searches (issues #274, #317, #333).
  *
  * Leaving the search belongs in [leading] and is drawn as a back arrow, never a second ✕ — the ✕ in
  * the field means "empty the query", and two of them side by side read as the same button twice.
@@ -81,8 +92,7 @@ fun KeyboardSearchBar(
     trailing: @Composable (RowScope.() -> Unit)? = null,
     icon: ImageVector = Icons.Default.Search,
 ) {
-    val style = rememberSnyggThemeQuery(FlorisImeUi.SmartbarCandidatesRow.elementName)
-    val inputFeedbackController = LocalInputFeedbackController.current
+    val keyboardManager by LocalContext.current.keyboardManager()
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier
@@ -91,31 +101,78 @@ fun KeyboardSearchBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         leading?.invoke(this)
-        Row(
+        KeyboardFieldInput(
+            text = query,
+            placeholder = placeholder,
+            icon = icon,
+            focused = true,
+            onTap = { keyboardManager.placeFieldCursor(it) },
+            onClear = onClear,
+            modifier = Modifier.weight(1f),
+        )
+        trailing?.invoke(this)
+    }
+}
+
+/**
+ * The text line of the keyboard's own fields — the four searches and the translate bar (issue #424) —
+ * so all five behave alike.
+ *
+ * None of them is a real text field: an input method cannot give focus to a view of its own, so the
+ * text lives in `KeyboardManager` (with its `fieldCursor` and `fieldSelection`, shared because only one
+ * field is ever open) and the keys are folded into it there. This only draws it — but draws it as a text
+ * field: one line that scrolls sideways to keep the cursor in view, a blinking cursor wherever a tap,
+ * the arrow keys or a space-bar glide put it, and the stretch a Backspace swipe marks. Without the keys
+ * ([focused] false, the translate bar after a tap into the app) it keeps its text and shows no cursor;
+ * a tap on it hands [onTap] the offset under the finger.
+ *
+ * [modifier] sizes the pill; the pill brings its own inset and background.
+ */
+@Composable
+fun KeyboardFieldInput(
+    text: String,
+    placeholder: String,
+    icon: ImageVector,
+    focused: Boolean,
+    onTap: (Int) -> Unit,
+    onClear: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val keyboardManager by LocalContext.current.keyboardManager()
+    val cursor by keyboardManager.fieldCursor.collectAsState()
+    val selection by keyboardManager.fieldSelection.collectAsState()
+    val style = rememberSnyggThemeQuery(FlorisImeUi.SmartbarCandidatesRow.elementName)
+    val inputFeedbackController = LocalInputFeedbackController.current
+    val density = LocalDensity.current
+    val scroll = rememberScrollState()
+    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+
+    Row(
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(horizontal = 6.dp, vertical = 5.dp)
+            .clip(RoundedCornerShape(50))
+            .background(if (focused) Color(0x33808080) else Color(0x1A808080))
+            // A tap beside the text — on the icon, in the empty end of the field — puts the cursor last.
+            .clickable(indication = null, interactionSource = null) {
+                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                onTap(text.length)
+            }
+            .padding(start = 12.dp, end = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SnyggIcon(
+            imageVector = icon,
             modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .padding(horizontal = 6.dp, vertical = 5.dp)
-                .clip(RoundedCornerShape(50))
-                .background(Color(0x22808080))
-                .padding(start = 10.dp, end = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            SnyggIcon(
-                imageVector = icon,
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(18.dp),
-            )
-            // The caret marks where the next character lands, so with nothing typed it belongs *before*
-            // the placeholder, not after it. The text takes only the width it needs (fill = false) so
-            // the caret sits against it; the row around them holds the remaining space open.
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (query.isEmpty()) {
-                    Caret(color = style.foreground())
+                .padding(end = 8.dp)
+                .size(18.dp),
+        )
+        Box(modifier = Modifier.weight(1f).fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
+            if (text.isEmpty()) {
+                // The cursor marks where the next character lands, so with nothing typed it belongs
+                // *before* the placeholder, not after it.
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (focused) Caret(color = style.foreground())
                     Text(
                         modifier = Modifier.padding(start = 6.dp),
                         text = placeholder,
@@ -123,38 +180,87 @@ fun KeyboardSearchBar(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                } else {
-                    Text(
-                        modifier = Modifier.weight(1f, fill = false),
-                        text = query,
-                        color = style.foreground(),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Caret(color = style.foreground())
                 }
-            }
-            if (query.isNotEmpty()) {
+            } else {
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(50))
-                        .clickable(onClick = {
-                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                            onClear()
-                        })
-                        .padding(6.dp),
+                        .horizontalScroll(scroll)
+                        .pointerInput(text) {
+                            detectTapGestures { position ->
+                                inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                                layout?.let { onTap(it.getOffsetForPosition(position)) }
+                            }
+                        },
+                    contentAlignment = Alignment.CenterStart,
                 ) {
-                    SnyggIcon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = stringRes(R.string.action__clear),
-                        modifier = Modifier.size(16.dp),
+                    // A stretch marked by the Backspace swipe is shown the way a text field shows one.
+                    val marked = selection?.let { it.first.coerceIn(0, text.length) until it.last.coerceIn(0, text.length) }
+                    val shown = if (marked == null || marked.isEmpty()) {
+                        AnnotatedString(text)
+                    } else {
+                        buildAnnotatedString {
+                            append(text)
+                            addStyle(SpanStyle(background = style.foreground().copy(alpha = 0.3f)), marked.first, marked.last + 1)
+                        }
+                    }
+                    Text(
+                        text = shown,
+                        color = style.foreground().copy(alpha = if (focused) 1f else 0.7f),
+                        maxLines = 1,
+                        softWrap = false,
+                        onTextLayout = { layout = it },
+                        // Room after the last character for the cursor and the scroll margin.
+                        modifier = Modifier.padding(end = CaretMargin),
                     )
+                    val caretX = layout?.caretX(cursor)
+                    if (focused && caretX != null && selection == null) {
+                        Caret(
+                            color = style.foreground(),
+                            modifier = Modifier.offset { IntOffset(caretX - 2.dp.roundToPx(), 0) },
+                        )
+                    }
+                }
+                // Keep the cursor in view as it moves or the text grows under it.
+                LaunchedEffect(cursor, text, layout) {
+                    val x = layout?.caretX(cursor) ?: return@LaunchedEffect
+                    val margin = with(density) { CaretMargin.roundToPx() }
+                    val viewport = scroll.viewportSize
+                    val target = when {
+                        x - margin < scroll.value -> x - margin
+                        x + margin > scroll.value + viewport -> x + margin - viewport
+                        else -> return@LaunchedEffect
+                    }
+                    scroll.animateScrollTo(target.coerceIn(0, scroll.maxValue))
                 }
             }
         }
-        trailing?.invoke(this)
+        if (text.isNotEmpty()) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .clickable {
+                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        onClear()
+                    }
+                    .padding(6.dp),
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringRes(R.string.action__clear),
+                    modifier = Modifier.size(16.dp),
+                )
+            }
+        }
     }
 }
+
+/**
+ * Where the cursor at [offset] is drawn. Clamped to the text *this layout* was made from, which trails
+ * the field's by a frame: a letter typed moves the cursor before the new text has been laid out, and
+ * asking the old layout for an offset past its end throws.
+ */
+private fun TextLayoutResult.caretX(offset: Int): Int =
+    getCursorRect(offset.coerceIn(0, layoutInput.text.length)).left.roundToInt()
 
 /** A blinking text cursor, marking where the next keystroke lands. */
 @Composable

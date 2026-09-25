@@ -95,24 +95,28 @@ data class QuickActionArrangement(
                 // and during a selection, not mid-word.
                 QuickAction.InsertKey(TextKeyData.DICTATE_REINSERT),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_CLIPBOARD),
+                // On-device translation (issue #424). Third, ahead of GIF: it is the start of an errand
+                // like the two before it, nobody looks for it in a keyboard until they see it there, and
+                // Gboard keeps its translate button in the visible bar — which is where people switching
+                // from it will look.
+                QuickAction.InsertKey(TextKeyData.TRANSLATE),
                 // GIF search panel (KLIPY). In the bar by default rather than waiting to be dragged there:
                 // it is one of the few actions people go looking for, and unlike the split or language
                 // actions it is never greyed out — without an API key the panel itself says so.
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_GIF),
-                // Scan text (issue #390): camera → recognised lines → the one you tap. High for discovery
-                // rather than frequency — it is the feature nobody guesses a keyboard has, and the issue's
-                // "not a Smartbar default" was written before this list was a considered order.
-                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN),
-                // On-device translation (issue #424), next to scan and for the same reason: nobody looks
-                // for it in a keyboard until they see it there. Gboard keeps its translate button in the
-                // visible bar too, which is what people switching from it will look for.
-                QuickAction.InsertKey(TextKeyData.TRANSLATE),
-                QuickAction.InsertKey(TextKeyData.UNDO),
-                // The last of the visible actions. A keyboard with this much behind it — the provider,
-                // the key, the prompts, the languages — needs a door of its own; without one the way in
-                // is hunting for the app icon in the launcher, which is a long walk from the field the
-                // user is standing in.
+                // A keyboard with this much behind it — the provider, the key, the prompts, the languages
+                // — needs a door of its own; without one the way in is hunting for the app icon in the
+                // launcher, which is a long walk from the field the user is standing in. Fifth, so it is
+                // on screen on a 360 dp phone too, where only five fit (it was sixth, and so hidden there).
                 QuickAction.InsertKey(TextKeyData.SETTINGS),
+                // Scan text (issue #390): camera → recognised lines → the one you tap. The last visible slot
+                // on a 411 dp phone, for discovery rather than frequency — it is the feature nobody guesses
+                // a keyboard has.
+                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN),
+                // First of the overflow grid rather than in the bar (#424 moved it out). The actions row is
+                // on screen when the field is idle; while typing, the strip shows suggestions — so Undo was
+                // rarely there at the moment it was wanted, and one tap into the grid costs little more.
+                QuickAction.InsertKey(TextKeyData.UNDO),
                 // --- Everything else that inserts something -----------------------------------------
                 // The text editing panel (issue #386) — cursor pad, select, clipboard. First tile of the
                 // overflow grid rather than a slot in the bar: it is the umbrella over fourteen of the

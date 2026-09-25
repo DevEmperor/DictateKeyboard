@@ -60,7 +60,7 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggText
 
 /**
- * Finding a sticker by name (issue #317), shown in the Smartbar's slot while the search is open so the
+ * Finding a sticker by name (issue #317), shown above the Smartbar while the search is open so the
  * keyboard below can type the query — see
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.stickerSearchQuery].
  *
