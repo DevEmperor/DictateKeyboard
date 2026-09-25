@@ -119,8 +119,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.ui.SnyggText
 
-/** How long the mic must be held before it becomes push-to-talk rather than a tap (#235). */
-private const val PUSH_TO_TALK_HOLD_MS = 110L
+/**
+ * How long the mic must be held before it becomes push-to-talk rather than a tap (#235).
+ *
+ * It was 110 ms, and an ordinary deliberate tap runs 80–150: every slower tap became a hold, and its
+ * release ended the recording it had just started (#422). 300 is the keyboard's own long-press default.
+ */
+private const val PUSH_TO_TALK_HOLD_MS = 300L
+
+/**
+ * How long, counted from the finger landing, a hold must last before its release sends (#422).
+ *
+ * A release between [PUSH_TO_TALK_HOLD_MS] and this is neither a tap nor a dictation — too slow for one,
+ * too short to have said anything in — and is dropped without a trace, the way a voice-message button
+ * drops a hold it cannot use.
+ */
+private const val PUSH_TO_TALK_MIN_SEND_MS = 1000L
 
 /** How far the swollen mic travels left, and how far the finger must slide, to discard (#235). */
 private val PUSH_TO_TALK_TRAVEL = 105.dp
@@ -679,6 +693,7 @@ fun QuickActionButton(
                                         action = action,
                                         feedback = inputFeedbackController,
                                         holdDelayMs = PUSH_TO_TALK_HOLD_MS,
+                                        minSendMs = PUSH_TO_TALK_MIN_SEND_MS,
                                         cancelSlidePx = PUSH_TO_TALK_CANCEL_SLIDE.toPx(),
                                         lockSlidePx = PUSH_TO_TALK_LOCK_SLIDE.toPx(),
                                         commitPx = PUSH_TO_TALK_AXIS_COMMIT.toPx(),

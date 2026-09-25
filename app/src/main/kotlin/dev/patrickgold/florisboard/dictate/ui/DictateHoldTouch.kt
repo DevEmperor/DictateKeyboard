@@ -18,6 +18,8 @@ import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,6 +46,7 @@ object DictateHoldTouch {
     private val handler = Handler(Looper.getMainLooper())
 
     private var lastDownId = -1
+    private var lastDownAt = 0L
     private var lastDownX = 0f
     private var lastDownY = 0f
     private var lastDownStillDown = false
@@ -52,6 +55,10 @@ object DictateHoldTouch {
     private var pendingId = -1
     /** The finger of a hold in progress, or -1. */
     private var trackedId = -1
+    /** When the press being followed landed, on the touch stream's own clock. */
+    private var downAt = 0L
+    /** How long a hold must last, counted from [downAt], before its release sends rather than drops. */
+    private var minSendMs = 0L
     private var originX = 0f
     private var originY = 0f
     private var axis = Axis.NONE
@@ -85,7 +92,8 @@ object DictateHoldTouch {
 
     /**
      * The mic was pressed. If the finger is still there once [holdDelayMs] have passed this becomes a
-     * recording; if it lifts first it stays the ordinary tap it looks like.
+     * recording; if it lifts first it stays the ordinary tap it looks like. A recording let go before
+     * [minSendMs] — counted from the landing, not from the hold — is dropped instead of sent (#422).
      *
      * Returns false when the window never saw this press land, in which case the caller keeps the gesture
      * itself — arming on a press we cannot follow would leave the key held forever.
@@ -95,6 +103,7 @@ object DictateHoldTouch {
         action: QuickAction,
         feedback: InputFeedbackController,
         holdDelayMs: Long,
+        minSendMs: Long,
         cancelSlidePx: Float,
         lockSlidePx: Float,
         commitPx: Float,
@@ -103,6 +112,7 @@ object DictateHoldTouch {
     ): Boolean {
         if (!take(context, action, feedback, onEnd)) return false
         pushToTalk = true
+        this.minSendMs = minSendMs
         this.cancelSlidePx = cancelSlidePx
         this.lockSlidePx = lockSlidePx
         this.commitPx = commitPx
@@ -148,6 +158,7 @@ object DictateHoldTouch {
         if (lastDownId < 0 || !lastDownStillDown) return false
         cancel()
         pendingId = lastDownId
+        downAt = lastDownAt
         this.context = context
         this.action = action
         this.feedback = feedback
@@ -162,6 +173,7 @@ object DictateHoldTouch {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                 val index = event.actionIndex
                 lastDownId = event.getPointerId(index)
+                lastDownAt = event.eventTime
                 lastDownX = event.getX(index)
                 lastDownY = event.getY(index)
                 lastDownStillDown = true
@@ -177,12 +189,20 @@ object DictateHoldTouch {
                 when (id) {
                     trackedId -> {
                         val ctx = context
+                        val pressMs = event.eventTime - downAt
+                        val send = pressMs >= minSendMs
+                        // Where held presses actually end, to set the two thresholds from rather than
+                        // guess (#422). Debug builds only; flog compiles out of a release.
+                        flogDebug(LogTopic.GESTURES) {
+                            "Mic press: $pressMs ms, hold, ${if (send) "sent" else "dropped"}"
+                        }
                         cancel()
-                        if (ctx != null) DictateController.onPushToTalkUp(ctx)
+                        if (ctx != null) DictateController.onPushToTalkUp(ctx, send)
                     }
                     // Lifted before it ever became a hold: the ordinary tap, delivered as the key press
                     // the gesture layer opened and never closed.
                     pendingId -> {
+                        flogDebug(LogTopic.GESTURES) { "Mic press: ${event.eventTime - downAt} ms, tap" }
                         val ctx = context
                         val act = action
                         cancel()

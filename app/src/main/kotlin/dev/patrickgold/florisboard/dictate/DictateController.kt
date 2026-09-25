@@ -393,6 +393,9 @@ object DictateController {
      */
     @Volatile private var pttStopPending = false
 
+    /** Whether that pending release sends the recording, or drops it as too short to be a dictation (#422). */
+    @Volatile private var pttStopSends = true
+
     private val _audioLevel = MutableStateFlow(0f)
     /**
      * Shared, noise-gated microphone level for lightweight recording visuals. Sampling once here keeps
@@ -755,8 +758,11 @@ object DictateController {
     /** Phase, lock confirmation and discard flight as one value — see [PushToTalkVisuals]. */
     val pushToTalkVisuals: StateFlow<PushToTalkVisuals> = _pushToTalkVisuals.asStateFlow()
 
-    /** Finger lifted: send, or silently drop a press too short to be speech. */
-    fun onPushToTalkUp(context: Context) {
+    /**
+     * Finger lifted: send, or — when [send] is false because the hold was too short to be a dictation —
+     * silently drop it. The gesture layer decides which, since only it knows when the finger landed.
+     */
+    fun onPushToTalkUp(context: Context, send: Boolean) {
         val phase = _pushToTalkPhase.value
         // Locked: the recording carries on and is ended by the stop button, exactly like tap-toggle.
         if (phase == PushToTalkPhase.LOCKED || phase == PushToTalkPhase.NONE) return
@@ -770,16 +776,24 @@ object DictateController {
         setPushToTalk(phase = PushToTalkPhase.NONE)
         _cancelSlideProgress.value = 0f
         _lockSlideProgress.value = 0f
-        // Releases arrive from the window's own touch stream now (see DictateHoldTouch), so a short one is
-        // a short one. This used to latch anything under 400 ms, because real-time holds were being ended
-        // by a release nobody made about 100 ms in — which also meant a deliberately brief hold latched
-        // instead of sending.
-        if (_state.value is UiState.Recording) {
-            stopAndTranscribe(context)
+        // Still starting up — let the start job end it the moment the recorder exists, whichever way it is
+        // to end. Cancelling the job part way instead would be taken by its own catch for a recording that
+        // failed, and a release just past the tap window lands in exactly that stretch.
+        if (_state.value !is UiState.Recording && startJob?.isActive == true) {
+            pttStopSends = send
+            pttStopPending = true
             return
         }
-        // Still starting up — let the start job stop it the moment the recorder exists.
-        if (startJob?.isActive == true) pttStopPending = true else cancelRecording()
+        // Let go after the tap window but before a dictation could have happened (#422): a slow tap or a
+        // hold given up on. Neither is worth a request, and latching instead would leave the mic open for
+        // someone who believes they let go of it — so nothing happens, and the next tap simply works. No
+        // flight to the bin either: that is the answer to a discard the user chose, not to a press that
+        // came to nothing.
+        //
+        // This is not the 400 ms latch that was taken out after #235. That one papered over releases
+        // nobody made — Compose ended real-time holds about 100 ms in — and it kept the recording; releases
+        // come from the window's own touch stream now (see DictateHoldTouch), so a short one is a short one.
+        if (send && _state.value is UiState.Recording) stopAndTranscribe(context) else cancelRecording()
     }
 
     /**
@@ -1380,7 +1394,7 @@ object DictateController {
                 // focus / Bluetooth SCO. Now that a recorder exists, honour that release.
                 if (pttStopPending) {
                     pttStopPending = false
-                    stopAndTranscribe(appContext)
+                    if (pttStopSends) stopAndTranscribe(appContext) else cancelRecording()
                 }
             } catch (t: Throwable) {
                 recorder = null
