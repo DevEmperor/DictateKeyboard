@@ -88,7 +88,9 @@ class DictateApiException(
                 hay.contains("input_too_long") || hay.contains("reword_truncated") -> Kind.TEXT_SIZE_LIMIT
                 status == 413 ||
                     hay.contains("audio duration") || hay.contains("content size limit") ||
-                    hay.contains("too large") || hay.contains("maximum context length") -> Kind.CONTENT_SIZE_LIMIT
+                    hay.contains("too large") || hay.contains("maximum context length") ||
+                    // Scaleway refuses an oversized upload with a 400, "Maximum file size exceeded" (#423).
+                    hay.contains("file size") -> Kind.CONTENT_SIZE_LIMIT
                 hay.contains("format") || hay.contains("unsupported") || hay.contains("decode") ||
                     hay.contains("could not process") -> Kind.FORMAT_NOT_SUPPORTED
                 status in 500..599 -> Kind.SERVER_ERROR

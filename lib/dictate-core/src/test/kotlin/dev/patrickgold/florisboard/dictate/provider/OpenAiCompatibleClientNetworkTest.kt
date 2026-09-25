@@ -720,4 +720,131 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             OpenAiCompatibleClient.afterLastSentenceEnd(it) shouldBe it
         }
     }
+
+    // --- Scaleway (issue #423) ---
+
+    // Both halves of Scaleway are plain OpenAI on one host, which is the whole reason the preset needed no
+    // wire format of its own. This holds it to that: the path under `/v1/`, a Bearer key, and the singular
+    // `language` that whisper-large-v3 reads.
+    test("Scaleway transcribes over plain OpenAI multipart with a Bearer key") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(200).setBody("""{"text":"Guten Morgen"}"""))
+                val preset = ProviderRegistry.SCALEWAY
+                val client = OpenAiCompatibleClient.from(
+                    preset, "scw-secret", baseUrlOverride = server.url("/v1/").toString(),
+                )
+
+                val result = client.transcribe(
+                    TranscriptionRequest(audio, preset.defaultTranscriptionModel.orEmpty(), language = "de"),
+                )
+                val recorded = server.takeRequest()
+                val body = recorded.body.readUtf8()
+
+                result.text shouldBe "Guten Morgen"
+                recorded.path shouldBe "/v1/audio/transcriptions"
+                recorded.getHeader("Authorization") shouldBe "Bearer scw-secret"
+                body shouldContain "name=\"model\"\r\n\r\nwhisper-large-v3"
+                body shouldContain "name=\"language\"\r\n\r\nde"
+                body shouldNotContain "name=\"languages"
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    // Measured 2026-09-25 with a key on an account that had no payment method yet: the key is valid, and
+    // every request is still refused, in these words and in Scaleway's flat error shape rather than
+    // OpenAI's envelope. What has to survive is the kind — quota, not a wrong key, because the key is
+    // fine — and Scaleway's own sentence rather than the raw JSON around it.
+    test("a Scaleway account without quota reads as quota, in Scaleway's own words") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(429)
+                    .setHeader("x-ratelimit-limit-requests", "0")
+                    .setBody(
+                        """{"status":429,"error":"INSUFFICIENT QUOTA","message":"You exceeded your """ +
+                            """current quota of requests per minute. Slow down your usage or increase your """ +
+                            """quotas."}""",
+                    ),
+            )
+            val preset = ProviderRegistry.SCALEWAY
+            val client = OpenAiCompatibleClient.from(
+                preset, "scw-secret", baseUrlOverride = server.url("/v1/").toString(),
+            )
+
+            val error = shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser(preset.defaultChatModel.orEmpty(), "Hallo"))
+            }
+
+            error.kind shouldBe DictateApiException.Kind.QUOTA_EXCEEDED
+            error.message.orEmpty() shouldStartWith "You exceeded your current quota"
+            server.requestCount shouldBe 1
+        }
+    }
+
+    // The model server behind Scaleway's gateway answers in OpenAI's envelope, but with `"code":400` as a
+    // number, and a String-typed field used to refuse the whole envelope over it. Both bodies are what the
+    // endpoint returned on 2026-09-25. What has to come out is the provider's sentence rather than the
+    // JSON, and a kind the app can act on: an oversized file offers to keep the recording, and a format it
+    // refuses gets the untouched WAV instead (#281). Two responses each, so a regression back to a retried
+    // UNKNOWN fails on the count rather than hanging on an empty queue.
+    test("Scaleway's refusals are read as the size and format errors they are") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply {
+            writeBytes("RIFF-test-audio".encodeToByteArray())
+        }
+        val tooBig = """{"error":{"message":"Maximum file size exceeded (parameter=audio_filesize_mb, """ +
+            """value=25.000041961669922)","type":"BadRequestError","param":"audio_filesize_mb","code":400}}"""
+        val badFormat = """{"error":{"message":"Invalid file format. Please convert your file to a """ +
+            """supported format: ['flac', 'm4a', 'mpeg', 'mp2', 'mp3', 'mp4', 'ogg', 'wav', 'webm'].",""" +
+            """"type":"BadRequestError","param":null,"code":400}}"""
+        try {
+            listOf(
+                tooBig to DictateApiException.Kind.CONTENT_SIZE_LIMIT,
+                badFormat to DictateApiException.Kind.FORMAT_NOT_SUPPORTED,
+            ).forAll { (body, kind) ->
+                MockWebServer().use { server ->
+                    repeat(2) { server.enqueue(MockResponse().setResponseCode(400).setBody(body)) }
+                    val client = OpenAiCompatibleClient.from(
+                        ProviderRegistry.SCALEWAY, "scw-secret", baseUrlOverride = server.url("/v1/").toString(),
+                    )
+
+                    val error = shouldThrow<DictateApiException> {
+                        client.transcribe(TranscriptionRequest(audio, "whisper-large-v3"))
+                    }
+
+                    error.kind shouldBe kind
+                    error.code shouldBe "400"
+                    error.message.orEmpty() shouldNotContain "\"error\""
+                    server.requestCount shouldBe 1
+                }
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    // A wrong key is a 403 at Scaleway, not a 401, and the credentials step of the connection test is the
+    // catalog request below — so it is the one that has to name the key.
+    test("a wrong Scaleway key is named as one, though it arrives as a 403") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(403).setBody(
+                    """{"status":403,"error":"FORBIDDEN","message":"insufficient permissions to access the resource"}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient.from(
+                ProviderRegistry.SCALEWAY, "not-a-key", baseUrlOverride = server.url("/v1/").toString(),
+            )
+
+            val error = shouldThrow<DictateApiException> { client.listModels() }
+
+            error.kind shouldBe DictateApiException.Kind.INVALID_API_KEY
+            error.message.orEmpty() shouldContain "insufficient permissions"
+            server.takeRequest().path shouldBe "/v1/models"
+        }
+    }
 })

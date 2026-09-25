@@ -681,6 +681,77 @@ object ProviderRegistry {
     )
 
     /**
+     * Scaleway Generative APIs — a provider that is EU-hosted end to end (issue #423).
+     *
+     * Asked for as an everyday provider for someone who wants neither the audio nor the text to leave the
+     * EU. Scaleway processes both in Paris as a GDPR data processor with zero data retention by default,
+     * and says so in its own privacy terms rather than in marketing: it does not "collect, read, reuse, or
+     * analyze" inputs or outputs, trains nothing on them, and keeps a request's content only when that
+     * request breaks the service (a 500, say), for at most two weeks (data-privacy page, read 2026-09-25).
+     *
+     * Both halves are plain OpenAI on one host — multipart `audio/transcriptions` and `chat/completions` —
+     * so this entry needs no wire format of its own. OVHcloud's AI Endpoints would cost the same and were
+     * left for later on purpose: every preset is one more catalogue to re-check by hand.
+     *
+     * **A new account answers nothing until it has a payment method.** The key is valid from the start —
+     * `/models` answers 200 — but every chat and transcription request comes back 429 with
+     * `x-ratelimit-limit-requests: 0`, worded "You exceeded your current quota of requests per minute".
+     * Measured 2026-09-25 with a fresh key; Scaleway's rate-limit page says base limits begin with a
+     * validated payment method. So someone's first dictation reads as a rate limit rather than a missing
+     * setup step, and the key page link is the way back to the console.
+     *
+     * Errors come in two shapes, depending on who refuses. The gateway (key, quota) answers flat —
+     * `{"status":429,"error":"INSUFFICIENT QUOTA","message":"…"}` — and a wrong key is a plain 403. The
+     * model server behind it answers in OpenAI's envelope, but with the status as a *number* in `code`,
+     * which is what the client's error parser had to learn to read. Neither needs anything
+     * Scaleway-specific beyond that.
+     */
+    val SCALEWAY = ProviderPreset(
+        id = "scaleway",
+        displayName = "Scaleway",
+        baseUrl = "https://api.scaleway.ai/v1/",
+        capabilities = CHAT_AND_STT,
+        // The live list answers even without quota, and mixes chat, embedding and transcription models with
+        // nothing to tell them apart (2026-09-25: 16 ids, `whisper-large-v3` the only transcription one).
+        // The picker's name filter sorts them; `bge-multilingual-gemma2` is the embedding model it had to
+        // be taught.
+        supportsDynamicModels = true,
+        // Scaleway's own docs link exactly this page for creating a key. Their console answers 200 for any
+        // path at all, so a status code proves nothing here (2026-09-25).
+        apiKeyUrl = "https://console.scaleway.com/iam/api-keys",
+        // All three measured on 2026-09-25 with the app's own Fix Grammar prompt on a German sentence full
+        // of mistakes; each returned the corrected sentence alone. mistral-small-3.2 is the default: the
+        // fastest (0.6 s), the model Scaleway's own examples use and where it routes two retired models,
+        // so the one least likely to vanish, and it does not reason, so a rewording pays for no hidden
+        // thinking. llama-3.3-70b took 0.9 s; gpt-oss-120b 4.6 s, its thinking in a separate `reasoning`
+        // field rather than in the text. None is on the deprecation list (supported-models page, read the
+        // same day) — pixtral-12b answers today but retires on 2026-10-01, and is left to the live list.
+        defaultChatModel = "mistral-small-3.2-24b-instruct-2506",
+        curatedChatModels = listOf(
+            "mistral-small-3.2-24b-instruct-2506", "llama-3.3-70b-instruct", "gpt-oss-120b",
+        ),
+        // The only transcription model left: voxtral-small-24b retired on 2026-08-01, and Scaleway routes
+        // what was sent to it here. Ten seconds of German came back in 0.6 s, thirteen minutes in 34 s.
+        // It reads every field the client sends: `prompt` measurably steers the transcript (a lowercase,
+        // unpunctuated prompt turned the answer lowercase and unpunctuated), and `language` can be left
+        // out for auto-detect.
+        defaultTranscriptionModel = "whisper-large-v3",
+        curatedTranscriptionModels = listOf("whisper-large-v3"),
+        // The documented list for whisper-large-v3 — flac, m4a, mpeg, mp2, mp3, mp4, ogg, wav, webm — and
+        // this time the endpoint agrees with it exactly. Asked on 2026-09-25 with one German sample in
+        // every container the app knows: these six transcribed; aac and amr came back 400 "Invalid file
+        // format", and so did the Ogg file when it was named `.opus` — the name decides here as it does at
+        // OpenAI, which [audioUploadNameOf] already handles. Scaleway still calls the endpoint beta
+        // ("support of the full feature set will be incremental"), so this is the list to re-measure first.
+        acceptedAudioContainers = setOf(
+            AudioContainer.FLAC, AudioContainer.M4A, AudioContainer.MP3,
+            AudioContainer.OGG, AudioContainer.WAV, AudioContainer.WEBM,
+        ),
+        // Batch only: Scaleway has no streaming transcription.
+        supportsRealtime = false,
+    )
+
+    /**
      * Ollama server (OpenAI-compatible). No API key required by default. The base URL is user-editable
      * (issue #136) and defaults to localhost — point it at `http://<lan-ip>:11434/v1/` for a server on
      * another machine (localhost resolves to the phone itself).
@@ -718,7 +789,7 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
@@ -768,6 +839,11 @@ object ProviderRegistry {
      *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
      *    anything a keyboard produces; recorded so the number is not looked up twice.
      *  - SiliconFlow 50 MB (and one hour), from its transcription API reference.
+     *  - Scaleway 25 MB for whisper-large-v3 on its serverless API (supported-models page, read
+     *    2026-09-25), and asked the same day: the "MB" is a MiB. A 25,500,044-byte WAV transcribed; one
+     *    of 26,214,444 bytes came back 400 "Maximum file size exceeded (…, value=25.000041961669922)". Its
+     *    rate limit counts audio seconds, 1800 a minute once a payment method is on file; a single upload
+     *    at this ceiling is about 820 seconds of 16 kHz WAV, so the size, not the rate, is met first.
      *  - OpenRouter 25 MB for a multipart upload, added 2026-09-04 while checking #321 — it was simply
      *    missing, which meant the file-import path never split anything for it and a shared recording
      *    went out whole to be refused. Its harder limit is not a size at all: a request gets about 60
@@ -780,7 +856,7 @@ object ProviderRegistry {
      *    of the two and is the one that governs a MAI request.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
-        "openai", "cloud", "groq", "openrouter" -> 25L * 1024 * 1024
+        "openai", "cloud", "groq", "openrouter", "scaleway" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
         "siliconflow" -> 50L * 1024 * 1024
         "azure" -> 300L * 1024 * 1024

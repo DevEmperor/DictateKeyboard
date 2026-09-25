@@ -24,6 +24,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Credentials
@@ -1291,12 +1292,20 @@ class OpenAiCompatibleClient(
 
     /**
      * Extracts the error detail from a non-2xx body. Tries the OpenAI-style `{ "error": { … } }` envelope
-     * first, then falls back to Soniox's flat `{ error_type, message, status_code }` shape; null if the body
-     * is neither (e.g. plain-text gateways).
+     * first, then falls back to Soniox's flat `{ error_type, message, status_code }` shape — which also
+     * reads Scaleway's gateway errors, flat with a `message` of their own; null if the body is neither
+     * (e.g. plain-text gateways).
      */
     private fun parseError(body: String): ErrorBodyDto? {
-        runCatching { json.decodeFromString(ErrorEnvelopeDto.serializer(), body).error }
-            .getOrNull()?.let { return it }
+        // The envelope is read field by field rather than into a typed class. Scaleway's model server puts
+        // the HTTP status in `code` as a number (#423), and a String-typed field refused the whole envelope
+        // over it — so the user was shown the raw JSON instead of the provider's sentence, and the sentence
+        // that said "file size" never reached the classifier as one.
+        runCatching { (json.parseToJsonElement(body) as? JsonObject)?.get("error") as? JsonObject }
+            .getOrNull()?.let { error ->
+                fun field(name: String) = (error[name] as? JsonPrimitive)?.contentOrNull
+                return ErrorBodyDto(message = field("message"), code = field("code"), type = field("type"))
+            }
         return runCatching {
             val soniox = json.decodeFromString(SonioxErrorDto.serializer(), body)
             if (soniox.message.isNullOrBlank() && soniox.errorType.isNullOrBlank()) {
@@ -1765,14 +1774,10 @@ class OpenAiCompatibleClient(
         val message: String? = null,
     )
 
-    @Serializable
-    private data class ErrorEnvelopeDto(val error: ErrorBodyDto? = null)
-
-    @Serializable
     private data class ErrorBodyDto(
         val message: String? = null,
         // OpenAI-style machine-readable hints (e.g. code = "invalid_api_key", type = "insufficient_quota").
-        // Decoded as strings; providers that send a non-string code simply fall back to status/keywords.
+        // Whatever primitive the provider sent, as text — Scaleway's `400` arrives here as "400".
         val code: String? = null,
         val type: String? = null,
     )

@@ -109,6 +109,14 @@ class ShouldPackTest {
     }
 
     @Test
+    fun `scaleway carries the ceiling its beta endpoint enforces`() {
+        // #423: documented as 25 MB and measured as 25 MiB. Without it the file-import path would send a
+        // shared recording whole, the way #321 found OpenRouter doing, and let the server refuse it.
+        val scaleway = ProviderRegistry.maxUploadBytes("scaleway")
+        assertTrue(scaleway == mib(25), "expected a documented 25 MiB ceiling, got $scaleway")
+    }
+
+    @Test
     fun `openrouter carries a ceiling at all, which is the half that was missing`() {
         // #321: OpenRouter documents 25 MB for a multipart upload, and the table simply did not know it.
         // Packing was never the part that suffered — three quarters of 25 MiB is above the general

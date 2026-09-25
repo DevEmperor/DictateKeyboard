@@ -260,6 +260,8 @@ private fun matchesKind(id: String, kind: ModelKind): Boolean {
         ModelKind.TRANSCRIPTION -> isStt
         ModelKind.CHAT -> !isStt &&
             !l.contains("embedding") && !l.contains("tts") && !l.contains("dall-e") &&
-            !l.contains("image") && !l.contains("moderation") && !l.contains("rerank")
+            !l.contains("image") && !l.contains("moderation") && !l.contains("rerank") &&
+            // BAAI's embedding family, whose ids do not say "embedding" (Scaleway's bge-multilingual-gemma2).
+            !l.contains("bge-")
     }
 }
