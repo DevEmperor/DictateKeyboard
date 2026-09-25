@@ -183,6 +183,8 @@ class QuickActionArrangementTest : FunSpec({
             // Scan text (issue #390) is the same story one release later: it ships switched off nowhere,
             // it is simply new, and an existing arrangement has to grow to include it.
             restored.contains(QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN)) shouldBe true
+            // And translation (issue #424) after it.
+            restored.contains(QuickAction.InsertKey(TextKeyData.TRANSLATE)) shouldBe true
         }
 
         test("an action already in the arrangement is not added a second time") {

@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.translate.TranslateBar
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.dictate.gif.GifSearchPanel
 import dev.patrickgold.florisboard.dictate.sticker.StickerSearchPanel
@@ -67,6 +68,7 @@ fun TextInputLayout(
     val gifSearchActive by keyboardManager.gifSearchQuery.collectAsState()
     val stickerSearchActive by keyboardManager.stickerSearchQuery.collectAsState()
     val clipboardSearchActive by keyboardManager.clipboardSearchQuery.collectAsState()
+    val translateActive by keyboardManager.translateQuery.collectAsState()
 
     InlineSuggestionsStyleCache()
 
@@ -80,7 +82,11 @@ fun TextInputLayout(
         // the Smartbar — results above the search bar for emoji, stickers and clips, earlier terms for
         // GIF — and size themselves, so the keyboard grows for the duration of the search the way the
         // GIF panel does. Only one can be open at a time: each is reached from its own panel.
-        if (emojiSearchActive != null) {
+        // The translate bar (issue #424) takes the same slot for the same reason: the keys below type
+        // into it. Two rows tall, and like the searches it sizes itself.
+        if (translateActive != null) {
+            TranslateBar()
+        } else if (emojiSearchActive != null) {
             EmojiSearchPanel()
         } else if (gifSearchActive != null) {
             GifSearchPanel()

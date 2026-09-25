@@ -341,6 +341,21 @@ val verifySherpaOnnxLibs by tasks.registering {
 }
 tasks.named("preBuild").configure { dependsOn(verifySherpaOnnxLibs) }
 
+// On-device translation (issue #424): libdictate_bergamot.so is built from Mozilla's sources by
+// tools/bergamot/build-android.sh and not committed. arm64 only: Marian's x86 path does not compile
+// against the NDK (faiss finds no SSE headers) and 32-bit ARM is untried. On those the translate bar
+// says the device is not supported, so a missing arm64 build is the one that must stop the build —
+// otherwise it ships a feature that cannot run on any phone at all.
+val verifyBergamotLib by tasks.registering {
+    val library = layout.projectDirectory.file("src/main/jniLibs/arm64-v8a/libdictate_bergamot.so").asFile
+    doLast {
+        if (!library.exists()) {
+            throw GradleException("Missing libdictate_bergamot.so for arm64-v8a.\n\nRun:  tools/bergamot/build-android.sh")
+        }
+    }
+}
+tasks.named("preBuild").configure { dependsOn(verifyBergamotLib) }
+
 fun getGitCommitHash(short: Boolean = false): Provider<String> {
     if (!File(".git").exists()) {
         return providers.provider { "null" }

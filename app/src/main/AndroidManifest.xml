@@ -137,6 +137,14 @@
             android:foregroundServiceType="dataSync"
             android:exported="false"/>
 
+        <!-- On-device translation (issue #424). Its own process, bound only while the translate bar is
+             open: the engine's 75–150 MB and any native crash stay out of the keyboard's process, and
+             the process ends when the bar closes. FlorisApplication skips its init there. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.translate.TranslationEngineService"
+            android:process=":translate"
+            android:exported="false"/>
+
         <!-- System-wide voice input via the standard RecognitionService API (issue #67), like FUTO Voice
              Input. Bound only by the OS via BIND_RECOGNITION_SERVICE. Select Dictate as the device's
              recognition service to dictate through it from any app/keyboard that honours it. -->

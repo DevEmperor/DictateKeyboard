@@ -1024,6 +1024,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Déplacer le curseur, sélectionner et modifier le texte</string>
     <string name="quick_action__ime_ui_mode_scan">Scanner un texte</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Photographier un texte imprimé et l\'insérer</string>
+    <string name="quick_action__translate">Traduire</string>
+    <string name="quick_action__translate__tooltip">Traduire pendant la saisie, sur cet appareil</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Touchez pour dicter, touchez à nouveau pour transcrire</string>
     <string name="quick_action__dictate_live_prompt">Instruction en direct</string>
@@ -2281,4 +2283,23 @@
     <string name="scan__select_all">Tout sélectionner</string>
     <string name="scan__discard">Abandonner</string>
     <string name="scan__approve">Valider</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Traduction</string>
+    <string name="translate__settings_intro">Traduit directement sur votre téléphone, et rien de ce que vous tapez n\'en sort. Accessible via « Traduire » dans la barre intelligente.</string>
+    <string name="translate__group_installed">Téléchargées</string>
+    <string name="translate__group_available">Disponibles</string>
+    <string name="translate__english_included">Toujours inclus</string>
+    <string name="translate__size_installed">{size} sur l\'appareil</string>
+    <string name="translate__size_download">{download} à télécharger · {size} sur l\'appareil</string>
+    <string name="translate__hint">Saisissez le texte à traduire</string>
+    <string name="translate__detect">Détecter la langue</string>
+    <string name="translate__detected">{language} (détecté)</string>
+    <string name="translate__swap">Inverser les langues</string>
+    <string name="translate__no_languages">Aucune langue téléchargée pour l\'instant</string>
+    <string name="translate__get_languages">Télécharger des langues</string>
+    <string name="translate__more_languages">Plus de langues</string>
+    <string name="translate__missing">Non téléchargé : {language}</string>
+    <string name="translate__failed">Échec de la traduction</string>
+    <string name="translate__unsupported">La traduction n\'est pas disponible sur cet appareil</string>
 </resources>

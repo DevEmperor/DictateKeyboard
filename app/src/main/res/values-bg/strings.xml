@@ -1146,6 +1146,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Преместване на курсора, избор и редактиране на текст</string>
     <string name="quick_action__ime_ui_mode_scan">Сканиране на текст</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Снимайте печатен текст и го вмъкнете</string>
+    <string name="quick_action__translate">Превод</string>
+    <string name="quick_action__translate__tooltip">Превеждайте, докато пишете, направо на устройството</string>
     <string name="quick_action__ime_ui_mode_dictate">Диктовка</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Докоснете, за да диктувате, докоснете отново за транскрибиране</string>
     <string name="quick_action__dictate_live_prompt">Гласова инструкция</string>
@@ -2405,4 +2407,23 @@
     <string name="scan__select_all">Избери всичко</string>
     <string name="scan__discard">Отхвърли</string>
     <string name="scan__approve">Приеми</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Превод</string>
+    <string name="translate__settings_intro">Превежда направо на телефона ви и нищо от това, което пишете, не го напуска. Отваря се с „Превод“ в интелигентната лента.</string>
+    <string name="translate__group_installed">Изтеглени</string>
+    <string name="translate__group_available">Налични</string>
+    <string name="translate__english_included">Винаги наличен</string>
+    <string name="translate__size_installed">{size} на устройството</string>
+    <string name="translate__size_download">{download} за изтегляне · {size} на устройството</string>
+    <string name="translate__hint">Въведете текст за превод</string>
+    <string name="translate__detect">Разпознаване на езика</string>
+    <string name="translate__detected">{language} (разпознат)</string>
+    <string name="translate__swap">Размяна на езиците</string>
+    <string name="translate__no_languages">Все още няма изтеглен език</string>
+    <string name="translate__get_languages">Изтегляне на езици</string>
+    <string name="translate__more_languages">Още езици</string>
+    <string name="translate__missing">Не е изтеглено: {language}</string>
+    <string name="translate__failed">Преводът не бе успешен</string>
+    <string name="translate__unsupported">Преводът не е наличен на това устройство</string>
 </resources>

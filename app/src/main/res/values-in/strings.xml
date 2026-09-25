@@ -1101,6 +1101,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="quick_action__ime_ui_mode_editing__tooltip">Pindahkan kursor, pilih, dan edit teks</string>
     <string name="quick_action__ime_ui_mode_scan">Pindai teks</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Foto teks cetak lalu sisipkan</string>
+    <string name="quick_action__translate">Terjemahkan</string>
+    <string name="quick_action__translate__tooltip">Terjemahkan sambil mengetik, di perangkat ini</string>
     <string name="quick_action__ime_ui_mode_dictate">Dikte</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Ketuk untuk mendikte, ketuk lagi untuk mentranskripsi</string>
     <string name="quick_action__dictate_live_prompt">Perintah suara</string>
@@ -2359,4 +2361,23 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="scan__select_all">Pilih semua</string>
     <string name="scan__discard">Buang</string>
     <string name="scan__approve">Terima</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Terjemahan</string>
+    <string name="translate__settings_intro">Menerjemahkan langsung di ponselmu, dan apa pun yang kamu ketik tidak pernah keluar dari ponsel. Buka lewat “Terjemahkan” di Smartbar.</string>
+    <string name="translate__group_installed">Sudah diunduh</string>
+    <string name="translate__group_available">Tersedia</string>
+    <string name="translate__english_included">Selalu tersedia</string>
+    <string name="translate__size_installed">{size} di perangkat ini</string>
+    <string name="translate__size_download">Unduhan {download} · {size} di perangkat ini</string>
+    <string name="translate__hint">Ketik untuk menerjemahkan</string>
+    <string name="translate__detect">Deteksi bahasa</string>
+    <string name="translate__detected">{language} (terdeteksi)</string>
+    <string name="translate__swap">Tukar bahasa</string>
+    <string name="translate__no_languages">Belum ada bahasa yang diunduh</string>
+    <string name="translate__get_languages">Unduh bahasa</string>
+    <string name="translate__more_languages">Bahasa lainnya</string>
+    <string name="translate__missing">{language} belum diunduh</string>
+    <string name="translate__failed">Terjemahan gagal</string>
+    <string name="translate__unsupported">Terjemahan tidak tersedia di perangkat ini</string>
 </resources>

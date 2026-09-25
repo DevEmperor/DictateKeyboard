@@ -120,6 +120,9 @@ object KeyCode {
     // free numbers left in this block. Not -245, which is in QuickActionArrangement.REMOVED_ACTION_CODES
     // and would be stripped out of every stored arrangement.
     const val IME_UI_MODE_SCAN =            -229
+    // Opens or closes the on-device translate bar (issue #424). -230 is the last free number of this block,
+    // see IME_UI_MODE_SCAN above.
+    const val TRANSLATE =                   -230
 
     const val IME_SHOW_UI =                 -231
     const val IME_HIDE_UI =                 -232

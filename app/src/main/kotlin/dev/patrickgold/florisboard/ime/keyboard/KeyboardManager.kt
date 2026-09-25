@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.dictate.translate.TranslateBarController
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -174,6 +175,36 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     val clipboardSearchQuery = MutableStateFlow<String?>(null)
 
+    /**
+     * What is typed into the translate bar (issue #424), or `null` while the bar is closed. Filled from
+     * the keys like the searches above, but its result is not a list to pick from: [translateBar] keeps
+     * the translation of it standing in the app's text field.
+     */
+    val translateQuery = MutableStateFlow<String?>(null)
+
+    /** Where in [translateQuery] the next character lands; the bar's field has a real cursor. */
+    val translateCursor = MutableStateFlow(0)
+
+    /**
+     * Whether the translate bar's field has the keys. A tap into the app's own field takes them back
+     * without closing the bar, as in Gboard; a tap on the bar's field returns them. While it is false the
+     * keyboard types into the app as if the bar were not there.
+     */
+    val translateFocused = MutableStateFlow(true)
+
+    /**
+     * A marked stretch of the translate bar's text, or `null`. Made by swiping over Backspace, like the
+     * app's own field: released, the delete swipe removes it; a key typed over it replaces it.
+     */
+    val translateSelection = MutableStateFlow<IntRange?>(null)
+    val translateBar by lazy {
+        TranslateBarController(appContext, translateQuery, translateCursor, translateFocused, translateSelection)
+    }
+
+    /** Whether keystrokes currently belong to the translate bar. */
+    val translateTakesKeys: Boolean
+        get() = translateQuery.value != null && translateFocused.value
+
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion = AtomicInteger(0)
     val activeEvaluator: StateFlow<ComputingEvaluator>
@@ -312,9 +343,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     fun reevaluateInputShiftState() {
         if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+            // While the translate bar takes the keys, the sentence being typed is the bar's, not the
+            // app field's — which ends in the last translation and would capitalise mid-sentence.
+            val translating = translateQuery.value?.takeIf { translateFocused.value }
+            val startsSentence = translating?.let { TranslateBarController.startsSentence(it.take(translateCursor.value)) }
+                ?: (editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE)
             val shift = prefs.correction.autoCapitalization.get()
                 && subtypeManager.activeSubtype.primaryLocale.supportsCapitalization
-                && editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
+                && startsSentence
             activeState.inputShiftState = when {
                 shift -> InputShiftState.SHIFTED_AUTOMATIC
                 else -> InputShiftState.UNSHIFTED
@@ -562,6 +598,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         } else {
             "$current $text"
         }
+        if (translateTakesKeys) {
+            val current = translateQuery.value.orEmpty()
+            val before = current.take(translateCursor.value)
+            val word = if (before.isEmpty() || before.endsWith(' ')) text else " $text"
+            insertIntoTranslate(word)
+            reevaluateInputShiftState()
+            return true
+        }
         emojiSearchQuery.value?.let { emojiSearchQuery.value = joined(it); return true }
         gifSearchQuery.value?.let { gifSearchQuery.value = joined(it); return true }
         stickerSearchQuery.value?.let { stickerSearchQuery.value = joined(it); return true }
@@ -590,7 +634,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    fun handleArrow(code: Int, count: Int = 1) = editorInstance.apply {
+    fun handleArrow(code: Int, count: Int = 1) {
+        // While the translate bar has the keys, the cursor that moves is its own (issue #424).
+        if (translateTakesKeys) {
+            moveTranslateCursor(code, count)
+            return
+        }
+        handleEditorArrow(code, count)
+    }
+
+    private fun handleEditorArrow(code: Int, count: Int) = editorInstance.apply {
         val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
         val content = activeContent
         val selection = content.selection
@@ -1255,8 +1308,192 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * a query using their own selected layout, while the search panel is shown in place of the Smartbar.
      */
     fun activateEmojiSearch() {
+        closeTranslate()
         emojiSearchQuery.value = ""
         activeState.imeUiMode = ImeUiMode.TEXT
+    }
+
+    /**
+     * Opens or closes the translate bar (issue #424), which takes the Smartbar's slot like a search and
+     * leaves the layout below for typing. Only one thing can take the keys at a time, so any open search
+     * is closed first — the order in [onInputKeyUp] would otherwise decide silently which one gets them.
+     */
+    fun toggleTranslate() {
+        if (translateQuery.value != null) {
+            closeTranslate()
+            return
+        }
+        closeEmojiSearch(returnToMedia = false)
+        closeGifSearch(returnToPanel = false)
+        closeStickerSearch(returnToPanel = false)
+        closeClipboardSearch(returnToPanel = false)
+        activeState.imeUiMode = ImeUiMode.TEXT
+        translateBar.open()
+        reevaluateInputShiftState()
+    }
+
+    /** Closes the translate bar; [finish] = false when the field it wrote into is already gone. */
+    fun closeTranslate(finish: Boolean = true) {
+        if (translateQuery.value == null) return
+        translateBar.close(finish)
+        reevaluateInputShiftState()
+    }
+
+    /**
+     * Folds a keystroke into the translate bar's text. Returns `true` when the key was consumed.
+     *
+     * Differs from [handleSearchKey] in the two keys where a sentence is not a search term. Enter is
+     * the app's own Enter once the translation is finished — in a chat that sends the translated
+     * message. A backspace on an empty bar reaches the app, where the last translation stands: that is
+     * the text a user deleting at that moment means.
+     */
+    private fun handleTranslateKey(data: KeyData): Boolean {
+        if (!translateTakesKeys) return false
+        val current = translateQuery.value.orEmpty()
+        val cursor = translateCursor.value.coerceIn(0, current.length)
+        if ((data.code == KeyCode.DELETE || data.code == KeyCode.DELETE_WORD) && translateSelection.value != null) {
+            deleteTranslateSelection()
+            reevaluateInputShiftState()
+            return true
+        }
+        when (data.code) {
+            KeyCode.SPACE -> insertIntoTranslate(" ")
+            KeyCode.ENTER -> {
+                translateBar.submit { performTranslateEnter() }
+                return true
+            }
+            KeyCode.DELETE -> {
+                if (current.isEmpty()) return false
+                if (cursor == 0) return true
+                val from = current.offsetByCodePoints(cursor, -1)
+                translateQuery.value = current.removeRange(from, cursor)
+                translateCursor.value = from
+            }
+            KeyCode.DELETE_WORD -> {
+                if (current.isEmpty()) return false
+                val before = current.take(cursor)
+                val kept = before.trimEnd().dropLastWhile { !it.isWhitespace() }
+                translateQuery.value = kept + current.drop(cursor)
+                translateCursor.value = kept.length
+            }
+            else -> {
+                val text = data.asString(isForDisplay = false)
+                if (!keyProducesSearchText(data.type, text)) return false
+                insertIntoTranslate(text)
+            }
+        }
+        reevaluateInputShiftState()
+        return true
+    }
+
+    private fun insertIntoTranslate(text: String) {
+        val current = translateQuery.value ?: return
+        // Typed over a marked stretch, the text replaces it, as in any text field.
+        val range = translateSelection.value?.let { it.first.coerceIn(0, current.length)..it.last.coerceIn(0, current.length) }
+        val from = range?.first ?: translateCursor.value.coerceIn(0, current.length)
+        val to = range?.let { it.last } ?: from
+        translateSelection.value = null
+        translateQuery.value = current.substring(0, from) + text + current.substring(to)
+        translateCursor.value = from + text.length
+    }
+
+    private fun deleteTranslateSelection() {
+        val current = translateQuery.value ?: return
+        val range = translateSelection.value ?: return
+        val from = range.first.coerceIn(0, current.length)
+        val to = range.last.coerceIn(from, current.length)
+        translateSelection.value = null
+        translateQuery.value = current.removeRange(from, to)
+        translateCursor.value = from
+    }
+
+    /**
+     * The Backspace swipe while the translate bar has the keys: marks [units] characters or words before
+     * the cursor ([forward]: after it, with Shift held), the way the same swipe marks them in the app's
+     * field. Stored as `start..end` with `end` exclusive.
+     */
+    fun selectInTranslate(units: Int, words: Boolean, forward: Boolean) {
+        val current = translateQuery.value ?: return
+        val cursor = translateCursor.value.coerceIn(0, current.length)
+        if (units <= 0) {
+            translateSelection.value = null
+            return
+        }
+        var edge = cursor
+        repeat(units) {
+            edge = if (forward) nextTranslateBoundary(current, edge, words) else previousTranslateBoundary(current, edge, words)
+        }
+        translateSelection.value = if (edge == cursor) null else minOf(edge, cursor)..maxOf(edge, cursor)
+    }
+
+    /** Releasing a delete swipe: what it marked goes. */
+    fun finishTranslateSwipeDelete() {
+        if (translateSelection.value != null) deleteTranslateSelection()
+        reevaluateInputShiftState()
+    }
+
+    private fun previousTranslateBoundary(text: String, from: Int, words: Boolean): Int {
+        if (from <= 0) return 0
+        if (!words) return text.offsetByCodePoints(from, -1)
+        var i = from
+        while (i > 0 && text[i - 1].isWhitespace()) i--
+        while (i > 0 && !text[i - 1].isWhitespace()) i--
+        return i
+    }
+
+    private fun nextTranslateBoundary(text: String, from: Int, words: Boolean): Int {
+        if (from >= text.length) return text.length
+        if (!words) return text.offsetByCodePoints(from, 1)
+        var i = from
+        while (i < text.length && text[i].isWhitespace()) i++
+        while (i < text.length && !text[i].isWhitespace()) i++
+        return i
+    }
+
+    /**
+     * Moves the translate bar's cursor for an arrow key or a space-bar glide. Up and down have no lines
+     * to move between in a one-line field, so they go to the start and the end, like Home and End.
+     */
+    private fun moveTranslateCursor(code: Int, count: Int) {
+        val current = translateQuery.value ?: return
+        translateSelection.value = null
+        var cursor = translateCursor.value.coerceIn(0, current.length)
+        when (code) {
+            KeyCode.ARROW_LEFT -> repeat(count) { if (cursor > 0) cursor = current.offsetByCodePoints(cursor, -1) }
+            KeyCode.ARROW_RIGHT -> repeat(count) { if (cursor < current.length) cursor = current.offsetByCodePoints(cursor, 1) }
+            KeyCode.ARROW_UP, KeyCode.MOVE_START_OF_LINE, KeyCode.MOVE_START_OF_PAGE -> cursor = 0
+            KeyCode.ARROW_DOWN, KeyCode.MOVE_END_OF_LINE, KeyCode.MOVE_END_OF_PAGE -> cursor = current.length
+        }
+        translateCursor.value = cursor
+        reevaluateInputShiftState()
+    }
+
+    /** The app's field was tapped (issue #424): the keys go back to it, the bar stays open. */
+    fun onEditorClicked() {
+        translateBar.unfocus()
+        reevaluateInputShiftState()
+    }
+
+    /**
+     * The app's Enter after a translation was written: the field's action (send, search, done) or a line
+     * break, as [handleEnter] decides it — minus word learning and snippet expansion, which would act on
+     * the translated text as if the user had typed it.
+     */
+    private fun performTranslateEnter() {
+        val info = editorInstance.activeInfo
+        if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+            editorInstance.performEnter()
+            return
+        }
+        when (val action = info.imeOptions.action) {
+            ImeOptions.Action.DONE,
+            ImeOptions.Action.GO,
+            ImeOptions.Action.NEXT,
+            ImeOptions.Action.PREVIOUS,
+            ImeOptions.Action.SEARCH,
+            ImeOptions.Action.SEND -> editorInstance.performEnterAction(action)
+            else -> editorInstance.performEnter()
+        }
     }
 
     /**
@@ -1335,6 +1572,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /** Starts a clipboard search: shows the text keyboard so the user can type what to look for. */
     fun activateClipboardSearch() {
+        closeTranslate()
         clipboardSearchQuery.value = ""
         activeState.imeUiMode = ImeUiMode.TEXT
     }
@@ -1352,6 +1590,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /** Starts a sticker search: shows the text keyboard so the user can type a file name. */
     fun activateStickerSearch() {
+        closeTranslate()
         stickerSearchQuery.value = ""
         activeState.imeUiMode = ImeUiMode.TEXT
     }
@@ -1369,6 +1608,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /** Starts a GIF search: shows the text keyboard so the user can type the query. */
     fun activateGifSearch() {
+        closeTranslate()
         gifSearchQuery.value = ""
         activeState.imeUiMode = ImeUiMode.TEXT
     }
@@ -1420,6 +1660,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             pendingAutoCorrection = null
         }
         val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
+        // The translate bar first: opening it closes the searches, and opening one of them closes it.
+        if (handleTranslateKey(data)) return@batchEdit
         // Only one of the four can be open at a time — each is reached from its own panel — so the
         // first one that answers has consumed the key.
         val consumedInSmartbarSlot = handleSearchKey(
@@ -1535,6 +1777,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 closeEmojiSearch(returnToMedia = false)
                 activeState.imeUiMode = ImeUiMode.SCAN
             }
+            // The translate bar (issue #424). A toggle, because the bar sits where the button was.
+            KeyCode.TRANSLATE -> toggleTranslate()
             KeyCode.IME_UI_MODE_DICTATE -> dev.patrickgold.florisboard.dictate.DictateController.onMicClick(appContext)
             KeyCode.DICTATE_LIVE_PROMPT -> dev.patrickgold.florisboard.dictate.DictateController.startLivePrompt(appContext)
             KeyCode.DICTATE_PROMPTS -> {

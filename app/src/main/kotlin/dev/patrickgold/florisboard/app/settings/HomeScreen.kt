@@ -39,6 +39,7 @@ import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.Palette
+import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -250,6 +251,12 @@ fun HomeScreen() = FlorisScreen {
             icon = Icons.Default.SentimentSatisfiedAlt,
             title = stringRes(R.string.settings__media__title),
             onClick = { navController.navigate(Routes.Settings.Media) },
+        )
+        // With the other tools the Smartbar opens (issue #424): it is one, and not a dictation feature.
+        Preference(
+            icon = Icons.Outlined.Translate,
+            title = stringRes(R.string.settings__translation__title),
+            onClick = { navController.navigate(Routes.Settings.Translation) },
         )
         Preference(
             icon = Icons.Default.Extension,

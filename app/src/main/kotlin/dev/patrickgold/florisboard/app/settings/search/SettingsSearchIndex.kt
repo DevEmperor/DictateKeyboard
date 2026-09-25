@@ -69,6 +69,9 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.settings__keyboard__title, R.string.settings__keyboard__title, Routes.Settings.Keyboard),
         SettingsSearchEntry(R.string.settings__localization__title, R.string.settings__localization__title, Routes.Settings.Localization),
         SettingsSearchEntry(R.string.settings__media__title, R.string.settings__media__title, Routes.Settings.Media),
+        // Hand-added (issue #424): the generator has not been run since TranslationScreen existed (it is in
+        // its SCREEN_ROUTE now), and its language rows are custom composables with nothing to anchor.
+        SettingsSearchEntry(R.string.settings__translation__title, R.string.settings__translation__title, Routes.Settings.Translation),
         SettingsSearchEntry(R.string.settings__smartbar__title, R.string.settings__smartbar__title, Routes.Settings.Smartbar),
         // Hand-added (issue #385): the generator has no entry for this screen file, and running it
         // would drop the keywordsRes arguments below along with every other hand-added row.

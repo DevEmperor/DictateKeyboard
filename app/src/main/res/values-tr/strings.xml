@@ -1125,6 +1125,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">İmleci taşıyın, metni seçin ve düzenleyin</string>
     <string name="quick_action__ime_ui_mode_scan">Metin tara</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Basılı metni fotoğraflayıp ekleyin</string>
+    <string name="quick_action__translate">Çevir</string>
+    <string name="quick_action__translate__tooltip">Yazarken çevirin, doğrudan bu cihazda</string>
     <string name="quick_action__ime_ui_mode_dictate">Dikte</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Dikte etmek için dokunun, yazıya dökmek için tekrar dokunun</string>
     <string name="quick_action__dictate_live_prompt">Canlı komut</string>
@@ -2384,4 +2386,23 @@
     <string name="scan__select_all">Tümünü seç</string>
     <string name="scan__discard">Vazgeç</string>
     <string name="scan__approve">Onayla</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Çeviri</string>
+    <string name="translate__settings_intro">Doğrudan telefonunuzda çevirir; yazdığınız hiçbir şey telefonunuzdan çıkmaz. Akıllı Çubuk\'taki “Çevir” düğmesiyle açılır.</string>
+    <string name="translate__group_installed">İndirilenler</string>
+    <string name="translate__group_available">Mevcut</string>
+    <string name="translate__english_included">Her zaman dahil</string>
+    <string name="translate__size_installed">Cihazda {size}</string>
+    <string name="translate__size_download">{download} indirme · cihazda {size}</string>
+    <string name="translate__hint">Çevirmek için yazın</string>
+    <string name="translate__detect">Dili algıla</string>
+    <string name="translate__detected">{language} (algılandı)</string>
+    <string name="translate__swap">Dillerin yerini değiştir</string>
+    <string name="translate__no_languages">Henüz indirilmiş dil yok</string>
+    <string name="translate__get_languages">Dil indir</string>
+    <string name="translate__more_languages">Diğer diller</string>
+    <string name="translate__missing">{language} indirilmemiş</string>
+    <string name="translate__failed">Çeviri başarısız</string>
+    <string name="translate__unsupported">Çeviri bu cihazda kullanılamıyor</string>
 </resources>

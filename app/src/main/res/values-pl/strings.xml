@@ -1163,6 +1163,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Przesuwaj kursor, zaznaczaj i edytuj tekst</string>
     <string name="quick_action__ime_ui_mode_scan">Skanuj tekst</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Sfotografuj drukowany tekst i wstaw go</string>
+    <string name="quick_action__translate">Tłumacz</string>
+    <string name="quick_action__translate__tooltip">Tłumacz podczas pisania, na tym urządzeniu</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Dotknij, aby dyktować, dotknij ponownie, aby transkrybować</string>
     <string name="quick_action__dictate_live_prompt">Polecenie na żywo</string>
@@ -2424,4 +2426,23 @@
     <string name="scan__select_all">Zaznacz wszystko</string>
     <string name="scan__discard">Odrzuć</string>
     <string name="scan__approve">Zatwierdź</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Tłumaczenie</string>
+    <string name="translate__settings_intro">Tłumaczy bezpośrednio na telefonie i nic z tego, co piszesz, go nie opuszcza. Otwierasz je przyciskiem „Tłumacz” na inteligentnym pasku.</string>
+    <string name="translate__group_installed">Pobrane</string>
+    <string name="translate__group_available">Dostępne</string>
+    <string name="translate__english_included">Zawsze dostępny</string>
+    <string name="translate__size_installed">{size} na urządzeniu</string>
+    <string name="translate__size_download">{download} do pobrania · {size} na urządzeniu</string>
+    <string name="translate__hint">Wpisz tekst do przetłumaczenia</string>
+    <string name="translate__detect">Wykryj język</string>
+    <string name="translate__detected">{language} (wykryty)</string>
+    <string name="translate__swap">Zamień języki</string>
+    <string name="translate__no_languages">Nie pobrano jeszcze żadnego języka</string>
+    <string name="translate__get_languages">Pobierz języki</string>
+    <string name="translate__more_languages">Więcej języków</string>
+    <string name="translate__missing">Nie pobrano: {language}</string>
+    <string name="translate__failed">Tłumaczenie nie powiodło się</string>
+    <string name="translate__unsupported">Tłumaczenie nie jest dostępne na tym urządzeniu</string>
 </resources>

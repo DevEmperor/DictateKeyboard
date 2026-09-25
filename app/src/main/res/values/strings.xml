@@ -221,6 +221,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Move the cursor, select and edit text</string>
     <string name="quick_action__ime_ui_mode_scan" comment="Opens the scan panel: photograph printed text and insert part of it. Mind the limited space.">Scan text</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Photograph printed text and insert it</string>
+    <string name="quick_action__translate" comment="Opens the on-device translate bar. Mind the limited space.">Translate</string>
+    <string name="quick_action__translate__tooltip">Translate as you type, on this device</string>
     <string name="quick_action__ime_ui_mode_dictate" comment="Please mind the limited available space for the quick action strings">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Tap to dictate, tap again to transcribe</string>
     <string name="quick_action__dictate_live_prompt" comment="Please mind the limited available space for the quick action strings">Live prompt</string>
@@ -2636,4 +2638,22 @@
     <string name="changelog__v4_2_0" comment="What's-new text for the 4.2.0 release. One change per line.">• NEW: Floating dictation button — dictate straight into any app, even when another keyboard is active. Pick from three styles (Pill, Ring, Orb), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press to reword. Turn it on in Settings ▸ Dictate ▸ Floating button.\n• NEW: Google Gemini — bring your own AI Studio API key for both transcription and rewording.\n• Prompts now appear in an always-on row above the keys by default.\n• More reliable text insertion across apps, including browsers and other keyboards.</string>
     <string name="changelog__v4_1_1" comment="What's-new text for the 4.1.1 release. One change per line.">• Fix: the accent color could appear green on some devices — keys and buttons are back to the Dictate blue.</string>
 
+    <!-- On-device translation (issue #424). Language names come from the system and need no strings. -->
+    <string name="settings__translation__title" comment="Title of the translation settings screen and its entry on the settings home">Translation</string>
+    <string name="translate__settings_intro" comment="The one line at the top of the translation settings. Say where the feature is opened: use the same word for the Smartbar as settings__smartbar__title and for the button as quick_action__translate.">Translates right on your phone, and nothing you type leaves it. Open it with Translate in the Smartbar.</string>
+    <string name="translate__group_installed" comment="Settings group: the translation languages already on the phone">Downloaded</string>
+    <string name="translate__group_available" comment="Settings group: the translation languages that can be downloaded">Available</string>
+    <string name="translate__english_included" comment="Subtitle of the English row: English needs no download, every language carries it">Always included</string>
+    <string name="translate__size_installed" comment="Subtitle of a downloaded language. {size} is e.g. 72 MB">{size} on this device</string>
+    <string name="translate__size_download" comment="Subtitle of a language not yet downloaded. {download} is what the download costs, {size} what stays on the phone, e.g. 52 MB / 72 MB">{download} download · {size} on this device</string>
+    <string name="translate__hint" comment="Placeholder in the translate bar's input line, above the keyboard">Type to translate</string>
+    <string name="translate__detect" comment="Language chip: the source language is detected automatically">Detect language</string>
+    <string name="translate__detected" comment="Language chip once detection has settled, e.g. German (detected)">{language} (detected)</string>
+    <string name="translate__swap" comment="Accessibility label of the button that swaps source and target language">Swap languages</string>
+    <string name="translate__no_languages" comment="Shown in the translate bar when no language is downloaded">No language downloaded yet</string>
+    <string name="translate__get_languages" comment="Button in the translate bar that opens the translation settings">Get languages</string>
+    <string name="translate__more_languages" comment="Last chip in the translate bar's language list, opens the settings to download more">More languages</string>
+    <string name="translate__missing" comment="{language} is one or more language names">{language} is not downloaded</string>
+    <string name="translate__failed">Translation failed</string>
+    <string name="translate__unsupported">Translation is not available on this device</string>
 </resources>

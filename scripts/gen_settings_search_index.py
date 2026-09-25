@@ -33,6 +33,7 @@ SCREEN_ROUTE = {
     "GesturesScreen": "Routes.Settings.Gestures",
     "ClipboardScreen": "Routes.Settings.Clipboard",
     "MediaScreen": "Routes.Settings.Media",
+    "TranslationScreen": "Routes.Settings.Translation",
     "OtherScreen": "Routes.Settings.Other",
     "PhysicalKeyboardScreen": "Routes.Settings.PhysicalKeyboard",
     "BackupScreen": "Routes.Settings.Backup",

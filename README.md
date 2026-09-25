@@ -138,6 +138,7 @@ Dictate nothing and are not going anywhere.
 - **GIF search** — search and insert GIFs right from the keyboard, powered by [KLIPY](https://klipy.com). Add your own free KLIPY API key (bring-your-own-key, like the AI providers); search terms are only sent while the GIF panel is open.
 - **Your own stickers** — point the keyboard at a folder of your own images and insert them straight into a chat. Subfolders become tabs, long-press pins a favourite or deletes the file, and nothing leaves the device. Share a sticker to Dictate from WhatsApp, Telegram or anywhere else and it lands in the folder.
 - **Scan text** — photograph an IBAN, a serial number or an address on an envelope and tap the part of it you want in the field. Recognition runs on the device, no camera permission is asked for, and the photo is deleted as soon as it has been read.
+- **Offline translation** — tap Translate in the Smartbar, type in your language and the translation appears in the text field as you go; press Enter and it is sent. Runs entirely on the phone with Mozilla's Firefox Translations models: 49 languages including Hindi, Japanese and Arabic, downloaded one at a time (30–75 MB each), and nothing you type leaves the device.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
 - **Backup & restore** — take your whole setup to a new phone: preferences, rewording prompts, personal dictionary and learned words, themes, layouts. You choose what goes in, and an archive can be made **without** your API keys, passwords or Dictate Cloud credit — so it can be handed to someone else or attached to a bug report without leaking anything.
 - **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
@@ -286,6 +287,8 @@ Dictate Keyboard is released under the terms of the
   substituted into sherpa-onnx's own Parakeet graph, since upstream publishes no ONNX build.
 - The Lattice button design is ported from
   [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs) by Jakub Antalik (MIT).
+- Offline translation uses Mozilla's [Firefox Translations](https://github.com/mozilla/translations)
+  models and its Bergamot engine (MPL-2.0), built on [Marian NMT](https://marian-nmt.github.io) (MIT).
 - GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.
 
 <br>

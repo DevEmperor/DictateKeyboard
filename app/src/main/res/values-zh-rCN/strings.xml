@@ -1141,6 +1141,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">移动光标、选择和编辑文本</string>
     <string name="quick_action__ime_ui_mode_scan">扫描文字</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">拍摄印刷文字并插入</string>
+    <string name="quick_action__translate">翻译</string>
+    <string name="quick_action__translate__tooltip">边输入边翻译，全程在本机完成</string>
     <string name="quick_action__ime_ui_mode_dictate">听写</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">点按开始听写，再次点按进行转录</string>
     <string name="quick_action__dictate_live_prompt">实时指令</string>
@@ -2398,4 +2400,23 @@
     <string name="scan__select_all">全选</string>
     <string name="scan__discard">放弃</string>
     <string name="scan__approve">确认</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">翻译</string>
+    <string name="translate__settings_intro">直接在手机上翻译，你输入的内容不会离开手机。在智能栏中点按“翻译”即可打开。</string>
+    <string name="translate__group_installed">已下载</string>
+    <string name="translate__group_available">可下载</string>
+    <string name="translate__english_included">始终内置</string>
+    <string name="translate__size_installed">占用本机 {size}</string>
+    <string name="translate__size_download">下载 {download} · 占用本机 {size}</string>
+    <string name="translate__hint">输入要翻译的文字</string>
+    <string name="translate__detect">检测语言</string>
+    <string name="translate__detected">{language}（已检测）</string>
+    <string name="translate__swap">交换语言</string>
+    <string name="translate__no_languages">尚未下载任何语言</string>
+    <string name="translate__get_languages">下载语言</string>
+    <string name="translate__more_languages">更多语言</string>
+    <string name="translate__missing">{language}尚未下载</string>
+    <string name="translate__failed">翻译失败</string>
+    <string name="translate__unsupported">此设备不支持翻译</string>
 </resources>

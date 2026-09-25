@@ -1078,6 +1078,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">カーソル移動、選択、テキスト編集</string>
     <string name="quick_action__ime_ui_mode_scan">テキストをスキャン</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">印刷された文字を撮影して挿入します</string>
+    <string name="quick_action__translate">翻訳</string>
+    <string name="quick_action__translate__tooltip">入力しながらこの端末上で翻訳します</string>
     <string name="quick_action__ime_ui_mode_dictate">音声入力</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">タップして音声入力、もう一度タップで文字起こし</string>
     <string name="quick_action__dictate_live_prompt">音声指示</string>
@@ -2336,4 +2338,23 @@
     <string name="scan__select_all">すべて選択</string>
     <string name="scan__discard">破棄</string>
     <string name="scan__approve">確定</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">翻訳</string>
+    <string name="translate__settings_intro">端末上で直接翻訳するため、入力した内容が外部に送られることはありません。スマートバーの「翻訳」から開けます。</string>
+    <string name="translate__group_installed">ダウンロード済み</string>
+    <string name="translate__group_available">ダウンロード可能</string>
+    <string name="translate__english_included">常に利用可能</string>
+    <string name="translate__size_installed">端末内: {size}</string>
+    <string name="translate__size_download">ダウンロード: {download} · 端末内: {size}</string>
+    <string name="translate__hint">入力して翻訳</string>
+    <string name="translate__detect">言語を検出</string>
+    <string name="translate__detected">{language}（検出）</string>
+    <string name="translate__swap">言語を入れ替え</string>
+    <string name="translate__no_languages">まだ言語がダウンロードされていません</string>
+    <string name="translate__get_languages">言語をダウンロード</string>
+    <string name="translate__more_languages">その他の言語</string>
+    <string name="translate__missing">{language}はダウンロードされていません</string>
+    <string name="translate__failed">翻訳に失敗しました</string>
+    <string name="translate__unsupported">この端末では翻訳を利用できません</string>
 </resources>

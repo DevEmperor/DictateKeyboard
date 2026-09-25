@@ -138,6 +138,7 @@ data class TextKeyData(
                 IME_UI_MODE_STICKER,
                 IME_UI_MODE_EDITING,
                 IME_UI_MODE_SCAN,
+                TRANSLATE,
                 IME_UI_MODE_DICTATE,
                 DICTATE_LIVE_PROMPT,
                 DICTATE_PROMPTS,
@@ -466,6 +467,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.IME_UI_MODE_SCAN,
             label = "ime_ui_mode_scan",
+        )
+        /** Predefined key data for [KeyCode.TRANSLATE] (opens or closes the translate bar, issue #424) */
+        val TRANSLATE = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TRANSLATE,
+            label = "translate",
         )
         /** Predefined key data for [KeyCode.IME_UI_MODE_DICTATE] (Dictate AI voice panel) */
         val IME_UI_MODE_DICTATE = TextKeyData(

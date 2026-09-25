@@ -1091,6 +1091,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Pārvietojiet kursoru, atlasiet un rediģējiet tekstu</string>
     <string name="quick_action__ime_ui_mode_scan">Skenēt tekstu</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Nofotografējiet drukātu tekstu un ievietojiet to</string>
+    <string name="quick_action__translate">Tulkot</string>
+    <string name="quick_action__translate__tooltip">Tulkojiet rakstot, tieši šajā ierīcē</string>
     <string name="quick_action__ime_ui_mode_dictate">Diktēšana</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Pieskarieties, lai diktētu, pieskarieties vēlreiz, lai transkribētu</string>
     <string name="quick_action__dictate_live_prompt">Balss norādījums</string>
@@ -2351,4 +2353,23 @@
     <string name="scan__select_all">Atlasīt visu</string>
     <string name="scan__discard">Atmest</string>
     <string name="scan__approve">Apstiprināt</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Tulkošana</string>
+    <string name="translate__settings_intro">Tulko tieši tālrunī, un nekas no tā, ko rakstāt, to nepamet. To var atvērt ar pogu “Tulkot” viedjoslā.</string>
+    <string name="translate__group_installed">Lejupielādētās</string>
+    <string name="translate__group_available">Pieejamās</string>
+    <string name="translate__english_included">Vienmēr iekļauta</string>
+    <string name="translate__size_installed">{size} ierīcē</string>
+    <string name="translate__size_download">{download} lejupielāde · {size} ierīcē</string>
+    <string name="translate__hint">Rakstiet, lai tulkotu</string>
+    <string name="translate__detect">Noteikt valodu</string>
+    <string name="translate__detected">{language} (noteikta)</string>
+    <string name="translate__swap">Samainīt valodas</string>
+    <string name="translate__no_languages">Vēl nav lejupielādēta neviena valoda</string>
+    <string name="translate__get_languages">Lejupielādēt valodas</string>
+    <string name="translate__more_languages">Vairāk valodu</string>
+    <string name="translate__missing">Nav lejupielādēta: {language}</string>
+    <string name="translate__failed">Tulkošana neizdevās</string>
+    <string name="translate__unsupported">Tulkošana šajā ierīcē nav pieejama</string>
 </resources>

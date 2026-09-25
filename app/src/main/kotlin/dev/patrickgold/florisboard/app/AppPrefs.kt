@@ -1171,6 +1171,21 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    // On-device translation bar (issue #424). Both are catalog codes ("de", "zh_hant", "en"); the source
+    // may also be empty, which means "detect it". The target is empty until the bar is first opened, when
+    // it is set to the likeliest choice (see TranslateBarController.initialTarget) and then remembered.
+    val translation = Translation()
+    inner class Translation {
+        val sourceLanguage = string(
+            key = "translation__source_language",
+            default = "",
+        )
+        val targetLanguage = string(
+            key = "translation__target_language",
+            default = "",
+        )
+    }
+
     val sticker = Sticker()
     inner class Sticker {
         // The folder the user picked, as a SAF tree URI we hold a persisted read permission on.

@@ -153,3 +153,27 @@ not even on first use.
 
 No camera permission is declared for this: the system camera app takes the picture and hands the file
 back, and the photo is deleted from our cache as soon as it has been read.
+
+
+10. On-device translation models and engine (the translate bar)
+---------------------------------------------------------------
+
+Files: translation-models/<xx-en|en-xx>/  (downloaded on demand, per language)
+       libdictate_bergamot.so            (bundled)
+
+Translation runs entirely on the device, in a process of its own; no text is sent anywhere. The
+models are Mozilla's Firefox Translations models, mirrored unchanged to a release of this project
+(translation-models-v1) so that every download is pinned by its checksum. Mozilla trains them to and
+from English only, so a pair of two other languages is translated through English.
+
+  - Firefox Translations models, © Mozilla, Mozilla Public License 2.0.
+    https://github.com/mozilla/translations  (source code of the training pipeline and models)
+  - Bergamot translation engine (bergamot-translator, now mozilla/translations/inference), © the
+    Bergamot project and Mozilla, Mozilla Public License 2.0 — built unmodified from
+    https://github.com/mozilla/translations
+  - Marian NMT (the Bergamot fork), MIT License. https://github.com/marian-nmt/marian-dev
+  - SentencePiece, © Google, Apache License 2.0 (one line changed to compile with NDK 29, see
+    tools/bergamot/patches in the Dictate repository). https://github.com/google/sentencepiece
+  - ruy, © Google, Apache License 2.0; cpuinfo, BSD 2-Clause; simd_utils, BSD 2-Clause;
+    PCRE2, BSD 3-Clause; yaml-cpp and pathie-cpp, MIT / BSD 2-Clause; ssplit-cpp, Apache License 2.0.
+

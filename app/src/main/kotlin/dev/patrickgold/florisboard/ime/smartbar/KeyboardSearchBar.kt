@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -55,7 +56,8 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 private const val CaretBlinkMillis = 1000
 
 /**
- * The search bar shared by the emoji search and the GIF search (issue #274).
+ * The search bar shared by the emoji search and the GIF search (issue #274), and the input line of the
+ * translate bar (issue #424), which passes its own [icon].
  *
  * Neither search owns a real text field: the query is typed on the keyboard below and intercepted in
  * the input pipeline (see `KeyboardManager.handleEmojiSearchKey`), so this bar only *renders* a query
@@ -77,6 +79,7 @@ fun KeyboardSearchBar(
     modifier: Modifier = Modifier,
     leading: @Composable (RowScope.() -> Unit)? = null,
     trailing: @Composable (RowScope.() -> Unit)? = null,
+    icon: ImageVector = Icons.Default.Search,
 ) {
     val style = rememberSnyggThemeQuery(FlorisImeUi.SmartbarCandidatesRow.elementName)
     val inputFeedbackController = LocalInputFeedbackController.current
@@ -99,7 +102,7 @@ fun KeyboardSearchBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIcon(
-                imageVector = Icons.Default.Search,
+                imageVector = icon,
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .size(18.dp),
@@ -155,7 +158,7 @@ fun KeyboardSearchBar(
 
 /** A blinking text cursor, marking where the next keystroke lands. */
 @Composable
-private fun Caret(color: Color) {
+internal fun Caret(color: Color, modifier: Modifier = Modifier) {
     val transition = rememberInfiniteTransition(label = "search-caret")
     val alpha by transition.animateFloat(
         initialValue = 1f,
@@ -174,7 +177,7 @@ private fun Caret(color: Color) {
         label = "search-caret-alpha",
     )
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(start = 2.dp)
             .alpha(alpha)
             .width(2.dp)

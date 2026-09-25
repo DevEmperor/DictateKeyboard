@@ -929,6 +929,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Sposta il cursore, seleziona e modifica il testo</string>
     <string name="quick_action__ime_ui_mode_scan">Scansiona testo</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Fotografa un testo stampato e inseriscilo</string>
+    <string name="quick_action__translate">Traduci</string>
+    <string name="quick_action__translate__tooltip">Traduci mentre scrivi, su questo dispositivo</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Tocca per dettare, tocca di nuovo per trascrivere</string>
     <string name="quick_action__dictate_live_prompt">Istruzione dal vivo</string>
@@ -2188,4 +2190,23 @@
     <string name="scan__select_all">Seleziona tutto</string>
     <string name="scan__discard">Scarta</string>
     <string name="scan__approve">Conferma</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Traduzione</string>
+    <string name="translate__settings_intro">Traduce direttamente sul telefono e nulla di ciò che scrivi ne esce. Si apre con «Traduci» nella Smartbar.</string>
+    <string name="translate__group_installed">Scaricate</string>
+    <string name="translate__group_available">Disponibili</string>
+    <string name="translate__english_included">Sempre incluso</string>
+    <string name="translate__size_installed">{size} sul dispositivo</string>
+    <string name="translate__size_download">{download} da scaricare · {size} sul dispositivo</string>
+    <string name="translate__hint">Scrivi per tradurre</string>
+    <string name="translate__detect">Rileva lingua</string>
+    <string name="translate__detected">{language} (rilevato)</string>
+    <string name="translate__swap">Inverti lingue</string>
+    <string name="translate__no_languages">Ancora nessuna lingua scaricata</string>
+    <string name="translate__get_languages">Scarica lingue</string>
+    <string name="translate__more_languages">Altre lingue</string>
+    <string name="translate__missing">Non scaricato: {language}</string>
+    <string name="translate__failed">Traduzione non riuscita</string>
+    <string name="translate__unsupported">La traduzione non è disponibile su questo dispositivo</string>
 </resources>

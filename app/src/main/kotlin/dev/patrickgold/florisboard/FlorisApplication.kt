@@ -78,6 +78,10 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
+        // The translation engine's process (issue #424) runs one service and touches none of this: the
+        // preference store, the dictionaries, the Wear publisher would all be a second copy of the
+        // keyboard in memory, in the process that exists precisely to keep memory out of the keyboard.
+        if (isTranslationEngineProcess()) return
         try {
             Flog.install(
                 context = this,
@@ -101,6 +105,15 @@ class FlorisApplication : Application() {
             CrashUtility.stageException(e)
             return
         }
+    }
+
+    private fun isTranslationEngineProcess(): Boolean {
+        val name = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            Application.getProcessName()
+        } else {
+            runCatching { java.io.File("/proc/self/cmdline").readText().trimEnd('\u0000') }.getOrNull()
+        }
+        return name?.endsWith(":translate") == true
     }
 
     override fun onTrimMemory(level: Int) {

@@ -1084,6 +1084,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Cursor bewegen, Text auswählen und bearbeiten</string>
     <string name="quick_action__ime_ui_mode_scan">Text scannen</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Gedruckten Text fotografieren und einfügen</string>
+    <string name="quick_action__translate">Übersetzen</string>
+    <string name="quick_action__translate__tooltip">Beim Tippen übersetzen, direkt auf dem Gerät</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Tippen zum Diktieren, erneut tippen zum Transkribieren</string>
     <string name="quick_action__dictate_live_prompt">Live-Prompt</string>
@@ -2317,4 +2319,23 @@
     <string name="scan__select_all">Alles auswählen</string>
     <string name="scan__discard">Verwerfen</string>
     <string name="scan__approve">Übernehmen</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Übersetzen</string>
+    <string name="translate__settings_intro">Übersetzt direkt auf deinem Handy, nichts von dem, was du tippst, verlässt es. Du öffnest es mit „Übersetzen“ in der Schnellzugriffsleiste.</string>
+    <string name="translate__group_installed">Heruntergeladen</string>
+    <string name="translate__group_available">Verfügbar</string>
+    <string name="translate__english_included">Immer dabei</string>
+    <string name="translate__size_installed">{size} auf dem Gerät</string>
+    <string name="translate__size_download">{download} Download · {size} auf dem Gerät</string>
+    <string name="translate__hint">Zum Übersetzen tippen</string>
+    <string name="translate__detect">Sprache erkennen</string>
+    <string name="translate__detected">{language} (erkannt)</string>
+    <string name="translate__swap">Sprachen tauschen</string>
+    <string name="translate__no_languages">Noch keine Sprache heruntergeladen</string>
+    <string name="translate__get_languages">Sprachen laden</string>
+    <string name="translate__more_languages">Weitere Sprachen</string>
+    <string name="translate__missing">{language} ist nicht heruntergeladen</string>
+    <string name="translate__failed">Übersetzung fehlgeschlagen</string>
+    <string name="translate__unsupported">Übersetzen ist auf diesem Gerät nicht verfügbar</string>
 </resources>

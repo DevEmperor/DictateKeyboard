@@ -1128,6 +1128,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Mueve el cursor, selecciona y edita el texto</string>
     <string name="quick_action__ime_ui_mode_scan">Escanear texto</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Fotografía un texto impreso e insértalo</string>
+    <string name="quick_action__translate">Traducir</string>
+    <string name="quick_action__translate__tooltip">Traduce mientras escribes, en este dispositivo</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Toca para dictar, toca de nuevo para transcribir</string>
     <string name="quick_action__dictate_live_prompt">Instrucción en vivo</string>
@@ -2387,4 +2389,23 @@
     <string name="scan__select_all">Seleccionar todo</string>
     <string name="scan__discard">Descartar</string>
     <string name="scan__approve">Aceptar</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Traducción</string>
+    <string name="translate__settings_intro">Traduce directamente en tu teléfono y nada de lo que escribes sale de él. Se abre con «Traducir» en la barra inteligente.</string>
+    <string name="translate__group_installed">Descargados</string>
+    <string name="translate__group_available">Disponibles</string>
+    <string name="translate__english_included">Siempre incluido</string>
+    <string name="translate__size_installed">{size} en el dispositivo</string>
+    <string name="translate__size_download">{download} de descarga · {size} en el dispositivo</string>
+    <string name="translate__hint">Escribe para traducir</string>
+    <string name="translate__detect">Detectar idioma</string>
+    <string name="translate__detected">{language} (detectado)</string>
+    <string name="translate__swap">Intercambiar idiomas</string>
+    <string name="translate__no_languages">Aún no hay ningún idioma descargado</string>
+    <string name="translate__get_languages">Descargar idiomas</string>
+    <string name="translate__more_languages">Más idiomas</string>
+    <string name="translate__missing">Falta descargar {language}</string>
+    <string name="translate__failed">No se pudo traducir</string>
+    <string name="translate__unsupported">La traducción no está disponible en este dispositivo</string>
 </resources>

@@ -581,9 +581,13 @@ private class TextKeyboardLayoutController(
                     pointer.index = pointerIndex
                     if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
-                            val selection = editorInstance.activeContent.selection
-                            if (selection.isSelectionMode) {
-                                editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
+                            if (keyboardManager.translateTakesKeys) {
+                                keyboardManager.finishTranslateSwipeDelete()
+                            } else {
+                                val selection = editorInstance.activeContent.selection
+                                if (selection.isSelectionMode) {
+                                    editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
+                                }
                             }
                         }
                         onTouchCancelInternal(event, pointer)
@@ -604,9 +608,14 @@ private class TextKeyboardLayoutController(
                                 pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
-                                val selection = editorInstance.activeContent.selection
-                                if (selection.isSelectionMode) {
-                                    editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
+                                // The translate bar's field has its own marked stretch (issue #424).
+                                if (keyboardManager.translateTakesKeys) {
+                                    keyboardManager.finishTranslateSwipeDelete()
+                                } else {
+                                    val selection = editorInstance.activeContent.selection
+                                    if (selection.isSelectionMode) {
+                                        editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
+                                    }
                                 }
                             }
                             onTouchCancelInternal(event, pointer)
@@ -943,6 +952,15 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
+                    // While the translate bar has the keys the swipe marks its text, not the app's (#424).
+                    if (keyboardManager.translateTakesKeys) {
+                        keyboardManager.selectInTranslate(
+                            units = -event.absUnitCountX - 1,
+                            words = false,
+                            forward = inputEventDispatcher.isPressed(KeyCode.SHIFT),
+                        )
+                        return true
+                    }
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
                         if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
@@ -966,6 +984,14 @@ private class TextKeyboardLayoutController(
                 SwipeAction.DELETE_WORDS_PRECISELY, SwipeAction.SELECT_WORDS_PRECISELY -> {
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
+                    }
+                    if (keyboardManager.translateTakesKeys) {
+                        keyboardManager.selectInTranslate(
+                            units = -event.absUnitCountX / 2 - 1,
+                            words = true,
+                            forward = inputEventDispatcher.isPressed(KeyCode.SHIFT),
+                        )
+                        return true
                     }
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {

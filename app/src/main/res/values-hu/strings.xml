@@ -1145,6 +1145,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Kurzormozgatás, kijelölés és szövegszerkesztés</string>
     <string name="quick_action__ime_ui_mode_scan">Szöveg beolvasása</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Fényképezze le a nyomtatott szöveget és illessze be</string>
+    <string name="quick_action__translate">Fordítás</string>
+    <string name="quick_action__translate__tooltip">Fordítás gépelés közben, ezen az eszközön</string>
     <string name="quick_action__ime_ui_mode_dictate">Diktálás</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Koppintson a diktáláshoz, majd újra az átíráshoz</string>
     <string name="quick_action__dictate_live_prompt">Élő utasítás</string>
@@ -2404,4 +2406,23 @@
     <string name="scan__select_all">Összes kijelölése</string>
     <string name="scan__discard">Elvetés</string>
     <string name="scan__approve">Elfogadás</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Fordítás</string>
+    <string name="translate__settings_intro">Közvetlenül a telefonon fordít, a begépelt szöveg nem hagyja el a készüléket. Az Okossáv „Fordítás” gombjával nyitható meg.</string>
+    <string name="translate__group_installed">Letöltve</string>
+    <string name="translate__group_available">Letölthető</string>
+    <string name="translate__english_included">Mindig elérhető</string>
+    <string name="translate__size_installed">{size} az eszközön</string>
+    <string name="translate__size_download">{download} letöltés · {size} az eszközön</string>
+    <string name="translate__hint">Fordítandó szöveg</string>
+    <string name="translate__detect">Nyelv felismerése</string>
+    <string name="translate__detected">{language} (felismerve)</string>
+    <string name="translate__swap">Nyelvek felcserélése</string>
+    <string name="translate__no_languages">Még nincs letöltött nyelv</string>
+    <string name="translate__get_languages">Nyelvek letöltése</string>
+    <string name="translate__more_languages">További nyelvek</string>
+    <string name="translate__missing">Nincs letöltve: {language}</string>
+    <string name="translate__failed">A fordítás nem sikerült</string>
+    <string name="translate__unsupported">A fordítás nem érhető el ezen az eszközön</string>
 </resources>

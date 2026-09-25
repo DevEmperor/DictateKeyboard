@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
+import dev.patrickgold.florisboard.app.settings.translation.TranslationScreen
 import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
@@ -309,6 +310,11 @@ object Routes {
         @Serializable
         @Deeplink("settings/about/data-attributions")
         object DataAttributions
+
+        // On-device translation (issue #424); the translate bar deep-links here for its languages.
+        @Serializable
+        @Deeplink("settings/translation")
+        object Translation
     }
 
     object Devtools {
@@ -458,6 +464,7 @@ object Routes {
             composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }
             composableWithDeepLink(Settings.ThirdPartyLicenses::class) { ThirdPartyLicensesScreen() }
             composableWithDeepLink(Settings.DataAttributions::class) { DataAttributionsScreen() }
+            composableWithDeepLink(Settings.Translation::class) { TranslationScreen() }
 
             composableWithDeepLink(Devtools.Home::class) { DevtoolsScreen() }
             composableWithDeepLink(Devtools.AndroidLocales::class) { AndroidLocalesScreen() }

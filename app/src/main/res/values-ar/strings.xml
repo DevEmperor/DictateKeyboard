@@ -1004,6 +1004,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">تحريك المؤشر وتحديد النص وتحريره</string>
     <string name="quick_action__ime_ui_mode_scan">مسح النص</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">صوّر نصًا مطبوعًا وأدرجه</string>
+    <string name="quick_action__translate">ترجمة</string>
+    <string name="quick_action__translate__tooltip">ترجم أثناء الكتابة، على هذا الجهاز</string>
     <string name="quick_action__ime_ui_mode_dictate">الإملاء</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">انقر للإملاء، وانقر مرة أخرى للتفريغ النصي</string>
     <string name="quick_action__dictate_live_prompt">أمر صوتي</string>
@@ -2267,4 +2269,23 @@
     <string name="scan__select_all">تحديد الكل</string>
     <string name="scan__discard">تجاهل</string>
     <string name="scan__approve">قبول</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">الترجمة</string>
+    <string name="translate__settings_intro">يترجم مباشرة على هاتفك، ولا يغادره شيء مما تكتبه. افتحه من «ترجمة» في الشريط الذكي.</string>
+    <string name="translate__group_installed">المنزّلة</string>
+    <string name="translate__group_available">المتاحة</string>
+    <string name="translate__english_included">مضمّنة دائمًا</string>
+    <string name="translate__size_installed">{size} على الجهاز</string>
+    <string name="translate__size_download">تنزيل {download} · {size} على الجهاز</string>
+    <string name="translate__hint">اكتب للترجمة</string>
+    <string name="translate__detect">اكتشاف اللغة</string>
+    <string name="translate__detected">{language} (مكتشفة)</string>
+    <string name="translate__swap">تبديل اللغتين</string>
+    <string name="translate__no_languages">لم يتم تنزيل أي لغة بعد</string>
+    <string name="translate__get_languages">تنزيل اللغات</string>
+    <string name="translate__more_languages">لغات أخرى</string>
+    <string name="translate__missing">لم يتم تنزيل {language}</string>
+    <string name="translate__failed">فشلت الترجمة</string>
+    <string name="translate__unsupported">الترجمة غير متاحة على هذا الجهاز</string>
 </resources>

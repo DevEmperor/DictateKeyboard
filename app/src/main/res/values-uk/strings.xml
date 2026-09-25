@@ -991,6 +991,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Переміщення курсора, виділення та редагування тексту</string>
     <string name="quick_action__ime_ui_mode_scan">Сканувати текст</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Сфотографувати друкований текст і вставити його</string>
+    <string name="quick_action__translate">Перекласти</string>
+    <string name="quick_action__translate__tooltip">Перекладати під час набору, прямо на пристрої</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Торкніться, щоб диктувати, торкніться ще раз для транскрибування</string>
     <string name="quick_action__dictate_live_prompt">Голосова інструкція</string>
@@ -2252,4 +2254,23 @@
     <string name="scan__select_all">Вибрати все</string>
     <string name="scan__discard">Відхилити</string>
     <string name="scan__approve">Прийняти</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Переклад</string>
+    <string name="translate__settings_intro">Перекладає прямо на телефоні, і ніщо з того, що ви вводите, його не залишає. Відкривається кнопкою «Перекласти» на розумній панелі.</string>
+    <string name="translate__group_installed">Завантажені</string>
+    <string name="translate__group_available">Доступні</string>
+    <string name="translate__english_included">Завжди доступна</string>
+    <string name="translate__size_installed">{size} на пристрої</string>
+    <string name="translate__size_download">{download} для завантаження · {size} на пристрої</string>
+    <string name="translate__hint">Введіть текст для перекладу</string>
+    <string name="translate__detect">Визначити мову</string>
+    <string name="translate__detected">{language} (визначено)</string>
+    <string name="translate__swap">Поміняти мови місцями</string>
+    <string name="translate__no_languages">Ще не завантажено жодної мови</string>
+    <string name="translate__get_languages">Завантажити мови</string>
+    <string name="translate__more_languages">Інші мови</string>
+    <string name="translate__missing">Не завантажено: {language}</string>
+    <string name="translate__failed">Не вдалося перекласти</string>
+    <string name="translate__unsupported">Переклад недоступний на цьому пристрої</string>
 </resources>

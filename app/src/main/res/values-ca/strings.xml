@@ -1016,6 +1016,8 @@
     <string name="quick_action__ime_ui_mode_editing__tooltip">Mou el cursor, selecciona i edita el text</string>
     <string name="quick_action__ime_ui_mode_scan">Escaneja text</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Fotografia un text imprès i insereix-lo</string>
+    <string name="quick_action__translate">Tradueix</string>
+    <string name="quick_action__translate__tooltip">Tradueix mentre escrius, en aquest dispositiu</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Toca per dictar, torna a tocar per transcriure</string>
     <string name="quick_action__dictate_live_prompt">Instrucció en directe</string>
@@ -2275,4 +2277,23 @@
     <string name="scan__select_all">Selecciona-ho tot</string>
     <string name="scan__discard">Descarta</string>
     <string name="scan__approve">Accepta</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Traducció</string>
+    <string name="translate__settings_intro">Tradueix directament al telèfon, i res del que escrius no en surt. S\'obre amb «Tradueix» a la barra intel·ligent.</string>
+    <string name="translate__group_installed">Baixats</string>
+    <string name="translate__group_available">Disponibles</string>
+    <string name="translate__english_included">Sempre inclòs</string>
+    <string name="translate__size_installed">{size} al dispositiu</string>
+    <string name="translate__size_download">{download} de baixada · {size} al dispositiu</string>
+    <string name="translate__hint">Escriu per traduir</string>
+    <string name="translate__detect">Detecta l\'idioma</string>
+    <string name="translate__detected">{language} (detectat)</string>
+    <string name="translate__swap">Intercanvia els idiomes</string>
+    <string name="translate__no_languages">Encara no s\'ha baixat cap idioma</string>
+    <string name="translate__get_languages">Baixa idiomes</string>
+    <string name="translate__more_languages">Més idiomes</string>
+    <string name="translate__missing">Cal baixar {language}</string>
+    <string name="translate__failed">La traducció ha fallat</string>
+    <string name="translate__unsupported">La traducció no està disponible en aquest dispositiu</string>
 </resources>

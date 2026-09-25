@@ -103,6 +103,10 @@ data class QuickActionArrangement(
                 // rather than frequency — it is the feature nobody guesses a keyboard has, and the issue's
                 // "not a Smartbar default" was written before this list was a considered order.
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN),
+                // On-device translation (issue #424), next to scan and for the same reason: nobody looks
+                // for it in a keyboard until they see it there. Gboard keeps its translate button in the
+                // visible bar too, which is what people switching from it will look for.
+                QuickAction.InsertKey(TextKeyData.TRANSLATE),
                 QuickAction.InsertKey(TextKeyData.UNDO),
                 // The last of the visible actions. A keyboard with this much behind it — the provider,
                 // the key, the prompts, the languages — needs a door of its own; without one the way in

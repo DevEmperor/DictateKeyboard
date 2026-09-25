@@ -1046,6 +1046,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="quick_action__ime_ui_mode_editing__tooltip">Cursor verplaatsen, tekst selecteren en bewerken</string>
     <string name="quick_action__ime_ui_mode_scan">Tekst scannen</string>
     <string name="quick_action__ime_ui_mode_scan__tooltip">Gedrukte tekst fotograferen en invoegen</string>
+    <string name="quick_action__translate">Vertalen</string>
+    <string name="quick_action__translate__tooltip">Vertalen tijdens het typen, op dit apparaat</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Tik om te dicteren, tik nogmaals om te transcriberen</string>
     <string name="quick_action__dictate_live_prompt">Live-instructie</string>
@@ -2305,4 +2307,23 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="scan__select_all">Alles selecteren</string>
     <string name="scan__discard">Verwerpen</string>
     <string name="scan__approve">Overnemen</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Vertalen</string>
+    <string name="translate__settings_intro">Vertaalt rechtstreeks op je telefoon, en niets van wat je typt verlaat hem. Je opent het met “Vertalen” in de Slimme Balk.</string>
+    <string name="translate__group_installed">Gedownload</string>
+    <string name="translate__group_available">Beschikbaar</string>
+    <string name="translate__english_included">Altijd inbegrepen</string>
+    <string name="translate__size_installed">{size} op het apparaat</string>
+    <string name="translate__size_download">Download {download} · {size} op het apparaat</string>
+    <string name="translate__hint">Typ om te vertalen</string>
+    <string name="translate__detect">Taal detecteren</string>
+    <string name="translate__detected">{language} (gedetecteerd)</string>
+    <string name="translate__swap">Talen omwisselen</string>
+    <string name="translate__no_languages">Nog geen taal gedownload</string>
+    <string name="translate__get_languages">Talen downloaden</string>
+    <string name="translate__more_languages">Meer talen</string>
+    <string name="translate__missing">Niet gedownload: {language}</string>
+    <string name="translate__failed">Vertalen mislukt</string>
+    <string name="translate__unsupported">Vertalen is niet beschikbaar op dit apparaat</string>
 </resources>
