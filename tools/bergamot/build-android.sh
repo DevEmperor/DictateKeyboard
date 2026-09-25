@@ -42,10 +42,15 @@ if [ "$(git -C "$SRC" rev-parse HEAD 2>/dev/null)" != "$TRANSLATIONS_COMMIT" ]; 
   git -C "$SRC" fetch --depth 1 origin "$TRANSLATIONS_COMMIT"
   git -C "$SRC" checkout --quiet "$TRANSLATIONS_COMMIT"
 fi
-# Marian's CMakeLists runs `git submodule update --init --recursive` unconditionally, which would clone
-# FBGEMM, NCCL and onnxjs+Eigen — GPU/x86 code a phone build never compiles. Marked "none", it skips them.
+# Marian's CMakeLists runs `git submodule update --init --recursive` unconditionally, and from inside the
+# repository that means every submodule of it: FBGEMM, NCCL and onnxjs+Eigen (GPU/x86 code a phone never
+# compiles) and the training pipeline's kenlm, fast_align, extract-lex, preprocess, marian-dev and emsdk —
+# about 400 MB nobody builds. Marked "none", `submodule update` skips them.
 for unused in fbgemm nccl onnxjs simple-websocket-server; do
   git -C "$SRC" config "submodule.inference/marian/src/3rd_party/$unused.update" none
+done
+for unused in fast_align extract-lex 3rd_party/kenlm 3rd_party/marian-dev 3rd_party/preprocess inference/3rd_party/emsdk; do
+  git -C "$SRC" config "submodule.$unused.update" none
 done
 git -C "$SRC" submodule update --init --depth 1 -- \
   inference/3rd_party/ssplit-cpp \
