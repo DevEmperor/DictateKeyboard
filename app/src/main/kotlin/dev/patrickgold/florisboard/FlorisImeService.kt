@@ -486,14 +486,16 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     /**
-     * The user tapped the app's text field. Only the translate bar (issue #424) cares: like Gboard's, it
-     * hands the keys back to the app instead of closing. Not every app reports this — a tap that moves
-     * the cursor is also caught in [onUpdateSelection] — but it is the one signal for a tap that lands
-     * exactly where the cursor already was.
+     * The user tapped the app's text field. Only the keyboard's own fields care: the translate bar
+     * (issue #424) hands the keys back to the app, a search closes (#394). Not every app reports this — a
+     * tap that moves the cursor is also caught in [onUpdateSelection] — but it is the one signal for a tap
+     * that lands exactly where the cursor already was.
      */
     override fun onViewClicked(focusChanged: Boolean) {
         super.onViewClicked(focusChanged)
-        if (keyboardManager.translateQuery.value != null) keyboardManager.onEditorClicked()
+        if (keyboardManager.translateQuery.value != null || keyboardManager.activeInternalField() != null) {
+            keyboardManager.onEditorClicked()
+        }
     }
 
     override fun onUpdateSelection(
@@ -506,10 +508,9 @@ class FlorisImeService : LifecycleInputMethodService() {
     ) {
         flogInfo { "old={start=$oldSelStart,end=$oldSelEnd} new={start=$newSelStart,end=$newSelEnd} composing={start=$candidatesStart,end=$candidatesEnd}" }
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
-        // A cursor the translate bar did not move means the user is working in the app's field (#424).
-        if (keyboardManager.translateQuery.value != null) {
-            keyboardManager.translateBar.onSelectionChanged(oldSelStart, oldSelEnd, newSelStart, newSelEnd)
-        }
+        // A cursor the keyboard did not move means the user is working in the app's field again: the
+        // translate bar gives the keys back (#424), a search closes (#394).
+        keyboardManager.onAppSelectionChanged(oldSelStart, oldSelEnd, newSelStart, newSelEnd)
         activeState.batchEdit {
             activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
             editorInstance.handleSelectionUpdate(

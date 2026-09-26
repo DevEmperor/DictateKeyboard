@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import android.icu.lang.UCharacter
+import android.os.SystemClock
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.runtime.getValue
@@ -1652,10 +1653,57 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         reevaluateInputShiftState()
     }
 
-    /** The app's field was tapped (issue #424): the keys go back to it, the bar stays open. */
+    /**
+     * The app's field was tapped. The translate bar hands the keys back to it and stays open, as in
+     * Gboard (issue #424) — its translation stands in that field and the user may want to go on with it.
+     * A search closes instead (issue #394): it has nothing standing in the app, and a search left open
+     * while the app's cursor blinks again is a field that looks like it has the keys and has not — so the
+     * user typed into the search believing they were typing into the chat.
+     */
     fun onEditorClicked() {
-        translateBar.unfocus()
+        if (translateQuery.value != null) {
+            translateBar.unfocus()
+        } else {
+            closeSearchesForApp()
+        }
         reevaluateInputShiftState()
+    }
+
+    /**
+     * The app reported a new selection. With the translate bar open, [TranslateBarController] decides
+     * what it means. With a search open, a cursor the keyboard did not move is the user tapping or
+     * dragging in the app's field — the other half of [onEditorClicked], for apps that don't report the
+     * tap itself — and closes the search the same way.
+     */
+    fun onAppSelectionChanged(oldStart: Int, oldEnd: Int, newStart: Int, newEnd: Int) {
+        if (translateQuery.value != null) {
+            translateBar.onSelectionChanged(oldStart, oldEnd, newStart, newEnd)
+            return
+        }
+        if (activeInternalField() == null) return
+        if (oldStart == newStart && oldEnd == newEnd) return
+        if (SystemClock.uptimeMillis() < searchOwnEditUntil) return
+        closeSearchesForApp()
+    }
+
+    /**
+     * Until when a moving app cursor is the keyboard's own doing: an emoji picked from the search goes
+     * into the app while the search stays open, and the cursor it moves must not close the search.
+     */
+    private var searchOwnEditUntil = 0L
+
+    /** Writes [text] into the app from an open search — an emoji picked from its results (issue #394). */
+    fun commitFromSearch(text: String) {
+        searchOwnEditUntil = SystemClock.uptimeMillis() + TranslateBarController.OWN_EDIT_WINDOW_MS
+        editorInstance.commitText(text)
+    }
+
+    /** Closes whichever search is open and leaves the keyboard to the app — not the panel it came from. */
+    private fun closeSearchesForApp() {
+        closeEmojiSearch(returnToMedia = false)
+        closeGifSearch(returnToPanel = false)
+        closeStickerSearch(returnToPanel = false)
+        closeClipboardSearch(returnToPanel = false)
     }
 
     /**

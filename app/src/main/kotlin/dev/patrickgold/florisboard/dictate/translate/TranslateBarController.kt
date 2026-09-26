@@ -398,8 +398,11 @@ class TranslateBarController(
         /** Gboard waits 300–600 ms; Bergamot answers in ~60–100 ms on a mid-range phone, so the low end. */
         const val DEBOUNCE_MS = 350L
 
-        /** How long after our own edit a selection change in the app is still ours. */
-        private const val OWN_EDIT_WINDOW_MS = 800L
+        /**
+         * How long after our own edit a selection change in the app is still ours. The emoji search uses
+         * the same window for the emojis it inserts (issue #394).
+         */
+        const val OWN_EDIT_WINDOW_MS = 800L
         private const val MIN_DETECT_CHARS = 12
         private const val MIN_DETECT_CONFIDENCE = 0.5f
 

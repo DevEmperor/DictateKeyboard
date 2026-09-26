@@ -14,15 +14,17 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
@@ -60,16 +62,20 @@ import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
+/** How many rows of results stand above the search bar (issue #394). */
+private const val ResultRows = 2
+
 /**
  * The in-keyboard emoji search panel (issues #110, #274). Shown above the Smartbar while a search
  * is active (see [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.emojiSearchQuery]); the
  * user's own keyboard layout below it types the query, which is intercepted in the input pipeline.
  *
- * Results appear in one row *above* the search bar, scrolled sideways — the shape the sticker and GIF
- * searches use, so the three read alike and none of them takes a third of the screen from the app being
- * typed into. They share [EmojiKey] with the palette, so a result can still be long-pressed for its
- * skin tones. Tapping inserts straight into the editor (bypassing the query interception) and leaves
- * the search open.
+ * Results appear *above* the search bar, scrolled sideways, in two rows — Gboard's shape (issue #394).
+ * One row showed eight faces for "love" where there are two dozen worth choosing from; a third row would
+ * start taking the screen from the app being typed into. The two rows are there even while they hold
+ * less, so the keyboard does not change height under the user between one letter and the next. Results
+ * share [EmojiKey] with the palette, so one can still be long-pressed for its skin tones. Tapping inserts
+ * straight into the editor (bypassing the query interception) and leaves the search open.
  */
 @Composable
 fun EmojiSearchPanel(modifier: Modifier = Modifier) {
@@ -137,9 +143,9 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
 
     // Every new letter is a new result set, so start it at the top instead of wherever the previous
     // one had been scrolled to.
-    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
     LaunchedEffect(shown) {
-        if (!shown.isNullOrEmpty()) listState.scrollToItem(0)
+        if (!shown.isNullOrEmpty()) gridState.scrollToItem(0)
     }
 
     SnyggColumn(
@@ -149,7 +155,7 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(FlorisImeSizing.smartbarHeight),
+                .height(FlorisImeSizing.smartbarHeight * ResultRows),
             contentAlignment = Alignment.Center,
         ) {
             val current = shown
@@ -165,36 +171,39 @@ fun EmojiSearchPanel(modifier: Modifier = Modifier) {
                         textAlign = TextAlign.Center,
                     )
                 }
-                else -> LazyRow(
-                    state = listState,
+                // Filled column by column, so the best matches stand at the front, top and bottom.
+                else -> LazyHorizontalGrid(
+                    rows = GridCells.Fixed(ResultRows),
+                    state = gridState,
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(horizontal = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     items(current, key = { it.emojis.first().value }) { emojiSet ->
-                        // A row hands its items an unbounded width, so the cell names its own — the
-                        // same width the palette's grid gives each emoji.
-                        Box(modifier = Modifier.width(EmojiBaseWidth)) {
-                            EmojiKey(
-                                emojiSet = emojiSet,
-                                emojiCompatInstance = emojiCompatInstance,
-                                preferredSkinTone = preferredSkinTone,
-                                isPinned = false,
-                                isRecent = false,
-                                onEmojiInput = { emoji ->
-                                    // No feedback call here: [EmojiKey] already ticks on the confirmed
-                                    // tap before it hands the emoji over, and adding one here played the
-                                    // sound twice for a single tap.
-                                    // Commit straight to the editor: routing through the dispatcher
-                                    // would be swallowed by the active search-query interception.
-                                    editorInstance.commitText(emoji.value)
-                                    scope.launch {
-                                        EmojiHistoryHelper.markEmojiUsed(prefs, PrivateSession.isActive(context), emoji)
-                                    }
-                                },
-                                onHistoryAction = { },
-                            )
-                        }
+                        EmojiKey(
+                            emojiSet = emojiSet,
+                            emojiCompatInstance = emojiCompatInstance,
+                            preferredSkinTone = preferredSkinTone,
+                            isPinned = false,
+                            isRecent = false,
+                            onEmojiInput = { emoji ->
+                                // No feedback call here: [EmojiKey] already ticks on the confirmed
+                                // tap before it hands the emoji over, and adding one here played the
+                                // sound twice for a single tap.
+                                // Straight to the editor: routing through the dispatcher would be
+                                // swallowed by the search's own key handling. Through the keyboard
+                                // manager, so the cursor this moves is not taken for a tap in the app.
+                                keyboardManager.commitFromSearch(emoji.value)
+                                scope.launch {
+                                    EmojiHistoryHelper.markEmojiUsed(prefs, PrivateSession.isActive(context), emoji)
+                                }
+                            },
+                            onHistoryAction = { },
+                            // A sideways grid hands its items an unbounded width, so the cell names its
+                            // own — the palette's — and takes its row's full height to aim at.
+                            modifier = Modifier
+                                .width(EmojiBaseWidth)
+                                .fillMaxHeight(),
+                        )
                     }
                 }
             }
