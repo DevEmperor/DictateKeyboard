@@ -2317,7 +2317,7 @@
     <string name="dictate__language_detect" comment="Language option: let the model auto-detect the spoken language">Detect automatically</string>
     <string name="dictate__languages_active_title" comment="Row/dialog title to pick the currently active transcription language">Active language</string>
     <string name="dictate__languages_follow_keyboard" comment="Switch title: the dictation language follows the keyboard language">Follow the keyboard language</string>
-    <string name="dictate__languages_follow_keyboard_summary" comment="Switch summary. Only languages ticked in the list below this switch are switched to">Switching the keyboard language switches dictation too, if that language is ticked below</string>
+    <string name="dictate__languages_follow_keyboard_summary" comment="Switch summary. Only languages ticked in the list below this switch are switched to">Switches dictation too, if the language is ticked below</string>
 
     <!-- Dictate prompt selection (system & style prompt: none / predefined / custom) -->
     <string name="dictate__prompt_selection_none" comment="Prompt option: do not send any prompt">None</string>

@@ -1502,7 +1502,7 @@
     <string name="dictate__language_detect">Detetar automaticamente</string>
     <string name="dictate__languages_active_title">Idioma ativo</string>
     <string name="dictate__languages_follow_keyboard">Seguir o idioma do teclado</string>
-    <string name="dictate__languages_follow_keyboard_summary">Mudar o idioma do teclado muda também o do ditado, se esse idioma estiver assinalado abaixo</string>
+    <string name="dictate__languages_follow_keyboard_summary">Muda também o ditado, se o idioma estiver assinalado abaixo</string>
     <string name="quick_action__dictate_switch_provider">Fornecedor de transcrição</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Mudar de fornecedor de transcrição</string>
     <string name="enum__space_bar_mode__transcription_provider">Fornecedor de transcrição</string>

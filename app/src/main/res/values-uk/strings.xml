@@ -1367,7 +1367,7 @@
     <string name="dictate__language_detect">Визначати автоматично</string>
     <string name="dictate__languages_active_title">Активна мова</string>
     <string name="dictate__languages_follow_keyboard">Слідувати мові клавіатури</string>
-    <string name="dictate__languages_follow_keyboard_summary">Зміна мови клавіатури змінює й мову диктування, якщо її позначено нижче</string>
+    <string name="dictate__languages_follow_keyboard_summary">Змінює й мову диктування, якщо її позначено нижче</string>
     <string name="quick_action__dictate_switch_provider">Постачальник транскрибування</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Змінити постачальника транскрибування</string>
     <string name="enum__space_bar_mode__transcription_provider">Постачальник транскрибування</string>

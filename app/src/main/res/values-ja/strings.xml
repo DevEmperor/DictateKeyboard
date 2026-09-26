@@ -1454,7 +1454,7 @@
     <string name="dictate__language_detect">自動検出</string>
     <string name="dictate__languages_active_title">使用中の言語</string>
     <string name="dictate__languages_follow_keyboard">キーボードの言語に合わせる</string>
-    <string name="dictate__languages_follow_keyboard_summary">キーボードの言語を切り替えると、その言語が下でチェックされていれば音声入力の言語も切り替わります</string>
+    <string name="dictate__languages_follow_keyboard_summary">下でチェックされた言語なら、音声入力も切り替わります</string>
     <string name="quick_action__dictate_switch_provider">文字起こしプロバイダー</string>
     <string name="quick_action__dictate_switch_provider__tooltip">文字起こしプロバイダーを切り替え</string>
     <string name="enum__space_bar_mode__transcription_provider">文字起こしプロバイダー</string>

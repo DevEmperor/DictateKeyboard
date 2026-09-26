@@ -1538,7 +1538,7 @@
     <string name="dictate__language_detect">Zjistit automaticky</string>
     <string name="dictate__languages_active_title">Aktivní jazyk</string>
     <string name="dictate__languages_follow_keyboard">Řídit se jazykem klávesnice</string>
-    <string name="dictate__languages_follow_keyboard_summary">Při přepnutí jazyka klávesnice se přepne i diktování, pokud je daný jazyk níže zaškrtnutý</string>
+    <string name="dictate__languages_follow_keyboard_summary">Přepne i diktování, pokud je jazyk níže zaškrtnutý</string>
     <string name="quick_action__dictate_switch_provider">Poskytovatel přepisu</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Přepnout poskytovatele přepisu</string>
     <string name="enum__space_bar_mode__transcription_provider">Poskytovatel přepisu</string>

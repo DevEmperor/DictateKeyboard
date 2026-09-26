@@ -1305,7 +1305,7 @@
     <string name="dictate__language_detect">Rileva automaticamente</string>
     <string name="dictate__languages_active_title">Lingua attiva</string>
     <string name="dictate__languages_follow_keyboard">Segui la lingua della tastiera</string>
-    <string name="dictate__languages_follow_keyboard_summary">Cambiando la lingua della tastiera cambia anche quella della dettatura, se è spuntata qui sotto</string>
+    <string name="dictate__languages_follow_keyboard_summary">Cambia anche la dettatura, se la lingua è spuntata qui sotto</string>
     <string name="quick_action__dictate_switch_provider">Fornitore di trascrizione</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Cambia il fornitore di trascrizione</string>
     <string name="enum__space_bar_mode__transcription_provider">Fornitore di trascrizione</string>

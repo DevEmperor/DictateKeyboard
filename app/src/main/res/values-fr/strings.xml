@@ -1400,7 +1400,7 @@
     <string name="dictate__language_detect">Détecter automatiquement</string>
     <string name="dictate__languages_active_title">Langue active</string>
     <string name="dictate__languages_follow_keyboard">Suivre la langue du clavier</string>
-    <string name="dictate__languages_follow_keyboard_summary">Changer la langue du clavier change aussi celle de la dictée, si cette langue est cochée ci-dessous</string>
+    <string name="dictate__languages_follow_keyboard_summary">Change aussi la dictée si la langue est cochée ci-dessous</string>
     <string name="quick_action__dictate_switch_provider">Fournisseur de transcription</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Changer de fournisseur de transcription</string>
     <string name="enum__space_bar_mode__transcription_provider">Fournisseur de transcription</string>

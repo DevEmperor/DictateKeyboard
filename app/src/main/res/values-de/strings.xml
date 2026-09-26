@@ -1513,7 +1513,7 @@
     <string name="dictate__language_detect">Automatisch erkennen</string>
     <string name="dictate__languages_active_title">Aktive Sprache</string>
     <string name="dictate__languages_follow_keyboard">Der Tastatursprache folgen</string>
-    <string name="dictate__languages_follow_keyboard_summary">Wechselt die Tastatursprache, wechselt auch das Diktat – wenn die Sprache unten angehakt ist</string>
+    <string name="dictate__languages_follow_keyboard_summary">Wechselt das Diktat mit, wenn die Sprache unten angehakt ist</string>
     <string name="quick_action__dictate_switch_provider">Transkriptionsanbieter</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Transkriptionsanbieter wechseln</string>
     <string name="enum__space_bar_mode__transcription_provider">Transkriptionsanbieter</string>

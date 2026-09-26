@@ -1521,7 +1521,7 @@
     <string name="dictate__language_detect">Automatikus felismerés</string>
     <string name="dictate__languages_active_title">Aktív nyelv</string>
     <string name="dictate__languages_follow_keyboard">A billentyűzet nyelvének követése</string>
-    <string name="dictate__languages_follow_keyboard_summary">A billentyűzet nyelvének váltásakor a diktálás is vált, ha az a nyelv lent be van jelölve</string>
+    <string name="dictate__languages_follow_keyboard_summary">A diktálás is vált, ha a nyelv lent be van jelölve</string>
     <string name="quick_action__dictate_switch_provider">Átírási szolgáltató</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Átírási szolgáltató váltása</string>
     <string name="enum__space_bar_mode__transcription_provider">Átírási szolgáltató</string>

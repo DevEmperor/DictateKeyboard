@@ -1380,7 +1380,7 @@
     <string name="dictate__language_detect">الكشف تلقائيًا</string>
     <string name="dictate__languages_active_title">اللغة النشطة</string>
     <string name="dictate__languages_follow_keyboard">اتّباع لغة لوحة المفاتيح</string>
-    <string name="dictate__languages_follow_keyboard_summary">عند تبديل لغة لوحة المفاتيح تتبدّل لغة الإملاء أيضًا، إذا كانت هذه اللغة محدّدة أدناه</string>
+    <string name="dictate__languages_follow_keyboard_summary">يبدّل لغة الإملاء أيضًا إذا كانت اللغة محدّدة أدناه</string>
     <string name="quick_action__dictate_switch_provider">مزوّد التفريغ النصي</string>
     <string name="quick_action__dictate_switch_provider__tooltip">تبديل مزوّد التفريغ النصي</string>
     <string name="enum__space_bar_mode__transcription_provider">مزوّد التفريغ النصي</string>

@@ -1467,7 +1467,7 @@
     <string name="dictate__language_detect">Noteikt automātiski</string>
     <string name="dictate__languages_active_title">Aktīvā valoda</string>
     <string name="dictate__languages_follow_keyboard">Sekot tastatūras valodai</string>
-    <string name="dictate__languages_follow_keyboard_summary">Mainot tastatūras valodu, mainās arī diktēšanas valoda, ja šī valoda ir atzīmēta zemāk</string>
+    <string name="dictate__languages_follow_keyboard_summary">Maina arī diktēšanas valodu, ja tā ir atzīmēta zemāk</string>
     <string name="quick_action__dictate_switch_provider">Transkribēšanas pakalpojuma sniedzējs</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Mainīt transkribēšanas pakalpojuma sniedzēju</string>
     <string name="enum__space_bar_mode__transcription_provider">Transkribēšanas pakalpojuma sniedzējs</string>

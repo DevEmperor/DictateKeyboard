@@ -1392,7 +1392,7 @@
     <string name="dictate__language_detect">Detecta automàticament</string>
     <string name="dictate__languages_active_title">Idioma actiu</string>
     <string name="dictate__languages_follow_keyboard">Segueix l\'idioma del teclat</string>
-    <string name="dictate__languages_follow_keyboard_summary">En canviar l\'idioma del teclat també canvia el del dictat, si aquest idioma està marcat a sota</string>
+    <string name="dictate__languages_follow_keyboard_summary">També canvia el dictat, si l\'idioma està marcat a sota</string>
     <string name="quick_action__dictate_switch_provider">Proveïdor de transcripció</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Canvia el proveïdor de transcripció</string>
     <string name="enum__space_bar_mode__transcription_provider">Proveïdor de transcripció</string>

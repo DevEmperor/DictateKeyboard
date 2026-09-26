@@ -1504,7 +1504,7 @@
     <string name="dictate__language_detect">Detectar automáticamente</string>
     <string name="dictate__languages_active_title">Idioma activo</string>
     <string name="dictate__languages_follow_keyboard">Seguir el idioma del teclado</string>
-    <string name="dictate__languages_follow_keyboard_summary">Al cambiar el idioma del teclado también cambia el del dictado, si ese idioma está marcado abajo</string>
+    <string name="dictate__languages_follow_keyboard_summary">También cambia el dictado, si el idioma está marcado abajo</string>
     <string name="quick_action__dictate_switch_provider">Proveedor de transcripción</string>
     <string name="quick_action__dictate_switch_provider__tooltip">Cambiar el proveedor de transcripción</string>
     <string name="enum__space_bar_mode__transcription_provider">Proveedor de transcripción</string>
