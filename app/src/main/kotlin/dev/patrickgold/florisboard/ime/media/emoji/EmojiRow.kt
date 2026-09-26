@@ -212,6 +212,9 @@ fun EmojiRow(modifier: Modifier = Modifier) {
                         .width(cellWidth)
                         .fillMaxHeight(),
                     fontSize = EmojiRowFontSize,
+                    // Every cell here has the long-press menu, so a mark on each says nothing — it was
+                    // only clutter on a row meant to stay quiet.
+                    showPopupIndicator = false,
                 )
             }
         }

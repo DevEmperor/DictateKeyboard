@@ -484,7 +484,8 @@ fun EmojiPaletteView(
 /**
  * One emoji cell. [modifier] is its shape — square, as the palette's grid wants it, unless the caller
  * sizes the cell itself (the recent-emoji row: full row height, narrower than tall). [fontSize] is the
- * glyph's; the row draws smaller glyphs than the palette (issue #394).
+ * glyph's; the row draws smaller glyphs than the palette (issue #394). [showPopupIndicator] draws the
+ * corner mark that says a long-press has more to offer.
  */
 @Composable
 internal fun EmojiKey(
@@ -497,6 +498,7 @@ internal fun EmojiKey(
     onHistoryAction: () -> Unit,
     modifier: Modifier = Modifier.aspectRatio(1f),
     fontSize: TextUnit = EmojiDefaultFontSize,
+    showPopupIndicator: Boolean = true,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
@@ -529,7 +531,7 @@ internal fun EmojiKey(
             emojiCompatInstance = emojiCompatInstance,
             fontSize = fontSize,
         )
-        if (variations.isNotEmpty() || isPinned || isRecent) {
+        if (showPopupIndicator && (variations.isNotEmpty() || isPinned || isRecent)) {
             val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
             val shape = when (LocalLayoutDirection.current) {
                 LayoutDirection.Ltr -> VariantsTriangleShapeLtr
