@@ -187,10 +187,22 @@ class EmojiSuggestionIndexTest {
     @Test
     fun `the word before the cursor is found once it is finished`() {
         assertEquals("love", EmojiSuggestionIndex.completedWordBefore("I love "))
-        assertEquals("love", EmojiSuggestionIndex.completedWordBefore("I love! "))
-        assertEquals("love", EmojiSuggestionIndex.completedWordBefore("I love."))
+        assertEquals("love", EmojiSuggestionIndex.completedWordBefore("I love  "))
+        assertEquals("love", EmojiSuggestionIndex.completedWordBefore("I love "))
         assertEquals("", EmojiSuggestionIndex.completedWordBefore("I love"), "still being typed")
         assertEquals("", EmojiSuggestionIndex.completedWordBefore(""))
         assertEquals("", EmojiSuggestionIndex.completedWordBefore("   "))
+    }
+
+    /** Issue #394: past a mark or a line break the word is behind the writer, and so is its emoji. */
+    @Test
+    fun `anything but a space ends the word's claim on the strip`() {
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("Hello\n"), "a new line")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("Hello\n  "), "spaces on a new line")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("Hello,"), "a comma")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("Hello, "), "a comma and a space")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("I love! "), "an exclamation mark")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("I love."), "a full stop")
+        assertEquals("", EmojiSuggestionIndex.completedWordBefore("Hello 👋 "), "the emoji already chosen")
     }
 }
