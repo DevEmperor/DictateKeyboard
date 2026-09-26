@@ -1027,36 +1027,72 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     // --- The user's own words as correction targets (issue #318 follow-up) ------------------------
 
     /**
-     * Fold key → stored spelling for every word the user added by hand, cached per language.
+     * Everything the user added by hand for one language and locale, read once and kept in memory.
      *
-     * A cache rather than a query because the corrector asks by *edit distance*: it needs to look up a
-     * few hundred candidate spellings per keystroke, and the personal dictionary's own lookup is a
-     * `LIKE '%word%'` scan. Dropped whenever the dictionary changes ([onPersonalVocabularyChanged]),
-     * which is the same handful of places that already rebuild the glide index.
+     * A copy rather than a query, for two reasons. The corrector asks by *edit distance* and looks up a few
+     * hundred candidate spellings per keystroke. And the strip used to ask the databases themselves three
+     * times per keystroke — is this word the user's own, which of their words start with it, what is stored
+     * behind it as a shortcut — which on a Galaxy A55 release build cost 25–70 ms per key press (issue #381):
+     * a `LIKE '%word%'` scan of the keyboard's own dictionary each time, and a content-provider call into
+     * another process for the system one.
+     *
+     * The copy is dropped when [DictionaryManager.userVocabularyVersion] moves, which counts every write to
+     * either dictionary, and on [onPersonalVocabularyChanged]. Before #381 it was dropped by the latter
+     * alone, which the settings screens never call, so a word added there reached the corrector only after
+     * a restart.
      */
-    private val personalWordsByLang = guardedByLock { mutableMapOf<String, Map<String, String>>() }
+    private class UserVocabulary(
+        val version: Int,
+        /** Fold key → stored spelling, for the corrector's edit-distance lookups. */
+        val byFold: Map<String, String>,
+        /** Every stored spelling with its fold key, in storage order, for completions. */
+        val words: List<Pair<String, String>>,
+        /** Every stored spelling, lowercased: is a typed word the user's own? */
+        val lowercase: Set<String>,
+        /** Shortcut, lowercased → what is stored behind it, in storage order. */
+        val shortcuts: Map<String, List<String>>,
+    )
+
+    private val userVocabularyByLocale = guardedByLock { mutableMapOf<String, UserVocabulary>() }
 
     override suspend fun onPersonalVocabularyChanged() {
-        personalWordsByLang.withLock { it.clear() }
+        userVocabularyByLocale.withLock { it.clear() }
     }
 
-    private suspend fun personalWordsFor(subtype: Subtype): Map<String, String> {
-        val lang = dictLangFor(subtype) ?: return emptyMap()
-        return personalWordsByLang.withLock { cache ->
-            cache.getOrPut(lang) {
-                runCatching {
-                    val dm = DictionaryManager.default()
-                    dm.loadUserDictionariesIfNecessary()
-                    buildMap {
-                        for (entry in dm.queryAllUserWords(subtype.primaryLocale)) {
-                            val word = entry.word.trim()
-                            if (word.isNotEmpty()) put(DictFold.foldKey(lang, word), word)
-                        }
+    private suspend fun userVocabularyFor(subtype: Subtype): UserVocabulary? {
+        val lang = dictLangFor(subtype) ?: return null
+        val dm = runCatching { DictionaryManager.default() }.getOrNull() ?: return null
+        runCatching { dm.loadUserDictionariesIfNecessary() }
+        // Read before the query, so a write that lands while the copy is being built makes the next
+        // keystroke build it again rather than keep a copy that already missed it.
+        val version = dm.userVocabularyVersion
+        val key = "$lang|${subtype.primaryLocale.localeTag()}"
+        return userVocabularyByLocale.withLock { cache ->
+            cache[key]?.takeIf { it.version == version } ?: run {
+                val entries = runCatching { dm.queryAllUserWords(subtype.primaryLocale) }.getOrDefault(emptyList())
+                val byFold = HashMap<String, String>()
+                val words = ArrayList<Pair<String, String>>(entries.size)
+                val lowercase = HashSet<String>()
+                val shortcuts = LinkedHashMap<String, MutableList<String>>()
+                for (entry in entries) {
+                    val word = entry.word.trim()
+                    if (word.isEmpty()) continue
+                    val folded = DictFold.foldKey(lang, word)
+                    byFold[folded] = word
+                    words.add(folded to word)
+                    lowercase.add(word.lowercase())
+                    entry.shortcut?.takeIf { it.isNotBlank() }?.let { shortcut ->
+                        val expansions = shortcuts.getOrPut(shortcut.lowercase()) { ArrayList() }
+                        if (word !in expansions) expansions.add(word)
                     }
-                }.getOrDefault(emptyMap())
-            }
+                }
+                UserVocabulary(version, byFold, words, lowercase, shortcuts)
+            }.also { cache[key] = it }
         }
     }
+
+    private suspend fun personalWordsFor(subtype: Subtype): Map<String, String> =
+        userVocabularyFor(subtype)?.byFold.orEmpty()
 
     /**
      * The user's own words one edit away from [word] — theirs to be corrected *into*, which no amount of
@@ -1100,12 +1136,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             ?.takeIf { prefs.wordLearningIsOn }
             ?.let { lang -> runCatching { LearnedWordsStore.snapshot(appContext, lang) }.getOrNull() }
 
-    private fun isInUserDictionary(word: String, subtype: Subtype): Boolean = runCatching {
-        val dm = DictionaryManager.default()
-        dm.loadUserDictionariesIfNecessary()
-        dm.queryUserDictionary(word, subtype.primaryLocale)
-            .any { it.text.toString().equals(word, ignoreCase = true) }
-    }.getOrDefault(false)
+    private suspend fun isInUserDictionary(word: String, subtype: Subtype): Boolean =
+        userVocabularyFor(subtype)?.lowercase?.contains(word.trim().lowercase()) == true
 
     override val providerId = ProviderId
 
@@ -1511,13 +1543,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // relative to the dictionary, only the user's own words are put in the order they earned. A word
         // typed into the dictionary by hand has no count and stays at the front, because teaching a word
         // deliberately still outranks anything we merely noticed.
-        val personal = runCatching {
-            val dm = DictionaryManager.default()
-            dm.loadUserDictionariesIfNecessary()
-            dm.queryUserDictionary(word, subtype.primaryLocale)
-        }.getOrNull().orEmpty()
-            .map { it.text.toString() }
-            .filter { index.fold(it).startsWith(index.fold(word)) }
+        val userVocabulary = userVocabularyFor(subtype)
+        val foldedWord = index.fold(word)
+        val personal = userVocabulary?.words.orEmpty()
+            .filter { (folded, _) -> folded.startsWith(foldedWord) }
+            .map { (_, stored) -> stored }
             .distinctBy { it.lowercase() }
             .sortedByDescending { text ->
                 val score = learnedSnapshot?.scoreOfKey(index.fold(text)) ?: 0.0
@@ -1529,11 +1559,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // is the opposite of a completion: it looks nothing like what was typed, and typing the shortcut
         // in full is as deliberate as a user gets. Never auto-committed — "mail" is also an ordinary word,
         // and space must not swap it for an address in the middle of a sentence.
-        val shortcutExpansions = runCatching {
-            val dm = DictionaryManager.default()
-            dm.loadUserDictionariesIfNecessary()
-            dm.queryUserShortcuts(word, subtype.primaryLocale)
-        }.getOrNull().orEmpty()
+        val shortcutExpansions = userVocabulary?.shortcuts?.get(word.lowercase()).orEmpty()
         for (expansion in shortcutExpansions) {
             if (out.size >= maxCandidateCount) break
             out.putIfAbsent(

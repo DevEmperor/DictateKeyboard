@@ -42,7 +42,7 @@ import org.florisboard.lib.android.writeText
 import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
-private const val WORDS_TABLE = "words"
+internal const val WORDS_TABLE = "words"
 
 const val FREQUENCY_MIN = 1
 const val FREQUENCY_MAX = 255
