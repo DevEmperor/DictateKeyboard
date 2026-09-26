@@ -94,7 +94,9 @@ object FlorisImeSizing {
         val context = LocalContext.current
         val keyboardManager by context.keyboardManager()
         val lastCharactersEvaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
-        return remember { derivedStateOf { (lastCharactersEvaluator.keyboard as TextKeyboard).rowCount } }
+        // The same count keyboardUiHeight() draws with, floor included: the resize handles turn a drag into a
+        // height through it, and a count the keyboard is not drawn with makes the handle drift from the finger.
+        return remember { derivedStateOf { (lastCharactersEvaluator.keyboard as TextKeyboard).rowCount.coerceAtLeast(4) } }
     }
 
     @Composable

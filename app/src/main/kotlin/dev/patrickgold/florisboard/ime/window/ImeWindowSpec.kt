@@ -72,7 +72,7 @@ sealed class ImeWindowSpec {
      * Calculate how a move gesture would change the computed props.
      *
      * @param offset The offset by which the gesture moved. Must be a real number pair.
-     * @param rowCount The effective row count. Must be between 4 and 6.
+     * @param rowCount The effective row count. Must be at least 4.
      * @param smartbarRowCount The effective Smartbar row count.
      *
      * @return A moved window spec, possibly unchanged.
@@ -88,7 +88,7 @@ sealed class ImeWindowSpec {
      *
      * @param offset The offset by which the gesture resized. Must be a real number pair.
      * @param handle The resize handle. Determines from which angle the keyboard is resized.
-     * @param rowCount The effective row count. Must be between 4 and 6.
+     * @param rowCount The effective row count. Must be at least 4.
      * @param smartbarRowCount The effective Smartbar row count.
      *
      * @return A resized window spec, possibly unchanged.
@@ -117,8 +117,10 @@ sealed class ImeWindowSpec {
             rowHeight * constraints.smartbarDynamicScalingFactor
     }
 
+    // No upper bound on the rows (issue #418): it used to be 6, and the Hindi varnamala with a number row has
+    // 7, so the first drag on a resize handle threw and took the keyboard down. Nothing here needs a ceiling.
     protected fun Dp.toEffective(rowCount: Int, smartbarRowCount: Int): Dp = let { keyboardHeight ->
-        require(rowCount in 4..6)
+        require(rowCount >= 4)
         require(smartbarRowCount in 0..2)
         val effKeyboardHeight = calcRowHeight(keyboardHeight) * rowCount
         val effSmartbarHeight = calcSmartbarRowHeight(keyboardHeight) * smartbarRowCount
@@ -126,7 +128,7 @@ sealed class ImeWindowSpec {
     }
 
     protected fun Dp.toBaseline(rowCount: Int, smartbarRowCount: Int): Dp  = let { effKeyboardHeight ->
-        require(rowCount in 4..6)
+        require(rowCount >= 4)
         require(smartbarRowCount in 0..2)
         val staticSmartbarHeight = calcRowHeight(constraints.defKeyboardHeight * constraints.smartbarStaticScalingFactor * smartbarRowCount)
         val keyboardHeight = ((effKeyboardHeight - staticSmartbarHeight) * constraints.baselineRowCount) /
