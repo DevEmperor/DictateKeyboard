@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.ime.nlp.han.PinyinPackManager
 import dev.patrickgold.florisboard.ime.nlp.latin.GlideDictionaryManager
@@ -220,6 +221,7 @@ class SubtypeManager(context: Context) {
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
         activeSubtype = newActiveSubtype
+        DictateController.followKeyboardLanguage(newActiveSubtype.primaryLocale.base, cachedActiveSubtype.primaryLocale.base)
     }
 
     /**
@@ -243,12 +245,15 @@ class SubtypeManager(context: Context) {
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
         activeSubtype = newActiveSubtype
+        DictateController.followKeyboardLanguage(newActiveSubtype.primaryLocale.base, cachedActiveSubtype.primaryLocale.base)
     }
 
     fun switchToSubtypeById(id: Long) = scope.launch {
         if (subtypes.any { it.id == id }) {
+            val previous = activeSubtype
             activeSubtype = getSubtypeById(id)!!
             prefs.localization.activeSubtypeId.set(id)
+            DictateController.followKeyboardLanguage(activeSubtype.primaryLocale.base, previous.primaryLocale.base)
         }
     }
 }

@@ -1476,6 +1476,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__languages_summary">Pilih bahasa yang Anda gunakan untuk mendikte. Beralih di antaranya dengan cepat dari bilah perekaman.</string>
     <string name="dictate__language_detect">Deteksi otomatis</string>
     <string name="dictate__languages_active_title">Bahasa aktif</string>
+    <string name="dictate__languages_follow_keyboard">Ikuti bahasa keyboard</string>
+    <string name="dictate__languages_follow_keyboard_summary">Mengganti bahasa keyboard juga mengganti bahasa dikte, jika bahasa itu dicentang di bawah</string>
+    <string name="quick_action__dictate_switch_provider">Penyedia transkripsi</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Ganti penyedia transkripsi</string>
+    <string name="enum__space_bar_mode__transcription_provider">Penyedia transkripsi</string>
     <string name="dictate__prompt_selection_none">Tidak ada</string>
     <string name="dictate__prompt_selection_predefined">Bawaan</string>
     <string name="dictate__prompt_selection_custom">Kustom</string>

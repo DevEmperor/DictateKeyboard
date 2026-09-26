@@ -82,6 +82,39 @@ object ProviderListing {
         isModelInstalled: (String) -> Boolean,
     ): Boolean = preset.id == selectedId || isSetUp(preset, accounts, isModelInstalled)
 
+    /**
+     * What the transcription picker offers, as `id to name`, in the order it offers them: the pickable
+     * presets with on-device first (issue #228), then the user's own endpoints by name.
+     *
+     * One list for every place that lets the provider be switched — the settings dialog and the keyboard's
+     * own picker (issue #431) — so the two can never disagree about what is set up.
+     */
+    fun transcriptionChoices(
+        accounts: ProviderAccounts,
+        selectedId: String,
+        isModelInstalled: (String) -> Boolean,
+    ): List<Pair<String, String>> = buildList {
+        ProviderRegistry.presets
+            .filter { it.capabilities.transcription }
+            .filter { isPickable(it, accounts, selectedId, isModelInstalled) }
+            .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
+            .forEach { add(it.id to it.displayName) }
+        accounts.accounts.values
+            .filter { it.isCustom }
+            .sortedBy { it.displayName.lowercase() }
+            .forEach { add(it.providerId to customLabel(it)) }
+    }
+
+    /**
+     * The name a provider goes by wherever one is named: the preset's own, or for a custom endpoint the
+     * name its user gave it. An id nothing answers to is shown as itself rather than as nothing.
+     */
+    fun displayNameOf(id: String, accounts: ProviderAccounts): String =
+        ProviderRegistry.byId(id)?.displayName ?: accounts[id]?.let(::customLabel) ?: id
+
+    /** Label for a custom endpoint: its user-given name, or a generic fallback. */
+    fun customLabel(account: ProviderAccount): String = account.displayName.ifBlank { "Custom server" }
+
     /** The chips above the add-provider list. Several at once narrow the list further, never widen it. */
     enum class Filter { TRANSCRIPTION, REWORDING, REALTIME, EU }
 

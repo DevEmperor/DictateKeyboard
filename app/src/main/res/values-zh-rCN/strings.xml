@@ -1516,6 +1516,11 @@
     <string name="dictate__languages_summary">选择您听写所用的语言。可从录音栏快速切换。</string>
     <string name="dictate__language_detect">自动检测</string>
     <string name="dictate__languages_active_title">当前语言</string>
+    <string name="dictate__languages_follow_keyboard">跟随键盘语言</string>
+    <string name="dictate__languages_follow_keyboard_summary">切换键盘语言时，如果该语言已在下方勾选，听写语言也会随之切换</string>
+    <string name="quick_action__dictate_switch_provider">转录服务商</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">切换转录服务商</string>
+    <string name="enum__space_bar_mode__transcription_provider">转录服务商</string>
     <string name="dictate__prompt_selection_none">无</string>
     <string name="dictate__prompt_selection_predefined">默认</string>
     <string name="dictate__prompt_selection_custom">自定义</string>

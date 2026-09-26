@@ -1421,6 +1421,11 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__languages_summary">Kies de talen waarin je dicteert. Wissel er snel tussen via de opnamebalk.</string>
     <string name="dictate__language_detect">Automatisch detecteren</string>
     <string name="dictate__languages_active_title">Actieve taal</string>
+    <string name="dictate__languages_follow_keyboard">Toetsenbordtaal volgen</string>
+    <string name="dictate__languages_follow_keyboard_summary">Wisselen van toetsenbordtaal wisselt ook de dicteertaal, als die taal hieronder is aangevinkt</string>
+    <string name="quick_action__dictate_switch_provider">Transcriptieaanbieder</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Wissel van transcriptieaanbieder</string>
+    <string name="enum__space_bar_mode__transcription_provider">Transcriptieaanbieder</string>
     <string name="dictate__prompt_selection_none">Geen</string>
     <string name="dictate__prompt_selection_predefined">Standaard</string>
     <string name="dictate__prompt_selection_custom">Aangepast</string>

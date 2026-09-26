@@ -206,15 +206,7 @@ fun DictateProvidersScreen() = FlorisScreen {
             // which the pickers link to. Offering every preset meant offering the chance to pick one
             // that could only answer "no API key" at the moment of dictating.
             TranscriptionProviderPreference(
-                entries = buildList {
-                    ProviderRegistry.presets
-                        .filter { it.capabilities.transcription }
-                        .filter { ProviderListing.isPickable(it, accounts, activeTranscriptionId, isInstalled) }
-                        // On-device (offline) first in the picker, above the cloud providers (issue #228).
-                        .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
-                        .forEach { add(it.id to it.displayName) }
-                    customAccounts.forEach { add(it.providerId to customLabel(it)) }
-                },
+                entries = ProviderListing.transcriptionChoices(accounts, activeTranscriptionId, isInstalled),
             )
             // When the active transcription provider runs single-call multimodal (#130), rewording happens
             // inside that one call, so the rewording provider here is currently unused — surfaced as a
@@ -225,7 +217,7 @@ fun DictateProvidersScreen() = FlorisScreen {
                         .filter { it.capabilities.chat }
                         .filter { ProviderListing.isPickable(it, accounts, activeRewordingId, isInstalled) }
                         .forEach { add(it.id to it.displayName) }
-                    customAccounts.forEach { add(it.providerId to customLabel(it)) }
+                    customAccounts.forEach { add(it.providerId to ProviderListing.customLabel(it)) }
                 },
                 showInfo = accounts.getOrEmpty(activeTranscriptionId).transcriptionViaChat,
             )
@@ -285,7 +277,7 @@ fun DictateProvidersScreen() = FlorisScreen {
             customAccounts.forEach { account ->
                 Preference(
                     icon = Icons.Default.Dns,
-                    title = customLabel(account),
+                    title = ProviderListing.customLabel(account),
                     summary = if (account.hasKey || account.customBaseUrl.isNotBlank()) {
                         account.customBaseUrl.ifBlank { keySet }
                     } else {
@@ -565,10 +557,6 @@ private fun TranscriptionProviderPreference(entries: List<Pair<String, String>>)
         }
     }
 }
-
-/** Label for a custom endpoint: its user-given name, or a generic fallback. */
-private fun customLabel(account: ProviderAccount): String =
-    account.displayName.ifBlank { "Custom server" }
 
 /**
  * The job icons at the end of a provider row: a microphone where it transcribes, the rewording icon where

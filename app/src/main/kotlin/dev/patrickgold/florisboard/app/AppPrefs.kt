@@ -880,6 +880,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__active_input_language",
             default = "detect",
         )
+        // Switching the keyboard's language also switches the dictation language, when that language is
+        // one of inputLanguages (issue #431). Off by default: #347 settled that a layout says nothing
+        // about the spoken language for most people, so this is for the ones for whom it does. Acts on
+        // the switch only — never on opening the keyboard — so a language picked by hand stays picked.
+        val languageFollowsKeyboard = boolean(
+            key = "dictate__language_follows_keyboard",
+            default = false,
+        )
         // Guard so the one-time seeding of the device/system dictation language (added on top of the
         // default detect,en) runs only once on a fresh install. See
         // DictateLegacyMigrator.seedDeviceLanguageIfNeeded.

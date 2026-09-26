@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.provider.ProviderListing
 import dev.patrickgold.florisboard.dictate.ui.LegacyLayoutState
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
@@ -381,6 +382,13 @@ private fun TextKeyButton(
                     SpaceBarMode.NOTHING -> return@let
                     SpaceBarMode.CURRENT_LANGUAGE -> {}
                     SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"
+                    // Collected here rather than in the evaluator, so switching the provider — from the
+                    // keyboard's own picker as much as from the settings — relabels the key at once.
+                    SpaceBarMode.TRANSCRIPTION_PROVIDER -> {
+                        val providerId by prefs.dictate.transcriptionProviderId.collectAsState()
+                        val accounts by prefs.dictate.providerAccounts.collectAsState()
+                        customLabel = ProviderListing.displayNameOf(providerId, accounts)
+                    }
                 }
             }
             SnyggText(

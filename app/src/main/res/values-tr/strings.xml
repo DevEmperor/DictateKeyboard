@@ -1500,6 +1500,11 @@
     <string name="dictate__languages_summary">Dikte ettiğiniz dilleri seçin. Kayıt çubuğundan aralarında hızlıca geçiş yapın.</string>
     <string name="dictate__language_detect">Otomatik algıla</string>
     <string name="dictate__languages_active_title">Etkin dil</string>
+    <string name="dictate__languages_follow_keyboard">Klavye dilini takip et</string>
+    <string name="dictate__languages_follow_keyboard_summary">Klavye dili değiştiğinde, bu dil aşağıda işaretliyse dikte dili de değişir</string>
+    <string name="quick_action__dictate_switch_provider">Yazıya dökme sağlayıcısı</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Yazıya dökme sağlayıcısını değiştir</string>
+    <string name="enum__space_bar_mode__transcription_provider">Yazıya dökme sağlayıcısı</string>
     <string name="dictate__prompt_selection_none">Yok</string>
     <string name="dictate__prompt_selection_predefined">Varsayılan</string>
     <string name="dictate__prompt_selection_custom">Özel</string>

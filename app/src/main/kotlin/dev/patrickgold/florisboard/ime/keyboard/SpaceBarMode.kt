@@ -19,5 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 enum class SpaceBarMode {
     NOTHING,
     CURRENT_LANGUAGE,
-    SPACE_BAR_KEY;
+    SPACE_BAR_KEY,
+    // Dictate (issue #431): the active transcription provider, under the name the settings use for it.
+    TRANSCRIPTION_PROVIDER;
 }

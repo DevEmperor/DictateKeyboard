@@ -583,6 +583,10 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 key = SpaceBarMode.SPACE_BAR_KEY,
                 label = stringRes(R.string.enum__space_bar_mode__space_bar_key),
             )
+            entry(
+                key = SpaceBarMode.TRANSCRIPTION_PROVIDER,
+                label = stringRes(R.string.enum__space_bar_mode__transcription_provider),
+            )
         }
     },
     SpellingLanguageMode::class to DEFAULT to {

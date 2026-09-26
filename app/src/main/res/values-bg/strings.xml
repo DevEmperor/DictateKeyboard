@@ -1521,6 +1521,11 @@
     <string name="dictate__languages_summary">Изберете езиците, на които диктувате. Превключвайте бързо между тях от лентата за запис.</string>
     <string name="dictate__language_detect">Откривай автоматично</string>
     <string name="dictate__languages_active_title">Активен език</string>
+    <string name="dictate__languages_follow_keyboard">Следване на езика на клавиатурата</string>
+    <string name="dictate__languages_follow_keyboard_summary">При смяна на езика на клавиатурата се сменя и езикът на диктовката, ако е отметнат по-долу</string>
+    <string name="quick_action__dictate_switch_provider">Доставчик на транскрибиране</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Смяна на доставчика на транскрибиране</string>
+    <string name="enum__space_bar_mode__transcription_provider">Доставчик на транскрибиране</string>
     <string name="dictate__prompt_selection_none">Няма</string>
     <string name="dictate__prompt_selection_predefined">По подразбиране</string>
     <string name="dictate__prompt_selection_custom">Персонализиран</string>

@@ -1537,6 +1537,11 @@
     <string name="dictate__languages_summary">Vyberte jazyky, ve kterých diktujete. Rychle mezi nimi přepínejte na liště nahrávání.</string>
     <string name="dictate__language_detect">Zjistit automaticky</string>
     <string name="dictate__languages_active_title">Aktivní jazyk</string>
+    <string name="dictate__languages_follow_keyboard">Řídit se jazykem klávesnice</string>
+    <string name="dictate__languages_follow_keyboard_summary">Při přepnutí jazyka klávesnice se přepne i diktování, pokud je daný jazyk níže zaškrtnutý</string>
+    <string name="quick_action__dictate_switch_provider">Poskytovatel přepisu</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Přepnout poskytovatele přepisu</string>
+    <string name="enum__space_bar_mode__transcription_provider">Poskytovatel přepisu</string>
     <string name="dictate__prompt_selection_none">Žádný</string>
     <string name="dictate__prompt_selection_predefined">Výchozí</string>
     <string name="dictate__prompt_selection_custom">Vlastní</string>

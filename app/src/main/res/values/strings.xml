@@ -231,6 +231,8 @@
     <string name="quick_action__dictate_prompts__tooltip">Open the AI rewording prompts</string>
     <string name="quick_action__dictate_reinsert" comment="Please mind the limited available space for the quick action strings. Opens the dictation history panel">History</string>
     <string name="quick_action__dictate_reinsert__tooltip">Open your dictation history</string>
+    <string name="quick_action__dictate_switch_provider" comment="Please mind the limited available space for the quick action strings. Opens a list of the set-up transcription providers to switch between; also the title of that list">Transcription provider</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Switch the transcription provider</string>
     <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Switch language</string>
     <string name="quick_action__language_switch__tooltip">Perform language switch</string>
     <string name="quick_action__system_prev_input_method" comment="Quick action: switch back to the previously used keyboard/IME. Mind the limited space.">Switch keyboard</string>
@@ -1693,6 +1695,7 @@
     <string name="enum__space_bar_mode__nothing" comment="Enum value label">No label</string>
     <string name="enum__space_bar_mode__current_language" comment="Enum value label">Current language</string>
     <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+    <string name="enum__space_bar_mode__transcription_provider" comment="Enum value label: the space bar shows the name of the active transcription provider, e.g. Groq">Transcription provider</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>
@@ -2313,6 +2316,8 @@
     <string name="dictate__languages_summary" comment="Explanation on the language picker screen">Pick the languages you dictate in. Switch between them quickly from the recording bar.</string>
     <string name="dictate__language_detect" comment="Language option: let the model auto-detect the spoken language">Detect automatically</string>
     <string name="dictate__languages_active_title" comment="Row/dialog title to pick the currently active transcription language">Active language</string>
+    <string name="dictate__languages_follow_keyboard" comment="Switch title: the dictation language follows the keyboard language">Follow the keyboard language</string>
+    <string name="dictate__languages_follow_keyboard_summary" comment="Switch summary. Only languages ticked in the list below this switch are switched to">Switching the keyboard language switches dictation too, if that language is ticked below</string>
 
     <!-- Dictate prompt selection (system & style prompt: none / predefined / custom) -->
     <string name="dictate__prompt_selection_none" comment="Prompt option: do not send any prompt">None</string>

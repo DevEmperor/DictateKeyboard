@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Numbers
+import androidx.compose.material.icons.outlined.CloudSync
 import androidx.compose.material.icons.outlined.DocumentScanner
 import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.material.icons.outlined.Gif
@@ -385,6 +386,11 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         KeyCode.DICTATE_REINSERT -> {
             // Re-inserts the last successful dictation; a history glyph signals "bring the last one back".
             Icons.Default.History
+        }
+        KeyCode.DICTATE_SWITCH_PROVIDER -> {
+            // The transcription provider picker (issue #431): a cloud with the swap arrows, the glyph the
+            // request itself sketched.
+            Icons.Outlined.CloudSync
         }
         KeyCode.LANGUAGE_SWITCH -> {
             Icons.Default.Language

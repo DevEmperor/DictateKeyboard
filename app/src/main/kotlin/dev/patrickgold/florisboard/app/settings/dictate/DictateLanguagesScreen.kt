@@ -20,12 +20,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,11 +37,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
+import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
@@ -62,6 +68,7 @@ fun DictateLanguagesScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
 
     content {
+        val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val selectionRaw by prefs.dictate.inputLanguages.collectAsState()
         val selectedCodes = remember(selectionRaw) {
@@ -92,6 +99,15 @@ fun DictateLanguagesScreen() = FlorisScreen {
             }
         }
 
+        val followsKeyboard by prefs.dictate.languageFollowsKeyboard.collectAsState()
+        val subtypeManager by context.subtypeManager()
+        fun setFollowsKeyboard(on: Boolean) {
+            scope.launch {
+                prefs.dictate.languageFollowsKeyboard.set(on)
+                if (on) DictateController.followKeyboardLanguage(subtypeManager.activeSubtype.primaryLocale.base)
+            }
+        }
+
         val detectLabel = stringRes(R.string.dictate__language_detect)
         fun languageLabel(code: String): String =
             if (code == DictateLanguages.DETECT) detectLabel else DictateLanguages.of(code).displayName()
@@ -108,6 +124,19 @@ fun DictateLanguagesScreen() = FlorisScreen {
                 icon = { Icon(Icons.Default.Language, contentDescription = null) },
                 text = stringRes(R.string.dictate__languages_active_title),
                 secondaryText = languageLabel(activeCode),
+            )
+            // Issue #431. Turning it on follows the keyboard's current language straight away, so the effect
+            // is visible where the switch is; after that only a switch of the keyboard's language moves it.
+            JetPrefListItem(
+                modifier = Modifier
+                    .settingsSearchAnchor("dictate__languages_follow_keyboard")
+                    .clickable { setFollowsKeyboard(!followsKeyboard) },
+                icon = { Icon(Icons.Default.Keyboard, contentDescription = null) },
+                text = stringRes(R.string.dictate__languages_follow_keyboard),
+                secondaryText = stringRes(R.string.dictate__languages_follow_keyboard_summary),
+                trailing = {
+                    Switch(checked = followsKeyboard, onCheckedChange = { setFollowsKeyboard(it) })
+                },
             )
             HorizontalDivider()
             LazyColumn(

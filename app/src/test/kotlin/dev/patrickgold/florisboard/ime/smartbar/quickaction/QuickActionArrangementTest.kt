@@ -185,6 +185,8 @@ class QuickActionArrangementTest : FunSpec({
             restored.contains(QuickAction.InsertKey(TextKeyData.IME_UI_MODE_SCAN)) shouldBe true
             // And translation (issue #424) after it.
             restored.contains(QuickAction.InsertKey(TextKeyData.TRANSLATE)) shouldBe true
+            // And the transcription provider picker (issue #431).
+            restored.contains(QuickAction.InsertKey(TextKeyData.DICTATE_SWITCH_PROVIDER)) shouldBe true
         }
 
         test("an action already in the arrangement is not added a second time") {

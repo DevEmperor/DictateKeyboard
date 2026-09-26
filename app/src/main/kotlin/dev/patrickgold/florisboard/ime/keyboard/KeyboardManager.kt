@@ -1962,6 +1962,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 closeInternalFields()
                 activeState.imeUiMode = ImeUiMode.HISTORY
             }
+            // The transcription provider picker (issue #431): a sheet over the keys, like the keyboard
+            // language picker it is modelled on, so the field keeps its focus and the panel underneath stays.
+            KeyCode.DICTATE_SWITCH_PROVIDER -> {
+                activeState.isTranscriptionProviderSelectionVisible = true
+            }
             // Keys that are there to be looked at, not pressed: the अ key wearing the pending consonant
             // (issue #315). The consonant is already in the text, so writing anything would double it —
             // and without this branch the fallthrough below would try to encode a negative code point.

@@ -174,6 +174,38 @@ object DictateLanguages {
     }
 
     /**
+     * Keyboard language codes that this catalog spells differently: Norwegian keyboards are Bokmål (`nb`)
+     * where the catalog says `no`, Filipino (`fil`) is its Tagalog, and the catalog keeps Whisper's `jw`
+     * for Javanese rather than ISO's `jv`.
+     */
+    private val KEYBOARD_ALIASES = mapOf("nb" to "no", "fil" to "tl", "jv" to "jw")
+
+    /**
+     * The dictation language to switch to now that the keyboard's language is [locale] (issue #431), or
+     * `null` to leave the active one where it is.
+     *
+     * Only ever one of the user's own languages ([selectionRaw]). The active language always is one of
+     * them — the settings and the recording bar both hold to that — and a keyboard language outside the
+     * list says nothing about what is being spoken: a German layout kept for umlauts, say. Picking from
+     * the list also means turning this on never edits the list itself, which is the half of #347 that
+     * would have tied two lists the user curates to each other.
+     *
+     * The full tag wins first, so `zh-TW` finds Mandarin (TW) even with (CN) selected too; then the bare
+     * language, so an `en-GB` keyboard finds English and a Hindi transliteration layout finds Hindi.
+     * [DETECT] is never the answer: no keyboard language means "work it out".
+     */
+    fun forKeyboard(locale: Locale, selectionRaw: String): DictateLanguage? {
+        val selected = parseSelection(selectionRaw).filter { it.code != DETECT }
+        // toLanguageTag, not language: Android's Locale still answers "iw" and "in" for Hebrew and
+        // Indonesian there, where the tag has the modern codes this catalog uses.
+        val tag = locale.toLanguageTag().lowercase(Locale.ROOT)
+        selected.firstOrNull { it.code.lowercase(Locale.ROOT) == tag }?.let { return it }
+        val base = tag.substringBefore('-').let { KEYBOARD_ALIASES[it] ?: it }
+        if (base.isEmpty() || base == "und") return null
+        return selected.firstOrNull { it.code.substringBefore('-').lowercase(Locale.ROOT) == base }
+    }
+
+    /**
      * The user's own name for a bare language [code], for a place that names a *model's* coverage
      * rather than a dictation pick — "Deutsch", "Chinesisch", "Hawaiianisch".
      *

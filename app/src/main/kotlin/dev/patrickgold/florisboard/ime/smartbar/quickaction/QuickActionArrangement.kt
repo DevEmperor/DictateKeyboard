@@ -118,6 +118,10 @@ data class QuickActionArrangement(
                 // on screen when the field is idle; while typing, the strip shows suggestions — so Undo was
                 // rarely there at the moment it was wanted, and one tap into the grid costs little more.
                 QuickAction.InsertKey(TextKeyData.UNDO),
+                // Which provider hears the dictation (issue #431). The dictation loop's own, so at the head of
+                // the grid — but in the grid and not the bar, because most people have one provider set up
+                // and would be giving a slot to a list of one.
+                QuickAction.InsertKey(TextKeyData.DICTATE_SWITCH_PROVIDER),
                 // --- Everything else that inserts something -----------------------------------------
                 // The text editing panel (issue #386) — cursor pad, select, clipboard. First tile of the
                 // overflow grid rather than a slot in the bar: it is the umbrella over fourteen of the

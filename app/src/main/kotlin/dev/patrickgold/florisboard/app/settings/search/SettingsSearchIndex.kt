@@ -50,6 +50,9 @@ object SettingsSearchIndex {
         // system file picker instead (issue #301).
         SettingsSearchEntry(R.string.dictate__import_menu, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__import_menu"),
         SettingsSearchEntry(R.string.dictate__languages_title, R.string.dictate__languages_title, Routes.Settings.DictateLanguages, parentRes = R.string.dictate__title),
+        // Hand-added: the languages screen is a plain list, not jetpref rows, so the generator cannot see
+        // this switch (issue #431).
+        SettingsSearchEntry(R.string.dictate__languages_follow_keyboard, R.string.dictate__languages_title, Routes.Settings.DictateLanguages, parentRes = R.string.dictate__title, anchor = "dictate__languages_follow_keyboard"),
         SettingsSearchEntry(R.string.dictate__mappings_title, R.string.dictate__mappings_title, Routes.Settings.DictateMappings, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__prompt_library_title, R.string.dictate__prompt_library_title, Routes.Settings.DictatePromptLibrary, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__providers_title, R.string.dictate__providers_title, Routes.Settings.DictateProviders, parentRes = R.string.dictate__title),

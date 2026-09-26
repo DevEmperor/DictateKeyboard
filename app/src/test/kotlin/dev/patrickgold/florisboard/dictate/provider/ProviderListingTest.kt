@@ -93,6 +93,41 @@ class ProviderListingTest {
         assertTrue(ProviderListing.isPickable(cloud, funded, selectedId = "", nothingInstalled))
     }
 
+    // Issue #431: the keyboard's picker and the settings dialog offer one and the same list.
+    @Test
+    fun `the transcription choices are the pickable ones, on-device first, own endpoints last`() {
+        val groq = ProviderRegistry.GROQ.id
+        val local = ProviderRegistry.LOCAL
+        val accounts = accountsOf(
+            ProviderAccount(providerId = groq, apiKey = "gsk_x"),
+            ProviderAccount(providerId = "custom:b", displayName = "Zeta box"),
+            ProviderAccount(providerId = "custom:a", displayName = "alpha box"),
+        )
+        val choices = ProviderListing.transcriptionChoices(accounts, selectedId = groq) {
+            it == local.defaultTranscriptionModel
+        }
+        assertEquals(
+            listOf(local.id, groq, "custom:a", "custom:b"),
+            choices.map { it.first },
+        )
+        assertEquals(local.displayName, choices.first().second)
+        // A provider that could only answer "no API key" is not on offer, and neither is a rewording-only one.
+        assertFalse(choices.any { it.first == ProviderRegistry.OPENAI.id })
+        assertFalse(choices.any { it.first == ProviderRegistry.ANTHROPIC.id })
+    }
+
+    @Test
+    fun `a provider is named by its preset, an own endpoint by its user`() {
+        val accounts = accountsOf(
+            ProviderAccount(providerId = "custom:a", displayName = "Home server"),
+            ProviderAccount(providerId = "custom:b"),
+        )
+        assertEquals(ProviderRegistry.GROQ.displayName, ProviderListing.displayNameOf(ProviderRegistry.GROQ.id, accounts))
+        assertEquals("Home server", ProviderListing.displayNameOf("custom:a", accounts))
+        assertEquals("Custom server", ProviderListing.displayNameOf("custom:b", accounts))
+        assertEquals("custom:gone", ProviderListing.displayNameOf("custom:gone", accounts))
+    }
+
     @Test
     fun `the EU filter finds the EU-hosted providers and the EU regions`() {
         val eu = ProviderRegistry.presets.filter { ProviderListing.matches(it, "", setOf(Filter.EU)) }.map { it.id }

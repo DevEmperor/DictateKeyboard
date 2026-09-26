@@ -59,6 +59,7 @@ import kotlin.properties.Delegates
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
  *          |          |          |        1 | Subtype selection dialog visible
+ *          |          |          |       1  | Transcription provider selection visible (Dictate)
  *        1 |          |          |          | Devtools: Show drag&drop helpers
  *
  * The resulting structure is only relevant during a runtime lifespan and
@@ -96,6 +97,8 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val F_IS_SUBTYPE_SELECTION_VISIBLE: ULong =   0x1_0000_0000u
+        // The transcription provider picker (issue #431), a sheet like the subtype one above.
+        const val F_IS_PROVIDER_SELECTION_VISIBLE: ULong =  0x2_0000_0000u
 
         const val F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS =      0x01_00_00_00_00_00_00_00uL
 
@@ -197,6 +200,10 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
     var isSubtypeSelectionVisible: Boolean
         get() = getFlag(F_IS_SUBTYPE_SELECTION_VISIBLE)
         set(v) { setFlag(F_IS_SUBTYPE_SELECTION_VISIBLE, v) }
+
+    var isTranscriptionProviderSelectionVisible: Boolean
+        get() = getFlag(F_IS_PROVIDER_SELECTION_VISIBLE)
+        set(v) { setFlag(F_IS_PROVIDER_SELECTION_VISIBLE, v) }
 
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)

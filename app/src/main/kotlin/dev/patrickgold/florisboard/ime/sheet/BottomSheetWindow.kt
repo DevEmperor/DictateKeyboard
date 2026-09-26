@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import dev.patrickgold.florisboard.dictate.ui.SelectTranscriptionProviderPanel
 import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
@@ -41,6 +42,9 @@ fun BottomSheetWindow() {
             if (state.isSubtypeSelectionVisible) {
                 keyboardManager.activeState.isSubtypeSelectionVisible = false
             }
+            if (state.isTranscriptionProviderSelectionVisible) {
+                keyboardManager.activeState.isTranscriptionProviderSelectionVisible = false
+            }
         },
     ) {
         if (state.isActionsEditorVisible) {
@@ -49,9 +53,12 @@ fun BottomSheetWindow() {
         if (state.isSubtypeSelectionVisible) {
             SelectSubtypePanel()
         }
+        if (state.isTranscriptionProviderSelectionVisible) {
+            SelectTranscriptionProviderPanel()
+        }
     }
 }
 
 fun KeyboardState.isAnyBottomSheetVisible(): Boolean {
-    return isActionsEditorVisible || isSubtypeSelectionVisible
+    return isActionsEditorVisible || isSubtypeSelectionVisible || isTranscriptionProviderSelectionVisible
 }

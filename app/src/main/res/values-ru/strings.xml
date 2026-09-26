@@ -1527,6 +1527,11 @@
     <string name="dictate__languages_summary">Выберите языки, на которых вы диктуете. Быстро переключайтесь между ними на панели записи.</string>
     <string name="dictate__language_detect">Определять автоматически</string>
     <string name="dictate__languages_active_title">Активный язык</string>
+    <string name="dictate__languages_follow_keyboard">Следовать языку клавиатуры</string>
+    <string name="dictate__languages_follow_keyboard_summary">При смене языка клавиатуры меняется и язык диктовки, если он отмечен ниже</string>
+    <string name="quick_action__dictate_switch_provider">Поставщик транскрибирования</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Сменить поставщика транскрибирования</string>
+    <string name="enum__space_bar_mode__transcription_provider">Поставщик транскрибирования</string>
     <string name="dictate__prompt_selection_none">Нет</string>
     <string name="dictate__prompt_selection_predefined">По умолчанию</string>
     <string name="dictate__prompt_selection_custom">Пользовательский</string>

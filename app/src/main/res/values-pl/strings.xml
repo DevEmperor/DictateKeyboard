@@ -1538,6 +1538,11 @@
     <string name="dictate__languages_summary">Wybierz języki, w których dyktujesz. Szybko przełączaj się między nimi na pasku nagrywania.</string>
     <string name="dictate__language_detect">Wykryj automatycznie</string>
     <string name="dictate__languages_active_title">Aktywny język</string>
+    <string name="dictate__languages_follow_keyboard">Podążaj za językiem klawiatury</string>
+    <string name="dictate__languages_follow_keyboard_summary">Zmiana języka klawiatury zmienia też język dyktowania, jeśli jest on zaznaczony poniżej</string>
+    <string name="quick_action__dictate_switch_provider">Dostawca transkrypcji</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Zmień dostawcę transkrypcji</string>
+    <string name="enum__space_bar_mode__transcription_provider">Dostawca transkrypcji</string>
     <string name="dictate__prompt_selection_none">Brak</string>
     <string name="dictate__prompt_selection_predefined">Domyślny</string>
     <string name="dictate__prompt_selection_custom">Niestandardowy</string>

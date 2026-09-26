@@ -108,6 +108,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.NumberFormat
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
@@ -891,6 +892,36 @@ object DictateController {
     }
 
     /**
+     * Makes [id] the active transcription provider, from the keyboard's own picker (issue #431). On this
+     * scope rather than the panel's, which leaves composition the moment the choice closes it.
+     */
+    fun setTranscriptionProvider(id: String) {
+        scope.launch { prefs.dictate.transcriptionProviderId.set(id) }
+    }
+
+    /**
+     * The keyboard's language was just switched from [previous] to [locale] — or, with no [previous], the
+     * setting that follows it was just turned on (issue #431). With [prefs.dictate.languageFollowsKeyboard]
+     * on, dictation follows, if the language is one the user dictates in ([DictateLanguages.forKeyboard]).
+     *
+     * Called from the switch itself and never from a subtype flow: that flow also answers when the keyboard
+     * starts, first with the default subtype and then with the stored one, and following *that* would undo
+     * a hand-picked language every time the process comes back. For the same reason a switch that lands on
+     * the same language — the only subtype, or a second layout for it — changes nothing. Mid-dictation it
+     * behaves like the language chip on the recording bar: a batch dictation is sent in the new language, a
+     * live one keeps its own.
+     */
+    fun followKeyboardLanguage(locale: Locale, previous: Locale? = null) {
+        if (!prefs.dictate.languageFollowsKeyboard.get()) return
+        val selectionRaw = prefs.dictate.inputLanguages.get()
+        val match = DictateLanguages.forKeyboard(locale, selectionRaw) ?: return
+        // Compared as the dictation language each side implies, not as locales: Hindi's varnamala and
+        // transliteration layouts carry different tags and are still one spoken language.
+        if (previous != null && DictateLanguages.forKeyboard(previous, selectionRaw) == match) return
+        if (match.code != prefs.dictate.activeInputLanguage.get()) setLanguage(match.code)
+    }
+
+    /**
      * The languages to hand to a model whose language field takes a *list* (OpenAI's gpt-transcribe
      * generation, Soniox, Gemini) — the user's own selection while auto-detect is active, nothing
      * otherwise. See [DictateLanguages.expectedLanguages] (issue #99).
@@ -939,12 +970,14 @@ object DictateController {
     /**
      * Opens the Dictate provider settings from the keyboard, used by the "fixable" errors (e.g. an
      * invalid or missing API key, roadmap 1.12). Launched as a new task since an IME has no activity of
-     * its own; clears the error afterwards so the Smartbar returns to normal.
+     * its own; clears the error afterwards so the Smartbar returns to normal. [addNew] lands on the
+     * add-a-provider list instead, for the keyboard's provider picker (issue #431).
      */
-    fun openProviderSettings(context: Context) {
+    fun openProviderSettings(context: Context, addNew: Boolean = false) {
+        val route = if (addNew) "settings/dictate/providers/add" else "settings/dictate/providers"
         runCatching {
             context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("ui://florisboard/settings/dictate/providers"))
+                Intent(Intent.ACTION_VIEW, Uri.parse("ui://florisboard/$route"))
                     // BROWSABLE is required: FlorisAppActivity.onNewIntent only routes a VIEW intent to the
                     // nav-graph deep-link handler when it carries this category, otherwise it treats the
                     // intent as an extension-import and lands on the wrong screen.

@@ -101,4 +101,42 @@ class DictateLanguageMatchTest : FunSpec({
                 .shouldNotContain(DictateLanguages.DETECT)
         }
     }
+
+    // Issue #431: switching the keyboard's language can switch dictation too — but only ever to one of the
+    // languages the user dictates in, never widening the list and never to "detect".
+    context("forKeyboard picks the dictation language a keyboard language stands for") {
+        test("a regional keyboard finds its bare language") {
+            DictateLanguages.forKeyboard(Locale("en", "GB"), "detect,en,hi")?.code shouldBe "en"
+            DictateLanguages.forKeyboard(Locale("hi", "IN"), "detect,en,hi")?.code shouldBe "hi"
+        }
+
+        test("a language outside the selection leaves dictation alone") {
+            DictateLanguages.forKeyboard(Locale("de", "DE"), "detect,en,hi") shouldBe null
+        }
+
+        test("detect is never the answer") {
+            DictateLanguages.forKeyboard(Locale("en", "US"), "detect") shouldBe null
+            DictateLanguages.forKeyboard(Locale("", ""), "detect,en") shouldBe null
+        }
+
+        test("the full tag wins over the bare language") {
+            DictateLanguages.forKeyboard(Locale.forLanguageTag("zh-TW"), "zh-CN,zh-TW")?.code shouldBe "zh-TW"
+            DictateLanguages.forKeyboard(Locale.forLanguageTag("zh-CN"), "zh-CN,zh-TW")?.code shouldBe "zh-CN"
+            // No exact match: the same language in another region is still that language.
+            DictateLanguages.forKeyboard(Locale.forLanguageTag("zh-CN"), "en,zh-TW")?.code shouldBe "zh-TW"
+        }
+
+        test("a script subtag does not hide the language") {
+            DictateLanguages.forKeyboard(Locale.forLanguageTag("hi-Latn"), "en,hi")?.code shouldBe "hi"
+            DictateLanguages.forKeyboard(Locale.forLanguageTag("sr-Latn-RS"), "en,sr")?.code shouldBe "sr"
+        }
+
+        test("keyboard codes the catalog spells differently") {
+            DictateLanguages.forKeyboard(Locale("nb", "NO"), "en,no")?.code shouldBe "no"
+            DictateLanguages.forKeyboard(Locale("fil", "PH"), "en,tl")?.code shouldBe "tl"
+            DictateLanguages.forKeyboard(Locale("jv"), "en,jw")?.code shouldBe "jw"
+            // Java's legacy "iw" still comes out of Locale("he") on some runtimes; the tag is "he".
+            DictateLanguages.forKeyboard(Locale("he", "IL"), "en,he")?.code shouldBe "he"
+        }
+    }
 })

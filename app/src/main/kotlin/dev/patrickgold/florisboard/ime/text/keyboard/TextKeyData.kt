@@ -143,6 +143,7 @@ data class TextKeyData(
                 DICTATE_LIVE_PROMPT,
                 DICTATE_PROMPTS,
                 DICTATE_REINSERT,
+                DICTATE_SWITCH_PROVIDER,
                 SYSTEM_INPUT_METHOD_PICKER,
                 SYSTEM_PREV_INPUT_METHOD,
                 SYSTEM_NEXT_INPUT_METHOD,
@@ -497,6 +498,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.DICTATE_REINSERT,
             label = "dictate_reinsert",
+        )
+        /** Predefined key data for [KeyCode.DICTATE_SWITCH_PROVIDER] (transcription provider picker, #431) */
+        val DICTATE_SWITCH_PROVIDER = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.DICTATE_SWITCH_PROVIDER,
+            label = "dictate_switch_provider",
         )
 
         /** Predefined key data for [KeyCode.SYSTEM_INPUT_METHOD_PICKER] */

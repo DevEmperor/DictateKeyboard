@@ -1366,6 +1366,11 @@
     <string name="dictate__languages_summary">Виберіть мови, якими ви диктуєте. Швидко перемикайтеся між ними на панелі запису.</string>
     <string name="dictate__language_detect">Визначати автоматично</string>
     <string name="dictate__languages_active_title">Активна мова</string>
+    <string name="dictate__languages_follow_keyboard">Слідувати мові клавіатури</string>
+    <string name="dictate__languages_follow_keyboard_summary">Зміна мови клавіатури змінює й мову диктування, якщо її позначено нижче</string>
+    <string name="quick_action__dictate_switch_provider">Постачальник транскрибування</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Змінити постачальника транскрибування</string>
+    <string name="enum__space_bar_mode__transcription_provider">Постачальник транскрибування</string>
     <string name="dictate__prompt_selection_none">Немає</string>
     <string name="dictate__prompt_selection_predefined">За замовчуванням</string>
     <string name="dictate__prompt_selection_custom">Власний</string>
