@@ -187,6 +187,31 @@ class TouchBeamDecoderTest {
     }
 
     @Test
+    fun aHalfTypedWordSurvivesAsAPrefixReading() {
+        // "hel" is no word, so decode() has nothing — but as the start of one it is still read (issue #381).
+        val readings = TouchBeamDecoder.decodePrefixes(tapsFor("hel"), "hel", INDEX, LAYOUT)
+        val first = readings.first()
+        assertEquals(0.0f, first.cost, 1e-4f)
+        assertEquals(listOf("held", "hello", "help"), WORDS.copyOfRange(first.lo, first.hi).toList())
+    }
+
+    @Test
+    fun aSlipInAHalfTypedWordIsReadAsTheNeighbouringPrefix() {
+        // "jel" dead-centre: the typed reading is free, and "hel" survives one key over.
+        val readings = TouchBeamDecoder.decodePrefixes(tapsFor("jel"), "jel", INDEX, LAYOUT)
+        val prefixes = readings.map { WORDS[it.lo].take(3) }
+        assertEquals("jel", prefixes.first())
+        assertTrue("hel" in prefixes, "the neighbouring prefix must survive: $prefixes")
+    }
+
+    @Test
+    fun rangeOfFindsEveryWordWithThePrefix() {
+        val packed = INDEX.rangeOf("ca")
+        assertEquals(listOf("car", "cart", "cat", "cats"), WORDS.copyOfRange((packed ushr 32).toInt(), (packed and 0xFFFFFFFFL).toInt()).toList())
+        assertEquals(-1L, INDEX.rangeOf("cz"))
+    }
+
+    @Test
     fun mismatchedInputIsRejectedRatherThanDecodedWrongly() {
         // typed and points must describe the same number of characters
         assertTrue(decode(tapsFor("hello"), "help").isEmpty())

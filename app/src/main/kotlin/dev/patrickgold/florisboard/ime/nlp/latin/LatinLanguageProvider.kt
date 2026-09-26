@@ -667,8 +667,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val lang = dictLangFor(subtype) ?: return null
         val index = lowerIndexFor(subtype)
         return prefixIndexByLang.withLock { cache ->
-            cache[lang] ?: TouchBeamDecoder.PrefixIndex(index.freq.keys.toTypedArray().apply { sort() })
-                .also { cache[lang] = it }
+            cache[lang] ?: run {
+                val words = index.freq.keys.toTypedArray().apply { sort() }
+                // Each word's frequency beside it, so completions can rank a range without a lookup per entry.
+                TouchBeamDecoder.PrefixIndex(words, IntArray(words.size) { index.freq.getValue(words[it]) })
+            }.also { cache[lang] = it }
         }
     }
 
@@ -931,6 +934,32 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             words = reading.words.map { index.canonical[it] ?: it },
             topCost = reading.topCost,
         )
+    }
+
+    /**
+     * Longer words a half-typed word with a slip in it probably belongs to (issue #381): from the taps where
+     * there are any, and from the typed string always — see [CorrectionReaders.completions].
+     */
+    private suspend fun completionsFor(
+        word: String,
+        subtype: Subtype,
+        index: LowerIndex,
+        maxCount: Int,
+        contextScore: (cand: String) -> Double,
+    ): List<String> {
+        val prefixIndex = prefixIndexFor(subtype) ?: return emptyList()
+        val folded = index.fold(word)
+        val points = TouchTrace.pointsFor(word)
+        val layout = KeyProximityInfo.snapshot()
+        val byTouch = if (points != null && layout != null) {
+            CorrectionReaders.completionsByTouch(points, word, folded, prefixIndex, layout, maxCount, contextScore)
+        } else {
+            emptyList()
+        }
+        val byString = CorrectionReaders.completionsByString(
+            folded, prefixIndex, index.alphabet, maxCount, KeyProximityInfo::normSqDistance, contextScore,
+        )
+        return CorrectionReaders.completions(byTouch, byString).map { index.canonical[it] ?: it }
     }
 
     // --- German umlaut / ß restoration (issue #219) -------------------------------------------------
@@ -1702,6 +1731,16 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 text = stringReading.words.map { index.canonical[it] ?: it },
                 maxCount = CORRECTION_MAX,
             )
+            // And the longer words a half-typed word with a slip in it was probably on its way to (issue
+            // #381): `dixt` is a prefix of nothing, so the walk above has nothing for `dictionary`, and every
+            // fix is a whole word. Worked in behind the first fix, never eligible — an offer about a word the
+            // user has not finished — and added after `hadCandidatesBefore` was read, so they cannot make
+            // the corrector more timid either.
+            val offers = CorrectionReaders.withCompletions(
+                fixes = corrections,
+                completions = completionsFor(word, subtype, index, maxCandidateCount, ctx),
+                freqOf = { index.freq[index.fold(it)] ?: 0 },
+            )
             // What may be swapped in *silently* (the strip always shows everything either way).
             val topTouchCost = touchCorrections?.topCost
             // A restoration above (umlaut, spelling, apostrophe) that already claimed the slot keeps it:
@@ -1751,7 +1790,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     ),
                 )
             }
-            corrections.forEachIndexed { i, correction ->
+            val lead = corrections.firstOrNull()
+            offers.forEach { correction ->
                 val text = cased(correction)
                 val freq = index.freq[index.fold(correction)] ?: 0
                 out.putIfAbsent(
@@ -1761,7 +1801,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                         confidence = freq / 255.0,
                         // Only when nothing of the user's own already took the auto-commit slot: two bold
                         // candidates would be a lie about which one space is going to take.
-                        isEligibleForAutoCommit = allowAutoCommit && i == 0 &&
+                        isEligibleForAutoCommit = allowAutoCommit && correction == lead &&
                             personalFixes.isEmpty() && freq >= AUTOCORRECT_MIN_FREQ,
                         sourceProvider = this,
                     ),

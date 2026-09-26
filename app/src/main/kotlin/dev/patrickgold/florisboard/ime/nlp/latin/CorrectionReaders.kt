@@ -107,6 +107,163 @@ internal object CorrectionReaders {
         return TouchReading(words = ranked.map { it.key }, topCost = costs[ranked.first().key])
     }
 
+    /** How many of a prefix reading's most frequent words are considered as completions of it. */
+    private const val COMPLETIONS_PER_READING = 2
+
+    /**
+     * Longer words the taps may be the *beginning* of, as folded keys, best first (issue #381).
+     *
+     * Everything else here reads the taps as a whole word, and the completion walk in `suggest()` reads
+     * the typed string as a prefix exactly as it stands. So a slip inside a half-typed word — `dixt` on
+     * the way to `dictionary` — reached neither: the walk has nothing starting with `dixt`, and no word
+     * of four letters is `dictionary`. The beam already holds the answer, though: `dict` survives its last
+     * tap as a range of dictionary entries. This offers the most frequent words of the cheapest such
+     * ranges, scored like a beam candidate (prior − tap cost + context).
+     *
+     * The reading that is exactly what was typed is skipped: its words are the walk's ordinary
+     * completions, and offering them twice would only crowd the strip.
+     */
+    fun completionsByTouch(
+        points: FloatArray,
+        typed: String,
+        folded: String,
+        prefixIndex: TouchBeamDecoder.PrefixIndex,
+        layout: KeyProximityInfo.Layout,
+        maxCount: Int,
+        contextScore: (cand: String) -> Double,
+    ): List<String> {
+        val words = prefixIndex.words
+        val freqs = prefixIndex.freqs
+        if (freqs.size != words.size) return emptyList()
+        val taps = points.size / 2
+        val scored = HashMap<String, Double>()
+        val bestAt = IntArray(COMPLETIONS_PER_READING)
+        for (reading in TouchBeamDecoder.decodePrefixes(points, typed, prefixIndex, layout)) {
+            if (folded.length == taps && words[reading.lo].startsWith(folded)) continue
+            mostFrequent(prefixIndex, reading.lo, reading.hi, longerThan = taps, into = bestAt)
+            for (i in bestAt) {
+                if (i < 0) continue
+                val word = words[i]
+                val score = TouchScoring.score(freqs[i], reading.cost, contextScore(word))
+                if (score > (scored[word] ?: Double.NEGATIVE_INFINITY)) scored[word] = score
+            }
+        }
+        return scored.entries.sortedByDescending { it.value }.take(maxCount).map { it.key }
+    }
+
+    /**
+     * The same question asked of the typed string instead of the taps: longer words that begin with
+     * something one edit away from [folded], as folded keys, best first (issue #381).
+     *
+     * It covers what the beam cannot see, for the same reason [byEditDistance] does for whole words: a
+     * transposition inside the prefix (both keys hit dead-centre, in the wrong order), a letter dropped or
+     * typed twice (no tap to be wrong about), and a key nowhere near the right one. `conseqd` is
+     * `conseq` with one tap too many, and `vecau` is `becau` one key over — neither is a prefix of anything
+     * as typed.
+     *
+     * Each variant is ranked by the frequency of the word it leads to and by how plausible the edit is,
+     * on the same terms [byEditDistance] uses for whole words.
+     */
+    fun completionsByString(
+        folded: String,
+        prefixIndex: TouchBeamDecoder.PrefixIndex,
+        alphabet: Set<Char>,
+        maxCount: Int,
+        sqDistance: (Char, Char) -> Float?,
+        contextScore: (cand: String) -> Double,
+    ): List<String> {
+        val words = prefixIndex.words
+        val freqs = prefixIndex.freqs
+        if (freqs.size != words.size || folded.length < MIN_COMPLETION_PREFIX) return emptyList()
+        val scored = HashMap<String, Double>()
+        val bestAt = IntArray(COMPLETIONS_PER_READING)
+        for (variant in EditDistance.edits1(folded, alphabet)) {
+            // The typed string itself is the walk's business; anything shorter than a real prefix would
+            // complete to half the dictionary.
+            if (variant == folded || variant.length < MIN_COMPLETION_PREFIX) continue
+            val range = prefixIndex.rangeOf(variant)
+            if (range < 0) continue
+            mostFrequent(
+                prefixIndex, (range ushr 32).toInt(), (range and 0xFFFFFFFFL).toInt(),
+                longerThan = maxOf(variant.length, folded.length), into = bestAt,
+            )
+            val edit = spatialLogLikelihood(folded, variant, sqDistance)
+            for (i in bestAt) {
+                if (i < 0) continue
+                val word = words[i]
+                val score = TouchScoring.lmPrior(freqs[i]) + edit + contextScore(word)
+                if (score > (scored[word] ?: Double.NEGATIVE_INFINITY)) scored[word] = score
+            }
+        }
+        return scored.entries.sortedByDescending { it.value }.take(maxCount).map { it.key }
+    }
+
+    /** Shortest prefix a completion is offered for; below it a prefix is too short to say anything. */
+    private const val MIN_COMPLETION_PREFIX = 3
+
+    /**
+     * Both readers' completions as one list: alternating, the string reader's first. It sees the slips the
+     * beam is blind to (a transposition, a dropped or doubled letter, a far key), and leading with it put
+     * the intended word into the first three offers 26.0 % of the time against 20.5 % the other way round
+     * (`PrefixSlipEvalTest`).
+     */
+    fun completions(byTouch: List<String>, byString: List<String>): List<String> {
+        val out = LinkedHashSet<String>()
+        for (i in 0 until maxOf(byTouch.size, byString.size)) {
+            byString.getOrNull(i)?.let { out.add(it) }
+            byTouch.getOrNull(i)?.let { out.add(it) }
+        }
+        return out.toList()
+    }
+
+    /**
+     * The fixes with the completions worked in (issue #381): the best completion takes the second slot
+     * when it is a commoner word than the fix it would displace, and otherwise follows the fixes like the
+     * rest. The first fix never moves, since that is the word the silent swap is decided about.
+     *
+     * The frequency test is what makes a completion safe to promote. Unconditionally in second place, the
+     * intended word of a slip inside a half-typed word is among the first three offers 26.0 % of the time
+     * — against 0.4 % before and 15.1 % with the completions merely appended — but a finished word with a
+     * slip loses its right fix from the first three 4.1 % of the time. With the test it is 22.1 % against
+     * 1.9 %; `PrefixSlipEvalTest` has the whole table.
+     */
+    fun withCompletions(fixes: List<String>, completions: List<String>, freqOf: (String) -> Int): List<String> {
+        val best = completions.firstOrNull { it !in fixes } ?: return fixes
+        val displaced = fixes.getOrNull(1)
+        val promoted = displaced == null || freqOf(best) > freqOf(displaced)
+        val out = LinkedHashSet<String>()
+        if (promoted) {
+            out.addAll(fixes.take(1))
+            out.add(best)
+        }
+        out.addAll(fixes)
+        out.addAll(completions)
+        return out.toList()
+    }
+
+    /**
+     * Fills [into] with the positions of the most frequent entries of `[lo, hi)` longer than [longerThan]
+     * characters, most frequent first, -1 where there are fewer.
+     */
+    private fun mostFrequent(index: TouchBeamDecoder.PrefixIndex, lo: Int, hi: Int, longerThan: Int, into: IntArray) {
+        val words = index.words
+        val freqs = index.freqs
+        into.fill(-1)
+        for (i in lo until hi) {
+            if (words[i].length <= longerThan) continue
+            var slot = -1
+            for (k in into.indices) {
+                if (into[k] < 0 || freqs[i] > freqs[into[k]]) {
+                    slot = k
+                    break
+                }
+            }
+            if (slot < 0) continue
+            for (k in into.size - 1 downTo slot + 1) into[k] = into[k - 1]
+            into[slot] = i
+        }
+    }
+
     /**
      * What the edit-distance reader offers the strip: [words] as folded keys, best first, and whether
      * distance 1 found nothing — in which case [words] came from distance 2, which is never trusted enough
