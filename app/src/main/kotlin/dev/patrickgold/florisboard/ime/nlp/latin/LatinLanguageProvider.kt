@@ -1321,6 +1321,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // strip), then the user's personal dictionary, then the main dictionary ranked by frequency.
         val out = LinkedHashMap<String, SuggestionCandidate>()
         val index = lowerIndexFor(subtype)
+        // Whether Space may swap a fix in *silently* — and nothing more. Every fix below is offered in the
+        // strip either way; this only ever decides `isEligibleForAutoCommit` (issue #381). It used to gate
+        // the fixes themselves, so switching autocorrect off — which the setting describes as "fix typos
+        // when you type a space" — also emptied the strip on every typo: `helwo` showed nothing at all,
+        // one letter away from `hello`. The people who turn it off are the ones who fix by tapping.
         val autoCorrectOn = prefs.suggestion.autoCorrect.get()
 
         // German umlaut/ß restoration (issue #219) runs FIRST, so the correct spelling leads the strip and a
@@ -1329,7 +1334,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // substitution never wins over the umlaut form (Madchen→Mädchen, not Machen). Dictionary-driven, so
         // only real words are produced; a validly-typed word is never swapped, only offered (schon→schön).
         // ß-restoration is off for Swiss German (de-CH), which has no ß.
-        if (autoCorrectOn && isGermanSubtype(subtype) && word.length >= 3) {
+        if (isGermanSubtype(subtype) && word.length >= 3) {
             val allowSharpS = !subtype.primaryLocale.country.equals("CH", ignoreCase = true)
             val variants = germanSpellingVariants(word, allowSharpS).mapNotNull { v ->
                 index.freq[v.lowercase()]?.let { f -> Triple(v, f, index.canonical[v.lowercase()] ?: v) }
@@ -1353,7 +1358,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                             confidence = f / 255.0,
                             // Auto-swap only the top variant of a NON-word; a validly typed word stays the
                             // user's choice and the variant is merely offered.
-                            isEligibleForAutoCommit = i == 0 && !typedIsWord && f >= AUTOCORRECT_MIN_FREQ,
+                            isEligibleForAutoCommit =
+                                i == 0 && autoCorrectOn && !typedIsWord && f >= AUTOCORRECT_MIN_FREQ,
                             sourceProvider = this,
                         ),
                     )
@@ -1429,7 +1435,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // "n'on" from "non" as "j'aime" from "jaime", since "on" is a word and `n'` is a prefix. The corpus
         // is what tells the two apart, and it decides both whether a form is offered at all and whether it
         // may be taken silently; [ElisionEvidence] carries the measurements.
-        if (autoCorrectOn && word.length >= 3 && word.none { it == '\'' || it == '’' }) {
+        if (word.length >= 3 && word.none { it == '\'' || it == '’' }) {
             val typedFreq = index.freq[index.fold(word)] ?: 0
             // Corpus key → its frequency on the dictionary's 128..255 scale and the spelling to show.
             // Insertion order is the order they reach the strip.
@@ -1469,7 +1475,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             // ([ElisionEvidence.DOMINANCE]). Every other language stays tap-only, because "ill", "well" and
             // "its" are exactly as common as the contractions they would be rewritten into.
             val autoCommitKey = forms.keys.singleOrNull()?.takeIf {
-                index.lang == ELISION_LANG &&
+                autoCorrectOn && index.lang == ELISION_LANG &&
                     ElisionEvidence.mayReplace(corpus, ElisionEvidence.key(index.fold(word)), it)
             }
             if (rebuilt || autoCommitKey != null) {
@@ -1510,9 +1516,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Deliberately hangs off the existing "Auto-capitalization" preference rather than adding its own:
         // anyone who types in all-lowercase on purpose has already turned that off, since it would otherwise
         // capitalise every sentence start too.
-        if (autoCorrectOn && prefs.correction.autoCapitalization.get() &&
-            word.length >= 2 && word.none { it.isUpperCase() }
-        ) {
+        if (prefs.correction.autoCapitalization.get() && word.length >= 2 && word.none { it.isUpperCase() }) {
             val lower = index.fold(word)
             val canonical = index.canonical[lower]
             if (canonical != null && canonical.first().isUpperCase() && canonical != word &&
@@ -1534,7 +1538,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     // somebody's name rather than restored to `j'aime`, which the corpus attests 450 times
                     // and the name not at all. First claim wins, and the apostrophe block's is the one
                     // backed by a measurement.
-                    isEligibleForAutoCommit = out.values.none { it.isEligibleForAutoCommit },
+                    isEligibleForAutoCommit = autoCorrectOn && out.values.none { it.isEligibleForAutoCommit },
                     sourceProvider = this,
                 )
             }
@@ -1546,7 +1550,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Whether this word is a candidate for a spelling fix at all. One value rather than the same
         // conditions written twice, because the block that corrects and the slots reserved *for* correcting
         // have to agree — the digit rule (issue #309) was easy to add to one of them and forget in the other.
-        val mayCorrect = autoCorrectOn && !isKnown && word.length >= 3 && isDictionaryJudgeable(word)
+        val mayCorrect = !isKnown && word.length >= 3 && isDictionaryJudgeable(word)
         // Reserve a few slots for edit-distance corrections so a typo's fix isn't crowded out by prefix
         // completions of that typo (issue #212). Only when we'd actually correct.
         val completionCap = if (mayCorrect) {
@@ -1785,7 +1789,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             // never committed — it is only drawn bold, which is a lie about what Space is going to take.
             // The dictionary fixes below already follow this rule against the personal ones.
             val slotClaimed = out.values.any { it.isEligibleForAutoCommit }
-            val allowAutoCommit = !slotClaimed && when {
+            val allowAutoCommit = autoCorrectOn && !slotClaimed && when {
                 // Decoded from the taps: act only when the fingers really were near that key. This replaces
                 // the `hadCandidatesBefore` gate, which suppressed 2.7 % of otherwise correct fixes merely
                 // because the typo prefixed some dictionary word — while a bare "a correction exists" rule
