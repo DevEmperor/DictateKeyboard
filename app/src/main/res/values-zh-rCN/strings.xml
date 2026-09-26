@@ -718,6 +718,7 @@
     <string name="clipboard__group_pinned">置顶</string>
     <string name="clipboard__group_recent">最新</string>
     <string name="clipboard__group_other">其他</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">置顶项显示在上方</string>
     <string name="clipboard__item_description_email">电子邮箱</string>
     <string name="clipboard__item_description_url">链接地址</string>
     <string name="clipboard__item_description_phone">电话号码</string>

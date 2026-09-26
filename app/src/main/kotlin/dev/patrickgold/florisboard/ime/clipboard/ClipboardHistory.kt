@@ -20,7 +20,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 
 data class ClipboardHistory(val all: List<ClipboardItem>) {
     companion object {
-        private const val RECENT_TIMESPAN_MS = 300_000 // 300 sec = 5 min
+        internal const val RECENT_TIMESPAN_MS = 300_000 // 300 sec = 5 min
 
         val EMPTY = ClipboardHistory(emptyList())
     }

@@ -331,7 +331,7 @@
   "clipboard-item": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
-    "font-size": "14sp",
+    "font-size": "13sp",
     "margin": "4dp",
     "shape": "var(--shape-variant)",
     "shadow-elevation": "2dp",

@@ -611,6 +611,7 @@
     <string name="clipboard__group_pinned">Fixat</string>
     <string name="clipboard__group_recent">Recent</string>
     <string name="clipboard__group_other">Altres</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Elements fixats a dalt</string>
     <string name="clipboard__item_description_email">Correu</string>
     <string name="clipboard__item_description_url">Enllaç</string>
     <string name="clipboard__item_description_phone">Telèfon</string>

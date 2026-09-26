@@ -594,6 +594,7 @@
     <string name="clipboard__group_pinned">مثبّت</string>
     <string name="clipboard__group_recent">حديث</string>
     <string name="clipboard__group_other">أخرى</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">العناصر المثبّتة في الأعلى</string>
     <string name="clipboard__item_description_email">البريد الإلكتروني</string>
     <string name="clipboard__item_description_url">الرابط</string>
     <string name="clipboard__item_description_phone">الهاتف</string>

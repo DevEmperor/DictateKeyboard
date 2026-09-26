@@ -324,7 +324,8 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.ClipboardItem.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
-        fontSize = fontSize(14.sp)
+        // A step below the 14 sp the rest of the panel uses, for more clips per screen (issue #395).
+        fontSize = fontSize(13.sp)
         margin = padding(4.dp)
         padding = padding(12.dp, 8.dp)
         shape = `var`("--shape-variant")

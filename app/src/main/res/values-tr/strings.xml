@@ -707,6 +707,7 @@
     <string name="clipboard__group_pinned">Sabitlenmiş</string>
     <string name="clipboard__group_recent">Son Kullanılan</string>
     <string name="clipboard__group_other">Diğer</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Sabitlenmiş öğeler üstte</string>
     <string name="clipboard__item_description_email">E-posta</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefon</string>

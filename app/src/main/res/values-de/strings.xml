@@ -664,6 +664,7 @@
     <string name="clipboard__group_pinned">Angeheftet</string>
     <string name="clipboard__group_recent">Aktuell</string>
     <string name="clipboard__group_other">Andere</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Angeheftete oben</string>
     <string name="clipboard__item_description_email">E-Mail</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefon</string>

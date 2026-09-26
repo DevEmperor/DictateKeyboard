@@ -600,6 +600,7 @@
     <string name="clipboard__group_pinned">Fixado</string>
     <string name="clipboard__group_recent">Recente</string>
     <string name="clipboard__group_other">Outro</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Itens fixados no topo</string>
     <string name="clipboard__item_description_email">Email</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefone</string>

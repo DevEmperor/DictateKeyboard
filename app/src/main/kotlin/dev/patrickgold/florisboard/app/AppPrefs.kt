@@ -154,6 +154,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 historyNumGridColumnsLandscape
             }
         }
+        // Off by default since issue #395: pins only ever grow, so on top they pushed what was just
+        // copied further down with every one added. The header tabs keep them one tap away below.
+        val historyPinnedOnTop = boolean(
+            key = "clipboard__history_pinned_on_top",
+            default = false,
+        )
         val historyAutoCleanOldEnabled = boolean(
             key = "clipboard__history_auto_clean_old_enabled",
             default = false,

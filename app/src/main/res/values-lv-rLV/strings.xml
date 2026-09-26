@@ -671,6 +671,7 @@
     <string name="clipboard__group_pinned">Piesprausts</string>
     <string name="clipboard__group_recent">Nesenie</string>
     <string name="clipboard__group_other">Cits</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Piespraustie vienumi augšā</string>
     <string name="clipboard__item_description_email">E-pasta adrese</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Tālrunis</string>

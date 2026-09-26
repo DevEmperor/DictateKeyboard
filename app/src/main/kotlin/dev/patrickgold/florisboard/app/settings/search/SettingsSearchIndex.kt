@@ -115,6 +115,8 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__clipboard__group_clipboard_history__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard),
         SettingsSearchEntry(R.string.pref__clipboard__enable_clipboard_history__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__enable_clipboard_history__label"),
         SettingsSearchEntry(R.string.pref__clipboard__num_history_grid_columns__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__num_history_grid_columns__label"),
+        // Hand-added (issue #395): a rerun of the generator no longer compiles, so new rows go in by hand.
+        SettingsSearchEntry(R.string.pref__clipboard__history_pinned_on_top__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__history_pinned_on_top__label"),
         SettingsSearchEntry(R.string.pref__clipboard__clean_up_old__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__clean_up_old__label"),
         SettingsSearchEntry(R.string.pref__clipboard__clean_up_after__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__clean_up_after__label"),
         SettingsSearchEntry(R.string.pref__clipboard__auto_clean_sensitive__label, R.string.settings__clipboard__title, Routes.Settings.Clipboard, anchor = "pref__clipboard__auto_clean_sensitive__label"),

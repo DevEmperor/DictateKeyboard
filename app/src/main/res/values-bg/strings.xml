@@ -716,6 +716,7 @@
     <string name="clipboard__group_pinned">Закачени</string>
     <string name="clipboard__group_recent">Последни</string>
     <string name="clipboard__group_other">Други</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Закачените най-отгоре</string>
     <string name="clipboard__item_description_email">Електронна поща</string>
     <string name="clipboard__item_description_url">Адрес</string>
     <string name="clipboard__item_description_phone">Телефон</string>

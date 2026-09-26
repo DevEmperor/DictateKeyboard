@@ -595,6 +595,7 @@
     <string name="clipboard__group_pinned">Закріплено</string>
     <string name="clipboard__group_recent">Останні</string>
     <string name="clipboard__group_other">Інше</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Закріплені вгорі</string>
     <string name="clipboard__item_description_email">Пошта</string>
     <string name="clipboard__item_description_url">Посилання</string>
     <string name="clipboard__item_description_phone">Телефон</string>

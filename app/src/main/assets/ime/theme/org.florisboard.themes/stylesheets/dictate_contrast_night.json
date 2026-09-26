@@ -348,7 +348,7 @@
   "clipboard-item": {
     "background": "var(--paper)",
     "foreground": "var(--ink)",
-    "font-size": "14sp",
+    "font-size": "13sp",
     "margin": "4dp",
     "shape": "var(--shape-variant)",
     "text-max-lines": "10",

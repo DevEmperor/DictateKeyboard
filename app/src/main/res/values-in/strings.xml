@@ -703,6 +703,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clipboard__group_pinned">Disematkan</string>
     <string name="clipboard__group_recent">Terkini</string>
     <string name="clipboard__group_other">Lainnya</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Item yang disematkan di atas</string>
     <string name="clipboard__item_description_email">Email</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Ponsel</string>

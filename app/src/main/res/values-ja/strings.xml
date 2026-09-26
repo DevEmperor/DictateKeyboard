@@ -682,6 +682,7 @@
     <string name="clipboard__group_pinned">ピン留め済み</string>
     <string name="clipboard__group_recent">最近の項目</string>
     <string name="clipboard__group_other">その他</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">ピン留めした項目を上に表示</string>
     <string name="clipboard__item_description_email">メール</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">電話</string>

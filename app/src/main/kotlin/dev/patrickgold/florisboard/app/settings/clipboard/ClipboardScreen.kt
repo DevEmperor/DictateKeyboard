@@ -129,6 +129,12 @@ fun ClipboardScreen() = FlorisScreen {
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
             SwitchPreference(
+                prefs.clipboard.historyPinnedOnTop,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__history_pinned_on_top__label"),
+                title = stringRes(R.string.pref__clipboard__history_pinned_on_top__label),
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
+            )
+            SwitchPreference(
                 prefs.clipboard.historyAutoCleanOldEnabled,
                 modifier = Modifier.settingsSearchAnchor("pref__clipboard__clean_up_old__label"),
                 title = stringRes(R.string.pref__clipboard__clean_up_old__label),

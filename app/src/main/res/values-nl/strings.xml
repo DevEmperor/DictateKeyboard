@@ -638,6 +638,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="clipboard__group_pinned">Vastgemaakt</string>
     <string name="clipboard__group_recent">Recent</string>
     <string name="clipboard__group_other">Overige</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Vastgemaakte items bovenaan</string>
     <string name="clipboard__item_description_email">E-mail</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefoon</string>

@@ -1327,6 +1327,7 @@
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Number of grid columns</string>
+    <string name="pref__clipboard__history_pinned_on_top__label" comment="Preference title">Pinned items on top</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>

@@ -31,10 +31,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,13 +46,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Backspace
@@ -73,7 +83,9 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.produceState
@@ -83,6 +95,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -91,6 +104,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -127,6 +141,7 @@ import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
 import org.florisboard.lib.compose.autoMirrorForRtl
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.onAccent
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
@@ -158,19 +173,34 @@ fun ClipboardInputLayout(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.collectAsState()
+    val pinnedOnTop by prefs.clipboard.historyPinnedOnTop.collectAsState()
 
     var isFilterRowShown by remember { mutableStateOf(false) }
     val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
 
+    // Rebuilt rather than taken from the manager as it is: its copy splits recent from other against the
+    // clock of the last database change, see nextRecentExpiryMs. Opening the panel and every expiry below
+    // move this clock, and with it the split.
+    var clock by remember { mutableLongStateOf(System.currentTimeMillis()) }
     val unfilteredHistory by clipboardManager.historyFlow.collectAsState()
-    val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet()) {
+    val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet(), clock) {
         if (activeFilterTypes.isEmpty()) {
-            unfilteredHistory
+            ClipboardHistory(unfilteredHistory.all)
         } else {
             unfilteredHistory.all
                 .filter { activeFilterTypes.contains(it.type) }
                 .let { ClipboardHistory(it) }
         }
+    }
+    LaunchedEffect(filteredHistory.recent, clock) {
+        val expiry = filteredHistory.nextRecentExpiryMs() ?: return@LaunchedEffect
+        delay((expiry - System.currentTimeMillis()).coerceAtLeast(0L))
+        clock = System.currentTimeMillis()
+    }
+    // Keyed on the clock as well: ClipboardHistory compares by its items alone, so a copy rebuilt after an
+    // expiry is "equal" to the one before it while its recent and other lists are not.
+    val sections = remember(filteredHistory, clock, pinnedOnTop) {
+        filteredHistory.sections(pinnedOnTop)
     }
 
     val gridState = rememberLazyStaggeredGridState()
@@ -209,11 +239,24 @@ fun ClipboardInputLayout(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 )
             }
-            SnyggText(
-                elementName = FlorisImeUi.ClipboardHeaderText.elementName,
-                modifier = Modifier.weight(1f),
-                text = stringRes(R.string.clipboard__header_title),
-            )
+            // The tabs take the title's place rather than a row of their own (issue #395): the free width
+            // beside the buttons was unused, and the panel's height is fixed, so a new row would only
+            // have been paid for in cards.
+            if (!deviceLocked && historyEnabled && sections.size > 1) {
+                ClipboardSectionTabs(
+                    sections = sections,
+                    gridState = gridState,
+                    accent = accentColor,
+                    enabled = !isPopupSurfaceActive(),
+                    modifier = Modifier.weight(1f),
+                )
+            } else {
+                SnyggText(
+                    elementName = FlorisImeUi.ClipboardHeaderText.elementName,
+                    modifier = Modifier.weight(1f),
+                    text = stringRes(R.string.clipboard__header_title),
+                )
+            }
             PanelHeaderButton(
                 onClick = { scope.launch { prefs.clipboard.historyEnabled.set(!historyEnabled) } },
                 modifier = sizeModifier.autoMirrorForRtl(),
@@ -457,21 +500,13 @@ fun ClipboardInputLayout(
                         state = gridState,
                         columns = staggeredGridCells,
                     ) {
-                        clipboardItems(
-                            items = filteredHistory.pinned,
-                            key = "pinned-header",
-                            title = R.string.clipboard__group_pinned,
-                        )
-                        clipboardItems(
-                            items = filteredHistory.recent,
-                            key = "recent-header",
-                            title = R.string.clipboard__group_recent,
-                        )
-                        clipboardItems(
-                            items = filteredHistory.other,
-                            key = "other-header",
-                            title = R.string.clipboard__group_other,
-                        )
+                        for (span in sections) {
+                            clipboardItems(
+                                items = span.items,
+                                key = span.section.headerKey,
+                                title = span.section.titleRes,
+                            )
+                        }
                     }
                 }
             }
@@ -689,6 +724,110 @@ private fun ClipCategoryTitle(
         modifier = modifier.fillMaxWidth(),
         text = text.uppercase(),
     )
+}
+
+private val ClipboardSection.headerKey: String
+    get() = when (this) {
+        ClipboardSection.PINNED -> "pinned-header"
+        ClipboardSection.RECENT -> "recent-header"
+        ClipboardSection.OTHER -> "other-header"
+    }
+
+@get:StringRes
+private val ClipboardSection.titleRes: Int
+    get() = when (this) {
+        ClipboardSection.PINNED -> R.string.clipboard__group_pinned
+        ClipboardSection.RECENT -> R.string.clipboard__group_recent
+        ClipboardSection.OTHER -> R.string.clipboard__group_other
+    }
+
+private val SectionTabShape = RoundedCornerShape(6.dp)
+
+/**
+ * One tab per non-empty group, lit for the group the grid is scrolled to; a tap scrolls to that group's
+ * header (issue #395). Compact on purpose — small type, a tight box around it — because they share the
+ * header row with the panel's buttons and a group's name is all they have to show.
+ */
+@Composable
+private fun ClipboardSectionTabs(
+    sections: List<ClipboardSectionSpan>,
+    gridState: LazyStaggeredGridState,
+    accent: Color,
+    enabled: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    val inputFeedbackController = LocalInputFeedbackController.current
+
+    // A tapped tab stays lit until the grid is dragged by hand. The jump to the last group ends where the
+    // grid runs out, not with that group's header at the top, and the scroll position alone would then
+    // name whichever group is still above it.
+    var tapped by remember { mutableStateOf<ClipboardSection?>(null) }
+    val isDragged by gridState.interactionSource.collectIsDraggedAsState()
+    LaunchedEffect(isDragged) {
+        if (isDragged) tapped = null
+    }
+    val scrolledTo by remember(sections) {
+        derivedStateOf {
+            sections.sectionAt(
+                firstVisibleIndex = gridState.firstVisibleItemIndex,
+                atEnd = !gridState.canScrollForward && gridState.canScrollBackward,
+            )
+        }
+    }
+    val selected = tapped?.takeIf { section -> sections.any { it.section == section } } ?: scrolledTo
+
+    // Three names can outgrow the width beside the buttons in some languages, so the row scrolls and
+    // keeps the lit tab in view.
+    val rowState = rememberLazyListState()
+    LaunchedEffect(selected) {
+        val index = sections.indexOfFirst { it.section == selected }
+        if (index >= 0) rowState.animateScrollToItem(index)
+    }
+    LazyRow(
+        modifier = modifier.fillMaxHeight(),
+        state = rowState,
+        contentPadding = PaddingValues(horizontal = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        items(sections, key = { it.section.name }) { span ->
+            val isSelected = span.section == selected
+            // The whole height of the header row takes the tap, only the text's own box is painted: a
+            // target as small as the label would be a hard one to hit on a moving keyboard.
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .selectable(
+                        selected = isSelected,
+                        enabled = enabled,
+                        role = Role.Tab,
+                        interactionSource = null,
+                        indication = null,
+                        onClick = {
+                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                            tapped = span.section
+                            scope.launch { gridState.animateScrollToItem(span.headerIndex) }
+                        },
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                SnyggText(
+                    elementName = FlorisImeUi.ClipboardHeaderText.elementName,
+                    modifier = Modifier
+                        .clip(SectionTabShape)
+                        // The accent at full opacity, as on the sticker tabs: a washed one reads as a
+                        // disabled control rather than as the colour the user picked.
+                        .background(if (isSelected) accent else Color.Transparent)
+                        .padding(horizontal = 8.dp, vertical = 3.dp)
+                        .run { if (isSelected) this else alpha(0.6f) },
+                    fontSizeMultiplier = 0.8f,
+                    color = if (isSelected) accent.onAccent() else null,
+                    text = stringRes(span.section.titleRes),
+                )
+            }
+        }
+    }
 }
 
 @Composable

@@ -599,6 +599,7 @@
     <string name="clipboard__group_pinned">Fissati</string>
     <string name="clipboard__group_recent">Recenti</string>
     <string name="clipboard__group_other">Altro</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Elementi fissati in alto</string>
     <string name="clipboard__item_description_email">Email</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefono</string>
