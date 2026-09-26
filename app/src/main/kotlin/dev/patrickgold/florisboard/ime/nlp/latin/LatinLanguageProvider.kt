@@ -77,6 +77,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         private const val CORRECTION_MAX = CorrectionReaders.MAX_CORRECTIONS
         private const val CORRECTION_RESERVE = 3
 
+        // A prefix with more dictionary words than this is left to the plain completion walk (issue #381):
+        // with over a thousand matches in ~64,000 words, the walk meets its eight within the first few
+        // hundred, which is cheaper than collecting and sorting the matches.
+        private const val DENSE_PREFIX_MATCHES = 1024
+
         // The one language whose apostrophe forms are rebuilt rather than looked up — see the restoration
         // block in [suggest] and [ElisionEvidence] for why French alone needs it.
         private const val ELISION_LANG = "fr"
@@ -622,6 +627,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
+    private val prefixOrderByLang = guardedByLock { mutableMapOf<String, Pair<List<String>, PrefixOrder>>() }
+
+    /**
+     * [ranked] sorted by spelling as well, so the completion walk can find a rare prefix's words without
+     * reading the whole list (issue #381). Built once per language, for the very list it was given.
+     */
+    private suspend fun prefixOrderFor(subtype: Subtype, ranked: List<String>, rankedKeys: List<String>?): PrefixOrder? {
+        val lang = dictLangFor(subtype) ?: return null
+        return prefixOrderByLang.withLock { cache ->
+            cache[lang]?.takeIf { it.first === ranked }?.second
+                ?: PrefixOrder(ranked, rankedKeys).also { cache[lang] = ranked to it }
+        }
+    }
+
     // --- Spell check / autocorrect core (issue #127 follow-up) --------------------------------------
 
     /**
@@ -692,6 +711,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 wordDataByLang.withLock { it.clear() }
                 rankedWordsByLang.withLock { it.clear() }
                 rankedFoldKeysByLang.withLock { it.clear() }
+                prefixOrderByLang.withLock { it.clear() }
                 lowerIndexByLang.withLock { it.clear() }
                 bigramsByLang.withLock { it.clear() }
                 trigramsByLang.withLock { it.clear() }
@@ -1703,18 +1723,20 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val ranked = rankedWordsFor(subtype)
         val rankedKeys = rankedFoldKeysFor(subtype, ranked)
         val foldedPrefix = if (rankedKeys != null) index.fold(word) else ""
-        for ((rank, dictWord) in ranked.withIndex()) {
-            if (out.size >= completionCap) break
+
+        /** Offers the dictionary word at [rank] if it extends the prefix; false once the strip is full. */
+        fun offerCompletion(rank: Int, dictWord: String): Boolean {
+            if (out.size >= completionCap) return false
             val matches = if (rankedKeys != null) {
                 rankedKeys[rank].startsWith(foldedPrefix)
             } else {
                 dictWord.startsWith(word, ignoreCase = true)
             }
-            if (!matches) continue
+            if (!matches) return true
             val freq = data[dictWord] ?: 0
             addPersonalDownTo(freq)
             addLearnedDownTo(freq)
-            if (out.size >= completionCap) break
+            if (out.size >= completionCap) return false
             val text = cased(dictWord)
             out.putIfAbsent(
                 text.lowercase(),
@@ -1724,6 +1746,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     sourceProvider = this,
                 ),
             )
+            return true
+        }
+
+        // A rare prefix — and every prefix with a slip in it is one — matches almost nothing, so walking the
+        // ranked list meant reading all of it on every keystroke (issue #381). Its matches are found by
+        // binary search instead, then offered in the same rank order. A common prefix keeps the walk: its
+        // matches sit among the first few hundred words, and collecting thousands of them would cost more.
+        val rareMatches = prefixOrderFor(subtype, ranked, rankedKeys)
+            ?.ranksStartingWith(if (rankedKeys != null) foldedPrefix else word, limit = DENSE_PREFIX_MATCHES)
+        if (rareMatches != null) {
+            for (rank in rareMatches) if (!offerCompletion(rank, ranked[rank])) break
+        } else {
+            for ((rank, dictWord) in ranked.withIndex()) if (!offerCompletion(rank, dictWord)) break
         }
         // Nothing (or too little) in the dictionary extends this prefix: the user's own words are all that
         // is left to offer, so they go in rather than being dropped for want of a rank to sit at.
