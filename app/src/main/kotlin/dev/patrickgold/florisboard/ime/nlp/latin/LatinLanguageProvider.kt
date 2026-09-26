@@ -793,6 +793,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private fun correctionsFor(
         word: String,
         index: LowerIndex,
+        prefixIndex: TouchBeamDecoder.PrefixIndex?,
         maxCount: Int,
         allowDistance2: Boolean,
         contextScore: (cand: String) -> Double = { 0.0 },
@@ -800,6 +801,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         folded = index.fold(word),
         freq = index.freq,
         alphabet = index.alphabet,
+        prefixIndex = prefixIndex,
         maxCount = maxCount,
         allowDistance2 = allowDistance2,
         sqDistance = KeyProximityInfo::normSqDistance,
@@ -1206,7 +1208,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             ?.let { index.fold(it) }?.takeIf { it.isNotEmpty() }
         val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
         val suggestions = correctionsFor(
-            trimmed, index, maxSuggestionCount, allowDistance2 = true,
+            trimmed, index, prefixIndexFor(subtype), maxSuggestionCount, allowDistance2 = true,
             bigramContextScore(prevWord, bigrams),
         )
         return SpellingResult.typo(suggestions.toTypedArray())
@@ -1747,6 +1749,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 folded = index.fold(word),
                 freq = index.freq,
                 alphabet = index.alphabet,
+                prefixIndex = prefixIndexFor(subtype),
                 sqDistance = KeyProximityInfo::normSqDistance,
                 contextScore = ctx,
                 allowDistance2 = touchCorrections == null,

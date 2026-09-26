@@ -91,7 +91,7 @@ class ReaderMergeEvalTest {
             contextScore = { 0.0 },
         )
         fun byString(allowDistance2: Boolean) =
-            CorrectionReaders.byString(typed, dict.freq, dict.alphabet, sqDistance, { 0.0 }, allowDistance2)
+            CorrectionReaders.byString(typed, dict.freq, dict.alphabet, dict.index, sqDistance, { 0.0 }, allowDistance2)
 
         var started = System.nanoTime()
         val shipped = byString(allowDistance2 = touch == null)

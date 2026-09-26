@@ -75,16 +75,50 @@ object TouchBeamDecoder {
         }
 
         /** The packed range of every word starting with [prefix], or -1 when none does. */
-        fun rangeOf(prefix: String): Long {
-            var lo = 0
-            var hi = words.size
-            for (depth in prefix.indices) {
-                val packed = narrow(lo, hi, depth, prefix[depth])
+        fun rangeOf(prefix: String): Long = extend(0, words.size, 0, prefix, 0)
+
+        /**
+         * Narrows `[lo, hi)` — words sharing a prefix of length [depth] — by the characters of [s] from
+         * index [from] on, one per depth. Returns the packed range, or -1 as soon as nothing matches.
+         */
+        fun extend(lo: Int, hi: Int, depth: Int, s: String, from: Int): Long {
+            var a = lo
+            var b = hi
+            var d = depth
+            for (j in from until s.length) {
+                val packed = narrow(a, b, d, s[j])
                 if (packed < 0) return -1L
-                lo = (packed ushr 32).toInt()
-                hi = (packed and 0xFFFFFFFFL).toInt()
+                a = (packed ushr 32).toInt()
+                b = (packed and 0xFFFFFFFFL).toInt()
+                d++
             }
-            return (lo.toLong() shl 32) or (hi.toLong() and 0xFFFFFFFFL)
+            return (a.toLong() shl 32) or (b.toLong() and 0xFFFFFFFFL)
+        }
+
+        /**
+         * The entry of a packed range that is exactly [length] characters long, or null. Within a range of
+         * words sharing a prefix of that length, it is the one that sorts first.
+         */
+        fun exactWord(packed: Long, length: Int): String? {
+            if (packed < 0) return null
+            val word = words[(packed ushr 32).toInt()]
+            return if (word.length == length) word else null
+        }
+
+        /**
+         * Calls [action] once per character occurring at position [depth] in `[lo, hi)` — words sharing a
+         * prefix of length [depth] — with the sub-range of entries that have it there. The entry that ends
+         * at [depth], if there is one, sorts first and has no such character.
+         */
+        fun forEachChild(lo: Int, hi: Int, depth: Int, action: (ch: Char, lo: Int, hi: Int) -> Unit) {
+            var p = lo
+            while (p < hi && words[p].length <= depth) p++
+            while (p < hi) {
+                val ch = words[p][depth]
+                val end = upperBound(p, hi, depth, ch)
+                action(ch, p, end)
+                p = end
+            }
         }
 
         private fun keyAt(index: Int, depth: Int): Int {

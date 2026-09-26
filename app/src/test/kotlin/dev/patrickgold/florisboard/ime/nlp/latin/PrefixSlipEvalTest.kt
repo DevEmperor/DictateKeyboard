@@ -102,7 +102,7 @@ class PrefixSlipEvalTest {
             contextScore = { 0.0 },
         )
         val string = CorrectionReaders.byString(
-            typed, dict.freq, dict.alphabet, sqDistance, { 0.0 }, allowDistance2 = touch == null,
+            typed, dict.freq, dict.alphabet, dict.index, sqDistance, { 0.0 }, allowDistance2 = touch == null,
         )
         val fixes = CorrectionReaders.merge(touch?.words.orEmpty(), string.words, CorrectionReaders.MAX_CORRECTIONS)
 

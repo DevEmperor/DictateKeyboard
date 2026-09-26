@@ -284,23 +284,25 @@ internal object CorrectionReaders {
         folded: String,
         freq: Map<String, Int>,
         alphabet: Set<Char>,
+        prefixIndex: TouchBeamDecoder.PrefixIndex?,
         sqDistance: (Char, Char) -> Float?,
         contextScore: (cand: String) -> Double,
         allowDistance2: Boolean,
     ): StringReading {
-        val near = byEditDistance(folded, freq, alphabet, MAX_CORRECTIONS, false, sqDistance, contextScore)
+        val near = byEditDistance(folded, freq, alphabet, prefixIndex, MAX_CORRECTIONS, false, sqDistance, contextScore)
         if (near.isNotEmpty() || !allowDistance2 || folded.length > MAX_DISTANCE2_LEN) {
             return StringReading(near, near.isEmpty())
         }
         return StringReading(
-            words = byEditDistance(folded, freq, alphabet, MAX_CORRECTIONS, true, sqDistance, contextScore),
+            words = byEditDistance(folded, freq, alphabet, prefixIndex, MAX_CORRECTIONS, true, sqDistance, contextScore),
             distance1Empty = true,
         )
     }
 
     /**
      * Dictionary words closest to (a misspelling of) [folded], as folded keys, best first. Distance 2 only
-     * when [allowDistance2] and distance 1 found nothing.
+     * when [allowDistance2] and distance 1 found nothing, and only with a [prefixIndex] to search — its
+     * words are [freq]'s keys, so without one there is nothing to find anyway.
      *
      * [sqDistance] is the squared distance between two keys in key-width², or null when the geometry does
      * not know one of them — which reduces the ranking to frequency alone.
@@ -309,24 +311,106 @@ internal object CorrectionReaders {
         folded: String,
         freq: Map<String, Int>,
         alphabet: Set<Char>,
+        prefixIndex: TouchBeamDecoder.PrefixIndex?,
         maxCount: Int,
         allowDistance2: Boolean,
         sqDistance: (Char, Char) -> Float?,
         contextScore: (cand: String) -> Double = { 0.0 },
     ): List<String> {
-        val e1 = EditDistance.edits1(folded, alphabet)
-        val known = e1.filterTo(LinkedHashSet()) { freq.containsKey(it) }
-        if (known.isEmpty() && allowDistance2) {
-            for (e in e1) for (ee in EditDistance.edits1(e, alphabet)) {
-                if (freq.containsKey(ee)) known.add(ee)
-            }
+        var known: Set<String> = EditDistance.edits1(folded, alphabet).filterTo(HashSet()) { freq.containsKey(it) }
+        if (known.isEmpty() && allowDistance2 && prefixIndex != null) {
+            known = distance2(folded, alphabet, prefixIndex)
         }
         // Noisy-channel ranking (Tier 1): combine the unigram prior with a keyboard-proximity likelihood,
         // so a fat-finger substitution of an adjacent key beats a merely more frequent but far-away word,
-        // instead of ranking purely by frequency.
-        return known.sortedByDescending { channelScore(folded, it, freq[it] ?: 0, sqDistance, contextScore) }
-            .take(maxCount)
+        // instead of ranking purely by frequency. Ties go alphabetically, so the order never depends on
+        // how the candidates happened to be generated.
+        val score = known.associateWith { channelScore(folded, it, freq[it] ?: 0, sqDistance, contextScore) }
+        return known.sortedWith(compareByDescending<String> { score.getValue(it) }.thenBy { it }).take(maxCount)
     }
+
+    /**
+     * Every word of [index] two edits from [folded] — the same words to the last one as building every
+     * edit of every edit ([EditDistance.edits1] twice) and looking each up (issue #381).
+     *
+     * That was the old way, and it built ~(54·n)² strings per keystroke: 40 ms for a three-letter typo and
+     * 281 ms for a nine-letter one on a Galaxy A55 release build, on every key press of a word neither the
+     * beam nor distance 1 could read. Here one depth-first walk goes through the sorted index with a budget
+     * of two edits: a shared start is walked once, a branch ends the moment its prefix is no longer the
+     * start of any word, and replacements and insertions only try characters that actually follow there.
+     *
+     * "Every edit of every edit" is the Damerau–Levenshtein distance with the edits applied one after the
+     * other, and that allows one thing a left-to-right alignment does not see: two letters swapped with a
+     * third inserted between them (`ab` → `bca`) or dropped from between them (`acb` → `ba`). Within a
+     * budget of two those are the only such cases (Lowrance and Wagner's generalised transposition), so
+     * they are the two extra moves below. `Distance2EquivalenceTest` checks the result against the old way,
+     * word for word.
+     */
+    fun distance2(folded: String, alphabet: Set<Char>, index: TouchBeamDecoder.PrefixIndex): Set<String> {
+        val out = HashSet<String>()
+        if (index.words.isNotEmpty()) Distance2Walk(folded, alphabet, index, out).walk(0, 0, index.words.size, 0, 2)
+        return out
+    }
+
+    /** The walk behind [distance2]: [typed] is read at `pos`, the index is narrowed to `[lo, hi)` at `depth`. */
+    private class Distance2Walk(
+        val typed: String,
+        val alphabet: Set<Char>,
+        val index: TouchBeamDecoder.PrefixIndex,
+        val out: MutableSet<String>,
+    ) {
+        fun walk(pos: Int, lo: Int, hi: Int, depth: Int, budget: Int) {
+            val n = typed.length
+            // Everything typed has been read: the entry exactly this long, if there is one, is a word.
+            if (pos == n) index.exactWord((lo.toLong() shl 32) or (hi.toLong() and 0xFFFFFFFFL), depth)?.let { out.add(it) }
+            // The typed character as it is.
+            if (pos < n) index.narrow(lo, hi, depth, typed[pos]).let { if (it >= 0) walk(pos + 1, lo(it), hi(it), depth + 1, budget) }
+            if (budget == 0) return
+            // It was typed by mistake.
+            if (pos < n) walk(pos + 1, lo, hi, depth, budget - 1)
+            // It and the next one came out the wrong way round.
+            if (pos + 1 < n) {
+                val first = index.narrow(lo, hi, depth, typed[pos + 1])
+                if (first >= 0) {
+                    val second = index.narrow(lo(first), hi(first), depth + 1, typed[pos])
+                    if (second >= 0) walk(pos + 2, lo(second), hi(second), depth + 2, budget - 1)
+                }
+            }
+            index.forEachChild(lo, hi, depth) { ch, childLo, childHi ->
+                if (ch in alphabet) {
+                    // It should have been ch.
+                    if (pos < n && ch != typed[pos]) walk(pos + 1, childLo, childHi, depth + 1, budget - 1)
+                    // ch was left out here.
+                    walk(pos, childLo, childHi, depth + 1, budget - 1)
+                }
+            }
+            if (budget < 2) return
+            // Swapped, with a letter left out between them: typed `ab`, meant `b?a`.
+            if (pos + 1 < n) {
+                val first = index.narrow(lo, hi, depth, typed[pos + 1])
+                if (first >= 0) {
+                    index.forEachChild(lo(first), hi(first), depth + 1) { ch, childLo, childHi ->
+                        if (ch in alphabet) {
+                            val third = index.narrow(childLo, childHi, depth + 2, typed[pos])
+                            if (third >= 0) walk(pos + 2, lo(third), hi(third), depth + 3, 0)
+                        }
+                    }
+                }
+            }
+            // Swapped, with a stray letter typed between them: typed `a?b`, meant `ba`.
+            if (pos + 2 < n) {
+                val first = index.narrow(lo, hi, depth, typed[pos + 2])
+                if (first >= 0) {
+                    val second = index.narrow(lo(first), hi(first), depth + 1, typed[pos])
+                    if (second >= 0) walk(pos + 3, lo(second), hi(second), depth + 2, 0)
+                }
+            }
+        }
+    }
+
+    private fun lo(packed: Long): Int = (packed ushr 32).toInt()
+
+    private fun hi(packed: Long): Int = (packed and 0xFFFFFFFFL).toInt()
 
     /**
      * The corrections the strip offers when both readers have spoken: the beam's best, then the string
