@@ -110,6 +110,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import kotlin.math.abs
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -353,23 +354,41 @@ fun EmojiPaletteView(
             pagerState.animateScrollToPage(0)
         }
 
+        // The tab row follows the pager — once, here. It used to be collected inside every composed page,
+        // so each page change set the category and re-read the history three times over (issue #394).
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                activeCategory = pageNumberToCategory(page)
+                recentlyUsedVersion++
+            }
+        }
+
         EmojiCategoriesTabRow(
             activeCategory = activeCategory,
             onCategoryChange = { category ->
                 activeCategory = category
-                scope.launch { pagerState.animateScrollToPage(categoryToPageNumber(activeCategory)) }
+                val target = categoryToPageNumber(category)
+                scope.launch {
+                    // A neighbour slides in; anything further is jumped to (issue #394). Animating to a
+                    // far tab scrolled through every page in between: each built its grid of emoji views
+                    // for a frame or two, and each passing page moved the tab highlight, so the row at
+                    // the top stuttered across the categories before landing on the one tapped.
+                    if (abs(target - pagerState.currentPage) <= 1) {
+                        pagerState.animateScrollToPage(target)
+                    } else {
+                        pagerState.scrollToPage(target)
+                    }
+                }
             },
         )
         HorizontalPager(pagerState, beyondViewportPageCount = 1) { page ->
             // Every page needs its own lazyGridState in order to scroll correctly
             val lazyGridState = rememberLazyGridState()
 
-            // Update the lazyGridState and active category on scroll
+            // A page comes back at its top, wherever it was left.
             LaunchedEffect(pagerState) {
-                snapshotFlow { pagerState.currentPage }.collect { page ->
+                snapshotFlow { pagerState.currentPage }.collect {
                     lazyGridState.scrollToItem(0)
-                    activeCategory = pageNumberToCategory(page)
-                    recentlyUsedVersion++
                 }
             }
 
@@ -712,29 +731,28 @@ fun EmojiText(
     color: Color = Color.Black,
     fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
+    // `onReset` lets a scrolling grid hand a cell's view on to the next emoji instead of inflating a new
+    // one for every cell that scrolls into view (issue #394) — a view per emoji is what these grids are
+    // made of. Size and colour are set on every update, since a reused view may come from another cell.
     if (emojiCompatInstance != null) {
         AndroidView(
             modifier = modifier,
-            factory = { context ->
-                EmojiTextView(context).also {
-                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(color.toArgb())
-                }
-            },
+            factory = { context -> EmojiTextView(context) },
+            onReset = { },
             update = { view ->
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                view.setTextColor(color.toArgb())
                 view.text = text
             },
         )
     } else {
         AndroidView(
             modifier = modifier,
-            factory = { context ->
-                TextView(context).also {
-                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(color.toArgb())
-                }
-            },
+            factory = { context -> TextView(context) },
+            onReset = { },
             update = { view ->
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                view.setTextColor(color.toArgb())
                 view.text = text
             },
         )
