@@ -70,12 +70,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // in both places, and the evaluation harness has to measure the same rule both use.
         private const val AUTOCORRECT_MIN_FREQ = AutoCommitGate.MIN_FREQ
 
-        // Spelling-fix suggestions (issue #212 / distance-2 fallback): how many edit-distance corrections
-        // to surface, how many strip slots to reserve for them so prefix completions of a typo don't crowd
-        // them out, and the max word length for the (more expensive) distance-2 fallback.
-        private const val CORRECTION_MAX = 3
+        // Spelling-fix suggestions (issue #212): how many corrections to surface, and how many strip slots
+        // to reserve for them so prefix completions of a typo don't crowd them out.
+        private const val CORRECTION_MAX = CorrectionReaders.MAX_CORRECTIONS
         private const val CORRECTION_RESERVE = 3
-        private const val MAX_DISTANCE2_LEN = 12
 
         // The one language whose apostrophe forms are rebuilt rather than looked up — see the restoration
         // block in [suggest] and [ElisionEvidence] for why French alone needs it.
@@ -111,29 +109,16 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
-        // Keyboard-proximity noisy-channel model (Tier 1). Distances are in key-width² units.
-        private const val PROX_SIGMA2 = 1.0         // touch variance (~1 key-width std): near mis-taps cost little
-        private const val NEUTRAL_SUB_SQDIST = 2.0  // fallback substitution distance² when key geometry is unknown
-        private const val LENGTH_DIFF_PENALTY = -0.7 // flat log-penalty for insert/delete candidates
-        private const val TRANSPOSE_PENALTY = -0.3   // adjacent-swap typo; cost independent of key distance
-
         // Bigram context model (Tier 2): weight on ln(bigram-count+1) added to a candidate that commonly
         // follows the previous word, so context ("of the" over "of teh") re-ranks the correction.
         private const val CONTEXT_WEIGHT = 0.3
 
         // --- Touch-decoded corrections (issue #242) -------------------------------------------------
-        // Used only on the path where real tap coordinates are available; the legacy ranking above keeps its
-        // own constants so behaviour without a trace is bit-for-bit unchanged.
+        // Both correction readers, their constants and the rule that merges them live in
+        // [CorrectionReaders], and the prior and touch variance in [TouchScoring], because the evaluation
+        // harness has to score exactly the way this does — a second copy of the formula is what made the
+        // #242 numbers impossible to reproduce.
         //
-        // The prior and the touch variance live in [TouchScoring], because the evaluation harness has to
-        // score exactly the way this does — a second copy of the formula is what made the #242 numbers
-        // impossible to reproduce.
-        //
-        // Flat cost for a candidate of a different length (a dropped or doubled letter), which the beam
-        // cannot produce and which therefore comes from the edit-distance generator.
-        private const val TOUCH_LENGTH_PENALTY = -5.0
-        // How many words the beam returns before scoring.
-        private const val BEAM_CANDIDATES = 12
         // Whether a decoded correction may be swapped in silently now lives in [AutoCommitGate], so the
         // rule can be measured against both populations that care about it — mis-taps that must be fixed
         // and correctly typed unknown words that must not be touched (issue #295).
@@ -801,10 +786,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         return isInUserDictionary(word, subtype)
     }
 
-    /** All strings one edit away from [word] — shared with the word learner (issue #318). */
-    private fun edits1(word: String, alphabet: Set<Char>): Set<String> =
-        EditDistance.edits1(word, alphabet)
-
     /** Dictionary words closest to (a misspelling of) [word], ranked by frequency. */
     private fun correctionsFor(
         word: String,
@@ -812,59 +793,15 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         maxCount: Int,
         allowDistance2: Boolean,
         contextScore: (cand: String) -> Double = { 0.0 },
-    ): List<String> {
-        val lower = index.fold(word)
-        val e1 = edits1(lower, index.alphabet)
-        val known = e1.filterTo(LinkedHashSet()) { index.freq.containsKey(it) }
-        if (known.isEmpty() && allowDistance2) {
-            for (e in e1) for (ee in edits1(e, index.alphabet)) {
-                if (index.freq.containsKey(ee)) known.add(ee)
-            }
-        }
-        // Noisy-channel ranking (Tier 1): combine the unigram prior with a keyboard-proximity likelihood,
-        // so a fat-finger substitution of an adjacent key beats a merely more frequent but far-away word,
-        // instead of ranking purely by frequency.
-        return known.sortedByDescending { channelScore(lower, it, index.freq[it] ?: 0, contextScore) }
-            .take(maxCount)
-            .map { index.canonical[it] ?: it }
-    }
-
-    /**
-     * Noisy-channel score for ranking a correction candidate: log unigram prior + log likelihood that
-     * [typed] is a mis-tap of [cand] given the keyboard geometry (Tier 1) + a context bonus for how often
-     * [cand] follows the previous word (Tier 2 bigram). Higher is better.
-     */
-    private fun channelScore(typed: String, cand: String, freq: Int, contextScore: (String) -> Double): Double =
-        ln((freq + 1).toDouble()) + spatialLogLikelihood(typed, cand) + contextScore(cand)
-
-    /**
-     * log P(typed | cand): near-key substitutions cost little, far ones a lot (Gaussian over key distance);
-     * an adjacent transposition (finger-order slip) is a flat cost independent of distance; insert/delete
-     * candidates get a flat penalty so the frequency prior orders them. Neutral when key geometry is
-     * unavailable (layout not captured yet), which reduces this to frequency-only ranking.
-     */
-    private fun spatialLogLikelihood(typed: String, cand: String): Double {
-        if (typed.length != cand.length) return LENGTH_DIFF_PENALTY
-        if (isAdjacentTransposition(typed, cand)) return TRANSPOSE_PENALTY
-        var cost = 0.0
-        for (i in typed.indices) {
-            if (typed[i] == cand[i]) continue
-            val d2 = KeyProximityInfo.normSqDistance(typed[i], cand[i])?.toDouble() ?: NEUTRAL_SUB_SQDIST
-            cost += d2 / (2.0 * PROX_SIGMA2)
-        }
-        return -cost
-    }
-
-    /** True if [b] is [a] with exactly one pair of adjacent characters swapped (a transposition). */
-    private fun isAdjacentTransposition(a: String, b: String): Boolean {
-        if (a.length != b.length || a.length < 2) return false
-        var i = 0
-        while (i < a.length && a[i] == b[i]) i++
-        if (i >= a.length - 1) return false
-        if (a[i] != b[i + 1] || a[i + 1] != b[i]) return false
-        for (j in i + 2 until a.length) if (a[j] != b[j]) return false
-        return true
-    }
+    ): List<String> = CorrectionReaders.byEditDistance(
+        folded = index.fold(word),
+        freq = index.freq,
+        alphabet = index.alphabet,
+        maxCount = maxCount,
+        allowDistance2 = allowDistance2,
+        sqDistance = KeyProximityInfo::normSqDistance,
+        contextScore = contextScore,
+    ).map { index.canonical[it] ?: it }
 
     // --- Next-word prediction (issue #245) ----------------------------------------------------------
 
@@ -965,22 +902,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     // --- Touch-decoded corrections (issue #242) -----------------------------------------------------
 
     /**
-     * Corrections decoded from tap positions, plus how well the taps actually support the best one.
-     *
-     * [topCost] is the winning candidate's excess tap distance, or null when it came from edit distance and
-     * there is therefore no positional evidence either way (a dropped or doubled letter).
-     */
-    private class TouchCorrections(val words: List<String>, val topCost: Float?)
-
-    /**
-     * Corrections decoded from where the user's fingers actually landed, or null when that is not possible
-     * (no tap evidence for this exact word, no captured key geometry, or the beam found nothing) — in which
-     * case the caller falls back to the classic edit-distance path unchanged.
-     *
-     * The beam contributes same-length candidates with near-perfect recall; a dropped or doubled letter
-     * changes the length and cannot come out of it, so those still come from [edits1] and are scored with a
-     * flat penalty. Both are then ranked on one scale: linear log-frequency prior, minus the excess tap
-     * distance, plus the bigram context bonus.
+     * Corrections decoded from where the user's fingers actually landed (see [CorrectionReaders.byTouch]),
+     * or null when that is not possible — no tap evidence for this exact word, no captured key geometry,
+     * or the beam found nothing.
      */
     private suspend fun touchCorrectionsFor(
         word: String,
@@ -988,41 +912,24 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         index: LowerIndex,
         maxCount: Int,
         contextScore: (cand: String) -> Double,
-    ): TouchCorrections? {
+    ): CorrectionReaders.TouchReading? {
         val points = TouchTrace.pointsFor(word) ?: return null
         val layout = KeyProximityInfo.snapshot() ?: return null
         val prefixIndex = prefixIndexFor(subtype) ?: return null
-        val beam = TouchBeamDecoder.decode(
+        val reading = CorrectionReaders.byTouch(
             points = points,
             typed = word,
-            index = prefixIndex,
+            folded = index.fold(word),
+            freq = index.freq,
+            alphabet = index.alphabet,
+            prefixIndex = prefixIndex,
             layout = layout,
-            maxResults = BEAM_CANDIDATES,
-        )
-        if (beam.isEmpty()) return null
-
-        val scored = HashMap<String, Double>(beam.size * 2)
-        // Tap cost per beam candidate, kept so the caller can tell a near-boundary slip (trustworthy enough
-        // to swap in silently) from a candidate a whole key away (offer it, but don't act on it).
-        val costs = HashMap<String, Float>(beam.size)
-        for (candidate in beam) {
-            val freq = index.freq[candidate.word] ?: continue
-            scored[candidate.word] =
-                TouchScoring.score(freq, candidate.cost, contextScore(candidate.word))
-            costs[candidate.word] = candidate.cost
-        }
-        // Length-changing slips (a letter dropped or typed twice) are invisible to the beam.
-        val lower = index.fold(word)
-        for (edit in edits1(lower, index.alphabet)) {
-            if (edit.length == lower.length) continue
-            val freq = index.freq[edit] ?: continue
-            scored.putIfAbsent(edit, TouchScoring.lmPrior(freq) + TOUCH_LENGTH_PENALTY + contextScore(edit))
-        }
-        if (scored.isEmpty()) return null
-        val ranked = scored.entries.sortedByDescending { it.value }.take(maxCount)
-        return TouchCorrections(
-            words = ranked.map { index.canonical[it.key] ?: it.key },
-            topCost = costs[ranked.first().key],
+            maxCount = maxCount,
+            contextScore = contextScore,
+        ) ?: return null
+        return CorrectionReaders.TouchReading(
+            words = reading.words.map { index.canonical[it] ?: it },
+            topCost = reading.topCost,
         )
     }
 
@@ -1772,16 +1679,29 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             val prevWord = previousWordOf(content, index)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
             val ctx = bigramContextScore(prevWord, bigrams)
-            // Preferred: decode from the actual tap positions (issue #242). Falls back to edit distance
-            // whenever no usable tap evidence exists — hardware keyboard, glide, pasted or dictated text,
-            // or a cursor jump that desynced the trace.
+            // Preferred: decode from the actual tap positions (issue #242). Null whenever no usable tap
+            // evidence exists — hardware keyboard, glide, pasted or dictated text, or a cursor jump that
+            // desynced the trace.
             val touchCorrections = touchCorrectionsFor(word, subtype, index, CORRECTION_MAX, ctx)
-            var corrections = touchCorrections?.words
-                ?: correctionsFor(word, index, CORRECTION_MAX, allowDistance2 = false, ctx)
-            val distance1Empty = corrections.isEmpty()
-            if (touchCorrections == null && distance1Empty && word.length <= MAX_DISTANCE2_LEN) {
-                corrections = correctionsFor(word, index, CORRECTION_MAX, allowDistance2 = true, ctx)
-            }
+            // And the reading of the string, always (issue #381). It used to run only when the beam found
+            // nothing, so a beam that found *anything* hid it: every tap of `helwo` sits on a neighbour of
+            // `growl`, and `hello` — one letter away — never reached the strip. It gets one slot of its own
+            // but never the first, so what Space may take is decided exactly as before; distance 2 still
+            // runs only where the beam had nothing, because beside a beam it costs much and finds nothing.
+            val stringReading = CorrectionReaders.byString(
+                folded = index.fold(word),
+                freq = index.freq,
+                alphabet = index.alphabet,
+                sqDistance = KeyProximityInfo::normSqDistance,
+                contextScore = ctx,
+                allowDistance2 = touchCorrections == null,
+            )
+            val distance1Empty = stringReading.distance1Empty
+            val corrections = CorrectionReaders.merge(
+                touch = touchCorrections?.words.orEmpty(),
+                text = stringReading.words.map { index.canonical[it] ?: it },
+                maxCount = CORRECTION_MAX,
+            )
             // What may be swapped in *silently* (the strip always shows everything either way).
             val topTouchCost = touchCorrections?.topCost
             // A restoration above (umlaut, spelling, apostrophe) that already claimed the slot keeps it:
@@ -1871,7 +1791,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): Pair<String, Float>? {
         val layout = KeyProximityInfo.snapshot() ?: return null
         val prefixIndex = prefixIndexFor(subtype) ?: return null
-        val beam = TouchBeamDecoder.decode(points, word, prefixIndex, layout, BEAM_CANDIDATES)
+        val beam = TouchBeamDecoder.decode(points, word, prefixIndex, layout, CorrectionReaders.BEAM_CANDIDATES)
         var best: TouchBeamDecoder.Candidate? = null
         var bestScore = Double.NEGATIVE_INFINITY
         for (candidate in beam) {

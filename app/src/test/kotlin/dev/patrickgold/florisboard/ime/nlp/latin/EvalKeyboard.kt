@@ -41,8 +41,8 @@ internal object EvalKeyboard {
     /** The dictionary frequency a correction needs before it may be auto-committed. */
     const val MIN_FREQ = AutoCommitGate.MIN_FREQ
 
-    /** How many words the beam returns before scoring, mirroring `BEAM_CANDIDATES`. */
-    const val BEAM_CANDIDATES = 12
+    /** How many words the beam returns before scoring — the provider's own number, not a copy. */
+    const val BEAM_CANDIDATES = CorrectionReaders.BEAM_CANDIDATES
 
     val layout: KeyProximityInfo.Layout = run {
         val codes = ArrayList<Int>()
