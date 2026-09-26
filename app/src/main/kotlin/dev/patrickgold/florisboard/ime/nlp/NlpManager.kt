@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -317,13 +318,23 @@ class NlpManager(context: Context) {
     @Volatile
     private var holdNextSuggest = false
 
+    /**
+     * The suggestion work for the previous keystroke, cancelled as soon as the next one arrives (issue
+     * #381). Each keystroke used to launch its own computation and none was ever stopped, so fast typing
+     * left several running side by side for words already gone — each one's result thrown away, but only
+     * after it had taken its share of the CPU from the one that mattered.
+     */
+    @Volatile
+    private var suggestJob: Job? = null
+
     fun suggest(subtype: Subtype, content: EditorContent) {
         if (holdNextSuggest) {
             holdNextSuggest = false
             return
         }
         val reqTime = SystemClock.uptimeMillis()
-        scope.launch {
+        suggestJob?.cancel()
+        suggestJob = scope.launch {
             val candidates = computeSuggestions(subtype, content)
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {

@@ -38,6 +38,8 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.MapSerializer
@@ -1690,6 +1692,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
 
+        // A checkpoint for the next keystroke (issue #381): NlpManager cancels this computation as soon as
+        // one arrives, but the stages below are plain loops that would otherwise run to the end regardless.
+        currentCoroutineContext().ensureActive()
+
         val data = wordDataFor(subtype)
         // Prefix matching happens on the stored spellings, so an Arabic writer typing ان or a French
         // writer typing ho would miss أنا and hôte. Where the fold changes the lookup spelling, compare
@@ -1732,6 +1738,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // swap in silently). #190: never correct a word valid in any configured language, #309: never one
         // that carries a digit.
         if (mayCorrect) {
+            currentCoroutineContext().ensureActive()
             val hadCandidatesBefore = out.isNotEmpty() // German restoration and/or prefix completions
             val prevWord = previousWordOf(content, index)
             val bigrams = if (prevWord != null) bigramsFor(subtype) else NgramIndex.EMPTY
@@ -1765,6 +1772,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             // fix is a whole word. Worked in behind the first fix, never eligible — an offer about a word the
             // user has not finished — and added after `hadCandidatesBefore` was read, so they cannot make
             // the corrector more timid either.
+            currentCoroutineContext().ensureActive()
             val offers = CorrectionReaders.withCompletions(
                 fixes = corrections,
                 completions = completionsFor(word, subtype, index, maxCandidateCount, ctx),
