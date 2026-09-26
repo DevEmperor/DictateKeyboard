@@ -11,25 +11,31 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.app.KeyguardManager
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
@@ -47,42 +53,38 @@ import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 
 /**
- * What goes into the recent-emoji row, as arithmetic that can be checked without a phone (issue #340).
+ * The row's glyph size: smaller than the palette's, because this row is paid for out of the height of
+ * every keyboard it sits on, and a glyph that fills it leaves room for seven emojis where nine fit
+ * (issue #394). Not smaller than this — past it the faces stop being recognisable at a glance.
+ */
+private val EmojiRowFontSize = 20.sp
+
+/** What a cell adds to its glyph's width, so neighbours don't touch. */
+private val EmojiRowCellPadding = 14.dp
+
+/**
+ * What goes into the recent-emoji row, as a rule that can be checked without a phone (issue #340).
  */
 object EmojiRowContent {
 
     /**
-     * How many emoji cells fit into [availableDp] when each is [cellDp] wide and the trailing button
-     * that opens the emoji panel takes one cell of its own.
-     *
-     * This is the whole of "fill the row, don't count it": nowhere is there a number saying nine or
-     * twelve, so a narrow phone, a folded cover screen and a tablet each get what they have room for.
-     * Never returns less than one — a row that decided to show nothing would be a row that should not
-     * have been drawn at all, and that call belongs to [emojiRowVisible], not here.
-     */
-    fun cellCount(availableDp: Float, cellDp: Float): Int {
-        if (cellDp <= 0f) return 1
-        val total = (availableDp / cellDp).toInt()
-        return (total - 1).coerceAtLeast(1)
-    }
-
-    /**
-     * The emojis to show, at most [cells] of them: pinned first, then the recently used.
+     * The emojis to show: pinned first, then the recently used — all of them, the row scrolls
+     * (issue #394). It used to stop at what fit on one screen, which left most of a 90-entry history
+     * unreachable from the row. How much is *visible* is the screen's business; how much is *there* is
+     * the history's.
      *
      * Pinned first is what makes the plain recent order enough. Someone who wants a handful of emojis
      * *always* has already said so by pinning them, and those then sit on the left where the thumb is;
-     * the rest is the history's own order, which across the ten or so visible places is what a frecency
-     * score would mostly produce anyway.
+     * the rest is the history's own order, which across the visible places is what a frecency score would
+     * mostly produce anyway.
      *
      * Duplicates are dropped rather than assumed away: pinning moves an emoji out of the recents, so
      * the two lists should already be disjoint — but a strip showing the same face twice for a history
      * written by an older version is a worse outcome than one call to distinctBy.
      */
-    fun pick(pinned: List<Emoji>, recent: List<Emoji>, cells: Int): List<Emoji> {
-        if (cells <= 0) return emptyList()
+    fun pick(pinned: List<Emoji>, recent: List<Emoji>): List<Emoji> {
         return (pinned.asSequence() + recent.asSequence())
             .distinctBy { it.value }
-            .take(cells)
             .toList()
     }
 }
@@ -127,8 +129,8 @@ fun emojiRowVisible(): Boolean {
 }
 
 /**
- * A single row of recently used emojis between the Smartbar and the keyboard (issue #340), with a
- * button at its end that opens the full emoji panel.
+ * A single row of recently used emojis between the Smartbar and the keyboard (issue #340), scrolled
+ * sideways, with a button at its end that opens the full emoji panel.
  *
  * **The order is frozen while the row is on screen.** The content is read once per input session and
  * then left alone, even though tapping an emoji does update the history underneath. Re-sorting live
@@ -136,6 +138,11 @@ fun emojiRowVisible(): Boolean {
  * insert a different one. The emoji panel made the same call for the same reason (`remember`, with the
  * comment "prevents rapid emoji changes for the user"). Freshness is not lost: opening the emoji panel
  * unmounts this whole layout, so coming back re-reads, and so does moving to another field.
+ *
+ * The one exception is the long-press popup (issue #394): pinning or removing an emoji there is a change
+ * the user asked for, and a row that went on showing the removed emoji would look as if nothing had
+ * happened. Removal is also the opposite of the tap problem — the list shrinks away from the finger
+ * instead of reshuffling under it.
  */
 @Composable
 fun EmojiRow(modifier: Modifier = Modifier) {
@@ -150,10 +157,22 @@ fun EmojiRow(modifier: Modifier = Modifier) {
         .collectAsState()
     val preferredSkinTone by prefs.emoji.preferredSkinTone.collectAsState()
 
-    // One read per input session — see the note on freezing above.
-    val history = remember(activeEditorInfo) { prefs.emoji.historyData.get() }
+    // One read per input session — see the note on freezing above — and one more after each action
+    // taken in the long-press popup.
+    var historyVersion by remember { mutableIntStateOf(0) }
+    val history = remember(activeEditorInfo, historyVersion) { prefs.emoji.historyData.get() }
+    val emojis = remember(history) { EmojiRowContent.pick(history.pinned, history.recent) }
+    val pinnedValues = remember(history) { history.pinned.mapTo(HashSet()) { it.value } }
+
+    // A new field starts the row at its beginning, where the pinned ones are.
+    val listState = rememberLazyListState()
+    LaunchedEffect(activeEditorInfo) {
+        listState.scrollToItem(0)
+    }
 
     val rowHeight = FlorisImeSizing.smartbarHeight
+    // Follows the glyph, so a larger system font widens the cells instead of clipping the emojis.
+    val cellWidth = with(LocalDensity.current) { EmojiRowFontSize.toDp() } + EmojiRowCellPadding
     SnyggRow(
         elementName = FlorisImeUi.SmartbarSharedActionsRow.elementName,
         modifier = modifier
@@ -161,55 +180,57 @@ fun EmojiRow(modifier: Modifier = Modifier) {
             .height(rowHeight),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-            val cells = EmojiRowContent.cellCount(maxWidth.value, rowHeight.value)
-            val emojis = remember(history, cells) {
-                EmojiRowContent.pick(history.pinned, history.recent, cells)
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                emojis.forEach { emoji ->
-                    Box(modifier = Modifier.size(rowHeight)) {
-                        EmojiKey(
-                            emojiSet = EmojiSet(listOf(emoji)),
-                            emojiCompatInstance = emojiCompatInstance,
-                            preferredSkinTone = preferredSkinTone,
-                            // No long-press popup here: it opens above its cell, and this row is the
-                            // topmost line of the keyboard, so it would open against the window edge.
-                            // Pinning and removing stay in the emoji panel, where they have room.
-                            isPinned = false,
-                            isRecent = false,
-                            onEmojiInput = { tapped ->
-                                keyboardManager.inputEventDispatcher.sendDownUp(tapped)
-                                scope.launch {
-                                    EmojiHistoryHelper.markEmojiUsed(
-                                        prefs, PrivateSession.isActive(context), tapped,
-                                    )
-                                }
-                            },
-                            onHistoryAction = { },
-                        )
-                    }
-                }
-                // Whatever the cell arithmetic left over, so the button below sits flush right.
-                Box(modifier = Modifier.weight(1f))
-                SnyggIconButton(
-                    elementName = FlorisImeUi.SmartbarActionKey.elementName,
-                    modifier = Modifier
-                        .width(rowHeight)
-                        .fillMaxHeight(),
-                    onClick = {
-                        keyboardManager.inputEventDispatcher.sendDownUp(TextKeyData.IME_UI_MODE_MEDIA)
+        LazyRow(
+            state = listState,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+            contentPadding = PaddingValues(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            items(emojis, key = { it.value }) { emoji ->
+                val isPinned = emoji.value in pinnedValues
+                EmojiKey(
+                    emojiSet = EmojiSet(listOf(emoji)),
+                    emojiCompatInstance = emojiCompatInstance,
+                    preferredSkinTone = preferredSkinTone,
+                    // Real membership, so the long-press offers the palette's own pin/unpin and remove.
+                    // Its popup opens above the cell, over the Smartbar — the row sits below it.
+                    isPinned = isPinned,
+                    isRecent = !isPinned,
+                    onEmojiInput = { tapped ->
+                        keyboardManager.inputEventDispatcher.sendDownUp(tapped)
+                        scope.launch {
+                            EmojiHistoryHelper.markEmojiUsed(
+                                prefs, PrivateSession.isActive(context), tapped,
+                            )
+                        }
                     },
-                ) {
-                    SnyggIcon(
-                        imageVector = Icons.Default.MoreHoriz,
-                        contentDescription = stringResource(R.string.emoji__row__open_panel),
-                    )
-                }
+                    onHistoryAction = { historyVersion++ },
+                    // The full row height to aim at, but no longer a full square of width.
+                    modifier = Modifier
+                        .width(cellWidth)
+                        .fillMaxHeight(),
+                    fontSize = EmojiRowFontSize,
+                )
             }
+        }
+        // Outside the scroll, so it never moves. A face rather than "⋯": the Smartbar's own overflow
+        // button right above is "⋯", and the two sat stacked looking like one control drawn twice. The
+        // face is what the emoji key and the Smartbar's emoji action show for the same panel.
+        SnyggIconButton(
+            elementName = FlorisImeUi.SmartbarActionKey.elementName,
+            modifier = Modifier
+                .width(rowHeight)
+                .fillMaxHeight(),
+            onClick = {
+                keyboardManager.inputEventDispatcher.sendDownUp(TextKeyData.IME_UI_MODE_MEDIA)
+            },
+        ) {
+            SnyggIcon(
+                imageVector = Icons.Default.SentimentSatisfiedAlt,
+                contentDescription = stringResource(R.string.emoji__row__open_panel),
+            )
         }
     }
 }

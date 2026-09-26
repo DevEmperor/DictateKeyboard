@@ -462,6 +462,11 @@ fun EmojiPaletteView(
     }
 }
 
+/**
+ * One emoji cell. [modifier] is its shape — square, as the palette's grid wants it, unless the caller
+ * sizes the cell itself (the recent-emoji row: full row height, narrower than tall). [fontSize] is the
+ * glyph's; the row draws smaller glyphs than the palette (issue #394).
+ */
 @Composable
 internal fun EmojiKey(
     emojiSet: EmojiSet,
@@ -471,6 +476,8 @@ internal fun EmojiKey(
     isRecent: Boolean,
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
+    modifier: Modifier = Modifier.aspectRatio(1f),
+    fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
@@ -478,8 +485,7 @@ internal fun EmojiKey(
     var showVariantsBox by remember { mutableStateOf(false) }
 
     SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
-        modifier = Modifier
-            .aspectRatio(1f)
+        modifier = modifier
             .pointerInput(Unit) {
                 detectTapGestures(
                     // Fire the key-press haptic on the confirmed tap, not on the initial press:
@@ -502,6 +508,7 @@ internal fun EmojiKey(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
             emojiCompatInstance = emojiCompatInstance,
+            fontSize = fontSize,
         )
         if (variations.isNotEmpty() || isPinned || isRecent) {
             val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
