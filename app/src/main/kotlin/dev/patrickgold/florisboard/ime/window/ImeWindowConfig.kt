@@ -38,6 +38,9 @@ typealias ImeWindowConfigByType = Map<ImeFormFactor.Type, ImeWindowConfig>
  * @property floatingMode Describes the floating sub-mode.
  * @property floatingProps Describes the props per floating sub-mode. May not have a mapping for a given sub-mode, in
  *  which case the window constraints should be queried for default props.
+ * @property subtypeProps Describes the props of the [ImeWindowMode.Fixed.NORMAL] sub-mode per subtype id. A
+ *  subtype without a mapping uses the normal entry of [fixedProps], which is where the one size for every
+ *  subtype was kept before (issue #418).
  */
 @Serializable
 data class ImeWindowConfig(
@@ -46,7 +49,35 @@ data class ImeWindowConfig(
     val fixedProps: Map<ImeWindowMode.Fixed, ImeWindowProps.Fixed> = emptyMap(),
     val floatingMode: ImeWindowMode.Floating = ImeWindowMode.Floating.NORMAL,
     val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
+    val subtypeProps: Map<Long, ImeWindowProps.Fixed> = emptyMap(),
 ) {
+    /**
+     * The props saved for [fixedMode] while the subtype [subtypeId] is active, or null if there are none, in
+     * which case the window constraints should be queried for default props.
+     *
+     * Only the normal keyboard is sized per subtype (issue #418): a layout with more rows, like the Hindi
+     * varnamala, makes the keyboard taller, and the user may want exactly that language smaller without
+     * shrinking every other one. One-handed and split are positions as much as sizes, and a keyboard that
+     * jumped sides on a language switch would be a bug, so those stay one per mode.
+     */
+    fun fixedPropsFor(fixedMode: ImeWindowMode.Fixed, subtypeId: Long): ImeWindowProps.Fixed? {
+        return when (fixedMode) {
+            ImeWindowMode.Fixed.NORMAL -> subtypeProps[subtypeId] ?: fixedProps[fixedMode]
+            else -> fixedProps[fixedMode]
+        }
+    }
+
+    /**
+     * Returns a copy with [props] saved for [fixedMode] while the subtype [subtypeId] is active, the
+     * counterpart of [fixedPropsFor].
+     */
+    fun withFixedProps(fixedMode: ImeWindowMode.Fixed, subtypeId: Long, props: ImeWindowProps.Fixed): ImeWindowConfig {
+        return when (fixedMode) {
+            ImeWindowMode.Fixed.NORMAL -> copy(subtypeProps = subtypeProps.plus(subtypeId to props))
+            else -> copy(fixedProps = fixedProps.plus(fixedMode to props))
+        }
+    }
+
     /**
      * Helper for serializing [ImeWindowConfigByType] to prefs.
      */

@@ -137,10 +137,11 @@ class ImeWindowController(
         combine(
             activeRootInsets,
             activeWindowConfig,
+            prefs.localization.activeSubtypeId.asFlow(),
             userPreferredOptions,
             editor.version,
-        ) { rootInsets, windowConfig, userConfig, _ ->
-            doComputeWindowSpec(rootInsets, windowConfig, userConfig)
+        ) { rootInsets, windowConfig, subtypeId, userConfig, _ ->
+            doComputeWindowSpec(rootInsets, windowConfig, subtypeId, userConfig)
         }.collectIn(scope) { windowSpec ->
             activeWindowSpec.value = windowSpec
         }
@@ -257,15 +258,22 @@ class ImeWindowController(
         return isWindowShown.compareAndSet(expect = true, update = false)
     }
 
+    /**
+     * The subtype whose size the normal keyboard is showing and saving (issue #418). Read from the pref
+     * rather than the subtype manager, so this class stays free of the Android framework.
+     */
+    private fun activeSubtypeId(): Long = prefs.localization.activeSubtypeId.get()
+
     private fun doComputeWindowSpec(
         rootInsets: ImeInsets.Root,
         windowConfig: ImeWindowConfig,
+        subtypeId: Long,
         userPreferredOptions: ImeWindowSpec.UserPreferredOptions,
     ): ImeWindowSpec {
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.fixedMode)
-                val props = (windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps)
+                val props = (windowConfig.fixedPropsFor(windowConfig.fixedMode, subtypeId) ?: constraints.defaultProps)
                     .constrained(constraints)
                 ImeWindowSpec.Fixed(
                     fixedMode = windowConfig.fixedMode,
@@ -392,10 +400,22 @@ class ImeWindowController(
         }
 
         fun resetFixedSize() {
+            val rootInsets = activeRootInsets.value
+            val subtypeId = activeSubtypeId()
             updateWindowConfig { config ->
-                config.copy(
-                    fixedProps = config.fixedProps.minus(config.fixedMode),
-                )
+                when (config.fixedMode) {
+                    // Dropping this subtype's entry would fall back to the one size every subtype shared
+                    // before (issue #418) — which is the user's old custom size, not the default, and a reset
+                    // that lands there looks like it did nothing. So the default is written down for it.
+                    ImeWindowMode.Fixed.NORMAL -> config.withFixedProps(
+                        fixedMode = ImeWindowMode.Fixed.NORMAL,
+                        subtypeId = subtypeId,
+                        props = ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.NORMAL).defaultProps,
+                    )
+                    else -> config.copy(
+                        fixedProps = config.fixedProps.minus(config.fixedMode),
+                    )
+                }
             }
         }
 
@@ -480,11 +500,12 @@ class ImeWindowController(
 
         fun endMoveGesture(spec: ImeWindowSpec) {
             var keepEnabled = true
+            val subtypeId = activeSubtypeId()
             updateWindowConfig { config ->
                 when (spec) {
                      is ImeWindowSpec.Fixed -> {
                          keepEnabled = true
-                         config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
+                         config.withFixedProps(spec.fixedMode, subtypeId, spec.props)
                      }
                     is ImeWindowSpec.Floating -> {
                         if (spec.props.offsetBottom <= spec.constraints.dockToFixedHeight) {
@@ -507,11 +528,12 @@ class ImeWindowController(
 
         fun endResizeGesture(spec: ImeWindowSpec) {
             var keepEnabled = true
+            val subtypeId = activeSubtypeId()
             updateWindowConfig { config ->
                 when (spec) {
                     is ImeWindowSpec.Fixed -> {
                         keepEnabled = true
-                        config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
+                        config.withFixedProps(spec.fixedMode, subtypeId, spec.props)
                     }
                     is ImeWindowSpec.Floating -> {
                         keepEnabled = true
