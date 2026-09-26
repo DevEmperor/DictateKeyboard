@@ -70,6 +70,7 @@ fun TypingScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
             Preference(
                 icon = Icons.AutoMirrored.Filled.LibraryBooks,
+                modifier = Modifier.settingsSearchAnchor("settings__dictionary__title"),
                 title = stringRes(R.string.settings__dictionary__title),
                 onClick = { navController.navigate(Routes.Settings.Dictionary) },
             )
