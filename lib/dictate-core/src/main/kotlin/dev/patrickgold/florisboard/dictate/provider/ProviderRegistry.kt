@@ -696,6 +696,48 @@ object ProviderRegistry {
     )
 
     /**
+     * OpenCode Go — the OpenCode project's subscription gateway to its curated set of open coding
+     * models, **chat only**.
+     *
+     * The endpoint is Go's own (`opencode.ai/zen/go`), not the OpenCode client's; what it speaks is
+     * plain OpenAI at `POST {baseUrl}chat/completions`, and one key bought at the console below serves
+     * them all. There is no speech-to-text side to it, so this preset is [CHAT_ONLY] like [ANTHROPIC]:
+     * rewording, translation and tone, never dictation.
+     *
+     * **The `x-opencode-session` header is not optional.** Go announced on 2026-09-03 that requests
+     * must carry a stable per-conversation session id, and has errored without one since 2026-09-06; a
+     * request missing it is answered "request is missing x-opencode-session and cannot be routed
+     * efficiently" (reported from this app against a live key on 2026-10-03 — the endpoint's
+     * unauthenticated answers are all auth errors, so the check sits behind a valid key). The docs ask
+     * clients to "send a stable session ID in x-opencode-session for each conversation so we can
+     * optimize routing and prompt caching"; a keyboard sends single-shot rewrites rather than a
+     * conversation, so one stable id for the whole install is the honest reading of "stable", and it
+     * is the same kind of key the third-party proxies of this service hand it. A preset's
+     * [ProviderPreset.extraHeaders] are the only place this client can set a header, which is why the
+     * value is fixed here.
+     *
+     * Model ids verified against the live catalog (`GET {baseUrl}models`) and Go's endpoint table, both
+     * read 2026-10-03. Only the ids the table lists on `/chat/completions` are curated below: the same
+     * catalog also carries models served on `/messages` (MiniMax, Qwen Max/Flash, Qwen Plus) or
+     * `/responses` (Grok, the GPT Lunas, Muse Spark), which this client does not speak. The live
+     * catalog is merged on top regardless, so a newer chat model needs no app update.
+     */
+    val OPENCODE_GO = ProviderPreset(
+        id = "opencode-go",
+        displayName = "OpenCode Go",
+        baseUrl = "https://opencode.ai/zen/go/v1/",
+        capabilities = CHAT_ONLY,
+        supportsDynamicModels = true,
+        apiKeyUrl = "https://opencode.ai/console",
+        defaultChatModel = "deepseek-v4.1-flash",
+        curatedChatModels = listOf(
+            "deepseek-v4.1-flash", "deepseek-v4-flash", "glm-5.3-flash",
+            "kimi-k2.6", "mimo-v2.6-flash", "longcat-2.0",
+        ),
+        extraHeaders = mapOf("x-opencode-session" to "dictate-opencode-go"),
+    )
+
+    /**
      * SiliconFlow (硅基流动) — the one transcription provider reachable from mainland China (issue #262).
      *
      * Everything else in this list is blocked or unreachable there without a VPN, which left users in
@@ -911,8 +953,8 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OVHCLOUD,
-        OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, OPENCODE_GO, SILICONFLOW, SCALEWAY,
+        OVHCLOUD, OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
