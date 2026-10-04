@@ -71,9 +71,10 @@ data class ProviderAccount(
      */
     val customRealtime: Boolean = false,
     /**
-     * Wake-on-demand support (issue #189): send a throwaway `/models` request as soon as a rewording is
-     * known to be coming, so a machine that only wakes on network traffic has the dictation's length as a
-     * head start instead of the user waiting out its boot.
+     * Wake-on-demand support (issue #189): send a throwaway `/models` request as soon as this endpoint is
+     * known to be needed — when a recording starts, if it transcribes, and when a rewording is known to be
+     * coming, if it rewords — so a machine that only wakes on network traffic has the dictation's length
+     * as a head start instead of the user waiting out its boot.
      *
      * A common self-hosting shape is a small always-on box in front of a GPU machine that sleeps between
      * jobs. Only ever useful for an endpoint of the user's own, and nothing about a server says whether it

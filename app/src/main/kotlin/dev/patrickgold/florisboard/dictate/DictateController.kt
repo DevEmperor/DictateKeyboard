@@ -284,8 +284,8 @@ object DictateController {
     /** The user's saved prompts (shared `prompts.db`), refreshed via [refreshPrompts]; drives the Smartbar prompt chips. */
     val prompts: StateFlow<List<PromptModel>> = _prompts.asStateFlow()
 
-    /** When a sleeping rewording server was last poked awake (#189); see [warmUpRewordingServer]. */
-    private var lastWarmUpAtMs = 0L
+    /** When each sleeping self-hosted server was last poked awake (#189), by base URL; see [warmUp]. */
+    private val lastWarmUpAtMs = mutableMapOf<String, Long>()
 
     private val _pendingPrompts = MutableStateFlow<List<PromptModel>>(emptyList())
     /**
@@ -698,7 +698,7 @@ object DictateController {
      */
     internal const val AUDIO_LEVEL_SAMPLE_MS = 50L
 
-    /** Shortest gap between two wake-up pokes at a sleeping rewording server (#189). */
+    /** Shortest gap between two wake-up pokes at the same sleeping server (#189). */
     private const val WARM_UP_THROTTLE_MS = 60_000L
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
@@ -1418,7 +1418,10 @@ object DictateController {
             discardRetainedAudio()
             discardCarryOver()
         }
-        // A rewording server that has to be woken (#189) gets the length of this dictation to do it in.
+        // A server that has to be woken (#189) gets the length of this dictation to do it in: the
+        // transcription server whenever its own switch is on, the rewording server when a rewording
+        // will follow.
+        warmUp(transcriptionAccount())
         if (rewordingWillFollow()) warmUpRewordingServer()
         startJob = scope.launch {
             try {
@@ -4112,31 +4115,36 @@ object DictateController {
      * the trimmed model output.
      */
     /**
-     * Wake-on-demand for a self-hosted rewording backend (issue #189).
+     * Wake-on-demand for a self-hosted backend (issue #189).
      *
      * The self-hosting shape this exists for: a small always-on box in front of a GPU machine that sleeps
      * between jobs and is woken by the first packet that reaches it. Waking takes tens of seconds, and
      * since the app only ever spoke to the server when it had something to send, that wait landed on the
      * request the user was already waiting for — or timed out.
      *
-     * So the moment a rewording is *known to be coming*, an empty `/models` goes out: free, side-effect
+     * So the moment a server is *known to be needed*, an empty `/models` goes out: free, side-effect
      * free, and every OpenAI-compatible server answers it. From there the machine has the whole dictation
      * to boot in. It is fire-and-forget by design — a failure is exactly the case this is for, and nothing
      * about it may reach the user or hold up a recording.
      *
-     * Deliberately not fired for transcriptions: the reporter runs a cloud STT in front of a local GPU,
-     * and waking that GPU for every dictation would defeat the point of letting it sleep.
+     * The switch belongs to each account, and each account is only woken for its own job: the rewording
+     * server when a rewording is certain, the transcription server when a recording starts. That keeps
+     * the reporter's shape intact — a cloud STT in front of a local GPU leaves the GPU asleep through
+     * dictations that end without a rewording, since the cloud account has no switch to turn on — while
+     * a self-hosted transcription server that sleeps between jobs (or unloads its model when idle) gets
+     * the same head start. One account doing both jobs is woken once.
      */
-    private fun warmUpRewordingServer() {
-        val account = rewordingAccount()
+    private fun warmUpRewordingServer() = warmUp(rewordingAccount(), apiKey = rewordingApiKey())
+
+    private fun warmUp(account: ProviderAccount, apiKey: String = account.apiKey) {
         if (!account.customWarmUp) return
+        val preset = presetFor(account)
+        val baseUrl = baseUrlOverrideFor(account)
+        val key = baseUrl ?: account.providerId
         val now = SystemClock.elapsedRealtime()
         // Once a minute is plenty: the machine is either coming up already or it is up.
-        if (now - lastWarmUpAtMs in 0 until WARM_UP_THROTTLE_MS) return
-        lastWarmUpAtMs = now
-        val preset = presetFor(account)
-        val apiKey = account.apiKey.ifBlank { transcriptionAccount().apiKey }
-        val baseUrl = baseUrlOverrideFor(account)
+        if (now - (lastWarmUpAtMs[key] ?: 0L) in 0 until WARM_UP_THROTTLE_MS) return
+        lastWarmUpAtMs[key] = now
         scope.launch(Dispatchers.IO) {
             runCatching {
                 // Deliberately not on the user's request timeout (#337): this request exists to make
