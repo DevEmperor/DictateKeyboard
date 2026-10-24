@@ -180,4 +180,20 @@ class DictateLanguageMatchTest : FunSpec({
             sorted shouldContainExactlyInAnyOrder DictateLanguages.all
         }
     }
+
+    context("forImport: the share screen's own language, until then the keyboard's (issue #461)") {
+        test("nothing picked on the share screen yet: the active dictation language, as before") {
+            DictateLanguages.forImport(importCode = "", activeCode = "de") shouldBe "de"
+            DictateLanguages.forImport(importCode = "", activeCode = DictateLanguages.DETECT) shouldBe DictateLanguages.DETECT
+        }
+
+        test("a pick on the share screen wins, detect included") {
+            DictateLanguages.forImport(importCode = "ar", activeCode = "en") shouldBe "ar"
+            DictateLanguages.forImport(importCode = DictateLanguages.DETECT, activeCode = "en") shouldBe DictateLanguages.DETECT
+        }
+
+        test("a code the catalog no longer knows falls back to detect") {
+            DictateLanguages.forImport(importCode = "zz", activeCode = "en") shouldBe DictateLanguages.DETECT
+        }
+    }
 })

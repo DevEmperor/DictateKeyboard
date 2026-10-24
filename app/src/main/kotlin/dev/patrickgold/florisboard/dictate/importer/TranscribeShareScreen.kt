@@ -16,9 +16,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.Formatter
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import android.content.res.Configuration
@@ -27,16 +29,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ContentCopy
@@ -55,6 +62,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -73,6 +81,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -98,6 +108,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
 import java.io.File
 
@@ -133,6 +145,12 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
     var providerLabel by remember { mutableStateOf("") }
     var onDeviceProvider by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
+    /** What this file is transcribed in: the screen's own pick, remembered for the next one (issue #461). */
+    var language by remember {
+        mutableStateOf(
+            DictateLanguages.forImport(prefs.dictate.importLanguage.get(), prefs.dictate.activeInputLanguage.get())
+        )
+    }
     var job by remember { mutableStateOf<Job?>(null) }
     val prompts = remember { mutableStateOf<List<PromptModel>>(emptyList()) }
 
@@ -193,6 +211,14 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         job?.cancel()
         error = null
         needsKey = false
+        // A run replaces whatever transcript is on screen, so it shows its progress the way the first one
+        // did. Kept on screen, the old text sat under a "Rewording…" line that described nothing that was
+        // happening — and after a language switch it is the wrong language anyway.
+        text = ""
+        original = ""
+        searching = false
+        query = ""
+        val lang = language
         val account = ImportTranscriber.accountFor(prefs)
         val preset = ImportTranscriber.presetFor(account)
         refreshProvider()
@@ -217,8 +243,9 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             }
         )
         job = scope.launch {
+            val self = coroutineContext[Job]
             try {
-                val result = ImportTranscriber.transcribe(context, prefs, file) { report(it) }
+                val result = ImportTranscriber.transcribe(context, prefs, file, lang) { report(it) }
                 progress = ImportProgress(ImportStage.FINISH)
                 original = ""
                 // Kept like every other dictation, so closing this screen does not lose the transcript.
@@ -239,8 +266,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
                             providerId = account.providerId,
                             providerName = account.displayName.ifBlank { preset.displayName },
                             model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" },
-                            language = prefs.dictate.activeInputLanguage.get()
-                                .takeIf { it != DictateLanguages.DETECT } ?: "",
+                            language = lang.takeIf { it != DictateLanguages.DETECT } ?: "",
                             durationSecs = info?.durationSecs ?: 0L,
                             source = DictateHistorySource.IMPORT,
                             reworded = false,
@@ -256,10 +282,26 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
             } catch (e: Exception) {
                 error = e.message ?: context.getString(R.string.dictate__file_read_error)
             } finally {
-                busy = false
-                status = ""
+                // A language switch cancels this run and starts the next before this block gets to run.
+                // By then the screen belongs to the new run, and switching it to idle would leave a blank
+                // middle until the new transcript arrives.
+                if (job === self) {
+                    busy = false
+                    status = ""
+                }
             }
         }
+    }
+
+    /**
+     * Another language for this file (issue #461): remembered for the next shared file, and a file that
+     * is already here is transcribed again in it. One still being copied simply starts in it.
+     */
+    fun pickLanguage(code: String) {
+        if (code == language) return
+        language = code
+        scope.launch { prefs.dictate.importLanguage.set(code) }
+        run()
     }
 
     // Copy the file out of the temporary grant first, then start. Both happen once per screen.
@@ -350,7 +392,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         Toast.makeText(context, R.string.dictate__history_audio_missing, Toast.LENGTH_SHORT).show()
     }
 
-    val header = @Composable { Header(info, skipped, providerLabel) }
+    val header = @Composable { Header(info, skipped, providerLabel, language) { pickLanguage(it) } }
     val playerRow = @Composable { if (audio != null) AudioPlaybackRow(player) }
     val middle = @Composable { modifier: Modifier ->
         Box(modifier) {
@@ -674,24 +716,38 @@ private fun SearchRow(
 }
 
 @Composable
-private fun Header(info: SharedFileInfo?, skipped: Int, providerName: String) {
+private fun Header(
+    info: SharedFileInfo?,
+    skipped: Int,
+    providerName: String,
+    language: String,
+    onLanguage: (String) -> Unit,
+) {
     val context = LocalContext.current
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp)) {
-            Text(
-                text = info?.displayName ?: stringRes(R.string.dictate__import_title),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = listOfNotNull(
-                    info?.durationSecs?.takeIf { it > 0 }?.let { formatDuration(it) },
-                    info?.sizeBytes?.takeIf { it > 0 }?.let { Formatter.formatShortFileSize(context, it) },
-                    providerName.takeIf { it.isNotBlank() },
-                ).joinToString(" · "),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            // The language sits beside the two lines rather than under them: every line up here is height
+            // the transcript does not get.
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        text = info?.displayName ?: stringRes(R.string.dictate__import_title),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = listOfNotNull(
+                            info?.durationSecs?.takeIf { it > 0 }?.let { formatDuration(it) },
+                            info?.sizeBytes?.takeIf { it > 0 }?.let { Formatter.formatShortFileSize(context, it) },
+                            providerName.takeIf { it.isNotBlank() },
+                        ).joinToString(" · "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Spacer(Modifier.size(12.dp))
+                LanguageButton(language, onLanguage)
+            }
             if (skipped > 0) {
                 Spacer(Modifier.height(8.dp))
                 Text(
@@ -701,6 +757,114 @@ private fun Header(info: SharedFileInfo?, skipped: Int, providerName: String) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+    }
+}
+
+/**
+ * The language this file is transcribed in, and the way to change it (issue #461).
+ *
+ * In the header rather than beside the result, because it matters before there is a result: the
+ * transcription starts on arrival, and a switch made while the file is still going up stops that upload
+ * and starts over in the new language. It looks like the keyboard's language chip — the globe for
+ * detection, the short code otherwise — because a full name in a chip of its own cost the header a line.
+ *
+ * The menu offers detection and the user's own languages, and every other one behind "More languages":
+ * a voice message can be in a language nobody here dictates in. The rest is not in the menu because it is
+ * a hundred rows, and building them all held the screen for a second and a half on the emulator each time
+ * the menu opened, for a list that is rarely needed. Picking one outside the user's list does not add it
+ * there; this screen keeps its own choice.
+ */
+@Composable
+private fun LanguageButton(language: String, onPick: (String) -> Unit) {
+    val prefs by FlorisPreferenceStore
+    var open by remember { mutableStateOf(false) }
+    var showAll by remember { mutableStateOf(false) }
+    val detectLabel = stringRes(R.string.dictate__language_detect)
+    fun label(code: String) = if (code == DictateLanguages.DETECT) detectLabel else DictateLanguages.of(code).displayName()
+    val current = label(language)
+    // Only a pick changes the language, and a pick closes both lists, so no row ever moves under the
+    // finger. The current language counts as one of the user's own even outside their list, so it is
+    // never the one left out of the menu.
+    val (mine, rest) = remember(language) {
+        val selected = DictateLanguages.parseSelection(prefs.dictate.inputLanguages.get()).map { it.code }.toSet()
+        DictateLanguages.sortedForDisplay(DictateLanguages.all).partition {
+            it.code == DictateLanguages.DETECT || it.code == language || it.code in selected
+        }
+    }
+
+    Box {
+        OutlinedButton(
+            onClick = { open = true },
+            contentPadding = PaddingValues(start = 12.dp, end = 6.dp),
+            // The short code says little to a screen reader; the name says it all.
+            modifier = Modifier.semantics { contentDescription = current },
+        ) {
+            if (language == DictateLanguages.DETECT) {
+                Icon(Icons.Default.Language, contentDescription = null, modifier = Modifier.size(20.dp))
+            } else {
+                Text(DictateLanguages.of(language).shortCode, style = MaterialTheme.typography.labelLarge)
+            }
+            Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(20.dp))
+        }
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+            mine.forEach { lang ->
+                DropdownMenuItem(
+                    text = { Text(label(lang.code)) },
+                    trailingIcon = if (lang.code == language) {
+                        { Icon(Icons.Default.Check, contentDescription = null) }
+                    } else {
+                        null
+                    },
+                    onClick = {
+                        open = false
+                        onPick(lang.code)
+                    },
+                )
+            }
+            HorizontalDivider()
+            DropdownMenuItem(
+                text = { Text(stringRes(R.string.translate__more_languages)) },
+                onClick = {
+                    open = false
+                    showAll = true
+                },
+            )
+        }
+    }
+
+    // The rest in a lazy list of its own: unfolded inside the menu, all hundred rows were built at once
+    // and held the screen for two seconds on the emulator. Rows as in the provider pickers; none is
+    // selected, because the current language is always among the menu's own.
+    if (showAll) {
+        JetPrefAlertDialog(
+            scrollModifier = florisDialogScroll(),
+            title = stringRes(R.string.translate__more_languages),
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = { showAll = false },
+        ) {
+            LazyColumn(modifier = Modifier.heightIn(max = 420.dp)) {
+                items(rest, key = { it.code }) { lang ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showAll = false
+                                onPick(lang.code)
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = false,
+                            onClick = {
+                                showAll = false
+                                onPick(lang.code)
+                            },
+                        )
+                        Text(text = label(lang.code), modifier = Modifier.padding(start = 8.dp))
+                    }
+                }
             }
         }
     }

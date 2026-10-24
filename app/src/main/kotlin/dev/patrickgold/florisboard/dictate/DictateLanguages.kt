@@ -225,6 +225,13 @@ object DictateLanguages {
     }
 
     /**
+     * The language a shared file starts out in (issue #461): the one last picked on the share screen
+     * ([importCode]), or the active dictation language ([activeCode]) while none has been picked there.
+     * A code this catalog no longer knows becomes [DETECT], as everywhere [of] is asked.
+     */
+    fun forImport(importCode: String, activeCode: String): String = of(importCode.ifBlank { activeCode }).code
+
+    /**
      * The user's own name for a bare language [code], for a place that names a *model's* coverage
      * rather than a dictation pick — "Deutsch", "Chinesisch", "Hawaiianisch".
      *

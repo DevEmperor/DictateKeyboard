@@ -99,11 +99,15 @@ object ImportTranscriber {
      * this function owns — preparing, uploading, waiting for the answer; the copy before it and the
      * history entry after it belong to the caller. Cancellation is cooperative: the coroutine is
      * checked between pieces, so stopping a ten-part job never costs more than the part in flight.
+     *
+     * [language] is the screen's own pick, [DictateLanguages.DETECT] included (issue #461) — not the
+     * keyboard's active language, which says what the user dictates in rather than what they were sent.
      */
     suspend fun transcribe(
         context: Context,
         prefs: FlorisPreferenceModel,
         audio: File,
+        language: String,
         onProgress: (ImportProgress) -> Unit = {},
     ): String = withContext(Dispatchers.IO) {
         val appContext = context.applicationContext
@@ -150,7 +154,7 @@ object ImportTranscriber {
                     )
                 )
                 val text = transcribeOne(
-                    appContext, prefs, account, preset, model, piece, onDevice, onUpload,
+                    appContext, prefs, account, preset, model, piece, language, onDevice, onUpload,
                 )
                 if (text.isNotBlank()) parts.add(text)
             }
@@ -244,6 +248,7 @@ object ImportTranscriber {
         preset: dev.patrickgold.florisboard.dictate.provider.ProviderPreset,
         model: String,
         audio: File,
+        language: String,
         onDevice: Boolean,
         onUpload: ((sent: Long, total: Long) -> Unit)?,
     ): String {
@@ -276,7 +281,7 @@ object ImportTranscriber {
         }
         try {
             return transcribeFile(
-                appContext, prefs, account, preset, model, converted ?: source, onDevice, onUpload,
+                appContext, prefs, account, preset, model, converted ?: source, language, onDevice, onUpload,
             )
         } finally {
             converted?.let { runCatching { it.delete() } }
@@ -292,6 +297,7 @@ object ImportTranscriber {
         preset: dev.patrickgold.florisboard.dictate.provider.ProviderPreset,
         model: String,
         audio: File,
+        language: String,
         onDevice: Boolean,
         onUpload: ((sent: Long, total: Long) -> Unit)?,
     ): String {
@@ -299,11 +305,11 @@ object ImportTranscriber {
             audioFile = audio,
             model = model,
             onUpload = onUpload,
-            language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT },
-            // The same list-shaped hint the keyboard sends (#99), so an import is recognised in the
-            // languages the user actually speaks.
+            language = language.takeIf { it != DictateLanguages.DETECT },
+            // The same list-shaped hint the keyboard sends (#99), so an import left to detection is
+            // recognised among the languages the user actually speaks.
             expectedLanguages = DictateLanguages.expectedLanguages(
-                activeCode = prefs.dictate.activeInputLanguage.get(),
+                activeCode = language,
                 selectionRaw = prefs.dictate.inputLanguages.get(),
             ),
         )
