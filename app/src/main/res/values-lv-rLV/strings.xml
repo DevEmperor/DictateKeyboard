@@ -2274,6 +2274,7 @@
     <string name="gif__error">Neizdevās ielādēt GIF. Pārbaudi savienojumu un API atslēgu.</string>
     <string name="gif__setup_needed">Iestatījumos pievieno bezmaksas KLIPY API atslēgu, lai meklētu GIF</string>
     <string name="gif__setup_needed_action">Iestatīt GIF meklēšanu</string>
+    <string name="gif__search_off">GIF meklēšana ir izslēgta</string>
     <string name="dictate__error_no_rewording_model">Izvēlieties pārformulēšanas modeli pakalpojumam %1$s</string>
     <string name="dictate__model_placeholder_required">obligāti: izvēlieties vai ierakstiet modeli</string>
     <string name="gif__copied_to_clipboard">GIF nokopēts starpliktuvē — turi nospiestu, lai ielīmētu</string>

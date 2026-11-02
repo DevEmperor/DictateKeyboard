@@ -1188,9 +1188,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
     val gif = Gif()
     inner class Gif {
+        // "gif__enabled" (default off) was read by nothing but the settings summary, so GIF search ran
+        // with it off. Made to work, it would have switched GIFs off for everyone who had added a key
+        // without touching it; a new key that starts on keeps them working, and off now means off. The
+        // old key is dropped in migrate().
         val enabled = boolean(
-            key = "gif__enabled",
-            default = false,
+            key = "gif__search_enabled",
+            default = true,
         )
         // Bring-your-own KLIPY API key (see KlipyGifProvider). Empty = GIF search disabled.
         val klipyApiKey = string(
@@ -1898,6 +1902,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
     override fun migrate(entry: PreferenceMigrationEntry): PreferenceMigrationEntry {
         return when (entry.key) {
+
+            // The GIF switch that never switched anything; see Gif.enabled.
+            "gif__enabled" -> entry.reset()
 
             // Migrate media prefs to emoji prefs
             // Keep migration rule until: 0.6 dev cycle

@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.gif
 
 import android.graphics.drawable.Animatable
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -109,11 +110,14 @@ fun GifPanel(
     val prefs by FlorisPreferenceStore
     val accent by prefs.theme.accentColor.collectPrefAsState()
     val apiKey by prefs.gif.klipyApiKey.collectPrefAsState()
+    val searchEnabled by prefs.gif.enabled.collectPrefAsState()
     val history by prefs.gif.history.collectPrefAsState()
     val submittedQuery by keyboardManager.gifSearchSubmit.collectAsState()
     val scope = rememberCoroutineScope()
     val inputFeedbackController = LocalInputFeedbackController.current
-    val hasKey = apiKey.isNotBlank()
+    // "Enable GIF search" off means no request to KLIPY at all, key or not: every request below waits on
+    // this, so the switch is what it says rather than a label in the settings.
+    val hasKey = searchEnabled && apiKey.isNotBlank()
 
     var gifs by remember { mutableStateOf<List<GifItem>>(emptyList()) }
     var page by remember { mutableStateOf(1) }
@@ -280,7 +284,12 @@ fun GifPanel(
             val panelAlpha by animateFloatAsState(targetValue = if (menuItem != null) 0.12f else 1f)
             Box(modifier = Modifier.fillMaxSize().alpha(panelAlpha)) {
                 when {
-                    !hasKey -> GifSetupNeeded { FlorisImeService.launchSettings("settings/media") }
+                    !searchEnabled -> GifSetupNeeded(R.string.gif__search_off) {
+                        FlorisImeService.launchSettings("settings/media")
+                    }
+                    !hasKey -> GifSetupNeeded(R.string.gif__setup_needed) {
+                        FlorisImeService.launchSettings("settings/media")
+                    }
                     initialLoading -> GifCentered { CircularProgressIndicator(color = accent) }
                     loadError -> GifCentered {
                         SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__error))
@@ -441,7 +450,7 @@ private fun GifCentered(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun GifSetupNeeded(onSetup: () -> Unit) {
+private fun GifSetupNeeded(@StringRes headline: Int, onSetup: () -> Unit) {
     SnyggBox(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -452,7 +461,7 @@ private fun GifSetupNeeded(onSetup: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(R.string.gif__setup_needed))
+            SnyggText(FlorisImeUi.MediaEmojiSubheader.elementName, text = stringRes(headline))
             SnyggText(
                 elementName = FlorisImeUi.SmartbarCandidateWordText.elementName,
                 text = stringRes(R.string.gif__setup_needed_action),

@@ -2315,6 +2315,7 @@
     <string name="gif__error">无法加载 GIF。请检查你的网络连接和 API 密钥。</string>
     <string name="gif__setup_needed">在设置中添加免费的 KLIPY API 密钥以搜索 GIF</string>
     <string name="gif__setup_needed_action">设置 GIF 搜索</string>
+    <string name="gif__search_off">GIF 搜索已关闭</string>
     <string name="dictate__error_no_rewording_model">请为 %1$s 选择改写模型</string>
     <string name="dictate__model_placeholder_required">必填：选择或输入模型</string>
     <string name="gif__copied_to_clipboard">GIF 已复制到剪贴板 — 长按即可粘贴</string>

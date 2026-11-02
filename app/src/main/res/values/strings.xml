@@ -41,6 +41,7 @@
     <string name="gif__error" comment="Shown when a GIF request fails">Couldn\'t load GIFs. Check your connection and API key.</string>
     <string name="gif__setup_needed" comment="Empty state prompting the user to add a key">Add a free KLIPY API key in Settings to search GIFs</string>
     <string name="gif__setup_needed_action" comment="Button to open settings">Set up GIF search</string>
+    <string name="gif__search_off" comment="Empty state of the GIF panel while the user has switched GIF search off in the settings">GIF search is turned off</string>
     <string name="gif__copied_to_clipboard" comment="Toast when a GIF is copied as a fallback">GIF copied to clipboard — long-press to paste</string>
     <string name="gif__insert_failed" comment="Toast when a GIF could not be inserted or copied">Couldn\'t insert the GIF</string>
     <!-- Scan text (issue #390) -->

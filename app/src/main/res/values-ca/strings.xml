@@ -2195,6 +2195,7 @@
     <string name="gif__error">No s\'han pogut carregar els GIFs. Comprova la connexió i la clau d\'API.</string>
     <string name="gif__setup_needed">Afegeix una clau gratuïta de l\'API de KLIPY a Configuració per cercar GIFs</string>
     <string name="gif__setup_needed_action">Configura la cerca de GIFs</string>
+    <string name="gif__search_off">La cerca de GIFs està desactivada</string>
     <string name="dictate__error_no_rewording_model">Tria un model de reformulació per a %1$s</string>
     <string name="dictate__model_placeholder_required">obligatori: tria o escriu un model</string>
     <string name="gif__copied_to_clipboard">GIF copiat al porta-retalls — mantén premut per enganxar</string>
