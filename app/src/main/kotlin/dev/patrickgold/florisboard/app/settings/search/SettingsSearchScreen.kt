@@ -56,7 +56,7 @@ import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.stringRes
 
 /** Title resources shown as quick "Popular" shortcuts when the search box is still empty. */
-private val POPULAR_TITLES = setOf(
+internal val POPULAR_TITLES = listOf(
     R.string.dictate__rewording_title,
     R.string.dictate__providers_title,
     R.string.dictate__realtime_title,
@@ -64,6 +64,20 @@ private val POPULAR_TITLES = setOf(
     R.string.settings__typing__title,
     R.string.pref__glide__enabled__label,
 )
+
+/**
+ * One entry per popular title, in the order of [titles]. A screen is indexed twice — as itself, and as the
+ * row that leads to it on its parent — and both carry its title, so filtering by title listed "AI
+ * providers" and "Rewording (AI)" twice each. The screen's own entry wins: it opens the screen rather than
+ * the parent with a row flashing on it.
+ */
+internal fun popularEntries(
+    entries: List<SettingsSearchEntry>,
+    titles: List<Int> = POPULAR_TITLES,
+): List<SettingsSearchEntry> = titles.mapNotNull { title ->
+    val matches = entries.filter { it.titleRes == title }
+    matches.firstOrNull { it.sectionRes == title } ?: matches.firstOrNull()
+}
 
 /**
  * A search across every indexed settings entry (issue #187). Type to filter by localized title,
@@ -174,7 +188,7 @@ fun SettingsSearchScreen() = FlorisScreen {
             }
             // Popular shortcuts.
             SectionHeader(stringRes(R.string.settings__search__popular))
-            SettingsSearchIndex.entries.filter { it.titleRes in POPULAR_TITLES }.forEach { entry ->
+            popularEntries(SettingsSearchIndex.entries).forEach { entry ->
                 ResultRow(entry, onClick = { open(entry) })
             }
         } else if (results.isEmpty()) {

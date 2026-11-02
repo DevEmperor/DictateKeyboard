@@ -174,54 +174,61 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
 @Composable
 fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
     return when (this) {
-        is QuickAction.InsertKey -> stringRes(when (data.code) {
-            KeyCode.ARROW_UP -> R.string.quick_action__arrow_up__tooltip
-            KeyCode.ARROW_DOWN -> R.string.quick_action__arrow_down__tooltip
-            KeyCode.ARROW_LEFT -> R.string.quick_action__arrow_left__tooltip
-            KeyCode.ARROW_RIGHT -> R.string.quick_action__arrow_right__tooltip
-            KeyCode.MOVE_START_OF_PAGE -> R.string.quick_action__move_start_of_page__tooltip
-            KeyCode.MOVE_END_OF_PAGE -> R.string.quick_action__move_end_of_page__tooltip
-            KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> R.string.quick_action__clipboard_clear_primary_clip__tooltip
-            KeyCode.CLIPBOARD_COPY -> R.string.quick_action__clipboard_copy__tooltip
-            KeyCode.CLIPBOARD_CUT -> R.string.quick_action__clipboard_cut__tooltip
-            KeyCode.CLIPBOARD_PASTE -> R.string.quick_action__clipboard_paste__tooltip
-            KeyCode.CLIPBOARD_SELECT_ALL -> R.string.quick_action__clipboard_select_all__tooltip
-            KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
-            KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media__tooltip
-            KeyCode.IME_UI_MODE_GIF -> R.string.quick_action__ime_ui_mode_gif__tooltip
-            KeyCode.IME_UI_MODE_STICKER -> R.string.quick_action__ime_ui_mode_sticker__tooltip
-            KeyCode.IME_UI_MODE_EDITING -> R.string.quick_action__ime_ui_mode_editing__tooltip
-            KeyCode.IME_UI_MODE_SCAN -> R.string.quick_action__ime_ui_mode_scan__tooltip
-            KeyCode.TRANSLATE -> R.string.quick_action__translate__tooltip
-            KeyCode.IME_UI_MODE_DICTATE -> R.string.quick_action__ime_ui_mode_dictate__tooltip
-            KeyCode.DICTATE_LIVE_PROMPT -> R.string.quick_action__dictate_live_prompt__tooltip
-            KeyCode.DICTATE_PROMPTS -> R.string.quick_action__dictate_prompts__tooltip
-            KeyCode.DICTATE_REINSERT -> R.string.quick_action__dictate_reinsert__tooltip
-            KeyCode.DICTATE_SWITCH_PROVIDER -> R.string.quick_action__dictate_switch_provider__tooltip
-            KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch__tooltip
-            KeyCode.SYSTEM_PREV_INPUT_METHOD -> R.string.quick_action__system_prev_input_method__tooltip
-            KeyCode.SYSTEM_INPUT_METHOD_PICKER -> R.string.quick_action__system_input_method_picker__tooltip
-            KeyCode.SETTINGS -> R.string.quick_action__settings__tooltip
-            KeyCode.UNDO -> R.string.quick_action__undo__tooltip
-            KeyCode.REDO -> R.string.quick_action__redo__tooltip
-            KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow__tooltip
-            KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode__tooltip
-            KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui__tooltip
-            KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode__tooltip
-            // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode__tooltip
-            KeyCode.SPLIT_LAYOUT -> R.string.quick_action__split_layout__tooltip
-            KeyCode.TOGGLE_RESIZE_MODE -> R.string.quick_action__resize_mode__tooltip
-            KeyCode.TOGGLE_NUMBER_ROW -> R.string.quick_action__toggle_number_row__tooltip
-            KeyCode.VIEW_NUMERIC_ADVANCED -> R.string.quick_action__view_numeric_advanced__tooltip
-            KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
-                R.string.quick_action__drag_marker__tooltip
-            } else {
-                R.string.general__empty_string
-            }
-            KeyCode.NOOP -> R.string.quick_action__noop__tooltip
-            else -> R.string.general__invalid_fatal
-        })
+        is QuickAction.InsertKey -> stringRes(tooltipResFor(data.code, evaluator.state.debugShowDragAndDropHelpers))
         is QuickAction.InsertText -> "Insert text '$data'"
     }
+}
+
+/**
+ * The tooltip of the action for key [code]. A plain function so a test can hold every action in the
+ * default arrangement to having one: Forward delete had none and showed "!! invalid !!" on a long press.
+ */
+internal fun tooltipResFor(code: Int, showDragHelpers: Boolean): Int = when (code) {
+    KeyCode.ARROW_UP -> R.string.quick_action__arrow_up__tooltip
+    KeyCode.ARROW_DOWN -> R.string.quick_action__arrow_down__tooltip
+    KeyCode.ARROW_LEFT -> R.string.quick_action__arrow_left__tooltip
+    KeyCode.ARROW_RIGHT -> R.string.quick_action__arrow_right__tooltip
+    KeyCode.MOVE_START_OF_PAGE -> R.string.quick_action__move_start_of_page__tooltip
+    KeyCode.MOVE_END_OF_PAGE -> R.string.quick_action__move_end_of_page__tooltip
+    KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> R.string.quick_action__clipboard_clear_primary_clip__tooltip
+    KeyCode.CLIPBOARD_COPY -> R.string.quick_action__clipboard_copy__tooltip
+    KeyCode.CLIPBOARD_CUT -> R.string.quick_action__clipboard_cut__tooltip
+    KeyCode.CLIPBOARD_PASTE -> R.string.quick_action__clipboard_paste__tooltip
+    KeyCode.CLIPBOARD_SELECT_ALL -> R.string.quick_action__clipboard_select_all__tooltip
+    KeyCode.FORWARD_DELETE -> R.string.quick_action__forward_delete__tooltip
+    KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
+    KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media__tooltip
+    KeyCode.IME_UI_MODE_GIF -> R.string.quick_action__ime_ui_mode_gif__tooltip
+    KeyCode.IME_UI_MODE_STICKER -> R.string.quick_action__ime_ui_mode_sticker__tooltip
+    KeyCode.IME_UI_MODE_EDITING -> R.string.quick_action__ime_ui_mode_editing__tooltip
+    KeyCode.IME_UI_MODE_SCAN -> R.string.quick_action__ime_ui_mode_scan__tooltip
+    KeyCode.TRANSLATE -> R.string.quick_action__translate__tooltip
+    KeyCode.IME_UI_MODE_DICTATE -> R.string.quick_action__ime_ui_mode_dictate__tooltip
+    KeyCode.DICTATE_LIVE_PROMPT -> R.string.quick_action__dictate_live_prompt__tooltip
+    KeyCode.DICTATE_PROMPTS -> R.string.quick_action__dictate_prompts__tooltip
+    KeyCode.DICTATE_REINSERT -> R.string.quick_action__dictate_reinsert__tooltip
+    KeyCode.DICTATE_SWITCH_PROVIDER -> R.string.quick_action__dictate_switch_provider__tooltip
+    KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch__tooltip
+    KeyCode.SYSTEM_PREV_INPUT_METHOD -> R.string.quick_action__system_prev_input_method__tooltip
+    KeyCode.SYSTEM_INPUT_METHOD_PICKER -> R.string.quick_action__system_input_method_picker__tooltip
+    KeyCode.SETTINGS -> R.string.quick_action__settings__tooltip
+    KeyCode.UNDO -> R.string.quick_action__undo__tooltip
+    KeyCode.REDO -> R.string.quick_action__redo__tooltip
+    KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow__tooltip
+    KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode__tooltip
+    KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui__tooltip
+    KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode__tooltip
+    // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
+    KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode__tooltip
+    KeyCode.SPLIT_LAYOUT -> R.string.quick_action__split_layout__tooltip
+    KeyCode.TOGGLE_RESIZE_MODE -> R.string.quick_action__resize_mode__tooltip
+    KeyCode.TOGGLE_NUMBER_ROW -> R.string.quick_action__toggle_number_row__tooltip
+    KeyCode.VIEW_NUMERIC_ADVANCED -> R.string.quick_action__view_numeric_advanced__tooltip
+    KeyCode.DRAG_MARKER -> if (showDragHelpers) {
+        R.string.quick_action__drag_marker__tooltip
+    } else {
+        R.string.general__empty_string
+    }
+    KeyCode.NOOP -> R.string.quick_action__noop__tooltip
+    else -> R.string.general__invalid_fatal
 }

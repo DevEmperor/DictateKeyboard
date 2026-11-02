@@ -2200,6 +2200,7 @@
     <string name="gif__setup_needed">أضِف مفتاح KLIPY API مجاني في الإعدادات للبحث عن GIFs</string>
     <string name="gif__setup_needed_action">إعداد البحث عن GIF</string>
     <string name="gif__search_off">البحث عن GIF متوقف</string>
+    <string name="quick_action__forward_delete__tooltip">حذف الحرف الذي يلي المؤشر</string>
     <string name="dictate__error_no_rewording_model">اختر نموذج إعادة الصياغة لـ %1$s</string>
     <string name="dictate__model_placeholder_required">مطلوب: اختر نموذجًا أو اكتبه</string>
     <string name="gif__copied_to_clipboard">تم نسخ GIF إلى الحافظة — اضغط مطولًا للصق</string>

@@ -2277,6 +2277,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="gif__setup_needed">Tambahkan kunci API KLIPY gratis di Pengaturan untuk mencari GIF</string>
     <string name="gif__setup_needed_action">Siapkan pencarian GIF</string>
     <string name="gif__search_off">Pencarian GIF dimatikan</string>
+    <string name="quick_action__forward_delete__tooltip">Hapus karakter setelah kursor</string>
     <string name="dictate__error_no_rewording_model">Pilih model penyusunan ulang untuk %1$s</string>
     <string name="dictate__model_placeholder_required">wajib: pilih atau ketik model</string>
     <string name="gif__copied_to_clipboard">GIF disalin ke papan klip — tekan lama untuk menempel</string>

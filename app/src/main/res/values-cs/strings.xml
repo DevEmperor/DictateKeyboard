@@ -2350,6 +2350,7 @@
     <string name="gif__setup_needed">Přidejte v Nastavení bezplatný klíč KLIPY API pro vyhledávání GIFs</string>
     <string name="gif__setup_needed_action">Nastavit vyhledávání GIFs</string>
     <string name="gif__search_off">Vyhledávání GIFů je vypnuté</string>
+    <string name="quick_action__forward_delete__tooltip">Smazat znak za kurzorem</string>
     <string name="dictate__error_no_rewording_model">Vyberte model přeformulování pro %1$s</string>
     <string name="dictate__model_placeholder_required">povinné: vyberte nebo zadejte model</string>
     <string name="gif__copied_to_clipboard">GIF zkopírován do schránky — vložíte dlouhým stisknutím</string>

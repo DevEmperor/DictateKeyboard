@@ -2130,6 +2130,7 @@
     <string name="gif__setup_needed">Adicione uma chave de API gratuita da KLIPY nas Configurações para buscar GIFs</string>
     <string name="gif__setup_needed_action">Configurar busca de GIFs</string>
     <string name="gif__search_off">A busca de GIFs está desativada</string>
+    <string name="quick_action__forward_delete__tooltip">Apagar o caractere após o cursor</string>
     <string name="dictate__error_no_rewording_model">Escolha um modelo de reformulação para %1$s</string>
     <string name="dictate__model_placeholder_required">obrigatório: escolha ou digite um modelo</string>
     <string name="gif__copied_to_clipboard">GIF copiado para a área de transferência — mantenha pressionado para colar</string>

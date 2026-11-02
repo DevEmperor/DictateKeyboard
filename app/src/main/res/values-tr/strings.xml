@@ -2305,6 +2305,7 @@
     <string name="gif__setup_needed">GIF aramak için Ayarlar\'da ücretsiz bir KLIPY API anahtarı ekleyin</string>
     <string name="gif__setup_needed_action">GIF aramayı kur</string>
     <string name="gif__search_off">GIF arama kapalı</string>
+    <string name="quick_action__forward_delete__tooltip">İmlecin sonrasındaki karakteri sil</string>
     <string name="dictate__error_no_rewording_model">%1$s için bir yeniden ifade etme modeli seçin</string>
     <string name="dictate__model_placeholder_required">zorunlu: bir model seçin veya yazın</string>
     <string name="gif__copied_to_clipboard">GIF panoya kopyalandı — yapıştırmak için uzun basın</string>

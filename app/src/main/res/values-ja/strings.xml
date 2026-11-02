@@ -2254,6 +2254,7 @@
     <string name="gif__setup_needed">GIF を検索するには設定で無料の KLIPY API キーを追加してください</string>
     <string name="gif__setup_needed_action">GIF 検索を設定</string>
     <string name="gif__search_off">GIF 検索はオフになっています</string>
+    <string name="quick_action__forward_delete__tooltip">カーソルの後ろの文字を削除</string>
     <string name="dictate__error_no_rewording_model">%1$s の言い換えモデルを選択してください</string>
     <string name="dictate__model_placeholder_required">必須：モデルを選択または入力</string>
     <string name="gif__copied_to_clipboard">GIF をクリップボードにコピーしました — 長押しで貼り付け</string>
