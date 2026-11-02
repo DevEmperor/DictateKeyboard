@@ -839,7 +839,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             // itself — commitCompletion would treat the trailing token as something to replace. The
             // completion brings its own "=" when none was typed yet (issue #440).
             is MathSuggestionCandidate -> editorInstance.commitText(candidate.completion)
-            else -> editorInstance.commitCompletion(candidate)
+            // A tapped word replaces the whole word the cursor stands in; the correction a space applies
+            // does not, because a space typed inside a word is splitting it.
+            else -> editorInstance.commitCompletion(candidate, wholeWord = byUser)
         }
     }
 

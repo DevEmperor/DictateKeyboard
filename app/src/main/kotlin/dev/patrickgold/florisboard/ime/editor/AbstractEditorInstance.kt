@@ -446,6 +446,9 @@ abstract class AbstractEditorInstance(context: Context) {
      * the same batch edit before it is replaced, so the editor never gets a chance to draw it underlined.
      * Going through the composing region rather than a selection keeps the bookkeeping — the expected
      * content and the last commit position — on the one path that is known to be right.
+     *
+     * [range] may reach past the cursor, over the rest of a word the cursor stands inside (Dictate,
+     * `behavio|r`); [rangeText] then holds both halves, and the part behind the cursor goes as well.
      */
     open fun finalizeComposingText(text: String, range: EditorRange, rangeText: String): Boolean {
         val ic = currentInputConnection() ?: return false
@@ -454,13 +457,15 @@ abstract class AbstractEditorInstance(context: Context) {
         if (activeInfo.isRawInputEditor || range.isNotValid) {
             return false
         } else runBlocking {
+            val behindCursor = (range.end - content.selection.end).coerceIn(0, rangeText.length)
             val newSelection = EditorRange.cursor(range.end + (text.length - rangeText.length))
             val newContent = content.generateCopy(
                 selection = newSelection,
                 textBeforeSelection = buildString {
-                    append(content.textBeforeSelection.removeSuffix(rangeText))
+                    append(content.textBeforeSelection.removeSuffix(rangeText.dropLast(behindCursor)))
                     append(text)
                 },
+                textAfterSelection = content.textAfterSelection.drop(behindCursor),
                 selectedText = "",
             )
             expectedContentQueue.push(newContent)

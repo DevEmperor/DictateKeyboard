@@ -82,13 +82,54 @@ internal fun mayIgnoreNoSuggestionsFlag(
  *
  * Invalid stays invalid: after a phantom space there is neither a composing region nor a current word,
  * and there the candidate is genuinely new text that belongs after the cursor.
+ *
+ * Both of those end at the cursor, because they are found by looking back from it. With the cursor inside
+ * a word that is only half of it: `behavio|r` composes `behavio`, and accepting "behaviour" left the `r`
+ * standing, as `behaviour r` (reported by e-mail with a screen recording, 2026-11). So when the range ends
+ * at a plain cursor, the rest of the word behind it ([wordTailLength] of [textAfterSelection]) is replaced
+ * too, the way Gboard does it.
  */
-internal fun completionReplacementRange(composing: EditorRange, currentWord: EditorRange): EditorRange =
-    when {
+internal fun completionReplacementRange(
+    composing: EditorRange,
+    currentWord: EditorRange,
+    selection: EditorRange = EditorRange.Unspecified,
+    textAfterSelection: String = "",
+): EditorRange {
+    val range = when {
         composing.isValid -> composing
         currentWord.isValid -> currentWord
-        else -> EditorRange.Unspecified
+        else -> return EditorRange.Unspecified
     }
+    if (selection.isNotValid || selection.isSelectionMode || range.end != selection.end) return range
+    val tail = wordTailLength(textAfterSelection)
+    return if (tail > 0) EditorRange(range.start, range.end + tail) else range
+}
+
+/**
+ * How many characters at the start of [textAfterCursor] still belong to the word the cursor is in.
+ *
+ * Letters, digits and the combining marks that some scripts write their vowels with (a Devanagari matra
+ * after the cursor is half of a letter, not the start of something new). An apostrophe counts when a
+ * letter follows it, so `do|n't` is one word, while a closing quote before a space is not part of it. A
+ * hyphen ends the word, as it does everywhere else in the keyboard (see `WordRun`).
+ */
+internal fun wordTailLength(textAfterCursor: String): Int {
+    var i = 0
+    while (i < textAfterCursor.length) {
+        val cp = textAfterCursor.codePointAt(i)
+        val inWord = Character.isLetterOrDigit(cp) || when (Character.getType(cp)) {
+            Character.NON_SPACING_MARK.toInt(),
+            Character.COMBINING_SPACING_MARK.toInt(),
+            Character.ENCLOSING_MARK.toInt(),
+            -> true
+            else -> false
+        } || ((cp == '\''.code || cp == '’'.code) &&
+            i + 1 < textAfterCursor.length && Character.isLetter(textAfterCursor.codePointAt(i + 1)))
+        if (!inWord) break
+        i += Character.charCount(cp)
+    }
+    return i
+}
 
 /**
  * Whether the space between [textBefore] and the punctuation mark [char] should be swallowed, turning
@@ -541,16 +582,36 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * the wrong word on exactly the cases the first one was written for.
      */
     fun textCompletionWouldReplace(): String {
+        // Asked only before an auto-correction, which never takes the part of a word behind the cursor.
         val content = activeContent
-        if (!completionReplacementRange(content.composing, content.currentWord).isValid) return ""
-        return if (content.composing.isValid) content.composingText else content.currentWordText
+        val range = completionRange(content, wholeWord = false)
+        return if (range.isValid) completionRangeText(content, range) else ""
     }
 
-    fun commitCompletion(candidate: SuggestionCandidate): Boolean {
+    /**
+     * [completionReplacementRange] asked about [content]: the same rule for both callers, by construction.
+     * [wholeWord] adds the part of the word behind the cursor; only a candidate the user picked does that.
+     */
+    private fun completionRange(content: EditorContent, wholeWord: Boolean): EditorRange =
+        completionReplacementRange(
+            composing = content.composing,
+            currentWord = content.currentWord,
+            selection = if (wholeWord) content.selection else EditorRange.Unspecified,
+            textAfterSelection = content.textAfterSelection,
+        )
+
+    /** What [range] reads in [content]: the word up to the cursor, plus the part of it behind the cursor. */
+    private fun completionRangeText(content: EditorContent, range: EditorRange): String {
+        val beforeCursor = if (content.composing.isValid) content.composingText else content.currentWordText
+        val behindCursor = (range.end - content.selection.end).coerceAtLeast(0)
+        return beforeCursor + content.textAfterSelection.take(behindCursor)
+    }
+
+    fun commitCompletion(candidate: SuggestionCandidate, wholeWord: Boolean = false): Boolean {
         val text = candidate.text.toString()
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
         val content = activeContent
-        val replaceRange = completionReplacementRange(content.composing, content.currentWord)
+        val replaceRange = completionRange(content, wholeWord)
         // Issue #393: the space an accepted candidate promises is written here rather than in front of
         // the next key press, so the cursor stands where the user can see the word is finished. What
         // follows the range about to be overwritten — not what follows the cursor, which may still be
@@ -572,7 +633,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             super.finalizeComposingText(
                 text = "$text$trailingSpace",
                 range = replaceRange,
-                rangeText = if (content.composing.isValid) content.composingText else content.currentWordText,
+                rangeText = completionRangeText(content, replaceRange),
             )
         } else {
             val isPhantomSpaceActive = phantomSpace.determine(text)
