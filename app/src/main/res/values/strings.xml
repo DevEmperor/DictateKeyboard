@@ -2150,6 +2150,8 @@
     <string name="dictate__providers_check_failed_connection" comment="Headline when the connection test failed">Connection test failed</string>
     <string name="dictate__providers_check_failed_transcription" comment="Headline when the transcription test failed">Transcription test failed</string>
     <string name="dictate__providers_check_err_auth" comment="What to do when the provider rejected the key">The key was rejected. Check it, and that the endpoint belongs to the same account.</string>
+    <string name="dictate__providers_check_err_model" comment="What to do when the key is valid but may not use the chosen model, e.g. an OpenAI project with a model allow-list">The key works, but may not use this model. Choose another model, or allow this one in the provider’s project settings.</string>
+    <string name="dictate__error_model_unavailable" comment="Short error: the key is valid but may not use the chosen model, or the model does not exist">Model not available for this key</string>
     <string name="dictate__providers_check_err_quota" comment="What to do when the key works but the account has nothing left to spend">The key works, but the account is out of quota or over a rate limit. Check your plan with the provider.</string>
     <string name="dictate__providers_check_err_network" comment="What to do when the server could not be reached at all">The server could not be reached. Check the address and your internet connection.</string>
     <string name="dictate__providers_check_err_timeout" comment="What to do when the provider did not answer in time">No answer in time. The provider may be busy — try again.</string>

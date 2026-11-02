@@ -1313,6 +1313,8 @@
     <string name="dictate__providers_check_failed_connection">La prova de connexió ha fallat</string>
     <string name="dictate__providers_check_failed_transcription">La prova de transcripció ha fallat</string>
     <string name="dictate__providers_check_err_auth">La clau s’ha rebutjat. Comproveu-la i que l’adreça pertanyi al mateix compte.</string>
+    <string name="dictate__providers_check_err_model">La clau funciona, però no pot fer servir aquest model. Tria un altre model o permet aquest a la configuració del projecte del proveïdor.</string>
+    <string name="dictate__error_model_unavailable">Model no disponible per a aquesta clau</string>
     <string name="dictate__providers_check_err_quota">La clau funciona, però el compte no té quota o ha superat un límit. Reviseu el vostre pla amb el proveïdor.</string>
     <string name="dictate__providers_check_err_network">No s’ha pogut arribar al servidor. Comproveu l’adreça i la connexió a internet.</string>
     <string name="dictate__providers_check_err_timeout">Sense resposta a temps. El proveïdor pot estar ocupat: torneu-ho a provar.</string>

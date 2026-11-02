@@ -1321,6 +1321,8 @@
     <string name="dictate__providers_check_failed_connection">Échec du test de connexion</string>
     <string name="dictate__providers_check_failed_transcription">Échec du test de transcription</string>
     <string name="dictate__providers_check_err_auth">La clé a été refusée. Vérifiez-la, ainsi que l’appartenance de l’adresse au même compte.</string>
+    <string name="dictate__providers_check_err_model">La clé fonctionne, mais ne peut pas utiliser ce modèle. Choisissez un autre modèle ou autorisez celui-ci dans les paramètres du projet chez le fournisseur.</string>
+    <string name="dictate__error_model_unavailable">Modèle non disponible pour cette clé</string>
     <string name="dictate__providers_check_err_quota">La clé fonctionne, mais le compte n’a plus de quota ou dépasse une limite. Vérifiez votre offre auprès du fournisseur.</string>
     <string name="dictate__providers_check_err_network">Le serveur est injoignable. Vérifiez l’adresse et votre connexion internet.</string>
     <string name="dictate__providers_check_err_timeout">Pas de réponse à temps. Le fournisseur est peut-être occupé : réessayez.</string>

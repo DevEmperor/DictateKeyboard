@@ -1438,6 +1438,8 @@
     <string name="dictate__providers_check_failed_connection">连接测试失败</string>
     <string name="dictate__providers_check_failed_transcription">转录测试失败</string>
     <string name="dictate__providers_check_err_auth">密钥被拒绝。请检查密钥，以及地址是否属于同一账户。</string>
+    <string name="dictate__providers_check_err_model">密钥有效，但无权使用此模型。请选择其他模型，或在服务商的项目设置中允许此模型。</string>
+    <string name="dictate__error_model_unavailable">此密钥无法使用该模型</string>
     <string name="dictate__providers_check_err_quota">密钥有效，但账户额度用尽或超出限制。请在服务商处查看你的套餐。</string>
     <string name="dictate__providers_check_err_network">无法连接服务器。请检查地址和网络连接。</string>
     <string name="dictate__providers_check_err_timeout">未在限定时间内收到回应。服务商可能繁忙，请重试。</string>

@@ -1398,6 +1398,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_check_failed_connection">Uji koneksi gagal</string>
     <string name="dictate__providers_check_failed_transcription">Uji transkripsi gagal</string>
     <string name="dictate__providers_check_err_auth">Kunci ditolak. Periksa kunci dan pastikan alamatnya milik akun yang sama.</string>
+    <string name="dictate__providers_check_err_model">Kunci berfungsi, tetapi tidak boleh memakai model ini. Pilih model lain atau izinkan model ini di setelan proyek penyedia.</string>
+    <string name="dictate__error_model_unavailable">Model tidak tersedia untuk kunci ini</string>
     <string name="dictate__providers_check_err_quota">Kunci berfungsi, tetapi kuota akun habis atau melebihi batas. Periksa paket Anda di penyedia.</string>
     <string name="dictate__providers_check_err_network">Server tidak dapat dijangkau. Periksa alamat dan koneksi internet Anda.</string>
     <string name="dictate__providers_check_err_timeout">Tidak ada jawaban tepat waktu. Penyedia mungkin sibuk — coba lagi.</string>

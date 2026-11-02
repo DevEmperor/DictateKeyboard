@@ -1301,6 +1301,8 @@
     <string name="dictate__providers_check_failed_connection">فشل اختبار الاتصال</string>
     <string name="dictate__providers_check_failed_transcription">فشل اختبار التفريغ النصي</string>
     <string name="dictate__providers_check_err_auth">رُفض المفتاح. تحقق منه ومن أن العنوان يخص الحساب نفسه.</string>
+    <string name="dictate__providers_check_err_model">المفتاح يعمل، لكن لا يُسمح له باستخدام هذا النموذج. اختر نموذجًا آخر أو اسمح بهذا النموذج في إعدادات المشروع لدى المزوّد.</string>
+    <string name="dictate__error_model_unavailable">النموذج غير متاح لهذا المفتاح</string>
     <string name="dictate__providers_check_err_quota">المفتاح يعمل، لكن الحساب استنفد حصته أو تجاوز حد الاستخدام. راجع خطتك لدى المزوّد.</string>
     <string name="dictate__providers_check_err_network">تعذّر الوصول إلى الخادم. تحقق من العنوان ومن اتصالك بالإنترنت.</string>
     <string name="dictate__providers_check_err_timeout">لا استجابة في الوقت المحدد. قد يكون المزوّد مشغولًا — أعد المحاولة.</string>

@@ -1442,6 +1442,8 @@
     <string name="dictate__providers_check_failed_connection">A kapcsolat tesztje sikertelen</string>
     <string name="dictate__providers_check_failed_transcription">Az átírás tesztje sikertelen</string>
     <string name="dictate__providers_check_err_auth">A kulcsot elutasították. Ellenőrizd a kulcsot, és hogy a cím ugyanahhoz a fiókhoz tartozik-e.</string>
+    <string name="dictate__providers_check_err_model">A kulcs működik, de ezt a modellt nem használhatja. Válasszon másik modellt, vagy engedélyezze ezt a szolgáltató projektbeállításaiban.</string>
+    <string name="dictate__error_model_unavailable">A modell nem érhető el ehhez a kulcshoz</string>
     <string name="dictate__providers_check_err_quota">A kulcs működik, de a fiók kerete elfogyott, vagy túllépted a korlátot. Nézd meg a csomagodat a szolgáltatónál.</string>
     <string name="dictate__providers_check_err_network">A kiszolgáló nem érhető el. Ellenőrizd a címet és az internetkapcsolatot.</string>
     <string name="dictate__providers_check_err_timeout">Nem érkezett válasz időben. A szolgáltató lehet, hogy leterhelt – próbáld újra.</string>

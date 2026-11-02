@@ -1459,6 +1459,8 @@
     <string name="dictate__providers_check_failed_connection">Test spojení selhal</string>
     <string name="dictate__providers_check_failed_transcription">Test přepisu selhal</string>
     <string name="dictate__providers_check_err_auth">Klíč byl odmítnut. Zkontrolujte jej i to, zda adresa patří ke stejnému účtu.</string>
+    <string name="dictate__providers_check_err_model">Klíč funguje, ale tento model používat nesmí. Vyberte jiný model, nebo jej povolte v nastavení projektu u poskytovatele.</string>
+    <string name="dictate__error_model_unavailable">Model není pro tento klíč dostupný</string>
     <string name="dictate__providers_check_err_quota">Klíč funguje, ale účet nemá kvótu nebo překročil limit. Zkontrolujte svůj tarif u poskytovatele.</string>
     <string name="dictate__providers_check_err_network">Server nebylo možné kontaktovat. Zkontrolujte adresu a připojení k internetu.</string>
     <string name="dictate__providers_check_err_timeout">Žádná odpověď včas. Poskytovatel může být vytížený – zkuste to znovu.</string>

@@ -1226,6 +1226,8 @@
     <string name="dictate__providers_check_failed_connection">Prova di connessione fallita</string>
     <string name="dictate__providers_check_failed_transcription">Prova di trascrizione fallita</string>
     <string name="dictate__providers_check_err_auth">La chiave è stata rifiutata. Controllala e verifica che l’indirizzo appartenga allo stesso account.</string>
+    <string name="dictate__providers_check_err_model">La chiave funziona, ma non può usare questo modello. Scegli un altro modello o abilita questo nelle impostazioni del progetto presso il fornitore.</string>
+    <string name="dictate__error_model_unavailable">Modello non disponibile per questa chiave</string>
     <string name="dictate__providers_check_err_quota">La chiave funziona, ma l’account ha esaurito la quota o ha superato un limite. Controlla il tuo piano presso il provider.</string>
     <string name="dictate__providers_check_err_network">Impossibile raggiungere il server. Controlla l’indirizzo e la connessione a internet.</string>
     <string name="dictate__providers_check_err_timeout">Nessuna risposta in tempo. Il provider potrebbe essere occupato: riprova.</string>

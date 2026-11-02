@@ -1449,6 +1449,8 @@
     <string name="dictate__providers_check_failed_connection">Проверка соединения не удалась</string>
     <string name="dictate__providers_check_failed_transcription">Проверка транскрибирования не удалась</string>
     <string name="dictate__providers_check_err_auth">Ключ отклонён. Проверьте его и то, относится ли адрес к той же учётной записи.</string>
+    <string name="dictate__providers_check_err_model">Ключ работает, но не может использовать эту модель. Выберите другую модель или разрешите эту в настройках проекта у провайдера.</string>
+    <string name="dictate__error_model_unavailable">Модель недоступна для этого ключа</string>
     <string name="dictate__providers_check_err_quota">Ключ работает, но на счёте нет квоты или превышен лимит. Проверьте свой тариф у провайдера.</string>
     <string name="dictate__providers_check_err_network">Не удалось связаться с сервером. Проверьте адрес и подключение к интернету.</string>
     <string name="dictate__providers_check_err_timeout">Ответ не пришёл вовремя. Провайдер может быть загружен — попробуйте ещё раз.</string>

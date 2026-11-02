@@ -1375,6 +1375,8 @@
     <string name="dictate__providers_check_failed_connection">接続テストに失敗しました</string>
     <string name="dictate__providers_check_failed_transcription">文字起こしテストに失敗しました</string>
     <string name="dictate__providers_check_err_auth">キーが拒否されました。キーと、アドレスが同じアカウントのものかを確認してください。</string>
+    <string name="dictate__providers_check_err_model">キーは有効ですが、このモデルは使用できません。別のモデルを選ぶか、プロバイダーのプロジェクト設定でこのモデルを許可してください。</string>
+    <string name="dictate__error_model_unavailable">このキーではモデルを利用できません</string>
     <string name="dictate__providers_check_err_quota">キーは有効ですが、アカウントの残量がないか上限を超えています。プロバイダーでプランを確認してください。</string>
     <string name="dictate__providers_check_err_network">サーバーに接続できませんでした。アドレスとインターネット接続を確認してください。</string>
     <string name="dictate__providers_check_err_timeout">時間内に応答がありませんでした。プロバイダーが混雑している可能性があります。もう一度お試しください。</string>

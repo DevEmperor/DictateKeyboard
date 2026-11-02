@@ -1343,6 +1343,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_check_failed_connection">Verbindingstest mislukt</string>
     <string name="dictate__providers_check_failed_transcription">Transcriptietest mislukt</string>
     <string name="dictate__providers_check_err_auth">De sleutel is geweigerd. Controleer hem, en of het adres bij hetzelfde account hoort.</string>
+    <string name="dictate__providers_check_err_model">De sleutel werkt, maar mag dit model niet gebruiken. Kies een ander model of sta dit model toe in de projectinstellingen van de aanbieder.</string>
+    <string name="dictate__error_model_unavailable">Model niet beschikbaar voor deze sleutel</string>
     <string name="dictate__providers_check_err_quota">De sleutel werkt, maar het account heeft geen tegoed meer of zit boven een limiet. Controleer je abonnement bij de aanbieder.</string>
     <string name="dictate__providers_check_err_network">De server was niet bereikbaar. Controleer het adres en je internetverbinding.</string>
     <string name="dictate__providers_check_err_timeout">Geen antwoord op tijd. De aanbieder is misschien druk — probeer het opnieuw.</string>

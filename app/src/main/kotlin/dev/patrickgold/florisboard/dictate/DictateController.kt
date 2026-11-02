@@ -1155,6 +1155,7 @@ object DictateController {
         DictateApiException.Kind.CONTENT_SIZE_LIMIT -> R.string.dictate__error_content_size_limit
         DictateApiException.Kind.TEXT_SIZE_LIMIT -> R.string.dictate__error_text_size_limit
         DictateApiException.Kind.FORMAT_NOT_SUPPORTED -> R.string.dictate__error_format_not_supported
+        DictateApiException.Kind.MODEL_UNAVAILABLE -> R.string.dictate__error_model_unavailable
         DictateApiException.Kind.TIMEOUT -> R.string.dictate__error_timeout
         DictateApiException.Kind.NETWORK -> R.string.dictate__error_network
         DictateApiException.Kind.SERVER_ERROR -> R.string.dictate__error_server
@@ -1248,7 +1249,9 @@ object DictateController {
             outOfCredit -> ErrorAction.TOP_UP
             canResend && e.kind in EXPORTABLE_ERROR_KINDS -> ErrorAction.SAVE_AUDIO
             canResend && e.kind.isRetryable -> ErrorAction.RESEND
-            e.kind == DictateApiException.Kind.INVALID_API_KEY -> ErrorAction.OPEN_SETTINGS
+            // A model the key may not use is changed where the key is: the provider's settings.
+            e.kind == DictateApiException.Kind.INVALID_API_KEY ||
+                e.kind == DictateApiException.Kind.MODEL_UNAVAILABLE -> ErrorAction.OPEN_SETTINGS
             else -> ErrorAction.NONE
         }
         // The chip fits one short line, so the hint replaces the headline rather than being appended to

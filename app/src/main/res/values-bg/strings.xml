@@ -1443,6 +1443,8 @@
     <string name="dictate__providers_check_failed_connection">Тестът на връзката е неуспешен</string>
     <string name="dictate__providers_check_failed_transcription">Тестът на транскрибирането е неуспешен</string>
     <string name="dictate__providers_check_err_auth">Ключът беше отхвърлен. Проверете него и дали адресът принадлежи на същия акаунт.</string>
+    <string name="dictate__providers_check_err_model">Ключът работи, но не може да използва този модел. Изберете друг модел или го разрешете в настройките на проекта при доставчика.</string>
+    <string name="dictate__error_model_unavailable">Моделът не е достъпен за този ключ</string>
     <string name="dictate__providers_check_err_quota">Ключът работи, но акаунтът е изчерпал квотата си или е над лимита. Проверете плана си при доставчика.</string>
     <string name="dictate__providers_check_err_network">Сървърът не можа да бъде достигнат. Проверете адреса и интернет връзката си.</string>
     <string name="dictate__providers_check_err_timeout">Няма отговор навреме. Доставчикът може да е зает — опитайте отново.</string>

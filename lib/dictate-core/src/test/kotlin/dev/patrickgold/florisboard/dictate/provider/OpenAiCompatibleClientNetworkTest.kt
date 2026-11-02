@@ -395,6 +395,47 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    test("a project that may not use the model is told so, not to check its key") {
+        // OpenAI's own answers, asked of the endpoint on 2026-11-02 (project id shortened): a project with a
+        // model allow-list, and a model that does not exist.
+        val answers = listOf(
+            403 to """{"error":{"message":"Project `proj_x` does not have access to model `gpt-6-luna`",""" +
+                """"type":"invalid_request_error","param":null,"code":"model_not_found"}}""",
+            404 to """{"error":{"message":"The model `no-such-model` does not exist or you do not have access to it.",""" +
+                """"type":"invalid_request_error","param":null,"code":"model_not_found"}}""",
+        )
+        for ((status, body) in answers) {
+            MockWebServer().use { server ->
+                server.enqueue(MockResponse().setResponseCode(status).setBody(body))
+                val client = OpenAiCompatibleClient(
+                    ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+                )
+
+                val error = shouldThrow<DictateApiException> {
+                    client.complete(ChatRequest.ofUser("gpt-6-luna", "Fix my typos"))
+                }
+                error.kind shouldBe DictateApiException.Kind.MODEL_UNAVAILABLE
+                error.kind.isRetryable shouldBe false
+            }
+        }
+    }
+
+    test("a rejected key is still a key problem") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(401).setBody(
+                    """{"error":{"message":"Incorrect API key provided.","type":"invalid_request_error",""" +
+                        """"code":"invalid_api_key"}}""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "x"))
+
+            shouldThrow<DictateApiException> {
+                client.complete(ChatRequest.ofUser("gpt-6-luna", "Fix my typos"))
+            }.kind shouldBe DictateApiException.Kind.INVALID_API_KEY
+        }
+    }
+
     test("Deepgram offers only models the file endpoint can serve") {
         MockWebServer().use { server ->
             server.enqueue(

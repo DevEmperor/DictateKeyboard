@@ -53,6 +53,15 @@ class DictateApiException(
          */
         TEXT_SIZE_LIMIT,
         FORMAT_NOT_SUPPORTED,
+
+        /**
+         * The key is fine, but the model is not one it may use: an OpenAI project that allows only some
+         * models answers `403 model_not_found`, "Project … does not have access to model …", and a model
+         * that does not exist (any more) gets the same code with a 404 (both asked of the endpoint,
+         * 2026-11-02). As a 403 it used to read "Check your API key", which sent the user to the one
+         * setting that was right; the remedy is another model, or allowing this one in the project.
+         */
+        MODEL_UNAVAILABLE,
         TIMEOUT,
         NETWORK,
         SERVER_ERROR,
@@ -123,6 +132,9 @@ class DictateApiException(
             // Search code + type + message together so any of the three can trigger a match.
             val hay = listOf(code, type, message).joinToString(" ") { it.orEmpty() }.lowercase()
             val kind = when {
+                // Before the key check: a project without access to a model answers 403 like a bad key.
+                hay.contains("model_not_found") || hay.contains("does not have access to model") ||
+                    (hay.contains("model") && hay.contains("does not exist")) -> Kind.MODEL_UNAVAILABLE
                 status == 401 || status == 403 ||
                     hay.contains("api key") || hay.contains("api_key") || hay.contains("invalid_api_key") ||
                     hay.contains("unauthorized") || hay.contains("authentication") -> Kind.INVALID_API_KEY

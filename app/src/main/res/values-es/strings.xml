@@ -1425,6 +1425,8 @@
     <string name="dictate__providers_check_failed_connection">La prueba de conexión ha fallado</string>
     <string name="dictate__providers_check_failed_transcription">La prueba de transcripción ha fallado</string>
     <string name="dictate__providers_check_err_auth">La clave fue rechazada. Compruébala y que la dirección pertenezca a la misma cuenta.</string>
+    <string name="dictate__providers_check_err_model">La clave funciona, pero no puede usar este modelo. Elige otro modelo o permite este en la configuración del proyecto del proveedor.</string>
+    <string name="dictate__error_model_unavailable">Modelo no disponible para esta clave</string>
     <string name="dictate__providers_check_err_quota">La clave funciona, pero la cuenta no tiene cuota o ha superado un límite. Revisa tu plan con el proveedor.</string>
     <string name="dictate__providers_check_err_network">No se pudo llegar al servidor. Comprueba la dirección y tu conexión a internet.</string>
     <string name="dictate__providers_check_err_timeout">Sin respuesta a tiempo. El proveedor puede estar ocupado: inténtalo de nuevo.</string>

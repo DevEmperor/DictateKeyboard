@@ -1288,6 +1288,8 @@
     <string name="dictate__providers_check_failed_connection">Перевірка з’єднання не вдалася</string>
     <string name="dictate__providers_check_failed_transcription">Перевірка транскрибування не вдалася</string>
     <string name="dictate__providers_check_err_auth">Ключ відхилено. Перевірте його та чи належить адреса до того самого облікового запису.</string>
+    <string name="dictate__providers_check_err_model">Ключ працює, але не може використовувати цю модель. Виберіть іншу модель або дозвольте цю в налаштуваннях проєкту в постачальника.</string>
+    <string name="dictate__error_model_unavailable">Модель недоступна для цього ключа</string>
     <string name="dictate__providers_check_err_quota">Ключ працює, але на рахунку немає квоти або перевищено ліміт. Перевірте свій тариф у постачальника.</string>
     <string name="dictate__providers_check_err_network">Не вдалося зв’язатися із сервером. Перевірте адресу та підключення до інтернету.</string>
     <string name="dictate__providers_check_err_timeout">Відповідь не надійшла вчасно. Постачальник може бути завантажений — спробуйте ще раз.</string>

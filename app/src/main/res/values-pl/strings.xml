@@ -1460,6 +1460,8 @@
     <string name="dictate__providers_check_failed_connection">Test połączenia nie powiódł się</string>
     <string name="dictate__providers_check_failed_transcription">Test transkrypcji nie powiódł się</string>
     <string name="dictate__providers_check_err_auth">Klucz został odrzucony. Sprawdź go i to, czy adres należy do tego samego konta.</string>
+    <string name="dictate__providers_check_err_model">Klucz działa, ale nie może używać tego modelu. Wybierz inny model albo zezwól na ten w ustawieniach projektu u dostawcy.</string>
+    <string name="dictate__error_model_unavailable">Model niedostępny dla tego klucza</string>
     <string name="dictate__providers_check_err_quota">Klucz działa, ale konto nie ma już limitu lub go przekroczyło. Sprawdź swój plan u dostawcy.</string>
     <string name="dictate__providers_check_err_network">Nie udało się połączyć z serwerem. Sprawdź adres i połączenie z internetem.</string>
     <string name="dictate__providers_check_err_timeout">Brak odpowiedzi na czas. Dostawca może być obciążony — spróbuj ponownie.</string>

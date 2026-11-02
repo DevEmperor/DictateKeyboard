@@ -1388,6 +1388,8 @@
     <string name="dictate__providers_check_failed_connection">Savienojuma pārbaude neizdevās</string>
     <string name="dictate__providers_check_failed_transcription">Transkribēšanas pārbaude neizdevās</string>
     <string name="dictate__providers_check_err_auth">Atslēga tika noraidīta. Pārbaudiet to un to, vai adrese pieder tam pašam kontam.</string>
+    <string name="dictate__providers_check_err_model">Atslēga darbojas, bet nedrīkst izmantot šo modeli. Izvēlieties citu modeli vai atļaujiet šo pakalpojuma sniedzēja projekta iestatījumos.</string>
+    <string name="dictate__error_model_unavailable">Modelis šai atslēgai nav pieejams</string>
     <string name="dictate__providers_check_err_quota">Atslēga darbojas, bet kontam vairs nav kvotas vai ir pārsniegts ierobežojums. Pārbaudiet savu plānu pie pakalpojuma sniedzēja.</string>
     <string name="dictate__providers_check_err_network">Serveri neizdevās sasniegt. Pārbaudiet adresi un interneta savienojumu.</string>
     <string name="dictate__providers_check_err_timeout">Nav atbildes noteiktajā laikā. Pakalpojuma sniedzējs var būt noslogots — mēģiniet vēlreiz.</string>

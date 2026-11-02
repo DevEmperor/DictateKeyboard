@@ -1422,6 +1422,8 @@
     <string name="dictate__providers_check_failed_connection">Bağlantı sınaması başarısız</string>
     <string name="dictate__providers_check_failed_transcription">Yazıya dökme sınaması başarısız</string>
     <string name="dictate__providers_check_err_auth">Anahtar reddedildi. Anahtarı ve adresin aynı hesaba ait olup olmadığını denetleyin.</string>
+    <string name="dictate__providers_check_err_model">Anahtar çalışıyor ancak bu modeli kullanamıyor. Başka bir model seçin veya bu modele sağlayıcının proje ayarlarında izin verin.</string>
+    <string name="dictate__error_model_unavailable">Model bu anahtar için kullanılamıyor</string>
     <string name="dictate__providers_check_err_quota">Anahtar çalışıyor ama hesabın kotası bitmiş ya da bir sınır aşılmış. Sağlayıcıdaki planınızı denetleyin.</string>
     <string name="dictate__providers_check_err_network">Sunucuya ulaşılamadı. Adresi ve internet bağlantınızı denetleyin.</string>
     <string name="dictate__providers_check_err_timeout">Zamanında yanıt gelmedi. Sağlayıcı yoğun olabilir — yeniden deneyin.</string>

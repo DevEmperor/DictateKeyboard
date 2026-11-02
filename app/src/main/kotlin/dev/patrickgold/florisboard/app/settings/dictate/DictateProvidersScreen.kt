@@ -1519,6 +1519,7 @@ private fun failureOutcome(context: Context, e: Exception, transcription: Boolea
     val advice = context.stringRes(
         when (kind) {
             DictateApiException.Kind.INVALID_API_KEY -> R.string.dictate__providers_check_err_auth
+            DictateApiException.Kind.MODEL_UNAVAILABLE -> R.string.dictate__providers_check_err_model
             DictateApiException.Kind.QUOTA_EXCEEDED -> R.string.dictate__providers_check_err_quota
             DictateApiException.Kind.NETWORK -> R.string.dictate__providers_check_err_network
             DictateApiException.Kind.TIMEOUT -> R.string.dictate__providers_check_err_timeout

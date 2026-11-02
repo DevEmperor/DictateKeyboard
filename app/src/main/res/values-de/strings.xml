@@ -1370,6 +1370,8 @@
     <string name="dictate__providers_check_failed_connection">Verbindungstest fehlgeschlagen</string>
     <string name="dictate__providers_check_failed_transcription">Transkriptionstest fehlgeschlagen</string>
     <string name="dictate__providers_check_err_auth">Der Schlüssel wurde abgelehnt. Prüfe ihn und ob die Adresse zum selben Konto gehört.</string>
+    <string name="dictate__providers_check_err_model">Der Schlüssel funktioniert, darf dieses Modell aber nicht nutzen. Wähle ein anderes Modell oder gib dieses in den Projekteinstellungen des Anbieters frei.</string>
+    <string name="dictate__error_model_unavailable">Modell für diesen Schlüssel nicht verfügbar</string>
     <string name="dictate__providers_check_err_quota">Der Schlüssel funktioniert, aber das Konto hat kein Guthaben mehr oder liegt über einem Limit. Prüfe deinen Tarif beim Anbieter.</string>
     <string name="dictate__providers_check_err_network">Der Server war nicht erreichbar. Prüfe die Adresse und deine Internetverbindung.</string>
     <string name="dictate__providers_check_err_timeout">Keine Antwort in der vorgegebenen Zeit. Der Anbieter ist vielleicht ausgelastet – versuch es noch einmal.</string>

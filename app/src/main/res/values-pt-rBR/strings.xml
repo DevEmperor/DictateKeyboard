@@ -1247,6 +1247,8 @@
     <string name="dictate__providers_check_failed_connection">Falha no teste de conexão</string>
     <string name="dictate__providers_check_failed_transcription">Falha no teste de transcrição</string>
     <string name="dictate__providers_check_err_auth">A chave foi recusada. Confira a chave e se o endereço pertence à mesma conta.</string>
+    <string name="dictate__providers_check_err_model">A chave funciona, mas não pode usar este modelo. Escolha outro modelo ou libere este nas configurações do projeto no provedor.</string>
+    <string name="dictate__error_model_unavailable">Modelo indisponível para esta chave</string>
     <string name="dictate__providers_check_err_quota">A chave funciona, mas a conta ficou sem cota ou passou de um limite. Verifique seu plano com o provedor.</string>
     <string name="dictate__providers_check_err_network">Não foi possível alcançar o servidor. Confira o endereço e sua conexão com a internet.</string>
     <string name="dictate__providers_check_err_timeout">Sem resposta a tempo. O provedor pode estar ocupado — tente de novo.</string>
