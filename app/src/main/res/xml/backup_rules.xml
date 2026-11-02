@@ -9,4 +9,8 @@
     <include
         domain="database"
         path="floris_user_dictionary"/>
+    <!-- The saved prompts, as data_extraction_rules.xml explains. -->
+    <include
+        domain="database"
+        path="prompts.db"/>
 </full-backup-content>

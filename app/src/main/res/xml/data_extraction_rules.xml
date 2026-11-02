@@ -4,8 +4,12 @@
   backup_rules.xml itself, whose <full-backup-content> root is the wrong format here.
 
   The intent is the same as there: the settings (API keys included, a decision stated in the privacy
-  policy), the keyboard's own files and the user dictionary. Never the dictation history, its audio or
-  the clipboard, which are left out by not being listed.
+  policy), the saved prompts, the keyboard's own files and the user dictionary. Never the dictation
+  history, its audio or the clipboard, which are left out by not being listed.
+
+  The prompts were missing although the privacy policy (section 2.6) has always named them: the rules
+  came over from FlorisBoard, and the prompt store was added after them. It keeps a rollback journal,
+  not a write-ahead log, so the database file alone is complete after every save.
 
   The cloud backup only runs when it is end-to-end encrypted with the screen lock, which is what the
   privacy policy says of it.
@@ -15,10 +19,12 @@
         <include domain="root" path="jetpref_datastore" />
         <include domain="file" path="ime" />
         <include domain="database" path="floris_user_dictionary" />
+        <include domain="database" path="prompts.db" />
     </cloud-backup>
     <device-transfer>
         <include domain="root" path="jetpref_datastore" />
         <include domain="file" path="ime" />
         <include domain="database" path="floris_user_dictionary" />
+        <include domain="database" path="prompts.db" />
     </device-transfer>
 </data-extraction-rules>
