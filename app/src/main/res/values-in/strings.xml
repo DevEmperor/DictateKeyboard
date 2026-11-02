@@ -898,7 +898,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__addon_management_box__managing_placeholder">Kelola {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Semua tugas yang terkait dengan mengimpor, mengekspor, membuat, menyesuaikan, dan menghapus ekstensi dapat ditangani melalui manajer addon terpusat.</string>
     <string name="ext__addon_management_box__go_to_page">Ke {ext_home_title}</string>
-    <string name="ext__home__info">Anda dapat mengunduh dan menginstal ekstensi dari Dictate Addons Store atau mengimpor file ekstensi apa pun yang telah Anda unduh dari internet.</string>
+    <string name="ext__home__info">Ekstensi menambahkan tema, tata letak keyboard, dan paket bahasa. Impor file ekstensi untuk menambahkannya; ekstensi yang Anda miliki tercantum di bawah.</string>
     <string name="ext__home__visit_store">Kunjungi Add-ons Store</string>
     <string name="ext__home__manage_extensions">Kelola ekstensi terpasang</string>
     <string name="ext__list__view_details">Lihat rincian</string>

@@ -925,7 +925,7 @@
     <string name="ext__addon_management_box__managing_placeholder">管理 {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">所有与导入、导出、创建、自定义和删除扩展相关的任务都可以通过集中的插件管理器来处理。</string>
     <string name="ext__addon_management_box__go_to_page">跳转到{ext_home_title}</string>
-    <string name="ext__home__info">您可以从 Dictate 插件商店下载并安装扩展，或者导入您从互联网上下载的任何匹配和兼容的扩展文件。</string>
+    <string name="ext__home__info">扩展可添加主题、键盘布局和语言包。导入扩展文件即可添加；已安装的扩展列在下方。</string>
     <string name="ext__home__visit_store">访问插件商店</string>
     <string name="ext__home__manage_extensions">管理已安装的扩展</string>
     <string name="ext__list__view_details">查看详细信息</string>

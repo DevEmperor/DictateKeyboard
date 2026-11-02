@@ -784,7 +784,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Керування {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Всі завдання, пов\'язані з імпортом, експортом, створенням, налаштуванням і видаленням розширень, можна вирішувати за допомогою централізованого менеджера розширень.</string>
     <string name="ext__addon_management_box__go_to_page">Перейти до {ext_home_title}</string>
-    <string name="ext__home__info">Ви можете завантажити і встановити розширення з магазину розширень Dictate або імпортувати будь-який файл розширення, який ви завантажили з мережі.</string>
+    <string name="ext__home__info">Розширення додають теми, розкладки клавіатури та мовні пакети. Імпортуйте файл розширення, щоб додати його; наявні розширення наведено нижче.</string>
     <string name="ext__home__visit_store">Відвідати магазин розширень</string>
     <string name="ext__home__manage_extensions">Керування встановленими розширеннями</string>
     <string name="ext__list__view_details">Докладніше</string>

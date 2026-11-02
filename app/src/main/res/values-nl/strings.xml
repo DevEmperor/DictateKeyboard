@@ -833,7 +833,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="ext__addon_management_box__managing_placeholder">{extensions} beheren</string>
     <string name="ext__addon_management_box__addon_manager_info">Alle taken met betrekking tot het importeren, exporteren, maken, aanpassen en verwijderen van extensies kunnen worden afgehandeld via de gecentraliseerde beheer van add-ons.</string>
     <string name="ext__addon_management_box__go_to_page">Ga naar {ext_home_title}</string>
-    <string name="ext__home__info">Je kunt extensies downloaden en installeren uit de Dictate Addons Store of een extensiebestand importeren dat van internet is gedownload.</string>
+    <string name="ext__home__info">Extensies voegen thema’s, toetsenbordindelingen en taalpakketten toe. Importeer een extensiebestand om er een toe te voegen; je huidige extensies staan hieronder.</string>
     <string name="ext__home__visit_store">Bezoek de Addons Store</string>
     <string name="ext__home__manage_extensions">Geïnstalleerde extensies beheren</string>
     <string name="ext__list__view_details">Details weergeven</string>

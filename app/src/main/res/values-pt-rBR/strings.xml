@@ -772,7 +772,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Gerenciando {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Todas as tarefas relacionadas à importação, exportação, criação, personalização e remoção de extensões podem ser realizadas pela central de gerenciamento de complementos.</string>
     <string name="ext__addon_management_box__go_to_page">Ir para {ext_home_title}</string>
-    <string name="ext__home__info">Você pode baixar e instalar extensões na Dictate Addons Store ou importar qualquer arquivo de extensão que tenha baixado da interne.</string>
+    <string name="ext__home__info">As extensões adicionam temas, layouts de teclado e pacotes de idioma. Importe um arquivo de extensão para adicionar uma; as que você tem aparecem abaixo.</string>
     <string name="ext__home__manage_extensions">Gerenciar extensões instaladas</string>
     <string name="ext__list__view_details">Ver detalhes</string>
     <string name="ext__check_updates__title">Verifique se há atualizações</string>

@@ -101,8 +101,4 @@ data class ExtensionMeta(
      * Use an SPDX license expression if this extension has multiple licenses.
      */
     val license: String,
-) {
-    fun getUpdateJsonPair(): String {
-        return "\"${id}\":\"${version}\""
-    }
-}
+)

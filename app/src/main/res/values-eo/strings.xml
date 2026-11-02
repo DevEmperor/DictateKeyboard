@@ -555,7 +555,6 @@
     <string name="ext__addon_management_box__managing_placeholder">Administri la {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Ĉiuj taskoj rilataj al importado, eksportado, kreado, personecigo, kaj forigo etendaĵojn povas esti mastrumata per la centralizita etendaĵa mastrumilo.</string>
     <string name="ext__addon_management_box__go_to_page">Iri al {ext_home_title}</string>
-    <string name="ext__home__info">Vi povas elŝuti kaj instali etendaĵojn el la Dictate Aldonaĵejo aŭ enporti iun ajn etendaĵan dosieron ke vi elŝutis el la interreto.</string>
     <string name="ext__home__visit_store">Viziti Aldonaĵejon</string>
     <string name="ext__home__manage_extensions">Administri instalitajn etendaĵojn</string>
     <string name="ext__list__view_details">Vidi detalojn</string>

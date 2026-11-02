@@ -858,7 +858,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Verwalte {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Alle Aufgaben im Zusammenhang mit dem Importieren, Exportieren, Erstellen, Anpassen und Entfernen von Erweiterungen können über den Add-on-Manager abgewickelt werden.</string>
     <string name="ext__addon_management_box__go_to_page">Gehe zu {ext_home_title}</string>
-    <string name="ext__home__info">Erweiterungen können über den Dictate Add-on Store heruntergeladen und installiert werden oder importiere beliebige Erweiterungen aus dem Internet.</string>
+    <string name="ext__home__info">Erweiterungen bringen Designs, Tastaturlayouts und Sprachpakete. Importiere eine Erweiterungsdatei, um eine hinzuzufügen; die vorhandenen stehen unten.</string>
     <string name="ext__home__visit_store">Besuche den Add-ons Store</string>
     <string name="ext__home__manage_extensions">Installierte Erweiterungen verwalten</string>
     <string name="ext__list__view_details">Details anzeigen</string>

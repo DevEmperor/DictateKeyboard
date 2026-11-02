@@ -21,13 +21,9 @@ import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import org.florisboard.lib.compose.stringRes
@@ -37,15 +33,10 @@ fun ExtensionHomeScreen() = FlorisScreen {
     title = stringRes(R.string.ext__home__title)
     previewFieldVisible = false
 
-    val context = LocalContext.current
     val navController = LocalNavController.current
-    val extensionManager by context.extensionManager()
-    val extensionIndex by extensionManager.extensions.collectAsState()
 
     content {
         ImportExtensionBox(navController)
-
-        UpdateBox(extensionIndex = extensionIndex)
 
         Preference(
             icon = Icons.Default.Palette,

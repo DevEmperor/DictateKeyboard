@@ -755,7 +755,7 @@
     <string name="ext__validation__enter_component_id">Inserisci l\'ID corretto</string>
     <string name="ext__validation__hint_value_above_50_percent">Qualsiasi valore superiore al 50% si comporterà come se impostassi il 50%, prendi in considerazione di ridurre la dimensione percentuale</string>
     <string name="ext__addon_management_box__addon_manager_info">Tutte le attività relative all\'importazione, all\'esportazione, alla creazione, alla personalizzazione e alla rimozione delle estensioni possono essere gestite tramite il gestore interno</string>
-    <string name="ext__home__info">Puoi scaricare e installare estensioni dallo Store di Dictate o importare qualsiasi addon</string>
+    <string name="ext__home__info">Le estensioni aggiungono temi, layout di tastiera e pacchetti lingua. Importa un file di estensione per aggiungerne una; quelle che hai sono elencate qui sotto.</string>
     <string name="ext__home__visit_store">Vai allo Store degli addons</string>
     <string name="ext__home__manage_extensions">Gestisci temi installati</string>
     <string name="ext__list__view_details">Visualizza dettagli</string>

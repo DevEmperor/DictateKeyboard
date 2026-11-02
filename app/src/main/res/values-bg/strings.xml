@@ -923,7 +923,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Управление на {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Всички дейности, свързани с внасяне, изнасяне, създаване, промяна и премахване на разширения могат да бъдат извършване през Управление на разширения.</string>
     <string name="ext__addon_management_box__go_to_page">Към {ext_home_title}</string>
-    <string name="ext__home__info">Можете да изтегляте и инсталирате разширения от магазина за добавки на Dictate или да внесете файл на разширение, който сте изтеглили от интернет.</string>
+    <string name="ext__home__info">Разширенията добавят теми, клавиатурни подредби и езикови пакети. Внесете файл на разширение, за да добавите такова; наличните са изброени по-долу.</string>
     <string name="ext__home__visit_store">Магазин за добавки</string>
     <string name="ext__home__manage_extensions">Управление на инсталирани разширения</string>
     <string name="ext__list__view_details">Подробности</string>

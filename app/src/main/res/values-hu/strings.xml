@@ -922,7 +922,7 @@
     <string name="ext__addon_management_box__managing_placeholder">{extensions} kezelése</string>
     <string name="ext__addon_management_box__addon_manager_info">A kiterjesztések importálásával, exportálásával, létrehozásával, testreszabásával és eltávolításával kapcsolatos összes feladat a központi kiterjesztéskezelőn keresztül kezelhető.</string>
     <string name="ext__addon_management_box__go_to_page">Ugrás erre: {ext_home_title}</string>
-    <string name="ext__home__info">Letöltheti és telepítheti a kiterjesztéseket a Dictate kiegészítőboltból, vagy importálhat bármely, az internetről letöltött kiterjesztés fájlt.</string>
+    <string name="ext__home__info">A kiterjesztések témákat, billentyűzetkiosztásokat és nyelvi csomagokat adnak hozzá. Egy kiterjesztésfájl importálásával vehet fel újat; a meglévők alább láthatók.</string>
     <string name="ext__home__visit_store">Kiegészítőbolt meglátogatása</string>
     <string name="ext__home__manage_extensions">Telepített kiterjesztések kezelése</string>
     <string name="ext__list__view_details">Részletek megtekintése</string>

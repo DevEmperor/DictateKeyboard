@@ -806,7 +806,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Gestionant {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Totes les tasques referides a la importació, exportació, creació, personalització i supressió d\'extensions es poden gestionar a través de l\'administrador de complements centralitzat.</string>
     <string name="ext__addon_management_box__go_to_page">Ves a {ext_home_title}</string>
-    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de Dictate o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
+    <string name="ext__home__info">Les extensions afegeixen temes, disposicions de teclat i paquets d’idioma. Importa un fitxer d’extensió per afegir-ne una; les que tens apareixen a sota.</string>
     <string name="ext__home__visit_store">Visita la botiga de complements</string>
     <string name="ext__home__manage_extensions">Administra les extensions instal·lades</string>
     <string name="ext__list__view_details">Visualitza els detalls</string>

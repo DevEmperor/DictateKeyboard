@@ -116,9 +116,6 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                 item {
                     ImportExtensionBox(navController)
                 }
-                item {
-                    UpdateBox(extensionIndex = extensionIndex)
-                }
             }
             items(extensionIndex) { ext ->
                 FlorisOutlinedBox(

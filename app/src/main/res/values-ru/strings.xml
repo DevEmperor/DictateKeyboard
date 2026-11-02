@@ -913,7 +913,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Управление {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Все задачи, связанные с импортом, экспортом, созданием, персонализацией и удалением расширений могут быть выполнены через централизованный менеджер расширений.</string>
     <string name="ext__addon_management_box__go_to_page">Перейти к {ext_home_title}</string>
-    <string name="ext__home__info">Вы можете скачать и установить расширения через магазин расширений Dictate или импортировать любые файлы расширений, скачанные из интернета.</string>
+    <string name="ext__home__info">Расширения добавляют темы, раскладки клавиатуры и языковые пакеты. Импортируйте файл расширения, чтобы добавить его; установленные расширения перечислены ниже.</string>
     <string name="ext__home__visit_store">Магазин расширений</string>
     <string name="ext__home__manage_extensions">Установленные расширения</string>
     <string name="ext__list__view_details">Подробности</string>
