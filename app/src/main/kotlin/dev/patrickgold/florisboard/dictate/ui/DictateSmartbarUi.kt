@@ -863,7 +863,11 @@ private fun ErrorDetailPopup(detail: String, onDismiss: () -> Unit) {
     }
 }
 
-/** Kind-specific icon for the error chip; the open-settings action gets a key icon regardless of kind. */
+/**
+ * Kind-specific icon for the error chip. The key icon is for a missing or refused key only: a missing
+ * rewording model or on-device model opens the settings too, and a key next to it pointed the user at the
+ * wrong field.
+ */
 private fun errorIcon(
     kind: DictateApiException.Kind?,
     action: DictateController.ErrorAction,
@@ -873,7 +877,7 @@ private fun errorIcon(
     // the other offer of a kept recording, rather than a warning sign over something the user chose.
     neutral && action == DictateController.ErrorAction.RESEND -> Icons.Default.GraphicEq
     action == DictateController.ErrorAction.TOP_UP -> Icons.Default.AddCard
-    action == DictateController.ErrorAction.OPEN_SETTINGS -> Icons.Default.VpnKey
+    kind == DictateApiException.Kind.INVALID_API_KEY -> Icons.Default.VpnKey
     kind == DictateApiException.Kind.QUOTA_EXCEEDED -> Icons.Default.DataUsage
     kind == DictateApiException.Kind.CONTENT_SIZE_LIMIT -> Icons.Default.WarningAmber
     kind == DictateApiException.Kind.TEXT_SIZE_LIMIT -> Icons.Default.WarningAmber

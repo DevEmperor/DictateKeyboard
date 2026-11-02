@@ -757,7 +757,7 @@ private fun providerSummary(
         if (preset.capabilities.transcription) {
             add(stored.transcriptionModel.ifBlank { preset.defaultTranscriptionModel.orEmpty() })
         }
-        if (preset.capabilities.chat) add(chatModelFor(stored, preset, fallback = ""))
+        if (preset.capabilities.chat) add(chatModelFor(stored, preset))
     }.filter { it.isNotBlank() }.distinct()
     return models.joinToString(" · ").ifBlank { providerCapabilities(preset) }
 }
@@ -1164,8 +1164,10 @@ internal fun ProviderEditorDialog(
                     label = stringRes(R.string.dictate__providers_field_chat_model),
                     value = chatModel,
                     onValueChange = { chatModel = it },
+                    // No default of its own means none at all — an empty box no longer borrows OpenAI's —
+                    // so the hint says a model is needed instead of promising a default.
                     placeholder = preset?.defaultChatModel
-                        ?: stringRes(R.string.dictate__model_placeholder),
+                        ?: stringRes(R.string.dictate__model_placeholder_required),
                     onBrowse = { pickerKind = ModelKind.CHAT },
                 )
             }

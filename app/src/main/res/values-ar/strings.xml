@@ -2176,6 +2176,8 @@
     <string name="gif__error">تعذّر تحميل GIFs. تحقّق من اتصالك ومفتاح API.</string>
     <string name="gif__setup_needed">أضِف مفتاح KLIPY API مجاني في الإعدادات للبحث عن GIFs</string>
     <string name="gif__setup_needed_action">إعداد البحث عن GIF</string>
+    <string name="dictate__error_no_rewording_model">اختر نموذج إعادة الصياغة لـ %1$s</string>
+    <string name="dictate__model_placeholder_required">مطلوب: اختر نموذجًا أو اكتبه</string>
     <string name="gif__copied_to_clipboard">تم نسخ GIF إلى الحافظة — اضغط مطولًا للصق</string>
     <string name="gif__insert_failed">تعذّر إدراج GIF</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

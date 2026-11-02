@@ -2322,6 +2322,8 @@
     <string name="gif__error">Не удалось загрузить GIF. Проверьте подключение и ключ API.</string>
     <string name="gif__setup_needed">Добавьте бесплатный ключ API KLIPY в Настройках, чтобы искать GIF</string>
     <string name="gif__setup_needed_action">Настроить поиск GIF</string>
+    <string name="dictate__error_no_rewording_model">Выберите модель переформулирования для %1$s</string>
+    <string name="dictate__model_placeholder_required">обязательно: выберите или введите модель</string>
     <string name="gif__copied_to_clipboard">GIF скопирован в буфер обмена — нажмите и удерживайте, чтобы вставить</string>
     <string name="gif__insert_failed">Не удалось вставить GIF</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

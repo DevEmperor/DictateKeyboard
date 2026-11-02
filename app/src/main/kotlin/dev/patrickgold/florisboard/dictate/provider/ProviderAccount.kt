@@ -247,16 +247,52 @@ fun singleCallApplies(transcriptionViaChat: Boolean, preset: ProviderPreset, mod
  * fold leaves blank forever, so every rewording went to the preset default and no setting could change
  * it. So the merged field wins when it holds something ([sharedSingleCallModel]); otherwise the rewording
  * field's own value, and failing that the preset default — which is what an empty box has always meant.
- * A preset without one (a server of the user's own) is asked for whatever OpenAI's default is: read from
- * that preset rather than spelled out here, where a copy of `gpt-4o-mini` outlived its retirement notice.
+ *
+ * Blank when there is none of the three. A preset without a default (Mistral, xAI, DeepSeek, Together,
+ * DeepInfra, Ollama, a server of the user's own) used to be asked for OpenAI's default instead, which none
+ * of them serve: every rewording failed with a model the user had never chosen, from a vendor they were
+ * not using. Their catalogs move too fast to pin a default of ours, so the user picks one, and a blank
+ * answer here is what makes the app say so ([rewordingBlocker]).
  */
-fun chatModelFor(
-    account: ProviderAccount,
-    preset: ProviderPreset,
-    fallback: String = ProviderRegistry.OPENAI.defaultChatModel.orEmpty(),
-): String {
+fun chatModelFor(account: ProviderAccount, preset: ProviderPreset): String {
     sharedSingleCallModel(account)?.let { return it }
-    return account.chatModel.ifBlank { preset.defaultChatModel ?: fallback }
+    return account.chatModel.ifBlank { preset.defaultChatModel.orEmpty() }
+}
+
+/**
+ * The key a rewording through [rewording] is sent with: its own, or — when it has none — the one of
+ * [transcription], but only if both talk to the same server.
+ *
+ * That fallback is the old "reuse the transcription key", from when both sides were one vendor. Applied
+ * across vendors, it handed the transcription provider's key to whatever the rewording pointed at: a
+ * keyless Ollama box or a server of the user's own, possibly over plain http, which then held a secret it
+ * never needed and the user never meant to give it. Built-in providers keep one account each, so "the
+ * same server" means the same account, or two servers of the user's own at the same address.
+ */
+fun rewordingKeyFor(rewording: ProviderAccount, transcription: ProviderAccount): String {
+    if (rewording.apiKey.isNotBlank()) return rewording.apiKey
+    val sameServer = rewording.providerId == transcription.providerId ||
+        (rewording.isCustom && transcription.isCustom &&
+            rewording.customBaseUrl.isNotBlank() &&
+            rewording.customBaseUrl.trim().trimEnd('/').equals(
+                transcription.customBaseUrl.trim().trimEnd('/'), ignoreCase = true,
+            ))
+    return if (sameServer) transcription.apiKey else ""
+}
+
+/** Why a rewording through [account] cannot be sent, or null when it can. */
+enum class RewordingBlocker { NO_KEY, NO_MODEL }
+
+/**
+ * The two things a rewording needs before it is worth sending: a key, where the provider wants one
+ * ([ProviderAccount.requiresCredential] — Ollama and servers of the user's own do not), and a model. Asked
+ * up front so a prompt chip says which one is missing instead of "No API key set" for a keyless server
+ * that only lacked a model, or a provider error about a model nobody chose.
+ */
+fun rewordingBlocker(account: ProviderAccount, preset: ProviderPreset, key: String): RewordingBlocker? = when {
+    key.isBlank() && account.requiresCredential -> RewordingBlocker.NO_KEY
+    chatModelFor(account, preset).isBlank() -> RewordingBlocker.NO_MODEL
+    else -> null
 }
 
 /**

@@ -77,6 +77,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderListing
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
+import dev.patrickgold.florisboard.dictate.provider.RewordingBlocker
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionFallback
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
@@ -85,6 +86,8 @@ import dev.patrickgold.florisboard.dictate.overlay.DictateAccessibilityService
 import dev.patrickgold.florisboard.dictate.overlay.floatingButtonTapBuzzes
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.chatModelIsPresetDefault
+import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
+import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
 import dev.patrickgold.florisboard.dictate.recognition.RecognitionSink
 import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
@@ -2442,11 +2445,16 @@ object DictateController {
         // transcription needed a key (e-mail, 2026-10-19). Turning the chip away before the recording was
         // the alternative; it saves the user nothing they wanted, while the transcript is exactly that.
         val wantsLive = live || spokenCommand != null
-        val isLive = wantsLive && rewordingHasCredential()
-        if (wantsLive && !isLive) {
+        val blocker = if (wantsLive) currentRewordingBlocker() else null
+        val isLive = wantsLive && blocker == null
+        if (blocker != null) {
             swallowedRewording = DictateApiException(
-                DictateApiException.Kind.INVALID_API_KEY,
-                appContext.getString(R.string.dictate__error_no_api_key),
+                if (blocker == RewordingBlocker.NO_KEY) {
+                    DictateApiException.Kind.INVALID_API_KEY
+                } else {
+                    DictateApiException.Kind.UNKNOWN
+                },
+                rewordingBlockedMessage(appContext, blocker),
             )
         }
         val text = TranscriptHandover.continuation(handedOver, rawText)
@@ -4479,10 +4487,16 @@ object DictateController {
             }
         }
 
-        if (rewordingApiKey().isBlank()) {
+        // Asked of what the provider needs, not of whether a key is stored: a keyless Ollama server or a
+        // server of the user's own used to be refused here with "No API key set".
+        currentRewordingBlocker()?.let { blocker ->
             _state.value = UiState.Error(
-                message = appContext.getString(R.string.dictate__error_no_api_key),
-                kind = DictateApiException.Kind.INVALID_API_KEY,
+                message = rewordingBlockedMessage(appContext, blocker),
+                kind = if (blocker == RewordingBlocker.NO_KEY) {
+                    DictateApiException.Kind.INVALID_API_KEY
+                } else {
+                    DictateApiException.Kind.UNKNOWN
+                },
                 action = ErrorAction.OPEN_SETTINGS,
             )
             return
@@ -4594,13 +4608,15 @@ object DictateController {
         // Punctuation-only transcripts ("...") are not blank but hold nothing to reword, and a model
         // asked to format them answers the *request* instead of the text. See [hasNoWords].
         if (DictatePromptDefaults.hasNoWords(transcript)) return transcript
-        // No rewording key (not even a shared transcription one) → nothing here can run; return the raw
-        // transcript instead of flashing "Formatting…" and looping through doomed throw/catch calls.
-        if (rewordingApiKey().isBlank()) return transcript
+        // A provider that wants a key and has none, or no model to ask → no request here can run; skip them
+        // instead of flashing "Formatting…" and looping through doomed throw/catch calls. Snippets need no
+        // request and are still appended.
+        val canReword = rewordingCanRun()
         var text = transcript
 
         // 1) Auto-formatting (spoken cues → Markdown). Low-level prompt, no be-precise suffix.
-        if (prefs.dictate.autoFormattingEnabled.get()) {
+        if (prefs.dictate.autoFormattingEnabled.get() && !canReword) noteSkippedRewording(context)
+        if (canReword && prefs.dictate.autoFormattingEnabled.get()) {
             _state.value = UiState.Rewording(context.getString(R.string.dictate__status_formatting))
             // Hint the model with the readable language name ("German"), or "unknown" for auto-detect.
             val languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get())
@@ -4631,6 +4647,7 @@ object DictateController {
                 text += context.transcriptSeparatorBefore(text, snippet) + snippet
                 continue
             }
+            if (!canReword) { noteSkippedRewording(context); continue }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             text = rewordOrKeep(text) {
                 requestReword(instruction, text, p.reasoningEffort, p.reasoningEffortCustom)
@@ -4665,7 +4682,7 @@ object DictateController {
         _pendingPrompts.value = emptyList()
         // Nothing left to rework: the user took the whole live preview over and said nothing after (#421).
         if (queued.isEmpty() || text.isBlank()) return text
-        if (rewordingApiKey().isBlank()) return text
+        val canReword = rewordingCanRun()
         var result = text
         for (p in queued) {
             val raw = p.prompt.orEmpty()
@@ -4677,6 +4694,7 @@ object DictateController {
                 result += context.transcriptSeparatorBefore(result, snippet) + snippet
                 continue
             }
+            if (!canReword) { noteSkippedRewording(context); continue }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             result = rewordOrKeep(result) {
                 requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
@@ -4772,12 +4790,17 @@ object DictateController {
         reasoningCustom: String? = null,
     ): String {
         val account = rewordingAccount()
-        // Blank rewording key falls back to the transcription account's key (legacy "reuse" behavior).
-        val apiKey = account.apiKey.ifBlank { transcriptionAccount().apiKey }
-        if (apiKey.isBlank() && requiresKey(account)) {
-            throw DictateApiException(DictateApiException.Kind.INVALID_API_KEY, "No API key set")
-        }
+        val apiKey = rewordingApiKey()
         val preset = presetFor(account)
+        when (rewordingBlocker(account, preset, apiKey)) {
+            RewordingBlocker.NO_KEY ->
+                throw DictateApiException(DictateApiException.Kind.INVALID_API_KEY, "No API key set")
+            // Every caller asks [currentRewordingBlocker] first and says it in the user's language; this
+            // is the backstop, worded like the key one above.
+            RewordingBlocker.NO_MODEL ->
+                throw DictateApiException(DictateApiException.Kind.UNKNOWN, "No rewording model set")
+            null -> Unit
+        }
         val model = chatModelFor(account, preset)
         val client = OpenAiCompatibleClient.from(
             preset, apiKey,
@@ -4933,13 +4956,42 @@ object DictateController {
         return prefs.dictate.providerAccounts.get().getOrEmpty(id)
     }
 
-    /** Effective rewording key: the rewording account's, falling back to the transcription account's. */
-    private fun rewordingApiKey(): String =
-        rewordingAccount().apiKey.ifBlank { transcriptionAccount().apiKey }
+    /** Effective rewording key — see [rewordingKeyFor] for when the transcription key may stand in. */
+    private fun rewordingApiKey(): String = rewordingKeyFor(rewordingAccount(), transcriptionAccount())
 
-    /** Whether a rewording can be sent at all: the condition [requestRewordRaw] refuses on, asked first. */
-    private fun rewordingHasCredential(): Boolean =
-        rewordingApiKey().isNotBlank() || !requiresKey(rewordingAccount())
+    /** What stops a rewording from being sent, if anything: the condition [requestRewordRaw] refuses on. */
+    private fun currentRewordingBlocker(): RewordingBlocker? {
+        val account = rewordingAccount()
+        return rewordingBlocker(account, presetFor(account), rewordingApiKey())
+    }
+
+    /** Whether the automatic rewording steps may send anything at all — see [rewordingBlocker]. */
+    private fun rewordingCanRun(): Boolean = currentRewordingBlocker() == null
+
+    /**
+     * Records why an automatic step was skipped, for the notice after the commit ([reportSwallowedRewording]).
+     * Only a missing model is worth it: a missing key has always been silent here, while a server that has
+     * no model chosen otherwise just stops reworking with nothing to say why.
+     */
+    private fun noteSkippedRewording(context: Context) {
+        val blocker = currentRewordingBlocker() ?: return
+        if (blocker != RewordingBlocker.NO_MODEL || swallowedRewording != null) return
+        swallowedRewording = DictateApiException(
+            DictateApiException.Kind.UNKNOWN, rewordingBlockedMessage(context, blocker),
+        )
+    }
+
+    /** The one-line reason for [blocker], naming the provider when the model is what is missing. */
+    private fun rewordingBlockedMessage(context: Context, blocker: RewordingBlocker): String = when (blocker) {
+        RewordingBlocker.NO_KEY -> context.getString(R.string.dictate__error_no_api_key)
+        RewordingBlocker.NO_MODEL -> {
+            val account = rewordingAccount()
+            context.getString(
+                R.string.dictate__error_no_rewording_model,
+                account.displayName.ifBlank { presetFor(account).displayName },
+            )
+        }
+    }
 
     private fun promptsDb(context: Context) = PromptsDatabaseHelper.getInstance(context)
 

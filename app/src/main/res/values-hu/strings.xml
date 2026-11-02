@@ -2313,6 +2313,8 @@
     <string name="gif__error">Nem sikerült betölteni a GIF-eket. Ellenőrizd a kapcsolatot és az API-kulcsot.</string>
     <string name="gif__setup_needed">Adj hozzá egy ingyenes KLIPY API-kulcsot a Beállításokban a GIF-ek kereséséhez</string>
     <string name="gif__setup_needed_action">GIF-keresés beállítása</string>
+    <string name="dictate__error_no_rewording_model">Válasszon átfogalmazási modellt ehhez: %1$s</string>
+    <string name="dictate__model_placeholder_required">kötelező: válasszon vagy írjon be egy modellt</string>
     <string name="gif__copied_to_clipboard">GIF a vágólapra másolva — a beillesztéshez tartsd lenyomva</string>
     <string name="gif__insert_failed">Nem sikerült beszúrni a GIF-et</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

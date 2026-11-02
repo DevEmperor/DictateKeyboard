@@ -2333,6 +2333,8 @@
     <string name="gif__error">Nie udało się wczytać GIFs. Sprawdź połączenie i klucz API.</string>
     <string name="gif__setup_needed">Dodaj darmowy klucz API KLIPY w Ustawieniach, aby wyszukiwać GIFs</string>
     <string name="gif__setup_needed_action">Skonfiguruj wyszukiwanie GIFs</string>
+    <string name="dictate__error_no_rewording_model">Wybierz model przeformułowania dla %1$s</string>
+    <string name="dictate__model_placeholder_required">wymagane: wybierz lub wpisz model</string>
     <string name="gif__copied_to_clipboard">GIF skopiowany do schowka — przytrzymaj, aby wkleić</string>
     <string name="gif__insert_failed">Nie udało się wstawić GIF</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

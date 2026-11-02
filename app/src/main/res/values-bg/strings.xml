@@ -2314,6 +2314,8 @@
     <string name="gif__error">GIFs не могат да се заредят. Проверете връзката и API ключа си.</string>
     <string name="gif__setup_needed">Добавете безплатен ключ за KLIPY API в Настройки, за да търсите GIFs</string>
     <string name="gif__setup_needed_action">Настройване на търсенето на GIF</string>
+    <string name="dictate__error_no_rewording_model">Изберете модел за преформулиране за %1$s</string>
+    <string name="dictate__model_placeholder_required">задължително: изберете или въведете модел</string>
     <string name="gif__copied_to_clipboard">GIF е копиран в клипборда — задръжте натиснато за поставяне</string>
     <string name="gif__insert_failed">GIF не може да бъде вмъкнат</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

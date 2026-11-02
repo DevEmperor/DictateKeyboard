@@ -124,13 +124,16 @@ class ChatModelForTest {
     }
 
     @Test
-    fun `a provider without a chat default falls back to the caller's`() {
-        // The watch passes "" so an unconfigured rewording provider reports nothing rather than a model
-        // the phone never intended to use.
-        val soniox = ProviderRegistry.SONIOX
-        assertEquals("", chatModelFor(account(), soniox, fallback = ""))
-        // Otherwise OpenAI's own default, read from its preset so a retirement there cannot leave a stale
-        // copy here, as gpt-4o-mini once was.
-        assertEquals("gpt-6-luna", chatModelFor(account(), soniox))
+    fun `a provider without a chat default is never handed another vendor's`() {
+        // It used to get OpenAI's default, which Mistral, xAI, Ollama and a server of the user's own do not
+        // serve: every rewording failed naming gpt-6-luna. Blank is what makes the app ask for a model.
+        for (preset in listOf(
+            ProviderRegistry.MISTRAL, ProviderRegistry.XAI, ProviderRegistry.DEEPSEEK, ProviderRegistry.TOGETHER,
+            ProviderRegistry.DEEPINFRA, ProviderRegistry.OLLAMA, ProviderRegistry.custom("http://box:8000/v1/"),
+        )) {
+            assertEquals("", chatModelFor(account(), preset), preset.id)
+        }
+        // A model the user chose still goes out as chosen.
+        assertEquals("mistral-small-latest", chatModelFor(account(chat = "mistral-small-latest"), ProviderRegistry.MISTRAL))
     }
 }

@@ -24,6 +24,8 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
+import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
+import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -95,9 +97,9 @@ object PhoneTranscriber {
         val accounts = prefs.dictate.providerAccounts.get()
         val rewordingAccount = accounts.getOrEmpty(prefs.dictate.rewordingProviderId.get())
         val rewordingPreset = presetFor(rewordingAccount)
-        val transcriptionKey = accounts.getOrEmpty(prefs.dictate.transcriptionProviderId.get()).apiKey
-        val apiKey = rewordingAccount.apiKey.ifBlank { transcriptionKey }
-        if (apiKey.isBlank() && rewordingPreset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return transcript
+        val transcriptionAccount = accounts.getOrEmpty(prefs.dictate.transcriptionProviderId.get())
+        val apiKey = rewordingKeyFor(rewordingAccount, transcriptionAccount)
+        if (rewordingBlocker(rewordingAccount, rewordingPreset, apiKey) != null) return transcript
 
         val chatModel = chatModelFor(rewordingAccount, rewordingPreset)
         val client = OpenAiCompatibleClient.from(

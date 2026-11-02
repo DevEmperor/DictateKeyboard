@@ -2293,6 +2293,8 @@
     <string name="gif__error">GIF\'ler yüklenemedi. Bağlantınızı ve API anahtarınızı kontrol edin.</string>
     <string name="gif__setup_needed">GIF aramak için Ayarlar\'da ücretsiz bir KLIPY API anahtarı ekleyin</string>
     <string name="gif__setup_needed_action">GIF aramayı kur</string>
+    <string name="dictate__error_no_rewording_model">%1$s için bir yeniden ifade etme modeli seçin</string>
+    <string name="dictate__model_placeholder_required">zorunlu: bir model seçin veya yazın</string>
     <string name="gif__copied_to_clipboard">GIF panoya kopyalandı — yapıştırmak için uzun basın</string>
     <string name="gif__insert_failed">GIF eklenemedi</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

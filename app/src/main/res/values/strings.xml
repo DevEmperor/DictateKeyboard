@@ -2009,6 +2009,7 @@
     <string name="dictate__voice_input_hint" comment="Subtle hint under the orb in the voice-input UI (issue #67)">Tap to send</string>
     <string name="dictate__voice_ime_label" comment="Name of the Dictate voice input method shown in system keyboard settings (issue #67)">Dictate voice input</string>
     <string name="dictate__error_no_api_key" comment="Error when no API key is configured">No API key set – configure it in the Dictate settings.</string>
+    <string name="dictate__error_no_rewording_model" comment="Error when a rewording is asked for but the rewording provider has no model chosen and no default of its own. %1$s is the provider's name, e.g. Mistral AI or Ollama.">Choose a rewording model for %1$s</string>
     <string name="dictate__error_transcription_failed" comment="Generic transcription failure">Transcription failed.</string>
     <string name="dictate__error_unknown" comment="Unknown transcription error">Unknown error during transcription.</string>
     <string name="dictate__error_rewording_failed" comment="Generic rewording (GPT) failure">Rewording failed.</string>
@@ -2085,6 +2086,7 @@
     <string name="dictate__api_key_not_set" comment="Summary shown when no API key is set">Not set – tap to configure</string>
     <string name="dictate__model_title" comment="Label for the transcription model field">Transcription model</string>
     <string name="dictate__model_placeholder" comment="Placeholder hint for the model field">leave empty for provider default</string>
+    <string name="dictate__model_placeholder_required" comment="Placeholder hint for the rewording model field of a provider that has no default model, so one must be chosen">required: pick or type a model</string>
     <string name="dictate__model_default_summary" comment="Summary shown when no model override is set">Provider default</string>
     <string name="dictate__custom_server_title" comment="Group title for custom server settings">Custom server</string>
     <string name="dictate__base_url_title" comment="Label for the custom server base URL field">Base URL</string>

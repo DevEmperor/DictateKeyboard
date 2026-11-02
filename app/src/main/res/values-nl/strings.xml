@@ -2214,6 +2214,8 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="gif__error">Kon GIFs niet laden. Controleer je verbinding en API-sleutel.</string>
     <string name="gif__setup_needed">Voeg een gratis KLIPY-API-sleutel toe in Instellingen om GIFs te zoeken</string>
     <string name="gif__setup_needed_action">GIF-zoeken instellen</string>
+    <string name="dictate__error_no_rewording_model">Kies een herformuleringsmodel voor %1$s</string>
+    <string name="dictate__model_placeholder_required">verplicht: kies of typ een model</string>
     <string name="gif__copied_to_clipboard">GIF gekopieerd naar klembord — houd ingedrukt om te plakken</string>
     <string name="gif__insert_failed">Kon de GIF niet invoegen</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

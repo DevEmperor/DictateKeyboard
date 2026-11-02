@@ -2296,6 +2296,8 @@
     <string name="gif__error">No se pudieron cargar los GIFs. Comprueba tu conexión y clave de API.</string>
     <string name="gif__setup_needed">Añade una clave de API gratuita de KLIPY en Ajustes para buscar GIFs</string>
     <string name="gif__setup_needed_action">Configurar búsqueda de GIFs</string>
+    <string name="dictate__error_no_rewording_model">Elige un modelo de reformulación para %1$s</string>
+    <string name="dictate__model_placeholder_required">obligatorio: elige o escribe un modelo</string>
     <string name="gif__copied_to_clipboard">GIF copiado al portapapeles — mantén pulsado para pegar</string>
     <string name="gif__insert_failed">No se pudo insertar el GIF</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

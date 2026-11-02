@@ -100,8 +100,11 @@ import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.DictateRewording
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
+import dev.patrickgold.florisboard.dictate.provider.RewordingBlocker
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
+import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
+import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -879,11 +882,16 @@ private suspend fun rewordWith(context: Context, promptBody: String, transcript:
         account.isCustom -> ProviderRegistry.custom(account.customBaseUrl, realtime = account.customRealtime)
         else -> ProviderRegistry.byId(account.providerId) ?: ProviderRegistry.OPENAI
     }
-    val apiKey = account.apiKey.ifBlank {
-        accounts.getOrEmpty(prefs.dictate.transcriptionProviderId.get()).apiKey
-    }
-    if (apiKey.isBlank() && preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
-        throw IllegalStateException(context.getString(R.string.dictate__error_no_api_key))
+    val apiKey = rewordingKeyFor(account, accounts.getOrEmpty(prefs.dictate.transcriptionProviderId.get()))
+    when (rewordingBlocker(account, preset, apiKey)) {
+        RewordingBlocker.NO_KEY -> throw IllegalStateException(context.getString(R.string.dictate__error_no_api_key))
+        RewordingBlocker.NO_MODEL -> throw IllegalStateException(
+            context.getString(
+                R.string.dictate__error_no_rewording_model,
+                account.displayName.ifBlank { preset.displayName },
+            ),
+        )
+        null -> Unit
     }
     val client = OpenAiCompatibleClient.from(
         preset,

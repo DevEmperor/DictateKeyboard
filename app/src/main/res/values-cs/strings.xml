@@ -2332,6 +2332,8 @@
     <string name="gif__error">GIFs se nepodařilo načíst. Zkontrolujte připojení a API klíč.</string>
     <string name="gif__setup_needed">Přidejte v Nastavení bezplatný klíč KLIPY API pro vyhledávání GIFs</string>
     <string name="gif__setup_needed_action">Nastavit vyhledávání GIFs</string>
+    <string name="dictate__error_no_rewording_model">Vyberte model přeformulování pro %1$s</string>
+    <string name="dictate__model_placeholder_required">povinné: vyberte nebo zadejte model</string>
     <string name="gif__copied_to_clipboard">GIF zkopírován do schránky — vložíte dlouhým stisknutím</string>
     <string name="gif__insert_failed">GIF se nepodařilo vložit</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>
