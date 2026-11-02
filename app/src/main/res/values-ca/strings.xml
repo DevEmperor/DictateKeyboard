@@ -566,11 +566,8 @@
     <string name="setup__select_ime__title">Selecciona {app_name}</string>
     <string name="setup__select_ime__description">{app_name} s\'ha habilitat al sistema. Per usar-lo canvia a {app_name} al diàleg de selecció de mètode d\'entrada!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Canvia el teclat</string>
-    <string name="setup__grant_notification_permission__title">Permet les notificacions d\'informes d\'errors</string>
-    <string name="setup__grant_notification_permission__description">Des d\'Android 13 i posteriors les aplicacions han de demanar permís per
-        enviar notificacions. Dictate només en fa ús per obrir una pantalla d\'informe d\'error en cas de fallada.
-        Aquest permís es pot modificar en qualsevol moment als paràmetres del sistema.
-    </string>
+    <string name="setup__grant_notification_permission__title">Permet les notificacions</string>
+    <string name="setup__grant_notification_permission__description">A partir d’Android 13, les aplicacions han de demanar-ho abans de mostrar notificacions. Dictate Keyboard en mostra una mentre el botó flotant enregistra, mentre es baixa un model de veu i mentre el teu rellotge dicta a través del telèfon, i obre un informe d’error si l’aplicació falla. Pots canviar-ho en qualsevol moment a la configuració del sistema.</string>
     <string name="setup__grant_notification_permission__btn">Concedeix permís</string>
     <string name="setup__finish_up__title">Finalitza</string>
     <string name="setup__finish_up__description_p1">{app_name} s\'habilitat al sistema i està preparat perquè el personalitzis.</string>

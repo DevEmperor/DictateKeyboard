@@ -657,11 +657,8 @@
     <string name="setup__select_ime__title">Selecione {app_name}</string>
     <string name="setup__select_ime__description">{app_name} está agora ativado no sistema. Para o poder utilizar, escolha {app_name} no  na caixa de diálogo de seleção!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Mudar de teclado</string>
-    <string name="setup__grant_notification_permission__title">Permitir notificação com relatório de erros</string>
-    <string name="setup__grant_notification_permission__description">A partir do Android 13, as aplicações precisam pedir permissão para
-        enviar notificações. No Dictate, isso só é usado para abrir a tela de relatório de erros caso ocorra um erro.
-        Esta permissão pode ser alterada a qualquer momento nas configurações do sistema.
-    </string>
+    <string name="setup__grant_notification_permission__title">Permitir notificações</string>
+    <string name="setup__grant_notification_permission__description">A partir do Android 13, as aplicações têm de pedir antes de mostrar notificações. O Dictate Keyboard mostra uma enquanto o botão flutuante grava, enquanto um modelo de voz é descarregado e enquanto o seu relógio dita através do telemóvel, e abre um relatório de erros se a aplicação falhar. Pode alterar isto a qualquer momento nas definições do sistema.</string>
     <string name="setup__grant_notification_permission__btn">Conceder permissão</string>
     <string name="setup__finish_up__title">A terminar</string>
     <string name="setup__finish_up__description_p1">{app_name} está agora ativado no sistema e já pode ser personalizado ao seu gosto.</string>

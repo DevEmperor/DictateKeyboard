@@ -2112,6 +2112,8 @@
     <string name="quick_action__forward_delete__tooltip">Elimina il carattere dopo il cursore</string>
     <string name="dictate__error_no_rewording_model">Scegli un modello di riformulazione per %1$s</string>
     <string name="dictate__model_placeholder_required">obbligatorio: scegli o digita un modello</string>
+    <string name="setup__grant_notification_permission__title">Consenti le notifiche</string>
+    <string name="setup__grant_notification_permission__description">Da Android 13 le app devono chiedere prima di mostrare notifiche. Dictate Keyboard ne mostra una mentre il pulsante flottante registra, mentre si scarica un modello vocale e mentre il tuo orologio detta tramite il telefono, e apre un rapporto di arresto anomalo se l’app si blocca. Puoi cambiarlo in qualsiasi momento nelle impostazioni di sistema.</string>
     <string name="gif__copied_to_clipboard">GIF copiata negli appunti — tieni premuto per incollare</string>
     <string name="gif__insert_failed">Impossibile inserire la GIF</string>
     <string name="quick_action__ime_ui_mode_gif">GIF</string>

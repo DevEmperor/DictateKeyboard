@@ -655,11 +655,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__select_ime__title">Pilih {app_name}</string>
     <string name="setup__select_ime__description">{app_name} sekarang sudah diaktifkan di sistem Anda. Untuk menggunakannya secara aktif, beralihlah ke {app_name} dengan memilihnya di dialog pemilih input!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Ubah Papan Ketik</string>
-    <string name="setup__grant_notification_permission__title">Izinkan Notifikasi Pelaporan Crash</string>
-    <string name="setup__grant_notification_permission__description">Per-Android 13+, apl harus meminta izin untuk 
-        mengirim notifikasi. Pada Dictate, izin tersebut hanya digunakan untuk membuka jendela pelaporan crash pada saat terjadi crash.
-        Izin ini dapat diubah kapanpun pada setelan sistem.
-    </string>
+    <string name="setup__grant_notification_permission__title">Izinkan notifikasi</string>
+    <string name="setup__grant_notification_permission__description">Sejak Android 13, aplikasi harus meminta izin sebelum menampilkan notifikasi. Dictate Keyboard menampilkannya saat tombol mengambang merekam, saat model suara diunduh, dan saat jam tangan Anda mendikte melalui ponsel, serta membuka laporan crash jika aplikasi mogok. Anda dapat mengubahnya kapan saja di setelan sistem.</string>
     <string name="setup__grant_notification_permission__btn">Izinkan</string>
     <string name="setup__finish_up__title">Selesaikan</string>
     <string name="setup__finish_up__description_p1">{app_name} sekarang sudah diaktifkan di sistem ini dan siap untuk disesuaikan oleh Anda.</string>

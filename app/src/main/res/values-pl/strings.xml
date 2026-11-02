@@ -669,11 +669,8 @@
     <string name="setup__select_ime__title">Wybierz {app_name}</string>
     <string name="setup__select_ime__description">Aplikacja {app_name} jest teraz włączona w Twoim systemie. Aby aktywnie z niej korzystać, przełącz się na {app_name}, wybierając ją w oknie selektora danych wejściowych!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Przełącz Klawiaturę</string>
-    <string name="setup__grant_notification_permission__title">Zezwolenie na powiadomienia dotyczące raportów o awariach</string>
-    <string name="setup__grant_notification_permission__description">Od Androida 13+ aplikacje muszą prosić o pozwolenie na
-        wysyłanie powiadomień. We Dictate jest to używane tylko do otwierania ekranu raportu o awarii, w przypadku awarii.
-        Zezwolenie to można zmienić w dowolnym momencie w ustawieniach systemu.
-    </string>
+    <string name="setup__grant_notification_permission__title">Zezwól na powiadomienia</string>
+    <string name="setup__grant_notification_permission__description">Od Androida 13 aplikacje muszą pytać, zanim pokażą powiadomienia. Dictate Keyboard pokazuje je, gdy pływający przycisk nagrywa, gdy pobiera się model mowy i gdy zegarek dyktuje przez telefon, a w razie awarii otwiera raport o błędzie. Możesz to zmienić w każdej chwili w ustawieniach systemu.</string>
     <string name="setup__grant_notification_permission__btn">Przyznaj uprawnienie</string>
     <string name="setup__finish_up__title">Zakończ</string>
     <string name="setup__finish_up__description_p1">Aplikacja {app_name} jest teraz włączona w systemie i gotowa do dostosowania przez Ciebie.</string>

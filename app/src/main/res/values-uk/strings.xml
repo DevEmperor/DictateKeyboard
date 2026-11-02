@@ -551,11 +551,8 @@
     <string name="setup__select_ime__title">Вибрати {app_name}</string>
     <string name="setup__select_ime__description">У вашій системі ввімкнено {app_name}. Щоб активно використовувати його, перемкніться на {app_name}, вибравши його у діалоговому вікні вибору вводу!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Перемкнути клавіатуру</string>
-    <string name="setup__grant_notification_permission__title">Повідомлення про збої в роботі з дозволами</string>
-    <string name="setup__grant_notification_permission__description">Починаючи з Android 13+, програми повинні запитувати дозвіл на
-        надсилання сповіщень. У Dictate цей дозвіл використовується лише для того, щоб відкрити екран звіту про збій у разі збою.
-        Цей дозвіл можна будь-коли змінити в налаштуваннях системи.
-    </string>
+    <string name="setup__grant_notification_permission__title">Дозволити сповіщення</string>
+    <string name="setup__grant_notification_permission__description">Починаючи з Android 13, застосунки мають питати дозвіл, перш ніж показувати сповіщення. Dictate Keyboard показує сповіщення, поки плаваюча кнопка записує, поки завантажується мовна модель і поки ваш годинник диктує через телефон, а в разі збою застосунку відкриває звіт про помилку. Це можна будь-коли змінити в налаштуваннях системи.</string>
     <string name="setup__grant_notification_permission__btn">Надати дозвіл</string>
     <string name="setup__finish_up__title">Завершення</string>
     <string name="setup__finish_up__description_p1">{app_name} тепер ввімкнено в системі і він готовий до ваших налаштувань.</string>

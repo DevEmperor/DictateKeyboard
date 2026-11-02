@@ -1246,11 +1246,8 @@
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
 
-    <string name="setup__grant_notification_permission__title">Permit Crash Report Notifications</string>
-    <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
-        send notifications. In Dictate Keyboard, this is only used to open a crash report screen in the event of a crash.
-        This permission can be changed at any time in the system settings.
-    </string>
+    <string name="setup__grant_notification_permission__title">Allow notifications</string>
+    <string name="setup__grant_notification_permission__description">As of Android 13, apps must ask before they show notifications. Dictate Keyboard shows one while the floating button records, while a speech model downloads and while your watch dictates through the phone, and it opens a crash report if the app crashes. You can change this at any time in the system settings.</string>
     <string name="setup__grant_notification_permission__btn">Grant Permission</string>
 
     <!-- Setup: connect an AI provider (Dictate onboarding for non-technical users) -->

@@ -663,11 +663,8 @@
     <string name="setup__select_ime__title">Выберите {app_name}</string>
     <string name="setup__select_ime__description">{app_name} активирована. Чтобы ею пользоваться, переключитесь на {app_name} в окне способа ввода!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Переключить клавиатуру</string>
-    <string name="setup__grant_notification_permission__title">Разрешить уведомления об ошибках</string>
-    <string name="setup__grant_notification_permission__description">Начиная с Android 13, приложения должны
-        запрашивать разрешение для отправки уведомлений. Dictate будет использовать это только для отправки отчёта о сбое при вылете приложения.
-        Данное разрешение всегда можно отозвать в настройках устройства.
-    </string>
+    <string name="setup__grant_notification_permission__title">Разрешить уведомления</string>
+    <string name="setup__grant_notification_permission__description">Начиная с Android 13 приложения должны спрашивать разрешение, прежде чем показывать уведомления. Dictate Keyboard показывает уведомление, пока плавающая кнопка записывает, пока скачивается речевая модель и пока ваши часы диктуют через телефон, а при сбое приложения открывает отчёт об ошибке. Это можно изменить в любой момент в настройках системы.</string>
     <string name="setup__grant_notification_permission__btn">Предоставить разрешение</string>
     <string name="setup__finish_up__title">Готово</string>
     <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>

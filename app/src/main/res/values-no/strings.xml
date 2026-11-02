@@ -315,7 +315,6 @@
     <string name="setup__select_ime__title">Velg {app_name}</string>
     <string name="setup__select_ime__description">{app_name} er nå aktivert i systemet ditt. For å bruke det, bytt til {app_name} ved å velge den i input-valg-dialogen!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Bytt Tastatur</string>
-    <string name="setup__grant_notification_permission__title">Tillat krasjrapport-meldinger</string>
     <string name="setup__grant_notification_permission__btn">Gi tillatelse</string>
     <string name="setup__finish_up__title">Gjøre ferdig</string>
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>

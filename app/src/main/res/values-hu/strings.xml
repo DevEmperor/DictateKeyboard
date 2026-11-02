@@ -668,12 +668,8 @@
     <string name="setup__select_ime__title">{app_name} kiválasztása</string>
     <string name="setup__select_ime__description">A {app_name} most már engedélyezve van a rendszerben. Hogy aktívan használja, váltson erre a bevitelválasztó párbeszédablakban: {app_name}.</string>
     <string name="setup__select_ime__switch_keyboard_btn">Billentyűzet váltása</string>
-    <string name="setup__grant_notification_permission__title">Összeomlási jelentések értesítéseinek engedélyezése</string>
-    <string name="setup__grant_notification_permission__description">Az Android 13+ rendszertől kezdve az alkalmazásoknak engedélyt kell kérniük az
-        értesítések küldéséhez. A Dictateban ez csak arra szolgál, hogy
-        összeomlás esetén megnyíjon az összeomlási jelentés képernyője. Ez az
-        engedély bármikor megváltoztatható a rendszerbeállításokban.
-    </string>
+    <string name="setup__grant_notification_permission__title">Értesítések engedélyezése</string>
+    <string name="setup__grant_notification_permission__description">Az Android 13-tól az alkalmazásoknak engedélyt kell kérniük, mielőtt értesítést jelenítenek meg. A Dictate Keyboard akkor jelenít meg egyet, amikor a lebegő gomb rögzít, amikor egy beszédmodell letöltődik, és amikor az órája a telefonon keresztül diktál, összeomláskor pedig hibajelentést nyit meg. Ezt bármikor módosíthatja a rendszerbeállításokban.</string>
     <string name="setup__grant_notification_permission__btn">Engedély megadása</string>
     <string name="setup__finish_up__title">Befejezés</string>
     <string name="setup__finish_up__description_p1">A {app_name} most már engedélyezve van a rendszerben, és csak arra vár, hogy személyre szabja.</string>

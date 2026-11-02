@@ -621,11 +621,8 @@
     <string name="setup__select_ime__title">Atlasīt {app_name}</string>
     <string name="setup__select_ime__description">{app_name} tagad ir iespējots. Lai to izmantotu, jāpārslēdzas uz {app_name}, atlasot to ievades izvēles logā.</string>
     <string name="setup__select_ime__switch_keyboard_btn">Pārslēgt tastatūru</string>
-    <string name="setup__grant_notification_permission__title">Atļaut avārijas atskaišu paziņojumus</string>
-    <string name="setup__grant_notification_permission__description">Sākot ar Android 13, lietotnēm ir jāprasa atļauja, lai
-        nosūtītu paziņojumus. Dictate tā tiek izmantota tikai, lai atvērtu avārijas ziņojuma ekrānu avārijas gadījumā.
-        Šo atļauju sistēmas iestatījumos var mainīt jebkurā laikā.
-    </string>
+    <string name="setup__grant_notification_permission__title">Atļaut paziņojumus</string>
+    <string name="setup__grant_notification_permission__description">Sākot ar Android 13, lietotnēm ir jāprasa atļauja, pirms tās rāda paziņojumus. Dictate Keyboard rāda paziņojumu, kamēr peldošā poga ieraksta, kamēr tiek lejupielādēts runas modelis un kamēr jūsu pulkstenis diktē caur tālruni, un avārijas gadījumā atver avārijas ziņojumu. To var jebkurā laikā mainīt sistēmas iestatījumos.</string>
     <string name="setup__grant_notification_permission__btn">Piešķirt atļauju</string>
     <string name="setup__finish_up__title">Pabeigt</string>
     <string name="setup__finish_up__description_p1">{app_name} tagad ir iespējots un ir gatavs pielāgojumiem.</string>

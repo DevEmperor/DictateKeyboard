@@ -660,8 +660,8 @@
     <string name="setup__select_ime__title">{app_name} uygulamasını seçin</string>
     <string name="setup__select_ime__description">{app_name} artık sisteminizde etkin. Aktif olarak kullanmak için giriş seçici diyaloğunda seçerek {app_name} uygulamasına geçin!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Klavyeyi Değiştir</string>
-    <string name="setup__grant_notification_permission__title">Kilitlenme Raporu Bildirimlerine İzin Verin</string>
-    <string name="setup__grant_notification_permission__description">Android 13+ itibarıyla, uygulamalar bildirim göndermek için izin istemelidir. Dictate\'da bu yalnızca bir kilitlenme durumunda kilitlenme raporu ekranını açmak için kullanılır. Bu izin sistem ayarlarından herhangi bir zamanda değiştirilebilir.</string>
+    <string name="setup__grant_notification_permission__title">Bildirimlere izin ver</string>
+    <string name="setup__grant_notification_permission__description">Android 13’ten itibaren uygulamalar bildirim göstermeden önce izin istemelidir. Dictate Keyboard, kayan düğme kayıt yaparken, bir konuşma modeli indirilirken ve saatiniz telefon üzerinden dikte ederken bir bildirim gösterir; uygulama çökerse bir kilitlenme raporu açar. Bunu istediğiniz zaman sistem ayarlarından değiştirebilirsiniz.</string>
     <string name="setup__grant_notification_permission__btn">İzin Ver</string>
     <string name="setup__finish_up__title">Bitir</string>
     <string name="setup__finish_up__description_p1">{app_name} sistemde etkin ve özelleştirilmeye hazır.</string>

@@ -550,10 +550,8 @@
     <string name="setup__select_ime__title">اختيار {app_name}</string>
     <string name="setup__select_ime__description">تم تمكين {app_name} الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى {app_name} عن طريق تحديده في مربع حوار محدد الإدخال!</string>
     <string name="setup__select_ime__switch_keyboard_btn">تبديل لوحة المفاتيح</string>
-    <string name="setup__grant_notification_permission__title">السماح بإخطارات تقرير الأعطال</string>
-    <string name="setup__grant_notification_permission__description">اعتبارًا من نظام التشغيل Android 13+، يجب أن تطلب التطبيقات الإذن بذلك
-         إرسال الإخطارات. في Dictate، يُستخدم هذا فقط لفتح شاشة تقرير الأعطال في حالة حدوث عطل.
-         يمكن تغيير هذا الإذن في أي وقت في إعدادات النظام.    </string>
+    <string name="setup__grant_notification_permission__title">السماح بالإشعارات</string>
+    <string name="setup__grant_notification_permission__description">بدءًا من Android 13، يجب أن تطلب التطبيقات الإذن قبل عرض الإشعارات. يعرض Dictate Keyboard إشعارًا أثناء تسجيل الزر العائم، وأثناء تنزيل نموذج كلام، وأثناء إملاء ساعتك عبر الهاتف، ويفتح تقرير عطل إذا تعطل التطبيق. يمكنك تغيير ذلك في أي وقت من إعدادات النظام.</string>
     <string name="setup__grant_notification_permission__btn">منح الإذن</string>
     <string name="setup__finish_up__title">تم انهاء الاعداد</string>
     <string name="setup__finish_up__description_p1">تم تمكين{app_name} في النظام وجاهز للتخصيص بأسلوبك.</string>

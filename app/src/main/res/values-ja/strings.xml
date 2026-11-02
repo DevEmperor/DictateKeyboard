@@ -640,8 +640,8 @@
     <string name="setup__select_ime__title">{app_name}を選択</string>
     <string name="setup__select_ime__description">{app_name}はシステムで有効になりました。アクティブに使用するには、入力セレクターダイアログで{app_name}を選択して切り替えてください！</string>
     <string name="setup__select_ime__switch_keyboard_btn">キーボードを切り替える</string>
-    <string name="setup__grant_notification_permission__title">クラッシュレポート通知を許可</string>
-    <string name="setup__grant_notification_permission__description">Android 13以降、アプリは通知を送信するために許可を求める必要があります。\n Dictateでは、これはクラッシュ発生時にクラッシュレポート画面を開くためにのみ使用されます。\n この許可はシステム設定でいつでも変更できます。\n </string>
+    <string name="setup__grant_notification_permission__title">通知を許可</string>
+    <string name="setup__grant_notification_permission__description">Android 13 以降、アプリは通知を表示する前に許可を求める必要があります。Dictate Keyboard は、フローティングボタンの録音中、音声モデルのダウンロード中、ウォッチがスマートフォン経由で音声入力しているときに通知を表示し、アプリがクラッシュした場合はクラッシュレポートを開きます。この設定はシステム設定でいつでも変更できます。</string>
     <string name="setup__grant_notification_permission__btn">許可を与える</string>
     <string name="setup__finish_up__title">完了</string>
     <string name="setup__finish_up__description_p1">{app_name}はシステムで有効になり、カスタマイズの準備ができました。</string>

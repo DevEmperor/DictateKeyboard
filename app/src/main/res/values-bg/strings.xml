@@ -668,9 +668,8 @@
     <string name="setup__select_ime__title">Избиране на {app_name}</string>
     <string name="setup__select_ime__description">Клавиатурата на {app_name} вече е включена от системата. За да я използвате активно, превключете на {app_name}, като я изберете в диалоговия прозорец с методи за въвеждане!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Смяна на клавиатура</string>
-    <string name="setup__grant_notification_permission__title">Разрешаване на известия при срив</string>
-    <string name="setup__grant_notification_permission__description">От Андроид 13 нататък, приложенията трябва да поискат разрешение да изпращат известия. Във Dictate те се използват само за отваряне на екран в случай на срив.
-Можете да промените разрешението по всяко време в системните настройки.</string>
+    <string name="setup__grant_notification_permission__title">Разрешаване на известия</string>
+    <string name="setup__grant_notification_permission__description">От Android 13 нататък приложенията трябва да питат, преди да показват известия. Dictate Keyboard показва известие, докато плаващият бутон записва, докато се изтегля речев модел и докато часовникът ви диктува през телефона, а при срив отваря доклад за грешка. Можете да промените това по всяко време в системните настройки.</string>
     <string name="setup__grant_notification_permission__btn">Даване на разрешение</string>
     <string name="setup__finish_up__title">Завършване</string>
     <string name="setup__finish_up__description_p1">Клавииатурата на {app_name} вече е включена в системата и готова да я настроите според вашите предпочитения.</string>

@@ -668,11 +668,8 @@
     <string name="setup__select_ime__title">选择 {app_name}</string>
     <string name="setup__select_ime__description">{app_name} 现在已在您的系统中启用。要使用它，请在输入法选择对话框中选择{app_name} 来切换到它！</string>
     <string name="setup__select_ime__switch_keyboard_btn">切换键盘</string>
-    <string name="setup__grant_notification_permission__title">允许崩溃报告消息通知</string>
-    <string name="setup__grant_notification_permission__description">自安卓 13 以来，应用在发送通知前
-    必须向用户申请权限。在 Dictate 中，这一权限仅用于在崩溃时打开一个崩溃报告页面。
-    这一权限可以随时在系统设置中更改。
-    </string>
+    <string name="setup__grant_notification_permission__title">允许通知</string>
+    <string name="setup__grant_notification_permission__description">从 Android 13 开始，应用在显示通知前必须先请求许可。Dictate Keyboard 会在悬浮按钮录音时、下载语音模型时以及手表通过手机听写时显示通知，并在应用崩溃时打开崩溃报告。你可以随时在系统设置中更改此权限。</string>
     <string name="setup__grant_notification_permission__btn">授予权限</string>
     <string name="setup__finish_up__title">完成</string>
     <string name="setup__finish_up__description_p1">{app_name} 现在已在系统中启用，可供您自定义。</string>
