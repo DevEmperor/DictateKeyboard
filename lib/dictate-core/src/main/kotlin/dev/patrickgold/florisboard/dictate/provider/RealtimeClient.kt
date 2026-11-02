@@ -78,6 +78,9 @@ object RealtimeClient {
      * [expectedLanguages] is read only by the providers whose language field is a list (OpenAI's
      * gpt-transcribe generation, Soniox, Gemini, AssemblyAI's Pro model), and only when no language is
      * pinned: it turns auto-detect into detection among the languages the user dictates in (issue #99).
+     *
+     * [proxy] and [trustUserCerts] are the same network settings the batch client gets, so the socket
+     * leaves through the user's proxy and accepts their own CA like every other request does.
      */
     fun open(
         api: RealtimeApi,
@@ -87,6 +90,32 @@ object RealtimeClient {
         callbacks: RealtimeCallbacks,
         baseUrl: String? = null,
         expectedLanguages: List<String> = emptyList(),
+        proxy: ProxyConfig? = null,
+        trustUserCerts: Boolean = false,
+    ): RealtimeSession = openWith(
+        clientFor(proxy, trustUserCerts), api, apiKey, model, language, callbacks, baseUrl, expectedLanguages,
+    )
+
+    /**
+     * The shared socket client, or a sibling of it for a proxy or a user CA. `newBuilder()` keeps the
+     * connection pool and dispatcher, so the sibling costs no more than the settings it adds.
+     */
+    internal fun clientFor(proxy: ProxyConfig?, trustUserCerts: Boolean): OkHttpClient =
+        if (proxy == null && !trustUserCerts) {
+            wsClient
+        } else {
+            wsClient.newBuilder().applyNetworkSettings(proxy, trustUserCerts).build()
+        }
+
+    private fun openWith(
+        wsClient: OkHttpClient,
+        api: RealtimeApi,
+        apiKey: String,
+        model: String,
+        language: String?,
+        callbacks: RealtimeCallbacks,
+        baseUrl: String?,
+        expectedLanguages: List<String>,
     ): RealtimeSession = when (api) {
         RealtimeApi.OPENAI ->
             OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages)

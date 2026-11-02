@@ -211,10 +211,13 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.PromptSelectionPreference(
     }
 }
 
+/** What a set secret shows in its row: always the same, whatever the secret's length. */
+private const val SECRET_MASK = "••••••••"
+
 /**
  * A [Preference] row that edits a string preference through a text dialog. Shared across the Dictate
- * settings screens (API key, model, base URL, custom prompts). Secret fields are masked while typing;
- * pass [multiline] for longer free-text values such as custom prompts.
+ * settings screens (API key, model, base URL, custom prompts). Secret fields are masked while typing and
+ * in the row's summary; pass [multiline] for longer free-text values such as custom prompts.
  *
  * [keyboardType] overrides the default the flags pick — the default suits the addresses and model ids
  * this row was written for, and a value that is ordinary prose (a spoken trigger word) needs a normal
@@ -238,7 +241,10 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
     infoTitle: String? = null,
     infoText: String? = null,
     notSetSummary: String = stringRes(R.string.dictate__value_not_set),
-    summaryProvider: (String) -> String = { it.ifBlank { notSetSummary } },
+    // A secret is masked in the row as well as in the dialog: the proxy password stood under its title in
+    // plain text, on a screen anyone looking over a shoulder or at a screenshot could read. A fixed mask,
+    // so the row does not give away the length either.
+    summaryProvider: (String) -> String = { if (it.isBlank()) notSetSummary else if (isSecret) SECRET_MASK else it },
 ) {
     val value by pref.collectAsState()
     val scope = rememberCoroutineScope()

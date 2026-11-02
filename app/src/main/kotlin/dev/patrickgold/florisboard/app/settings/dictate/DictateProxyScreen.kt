@@ -34,7 +34,7 @@ import org.florisboard.lib.compose.stringRes
 
 /**
  * Network proxy settings. The configured proxy is applied globally to *every* outbound provider call –
- * transcription, rewording, model listing and the connection test – so all traffic to the configured AI
+ * transcription, real-time streams, rewording, model listing and the connection test – so all traffic to the configured AI
  * endpoints can be routed through it (roadmap section 5.6). Disabled by default; the host/port/auth
  * fields only take effect while the proxy toggle is on (see `dictateProxyConfig`).
  */

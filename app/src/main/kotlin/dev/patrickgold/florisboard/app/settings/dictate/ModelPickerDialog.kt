@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
@@ -97,6 +98,7 @@ fun ModelPickerDialog(
                     preset, apiKey,
                     baseUrlOverride = preset.baseUrl,
                     trustUserCerts = trustUserCerts,
+                    proxy = prefs.dictate.dictateProxyConfig(),
                     timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                 )
                 .listModels()

@@ -27,7 +27,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.Credentials
 import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -43,15 +42,10 @@ import java.io.IOException
 import java.io.OutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import java.net.Proxy
-import java.security.KeyStore
 import java.time.Duration
 import java.util.Base64
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManagerFactory
-import javax.net.ssl.X509TrustManager
 
 /**
  * A single client implementation that talks to any OpenAI Chat Completions / Audio Transcriptions
@@ -1441,44 +1435,8 @@ class OpenAiCompatibleClient(
             .readTimeout(timeout)
             .writeTimeout(timeout)
             .eventListenerFactory { call -> HttpCallDiagnostics.listenerFor(call.request()) }
-        config.proxy?.let { proxy ->
-            builder.proxy(proxy.toJavaProxy())
-            if (proxy.type == Proxy.Type.HTTP && proxy.hasCredentials) {
-                builder.proxyAuthenticator { _, response ->
-                    response.request.newBuilder()
-                        .header("Proxy-Authorization", Credentials.basic(proxy.username!!, proxy.password!!))
-                        .build()
-                }
-            }
-            // SOCKS proxy authentication is not handled here (OkHttp limitation). Add a
-            // java.net.Authenticator if SOCKS-with-credentials support is ever required.
-        }
-        if (config.trustUserCerts) {
-            applyUserCertTrust(builder)
-        }
+            .applyNetworkSettings(config.proxy, config.trustUserCerts)
         return builder.build()
-    }
-
-    /**
-     * Makes this client trust user-installed CA certificates as well as system ones (issue #137).
-     * Android's default trust manager (API 24+) honours only system CAs, but the `AndroidCAStore`
-     * keystore exposes the combined system + user trust anchors, so we build an [X509TrustManager]
-     * from it and install it on this client only. Best-effort: if the platform store is unavailable
-     * for any reason, the default (system-CAs-only) trust configuration stays in place.
-     */
-    private fun applyUserCertTrust(builder: OkHttpClient.Builder) {
-        runCatching {
-            val keyStore = KeyStore.getInstance("AndroidCAStore").apply { load(null) }
-            val tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
-                init(keyStore)
-            }
-            val trustManager = tmf.trustManagers.filterIsInstance<X509TrustManager>().firstOrNull()
-                ?: return@runCatching
-            val sslContext = SSLContext.getInstance("TLS").apply {
-                init(null, arrayOf(trustManager), null)
-            }
-            builder.sslSocketFactory(sslContext.socketFactory, trustManager)
-        }
     }
 
     /**

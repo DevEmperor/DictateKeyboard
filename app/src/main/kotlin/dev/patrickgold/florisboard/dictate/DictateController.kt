@@ -2850,6 +2850,8 @@ object DictateController {
                     // Same as the batch path: the providers with a list-shaped language field hear
                     // which languages to expect instead of nothing at all (#99).
                     expectedLanguages = expectedLanguages(),
+                    proxy = prefs.dictate.dictateProxyConfig(),
+                    trustUserCerts = account.trustUserCerts,
                 )
             }
         }.getOrElse { realtimeFailed = true; null } ?: return null
