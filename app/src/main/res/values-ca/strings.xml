@@ -1303,9 +1303,15 @@
     <string name="dictate__providers_test">Prova la connexió</string>
     <string name="dictate__providers_test_transcribe">Prova la transcripció</string>
     <string name="dictate__providers_check_no_key">Introduïu primer la clau API.</string>
-    <string name="dictate__providers_check_credentials_ok">Credencials verificades · {count} models</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Credencials verificades · {count} model</item>
+        <item quantity="other">Credencials verificades · {count} models</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Credencials verificades</string>
-    <string name="dictate__providers_check_endpoint_ok">S’ha arribat al servidor · {count} models</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">S’ha arribat al servidor · {count} model</item>
+        <item quantity="other">S’ha arribat al servidor · {count} models</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">La transcripció no s’ha provat.</string>
     <string name="dictate__providers_check_transcription_ok">Transcripció verificada</string>
     <string name="dictate__providers_check_transcription_text">Ha tornat com a: «{text}»</string>
@@ -1345,7 +1351,10 @@
     <string name="dictate__model_picker_title">Tria un model</string>
     <string name="dictate__model_picker_search">Cerca o escriu un id de model</string>
     <string name="dictate__model_picker_loading">Carregant els models…</string>
-    <string name="dictate__model_picker_count">{count} models</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} model</item>
+        <item quantity="other">{count} models</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Actualitza</string>
     <string name="dictate__model_picker_use_custom">Usa «{model}»</string>
     <string name="dictate__recording_group">Gravació</string>

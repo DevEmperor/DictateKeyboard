@@ -1450,9 +1450,19 @@
     <string name="dictate__providers_test">Testuj połączenie</string>
     <string name="dictate__providers_test_transcribe">Przetestuj transkrypcję</string>
     <string name="dictate__providers_check_no_key">Najpierw wpisz swój klucz API.</string>
-    <string name="dictate__providers_check_credentials_ok">Dane logowania zweryfikowane · {count} modeli</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Dane logowania zweryfikowane · {count} model</item>
+        <item quantity="few">Dane logowania zweryfikowane · {count} modele</item>
+        <item quantity="many">Dane logowania zweryfikowane · {count} modeli</item>
+        <item quantity="other">Dane logowania zweryfikowane · {count} modeli</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Dane logowania zweryfikowane</string>
-    <string name="dictate__providers_check_endpoint_ok">Połączono z serwerem · {count} modeli</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Połączono z serwerem · {count} model</item>
+        <item quantity="few">Połączono z serwerem · {count} modele</item>
+        <item quantity="many">Połączono z serwerem · {count} modeli</item>
+        <item quantity="other">Połączono z serwerem · {count} modeli</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transkrypcja nie została przetestowana.</string>
     <string name="dictate__providers_check_transcription_ok">Transkrypcja zweryfikowana</string>
     <string name="dictate__providers_check_transcription_text">Wróciło jako: „{text}”</string>
@@ -1492,7 +1502,12 @@
     <string name="dictate__model_picker_title">Wybierz model</string>
     <string name="dictate__model_picker_search">Wyszukaj lub wpisz id modelu</string>
     <string name="dictate__model_picker_loading">Ładowanie modeli…</string>
-    <string name="dictate__model_picker_count">{count} modeli</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} model</item>
+        <item quantity="few">{count} modele</item>
+        <item quantity="many">{count} modeli</item>
+        <item quantity="other">{count} modeli</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Odśwież</string>
     <string name="dictate__model_picker_use_custom">Użyj „{model}\"</string>
     <string name="dictate__recording_group">Nagrywanie</string>

@@ -2140,9 +2140,15 @@
     <string name="dictate__providers_test" comment="Button that checks whether the provider accepts the entered API key and endpoint">Test connection</string>
     <string name="dictate__providers_test_transcribe" comment="Button that sends a short bundled speech sample through the selected transcription model">Test transcription</string>
     <string name="dictate__providers_check_no_key" comment="Shown when a test is started before an API key has been entered">Enter your API key first.</string>
-    <string name="dictate__providers_check_credentials_ok" comment="Successful connection test at a provider with a live model catalog. {count} is the number of models it returned.">Credentials verified · {count} models</string>
+    <plurals name="dictate__providers_check_credentials_ok" comment="Successful connection test at a provider with a live model catalog. {count} is the number of models it returned.">
+        <item quantity="one">Credentials verified · {count} model</item>
+        <item quantity="other">Credentials verified · {count} models</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount" comment="Successful connection test at a provider whose model list ships with the app, so no model count was learned from the network">Credentials verified</string>
-    <string name="dictate__providers_check_endpoint_ok" comment="Successful connection test at a server that asks for no key at all, such as a local Ollama. {count} is the number of models it returned.">Server reached · {count} models</string>
+    <plurals name="dictate__providers_check_endpoint_ok" comment="Successful connection test at a server that asks for no key at all, such as a local Ollama. {count} is the number of models it returned.">
+        <item quantity="one">Server reached · {count} model</item>
+        <item quantity="other">Server reached · {count} models</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested" comment="Second line after a successful connection test, saying what was not checked">Transcription not tested.</string>
     <string name="dictate__providers_check_transcription_ok" comment="Successful transcription test: the provider returned a transcript for the sample">Transcription verified</string>
     <string name="dictate__providers_check_transcription_text" comment="Second line after a successful transcription test, showing what came back. {text} is the transcript.">Came back as: “{text}”</string>
@@ -2265,7 +2271,10 @@
     <string name="dictate__model_picker_title" comment="Title of the model picker dialog">Choose a model</string>
     <string name="dictate__model_picker_search" comment="Hint for the model search / free-text field">Search or type a model id</string>
     <string name="dictate__model_picker_loading" comment="Status while fetching the model catalog">Loading models…</string>
-    <string name="dictate__model_picker_count" comment="Status showing how many models match. {count} is a number.">{count} models</string>
+    <plurals name="dictate__model_picker_count" comment="Status showing how many models match. {count} is a number.">
+        <item quantity="one">{count} model</item>
+        <item quantity="other">{count} models</item>
+    </plurals>
     <string name="dictate__model_picker_refresh" comment="Button that fetches the live model catalog from the provider">Refresh</string>
     <string name="dictate__model_picker_use_custom" comment="Option to use the typed text as a model id. {model} is the typed text.">Use “{model}”</string>
 

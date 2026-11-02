@@ -1216,9 +1216,15 @@
     <string name="dictate__providers_test">Prova connessione</string>
     <string name="dictate__providers_test_transcribe">Prova la trascrizione</string>
     <string name="dictate__providers_check_no_key">Inserisci prima la tua chiave API.</string>
-    <string name="dictate__providers_check_credentials_ok">Credenziali verificate · {count} modelli</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Credenziali verificate · {count} modello</item>
+        <item quantity="other">Credenziali verificate · {count} modelli</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Credenziali verificate</string>
-    <string name="dictate__providers_check_endpoint_ok">Server raggiunto · {count} modelli</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Server raggiunto · {count} modello</item>
+        <item quantity="other">Server raggiunto · {count} modelli</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Trascrizione non testata.</string>
     <string name="dictate__providers_check_transcription_ok">Trascrizione verificata</string>
     <string name="dictate__providers_check_transcription_text">È tornato come: «{text}»</string>
@@ -1258,7 +1264,10 @@
     <string name="dictate__model_picker_title">Scegli un modello</string>
     <string name="dictate__model_picker_search">Cerca o digita un id di modello</string>
     <string name="dictate__model_picker_loading">Caricamento dei modelli…</string>
-    <string name="dictate__model_picker_count">{count} modelli</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} modello</item>
+        <item quantity="other">{count} modelli</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Aggiorna</string>
     <string name="dictate__model_picker_use_custom">Usa «{model}»</string>
     <string name="dictate__recording_group">Registrazione</string>

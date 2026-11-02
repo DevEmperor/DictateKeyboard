@@ -1428,9 +1428,13 @@
     <string name="dictate__providers_test">测试连接</string>
     <string name="dictate__providers_test_transcribe">测试转录</string>
     <string name="dictate__providers_check_no_key">请先输入 API 密钥。</string>
-    <string name="dictate__providers_check_credentials_ok">凭据已验证 · {count} 个模型</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="other">凭据已验证 · {count} 个模型</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">凭据已验证</string>
-    <string name="dictate__providers_check_endpoint_ok">已连接服务器 · {count} 个模型</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="other">已连接服务器 · {count} 个模型</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">尚未测试转录。</string>
     <string name="dictate__providers_check_transcription_ok">转录已验证</string>
     <string name="dictate__providers_check_transcription_text">返回内容：“{text}”</string>
@@ -1470,7 +1474,9 @@
     <string name="dictate__model_picker_title">选择模型</string>
     <string name="dictate__model_picker_search">搜索或输入模型 ID</string>
     <string name="dictate__model_picker_loading">正在加载模型…</string>
-    <string name="dictate__model_picker_count">{count} 个模型</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="other">{count} 个模型</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">刷新</string>
     <string name="dictate__model_picker_use_custom">使用“{model}”</string>
     <string name="dictate__recording_group">录音</string>

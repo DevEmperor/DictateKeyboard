@@ -1412,9 +1412,15 @@
     <string name="dictate__providers_test">Bağlantıyı test et</string>
     <string name="dictate__providers_test_transcribe">Yazıya dökmeyi sına</string>
     <string name="dictate__providers_check_no_key">Önce API anahtarınızı girin.</string>
-    <string name="dictate__providers_check_credentials_ok">Kimlik bilgileri doğrulandı · {count} model</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Kimlik bilgileri doğrulandı · {count} model</item>
+        <item quantity="other">Kimlik bilgileri doğrulandı · {count} model</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Kimlik bilgileri doğrulandı</string>
-    <string name="dictate__providers_check_endpoint_ok">Sunucuya ulaşıldı · {count} model</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Sunucuya ulaşıldı · {count} model</item>
+        <item quantity="other">Sunucuya ulaşıldı · {count} model</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Yazıya dökme sınanmadı.</string>
     <string name="dictate__providers_check_transcription_ok">Yazıya dökme doğrulandı</string>
     <string name="dictate__providers_check_transcription_text">Şöyle döndü: “{text}”</string>
@@ -1454,7 +1460,10 @@
     <string name="dictate__model_picker_title">Bir model seçin</string>
     <string name="dictate__model_picker_search">Bir model kimliği arayın veya yazın</string>
     <string name="dictate__model_picker_loading">Modeller yükleniyor…</string>
-    <string name="dictate__model_picker_count">{count} model</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} model</item>
+        <item quantity="other">{count} model</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Yenile</string>
     <string name="dictate__model_picker_use_custom">“{model}” kullan</string>
     <string name="dictate__recording_group">Kayıt</string>

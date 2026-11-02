@@ -1439,9 +1439,19 @@
     <string name="dictate__providers_test">Проверить подключение</string>
     <string name="dictate__providers_test_transcribe">Проверить транскрибирование</string>
     <string name="dictate__providers_check_no_key">Сначала введите свой API-ключ.</string>
-    <string name="dictate__providers_check_credentials_ok">Данные доступа подтверждены · моделей: {count}</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Данные доступа подтверждены · {count} модель</item>
+        <item quantity="few">Данные доступа подтверждены · {count} модели</item>
+        <item quantity="many">Данные доступа подтверждены · {count} моделей</item>
+        <item quantity="other">Данные доступа подтверждены · {count} моделей</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Данные доступа подтверждены</string>
-    <string name="dictate__providers_check_endpoint_ok">Сервер доступен · моделей: {count}</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Сервер доступен · {count} модель</item>
+        <item quantity="few">Сервер доступен · {count} модели</item>
+        <item quantity="many">Сервер доступен · {count} моделей</item>
+        <item quantity="other">Сервер доступен · {count} моделей</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Транскрибирование не проверялось.</string>
     <string name="dictate__providers_check_transcription_ok">Транскрибирование подтверждено</string>
     <string name="dictate__providers_check_transcription_text">Вернулось так: «{text}»</string>
@@ -1481,7 +1491,12 @@
     <string name="dictate__model_picker_title">Выберите модель</string>
     <string name="dictate__model_picker_search">Найдите или введите id модели</string>
     <string name="dictate__model_picker_loading">Загрузка моделей…</string>
-    <string name="dictate__model_picker_count">{count} моделей</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} модель</item>
+        <item quantity="few">{count} модели</item>
+        <item quantity="many">{count} моделей</item>
+        <item quantity="other">{count} моделей</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Обновить</string>
     <string name="dictate__model_picker_use_custom">Использовать «{model}»</string>
     <string name="dictate__recording_group">Запись</string>

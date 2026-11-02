@@ -1388,9 +1388,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_test">Uji koneksi</string>
     <string name="dictate__providers_test_transcribe">Uji transkripsi</string>
     <string name="dictate__providers_check_no_key">Masukkan kunci API Anda dulu.</string>
-    <string name="dictate__providers_check_credentials_ok">Kredensial terverifikasi · {count} model</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="other">Kredensial terverifikasi · {count} model</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Kredensial terverifikasi</string>
-    <string name="dictate__providers_check_endpoint_ok">Server terjangkau · {count} model</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="other">Server terjangkau · {count} model</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transkripsi belum diuji.</string>
     <string name="dictate__providers_check_transcription_ok">Transkripsi terverifikasi</string>
     <string name="dictate__providers_check_transcription_text">Hasilnya: “{text}”</string>
@@ -1430,7 +1434,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__model_picker_title">Pilih model</string>
     <string name="dictate__model_picker_search">Cari atau ketik ID model</string>
     <string name="dictate__model_picker_loading">Memuat model…</string>
-    <string name="dictate__model_picker_count">{count} model</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="other">{count} model</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Segarkan</string>
     <string name="dictate__model_picker_use_custom">Gunakan “{model}”</string>
     <string name="dictate__recording_group">Perekaman</string>

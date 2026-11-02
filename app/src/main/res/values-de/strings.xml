@@ -1360,9 +1360,15 @@
     <string name="dictate__providers_test">Verbindung testen</string>
     <string name="dictate__providers_test_transcribe">Transkription testen</string>
     <string name="dictate__providers_check_no_key">Gib zuerst deinen API-Schlüssel ein.</string>
-    <string name="dictate__providers_check_credentials_ok">Zugangsdaten bestätigt · {count} Modelle</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Zugangsdaten bestätigt · {count} Modell</item>
+        <item quantity="other">Zugangsdaten bestätigt · {count} Modelle</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Zugangsdaten bestätigt</string>
-    <string name="dictate__providers_check_endpoint_ok">Server erreicht · {count} Modelle</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Server erreicht · {count} Modell</item>
+        <item quantity="other">Server erreicht · {count} Modelle</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transkription nicht getestet.</string>
     <string name="dictate__providers_check_transcription_ok">Transkription bestätigt</string>
     <string name="dictate__providers_check_transcription_text">Zurückgekommen als: „{text}“</string>
@@ -1464,7 +1470,10 @@
     <string name="dictate__model_picker_title">Modell auswählen</string>
     <string name="dictate__model_picker_search">Modell-ID suchen oder eingeben</string>
     <string name="dictate__model_picker_loading">Modelle werden geladen…</string>
-    <string name="dictate__model_picker_count">{count} Modelle</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} Modell</item>
+        <item quantity="other">{count} Modelle</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Aktualisieren</string>
     <string name="dictate__model_picker_use_custom">„{model}\" verwenden</string>
     <string name="dictate__recording_group">Aufnahme</string>

@@ -1311,9 +1311,15 @@
     <string name="dictate__providers_test">Tester la connexion</string>
     <string name="dictate__providers_test_transcribe">Tester la transcription</string>
     <string name="dictate__providers_check_no_key">Saisissez d’abord votre clé API.</string>
-    <string name="dictate__providers_check_credentials_ok">Identifiants vérifiés · {count} modèles</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Identifiants vérifiés · {count} modèle</item>
+        <item quantity="other">Identifiants vérifiés · {count} modèles</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Identifiants vérifiés</string>
-    <string name="dictate__providers_check_endpoint_ok">Serveur atteint · {count} modèles</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Serveur atteint · {count} modèle</item>
+        <item quantity="other">Serveur atteint · {count} modèles</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transcription non testée.</string>
     <string name="dictate__providers_check_transcription_ok">Transcription vérifiée</string>
     <string name="dictate__providers_check_transcription_text">Résultat : « {text} »</string>
@@ -1353,7 +1359,10 @@
     <string name="dictate__model_picker_title">Choisir un modèle</string>
     <string name="dictate__model_picker_search">Recherchez ou saisissez un id de modèle</string>
     <string name="dictate__model_picker_loading">Chargement des modèles…</string>
-    <string name="dictate__model_picker_count">{count} modèles</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} modèle</item>
+        <item quantity="other">{count} modèles</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Actualiser</string>
     <string name="dictate__model_picker_use_custom">Utiliser « {model} »</string>
     <string name="dictate__recording_group">Enregistrement</string>

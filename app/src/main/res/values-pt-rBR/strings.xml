@@ -1237,9 +1237,15 @@
     <string name="dictate__providers_test">Testar conexão</string>
     <string name="dictate__providers_test_transcribe">Testar a transcrição</string>
     <string name="dictate__providers_check_no_key">Digite primeiro sua chave de API.</string>
-    <string name="dictate__providers_check_credentials_ok">Credenciais verificadas · {count} modelos</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Credenciais verificadas · {count} modelo</item>
+        <item quantity="other">Credenciais verificadas · {count} modelos</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Credenciais verificadas</string>
-    <string name="dictate__providers_check_endpoint_ok">Servidor alcançado · {count} modelos</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Servidor alcançado · {count} modelo</item>
+        <item quantity="other">Servidor alcançado · {count} modelos</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transcrição não testada.</string>
     <string name="dictate__providers_check_transcription_ok">Transcrição verificada</string>
     <string name="dictate__providers_check_transcription_text">Voltou como: “{text}”</string>
@@ -1279,7 +1285,10 @@
     <string name="dictate__model_picker_title">Escolher um modelo</string>
     <string name="dictate__model_picker_search">Pesquise ou digite um id de modelo</string>
     <string name="dictate__model_picker_loading">Carregando modelos…</string>
-    <string name="dictate__model_picker_count">{count} modelos</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} modelo</item>
+        <item quantity="other">{count} modelos</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Atualizar</string>
     <string name="dictate__model_picker_use_custom">Usar «{model}»</string>
     <string name="dictate__recording_group">Gravação</string>

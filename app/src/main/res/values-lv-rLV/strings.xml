@@ -1378,9 +1378,17 @@
     <string name="dictate__providers_test">Pārbaudīt savienojumu</string>
     <string name="dictate__providers_test_transcribe">Pārbaudīt transkribēšanu</string>
     <string name="dictate__providers_check_no_key">Vispirms ievadiet savu API atslēgu.</string>
-    <string name="dictate__providers_check_credentials_ok">Akreditācijas dati pārbaudīti · {count} modeļi</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="zero">Akreditācijas dati pārbaudīti · {count} modeļu</item>
+        <item quantity="one">Akreditācijas dati pārbaudīti · {count} modelis</item>
+        <item quantity="other">Akreditācijas dati pārbaudīti · {count} modeļi</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Akreditācijas dati pārbaudīti</string>
-    <string name="dictate__providers_check_endpoint_ok">Serveris sasniegts · {count} modeļi</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="zero">Serveris sasniegts · {count} modeļu</item>
+        <item quantity="one">Serveris sasniegts · {count} modelis</item>
+        <item quantity="other">Serveris sasniegts · {count} modeļi</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transkribēšana nav pārbaudīta.</string>
     <string name="dictate__providers_check_transcription_ok">Transkribēšana pārbaudīta</string>
     <string name="dictate__providers_check_transcription_text">Atgriezās kā: „{text}“</string>
@@ -1420,7 +1428,11 @@
     <string name="dictate__model_picker_title">Izvēlieties modeli</string>
     <string name="dictate__model_picker_search">Meklējiet vai ievadiet modeļa ID</string>
     <string name="dictate__model_picker_loading">Ielādē modeļus…</string>
-    <string name="dictate__model_picker_count">{count} modeļi</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="zero">{count} modeļu</item>
+        <item quantity="one">{count} modelis</item>
+        <item quantity="other">{count} modeļi</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Atsvaidzināt</string>
     <string name="dictate__model_picker_use_custom">Izmantot “{model}”</string>
     <string name="dictate__recording_group">Ierakstīšana</string>

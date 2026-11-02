@@ -1432,9 +1432,15 @@
     <string name="dictate__providers_test">Kapcsolat tesztelése</string>
     <string name="dictate__providers_test_transcribe">Átírás tesztelése</string>
     <string name="dictate__providers_check_no_key">Először add meg az API-kulcsodat.</string>
-    <string name="dictate__providers_check_credentials_ok">Hitelesítő adatok ellenőrizve · {count} modell</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Hitelesítő adatok ellenőrizve · {count} modell</item>
+        <item quantity="other">Hitelesítő adatok ellenőrizve · {count} modell</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Hitelesítő adatok ellenőrizve</string>
-    <string name="dictate__providers_check_endpoint_ok">Kiszolgáló elérve · {count} modell</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Kiszolgáló elérve · {count} modell</item>
+        <item quantity="other">Kiszolgáló elérve · {count} modell</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Az átírás nincs tesztelve.</string>
     <string name="dictate__providers_check_transcription_ok">Átírás ellenőrizve</string>
     <string name="dictate__providers_check_transcription_text">Ez jött vissza: „{text}”</string>
@@ -1474,7 +1480,10 @@
     <string name="dictate__model_picker_title">Válasszon modellt</string>
     <string name="dictate__model_picker_search">Keressen vagy írjon be egy modellazonosítót</string>
     <string name="dictate__model_picker_loading">Modellek betöltése…</string>
-    <string name="dictate__model_picker_count">{count} modell</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} modell</item>
+        <item quantity="other">{count} modell</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Frissítés</string>
     <string name="dictate__model_picker_use_custom">„{model}” használata</string>
     <string name="dictate__recording_group">Felvétel</string>

@@ -1333,9 +1333,15 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_test">Verbinding testen</string>
     <string name="dictate__providers_test_transcribe">Transcriptie testen</string>
     <string name="dictate__providers_check_no_key">Voer eerst je API-sleutel in.</string>
-    <string name="dictate__providers_check_credentials_ok">Inloggegevens geverifieerd · {count} modellen</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Inloggegevens geverifieerd · {count} model</item>
+        <item quantity="other">Inloggegevens geverifieerd · {count} modellen</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Inloggegevens geverifieerd</string>
-    <string name="dictate__providers_check_endpoint_ok">Server bereikt · {count} modellen</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Server bereikt · {count} model</item>
+        <item quantity="other">Server bereikt · {count} modellen</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Transcriptie niet getest.</string>
     <string name="dictate__providers_check_transcription_ok">Transcriptie geverifieerd</string>
     <string name="dictate__providers_check_transcription_text">Kwam terug als: “{text}”</string>
@@ -1375,7 +1381,10 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__model_picker_title">Kies een model</string>
     <string name="dictate__model_picker_search">Zoek of typ een model-id</string>
     <string name="dictate__model_picker_loading">Modellen laden…</string>
-    <string name="dictate__model_picker_count">{count} modellen</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} model</item>
+        <item quantity="other">{count} modellen</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Vernieuwen</string>
     <string name="dictate__model_picker_use_custom">«{model}» gebruiken</string>
     <string name="dictate__recording_group">Opname</string>

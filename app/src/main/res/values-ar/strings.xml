@@ -1291,9 +1291,23 @@
     <string name="dictate__providers_test">اختبار الاتصال</string>
     <string name="dictate__providers_test_transcribe">اختبار التفريغ النصي</string>
     <string name="dictate__providers_check_no_key">أدخل مفتاح واجهة البرمجة أولاً.</string>
-    <string name="dictate__providers_check_credentials_ok">تم التحقق من بيانات الاعتماد · {count} نموذجًا</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="zero">تم التحقق من بيانات الاعتماد · {count} نموذج</item>
+        <item quantity="one">تم التحقق من بيانات الاعتماد · {count} نموذج</item>
+        <item quantity="two">تم التحقق من بيانات الاعتماد · {count} نموذجان</item>
+        <item quantity="few">تم التحقق من بيانات الاعتماد · {count} نماذج</item>
+        <item quantity="many">تم التحقق من بيانات الاعتماد · {count} نموذجًا</item>
+        <item quantity="other">تم التحقق من بيانات الاعتماد · {count} نموذج</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">تم التحقق من بيانات الاعتماد</string>
-    <string name="dictate__providers_check_endpoint_ok">تم الوصول إلى الخادم · {count} نموذجًا</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="zero">تم الوصول إلى الخادم · {count} نموذج</item>
+        <item quantity="one">تم الوصول إلى الخادم · {count} نموذج</item>
+        <item quantity="two">تم الوصول إلى الخادم · {count} نموذجان</item>
+        <item quantity="few">تم الوصول إلى الخادم · {count} نماذج</item>
+        <item quantity="many">تم الوصول إلى الخادم · {count} نموذجًا</item>
+        <item quantity="other">تم الوصول إلى الخادم · {count} نموذج</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">لم يُختبر التفريغ النصي.</string>
     <string name="dictate__providers_check_transcription_ok">تم التحقق من التفريغ النصي</string>
     <string name="dictate__providers_check_transcription_text">جاء الرد: “{text}”</string>
@@ -1333,7 +1347,14 @@
     <string name="dictate__model_picker_title">اختر نموذجًا</string>
     <string name="dictate__model_picker_search">ابحث أو اكتب معرّف نموذج</string>
     <string name="dictate__model_picker_loading">جارٍ تحميل النماذج…</string>
-    <string name="dictate__model_picker_count">{count} نماذج</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="zero">{count} نموذج</item>
+        <item quantity="one">{count} نموذج</item>
+        <item quantity="two">{count} نموذجان</item>
+        <item quantity="few">{count} نماذج</item>
+        <item quantity="many">{count} نموذجًا</item>
+        <item quantity="other">{count} نموذج</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">تحديث</string>
     <string name="dictate__model_picker_use_custom">استخدام ”{model}“</string>
     <string name="dictate__recording_group">التسجيل</string>

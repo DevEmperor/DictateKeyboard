@@ -1449,9 +1449,19 @@
     <string name="dictate__providers_test">Otestovat připojení</string>
     <string name="dictate__providers_test_transcribe">Otestovat přepis</string>
     <string name="dictate__providers_check_no_key">Nejprve zadejte svůj API klíč.</string>
-    <string name="dictate__providers_check_credentials_ok">Přihlašovací údaje ověřeny · {count} modelů</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Přihlašovací údaje ověřeny · {count} model</item>
+        <item quantity="few">Přihlašovací údaje ověřeny · {count} modely</item>
+        <item quantity="many">Přihlašovací údaje ověřeny · {count} modelů</item>
+        <item quantity="other">Přihlašovací údaje ověřeny · {count} modelů</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Přihlašovací údaje ověřeny</string>
-    <string name="dictate__providers_check_endpoint_ok">Server byl dosažen · {count} modelů</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Server byl dosažen · {count} model</item>
+        <item quantity="few">Server byl dosažen · {count} modely</item>
+        <item quantity="many">Server byl dosažen · {count} modelů</item>
+        <item quantity="other">Server byl dosažen · {count} modelů</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Přepis nebyl otestován.</string>
     <string name="dictate__providers_check_transcription_ok">Přepis ověřen</string>
     <string name="dictate__providers_check_transcription_text">Vrátilo se jako: „{text}“</string>
@@ -1491,7 +1501,12 @@
     <string name="dictate__model_picker_title">Vyberte model</string>
     <string name="dictate__model_picker_search">Vyhledejte nebo zadejte id modelu</string>
     <string name="dictate__model_picker_loading">Načítání modelů…</string>
-    <string name="dictate__model_picker_count">{count} modelů</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} model</item>
+        <item quantity="few">{count} modely</item>
+        <item quantity="many">{count} modelů</item>
+        <item quantity="other">{count} modelů</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Obnovit</string>
     <string name="dictate__model_picker_use_custom">Použít „{model}\"</string>
     <string name="dictate__recording_group">Nahrávání</string>

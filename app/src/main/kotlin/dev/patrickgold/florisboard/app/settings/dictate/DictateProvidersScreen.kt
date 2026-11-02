@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.app.settings.dictate
 
 import android.content.Context
+import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -118,6 +119,7 @@ import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.persistentVerticalScrollbar
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.curlyFormat
 
 /**
  * What the setup wizard asked this screen to open as it appears (issue #273).
@@ -1428,10 +1430,13 @@ private fun ProviderCheckSection(
     }
 
     Column(modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
-        Row(
+        // A flow rather than a row: the two buttons do not fit side by side in the dialog on a 1080 px phone,
+        // and a row squeezed the second one until its label broke mid-word ("Test transcriptio / n"). Now it
+        // moves to a line of its own, whole.
+        FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End,
+            itemVerticalAlignment = Alignment.CenterVertically,
         ) {
             if (running) {
                 CircularProgressIndicator(modifier = Modifier.padding(end = 8.dp).size(16.dp))
@@ -1440,7 +1445,7 @@ private fun ProviderCheckSection(
                 enabled = !running,
                 onClick = { startCheck(transcription = false) { it.checkCredentials() } },
             ) {
-                Text(stringRes(R.string.dictate__providers_test))
+                Text(stringRes(R.string.dictate__providers_test), maxLines = 1)
             }
             if (showTranscription) {
                 TextButton(
@@ -1455,7 +1460,7 @@ private fun ProviderCheckSection(
                         }
                     },
                 ) {
-                    Text(stringRes(R.string.dictate__providers_test_transcribe))
+                    Text(stringRes(R.string.dictate__providers_test_transcribe), maxLines = 1)
                 }
             }
         }
@@ -1491,20 +1496,21 @@ private fun checkOutcome(context: Context, check: ConnectionCheck): CheckOutcome
     ConnectionCheckScope.CREDENTIALS -> CheckOutcome(
         ok = true,
         headline = check.liveModelCount
-            ?.let { context.stringRes(R.string.dictate__providers_check_credentials_ok, "count" to it.toString()) }
+            ?.let { context.modelCount(R.plurals.dictate__providers_check_credentials_ok, it) }
             ?: context.stringRes(R.string.dictate__providers_check_credentials_ok_nocount),
         detail = context.stringRes(R.string.dictate__providers_check_credentials_untested),
     )
     // Keyless by design, so there is nothing to verify and the honest verdict is smaller, not bigger.
     ConnectionCheckScope.ENDPOINT -> CheckOutcome(
         ok = true,
-        headline = context.stringRes(
-            R.string.dictate__providers_check_endpoint_ok,
-            "count" to (check.liveModelCount ?: 0),
-        ),
+        headline = context.modelCount(R.plurals.dictate__providers_check_endpoint_ok, check.liveModelCount ?: 0),
         detail = context.stringRes(R.string.dictate__providers_check_credentials_untested),
     )
 }
+
+/** A verdict that counts models, in the plural form [count] asks for: a server with one model said "1 models". */
+private fun Context.modelCount(@PluralsRes id: Int, count: Int): String =
+    resources.getQuantityString(id, count).curlyFormat("count" to count)
 
 /**
  * Turns a failed check into a verdict plus the next thing to do.

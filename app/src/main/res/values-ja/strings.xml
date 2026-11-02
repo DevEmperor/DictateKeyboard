@@ -1365,9 +1365,13 @@
     <string name="dictate__providers_test">接続をテスト</string>
     <string name="dictate__providers_test_transcribe">文字起こしをテスト</string>
     <string name="dictate__providers_check_no_key">先にAPIキーを入力してください。</string>
-    <string name="dictate__providers_check_credentials_ok">認証情報を確認 · {count} 個のモデル</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="other">認証情報を確認 · {count} 個のモデル</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">認証情報を確認</string>
-    <string name="dictate__providers_check_endpoint_ok">サーバーに到達 · {count} 個のモデル</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="other">サーバーに到達 · {count} 個のモデル</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">文字起こしは未テストです。</string>
     <string name="dictate__providers_check_transcription_ok">文字起こしを確認</string>
     <string name="dictate__providers_check_transcription_text">返ってきた内容：「{text}」</string>
@@ -1407,7 +1411,9 @@
     <string name="dictate__model_picker_title">モデルを選択</string>
     <string name="dictate__model_picker_search">モデルIDを検索または入力</string>
     <string name="dictate__model_picker_loading">モデルを読み込み中…</string>
-    <string name="dictate__model_picker_count">{count}モデル</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="other">{count}モデル</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">更新</string>
     <string name="dictate__model_picker_use_custom">「{model}」を使用</string>
     <string name="dictate__recording_group">録音</string>

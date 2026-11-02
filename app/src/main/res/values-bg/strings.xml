@@ -1433,9 +1433,15 @@
     <string name="dictate__providers_test">Тествай връзката</string>
     <string name="dictate__providers_test_transcribe">Тест на транскрибирането</string>
     <string name="dictate__providers_check_no_key">Първо въведете своя API ключ.</string>
-    <string name="dictate__providers_check_credentials_ok">Данните за достъп са проверени · {count} модела</string>
+    <plurals name="dictate__providers_check_credentials_ok">
+        <item quantity="one">Данните за достъп са проверени · {count} модел</item>
+        <item quantity="other">Данните за достъп са проверени · {count} модела</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_ok_nocount">Данните за достъп са проверени</string>
-    <string name="dictate__providers_check_endpoint_ok">Сървърът е достигнат · {count} модела</string>
+    <plurals name="dictate__providers_check_endpoint_ok">
+        <item quantity="one">Сървърът е достигнат · {count} модел</item>
+        <item quantity="other">Сървърът е достигнат · {count} модела</item>
+    </plurals>
     <string name="dictate__providers_check_credentials_untested">Транскрибирането не е тествано.</string>
     <string name="dictate__providers_check_transcription_ok">Транскрибирането е проверено</string>
     <string name="dictate__providers_check_transcription_text">Върна се като: „{text}“</string>
@@ -1475,7 +1481,10 @@
     <string name="dictate__model_picker_title">Изберете модел</string>
     <string name="dictate__model_picker_search">Търсете или въведете идентификатор на модел</string>
     <string name="dictate__model_picker_loading">Зареждане на модели…</string>
-    <string name="dictate__model_picker_count">{count} модела</string>
+    <plurals name="dictate__model_picker_count">
+        <item quantity="one">{count} модел</item>
+        <item quantity="other">{count} модела</item>
+    </plurals>
     <string name="dictate__model_picker_refresh">Опресни</string>
     <string name="dictate__model_picker_use_custom">Използвай „{model}“</string>
     <string name="dictate__recording_group">Записване</string>
