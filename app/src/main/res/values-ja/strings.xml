@@ -139,6 +139,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">文字数 単語数 カウント 統計</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">トリミング 空白 削除 コピー 切り取り</string>
     <string name="settings__search__keywords__clear_cache">キャッシュ ストレージ 空き容量 一時ファイル 削除 クリア 掃除</string>
+    <string name="settings__search__keywords__keyboard_size">高さ 大きく 小さく サイズ変更 リサイズ</string>
     <string name="settings__search__keywords__momentary_layer">長押し スライド 記号 レイヤー 一時 句読点 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">絵文字 行 バー 最近 使った キーボード 上 クイック</string>
     <string name="settings__search__keywords__request_timeout">タイムアウト 時間切れ 遅い 待機 接続 秒</string>
@@ -456,6 +457,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズ倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーン入力</string>
+    <string name="pref__keyboard__keyboard_size__label">キーボードのサイズ</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">キーの間隔</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">縦 {v}%、横 {h}% — 間隔を広げるとキーボードではなくキーが小さくなります。</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キー入力</string>

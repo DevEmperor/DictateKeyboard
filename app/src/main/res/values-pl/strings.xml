@@ -146,6 +146,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">liczba słów licznik słów znaki długość statystyki</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">przycinanie spacje usuwanie czyszczenie kopiowanie wycinanie</string>
     <string name="settings__search__keywords__clear_cache">pamięć podręczna cache miejsce pliki tymczasowe zwolnić usunąć wyczyścić</string>
+    <string name="settings__search__keywords__keyboard_size">wysokość wysoka niska większa mniejsza zmień rozmiar powiększ zmniejsz</string>
     <string name="settings__search__keywords__momentary_layer">przytrzymaj przesuń symbol warstwa interpunkcja tymczasowo chwilowo 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji rząd pasek ostatnio używane nad klawiaturą szybki</string>
     <string name="settings__search__keywords__request_timeout">limit czasu timeout wolno czekanie połączenie sekundy</string>
@@ -484,6 +485,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
+    <string name="pref__keyboard__keyboard_size__label">Rozmiar klawiatury</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Odstęp między klawiszami</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% w pionie, {h}% w poziomie — większy odstęp zmniejsza klawisze, a nie klawiaturę.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>

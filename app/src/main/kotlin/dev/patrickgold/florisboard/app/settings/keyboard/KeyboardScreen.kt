@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -29,7 +32,10 @@ import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.window.ImeWindowController
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -129,6 +135,26 @@ fun KeyboardScreen() = FlorisScreen {
                 min = 50,
                 max = 150,
                 stepIncrement = 5,
+            )
+            // The keyboard's height is set by dragging, on the keyboard itself. This row used to be missing,
+            // so the gap below was taken for it, and it never changes the height (#365). Tapping it opens the
+            // keyboard on the preview field with its size handles out, saved per language as always (#418).
+            val context = LocalContext.current
+            val previewField = LocalPreviewFieldController.current
+            val softwareKeyboard = LocalSoftwareKeyboardController.current
+            Preference(
+                modifier = Modifier.settingsSearchAnchor("pref__keyboard__keyboard_size__label"),
+                title = stringRes(R.string.pref__keyboard__keyboard_size__label),
+                onClick = {
+                    if (InputMethodUtils.isFlorisboardSelected(context)) {
+                        ImeWindowController.requestEditor(FlorisImeService.windowControllerOrNull())
+                        previewField?.focusRequester?.requestFocus()
+                        softwareKeyboard?.show()
+                    } else {
+                        // Another keyboard would come up without any handles to drag.
+                        InputMethodUtils.showImePicker(context)
+                    }
+                },
             )
             // The factor scales a 2dp horizontal / 5dp vertical base, so the old 50-150 % moved the gap
             // by a single dp and read as doing nothing at all (issue #365). 0-300 % spans no gap to a

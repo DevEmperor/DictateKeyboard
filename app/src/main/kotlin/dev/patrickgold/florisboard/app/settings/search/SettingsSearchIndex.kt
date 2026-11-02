@@ -305,6 +305,7 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.pref__keyboard__group_layout__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard),
         SettingsSearchEntry(R.string.pref__keyboard__landscape_input_ui_mode__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__landscape_input_ui_mode__label"),
         SettingsSearchEntry(R.string.pref__keyboard__font_size_multiplier__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__font_size_multiplier__label"),
+        SettingsSearchEntry(R.string.pref__keyboard__keyboard_size__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__keyboard_size__label", keywordsRes = R.string.settings__search__keywords__keyboard_size),
         SettingsSearchEntry(R.string.pref__keyboard__key_spacing__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__key_spacing__label"),
         SettingsSearchEntry(R.string.settings__input_feedback__title, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "settings__input_feedback__title"),
         SettingsSearchEntry(R.string.pref__keyboard__popup_enabled__label, R.string.settings__keyboard__title, Routes.Settings.Keyboard, anchor = "pref__keyboard__popup_enabled__label"),

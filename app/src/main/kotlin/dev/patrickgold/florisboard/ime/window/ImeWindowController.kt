@@ -250,7 +250,9 @@ class ImeWindowController(
     }
 
     fun onWindowShown(): Boolean {
-        return isWindowShown.compareAndSet(expect = false, update = true)
+        val shown = isWindowShown.compareAndSet(expect = false, update = true)
+        if (shown && takeEditorRequest()) editor.enable()
+        return shown
     }
 
     fun onWindowHidden(): Boolean {
@@ -604,5 +606,34 @@ class ImeWindowController(
          */
         val isAnyGesture: Boolean
             get() = isMoveGesture || isResizeGesture
+    }
+
+    companion object {
+        /** How long a request from the settings waits for the keyboard to open before it lapses. */
+        private const val EDITOR_REQUEST_TTL_NANOS = 3_000_000_000L
+
+        @Volatile
+        private var editorRequestedAt = 0L
+
+        /**
+         * Opens the size editor from the settings' "Keyboard size" row (Dictate). The height used to be
+         * reachable only through the Resize action, so people looked for it under the key gap, which never
+         * changes it (#365). The row focuses the settings' preview field, so the keyboard is usually not up
+         * yet: the request then waits for the window to be shown, and lapses after a few seconds so that it
+         * cannot surface later in some other app's field.
+         */
+        fun requestEditor(controller: ImeWindowController?) {
+            if (controller != null && controller.isWindowShown.value) {
+                controller.editor.enable()
+            } else {
+                editorRequestedAt = System.nanoTime()
+            }
+        }
+
+        private fun takeEditorRequest(): Boolean {
+            val at = editorRequestedAt
+            editorRequestedAt = 0L
+            return at != 0L && System.nanoTime() - at < EDITOR_REQUEST_TTL_NANOS
+        }
     }
 }

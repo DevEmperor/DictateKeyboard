@@ -144,6 +144,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">количество слов счётчик слов символы длина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">обрезать пробелы удалить очистить копировать вырезать</string>
     <string name="settings__search__keywords__clear_cache">кэш память место временные файлы освободить удалить очистить</string>
+    <string name="settings__search__keywords__keyboard_size">высота высокая низкая больше меньше изменить размер увеличить уменьшить</string>
     <string name="settings__search__keywords__momentary_layer">удержать провести символ слой пунктуация временно на мгновение 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">эмодзи ряд строка панель недавние использованные над клавиатурой быстрый смайлик</string>
     <string name="settings__search__keywords__request_timeout">тайм-аут время ожидания медленно ждать соединение секунды</string>
@@ -478,6 +479,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">На весь экран в альбомном режиме</string>
+    <string name="pref__keyboard__keyboard_size__label">Размер клавиатуры</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Промежуток между клавишами</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% по вертикали, {h}% по горизонтали — больший промежуток уменьшает клавиши, а не клавиатуру.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>

@@ -139,6 +139,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">عدد الكلمات عداد الأحرف الطول إحصائيات</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">اقتصاص مسافات إزالة تنظيف نسخ قص</string>
     <string name="settings__search__keywords__clear_cache">ذاكرة مؤقتة تخزين مساحة ملفات مؤقتة تحرير حذف تنظيف</string>
+    <string name="settings__search__keywords__keyboard_size">ارتفاع طول أكبر أصغر تكبير تصغير تغيير الحجم</string>
     <string name="settings__search__keywords__momentary_layer">ضغط مطول سحب رمز طبقة ترقيم مؤقت 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">رموز تعبيرية صف شريط مؤخرا مستخدمة فوق لوحة المفاتيح سريع</string>
     <string name="settings__search__keywords__request_timeout">مهلة انتهت المهلة بطيء انتظار اتصال ثواني</string>
@@ -366,6 +367,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">مضاعف حجم الخط</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">التخطيط</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">إدخال ملء الشاشة الأفقي</string>
+    <string name="pref__keyboard__keyboard_size__label">حجم لوحة المفاتيح</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">المسافة بين المفاتيح</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% رأسيًا، {h}% أفقيًا — المسافة الأكبر تجعل المفاتيح أصغر، لا لوحة المفاتيح.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">ضغط المفتاح</string>

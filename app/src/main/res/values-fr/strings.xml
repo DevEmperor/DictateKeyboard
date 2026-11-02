@@ -138,6 +138,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">compter les mots nombre de mots caractères longueur statistiques</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">rogner espaces supprimer nettoyer copier couper</string>
     <string name="settings__search__keywords__clear_cache">cache stockage espace fichiers temporaires libérer supprimer nettoyer</string>
+    <string name="settings__search__keywords__keyboard_size">hauteur haut bas plus grand plus petit redimensionner agrandir réduire</string>
     <string name="settings__search__keywords__momentary_layer">maintenir glisser symbole couche ponctuation temporaire momentané 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">emoji émoji rangée ligne barre récents utilisés au-dessus clavier rapide</string>
     <string name="settings__search__keywords__request_timeout">délai timeout lent attente connexion secondes expiré</string>
@@ -410,6 +411,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicateur de la taille de la police</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrée en plein écran à l\'horizontale</string>
+    <string name="pref__keyboard__keyboard_size__label">Taille du clavier</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espace entre les touches</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v} % vertical, {h} % horizontal — un espace plus large réduit les touches, pas le clavier.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>

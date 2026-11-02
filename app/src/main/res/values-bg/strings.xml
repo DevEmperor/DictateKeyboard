@@ -146,6 +146,7 @@
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">брой думи брояч на думи знаци дължина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">изрязване интервали премахване почистване копиране</string>
     <string name="settings__search__keywords__clear_cache">кеш памет място временни файлове освобождаване изтриване почистване</string>
+    <string name="settings__search__keywords__keyboard_size">височина висока ниска по-голяма по-малка преоразмеряване размер</string>
     <string name="settings__search__keywords__momentary_layer">задръжане плъзгане символ слой пунктуация временно 123 iphone</string>
     <string name="settings__search__keywords__emoji_row">емоджи ред лента наскоро използвани над клавиатурата бърз смайлик</string>
     <string name="settings__search__keywords__request_timeout">изчакване таймаут бавно чакане връзка секунди прекъсване</string>
@@ -484,6 +485,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Размер на надписите на клавишите</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Клавиатура на цял екран (пейзаж)</string>
+    <string name="pref__keyboard__keyboard_size__label">Размер на клавиатурата</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Разстояние между клавишите</string>
     <string name="pref__keyboard__key_spacing__summary" comment="Preference summary">{v}% вертикално, {h}% хоризонтално — по-голямото разстояние смалява клавишите, а не клавиатурата.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
