@@ -618,6 +618,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">删除键长按</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">滑动触发速度阈值</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">滑动触发距离阈值</string>
+    <string name="settings__help__title">帮助</string>
     <string name="settings__other__title" comment="Title of Other settings">其他杂项...</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">软件设置页主题</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">系统默认(AMOLED)</string>

@@ -570,6 +570,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dzēšanas taustiņa ilga piespiešana</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pavilkšanas ātruma slieksnis</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pavilkšanas attāluma slieksnis</string>
+    <string name="settings__help__title">Palīdzība</string>
     <string name="settings__other__title" comment="Title of Other settings">Cits</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Iestatījumu izskats</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Sistēmas noklusējums (AMOLED)</string>

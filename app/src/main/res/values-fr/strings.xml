@@ -546,6 +546,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Touche de suppression pression longue</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Seuil de vitesse de glissement</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Seuil de la distance de glissement</string>
+    <string name="settings__help__title">Aide</string>
     <string name="settings__other__title" comment="Title of Other settings">Autre</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Paramètres des thèmes</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Système par défaut (AMOLED)</string>

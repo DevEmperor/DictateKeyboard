@@ -607,6 +607,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Apertar e segurar tecla de apagar</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidade de deslize</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distância de deslize</string>
+    <string name="settings__help__title">Ajuda</string>
     <string name="settings__other__title" comment="Title of Other settings">Outro</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Tema das definições</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Definição do sistema (AMOLED)</string>

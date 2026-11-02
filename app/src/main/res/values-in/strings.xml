@@ -604,6 +604,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Tekanan lama tombol hapus</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ambang batas kecepatan geser</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Ambang jarak geser</string>
+    <string name="settings__help__title">Bantuan</string>
     <string name="settings__other__title" comment="Title of Other settings">Lainnya</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Pengaturan Tema</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Default sistem (AMOLED)</string>

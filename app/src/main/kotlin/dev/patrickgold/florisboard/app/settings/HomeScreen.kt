@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.Assignment
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Gesture
 import androidx.compose.material.icons.filled.Language
@@ -64,6 +65,7 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.data.stats.DictateStats
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -314,6 +316,13 @@ fun HomeScreen() = FlorisScreen {
             icon = Icons.Outlined.Build,
             title = stringRes(R.string.settings__other__title),
             onClick = { navController.navigate(Routes.Settings.Other) },
+        )
+        // The user guide (Dictate): every feature and setting explained with pictures, on the GitHub wiki.
+        // The screens themselves carry labels only, so this is where the explanations live.
+        Preference(
+            icon = Icons.AutoMirrored.Outlined.HelpOutline,
+            title = stringRes(R.string.settings__help__title),
+            onClick = { context.launchUrl(R.string.dictate__wiki_url) },
         )
         Preference(
             icon = Icons.Outlined.Info,

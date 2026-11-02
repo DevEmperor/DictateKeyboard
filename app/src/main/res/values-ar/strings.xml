@@ -500,6 +500,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">الضغطة المطولة لمفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">عتبة مسافة السحب</string>
+    <string name="settings__help__title">مساعدة</string>
     <string name="settings__other__title" comment="Title of Other settings">أخرى</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">إعدادات المظهر</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">افتراضي النظام (أموليد)</string>

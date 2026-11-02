@@ -500,6 +500,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Довге натискання клавіші «Видалити»</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Поріг швидкості проведення</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Поріг відстані проведення</string>
+    <string name="settings__help__title">Довідка</string>
     <string name="settings__other__title" comment="Title of Other settings">Інше</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Налаштування теми</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Як в системі (Чорна)</string>

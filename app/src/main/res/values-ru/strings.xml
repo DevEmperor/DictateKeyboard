@@ -612,6 +612,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Долгое нажатие «Удалить»</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Порог скорости жеста</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Порог срабатывания жеста</string>
+    <string name="settings__help__title">Справка</string>
     <string name="settings__other__title" comment="Title of Other settings">Прочее</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Настройки темы</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Как в системе (AMOLED)</string>

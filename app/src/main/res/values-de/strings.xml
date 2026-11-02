@@ -558,6 +558,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Aktion bei lang gedrückter Löschtaste</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
+    <string name="settings__help__title">Hilfe</string>
     <string name="settings__other__title" comment="Title of Other settings">Sonstige</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">App-Design</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Systemstandard (AMOLED)</string>

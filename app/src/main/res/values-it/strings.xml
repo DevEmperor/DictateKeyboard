@@ -518,6 +518,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pressione prolungata del tasto Elimina</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Soglia di velocità dello swipe</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Soglia di distanza dello swipe</string>
+    <string name="settings__help__title">Guida</string>
     <string name="settings__other__title" comment="Title of Other settings">Altro</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Impostazioni tema</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Predefinito di sistema (AMOLED)</string>

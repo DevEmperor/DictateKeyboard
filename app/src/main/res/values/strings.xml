@@ -867,6 +867,7 @@
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
+    <string name="settings__help__title" comment="Row on the settings home screen that opens the online user guide (a wiki with explanations and screenshots)">Help</string>
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>

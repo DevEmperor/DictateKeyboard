@@ -617,6 +617,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dlouhé stisknutí klávesy ke smazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetí</string>
+    <string name="settings__help__title">Nápověda</string>
     <string name="settings__other__title" comment="Title of Other settings">Ostatní</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Motiv nastavení</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Podle systému (AMOLED)</string>
