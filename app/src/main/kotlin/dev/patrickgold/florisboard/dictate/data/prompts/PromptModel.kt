@@ -60,3 +60,27 @@ data class PromptModel(
 
 /** The literal text of this prompt if it is a snippet, else `null` — see [snippetBodyOf]. */
 fun PromptModel.snippetBody(): String? = snippetBodyOf(prompt)
+
+/**
+ * The prompts of a backup that a merge restore should add: [incoming] minus every prompt that [existing]
+ * already holds in the same form. Ids and positions are not compared — they are where a prompt sits, not
+ * what it is.
+ *
+ * A merge used to append the whole backup, so restoring the same archive twice (or one taken from this
+ * very phone, which is the usual way to try a restore) left every prompt in the list twice.
+ */
+fun promptsMissingFrom(existing: List<PromptModel>, incoming: List<PromptModel>): List<PromptModel> {
+    val have = existing.mapTo(HashSet()) { it.contentKey() }
+    return incoming.filter { have.add(it.contentKey()) }
+}
+
+private fun PromptModel.contentKey() = listOf(
+    name.orEmpty(),
+    prompt.orEmpty(),
+    requiresSelection,
+    autoApply,
+    reasoningEffort,
+    reasoningEffortCustom?.takeIf { it.isNotBlank() },
+    trigger?.takeIf { it.isNotBlank() },
+    libraryId?.takeIf { it.isNotBlank() },
+)

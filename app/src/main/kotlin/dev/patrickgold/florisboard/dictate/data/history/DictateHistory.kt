@@ -171,6 +171,20 @@ abstract class DictateHistoryDatabase : RoomDatabase() {
 }
 
 /**
+ * The backed-up entries a merge restore should add: [incoming] minus those [existing] already holds. A
+ * dictation is identified by when it was made and what it said; ids are re-issued on every import, so they
+ * say nothing. A merge used to append the whole backup, so restoring the same archive twice listed every
+ * dictation twice, as it did the prompts.
+ */
+internal fun historyEntriesMissingFrom(
+    existing: List<DictateHistoryEntry>,
+    incoming: List<DictateHistoryEntry>,
+): List<DictateHistoryEntry> {
+    val have = existing.mapTo(HashSet()) { it.createdAt to it.text }
+    return incoming.filter { have.add(it.createdAt to it.text) }
+}
+
+/**
  * Single write/read path for the dictation history (issue #140), mirroring [dev.patrickgold.florisboard
  * .dictate.data.stats.DictateStats]. Owns the Room database and the private audio directory so the
  * keyboard, the floating button and the settings/panel UIs all share one store.
@@ -376,7 +390,8 @@ object DictateHistoryStore {
      * Restores backed-up [entries] (backup/restore). Each is re-inserted with a fresh id; when
      * [backupAudioDir] contains a WAV named by the entry's ORIGINAL id (as written by the backup), it is
      * copied into the history audio dir and linked, otherwise the entry restores text-only. [replace]
-     * clears the store first (the Erase restore strategy); otherwise entries are appended (Merge).
+     * clears the store first (the Erase restore strategy); otherwise the entries that are not already here
+     * are appended (Merge) — see [historyEntriesMissingFrom].
      *
      * Writes to the DAO directly and **never** notifies the folder export (issue #379): a restore puts a
      * whole history back at once, and going through [record] would spray hundreds of files into a folder
@@ -391,7 +406,8 @@ object DictateHistoryStore {
         val dao = db(context).dao()
         if (replace) clearAll(context)
         val destDir = audioDir(context)
-        for (entry in entries) {
+        val toImport = if (replace) entries else historyEntriesMissingFrom(dao.getAllNewestFirst(), entries)
+        for (entry in toImport) {
             if (entry.text.isBlank()) continue
             val newId = dao.insert(entry.copy(id = 0, audioPath = null, audioBytes = 0L))
             // Found by id rather than by name: since #322 a retained file carries the extension of what

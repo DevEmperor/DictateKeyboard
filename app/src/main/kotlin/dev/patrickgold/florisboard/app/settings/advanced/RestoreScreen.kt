@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.data.prompts.promptsMissingFrom
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
 import dev.patrickgold.florisboard.dictate.provider.hasNoSecrets
 import dev.patrickgold.florisboard.dictate.symbols.CustomSymbols
@@ -225,8 +226,8 @@ fun RestoreScreen() = FlorisScreen {
                     // Erase mode: replace the whole prompt list with the backed-up one.
                     db.replaceAll(prompts)
                 } else {
-                    // Merge mode: append the backed-up prompts after the existing ones.
-                    db.addAll(prompts)
+                    // Merge mode: append the backed-up prompts that are not already here.
+                    db.addAll(promptsMissingFrom(db.getAll(), prompts))
                 }
             }
         }
@@ -298,7 +299,9 @@ fun RestoreScreen() = FlorisScreen {
             }
         }
         val clipboardManager = context.clipboardManager().value
-        if (shouldReset) {
+        // Erase replaces what is ticked. An unticked clipboard is not part of this restore, and it used to be
+        // wiped all the same.
+        if (shouldReset && restoreFilesSelector.provideClipboardItems()) {
             clipboardManager.clearFullHistory()
             ClipboardFileStorage.resetClipboardFileStorage(context)
         }
