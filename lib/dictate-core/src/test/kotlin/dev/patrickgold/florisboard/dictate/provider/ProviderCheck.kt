@@ -28,7 +28,8 @@ import kotlin.time.Duration.Companion.hours
  *
  * It never runs on its own. Jannis decided (2026-11-03) that it is run by hand, once a month, together,
  * with the results looked at before anything changes. The unit-test task skips it unless
- * `DICTATE_PROVIDER_CHECK` names the keys file; `.claude/provider-check/run.sh` sets that up and says how.
+ * `DICTATE_PROVIDER_CHECK` names the keys file; `private/testing/provider-check/run.sh` (outside the public repo)
+ * sets that up and says how.
  *
  * Environment:
  * - `DICTATE_PROVIDER_CHECK`: the keys file, `NAME=value` per line (OPENAI, GROQ, …, AZURE_URL).

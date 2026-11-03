@@ -17,7 +17,7 @@ import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
 
 /**
  * One searchable settings entry (issue #187). GENERATED from the settings screens by
- * scripts/gen_settings_search_index — do not curate by hand; rerun the generator when settings
+ * tools/gen_settings_search_index — do not curate by hand; rerun the generator when settings
  * change so the search stays complete. Each entry maps a localized [titleRes] to the [route]
  * that shows it, with [sectionRes] (the screen) and optional [parentRes] forming the breadcrumb.
  * When [anchor] is set the destination row is tagged with Modifier.settingsSearchAnchor and the
