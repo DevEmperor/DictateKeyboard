@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -1134,11 +1135,17 @@ class OpenAiCompatibleClient(
                 .map { ModelInfo(it.id) }
                 .sortedBy { it.id.lowercase() }
         }
-        val response = decode(ModelsResponseDto.serializer(), body)
+        // Together answers with the bare array instead of OpenAI's `{ data: [...] }`, so its picker said
+        // "Unreadable response from provider" and stayed empty (provider check, 2026-11-03).
+        val entries = if (body.trimStart().startsWith("[")) {
+            decode(ListSerializer(ModelEntryDto.serializer()), body)
+        } else {
+            decode(ModelsResponseDto.serializer(), body).data
+        }
         // Gemini's catalog reports ids as `models/gemini-…`; strip that prefix so the picker shows clean
         // ids that also work directly as the `model` field in both chat and generateContent calls.
         val stripPrefix = config.transcriptionApi == TranscriptionApi.GEMINI_GENERATE_CONTENT
-        return response.data
+        return entries
             .map {
                 ModelInfo(
                     id = if (stripPrefix) it.id.removePrefix("models/") else it.id,

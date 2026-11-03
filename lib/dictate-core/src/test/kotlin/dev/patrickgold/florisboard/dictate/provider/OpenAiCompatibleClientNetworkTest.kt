@@ -464,6 +464,23 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Together's /models, shortened from the live answer of 2026-11-03: an array, no `data` around it.
+    test("a model list sent as a bare array is read like one wrapped in data") {
+        MockWebServer().use { server ->
+            server.enqueue(
+                MockResponse().setResponseCode(200).setBody(
+                    """[{"id":"openai/gpt-oss-120b","object":"model","type":"chat","running":false},""" +
+                        """{"id":"deepseek-ai/DeepSeek-V4.1-Flash","object":"model","type":"chat"}]""",
+                ),
+            )
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            client.listModels().map { it.id } shouldBe listOf("deepseek-ai/DeepSeek-V4.1-Flash", "openai/gpt-oss-120b")
+        }
+    }
+
     // Issue #304: a thinking model that spends its whole answer on the thinking comes back as a perfectly
     // valid 200 with nothing in it. The one remedy on this side is to ask again with less thinking.
     test("a reasoning-only answer is asked again with the thinking turned down") {
