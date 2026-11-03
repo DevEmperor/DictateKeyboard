@@ -4762,11 +4762,6 @@ object DictateController {
     }
 
     /**
-     * High-level rewording call: builds the user message as `instruction [+ system prompt] [+ input]`
-     * (exactly as the legacy app did – the be-precise prompt is tuned for this position) and returns
-     * the trimmed model output.
-     */
-    /**
      * Wake-on-demand for a self-hosted backend (issue #189).
      *
      * The self-hosting shape this exists for: a small always-on box in front of a GPU machine that sleeps
@@ -4823,19 +4818,20 @@ object DictateController {
         prefs.dictate.rewordingEnabled.get() &&
             (prefs.dictate.autoFormattingEnabled.get() || _prompts.value.any { it.autoApply && it.snippetBody() == null })
 
+    /**
+     * High-level rewording call: the user message is `instruction [+ system prompt] [+ input]`, in the
+     * legacy app's order, with the input framed as the user's text
+     * ([DictatePromptDefaults.buildRewordingRequest]) — unframed, a dictated question got answered and a
+     * dictated request carried out (#469). Returns the trimmed model output.
+     */
     private suspend fun requestReword(
         instruction: String,
         input: String?,
         reasoning: DictateReasoningEffort? = null,
         reasoningCustom: String? = null,
     ): String {
-        val sys = systemPrompt()
-        val content = buildString {
-            append(instruction)
-            if (sys.isNotBlank()) append("\n\n").append(sys)
-            if (!input.isNullOrBlank()) append("\n\n").append(input)
-        }
-        return requestRewordRaw(content, reasoning, reasoningCustom)
+        val content = DictatePromptDefaults.buildRewordingRequest(instruction, systemPrompt(), input)
+        return DictatePromptDefaults.stripTextTags(requestRewordRaw(content, reasoning, reasoningCustom))
     }
 
     /**

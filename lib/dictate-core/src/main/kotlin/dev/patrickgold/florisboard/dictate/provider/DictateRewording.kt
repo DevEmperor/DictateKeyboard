@@ -67,15 +67,13 @@ object DictateRewording {
                 text += seamSeparator(text, snippet) + snippet
                 continue
             }
-            val content = buildString {
-                append(prompt.instruction)
-                if (!systemPrompt.isNullOrBlank()) append("\n\n").append(systemPrompt)
-                // Always the running text, as on the phone (see promptRequiresSelection): without it the
-                // model answers the bare instruction, and that answer would replace the dictation.
-                append("\n\n").append(text)
-            }
+            // Always the running text, as on the phone (see promptRequiresSelection): without it the model
+            // answers the bare instruction, and that answer would replace the dictation. Framed as text, or a
+            // dictated question gets answered instead (#469).
+            val content = DictatePromptDefaults.buildRewordingRequest(prompt.instruction, systemPrompt, text)
             text = runCatching {
-                client.complete(ChatRequest.ofUser(chatModel, content, reasoningEffort)).text.trim().ifBlank { text }
+                val reply = client.complete(ChatRequest.ofUser(chatModel, content, reasoningEffort)).text
+                DictatePromptDefaults.stripTextTags(reply).trim().ifBlank { text }
             }.getOrDefault(text)
         }
         return text
