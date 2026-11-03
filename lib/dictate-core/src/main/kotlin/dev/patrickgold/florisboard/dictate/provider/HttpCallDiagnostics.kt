@@ -196,7 +196,15 @@ internal object DictateHttpLog {
         }
     }
 
+    /**
+     * Also hears every warning, for the provider check (`ProviderCheck` in the tests): the warnings are where
+     * a refused request quietly took another way, which the check has to report rather than count as a pass.
+     */
+    @Volatile
+    var warnSink: ((String) -> Unit)? = null
+
     fun warn(message: String) {
+        warnSink?.invoke(message)
         try {
             Log.w(TAG, message)
         } catch (_: RuntimeException) {

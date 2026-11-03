@@ -150,7 +150,7 @@ class OpenAiCompatibleClient(
         current == null || current.trim().lowercase() !in THINKING_AT_FLOOR
 
     /** What one call came back with: an answer, or a 200 with nothing usable in it (issue #304). */
-    private sealed interface Completion {
+    internal sealed interface Completion {
         data class Answer(val result: ChatResult) : Completion
 
         /**
@@ -190,7 +190,11 @@ class OpenAiCompatibleClient(
             ("does not support" in m && ("thinking" in m || "reasoning" in m))
     }
 
-    private suspend fun completeOnce(request: ChatRequest): Completion {
+    /**
+     * One request exactly as asked, with none of [complete]'s retries: the provider check reads what an
+     * endpoint does with each reasoning value from here, which [complete] would otherwise smooth over.
+     */
+    internal suspend fun completeOnce(request: ChatRequest): Completion {
         val dto = ChatCompletionRequestDto(
             model = request.model,
             messages = request.messages.map { MessageDto(it.role.wire, it.content) },

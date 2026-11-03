@@ -10,7 +10,6 @@
 
 package dev.patrickgold.florisboard.dictate.provider
 
-import android.util.Base64
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
@@ -33,6 +32,7 @@ import okio.ByteString.Companion.toByteString
 import java.net.InetAddress
 import java.net.Socket
 import java.net.URLEncoder
+import java.util.Base64
 import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
 
@@ -321,7 +321,7 @@ private class OpenAiRealtimeSession(
     }
 
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
-        val b64 = Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP)
+        val b64 = base64Of(pcm16, len)
         val msg = buildJsonObject {
             put("type", "input_audio_buffer.append")
             put("audio", b64)
@@ -712,7 +712,7 @@ private class ElevenLabsRealtimeSession(
     private fun sendAudioFrame(socket: WebSocket, pcm16: ByteArray, len: Int) {
         val msg = buildJsonObject {
             put("message_type", "input_audio_chunk")
-            put("audio_base_64", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
+            put("audio_base_64", base64Of(pcm16, len))
             put("commit", false)
             put("sample_rate", 16_000)
         }.toString()
@@ -900,7 +900,7 @@ private class GeminiRealtimeSession(
         val msg = buildJsonObject {
             putJsonObject("realtimeInput") {
                 putJsonObject("audio") {
-                    put("data", Base64.encodeToString(pcm16, 0, len, Base64.NO_WRAP))
+                    put("data", base64Of(pcm16, len))
                     put("mimeType", "audio/pcm;rate=16000")
                 }
             }
@@ -1474,3 +1474,11 @@ internal fun languageHintsOf(language: String?, expectedLanguages: List<String>)
     return (if (pinned != null) listOf(pinned) else expectedLanguages)
         .filter { it.isNotBlank() && it != "detect" }
 }
+
+/**
+ * The first [len] bytes of [pcm16] in Base64, unwrapped, as the sockets that frame audio as JSON want it.
+ * java.util's encoder, as the batch client uses (minSdk 26): android.util's only exists on a device, and
+ * the provider check streams through these sessions on the JVM.
+ */
+private fun base64Of(pcm16: ByteArray, len: Int): String =
+    Base64.getEncoder().encodeToString(if (len == pcm16.size) pcm16 else pcm16.copyOf(len))
