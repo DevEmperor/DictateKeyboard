@@ -752,9 +752,14 @@ object DictateController {
      * unknown). Above [PACK_ABOVE_BYTES] always; below it only when the provider's own limit is close
      * enough that the WAV would otherwise be refused — three quarters of it, so the decision is made
      * before the edge rather than at it.
+     *
+     * Never into a container the provider is known to refuse: packing makes M4A, and where [accepted]
+     * lacks it the upload was refused, or converted straight back to WAV (Azure's MAI models, measured
+     * 2026-11-03). An empty [accepted] is unknown and packs as before.
      */
-    internal fun shouldPack(wavBytes: Long, limitBytes: Long): Boolean =
-        wavBytes > PACK_ABOVE_BYTES || (limitBytes > 0L && wavBytes > limitBytes / 4 * 3)
+    internal fun shouldPack(wavBytes: Long, limitBytes: Long, accepted: Set<AudioContainer> = emptySet()): Boolean =
+        (accepted.isEmpty() || AudioContainer.M4A in accepted) &&
+            (wavBytes > PACK_ABOVE_BYTES || (limitBytes > 0L && wavBytes > limitBytes / 4 * 3))
     /** Cache file for a recording taken back from a hanging cloud request to finish on-device (#270). */
     private const val RESCUED_AUDIO_NAME = "dictate_rescued.wav"
     /** The recording handed to the fallback provider (#455), with the original's extension appended. */
@@ -2145,7 +2150,9 @@ object DictateController {
                 if (!chatAudio &&
                     preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
                     source != DictateHistorySource.IMPORT &&
-                    shouldPack(uploadFile.length(), ProviderRegistry.maxUploadBytes(preset.id))
+                    shouldPack(
+                        uploadFile.length(), ProviderRegistry.maxUploadBytes(preset.id), preset.acceptedAudioContainers,
+                    )
                 ) {
                     val packed = AudioEncode.toM4a(uploadFile, File(appContext.cacheDir, PACKED_AUDIO_NAME))
                     if (packed != null) {
@@ -3426,7 +3433,7 @@ object DictateController {
         // exactly where the segments add up. The WAV stays on disk: it is merged into the history audio.
         val toUpload = spedUp ?: wav
         val packed = if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE &&
-            shouldPack(toUpload.length(), ProviderRegistry.maxUploadBytes(preset.id))
+            shouldPack(toUpload.length(), ProviderRegistry.maxUploadBytes(preset.id), preset.acceptedAudioContainers)
         ) {
             AudioEncode.toM4a(toUpload, File(appContext.cacheDir, "pak_${wav.nameWithoutExtension}.m4a"))
         } else {

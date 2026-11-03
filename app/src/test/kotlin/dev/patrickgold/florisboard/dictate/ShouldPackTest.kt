@@ -70,6 +70,16 @@ class ShouldPackTest {
     }
 
     @Test
+    fun `nothing is packed into a container the provider refuses`() {
+        // Azure's MAI models refuse M4A (measured 2026-11-03); the WAV fits its 300 MiB for over two hours.
+        val azure = ProviderRegistry.AZURE.acceptedAudioContainers
+        assertFalse(DictateController.shouldPack(seconds(60 * 30), mib(300), azure))
+        // A provider that takes M4A, or one whose formats are unknown, is packed as before.
+        assertTrue(DictateController.shouldPack(seconds(60 * 14), known, ProviderRegistry.OPENAI.acceptedAudioContainers))
+        assertTrue(DictateController.shouldPack(seconds(60 * 14), known, emptySet()))
+    }
+
+    @Test
     fun `an unknown limit is not read as permission`() {
         // 0 means "no figure documented", not "no ceiling". A big recording is packed either way.
         assertTrue(pack(mib(20), unknown))

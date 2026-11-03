@@ -657,18 +657,14 @@ object ProviderRegistry {
         allowsCustomBaseUrl = true,
         defaultTranscriptionModel = "MAI-Transcribe-2",
         curatedTranscriptionModels = listOf("MAI-Transcribe-2", "MAI-Transcribe-1.5"),
-        // Two of Microsoft's pages describe the same endpoint differently, and this list follows the
-        // wider one. The MAI page's prerequisites name WAV, MP3 and FLAC — the formats of its sample
-        // file; the Fast Transcription page, which is the API MAI is invoked through, names WAV, MP3,
-        // Opus/Ogg, FLAC, WMA, AAC, A-law and µ-law in WAV, AMR, WebM and Speex (both read 2026-09-09).
-        // Neither names MP4/M4A, and it is here anyway for two reasons that outweigh the omission: it is
-        // AAC in an MP4 container, which the wider list does name, and leaving it out would make every
-        // dictation past the packing threshold transcode straight back to WAV after being packed. A
-        // refusal costs one request and no dictation — FORMAT_NOT_SUPPORTED resends the untouched WAV
-        // (#281). Unmeasured: nobody here has an Azure key to ask the endpoint with.
+        // Asked of the endpoint (provider check, 2026-11-03): MAI-Transcribe-2 and -1.5 take WAV, MP3,
+        // FLAC and Ogg/Opus, and refuse M4A, AAC, WebM and AMR with 400 "invalid_audio … Format not
+        // recognised". Microsoft's two pages disagree (MAI's names WAV, MP3, FLAC; Fast Transcription's
+        // names AAC, AMR and WebM as well, both read 2026-09-09), and the narrower one was right. The list
+        // used to follow the wider one, so a shared M4A voice memo failed outright, the import having no
+        // WAV to fall back to. Dictations are no longer packed into M4A here either (`shouldPack`).
         acceptedAudioContainers = setOf(
             AudioContainer.WAV, AudioContainer.MP3, AudioContainer.FLAC, AudioContainer.OGG,
-            AudioContainer.M4A, AudioContainer.AAC, AudioContainer.WEBM, AudioContainer.AMR,
         ),
         // Realtime is off, and not by omission. Azure streams MAI-Transcribe through the Voice Live API,
         // which is a different protocol on a different host and expects a Foundry deployment rather than
