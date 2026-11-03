@@ -663,6 +663,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">このアーカイブには API キーとパスワードが平文で入っており、Dictate Cloud の残高も含まれます。受け取った人は誰でもあなたの負担で音声入力できます。他人に渡さないでください。すでに渡してしまった場合は、プロバイダー側でキーを変更してください。下でチェックされているものはすべて一緒に入ります。文字起こしの履歴やクリップボードも含まれます。</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">このアーカイブには API キー、パスワード、Dictate Cloud の残高は含まれていないので、他人に渡せます。ただし、あなたのキーも復元されません。下でチェックされているものはそのまま入っており、文字起こしの履歴やクリップボードも含まれます。</string>
     <string name="backup_and_restore__back_up__personal_content_note">このアーカイブに API キーとパスワードは含まれていませんが、下でチェックされているものはすべて入ります。保存された録音を含む文字起こしの履歴、クリップボード、プロンプト、キーボードがあなたから学習した単語です。</string>
+    <string name="backup_and_restore__back_up__encrypted_note">このアーカイブはパスワードで暗号化され、下でチェックされているものはすべてそのパスワードでしか復元できません。パスワードを忘れると、誰もこのバックアップを復元できません。あなた自身も同じです。</string>
+    <string name="backup_and_restore__back_up__password">パスワード保護</string>
+    <string name="backup_and_restore__back_up__password_enabled">パスワードで暗号化</string>
+    <string name="backup_and_restore__back_up__password_too_short">{count} 文字以上</string>
+    <string name="backup_and_restore__back_up__password_mismatch">パスワードが一致しません</string>
+    <string name="backup_and_restore__password">パスワード</string>
+    <string name="backup_and_restore__password_repeat">パスワード（確認）</string>
+    <string name="backup_and_restore__restore__encrypted">このバックアップアーカイブはパスワードで保護されています。内容を表示するにはパスワードを入力してください。</string>
+    <string name="backup_and_restore__restore__unlock">ロック解除</string>
+    <string name="backup_and_restore__restore__wrong_password">パスワードが違います</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">このアーカイブを開けません。破損しているか、新しいバージョンの Dictate で作成されています。</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">キーボード拡張機能</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">スペル拡張機能 / 辞書</string>
     <string name="backup_and_restore__back_up__files_ime_theme">テーマ拡張機能</string>

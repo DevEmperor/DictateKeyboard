@@ -20,11 +20,24 @@ import android.content.ContentUris
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -37,6 +50,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
@@ -108,9 +125,14 @@ object Backup {
     // The user's own symbol pages (issue #342). A setting, so it travels with the preferences, but a file of
     // its own beside them, as on the device; an archive without it is one whose every key was the default.
     const val CUSTOM_SYMBOLS_JSON_NAME = "custom_symbols.json"
+    // The ordinary archive a password-protected one is sealed from (issue #470); deleted once it is.
+    const val PLAIN_ARCHIVE_FILE_NAME = "plain_backup.zip"
 
-    fun defaultFileName(metadata: Metadata): String {
-        return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
+    // A protected archive says so in its name, so that whoever finds it in a folder of backups knows which
+    // one asks for a password before picking it.
+    fun defaultFileName(metadata: Metadata, encrypted: Boolean = false): String {
+        val suffix = if (encrypted) "_encrypted" else ""
+        return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}$suffix.zip"
     }
 
     enum class Destination {
@@ -199,6 +221,12 @@ fun BackupScreen() = FlorisScreen {
     var backupDestination by remember { mutableStateOf(Backup.Destination.FILE_SYS) }
     val backupFilesSelector = remember { Backup.FilesSelector() }
     var backupWorkspace: CacheManager.BackupAndRestoreWorkspace? = null
+    // Plain remember, never rememberSaveable: saved state can be written to disk, and a password must not.
+    var passwordProtected by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+    var passwordRepeat by remember { mutableStateOf("") }
+    val passwordAccepted = password == passwordRepeat &&
+        password.codePointCount(0, password.length) >= BackupEncryption.MIN_PASSWORD_LENGTH
 
     val backUpToFileSystemLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/zip"),
@@ -349,8 +377,25 @@ fun BackupScreen() = FlorisScreen {
             timestamp = System.currentTimeMillis(),
         )
         workspace.inputDir.subFile(Backup.METADATA_JSON_NAME).writeJson(workspace.metadata)
-        workspace.zipFile = workspace.outputDir.subFile(Backup.defaultFileName(workspace.metadata))
-        ZipUtils.zip(workspace.inputDir, workspace.zipFile)
+        val protectWith = password.takeIf { passwordProtected }
+        workspace.zipFile = workspace.outputDir.subFile(
+            Backup.defaultFileName(workspace.metadata, encrypted = protectWith != null),
+        )
+        if (protectWith == null) {
+            ZipUtils.zip(workspace.inputDir, workspace.zipFile)
+        } else {
+            // With a password (issue #470), the sealed archive is the only copy left: the plain one it was
+            // sealed from and the files that went into it are deleted at once. The share destination never
+            // closes its workspace, so otherwise they would sit in the cache with the keys readable.
+            val plainArchive = workspace.outputDir.subFile(Backup.PLAIN_ARCHIVE_FILE_NAME)
+            try {
+                ZipUtils.zip(workspace.inputDir, plainArchive)
+                BackupEncryption.encrypt(plainArchive, workspace.zipFile, protectWith)
+            } finally {
+                plainArchive.delete()
+                workspace.inputDir.deleteRecursively()
+            }
+        }
         backupWorkspace = workspace
     }
 
@@ -404,7 +449,7 @@ fun BackupScreen() = FlorisScreen {
                     scope.launch { prepareAndPerformBackup() }
                 },
                 text = stringRes(R.string.action__back_up),
-                enabled = backupFilesSelector.atLeastOneSelected(),
+                enabled = backupFilesSelector.atLeastOneSelected() && (!passwordProtected || passwordAccepted),
             )
         }
     }
@@ -416,9 +461,14 @@ fun BackupScreen() = FlorisScreen {
         // warns — but an archive of nothing but the history is transcripts and recordings of someone's
         // voice, and saying nothing at all about that would be the same mistake one level down. The third
         // state is for exactly that case: personal content, no credentials.
+        //
+        // A password (issue #470) puts all of that behind it, keys or not, so it gets its own wording. What
+        // that note has to say instead is that the password is the only way back in.
         val credentialsInArchive = backupFilesSelector.jetprefDatastore &&
-            backupFilesSelector.providerCredentials
+            backupFilesSelector.providerCredentials && !passwordProtected
         val contentNoticeId = when {
+            passwordProtected && backupFilesSelector.atLeastOneSelected() ->
+                R.string.backup_and_restore__back_up__encrypted_note
             credentialsInArchive -> R.string.backup_and_restore__back_up__credentials_warning
             backupFilesSelector.jetprefDatastore ->
                 R.string.backup_and_restore__back_up__credentials_excluded_note
@@ -478,7 +528,113 @@ fun BackupScreen() = FlorisScreen {
             filesSelector = backupFilesSelector,
             title = stringRes(R.string.backup_and_restore__back_up__files),
         )
+        BackupPasswordBox(
+            enabled = passwordProtected,
+            onEnabledChange = { passwordProtected = it },
+            password = password,
+            onPasswordChange = { password = it },
+            repeat = passwordRepeat,
+            onRepeatChange = { passwordRepeat = it },
+        )
     }
+}
+
+/**
+ * The optional password (issue #470). Asked twice, because a mistyped password on an archive nobody can
+ * open is a lost backup. Each field says what is wrong with it only once there is something to judge.
+ */
+@Composable
+private fun BackupPasswordBox(
+    enabled: Boolean,
+    onEnabledChange: (Boolean) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    repeat: String,
+    onRepeatChange: (String) -> Unit,
+) {
+    var reveal by remember { mutableStateOf(false) }
+    FlorisOutlinedBox(
+        modifier = Modifier.defaultFlorisOutlinedBox(),
+        title = stringRes(R.string.backup_and_restore__back_up__password),
+    ) {
+        CheckboxListItem(
+            onClick = { onEnabledChange(!enabled) },
+            checked = enabled,
+            text = stringRes(R.string.backup_and_restore__back_up__password_enabled),
+        )
+        if (enabled) {
+            val min = BackupEncryption.MIN_PASSWORD_LENGTH
+            val tooShort = password.isNotEmpty() && password.codePointCount(0, password.length) < min
+            val mismatch = repeat.isNotEmpty() && repeat != password
+            Column(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                BackupPasswordField(
+                    value = password,
+                    onValueChange = onPasswordChange,
+                    label = stringRes(R.string.backup_and_restore__password),
+                    reveal = reveal,
+                    onRevealChange = { reveal = it },
+                    error = if (tooShort) stringRes(R.string.backup_and_restore__back_up__password_too_short, "count" to min) else null,
+                )
+                BackupPasswordField(
+                    value = repeat,
+                    onValueChange = onRepeatChange,
+                    label = stringRes(R.string.backup_and_restore__password_repeat),
+                    reveal = reveal,
+                    onRevealChange = { reveal = it },
+                    error = if (mismatch) stringRes(R.string.backup_and_restore__back_up__password_mismatch) else null,
+                    imeAction = ImeAction.Done,
+                )
+            }
+        }
+    }
+}
+
+/**
+ * A password field for a backup archive, on both screens. The password keyboard type is what tells a
+ * keyboard, ours included, not to suggest, correct or learn what is typed here.
+ */
+@Composable
+internal fun BackupPasswordField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    reveal: Boolean,
+    onRevealChange: (Boolean) -> Unit,
+    error: String? = null,
+    imeAction: ImeAction = ImeAction.Next,
+    onDone: (() -> Unit)? = null,
+    enabled: Boolean = true,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
+        singleLine = true,
+        label = { Text(label) },
+        isError = error != null,
+        supportingText = error?.let { { Text(it) } },
+        visualTransformation = if (reveal) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            autoCorrectEnabled = false,
+            imeAction = imeAction,
+        ),
+        keyboardActions = onDone?.let { done ->
+            KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done); done() })
+        } ?: KeyboardActions.Default,
+        trailingIcon = {
+            IconButton(onClick = { onRevealChange(!reveal) }) {
+                Icon(
+                    imageVector = if (reveal) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
+                    contentDescription = null,
+                )
+            }
+        },
+    )
 }
 
 @Composable

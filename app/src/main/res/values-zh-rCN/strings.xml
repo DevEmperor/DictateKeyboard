@@ -696,6 +696,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">该归档以明文保存你的 API 密钥和密码，还包含你的 Dictate Cloud 余额——拿到它的人都能用你的账户来听写。不要转交；如果已经转交过，请在服务商处更换密钥。下面勾选的其他内容也会一同带走，包括听写历史和剪贴板。</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">该归档不含 API 密钥、密码和 Dictate Cloud 余额，因此可以转交——但也不会恢复你的密钥。下面勾选的其他内容仍在其中，包括听写历史和剪贴板。</string>
     <string name="backup_and_restore__back_up__personal_content_note">该归档不含 API 密钥和密码，但包含下面勾选的一切：听写历史及保留的录音、剪贴板、你的提示词，以及键盘从你这里学到的词。</string>
+    <string name="backup_and_restore__back_up__encrypted_note">该归档已用你的密码加密，下面勾选的一切都只能凭此密码恢复。如果忘记密码，任何人都无法恢复这份备份，包括你自己。</string>
+    <string name="backup_and_restore__back_up__password">密码保护</string>
+    <string name="backup_and_restore__back_up__password_enabled">使用密码加密</string>
+    <string name="backup_and_restore__back_up__password_too_short">至少 {count} 个字符</string>
+    <string name="backup_and_restore__back_up__password_mismatch">两次输入的密码不一致</string>
+    <string name="backup_and_restore__password">密码</string>
+    <string name="backup_and_restore__password_repeat">再次输入密码</string>
+    <string name="backup_and_restore__restore__encrypted">该备份归档受密码保护。输入密码即可查看其中的内容。</string>
+    <string name="backup_and_restore__restore__unlock">解锁</string>
+    <string name="backup_and_restore__restore__wrong_password">密码错误</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">无法打开该归档。它已损坏，或是由更新版本的 Dictate 创建的。</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">键盘扩展</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">拼写扩展 / 词典</string>
     <string name="backup_and_restore__back_up__files_ime_theme">主题扩展</string>

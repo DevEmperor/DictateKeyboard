@@ -681,6 +681,17 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="backup_and_restore__back_up__credentials_warning">Arsip ini memuat kunci API dan kata sandi Anda dalam teks biasa, beserta saldo Dictate Cloud Anda — siapa pun yang menerimanya bisa mendikte atas biaya Anda. Jangan meneruskannya, dan jika sudah, gantilah kuncinya di penyedia Anda. Semua hal lain yang dicentang di bawah ikut terbawa, termasuk riwayat transkripsi dan papan klip Anda.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Arsip ini tidak memuat kunci API, kata sandi, maupun saldo Dictate Cloud, jadi boleh diteruskan, tetapi juga tidak akan memulihkan milik Anda. Semua hal lain yang dicentang di bawah tetap ada di dalamnya, termasuk riwayat transkripsi dan papan klip Anda.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Arsip ini tidak memuat kunci API dan kata sandi, tetapi memuat semua yang dicentang di bawah: riwayat transkripsi beserta rekaman yang disimpan, papan klip, prompt Anda, dan kata-kata yang dipelajari papan ketik dari Anda.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Arsip ini dienkripsi dengan kata sandi Anda, dan semua yang dicentang di bawah hanya dapat dipulihkan dengan kata sandi tersebut. Jika Anda lupa kata sandinya, tidak ada yang bisa memulihkan cadangan ini, bahkan Anda sendiri.</string>
+    <string name="backup_and_restore__back_up__password">Perlindungan kata sandi</string>
+    <string name="backup_and_restore__back_up__password_enabled">Enkripsi dengan kata sandi</string>
+    <string name="backup_and_restore__back_up__password_too_short">Minimal {count} karakter</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Kata sandi tidak cocok</string>
+    <string name="backup_and_restore__password">Kata sandi</string>
+    <string name="backup_and_restore__password_repeat">Ulangi kata sandi</string>
+    <string name="backup_and_restore__restore__encrypted">Arsip cadangan ini dilindungi kata sandi. Masukkan kata sandi untuk melihat isinya.</string>
+    <string name="backup_and_restore__restore__unlock">Buka kunci</string>
+    <string name="backup_and_restore__restore__wrong_password">Kata sandi salah</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Arsip ini tidak dapat dibuka. Arsip rusak, atau dibuat dengan versi Dictate yang lebih baru.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Ekstensi papan ketik</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Ekstensi / kamus ejaan</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Ekstensi tema</string>

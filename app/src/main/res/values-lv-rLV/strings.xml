@@ -649,6 +649,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Šis arhīvs satur tavas API atslēgas un paroles atklātā tekstā, kā arī tavu Dictate Cloud kredītu — ikviens, kas to saņem, var diktēt uz tava rēķina. Nenodod to tālāk, un, ja jau esi nodevis, nomaini atslēgu pie sava pakalpojuma sniedzēja. Viss pārējais, kas atzīmēts zemāk, ceļo kopā ar to, tostarp transkripcijas vēsture un starpliktuve.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Šajā arhīvā nav ne API atslēgu, ne paroļu, ne Dictate Cloud kredīta, tāpēc to var nodot tālāk, taču tavas tas arī neatjaunos. Viss pārējais, kas atzīmēts zemāk, tajā joprojām ir, tostarp transkripcijas vēsture un starpliktuve.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Šajā arhīvā nav API atslēgu un paroļu, bet ir viss, kas atzīmēts zemāk: transkripcijas vēsture kopā ar saglabātajiem ierakstiem, starpliktuve, tavi uzvedņi un vārdi, ko tastatūra no tevis iemācījusies.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Šis arhīvs ir šifrēts ar tavu paroli, un visu, kas atzīmēts zemāk, var atjaunot tikai ar to. Ja aizmirsīsi paroli, neviens nevarēs atjaunot šo dublējumu – pat ne tu.</string>
+    <string name="backup_and_restore__back_up__password">Aizsardzība ar paroli</string>
+    <string name="backup_and_restore__back_up__password_enabled">Šifrēt ar paroli</string>
+    <string name="backup_and_restore__back_up__password_too_short">Vismaz {count} rakstzīmes</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Paroles nesakrīt</string>
+    <string name="backup_and_restore__password">Parole</string>
+    <string name="backup_and_restore__password_repeat">Atkārto paroli</string>
+    <string name="backup_and_restore__restore__encrypted">Šis dublējuma arhīvs ir aizsargāts ar paroli. Ievadi to, lai redzētu, kas ir arhīvā.</string>
+    <string name="backup_and_restore__restore__unlock">Atbloķēt</string>
+    <string name="backup_and_restore__restore__wrong_password">Nepareiza parole</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Šo arhīvu nevar atvērt. Tas ir bojāts vai izveidots ar jaunāku Dictate versiju.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastatūras paplašinājumi</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Pareizrakstības paplašinājumi / vārdnīcas</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Izskata paplašinājumi</string>

@@ -696,6 +696,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Ez az archívum tisztán olvasható formában tartalmazza az API-kulcsaidat és jelszavaidat, valamint a Dictate Cloud egyenlegedet — aki megkapja, a te költségedre diktálhat. Ne add tovább, és ha már megtetted, változtasd meg a kulcsot a szolgáltatónál. Minden más, ami alább be van jelölve, vele együtt utazik, beleértve az átírási előzményeket és a vágólapot.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Ez az archívum nem tartalmaz API-kulcsot, jelszót és Dictate Cloud egyenleget, így továbbadható, de a tiédet sem állítja vissza. Minden más, ami alább be van jelölve, továbbra is benne van, az átírási előzmények és a vágólap is.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Ez az archívum nem tartalmaz API-kulcsot és jelszót, de tartalmaz mindent, ami alább be van jelölve: az átírási előzményeket a megtartott felvételekkel, a vágólapot, a promptjaidat és azokat a szavakat, amelyeket a billentyűzet tőled tanult.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Ez az archívum a jelszavaddal van titkosítva, és mindent, ami alább be van jelölve, csak vele lehet visszaállítani. Ha elfelejted a jelszót, senki sem tudja visszaállítani ezt a biztonsági mentést – még te sem.</string>
+    <string name="backup_and_restore__back_up__password">Jelszavas védelem</string>
+    <string name="backup_and_restore__back_up__password_enabled">Titkosítás jelszóval</string>
+    <string name="backup_and_restore__back_up__password_too_short">Legalább {count} karakter</string>
+    <string name="backup_and_restore__back_up__password_mismatch">A jelszavak nem egyeznek</string>
+    <string name="backup_and_restore__password">Jelszó</string>
+    <string name="backup_and_restore__password_repeat">Jelszó megismétlése</string>
+    <string name="backup_and_restore__restore__encrypted">Ez a biztonsági mentés jelszóval védett. Add meg a jelszót, hogy lásd, mit tartalmaz.</string>
+    <string name="backup_and_restore__restore__unlock">Feloldás</string>
+    <string name="backup_and_restore__restore__wrong_password">Hibás jelszó</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Ez az archívum nem nyitható meg. Sérült, vagy a Dictate egy újabb verziójával készült.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Billentyűzetkiterjesztések</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Helyesírási kiterjesztések / szótárak</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Témakiterjesztések</string>

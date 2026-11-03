@@ -573,6 +573,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">يحتوي هذا الأرشيف على مفاتيح API وكلمات المرور الخاصة بك بنص واضح، إلى جانب رصيدك في Dictate Cloud — ومن يحصل عليه يمكنه الإملاء على حسابك. لا تُشاركه، وإذا كنت قد شاركته بالفعل فغيِّر المفتاح عند مزوّدك. كل ما هو محدَّد أدناه يرحل معه أيضًا، بما في ذلك سجل النسخ النصي والحافظة.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">لا يحتوي هذا الأرشيف على مفاتيح API أو كلمات مرور أو رصيد Dictate Cloud، فيمكن مشاركته، لكنه لن يستعيد مفاتيحك كذلك. كل ما هو محدَّد أدناه لا يزال فيه، بما في ذلك سجل النسخ النصي والحافظة.</string>
     <string name="backup_and_restore__back_up__personal_content_note">لا يحتوي هذا الأرشيف على مفاتيح API أو كلمات مرور، لكنه يحتوي على كل ما هو محدَّد أدناه: سجل النسخ النصي مع التسجيلات المحفوظة، والحافظة، ومطالباتك، والكلمات التي تعلّمتها لوحة المفاتيح منك.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">هذا الأرشيف مشفَّر بكلمة المرور الخاصة بك، ولا يمكن استعادة كل ما هو محدَّد أدناه إلا بها. إذا نسيت كلمة المرور، فلن يتمكن أحد من استعادة هذه النسخة الاحتياطية، ولا حتى أنت.</string>
+    <string name="backup_and_restore__back_up__password">الحماية بكلمة مرور</string>
+    <string name="backup_and_restore__back_up__password_enabled">التشفير بكلمة مرور</string>
+    <string name="backup_and_restore__back_up__password_too_short">{count} أحرف على الأقل</string>
+    <string name="backup_and_restore__back_up__password_mismatch">كلمتا المرور غير متطابقتين</string>
+    <string name="backup_and_restore__password">كلمة المرور</string>
+    <string name="backup_and_restore__password_repeat">أعد إدخال كلمة المرور</string>
+    <string name="backup_and_restore__restore__encrypted">أرشيف النسخ الاحتياطي هذا محميّ بكلمة مرور. أدخلها لترى محتواه.</string>
+    <string name="backup_and_restore__restore__unlock">فتح القفل</string>
+    <string name="backup_and_restore__restore__wrong_password">كلمة المرور غير صحيحة</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">لا يمكن فتح هذا الأرشيف. إما أنه تالف، أو أنه أُنشئ بإصدار أحدث من Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">ملحقات لوحة المفاتيح</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">ملحقات التهجئة/ القاموس</string>
     <string name="backup_and_restore__back_up__files_ime_theme">ملحقات السمات</string>

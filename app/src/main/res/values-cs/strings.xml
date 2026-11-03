@@ -696,6 +696,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Tento archiv obsahuje tvoje klíče API a hesla v čitelné podobě i tvůj kredit Dictate Cloud — kdokoli ho dostane, může diktovat na tvůj účet. Nepředávej ho dál, a pokud jsi to už udělal, změň klíč u svého poskytovatele. Všechno ostatní zaškrtnuté níže jde s ním, včetně historie přepisů a schránky.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Tento archiv neobsahuje žádné klíče API, hesla ani kredit Dictate Cloud, takže ho můžeš předat dál, ale tvoje také neobnoví. Všechno ostatní zaškrtnuté níže v něm zůstává, včetně historie přepisů a schránky.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Tento archiv neobsahuje klíče API ani hesla, ale obsahuje všechno zaškrtnuté níže: historii přepisů i s uchovanými nahrávkami, schránku, tvoje prompty a slova, která se klávesnice od tebe naučila.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Tento archiv je zašifrovaný tvým heslem a vše zaškrtnuté níže lze obnovit jen s ním. Pokud heslo zapomeneš, tuto zálohu nikdo neobnoví – ani ty.</string>
+    <string name="backup_and_restore__back_up__password">Ochrana heslem</string>
+    <string name="backup_and_restore__back_up__password_enabled">Zašifrovat heslem</string>
+    <string name="backup_and_restore__back_up__password_too_short">Alespoň {count} znaků</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Hesla se neshodují</string>
+    <string name="backup_and_restore__password">Heslo</string>
+    <string name="backup_and_restore__password_repeat">Zopakuj heslo</string>
+    <string name="backup_and_restore__restore__encrypted">Tento archiv zálohy je chráněný heslem. Zadej ho a uvidíš, co archiv obsahuje.</string>
+    <string name="backup_and_restore__restore__unlock">Odemknout</string>
+    <string name="backup_and_restore__restore__wrong_password">Špatné heslo</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Tento archiv nelze otevřít. Je poškozený, nebo byl vytvořen novější verzí Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšíření klávesnice</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozšíření kontroly pravopisu / slovníky</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozšíření témat</string>

@@ -578,6 +578,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Este arquivo contém suas chaves de API e senhas em texto simples, além do seu saldo do Dictate Cloud: quem o receber pode ditar à sua custa. Não o compartilhe e, se já fez isso, troque a chave no seu provedor. Todo o resto que estiver marcado abaixo vai junto, incluindo seu histórico de transcrição e sua área de transferência.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Este arquivo não contém chaves de API, senhas nem saldo do Dictate Cloud, então pode ser compartilhado, mas também não vai restaurar as suas. Todo o resto que estiver marcado abaixo continua incluído, inclusive seu histórico de transcrição e sua área de transferência.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Este arquivo não contém chaves de API nem senhas, mas contém tudo o que estiver marcado abaixo: seu histórico de transcrição com as gravações guardadas, sua área de transferência, seus prompts e as palavras que o teclado aprendeu com você.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Este arquivo é criptografado com a sua senha, e tudo o que estiver marcado abaixo só pode ser restaurado com ela. Se você esquecer a senha, ninguém poderá restaurar este backup, nem mesmo você.</string>
+    <string name="backup_and_restore__back_up__password">Proteção por senha</string>
+    <string name="backup_and_restore__back_up__password_enabled">Criptografar com uma senha</string>
+    <string name="backup_and_restore__back_up__password_too_short">Pelo menos {count} caracteres</string>
+    <string name="backup_and_restore__back_up__password_mismatch">As senhas não coincidem</string>
+    <string name="backup_and_restore__password">Senha</string>
+    <string name="backup_and_restore__password_repeat">Repita a senha</string>
+    <string name="backup_and_restore__restore__encrypted">Este arquivo de backup está protegido por senha. Digite-a para ver o que ele contém.</string>
+    <string name="backup_and_restore__restore__unlock">Desbloquear</string>
+    <string name="backup_and_restore__restore__wrong_password">Senha incorreta</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Não é possível abrir este arquivo. Ele está danificado ou foi criado por uma versão mais recente do Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensões do teclado</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensões de ortografia / dicionários</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensões de tema</string>

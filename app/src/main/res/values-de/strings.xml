@@ -641,6 +641,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Dieses Archiv enthält deine API-Schlüssel und Passwörter im Klartext, dazu dein Dictate-Cloud-Guthaben – wer es bekommt, kann auf deine Kosten diktieren. Gib es nicht weiter, und wenn du das schon getan hast, ändere den Schlüssel bei deinem Anbieter. Alles andere, was unten angehakt ist, geht mit – auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Dieses Archiv enthält keine API-Schlüssel, Passwörter und kein Dictate-Cloud-Guthaben, du kannst es also weitergeben – es stellt deine aber auch nicht wieder her. Alles andere, was unten angehakt ist, ist weiterhin enthalten, auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Dieses Archiv enthält keine API-Schlüssel und Passwörter, aber alles, was unten angehakt ist – deinen Transkriptionsverlauf samt aufbewahrter Aufnahmen, deine Zwischenablage, deine Prompts und die Wörter, die die Tastatur von dir gelernt hat.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Dieses Archiv ist mit deinem Passwort verschlüsselt, und alles, was unten angehakt ist, lässt sich nur damit wiederherstellen. Vergisst du das Passwort, kann niemand diese Sicherung wiederherstellen – auch du nicht.</string>
+    <string name="backup_and_restore__back_up__password">Passwortschutz</string>
+    <string name="backup_and_restore__back_up__password_enabled">Mit einem Passwort verschlüsseln</string>
+    <string name="backup_and_restore__back_up__password_too_short">Mindestens {count} Zeichen</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Die Passwörter stimmen nicht überein</string>
+    <string name="backup_and_restore__password">Passwort</string>
+    <string name="backup_and_restore__password_repeat">Passwort wiederholen</string>
+    <string name="backup_and_restore__restore__encrypted">Diese Datensicherung ist mit einem Passwort geschützt. Gib es ein, um zu sehen, was sie enthält.</string>
+    <string name="backup_and_restore__restore__unlock">Entsperren</string>
+    <string name="backup_and_restore__restore__wrong_password">Falsches Passwort</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Dieses Archiv lässt sich nicht öffnen. Es ist beschädigt oder wurde mit einer neueren Version von Dictate erstellt.</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Gespeicherte Umformulierungs-Prompts</string>
     <string name="backup_and_restore__back_up__files_personal_dictionary">Persönliches Wörterbuch und gelernte Wörter</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastaturerweiterungen</string>

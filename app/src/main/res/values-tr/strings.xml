@@ -688,6 +688,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Bu arşiv API anahtarlarınızı ve şifrelerinizi düz metin olarak, Dictate Cloud bakiyenizle birlikte içerir — onu alan herkes sizin hesabınıza dikte edebilir. Başkasına vermeyin; verdiyseniz sağlayıcınızdaki anahtarı değiştirin. Aşağıda işaretli olan her şey onunla birlikte gider, dikte geçmişiniz ve panonuz da dahil.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Bu arşivde API anahtarı, şifre veya Dictate Cloud bakiyesi yok, bu yüzden paylaşılabilir; ama sizinkileri de geri yüklemez. Aşağıda işaretli olan her şey hâlâ içindedir, dikte geçmişiniz ve panonuz da dahil.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Bu arşivde API anahtarı ve şifre yok, ama aşağıda işaretli olan her şey var: saklanan kayıtlarla birlikte dikte geçmişiniz, panonuz, istemleriniz ve klavyenin sizden öğrendiği kelimeler.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Bu arşiv şifrenizle şifrelenir ve aşağıda işaretli olan her şey yalnızca bu şifreyle geri yüklenebilir. Şifreyi unutursanız bu yedeği kimse geri yükleyemez, siz bile.</string>
+    <string name="backup_and_restore__back_up__password">Şifre koruması</string>
+    <string name="backup_and_restore__back_up__password_enabled">Şifreyle koru</string>
+    <string name="backup_and_restore__back_up__password_too_short">En az {count} karakter</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Şifreler eşleşmiyor</string>
+    <string name="backup_and_restore__password">Şifre</string>
+    <string name="backup_and_restore__password_repeat">Şifreyi tekrarlayın</string>
+    <string name="backup_and_restore__restore__encrypted">Bu yedekleme arşivi şifreyle korunuyor. İçeriğini görmek için şifreyi girin.</string>
+    <string name="backup_and_restore__restore__unlock">Kilidi aç</string>
+    <string name="backup_and_restore__restore__wrong_password">Yanlış şifre</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Bu arşiv açılamıyor. Arşiv bozuk ya da Dictate’in daha yeni bir sürümüyle oluşturulmuş.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Klavye eklentileri</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Yazım denetimi eklentileri / sözlükler</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Tema eklentileri</string>

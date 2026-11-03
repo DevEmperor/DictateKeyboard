@@ -589,6 +589,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Aquest arxiu conté les teves claus API i contrasenyes en text net, juntament amb el teu crèdit de Dictate Cloud: qui el rebi pot dictar a càrrec teu. No el comparteixis i, si ja ho has fet, canvia la clau al teu proveïdor. Tota la resta que estigui marcada a sota hi viatja, inclòs l’historial de transcripcions i el porta-retalls.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Aquest arxiu no conté claus API, contrasenyes ni crèdit de Dictate Cloud, així que es pot compartir, però tampoc no restaurarà les teves. Tota la resta que estigui marcada a sota hi continua, inclòs l’historial de transcripcions i el porta-retalls.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Aquest arxiu no conté claus API ni contrasenyes, però sí tot el que estigui marcat a sota: l’historial de transcripcions amb els enregistraments conservats, el porta-retalls, els teus prompts i les paraules que el teclat ha après de tu.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Aquest arxiu està xifrat amb la teva contrasenya, i tot el que estigui marcat a sota només es pot restaurar amb ella. Si oblides la contrasenya, ningú no podrà restaurar aquesta còpia de seguretat, ni tan sols tu.</string>
+    <string name="backup_and_restore__back_up__password">Protecció amb contrasenya</string>
+    <string name="backup_and_restore__back_up__password_enabled">Xifra amb una contrasenya</string>
+    <string name="backup_and_restore__back_up__password_too_short">Com a mínim {count} caràcters</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Les contrasenyes no coincideixen</string>
+    <string name="backup_and_restore__password">Contrasenya</string>
+    <string name="backup_and_restore__password_repeat">Repeteix la contrasenya</string>
+    <string name="backup_and_restore__restore__encrypted">Aquest arxiu de còpia de seguretat està protegit amb una contrasenya. Introdueix-la per veure què conté.</string>
+    <string name="backup_and_restore__restore__unlock">Desbloqueja</string>
+    <string name="backup_and_restore__restore__wrong_password">Contrasenya incorrecta</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Aquest arxiu no es pot obrir. Està malmès o s’ha creat amb una versió més nova de Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensions del teclat</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensions de correcció ortogràfica / diccionaris</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensions del tema</string>

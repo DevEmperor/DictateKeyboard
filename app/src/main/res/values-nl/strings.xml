@@ -618,6 +618,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Dit archief bevat je API-sleutels en wachtwoorden in leesbare tekst, plus je Dictate Cloud-krediet: wie het krijgt, kan op jouw kosten dicteren. Geef het niet door, en als je dat al hebt gedaan, wijzig dan de sleutel bij je aanbieder. Al het andere dat hieronder is aangevinkt gaat mee, ook je transcriptiegeschiedenis en je klembord.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">Dit archief bevat geen API-sleutels, wachtwoorden of Dictate Cloud-krediet, dus je kunt het doorgeven, maar het zet die van jou ook niet terug. Al het andere dat hieronder is aangevinkt zit er nog in, ook je transcriptiegeschiedenis en je klembord.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Dit archief bevat geen API-sleutels of wachtwoorden, maar wel alles wat hieronder is aangevinkt: je transcriptiegeschiedenis met bewaarde opnames, je klembord, je prompts en de woorden die het toetsenbord van je heeft geleerd.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Dit archief is versleuteld met je wachtwoord, en alles wat hieronder is aangevinkt kan alleen daarmee worden hersteld. Vergeet je het wachtwoord, dan kan niemand deze back-up herstellen – ook jij niet.</string>
+    <string name="backup_and_restore__back_up__password">Wachtwoordbeveiliging</string>
+    <string name="backup_and_restore__back_up__password_enabled">Versleutelen met een wachtwoord</string>
+    <string name="backup_and_restore__back_up__password_too_short">Minstens {count} tekens</string>
+    <string name="backup_and_restore__back_up__password_mismatch">De wachtwoorden komen niet overeen</string>
+    <string name="backup_and_restore__password">Wachtwoord</string>
+    <string name="backup_and_restore__password_repeat">Herhaal het wachtwoord</string>
+    <string name="backup_and_restore__restore__encrypted">Dit back-uparchief is beveiligd met een wachtwoord. Voer het in om te zien wat het archief bevat.</string>
+    <string name="backup_and_restore__restore__unlock">Ontgrendelen</string>
+    <string name="backup_and_restore__restore__wrong_password">Onjuist wachtwoord</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Dit archief kan niet worden geopend. Het is beschadigd, of het is gemaakt met een nieuwere versie van Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Toetsenbordextensies</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spellingextensies /woordenboeken</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Thema-extensies</string>

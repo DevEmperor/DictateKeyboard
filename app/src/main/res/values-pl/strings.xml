@@ -697,6 +697,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">To archiwum zawiera twoje klucze API i hasła w postaci jawnej, a także twoje środki Dictate Cloud — każdy, kto je otrzyma, może dyktować na twój koszt. Nie przekazuj go dalej, a jeśli już to zrobiłeś, zmień klucz u swojego dostawcy. Wszystko inne zaznaczone poniżej jedzie razem z nim, w tym historia transkrypcji i schowek.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">To archiwum nie zawiera kluczy API, haseł ani środków Dictate Cloud, więc można je przekazać dalej, ale nie przywróci też twoich. Wszystko inne zaznaczone poniżej nadal w nim jest, w tym historia transkrypcji i schowek.</string>
     <string name="backup_and_restore__back_up__personal_content_note">To archiwum nie zawiera kluczy API ani haseł, ale zawiera wszystko, co zaznaczono poniżej: historię transkrypcji wraz z zachowanymi nagraniami, schowek, twoje prompty i słowa, których klawiatura się od ciebie nauczyła.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">To archiwum jest zaszyfrowane twoim hasłem i wszystko, co zaznaczono poniżej, da się przywrócić tylko z nim. Jeśli zapomnisz hasła, nikt nie przywróci tej kopii zapasowej – nawet ty.</string>
+    <string name="backup_and_restore__back_up__password">Ochrona hasłem</string>
+    <string name="backup_and_restore__back_up__password_enabled">Zaszyfruj hasłem</string>
+    <string name="backup_and_restore__back_up__password_too_short">Co najmniej {count} znaków</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Hasła nie są zgodne</string>
+    <string name="backup_and_restore__password">Hasło</string>
+    <string name="backup_and_restore__password_repeat">Powtórz hasło</string>
+    <string name="backup_and_restore__restore__encrypted">To archiwum kopii zapasowej jest chronione hasłem. Wpisz je, aby zobaczyć, co zawiera.</string>
+    <string name="backup_and_restore__restore__unlock">Odblokuj</string>
+    <string name="backup_and_restore__restore__wrong_password">Nieprawidłowe hasło</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Nie można otworzyć tego archiwum. Jest uszkodzone albo zostało utworzone w nowszej wersji Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozszerzenia klawiatury</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozszerzenia pisowni / słowniki</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozszerzenia motywów</string>

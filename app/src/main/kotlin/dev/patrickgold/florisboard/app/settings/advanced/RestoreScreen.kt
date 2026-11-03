@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.settings.advanced
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -76,15 +79,18 @@ import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisButton
 import org.florisboard.lib.compose.FlorisButtonBar
 import org.florisboard.lib.compose.FlorisCardDefaults
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisOutlinedButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.io.FsFile
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
@@ -103,6 +109,48 @@ object Restore {
     // the upstream FlorisBoard id after the fork, which made every Dictate backup falsely warn.
     const val PACKAGE_NAME = "net.devemperor.dictate"
     const val BACKUP_ARCHIVE_FILE_NAME = "backup.zip"
+    // The plain archive inside a password-protected one (issue #470), deleted again once it is unpacked.
+    const val DECRYPTED_ARCHIVE_FILE_NAME = "decrypted_backup.zip"
+}
+
+/**
+ * Unpacks the plain backup [archive] into this workspace and reads what the restore screen shows about it.
+ *
+ * Shared by an ordinary archive and the one inside a password-protected archive, which is what makes a
+ * decrypted backup restore exactly like any other.
+ */
+private fun CacheManager.BackupAndRestoreWorkspace.readArchive(archive: FsFile) {
+    ZipUtils.unzip(archive, outputDir)
+    metadata = try {
+        outputDir.subFile(Backup.METADATA_JSON_NAME).readJson()
+    } catch (e: FileNotFoundException) {
+        error("Invalid archive: either backup_metadata.json is missing or file is not a ZIP archive.")
+    }
+    restoreWarningId = when {
+        metadata.versionCode != BuildConfig.VERSION_CODE -> {
+            R.string.backup_and_restore__restore__metadata_warn_different_version
+        }
+        !metadata.packageName.startsWith(Restore.PACKAGE_NAME) -> {
+            R.string.backup_and_restore__restore__metadata_warn_different_vendor
+        }
+        else -> null
+    }
+    restoreErrorId = when {
+        metadata.packageName.isBlank() || metadata.versionCode < Restore.MIN_VERSION_CODE -> {
+            R.string.backup_and_restore__restore__metadata_error_invalid_metadata
+        }
+        else -> null
+    }
+    // Say up front that no keys will come back from this one (issue #367). Found by looking at the keyring
+    // the archive carries rather than at a flag, so it is equally true of an archive written by any
+    // version — and of one whose owner simply never set a key up.
+    restoreCredentialsMissing = runCatching {
+        val prefsFile = outputDir
+            .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
+            .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+        prefsFile.exists() &&
+            BackupRedaction.accountsFrom(prefsFile.readText())?.hasNoSecrets == true
+    }.getOrDefault(false)
 }
 
 /**
@@ -137,6 +185,14 @@ fun RestoreScreen() = FlorisScreen {
     var restoreWorkspace by remember {
         mutableStateOf<CacheManager.BackupAndRestoreWorkspace?>(null)
     }
+    // A password-protected archive (issue #470) stays locked until its password is in: there is nothing in
+    // it to show or restore before that. Screen state rather than workspace fields, because unlocking
+    // changes what is shown without replacing the workspace, and only state makes Compose look again.
+    var archiveLocked by remember { mutableStateOf(false) }
+    var unlockPassword by remember { mutableStateOf("") }
+    var unlockReveal by remember { mutableStateOf(false) }
+    var unlockErrorId by remember { mutableStateOf<Int?>(null) }
+    var unlocking by remember { mutableStateOf(false) }
 
     val restoreDataFromFileSystemLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -145,40 +201,17 @@ fun RestoreScreen() = FlorisScreen {
             runCatching {
                 restoreWorkspace?.close()
                 restoreWorkspace = null
+                archiveLocked = false
+                unlockPassword = ""
+                unlockErrorId = null
                 val workspace = cacheManager.backupAndRestore.new()
                 workspace.zipFile = workspace.inputDir.subFile(Restore.BACKUP_ARCHIVE_FILE_NAME)
                 context.contentResolver.readToFile(uri, workspace.zipFile)
-                ZipUtils.unzip(workspace.zipFile, workspace.outputDir)
-                workspace.metadata = try {
-                    workspace.outputDir.subFile(Backup.METADATA_JSON_NAME).readJson()
-                } catch (e: FileNotFoundException) {
-                    error("Invalid archive: either backup_metadata.json is missing or file is not a ZIP archive.")
+                if (BackupEncryption.isEncrypted(workspace.zipFile)) {
+                    archiveLocked = true
+                } else {
+                    workspace.readArchive(workspace.zipFile)
                 }
-                workspace.restoreWarningId = when {
-                    workspace.metadata.versionCode != BuildConfig.VERSION_CODE -> {
-                        R.string.backup_and_restore__restore__metadata_warn_different_version
-                    }
-                    !workspace.metadata.packageName.startsWith(Restore.PACKAGE_NAME) -> {
-                        R.string.backup_and_restore__restore__metadata_warn_different_vendor
-                    }
-                    else -> null
-                }
-                workspace.restoreErrorId = when {
-                    workspace.metadata.packageName.isBlank() || workspace.metadata.versionCode < Restore.MIN_VERSION_CODE -> {
-                        R.string.backup_and_restore__restore__metadata_error_invalid_metadata
-                    }
-                    else -> null
-                }
-                // Say up front that no keys will come back from this one (issue #367). Found by looking at
-                // the keyring the archive carries rather than at a flag, so it is equally true of an archive
-                // written by any version — and of one whose owner simply never set a key up.
-                workspace.restoreCredentialsMissing = runCatching {
-                    val prefsFile = workspace.outputDir
-                        .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
-                        .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
-                    prefsFile.exists() &&
-                        BackupRedaction.accountsFrom(prefsFile.readText())?.hasNoSecrets == true
-                }.getOrDefault(false)
                 restoreWorkspace = workspace
             }.onFailure { error ->
                 context.showLongToastSync(
@@ -188,6 +221,46 @@ fun RestoreScreen() = FlorisScreen {
             }
         },
     )
+
+    // Off the main thread: the key alone takes about a second to derive, and the payload can run to
+    // hundreds of megabytes. A wrong password leaves the archive locked and the password in the field.
+    fun unlock(workspace: CacheManager.BackupAndRestoreWorkspace) {
+        if (unlocking || unlockPassword.isEmpty()) return
+        unlocking = true
+        unlockErrorId = null
+        val password = unlockPassword
+        restoreScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    val plainArchive = workspace.inputDir.subFile(Restore.DECRYPTED_ARCHIVE_FILE_NAME)
+                    try {
+                        BackupEncryption.decrypt(workspace.zipFile, password, plainArchive)
+                        workspace.readArchive(plainArchive)
+                    } finally {
+                        plainArchive.delete()
+                    }
+                }
+            }
+            unlocking = false
+            result.onSuccess {
+                unlockPassword = ""
+                archiveLocked = false
+            }.onFailure { error ->
+                when (error) {
+                    is BackupEncryption.WrongPasswordException -> {
+                        unlockErrorId = R.string.backup_and_restore__restore__wrong_password
+                    }
+                    is BackupEncryption.UnreadableArchiveException -> {
+                        unlockErrorId = R.string.backup_and_restore__restore__encrypted_unreadable
+                    }
+                    else -> context.showLongToast(
+                        R.string.backup_and_restore__restore__failure,
+                        "error_message" to error.localizedMessage,
+                    )
+                }
+            }
+        }
+    }
 
     suspend fun performRestore() {
         val workspace = restoreWorkspace!!
@@ -372,6 +445,10 @@ fun RestoreScreen() = FlorisScreen {
                     restoreScope.launch(Dispatchers.Main) {
                         try {
                             performRestore()
+                            // Done with the unpacked archive. Nothing else ever clears it, and what it holds
+                            // is readable, keys included — for a password-protected archive, the only
+                            // readable copy there is (issue #470).
+                            restoreWorkspace?.close()
                             context.showLongToast(R.string.backup_and_restore__restore__success)
                             navController.navigateUp()
                         } catch (e: Throwable) {
@@ -384,7 +461,7 @@ fun RestoreScreen() = FlorisScreen {
                     }
                 },
                 text = stringRes(R.string.action__restore),
-                enabled = restoreWorkspace != null && restoreWorkspace?.restoreErrorId == null,
+                enabled = restoreWorkspace != null && !archiveLocked && restoreWorkspace?.restoreErrorId == null,
             )
         }
     }
@@ -424,6 +501,8 @@ fun RestoreScreen() = FlorisScreen {
                 .padding(vertical = 16.dp)
                 .align(Alignment.CenterHorizontally),
             text = stringRes(R.string.action__select_file),
+            // Not while an archive is being unlocked: it would close the workspace that is being read.
+            enabled = !unlocking,
         )
         val workspace = restoreWorkspace
         if (workspace == null) {
@@ -434,6 +513,44 @@ fun RestoreScreen() = FlorisScreen {
                 text = stringRes(R.string.state__no_file_selected),
                 fontStyle = FontStyle.Italic,
             )
+        } else if (archiveLocked) {
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
+                title = stringRes(R.string.backup_and_restore__restore__metadata),
+            ) {
+                Column(
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Text(
+                        text = stringRes(R.string.backup_and_restore__restore__encrypted),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    BackupPasswordField(
+                        value = unlockPassword,
+                        onValueChange = {
+                            unlockPassword = it
+                            unlockErrorId = null
+                        },
+                        label = stringRes(R.string.backup_and_restore__password),
+                        reveal = unlockReveal,
+                        onRevealChange = { unlockReveal = it },
+                        error = unlockErrorId?.let { stringRes(it) },
+                        imeAction = ImeAction.Done,
+                        onDone = { unlock(workspace) },
+                        enabled = !unlocking,
+                    )
+                    if (unlocking) {
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                    }
+                    FlorisButton(
+                        onClick = { unlock(workspace) },
+                        modifier = Modifier.align(Alignment.End),
+                        text = stringRes(R.string.backup_and_restore__restore__unlock),
+                        enabled = !unlocking && unlockPassword.isNotEmpty(),
+                    )
+                }
+            }
         } else {
             FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),

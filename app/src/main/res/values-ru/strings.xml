@@ -691,6 +691,17 @@
     <string name="backup_and_restore__back_up__credentials_warning">Этот архив содержит ваши ключи API и пароли в открытом виде, а также баланс Dictate Cloud — любой, кто его получит, сможет диктовать за ваш счёт. Не передавайте его, а если уже передали, смените ключ у провайдера. Всё остальное, что отмечено ниже, уезжает вместе с ним, включая историю расшифровок и буфер обмена.</string>
     <string name="backup_and_restore__back_up__credentials_excluded_note">В этом архиве нет ни ключей API, ни паролей, ни баланса Dictate Cloud, поэтому его можно передать, но и ваши он не восстановит. Всё остальное, что отмечено ниже, в нём остаётся, включая историю расшифровок и буфер обмена.</string>
     <string name="backup_and_restore__back_up__personal_content_note">В этом архиве нет ключей API и паролей, но есть всё, что отмечено ниже: история расшифровок вместе с сохранёнными записями, буфер обмена, ваши промпты и слова, которые клавиатура выучила у вас.</string>
+    <string name="backup_and_restore__back_up__encrypted_note">Этот архив зашифрован вашим паролем, и всё, что отмечено ниже, можно восстановить только с ним. Если вы забудете пароль, никто не сможет восстановить эту резервную копию — даже вы.</string>
+    <string name="backup_and_restore__back_up__password">Защита паролем</string>
+    <string name="backup_and_restore__back_up__password_enabled">Зашифровать паролем</string>
+    <string name="backup_and_restore__back_up__password_too_short">Не менее {count} символов</string>
+    <string name="backup_and_restore__back_up__password_mismatch">Пароли не совпадают</string>
+    <string name="backup_and_restore__password">Пароль</string>
+    <string name="backup_and_restore__password_repeat">Повторите пароль</string>
+    <string name="backup_and_restore__restore__encrypted">Этот архив резервной копии защищён паролем. Введите его, чтобы увидеть содержимое.</string>
+    <string name="backup_and_restore__restore__unlock">Разблокировать</string>
+    <string name="backup_and_restore__restore__wrong_password">Неверный пароль</string>
+    <string name="backup_and_restore__restore__encrypted_unreadable">Не удаётся открыть этот архив. Он повреждён или создан более новой версией Dictate.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Клавиатурные расширения</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Расширения для правописания / словари</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Расширения оформления</string>
