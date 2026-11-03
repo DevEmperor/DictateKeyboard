@@ -993,12 +993,14 @@ private class MistralRealtimeSession(
  * Text that is still unsettled when the socket closes is emitted as a final segment, so the tail of a
  * dictation survives a close that arrives before the last `is_final`/`EndOfTurn`.
  */
-private class DeepgramRealtimeSession(
+internal class DeepgramRealtimeSession(
     private val client: OkHttpClient,
     private val apiKey: String,
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    /** Scheme and host — Deepgram's own, except in tests. */
+    private val host: String = HOST,
 ) : RealtimeSession {
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
@@ -1020,7 +1022,7 @@ private class DeepgramRealtimeSession(
 
     private fun listenUrl(): String {
         val lang = pinnedLanguage?.let { "&language=$it" }.orEmpty()
-        return "wss://api.deepgram.com/v1/listen?model=$model" +
+        return "$host/v1/listen?model=$model" +
             "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang"
     }
 
@@ -1034,8 +1036,10 @@ private class DeepgramRealtimeSession(
             ?.takeIf { model.endsWith("multi") }
             ?.let { "&language_hint=${it.substringBefore('-')}" }
             .orEmpty()
-        return "wss://api.deepgram.com/v2/listen?model=$model&encoding=linear16&sample_rate=16000$hint"
+        return "$host/v2/listen?model=$model&encoding=linear16&sample_rate=16000$hint"
     }
+
+    private companion object { const val HOST = "wss://api.deepgram.com" }
 
     private val listener = object : WebSocketListener() {
         override fun onMessage(webSocket: WebSocket, text: String) {
@@ -1057,6 +1061,21 @@ private class DeepgramRealtimeSession(
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             android.util.Log.w("DictateRT", "deepgram realtime WS failed (http=${response?.code}): ${t.message}")
             emitError(t)
+        }
+
+        // The close *is* Deepgram's end of stream: it answers CloseStream with the last Results, a Metadata
+        // message and its own close frame, 0.18 s after the stop (measured 2026-11-02). OkHttp reports a
+        // close the server starts as onClosing and waits for ours before onClosed, so taken only there the
+        // end went unnoticed and every dictation sat out the 1.2 s silence window instead (#447).
+        // Nova closes with 1000, Flux with an empty close frame, which OkHttp reads as 1005 (both measured,
+        // with and without a pause before the stop). Any other code is Deepgram failing or refusing the
+        // stream, and the recording is worth more than what it settled before that.
+        override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+            if (code == 1000 || code == 1005) {
+                finishClosed(webSocket)
+            } else {
+                emitError(RuntimeException("Deepgram closed the realtime stream ($code): $reason"))
+            }
         }
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) = finishClosed(webSocket)
     }
