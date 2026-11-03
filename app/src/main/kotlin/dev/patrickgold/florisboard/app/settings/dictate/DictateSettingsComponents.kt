@@ -338,6 +338,7 @@ internal fun ReasoningEffortDialog(
     val options = buildList {
         if (includeUseGlobal) add(null)
         add(DictateReasoningEffort.OFF)
+        add(DictateReasoningEffort.NONE)
         add(DictateReasoningEffort.MINIMAL)
         add(DictateReasoningEffort.LOW)
         add(DictateReasoningEffort.MEDIUM)
@@ -387,6 +388,7 @@ private fun reasoningEffortDialogLabel(effort: DictateReasoningEffort?): String 
     when (effort) {
         null -> R.string.dictate__prompt_reasoning_default
         DictateReasoningEffort.OFF -> R.string.dictate__reasoning_effort_off
+        DictateReasoningEffort.NONE -> R.string.dictate__reasoning_effort_none
         DictateReasoningEffort.MINIMAL -> R.string.dictate__reasoning_effort_minimal
         DictateReasoningEffort.LOW -> R.string.dictate__reasoning_effort_low
         DictateReasoningEffort.MEDIUM -> R.string.dictate__reasoning_effort_medium

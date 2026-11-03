@@ -105,6 +105,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
 import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
+import dev.patrickgold.florisboard.dictate.rewordingReasoningWire
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -363,7 +364,7 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         job = scope.launch {
             try {
                 val before = text
-                val result = rewordWith(context, body, before)
+                val result = rewordWith(context, prompt, body, before)
                 original = before
                 text = result
             } catch (c: CancellationException) {
@@ -873,8 +874,11 @@ private fun LanguageButton(language: String, onPick: (String) -> Unit) {
     }
 }
 
-/** Runs one library prompt over [transcript] using the configured rewording provider. */
-private suspend fun rewordWith(context: Context, promptBody: String, transcript: String): String {
+/**
+ * Runs [prompt] (whose text is [promptBody]) over [transcript] using the configured rewording provider, at
+ * the reasoning effort the keyboard would run it at.
+ */
+private suspend fun rewordWith(context: Context, prompt: PromptModel, promptBody: String, transcript: String): String {
     val prefs by FlorisPreferenceStore
     val accounts = prefs.dictate.providerAccounts.get()
     val account = accounts.getOrEmpty(prefs.dictate.rewordingProviderId.get())
@@ -914,7 +918,9 @@ private suspend fun rewordWith(context: Context, promptBody: String, transcript:
         languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get()),
         systemPrompt = null,
         autoApplyPrompts = listOf(DictateRewording.Prompt(promptBody)),
-        reasoningEffort = preset.reasoningEffortWhenOff(chatModel),
+        reasoningEffort = rewordingReasoningWire(
+            prefs, preset, chatModel, prompt.reasoningEffort, prompt.reasoningEffortCustom,
+        ),
     )
 }
 

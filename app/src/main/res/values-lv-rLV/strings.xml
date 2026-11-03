@@ -1612,7 +1612,7 @@
     <string name="dictate__prompt_auto_apply_title">Lietot automātiski</string>
     <string name="dictate__prompt_auto_apply_summary">Automātiski palaist šo uzvedni katrai transkripcijai</string>
     <string name="dictate__prompt_reasoning_title">Spriešana</string>
-    <string name="dictate__prompt_reasoning_default">Noklusējums</string>
+    <string name="dictate__prompt_reasoning_default">Globālais iestatījums</string>
     <string name="dictate__prompt_badge_selection">Nepieciešama atlase</string>
     <string name="dictate__prompt_badge_auto">Tiek lietota automātiski</string>
     <string name="dictate__example_prompt_fix_grammar_name">Labot gramatiku</string>
@@ -1895,7 +1895,8 @@
     <string name="dictate__promo_milestone_count">%s diktāti ar Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statistika</string>
     <string name="dictate__reasoning_effort_title">Spriešanas piepūle</string>
-    <string name="dictate__reasoning_effort_off">Izslēgts</string>
+    <string name="dictate__reasoning_effort_off">Pakalpojuma sniedzēja noklusējums</string>
+    <string name="dictate__reasoning_effort_none">Bez spriešanas</string>
     <string name="dictate__reasoning_effort_off_summary">Nodrošinātāja noklusējums — nespriešanas modeļiem atstāj izslēgtu</string>
     <string name="dictate__reasoning_effort_minimal">Minimāla</string>
     <string name="dictate__reasoning_effort_minimal_summary">Ātrākais, vismazāk domāšanas</string>

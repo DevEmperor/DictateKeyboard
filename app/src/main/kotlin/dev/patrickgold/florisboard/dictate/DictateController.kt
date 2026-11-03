@@ -4864,22 +4864,8 @@ object DictateController {
             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
         )
         // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
-        // setting (#155). OFF → field omitted, unless the model is the preset's own default and the preset
-        // knows what it should run at (gpt-6-luna). CUSTOM (#186) uses a user-entered wire value — the
-        // per-prompt one when the override itself is CUSTOM, else the global custom value.
-        val effort = reasoning ?: prefs.dictate.rewordingReasoningEffort.get()
-        val reasoningWire = when (effort) {
-            DictateReasoningEffort.CUSTOM -> {
-                val custom = if (reasoning == DictateReasoningEffort.CUSTOM) {
-                    reasoningCustom
-                } else {
-                    prefs.dictate.rewordingReasoningEffortCustom.get()
-                }
-                custom?.trim()?.ifBlank { null }
-            }
-            DictateReasoningEffort.OFF -> preset.reasoningEffortWhenOff(model)
-            else -> effort.wire
-        }
+        // setting (#155).
+        val reasoningWire = rewordingReasoningWire(prefs, preset, model, reasoning, reasoningCustom)
         val result = client.complete(
             ChatRequest.ofUser(model, userContent, reasoningEffort = reasoningWire),
         ).text.trim()

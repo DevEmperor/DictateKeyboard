@@ -1515,7 +1515,7 @@
     <string name="dictate__prompt_auto_apply_title">Застосовувати автоматично</string>
     <string name="dictate__prompt_auto_apply_summary">Запускати цей промпт автоматично під час кожної транскрипції</string>
     <string name="dictate__prompt_reasoning_title">Міркування</string>
-    <string name="dictate__prompt_reasoning_default">За замовчуванням</string>
+    <string name="dictate__prompt_reasoning_default">Загальне налаштування</string>
     <string name="dictate__prompt_badge_selection">Потребує виділення</string>
     <string name="dictate__prompt_badge_auto">Застосовується автоматично</string>
     <string name="dictate__example_prompt_fix_grammar_name">Виправити граматику</string>
@@ -1799,7 +1799,8 @@
     <string name="dictate__promo_milestone_count">%s диктувань із Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Статистика</string>
     <string name="dictate__reasoning_effort_title">Зусилля міркування</string>
-    <string name="dictate__reasoning_effort_off">Вимк.</string>
+    <string name="dictate__reasoning_effort_off">За замовчуванням постачальника</string>
+    <string name="dictate__reasoning_effort_none">Без міркування</string>
     <string name="dictate__reasoning_effort_off_summary">Стандарт постачальника — для не-міркувальних моделей залиште вимкненим</string>
     <string name="dictate__reasoning_effort_minimal">Мінімальне</string>
     <string name="dictate__reasoning_effort_minimal_summary">Найшвидше, мінімум міркувань</string>

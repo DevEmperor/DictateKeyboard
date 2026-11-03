@@ -1616,7 +1616,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_auto_apply_title">Terapkan otomatis</string>
     <string name="dictate__prompt_auto_apply_summary">Jalankan perintah ini secara otomatis pada setiap transkripsi</string>
     <string name="dictate__prompt_reasoning_title">Penalaran</string>
-    <string name="dictate__prompt_reasoning_default">Bawaan</string>
+    <string name="dictate__prompt_reasoning_default">Pengaturan global</string>
     <string name="dictate__prompt_badge_selection">Memerlukan pilihan</string>
     <string name="dictate__prompt_badge_auto">Diterapkan otomatis</string>
     <string name="dictate__example_prompt_fix_grammar_name">Perbaiki Tata Bahasa</string>
@@ -1897,7 +1897,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__promo_milestone_count">%s dikte dengan Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statistik</string>
     <string name="dictate__reasoning_effort_title">Upaya penalaran</string>
-    <string name="dictate__reasoning_effort_off">Mati</string>
+    <string name="dictate__reasoning_effort_off">Bawaan penyedia</string>
+    <string name="dictate__reasoning_effort_none">Tanpa penalaran</string>
     <string name="dictate__reasoning_effort_off_summary">Bawaan penyedia — biarkan mati untuk model non-penalaran</string>
     <string name="dictate__reasoning_effort_minimal">Minimal</string>
     <string name="dictate__reasoning_effort_minimal_summary">Tercepat, paling sedikit berpikir</string>

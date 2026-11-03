@@ -881,7 +881,7 @@ private fun SwitchRow(
 
 /**
  * Per-prompt reasoning-effort selector (issue #155): a label that opens the shared radio dialog with a
- * custom-value field (issue #186). "Default" = use the global setting.
+ * custom-value field (issue #186). "Global setting" (null) = use the global one.
  */
 @Composable
 private fun ReasoningRow(
@@ -937,6 +937,7 @@ private fun reasoningEffortLabel(effort: DictateReasoningEffort?): String = stri
     when (effort) {
         null -> R.string.dictate__prompt_reasoning_default
         DictateReasoningEffort.OFF -> R.string.dictate__reasoning_effort_off
+        DictateReasoningEffort.NONE -> R.string.dictate__reasoning_effort_none
         DictateReasoningEffort.MINIMAL -> R.string.dictate__reasoning_effort_minimal
         DictateReasoningEffort.LOW -> R.string.dictate__reasoning_effort_low
         DictateReasoningEffort.MEDIUM -> R.string.dictate__reasoning_effort_medium

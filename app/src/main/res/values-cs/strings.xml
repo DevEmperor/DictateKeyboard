@@ -1686,7 +1686,7 @@
     <string name="dictate__prompt_auto_apply_title">Použít automaticky</string>
     <string name="dictate__prompt_auto_apply_summary">Spouštět tento prompt automaticky u každého přepisu</string>
     <string name="dictate__prompt_reasoning_title">Uvažování</string>
-    <string name="dictate__prompt_reasoning_default">Výchozí</string>
+    <string name="dictate__prompt_reasoning_default">Globální nastavení</string>
     <string name="dictate__prompt_badge_selection">Vyžaduje výběr</string>
     <string name="dictate__prompt_badge_auto">Použije se automaticky</string>
     <string name="dictate__example_prompt_fix_grammar_name">Opravit gramatiku</string>
@@ -1970,7 +1970,8 @@
     <string name="dictate__promo_milestone_count">%s diktátů s Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statistiky</string>
     <string name="dictate__reasoning_effort_title">Úsilí uvažování</string>
-    <string name="dictate__reasoning_effort_off">Vypnuto</string>
+    <string name="dictate__reasoning_effort_off">Výchozí poskytovatele</string>
+    <string name="dictate__reasoning_effort_none">Bez uvažování</string>
     <string name="dictate__reasoning_effort_off_summary">Výchozí u poskytovatele — u neuvažovacích modelů nechte vypnuté</string>
     <string name="dictate__reasoning_effort_minimal">Minimální</string>
     <string name="dictate__reasoning_effort_minimal_summary">Nejrychlejší, minimum přemýšlení</string>

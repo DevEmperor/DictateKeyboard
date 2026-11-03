@@ -675,6 +675,55 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Gemini's answer to "none" on gemini-3.5-flash-lite, verbatim from 2026-11-03: an array, and not a word
+    // about the field. Low, minimal and high go through on the same model.
+    val bareInvalidArgument = MockResponse().setResponseCode(400).setBody(
+        """[{"error":{"code":400,"message":"Request contains an invalid argument.","status":"INVALID_ARGUMENT"}}]""",
+    )
+
+    test("a bare 400 is asked once more without the effort, and that is kept when it answers") {
+        MockWebServer().use { server ->
+            server.enqueue(bareInvalidArgument)
+            repeat(2) {
+                server.enqueue(
+                    MockResponse().setResponseCode(200).setBody("""{"choices":[{"message":{"content":"Hi."}}]}"""),
+                )
+            }
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1beta/openai/").toString(), apiKey = "test"),
+            )
+            val request = ChatRequest.ofUser("gemini-3.5-flash-lite", "Fix my typos", reasoningEffort = "none")
+
+            client.complete(request).text shouldBe "Hi."
+            client.complete(request).text shouldBe "Hi."
+
+            server.takeRequest().body.readUtf8() shouldContain "\"reasoning_effort\":\"none\""
+            server.takeRequest().body.readUtf8() shouldNotContain "reasoning_effort"
+            server.takeRequest().body.readUtf8() shouldNotContain "reasoning_effort"
+            server.requestCount shouldBe 3
+        }
+    }
+
+    test("a bare 400 that the effort did not cause reaches the user as it was, and nothing is kept") {
+        MockWebServer().use { server ->
+            server.enqueue(bareInvalidArgument)
+            server.enqueue(MockResponse().setResponseCode(400).setBody("""{"error":{"message":"Second refusal"}}"""))
+            server.enqueue(MockResponse().setResponseCode(200).setBody("""{"choices":[{"message":{"content":"Hi."}}]}"""))
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1beta/openai/").toString(), apiKey = "test"),
+            )
+            val request = ChatRequest.ofUser("gemini-3.6-flash", "Fix my typos", reasoningEffort = "low")
+
+            val e = shouldThrow<DictateApiException> { client.complete(request) }
+            e.message shouldContain "Request contains an invalid argument."
+            client.complete(request).text shouldBe "Hi."
+
+            server.takeRequest()
+            server.takeRequest()
+            server.takeRequest().body.readUtf8() shouldContain "\"reasoning_effort\":\"low\""
+        }
+    }
+
     test("the nearest supported effort: ties go lower, and nothing is made up") {
         val luna = "Supported values are: 'none', 'low', 'medium', 'high', and 'xhigh'."
         OpenAiCompatibleClient.nearestSupportedEffort("minimal", luna) shouldBe "none"

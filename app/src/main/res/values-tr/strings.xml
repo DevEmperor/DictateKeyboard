@@ -1646,7 +1646,7 @@
     <string name="dictate__prompt_auto_apply_title">Otomatik uygula</string>
     <string name="dictate__prompt_auto_apply_summary">Bu komutu her yazıya dökmede otomatik olarak çalıştır</string>
     <string name="dictate__prompt_reasoning_title">Akıl yürütme</string>
-    <string name="dictate__prompt_reasoning_default">Varsayılan</string>
+    <string name="dictate__prompt_reasoning_default">Genel ayar</string>
     <string name="dictate__prompt_badge_selection">Seçim gerektirir</string>
     <string name="dictate__prompt_badge_auto">Otomatik uygulanır</string>
     <string name="dictate__example_prompt_fix_grammar_name">Dil Bilgisini Düzelt</string>
@@ -1928,7 +1928,8 @@
     <string name="dictate__promo_milestone_count">Dictate ile %s dikte! 🎉</string>
     <string name="dictate__promo_milestone_action">İstatistik</string>
     <string name="dictate__reasoning_effort_title">Akıl yürütme çabası</string>
-    <string name="dictate__reasoning_effort_off">Kapalı</string>
+    <string name="dictate__reasoning_effort_off">Sağlayıcı varsayılanı</string>
+    <string name="dictate__reasoning_effort_none">Akıl yürütme yok</string>
     <string name="dictate__reasoning_effort_off_summary">Sağlayıcı varsayılanı — akıl yürütmeyen modellerde kapalı bırakın</string>
     <string name="dictate__reasoning_effort_minimal">Minimum</string>
     <string name="dictate__reasoning_effort_minimal_summary">En hızlı, en az düşünme</string>

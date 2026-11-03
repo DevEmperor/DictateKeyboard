@@ -1662,7 +1662,7 @@
     <string name="dictate__prompt_auto_apply_title">Automatikus alkalmazás</string>
     <string name="dictate__prompt_auto_apply_summary">Az utasítás automatikus futtatása minden átíráson</string>
     <string name="dictate__prompt_reasoning_title">Gondolkodás</string>
-    <string name="dictate__prompt_reasoning_default">Alapértelmezett</string>
+    <string name="dictate__prompt_reasoning_default">Globális beállítás</string>
     <string name="dictate__prompt_badge_selection">Kijelölést igényel</string>
     <string name="dictate__prompt_badge_auto">Automatikusan alkalmazódik</string>
     <string name="dictate__example_prompt_fix_grammar_name">Nyelvtan javítása</string>
@@ -1944,7 +1944,8 @@
     <string name="dictate__promo_milestone_count">%s diktálás a Dictate-tel! 🎉</string>
     <string name="dictate__promo_milestone_action">Statisztika</string>
     <string name="dictate__reasoning_effort_title">Gondolkodási ráfordítás</string>
-    <string name="dictate__reasoning_effort_off">Ki</string>
+    <string name="dictate__reasoning_effort_off">Szolgáltató alapértelmezett</string>
+    <string name="dictate__reasoning_effort_none">Nincs gondolkodás</string>
     <string name="dictate__reasoning_effort_off_summary">Szolgáltatói alapérték — nem gondolkodó modelleknél hagyd kikapcsolva</string>
     <string name="dictate__reasoning_effort_minimal">Minimális</string>
     <string name="dictate__reasoning_effort_minimal_summary">Leggyorsabb, legkevesebb gondolkodás</string>

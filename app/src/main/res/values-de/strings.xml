@@ -1656,7 +1656,7 @@
     <string name="dictate__prompt_auto_apply_title">Automatisch anwenden</string>
     <string name="dictate__prompt_auto_apply_summary">Diesen Prompt automatisch auf jede Transkription anwenden</string>
     <string name="dictate__prompt_reasoning_title">Denken</string>
-    <string name="dictate__prompt_reasoning_default">Standard</string>
+    <string name="dictate__prompt_reasoning_default">Globale Einstellung</string>
     <string name="dictate__prompt_badge_selection">Erfordert Auswahl</string>
     <string name="dictate__prompt_badge_auto">Wird automatisch angewendet</string>
     <string name="dictate__prompt_reorder_hint">Lange auf einen Prompt drücken und ziehen, um die Reihenfolge zu ändern.</string>
@@ -1920,7 +1920,8 @@
     <string name="dictate__promo_milestone_count">%s Diktate mit Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statistik</string>
     <string name="dictate__reasoning_effort_title">Denkaufwand</string>
-    <string name="dictate__reasoning_effort_off">Aus</string>
+    <string name="dictate__reasoning_effort_off">Anbieter-Standard</string>
+    <string name="dictate__reasoning_effort_none">Kein Denken</string>
     <string name="dictate__reasoning_effort_off_summary">Anbieter-Standard — bei Nicht-Reasoning-Modellen aus lassen</string>
     <string name="dictate__reasoning_effort_minimal">Minimal</string>
     <string name="dictate__reasoning_effort_minimal_summary">Am schnellsten, kaum Nachdenken</string>

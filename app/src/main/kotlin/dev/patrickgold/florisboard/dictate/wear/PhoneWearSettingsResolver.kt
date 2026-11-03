@@ -16,10 +16,12 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
+import dev.patrickgold.florisboard.dictate.promptReasoningWire
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
+import dev.patrickgold.florisboard.dictate.rewordingReasoningWire
 import dev.patrickgold.florisboard.dictate.sync.DictateSyncedSettings
 import dev.patrickgold.florisboard.dictate.sync.DictateWearProtocol
 import dev.patrickgold.florisboard.dictate.sync.SyncedPrompt
@@ -61,7 +63,14 @@ object PhoneWearSettingsResolver {
         val autoApply = withContext(Dispatchers.IO) {
             PromptsDatabaseHelper.getInstance(context).getAll()
                 .filter { it.autoApply }
-                .mapNotNull { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { SyncedPrompt(it, p.requiresSelection) } }
+                .mapNotNull { p ->
+                    p.prompt?.takeIf { it.isNotBlank() }?.let {
+                        SyncedPrompt(
+                            it, p.requiresSelection,
+                            reasoningEffort = promptReasoningWire(prefs, rewordingPreset, chatModel, p),
+                        )
+                    }
+                }
         }
 
         return DictateSyncedSettings(
@@ -87,7 +96,7 @@ object PhoneWearSettingsResolver {
             // Rewording key only travels under the same opt-in as the transcription key.
             rewordingApiKey = if (syncKey) rewordingKey else "",
             rewordingApi = rewordingPreset.transcriptionApi,
-            rewordingReasoningEffort = rewordingPreset.reasoningEffortWhenOff(chatModel),
+            rewordingReasoningEffort = rewordingReasoningWire(prefs, rewordingPreset, chatModel),
             systemPrompt = systemPrompt(prefs),
             autoApplyPrompts = autoApply,
             hapticFeedback = prefs.dictate.hapticFeedback.get(),

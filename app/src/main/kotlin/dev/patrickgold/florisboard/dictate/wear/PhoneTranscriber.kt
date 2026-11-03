@@ -16,6 +16,7 @@ import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
+import dev.patrickgold.florisboard.dictate.promptReasoningWire
 import dev.patrickgold.florisboard.dictate.provider.DictateRewording
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
@@ -26,6 +27,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
 import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
+import dev.patrickgold.florisboard.dictate.rewordingReasoningWire
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -113,7 +115,11 @@ object PhoneTranscriber {
         val autoApply = withContext(Dispatchers.IO) {
             PromptsDatabaseHelper.getInstance(context).getAll()
                 .filter { it.autoApply }
-                .mapNotNull { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { DictateRewording.Prompt(it) } }
+                .mapNotNull { p ->
+                    p.prompt?.takeIf { it.isNotBlank() }?.let {
+                        DictateRewording.Prompt(it, promptReasoningWire(prefs, rewordingPreset, chatModel, p))
+                    }
+                }
         }
         val languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get())
         val systemPrompt = when (prefs.dictate.systemPromptSelection.get()) {
@@ -131,7 +137,7 @@ object PhoneTranscriber {
             languageName = languageName,
             systemPrompt = systemPrompt,
             autoApplyPrompts = autoApply,
-            reasoningEffort = rewordingPreset.reasoningEffortWhenOff(chatModel),
+            reasoningEffort = rewordingReasoningWire(prefs, rewordingPreset, chatModel),
         )
     }
 

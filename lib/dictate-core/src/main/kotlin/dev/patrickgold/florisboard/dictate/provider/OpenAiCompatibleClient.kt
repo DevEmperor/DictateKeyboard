@@ -95,6 +95,19 @@ class OpenAiCompatibleClient(
             if (rejected != null && isReasoningEffortRejected(e)) {
                 sent = rememberRejection(effective.model, rejected, e)
                 completeOnce(effective.copy(reasoningEffort = sent))
+            } else if (rejected != null && e.httpStatus == 400 && e.kind == DictateApiException.Kind.UNKNOWN) {
+                // A refusal that names no cause at all: gemini-3.5-flash-lite answers "none", and only
+                // "none", with a bare "Request contains an invalid argument." (asked 2026-11-03, #464).
+                // Without the field is worth exactly one more try. It is remembered only when that answers;
+                // otherwise the user hears the first refusal, which may have had nothing to do with it.
+                val answer = try {
+                    completeOnce(effective.copy(reasoningEffort = null))
+                } catch (_: DictateApiException) {
+                    throw e
+                }
+                reasoningEffortSubstitutes[effortKey(effective.model, rejected)] = null
+                sent = null
+                answer
             } else {
                 throw e
             }

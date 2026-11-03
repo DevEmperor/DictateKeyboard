@@ -1656,7 +1656,7 @@
     <string name="dictate__prompt_auto_apply_title">自动应用</string>
     <string name="dictate__prompt_auto_apply_summary">对每次转录自动运行此提示词</string>
     <string name="dictate__prompt_reasoning_title">推理</string>
-    <string name="dictate__prompt_reasoning_default">默认</string>
+    <string name="dictate__prompt_reasoning_default">全局设置</string>
     <string name="dictate__prompt_badge_selection">需要选中文本</string>
     <string name="dictate__prompt_badge_auto">自动应用</string>
     <string name="dictate__example_prompt_fix_grammar_name">修正语法</string>
@@ -1936,7 +1936,8 @@
     <string name="dictate__promo_milestone_count">用 Dictate 达成 %s 次！🎉</string>
     <string name="dictate__promo_milestone_action">统计</string>
     <string name="dictate__reasoning_effort_title">推理力度</string>
-    <string name="dictate__reasoning_effort_off">关闭</string>
+    <string name="dictate__reasoning_effort_off">服务商默认</string>
+    <string name="dictate__reasoning_effort_none">不推理</string>
     <string name="dictate__reasoning_effort_off_summary">提供商默认 — 非推理模型请保持关闭</string>
     <string name="dictate__reasoning_effort_minimal">最小</string>
     <string name="dictate__reasoning_effort_minimal_summary">最快，思考最少</string>

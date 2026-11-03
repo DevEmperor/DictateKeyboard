@@ -2510,7 +2510,8 @@
     <string name="dictate__rewording_group" comment="Group title for the rewording (AI editing) stage on the main Dictate screen">Rewording (AI editing)</string>
     <string name="dictate__rewording_title" comment="Title of the rewording settings screen">Rewording (AI)</string>
     <string name="dictate__reasoning_effort_title" comment="Title of the reasoning-effort setting (only affects reasoning models like o-series/GPT-5/Grok)">Reasoning effort</string>
-    <string name="dictate__reasoning_effort_off" comment="Reasoning-effort option: off / provider default">Off</string>
+    <string name="dictate__reasoning_effort_off" comment="Reasoning-effort option: send nothing, so the default of the provider applies (which may be thinking)">Provider default</string>
+    <string name="dictate__reasoning_effort_none" comment="Reasoning-effort option: ask the model not to think at all (sends reasoning_effort none)">No thinking</string>
     <string name="dictate__reasoning_effort_off_summary" comment="Summary for the off reasoning-effort option">Provider default — leave off for non-reasoning models</string>
     <string name="dictate__reasoning_effort_minimal" comment="Reasoning-effort option: minimal">Minimal</string>
     <string name="dictate__reasoning_effort_minimal_summary" comment="Summary for minimal reasoning effort">Fastest, least thinking</string>
@@ -2641,7 +2642,7 @@
     <string name="dictate__prompt_auto_apply_title" comment="Switch: run the prompt automatically after each transcription">Apply automatically</string>
     <string name="dictate__prompt_auto_apply_summary" comment="Summary for the auto-apply switch">Run this prompt on every transcription automatically</string>
     <string name="dictate__prompt_reasoning_title" comment="Label for the per-prompt reasoning-effort dropdown in the prompt editor">Reasoning</string>
-    <string name="dictate__prompt_reasoning_default" comment="Reasoning dropdown option: fall back to the global reasoning-effort setting">Default</string>
+    <string name="dictate__prompt_reasoning_default" comment="Reasoning dropdown option: fall back to the global reasoning-effort setting. Not just Default: it sits right above Provider default, which means something else">Global setting</string>
     <string name="dictate__prompt_badge_selection" comment="Accessibility label for the prompt list icon: prompt needs a selection">Requires selection</string>
     <string name="dictate__prompt_badge_auto" comment="Accessibility label for the prompt list icon: prompt runs automatically">Applies automatically</string>
     <!-- Default example prompts seeded on a fresh install. A useful starter set covering all three

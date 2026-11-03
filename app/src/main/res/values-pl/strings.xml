@@ -1687,7 +1687,7 @@
     <string name="dictate__prompt_auto_apply_title">Stosuj automatycznie</string>
     <string name="dictate__prompt_auto_apply_summary">Uruchamiaj ten prompt automatycznie przy każdej transkrypcji</string>
     <string name="dictate__prompt_reasoning_title">Rozumowanie</string>
-    <string name="dictate__prompt_reasoning_default">Domyślne</string>
+    <string name="dictate__prompt_reasoning_default">Ustawienie globalne</string>
     <string name="dictate__prompt_badge_selection">Wymaga zaznaczenia</string>
     <string name="dictate__prompt_badge_auto">Stosowany automatycznie</string>
     <string name="dictate__example_prompt_fix_grammar_name">Popraw gramatykę</string>
@@ -1971,7 +1971,8 @@
     <string name="dictate__promo_milestone_count">%s dyktowań z Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statystyki</string>
     <string name="dictate__reasoning_effort_title">Wysiłek rozumowania</string>
-    <string name="dictate__reasoning_effort_off">Wył.</string>
+    <string name="dictate__reasoning_effort_off">Domyślny dostawcy</string>
+    <string name="dictate__reasoning_effort_none">Bez rozumowania</string>
     <string name="dictate__reasoning_effort_off_summary">Domyślne dostawcy — wyłącz dla modeli bez rozumowania</string>
     <string name="dictate__reasoning_effort_minimal">Minimalny</string>
     <string name="dictate__reasoning_effort_minimal_summary">Najszybszy, minimum myślenia</string>

@@ -1534,7 +1534,7 @@
     <string name="dictate__prompt_auto_apply_title">Aplica automàticament</string>
     <string name="dictate__prompt_auto_apply_summary">Executa aquest prompt automàticament a cada transcripció</string>
     <string name="dictate__prompt_reasoning_title">Raonament</string>
-    <string name="dictate__prompt_reasoning_default">Per defecte</string>
+    <string name="dictate__prompt_reasoning_default">Configuració global</string>
     <string name="dictate__prompt_badge_selection">Requereix una selecció</string>
     <string name="dictate__prompt_badge_auto">S\'aplica automàticament</string>
     <string name="dictate__example_prompt_fix_grammar_name">Corregeix la gramàtica</string>
@@ -1816,7 +1816,8 @@
     <string name="dictate__promo_milestone_count">%s dictats amb Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Estadístiques</string>
     <string name="dictate__reasoning_effort_title">Esforç de raonament</string>
-    <string name="dictate__reasoning_effort_off">Desactivat</string>
+    <string name="dictate__reasoning_effort_off">Per defecte del proveïdor</string>
+    <string name="dictate__reasoning_effort_none">Sense raonament</string>
     <string name="dictate__reasoning_effort_off_summary">Predeterminat del proveïdor — deixa-ho desactivat per a models sense raonament</string>
     <string name="dictate__reasoning_effort_minimal">Mínim</string>
     <string name="dictate__reasoning_effort_minimal_summary">El més ràpid, poc raonament</string>

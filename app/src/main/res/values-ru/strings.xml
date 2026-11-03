@@ -1676,7 +1676,7 @@
     <string name="dictate__prompt_auto_apply_title">Применять автоматически</string>
     <string name="dictate__prompt_auto_apply_summary">Запускать этот промпт автоматически при каждой транскрипции</string>
     <string name="dictate__prompt_reasoning_title">Рассуждение</string>
-    <string name="dictate__prompt_reasoning_default">По умолчанию</string>
+    <string name="dictate__prompt_reasoning_default">Общая настройка</string>
     <string name="dictate__prompt_badge_selection">Требует выделения</string>
     <string name="dictate__prompt_badge_auto">Применяется автоматически</string>
     <string name="dictate__example_prompt_fix_grammar_name">Исправить грамматику</string>
@@ -1960,7 +1960,8 @@
     <string name="dictate__promo_milestone_count">%s диктовок с Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Статистика</string>
     <string name="dictate__reasoning_effort_title">Усилие рассуждения</string>
-    <string name="dictate__reasoning_effort_off">Выкл.</string>
+    <string name="dictate__reasoning_effort_off">По умолчанию поставщика</string>
+    <string name="dictate__reasoning_effort_none">Без рассуждения</string>
     <string name="dictate__reasoning_effort_off_summary">По умолчанию у провайдера — для нерассуждающих моделей оставьте выкл.</string>
     <string name="dictate__reasoning_effort_minimal">Минимальное</string>
     <string name="dictate__reasoning_effort_minimal_summary">Самое быстрое, минимум размышлений</string>

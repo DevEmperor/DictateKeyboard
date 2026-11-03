@@ -97,8 +97,8 @@ class DictateRewordingTest : FunSpec({
         model.sent shouldHaveSize 0
     }
 
-    // These paths have no reasoning setting of their own; without the effort, OpenAI's default model would
-    // think at medium on every one of their requests.
+    // The effort is the user's setting, resolved by the caller; without it, OpenAI's default model would think
+    // at medium on every one of these requests.
     test("every request of the chain carries the reasoning effort it was given") {
         val model = AskingModel()
         DictateRewording.apply(
@@ -114,5 +114,25 @@ class DictateRewordingTest : FunSpec({
         model.efforts shouldBe listOf("none", "none")
         run(model, "Rewrite the dictated text.")
         model.efforts.last() shouldBe null
+    }
+
+    // #464: a prompt with an effort of its own runs at it on the watch as it does in the keyboard.
+    test("a prompt's own effort wins, a blank one leaves the field out, and none follows the chain's") {
+        val model = AskingModel()
+        DictateRewording.apply(
+            client = model,
+            chatModel = "qwen3",
+            transcript = "Hello, see you tomorrow.",
+            autoFormatting = true,
+            languageName = "English",
+            systemPrompt = null,
+            autoApplyPrompts = listOf(
+                DictateRewording.Prompt("Rewrite the dictated text.", reasoningEffort = "high"),
+                DictateRewording.Prompt("Rewrite the dictated text.", reasoningEffort = ""),
+                DictateRewording.Prompt("Rewrite the dictated text."),
+            ),
+            reasoningEffort = "none",
+        )
+        model.efforts shouldBe listOf("none", "high", null, "none")
     }
 })

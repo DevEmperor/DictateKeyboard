@@ -1542,7 +1542,7 @@
     <string name="dictate__prompt_auto_apply_title">Appliquer automatiquement</string>
     <string name="dictate__prompt_auto_apply_summary">Exécuter ce prompt automatiquement sur chaque transcription</string>
     <string name="dictate__prompt_reasoning_title">Raisonnement</string>
-    <string name="dictate__prompt_reasoning_default">Par défaut</string>
+    <string name="dictate__prompt_reasoning_default">Réglage global</string>
     <string name="dictate__prompt_badge_selection">Nécessite une sélection</string>
     <string name="dictate__prompt_badge_auto">S\'applique automatiquement</string>
     <string name="dictate__example_prompt_fix_grammar_name">Corriger la grammaire</string>
@@ -1822,7 +1822,8 @@
     <string name="dictate__promo_milestone_count">%s dictées avec Dictate ! 🎉</string>
     <string name="dictate__promo_milestone_action">Stats</string>
     <string name="dictate__reasoning_effort_title">Effort de raisonnement</string>
-    <string name="dictate__reasoning_effort_off">Désactivé</string>
+    <string name="dictate__reasoning_effort_off">Par défaut du fournisseur</string>
+    <string name="dictate__reasoning_effort_none">Aucun raisonnement</string>
     <string name="dictate__reasoning_effort_off_summary">Valeur par défaut du fournisseur — laissez désactivé pour les modèles sans raisonnement</string>
     <string name="dictate__reasoning_effort_minimal">Minimal</string>
     <string name="dictate__reasoning_effort_minimal_summary">Le plus rapide, peu de réflexion</string>

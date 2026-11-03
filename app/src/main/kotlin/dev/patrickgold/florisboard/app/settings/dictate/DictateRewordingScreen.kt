@@ -151,6 +151,7 @@ fun DictateRewordingScreen() = FlorisScreen {
                 DictateReasoningEffort.CUSTOM ->
                     reasoningCustom.ifBlank { stringRes(R.string.dictate__reasoning_effort_custom) }
                 DictateReasoningEffort.OFF -> stringRes(R.string.dictate__reasoning_effort_off)
+                DictateReasoningEffort.NONE -> stringRes(R.string.dictate__reasoning_effort_none)
                 DictateReasoningEffort.MINIMAL -> stringRes(R.string.dictate__reasoning_effort_minimal)
                 DictateReasoningEffort.LOW -> stringRes(R.string.dictate__reasoning_effort_low)
                 DictateReasoningEffort.MEDIUM -> stringRes(R.string.dictate__reasoning_effort_medium)

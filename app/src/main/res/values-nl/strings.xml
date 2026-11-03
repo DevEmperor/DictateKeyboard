@@ -1566,7 +1566,7 @@
     <string name="dictate__prompt_auto_apply_title">Automatisch toepassen</string>
     <string name="dictate__prompt_auto_apply_summary">Deze prompt automatisch op elke transcriptie uitvoeren</string>
     <string name="dictate__prompt_reasoning_title">Redeneren</string>
-    <string name="dictate__prompt_reasoning_default">Standaard</string>
+    <string name="dictate__prompt_reasoning_default">Algemene instelling</string>
     <string name="dictate__prompt_badge_selection">Vereist selectie</string>
     <string name="dictate__prompt_badge_auto">Wordt automatisch toegepast</string>
     <string name="dictate__example_prompt_fix_grammar_name">Grammatica corrigeren</string>
@@ -1848,7 +1848,8 @@
     <string name="dictate__promo_milestone_count">%s dictaten met Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">Statistieken</string>
     <string name="dictate__reasoning_effort_title">Redeneerinspanning</string>
-    <string name="dictate__reasoning_effort_off">Uit</string>
+    <string name="dictate__reasoning_effort_off">Standaard van de aanbieder</string>
+    <string name="dictate__reasoning_effort_none">Geen redeneren</string>
     <string name="dictate__reasoning_effort_off_summary">Standaard van provider — laat uit voor niet-redenerende modellen</string>
     <string name="dictate__reasoning_effort_minimal">Minimaal</string>
     <string name="dictate__reasoning_effort_minimal_summary">Snelst, minst nadenken</string>

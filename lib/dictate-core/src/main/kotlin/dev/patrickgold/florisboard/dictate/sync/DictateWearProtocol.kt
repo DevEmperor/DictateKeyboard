@@ -188,9 +188,9 @@ data class DictateSyncedSettings(
     val rewordingApiKey: String = "",
     val rewordingApi: TranscriptionApi = TranscriptionApi.OPENAI_MULTIPART,
     /**
-     * `reasoning_effort` for the standalone rewording requests ([ProviderPreset.reasoningEffortWhenOff]);
-     * null omits it. The watch has no preset to ask, so the phone asks for it. Optional both ways: an older
-     * watch ignores the key, and an older phone leaves it out.
+     * `reasoning_effort` for the standalone rewording requests, resolved on the phone from the user's
+     * setting as the keyboard resolves it (#464; before, only [ProviderPreset.reasoningEffortWhenOff]);
+     * null omits it. Optional both ways: an older watch ignores the key, and an older phone leaves it out.
      */
     val rewordingReasoningEffort: String? = null,
     /** Rewording system prompt (be-precise / custom), appended to each auto-apply prompt. */
@@ -234,4 +234,10 @@ data class SyncedPrompt(
      * true for every automatic prompt that is not a snippet, for watches that read it.
      */
     val requiresSelection: Boolean = false,
+    /**
+     * The prompt's own `reasoning_effort` ([DictateRewording.Prompt.reasoningEffort]): null follows
+     * [DictateSyncedSettings.rewordingReasoningEffort], which is also what an older phone sends, and blank
+     * leaves the field out.
+     */
+    val reasoningEffort: String? = null,
 )

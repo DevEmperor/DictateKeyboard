@@ -1535,7 +1535,7 @@
     <string name="dictate__prompt_auto_apply_title">تطبيق تلقائي</string>
     <string name="dictate__prompt_auto_apply_summary">شغّل هذه المطالبة تلقائيًا على كل عملية تفريغ نصي</string>
     <string name="dictate__prompt_reasoning_title">التفكير</string>
-    <string name="dictate__prompt_reasoning_default">افتراضي</string>
+    <string name="dictate__prompt_reasoning_default">الإعداد العام</string>
     <string name="dictate__prompt_badge_selection">يتطلّب تحديدًا</string>
     <string name="dictate__prompt_badge_auto">يُطبَّق تلقائيًا</string>
     <string name="dictate__example_prompt_fix_grammar_name">تصحيح القواعد</string>
@@ -1821,7 +1821,8 @@
     <string name="dictate__promo_milestone_count">%s إملاء مع Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action">الإحصاءات</string>
     <string name="dictate__reasoning_effort_title">مقدار التفكير</string>
-    <string name="dictate__reasoning_effort_off">إيقاف</string>
+    <string name="dictate__reasoning_effort_off">الافتراضي للمزوّد</string>
+    <string name="dictate__reasoning_effort_none">بلا تفكير</string>
     <string name="dictate__reasoning_effort_off_summary">الإعداد الافتراضي للمزوّد — اتركه مطفأً للنماذج غير الاستدلالية</string>
     <string name="dictate__reasoning_effort_minimal">الأدنى</string>
     <string name="dictate__reasoning_effort_minimal_summary">الأسرع، أقل تفكير</string>

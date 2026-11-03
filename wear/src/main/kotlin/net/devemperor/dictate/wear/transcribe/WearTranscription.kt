@@ -134,7 +134,7 @@ object WearTranscription {
                 transcriptionApi = settings.rewordingApi,
             )
         )
-        val prompts = settings.autoApplyPrompts.map { DictateRewording.Prompt(it.instruction) }
+        val prompts = settings.autoApplyPrompts.map { DictateRewording.Prompt(it.instruction, it.reasoningEffort) }
         return DictateRewording.apply(
             client = client,
             chatModel = settings.chatModel,

@@ -62,6 +62,9 @@ object DictateWearPublisher {
             prefs.dictate.stylePromptCustom.asFlow().map {},
             prefs.dictate.customWords.asFlow().map {},
             prefs.dictate.wearStandaloneEnabled.asFlow().map {},
+            // The watch's standalone rewording sends what these resolve to (#464).
+            prefs.dictate.rewordingReasoningEffort.asFlow().map {},
+            prefs.dictate.rewordingReasoningEffortCustom.asFlow().map {},
         ).debounce(500L).collectIn(scope) {
             runCatching { publish(context) }
         }
