@@ -1400,4 +1400,74 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         connectMillis(handOver = true) shouldBe 4_000
         connectMillis(handOver = false) shouldBe 8_000
     }
+
+    // #447: Google's dedicated transcription model refused every request of a free-tier key on 2026-10-07,
+    // and the chat model transcribed the same clip. The answers below are Google's own error shapes.
+    fun geminiClient(server: MockWebServer) = OpenAiCompatibleClient(
+        ProviderConfig(
+            baseUrl = server.url("/v1beta/openai/").toString(),
+            apiKey = "test",
+            transcriptionApi = TranscriptionApi.GEMINI_GENERATE_CONTENT,
+        ),
+    )
+    val geminiText = """{"candidates":[{"content":{"parts":[{"text":"Hallo Welt"}]}}]}"""
+
+    test("a refusal of Google's transcription model hands the recording to the chat model once") {
+        val refusals = listOf(
+            400 to """{"error":{"code":400,"message":"Thinking is not enabled for this model","status":"INVALID_ARGUMENT"}}""",
+            429 to """{"error":{"code":429,"message":"You exceeded your current quota.","status":"RESOURCE_EXHAUSTED"}}""",
+            404 to """{"error":{"code":404,"message":"models/gemini-3.5-transcribe is not found","status":"NOT_FOUND"}}""",
+        )
+        val audio = createTempFile(suffix = ".wav").toFile().apply { writeBytes("RIFF-test-audio".encodeToByteArray()) }
+        try {
+            for ((status, body) in refusals) {
+                MockWebServer().use { server ->
+                    server.enqueue(MockResponse().setResponseCode(status).setBody(body))
+                    server.enqueue(MockResponse().setResponseCode(200).setBody(geminiText))
+
+                    val result = geminiClient(server).transcribe(TranscriptionRequest(audio, "gemini-3.5-transcribe"))
+
+                    result.text shouldBe "Hallo Welt"
+                    server.takeRequest().path shouldBe "/v1beta/interactions"
+                    server.takeRequest().path shouldBe "/v1beta/models/${ProviderRegistry.GEMINI.defaultChatModel}:generateContent"
+                    server.requestCount shouldBe 2
+                }
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    test("a rejected Gemini key is not sent to the chat model as well") {
+        val audio = createTempFile(suffix = ".wav").toFile().apply { writeBytes("RIFF-test-audio".encodeToByteArray()) }
+        try {
+            MockWebServer().use { server ->
+                server.enqueue(
+                    MockResponse().setResponseCode(400).setBody(
+                        """{"error":{"code":400,"message":"API key not valid. Please pass a valid API key.",""" +
+                            """"status":"INVALID_ARGUMENT"}}""",
+                    ),
+                )
+                shouldThrow<DictateApiException> {
+                    geminiClient(server).transcribe(TranscriptionRequest(audio, "gemini-3.5-transcribe"))
+                }.kind shouldBe DictateApiException.Kind.INVALID_API_KEY
+                server.requestCount shouldBe 1
+            }
+        } finally {
+            audio.delete()
+        }
+    }
+
+    test("a model this key cannot use reads as that, not as an unknown error") {
+        DictateApiException.fromHttp(400, "Thinking is not enabled for this model").kind shouldBe
+            DictateApiException.Kind.MODEL_UNAVAILABLE
+        DictateApiException.fromHttp(
+            404,
+            "Model 'gemini-3.5-transcribe-x' not found. Did you mean 'gemini-3.5-transcribe'?",
+            code = "not_found",
+        ).kind shouldBe DictateApiException.Kind.MODEL_UNAVAILABLE
+        // The same words in a 5xx are the server's trouble, and a plain bad request stays unknown.
+        DictateApiException.fromHttp(503, "Overloaded for this model").kind shouldBe DictateApiException.Kind.SERVER_ERROR
+        DictateApiException.fromHttp(400, "Invalid JSON payload").kind shouldBe DictateApiException.Kind.UNKNOWN
+    }
 })

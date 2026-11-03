@@ -857,7 +857,17 @@ class OpenAiCompatibleClient(
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult {
         if (ProviderRegistry.isGeminiTranscribeModel(request.model)) {
-            return transcribeGeminiInteractions(request, onRetry)
+            val standIn = ProviderRegistry.GEMINI.defaultChatModel.orEmpty()
+            return try {
+                transcribeGeminiInteractions(request, onRetry)
+            } catch (e: DictateApiException) {
+                if (!isGeminiTranscribeRefusal(e) || standIn.isEmpty()) throw e
+                DictateHttpLog.warn(
+                    "Gemini STT model=${sanitizeForLog(request.model)} refused status=${e.httpStatus}; " +
+                        "fallingBack=$standIn",
+                )
+                transcribeGeminiGenerateContent(request.copy(model = standIn), onRetry)
+            }
         }
         val base64 = withContext(Dispatchers.IO) {
             base64EncodeFile(request.audioFile)
@@ -1881,6 +1891,26 @@ class OpenAiCompatibleClient(
 
         private fun sanitizeForLog(value: String): String =
             value.replace('\r', '_').replace('\n', '_').take(160)
+
+        /**
+         * Whether Google's dedicated transcription model said no in a way its chat models might not, so
+         * the recording is worth one more try on [ProviderRegistry.GEMINI]'s chat model (#447).
+         *
+         * Measured on 2026-10-07 with Jannis's free-tier key: `gemini-3.5-transcribe` answered every request
+         * HTTP 400 "Thinking is not enabled for this model", on both endpoints Google documents for it,
+         * while `gemini-3.6-flash` transcribed the same clip. Another key got five answers in a minute on
+         * 2026-11-02, but the free tier caps the model at three requests a minute, and a model can be
+         * withdrawn or missing for a key (404). Each of those is a refusal of *this model*, and a Gemini Live
+         * dictation that fell back to batch lands on it too. A rejected key, an oversized upload and a
+         * server failure are not: the chat model would hear the same answer.
+         */
+        internal fun isGeminiTranscribeRefusal(e: DictateApiException): Boolean {
+            val status = e.httpStatus ?: return false
+            return status in 400..499 &&
+                e.kind != DictateApiException.Kind.INVALID_API_KEY &&
+                e.kind != DictateApiException.Kind.CONTENT_SIZE_LIMIT &&
+                e.kind != DictateApiException.Kind.TEXT_SIZE_LIMIT
+        }
 
         /**
          * Endpoint+model+effort triples a provider refused (#184/#186), each with what goes out in its
