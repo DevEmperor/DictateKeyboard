@@ -34,6 +34,17 @@ class RealtimeProxyTest : FunSpec({
         override fun onClosed() = Unit
     }
 
+    test("every real-time socket gets the small send buffer, through a proxy too") {
+        // #447: with the platform's own buffer the backlog of a slow uplink hides in the kernel.
+        val direct = RealtimeClient.clientFor(null, trustUserCerts = false).socketFactory
+        val proxied = RealtimeClient.clientFor(ProxyConfig(Proxy.Type.HTTP, "127.0.0.1", 1), false).socketFactory
+        (direct is SendBufferSocketFactory) shouldBe true
+        (proxied is SendBufferSocketFactory) shouldBe true
+        // Linux reports the buffer it asked for doubled, other systems as asked.
+        val size = direct.createSocket().use { it.sendBufferSize }
+        (size == RealtimeClient.SEND_BUFFER_BYTES || size == 2 * RealtimeClient.SEND_BUFFER_BYTES) shouldBe true
+    }
+
     test("a real-time session asks the proxy for the vendor's host") {
         MockWebServer().use { proxy ->
             proxy.enqueue(MockResponse().setResponseCode(403))

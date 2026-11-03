@@ -72,6 +72,7 @@ import dev.patrickgold.florisboard.dictate.provider.RealtimeApi
 import dev.patrickgold.florisboard.dictate.provider.RealtimeCallbacks
 import dev.patrickgold.florisboard.dictate.provider.RealtimeClient
 import dev.patrickgold.florisboard.dictate.provider.RealtimeSession
+import dev.patrickgold.florisboard.dictate.provider.RealtimeTailWatch
 import dev.patrickgold.florisboard.dictate.provider.AudioContainer
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderListing
@@ -749,18 +750,10 @@ object DictateController {
     private const val RESCUED_AUDIO_NAME = "dictate_rescued.wav"
     /** The recording handed to the fallback provider (#455), with the original's extension appended. */
     private const val FALLBACK_AUDIO_BASENAME = "dictate_fallback"
-    // Realtime (#128, #372): after finish(), how long to wait for the provider to flush the last words
-    // before we commit the already-streamed text. Neither bound is normally reached — the session closes
-    // itself as soon as its end-of-stream marker arrives, measured at 0.27–0.37 s after `audioStreamEnd`
-    // for Gemini (2026-09-14). They bound the unhealthy case, and it takes two of them because one number
-    // cannot: a single fixed budget is either too short for a tail that is seconds behind the microphone
-    // (a mobile uplink that could not carry the audio in real time) or a delay everyone pays on every stop.
-    //
-    // [REALTIME_TAIL_IDLE_MS] is how long the provider may stay *silent* before we stop expecting anything
-    // more; every piece of text that arrives grants it anew, so a stream still catching up is never cut
-    // mid-sentence. [REALTIME_TAIL_MAX_MS] caps the whole wait even while text keeps coming.
-    private const val REALTIME_TAIL_IDLE_MS = 1_200L
-    private const val REALTIME_TAIL_MAX_MS = 8_000L
+    // Realtime (#128, #372, #447): how often the wait after finish() reads the session's backlog and the
+    // time of the last text. The rules themselves are RealtimeTailWatch's; the session's own close wakes
+    // the wait at once, so this only sets how promptly silence and a drained queue are noticed.
+    private const val REALTIME_TAIL_POLL_MS = 50L
 
     // How long a lost microphone (#411) is left to settle before the route is decided again. A single
     // disconnect arrives as a burst of removals and the audio service needs a moment to agree on what is
@@ -2873,44 +2866,56 @@ object DictateController {
     }
 
     /**
-     * Waits out the tail of a finished stream (#372): returns as soon as [closed] completes, or once the
-     * provider has been silent for [REALTIME_TAIL_IDLE_MS], and in no case later than
-     * [REALTIME_TAIL_MAX_MS] after the stop.
+     * Waits out the tail of a finished stream (#372, #447) and says how it ended. The rules are
+     * [RealtimeTailWatch]'s: on a link that kept up, the session's own end answer, or silence after the
+     * last text, or a cap; on one that fell behind, for as long as the backlog still leaves the phone.
      *
-     * The silence is measured from the last text the stream produced, not from the stop, and the recording
-     * having just ended does not mean the provider is done: it is still transcribing whatever audio it has
-     * not caught up with. So an idle window that keeps being renewed is what tells the two apart — a
-     * provider with nothing left to say goes quiet and we commit, one that is still working keeps sending
-     * and we keep listening.
-     *
-     * Returns false in the one case where the stream was cut rather than finished: still producing text
-     * when the hard cap ran out. The transcript is then known to be missing its end, and the caller has a
-     * complete recording to transcribe instead.
+     * The answer is [RealtimeTailWatch.Outcome.complete] false where the stream was cut rather than
+     * finished. The transcript is then known to be missing its end, and the caller has a complete
+     * recording to transcribe instead.
      */
-    private suspend fun awaitRealtimeTail(closed: CompletableDeferred<Unit>?): Boolean {
+    private suspend fun awaitRealtimeTail(
+        session: RealtimeSession?,
+        closed: CompletableDeferred<Unit>?,
+    ): RealtimeTailWatch.Outcome {
         val startedAt = SystemClock.elapsedRealtime()
         // Whatever the provider said while the microphone was open says nothing about how long its closing
         // words will take, so the idle window starts fresh at the stop.
         realtimeLastTextAt = startedAt
-        var endedBy = "cap"
-        while (true) {
-            val now = SystemClock.elapsedRealtime()
-            val idleUntil = realtimeLastTextAt + REALTIME_TAIL_IDLE_MS
-            val until = minOf(idleUntil, startedAt + REALTIME_TAIL_MAX_MS)
-            if (until <= now) {
-                if (idleUntil <= now) endedBy = "silence"
-                break
-            }
-            if (withTimeoutOrNull(until - now) { closed?.await(); true } != null) {
-                endedBy = "provider"
-                break
-            }
-        }
+        val pending = { runCatching { session?.pendingUploadBytes() }.getOrNull() ?: 0L }
+        val watch = RealtimeTailWatch(
+            startedAt,
+            pending(),
+            endsWithAnswer = session?.endsWithAnswer == true,
+            answersAfterPause = session?.answersAfterPause == true,
+        )
+        val outcome = pollRealtimeTail(watch, pending, closed)
         Log.i(
             LATENCY_LOG_TAG,
-            "phase=realtimeTail endedBy=$endedBy phaseMs=${SystemClock.elapsedRealtime() - startedAt}",
+            "phase=realtimeTail endedBy=${outcome.name.lowercase()} " +
+                "phaseMs=${SystemClock.elapsedRealtime() - startedAt} behind=${watch.behind} " +
+                "pendingAtStop=${watch.pendingAtStop} " +
+                "drainMs=${if (watch.drainedAt >= 0L) watch.drainedAt - startedAt else -1} " +
+                "inFlightMs=${watch.inFlightMs}",
         )
-        return endedBy != "cap"
+        return outcome
+    }
+
+    /** Feeds [watch] until it answers. The close wakes the loop at once; the rest is read every few dozen ms. */
+    private suspend fun pollRealtimeTail(
+        watch: RealtimeTailWatch,
+        pending: () -> Long,
+        closed: CompletableDeferred<Unit>?,
+    ): RealtimeTailWatch.Outcome {
+        while (true) {
+            watch.check(SystemClock.elapsedRealtime(), pending(), realtimeLastTextAt, closed?.isCompleted == true)
+                ?.let { return it }
+            if (closed == null) {
+                delay(REALTIME_TAIL_POLL_MS)
+            } else {
+                withTimeoutOrNull(REALTIME_TAIL_POLL_MS) { closed.await() }
+            }
+        }
     }
 
     /**
@@ -2946,8 +2951,10 @@ object DictateController {
                 // fraction of a second. What it must not do is end while the tail is still arriving: the
                 // last word or two of a dictation only reach us in the closing segment, so a fixed budget
                 // committed a sentence one word short whenever the stream was running behind (#372). So
-                // the clock is restarted by every piece of text and only silence ends it early.
-                val tailComplete = awaitRealtimeTail(closed)
+                // the clock is restarted by every piece of text and only silence ends it early — and on an
+                // uplink that fell behind, not even silence until the backlog has left the phone (#447).
+                val tail = awaitRealtimeTail(session, closed)
+                val tailComplete = tail.complete
                 runCatching { session?.cancel() }
                 // From here the transcript is read, and nothing that arrives later may touch the field.
                 // `close(1000)` keeps frames coming until the server's own close, and a final that lands
@@ -2964,13 +2971,15 @@ object DictateController {
                 // buffer only if the stream produced nothing at all.
                 val transcript = realtimeTranscript.toString().trim().ifEmpty { realtimeFinal.toString().trim() }
                 _interimText.value = ""
-                // A stream still delivering when the tail cap ran out is missing its end, and half a
-                // dictation is worse than the wait: the recording is complete, so transcribe that instead.
+                // A stream cut before its end — still delivering at the cap, or its backlog stuck on the
+                // phone — is missing words, and half a dictation is worse than the wait: the recording is
+                // complete, so transcribe that instead.
                 if (realtimeFailed || !tailComplete || transcript.isEmpty()) {
                     Log.i(
                         LATENCY_LOG_TAG,
                         "phase=realtimeFallback reason=" + when {
                             realtimeFailed -> "streamFailed"
+                            tail == RealtimeTailWatch.Outcome.STALLED -> "stalled"
                             !tailComplete -> "tailCap"
                             else -> "emptyTranscript"
                         },

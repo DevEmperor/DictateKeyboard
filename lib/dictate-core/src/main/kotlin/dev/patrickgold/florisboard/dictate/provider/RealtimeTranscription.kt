@@ -70,6 +70,29 @@ interface RealtimeSession {
 
     /** Abort the session immediately without awaiting a final result (e.g. the user cancelled). */
     fun cancel()
+
+    /**
+     * Bytes this session has accepted from [sendAudio] and [finish] that have not yet left the phone
+     * (#447): what waits for the handshake, plus the socket's own queue. On an uplink slower than the
+     * stream this is the backlog the provider has not heard yet, so a stop has to wait for it rather
+     * than for a fixed clock. 0 when nothing waits, or when the session cannot tell.
+     */
+    fun pendingUploadBytes(): Long = 0L
+
+    /**
+     * Whether this session closes itself once the provider has answered [finish], and whether that
+     * answer comes only after all the audio sent before it (#447). Then a stop can wait for the answer
+     * instead of guessing the end from a pause in the text. False where the protocol has no such
+     * answer, or where nobody has measured that it has one.
+     */
+    val endsWithAnswer: Boolean get() = false
+
+    /**
+     * Whether that answer comes even when the dictation ends in a pause, with nothing said since the
+     * provider's last transcript (#447). Only then is it worth waiting for on a link that kept up: a
+     * session that answers the end of speech, not the end of the stream, has nothing left to answer.
+     */
+    val answersAfterPause: Boolean get() = endsWithAnswer
 }
 
 /**

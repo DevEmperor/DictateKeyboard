@@ -69,6 +69,19 @@ class RealtimeAudioGateTest {
     }
 
     @Test
+    fun pendingBytesCountWhatWaitsForTheHandshake() {
+        val gate = RealtimeAudioGate()
+        val sender = { _: ByteArray, _: Int -> }
+
+        gate.sendAudio(byteArrayOf(1, 2, 3), 3, sender)
+        gate.sendAudio(byteArrayOf(4, 5), 2, sender)
+        assertEquals(5L, gate.pendingBytes())
+
+        gate.markReady(sender) {}
+        assertEquals(0L, gate.pendingBytes())
+    }
+
+    @Test
     fun closeDropsPendingAudioAndIgnoresLateSetup() {
         val gate = RealtimeAudioGate()
         val events = mutableListOf<String>()

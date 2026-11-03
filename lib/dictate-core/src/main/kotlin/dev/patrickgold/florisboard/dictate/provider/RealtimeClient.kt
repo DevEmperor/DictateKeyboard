@@ -30,8 +30,11 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
+import java.net.InetAddress
+import java.net.Socket
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
+import javax.net.SocketFactory
 
 /**
  * Opens real-time transcription sessions (issue #128). Implements all eight [RealtimeApi] wire formats:
@@ -44,8 +47,21 @@ import java.util.concurrent.TimeUnit
  */
 object RealtimeClient {
 
+    /**
+     * The send buffer every realtime socket asks for (#447); Linux doubles it, so 64 KiB are in flight.
+     *
+     * Left to itself, Android grows a socket's send buffer up to megabytes, and on an uplink slower than
+     * the stream the backlog disappears into it: on the #447 bench OkHttp's queue read 0 while seconds of
+     * speech had not left the phone, and a stop cannot tell a slow stream from a finished one. With the
+     * buffer this small the backlog stays in OkHttp's queue, where [RealtimeSession.pendingUploadBytes] can
+     * see it, and what can be on its way at once is bounded. 64 KiB still carry more than 1 Mbit/s at a
+     * 500 ms round trip, and the fastest stream here (OpenAI, base64 at 24 kHz) needs about 520 kbit/s.
+     */
+    internal const val SEND_BUFFER_BYTES = 32 * 1024
+
     private val wsClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
+            .socketFactory(SendBufferSocketFactory(SEND_BUFFER_BYTES))
             .connectTimeout(8, TimeUnit.SECONDS)   // fail a dead route fast instead of stalling the session
             // Race IPv6/IPv4 with OkHttp 5 Happy Eyeballs instead of forcing either address family.
             .fastFallback(true)
@@ -134,6 +150,34 @@ object RealtimeClient {
         RealtimeApi.MISTRAL_VOXTRAL -> MistralRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.XAI -> XaiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
     }
+}
+
+/**
+ * Sockets with a fixed send buffer, for [RealtimeClient.SEND_BUFFER_BYTES]. OkHttp asks for an unconnected
+ * socket and connects it itself, so the buffer is set before the first byte; the other overloads are here
+ * because the contract has them. A platform that refuses the size keeps its own, and the stream works as
+ * before, only without a visible backlog.
+ *
+ * A SOCKS proxy is the one route that bypasses this: OkHttp builds that socket itself.
+ */
+internal class SendBufferSocketFactory(
+    private val sendBufferBytes: Int,
+    private val delegate: SocketFactory = SocketFactory.getDefault(),
+) : SocketFactory() {
+
+    private fun Socket.limited(): Socket = apply { runCatching { sendBufferSize = sendBufferBytes } }
+
+    override fun createSocket(): Socket = delegate.createSocket().limited()
+
+    override fun createSocket(host: String?, port: Int): Socket = delegate.createSocket(host, port).limited()
+
+    override fun createSocket(host: String?, port: Int, localHost: InetAddress?, localPort: Int): Socket =
+        delegate.createSocket(host, port, localHost, localPort).limited()
+
+    override fun createSocket(host: InetAddress?, port: Int): Socket = delegate.createSocket(host, port).limited()
+
+    override fun createSocket(address: InetAddress?, port: Int, localAddress: InetAddress?, localPort: Int): Socket =
+        delegate.createSocket(address, port, localAddress, localPort).limited()
 }
 
 /**
@@ -297,6 +341,11 @@ private class OpenAiRealtimeSession(
         }
     }
 
+    override fun pendingUploadBytes(): Long = audioGate.pendingBytes() + (ws?.queueSize() ?: 0L)
+
+    // With turn detection off there is one item, and its `completed` answers the commit behind the audio.
+    override val endsWithAnswer: Boolean get() = true
+
     override fun cancel() {
         audioGate.close()
         done = true
@@ -412,6 +461,10 @@ private class SonioxRealtimeSession(
             runCatching { ws?.send("") }   // empty frame → flush + finished
         }
     }
+
+    override fun pendingUploadBytes(): Long = audioGate.pendingBytes() + (ws?.queueSize() ?: 0L)
+
+    override val endsWithAnswer: Boolean get() = true
 
     override fun cancel() {
         audioGate.close()
@@ -572,6 +625,11 @@ internal class AssemblyAiRealtimeSession(
         runCatching { socket.send("""{"type":"Terminate"}""") }
     }
 
+    override fun pendingUploadBytes(): Long = ws?.queueSize() ?: 0L
+
+    // `Termination` answers `Terminate`, after the turn in progress has settled.
+    override val endsWithAnswer: Boolean get() = true
+
     override fun cancel() {
         done = true
         runCatching { ws?.close(1000, null) }
@@ -675,6 +733,10 @@ private class ElevenLabsRealtimeSession(
             ws?.let { sendCommit(it) }
         }
     }
+
+    // No answer to wait for: the commit comes back as one more committed transcript, like every pause the
+    // server's own voice detection commits, so the stop ends on silence.
+    override fun pendingUploadBytes(): Long = audioGate.pendingBytes() + (ws?.queueSize() ?: 0L)
 
     override fun cancel() {
         audioGate.close()
@@ -785,7 +847,11 @@ private class GeminiRealtimeSession(
         // the stop is sent — and closing on it would drop everything spoken since. Audio that no
         // transcription has covered yet is the exact test: while some is outstanding this marker is not
         // ours, and the one that answers our own end of stream is still to come.
-        if (ended && finishing && !audioSinceFinal) finalizeAndClose(webSocket)
+        //
+        // "Sent" has to mean left the phone (#447). On a slow uplink the frames are handed to the socket
+        // long before Google hears them, and a turn that ends in that backlog settles its final and its
+        // marker after the stop, with the rest of the dictation still queued here.
+        if (ended && finishing && !audioSinceFinal && pendingUploadBytes() == 0L) finalizeAndClose(webSocket)
     }
 
     /**
@@ -852,6 +918,14 @@ private class GeminiRealtimeSession(
             ws?.let { sendAudioEnd(it) }
         }
     }
+
+    override fun pendingUploadBytes(): Long = audioGate.pendingBytes() + (ws?.queueSize() ?: 0L)
+
+    override val endsWithAnswer: Boolean get() = true
+
+    // Its marker ends a turn of speech, not the stream: a dictation that ends in a pause has no turn left
+    // to end, and after a 3.5 s pause before the stop nothing came at all (both runs, 2026-11-02).
+    override val answersAfterPause: Boolean get() = false
 
     override fun cancel() {
         audioGate.close()
@@ -955,6 +1029,9 @@ private class MistralRealtimeSession(
         val socket = ws ?: return finalizeAndClose(null)
         runCatching { socket.send("""{"type":"transcription_session.close"}""") }
     }
+
+    // The protocol here is reconstructed, so its `Done` is not trusted as an answer.
+    override fun pendingUploadBytes(): Long = ws?.queueSize() ?: 0L
 
     override fun cancel() {
         done = true
@@ -1090,6 +1167,11 @@ internal class DeepgramRealtimeSession(
         runCatching { socket.send("""{"type":"CloseStream"}""") }
     }
 
+    override fun pendingUploadBytes(): Long = ws?.queueSize() ?: 0L
+
+    // Deepgram closes the socket itself once it has transcribed everything before `CloseStream`.
+    override val endsWithAnswer: Boolean get() = true
+
     override fun cancel() {
         done = true
         runCatching { ws?.close(1000, null) }
@@ -1223,6 +1305,12 @@ internal class XaiRealtimeSession(
             ws?.let { sendEnd(it) }
         }
     }
+
+    override fun pendingUploadBytes(): Long = audioGate.pendingBytes() + (ws?.queueSize() ?: 0L)
+
+    // `transcript.done` answers `audio.done`: 0.31 s after the stop, 0.11 s after a 3.5 s pause before it
+    // (grok-voice-transcribe-2.0, measured 2026-11-02).
+    override val endsWithAnswer: Boolean get() = true
 
     override fun cancel() {
         audioGate.close()

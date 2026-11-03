@@ -83,6 +83,9 @@ internal class RealtimeAudioGate(
         }
     }
 
+    /** The audio still held back for the handshake, which a stopped session owes its provider too (#447). */
+    fun pendingBytes(): Long = synchronized(this) { bufferedBytes.toLong() }
+
     /** Discards pending audio and ignores late setup callbacks after cancellation/failure/close. */
     fun close() {
         synchronized(this) {
