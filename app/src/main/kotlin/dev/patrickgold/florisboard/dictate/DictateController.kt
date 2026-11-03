@@ -370,6 +370,15 @@ object DictateController {
     private var lastDictationLead = ""
 
     /**
+     * The last dictation as it went into the field, separator included, when its full stop was left off
+     * (issue #468) — and that stop. A dictation right behind it puts the stop back ([leadFor]): the setting
+     * is for a sentence on its own, and two in a row are two sentences, which keep their marks.
+     */
+    private var heldFullStop: HeldFullStop? = null
+
+    private class HeldFullStop(val written: String, val mark: Char)
+
+    /**
      * Everything the stream has produced so far, whether or not any of it was put into the field (#345).
      *
      * [realtimeShown] cannot answer that on its own: it means *what is in the field right now*, and the
@@ -773,6 +782,13 @@ object DictateController {
 
     /** Shortest gap between two wake-up pokes at the same sleeping server (#189). */
     private const val WARM_UP_THROTTLE_MS = 60_000L
+
+    /**
+     * How much of the last dictation the field must still end in for its full stop to be put back (#468).
+     * Enough that typing, a moved cursor or another field never matches by chance; the keyboard's own
+     * view of the text before the cursor is a window, not the whole field.
+     */
+    private const val HELD_STOP_MATCH_CHARS = 64
 
     /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
 
@@ -2498,8 +2514,15 @@ object DictateController {
         } else {
             finalText
         }
+        // A dictation of one sentence without its full stop, when the user asked for that (#468). Before the
+        // mappings, so a replacement written with a dot at its end keeps it; not for a live prompt, whose
+        // answer is not a dictation. What the user took over of the preview counts toward the sentence.
+        val stopLeftOff = !isLive && prefs.dictate.dropFinalFullStop.get() &&
+            FinalFullStop.droppable(paragraphed, head = rawText.dropLast(text.length))
         // Deterministic find-and-replace dictionary (issue #129), applied right before insert.
-        val outputText = prefs.dictate.customMappings.get().apply(paragraphed)
+        val outputText = prefs.dictate.customMappings.get().apply(
+            if (stopLeftOff) paragraphed.dropLast(1) else paragraphed,
+        )
         // The whole dictation, for what keeps a record of it — the history, the stats, the re-insert cache —
         // while the field gets only the part that was not handed over (#421). [text] is the tail of [rawText].
         val dictated = if (text.length == rawText.length) {
@@ -2510,6 +2533,8 @@ object DictateController {
         // The space in front of it, if the field needs one (#443). Kept out of [outputText] on purpose:
         // the history, the re-insert cache and the clipboard copies hold the dictation, not the seam.
         val lead: String
+        // What the field now ends in, separator included, when it is this dictation as written (#468).
+        var inField = ""
         if (finalizeViaComposing) {
             // Realtime (#128): replace the live-streamed preview with the finished (reworded) result via the
             // minimal diff, then honor auto-enter — instead of committing on top of the preview.
@@ -2554,6 +2579,7 @@ object DictateController {
                 discardRetainedAudio()
                 return
             }
+            if (!edited) inField = lead + written
             // Not after an edit at the last moment: the user is in the middle of the text, and auto-enter
             // would send it.
             if (prefs.dictate.autoEnter.get() && outputText.isNotEmpty() && !edited) outSink.performEnter()
@@ -2571,6 +2597,7 @@ object DictateController {
             lead = leadFor(appContext, outputText)
             val committed = commitOutput(appContext, lead + outputText)
             if (committed) latencyTrace?.let { logLatency(it, "outputCommitted") }
+            if (committed) inField = lead + outputText
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — surface an error, and
             // put the text somewhere the user can actually reach.
@@ -2594,6 +2621,13 @@ object DictateController {
         // Re-insert safety net (issue #111) + lifetime stats (issue #142) + history log (issue #140).
         rememberLastDictation(appContext, dictated)
         lastDictationLead = lead
+        // For the next dictation to put the stop back (#468), and only where it can: the field ends in this
+        // one, and not in a mark of its own, which a mapping may have written.
+        heldFullStop = if (stopLeftOff && inField.isNotEmpty() && !FinalFullStop.isEnd(inField.last())) {
+            HeldFullStop(inField, paragraphed.last())
+        } else {
+            null
+        }
         if (capture?.isReplay != true) {
             DictateStats.recordDictation(prefs, dictated, recordedSeconds)
             if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
@@ -3560,15 +3594,25 @@ object DictateController {
      * field, off the main thread for the overlay like every other accessibility call.
      *
      * Nothing for the system voice input: the calling app joins our result into its own field.
+     *
+     * It also puts back the full stop the last dictation went without (#468), when this one carries on right
+     * behind it: one sentence on its own goes without, two in a row are two sentences and keep their marks.
+     * Not in front of a mark that binds to the word before it — `Buy tofu` + `, milk` wants no stop.
      */
     private suspend fun leadFor(appContext: Context, text: String): String {
         if (text.isEmpty() || outputTarget == OutputTarget.RECOGNITION_SERVICE) return ""
         val sink = sink(appContext)
-        // One character is all the rule looks at.
+        // One character is all the separator rule looks at; a held stop needs to see its dictation.
+        val held = heldFullStop?.takeIf { !TranscriptJoin.DEFAULT_TIGHTENING_SYMBOLS.contains(text.first()) }
+        val length = held?.written?.length?.coerceAtMost(HELD_STOP_MATCH_CHARS) ?: 1
         val before = if (outputTarget == OutputTarget.OVERLAY) {
-            withContext(Dispatchers.IO) { sink.textBeforeCursor(1) }
+            withContext(Dispatchers.IO) { sink.textBeforeCursor(length) }
         } else {
-            sink.textBeforeCursor(1)
+            sink.textBeforeCursor(length)
+        }
+        if (held != null && before != null && before == held.written.takeLast(length)) {
+            val mark = held.mark.toString()
+            return mark + appContext.transcriptSeparatorBefore(mark, text)
         }
         return appContext.transcriptSeparatorBefore(before, text)
     }

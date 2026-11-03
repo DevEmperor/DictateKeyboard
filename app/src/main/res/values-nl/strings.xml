@@ -138,6 +138,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">tekstuitbreiding afkorting snelkoppeling fragment macro autotekst sjabloon snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">woorden tellen aantal woorden tekens lengte statistieken</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">bijsnijden spaties verwijderen opschonen kopiëren knippen</string>
+    <string name="settings__search__keywords__final_full_stop" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which leaves the full stop off a dictation of one sentence. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">punt leestekens interpunctie einde zin zonder punt</string>
     <string name="settings__search__keywords__clear_cache">cache opslag ruimte tijdelijke bestanden vrijmaken verwijderen opschonen</string>
     <string name="settings__search__keywords__keyboard_size">hoogte hoog laag groter kleiner formaat wijzigen vergroten verkleinen</string>
     <string name="settings__search__keywords__momentary_layer">vasthouden schuiven symbool laag leesteken tijdelijk kort 123 iphone</string>
@@ -1419,6 +1420,8 @@
     <string name="dictate__paragraph_split_title">In alinea\'s opsplitsen</string>
     <string name="dictate__paragraph_split_off">Uit</string>
     <string name="dictate__paragraph_split_value">Na {n} woorden</string>
+    <string name="dictate__drop_final_full_stop_title">Laatste punt weglaten</string>
+    <string name="dictate__drop_final_full_stop_summary">Alleen als een dictaat één zin is; meerdere zinnen houden alle leestekens</string>
     <string name="dictate__realtime_title">Realtime-transcriptie</string>
     <string name="dictate__realtime_summary">Transcribeert al tijdens het spreken in plaats van pas na het stoppen, voor providers die dit ondersteunen</string>
     <string name="dictate__realtime_mode_off">Uit</string>

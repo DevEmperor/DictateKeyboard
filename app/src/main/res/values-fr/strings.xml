@@ -137,6 +137,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansion de texte abréviation raccourci extrait macro texte automatique modèle snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">compter les mots nombre de mots caractères longueur statistiques</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">rogner espaces supprimer nettoyer copier couper</string>
+    <string name="settings__search__keywords__final_full_stop" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which leaves the full stop off a dictation of one sentence. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">point ponctuation fin de phrase sans point</string>
     <string name="settings__search__keywords__clear_cache">cache stockage espace fichiers temporaires libérer supprimer nettoyer</string>
     <string name="settings__search__keywords__keyboard_size">hauteur haut bas plus grand plus petit redimensionner agrandir réduire</string>
     <string name="settings__search__keywords__momentary_layer">maintenir glisser symbole couche ponctuation temporaire momentané 123 iphone</string>
@@ -1395,6 +1396,8 @@
     <string name="dictate__paragraph_split_title">Diviser en paragraphes</string>
     <string name="dictate__paragraph_split_off">Désactivé</string>
     <string name="dictate__paragraph_split_value">Après {n} mots</string>
+    <string name="dictate__drop_final_full_stop_title">Omettre le point final</string>
+    <string name="dictate__drop_final_full_stop_summary">Seulement si la dictée ne compte qu’une phrase ; plusieurs phrases gardent toute leur ponctuation</string>
     <string name="dictate__realtime_title">Transcription en temps réel</string>
     <string name="dictate__realtime_summary">Transcrit pendant que vous parlez au lieu d\'attendre l\'arrêt, pour les fournisseurs compatibles</string>
     <string name="dictate__realtime_mode_off">Désactivé</string>

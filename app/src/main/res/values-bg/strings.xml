@@ -145,6 +145,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">текстов шаблон разширяване на текст съкращение макрос автотекст snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">брой думи брояч на думи знаци дължина статистика</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">изрязване интервали премахване почистване копиране</string>
+    <string name="settings__search__keywords__final_full_stop" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which leaves the full stop off a dictation of one sentence. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">точка пунктуация препинателни знаци край на изречението без точка</string>
     <string name="settings__search__keywords__clear_cache">кеш памет място временни файлове освобождаване изтриване почистване</string>
     <string name="settings__search__keywords__keyboard_size">височина висока ниска по-голяма по-малка преоразмеряване размер</string>
     <string name="settings__search__keywords__momentary_layer">задръжане плъзгане символ слой пунктуация временно 123 iphone</string>
@@ -1519,6 +1520,8 @@
     <string name="dictate__paragraph_split_title">Разделяне на абзаци</string>
     <string name="dictate__paragraph_split_off">Изкл.</string>
     <string name="dictate__paragraph_split_value">След {n} думи</string>
+    <string name="dictate__drop_final_full_stop_title">Без точка накрая</string>
+    <string name="dictate__drop_final_full_stop_summary">Само когато диктовката е едно изречение; няколко изречения запазват всички знаци</string>
     <string name="dictate__realtime_title">Транскрипция в реално време</string>
     <string name="dictate__realtime_summary">Транскрибира още докато говорите, а не след спирането, за доставчици, които го поддържат</string>
     <string name="dictate__realtime_mode_off">Изключено</string>

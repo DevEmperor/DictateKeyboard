@@ -228,6 +228,10 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__instant_output_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__instant_output_title"),
         SettingsSearchEntry(R.string.dictate__output_speed_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__output_speed_title"),
         SettingsSearchEntry(R.string.dictate__paragraph_split_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__paragraph_split_title"),
+        // Hand-added (issue #468): a rerun of the generator no longer compiles. "Period" is what half the
+        // English speakers call the mark the title names.
+        SettingsSearchEntry(R.string.dictate__drop_final_full_stop_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__drop_final_full_stop_title",
+            keywordsRes = R.string.settings__search__keywords__final_full_stop),
         SettingsSearchEntry(R.string.dictate__resend_button_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__resend_button_title"),
         SettingsSearchEntry(R.string.dictate__haptic_feedback_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__haptic_feedback_title"),
         SettingsSearchEntry(R.string.dictate__remember_last_dictation_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__remember_last_dictation_title"),

@@ -37,7 +37,7 @@ object TranscriptParagraphs {
     private fun isSentenceEnd(c: Char): Boolean = c == '.' || c == '!' || c == '?' || c == '…' // …
 
     /** Closing punctuation that can trail a sentence end: quotes and brackets. */
-    private fun isTrailing(c: Char): Boolean = when (c) {
+    internal fun isTrailing(c: Char): Boolean = when (c) {
         '"', '\'', '’', '”', '»', ')', ']', '}' -> true // " ' ’ ” » ) ] }
         else -> false
     }
@@ -68,9 +68,9 @@ object TranscriptParagraphs {
     /**
      * True when the dot at [dotIndex] belongs to something other than a sentence end, judged from the
      * whitespace-delimited token in front of it: an ordinal or date (`29.`), an initial (`J.`), or a known
-     * abbreviation (`usw.`, `z.B.`).
+     * abbreviation (`usw.`, `z.B.`). [FinalFullStop] asks the same of a dictation's last dot (#468).
      */
-    private fun isNonBreakingDot(text: String, dotIndex: Int): Boolean {
+    internal fun isNonBreakingDot(text: String, dotIndex: Int): Boolean {
         var start = dotIndex
         while (start > 0 && !text[start - 1].isWhitespace()) start--
         // Drop leading punctuation so a bracketed or quoted abbreviation still matches — `(e.g.`, `"Dr.`.

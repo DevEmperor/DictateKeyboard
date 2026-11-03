@@ -484,6 +484,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__paragraph_split_words",
             default = 0,
         )
+        // Leave the full stop off a dictation that is a single sentence (issue #468) — notes, list items,
+        // chat replies. Off by default: in running text the stop belongs there. Several sentences keep every
+        // mark, and a dictation right behind one puts its stop back (see FinalFullStop, DictateController.leadFor).
+        val dropFinalFullStop = boolean(
+            key = "dictate__drop_final_full_stop",
+            default = false,
+        )
         // Long-press the send (mic) button while recording to transcribe with the on-device model instead
         // of the configured cloud provider (issue #228), for a quick offline one-off without digging
         // through the provider settings. Toggled from the on-device model dialog. Off by default. Only

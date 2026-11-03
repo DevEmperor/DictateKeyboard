@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.FastForward
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
+import androidx.compose.material.icons.automirrored.filled.ShortText
 import androidx.compose.material.icons.filled.AudioFile
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Insights
@@ -562,6 +563,13 @@ fun DictateOutputScreen() = FlorisScreen {
             min = 0,
             max = 100,
             stepIncrement = 5,
+        )
+        SwitchPreference(
+            prefs.dictate.dropFinalFullStop,
+            icon = Icons.AutoMirrored.Filled.ShortText,
+            modifier = Modifier.settingsSearchAnchor("dictate__drop_final_full_stop_title"),
+            title = stringRes(R.string.dictate__drop_final_full_stop_title),
+            summary = stringRes(R.string.dictate__drop_final_full_stop_summary),
         )
         SwitchPreference(
             prefs.dictate.resendButton,
