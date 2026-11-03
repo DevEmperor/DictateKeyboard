@@ -16,6 +16,10 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 /**
  * Storage for user-defined rewording prompts.
@@ -38,6 +42,17 @@ import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 class PromptsDatabaseHelper private constructor(
     private val context: Context,
 ) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
+    private val _revision = MutableStateFlow(0)
+
+    /**
+     * Goes up after every write, from whichever screen made it: the prompt list, the library, an import
+     * or a restore. The watch carries a copy of the automatic prompts and is republished on it (#130); a
+     * signal each caller had to remember to send would have rotted the way the watch's pref list did.
+     */
+    val revision: StateFlow<Int> = _revision.asStateFlow()
+
+    private fun changed() = _revision.update { it + 1 }
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
@@ -89,7 +104,7 @@ class PromptsDatabaseHelper private constructor(
     fun add(model: PromptModel): Int {
         val db = writableDatabase
         val cv = model.toContentValues()
-        return db.insert("PROMPTS", null, cv).toInt()
+        return db.insert("PROMPTS", null, cv).toInt().also { changed() }
     }
 
     fun addAll(models: List<PromptModel>?) {
@@ -102,6 +117,7 @@ class PromptsDatabaseHelper private constructor(
         } finally {
             db.endTransaction()
         }
+        changed()
     }
 
     fun replaceAll(models: List<PromptModel>?) {
@@ -114,16 +130,19 @@ class PromptsDatabaseHelper private constructor(
         } finally {
             db.endTransaction()
         }
+        changed()
     }
 
     fun update(model: PromptModel) {
         val db = writableDatabase
         db.update("PROMPTS", model.toContentValues(), "ID = ?", arrayOf(model.id.toString()))
+        changed()
     }
 
     fun delete(id: Int) {
         val db = writableDatabase
         db.delete("PROMPTS", "ID = ?", arrayOf(id.toString()))
+        changed()
     }
 
     fun get(id: Int): PromptModel? {

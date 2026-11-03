@@ -11,9 +11,11 @@
 package dev.patrickgold.florisboard.dictate.wear
 
 import android.content.Context
+import android.util.Log
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.sync.DictateWearProtocol
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.debounce
@@ -51,6 +53,11 @@ object DictateWearPublisher {
     /**
      * Re-publish whenever a watch-relevant setting changes. Call once after the preference store is
      * loaded. Debounced so a burst of edits (e.g. typing custom words) collapses into a single push.
+     *
+     * Every preference [PhoneWearSettingsResolver.resolve] reads belongs here. The list was written for
+     * transcription (#106) and never followed the rewording fields (#130): a change of the rewording
+     * provider, the switches or the automatic prompts reached a standalone watch only when it asked again.
+     * `WearPublisherCoverageTest` now fails when a read preference is missing from it.
      */
     fun startPublishingOnChange(context: Context, scope: CoroutineScope) {
         merge(
@@ -62,11 +69,26 @@ object DictateWearPublisher {
             prefs.dictate.stylePromptCustom.asFlow().map {},
             prefs.dictate.customWords.asFlow().map {},
             prefs.dictate.wearStandaloneEnabled.asFlow().map {},
-            // The watch's standalone rewording sends what these resolve to (#464).
+            prefs.dictate.hapticFeedback.asFlow().map {},
+            prefs.dictate.requestTimeout.asFlow().map {},
+            // The standalone rewording chain.
+            prefs.dictate.rewordingProviderId.asFlow().map {},
+            prefs.dictate.rewordingEnabled.asFlow().map {},
+            prefs.dictate.wearAutoRewordingEnabled.asFlow().map {},
+            prefs.dictate.autoFormattingEnabled.asFlow().map {},
+            prefs.dictate.systemPromptSelection.asFlow().map {},
+            prefs.dictate.systemPromptCustom.asFlow().map {},
             prefs.dictate.rewordingReasoningEffort.asFlow().map {},
             prefs.dictate.rewordingReasoningEffortCustom.asFlow().map {},
+            // The automatic prompts, with their own reasoning effort, live in prompts.db.
+            PromptsDatabaseHelper.getInstance(context).revision.map {},
         ).debounce(500L).collectIn(scope) {
+            // Says only that it happened: the payload carries the keys.
             runCatching { publish(context) }
+                .onSuccess { Log.i(TAG, "settings: republished after a change") }
+                .onFailure { Log.w(TAG, "settings: republish after a change failed", it) }
         }
     }
+
+    private const val TAG = "DictateWear"
 }
