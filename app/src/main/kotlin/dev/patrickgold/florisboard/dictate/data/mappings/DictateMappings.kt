@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.data.mappings
 
+import dev.patrickgold.florisboard.app.PreferenceJson
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
@@ -80,10 +81,10 @@ data class DictateMappings(
         private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
         override fun serialize(value: DictateMappings): String =
-            json.encodeToString(value)
+            PreferenceJson.encode(json.encodeToString(value))
 
         override fun deserialize(value: String): DictateMappings = try {
-            json.decodeFromString(value)
+            json.decodeFromString(PreferenceJson.decode(value))
         } catch (e: Exception) {
             flogError { "Failed to deserialize DictateMappings: $e" }
             Empty

@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.gif
 
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.PreferenceJson
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
@@ -29,12 +30,12 @@ data class GifHistory(
 ) {
     object Serializer : PreferenceSerializer<GifHistory> {
         override fun serialize(value: GifHistory): String {
-            return Json.encodeToString(value)
+            return PreferenceJson.encode(Json.encodeToString(value))
         }
 
         override fun deserialize(value: String): GifHistory {
             return try {
-                Json.decodeFromString(value)
+                Json.decodeFromString(PreferenceJson.decode(value))
             } catch (e: Exception) {
                 flogError { "Failed to deserialize GifHistory: $e" }
                 Empty

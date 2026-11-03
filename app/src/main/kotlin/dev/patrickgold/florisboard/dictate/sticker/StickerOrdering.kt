@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.sticker
 
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.PreferenceJson
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
@@ -58,10 +59,10 @@ data class StickerPackSettings(
     val icons: Map<String, String> = emptyMap(),
 ) {
     object Serializer : PreferenceSerializer<StickerPackSettings> {
-        override fun serialize(value: StickerPackSettings): String = Json.encodeToString(value)
+        override fun serialize(value: StickerPackSettings): String = PreferenceJson.encode(Json.encodeToString(value))
 
         override fun deserialize(value: String): StickerPackSettings = try {
-            Json.decodeFromString<StickerPackSettings>(value)
+            Json.decodeFromString<StickerPackSettings>(PreferenceJson.decode(value))
         } catch (e: Exception) {
             flogError { "Failed to deserialize StickerPackSettings: $e" }
             Empty

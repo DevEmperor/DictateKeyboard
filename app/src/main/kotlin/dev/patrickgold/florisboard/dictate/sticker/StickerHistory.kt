@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.sticker
 
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.PreferenceJson
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
@@ -52,7 +53,7 @@ data class StickerHistory(
 
     object Serializer : PreferenceSerializer<StickerHistory> {
         override fun serialize(value: StickerHistory): String {
-            return Json.encodeToString(value)
+            return PreferenceJson.encode(Json.encodeToString(value))
         }
 
         /**
@@ -65,7 +66,7 @@ data class StickerHistory(
          */
         override fun deserialize(value: String): StickerHistory {
             return try {
-                val root = Json.parseToJsonElement(value).jsonObject
+                val root = Json.parseToJsonElement(PreferenceJson.decode(value)).jsonObject
                 if (root["pinned"] is JsonObject || root["recent"] is JsonObject) {
                     StickerHistory(
                         pinned = root.legacyCombined("pinned"),

@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate.provider
 
+import dev.patrickgold.florisboard.app.PreferenceJson
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
@@ -356,7 +357,7 @@ data class ProviderAccounts(
         private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
         override fun serialize(value: ProviderAccounts): String =
-            json.encodeToString(value)
+            PreferenceJson.encode(json.encodeToString(value))
 
         override fun deserialize(value: String): ProviderAccounts =
             deserializeOrNull(value) ?: Empty
@@ -371,7 +372,7 @@ data class ProviderAccounts(
          * two can never drift apart.
          */
         fun deserializeOrNull(value: String): ProviderAccounts? = try {
-            json.decodeFromString<ProviderAccounts>(value)
+            json.decodeFromString<ProviderAccounts>(PreferenceJson.decode(value))
         } catch (e: Exception) {
             flogError { "Failed to deserialize ProviderAccounts: $e" }
             null
