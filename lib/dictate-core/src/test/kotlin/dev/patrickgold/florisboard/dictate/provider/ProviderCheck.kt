@@ -32,7 +32,7 @@ import kotlin.time.Duration.Companion.hours
  *
  * Environment:
  * - `DICTATE_PROVIDER_CHECK`: the keys file, `NAME=value` per line (OPENAI, GROQ, …, AZURE_URL).
- * - `DICTATE_PROVIDER_CHECK_FIXTURES`: en.wav, de.wav, names.wav, en.{mp3,m4a,ogg,flac,webm}, {en,de}_<rate>.pcm.
+ * - `DICTATE_PROVIDER_CHECK_FIXTURES`: en.wav, de.wav, names.wav, en.{mp3,m4a,ogg,flac,webm,aac,amr}, {en,de}_<rate>.pcm.
  * - `DICTATE_PROVIDER_CHECK_OUT`: where report.md and results.json go.
  * - `DICTATE_PROVIDER_CHECK_ONLY`: preset ids to check, comma-separated; all when unset.
  * - `DICTATE_PROVIDER_CHECK_PARTS`: models,batch,formats,chat,reasoning,realtime; all when unset.
@@ -230,7 +230,7 @@ private class Check(
     }
 
     private suspend fun formats(preset: ProviderPreset, client: OpenAiCompatibleClient, model: String, scrub: (String) -> String) {
-        for (ext in listOf("wav", "mp3", "m4a", "ogg", "flac", "webm")) {
+        for (ext in listOf("wav", "mp3", "m4a", "ogg", "flac", "webm", "aac", "amr")) {
             val (text, ms, error) = timed {
                 client.transcribe(TranscriptionRequest(audioFile = File(fixtures, "en.$ext"), model = model), onRetry = {}).text
             }
@@ -240,12 +240,15 @@ private class Check(
         }
     }
 
+    /** A real rewording, so a reasoning model has something to think about and its tokens show it. */
+    private val rewording = DictatePromptDefaults.buildRewordingRequest(
+        "Correct all spelling and grammar mistakes. Return only the corrected text.",
+        null,
+        "this are a short test sentense with two mistake.",
+    )
+
     private suspend fun chat(preset: ProviderPreset, client: OpenAiCompatibleClient, model: String, scrub: (String) -> String) {
-        val request = DictatePromptDefaults.buildRewordingRequest(
-            "Correct all spelling and grammar mistakes. Return only the corrected text.",
-            null,
-            "this are a short test sentense with two mistake.",
-        )
+        val request = rewording
         val (reply, ms, error) = timed { client.complete(ChatRequest.ofUser(model, request)).text }
         if (reply == null) add(preset, "chat", model, "rewording", "FAIL", scrub(error.orEmpty()), ms)
         else add(preset, "chat", model, "rewording", "OK", "\"${scrub(DictatePromptDefaults.stripTextTags(reply)).take(120)}\"", ms)
@@ -256,7 +259,7 @@ private class Check(
         for (effort in efforts) {
             val label = effort ?: "(left out)"
             val (result, ms, error) = timed {
-                client.completeOnce(ChatRequest.ofUser(model, "Reply with the single word OK.", effort))
+                client.completeOnce(ChatRequest.ofUser(model, rewording, effort))
             }
             when (result) {
                 is OpenAiCompatibleClient.Completion.Answer -> add(preset, "reasoning", model, label, "OK",
