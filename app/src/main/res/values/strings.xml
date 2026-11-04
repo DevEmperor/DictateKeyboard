@@ -2138,6 +2138,7 @@
     <string name="dictate__providers_region_eu" comment="Name of the European Union data-residency region">European Union</string>
     <string name="dictate__providers_region_jp" comment="Name of the Japan data-residency region">Japan</string>
     <string name="dictate__providers_region_in" comment="Name of the India data-residency region">India</string>
+    <string name="dictate__providers_region_cn" comment="Name of the mainland China region (SiliconFlow’s .cn host, as opposed to its international one)">China (mainland)</string>
     <string name="dictate__providers_region_global" comment="Name of the worldwide (non-regional) endpoint">Worldwide</string>
     <string name="dictate__providers_custom_title" comment="Dialog title when editing a custom endpoint">Custom server</string>
     <string name="dictate__providers_get_key" comment="Accessibility label for the key icon beside the provider dialog title; it opens the provider's own page for creating an API key">Get an API key</string>

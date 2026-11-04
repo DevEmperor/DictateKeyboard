@@ -1428,6 +1428,7 @@
     <string name="dictate__providers_region_eu">欧盟</string>
     <string name="dictate__providers_region_jp">日本</string>
     <string name="dictate__providers_region_in">印度</string>
+    <string name="dictate__providers_region_cn">中国大陆</string>
     <string name="dictate__providers_region_global">全球</string>
     <string name="dictate__providers_custom_title">自定义服务器</string>
     <string name="dictate__providers_get_key">获取 API 密钥</string>

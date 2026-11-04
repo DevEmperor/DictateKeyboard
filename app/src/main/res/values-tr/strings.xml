@@ -1415,6 +1415,7 @@
     <string name="dictate__providers_region_eu">Avrupa Birliği</string>
     <string name="dictate__providers_region_jp">Japonya</string>
     <string name="dictate__providers_region_in">Hindistan</string>
+    <string name="dictate__providers_region_cn">Çin (anakara)</string>
     <string name="dictate__providers_region_global">Dünya geneli</string>
     <string name="dictate__providers_custom_title">Özel sunucu</string>
     <string name="dictate__providers_get_key">API anahtarı al</string>

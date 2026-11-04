@@ -1388,6 +1388,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_region_eu">Uni Eropa</string>
     <string name="dictate__providers_region_jp">Jepang</string>
     <string name="dictate__providers_region_in">India</string>
+    <string name="dictate__providers_region_cn">Tiongkok (daratan)</string>
     <string name="dictate__providers_region_global">Seluruh dunia</string>
     <string name="dictate__providers_custom_title">Server kustom</string>
     <string name="dictate__providers_get_key">Dapatkan kunci API</string>

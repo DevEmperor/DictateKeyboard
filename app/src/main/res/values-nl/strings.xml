@@ -1335,6 +1335,7 @@
     <string name="dictate__providers_region_eu">Europese Unie</string>
     <string name="dictate__providers_region_jp">Japan</string>
     <string name="dictate__providers_region_in">India</string>
+    <string name="dictate__providers_region_cn">China (vasteland)</string>
     <string name="dictate__providers_region_global">Wereldwijd</string>
     <string name="dictate__providers_custom_title">Aangepaste server</string>
     <string name="dictate__providers_get_key">API-sleutel ophalen</string>

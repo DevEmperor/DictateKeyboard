@@ -86,6 +86,7 @@ import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.ConnectionCheck
 import dev.patrickgold.florisboard.dictate.provider.ConnectionCheckSample
@@ -355,7 +356,10 @@ fun DictateProvidersScreen() = FlorisScreen {
                     localFromSetup = false
                 },
                 onSave = { updated, makeActive ->
-                    writeKeyring(accounts.put(updated))
+                    val keyring = accounts.put(updated)
+                    writeKeyring(keyring)
+                    // Moved to a region without speech-to-text, it cannot stay the transcription provider.
+                    scope.launch { DictateLegacyMigrator.moveTranscriptionOffUnsupportedAccounts(keyring) }
                     // A server of the user's own speaks both halves of the OpenAI API, and someone who
                     // added one during setup meant it to be the way the app works from now on.
                     if (activateOnSave) {
@@ -757,7 +761,7 @@ private fun providerSummary(
     // Resolved the way a dictation resolves them: an empty field is the preset default showing through,
     // and the rewording model follows the merged single-call field when that is on (#313).
     val models = buildList {
-        if (preset.capabilities.transcription) {
+        if (ProviderRegistry.transcribesAt(preset, stored.customBaseUrl)) {
             add(stored.transcriptionModel.ifBlank { preset.defaultTranscriptionModel.orEmpty() })
         }
         if (preset.capabilities.chat) add(chatModelFor(stored, preset))
@@ -807,7 +811,6 @@ internal fun ProviderEditorDialog(
     // Data residency (#403): where the provider publishes regional addresses, the base URL is chosen from
     // that list rather than typed. Empty for everyone who serves the world from one address.
     val regions = preset?.regions.orEmpty()
-    val showTranscription = preset?.capabilities?.transcription ?: true
     val showChat = preset?.capabilities?.chat ?: true
 
     var displayName by remember { mutableStateOf(account.displayName) }
@@ -821,6 +824,8 @@ internal fun ProviderEditorDialog(
             account.customBaseUrl.ifBlank { if (preset?.allowsCustomBaseUrl == true) preset.baseUrl else "" },
         )
     }
+    // Follows the region as it is picked: SiliconFlow International has no speech-to-text to configure.
+    val showTranscription = preset?.let { ProviderRegistry.transcribesAt(it, baseUrl) } ?: true
     // Model fields hold what the *user* chose and nothing else; the preset default appears greyed out
     // behind an empty one, which says what is running without pretending someone picked it. Filling the
     // default in as a value was the older answer to the same question, and it cost more than it gave: it
@@ -1751,6 +1756,7 @@ private fun RegionField(
  */
 @StringRes
 private fun regionLabelOf(id: String): Int = when (id) {
+    "cn" -> R.string.dictate__providers_region_cn
     "us" -> R.string.dictate__providers_region_us
     "eu" -> R.string.dictate__providers_region_eu
     "jp" -> R.string.dictate__providers_region_jp

@@ -284,6 +284,8 @@ fun RestoreScreen() = FlorisScreen {
                 // An archive from before 2026-11-04 carries the reasoning effort as one global setting;
                 // move it into the accounts now rather than at the next app start.
                 DictateLegacyMigrator.migrateReasoningToAccountsIfNeeded()
+                // And a backup can name a transcription provider whose region no longer transcribes.
+                DictateLegacyMigrator.moveTranscriptionOffUnsupportedAccounts()
             }
             // The symbol pages are one setting (issue #342): restored whole, never merged key by key. An
             // archive without them had every key at its default, which only Erase takes literally.

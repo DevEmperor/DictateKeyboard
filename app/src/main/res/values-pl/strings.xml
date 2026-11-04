@@ -1450,6 +1450,7 @@
     <string name="dictate__providers_region_eu">Unia Europejska</string>
     <string name="dictate__providers_region_jp">Japonia</string>
     <string name="dictate__providers_region_in">Indie</string>
+    <string name="dictate__providers_region_cn">Chiny (kontynentalne)</string>
     <string name="dictate__providers_region_global">Cały świat</string>
     <string name="dictate__providers_custom_title">Serwer niestandardowy</string>
     <string name="dictate__providers_get_key">Uzyskaj klucz API</string>

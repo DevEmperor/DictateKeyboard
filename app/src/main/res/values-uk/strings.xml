@@ -1278,6 +1278,7 @@
     <string name="dictate__providers_region_eu">Європейський Союз</string>
     <string name="dictate__providers_region_jp">Японія</string>
     <string name="dictate__providers_region_in">Індія</string>
+    <string name="dictate__providers_region_cn">Китай (материковий)</string>
     <string name="dictate__providers_region_global">Увесь світ</string>
     <string name="dictate__providers_custom_title">Власний сервер</string>
     <string name="dictate__providers_get_key">Отримати API-ключ</string>

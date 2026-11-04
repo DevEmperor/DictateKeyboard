@@ -116,6 +116,20 @@ class ProviderListingTest {
         assertFalse(choices.any { it.first == ProviderRegistry.ANTHROPIC.id })
     }
 
+    // SiliconFlow's international host serves no speech-to-text (measured 2026-11-03); its China host does.
+    @Test
+    fun `a SiliconFlow account is a transcription choice in China only`() {
+        val id = ProviderRegistry.SILICONFLOW.id
+        fun offered(baseUrl: String) = ProviderListing.transcriptionChoices(
+            accountsOf(ProviderAccount(providerId = id, apiKey = "sk-x", customBaseUrl = baseUrl)),
+            selectedId = "",
+            isModelInstalled = nothingInstalled,
+        ).any { it.first == id }
+        assertTrue(offered(""))
+        assertTrue(offered("https://api.siliconflow.cn/v1/"))
+        assertFalse(offered("https://api.siliconflow.com/v1/"))
+    }
+
     @Test
     fun `a provider is named by its preset, an own endpoint by its user`() {
         val accounts = accountsOf(

@@ -1431,6 +1431,7 @@
     <string name="dictate__providers_region_eu">Európai Unió</string>
     <string name="dictate__providers_region_jp">Japán</string>
     <string name="dictate__providers_region_in">India</string>
+    <string name="dictate__providers_region_cn">Kína (szárazföldi)</string>
     <string name="dictate__providers_region_global">Világszerte</string>
     <string name="dictate__providers_custom_title">Egyéni szerver</string>
     <string name="dictate__providers_get_key">API-kulcs beszerzése</string>

@@ -148,6 +148,7 @@ class FlorisApplication : Application() {
             DictateLegacyMigrator.migratePushToTalkDefaultIfNeeded()
             DictateLegacyMigrator.migrateTrustUserCertsToAccountsIfNeeded()
             DictateLegacyMigrator.migrateReasoningToAccountsIfNeeded()
+            DictateLegacyMigrator.moveTranscriptionOffUnsupportedAccounts()
             DictateLegacyMigrator.migrateWordLearningDefaultIfNeeded()
             DictateLegacyMigrator.migrateHindiDefaultsIfNeeded()
             DictateLegacyMigrator.migrateFrenchPunctuationRuleIfNeeded()

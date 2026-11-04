@@ -107,6 +107,9 @@ private class Check(
     private val previousIds: Map<String, List<String>>? =
         previous?.let { Json.decodeFromString<Map<String, List<String>>>(it.readText()) }
 
+    /** Whether the host each provider was checked at transcribes (SiliconFlow International does not). */
+    private val transcribesHere = mutableMapOf<String, Boolean>()
+
     private val enText = "Hello, this is a short test of the Dictate keyboard. Please meet me at the station " +
         "tomorrow at half past nine."
     private val deText = "Hallo, das ist ein kurzer Test der Dictate Tastatur. Wir treffen uns morgen um halb " +
@@ -123,6 +126,11 @@ private class Check(
                 .filter { only == null || it.provider in only }
             File(replay, "models.json").takeIf { it.isFile }
                 ?.let { liveIds.putAll(Json.decodeFromString<Map<String, List<String>>>(it.readText())) }
+            // The host a provider was checked at is in its setup row, as the run noted it.
+            rows.filter { it.part == "setup" && it.probe == "base URL" }.forEach { r ->
+                val host = r.detail.substringAfter("checked at ").substringBefore(" ")
+                ProviderRegistry.byId(r.provider)?.let { transcribesHere[r.provider] = ProviderRegistry.transcribesAt(it, host) }
+            }
             facts.appendLine("Replayed from `${replay.name}`; nothing was asked of any endpoint.")
             write()
             return
@@ -157,7 +165,8 @@ private class Check(
 
         val live = if ("models" in parts || preset.capabilities.chat) models(preset, client, scrub) else emptyList()
 
-        if (preset.capabilities.transcription) {
+        transcribesHere[preset.id] = ProviderRegistry.transcribesAt(preset, baseUrl.orEmpty())
+        if (transcribesHere[preset.id] == true) {
             val sttModels = (listOfNotNull(preset.defaultTranscriptionModel) + preset.curatedTranscriptionModels +
                 extra(preset, "transcription")).distinct()
             if ("batch" in parts) sttModels.forEach { batch(preset, client, it, scrub) }
@@ -412,7 +421,10 @@ private class Check(
         for ((provider, list) in rows.groupBy { it.provider }) {
             fun note(text: String) { lines += "- **$provider**: $text" }
             if (list.any { it.part == "setup" && it.outcome == "SKIP" }) note("not checked, no key")
+            // A speech model is not missed where the region has no speech-to-text to list.
+            val sttHere = transcribesHere[provider] != false
             val specs = ModelCatalog.modelsOf(provider)
+                .filter { sttHere || it.roles.any { r -> r == ModelRole.CHAT || r == ModelRole.CHAT_AUDIO } }
             liveIds[provider]?.let { live ->
                 val gone = specs.filter { s -> s.id !in live && s.aliases.none { it in live } }.map { it.id }
                 if (gone.isNotEmpty()) note("in the catalog, missing from the live list: ${ids(gone)}")
@@ -432,7 +444,7 @@ private class Check(
             // the words (espeak is hard on some models, so read these against real speech before acting).
             for ((key, tried) in list.filter { it.part in setOf("batch", "chat", "realtime") }.groupBy { it.part to it.model }) {
                 val (part, model) = key
-                if (ModelCatalog.spec(provider, model) == null) continue
+                if (ModelCatalog.spec(provider, model) == null || (part != "chat" && !sttHere)) continue
                 val failed = tried.filter { it.outcome in setOf("FAIL", "EMPTY", "REFUSED") }
                 val weak = tried.filter { r ->
                     r.outcome == "OK" && Regex("""(\d+)% of words""").find(r.detail)?.groupValues?.get(1)?.toInt()?.let { it < 50 } == true

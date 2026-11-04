@@ -382,6 +382,29 @@ object DictateLegacyMigrator {
     }
 
     /**
+     * Takes transcription off an account that cannot transcribe where it points (provider catalog,
+     * 2026-11-04): the active provider becomes the on-device engine, a fallback is switched off.
+     *
+     * SiliconFlow's International region serves no speech-to-text, measured, so an account on it stopped
+     * being one a dictation can go to; before, it failed every recording with "Model disabled". On-device is
+     * where the app sends someone without a usable provider anyway, and its SenseVoice covers the Chinese
+     * this provider was added for. Runs at start, after a restore, and whenever an account is saved, with
+     * [keyring] as it is about to be stored. Idempotent: a provider that transcribes is left alone.
+     */
+    suspend fun moveTranscriptionOffUnsupportedAccounts(keyring: ProviderAccounts? = null) {
+        val prefs by FlorisPreferenceStore
+        val accounts = keyring ?: prefs.dictate.providerAccounts.get()
+        fun transcribes(id: String): Boolean {
+            val preset = ProviderRegistry.byId(id) ?: return true
+            return ProviderRegistry.transcribesAt(preset, accounts.getOrEmpty(id).customBaseUrl)
+        }
+        if (!transcribes(prefs.dictate.transcriptionProviderId.get())) {
+            prefs.dictate.transcriptionProviderId.set(ProviderRegistry.LOCAL.id)
+        }
+        if (!transcribes(prefs.dictate.transcriptionFallbackId.get())) prefs.dictate.transcriptionFallbackId.set("")
+    }
+
+    /**
      * Moves the global "Reasoning effort" into each account (provider catalog, 2026-11-04).
      *
      * The setting was one word for every provider, and the words belong to the model: Luna takes none and

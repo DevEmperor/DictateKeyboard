@@ -30,6 +30,11 @@ data class ProviderRegion(
     val id: String,
     val baseUrl: String,
     val realtimeUrl: String? = null,
+    /**
+     * False where this region serves no speech-to-text although the provider does elsewhere (SiliconFlow
+     * International, measured 2026-11-03). See [ProviderRegistry.transcribesAt].
+     */
+    val transcription: Boolean = true,
 )
 
 /**
@@ -708,8 +713,13 @@ object ProviderRegistry {
      * multipart at `POST {baseUrl}audio/transcriptions`, so it needs nothing new in the upload path.
      * Rewording was already covered: DeepSeek above is domestically reachable too.
      *
-     * `.cn` is the mainland domain and the reason this entry exists; `.com` serves the same API
-     * internationally, so the base URL is left editable (#136) rather than forcing the wrong one.
+     * `.cn` is the mainland domain and the reason this entry exists; `.com` serves the API internationally,
+     * but **without speech-to-text**. Asked of the endpoint on 2026-11-03 with an international key:
+     * SenseVoiceSmall answers 403 "Model disabled" and TeleSpeechASR 400 "Model does not exist", while the
+     * .com API reference still lists both. So the two hosts are regions, and International transcribes
+     * nothing; an account on .com is not offered as a transcription provider. The China host could not be
+     * checked (no mainland key, its docs answer 404), so its transcription stays as it was until someone
+     * there says otherwise.
      *
      * Model ids verified against SiliconFlow's own pages on 2026-08-17: the two ASR ids from the
      * transcription API reference, the chat ids from the DeepSeek model page. Their catalog is far
@@ -729,6 +739,10 @@ object ProviderRegistry {
         supportsDynamicModels = true,
         apiKeyUrl = "https://cloud.siliconflow.cn/account/ak",
         allowsCustomBaseUrl = true,
+        regions = listOf(
+            ProviderRegion("cn", "https://api.siliconflow.cn/v1/"),
+            ProviderRegion("global", "https://api.siliconflow.com/v1/", transcription = false),
+        ),
         defaultChatModel = "deepseek-ai/DeepSeek-V3.2",
         // SenseVoice is the better of the two for dictation: it covers Mandarin, Cantonese, English,
         // Japanese and Korean, where TeleSpeech is Mandarin and Chinese dialects only.
@@ -927,6 +941,13 @@ object ProviderRegistry {
         val wanted = customBaseUrl.trim().trimEnd('/')
         return preset.regions.firstOrNull { it.baseUrl.trimEnd('/').equals(wanted, ignoreCase = true) }
     }
+
+    /**
+     * Whether an account of [preset] at [customBaseUrl] can transcribe: the provider has to, and so does the
+     * region the address selects. An address that is no region keeps the provider's answer.
+     */
+    fun transcribesAt(preset: ProviderPreset, customBaseUrl: String): Boolean =
+        preset.capabilities.transcription && regionOf(preset, customBaseUrl)?.transcription != false
 
     /**
      * The largest audio upload [providerId] accepts, or 0 when the provider does not document one.

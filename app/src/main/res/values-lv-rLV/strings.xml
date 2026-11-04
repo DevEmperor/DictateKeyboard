@@ -1378,6 +1378,7 @@
     <string name="dictate__providers_region_eu">Eiropas Savienība</string>
     <string name="dictate__providers_region_jp">Japāna</string>
     <string name="dictate__providers_region_in">Indija</string>
+    <string name="dictate__providers_region_cn">Ķīna (kontinentālā)</string>
     <string name="dictate__providers_region_global">Visā pasaulē</string>
     <string name="dictate__providers_custom_title">Pielāgots serveris</string>
     <string name="dictate__providers_get_key">Iegūt API atslēgu</string>

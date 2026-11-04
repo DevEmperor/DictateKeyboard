@@ -268,17 +268,19 @@ object ModelCatalog {
     )
 
     val SILICONFLOW = listOf(
-        // Checked on the international host (api.siliconflow.com); the preset speaks only the China host.
+        // Checked on the International region (api.siliconflow.com) with the only key there is.
         ModelSpec("deepseek-ai/DeepSeek-V3.2", C, verified = NOV_3),
         ModelSpec("deepseek-ai/DeepSeek-V3.1", C, verified = NOV_3),
         ModelSpec("deepseek-ai/DeepSeek-V3", C, verified = NOV_3),
+        // China region only: International serves no speech-to-text, so its accounts are not offered as a
+        // transcription provider (ProviderRegion.transcription).
         ModelSpec(
             "FunAudioLLM/SenseVoiceSmall", T,
-            note = "Disabled on the international host, which serves no speech-to-text at all; China host untested.",
+            note = "China region only; 403 \"Model disabled\" on International. China untested, no key there.",
         ),
         ModelSpec(
             "TeleAI/TeleSpeechASR", T,
-            note = "Does not exist on the international host; China host untested.",
+            note = "China region only; does not exist on International. China untested, no key there.",
         ),
     )
 

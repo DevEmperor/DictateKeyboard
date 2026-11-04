@@ -1303,6 +1303,7 @@
     <string name="dictate__providers_region_eu">Unió Europea</string>
     <string name="dictate__providers_region_jp">Japó</string>
     <string name="dictate__providers_region_in">Índia</string>
+    <string name="dictate__providers_region_cn">Xina (continental)</string>
     <string name="dictate__providers_region_global">Tot el món</string>
     <string name="dictate__providers_custom_title">Servidor personalitzat</string>
     <string name="dictate__providers_get_key">Obtén una clau API</string>

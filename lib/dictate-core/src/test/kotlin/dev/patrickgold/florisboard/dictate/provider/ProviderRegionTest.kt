@@ -90,6 +90,25 @@ class ProviderRegionTest : FunSpec({
         openRouter.regions.first().baseUrl shouldBe openRouter.baseUrl
     }
 
+    test("SiliconFlow transcribes in China and not on its international host") {
+        val siliconFlow = ProviderRegistry.SILICONFLOW
+        siliconFlow.regions.first().baseUrl shouldBe siliconFlow.baseUrl
+        // Every account stored before the regions holds a blank URL, the China host, and keeps transcribing.
+        ProviderRegistry.transcribesAt(siliconFlow, "") shouldBe true
+        ProviderRegistry.transcribesAt(siliconFlow, "https://api.siliconflow.cn/v1/") shouldBe true
+        // An international account typed its host in by hand before; that is now the region without speech.
+        ProviderRegistry.regionOf(siliconFlow, "https://api.siliconflow.com/v1")?.id shouldBe "global"
+        ProviderRegistry.transcribesAt(siliconFlow, "https://api.siliconflow.com/v1") shouldBe false
+        // Chat is the same in both.
+        siliconFlow.capabilities.chat shouldBe true
+    }
+
+    test("an address that is no region keeps the provider's answer, and a provider without speech has none") {
+        ProviderRegistry.transcribesAt(ProviderRegistry.SILICONFLOW, "https://proxy.example.com/v1/") shouldBe true
+        ProviderRegistry.transcribesAt(soniox, "https://api.eu.soniox.com/v1/") shouldBe true
+        ProviderRegistry.transcribesAt(ProviderRegistry.ANTHROPIC, "") shouldBe false
+    }
+
     test("a region is only offered where the account may carry its own base URL") {
         // Every resolution site in the app asks allowsCustomBaseUrl before it reads the account's URL, so
         // a preset with regions and without the flag would show a list that changes nothing.

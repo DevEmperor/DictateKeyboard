@@ -1413,6 +1413,7 @@
     <string name="dictate__providers_region_eu">União Europeia</string>
     <string name="dictate__providers_region_jp">Japão</string>
     <string name="dictate__providers_region_in">Índia</string>
+    <string name="dictate__providers_region_cn">China (continental)</string>
     <string name="dictate__providers_region_global">Todo o mundo</string>
     <string name="dictate__providers_custom_title">Servidor personalizado</string>
     <string name="dictate__providers_get_key">Obter uma chave de API</string>

@@ -95,7 +95,8 @@ object ProviderListing {
         isModelInstalled: (String) -> Boolean,
     ): List<Pair<String, String>> = buildList {
         ProviderRegistry.presets
-            .filter { it.capabilities.transcription }
+            // Asked of the account's own address: SiliconFlow transcribes in China, not International.
+            .filter { ProviderRegistry.transcribesAt(it, accounts[it.id]?.customBaseUrl.orEmpty()) }
             .filter { isPickable(it, accounts, selectedId, isModelInstalled) }
             .sortedByDescending { it.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE }
             .forEach { add(it.id to it.displayName) }

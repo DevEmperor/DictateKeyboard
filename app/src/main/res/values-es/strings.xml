@@ -1415,6 +1415,7 @@
     <string name="dictate__providers_region_eu">Unión Europea</string>
     <string name="dictate__providers_region_jp">Japón</string>
     <string name="dictate__providers_region_in">India</string>
+    <string name="dictate__providers_region_cn">China (continental)</string>
     <string name="dictate__providers_region_global">Todo el mundo</string>
     <string name="dictate__providers_custom_title">Servidor personalizado</string>
     <string name="dictate__providers_get_key">Obtener una clave API</string>

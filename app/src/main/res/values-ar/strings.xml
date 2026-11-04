@@ -1292,6 +1292,7 @@
     <string name="dictate__providers_region_eu">الاتحاد الأوروبي</string>
     <string name="dictate__providers_region_jp">اليابان</string>
     <string name="dictate__providers_region_in">الهند</string>
+    <string name="dictate__providers_region_cn">الصين (البر الرئيسي)</string>
     <string name="dictate__providers_region_global">عالميًا</string>
     <string name="dictate__providers_custom_title">خادم مخصّص</string>
     <string name="dictate__providers_get_key">الحصول على مفتاح API</string>

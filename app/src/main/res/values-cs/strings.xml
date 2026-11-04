@@ -1449,6 +1449,7 @@
     <string name="dictate__providers_region_eu">Evropská unie</string>
     <string name="dictate__providers_region_jp">Japonsko</string>
     <string name="dictate__providers_region_in">Indie</string>
+    <string name="dictate__providers_region_cn">Čína (pevninská)</string>
     <string name="dictate__providers_region_global">Celosvětově</string>
     <string name="dictate__providers_custom_title">Vlastní server</string>
     <string name="dictate__providers_get_key">Získat API klíč</string>

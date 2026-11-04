@@ -1363,6 +1363,7 @@
     <string name="dictate__providers_region_eu">Europäische Union</string>
     <string name="dictate__providers_region_jp">Japan</string>
     <string name="dictate__providers_region_in">Indien</string>
+    <string name="dictate__providers_region_cn">China (Festland)</string>
     <string name="dictate__providers_region_global">Weltweit</string>
     <string name="dictate__providers_custom_title">Benutzerdefinierter Server</string>
     <string name="dictate__providers_get_key">API-Schlüssel holen</string>

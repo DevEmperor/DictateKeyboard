@@ -1368,6 +1368,7 @@
     <string name="dictate__providers_region_eu">欧州連合</string>
     <string name="dictate__providers_region_jp">日本</string>
     <string name="dictate__providers_region_in">インド</string>
+    <string name="dictate__providers_region_cn">中国（本土）</string>
     <string name="dictate__providers_region_global">全世界</string>
     <string name="dictate__providers_custom_title">カスタムサーバー</string>
     <string name="dictate__providers_get_key">APIキーを取得</string>

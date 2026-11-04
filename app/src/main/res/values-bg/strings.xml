@@ -1435,6 +1435,7 @@
     <string name="dictate__providers_region_eu">Европейски съюз</string>
     <string name="dictate__providers_region_jp">Япония</string>
     <string name="dictate__providers_region_in">Индия</string>
+    <string name="dictate__providers_region_cn">Китай (континентален)</string>
     <string name="dictate__providers_region_global">Целият свят</string>
     <string name="dictate__providers_custom_title">Персонализиран сървър</string>
     <string name="dictate__providers_get_key">Вземете API ключ</string>
