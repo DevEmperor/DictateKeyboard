@@ -13,6 +13,7 @@ package dev.patrickgold.florisboard.dictate.provider
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -39,9 +40,14 @@ import kotlin.time.Duration.Companion.hours
  * - `DICTATE_PROVIDER_CHECK_PARTS`: models,batch,formats,chat,reasoning,realtime; all when unset.
  * - `DICTATE_PROVIDER_CHECK_MODELS`: optional file of `preset<TAB>role<TAB>model` lines for models to check
  *   on top of the curated ones (role: chat, transcription, realtime). For providers that curate none.
+ * - `DICTATE_PROVIDER_CHECK_PREVIOUS`: optional folder of an earlier run; its models.json says which live ids
+ *   are new or gone since then.
+ * - `DICTATE_PROVIDER_CHECK_REPLAY`: optional folder of an earlier run to read instead of asking anything, so
+ *   its results can be held against the catalog as it stands now (after editing it, say) at no cost.
  *
- * Nothing it writes contains a key: provider messages are cut short and scrubbed of the key before they are
- * kept, because some providers quote a key back in their refusal.
+ * The report opens with what the run found that [ModelCatalog] does not say, which is the month's list of
+ * decisions; the full table follows. Nothing it writes contains a key: provider messages are cut short and
+ * scrubbed of the key before they are kept, because some providers quote a key back in their refusal.
  */
 class ProviderCheck : FunSpec({
 
@@ -62,6 +68,9 @@ class ProviderCheck : FunSpec({
                     ?.readLines()?.filter { it.isNotBlank() && !it.startsWith("#") }
                     ?.mapNotNull { l -> l.split("\t").takeIf { it.size >= 3 }?.map { it.trim() } }
                     ?: emptyList(),
+                previous = System.getenv("DICTATE_PROVIDER_CHECK_PREVIOUS")?.let { File(it, "models.json") }
+                    ?.takeIf { it.isFile },
+                replay = System.getenv("DICTATE_PROVIDER_CHECK_REPLAY")?.let { File(it) }?.takeIf { it.isDirectory },
             )
             check.run()
         }
@@ -86,10 +95,17 @@ private class Check(
     val only: Set<String>?,
     val parts: Set<String>,
     val extraModels: List<List<String>>,
+    val previous: File?,
+    val replay: File?,
 ) {
     private val rows = mutableListOf<Row>()
     private val facts = StringBuilder()
     private val warnings = mutableListOf<String>()
+
+    /** Every live id per provider, kept as models.json so the next run can say what is new. */
+    private val liveIds = sortedMapOf<String, List<String>>()
+    private val previousIds: Map<String, List<String>>? =
+        previous?.let { Json.decodeFromString<Map<String, List<String>>>(it.readText()) }
 
     private val enText = "Hello, this is a short test of the Dictate keyboard. Please meet me at the station " +
         "tomorrow at half past nine."
@@ -102,6 +118,15 @@ private class Check(
     private val keyNames = mapOf("ovhcloud" to "OVH")
 
     suspend fun run() {
+        if (replay != null) {
+            rows += Json.decodeFromString<List<Row>>(File(replay, "results.json").readText())
+                .filter { only == null || it.provider in only }
+            File(replay, "models.json").takeIf { it.isFile }
+                ?.let { liveIds.putAll(Json.decodeFromString<Map<String, List<String>>>(it.readText())) }
+            facts.appendLine("Replayed from `${replay.name}`; nothing was asked of any endpoint.")
+            write()
+            return
+        }
         DictateHttpLog.warnSink = { synchronized(warnings) { warnings += it } }
         try {
             ProviderRegistry.presets
@@ -191,6 +216,7 @@ private class Check(
             add(preset, "models", "-", "list", "FAIL", scrub(error.orEmpty()), ms)
             return emptyList()
         }
+        liveIds[preset.id] = ids.sorted()
         val curated = (preset.curatedChatModels + preset.curatedTranscriptionModels + preset.curatedRealtimeModels +
             listOfNotNull(preset.defaultChatModel, preset.defaultTranscriptionModel, preset.defaultRealtimeModel)).toSet()
         val missing = curated.filter { it !in ids }
@@ -374,14 +400,75 @@ private class Check(
         return s.replace(Regex("(sk|gsk|xai|sk-or|sk-ant)-[A-Za-z0-9_*\\-]{6,}"), "<key>").take(400)
     }
 
+    /**
+     * What this run found that [ModelCatalog] and the presets do not say (catalog design, section 5): one line
+     * per provider and finding, so a month's review is a short list of decisions rather than 700 rows. A part
+     * that did not run cannot disagree, and new ids are only named against an earlier run's list, because
+     * the first look at a live list is all of it.
+     */
+    private fun disagreements(): List<String> {
+        val lines = mutableListOf<String>()
+        fun ids(list: Collection<String>) = if (list.size > 25) "${list.size} ids" else list.joinToString { "`$it`" }
+        for ((provider, list) in rows.groupBy { it.provider }) {
+            fun note(text: String) { lines += "- **$provider**: $text" }
+            if (list.any { it.part == "setup" && it.outcome == "SKIP" }) note("not checked, no key")
+            val specs = ModelCatalog.modelsOf(provider)
+            liveIds[provider]?.let { live ->
+                val gone = specs.filter { s -> s.id !in live && s.aliases.none { it in live } }.map { it.id }
+                if (gone.isNotEmpty()) note("in the catalog, missing from the live list: ${ids(gone)}")
+                previousIds?.get(provider)?.let { before ->
+                    val added = live - before.toSet()
+                    val removed = before - live.toSet()
+                    if (added.isNotEmpty()) note("new in the live list since the last run: ${ids(added)}")
+                    if (removed.isNotEmpty()) note("gone from the live list since the last run: ${ids(removed)}")
+                }
+            }
+            for ((model, tried) in list.filter { it.part == "reasoning" }.groupBy { it.model }) {
+                val values = ModelCatalog.spec(provider, model)?.reasoning?.values ?: continue
+                val refused = tried.filter { it.outcome == "REFUSED" && it.probe in values }.map { it.probe }
+                if (refused.isNotEmpty()) note("`$model` refuses ${refused.joinToString()}, which the catalog offers")
+            }
+            // A role the catalog promises that did not hold: failures, and transcripts that kept under half
+            // the words (espeak is hard on some models, so read these against real speech before acting).
+            for ((key, tried) in list.filter { it.part in setOf("batch", "chat", "realtime") }.groupBy { it.part to it.model }) {
+                val (part, model) = key
+                if (ModelCatalog.spec(provider, model) == null) continue
+                val failed = tried.filter { it.outcome in setOf("FAIL", "EMPTY", "REFUSED") }
+                val weak = tried.filter { r ->
+                    r.outcome == "OK" && Regex("""(\d+)% of words""").find(r.detail)?.groupValues?.get(1)?.toInt()?.let { it < 50 } == true
+                }
+                if (failed.isNotEmpty()) {
+                    note("`$model` $part: ${failed.size} of ${tried.size} failed (${failed.first().probe}: ${failed.first().detail.take(120)})")
+                }
+                weak.forEach { note("`$model` $part ${it.probe}: ${Regex("""\d+% of words""").find(it.detail)!!.value}") }
+            }
+            val claimed = ProviderRegistry.byId(provider)?.acceptedAudioContainers?.map { it.name.lowercase() }.orEmpty()
+            val formats = list.filter { it.part == "formats" }
+            if (claimed.isNotEmpty() && formats.isNotEmpty()) {
+                val refusedClaimed = formats.filter { it.outcome == "FAIL" && it.probe in claimed }.map { it.probe }
+                val takenUnclaimed = formats.filter { it.outcome == "OK" && it.probe !in claimed }.map { it.probe }
+                if (refusedClaimed.isNotEmpty()) note("refuses ${refusedClaimed.joinToString()}, which the preset claims")
+                if (takenUnclaimed.isNotEmpty()) note("takes ${takenUnclaimed.joinToString()}, which the preset does not claim")
+            }
+        }
+        return lines
+    }
+
     private fun write() {
         val json = Json { prettyPrint = true }
         File(out, "results.json").writeText(json.encodeToString(rows.toList()))
+        File(out, "models.json").writeText(json.encodeToString<Map<String, List<String>>>(liveIds))
         val md = StringBuilder()
         md.appendLine("# Provider check ${LocalDate.now()}")
         md.appendLine()
         val counts = rows.groupingBy { it.outcome }.eachCount()
         md.appendLine("Rows: ${rows.size} · " + counts.entries.sortedBy { it.key }.joinToString(" · ") { "${it.key} ${it.value}" })
+        md.appendLine()
+        md.appendLine("## Against the catalog")
+        md.appendLine()
+        if (previousIds == null) md.appendLine("No earlier run to compare the live lists with; new ids are not named.\n")
+        disagreements().ifEmpty { listOf("Nothing: every model, value and format the catalog names did what it says.") }
+            .forEach { md.appendLine(it) }
         md.appendLine()
         md.appendLine("## Results")
         for ((provider, list) in rows.groupBy { it.provider }) {
