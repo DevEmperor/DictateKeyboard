@@ -14,26 +14,27 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 /**
- * What goes out as `reasoning_effort` while the user's setting is Off. A preset speaks for its own default
- * model and for nothing else: every other model keeps the provider's default, as Off has always meant.
+ * What goes out as `reasoning_effort` while the account names no value. The catalog speaks for one model at
+ * a time: Luna is sent none, and every other model keeps the provider's default, as it always has.
  */
 class ReasoningEffortWhenOffTest : FunSpec({
 
-    val openAi = ProviderRegistry.OPENAI
+    fun byDefault(provider: String, model: String) =
+        ReasoningResolver.wire(ModelCatalog.spec(provider, model), "", PromptReasoning.ACCOUNT)
 
     test("OpenAI's default model runs without thinking") {
-        openAi.defaultChatModel shouldBe "gpt-6-luna"
-        openAi.reasoningEffortWhenOff("gpt-6-luna") shouldBe "none"
+        ProviderRegistry.OPENAI.defaultChatModel shouldBe "gpt-6-luna"
+        byDefault("openai", "gpt-6-luna") shouldBe "none"
     }
 
-    test("a model the user picked keeps the provider's default") {
+    test("another model keeps the provider's default") {
         // gpt-6.1-sol refuses "none" outright (measured 2026-10-16), so this is not just caution.
-        openAi.reasoningEffortWhenOff("gpt-6.1-sol") shouldBe null
-        openAi.reasoningEffortWhenOff("gpt-4o-mini") shouldBe null
+        byDefault("openai", "gpt-6.1-sol") shouldBe null
+        byDefault("openai", "gpt-4o-mini") shouldBe null
     }
 
-    test("a preset that says nothing sends nothing") {
-        ProviderRegistry.OPENROUTER.reasoningEffortWhenOff("openai/gpt-6-luna") shouldBe null
-        ProviderRegistry.custom("http://localhost:8080/v1/").reasoningEffortWhenOff("gpt-6-luna") shouldBe null
+    test("the same model elsewhere, or on a server of the user's own, is sent nothing") {
+        byDefault("openrouter", "openai/gpt-6-luna") shouldBe null
+        ReasoningResolver.wire(null, "", PromptReasoning.ACCOUNT) shouldBe null
     }
 })

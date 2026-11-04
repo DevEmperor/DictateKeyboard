@@ -28,49 +28,49 @@ class ReasoningResolverTest : FunSpec({
     val claude = spec("anthropic", "claude-sonnet-5-5")
 
     test("the account's choice goes out as it is, when the model takes it") {
-        ReasoningResolver.wire(sol, "xhigh", null, PromptReasoning.ACCOUNT) shouldBe "xhigh"
-        ReasoningResolver.wire(gptOss, "low", null, PromptReasoning.ACCOUNT) shouldBe "low"
+        ReasoningResolver.wire(sol, "xhigh", PromptReasoning.ACCOUNT) shouldBe "xhigh"
+        ReasoningResolver.wire(gptOss, "low", PromptReasoning.ACCOUNT) shouldBe "low"
     }
 
     test("no choice is the app's default where it has one, else no field") {
-        ReasoningResolver.wire(luna, "", "none", PromptReasoning.ACCOUNT) shouldBe "none"
-        ReasoningResolver.wire(gptOss, "", null, PromptReasoning.ACCOUNT) shouldBe null
+        ReasoningResolver.wire(luna, "", PromptReasoning.ACCOUNT) shouldBe "none"
+        ReasoningResolver.wire(gptOss, "", PromptReasoning.ACCOUNT) shouldBe null
     }
 
     test("a choice the model does not take, left from another model, counts as none made") {
         // "none" chosen for Luna, then the model switched to Sol, which refuses it.
-        ReasoningResolver.wire(sol, "none", null, PromptReasoning.ACCOUNT) shouldBe null
+        ReasoningResolver.wire(sol, "none", PromptReasoning.ACCOUNT) shouldBe null
     }
 
     test("a model without a reasoning setting gets no field, whatever is asked") {
         for (level in PromptReasoning.entries) {
-            ReasoningResolver.wire(claude, "high", null, level) shouldBe null
+            ReasoningResolver.wire(claude, "high", level) shouldBe null
         }
     }
 
     test("a level becomes each model's own word") {
-        ReasoningResolver.wire(luna, "", "none", PromptReasoning.NONE) shouldBe "none"
+        ReasoningResolver.wire(luna, "", PromptReasoning.NONE) shouldBe "none"
         // Sol does not take none; its least is low.
-        ReasoningResolver.wire(sol, "", null, PromptReasoning.NONE) shouldBe "low"
-        ReasoningResolver.wire(gptOss, "", null, PromptReasoning.NONE) shouldBe "low"
-        ReasoningResolver.wire(luna, "", "none", PromptReasoning.LITTLE) shouldBe "low"
-        ReasoningResolver.wire(gptOss, "", null, PromptReasoning.MUCH) shouldBe "high"
+        ReasoningResolver.wire(sol, "", PromptReasoning.NONE) shouldBe "low"
+        ReasoningResolver.wire(gptOss, "", PromptReasoning.NONE) shouldBe "low"
+        ReasoningResolver.wire(luna, "", PromptReasoning.LITTLE) shouldBe "low"
+        ReasoningResolver.wire(gptOss, "", PromptReasoning.MUCH) shouldBe "high"
         // Mistral names only none and high.
-        ReasoningResolver.wire(mistral, "", null, PromptReasoning.LITTLE) shouldBe "high"
+        ReasoningResolver.wire(mistral, "", PromptReasoning.LITTLE) shouldBe "high"
         // OVH's Qwen has no high; xhigh is several times the cost, so much is medium there.
-        ReasoningResolver.wire(ovhQwen, "", null, PromptReasoning.MUCH) shouldBe "medium"
+        ReasoningResolver.wire(ovhQwen, "", PromptReasoning.MUCH) shouldBe "medium"
     }
 
     test("a level overrides the account's own choice") {
-        ReasoningResolver.wire(sol, "xhigh", null, PromptReasoning.NONE) shouldBe "low"
+        ReasoningResolver.wire(sol, "xhigh", PromptReasoning.NONE) shouldBe "low"
     }
 
     test("a model the catalog does not know gets the account's word verbatim and the common word for a level") {
-        ReasoningResolver.wire(null, "max", null, PromptReasoning.ACCOUNT) shouldBe "max"
-        ReasoningResolver.wire(null, "", null, PromptReasoning.ACCOUNT) shouldBe null
-        ReasoningResolver.wire(null, "", null, PromptReasoning.NONE) shouldBe "none"
-        ReasoningResolver.wire(null, "", null, PromptReasoning.LITTLE) shouldBe "low"
-        ReasoningResolver.wire(null, "", null, PromptReasoning.MUCH) shouldBe "high"
+        ReasoningResolver.wire(null, "max", PromptReasoning.ACCOUNT) shouldBe "max"
+        ReasoningResolver.wire(null, "", PromptReasoning.ACCOUNT) shouldBe null
+        ReasoningResolver.wire(null, "", PromptReasoning.NONE) shouldBe "none"
+        ReasoningResolver.wire(null, "", PromptReasoning.LITTLE) shouldBe "low"
+        ReasoningResolver.wire(null, "", PromptReasoning.MUCH) shouldBe "high"
     }
 
     test("what prompts stored before the levels existed still means what it meant") {

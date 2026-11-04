@@ -189,7 +189,7 @@ data class DictateSyncedSettings(
     val rewordingApi: TranscriptionApi = TranscriptionApi.OPENAI_MULTIPART,
     /**
      * `reasoning_effort` for the standalone rewording requests, resolved on the phone from the user's
-     * setting as the keyboard resolves it (#464; before, only [ProviderPreset.reasoningEffortWhenOff]);
+     * setting as the keyboard resolves it (#464; before, only the preset's value for its default model);
      * null omits it. Optional both ways: an older watch ignores the key, and an older phone leaves it out.
      */
     val rewordingReasoningEffort: String? = null,

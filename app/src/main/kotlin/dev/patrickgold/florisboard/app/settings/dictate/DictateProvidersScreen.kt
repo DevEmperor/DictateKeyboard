@@ -888,7 +888,7 @@ internal fun ProviderEditorDialog(
     )
     val reasoningSpec = ModelCatalog.spec(effectivePreset.id, reasoningModel)
     val reasoningValues = reasoningSpec?.reasoning?.values
-    val reasoningAppDefault = effectivePreset.reasoningEffortWhenOff(reasoningModel)
+    val reasoningAppDefault = reasoningSpec?.reasoning?.sentByDefault
     val cleanReasoning = chatReasoning.trim()
         .takeIf { reasoningValues == null || (it in reasoningValues && it != reasoningAppDefault) }.orEmpty()
 

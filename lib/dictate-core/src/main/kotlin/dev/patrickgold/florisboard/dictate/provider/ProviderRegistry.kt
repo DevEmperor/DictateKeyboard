@@ -61,17 +61,6 @@ data class ProviderPreset(
      */
     val apiKeyUrl: String? = null,
     val defaultChatModel: String? = null,
-    /**
-     * The `reasoning_effort` [defaultChatModel] runs at while the user's own setting is Off — a fact
-     * about that one model, measured, never a guess about what models in general can take.
-     *
-     * Off omits the field and leaves the effort to the provider, and for a reasoning model the provider's
-     * default is rarely what a rewording wants: OpenAI's gpt-6-luna thinks at medium unless told
-     * otherwise, which made a one-sentence correction twice as slow and multiplied its output tokens.
-     * Applies only while that exact model is the one in use ([reasoningEffortWhenOff]); a model the user
-     * picked runs at whatever their setting says.
-     */
-    val defaultChatReasoningEffort: String? = null,
     val defaultTranscriptionModel: String? = null,
     val extraHeaders: Map<String, String> = emptyMap(),
     val isCustom: Boolean = false,
@@ -133,10 +122,6 @@ data class ProviderPreset(
     /** Whether the audio and text can stay in the EU with this provider — by default, or by region. */
     val servesFromEu: Boolean
         get() = hostedInEu || regions.any { it.id == "eu" }
-
-    /** The effort to send with [model] when the user's setting is Off; null leaves it to the provider. */
-    fun reasoningEffortWhenOff(model: String): String? =
-        defaultChatReasoningEffort?.takeIf { model == defaultChatModel }
 }
 
 /**
@@ -161,17 +146,8 @@ object ProviderRegistry {
         // for every one of them and also the cheapest model it sells ($0.10 in / $0.50 out per 1M tokens,
         // against gpt-4o-mini's $0.15 / $0.60). Like the transcription default below, it reaches everyone
         // who never chose a model; an explicit choice is stored verbatim and left alone.
+        // Unlike gpt-4o-mini, Luna is a reasoning model; what it is sent by default is in ModelCatalog.
         defaultChatModel = "gpt-6-luna",
-        // Unlike gpt-4o-mini, Luna is a reasoning model, and with the field omitted it thinks at medium.
-        // Measured 2026-10-16 with the app's own requests, five runs each:
-        //     Fix Grammar, one sentence     omitted ~2.0 s, 85-145 reasoning tokens   none ~0.9 s, 0
-        //     auto-formatting, spoken cues  omitted 2.5-7.2 s, up to 620 tokens       none 1.0-1.5 s, 0
-        // At none it set list and paragraph cues as reliably as gpt-4o-mini, and like gpt-4o-mini (every
-        // run) it left a spelling cue standing ("Meyer with a y"), which medium resolved four times in
-        // five. Today's results at today's speed beat a slightly better guess at five times the wait, so
-        // the default runs at none; the emulator showed the same, 1.1-1.6 s against 3.3-4.8 s at medium.
-        // "minimal" is no option: Luna refuses it with a 400, and gpt-6.1-sol refuses none as well.
-        defaultChatReasoningEffort = "none",
         // gpt-transcribe (2026-07) is both cheaper than gpt-4o-transcribe ($0.0045 vs $0.006 per minute)
         // and markedly more accurate, so it is the default. This applies to everyone who never chose a
         // model — the account stores an empty string in that case and resolves through here on every
@@ -301,9 +277,9 @@ object ProviderRegistry {
         // live catalog. This is just a safe default to start with and is fully user-overridable. It follows
         // the OpenAI preset off gpt-4o-mini, whose only upstream is OpenAI and which leaves its API on
         // 2027-01-14; openai/gpt-6-luna is in OpenRouter's public catalog at the same $0.10 / $0.50
-        // (read 2026-10-16). No [defaultChatReasoningEffort] here: OpenRouter documents its own nested
-        // `reasoning` object and maps efforts to the nearest supported level, and whether it reads the
-        // top-level field this client sends has not been measured.
+        // (read 2026-10-16). Unlike OpenAI's Luna it is sent nothing by default: OpenRouter takes every
+        // effort word and maps it itself (provider check, 2026-11-04), and no rewording measurement says
+        // which one its Luna should get.
         defaultChatModel = "openai/gpt-6-luna",
         // gpt-transcribe is the same model the OpenAI preset defaults to, which is the point: one model
         // behaving one way across providers, already exercised by this app. It is also the only entry

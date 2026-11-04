@@ -99,12 +99,12 @@ class ModelCatalogTest : FunSpec({
         }
     }
 
-    test("the effort a preset gives its own default model is one the catalog lists for it") {
-        for (preset in presets) {
-            val effort = preset.defaultChatReasoningEffort ?: continue
-            val model = preset.defaultChatModel!!
-            withClue("${preset.id} $model $effort") {
-                ModelCatalog.spec(preset.id, model)?.reasoning?.values.orEmpty() shouldContain effort
+    test("what a model is sent by default is a word it takes") {
+        for (id in ModelCatalog.providerIds) {
+            for (spec in ModelCatalog.modelsOf(id)) {
+                val reasoning = spec.reasoning ?: continue
+                val word = reasoning.sentByDefault ?: continue
+                withClue("$id ${spec.id} $word") { reasoning.values shouldContain word }
             }
         }
     }

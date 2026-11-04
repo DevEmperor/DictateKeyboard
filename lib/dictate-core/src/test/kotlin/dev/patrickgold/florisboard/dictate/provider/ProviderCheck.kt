@@ -173,7 +173,7 @@ private class Check(
         facts.appendLine()
         facts.appendLine("- chat: ${p.capabilities.chat}, transcription: ${p.capabilities.transcription}, " +
             "wire format: `${p.transcriptionApi}`, live model list: ${p.supportsDynamicModels}")
-        facts.appendLine("- default chat: `${p.defaultChatModel}` (effort when Off: `${p.defaultChatReasoningEffort}`), " +
+        facts.appendLine("- default chat: `${p.defaultChatModel}`, " +
             "curated chat: ${p.curatedChatModels.joinToString { "`$it`" }.ifEmpty { "–" }}")
         facts.appendLine("- default transcription: `${p.defaultTranscriptionModel}`, curated: " +
             p.curatedTranscriptionModels.joinToString { "`$it`" }.ifEmpty { "–" })

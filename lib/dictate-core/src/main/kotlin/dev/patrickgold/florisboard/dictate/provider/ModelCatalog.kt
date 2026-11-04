@@ -35,10 +35,13 @@ enum class ModelRole {
  * DeepInfra, Together, DeepSeek, Scaleway's Qwen), the list is `none` when it measurably switches thinking
  * off, then `low`, `medium`, `high`: offering seven words that land on three settings would be a choice that
  * does nothing. [whenOmitted] is what the model does without the field, where a measurement showed it.
+ * [sentByDefault] is what Dictate sends while the account names no value, where the provider's own default
+ * is the wrong one for a rewording; it is one of [values].
  */
 data class ReasoningSpec(
     val values: List<String>,
     val whenOmitted: String? = null,
+    val sentByDefault: String? = null,
 ) {
     companion object {
         /** Every word in use for reasoning effort, least thinking first. */
@@ -84,7 +87,8 @@ object ModelCatalog {
     private val C = setOf(ModelRole.CHAT)
     private val CTA = setOf(ModelRole.CHAT, ModelRole.TRANSCRIPTION, ModelRole.CHAT_AUDIO)
 
-    private fun effort(vararg values: String, whenOmitted: String? = null) = ReasoningSpec(values.toList(), whenOmitted)
+    private fun effort(vararg values: String, whenOmitted: String? = null, sentByDefault: String? = null) =
+        ReasoningSpec(values.toList(), whenOmitted, sentByDefault)
 
     /** none switches thinking off; the provider maps the rest itself (see [ReasoningSpec]). */
     private val NONE_TO_HIGH = effort("none", "low", "medium", "high")
@@ -92,7 +96,20 @@ object ModelCatalog {
 
     val OPENAI = listOf(
         // Without the field Luna thinks like medium: 65 tokens against 62 at medium and 13 at none.
-        ModelSpec("gpt-6-luna", C, effort("none", "low", "medium", "high", "xhigh", whenOmitted = "medium"), verified = NOV_4),
+        // So Dictate sends none unless the account says otherwise. Measured 2026-10-16 with the app's own
+        // requests, five runs each:
+        //     Fix Grammar, one sentence     omitted ~2.0 s, 85-145 reasoning tokens   none ~0.9 s, 0
+        //     auto-formatting, spoken cues  omitted 2.5-7.2 s, up to 620 tokens       none 1.0-1.5 s, 0
+        // At none it set list and paragraph cues as reliably as gpt-4o-mini, and like gpt-4o-mini (every
+        // run) it left a spelling cue standing ("Meyer with a y"), which medium resolved four times in
+        // five. Today's results at today's speed beat a slightly better guess at five times the wait; the
+        // emulator showed the same, 1.1-1.6 s against 3.3-4.8 s at medium. (Until 2026-11-04 this was the
+        // OpenAI preset's, for its default model only.)
+        ModelSpec(
+            "gpt-6-luna", C,
+            effort("none", "low", "medium", "high", "xhigh", whenOmitted = "medium", sentByDefault = "none"),
+            verified = NOV_4,
+        ),
         ModelSpec("gpt-6.1-sol", C, effort("low", "medium", "high", "xhigh"), verified = NOV_4),
         ModelSpec("gpt-live-transcribe", R, verified = NOV_3),
         ModelSpec("gpt-realtime-whisper", R, verified = NOV_3),

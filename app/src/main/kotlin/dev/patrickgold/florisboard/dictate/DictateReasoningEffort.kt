@@ -66,9 +66,7 @@ fun rewordingReasoningWire(
     preset: ProviderPreset,
     model: String,
     level: PromptReasoning = PromptReasoning.ACCOUNT,
-): String? = ReasoningResolver.wire(
-    ModelCatalog.spec(preset.id, model), account.chatReasoning, preset.reasoningEffortWhenOff(model), level,
-)
+): String? = ReasoningResolver.wire(ModelCatalog.spec(preset.id, model), account.chatReasoning, level)
 
 /**
  * [prompt]'s own effort in the form [DictateRewording.Prompt.reasoningEffort] takes: null when the prompt

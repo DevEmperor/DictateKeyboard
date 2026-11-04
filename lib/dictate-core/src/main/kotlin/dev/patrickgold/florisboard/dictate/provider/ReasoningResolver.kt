@@ -49,21 +49,22 @@ object ReasoningResolver {
      * - [spec] is the catalog's entry for the model, null when the catalog does not know it. A known model
      *   without reasoning gets no field, whatever was asked.
      * - [accountValue] is the account's own choice in the provider's words, blank for its default. A value
-     *   the model does not list (the model was changed since) counts as blank.
-     * - [appDefault] is what the app sends when the account says nothing; only gpt-6-luna has one ("none",
-     *   [ProviderPreset.reasoningEffortWhenOff]).
+     *   the model does not list (the model was changed since) counts as blank. Blank sends the catalog's
+     *   [ReasoningSpec.sentByDefault] where it has one (gpt-6-luna: none), else nothing.
      *
      * A level resolves against the model's own words: NONE to "none", or the least it takes; LITTLE to its
      * lowest above none; MUCH to "high", or its highest below xhigh and max, which cost several times as much.
-     * A model the catalog does not know gets the common word (none, low, high); one that refuses it is asked
-     * again without the field by the client.
+     * A model the catalog does not know gets the common word (none, low, high). Ollama, vLLM and llama.cpp
+     * all read `reasoning_effort` and switch thinking off at "none" (their docs, read 2026-11-04), so servers
+     * of the user's own need no other field. A model that refuses a word is asked once more by the client,
+     * with the nearest word its refusal names or without the field.
      */
-    fun wire(spec: ModelSpec?, accountValue: String, appDefault: String?, level: PromptReasoning): String? {
+    fun wire(spec: ModelSpec?, accountValue: String, level: PromptReasoning): String? {
         if (spec != null && spec.reasoning == null) return null
         val values = spec?.reasoning?.values
         return when (level) {
-            PromptReasoning.ACCOUNT ->
-                accountValue.trim().ifBlank { null }?.takeIf { values == null || it in values } ?: appDefault
+            PromptReasoning.ACCOUNT -> accountValue.trim().ifBlank { null }?.takeIf { values == null || it in values }
+                ?: spec?.reasoning?.sentByDefault
             PromptReasoning.NONE -> when {
                 values == null -> "none"
                 "none" in values -> "none"
