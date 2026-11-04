@@ -20,9 +20,9 @@ import io.kotest.matchers.shouldNotBe
 /**
  * The model catalog against the presets, and against itself.
  *
- * Until the presets' curated lists are made from the catalog, both exist side by side, and a model added to
- * one and forgotten in the other is exactly the drift the catalog is there to end. So every id a preset
- * offers must have an entry here, with the role it is offered for.
+ * The presets' curated lists are made from the catalog, but their defaults are still named in the presets,
+ * and a default the catalog does not know is exactly the drift the catalog is there to end. So every id a
+ * preset offers, its default included, must have an entry here with the role it is offered for.
  */
 class ModelCatalogTest : FunSpec({
 
@@ -52,6 +52,22 @@ class ModelCatalogTest : FunSpec({
                 }
             }
         }
+    }
+
+    test("a preset's curated lists are the catalog's models for that role, in catalog order") {
+        for (preset in presets) {
+            withClue(preset.id) {
+                preset.curatedChatModels shouldBe ModelCatalog.idsOf(preset.id, ModelRole.CHAT)
+                preset.curatedTranscriptionModels shouldBe ModelCatalog.idsOf(preset.id, ModelRole.TRANSCRIPTION)
+                preset.curatedRealtimeModels shouldBe ModelCatalog.idsOf(preset.id, ModelRole.REALTIME)
+            }
+        }
+    }
+
+    test("a default stays first where it was first, so the picker opens on it") {
+        ProviderRegistry.GEMINI.curatedTranscriptionModels.first() shouldBe ProviderRegistry.GEMINI.defaultTranscriptionModel
+        ProviderRegistry.OPENAI.curatedRealtimeModels.first() shouldBe ProviderRegistry.OPENAI.defaultRealtimeModel
+        ProviderRegistry.OPENAI.curatedChatModels.first() shouldBe ProviderRegistry.OPENAI.defaultChatModel
     }
 
     test("no id or alias appears twice for a provider") {

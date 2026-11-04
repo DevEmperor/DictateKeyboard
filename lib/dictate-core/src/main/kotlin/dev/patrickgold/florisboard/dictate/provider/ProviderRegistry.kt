@@ -78,8 +78,9 @@ data class ProviderPreset(
     /**
      * Curated, known-good model ids used by the model picker as an offline-capable starting set (and,
      * for transcription, to distinguish STT models since the `/models` catalog doesn't say which is
-     * which). The live [LlmProvider.listModels] catalog is merged on top. Verify ids against the
-     * provider when editing – never guessed.
+     * which). The live [LlmProvider.listModels] catalog is merged on top. Every shipped preset takes them
+     * from [ModelCatalog], where each id carries what the provider check measured; only the on-device
+     * engine names its own.
      */
     val curatedChatModels: List<String> = emptyList(),
     val curatedTranscriptionModels: List<String> = emptyList(),
@@ -178,11 +179,11 @@ object ProviderRegistry {
         defaultTranscriptionModel = "gpt-transcribe",
         // gpt-6-astra, the third of the current line, is left to the live catalog: at a hundred times
         // Luna's price it buys nothing a correction or a rephrasing needs.
-        curatedChatModels = listOf("gpt-6-luna", "gpt-6.1-sol"),
+        curatedChatModels = ModelCatalog.idsOf("openai", ModelRole.CHAT),
         // whisper-1, gpt-4o-transcribe and gpt-4o-mini-transcribe leave the API on 2027-02-26 (announced
         // 2026-08-26). Until then they still come up in the live catalog for whoever wants them; they are
         // just no longer offered as a starting point.
-        curatedTranscriptionModels = listOf("gpt-transcribe"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("openai", ModelRole.TRANSCRIPTION),
         // The guide lists mp3, mp4, mpeg, mpga, m4a, wav, webm; the API reference adds flac and ogg.
         // Rather than pick a page, the endpoint was asked directly on 2026-09-04 with the same Ogg/Opus
         // bytes twice, same `audio/ogg` part type, only the file NAME differing:
@@ -204,9 +205,7 @@ object ProviderRegistry {
         realtimeApi = RealtimeApi.OPENAI,
         defaultRealtimeModel = "gpt-live-transcribe",
         // The two gpt-4o transcribers went with the batch list above, for the same 2027-02-26 date.
-        curatedRealtimeModels = listOf(
-            "gpt-live-transcribe", "gpt-realtime-whisper", "gpt-transcribe",
-        ),
+        curatedRealtimeModels = ModelCatalog.idsOf("openai", ModelRole.REALTIME),
     )
 
     /**
@@ -232,6 +231,8 @@ object ProviderRegistry {
         apiKeyUrl = null,
         defaultChatModel = "dictate-cloud",
         defaultTranscriptionModel = "dictate-cloud",
+        curatedChatModels = ModelCatalog.idsOf("cloud", ModelRole.CHAT),
+        curatedTranscriptionModels = ModelCatalog.idsOf("cloud", ModelRole.TRANSCRIPTION),
         supportsRealtime = false,
         // Not copied from an upstream provider's list — the server does not say which one it used. This
         // is what its OWN duration probe reads (`cloud/src/audio.ts`), and that matters to the person
@@ -267,13 +268,9 @@ object ProviderRegistry {
         // existing in the catalog is not the same as a model that can reword.
         defaultChatModel = "openai/gpt-oss-120b",
         defaultTranscriptionModel = "whisper-large-v3-turbo",
-        curatedChatModels = listOf(
-            "openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("groq", ModelRole.CHAT),
         // distil-whisper-large-v3-en went the same way; both remaining Whispers are live.
-        curatedTranscriptionModels = listOf(
-            "whisper-large-v3-turbo", "whisper-large-v3",
-        ),
+        curatedTranscriptionModels = ModelCatalog.idsOf("groq", ModelRole.TRANSCRIPTION),
         // Read 2026-09-04: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm. Ogg included, so a shared
         // voice note goes to Groq untouched where OpenAI needs it transcoded.
         acceptedAudioContainers = setOf(
@@ -332,11 +329,8 @@ object ProviderRegistry {
         //   openai/whisper-large-v3-turbo  cheapest      DeepInfra, Groq
         //   openai/whisper-large-v3        from $0.00048/min via DeepInfra (also Together, Groq) — kept
         //                                  because it was the default until now, so a choice stays visible.
-        curatedTranscriptionModels = listOf(
-            "openai/gpt-transcribe", "microsoft/mai-transcribe-2",
-            "mistralai/voxtral-mini-transcribe", "deepgram/nova-3",
-            "openai/whisper-large-v3-turbo", "openai/whisper-large-v3",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("openrouter", ModelRole.CHAT),
+        curatedTranscriptionModels = ModelCatalog.idsOf("openrouter", ModelRole.TRANSCRIPTION),
         // Read 2026-09-04 from the speech-to-text guide: wav, mp3, flac, m4a, ogg, webm, aac.
         acceptedAudioContainers = setOf(
             AudioContainer.WAV, AudioContainer.MP3, AudioContainer.FLAC, AudioContainer.M4A,
@@ -390,15 +384,10 @@ object ProviderRegistry {
         // Stable, audio-capable Gemini models (verified June 2026; 2.0-flash was retired 2026-06-01). The
         // live picker merges any newer ones on top.
         // The whole 2.5 generation is retired; the live picker merges any newer ones on top.
-        curatedChatModels = listOf(
-            "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("gemini", ModelRole.CHAT),
         // The dedicated STT model first, then the multimodal chat models that double as transcription
         // models — they travel a different endpoint, so both belong here.
-        curatedTranscriptionModels = listOf(
-            "gemini-3.5-transcribe",
-            "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
-        ),
+        curatedTranscriptionModels = ModelCatalog.idsOf("gemini", ModelRole.TRANSCRIPTION),
         // Read 2026-09-04 from Google's audio docs: wav, mp3, aiff, aac, ogg, flac, mpeg, m4a, l16,
         // opus, alaw, mulaw, webm. The voice note in #322 was never a format Gemini refuses — the app
         // only failed to say what it was. Nothing here has to be converted for Gemini.
@@ -414,7 +403,7 @@ object ProviderRegistry {
         supportsRealtime = true,
         realtimeApi = RealtimeApi.GEMINI,
         defaultRealtimeModel = "gemini-3.5-transcribe-live",
-        curatedRealtimeModels = listOf("gemini-3.5-transcribe-live"),
+        curatedRealtimeModels = ModelCatalog.idsOf("gemini", ModelRole.REALTIME),
     )
 
     /**
@@ -437,9 +426,7 @@ object ProviderRegistry {
         // The console moved hosts: console.anthropic.com/settings/keys 301s to this one (2026-09-21).
         apiKeyUrl = "https://platform.claude.com/settings/keys",
         defaultChatModel = "claude-haiku-4-5-20251001",
-        curatedChatModels = listOf(
-            "claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-5",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("anthropic", ModelRole.CHAT),
     )
 
     val TOGETHER = ProviderPreset(
@@ -449,6 +436,7 @@ object ProviderRegistry {
         capabilities = CHAT_ONLY,
         supportsDynamicModels = true,
         apiKeyUrl = "https://api.together.ai/settings/api-keys",
+        curatedChatModels = ModelCatalog.idsOf("together", ModelRole.CHAT),
     )
 
     val DEEPINFRA = ProviderPreset(
@@ -458,6 +446,7 @@ object ProviderRegistry {
         capabilities = CHAT_ONLY,
         supportsDynamicModels = true,
         apiKeyUrl = "https://deepinfra.com/dash/api_keys",
+        curatedChatModels = ModelCatalog.idsOf("deepinfra", ModelRole.CHAT),
     )
 
     val MISTRAL = ProviderPreset(
@@ -469,14 +458,15 @@ object ProviderRegistry {
         supportsDynamicModels = true,
         apiKeyUrl = "https://console.mistral.ai/api-keys",
         defaultTranscriptionModel = "voxtral-mini-latest",
-        curatedTranscriptionModels = listOf("voxtral-mini-latest"),
+        curatedChatModels = ModelCatalog.idsOf("mistral", ModelRole.CHAT),
+        curatedTranscriptionModels = ModelCatalog.idsOf("mistral", ModelRole.TRANSCRIPTION),
         // Realtime (#128): Voxtral realtime (/v1/realtime, vLLM-style). Model id verified when built.
         // Realtime disabled: Mistral's raw WS returns 403 and the protocol is SDK-only/unverified (#128).
         // Keep the wiring (RealtimeApi + session) so it can be re-enabled once the protocol is confirmed.
         supportsRealtime = false,
         realtimeApi = RealtimeApi.MISTRAL_VOXTRAL,
         defaultRealtimeModel = "voxtral-mini-transcribe-realtime-2602",
-        curatedRealtimeModels = listOf("voxtral-mini-transcribe-realtime-2602"),
+        curatedRealtimeModels = ModelCatalog.idsOf("mistral", ModelRole.REALTIME),
         // "By default, your data is hosted in the European Union" (Mistral help centre, updated
         // 2026-08-12). The same page names a separate US endpoint, which this base URL is not, and
         // subprocessors outside the EU for some features.
@@ -498,12 +488,12 @@ object ProviderRegistry {
         apiKeyUrl = "https://console.soniox.com/api-keys",
         defaultTranscriptionModel = "stt-async-v5",
         // Verified against Soniox's model catalog; the live picker adds any newer async models.
-        curatedTranscriptionModels = listOf("stt-async-v5"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("soniox", ModelRole.TRANSCRIPTION),
         // Realtime (#128): wss stt-rt.soniox.com/transcribe-websocket, model stt-rt-v5.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.SONIOX,
         defaultRealtimeModel = "stt-rt-v5",
-        curatedRealtimeModels = listOf("stt-rt-v5"),
+        curatedRealtimeModels = ModelCatalog.idsOf("soniox", ModelRole.REALTIME),
         // Data residency (#403). Soniox sets the region per *project*, and each regional project mints its
         // own key that is valid against that region's hosts only — which is why the report reads as "the
         // new key doesn't work" rather than as anything about a region. Hosts from Soniox's data-residency
@@ -539,7 +529,7 @@ object ProviderRegistry {
         // The keys page left settings for the developers section; the old path redirects (2026-09-21).
         apiKeyUrl = "https://elevenlabs.io/app/developers/api-keys",
         defaultTranscriptionModel = "scribe_v2",
-        curatedTranscriptionModels = listOf("scribe_v2"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("elevenlabs", ModelRole.TRANSCRIPTION),
         // Read 2026-09-04: aac, aiff, ogg, mpeg/mp3, opus, wav, webm, flac, mp4/m4a — the most generous
         // list of any provider here, and one of only two that name Opus explicitly.
         acceptedAudioContainers = setOf(
@@ -550,7 +540,7 @@ object ProviderRegistry {
         supportsRealtime = true,
         realtimeApi = RealtimeApi.ELEVENLABS,
         defaultRealtimeModel = "scribe_v2_realtime",
-        curatedRealtimeModels = listOf("scribe_v2_realtime"),
+        curatedRealtimeModels = ModelCatalog.idsOf("elevenlabs", ModelRole.REALTIME),
     )
 
     /**
@@ -571,14 +561,14 @@ object ProviderRegistry {
         // (docs.deepgram.com, create-additional-api-keys, read 2026-09-21).
         apiKeyUrl = "https://console.deepgram.com/signup?jump=keys",
         defaultTranscriptionModel = "nova-3",
-        curatedTranscriptionModels = listOf("nova-3", "nova-2"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("deepgram", ModelRole.TRANSCRIPTION),
         // Realtime (#128): wss /v1/listen?encoding=linear16&sample_rate=16000&interim_results=true.
         // The flux models (#291) are streaming-only and speak /v2/listen instead — offered here but not
         // as the default, since they cost more, cover one or ten languages, and end turns on their own.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.DEEPGRAM,
         defaultRealtimeModel = "nova-3",
-        curatedRealtimeModels = listOf("nova-3", "nova-2", "flux-general-en", "flux-general-multi"),
+        curatedRealtimeModels = ModelCatalog.idsOf("deepgram", ModelRole.REALTIME),
     )
 
     /**
@@ -597,7 +587,7 @@ object ProviderRegistry {
         // names this URL (support.assemblyai.com, read 2026-09-21).
         apiKeyUrl = "https://www.assemblyai.com/dashboard/api-keys",
         defaultTranscriptionModel = "universal-3-pro",
-        curatedTranscriptionModels = listOf("universal-3-pro", "universal-2"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("assemblyai", ModelRole.TRANSCRIPTION),
         // Realtime (#128) over wss streaming.assemblyai.com/v3/ws, billed by connection-open duration.
         // Ids from the endpoint's own list of accepted `speech_model` values (2026-10-20). 3.6 Pro covers
         // 32 languages and formats its text ($0.45/h); the two Universal-Streaming models are the
@@ -606,11 +596,7 @@ object ProviderRegistry {
         supportsRealtime = true,
         realtimeApi = RealtimeApi.ASSEMBLYAI,
         defaultRealtimeModel = "universal-3-6-pro",
-        curatedRealtimeModels = listOf(
-            "universal-3-6-pro",
-            "universal-streaming-multilingual",
-            "universal-streaming-english",
-        ),
+        curatedRealtimeModels = ModelCatalog.idsOf("assemblyai", ModelRole.REALTIME),
     )
 
     /**
@@ -656,7 +642,7 @@ object ProviderRegistry {
         apiKeyUrl = "https://portal.azure.com/#create/Microsoft.CognitiveServicesAIFoundry",
         allowsCustomBaseUrl = true,
         defaultTranscriptionModel = "MAI-Transcribe-2",
-        curatedTranscriptionModels = listOf("MAI-Transcribe-2", "MAI-Transcribe-1.5"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("azure", ModelRole.TRANSCRIPTION),
         // Asked of the endpoint (provider check, 2026-11-03): MAI-Transcribe-2 and -1.5 take WAV, MP3,
         // FLAC and Ogg/Opus, and refuse M4A, AAC, WebM and AMR with 400 "invalid_audio … Format not
         // recognised". Microsoft's two pages disagree (MAI's names WAV, MP3, FLAC; Fast Transcription's
@@ -710,7 +696,8 @@ object ProviderRegistry {
         // and the default when none is sent. 1.0 is the original and is announced for deprecation, so it
         // is not offered — the model field still takes it typed in, for anyone who pinned it.
         defaultTranscriptionModel = "grok-voice-transcribe-2.0",
-        curatedTranscriptionModels = listOf("grok-voice-transcribe-2.0"),
+        curatedChatModels = ModelCatalog.idsOf("xai", ModelRole.CHAT),
+        curatedTranscriptionModels = ModelCatalog.idsOf("xai", ModelRole.TRANSCRIPTION),
         // Documented, read 2026-09-29: wav, mp3, ogg, opus, flac, aac, mp4, m4a, and mkv with MP3, AAC or
         // FLAC inside. WebM is Matroska too, but it carries Opus or Vorbis, which that clause leaves out,
         // so it is transcoded rather than hoped for; AMR is not named at all. Unmeasured — the list to
@@ -723,7 +710,7 @@ object ProviderRegistry {
         supportsRealtime = true,
         realtimeApi = RealtimeApi.XAI,
         defaultRealtimeModel = "grok-voice-transcribe-2.0",
-        curatedRealtimeModels = listOf("grok-voice-transcribe-2.0"),
+        curatedRealtimeModels = ModelCatalog.idsOf("xai", ModelRole.REALTIME),
     )
 
     val DEEPSEEK = ProviderPreset(
@@ -733,6 +720,7 @@ object ProviderRegistry {
         capabilities = CHAT_ONLY,
         supportsDynamicModels = true,
         apiKeyUrl = "https://platform.deepseek.com/api_keys",
+        curatedChatModels = ModelCatalog.idsOf("deepseek", ModelRole.CHAT),
     )
 
     /**
@@ -769,12 +757,8 @@ object ProviderRegistry {
         // SenseVoice is the better of the two for dictation: it covers Mandarin, Cantonese, English,
         // Japanese and Korean, where TeleSpeech is Mandarin and Chinese dialects only.
         defaultTranscriptionModel = "FunAudioLLM/SenseVoiceSmall",
-        curatedChatModels = listOf(
-            "deepseek-ai/DeepSeek-V3.2", "deepseek-ai/DeepSeek-V3.1", "deepseek-ai/DeepSeek-V3",
-        ),
-        curatedTranscriptionModels = listOf(
-            "FunAudioLLM/SenseVoiceSmall", "TeleAI/TeleSpeechASR",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("siliconflow", ModelRole.CHAT),
+        curatedTranscriptionModels = ModelCatalog.idsOf("siliconflow", ModelRole.TRANSCRIPTION),
     )
 
     /**
@@ -824,16 +808,14 @@ object ProviderRegistry {
         // field rather than in the text. None is on the deprecation list (supported-models page, read the
         // same day) — pixtral-12b answers today but retires on 2026-10-01, and is left to the live list.
         defaultChatModel = "mistral-small-3.2-24b-instruct-2506",
-        curatedChatModels = listOf(
-            "mistral-small-3.2-24b-instruct-2506", "llama-3.3-70b-instruct", "gpt-oss-120b",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("scaleway", ModelRole.CHAT),
         // The only transcription model left: voxtral-small-24b retired on 2026-08-01, and Scaleway routes
         // what was sent to it here. Ten seconds of German came back in 0.6 s, thirteen minutes in 34 s.
         // It reads every field the client sends: `prompt` measurably steers the transcript (a lowercase,
         // unpunctuated prompt turned the answer lowercase and unpunctuated), and `language` can be left
         // out for auto-detect.
         defaultTranscriptionModel = "whisper-large-v3",
-        curatedTranscriptionModels = listOf("whisper-large-v3"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("scaleway", ModelRole.TRANSCRIPTION),
         // The documented list for whisper-large-v3 — flac, m4a, mpeg, mp2, mp3, mp4, ogg, wav, webm — and
         // this time the endpoint agrees with it exactly. Asked on 2026-09-25 with one German sample in
         // every container the app knows: these six transcribed; aac and amr came back 400 "Invalid file
@@ -887,16 +869,14 @@ object ProviderRegistry {
         // but only ever answered the anonymous probe with 429, so nothing is claimed for them and the live
         // list offers them unvouched. OVHcloud's ids are capitalised, unlike Scaleway's for the same models.
         defaultChatModel = "Mistral-Small-3.2-24B-Instruct-2506",
-        curatedChatModels = listOf(
-            "Mistral-Small-3.2-24B-Instruct-2506", "Meta-Llama-3_3-70B-Instruct",
-        ),
+        curatedChatModels = ModelCatalog.idsOf("ovhcloud", ModelRole.CHAT),
         // whisper-large-v3 rather than the turbo as the default because the turbo is the one that got words
         // wrong: on the same German sample it wrote "Sprachkennung" in five containers out of five, where
         // the full model heard "Spracherkennung" — at 0.5 against 0.8 seconds for ten seconds of audio, a
         // difference nobody dictating waits for. Both read `prompt` (a lowercase, unpunctuated prompt made
         // the answer lowercase and unpunctuated) and detect the language when none is sent.
         defaultTranscriptionModel = "whisper-large-v3",
-        curatedTranscriptionModels = listOf("whisper-large-v3", "whisper-large-v3-turbo"),
+        curatedTranscriptionModels = ModelCatalog.idsOf("ovhcloud", ModelRole.TRANSCRIPTION),
         // Documented: mp3, mp4, aac, m4a, wav, flac, ogg, opus, webm, mpeg, mpga (speech-to-text guide,
         // updated 2026-05-11). Asked on 2026-09-25 with one German sample per container: these six came back
         // correct, and so did an Ogg file named `.opus`, which OpenAI and Scaleway both refuse; amr is refused

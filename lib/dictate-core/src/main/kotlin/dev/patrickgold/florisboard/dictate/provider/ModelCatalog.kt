@@ -69,9 +69,9 @@ data class ModelSpec(
  * curated id lists, name heuristics and refusal parsing (plan: provider catalog, 2026-11-03).
  *
  * Filled from the provider check (private/testing/provider-check/) of 2026-11-03 and 2026-11-04: batch,
- * formats and streaming on the 3rd, the chat and reasoning matrix with a real rewording on the 4th. Nothing
- * reads it yet; `ModelCatalogTest` keeps it in step with the presets' curated lists until they are made from
- * it. Ollama, the on-device engine and servers of the user's own have no entries: their models are the user's.
+ * formats and streaming on the 3rd, the chat and reasoning matrix with a real rewording on the 4th. The
+ * presets' curated lists are made from it ([idsOf]), so the order here is the order the pickers offer.
+ * Ollama, the on-device engine and servers of the user's own have no entries: their models are the user's.
  */
 object ModelCatalog {
 
@@ -94,9 +94,9 @@ object ModelCatalog {
         // Without the field Luna thinks like medium: 65 tokens against 62 at medium and 13 at none.
         ModelSpec("gpt-6-luna", C, effort("none", "low", "medium", "high", "xhigh", whenOmitted = "medium"), verified = NOV_4),
         ModelSpec("gpt-6.1-sol", C, effort("low", "medium", "high", "xhigh"), verified = NOV_4),
-        ModelSpec("gpt-transcribe", TR, verified = NOV_3),
         ModelSpec("gpt-live-transcribe", R, verified = NOV_3),
         ModelSpec("gpt-realtime-whisper", R, verified = NOV_3),
+        ModelSpec("gpt-transcribe", TR, verified = NOV_3),
     )
 
     val CLOUD = listOf(
@@ -132,6 +132,8 @@ object ModelCatalog {
     )
 
     val GEMINI = listOf(
+        // The dedicated speech model first: it is the transcription default, and the list keeps that order.
+        ModelSpec("gemini-3.5-transcribe", T, verified = NOV_3),
         // Gemini's chat endpoint reports no thinking tokens, so only acceptance is measured; its refusals name
         // thinking levels ("Thinking level MINIMAL is not supported"), so the field is understood.
         ModelSpec("gemini-3.6-flash", CTA, effort("none", "minimal", "low", "medium", "high"), verified = NOV_4),
@@ -140,10 +142,10 @@ object ModelCatalog {
             "gemini-3.5-flash-lite", CTA, effort("minimal", "low", "medium", "high"), verified = NOV_4,
             note = "Refuses none with a bare 400 \"Request contains an invalid argument.\"",
         ),
-        ModelSpec("gemini-3.1-flash-lite", C, effort("none", "minimal", "low", "medium", "high"), verified = NOV_4),
-        ModelSpec("gemini-3.8-flash", C, effort("none", "low", "medium", "high"), verified = NOV_4),
-        ModelSpec("gemini-3.7-flash", C, effort("none", "low", "medium", "high"), verified = NOV_4),
-        ModelSpec("gemini-3.5-transcribe", T, verified = NOV_3),
+        // These three transcribe as well as the curated ones (83–100 % of the words, 2026-11-04).
+        ModelSpec("gemini-3.1-flash-lite", CTA, effort("none", "minimal", "low", "medium", "high"), verified = NOV_4),
+        ModelSpec("gemini-3.8-flash", CTA, effort("none", "low", "medium", "high"), verified = NOV_4),
+        ModelSpec("gemini-3.7-flash", CTA, effort("none", "low", "medium", "high"), verified = NOV_4),
         ModelSpec(
             "gemini-3.5-transcribe-live", R,
             note = "Synthetic speech gave nothing in English and 22 % of the words in German (2026-11-03); " +
@@ -282,26 +284,28 @@ object ModelCatalog {
         ModelSpec("whisper-large-v3-turbo", T, verified = NOV_3),
     )
 
+    // Keyed by the preset ids as plain text: ProviderRegistry builds its presets' curated lists from here, so
+    // a reference back to it would make each object's initialisation wait on the other.
     private val byProvider: Map<String, List<ModelSpec>> = mapOf(
-        ProviderRegistry.OPENAI.id to OPENAI,
-        ProviderRegistry.CLOUD.id to CLOUD,
-        ProviderRegistry.GROQ.id to GROQ,
-        ProviderRegistry.OPENROUTER.id to OPENROUTER,
-        ProviderRegistry.GEMINI.id to GEMINI,
-        ProviderRegistry.ANTHROPIC.id to ANTHROPIC,
-        ProviderRegistry.TOGETHER.id to TOGETHER,
-        ProviderRegistry.DEEPINFRA.id to DEEPINFRA,
-        ProviderRegistry.MISTRAL.id to MISTRAL,
-        ProviderRegistry.SONIOX.id to SONIOX,
-        ProviderRegistry.ELEVENLABS.id to ELEVENLABS,
-        ProviderRegistry.DEEPGRAM.id to DEEPGRAM,
-        ProviderRegistry.ASSEMBLYAI.id to ASSEMBLYAI,
-        ProviderRegistry.AZURE.id to AZURE,
-        ProviderRegistry.XAI.id to XAI,
-        ProviderRegistry.DEEPSEEK.id to DEEPSEEK,
-        ProviderRegistry.SILICONFLOW.id to SILICONFLOW,
-        ProviderRegistry.SCALEWAY.id to SCALEWAY,
-        ProviderRegistry.OVHCLOUD.id to OVHCLOUD,
+        "openai" to OPENAI,
+        "cloud" to CLOUD,
+        "groq" to GROQ,
+        "openrouter" to OPENROUTER,
+        "gemini" to GEMINI,
+        "anthropic" to ANTHROPIC,
+        "together" to TOGETHER,
+        "deepinfra" to DEEPINFRA,
+        "mistral" to MISTRAL,
+        "soniox" to SONIOX,
+        "elevenlabs" to ELEVENLABS,
+        "deepgram" to DEEPGRAM,
+        "assemblyai" to ASSEMBLYAI,
+        "azure" to AZURE,
+        "xai" to XAI,
+        "deepseek" to DEEPSEEK,
+        "siliconflow" to SILICONFLOW,
+        "scaleway" to SCALEWAY,
+        "ovhcloud" to OVHCLOUD,
     )
 
     /** The providers with an entry. */
@@ -309,6 +313,10 @@ object ModelCatalog {
 
     /** The models the catalog knows for [providerId], in the order the app should offer them. */
     fun modelsOf(providerId: String): List<ModelSpec> = byProvider[providerId].orEmpty()
+
+    /** The ids of [providerId]'s models that the app offers for [role], in catalog order. */
+    fun idsOf(providerId: String, role: ModelRole): List<String> =
+        modelsOf(providerId).filter { role in it.roles }.map { it.id }
 
     /** [modelId] at [providerId], by its id or one of its aliases; null for a model the catalog does not know. */
     fun spec(providerId: String, modelId: String): ModelSpec? =
