@@ -173,10 +173,11 @@ object ProviderRegistry {
         // So Ogg belongs here: what OpenAI refuses is the extension `opus`, not the container — which is
         // why uploads now travel under the canonical name for what is inside them (see
         // [audioUploadNameOf]). A shared voice note therefore needs no transcode at all any more.
-        // flac stays out: the same disagreement applies to it and nobody has measured it.
+        // FLAC under its own name came back word for word in the provider check of 2026-11-04 (natural
+        // speech, gpt-transcribe), so it no longer needs a transcode either.
         acceptedAudioContainers = setOf(
             AudioContainer.MP3, AudioContainer.M4A, AudioContainer.WAV,
-            AudioContainer.WEBM, AudioContainer.OGG,
+            AudioContainer.WEBM, AudioContainer.OGG, AudioContainer.FLAC,
         ),
         // Realtime (#128): wss /v1/realtime?intent=transcription. gpt-live-transcribe is the streaming
         // model of the gpt-transcribe generation and emits deltas like gpt-realtime-whisper did, at the
@@ -312,10 +313,12 @@ object ProviderRegistry {
         //                                  because it was the default until now, so a choice stays visible.
         curatedChatModels = ModelCatalog.idsOf("openrouter", ModelRole.CHAT),
         curatedTranscriptionModels = ModelCatalog.idsOf("openrouter", ModelRole.TRANSCRIPTION),
-        // Read 2026-09-04 from the speech-to-text guide: wav, mp3, flac, m4a, ogg, webm, aac.
+        // The speech-to-text guide (read 2026-09-04) names wav, mp3, flac, m4a, ogg, webm and aac, but what
+        // a model takes is up to the provider behind it: openai/gpt-transcribe, the default, refused raw AAC
+        // with a 400 in the provider check of 2026-11-04. So AAC is transcoded rather than sent.
         acceptedAudioContainers = setOf(
             AudioContainer.WAV, AudioContainer.MP3, AudioContainer.FLAC, AudioContainer.M4A,
-            AudioContainer.OGG, AudioContainer.WEBM, AudioContainer.AAC,
+            AudioContainer.OGG, AudioContainer.WEBM,
         ),
         // Attribution headers recommended by OpenRouter: both are used for app ranking and some routes
         // reject requests without an HTTP-Referer. The value is a stable identifier, not a real URL.
@@ -686,12 +689,11 @@ object ProviderRegistry {
         curatedChatModels = ModelCatalog.idsOf("xai", ModelRole.CHAT),
         curatedTranscriptionModels = ModelCatalog.idsOf("xai", ModelRole.TRANSCRIPTION),
         // Documented, read 2026-09-29: wav, mp3, ogg, opus, flac, aac, mp4, m4a, and mkv with MP3, AAC or
-        // FLAC inside. WebM is Matroska too, but it carries Opus or Vorbis, which that clause leaves out,
-        // so it is transcoded rather than hoped for; AMR is not named at all. Unmeasured — the list to
-        // re-check first once there is a key to ask with (tools/probe-xai-stt.py).
+        // FLAC inside. WebM with Opus is not in that list, but the endpoint takes it: 100 % of the words
+        // in the provider check of 2026-11-04, natural speech. AMR is refused there and stays out.
         acceptedAudioContainers = setOf(
             AudioContainer.WAV, AudioContainer.MP3, AudioContainer.OGG,
-            AudioContainer.FLAC, AudioContainer.AAC, AudioContainer.M4A,
+            AudioContainer.FLAC, AudioContainer.AAC, AudioContainer.M4A, AudioContainer.WEBM,
         ),
         // Realtime: wss /v1/stt, the same model on the same key.
         supportsRealtime = true,

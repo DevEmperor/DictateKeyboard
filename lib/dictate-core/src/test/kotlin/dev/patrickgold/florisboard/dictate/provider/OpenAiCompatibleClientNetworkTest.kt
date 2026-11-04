@@ -13,6 +13,7 @@ package dev.patrickgold.florisboard.dictate.provider
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
@@ -1265,8 +1266,8 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         xai.supportsRealtime shouldBe true
         xai.realtimeApi shouldBe RealtimeApi.XAI
         xai.defaultTranscriptionModel shouldBe "grok-voice-transcribe-2.0"
-        // Documented: MKV only with MP3, AAC or FLAC inside, so WebM's Opus is not promised; AMR not named.
-        xai.acceptedAudioContainers shouldNotContain AudioContainer.WEBM
+        // WebM is not in the docs but measured (2026-11-04); AMR is refused by the endpoint.
+        xai.acceptedAudioContainers shouldContain AudioContainer.WEBM
         xai.acceptedAudioContainers shouldNotContain AudioContainer.AMR
         ProviderRegistry.maxUploadBytes("xai") shouldBe 500_000_000L
     }
