@@ -144,8 +144,9 @@ object ModelCatalog {
         ModelSpec("microsoft/mai-transcribe-2", T, verified = NOV_3),
         ModelSpec("mistralai/voxtral-mini-transcribe", T, verified = NOV_3),
         ModelSpec(
-            "deepgram/nova-3", T, verified = NOV_3,
-            note = "Auto-detect on German synthetic speech gave only \"Hello.\" (2026-11-03); check with real speech.",
+            "deepgram/nova-3", T, verified = NOV_4,
+            note = "No language detection through OpenRouter: German natural speech without a language came back " +
+                "as \"Hello.\", with the language set 88 % of the words (2026-11-04). Deepgram's own API detects it.",
         ),
         ModelSpec("openai/whisper-large-v3-turbo", T, verified = NOV_3),
         ModelSpec("openai/whisper-large-v3", T, verified = NOV_3),
@@ -166,11 +167,8 @@ object ModelCatalog {
         ModelSpec("gemini-3.1-flash-lite", CTA, effort("none", "minimal", "low", "medium", "high"), verified = NOV_4),
         ModelSpec("gemini-3.8-flash", CTA, effort("none", "low", "medium", "high"), verified = NOV_4),
         ModelSpec("gemini-3.7-flash", CTA, effort("none", "low", "medium", "high"), verified = NOV_4),
-        ModelSpec(
-            "gemini-3.5-transcribe-live", R,
-            note = "Synthetic speech gave nothing in English and 22 % of the words in German (2026-11-03); " +
-                "check with real speech.",
-        ),
+        // espeak gave nothing in English and 22 % in German on 2026-11-03; natural speech 100 % and 94 %.
+        ModelSpec("gemini-3.5-transcribe-live", R, verified = NOV_4),
     )
 
     // Every reasoning value is taken and none changes the tokens, so none is offered (2026-11-04).
@@ -217,8 +215,8 @@ object ModelCatalog {
     )
 
     val SONIOX = listOf(
-        ModelSpec("stt-async-v5", T, verified = NOV_3),
-        ModelSpec("stt-async-v6", T, verified = NOV_3),
+        ModelSpec("stt-async-v6", T, verified = NOV_4),
+        ModelSpec("stt-async-v5", T, verified = NOV_4),
         ModelSpec("stt-rt-v5", R, verified = NOV_3),
     )
 
@@ -230,25 +228,26 @@ object ModelCatalog {
     val DEEPGRAM = listOf(
         // Deepgram's list names them `nova-3-general`…; the short ids are what the app sends and what it takes.
         ModelSpec(
-            "nova-3", TR, aliases = setOf("nova-3-general"), verified = NOV_3,
-            note = "Auto-detect on German synthetic speech gave only \"Hello.\" (2026-11-03); check with real speech.",
+            "nova-3", TR, aliases = setOf("nova-3-general"), verified = NOV_4,
+            // Auto-detect on German: "Hello." with espeak (2026-11-03), 83 % with natural speech (2026-11-04).
         ),
         ModelSpec("nova-2", TR, aliases = setOf("nova-2-general"), verified = NOV_3),
         ModelSpec("flux-general-en", R, languages = setOf("en"), verified = NOV_3),
         ModelSpec(
-            "flux-general-multi", R, verified = NOV_3,
-            note = "German synthetic speech: 11 % of the words (2026-11-03); check with real speech.",
+            // German: 11 % with espeak (2026-11-03), 88 % with natural speech (2026-11-04).
+            "flux-general-multi", R, verified = NOV_4,
         ),
     )
 
     val ASSEMBLYAI = listOf(
-        ModelSpec("universal-3-pro", T, verified = NOV_3),
-        ModelSpec("universal-2", T, verified = NOV_3),
+        // AssemblyAI's recommended model for recorded audio since the 3.5 generation; the only one of the three
+        // to spell both names of the names sample (2026-11-04).
+        ModelSpec("universal-3-5-pro", T, verified = NOV_4),
+        ModelSpec("universal-3-pro", T, verified = NOV_4),
+        ModelSpec("universal-2", T, verified = NOV_4),
         ModelSpec("universal-3-6-pro", R, verified = NOV_3),
-        ModelSpec(
-            "universal-streaming-multilingual", R, verified = NOV_3,
-            note = "German synthetic speech came back empty (2026-11-03); check with real speech.",
-        ),
+        // German came back empty with espeak (2026-11-03); 88 % with natural speech (2026-11-04).
+        ModelSpec("universal-streaming-multilingual", R, verified = NOV_4),
         ModelSpec("universal-streaming-english", R, languages = setOf("en"), verified = NOV_3),
     )
 

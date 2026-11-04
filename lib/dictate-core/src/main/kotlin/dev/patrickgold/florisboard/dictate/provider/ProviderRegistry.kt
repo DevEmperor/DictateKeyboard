@@ -467,7 +467,9 @@ object ProviderRegistry {
         // Not the console root: /api-keys is a real route rather than a client-side guess — /apikeys
         // answers 404, so the server itself distinguishes them (2026-09-21).
         apiKeyUrl = "https://console.soniox.com/api-keys",
-        defaultTranscriptionModel = "stt-async-v5",
+        // v6 since 2026-11-04: in the provider check with natural speech it matched v5 in English and German
+        // and spelled both names of the names sample without the vocabulary hint, where v5 missed one.
+        defaultTranscriptionModel = "stt-async-v6",
         // Verified against Soniox's model catalog; the live picker adds any newer async models.
         curatedTranscriptionModels = ModelCatalog.idsOf("soniox", ModelRole.TRANSCRIPTION),
         // Realtime (#128): wss stt-rt.soniox.com/transcribe-websocket, model stt-rt-v5.
@@ -567,7 +569,11 @@ object ProviderRegistry {
         // problem as Deepgram, so again their own words: AssemblyAI's support article on getting a key
         // names this URL (support.assemblyai.com, read 2026-09-21).
         apiKeyUrl = "https://www.assemblyai.com/dashboard/api-keys",
-        defaultTranscriptionModel = "universal-3-pro",
+        // Universal-3.5 Pro is what AssemblyAI's model page recommends for recorded audio (read 2026-11-04;
+        // 3 Pro is no longer named there, though the endpoint still takes it). Measured the same day with
+        // natural speech: as good in English and German, and the only one of the two to spell both names
+        // of the names sample right. Everyone who never picked a model moves with it.
+        defaultTranscriptionModel = "universal-3-5-pro",
         curatedTranscriptionModels = ModelCatalog.idsOf("assemblyai", ModelRole.TRANSCRIPTION),
         // Realtime (#128) over wss streaming.assemblyai.com/v3/ws, billed by connection-open duration.
         // Ids from the endpoint's own list of accepted `speech_model` values (2026-10-20). 3.6 Pro covers
