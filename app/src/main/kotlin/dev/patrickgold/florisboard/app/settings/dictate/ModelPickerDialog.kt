@@ -43,6 +43,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
+import dev.patrickgold.florisboard.dictate.provider.ModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.ModelRole
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -135,30 +137,8 @@ fun ModelPickerDialog(
         }
     }
 
-    val curated = when (kind) {
-        ModelKind.TRANSCRIPTION -> preset.curatedTranscriptionModels
-        ModelKind.CHAT -> preset.curatedChatModels
-    }
-    val candidates = remember(curated, fetched, audioModelIds, transcriptionModelIds, query, current) {
-        // Gemini transcribes via its multimodal chat models, so its live STT catalog is the chat catalog
-        // rather than the keyword-filtered subset. Since #292 that is no longer the whole story: Google
-        // also ships dedicated STT models (gemini-3.5-transcribe), which the chat filter throws out by
-        // name. For Gemini's transcription list, accept either family.
-        val liveKind = if (preset.id == "gemini") ModelKind.CHAT else kind
-        val geminiStt = preset.id == "gemini" && kind == ModelKind.TRANSCRIPTION
-        // For transcription, also include models the catalog flagged by MODALITY — both audio-input chat
-        // models (#132) and dedicated STT models (#157) — so they surface even when the id doesn't match
-        // the name heuristic (e.g. OpenRouter's mai-transcribe / parakeet / chirp).
-        val audioForTranscription =
-            if (kind == ModelKind.TRANSCRIPTION) audioModelIds + transcriptionModelIds else emptyList()
-        val live = fetched.filter {
-            matchesKind(it, liveKind) || (geminiStt && matchesKind(it, ModelKind.TRANSCRIPTION))
-        }
-        (curated + audioForTranscription + live + current)
-            .map { it.trim() }
-            .filter { it.isNotEmpty() }
-            .distinct()
-            .filter { query.isBlank() || it.contains(query.trim(), ignoreCase = true) }
+    val candidates = remember(preset, kind, fetched, audioModelIds, transcriptionModelIds, query, current) {
+        pickerCandidates(preset, kind, fetched, audioModelIds, transcriptionModelIds, current, query)
     }
     val showFreeText = query.isNotBlank() && candidates.none { it.equals(query.trim(), ignoreCase = true) }
 
@@ -250,6 +230,50 @@ private fun ModelRow(label: String, selected: Boolean, onClick: () -> Unit) {
 }
 
 /**
+ * The ids [ModelPickerDialog] offers for [kind] at [preset], in order: the curated ones, those the live list
+ * flagged by modality, the rest of the live list ([fetched]) that fits, and the [current] choice, narrowed by
+ * [query].
+ */
+internal fun pickerCandidates(
+    preset: ProviderPreset,
+    kind: ModelKind,
+    fetched: List<String>,
+    audioModelIds: List<String>,
+    transcriptionModelIds: List<String>,
+    current: String,
+    query: String,
+): List<String> {
+    val curated = when (kind) {
+        ModelKind.TRANSCRIPTION -> preset.curatedTranscriptionModels
+        ModelKind.CHAT -> preset.curatedChatModels
+    }
+    // Gemini transcribes via its multimodal chat models, so its live STT catalog is the chat catalog
+    // rather than the keyword-filtered subset. Since #292 that is no longer the whole story: Google
+    // also ships dedicated STT models (gemini-3.5-transcribe), which the chat filter throws out by
+    // name. For Gemini's transcription list, accept either family.
+    val liveKind = if (preset.id == "gemini") ModelKind.CHAT else kind
+    val geminiStt = preset.id == "gemini" && kind == ModelKind.TRANSCRIPTION
+    // For transcription, also include models the catalog flagged by MODALITY — both audio-input chat
+    // models (#132) and dedicated STT models (#157) — so they surface even when the id doesn't match
+    // the name heuristic (e.g. OpenRouter's mai-transcribe / parakeet / chirp).
+    val audioForTranscription =
+        if (kind == ModelKind.TRANSCRIPTION) audioModelIds + transcriptionModelIds else emptyList()
+    // An id the model catalog knows is placed by what was measured about it; the name rules only guess for
+    // the rest. They used to put streaming-only models into the batch list, gpt-realtime-whisper by "whisper"
+    // and gpt-live-transcribe by "transcribe", where every upload to them failed.
+    val role = if (kind == ModelKind.TRANSCRIPTION) ModelRole.TRANSCRIPTION else ModelRole.CHAT
+    fun measured(id: String): Boolean? = ModelCatalog.spec(preset.id, id)?.let { role in it.roles }
+    val live = fetched.filter {
+        measured(it) ?: (matchesKind(it, liveKind) || (geminiStt && matchesKind(it, ModelKind.TRANSCRIPTION)))
+    }
+    return (curated + audioForTranscription.filter { measured(it) ?: true } + live + current)
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .distinct()
+        .filter { query.isBlank() || it.contains(query.trim(), ignoreCase = true) }
+}
+
+/**
  * Heuristic split of a raw catalog id into transcription vs. chat, since `/models` doesn't classify
  * them. Transcription ids contain a tell-tale token; everything else that isn't an embedding/TTS/image
  * model is treated as a chat model.
@@ -262,7 +286,9 @@ private fun matchesKind(id: String, kind: ModelKind): Boolean {
         l.contains("stt") || l.contains("asr") || l.contains("voxtral") || l.contains("chirp") ||
         l.contains("parakeet") || l.contains("speech")
     return when (kind) {
-        ModelKind.TRANSCRIPTION -> isStt
+        // Not a streaming model (one upload is all it never takes) and not a voice that speaks: Mistral's
+        // live list holds voxtral-mini-transcribe-realtime-3 and voxtral-mini-tts-3 (2026-11-03).
+        ModelKind.TRANSCRIPTION -> isStt && !l.contains("realtime") && !l.contains("tts")
         ModelKind.CHAT -> !isStt &&
             !l.contains("embedding") && !l.contains("tts") && !l.contains("dall-e") &&
             !l.contains("image") && !l.contains("moderation") && !l.contains("rerank") &&
