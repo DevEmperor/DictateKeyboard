@@ -890,9 +890,10 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
                     audioFile = audio,
                     model = "MAI-Transcribe-2",
                     language = "de",
-                    // The hint the app actually composes: the punctuation sample sentence with the
-                    // user's glossary appended behind it (DictatePromptDefaults.appendCustomWords).
+                    // What the app sends: the punctuation sample sentence with the user's glossary appended
+                    // behind it (DictatePromptDefaults.appendCustomWords), and the glossary on its own.
                     prompt = "Hallo. Vielen Dank. DevEmperor, Dictate",
+                    vocabulary = listOf("DevEmperor", "Dictate"),
                 ),
             )
             val recorded = server.takeRequest()
@@ -913,10 +914,9 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             // The point of the whole provider: fillers and false starts dropped before we ever see them.
             body shouldContain "\"transcribeStyle\":\"clean\""
             body shouldContain "\"locales\":[\"de\"]"
-            // The style hint has no prose slot on a dedicated STT model, so its terms bias recognition —
-            // and the sample sentence in front of them must not come along. Azure calls this field
-            // keyword biasing, so "Hallo. Vielen Dank." in it would nudge every dictation towards a
-            // greeting nobody asked for.
+            // A dedicated STT model has no prose slot, so the custom words bias recognition and the sample
+            // sentence stays behind. Azure calls this field keyword biasing, so "Hallo. Vielen Dank." in
+            // it would nudge every dictation towards a greeting nobody asked for.
             body shouldContain "\"phrases\":[\"DevEmperor\",\"Dictate\"]"
             body shouldNotContain "Vielen Dank"
         }
@@ -1049,21 +1049,6 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         OpenAiCompatibleClient.azureSupportsTranscribeStyle("MAI-Transcribe-3") shouldBe true
         OpenAiCompatibleClient.azureSupportsTranscribeStyle("mai-transcribe-1.5") shouldBe false
         OpenAiCompatibleClient.azureSupportsTranscribeStyle("MAI-Transcribe-1") shouldBe false
-    }
-
-    // A vocabulary term is a name, and a name has no full stop with a space behind it. Shared by Azure's
-    // phraseList (#349) and Google's custom_vocabulary (#292), which had the same leak.
-    test("a bias term never carries the sentence that stood in front of it") {
-        // What the leak looked like: the glossary's first entry arrives welded to the sample sentence.
-        OpenAiCompatibleClient.afterLastSentenceEnd("Hallo. Vielen Dank. DevEmperor") shouldBe "DevEmperor"
-        OpenAiCompatibleClient.afterLastSentenceEnd("你好。谢谢。 Dictate") shouldBe "Dictate"
-        OpenAiCompatibleClient.afterLastSentenceEnd("नमस्ते। धन्यवाद। Dictate") shouldBe "Dictate"
-
-        // Everything that was already a term comes through untouched — including the abbreviation that
-        // ends in a stop, which is why the rule asks for the space rather than the stop alone.
-        listOf("DevEmperor", "FlorisBoard", "Dr.", "z.B.", "Anna-Lena Müller").forAll {
-            OpenAiCompatibleClient.afterLastSentenceEnd(it) shouldBe it
-        }
     }
 
     // --- Scaleway (issue #423) ---
@@ -1273,7 +1258,7 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
     }
 
     // The three ways this endpoint differs from OpenAI's, each held here: the path and its fields, the
-    // file part last, and the vocabulary as `keyterm` with the sample sentence left behind.
+    // file part last, and the custom words as `keyterm` with the sample sentence left behind.
     test("xAI sends every field before the file, and the glossary as key terms") {
         val audio = createTempFile(suffix = ".wav").toFile().apply {
             writeBytes("RIFF-test-audio".encodeToByteArray())
@@ -1299,6 +1284,9 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
                         language = "de",
                         prompt = "Hallo. Vielen Dank. DevEmperor, Dictate, " +
                             "Donaudampfschifffahrtsgesellschaftskapitänswitwenrente",
+                        vocabulary = listOf(
+                            "DevEmperor", "Dictate", "Donaudampfschifffahrtsgesellschaftskapitänswitwenrente",
+                        ),
                     ),
                 )
                 val recorded = server.takeRequest()
@@ -1395,26 +1383,6 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
                 "Incorrect API key provided. You can obtain an API key from https://console.x.ai."
             error.code shouldBe "invalid-argument"
             server.requestCount shouldBe 1
-        }
-    }
-
-    // The bare sample sentence is the whole hint whenever the glossary is empty, and its last sentence
-    // used to come through as a two-word bias term for every dedicated STT model (#435).
-    test("a hint with no glossary behind its sample sentence yields no bias term") {
-        listOf(
-            "Hallo. Vielen Dank.",
-            "Hello. Thank you very much.",
-            "สวัสดี. ขอบคุณมาก.",
-            "你好。非常感谢。",
-            "こんにちは。どうもありがとうございます。",
-            "नमस्ते। बहुत-बहुत धन्यवाद।",
-        ).forAll { OpenAiCompatibleClient.vocabularyTermOf(it) shouldBe null }
-
-        OpenAiCompatibleClient.vocabularyTermOf("Hallo. Vielen Dank. DevEmperor") shouldBe "DevEmperor"
-        OpenAiCompatibleClient.vocabularyTermOf("你好。非常感谢。 DevEmperor") shouldBe "DevEmperor"
-        OpenAiCompatibleClient.vocabularyTermOf("Dr. Meier") shouldBe "Meier"
-        listOf("DevEmperor", "Dr.", "z.B.", "Anna-Lena Müller", "FlorisBoard").forAll {
-            OpenAiCompatibleClient.vocabularyTermOf(" $it ") shouldBe it
         }
     }
 

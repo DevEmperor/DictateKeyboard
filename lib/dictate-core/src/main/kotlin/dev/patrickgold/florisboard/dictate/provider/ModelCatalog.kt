@@ -140,13 +140,17 @@ object ModelCatalog {
             "openai/gpt-6-luna", C, effort("none", "low", "medium", "high", "xhigh", whenOmitted = "medium"),
             verified = NOV_4, note = "OpenRouter takes every word and maps it; listed are Luna's own.",
         ),
-        ModelSpec("openai/gpt-transcribe", T, verified = NOV_3, note = "OpenRouter takes the prompt and ignores it."),
+        ModelSpec(
+            "openai/gpt-transcribe", T, verified = NOV_4,
+            note = "OpenRouter ignores a top-level prompt; sent as provider options it arrives (2026-11-04).",
+        ),
         ModelSpec("microsoft/mai-transcribe-2", T, verified = NOV_3),
         ModelSpec("mistralai/voxtral-mini-transcribe", T, verified = NOV_3),
         ModelSpec(
             "deepgram/nova-3", T, verified = NOV_4,
             note = "No language detection through OpenRouter: German natural speech without a language came back " +
-                "as \"Hello.\", with the language set 88 % of the words (2026-11-04). Deepgram's own API detects it.",
+                "as \"Hello.\", with the language set 88 % of the words (2026-11-04). Deepgram's own API detects it. " +
+                "No custom words either: OpenRouter drops Deepgram's provider options.",
         ),
         ModelSpec("openai/whisper-large-v3-turbo", T, verified = NOV_3),
         ModelSpec("openai/whisper-large-v3", T, verified = NOV_3),

@@ -48,6 +48,7 @@ class WearPublisherCoverageTest {
     private val resolverSources = listOf(
         "wear/PhoneWearSettingsResolver.kt",
         "DictateReasoningEffort.kt",
+        "TranscriptionPrompt.kt",
     )
 
     private val published by lazy { source("wear/DictateWearPublisher.kt") }

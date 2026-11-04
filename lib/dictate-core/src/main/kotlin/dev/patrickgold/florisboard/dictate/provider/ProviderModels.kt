@@ -101,8 +101,15 @@ data class TranscriptionRequest(
      * every model that hints a single language.
      */
     val expectedLanguages: List<String> = emptyList(),
-    /** Optional style/punctuation prompt to bias recognition. */
+    /** Optional style/punctuation prompt to bias recognition, the user's custom words appended to it. */
     val prompt: String? = null,
+    /**
+     * The user's custom words one by one (issue #466), for the providers whose field takes a list of terms
+     * instead of prose: Deepgram, AssemblyAI, ElevenLabs, Azure, xAI, Gemini's transcription models, Voxtral.
+     * The same words are in [prompt] for everyone else. Each wire format keeps what its field takes
+     * ([VocabularyField]).
+     */
+    val vocabulary: List<String> = emptyList(),
     /**
      * Called while the audio is going out, with the bytes sent and the total (issue #337).
      *

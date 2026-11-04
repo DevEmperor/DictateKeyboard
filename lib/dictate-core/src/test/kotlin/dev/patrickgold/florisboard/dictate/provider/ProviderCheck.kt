@@ -245,10 +245,17 @@ private class Check(
     }
 
     private suspend fun batch(preset: ProviderPreset, client: OpenAiCompatibleClient, model: String, scrub: (String) -> String) {
-        suspend fun once(probe: String, file: String, language: String?, prompt: String?, expected: String?, mustHave: List<String>) {
+        suspend fun once(
+            probe: String, file: String, language: String?, words: List<String>, expected: String?, mustHave: List<String>,
+        ) {
             val (text, ms, error) = timed {
                 client.transcribe(
-                    TranscriptionRequest(audioFile = File(fixtures, file), model = model, language = language, prompt = prompt),
+                    TranscriptionRequest(
+                        audioFile = File(fixtures, file), model = model, language = language,
+                        // As the app sends custom words with no style prompt: in the prompt and as the list.
+                        prompt = DictatePromptDefaults.appendCustomWords(null, words.joinToString(", ")),
+                        vocabulary = words,
+                    ),
                     onRetry = {},
                 ).text
             }
@@ -258,18 +265,32 @@ private class Check(
             }
             val score = expected?.let { " · ${overlap(expected, text)}% of words" }.orEmpty()
             val found = mustHave.takeIf { it.isNotEmpty() }?.let { w ->
-                " · names: " + w.joinToString { if (text.contains(it, ignoreCase = true)) "$it ✓" else "$it ✗" }
+                " · words: " + w.joinToString { if (text.contains(it, ignoreCase = true)) "$it ✓" else "$it ✗" }
             }.orEmpty()
             add(preset, "batch", model, probe, "OK", "\"${scrub(text).take(140)}\"$score$found", ms)
         }
-        once("en, auto", "en.wav", null, null, enText, emptyList())
+        once("en, auto", "en.wav", null, emptyList(), enText, emptyList())
         if (speaks(preset, model, "de")) {
-            once("de, language=de", "de.wav", "de", null, deText, emptyList())
-            once("de, auto", "de.wav", null, null, deText, emptyList())
+            once("de, language=de", "de.wav", "de", emptyList(), deText, emptyList())
+            once("de, auto", "de.wav", null, emptyList(), deText, emptyList())
         }
-        once("names, no prompt", "names.wav", null, null, null, listOf("Siobhan", "Niamh"))
-        once("names, prompt", "names.wav", null, "Names: Siobhan, Niamh.", null, listOf("Siobhan", "Niamh"))
+        for (probe in wordProbes) {
+            once("${probe.name}, no words", "${probe.name}.wav", null, emptyList(), null, probe.words)
+            once("${probe.name}, custom words", "${probe.name}.wav", null, probe.words, null, probe.words)
+        }
     }
+
+    /**
+     * Speech with words a model rarely spells right on its own, and the custom words that should fix them
+     * (#466). Names: Irish names said properly. Terms: an invented brand and two Irish names, spoken as they
+     * sound ("Kwindra", "Eevin", "Keeva") for models that already know the names.
+     */
+    private class WordProbe(val name: String, val words: List<String>)
+
+    private val wordProbes = listOf(
+        WordProbe("names", listOf("Siobhan", "Niamh")),
+        WordProbe("terms", listOf("Qwyndra", "Aoibheann", "Caoimhe")),
+    ).filter { File(fixtures, "${it.name}.wav").exists() }
 
     private suspend fun formats(preset: ProviderPreset, client: OpenAiCompatibleClient, model: String, scrub: (String) -> String) {
         for (ext in listOf("wav", "mp3", "m4a", "ogg", "flac", "webm", "aac", "amr")) {
@@ -321,10 +342,19 @@ private class Check(
         model: String,
         scrub: (String) -> String,
     ) {
-        for ((lang, expected) in listOf("en" to enText, "de" to deText)) {
+        class Stream(val label: String, val file: String, val lang: String, val expected: String?, val words: List<String>)
+        val rate = RealtimeClient.sampleRateFor(api)
+        val streams = listOf(Stream("en", "en", "en", enText, emptyList()), Stream("de", "de", "de", deText, emptyList())) +
+            wordProbes.filter { File(fixtures, "${it.name}_$rate.pcm").exists() }.flatMap { probe ->
+                listOf(
+                    Stream("${probe.name}, no words", probe.name, "en", null, emptyList()),
+                    Stream("${probe.name}, custom words", probe.name, "en", null, probe.words),
+                )
+            }
+        for (stream in streams) {
+            val lang = stream.lang
             if (!speaks(preset, model, lang)) continue
-            val rate = RealtimeClient.sampleRateFor(api)
-            val pcm = File(fixtures, "${lang}_$rate.pcm").readBytes()
+            val pcm = File(fixtures, "${stream.file}_$rate.pcm").readBytes()
             val finals = StringBuilder()
             var lastPartial = ""
             var failure: Throwable? = null
@@ -343,6 +373,7 @@ private class Check(
                     override fun onClosed() { closed.countDown() }
                 },
                 baseUrl = baseUrl,
+                vocabulary = stream.words,
             )
             // 100 ms chunks in real time, as a microphone delivers them: at twice the speed Gemini Live heard
             // nothing and AssemblyAI's multilingual model next to nothing (2026-11-03).
@@ -367,11 +398,15 @@ private class Check(
             if (!ended) session.cancel()
             val ms = System.currentTimeMillis() - started
             val text = finals.toString().trim().ifEmpty { lastPartial }
+            val score = stream.expected?.let { " · ${overlap(it, text)}% of words" }
+                ?: wordProbes.first { it.name == stream.file }.words
+                    .joinToString(prefix = " · words: ") { if (text.contains(it, ignoreCase = true)) "$it ✓" else "$it ✗" }
+            val label = stream.label
             when {
-                failure != null -> add(preset, "realtime", model, lang, "FAIL", scrub(failure.toString()), ms)
-                text.isBlank() -> add(preset, "realtime", model, lang, "EMPTY", if (ended) "closed without text" else "no end after 30 s", ms)
-                else -> add(preset, "realtime", model, lang, "OK",
-                    "\"${scrub(text).take(120)}\" · ${overlap(expected, text)}% of words${if (ended) "" else " · no close"}", ms)
+                failure != null -> add(preset, "realtime", model, label, "FAIL", scrub(failure.toString()), ms)
+                text.isBlank() -> add(preset, "realtime", model, label, "EMPTY", if (ended) "closed without text" else "no end after 30 s", ms)
+                else -> add(preset, "realtime", model, label, "OK",
+                    "\"${scrub(text).take(120)}\"$score${if (ended) "" else " · no close"}", ms)
             }
         }
     }
@@ -477,6 +512,10 @@ private class Check(
                     note("`$model` $part: ${failed.size} of ${tried.size} failed (${failed.first().probe}: ${failed.first().detail.take(120)})")
                 }
                 weak.forEach { note("`$model` $part ${it.probe}: ${Regex("""\d+% of words""").find(it.detail)!!.value}") }
+                // The client asked again without the custom words: the field or one of its limits has changed.
+                tried.filter { "fallingBack=without them" in it.detail }.forEach {
+                    note("`$model` $part ${it.probe}: refused the custom words (${it.detail.substringAfter("⚠").take(120)})")
+                }
             }
             val claimed = ProviderRegistry.byId(provider)?.acceptedAudioContainers?.map { it.name.lowercase() }.orEmpty()
             val formats = list.filter { it.part == "formats" }

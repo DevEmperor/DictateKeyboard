@@ -169,6 +169,11 @@ data class DictateSyncedSettings(
     val languageName: String? = null,
     /** Style/punctuation prompt biasing recognition (already includes the custom-words glossary), or null. */
     val stylePrompt: String? = null,
+    /**
+     * The custom words one by one, for the providers that take a list of terms rather than the prompt
+     * (#466). Optional both ways: an older watch ignores the key, and an older phone leaves it out.
+     */
+    val customWords: List<String> = emptyList(),
     /** Phone accent color as a packed ARGB int, so the watch UI themes itself like the phone. */
     val accentColorArgb: Int = DEFAULT_ACCENT_ARGB,
     /**

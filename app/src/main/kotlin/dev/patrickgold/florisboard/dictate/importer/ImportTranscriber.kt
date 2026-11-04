@@ -20,6 +20,8 @@ import dev.patrickgold.florisboard.dictate.audio.AudioDecode
 import dev.patrickgold.florisboard.dictate.audio.AudioWav
 import dev.patrickgold.florisboard.dictate.audio.AudioSpeedUp
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
+import dev.patrickgold.florisboard.dictate.customWordList
+import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
@@ -28,6 +30,8 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.transcriptTighteningSymbols
+import dev.patrickgold.florisboard.dictate.transcriptionStyleBasePrompt
+import dev.patrickgold.florisboard.dictate.transcriptionStylePrompt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -312,8 +316,11 @@ object ImportTranscriber {
                 activeCode = language,
                 selectionRaw = prefs.dictate.inputLanguages.get(),
             ),
+            // The keyboard's prompt and custom words (#466), with the sample sentence in the file's language.
+            prompt = transcriptionStylePrompt(prefs, language),
+            vocabulary = customWordList(prefs),
         )
-        return if (onDevice) {
+        val text = if (onDevice) {
             LocalTranscriptionProvider(
                 LocalTranscriptionProvider.modelDir(appContext, model),
                 // Bounded like every other on-device decode (#354), on the same upwards-only terms as the
@@ -347,6 +354,9 @@ object ImportTranscriber {
                 ),
             ).transcribe(request).text.trim()
         }
+        // A silent piece can come back as the sample sentence, as on the keyboard (#77): it is nothing said.
+        val echo = DictatePromptDefaults.looksLikeStylePromptEcho(text, transcriptionStyleBasePrompt(prefs, language))
+        return if (echo) "" else text
     }
 
     /** The provider this import uses: the one configured for transcription, like every other path. */

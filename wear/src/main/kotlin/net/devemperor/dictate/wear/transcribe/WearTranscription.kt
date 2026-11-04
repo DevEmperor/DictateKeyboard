@@ -107,6 +107,7 @@ object WearTranscription {
                 model = settings.model,
                 language = settings.language,
                 prompt = settings.stylePrompt,
+                vocabulary = settings.customWords,
             )
         ).text.trim()
         return maybeReword(settings, transcript, onRewording)

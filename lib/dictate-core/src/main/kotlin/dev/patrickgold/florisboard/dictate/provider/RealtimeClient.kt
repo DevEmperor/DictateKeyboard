@@ -95,6 +95,10 @@ object RealtimeClient {
      * gpt-transcribe generation, Soniox, Gemini, AssemblyAI's Pro model), and only when no language is
      * pinned: it turns auto-detect into detection among the languages the user dictates in (issue #99).
      *
+     * [vocabulary] is the user's custom words (issue #466), which every socket here takes as a list of
+     * terms in its setup, and none as prose; each keeps what its field allows ([VocabularyField]). A
+     * session is set up once, so the list is the one the dictation started with.
+     *
      * [proxy] and [trustUserCerts] are the same network settings the batch client gets, so the socket
      * leaves through the user's proxy and accepts their own CA like every other request does.
      */
@@ -106,10 +110,12 @@ object RealtimeClient {
         callbacks: RealtimeCallbacks,
         baseUrl: String? = null,
         expectedLanguages: List<String> = emptyList(),
+        vocabulary: List<String> = emptyList(),
         proxy: ProxyConfig? = null,
         trustUserCerts: Boolean = false,
     ): RealtimeSession = openWith(
         clientFor(proxy, trustUserCerts), api, apiKey, model, language, callbacks, baseUrl, expectedLanguages,
+        vocabulary,
     )
 
     /**
@@ -132,23 +138,28 @@ object RealtimeClient {
         callbacks: RealtimeCallbacks,
         baseUrl: String?,
         expectedLanguages: List<String>,
+        vocabulary: List<String>,
     ): RealtimeSession = when (api) {
         RealtimeApi.OPENAI ->
-            OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages)
+            OpenAiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages, vocabulary)
                 .also { it.connect() }
-        RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.DEEPGRAM ->
+            DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks, vocabulary).also { it.connect() }
         RealtimeApi.SONIOX ->
-            SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages)
+            SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages, vocabulary)
                 .also { it.connect() }
         RealtimeApi.ASSEMBLYAI ->
-            AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
+            AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages, vocabulary)
                 .also { it.connect() }
-        RealtimeApi.ELEVENLABS -> ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.ELEVENLABS ->
+            ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks, vocabulary).also { it.connect() }
         RealtimeApi.GEMINI ->
-            GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
+            GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages, vocabulary)
                 .also { it.connect() }
+        // Off in the preset (#128) and its protocol unconfirmed, so it gets no words: Voxtral's documented
+        // `context_bias` belongs to a session message this one does not send.
         RealtimeApi.MISTRAL_VOXTRAL -> MistralRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
-        RealtimeApi.XAI -> XaiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.XAI -> XaiRealtimeSession(wsClient, apiKey, model, language, callbacks, vocabulary).also { it.connect() }
     }
 }
 
@@ -195,9 +206,13 @@ private class OpenAiRealtimeSession(
     private val callbacks: RealtimeCallbacks,
     private val baseUrl: String? = null,
     expectedLanguages: List<String> = emptyList(),
+    vocabulary: List<String> = emptyList(),
 ) : RealtimeSession {
 
     private val languageHints = languageHintsOf(language, expectedLanguages)
+
+    // The gpt-transcribe generation takes `keywords`; gpt-realtime-whisper takes neither it nor a prompt.
+    private val keywords = if (usesLanguagesField(model)) VocabularyField.OPENAI.fit(vocabulary) else emptyList()
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -304,6 +319,9 @@ private class OpenAiRealtimeSession(
                         } else if (!language.isNullOrBlank() && language != "detect") {
                             put("language", language)
                         }
+                        if (keywords.isNotEmpty()) {
+                            put("keywords", buildJsonArray { keywords.forEach { add(JsonPrimitive(it)) } })
+                        }
                     })
                     // No server-side turn detection: Dictate decides when a dictation ends and commits the
                     // buffer itself, so letting the server also cut turns would segment the same audio a
@@ -389,9 +407,11 @@ private class SonioxRealtimeSession(
     private val callbacks: RealtimeCallbacks,
     private val wsUrl: String? = null,
     expectedLanguages: List<String> = emptyList(),
+    vocabulary: List<String> = emptyList(),
 ) : RealtimeSession {
 
     private val languageHints = languageHintsOf(language, expectedLanguages)
+    private val terms = VocabularyField.SONIOX.fit(vocabulary)
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -447,6 +467,10 @@ private class SonioxRealtimeSession(
         // Soniox hints a list, so auto-detect can still name the languages the user dictates in (#99).
         if (languageHints.isNotEmpty()) {
             put("language_hints", buildJsonArray { languageHints.forEach { add(it) } })
+        }
+        // The custom words (#466) in the documented object; the file endpoint still takes a plain string.
+        if (terms.isNotEmpty()) {
+            putJsonObject("context") { put("terms", buildJsonArray { terms.forEach { add(it) } }) }
         }
     }.toString()
 
@@ -510,9 +534,13 @@ internal class AssemblyAiRealtimeSession(
     language: String?,
     private val callbacks: RealtimeCallbacks,
     expectedLanguages: List<String> = emptyList(),
+    vocabulary: List<String> = emptyList(),
     /** The socket address without its query — AssemblyAI's own, except in tests. */
     private val endpoint: String = URL,
 ) : RealtimeSession {
+
+    // Included in the price on the Pro and multilingual models, $0.04 an hour on Universal-Streaming English.
+    private val keyterms = VocabularyField.ASSEMBLYAI_STREAMING.fit(vocabulary)
 
     // Blank, or the id this preset used to show: neither is a value the server accepts (it refuses the
     // session with error 3006), and both meant "the provider's default".
@@ -566,6 +594,11 @@ internal class AssemblyAiRealtimeSession(
         if (languageCodes.isNotEmpty()) {
             val list = buildJsonArray { languageCodes.forEach { add(it) } }.toString()
             append("&language_codes=").append(URLEncoder.encode(list, "UTF-8"))
+        }
+        // A JSON array as well, for the same reason (#466).
+        if (keyterms.isNotEmpty()) {
+            val list = buildJsonArray { keyterms.forEach { add(it) } }.toString()
+            append("&keyterms_prompt=").append(URLEncoder.encode(list, "UTF-8"))
         }
         if (speechModel in FORMAT_TURNS_MODELS) append("&format_turns=true")
     }
@@ -656,7 +689,8 @@ internal class AssemblyAiRealtimeSession(
  * ElevenLabs Scribe realtime over `wss://api.elevenlabs.io/v1/speech-to-text/realtime` (config in query
  * params, `xi-api-key` header). 16 kHz mono PCM16 is sent base64 in `input_audio_chunk` messages;
  * `partial_transcript`/`committed_transcript` messages carry the text in `text`. `finish()` sends a final
- * chunk with `commit:true` so the server flushes the last committed transcript.
+ * chunk with `commit:true` so the server flushes the last committed transcript. The custom words go as
+ * `keyterms`, repeated in the query (#466), at a surcharge.
  */
 private class ElevenLabsRealtimeSession(
     private val client: OkHttpClient,
@@ -664,17 +698,20 @@ private class ElevenLabsRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    vocabulary: List<String> = emptyList(),
 ) : RealtimeSession {
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
     private val audioGate = RealtimeAudioGate()
+    private val keyterms = VocabularyField.ELEVENLABS_STREAMING.fit(vocabulary)
     @Volatile private var done = false
 
     fun connect() {
         val lang = if (!language.isNullOrBlank() && language != "detect") "&language_code=$language" else ""
+        val terms = keyterms.joinToString("") { "&keyterms=" + URLEncoder.encode(it, "UTF-8") }
         val url = "wss://api.elevenlabs.io/v1/speech-to-text/realtime" +
-            "?model_id=$model&audio_format=pcm_16000&commit_strategy=vad$lang"
+            "?model_id=$model&audio_format=pcm_16000&commit_strategy=vad$lang$terms"
         val request = Request.Builder().url(url).header("xi-api-key", apiKey).build()
         ws = client.newWebSocket(request, listener)
     }
@@ -783,9 +820,11 @@ private class GeminiRealtimeSession(
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
     expectedLanguages: List<String> = emptyList(),
+    vocabulary: List<String> = emptyList(),
 ) : RealtimeSession {
 
     private val languageHints = languageHintsOf(language, expectedLanguages)
+    private val customVocabulary = VocabularyField.GEMINI.fit(vocabulary)
 
     private val json = Json { ignoreUnknownKeys = true; isLenient = true }
     private var ws: WebSocket? = null
@@ -885,6 +924,10 @@ private class GeminiRealtimeSession(
                 // VERBATIM would hand all of that to the rewording step instead — for a keyboard, clean
                 // text on arrival is worth more than a faithful record of the stumbles.
                 put("mode", "SMART")
+                // The custom words (#466), beside the languages as Google documents them.
+                if (customVocabulary.isNotEmpty()) {
+                    put("customVocabulary", buildJsonArray { customVocabulary.forEach { add(it) } })
+                }
             }
         }
     }.toString()
@@ -1076,6 +1119,7 @@ internal class DeepgramRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    private val vocabulary: List<String> = emptyList(),
     /** Scheme and host — Deepgram's own, except in tests. */
     private val host: String = HOST,
 ) : RealtimeSession {
@@ -1100,7 +1144,8 @@ internal class DeepgramRealtimeSession(
     private fun listenUrl(): String {
         val lang = pinnedLanguage?.let { "&language=$it" }.orEmpty()
         return "$host/v1/listen?model=$model" +
-            "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang"
+            "&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true$lang" +
+            OpenAiCompatibleClient.deepgramVocabularyQuery(model, vocabulary)
     }
 
     /**
@@ -1113,7 +1158,8 @@ internal class DeepgramRealtimeSession(
             ?.takeIf { model.endsWith("multi") }
             ?.let { "&language_hint=${it.substringBefore('-')}" }
             .orEmpty()
-        return "$host/v2/listen?model=$model&encoding=linear16&sample_rate=16000$hint"
+        return "$host/v2/listen?model=$model&encoding=linear16&sample_rate=16000$hint" +
+            OpenAiCompatibleClient.deepgramVocabularyQuery(model, vocabulary)
     }
 
     private companion object { const val HOST = "wss://api.deepgram.com" }
@@ -1229,6 +1275,7 @@ internal class XaiRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    private val vocabulary: List<String> = emptyList(),
     /** The socket address without its query — xAI's own, except in tests. */
     private val endpoint: String = URL,
 ) : RealtimeSession {
@@ -1248,6 +1295,8 @@ internal class XaiRealtimeSession(
         append(endpoint).append("?sample_rate=16000&encoding=pcm&interim_results=true")
         if (model.isNotBlank()) append("&model=").append(URLEncoder.encode(model, "UTF-8"))
         OpenAiCompatibleClient.xaiLanguage(language)?.let { append("&language=").append(it) }
+        // The custom words (#466), repeated as on the file endpoint.
+        VocabularyField.XAI.fit(vocabulary).forEach { append("&keyterm=").append(URLEncoder.encode(it, "UTF-8")) }
     }
 
     fun connect() {

@@ -2193,7 +2193,10 @@ object DictateController {
                     expectedLanguages = if (chatAudio) emptyList() else expectedLanguages(),
                     // Non-chat: style/punctuation prompt biases recognition (roadmap 2.4 / 4.11).
                     // Chat-audio: the full instruction (language + style + all auto-formatting) in one go.
-                    prompt = if (chatAudio) buildChatAudioInstruction(appContext) else transcriptionStylePrompt(),
+                    prompt = if (chatAudio) buildChatAudioInstruction(appContext) else transcriptionStylePrompt(prefs),
+                    // The same words one by one, for the providers that take a list (#466). Single-call has
+                    // them in its instruction already.
+                    vocabulary = if (chatAudio) emptyList() else customWordList(prefs),
                 )
                 val providerStartedNanos = SystemClock.elapsedRealtimeNanos()
                 val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
@@ -2278,7 +2281,7 @@ object DictateController {
                 // "This sentence has capitalization and punctuation."). If the result is just that prompt
                 // echoed, treat it as no speech and drop it instead of dumping the prompt into the field.
                 // Skipped for the chat-audio path, whose prompt is an instruction, not a Whisper style hint.
-                if (!chatAudio && DictatePromptDefaults.looksLikeStylePromptEcho(result.text, transcriptionStyleBasePrompt())) {
+                if (!chatAudio && DictatePromptDefaults.looksLikeStylePromptEcho(result.text, transcriptionStyleBasePrompt(prefs))) {
                     outcome = "promptEcho"
                     // Nothing was said, so nothing failed: take the placeholder (#358) back out rather
                     // than leaving a red row offering to re-transcribe silence.
@@ -2889,6 +2892,8 @@ object DictateController {
                     // Same as the batch path: the providers with a list-shaped language field hear
                     // which languages to expect instead of nothing at all (#99).
                     expectedLanguages = expectedLanguages(),
+                    // Real-time sends no style prompt, only the custom words, as a list (#466).
+                    vocabulary = customWordList(prefs),
                     proxy = prefs.dictate.dictateProxyConfig(),
                     trustUserCerts = account.trustUserCerts,
                 )
@@ -3425,7 +3430,7 @@ object DictateController {
             fallbackIdFor(appContext, account)
         }
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
-        val style = transcriptionStylePrompt()
+        val style = transcriptionStylePrompt(prefs)
         val prompt = continuity.takeLast(200).trim().let { if (it.isEmpty()) style else "$it $style".trim() }
         // Time compression (issue #272): every segment is billed on its own, so the speed-up belongs here
         // too — this is where a long dictation's duration actually adds up. Segments are transcribed
@@ -3451,7 +3456,7 @@ object DictateController {
         }
         val request = TranscriptionRequest(
             audioFile = packed ?: toUpload, model = model, language = language, prompt = prompt,
-            expectedLanguages = expectedLanguages(),
+            expectedLanguages = expectedLanguages(), vocabulary = customWordList(prefs),
         )
         var fallbackEngine: HistoryEngine? = null
         return try {
@@ -4901,27 +4906,6 @@ object DictateController {
         else -> ""
     }
 
-    /**
-     * Style/punctuation prompt sent with the transcription request (independent of rewording). The
-     * user's custom words (roadmap 11.12) are appended on top of whichever style prompt is active, so
-     * names/jargon are spelled correctly even with the predefined punctuation prompt or with none.
-     */
-    private fun transcriptionStylePrompt(): String? =
-        DictatePromptDefaults.appendCustomWords(transcriptionStyleBasePrompt(), prefs.dictate.customWords.get())
-
-    /**
-     * The style prompt WITHOUT the appended custom-words glossary — the predefined per-language sentence or
-     * the user's custom style prompt. This is the part a Whisper-style model echoes on silence, so the
-     * prompt-echo guard (#77) compares against it rather than the full prompt (whose trailing glossary
-     * would otherwise throw off the overlap check).
-     */
-    private fun transcriptionStyleBasePrompt(): String? = when (prefs.dictate.stylePromptSelection.get()) {
-        DictatePromptDefaults.SELECTION_PREDEFINED ->
-            DictatePromptDefaults.punctuationPromptFor(prefs.dictate.activeInputLanguage.get())
-        DictatePromptDefaults.SELECTION_CUSTOM ->
-            prefs.dictate.stylePromptCustom.get().takeIf { it.isNotBlank() }
-        else -> null
-    }
 
     /**
      * The instruction sent alongside the audio in the single-call multimodal path (issue #130). Folds
@@ -4942,7 +4926,7 @@ object DictateController {
         // Everything from here on is an *instruction*, and the wrapper this ends up inside tells the
         // model they "may change the wording or even the language".
         val instructionsFrom = parts.size
-        transcriptionStylePrompt()?.takeIf { it.isNotBlank() }?.let { parts.add(it) }
+        transcriptionStylePrompt(prefs)?.takeIf { it.isNotBlank() }?.let { parts.add(it) }
         // Formatting/rewording is folded in only when the user has rewording enabled (mirrors
         // postProcessTranscript's gating), so single-call output matches the two-call output.
         if (prefs.dictate.rewordingEnabled.get()) {

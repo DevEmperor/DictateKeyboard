@@ -25,7 +25,10 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Headers
@@ -41,6 +44,7 @@ import okhttp3.Response
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
+import java.net.URLEncoder
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import java.time.Duration
@@ -249,7 +253,28 @@ class OpenAiCompatibleClient(
         // Single-call multimodal (issue #130): route audio through chat/completions with input_audio,
         // overriding the dedicated STT endpoint, so one request transcribes and formats together.
         config.useChatAudio -> transcribeViaChatAudio(request, onRetry)
-        else -> transcribeByApi(request, onRetry)
+        else -> transcribeKeepingVocabularyOptional(request, onRetry)
+    }
+
+    /**
+     * [transcribeByApi], and once more without the custom words if a request carrying them was refused
+     * (#466). The words are a hint, and a hint must never cost a dictation: a vendor can count a limit in a
+     * unit the app cannot reproduce ([VocabularyField.DEEPGRAM_KEYTERM]), tighten it, or start refusing a
+     * character. A refusal that had nothing to do with the words comes back the second time as well, at the
+     * price of one request.
+     */
+    private suspend fun transcribeKeepingVocabularyOptional(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult = try {
+        transcribeByApi(request, onRetry)
+    } catch (e: DictateApiException) {
+        if (request.vocabulary.isEmpty() || (e.httpStatus != 400 && e.httpStatus != 422)) throw e
+        DictateHttpLog.warn(
+            "STT model=${sanitizeForLog(request.model)} refused status=${e.httpStatus} with " +
+                "${request.vocabulary.size} custom words; fallingBack=without them",
+        )
+        transcribeByApi(request.copy(vocabulary = emptyList()), onRetry)
     }
 
     private suspend fun transcribeByApi(
@@ -290,21 +315,36 @@ class OpenAiCompatibleClient(
         onUpload: ((sent: Long, total: Long) -> Unit)?,
     ): RequestBody = if (onUpload == null) this else ProgressRequestBody(this, onUpload)
 
-    /** OpenAI-style `multipart/form-data` upload (OpenAI, Groq, Mistral, most custom servers). */
+    /**
+     * OpenAI-style `multipart/form-data` upload (OpenAI, Groq, Mistral, most custom servers).
+     *
+     * Voxtral reads no `prompt`: with the names sample, "Niamh" came back as "Neve" with and without one
+     * (2026-11-03). Its field for names and jargon is `context_bias`, once per entry, and with the same two
+     * names in it voxtral-mini-latest wrote "Niamh" (2026-11-04). The prompt still goes along for every
+     * other model this wire format reaches.
+     */
     private suspend fun transcribeMultipart(
         request: TranscriptionRequest,
         onRetry: (attempt: Int) -> Unit,
     ): TranscriptionResult {
-        val httpRequest = buildMultipartTranscriptionRequest(request)
+        val httpRequest = buildMultipartTranscriptionRequest(request) {
+            if (usesContextBias(request.model)) {
+                VocabularyField.MISTRAL.fit(request.vocabulary).forEach { addFormDataPart("context_bias", it) }
+            }
+        }
         val body = executeForBody(httpRequest, onRetry = onRetry)
         val response = decode(TranscriptionResponseDto.serializer(), body)
         return TranscriptionResult(response.text.trim())
     }
 
-    /** Builds the standard streaming multipart request shared by OpenAI-style STT endpoints. */
+    /**
+     * Builds the standard streaming multipart request shared by OpenAI-style STT endpoints. [extraParts]
+     * adds the fields one provider has beside the common ones, after them.
+     */
     private fun buildMultipartTranscriptionRequest(
         request: TranscriptionRequest,
         temperature: Double? = null,
+        extraParts: MultipartBody.Builder.() -> Unit = {},
     ): Request {
         val fileBody = request.audioBody()
         val multipart = MultipartBody.Builder()
@@ -336,6 +376,7 @@ class OpenAiCompatibleClient(
                 }
                 if (!request.prompt.isNullOrEmpty()) addFormDataPart("prompt", request.prompt)
                 if (temperature != null) addFormDataPart("temperature", temperature.toString())
+                extraParts()
             }
             .build()
         return Request.Builder()
@@ -350,6 +391,9 @@ class OpenAiCompatibleClient(
      * because it streams the file directly: no 4/3 expansion, no complete encoded copy in memory, and no
      * giant JSON string before the request can start. If the server explicitly rejects that wire format,
      * retry once with the JSON schema.
+     *
+     * The prompt and the custom words go in [openRouterProviderOptions], since OpenRouter takes a `prompt`
+     * and ignores it.
      */
     private suspend fun transcribeOpenRouterMultipart(
         request: TranscriptionRequest,
@@ -360,7 +404,9 @@ class OpenAiCompatibleClient(
         val httpRequest = buildMultipartTranscriptionRequest(
             request,
             temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
-        )
+        ) {
+            openRouterProviderOptions(request)?.let { addFormDataPart("provider", it.toString()) }
+        }
             .newBuilder()
             .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(label))
             .build()
@@ -396,6 +442,7 @@ class OpenAiCompatibleClient(
             inputAudio = InputAudioDto(data = base64, format = guessAudioFormat(request.audioFile)),
             language = request.language?.takeIf { it.isNotEmpty() && it != "detect" },
             temperature = OPENROUTER_TRANSCRIPTION_TEMPERATURE,
+            provider = openRouterProviderOptions(request),
         )
         val payload = json.encodeToString(TranscriptionJsonRequestDto.serializer(), dto)
         val fallbackLabel = "OpenRouter STT model=${sanitizeForLog(request.model)} " +
@@ -406,6 +453,44 @@ class OpenAiCompatibleClient(
             .post(payload.toRequestBody(JSON_MEDIA_TYPE).withUploadProgress(request.onUpload))
             .tag(HttpCallDiagnostics::class.java, HttpCallDiagnostics(fallbackLabel))
             .build()
+    }
+
+    /**
+     * The prompt and the custom words as OpenRouter forwards them (issue #466), or null with neither.
+     *
+     * OpenRouter "accepts but ignores" a top-level `prompt`: with the names sample, every model it serves
+     * wrote "Neve" for "Niamh" whether one was sent or not (2026-11-03). What it does forward is
+     * `provider.options.<slug>`, only to the provider that serves the request, and that works in a
+     * multipart body as a form field holding the JSON as well as in the JSON body. Measured 2026-11-04 with
+     * the names sample, twice each: gpt-transcribe (OpenAI's `prompt`), MAI-Transcribe-2 (Azure's
+     * `phraseList`) and Voxtral (Mistral's `context_bias`) went from "Neve" to "Niamh", and Whisper as
+     * DeepInfra serves it heard the prompt. A malformed Azure option came back 400, so they arrive as sent.
+     * Deepgram's options are dropped on the way, whatever the spelling, so Nova-3 here gets no words.
+     *
+     * Every provider's options go along at once, which costs nothing: one of them serves the request, and
+     * the others are never forwarded. Groq's `prompt` is OpenRouter's own example, and Together's own
+     * endpoint reads one (a junk prompt changed its transcript, 2026-11-04).
+     */
+    private fun openRouterProviderOptions(request: TranscriptionRequest): JsonObject? {
+        val prompt = request.prompt?.takeIf { it.isNotBlank() }
+        val bias = VocabularyField.MISTRAL.fit(request.vocabulary)
+        val phrases = VocabularyField.AZURE.fit(request.vocabulary)
+        if (prompt == null && bias.isEmpty() && phrases.isEmpty()) return null
+        return buildJsonObject {
+            putJsonObject("options") {
+                if (prompt != null) {
+                    OPENROUTER_PROMPT_PROVIDERS.forEach { slug -> putJsonObject(slug) { put("prompt", prompt) } }
+                }
+                if (bias.isNotEmpty()) {
+                    putJsonObject("mistral") { put("context_bias", JsonArray(bias.map(::JsonPrimitive))) }
+                }
+                if (phrases.isNotEmpty()) {
+                    putJsonObject("azure") {
+                        putJsonObject("phraseList") { put("phrases", JsonArray(phrases.map(::JsonPrimitive))) }
+                    }
+                }
+            }
+        }
     }
 
     private fun shouldFallbackFromOpenRouterMultipart(error: DictateApiException): Boolean {
@@ -601,7 +686,8 @@ class OpenAiCompatibleClient(
 
     /**
      * ElevenLabs Scribe (issue #143): a multipart upload much like [transcribeMultipart], but with the
-     * `xi-api-key` auth header (not Bearer), a `model_id` field and the `speech-to-text` path. No prompt.
+     * `xi-api-key` auth header (not Bearer), a `model_id` field and the `speech-to-text` path. No prompt:
+     * the custom words go as `keyterms`, one field per term (#466), which ElevenLabs bills at 20 % more.
      */
     private suspend fun transcribeElevenLabs(
         request: TranscriptionRequest,
@@ -615,6 +701,7 @@ class OpenAiCompatibleClient(
             .apply {
                 val lang = request.language
                 if (!lang.isNullOrEmpty() && lang != "detect") addFormDataPart("language_code", lang)
+                VocabularyField.ELEVENLABS.fit(request.vocabulary).forEach { addFormDataPart("keyterms", it) }
             }
             .build()
         val httpRequest = Request.Builder()
@@ -629,7 +716,8 @@ class OpenAiCompatibleClient(
 
     /**
      * Deepgram (issue #143): the raw audio bytes are POSTed to `listen?model=…` (model + language as query
-     * params) with an `Authorization: Token <key>` header; the transcript is nested in the response.
+     * params) with an `Authorization: Token <key>` header; the transcript is nested in the response. The
+     * custom words go in the query as well ([deepgramVocabularyQuery]).
      */
     private suspend fun transcribeDeepgram(
         request: TranscriptionRequest,
@@ -640,6 +728,7 @@ class OpenAiCompatibleClient(
             append(config.normalizedBaseUrl).append("listen?model=").append(request.model)
             append("&smart_format=true")
             if (lang != null) append("&language=").append(lang) else append("&detect_language=true")
+            append(deepgramVocabularyQuery(request.model, request.vocabulary))
         }
         val audioBody = request.audioBody()
         val httpRequest = Request.Builder()
@@ -682,6 +771,10 @@ class OpenAiCompatibleClient(
             speechModels = request.model.takeIf { it.isNotBlank() }?.let { listOf(it) },
             languageCode = lang,
             languageDetection = if (lang == null) true else null,
+            // The custom words (#466), billed at $0.05 an hour more. With the names sample Universal-3 Pro
+            // went from "Shivan … Neev" to both names (2026-11-04); the field arrives on every model, since
+            // each refuses a list over its own limit by name.
+            keytermsPrompt = VocabularyField.ASSEMBLYAI.fit(request.vocabulary).ifEmpty { null },
         )
         val createRequest = Request.Builder()
             .url(base + "v2/transcript")
@@ -738,10 +831,9 @@ class OpenAiCompatibleClient(
      *    because their reference customers are compliance and QA; a keyboard's user is writing a
      *    message, and nobody sends the false start on purpose. This is the same call the app already
      *    makes for Deepgram's `smart_format`, and it is fixed rather than a setting for the same reason.
-     *  - `phraseList` carries the user's own names and jargon, read out of the style hint by
-     *    [vocabularyFromPrompt] exactly as Google's dedicated model gets it (#292). A dedicated
-     *    speech-to-text model has nowhere to put prose, so the terms are the part of a hint that can
-     *    still do something.
+     *  - `phraseList` carries the user's custom words, [TranscriptionRequest.vocabulary], as Google's
+     *    dedicated model gets them (#292). A dedicated speech-to-text model has nowhere to put prose, so
+     *    the style hint itself stays behind.
      */
     private suspend fun transcribeAzure(
         request: TranscriptionRequest,
@@ -764,7 +856,7 @@ class OpenAiCompatibleClient(
                     null
                 },
             ),
-            phraseList = vocabularyFromPrompt(request.prompt)?.let { AzurePhraseListDto(it) },
+            phraseList = VocabularyField.AZURE.fit(request.vocabulary).ifEmpty { null }?.let(::AzurePhraseListDto),
         )
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -791,9 +883,8 @@ class OpenAiCompatibleClient(
      *    languages whatever is sent; the code turns spoken numbers, currencies and units into their
      *    written form, and only beside `format=true` — which without a language is a 400. So the two go
      *    together or not at all, and auto-detect sends neither. [xaiLanguage] says which codes.
-     *  - **There is no prompt.** The style hint's terms go out as repeated `keyterm` fields instead — the
-     *    same reading of it that Google's and Azure's dedicated models get ([vocabularyFromPrompt]) —
-     *    within xAI's documented 50 characters a term.
+     *  - **There is no prompt.** The custom words go out as repeated `keyterm` fields instead, as Google's
+     *    and Azure's dedicated models get them, within xAI's documented 50 characters a term.
      *
      * Filler words stay at xAI's default, which removes them: the choice this app makes wherever a
      * provider offers one (Gemini's `smart`, Azure's `clean`).
@@ -812,9 +903,7 @@ class OpenAiCompatibleClient(
                     addFormDataPart("language", language)
                     addFormDataPart("format", "true")
                 }
-                vocabularyFromPrompt(request.prompt).orEmpty()
-                    .filter { it.length <= XAI_KEYTERM_MAX_CHARS }
-                    .forEach { addFormDataPart("keyterm", it) }
+                VocabularyField.XAI.fit(request.vocabulary).forEach { addFormDataPart("keyterm", it) }
             }
             .addFormDataPart("file", audioUploadNameOf(request.audioFile), request.audioBody())
             .build()
@@ -956,7 +1045,7 @@ class OpenAiCompatibleClient(
                     languageCodes = request.language
                         ?.takeIf { it.isNotEmpty() && it != "detect" }
                         ?.let { listOf(it) },
-                    customVocabulary = vocabularyFromPrompt(request.prompt),
+                    customVocabulary = VocabularyField.GEMINI.fit(request.vocabulary).ifEmpty { null },
                 ),
             ),
         )
@@ -999,39 +1088,6 @@ class OpenAiCompatibleClient(
             AudioContainer.M4A -> "audio/m4a"
             else -> container.mimeType
         }
-
-    /**
-     * Turns the transcription style hint into vocabulary terms, or nothing — Google's
-     * `custom_vocabulary` (#292) and Azure's `phraseList.phrases` (#349) ask the same question.
-     *
-     * A dedicated STT model has nowhere to put prose — it takes no instruction. The one part of a hint
-     * that still does something here is the names and jargon in it, which is exactly what custom
-     * vocabulary biases towards. So the hint is read as a list (commas, semicolons, line breaks) and
-     * anything longer than four words is dropped as a sentence rather than a term. Google caps the field
-     * at 1000 entries but recommends staying near 100, which is also far more than a hint ever holds.
-     *
-     * **The sentence in front has to go, and the word-count rule does not remove it.** The app's own
-     * hint is a short sample sentence demonstrating punctuation, with the user's glossary appended
-     * behind it — `"Hallo. Vielen Dank. DevEmperor, Dictate"` — so the first comma-separated piece is
-     * the whole greeting *plus* the first real term, four words in total and therefore kept. As a
-     * bias phrase that is not merely useless: Azure calls this field keyword biasing and would nudge
-     * every dictation towards "Hallo. Vielen Dank."
-     *
-     * Hence [afterLastSentenceEnd]: a term never contains a full stop followed by a space, so cutting
-     * there recovers `DevEmperor` and leaves anything that was already a plain term untouched. The one
-     * thing it costs is the front of a term with a stop inside it — `"Dr. Meier"` biases towards
-     * `Meier` — which still biases towards the right name. With no glossary behind it, the sample's
-     * own last sentence is what is left, and [vocabularyTermOf] turns that away too.
-     */
-    private fun vocabularyFromPrompt(prompt: String?): List<String>? {
-        val terms = prompt.orEmpty()
-            .split(',', ';', '\n')
-            .mapNotNull(::vocabularyTermOf)
-            .filter { term -> term.count { it == ' ' } < 4 }
-            .distinct()
-            .take(100)
-        return terms.ifEmpty { null }
-    }
 
     /** Strict transcription prompt for [transcribeGeminiGenerateContent]; folds in the language and style hints. */
     private fun buildGeminiTranscriptionInstruction(request: TranscriptionRequest): String = buildString {
@@ -1605,6 +1661,7 @@ class OpenAiCompatibleClient(
         @SerialName("input_audio") val inputAudio: InputAudioDto,
         val language: String? = null,
         val temperature: Double? = null,
+        val provider: JsonObject? = null,
     )
 
     @Serializable
@@ -1671,6 +1728,7 @@ class OpenAiCompatibleClient(
         @SerialName("speech_models") val speechModels: List<String>? = null,
         @SerialName("language_code") val languageCode: String? = null,
         @SerialName("language_detection") val languageDetection: Boolean? = null,
+        @SerialName("keyterms_prompt") val keytermsPrompt: List<String>? = null,
     )
 
     @Serializable
@@ -1907,6 +1965,9 @@ class OpenAiCompatibleClient(
         private const val RETRY_DELAY_MS = 3000L
         internal const val OPENROUTER_TRANSCRIPTION_MAX_RETRIES = 0
         private const val OPENROUTER_TRANSCRIPTION_TEMPERATURE = 0.0
+
+        /** The providers behind OpenRouter's speech models that take a `prompt` (see [openRouterProviderOptions]). */
+        private val OPENROUTER_PROMPT_PROVIDERS = listOf("openai", "groq", "deepinfra", "together")
         internal const val NETWORK_CONNECT_TIMEOUT_SECONDS = 8L
         private val HTTP_CLIENTS = ConcurrentHashMap<HttpClientKey, OkHttpClient>()
 
@@ -2026,48 +2087,27 @@ class OpenAiCompatibleClient(
         /** Azure's readable style: fillers, false starts and self-corrections dropped. See [transcribeAzure]. */
         private const val AZURE_TRANSCRIBE_STYLE_CLEAN = "clean"
 
-        /**
-         * Sentence-ending marks in the scripts this app dictates in — Latin, CJK, Arabic and Devanagari
-         * — plus the ellipsis, which ends one just as firmly.
-         */
-        private val SENTENCE_END = Regex("[.!?。！？؟।…]+\\s+")
-
-        /** The marks of [SENTENCE_END] one by one, for asking how a piece of text closes. */
-        private const val SENTENCE_MARKS = ".!?。！？؟।…"
-
-        /** The full-width marks among them: CJK punctuation that ends a sentence and never sits in a name. */
-        private const val FULL_WIDTH_SENTENCE_MARKS = "。！？"
+        /** Whether [model] is Mistral's Voxtral, whose field for the custom words is `context_bias` (#466). */
+        internal fun usesContextBias(model: String): Boolean = model.trim().lowercase().startsWith("voxtral")
 
         /**
-         * [text] from after the last sentence that ended inside it, or all of [text] when none did.
+         * The custom words as Deepgram's query takes them for [model] (#466), `&…` or "" for none, on the
+         * file endpoint and the socket alike.
          *
-         * The rule a term obeys and a sentence does not: a name has no full stop with a space behind
-         * it. See [vocabularyFromPrompt], which is the only caller and carries the reasoning.
+         * Nova-3 and Flux take `keyterm`, repeated, and refuse it for every other model by name ("only
+         * supported for Nova-3 and Flux. Please use `keywords` instead", 2026-11-04). Nova-2 takes the
+         * older `keywords`, and with "Niamh" in either field both models spelled it. Anything else gets
+         * none: Deepgram's Whisper refuses `keyterm` too, and what it makes of `keywords` is unmeasured.
+         * Deepgram bills keyterms at $0.0013 a minute more.
          */
-        internal fun afterLastSentenceEnd(text: String): String =
-            SENTENCE_END.findAll(text).lastOrNull()?.let { text.substring(it.range.last + 1) } ?: text
-
-        /**
-         * The bias term one comma-separated [piece] of a style hint holds, or null when it holds a
-         * sentence instead. See [vocabularyFromPrompt], the only caller.
-         *
-         * [afterLastSentenceEnd] finds a term *behind* a sentence, which is where the glossary sits. It
-         * cannot help when nothing is behind it: with no custom words the whole hint is the sample
-         * sentence, `"Hallo. Vielen Dank."`, and its last sentence came through as the two-word term
-         * `Vielen Dank.` — a bias phrase on every dictation with a pinned language and an empty glossary,
-         * for Azure and Google before xAI's `keyterm` (#435) would have made it three. So what is left is
-         * a sentence when it closes with a sentence mark and either followed one (the cut happened —
-         * Thai and Lao write their thanks as one "word") or runs to several words, and whenever it holds
-         * a full-width mark, which no name does. `Dr.` and `z.B.` stay terms; a name of several words
-         * ending in a stop — `Acme Inc.` — is the price, and the rest of the glossary is not.
-         */
-        internal fun vocabularyTermOf(piece: String): String? {
-            val whole = piece.trim()
-            val term = afterLastSentenceEnd(whole).trim()
-            if (term.isEmpty() || term.any { it in FULL_WIDTH_SENTENCE_MARKS }) return null
-            val closes = term.last() in SENTENCE_MARKS
-            val followedOne = term.length < whole.length
-            return term.takeUnless { closes && (followedOne || term.contains(' ')) }
+        internal fun deepgramVocabularyQuery(model: String, vocabulary: List<String>): String {
+            val id = model.trim().lowercase()
+            val (name, field) = when {
+                id.startsWith("nova-3") || id.startsWith("flux") -> "keyterm" to VocabularyField.DEEPGRAM_KEYTERM
+                id.startsWith("nova-2") -> "keywords" to VocabularyField.DEEPGRAM_KEYWORDS
+                else -> return ""
+            }
+            return field.fit(vocabulary).joinToString("") { "&$name=" + URLEncoder.encode(it, "UTF-8") }
         }
 
         /**
@@ -2094,9 +2134,6 @@ class OpenAiCompatibleClient(
             "ar", "cs", "da", "nl", "en", "fil", "fr", "de", "hi", "id", "it", "ja", "ko",
             "mk", "ms", "fa", "pl", "pt", "ro", "ru", "es", "sv", "th", "tr", "vi",
         )
-
-        /** xAI's documented limit per `keyterm` (up to 100 of them, which [vocabularyFromPrompt] already caps). */
-        private const val XAI_KEYTERM_MAX_CHARS = 50
 
         /**
          * The single language to pin for Azure, or null to let MAI detect it.
