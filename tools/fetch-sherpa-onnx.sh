@@ -11,7 +11,13 @@
 #   app/libs/onnxruntime-android-<VERSION>.jar   – the generic ONNX Runtime Java API
 #   app/src/main/jniLibs/arm64-v8a/*.so         – the native runtime + JNI bridges
 #
-# Usage:  scripts/fetch-sherpa-onnx.sh [--force]
+# Usage:  tools/fetch-sherpa-onnx.sh [--force]
+#
+# ORT_VERSION has to be the exact ONNX Runtime that sherpa-onnx ships, patch level included: the runtime
+# versions its symbols (OrtGetApiBase@@VERS_1.24.3), and a bridge built for any other release fails to
+# load, which Smart Turn survives only by switching itself off. sherpa-onnx 2.0.1 ships 1.28.2, for which
+# no Android bridge is published (Maven has 1.28.0 and 1.29.0), so the update was held back (2026-11-04).
+# The check at the end of this script refuses such a pair.
 #
 set -euo pipefail
 
@@ -107,6 +113,26 @@ for abi in abis:
     with z.open(f"jni/{abi}/{so}") as f, open(f"{jni_root}/{abi}/{so}", "wb") as o:
         shutil.copyfileobj(f, o)
 print("  extracted: classes.jar +", ", ".join(f"{a}/libonnxruntime4j_jni.so" for a in abis))
+PY
+
+echo "· Checking that the runtime and the bridge are the same ONNX Runtime release …"
+"$PYTHON_BIN" - "$JNI_ROOT" "${ABIS[@]}" <<'PY'
+import re, sys
+jni_root, *abis = sys.argv[1:]
+def versions(path):
+    return set(re.findall(rb"VERS_\d+\.\d+\.\d+", open(path, "rb").read()))
+bad = []
+for abi in abis:
+    runtime = versions(f"{jni_root}/{abi}/libonnxruntime.so")
+    bridge = versions(f"{jni_root}/{abi}/libonnxruntime4j_jni.so")
+    if not bridge or not bridge <= runtime:
+        bad.append(f"{abi}: runtime {sorted(v.decode() for v in runtime)}, bridge needs {sorted(v.decode() for v in bridge)}")
+if bad:
+    print("✗ The ONNX Runtime bridge would not load against sherpa-onnx's runtime, and Smart Turn would quietly")
+    print("  switch itself off. Set ORT_VERSION to the release sherpa-onnx ships:")
+    print("\n".join("    " + b for b in bad))
+    sys.exit(1)
+print("  same release on every ABI")
 PY
 
 echo "✓ sherpa-onnx $VERSION ready:"

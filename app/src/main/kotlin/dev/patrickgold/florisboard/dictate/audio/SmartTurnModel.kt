@@ -14,6 +14,7 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import android.content.Context
+import android.util.Log
 import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import java.io.File
@@ -79,7 +80,10 @@ internal object SmartTurnModel {
             }
         }.getOrElse {
             // A broken native runtime (e.g. an ORT/JNI mismatch) or corrupt model must not be retried on
-            // every pause — give up Smart Turn for this process; the silence fallback keeps working.
+            // every pause — give up Smart Turn for this process; the silence fallback keeps working. Said
+            // in the log, because nothing else shows it: a bridge that would not load against sherpa-onnx
+            // 2.0.1's runtime went unnoticed until a dictation stopped being cut (2026-11-04).
+            Log.w("DictateSmartTurn", "Smart Turn unavailable for this process: $it")
             unavailable = true
             null
         }
