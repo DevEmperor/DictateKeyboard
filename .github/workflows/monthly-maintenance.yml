@@ -1,0 +1,40 @@
+name: Monthly maintenance reminder
+
+# Opens one issue on the 1st of each month from .github/monthly-maintenance.md, as a reminder and as the
+# place where the month's upkeep is recorded. It runs nothing else: the provider check needs the
+# maintainer's own API keys and is only ever started by hand.
+on:
+  schedule:
+    - cron: "0 7 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/monthly-maintenance.md
+          sparse-checkout-cone-mode: false
+      - name: Open this month's issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          month=$(date -u +%Y-%m)
+          title="Monthly maintenance $month"
+          # Once per month, also when the workflow is started by hand a second time.
+          if gh issue list --repo "$REPO" --state all --label maintenance --limit 50 --json title \
+              --jq '.[].title' | grep -qxF "$title"; then
+            echo "Already there: $title"
+            exit 0
+          fi
+          gh label create maintenance --repo "$REPO" --color 5319e7 \
+            --description "Recurring upkeep" 2>/dev/null || true
+          sed "s/{{MONTH}}/$month/" .github/monthly-maintenance.md > body.md
+          gh issue create --repo "$REPO" --title "$title" --body-file body.md \
+            --label maintenance --assignee "$GITHUB_REPOSITORY_OWNER"
