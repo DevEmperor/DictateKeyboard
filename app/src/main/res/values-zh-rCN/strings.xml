@@ -1656,7 +1656,9 @@
     <string name="dictate__prompt_auto_apply_title">自动应用</string>
     <string name="dictate__prompt_auto_apply_summary">对每次转录自动运行此提示词</string>
     <string name="dictate__prompt_reasoning_title">推理</string>
-    <string name="dictate__prompt_reasoning_default">全局设置</string>
+    <string name="dictate__prompt_reasoning_default">服务商设置</string>
+    <string name="dictate__prompt_reasoning_little">少量推理</string>
+    <string name="dictate__prompt_reasoning_much">大量推理</string>
     <string name="dictate__prompt_badge_selection">需要选中文本</string>
     <string name="dictate__prompt_badge_auto">自动应用</string>
     <string name="dictate__example_prompt_fix_grammar_name">修正语法</string>
@@ -1946,6 +1948,9 @@
     <string name="dictate__reasoning_effort_medium">中</string>
     <string name="dictate__reasoning_effort_medium_summary">思考与速度平衡</string>
     <string name="dictate__reasoning_effort_high">高</string>
+    <string name="dictate__reasoning_effort_xhigh">极高</string>
+    <string name="dictate__reasoning_effort_max">最大</string>
+    <string name="dictate__reasoning_effort_app_default">{name}（默认）</string>
     <string name="dictate__reasoning_effort_high_summary">思考最多，更慢</string>
     <string name="dictate__reasoning_effort_custom">自定义</string>
     <string name="dictate__action_save_audio">保存音频</string>

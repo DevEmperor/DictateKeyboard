@@ -989,14 +989,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__command_trigger_word",
             default = "",
         )
-        // Reasoning effort sent as OpenAI-compatible `reasoning_effort` on rewording chat calls for
-        // reasoning models (issue #141). OFF omits the field, so non-reasoning models are unaffected.
+        // The old global reasoning effort (#141). Since 2026-11-04 each account holds its own
+        // (ProviderAccount.chatReasoning); this is only read once, by migrateReasoningToAccountsIfNeeded,
+        // which then resets it to OFF. Kept so a backup from an older version still moves into the accounts.
         val rewordingReasoningEffort = enum(
             key = "dictate__rewording_reasoning_effort",
             default = DictateReasoningEffort.OFF,
         )
-        // The wire value sent as `reasoning_effort` when the setting is CUSTOM (issue #186), e.g. a value
-        // a specific provider expects. Blank → the field is omitted.
+        // The old global setting's Custom word (#186), migrated with it.
         val rewordingReasoningEffortCustom = string(
             key = "dictate__rewording_reasoning_effort_custom",
             default = "",

@@ -1616,7 +1616,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_auto_apply_title">Terapkan otomatis</string>
     <string name="dictate__prompt_auto_apply_summary">Jalankan perintah ini secara otomatis pada setiap transkripsi</string>
     <string name="dictate__prompt_reasoning_title">Penalaran</string>
-    <string name="dictate__prompt_reasoning_default">Pengaturan global</string>
+    <string name="dictate__prompt_reasoning_default">Pengaturan penyedia</string>
+    <string name="dictate__prompt_reasoning_little">Sedikit penalaran</string>
+    <string name="dictate__prompt_reasoning_much">Banyak penalaran</string>
     <string name="dictate__prompt_badge_selection">Memerlukan pilihan</string>
     <string name="dictate__prompt_badge_auto">Diterapkan otomatis</string>
     <string name="dictate__example_prompt_fix_grammar_name">Perbaiki Tata Bahasa</string>
@@ -1907,6 +1909,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__reasoning_effort_medium">Sedang</string>
     <string name="dictate__reasoning_effort_medium_summary">Seimbang antara berpikir dan kecepatan</string>
     <string name="dictate__reasoning_effort_high">Tinggi</string>
+    <string name="dictate__reasoning_effort_xhigh">Sangat tinggi</string>
+    <string name="dictate__reasoning_effort_max">Maksimum</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (bawaan)</string>
     <string name="dictate__reasoning_effort_high_summary">Paling banyak berpikir, lebih lambat</string>
     <string name="dictate__reasoning_effort_custom">Kustom</string>
     <string name="dictate__action_save_audio">Simpan audio</string>

@@ -38,6 +38,13 @@ data class ProviderAccount(
     val transcriptionModel: String = "",
     val chatModel: String = "",
     /**
+     * How much the rewording model thinks, in the provider's own word (`none`, `low`, `xhigh`…); empty is the
+     * default, which sends no field except where the app has its own (gpt-6-luna: none). Lives here and not
+     * in a global setting because the words belong to the model (provider catalog, 2026-11-04). Additive,
+     * empty for accounts stored before it; older versions skip it, the keyring JSON ignores unknown keys.
+     */
+    val chatReasoning: String = "",
+    /**
      * Chosen real-time streaming model for this provider (issue #128); empty = use the preset's
      * defaultRealtimeModel. Additive field, defaults empty for older stored accounts. Only meaningful
      * when the provider supports realtime and global real-time mode is on.

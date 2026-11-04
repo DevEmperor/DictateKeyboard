@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryEntry
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
@@ -280,6 +281,9 @@ fun RestoreScreen() = FlorisScreen {
                     fileBasedStorage
                 }
                 FlorisPreferenceStore.import(importStrategy, reader).getOrThrow()
+                // An archive from before 2026-11-04 carries the reasoning effort as one global setting;
+                // move it into the accounts now rather than at the next app start.
+                DictateLegacyMigrator.migrateReasoningToAccountsIfNeeded()
             }
             // The symbol pages are one setting (issue #342): restored whole, never merged key by key. An
             // archive without them had every key at its default, which only Erase takes literally.

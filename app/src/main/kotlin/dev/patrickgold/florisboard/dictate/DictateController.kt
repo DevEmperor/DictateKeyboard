@@ -74,6 +74,7 @@ import dev.patrickgold.florisboard.dictate.provider.RealtimeClient
 import dev.patrickgold.florisboard.dictate.provider.RealtimeSession
 import dev.patrickgold.florisboard.dictate.provider.RealtimeTailWatch
 import dev.patrickgold.florisboard.dictate.provider.AudioContainer
+import dev.patrickgold.florisboard.dictate.provider.PromptReasoning
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderListing
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
@@ -4571,7 +4572,7 @@ object DictateController {
         // Store the job so the stop button can abort this reword mid-generation (issue #192).
         rewordJob = scope.launch {
             try {
-                val text = requestReword(raw, input, prompt.reasoningEffort, prompt.reasoningEffortCustom)
+                val text = requestReword(raw, input, prompt.reasoning)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 val committed = writeToSink(sink, text)
                 // Don't declare success over a write the field refused (issue #277) — the reworded text
@@ -4715,7 +4716,7 @@ object DictateController {
             if (!canReword) { noteSkippedRewording(context); continue }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             text = rewordOrKeep(text) {
-                requestReword(instruction, text, p.reasoningEffort, p.reasoningEffortCustom)
+                requestReword(instruction, text, p.reasoning)
             }
         }
         return text
@@ -4762,7 +4763,7 @@ object DictateController {
             if (!canReword) { noteSkippedRewording(context); continue }
             _state.value = UiState.Rewording(p.name ?: context.getString(R.string.dictate__status_rewording))
             result = rewordOrKeep(result) {
-                requestReword(raw, if (p.requiresSelection) result else null, p.reasoningEffort, p.reasoningEffortCustom)
+                requestReword(raw, if (p.requiresSelection) result else null, p.reasoning)
             }
         }
         return result
@@ -4834,21 +4835,19 @@ object DictateController {
     private suspend fun requestReword(
         instruction: String,
         input: String?,
-        reasoning: DictateReasoningEffort? = null,
-        reasoningCustom: String? = null,
+        reasoning: PromptReasoning = PromptReasoning.ACCOUNT,
     ): String {
         val content = DictatePromptDefaults.buildRewordingRequest(instruction, systemPrompt(), input)
-        return DictatePromptDefaults.stripTextTags(requestRewordRaw(content, reasoning, reasoningCustom))
+        return DictatePromptDefaults.stripTextTags(requestRewordRaw(content, reasoning))
     }
 
     /**
-     * Low-level rewording call: sends [userContent] verbatim as a single user message. [reasoning] is
-     * the per-prompt reasoning-effort override (issue #155); null falls back to the global setting.
+     * Low-level rewording call: sends [userContent] verbatim as a single user message. [reasoning] is the
+     * prompt's level (#155); ACCOUNT is the rewording account's own setting.
      */
     private suspend fun requestRewordRaw(
         userContent: String,
-        reasoning: DictateReasoningEffort? = null,
-        reasoningCustom: String? = null,
+        reasoning: PromptReasoning = PromptReasoning.ACCOUNT,
     ): String {
         val account = rewordingAccount()
         val apiKey = rewordingApiKey()
@@ -4870,9 +4869,8 @@ object DictateController {
             trustUserCerts = account.trustUserCerts,
             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
         )
-        // Reasoning effort for reasoning models (issue #141); a per-prompt override wins over the global
-        // setting (#155).
-        val reasoningWire = rewordingReasoningWire(prefs, preset, model, reasoning, reasoningCustom)
+        // Reasoning (#141): the account's own setting, unless the prompt asks for a level of its own (#155).
+        val reasoningWire = rewordingReasoningWire(account, preset, model, reasoning)
         val result = client.complete(
             ChatRequest.ofUser(model, userContent, reasoningEffort = reasoningWire),
         ).text.trim()

@@ -1646,7 +1646,9 @@
     <string name="dictate__prompt_auto_apply_title">Otomatik uygula</string>
     <string name="dictate__prompt_auto_apply_summary">Bu komutu her yazıya dökmede otomatik olarak çalıştır</string>
     <string name="dictate__prompt_reasoning_title">Akıl yürütme</string>
-    <string name="dictate__prompt_reasoning_default">Genel ayar</string>
+    <string name="dictate__prompt_reasoning_default">Sağlayıcı ayarı</string>
+    <string name="dictate__prompt_reasoning_little">Az akıl yürütme</string>
+    <string name="dictate__prompt_reasoning_much">Çok akıl yürütme</string>
     <string name="dictate__prompt_badge_selection">Seçim gerektirir</string>
     <string name="dictate__prompt_badge_auto">Otomatik uygulanır</string>
     <string name="dictate__example_prompt_fix_grammar_name">Dil Bilgisini Düzelt</string>
@@ -1938,6 +1940,9 @@
     <string name="dictate__reasoning_effort_medium">Orta</string>
     <string name="dictate__reasoning_effort_medium_summary">Düşünme ve hız dengesi</string>
     <string name="dictate__reasoning_effort_high">Yüksek</string>
+    <string name="dictate__reasoning_effort_xhigh">Çok yüksek</string>
+    <string name="dictate__reasoning_effort_max">Maksimum</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (varsayılan)</string>
     <string name="dictate__reasoning_effort_high_summary">En çok düşünme, daha yavaş</string>
     <string name="dictate__reasoning_effort_custom">Özel</string>
     <string name="dictate__action_save_audio">Sesi kaydet</string>

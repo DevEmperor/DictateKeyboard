@@ -11,6 +11,7 @@
 package dev.patrickgold.florisboard.dictate.data.prompts
 
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
+import dev.patrickgold.florisboard.dictate.provider.PromptReasoning
 import kotlinx.serialization.Serializable
 
 /**
@@ -35,9 +36,11 @@ data class PromptModel(
     var prompt: String?,
     var requiresSelection: Boolean,
     var autoApply: Boolean,
-    // Per-prompt reasoning-effort override (issue #155); null = use the global rewording setting.
+    // How much this prompt asks the model to think (#155), stored as the old words so every version reads
+    // it; read it as [reasoning]. Null = the rewording account's own setting.
     var reasoningEffort: DictateReasoningEffort? = null,
-    // The custom wire value used when [reasoningEffort] is CUSTOM (issue #186); null/blank = omitted.
+    // The custom wire value of the old CUSTOM choice (#186). No longer written; a CUSTOM prompt follows the
+    // account now.
     var reasoningEffortCustom: String? = null,
     // Optional typed shortcut that expands this snippet while typing (issue #283); null/blank = none.
     // Only ever honoured for `[snippet]` prompts — see [snippetBody] and `SnippetTriggers`.
@@ -49,6 +52,13 @@ data class PromptModel(
     // keep the old parallel set in sync.
     var libraryId: String? = null,
 ) {
+    /**
+     * The prompt's reasoning level, read from what it stores (see [DictateReasoningEffort.storedFor]). Not a
+     * stored field, so backups and exports keep the shape older versions read.
+     */
+    val reasoning: PromptReasoning
+        get() = PromptReasoning.fromStored(reasoningEffort?.name)
+
     fun isPersisted(): Boolean = id >= 0
 
     companion object {

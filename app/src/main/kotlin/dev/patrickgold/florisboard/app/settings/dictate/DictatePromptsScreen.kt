@@ -85,6 +85,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
+import dev.patrickgold.florisboard.dictate.provider.PromptReasoning
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryContribution
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
@@ -361,11 +362,13 @@ fun DictatePromptsScreen(
                     // trigger either: a shared prompt must not claim a shortcut in someone else's typing.
                     pendingShare = PromptModel(0, 0, name, text, requiresSelection, autoApply)
                 },
-                onSave = { name, text, requiresSelection, autoApply, reasoning, reasoningCustom, trigger ->
+                onSave = { name, text, requiresSelection, autoApply, reasoning, trigger ->
+                    // Stored as the old words every version reads (DictateReasoningEffort.storedFor).
+                    val stored = DictateReasoningEffort.storedFor(reasoning)
                     scope.launch {
                         withContext(Dispatchers.IO) {
                             if (target.id < 0) {
-                                db.add(PromptModel(0, db.count(), name, text, requiresSelection, autoApply, reasoning, reasoningCustom, trigger))
+                                db.add(PromptModel(0, db.count(), name, text, requiresSelection, autoApply, stored, null, trigger))
                             } else {
                                 db.update(
                                     target.copy(
@@ -373,8 +376,8 @@ fun DictatePromptsScreen(
                                         prompt = text,
                                         requiresSelection = requiresSelection,
                                         autoApply = autoApply,
-                                        reasoningEffort = reasoning,
-                                        reasoningEffortCustom = reasoningCustom,
+                                        reasoningEffort = stored,
+                                        reasoningEffortCustom = null,
                                         trigger = trigger,
                                     ),
                                 )
@@ -507,7 +510,8 @@ private fun exportPrompts(context: android.content.Context, uri: Uri, prompts: L
                     .put("prompt", p.prompt.orEmpty())
                     .put("requiresSelection", p.requiresSelection)
                     .put("autoApply", p.autoApply)
-                    // Only written when set (null = use the global reasoning setting); issue #155.
+                    // Only written when set (null = the account's own setting); issue #155. The stored words,
+                    // so a file exported here imports into any version.
                     .apply { p.reasoningEffort?.let { put("reasoningEffort", it.name) } }
                     .apply { p.reasoningEffortCustom?.takeIf { it.isNotBlank() }?.let { put("reasoningEffortCustom", it) } }
                     // The typed trigger travels with the user's own export (issue #283) — unlike a
@@ -598,15 +602,14 @@ private fun PromptEditorDialog(
     // The typed trigger stays out of sharing for the same reason, plus a stronger one: a prompt from a
     // stranger must never quietly claim a shortcut in someone else's typing.
     onShare: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean) -> Unit,
-    onSave: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean, reasoning: DictateReasoningEffort?, reasoningCustom: String?, trigger: String?) -> Unit,
+    onSave: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean, reasoning: PromptReasoning, trigger: String?) -> Unit,
     onDelete: (() -> Unit)?,
 ) {
     var name by remember { mutableStateOf(initial.name.orEmpty()) }
     var text by remember { mutableStateOf(initial.prompt.orEmpty()) }
     var requiresSelection by remember { mutableStateOf(initial.requiresSelection) }
     var autoApply by remember { mutableStateOf(initial.autoApply) }
-    var reasoning by remember { mutableStateOf(initial.reasoningEffort) }
-    var reasoningCustom by remember { mutableStateOf(initial.reasoningEffortCustom.orEmpty()) }
+    var reasoning by remember { mutableStateOf(initial.reasoning) }
     var trigger by remember { mutableStateOf(initial.trigger.orEmpty()) }
     var showError by remember { mutableStateOf(false) }
     // Set on save when the trigger itself is the problem, so the field can say which of the two it is.
@@ -651,7 +654,6 @@ private fun PromptEditorDialog(
                     requiresSelection,
                     autoApply,
                     reasoning,
-                    reasoningCustom.trim().ifBlank { null },
                     cleanTrigger.ifBlank { null },
                 )
             }
@@ -741,11 +743,10 @@ private fun PromptEditorDialog(
                 checked = autoApply,
                 onCheckedChange = { autoApply = it },
             )
-            // Per-prompt reasoning-effort override (issue #155): "Default" = use the global setting.
+            // The prompt's own reasoning level (#155), resolved against the rewording model's words.
             ReasoningRow(
                 selected = reasoning,
-                custom = reasoningCustom,
-                onSelected = { effort, c -> reasoning = effort; reasoningCustom = c },
+                onSelected = { reasoning = it },
             )
             Spacer(Modifier.height(12.dp))
             // Contribute this prompt to the community library (issue #105) — a tonal button, only enabled
@@ -880,14 +881,13 @@ private fun SwitchRow(
 }
 
 /**
- * Per-prompt reasoning-effort selector (issue #155): a label that opens the shared radio dialog with a
- * custom-value field (issue #186). "Global setting" (null) = use the global one.
+ * A prompt's reasoning level (#155): a label that opens the shared radio dialog. The levels are in no
+ * provider's words, since a prompt outlives the provider it was written for ([PromptReasoning]).
  */
 @Composable
 private fun ReasoningRow(
-    selected: DictateReasoningEffort?,
-    custom: String,
-    onSelected: (DictateReasoningEffort?, String) -> Unit,
+    selected: PromptReasoning,
+    onSelected: (PromptReasoning) -> Unit,
 ) {
     var dialogOpen by remember { mutableStateOf(false) }
     Row(
@@ -905,11 +905,7 @@ private fun ReasoningRow(
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = if (selected == DictateReasoningEffort.CUSTOM && custom.isNotBlank()) {
-                    custom
-                } else {
-                    reasoningEffortLabel(selected)
-                },
+                text = promptReasoningLabel(selected),
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
             )
@@ -921,27 +917,12 @@ private fun ReasoningRow(
         }
     }
     if (dialogOpen) {
-        ReasoningEffortDialog(
-            initialEffort = selected,
-            initialCustom = custom,
-            includeUseGlobal = true,
-            onConfirm = { effort, c -> onSelected(effort, c); dialogOpen = false },
+        ReasoningChoiceDialog(
+            options = PromptReasoning.entries,
+            initial = selected,
+            label = { promptReasoningLabel(it) },
+            onConfirm = { onSelected(it); dialogOpen = false },
             onDismiss = { dialogOpen = false },
         )
     }
 }
-
-/** Localized label for a per-prompt reasoning choice; null = "use the global setting". */
-@Composable
-private fun reasoningEffortLabel(effort: DictateReasoningEffort?): String = stringRes(
-    when (effort) {
-        null -> R.string.dictate__prompt_reasoning_default
-        DictateReasoningEffort.OFF -> R.string.dictate__reasoning_effort_off
-        DictateReasoningEffort.NONE -> R.string.dictate__reasoning_effort_none
-        DictateReasoningEffort.MINIMAL -> R.string.dictate__reasoning_effort_minimal
-        DictateReasoningEffort.LOW -> R.string.dictate__reasoning_effort_low
-        DictateReasoningEffort.MEDIUM -> R.string.dictate__reasoning_effort_medium
-        DictateReasoningEffort.HIGH -> R.string.dictate__reasoning_effort_high
-        DictateReasoningEffort.CUSTOM -> R.string.dictate__reasoning_effort_custom
-    },
-)

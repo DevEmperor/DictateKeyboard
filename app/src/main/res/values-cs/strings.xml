@@ -1686,7 +1686,9 @@
     <string name="dictate__prompt_auto_apply_title">Použít automaticky</string>
     <string name="dictate__prompt_auto_apply_summary">Spouštět tento prompt automaticky u každého přepisu</string>
     <string name="dictate__prompt_reasoning_title">Uvažování</string>
-    <string name="dictate__prompt_reasoning_default">Globální nastavení</string>
+    <string name="dictate__prompt_reasoning_default">Nastavení poskytovatele</string>
+    <string name="dictate__prompt_reasoning_little">Málo uvažování</string>
+    <string name="dictate__prompt_reasoning_much">Hodně uvažování</string>
     <string name="dictate__prompt_badge_selection">Vyžaduje výběr</string>
     <string name="dictate__prompt_badge_auto">Použije se automaticky</string>
     <string name="dictate__example_prompt_fix_grammar_name">Opravit gramatiku</string>
@@ -1980,6 +1982,9 @@
     <string name="dictate__reasoning_effort_medium">Střední</string>
     <string name="dictate__reasoning_effort_medium_summary">Vyvážené přemýšlení a rychlost</string>
     <string name="dictate__reasoning_effort_high">Vysoké</string>
+    <string name="dictate__reasoning_effort_xhigh">Velmi vysoké</string>
+    <string name="dictate__reasoning_effort_max">Maximální</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (výchozí)</string>
     <string name="dictate__reasoning_effort_high_summary">Nejvíce přemýšlení, pomalejší</string>
     <string name="dictate__reasoning_effort_custom">Vlastní</string>
     <string name="dictate__action_save_audio">Uložit zvuk</string>

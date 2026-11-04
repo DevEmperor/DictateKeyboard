@@ -92,6 +92,7 @@ import dev.patrickgold.florisboard.dictate.provider.ConnectionCheckSample
 import dev.patrickgold.florisboard.dictate.provider.ConnectionCheckScope
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.ModelCatalog
 import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
@@ -849,6 +850,8 @@ internal fun ProviderEditorDialog(
         )
     }
     var chatModel by remember { mutableStateOf(account.chatModel) }
+    // The rewording model's reasoning effort, in its own words (provider catalog, 2026-11-04).
+    var chatReasoning by remember { mutableStateOf(account.chatReasoning) }
     var realtimeModel by remember {
         mutableStateOf(if (legacyStreamingPick) account.transcriptionModel else account.realtimeModel)
     }
@@ -874,6 +877,20 @@ internal fun ProviderEditorDialog(
         preset.allowsCustomBaseUrl -> preset.copy(baseUrl = baseUrl.ifBlank { preset.baseUrl })
         else -> preset
     }
+
+    // The model rewording runs on as the dialog stands now, worked out as the rewording itself will, and what
+    // the catalog knows about its reasoning. A choice the model does not take (it was changed since) is
+    // shown and saved as the default, and so is the word the default sends anyway: Luna's "none" would
+    // otherwise be listed twice, as "No thinking (default)" and "No thinking".
+    val reasoningModel = chatModelFor(
+        account.copy(chatModel = chatModel, transcriptionModel = transcriptionModel, transcriptionViaChat = transcriptionViaChat),
+        effectivePreset,
+    )
+    val reasoningSpec = ModelCatalog.spec(effectivePreset.id, reasoningModel)
+    val reasoningValues = reasoningSpec?.reasoning?.values
+    val reasoningAppDefault = effectivePreset.reasoningEffortWhenOff(reasoningModel)
+    val cleanReasoning = chatReasoning.trim()
+        .takeIf { reasoningValues == null || (it in reasoningValues && it != reasoningAppDefault) }.orEmpty()
 
     // Nothing here asks what a model can do. Which fields are shown is the switch's business alone, and
     // what belongs in the merged field is the user's — the app cannot know, and a version that guessed
@@ -936,6 +953,7 @@ internal fun ProviderEditorDialog(
                     trustUserCerts = trustUserCerts,
                     transcriptionModel = transcriptionModel.trim(),
                     chatModel = chatModel.trim(),
+                    chatReasoning = cleanReasoning,
                     realtimeModel = realtimeModel.trim(),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
@@ -1171,6 +1189,16 @@ internal fun ProviderEditorDialog(
                     placeholder = preset?.defaultChatModel
                         ?: stringRes(R.string.dictate__model_placeholder_required),
                     onBrowse = { pickerKind = ModelKind.CHAT },
+                )
+            }
+            // Reasoning effort, beside the model it belongs to; also with single call on, where the merged
+            // model rewords. Not offered for a model the catalog knows to have no setting that does anything.
+            if (showChat && !(reasoningSpec != null && reasoningValues == null)) {
+                ReasoningField(
+                    values = reasoningValues,
+                    value = if (reasoningValues == null) chatReasoning else cleanReasoning,
+                    appDefault = reasoningAppDefault,
+                    onValueChange = { chatReasoning = it },
                 )
             }
             // Single-call multimodal (issue #130): kept below the models; when on, this one model transcribes
@@ -1548,6 +1576,50 @@ private fun failureOutcome(context: Context, e: Exception, transcription: Boolea
         ),
         detail = listOfNotNull(advice, raw).joinToString(" "),
     )
+}
+
+/**
+ * The account's reasoning effort. For a model the catalog knows, a choice among [values], the model's own
+ * words, plus the default; for any other, free text. [appDefault] names what the default sends, where the app
+ * sends one of its own.
+ */
+@Composable
+private fun ReasoningField(
+    values: List<String>?,
+    value: String,
+    appDefault: String?,
+    onValueChange: (String) -> Unit,
+) {
+    val label = stringRes(R.string.dictate__reasoning_effort_title)
+    val defaultLabel = reasoningWordLabel("", appDefault)
+    if (values == null) {
+        // A model the catalog does not know, or a server of the user's own: its words are unknown, so the
+        // field takes whatever the server expects (`none`, `max`…), and blank is the default.
+        EditorField(label = label, value = value, onValueChange = onValueChange, placeholder = defaultLabel)
+        return
+    }
+    var dialogOpen by remember { mutableStateOf(false) }
+    Box(modifier = Modifier.padding(top = 8.dp)) {
+        OutlinedTextField(
+            value = reasoningWordLabel(value, appDefault),
+            onValueChange = {},
+            readOnly = true,
+            singleLine = true,
+            label = { Text(label) },
+            trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+        )
+        // A read-only text field does not take a click itself; this layer does, over all of it.
+        Box(modifier = Modifier.matchParentSize().clickable { dialogOpen = true })
+    }
+    if (dialogOpen) {
+        ReasoningChoiceDialog(
+            options = listOf("") + values.filter { it != appDefault },
+            initial = value,
+            label = { reasoningWordLabel(it, appDefault) },
+            onConfirm = { onValueChange(it); dialogOpen = false },
+            onDismiss = { dialogOpen = false },
+        )
+    }
 }
 
 /**

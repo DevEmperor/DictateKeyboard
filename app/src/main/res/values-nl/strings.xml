@@ -1566,7 +1566,9 @@
     <string name="dictate__prompt_auto_apply_title">Automatisch toepassen</string>
     <string name="dictate__prompt_auto_apply_summary">Deze prompt automatisch op elke transcriptie uitvoeren</string>
     <string name="dictate__prompt_reasoning_title">Redeneren</string>
-    <string name="dictate__prompt_reasoning_default">Algemene instelling</string>
+    <string name="dictate__prompt_reasoning_default">Instelling van de aanbieder</string>
+    <string name="dictate__prompt_reasoning_little">Weinig redeneren</string>
+    <string name="dictate__prompt_reasoning_much">Veel redeneren</string>
     <string name="dictate__prompt_badge_selection">Vereist selectie</string>
     <string name="dictate__prompt_badge_auto">Wordt automatisch toegepast</string>
     <string name="dictate__example_prompt_fix_grammar_name">Grammatica corrigeren</string>
@@ -1858,6 +1860,9 @@
     <string name="dictate__reasoning_effort_medium">Gemiddeld</string>
     <string name="dictate__reasoning_effort_medium_summary">Balans tussen nadenken en snelheid</string>
     <string name="dictate__reasoning_effort_high">Hoog</string>
+    <string name="dictate__reasoning_effort_xhigh">Zeer hoog</string>
+    <string name="dictate__reasoning_effort_max">Maximaal</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (standaard)</string>
     <string name="dictate__reasoning_effort_high_summary">Meest nadenken, langzamer</string>
     <string name="dictate__reasoning_effort_custom">Aangepast</string>
     <string name="dictate__action_save_audio">Audio opslaan</string>

@@ -78,9 +78,8 @@ object DictateWearPublisher {
             prefs.dictate.autoFormattingEnabled.asFlow().map {},
             prefs.dictate.systemPromptSelection.asFlow().map {},
             prefs.dictate.systemPromptCustom.asFlow().map {},
-            prefs.dictate.rewordingReasoningEffort.asFlow().map {},
-            prefs.dictate.rewordingReasoningEffortCustom.asFlow().map {},
-            // The automatic prompts, with their own reasoning effort, live in prompts.db.
+            // The reasoning setting lives in the account since 2026-11-04, so providerAccounts above covers it.
+            // The automatic prompts, with their own reasoning level, live in prompts.db.
             PromptsDatabaseHelper.getInstance(context).revision.map {},
         ).debounce(500L).collectIn(scope) {
             // Says only that it happened: the payload carries the keys.

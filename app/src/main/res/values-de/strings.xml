@@ -1656,7 +1656,9 @@
     <string name="dictate__prompt_auto_apply_title">Automatisch anwenden</string>
     <string name="dictate__prompt_auto_apply_summary">Diesen Prompt automatisch auf jede Transkription anwenden</string>
     <string name="dictate__prompt_reasoning_title">Denken</string>
-    <string name="dictate__prompt_reasoning_default">Globale Einstellung</string>
+    <string name="dictate__prompt_reasoning_default">Anbieter-Einstellung</string>
+    <string name="dictate__prompt_reasoning_little">Wenig Denken</string>
+    <string name="dictate__prompt_reasoning_much">Viel Denken</string>
     <string name="dictate__prompt_badge_selection">Erfordert Auswahl</string>
     <string name="dictate__prompt_badge_auto">Wird automatisch angewendet</string>
     <string name="dictate__prompt_reorder_hint">Lange auf einen Prompt drücken und ziehen, um die Reihenfolge zu ändern.</string>
@@ -1930,6 +1932,9 @@
     <string name="dictate__reasoning_effort_medium">Mittel</string>
     <string name="dictate__reasoning_effort_medium_summary">Ausgewogen zwischen Nachdenken und Tempo</string>
     <string name="dictate__reasoning_effort_high">Hoch</string>
+    <string name="dictate__reasoning_effort_xhigh">Sehr hoch</string>
+    <string name="dictate__reasoning_effort_max">Maximal</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (Standard)</string>
     <string name="dictate__reasoning_effort_high_summary">Am meisten Nachdenken, langsamer</string>
     <string name="dictate__reasoning_effort_custom">Benutzerdefiniert</string>
     <string name="dictate__action_save_audio">Audio speichern</string>

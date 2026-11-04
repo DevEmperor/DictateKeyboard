@@ -1534,7 +1534,9 @@
     <string name="dictate__prompt_auto_apply_title">Aplica automàticament</string>
     <string name="dictate__prompt_auto_apply_summary">Executa aquest prompt automàticament a cada transcripció</string>
     <string name="dictate__prompt_reasoning_title">Raonament</string>
-    <string name="dictate__prompt_reasoning_default">Configuració global</string>
+    <string name="dictate__prompt_reasoning_default">Configuració del proveïdor</string>
+    <string name="dictate__prompt_reasoning_little">Poc raonament</string>
+    <string name="dictate__prompt_reasoning_much">Molt raonament</string>
     <string name="dictate__prompt_badge_selection">Requereix una selecció</string>
     <string name="dictate__prompt_badge_auto">S\'aplica automàticament</string>
     <string name="dictate__example_prompt_fix_grammar_name">Corregeix la gramàtica</string>
@@ -1826,6 +1828,9 @@
     <string name="dictate__reasoning_effort_medium">Mitjà</string>
     <string name="dictate__reasoning_effort_medium_summary">Equilibri entre raonament i velocitat</string>
     <string name="dictate__reasoning_effort_high">Alt</string>
+    <string name="dictate__reasoning_effort_xhigh">Molt alt</string>
+    <string name="dictate__reasoning_effort_max">Màxim</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (per defecte)</string>
     <string name="dictate__reasoning_effort_high_summary">Màxim raonament, més lent</string>
     <string name="dictate__reasoning_effort_custom">Personalitzat</string>
     <string name="dictate__action_save_audio">Desa l\'àudio</string>

@@ -117,7 +117,7 @@ object PhoneTranscriber {
                 .filter { it.autoApply }
                 .mapNotNull { p ->
                     p.prompt?.takeIf { it.isNotBlank() }?.let {
-                        DictateRewording.Prompt(it, promptReasoningWire(prefs, rewordingPreset, chatModel, p))
+                        DictateRewording.Prompt(it, promptReasoningWire(rewordingAccount, rewordingPreset, chatModel, p))
                     }
                 }
         }
@@ -137,7 +137,7 @@ object PhoneTranscriber {
             languageName = languageName,
             systemPrompt = systemPrompt,
             autoApplyPrompts = autoApply,
-            reasoningEffort = rewordingReasoningWire(prefs, rewordingPreset, chatModel),
+            reasoningEffort = rewordingReasoningWire(rewordingAccount, rewordingPreset, chatModel),
         )
     }
 

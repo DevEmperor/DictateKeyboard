@@ -190,7 +190,9 @@ object SettingsSearchIndex {
         SettingsSearchEntry(R.string.dictate__prompt_trigger_title, R.string.dictate__prompts_title, Routes.Settings.DictatePrompts(), parentRes = R.string.dictate__title,
             keywordsRes = R.string.settings__search__keywords__text_expansion),
         SettingsSearchEntry(R.string.dictate__auto_formatting_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__auto_formatting_title"),
-        SettingsSearchEntry(R.string.dictate__reasoning_effort_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__reasoning_effort_title"),
+        // Hand-added: reasoning effort is set in each provider account since 2026-11-04, inside the account's
+        // dialog, which has no anchor; the search opens the providers screen it is reached from.
+        SettingsSearchEntry(R.string.dictate__reasoning_effort_title, R.string.dictate__providers_title, Routes.Settings.DictateProviders, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__system_prompt_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__stats_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__stats_title"),
         SettingsSearchEntry(R.string.dictate__history_title, R.string.dictate__title, Routes.Settings.Dictate, anchor = "dictate__history_title"),

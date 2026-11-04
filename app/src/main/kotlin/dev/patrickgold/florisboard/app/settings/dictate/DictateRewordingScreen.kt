@@ -12,7 +12,6 @@ package dev.patrickgold.florisboard.app.settings.dictate
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoFixHigh
-import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.ListAlt
@@ -22,22 +21,16 @@ import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
-import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -139,42 +132,8 @@ fun DictateRewordingScreen() = FlorisScreen {
             summary = stringRes(R.string.dictate__auto_formatting_summary),
         )
 
-        val reasoningScope = rememberCoroutineScope()
-        val reasoningEffort by prefs.dictate.rewordingReasoningEffort.collectAsState()
-        val reasoningCustom by prefs.dictate.rewordingReasoningEffortCustom.collectAsState()
-        var reasoningDialogOpen by remember { mutableStateOf(false) }
-        Preference(
-            icon = Icons.Default.Bolt,
-            modifier = Modifier.settingsSearchAnchor("dictate__reasoning_effort_title"),
-            title = stringRes(R.string.dictate__reasoning_effort_title),
-            summary = when (reasoningEffort) {
-                DictateReasoningEffort.CUSTOM ->
-                    reasoningCustom.ifBlank { stringRes(R.string.dictate__reasoning_effort_custom) }
-                DictateReasoningEffort.OFF -> stringRes(R.string.dictate__reasoning_effort_off)
-                DictateReasoningEffort.NONE -> stringRes(R.string.dictate__reasoning_effort_none)
-                DictateReasoningEffort.MINIMAL -> stringRes(R.string.dictate__reasoning_effort_minimal)
-                DictateReasoningEffort.LOW -> stringRes(R.string.dictate__reasoning_effort_low)
-                DictateReasoningEffort.MEDIUM -> stringRes(R.string.dictate__reasoning_effort_medium)
-                DictateReasoningEffort.HIGH -> stringRes(R.string.dictate__reasoning_effort_high)
-            },
-            onClick = { reasoningDialogOpen = true },
-            enabledIf = { prefs.dictate.rewordingEnabled isEqualTo true },
-        )
-        if (reasoningDialogOpen) {
-            ReasoningEffortDialog(
-                initialEffort = reasoningEffort,
-                initialCustom = reasoningCustom,
-                includeUseGlobal = false,
-                onConfirm = { effort, custom ->
-                    reasoningScope.launch {
-                        prefs.dictate.rewordingReasoningEffort.set(effort ?: DictateReasoningEffort.OFF)
-                        prefs.dictate.rewordingReasoningEffortCustom.set(custom)
-                    }
-                    reasoningDialogOpen = false
-                },
-                onDismiss = { reasoningDialogOpen = false },
-            )
-        }
+        // Reasoning effort used to be set here, once for every provider. Its words belong to the model, so
+        // since 2026-11-04 it is set in each provider account, beside the rewording model.
 
         PromptSelectionPreference(
             pref = prefs.dictate.systemPromptSelection,

@@ -1666,7 +1666,9 @@
     <string name="dictate__prompt_auto_apply_title">Прилагай автоматично</string>
     <string name="dictate__prompt_auto_apply_summary">Изпълнявай тази подкана автоматично при всяко транскрибиране</string>
     <string name="dictate__prompt_reasoning_title">Разсъждение</string>
-    <string name="dictate__prompt_reasoning_default">Общата настройка</string>
+    <string name="dictate__prompt_reasoning_default">Настройката на доставчика</string>
+    <string name="dictate__prompt_reasoning_little">Малко разсъждение</string>
+    <string name="dictate__prompt_reasoning_much">Много разсъждение</string>
     <string name="dictate__prompt_badge_selection">Изисква селекция</string>
     <string name="dictate__prompt_badge_auto">Прилага се автоматично</string>
     <string name="dictate__example_prompt_fix_grammar_name">Поправи граматиката</string>
@@ -1958,6 +1960,9 @@
     <string name="dictate__reasoning_effort_medium">Средно</string>
     <string name="dictate__reasoning_effort_medium_summary">Баланс между мислене и скорост</string>
     <string name="dictate__reasoning_effort_high">Високо</string>
+    <string name="dictate__reasoning_effort_xhigh">Много високо</string>
+    <string name="dictate__reasoning_effort_max">Максимално</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (по подразбиране)</string>
     <string name="dictate__reasoning_effort_high_summary">Най-много мислене, по-бавно</string>
     <string name="dictate__reasoning_effort_custom">По избор</string>
     <string name="dictate__action_save_audio">Запази аудиото</string>

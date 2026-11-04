@@ -67,7 +67,7 @@ object PhoneWearSettingsResolver {
                     p.prompt?.takeIf { it.isNotBlank() }?.let {
                         SyncedPrompt(
                             it, p.requiresSelection,
-                            reasoningEffort = promptReasoningWire(prefs, rewordingPreset, chatModel, p),
+                            reasoningEffort = promptReasoningWire(rewordingAccount, rewordingPreset, chatModel, p),
                         )
                     }
                 }
@@ -96,7 +96,7 @@ object PhoneWearSettingsResolver {
             // Rewording key only travels under the same opt-in as the transcription key.
             rewordingApiKey = if (syncKey) rewordingKey else "",
             rewordingApi = rewordingPreset.transcriptionApi,
-            rewordingReasoningEffort = rewordingReasoningWire(prefs, rewordingPreset, chatModel),
+            rewordingReasoningEffort = rewordingReasoningWire(rewordingAccount, rewordingPreset, chatModel),
             systemPrompt = systemPrompt(prefs),
             autoApplyPrompts = autoApply,
             hapticFeedback = prefs.dictate.hapticFeedback.get(),

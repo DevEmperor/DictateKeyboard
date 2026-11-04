@@ -1468,7 +1468,9 @@
     <string name="dictate__prompt_auto_apply_title">Aplicar automaticamente</string>
     <string name="dictate__prompt_auto_apply_summary">Executar este prompt automaticamente em cada transcrição</string>
     <string name="dictate__prompt_reasoning_title">Raciocínio</string>
-    <string name="dictate__prompt_reasoning_default">Configuração global</string>
+    <string name="dictate__prompt_reasoning_default">Configuração do provedor</string>
+    <string name="dictate__prompt_reasoning_little">Pouco raciocínio</string>
+    <string name="dictate__prompt_reasoning_much">Muito raciocínio</string>
     <string name="dictate__prompt_badge_selection">Requer seleção</string>
     <string name="dictate__prompt_badge_auto">Aplica-se automaticamente</string>
     <string name="dictate__example_prompt_fix_grammar_name">Corrigir gramática</string>
@@ -1760,6 +1762,9 @@
     <string name="dictate__reasoning_effort_medium">Médio</string>
     <string name="dictate__reasoning_effort_medium_summary">Equilíbrio entre raciocínio e velocidade</string>
     <string name="dictate__reasoning_effort_high">Alto</string>
+    <string name="dictate__reasoning_effort_xhigh">Muito alto</string>
+    <string name="dictate__reasoning_effort_max">Máximo</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (padrão)</string>
     <string name="dictate__reasoning_effort_high_summary">Máximo raciocínio, mais lento</string>
     <string name="dictate__reasoning_effort_custom">Personalizado</string>
     <string name="dictate__action_save_audio">Salvar áudio</string>

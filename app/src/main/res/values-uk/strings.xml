@@ -1515,7 +1515,9 @@
     <string name="dictate__prompt_auto_apply_title">Застосовувати автоматично</string>
     <string name="dictate__prompt_auto_apply_summary">Запускати цей промпт автоматично під час кожної транскрипції</string>
     <string name="dictate__prompt_reasoning_title">Міркування</string>
-    <string name="dictate__prompt_reasoning_default">Загальне налаштування</string>
+    <string name="dictate__prompt_reasoning_default">Налаштування постачальника</string>
+    <string name="dictate__prompt_reasoning_little">Мало міркування</string>
+    <string name="dictate__prompt_reasoning_much">Багато міркування</string>
     <string name="dictate__prompt_badge_selection">Потребує виділення</string>
     <string name="dictate__prompt_badge_auto">Застосовується автоматично</string>
     <string name="dictate__example_prompt_fix_grammar_name">Виправити граматику</string>
@@ -1809,6 +1811,9 @@
     <string name="dictate__reasoning_effort_medium">Середнє</string>
     <string name="dictate__reasoning_effort_medium_summary">Баланс міркувань і швидкості</string>
     <string name="dictate__reasoning_effort_high">Високе</string>
+    <string name="dictate__reasoning_effort_xhigh">Дуже високе</string>
+    <string name="dictate__reasoning_effort_max">Максимальне</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (за замовчуванням)</string>
     <string name="dictate__reasoning_effort_high_summary">Найбільше міркувань, повільніше</string>
     <string name="dictate__reasoning_effort_custom">Користувацький</string>
     <string name="dictate__action_save_audio">Зберегти аудіо</string>

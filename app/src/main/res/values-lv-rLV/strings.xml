@@ -1612,7 +1612,9 @@
     <string name="dictate__prompt_auto_apply_title">Lietot automātiski</string>
     <string name="dictate__prompt_auto_apply_summary">Automātiski palaist šo uzvedni katrai transkripcijai</string>
     <string name="dictate__prompt_reasoning_title">Spriešana</string>
-    <string name="dictate__prompt_reasoning_default">Globālais iestatījums</string>
+    <string name="dictate__prompt_reasoning_default">Pakalpojuma sniedzēja iestatījums</string>
+    <string name="dictate__prompt_reasoning_little">Maz spriešanas</string>
+    <string name="dictate__prompt_reasoning_much">Daudz spriešanas</string>
     <string name="dictate__prompt_badge_selection">Nepieciešama atlase</string>
     <string name="dictate__prompt_badge_auto">Tiek lietota automātiski</string>
     <string name="dictate__example_prompt_fix_grammar_name">Labot gramatiku</string>
@@ -1905,6 +1907,9 @@
     <string name="dictate__reasoning_effort_medium">Vidēja</string>
     <string name="dictate__reasoning_effort_medium_summary">Līdzsvars starp domāšanu un ātrumu</string>
     <string name="dictate__reasoning_effort_high">Augsta</string>
+    <string name="dictate__reasoning_effort_xhigh">Ļoti augsta</string>
+    <string name="dictate__reasoning_effort_max">Maksimāla</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (noklusējums)</string>
     <string name="dictate__reasoning_effort_high_summary">Visvairāk domāšanas, lēnāk</string>
     <string name="dictate__reasoning_effort_custom">Pielāgots</string>
     <string name="dictate__action_save_audio">Saglabāt audio</string>

@@ -1687,7 +1687,9 @@
     <string name="dictate__prompt_auto_apply_title">Stosuj automatycznie</string>
     <string name="dictate__prompt_auto_apply_summary">Uruchamiaj ten prompt automatycznie przy każdej transkrypcji</string>
     <string name="dictate__prompt_reasoning_title">Rozumowanie</string>
-    <string name="dictate__prompt_reasoning_default">Ustawienie globalne</string>
+    <string name="dictate__prompt_reasoning_default">Ustawienie dostawcy</string>
+    <string name="dictate__prompt_reasoning_little">Mało rozumowania</string>
+    <string name="dictate__prompt_reasoning_much">Dużo rozumowania</string>
     <string name="dictate__prompt_badge_selection">Wymaga zaznaczenia</string>
     <string name="dictate__prompt_badge_auto">Stosowany automatycznie</string>
     <string name="dictate__example_prompt_fix_grammar_name">Popraw gramatykę</string>
@@ -1981,6 +1983,9 @@
     <string name="dictate__reasoning_effort_medium">Średni</string>
     <string name="dictate__reasoning_effort_medium_summary">Równowaga myślenia i szybkości</string>
     <string name="dictate__reasoning_effort_high">Wysoki</string>
+    <string name="dictate__reasoning_effort_xhigh">Bardzo wysoki</string>
+    <string name="dictate__reasoning_effort_max">Maksymalny</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (domyślnie)</string>
     <string name="dictate__reasoning_effort_high_summary">Najwięcej myślenia, wolniej</string>
     <string name="dictate__reasoning_effort_custom">Niestandardowy</string>
     <string name="dictate__action_save_audio">Zapisz audio</string>

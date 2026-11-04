@@ -1596,7 +1596,9 @@
     <string name="dictate__prompt_auto_apply_title">自動的に適用</string>
     <string name="dictate__prompt_auto_apply_summary">このプロンプトをすべての文字起こしに自動的に実行します</string>
     <string name="dictate__prompt_reasoning_title">推論</string>
-    <string name="dictate__prompt_reasoning_default">全体の設定</string>
+    <string name="dictate__prompt_reasoning_default">プロバイダーの設定</string>
+    <string name="dictate__prompt_reasoning_little">推論少なめ</string>
+    <string name="dictate__prompt_reasoning_much">推論多め</string>
     <string name="dictate__prompt_badge_selection">選択が必要</string>
     <string name="dictate__prompt_badge_auto">自動的に適用</string>
     <string name="dictate__example_prompt_fix_grammar_name">文法を修正</string>
@@ -1887,6 +1889,9 @@
     <string name="dictate__reasoning_effort_medium">中</string>
     <string name="dictate__reasoning_effort_medium_summary">思考と速度のバランス</string>
     <string name="dictate__reasoning_effort_high">高</string>
+    <string name="dictate__reasoning_effort_xhigh">極高</string>
+    <string name="dictate__reasoning_effort_max">最大</string>
+    <string name="dictate__reasoning_effort_app_default">{name}（既定）</string>
     <string name="dictate__reasoning_effort_high_summary">最も思考、低速</string>
     <string name="dictate__reasoning_effort_custom">カスタム</string>
     <string name="dictate__action_save_audio">音声を保存</string>

@@ -1676,7 +1676,9 @@
     <string name="dictate__prompt_auto_apply_title">Применять автоматически</string>
     <string name="dictate__prompt_auto_apply_summary">Запускать этот промпт автоматически при каждой транскрипции</string>
     <string name="dictate__prompt_reasoning_title">Рассуждение</string>
-    <string name="dictate__prompt_reasoning_default">Общая настройка</string>
+    <string name="dictate__prompt_reasoning_default">Настройка поставщика</string>
+    <string name="dictate__prompt_reasoning_little">Мало рассуждения</string>
+    <string name="dictate__prompt_reasoning_much">Много рассуждения</string>
     <string name="dictate__prompt_badge_selection">Требует выделения</string>
     <string name="dictate__prompt_badge_auto">Применяется автоматически</string>
     <string name="dictate__example_prompt_fix_grammar_name">Исправить грамматику</string>
@@ -1970,6 +1972,9 @@
     <string name="dictate__reasoning_effort_medium">Среднее</string>
     <string name="dictate__reasoning_effort_medium_summary">Баланс размышлений и скорости</string>
     <string name="dictate__reasoning_effort_high">Высокое</string>
+    <string name="dictate__reasoning_effort_xhigh">Очень высокое</string>
+    <string name="dictate__reasoning_effort_max">Максимальное</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (по умолчанию)</string>
     <string name="dictate__reasoning_effort_high_summary">Больше всего размышлений, медленнее</string>
     <string name="dictate__reasoning_effort_custom">Пользовательский</string>
     <string name="dictate__action_save_audio">Сохранить аудио</string>

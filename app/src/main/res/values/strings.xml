@@ -2520,6 +2520,9 @@
     <string name="dictate__reasoning_effort_medium" comment="Reasoning-effort option: medium">Medium</string>
     <string name="dictate__reasoning_effort_medium_summary" comment="Summary for medium reasoning effort">Balanced thinking and speed</string>
     <string name="dictate__reasoning_effort_high" comment="Reasoning-effort option: high">High</string>
+    <string name="dictate__reasoning_effort_xhigh" comment="Reasoning-effort option above high, the provider word xhigh (OpenAI, xAI, DeepSeek)">Extra high</string>
+    <string name="dictate__reasoning_effort_max" comment="Reasoning-effort option: the provider word max, the most thinking a model offers">Maximum</string>
+    <string name="dictate__reasoning_effort_app_default" comment="Reasoning-effort option: the default, when the app itself sends a value for this model; {name} is that value, e.g. No thinking">{name} (default)</string>
     <string name="dictate__reasoning_effort_high_summary" comment="Summary for high reasoning effort">Most thinking, slower</string>
     <string name="dictate__reasoning_effort_custom" comment="Reasoning-effort option: a user-entered custom value">Custom</string>
     <string name="dictate__stats_title" comment="Title of the dictation statistics screen">Statistics</string>
@@ -2642,7 +2645,9 @@
     <string name="dictate__prompt_auto_apply_title" comment="Switch: run the prompt automatically after each transcription">Apply automatically</string>
     <string name="dictate__prompt_auto_apply_summary" comment="Summary for the auto-apply switch">Run this prompt on every transcription automatically</string>
     <string name="dictate__prompt_reasoning_title" comment="Label for the per-prompt reasoning-effort dropdown in the prompt editor">Reasoning</string>
-    <string name="dictate__prompt_reasoning_default" comment="Reasoning dropdown option: fall back to the global reasoning-effort setting. Not just Default: it sits right above Provider default, which means something else">Global setting</string>
+    <string name="dictate__prompt_reasoning_default" comment="A prompt's reasoning option: use the reasoning effort set in the rewording provider's settings">Provider setting</string>
+    <string name="dictate__prompt_reasoning_little" comment="A prompt's reasoning option: the model should think a little, whatever the provider calls that">Little thinking</string>
+    <string name="dictate__prompt_reasoning_much" comment="A prompt's reasoning option: the model should think a lot, whatever the provider calls that">Much thinking</string>
     <string name="dictate__prompt_badge_selection" comment="Accessibility label for the prompt list icon: prompt needs a selection">Requires selection</string>
     <string name="dictate__prompt_badge_auto" comment="Accessibility label for the prompt list icon: prompt runs automatically">Applies automatically</string>
     <!-- Default example prompts seeded on a fresh install. A useful starter set covering all three

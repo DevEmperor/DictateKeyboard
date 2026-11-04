@@ -15,10 +15,14 @@ import androidx.compose.ui.graphics.Color
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictatePromptsLayout
+import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
+import dev.patrickgold.florisboard.dictate.migratedChatReasoning
 import dev.patrickgold.florisboard.dictate.provider.DictateProxyType
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccounts
+import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.ProxyConfig
+import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import java.net.Proxy
 import java.util.Locale
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -375,6 +379,41 @@ object DictateLegacyMigrator {
             keyring.copy(accounts = keyring.accounts.mapValues { (_, account) -> account.copy(trustUserCerts = true) }),
         )
         prefs.dictate.trustUserCertificates.set(false)
+    }
+
+    /**
+     * Moves the global "Reasoning effort" into each account (provider catalog, 2026-11-04).
+     *
+     * The setting was one word for every provider, and the words belong to the model: Luna takes none and
+     * Sol does not, Groq's gpt-oss takes only low to high. Each account with a chat model gets the old choice
+     * in the words its model takes ([migratedChatReasoning]); an account that already has one keeps it.
+     * Idempotent: the old setting is reset once its value has moved, as with the certificates above.
+     */
+    suspend fun migrateReasoningToAccountsIfNeeded() {
+        val prefs by FlorisPreferenceStore
+        val global = prefs.dictate.rewordingReasoningEffort.get()
+        val custom = prefs.dictate.rewordingReasoningEffortCustom.get()
+        if (global == DictateReasoningEffort.OFF && custom.isBlank()) return
+        val keyring = prefs.dictate.providerAccounts.get()
+        prefs.dictate.providerAccounts.set(
+            keyring.copy(
+                accounts = keyring.accounts.mapValues { (_, account) ->
+                    val preset = when {
+                        account.isCustom -> ProviderRegistry.custom(account.customBaseUrl)
+                        else -> ProviderRegistry.byId(account.providerId)
+                    }
+                    if (preset == null || !preset.capabilities.chat || account.chatReasoning.isNotBlank()) {
+                        account
+                    } else {
+                        account.copy(
+                            chatReasoning = migratedChatReasoning(global, custom, preset, chatModelFor(account, preset)),
+                        )
+                    }
+                },
+            ),
+        )
+        prefs.dictate.rewordingReasoningEffort.set(DictateReasoningEffort.OFF)
+        prefs.dictate.rewordingReasoningEffortCustom.set("")
     }
 
     /**

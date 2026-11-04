@@ -918,9 +918,7 @@ private suspend fun rewordWith(context: Context, prompt: PromptModel, promptBody
         languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get()),
         systemPrompt = null,
         autoApplyPrompts = listOf(DictateRewording.Prompt(promptBody)),
-        reasoningEffort = rewordingReasoningWire(
-            prefs, preset, chatModel, prompt.reasoningEffort, prompt.reasoningEffortCustom,
-        ),
+        reasoningEffort = rewordingReasoningWire(account, preset, chatModel, prompt.reasoning),
     )
 }
 

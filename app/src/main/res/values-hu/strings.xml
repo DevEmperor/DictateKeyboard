@@ -1662,7 +1662,9 @@
     <string name="dictate__prompt_auto_apply_title">Automatikus alkalmazás</string>
     <string name="dictate__prompt_auto_apply_summary">Az utasítás automatikus futtatása minden átíráson</string>
     <string name="dictate__prompt_reasoning_title">Gondolkodás</string>
-    <string name="dictate__prompt_reasoning_default">Globális beállítás</string>
+    <string name="dictate__prompt_reasoning_default">Szolgáltatói beállítás</string>
+    <string name="dictate__prompt_reasoning_little">Kevés gondolkodás</string>
+    <string name="dictate__prompt_reasoning_much">Sok gondolkodás</string>
     <string name="dictate__prompt_badge_selection">Kijelölést igényel</string>
     <string name="dictate__prompt_badge_auto">Automatikusan alkalmazódik</string>
     <string name="dictate__example_prompt_fix_grammar_name">Nyelvtan javítása</string>
@@ -1954,6 +1956,9 @@
     <string name="dictate__reasoning_effort_medium">Közepes</string>
     <string name="dictate__reasoning_effort_medium_summary">Kiegyensúlyozott gondolkodás és sebesség</string>
     <string name="dictate__reasoning_effort_high">Magas</string>
+    <string name="dictate__reasoning_effort_xhigh">Nagyon magas</string>
+    <string name="dictate__reasoning_effort_max">Maximális</string>
+    <string name="dictate__reasoning_effort_app_default">{name} (alapértelmezett)</string>
     <string name="dictate__reasoning_effort_high_summary">Legtöbb gondolkodás, lassabb</string>
     <string name="dictate__reasoning_effort_custom">Egyéni</string>
     <string name="dictate__action_save_audio">Hang mentése</string>
