@@ -1545,7 +1545,7 @@ class OpenAiCompatibleClient(
 
     @Serializable
     private data class ResponseMessageDto(
-        val content: String? = null,
+        @SerialName("content") private val rawContent: JsonElement? = null,
         /**
          * The model's thinking, when the gateway hands it over. OpenRouter and most OpenAI-compatible
          * gateways call it `reasoning`, the DeepSeek-shaped ones `reasoning_content`.
@@ -1562,9 +1562,28 @@ class OpenAiCompatibleClient(
         val reasoning: JsonElement? = null,
         @SerialName("reasoning_content") val reasoningContent: JsonElement? = null,
     ) {
+        /**
+         * The answer's text. A plain string almost everywhere, but Mistral's models answer with a list of
+         * parts once they think: `[{type:"thinking", thinking:[…]}, {type:"text", text:"…"}]` (provider check,
+         * 2026-11-04). As a String field that failed the whole response as unreadable, so every rewording at
+         * "high" on Mistral failed. Only `text` parts count; the thinking never reaches the field.
+         */
+        val content: String?
+            get() = when (val c = rawContent) {
+                null, JsonNull -> null
+                is JsonPrimitive -> c.contentOrNull
+                is JsonArray -> c.filter { it.partType() == "text" }
+                    .joinToString("") { ((it as JsonObject)["text"] as? JsonPrimitive)?.contentOrNull.orEmpty() }
+                is JsonObject -> null
+            }
+
         /** Whether the model thought out loud, whatever shape the gateway put that in. */
         val thought: Boolean
-            get() = reasoning.hasContent() || reasoningContent.hasContent()
+            get() = reasoning.hasContent() || reasoningContent.hasContent() ||
+                (rawContent as? JsonArray)?.any { it.partType() == "thinking" } == true
+
+        private fun JsonElement.partType(): String? =
+            ((this as? JsonObject)?.get("type") as? JsonPrimitive)?.contentOrNull
 
         private fun JsonElement?.hasContent(): Boolean = when (this) {
             null, JsonNull -> false

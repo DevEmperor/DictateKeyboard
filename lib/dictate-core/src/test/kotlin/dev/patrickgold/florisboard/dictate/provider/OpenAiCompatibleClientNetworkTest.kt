@@ -721,6 +721,40 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
         }
     }
 
+    // Mistral at "high", the shape asked of the endpoint on 2026-11-04 (thinking text shortened).
+    fun mistralParts(text: String?) = MockResponse().setResponseCode(200).setBody(
+        """{"choices":[{"finish_reason":"${if (text == null) "length" else "stop"}","message":{"role":"assistant",""" +
+            """"content":[{"type":"thinking","thinking":[{"type":"text","text":"The user wants"}],"closed":true}""" +
+            (if (text == null) "" else """,{"type":"text","text":"$text"}""") + "]}}]}",
+    )
+
+    test("an answer sent as parts is read from its text parts, without the thinking") {
+        MockWebServer().use { server ->
+            server.enqueue(mistralParts("This is a test."))
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            client.complete(ChatRequest.ofUser("mistral-small-latest", "Fix: this are a test.", reasoningEffort = "high"))
+                .text shouldBe "This is a test."
+        }
+    }
+
+    test("parts that hold nothing but thinking count as an answer thought away") {
+        MockWebServer().use { server ->
+            server.enqueue(mistralParts(null))
+            server.enqueue(MockResponse().setResponseCode(200).setBody("""{"choices":[{"message":{"content":"Hi."}}]}"""))
+            val client = OpenAiCompatibleClient(
+                ProviderConfig(baseUrl = server.url("/v1/").toString(), apiKey = "test"),
+            )
+
+            client.complete(ChatRequest.ofUser("mistral-small-latest", "Fix my typos", reasoningEffort = "high"))
+                .text shouldBe "Hi."
+            server.takeRequest()
+            server.takeRequest().body.readUtf8() shouldContain "\"reasoning_effort\":\"low\""
+        }
+    }
+
     test("a bare 400 that the effort did not cause reaches the user as it was, and nothing is kept") {
         MockWebServer().use { server ->
             server.enqueue(bareInvalidArgument)
