@@ -198,6 +198,10 @@ private class Check(
         }
     }
 
+    /** False for a language an English-only model was never meant to hear (the catalog's `languages`). */
+    private fun speaks(preset: ProviderPreset, model: String, language: String) =
+        ModelCatalog.spec(preset.id, model)?.languages?.contains(language) != false
+
     private fun extra(preset: ProviderPreset, role: String) =
         extraModels.filter { it[0] == preset.id && it[1] == role }.map { it[2] }
 
@@ -259,8 +263,10 @@ private class Check(
             add(preset, "batch", model, probe, "OK", "\"${scrub(text).take(140)}\"$score$found", ms)
         }
         once("en, auto", "en.wav", null, null, enText, emptyList())
-        once("de, language=de", "de.wav", "de", null, deText, emptyList())
-        once("de, auto", "de.wav", null, null, deText, emptyList())
+        if (speaks(preset, model, "de")) {
+            once("de, language=de", "de.wav", "de", null, deText, emptyList())
+            once("de, auto", "de.wav", null, null, deText, emptyList())
+        }
         once("names, no prompt", "names.wav", null, null, null, listOf("Siobhan", "Niamh"))
         once("names, prompt", "names.wav", null, "Names: Siobhan, Niamh.", null, listOf("Siobhan", "Niamh"))
     }
@@ -316,6 +322,7 @@ private class Check(
         scrub: (String) -> String,
     ) {
         for ((lang, expected) in listOf("en" to enText, "de" to deText)) {
+            if (!speaks(preset, model, lang)) continue
             val rate = RealtimeClient.sampleRateFor(api)
             val pcm = File(fixtures, "${lang}_$rate.pcm").readBytes()
             val finals = StringBuilder()
@@ -418,15 +425,32 @@ private class Check(
     private fun disagreements(): List<String> {
         val lines = mutableListOf<String>()
         fun ids(list: Collection<String>) = if (list.size > 25) "${list.size} ids" else list.joinToString { "`$it`" }
-        for ((provider, list) in rows.groupBy { it.provider }) {
+        // A rate limit, a timeout or a server error says nothing about the model: reported as unmeasured,
+        // never as a refusal (Together's Kimi-K3 and OpenRouter's MAI were throttled on 2026-11-04).
+        fun transient(r: Row) = Regex("""\[(429|5\d\d|TIMEOUT)]|too many requests|rate limit""", RegexOption.IGNORE_CASE)
+            .containsMatchIn(r.detail)
+        for ((provider, all) in rows.groupBy { it.provider }) {
             fun note(text: String) { lines += "- **$provider**: $text" }
+            val preset = ProviderRegistry.byId(provider)
+            // Rows left by an earlier run that asked an English-only model in German are not held against it.
+            val list = all.filter { r ->
+                val language = r.probe.substringBefore(",").trim().takeIf { it == "de" } ?: "en"
+                preset == null || r.part !in setOf("batch", "realtime") || speaks(preset, r.model, language)
+            }
             if (list.any { it.part == "setup" && it.outcome == "SKIP" }) note("not checked, no key")
+            list.filter(::transient).takeIf { it.isNotEmpty() }?.let { t ->
+                note("not measured (rate limit or timeout): ${t.joinToString { "`${it.model}` ${it.part} ${it.probe}" }}")
+            }
             // A speech model is not missed where the region has no speech-to-text to list.
             val sttHere = transcribesHere[provider] != false
             val specs = ModelCatalog.modelsOf(provider)
                 .filter { sttHere || it.roles.any { r -> r == ModelRole.CHAT || r == ModelRole.CHAT_AUDIO } }
-            liveIds[provider]?.let { live ->
-                val gone = specs.filter { s -> s.id !in live && s.aliases.none { it in live } }.map { it.id }
+            liveIds[provider]?.takeIf { preset?.supportsDynamicModels == true }?.let { live ->
+                // Only kinds the list is seen to carry: Soniox, Deepgram and xAI list no streaming models at all,
+                // and their absence there says nothing about whether they still run.
+                fun listed(s: ModelSpec) = s.id in live || s.aliases.any { it in live }
+                val gone = specs.filter { s -> !listed(s) && specs.any { o -> o.roles == s.roles && listed(o) } }
+                    .map { it.id }
                 if (gone.isNotEmpty()) note("in the catalog, missing from the live list: ${ids(gone)}")
                 previousIds?.get(provider)?.let { before ->
                     val added = live - before.toSet()
@@ -437,7 +461,7 @@ private class Check(
             }
             for ((model, tried) in list.filter { it.part == "reasoning" }.groupBy { it.model }) {
                 val values = ModelCatalog.spec(provider, model)?.reasoning?.values ?: continue
-                val refused = tried.filter { it.outcome == "REFUSED" && it.probe in values }.map { it.probe }
+                val refused = tried.filter { it.outcome == "REFUSED" && it.probe in values && !transient(it) }.map { it.probe }
                 if (refused.isNotEmpty()) note("`$model` refuses ${refused.joinToString()}, which the catalog offers")
             }
             // A role the catalog promises that did not hold: failures, and transcripts that kept under half
@@ -445,7 +469,7 @@ private class Check(
             for ((key, tried) in list.filter { it.part in setOf("batch", "chat", "realtime") }.groupBy { it.part to it.model }) {
                 val (part, model) = key
                 if (ModelCatalog.spec(provider, model) == null || (part != "chat" && !sttHere)) continue
-                val failed = tried.filter { it.outcome in setOf("FAIL", "EMPTY", "REFUSED") }
+                val failed = tried.filter { it.outcome in setOf("FAIL", "EMPTY", "REFUSED") && !transient(it) }
                 val weak = tried.filter { r ->
                     r.outcome == "OK" && Regex("""(\d+)% of words""").find(r.detail)?.groupValues?.get(1)?.toInt()?.let { it < 50 } == true
                 }

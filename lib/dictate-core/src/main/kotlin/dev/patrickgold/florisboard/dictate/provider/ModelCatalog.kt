@@ -54,14 +54,17 @@ data class ReasoningSpec(
  *
  * [reasoning] null means the app sends no reasoning field and offers no choice: either the model refuses the
  * field, or it took every value and none of them changed anything (Anthropic, 2026-11-04). [aliases] are the
- * ids the provider's own list uses for the same model. [verified] is the day the provider check last saw it
- * do what [roles] say; null means listed but never confirmed, and [note] says why.
+ * ids the provider's own list uses for the same model. [languages] names the only languages a speech model
+ * understands where it is limited to a few (flux-general-en: English), so the check does not score it on
+ * German; null is many, or not limited as far as anyone measured. [verified] is the day the provider check
+ * last saw it do what [roles] say; null means listed but never confirmed, and [note] says why.
  */
 data class ModelSpec(
     val id: String,
     val roles: Set<ModelRole>,
     val reasoning: ReasoningSpec? = null,
     val aliases: Set<String> = emptySet(),
+    val languages: Set<String>? = null,
     val verified: LocalDate? = null,
     val retiresOn: LocalDate? = null,
     val note: String? = null,
@@ -231,7 +234,7 @@ object ModelCatalog {
             note = "Auto-detect on German synthetic speech gave only \"Hello.\" (2026-11-03); check with real speech.",
         ),
         ModelSpec("nova-2", TR, aliases = setOf("nova-2-general"), verified = NOV_3),
-        ModelSpec("flux-general-en", R, verified = NOV_3),
+        ModelSpec("flux-general-en", R, languages = setOf("en"), verified = NOV_3),
         ModelSpec(
             "flux-general-multi", R, verified = NOV_3,
             note = "German synthetic speech: 11 % of the words (2026-11-03); check with real speech.",
@@ -246,7 +249,7 @@ object ModelCatalog {
             "universal-streaming-multilingual", R, verified = NOV_3,
             note = "German synthetic speech came back empty (2026-11-03); check with real speech.",
         ),
-        ModelSpec("universal-streaming-english", R, verified = NOV_3),
+        ModelSpec("universal-streaming-english", R, languages = setOf("en"), verified = NOV_3),
     )
 
     val AZURE = listOf(
