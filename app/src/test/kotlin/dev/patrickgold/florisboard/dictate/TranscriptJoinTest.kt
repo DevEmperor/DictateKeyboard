@@ -157,4 +157,35 @@ class TranscriptJoinTest : FunSpec({
         TranscriptJoin.separatorBefore("50%", "of it", precedingSymbols = "") shouldBe ""
         TranscriptJoin.separatorBefore("50%", "of it") shouldBe " "
     }
+
+    // Long-form segments (#170), seen on the emulator 2026-11-04: Smart Turn cut after "this is", Whisper
+    // closed the fragment with "..." and the next segment went on in lower case.
+    test("a cut the sentence went on through loses the ellipsis Whisper put at it") {
+        val head = StringBuilder("Hello, this is...")
+        TranscriptJoin.dropCutEllipsis(head, "a short test.") shouldBe true
+        TranscriptJoin.appendPiece(head, "a short test.").toString() shouldBe "Hello, this is a short test."
+
+        val single = StringBuilder("Wir treffen uns… ")
+        TranscriptJoin.dropCutEllipsis(single, "morgen am Bahnhof.") shouldBe true
+        single.toString() shouldBe "Wir treffen uns"
+
+        val four = StringBuilder("and then....")
+        TranscriptJoin.dropCutEllipsis(four, "nothing") shouldBe true
+        four.toString() shouldBe "and then"
+    }
+
+    test("a new sentence, a script without case or a head without an ellipsis keeps the head") {
+        listOf(
+            "Hello, this is..." to "A short test.",
+            "Hello, this is..." to "你好",
+            "Hello, this is." to "a short test.",
+            "Wait." to "and then",
+            "" to "and then",
+            "Hello, this is..." to "",
+        ).forEach { (head, next) ->
+            val builder = StringBuilder(head)
+            TranscriptJoin.dropCutEllipsis(builder, next) shouldBe false
+            builder.toString() shouldBe head
+        }
+    }
 })

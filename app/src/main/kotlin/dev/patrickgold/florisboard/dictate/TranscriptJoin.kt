@@ -83,6 +83,31 @@ object TranscriptJoin {
         followingSymbols: String = DEFAULT_SEAM_FOLLOWING,
     ): String = seamSeparator(textBefore, piece, precedingSymbols, followingSymbols)
 
+    /**
+     * Takes the ellipsis off the end of [head] when [nextPiece] carries the same sentence on, that is when
+     * it opens with a lower-case letter. Returns whether it did.
+     *
+     * For long-form segments (#170), whose seams are cuts the app made: when Smart Turn takes a mid-sentence
+     * breath for the end of a thought, Whisper closes the fragment with "..." and the next segment goes on in
+     * lower case — "Hello, this is... a short test" for "Hello, this is a short test". A next piece in upper
+     * case, or in a script without case, leaves the head alone: there the dots may be the speaker's own.
+     */
+    fun dropCutEllipsis(head: StringBuilder, nextPiece: String): Boolean {
+        val next = nextPiece.trimStart()
+        if (next.isEmpty() || !next.first().isLowerCase()) return false
+        var end = head.length
+        while (end > 0 && head[end - 1].isWhitespace()) end--
+        val dots = when {
+            head.startsWith("...", end - 3) -> 3
+            end > 0 && head[end - 1] == '…' -> 1
+            else -> return false
+        }
+        var start = end - dots
+        while (start > 0 && head[start - 1] == '.') start-- // "...." is still one ellipsis
+        head.setLength(start)
+        return true
+    }
+
     /** [appendPiece] for the callers that hold their head as a plain string. */
     fun join(
         head: String,

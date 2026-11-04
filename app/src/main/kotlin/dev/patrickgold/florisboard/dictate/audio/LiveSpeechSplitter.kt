@@ -29,15 +29,22 @@ import java.util.concurrent.TimeUnit
  * if speech resumed during inference, that audio is processed first and the stale result is discarded.
  * If Smart Turn is unavailable, the VAD silence fallback and manual Next button remain functional.
  *
+ * A cut is placed in the pause, not at the moment it is decided. The verdict can arrive after the speaker
+ * went on, because the VAD only reports speech once 0.25 s of it are in, and a cut at that moment split
+ * the next word in two: "Please... Please meet me", or a lost "I" (2026-11-04). So [onPause] is told the
+ * sample at which to cut, counted like [RecordingController]'s capture, and the recorder hands everything
+ * after it to the next segment.
+ *
  * @param pauseThresholdMs how long a pause must last (after speech) before a cut is fired.
- * @param onPause invoked (on the worker thread) when a qualifying pause is detected; must be cheap and
- *   thread-safe (e.g. it hands off to a coroutine).
+ * @param onPause invoked (on the worker thread) when a qualifying pause is detected, with the cut position
+ *   as a sample count since the recording started; must be cheap and thread-safe (e.g. it hands off to a
+ *   coroutine).
  */
 class LiveSpeechSplitter(
     context: Context,
     private val pauseThresholdMs: Int,
     private val useSmartTurn: Boolean,
-    private val onPause: () -> Unit,
+    private val onPause: (cutAtSample: Long) -> Unit,
 ) {
     private val appContext = context.applicationContext
     private val queue = LinkedBlockingQueue<Event>()
@@ -90,7 +97,8 @@ class LiveSpeechSplitter(
                     sileroVadModelConfig = SileroVadModelConfig(
                         model = model.absolutePath,
                         threshold = 0.5f,
-                        minSilenceDuration = 0.25f,
+                        // From the constant [cutPosition] counts back with, so the two cannot drift apart.
+                        minSilenceDuration = VAD_MIN_SILENCE_SAMPLES.toFloat() / AudioDecode.TARGET_SAMPLE_RATE,
                         minSpeechDuration = 0.25f,
                         windowSize = SpeechGate.VAD_WINDOW,
                         maxSpeechDuration = 20f,
@@ -104,6 +112,9 @@ class LiveSpeechSplitter(
         val window = FloatArray(SpeechGate.VAD_WINDOW)
         val turnBuffer = SmartTurnPcmBuffer()
         var filled = 0
+        // Samples taken in since the recording started: the same count as the recorder's, so a cut position
+        // computed here means the same moment in its file.
+        var processed = 0L
         // Pipecat invokes Smart Turn after Silero reports 0.2 seconds of silence. An incomplete turn then
         // falls back to stop_secs (the user-facing maximum-pause slider, 2–8 seconds in Dictate).
         val windowMs = SpeechGate.VAD_WINDOW * 1000 / AudioDecode.TARGET_SAMPLE_RATE
@@ -111,8 +122,8 @@ class LiveSpeechSplitter(
         val fallbackWindows = ((pauseThresholdMs + windowMs - 1) / windowMs).coerceAtLeast(smartTurnWindows)
         val policy = SmartTurnPausePolicy(smartTurnWindows, fallbackWindows)
 
-        fun resetDetector() {
-            turnBuffer.clear()
+        fun resetDetector(keepSamples: Int = 0) {
+            if (keepSamples > 0) turnBuffer.keepNewest(keepSamples) else turnBuffer.clear()
             filled = 0
             runCatching { vad.reset() }
         }
@@ -124,9 +135,11 @@ class LiveSpeechSplitter(
                     // Match Pipecat's 500 ms pre-speech buffer plus the VAD's 200 ms start confirmation.
                     turnBuffer.keepNewest(PRE_SPEECH_SAMPLES)
                 }
-                SmartTurnPausePolicy.Action.Cut -> {
-                    resetDetector()
-                    runCatching { onPause() }
+                is SmartTurnPausePolicy.Action.Cut -> {
+                    val cutAt = cutPosition(processed, action.silentWindows)
+                    // What follows the cut opens the next turn, so the next analysis hears its start too.
+                    resetDetector(keepSamples = (processed - cutAt).coerceAtMost(Int.MAX_VALUE.toLong()).toInt())
+                    runCatching { onPause(cutAt) }
                 }
                 is SmartTurnPausePolicy.Action.Analyze -> {
                     if (!useSmartTurn) {
@@ -176,6 +189,7 @@ class LiveSpeechSplitter(
                     }
                     filled += take
                     idx += take
+                    processed += take
                     if (filled < SpeechGate.VAD_WINDOW) continue
                     filled = 0
                     runCatching { vad.acceptWaveform(window) }
@@ -196,9 +210,23 @@ class LiveSpeechSplitter(
         data object Reset : Event
     }
 
-    private companion object {
+    internal companion object {
         const val SMART_TURN_VAD_STOP_MS = 200
         const val PRE_SPEECH_MS = 500 + 200
         const val PRE_SPEECH_SAMPLES = AudioDecode.TARGET_SAMPLE_RATE * PRE_SPEECH_MS / 1000
+
+        /** The VAD's minSilenceDuration in samples: it reports silence only after this much of it. */
+        const val VAD_MIN_SILENCE_SAMPLES = AudioDecode.TARGET_SAMPLE_RATE / 4
+
+        /**
+         * Where to cut, as a sample count since the recording started, when the VAD has been silent for
+         * [silentWindows] windows up to [processed]. The VAD turned silent [silentWindows] windows ago, and it
+         * does so a quarter of a second after the speech actually stopped; the only stretch known to be
+         * silence is that quarter second, so the cut goes into its middle — an eighth of a second clear of the
+         * last word and of anything said after it. Nothing earlier than the start of the recording.
+         */
+        fun cutPosition(processed: Long, silentWindows: Int): Long =
+            (processed - silentWindows.toLong() * SpeechGate.VAD_WINDOW - VAD_MIN_SILENCE_SAMPLES / 2)
+                .coerceAtLeast(0L)
     }
 }

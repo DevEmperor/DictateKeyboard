@@ -77,14 +77,20 @@ internal class SmartTurnPausePolicy(
     }
 
     private fun cut(): Action {
+        // Counted before the reset: how far back the pause began. A "complete" verdict can arrive after
+        // the speaker went on (the VAD only reports speech once 0.25 s of it are in), so the cut has to be
+        // placed where the pause was, not where the verdict arrived.
+        val silent = silentWindows
         reset()
-        return Action.Cut
+        return Action.Cut(silent)
     }
 
     sealed interface Action {
         data object None : Action
         data object BeginTurn : Action
         data class Analyze(val epoch: Long) : Action
-        data object Cut : Action
+
+        /** Cut the segment; [silentWindows] VAD windows have been silent since the VAD last heard speech. */
+        data class Cut(val silentWindows: Int) : Action
     }
 }

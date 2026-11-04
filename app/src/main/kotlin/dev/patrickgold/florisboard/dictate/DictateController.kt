@@ -1624,7 +1624,8 @@ object DictateController {
                         prefs.dictate.longformAutoSplitSeconds.get() * 1000,
                         useSmartTurn = prefs.dictate.smartTurnEnabled.get() &&
                             SmartTurnModel.isModelAvailable(appContext),
-                    ) { flushSegment(appContext, splitterAlreadyReset = true) }.also { it.start() }
+                    ) { cutAt -> flushSegment(appContext, splitterAlreadyReset = true, cutAtSample = cutAt) }
+                        .also { it.start() }
                 } else null
                 // The mic PCM tap: the realtime session (batch mode), the VAD splitter (auto-split), or none.
                 val pcmSink: ((ByteArray, Int) -> Unit)? = when {
@@ -3154,7 +3155,12 @@ object DictateController {
         flushSegment(context, splitterAlreadyReset = false)
     }
 
-    private fun flushSegment(context: Context, splitterAlreadyReset: Boolean) {
+    /**
+     * [cutAtSample] is where an automatic cut belongs, in the recorder's sample count: in the pause the
+     * splitter found, which may lie before now when the speaker has already gone on. A manual cut has none
+     * and cuts at the moment of the tap.
+     */
+    private fun flushSegment(context: Context, splitterAlreadyReset: Boolean, cutAtSample: Long? = null) {
         if (!segmentedActive || _state.value !is UiState.Recording) return
         val appContext = context.applicationContext
         val generation = segmentGeneration
@@ -3165,7 +3171,7 @@ object DictateController {
             val assigned = segmentMutex.withLock {
                 if (!segmentedActive || _state.value !is UiState.Recording) return@withLock null
                 val i = segmentNextIndex++
-                val w = withContext(Dispatchers.IO) { recorder?.rotate() }
+                val w = withContext(Dispatchers.IO) { recorder?.rotate(cutAtSample) }
                 if (segmentKeepAudio && w != null && w.exists() && w.length() > 0L) segmentAudioFiles[i] = w
                 segmentInFlightCount++
                 _segmentsInFlight.value = segmentInFlightCount
@@ -3308,6 +3314,9 @@ object DictateController {
                 val raw = segmentResults.remove(segmentCommitIndex)!!.trim()
                 segmentCommitIndex++
                 if (raw.isNotEmpty()) {
+                    // A cut the sentence went on through leaves Whisper's "..." at the seam. Only while
+                    // nothing is the user's yet: handed-over text is matched against the transcript's head.
+                    if (realtimeHandedOver.isEmpty()) TranscriptJoin.dropCutEllipsis(realtimeTranscript, raw)
                     // The whole dictation, whatever happens to it in the field: the finalize records it.
                     TranscriptJoin.appendPiece(realtimeTranscript, raw, tightening)
                     if (segmentsHeldBack()) {

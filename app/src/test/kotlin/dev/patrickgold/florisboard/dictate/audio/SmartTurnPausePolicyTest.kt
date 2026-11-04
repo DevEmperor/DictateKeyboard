@@ -40,8 +40,23 @@ class SmartTurnPausePolicyTest {
         assertEquals(SmartTurnPausePolicy.Action.None, policy.onVadWindow(speech = false))
         val request = assertIs<SmartTurnPausePolicy.Action.Analyze>(policy.onVadWindow(speech = false))
 
-        assertEquals(SmartTurnPausePolicy.Action.Cut, policy.onPrediction(request.epoch, complete = true))
+        assertEquals(SmartTurnPausePolicy.Action.Cut(silentWindows = 2), policy.onPrediction(request.epoch, complete = true))
         assertEquals(SmartTurnPausePolicy.Action.None, policy.onVadWindow(speech = false))
+    }
+
+    // The VAD reports speech only after 0.25 s of it, so a "complete" verdict can arrive while the next word
+    // is already being said and the windows still read silent. The cut then has to know how far back the
+    // pause began, or it lands in that word ("Please... Please meet me", 2026-11-04).
+    @Test
+    fun aLateVerdictReportsHowLongAgoThePauseBegan() {
+        val policy = SmartTurnPausePolicy(analyzeAfterWindows = 2, fallbackAfterWindows = 20)
+        policy.onVadWindow(speech = true)
+        policy.onVadWindow(speech = false)
+        val request = assertIs<SmartTurnPausePolicy.Action.Analyze>(policy.onVadWindow(speech = false))
+        // Inference takes a while; the speaker goes on, but the VAD has not caught up yet.
+        repeat(5) { assertEquals(SmartTurnPausePolicy.Action.None, policy.onVadWindow(speech = false)) }
+
+        assertEquals(SmartTurnPausePolicy.Action.Cut(silentWindows = 7), policy.onPrediction(request.epoch, complete = true))
     }
 
     @Test
@@ -52,7 +67,7 @@ class SmartTurnPausePolicyTest {
 
         assertEquals(SmartTurnPausePolicy.Action.None, policy.onPrediction(request.epoch, complete = false))
         assertEquals(SmartTurnPausePolicy.Action.None, policy.onVadWindow(speech = false))
-        assertEquals(SmartTurnPausePolicy.Action.Cut, policy.onVadWindow(speech = false))
+        assertEquals(SmartTurnPausePolicy.Action.Cut(silentWindows = 3), policy.onVadWindow(speech = false))
     }
 
     @Test
@@ -65,7 +80,7 @@ class SmartTurnPausePolicyTest {
         policy.onVadWindow(speech = true)
         val second = assertIs<SmartTurnPausePolicy.Action.Analyze>(policy.onVadWindow(speech = false))
 
-        assertEquals(SmartTurnPausePolicy.Action.Cut, policy.onPrediction(second.epoch, complete = true))
+        assertEquals(SmartTurnPausePolicy.Action.Cut(silentWindows = 1), policy.onPrediction(second.epoch, complete = true))
     }
 
     @Test
@@ -80,6 +95,6 @@ class SmartTurnPausePolicyTest {
             policy.onPrediction(first.epoch, complete = true),
         )
 
-        assertEquals(SmartTurnPausePolicy.Action.Cut, policy.onPrediction(fresh.epoch, complete = true))
+        assertEquals(SmartTurnPausePolicy.Action.Cut(silentWindows = 1), policy.onPrediction(fresh.epoch, complete = true))
     }
 }

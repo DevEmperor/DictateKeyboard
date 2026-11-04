@@ -56,6 +56,12 @@ class RecordingController(private val context: Context) {
     @Volatile private var recording = false
     @Volatile private var paused = false
     @Volatile private var pcmBytes = 0L
+    /**
+     * Samples handed to the pcmSink since [start], under [fileLock]: the clock a long-form cut position is
+     * given in (see [rotate]). It counts what the sink was given, not what reached the file, so it stays the
+     * splitter's count even if a write fails.
+     */
+    private var capturedSamples = 0L
     /** Peak |sample| (0..32767) seen since the last [maxAmplitude] call; drives the waveform. */
     @Volatile private var peak = 0
 
@@ -113,6 +119,7 @@ class RecordingController(private val context: Context) {
         raf = out
         outputFile = file
         pcmBytes = 0
+        capturedSamples = 0
         peak = 0
         paused = false
         recording = true
@@ -174,6 +181,7 @@ class RecordingController(private val context: Context) {
                         // Counted only once written: the header is built from this, and a frame lost to a
                         // full disk would otherwise be announced as data the file does not contain.
                         runCatching { raf?.write(buf, 0, n) }.onSuccess { pcmBytes += n }
+                        capturedSamples += n / 2
                     }
                     val framePeak = framePeak(buf, n)
                     if (framePeak > peak) peak = framePeak
@@ -306,15 +314,35 @@ class RecordingController(private val context: Context) {
      * #170): finalizes the in-progress WAV, hands it back for background transcription, and immediately
      * reopens a fresh WAV so recording continues seamlessly. Returns the finalized segment file, or null
      * if nothing usable was captured since the last cut. Safe to call off the main thread while recording.
+     *
+     * [cutAtSample] places the cut in the past, counted in [capturedSamples]: the segment ends there and
+     * everything captured after it opens the next one, so a word begun before the decision to cut stays
+     * whole (long-form auto-split, which decides a moment after the pause). Null cuts now.
      */
-    fun rotate(): File? = synchronized(fileLock) {
+    fun rotate(cutAtSample: Long? = null): File? = synchronized(fileLock) {
         if (!recording) return@synchronized null
         val old = raf ?: return@synchronized null
-        val bytes = pcmBytes
+        val carry = carryBytes(pcmBytes, capturedSamples, cutAtSample)
+        // The cut lies before this segment's first sample (a manual cut came in between): nothing to cut off.
+        if (carry > 0 && carry >= pcmBytes) return@synchronized null
+        val tail = if (carry > 0) {
+            try {
+                ByteArray(carry.toInt()).also {
+                    old.seek(WAV_HEADER_SIZE + pcmBytes - carry)
+                    old.readFully(it)
+                }
+            } catch (_: Throwable) {
+                null // unreadable: cut now instead, as before
+            }
+        } else null
+        val bytes = pcmBytes - (tail?.size ?: 0)
+        // How long after the pause the cut was decided: what the next segment now opens with.
+        if (cutAtSample != null) Log.i("DictateLatency", "phase=segmentCut carriedMs=${(tail?.size ?: 0) * 1000L / (SAMPLE_RATE * 2)}")
         val base = outputFile
         val segment = try {
             old.seek(0)
             old.write(wavHeader(bytes))
+            if (tail != null) old.setLength(WAV_HEADER_SIZE + bytes)
             old.close()
             if (bytes > 0 && base != null) {
                 val seg = File(context.cacheDir, "dictate_seg_${segmentSeq++}.wav")
@@ -330,12 +358,13 @@ class RecordingController(private val context: Context) {
             RandomAccessFile(file, "rw").apply {
                 setLength(0)
                 write(ByteArray(WAV_HEADER_SIZE))
+                if (tail != null) write(tail)
             }
         } catch (_: Throwable) {
             null
         }
         outputFile = file
-        pcmBytes = 0
+        pcmBytes = if (raf != null) tail?.size?.toLong() ?: 0L else 0L
         segment
     }
 
@@ -431,6 +460,17 @@ class RecordingController(private val context: Context) {
         private const val CHANNELS = 1
         private const val BITS_PER_SAMPLE = 16
         private const val WAV_HEADER_SIZE = AudioWav.HEADER_SIZE
+
+        /**
+         * How many bytes at the end of the current segment belong to the next one when it is cut at
+         * [cutAtSample] while [capturedSamples] have been captured and [pcmBytes] written: none for a cut
+         * now (null) or one in the future, never more than the segment holds, always whole samples.
+         */
+        internal fun carryBytes(pcmBytes: Long, capturedSamples: Long, cutAtSample: Long?): Long {
+            if (cutAtSample == null) return 0L
+            val after = (capturedSamples - cutAtSample).coerceAtLeast(0L) * 2
+            return after.coerceAtMost(pcmBytes - pcmBytes % 2)
+        }
         /** Roughly half a second of patience for a busy microphone, then the start genuinely failed. */
         private const val ACQUIRE_ATTEMPTS = 5
         private const val ACQUIRE_RETRY_MS = 120L
