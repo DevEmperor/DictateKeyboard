@@ -1168,8 +1168,6 @@
     <string name="dictate__remember_last_dictation_summary">Зберігає останнє диктування, щоб плаваюча кнопка могла його скасувати, а класична розкладка — вставити знову.</string>
     <string name="dictate__remember_last_dictation_title">Запам’ятовувати останнє диктування</string>
     <string name="changelog__v4_2_0">• НОВЕ: плаваюча кнопка диктування — диктуйте прямо в будь-якому застосунку, навіть коли активна інша клавіатура. Виберіть один із трьох стилів (Капсула, Кільце, Сфера), дивіться живу форму хвилі під час мовлення, перетягуйте будь-куди з прилипанням до країв, задавайте колір і розмір та утримуйте для переформулювання. Увімкніть у Налаштуваннях ▸ Dictate ▸ Плаваюча кнопка.\n• НОВЕ: Google Gemini — використовуйте власний ключ API з AI Studio для транскрипції та переформулювання.\n• Запити тепер за замовчуванням показуються в постійному рядку над клавішами.\n• Надійніша вставка тексту в застосунках, включно з браузерами та іншими клавіатурами.</string>
-    <string name="dictate__promo_floating_button_message">Нове: диктуйте всюди</string>
-    <string name="dictate__promo_floating_button_action">Спробувати</string>
     <string name="setup__floating_button__btn">Налаштувати плаваючу кнопку</string>
     <string name="setup__nav_back">Назад</string>
     <string name="setup__nav_next">Далі</string>
@@ -2299,7 +2297,14 @@
     <string name="dictate__promo_sayova_message">Нове: ШІ на вашому годиннику</string>
     <string name="dictate__promo_sayova_action">Переглянути</string>
     <string name="about__more_apps__title">Інші застосунки</string>
-    <string name="about__more_apps__summary">SayOVA — голосовий ШІ-асистент для вашого годинника</string>
+    <string name="about__more_apps__summary">SayOVA і TunerToGo для вашого годинника</string>
+    <string name="about__more_apps__tunertogo_tagline">Тюнер для інструментів на Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Точний тюнер завжди на зап’ясті, готовий, щойно ви візьмете інструмент.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Гітара, бас, укулеле, скрипка та інші, з автоматичним визначенням струни</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Хроматичний режим для будь-яких інших інструментів і для голосу</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Коротка вібрація, коли струну налаштовано, — погляд лишається на кілках</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Без доступу до інтернету й без реклами: звук аналізується на годиннику й ніколи не зберігається</string>
+    <string name="about__more_apps__tunertogo_requirements">Потрібен годинник з Wear OS 3 або новішою версією та мікрофоном. Працює без застосунку на телефоні.</string>
     <string name="about__more_apps__intro">Також від DevEmperor, розробника Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Голосовий ШІ-асистент для Wear OS</string>
     <string name="about__more_apps__sayova_description">Розмовляйте з Google Gemini або OpenAI просто з годинника: природно, перебивайте будь-коли й читайте відповідь, поки її слухаєте.</string>

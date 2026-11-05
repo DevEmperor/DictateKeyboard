@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.app.settings.about
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,11 +24,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.SendToMobile
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.outlined.CloudOff
+import androidx.compose.material.icons.outlined.GraphicEq
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.MusicNote
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Shop
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material.icons.outlined.Translate
+import androidx.compose.material.icons.outlined.Vibration
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -50,7 +56,7 @@ import org.florisboard.lib.compose.stringRes
 
 /**
  * The developer's other apps, reached from About and from the one-time SayOVA nudge in the Smartbar
- * (`DictateController.maybePromptSayova`). For now that is SayOVA alone.
+ * (`DictateController.maybePromptSayova`): SayOVA first, since the nudge is about it, then TunerToGo.
  *
  * Google Play counts a "More apps" page in the menu as cross-promotion, not as ads; the Smartbar nudge that
  * points here is what makes Dictate's "Contains ads" declaration a question.
@@ -69,20 +75,63 @@ fun MoreAppsScreen() = FlorisScreen {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(12.dp))
-            SayovaCard(
+            AppCard(
+                name = "SayOVA",
+                banner = R.drawable.sayova_feature_graphic,
+                tagline = stringRes(R.string.about__more_apps__sayova_tagline),
+                description = stringRes(R.string.about__more_apps__sayova_description),
+                features = listOf(
+                    Icons.Outlined.Translate to stringRes(R.string.about__more_apps__sayova_feature_interpreter),
+                    Icons.Outlined.Timer to stringRes(R.string.about__more_apps__sayova_feature_tasks),
+                    Icons.AutoMirrored.Outlined.SendToMobile to stringRes(R.string.about__more_apps__sayova_feature_phone),
+                    Icons.Outlined.Lock to stringRes(R.string.about__more_apps__sayova_feature_privacy),
+                ),
+                requirements = stringRes(R.string.about__more_apps__sayova_requirements),
                 onPlay = { context.launchUrl(R.string.sayova__play_url) },
-                onWebsite = { context.launchUrl(R.string.sayova__website_url) },
+                secondIcon = Icons.Outlined.Public,
+                secondLabel = stringRes(R.string.about__website__title),
+                onSecond = { context.launchUrl(R.string.sayova__website_url) },
+            )
+            Spacer(Modifier.height(16.dp))
+            // TunerToGo has no website of its own; its README on GitHub is the page about it.
+            AppCard(
+                name = "TunerToGo",
+                banner = R.drawable.tunertogo_feature_graphic,
+                tagline = stringRes(R.string.about__more_apps__tunertogo_tagline),
+                description = stringRes(R.string.about__more_apps__tunertogo_description),
+                features = listOf(
+                    Icons.Outlined.MusicNote to stringRes(R.string.about__more_apps__tunertogo_feature_instruments),
+                    Icons.Outlined.GraphicEq to stringRes(R.string.about__more_apps__tunertogo_feature_chromatic),
+                    Icons.Outlined.Vibration to stringRes(R.string.about__more_apps__tunertogo_feature_vibration),
+                    Icons.Outlined.CloudOff to stringRes(R.string.about__more_apps__tunertogo_feature_privacy),
+                ),
+                requirements = stringRes(R.string.about__more_apps__tunertogo_requirements),
+                onPlay = { context.launchUrl(R.string.tunertogo__play_url) },
+                secondIcon = Icons.Default.Code,
+                secondLabel = "GitHub",
+                onSecond = { context.launchUrl(R.string.tunertogo__repo_url) },
             )
         }
     }
 }
 
 @Composable
-private fun SayovaCard(onPlay: () -> Unit, onWebsite: () -> Unit) {
+private fun AppCard(
+    name: String,
+    @DrawableRes banner: Int,
+    tagline: String,
+    description: String,
+    features: List<Pair<ImageVector, String>>,
+    requirements: String,
+    onPlay: () -> Unit,
+    secondIcon: ImageVector,
+    secondLabel: String,
+    onSecond: () -> Unit,
+) {
     Card(modifier = Modifier.fillMaxWidth()) {
-        // SayOVA's store banner, English like all of SayOVA's pictures; the text below is translated.
+        // The app's store banner, in English like the apps' own pictures; the text below is translated.
         Image(
-            painter = painterResource(R.drawable.sayova_feature_graphic),
+            painter = painterResource(banner),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -91,28 +140,25 @@ private fun SayovaCard(onPlay: () -> Unit, onWebsite: () -> Unit) {
         )
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "SayOVA",
+                text = name,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = stringRes(R.string.about__more_apps__sayova_tagline),
+                text = tagline,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(12.dp))
             Text(
-                text = stringRes(R.string.about__more_apps__sayova_description),
+                text = description,
                 style = MaterialTheme.typography.bodyMedium,
             )
             Spacer(Modifier.height(12.dp))
-            Feature(Icons.Outlined.Translate, stringRes(R.string.about__more_apps__sayova_feature_interpreter))
-            Feature(Icons.Outlined.Timer, stringRes(R.string.about__more_apps__sayova_feature_tasks))
-            Feature(Icons.AutoMirrored.Outlined.SendToMobile,stringRes(R.string.about__more_apps__sayova_feature_phone))
-            Feature(Icons.Outlined.Lock, stringRes(R.string.about__more_apps__sayova_feature_privacy))
+            features.forEach { (icon, text) -> Feature(icon, text) }
             Spacer(Modifier.height(12.dp))
             Text(
-                text = stringRes(R.string.about__more_apps__sayova_requirements),
+                text = requirements,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -123,10 +169,10 @@ private fun SayovaCard(onPlay: () -> Unit, onWebsite: () -> Unit) {
                     Spacer(Modifier.width(8.dp))
                     Text("Google Play")
                 }
-                OutlinedButton(onClick = onWebsite, modifier = Modifier.weight(1f)) {
-                    Icon(Icons.Outlined.Public, contentDescription = null, modifier = Modifier.size(18.dp))
+                OutlinedButton(onClick = onSecond, modifier = Modifier.weight(1f)) {
+                    Icon(secondIcon, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text(stringRes(R.string.about__website__title))
+                    Text(secondLabel)
                 }
             }
         }

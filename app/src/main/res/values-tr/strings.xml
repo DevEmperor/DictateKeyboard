@@ -1305,8 +1305,6 @@
     <string name="dictate__remember_last_dictation_summary">Son diktenizi saklar; böylece yüzen düğme geri alabilir, klasik düzen yeniden ekleyebilir.</string>
     <string name="dictate__remember_last_dictation_title">Son dikteyi hatırla</string>
     <string name="changelog__v4_2_0">• YENİ: kayan dikte düğmesi — başka bir klavye etkin olsa bile herhangi bir uygulamaya doğrudan dikte edin. Üç stilden birini seçin (Hap, Halka, Küre), konuşurken canlı dalga biçimini izleyin, kenara yapışmayla istediğiniz yere sürükleyin, rengini ve boyutunu ayarlayın ve yeniden ifade etmek için basılı tutun. Ayarlar ▸ Dictate ▸ Kayan düğme bölümünden açın.\n• YENİ: Google Gemini — transkripsiyon ve yeniden ifade için kendi AI Studio API anahtarını kullan.\n• İstemler artık varsayılan olarak tuşların üzerinde sabit bir sırada görünür.\n• Tarayıcılar ve diğer klavyeler dahil uygulamalar arası daha güvenilir metin ekleme.</string>
-    <string name="dictate__promo_floating_button_message">Yeni: her yerde dikte et</string>
-    <string name="dictate__promo_floating_button_action">Deneyin</string>
     <string name="setup__floating_button__btn">Kayan düğmeyi ayarla</string>
     <string name="setup__nav_back">Geri</string>
     <string name="setup__nav_next">İleri</string>
@@ -2428,7 +2426,14 @@
     <string name="dictate__promo_sayova_message">Yeni: saatinizde yapay zekâ</string>
     <string name="dictate__promo_sayova_action">Keşfedin</string>
     <string name="about__more_apps__title">Diğer uygulamalar</string>
-    <string name="about__more_apps__summary">SayOVA, saatiniz için yapay zekâ sesli asistanı</string>
+    <string name="about__more_apps__summary">Saatiniz için SayOVA ve TunerToGo</string>
+    <string name="about__more_apps__tunertogo_tagline">Wear OS için enstrüman akort cihazı</string>
+    <string name="about__more_apps__tunertogo_description">Her zaman bileğinizde duran, enstrümanınızı elinize aldığınız an hazır olan hassas bir akort cihazı.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitar, bas, ukulele, keman ve dahası, otomatik tel algılamayla</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Diğer tüm enstrümanlar ve sesiniz için kromatik mod</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Tel akortlandığında kısa bir titreşim, gözleriniz burgularda kalır</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">İnternet erişimi yok, reklam yok: ses saatte analiz edilir ve asla kaydedilmez</string>
+    <string name="about__more_apps__tunertogo_requirements">Mikrofonlu, Wear OS 3 veya daha yeni bir saat gerekir. Telefon uygulaması olmadan çalışır.</string>
     <string name="about__more_apps__intro">Ayrıca Dictate\'in geliştiricisi DevEmperor\'dan:</string>
     <string name="about__more_apps__sayova_tagline">Wear OS için yapay zekâ sesli asistanı</string>
     <string name="about__more_apps__sayova_description">Saatinizden Google Gemini veya OpenAI ile konuşun: doğal konuşun, istediğiniz an araya girin ve yanıtı dinlerken okuyun.</string>

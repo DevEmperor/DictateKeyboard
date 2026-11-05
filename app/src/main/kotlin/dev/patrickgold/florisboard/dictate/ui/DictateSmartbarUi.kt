@@ -39,7 +39,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.automirrored.filled.AltRoute
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Close
@@ -904,7 +903,6 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.RATE -> Icons.Default.Star
         DictateController.PromoKind.DONATE -> Icons.Default.Favorite
         DictateController.PromoKind.CHANGELOG -> Icons.Default.NewReleases
-        DictateController.PromoKind.FLOATING_BUTTON -> Icons.Default.Adjust
         DictateController.PromoKind.MILESTONE -> Icons.Default.EmojiEvents
         // The mark of what is running low, not of the action — the accent pill beside it already
         // says "top up".
@@ -916,7 +914,6 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_message
         DictateController.PromoKind.DONATE -> R.string.dictate__promo_donate_message
         DictateController.PromoKind.CHANGELOG -> R.string.dictate__promo_changelog_message
-        DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_message
         DictateController.PromoKind.MILESTONE -> R.string.dictate__stats_milestone_title
         DictateController.PromoKind.LOW_CREDIT -> R.string.dictate__promo_low_credit_message
         DictateController.PromoKind.SAYOVA -> R.string.dictate__promo_sayova_message
@@ -925,7 +922,6 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_action
         DictateController.PromoKind.DONATE -> R.string.dictate__promo_donate_action
         DictateController.PromoKind.CHANGELOG -> R.string.dictate__promo_changelog_action
-        DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_action
         DictateController.PromoKind.MILESTONE -> R.string.dictate__promo_milestone_action
         DictateController.PromoKind.LOW_CREDIT -> R.string.dictate__promo_low_credit_action
         DictateController.PromoKind.SAYOVA -> R.string.dictate__promo_sayova_action

@@ -1321,8 +1321,6 @@
     <string name="dictate__remember_last_dictation_summary">Megőrzi az utolsó diktálást, hogy a lebegő gomb visszavonhassa, a klasszikus elrendezés pedig újra beszúrhassa.</string>
     <string name="dictate__remember_last_dictation_title">Utolsó diktálás megjegyzése</string>
     <string name="changelog__v4_2_0">• ÚJ: lebegő diktálógomb — diktáljon közvetlenül bármelyik appba, akkor is, ha másik billentyűzet aktív. Válasszon a három stílus közül (Pirula, Gyűrű, Gömb), nézze az élő hullámformát beszéd közben, húzza bárhová a szélhez illesztéssel, állítsa be a színét és méretét, és tartsa lenyomva az átfogalmazáshoz. Kapcsolja be a Beállítások ▸ Dictate ▸ Lebegő gomb alatt.\n• ÚJ: Google Gemini — használd saját AI Studio API-kulcsodat átíráshoz és újrafogalmazáshoz.\n• A parancsok mostantól alapértelmezetten egy állandó sorban jelennek meg a billentyűk fölött.\n• Megbízhatóbb szövegbeszúrás az appokban, beleértve a böngészőket és más billentyűzeteket.</string>
-    <string name="dictate__promo_floating_button_message">Új: diktálj bárhol</string>
-    <string name="dictate__promo_floating_button_action">Kipróbálom</string>
     <string name="setup__floating_button__btn">Lebegő gomb beállítása</string>
     <string name="setup__nav_back">Vissza</string>
     <string name="setup__nav_next">Tovább</string>
@@ -2444,7 +2442,14 @@
     <string name="dictate__promo_sayova_message">Új app: MI az órádon</string>
     <string name="dictate__promo_sayova_action">Megnézem</string>
     <string name="about__more_apps__title">További appok</string>
-    <string name="about__more_apps__summary">SayOVA, MI-alapú hangasszisztens az órádra</string>
+    <string name="about__more_apps__summary">SayOVA és TunerToGo az órádra</string>
+    <string name="about__more_apps__tunertogo_tagline">Hangszerhangoló Wear OS-re</string>
+    <string name="about__more_apps__tunertogo_description">Pontos hangoló mindig a csuklódon, készen áll, amint kézbe veszed a hangszert.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitár, basszusgitár, ukulele, hegedű és más, automatikus húrfelismeréssel</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Kromatikus mód minden más hangszerhez és a hangodhoz</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Rövid rezgés, ha a húr be van hangolva, így a szemed a hangolókulcsokon maradhat</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Nincs internet-hozzáférés, nincs reklám: a hangot az óra elemzi, és sosem menti</string>
+    <string name="about__more_apps__tunertogo_requirements">Wear OS 3 vagy újabb rendszerű, mikrofonos óra szükséges. Telefonos app nélkül is működik.</string>
     <string name="about__more_apps__intro">Szintén DevEmperortól, a Dictate fejlesztőjétől:</string>
     <string name="about__more_apps__sayova_tagline">MI-alapú hangasszisztens Wear OS-re</string>
     <string name="about__more_apps__sayova_description">Beszélj a Google Geminivel vagy az OpenAI-jal közvetlenül az órádról: természetesen, bármikor közbeszólhatsz, és olvashatod a választ, miközben hallod.</string>

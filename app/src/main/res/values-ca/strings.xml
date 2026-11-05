@@ -1193,8 +1193,6 @@
     <string name="dictate__remember_last_dictation_summary">Conserva l\'últim dictat perquè el botó flotant el pugui desfer i la disposició clàssica el pugui tornar a inserir.</string>
     <string name="dictate__remember_last_dictation_title">Recorda l’últim dictat</string>
     <string name="changelog__v4_2_0">• NOU: botó de dictat flotant — dicta directament a qualsevol app, fins i tot amb un altre teclat actiu. Tria entre tres estils (Píndola, Anella, Esfera), mira una forma d’ona en directe mentre parles, arrossega’l on vulguis amb ajust a les vores, defineix-ne el color i la mida i mantén premut per reformular. Activa’l a Configuració ▸ Dictate ▸ Botó flotant.\n• NOU: Google Gemini — fes servir la teva pròpia clau d’API d’AI Studio per a la transcripció i la reformulació.\n• Les indicacions ara apareixen per defecte en una fila fixa damunt de les tecles.\n• Inserció de text més fiable entre apps, inclosos navegadors i altres teclats.</string>
-    <string name="dictate__promo_floating_button_message">Nou: dicta a qualsevol app</string>
-    <string name="dictate__promo_floating_button_action">Prova-ho</string>
     <string name="setup__floating_button__btn">Configura el botó flotant</string>
     <string name="setup__nav_back">Enrere</string>
     <string name="setup__nav_next">Següent</string>
@@ -2316,7 +2314,14 @@
     <string name="dictate__promo_sayova_message">App nova: IA al teu rellotge</string>
     <string name="dictate__promo_sayova_action">Descobreix</string>
     <string name="about__more_apps__title">Més apps</string>
-    <string name="about__more_apps__summary">SayOVA, un assistent de veu amb IA per al teu rellotge</string>
+    <string name="about__more_apps__summary">SayOVA i TunerToGo per al teu rellotge</string>
+    <string name="about__more_apps__tunertogo_tagline">Afinador d’instruments per a Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Un afinador precís sempre al canell, a punt tan bon punt agafes l’instrument.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Guitarra, baix, ukulele, violí i més, amb detecció automàtica de cordes</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Mode cromàtic per a qualsevol altre instrument i per a la veu</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Una vibració curta quan la corda està afinada, sense apartar la vista de les clavilles</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Sense accés a internet ni anuncis: el so s’analitza al rellotge i mai no es desa</string>
+    <string name="about__more_apps__tunertogo_requirements">Cal un rellotge amb Wear OS 3 o posterior amb micròfon. Funciona sense app al mòbil.</string>
     <string name="about__more_apps__intro">També de DevEmperor, el desenvolupador del Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Assistent de veu amb IA per a Wear OS</string>
     <string name="about__more_apps__sayova_description">Parla amb Google Gemini o OpenAI des del rellotge: amb naturalitat, interromp quan vulguis i llegeix la resposta mentre l’escoltes.</string>

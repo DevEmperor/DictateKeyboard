@@ -1339,8 +1339,6 @@
     <string name="dictate__remember_last_dictation_summary">Uchová poslední diktát, aby jej plovoucí tlačítko mohlo vrátit zpět a klasické rozvržení znovu vložit.</string>
     <string name="dictate__remember_last_dictation_title">Zapamatovat poslední diktování</string>
     <string name="changelog__v4_2_0">• NOVÉ: plovoucí tlačítko diktování — diktujte přímo v jakékoli aplikaci, i když je aktivní jiná klávesnice. Vyberte si ze tří stylů (Pilulka, Prstenec, Koule), sledujte živý průběh zvuku, když mluvíte, přetáhněte ho kamkoli s přichytáváním k okrajům, nastavte barvu a velikost a podržením přeformulujte. Zapněte ho v Nastavení ▸ Dictate ▸ Plovoucí tlačítko.\n• NOVÉ: Google Gemini — použijte vlastní klíč API z AI Studia pro přepis i přeformulování.\n• Výzvy se nyní ve výchozím nastavení zobrazují ve stálém řádku nad klávesami.\n• Spolehlivější vkládání textu napříč aplikacemi, včetně prohlížečů a jiných klávesnic.</string>
-    <string name="dictate__promo_floating_button_message">Nové: diktujte kdekoli</string>
-    <string name="dictate__promo_floating_button_action">Vyzkoušet</string>
     <string name="setup__floating_button__btn">Nastavit plovoucí tlačítko</string>
     <string name="setup__nav_back">Zpět</string>
     <string name="setup__nav_next">Další</string>
@@ -2470,7 +2468,14 @@
     <string name="dictate__promo_sayova_message">Nová aplikace: AI na hodinkách</string>
     <string name="dictate__promo_sayova_action">Objevit</string>
     <string name="about__more_apps__title">Další aplikace</string>
-    <string name="about__more_apps__summary">SayOVA, hlasový asistent s AI pro vaše hodinky</string>
+    <string name="about__more_apps__summary">SayOVA a TunerToGo pro vaše hodinky</string>
+    <string name="about__more_apps__tunertogo_tagline">Ladička pro Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Přesná ladička vždy na zápěstí, připravená, jakmile vezmete nástroj do ruky.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Kytara, baskytara, ukulele, housle a další, s automatickým rozpoznáním strun</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Chromatický režim pro všechny ostatní nástroje i pro váš hlas</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Krátká vibrace, když je struna naladěná, oči zůstanou u ladicích kolíků</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Bez přístupu k internetu, bez reklam: zvuk se analyzuje v hodinkách a nikdy se neukládá</string>
+    <string name="about__more_apps__tunertogo_requirements">Vyžaduje hodinky s Wear OS 3 nebo novějším a mikrofonem. Funguje bez aplikace v telefonu.</string>
     <string name="about__more_apps__intro">Také od DevEmperora, vývojáře Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Hlasový asistent s AI pro Wear OS</string>
     <string name="about__more_apps__sayova_description">Mluvte s Google Gemini nebo OpenAI přímo z hodinek: přirozeně, přerušte kdykoli a čtěte odpověď, zatímco ji posloucháte.</string>

@@ -2078,8 +2078,6 @@
     <string name="dictate__promo_donate_action" comment="Label of the accent pill button that opens PayPal to donate">Donate</string>
     <string name="dictate__promo_changelog_message" comment="Smartbar nudge shown after an app update. Kept short to fit the single-line Smartbar.">Dictate was updated</string>
     <string name="dictate__promo_changelog_action" comment="Short label of the accent pill button that opens the app's What's new changelog dialog. Must stay short to fit the single-line Smartbar.">Details</string>
-    <string name="dictate__promo_floating_button_message" comment="Smartbar spotlight message introducing the floating dictation button. Keep short for one line.">New: dictate in any app</string>
-    <string name="dictate__promo_floating_button_action" comment="Short label of the accent pill button that opens the floating-button settings. Must stay short to fit the single-line Smartbar.">Try it</string>
     <string name="dictate__promo_milestone_time" comment="Smartbar milestone nudge for saved time; %s is a duration. Keep short (single line).">Saved %s with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_count" comment="Smartbar milestone nudge for dictation count; %s is a number. Keep short (single line).">%s dictations with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action" comment="Short label of the accent pill that opens the statistics screen. Must stay short to fit the single-line Smartbar.">Stats</string>
@@ -2088,7 +2086,14 @@
     <string name="dictate__promo_sayova_message" comment="Smartbar nudge shown once, a few days after the update, about SayOVA, the developer's AI voice assistant for Wear OS watches. Keep short to fit the single-line Smartbar.">New app: AI on your watch</string>
     <string name="dictate__promo_sayova_action" comment="Short label of the accent pill that opens the More apps page. Must stay short to fit the single-line Smartbar.">Discover</string>
     <string name="about__more_apps__title" comment="Preference under About, and the title of the page presenting the developer's other apps">More apps</string>
-    <string name="about__more_apps__summary" comment="Summary of the More apps preference under About">SayOVA, an AI voice assistant for your watch</string>
+    <string name="about__more_apps__summary" comment="Summary of the More apps preference under About; SayOVA and TunerToGo are app names">SayOVA and TunerToGo for your watch</string>
+    <string name="about__more_apps__tunertogo_tagline" comment="One line under the name TunerToGo on the More apps page">Instrument tuner for Wear OS</string>
+    <string name="about__more_apps__tunertogo_description" comment="Paragraph describing TunerToGo on the More apps page">A precise tuner that is always on your wrist, ready the moment you pick up your instrument.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments" comment="TunerToGo feature bullet on the More apps page">Guitar, bass, ukulele, violin and more, with automatic string detection</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic" comment="TunerToGo feature bullet on the More apps page">Chromatic mode for every other instrument and for your voice</string>
+    <string name="about__more_apps__tunertogo_feature_vibration" comment="TunerToGo feature bullet on the More apps page; pegs are the tuning pegs of a string instrument">A short vibration when a string is in tune, so your eyes stay on the pegs</string>
+    <string name="about__more_apps__tunertogo_feature_privacy" comment="TunerToGo feature bullet on the More apps page">No internet access, no ads: the sound is analysed on the watch and never stored</string>
+    <string name="about__more_apps__tunertogo_requirements" comment="Small print under the TunerToGo features on the More apps page">Needs a watch with Wear OS 3 or newer and a microphone. Works without a phone app.</string>
     <string name="about__more_apps__intro" comment="First line of the More apps page, above the app cards">Also by DevEmperor, the developer of Dictate:</string>
     <string name="about__more_apps__sayova_tagline" comment="One line under the name SayOVA on the More apps page">AI voice assistant for Wear OS</string>
     <string name="about__more_apps__sayova_description" comment="Paragraph describing SayOVA on the More apps page">Talk to Google Gemini or OpenAI right from your watch: speak naturally, interrupt whenever you like, and read the answer along while you hear it.</string>

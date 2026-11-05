@@ -1340,8 +1340,6 @@
     <string name="dictate__remember_last_dictation_summary">Zachowuje ostatnie dyktowanie, aby pływający przycisk mógł je cofnąć, a klasyczny układ wstawić ponownie.</string>
     <string name="dictate__remember_last_dictation_title">Zapamiętaj ostatnie dyktowanie</string>
     <string name="changelog__v4_2_0">• NOWOŚĆ: pływający przycisk dyktowania — dyktuj bezpośrednio w dowolnej aplikacji, nawet gdy aktywna jest inna klawiatura. Wybierz spośród trzech stylów (Pigułka, Pierścień, Kula), patrz na wykres dźwięku na żywo, gdy mówisz, przeciągaj go gdziekolwiek z przyciąganiem do krawędzi, ustaw kolor i rozmiar oraz przytrzymaj, aby przeredagować. Włącz go w Ustawieniach ▸ Dictate ▸ Pływający przycisk.\n• NOWOŚĆ: Google Gemini — użyj własnego klucza API AI Studio do transkrypcji i przeredagowania.\n• Podpowiedzi pojawiają się teraz domyślnie w stałym rzędzie nad klawiszami.\n• Bardziej niezawodne wstawianie tekstu w aplikacjach, w tym w przeglądarkach i innych klawiaturach.</string>
-    <string name="dictate__promo_floating_button_message">Nowość: dyktuj wszędzie</string>
-    <string name="dictate__promo_floating_button_action">Wypróbuj</string>
     <string name="setup__floating_button__btn">Skonfiguruj pływający przycisk</string>
     <string name="setup__nav_back">Wstecz</string>
     <string name="setup__nav_next">Dalej</string>
@@ -2471,7 +2469,14 @@
     <string name="dictate__promo_sayova_message">Nowa aplikacja: AI na zegarku</string>
     <string name="dictate__promo_sayova_action">Odkryj</string>
     <string name="about__more_apps__title">Więcej aplikacji</string>
-    <string name="about__more_apps__summary">SayOVA, asystent głosowy AI na Twój zegarek</string>
+    <string name="about__more_apps__summary">SayOVA i TunerToGo na Twój zegarek</string>
+    <string name="about__more_apps__tunertogo_tagline">Stroik do instrumentów na Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Precyzyjny stroik zawsze na nadgarstku, gotowy, gdy tylko sięgniesz po instrument.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitara, bas, ukulele, skrzypce i więcej, z automatycznym rozpoznawaniem strun</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Tryb chromatyczny dla każdego innego instrumentu i dla głosu</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Krótka wibracja, gdy struna jest nastrojona, więc wzrok zostaje na kluczach</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Bez dostępu do internetu i bez reklam: dźwięk jest analizowany na zegarku i nigdy nie jest zapisywany</string>
+    <string name="about__more_apps__tunertogo_requirements">Wymaga zegarka z Wear OS 3 lub nowszym, z mikrofonem. Działa bez aplikacji na telefonie.</string>
     <string name="about__more_apps__intro">Również od DevEmperor, twórcy Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Asystent głosowy AI dla Wear OS</string>
     <string name="about__more_apps__sayova_description">Rozmawiaj z Google Gemini lub OpenAI prosto z zegarka: mów naturalnie, przerywaj, kiedy chcesz, i czytaj odpowiedź, słuchając jej.</string>

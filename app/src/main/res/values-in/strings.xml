@@ -1278,8 +1278,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__remember_last_dictation_summary">Menyimpan dikte terakhir Anda agar tombol mengambang dapat membatalkannya dan tata letak klasik dapat menyisipkannya kembali.</string>
     <string name="dictate__remember_last_dictation_title">Ingat dikte terakhir</string>
     <string name="changelog__v4_2_0">• BARU: tombol dikte mengambang — dikte langsung ke aplikasi apa pun, bahkan saat keyboard lain aktif. Pilih dari tiga gaya (Pil, Cincin, Bola), lihat gelombang langsung saat Anda berbicara, seret ke mana saja dengan pengancingan tepi, atur warna dan ukurannya, dan tekan lama untuk menyusun ulang. Aktifkan di Setelan ▸ Dictate ▸ Tombol mengambang.\n• BARU: Google Gemini — gunakan kunci API AI Studio Anda sendiri untuk transkripsi dan penulisan ulang.\n• Prompt kini muncul secara bawaan dalam baris tetap di atas tombol.\n• Penyisipan teks yang lebih andal di seluruh aplikasi, termasuk peramban dan keyboard lain.</string>
-    <string name="dictate__promo_floating_button_message">Baru: dikte di app mana pun</string>
-    <string name="dictate__promo_floating_button_action">Coba</string>
     <string name="setup__floating_button__btn">Siapkan tombol mengambang</string>
     <string name="setup__nav_back">Kembali</string>
     <string name="setup__nav_next">Berikutnya</string>
@@ -2397,7 +2395,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__promo_sayova_message">App baru: AI di jam tangan</string>
     <string name="dictate__promo_sayova_action">Lihat</string>
     <string name="about__more_apps__title">App lainnya</string>
-    <string name="about__more_apps__summary">SayOVA, asisten suara AI untuk jam tangan Anda</string>
+    <string name="about__more_apps__summary">SayOVA dan TunerToGo untuk jam tangan Anda</string>
+    <string name="about__more_apps__tunertogo_tagline">Penyetem instrumen untuk Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Penyetem presisi yang selalu ada di pergelangan tangan, siap begitu Anda mengambil instrumen.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitar, bas, ukulele, biola, dan lainnya, dengan deteksi senar otomatis</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Mode kromatik untuk instrumen lain dan untuk suara Anda</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Getaran singkat saat senar sudah pas, jadi mata tetap pada pasak</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Tanpa akses internet, tanpa iklan: suara dianalisis di jam tangan dan tidak pernah disimpan</string>
+    <string name="about__more_apps__tunertogo_requirements">Memerlukan jam tangan dengan Wear OS 3 atau lebih baru dan mikrofon. Berfungsi tanpa aplikasi ponsel.</string>
     <string name="about__more_apps__intro">Juga dari DevEmperor, pengembang Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Asisten suara AI untuk Wear OS</string>
     <string name="about__more_apps__sayova_description">Bicara dengan Google Gemini atau OpenAI langsung dari jam tangan: bicara secara alami, menyela kapan saja, dan membaca jawaban sambil mendengarkannya.</string>

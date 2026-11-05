@@ -1268,8 +1268,6 @@
     <string name="dictate__remember_last_dictation_summary">Saglabā jūsu pēdējo diktātu, lai peldošā poga to varētu atsaukt un klasiskais izkārtojums — ievietot atkārtoti.</string>
     <string name="dictate__remember_last_dictation_title">Atcerēties pēdējo diktātu</string>
     <string name="changelog__v4_2_0">• JAUNS: peldošā diktēšanas poga — diktējiet tieši jebkurā lietotnē, pat ja aktīva ir cita tastatūra. Izvēlieties no trim stiliem (Kapsula, Gredzens, Lode), vērojiet tiešraides viļņu formu runājot, velciet to jebkur ar piesaisti malām, iestatiet tās krāsu un izmēru un turiet nospiestu, lai pārformulētu. Ieslēdziet to sadaļā Iestatījumi ▸ Dictate ▸ Peldošā poga.\n• JAUNS: Google Gemini — izmanto savu AI Studio API atslēgu transkripcijai un pārformulēšanai.\n• Uzvednes tagad pēc noklusējuma tiek rādītas pastāvīgā rindā virs taustiņiem.\n• Uzticamāka teksta ievietošana lietotnēs, tostarp pārlūkos un citās tastatūrās.</string>
-    <string name="dictate__promo_floating_button_message">Jauns: diktē jebkurā lietotnē</string>
-    <string name="dictate__promo_floating_button_action">Izmēģināt</string>
     <string name="setup__floating_button__btn">Iestatīt peldošo pogu</string>
     <string name="setup__nav_back">Atpakaļ</string>
     <string name="setup__nav_next">Tālāk</string>
@@ -2395,7 +2393,14 @@
     <string name="dictate__promo_sayova_message">Jauna lietotne: MI pulkstenī</string>
     <string name="dictate__promo_sayova_action">Apskatīt</string>
     <string name="about__more_apps__title">Citas lietotnes</string>
-    <string name="about__more_apps__summary">SayOVA – MI balss asistents jūsu pulkstenim</string>
+    <string name="about__more_apps__summary">SayOVA un TunerToGo jūsu pulkstenim</string>
+    <string name="about__more_apps__tunertogo_tagline">Instrumentu skaņotājs Wear OS ierīcēm</string>
+    <string name="about__more_apps__tunertogo_description">Precīzs skaņotājs vienmēr uz jūsu plaukstas, gatavs, tiklīdz paņemat instrumentu.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Ģitāra, basģitāra, ukulele, vijole un citi, ar automātisku stīgu noteikšanu</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Hromatiskais režīms visiem citiem instrumentiem un jūsu balsij</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Īsa vibrācija, kad stīga ir noskaņota, lai skatiens paliek pie tapām</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Bez interneta piekļuves, bez reklāmām: skaņa tiek analizēta pulkstenī un nekad netiek saglabāta</string>
+    <string name="about__more_apps__tunertogo_requirements">Nepieciešams pulkstenis ar Wear OS 3 vai jaunāku versiju un mikrofonu. Darbojas bez tālruņa lietotnes.</string>
     <string name="about__more_apps__intro">Arī no DevEmperor, Dictate izstrādātāja:</string>
     <string name="about__more_apps__sayova_tagline">MI balss asistents Wear OS ierīcēm</string>
     <string name="about__more_apps__sayova_description">Runājiet ar Google Gemini vai OpenAI tieši no pulksteņa: dabiski, pārtrauciet jebkurā brīdī un lasiet atbildi, kamēr to klausāties.</string>

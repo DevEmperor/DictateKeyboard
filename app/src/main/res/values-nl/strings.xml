@@ -1225,8 +1225,6 @@
     <string name="dictate__remember_last_dictation_summary">Bewaart je laatste dictaat zodat de zwevende knop het ongedaan kan maken en de klassieke lay-out het opnieuw kan invoegen.</string>
     <string name="dictate__remember_last_dictation_title">Laatste dictaat onthouden</string>
     <string name="changelog__v4_2_0">• NIEUW: zwevende dicteerknop — dicteer rechtstreeks in elke app, zelfs met een ander toetsenbord actief. Kies uit drie stijlen (Pil, Ring, Bol), zie een live golfvorm terwijl je praat, sleep hem overal heen met randmagnetisme, stel kleur en grootte in en houd ingedrukt om te herformuleren. Schakel hem in via Instellingen ▸ Dictate ▸ Zwevende knop.\n• NIEUW: Google Gemini — gebruik je eigen AI Studio-API-sleutel voor transcriptie en herformuleren.\n• Prompts verschijnen nu standaard in een vaste rij boven de toetsen.\n• Betrouwbaardere tekstinvoer in apps, inclusief browsers en andere toetsenborden.</string>
-    <string name="dictate__promo_floating_button_message">Nieuw: overal dicteren</string>
-    <string name="dictate__promo_floating_button_action">Proberen</string>
     <string name="setup__floating_button__btn">Zwevende knop instellen</string>
     <string name="setup__nav_back">Terug</string>
     <string name="setup__nav_next">Volgende</string>
@@ -2348,7 +2346,14 @@
     <string name="dictate__promo_sayova_message">Nieuwe app: AI op je horloge</string>
     <string name="dictate__promo_sayova_action">Ontdekken</string>
     <string name="about__more_apps__title">Meer apps</string>
-    <string name="about__more_apps__summary">SayOVA, een AI-spraakassistent voor je horloge</string>
+    <string name="about__more_apps__summary">SayOVA en TunerToGo voor je horloge</string>
+    <string name="about__more_apps__tunertogo_tagline">Stemapparaat voor Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Een nauwkeurig stemapparaat dat altijd om je pols zit, klaar zodra je je instrument pakt.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitaar, bas, ukelele, viool en meer, met automatische snaarherkenning</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Chromatische modus voor elk ander instrument en voor je stem</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Een korte trilling als een snaar gestemd is, zodat je ogen bij de stemmechanieken blijven</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Geen internettoegang, geen advertenties: het geluid wordt op het horloge geanalyseerd en nooit opgeslagen</string>
+    <string name="about__more_apps__tunertogo_requirements">Vereist een horloge met Wear OS 3 of nieuwer en een microfoon. Werkt zonder app op de telefoon.</string>
     <string name="about__more_apps__intro">Ook van DevEmperor, de ontwikkelaar van Dictate:</string>
     <string name="about__more_apps__sayova_tagline">AI-spraakassistent voor Wear OS</string>
     <string name="about__more_apps__sayova_description">Praat met Google Gemini of OpenAI vanaf je horloge: gewoon praten, onderbreken wanneer je wilt en het antwoord meelezen terwijl je het hoort.</string>

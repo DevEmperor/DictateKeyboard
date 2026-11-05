@@ -1320,8 +1320,6 @@
     <string name="dictate__promo_donate_action">Spenden</string>
     <string name="dictate__promo_changelog_message">Dictate wurde aktualisiert</string>
     <string name="dictate__promo_changelog_action">Details</string>
-    <string name="dictate__promo_floating_button_message">Neu: in jeder App diktieren</string>
-    <string name="dictate__promo_floating_button_action">Testen</string>
     <string name="dictate__title">Dictate</string>
     <string name="dictate__provider_title">Transkriptionsanbieter</string>
     <string name="dictate__provider__openai">OpenAI</string>
@@ -2359,7 +2357,14 @@
     <string name="dictate__promo_sayova_message">Neue App: KI auf deiner Uhr</string>
     <string name="dictate__promo_sayova_action">Entdecken</string>
     <string name="about__more_apps__title">Weitere Apps</string>
-    <string name="about__more_apps__summary">SayOVA, ein KI-Sprachassistent für deine Uhr</string>
+    <string name="about__more_apps__summary">SayOVA und TunerToGo für deine Uhr</string>
+    <string name="about__more_apps__tunertogo_tagline">Stimmgerät für Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Ein präzises Stimmgerät, immer am Handgelenk und bereit, sobald du dein Instrument in die Hand nimmst.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Gitarre, Bass, Ukulele, Geige und mehr, mit automatischer Saitenerkennung</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Chromatischer Modus für alle anderen Instrumente und für deine Stimme</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Eine kurze Vibration, wenn die Saite gestimmt ist, die Augen bleiben bei den Wirbeln</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Kein Internetzugriff, keine Werbung: Der Ton wird auf der Uhr ausgewertet und nie gespeichert</string>
+    <string name="about__more_apps__tunertogo_requirements">Erfordert eine Uhr mit Wear OS 3 oder neuer und Mikrofon. Funktioniert ohne Handy-App.</string>
     <string name="about__more_apps__intro">Auch von DevEmperor, dem Entwickler von Dictate:</string>
     <string name="about__more_apps__sayova_tagline">KI-Sprachassistent für Wear OS</string>
     <string name="about__more_apps__sayova_description">Sprich direkt an deiner Uhr mit Google Gemini oder OpenAI: natürlich reden, jederzeit unterbrechen und die Antwort mitlesen, während du sie hörst.</string>

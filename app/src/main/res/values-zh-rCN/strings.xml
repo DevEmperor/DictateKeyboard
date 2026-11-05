@@ -1318,8 +1318,6 @@
     <string name="dictate__remember_last_dictation_summary">保留你最近一次的听写，以便悬浮按钮可以撤销它、经典布局可以重新插入它。</string>
     <string name="dictate__remember_last_dictation_title">记住上次听写</string>
     <string name="changelog__v4_2_0">• 新功能：悬浮听写按钮——即使其他键盘处于激活状态，也能直接在任何应用中听写。可从三种样式（胶囊、圆环、光球）中选择，说话时显示实时波形，可拖到任意位置并吸附到边缘，设置颜色和大小，长按即可改写。在 设置 ▸ Dictate ▸ 悬浮按钮 中开启。\n• 新功能：Google Gemini — 使用你自己的 AI Studio API 密钥进行转录和改写。\n• 提示词现在默认显示在按键上方的常驻行中。\n• 跨应用的文本插入更可靠，包括浏览器和其他键盘。</string>
-    <string name="dictate__promo_floating_button_message">新功能：在任何应用中听写</string>
-    <string name="dictate__promo_floating_button_action">试用</string>
     <string name="setup__floating_button__btn">设置悬浮按钮</string>
     <string name="setup__nav_back">返回</string>
     <string name="setup__nav_next">下一步</string>
@@ -2436,7 +2434,14 @@
     <string name="dictate__promo_sayova_message">新应用：手表上的 AI 助手</string>
     <string name="dictate__promo_sayova_action">了解</string>
     <string name="about__more_apps__title">更多应用</string>
-    <string name="about__more_apps__summary">SayOVA，手表上的 AI 语音助手</string>
+    <string name="about__more_apps__summary">适用于手表的 SayOVA 和 TunerToGo</string>
+    <string name="about__more_apps__tunertogo_tagline">适用于 Wear OS 的乐器调音器</string>
+    <string name="about__more_apps__tunertogo_description">精准的调音器始终戴在手腕上，拿起乐器即可使用。</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">支持吉他、贝斯、尤克里里、小提琴等，自动识别琴弦</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">半音阶模式适用于其他所有乐器和人声</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">琴弦调准时短促振动，视线无需离开弦钮</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">无网络访问、无广告：声音在手表上分析，绝不保存</string>
+    <string name="about__more_apps__tunertogo_requirements">需要配备麦克风、搭载 Wear OS 3 或更高版本的手表。无需手机应用。</string>
     <string name="about__more_apps__intro">同样来自 Dictate 的开发者 DevEmperor：</string>
     <string name="about__more_apps__sayova_tagline">适用于 Wear OS 的 AI 语音助手</string>
     <string name="about__more_apps__sayova_description">直接在手表上与 Google Gemini 或 OpenAI 对话：自然开口，随时打断，一边听回答一边阅读文字。</string>

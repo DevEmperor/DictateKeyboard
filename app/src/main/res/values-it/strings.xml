@@ -1109,8 +1109,6 @@
     <string name="dictate__remember_last_dictation_summary">Conserva l’ultima dettatura così il pulsante flottante può annullarla e il layout classico può reinserirla.</string>
     <string name="dictate__remember_last_dictation_title">Ricorda ultima dettatura</string>
     <string name="changelog__v4_2_0">• NOVITÀ: pulsante di dettatura flottante — detta direttamente in qualsiasi app, anche con un’altra tastiera attiva. Scegli tra tre stili (Pillola, Anello, Sfera), guarda una forma d’onda in tempo reale mentre parli, trascinalo ovunque con l’aggancio ai bordi, imposta colore e dimensione e tieni premuto per riformulare. Attivalo in Impostazioni ▸ Dictate ▸ Pulsante flottante.\n• NOVITÀ: Google Gemini — usa la tua chiave API di AI Studio per trascrizione e riformulazione.\n• I prompt ora appaiono per impostazione predefinita in una riga sempre visibile sopra i tasti.\n• Inserimento del testo più affidabile tra le app, inclusi browser e altre tastiere.</string>
-    <string name="dictate__promo_floating_button_message">Novità: detta ovunque</string>
-    <string name="dictate__promo_floating_button_action">Prova</string>
     <string name="setup__floating_button__btn">Configura il pulsante flottante</string>
     <string name="setup__nav_back">Indietro</string>
     <string name="setup__nav_next">Avanti</string>
@@ -2234,7 +2232,14 @@
     <string name="dictate__promo_sayova_message">Nuova app: l’IA al polso</string>
     <string name="dictate__promo_sayova_action">Scopri</string>
     <string name="about__more_apps__title">Altre app</string>
-    <string name="about__more_apps__summary">SayOVA, un assistente vocale IA per il tuo orologio</string>
+    <string name="about__more_apps__summary">SayOVA e TunerToGo per il tuo orologio</string>
+    <string name="about__more_apps__tunertogo_tagline">Accordatore per Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">Un accordatore preciso sempre al polso, pronto appena prendi in mano lo strumento.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">Chitarra, basso, ukulele, violino e altro, con riconoscimento automatico delle corde</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">Modalità cromatica per ogni altro strumento e per la voce</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">Una breve vibrazione quando la corda è intonata, così gli occhi restano sulle meccaniche</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">Nessun accesso a Internet, nessuna pubblicità: il suono viene analizzato sull’orologio e mai salvato</string>
+    <string name="about__more_apps__tunertogo_requirements">Richiede un orologio Wear OS 3 o successivo con microfono. Funziona senza app sul telefono.</string>
     <string name="about__more_apps__intro">Sempre da DevEmperor, lo sviluppatore di Dictate:</string>
     <string name="about__more_apps__sayova_tagline">Assistente vocale IA per Wear OS</string>
     <string name="about__more_apps__sayova_description">Parla con Google Gemini o OpenAI dal tuo orologio: in modo naturale, interrompi quando vuoi e leggi la risposta mentre la ascolti.</string>

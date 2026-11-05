@@ -1182,8 +1182,6 @@
     <string name="dictate__remember_last_dictation_summary">يحتفظ بآخر إملاء لك حتى يتمكن الزر العائم من التراجع عنه والتخطيط الكلاسيكي من إدراجه مجددًا.</string>
     <string name="dictate__remember_last_dictation_title">تذكّر آخر إملاء</string>
     <string name="changelog__v4_2_0">• جديد: زر إملاء عائم — أملِ مباشرةً في أي تطبيق، حتى عندما تكون لوحة مفاتيح أخرى نشطة. اختر من بين ثلاثة أنماط (كبسولة، حلقة، كرة)، وشاهد موجة صوتية حية أثناء التحدث، واسحبه إلى أي مكان مع الالتصاق بالحواف، واضبط لونه وحجمه، واضغط مطولاً لإعادة الصياغة. فعّله من الإعدادات ▸ Dictate ▸ الزر العائم.\n• جديد: Google Gemini — استخدم مفتاح API الخاص بك من AI Studio للنسخ وإعادة الصياغة.\n• تظهر المطالبات الآن افتراضيًا في صف ثابت فوق المفاتيح.\n• إدراج نص أكثر موثوقية عبر التطبيقات، بما في ذلك المتصفحات ولوحات المفاتيح الأخرى.</string>
-    <string name="dictate__promo_floating_button_message">جديد: أملِ في أي تطبيق</string>
-    <string name="dictate__promo_floating_button_action">جرّبه</string>
     <string name="setup__floating_button__btn">إعداد الزر العائم</string>
     <string name="setup__nav_back">رجوع</string>
     <string name="setup__nav_next">التالي</string>
@@ -2321,7 +2319,14 @@
     <string name="dictate__promo_sayova_message">تطبيق جديد: ذكاء اصطناعي في ساعتك</string>
     <string name="dictate__promo_sayova_action">اكتشف</string>
     <string name="about__more_apps__title">تطبيقات أخرى</string>
-    <string name="about__more_apps__summary">SayOVA، مساعد صوتي بالذكاء الاصطناعي لساعتك</string>
+    <string name="about__more_apps__summary">SayOVA وTunerToGo لساعتك</string>
+    <string name="about__more_apps__tunertogo_tagline">مُدوزن آلات موسيقية لنظام Wear OS</string>
+    <string name="about__more_apps__tunertogo_description">مُدوزن دقيق على معصمك دائمًا، جاهز لحظة تمسك آلتك.</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">الغيتار والباص واليوكوليلي والكمان وغيرها، مع التعرّف التلقائي على الأوتار</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">وضع كروماتي لأي آلة أخرى ولصوتك</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">اهتزاز قصير عند ضبط الوتر، فتبقى عيناك على المفاتيح</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">بلا اتصال بالإنترنت وبلا إعلانات: يُحلَّل الصوت على الساعة ولا يُحفظ أبدًا</string>
+    <string name="about__more_apps__tunertogo_requirements">يتطلب ساعة بنظام Wear OS 3 أو أحدث مزوّدة بميكروفون. يعمل دون تطبيق على الهاتف.</string>
     <string name="about__more_apps__intro">من DevEmperor أيضًا، مطوّر Dictate:</string>
     <string name="about__more_apps__sayova_tagline">مساعد صوتي بالذكاء الاصطناعي لنظام Wear OS</string>
     <string name="about__more_apps__sayova_description">تحدّث مع Google Gemini أو OpenAI مباشرةً من ساعتك: تكلّم بطبيعية، وقاطِع متى شئت، واقرأ الإجابة أثناء سماعها.</string>

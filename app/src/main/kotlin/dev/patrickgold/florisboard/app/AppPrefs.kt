@@ -691,11 +691,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_hint_seen",
             default = false,
         )
-        // App version whose one-time floating-button Smartbar spotlight has already been shown.
-        val floatingButtonSpotlightVersion = string(
-            key = "dictate__floating_button_spotlight_version",
-            default = "",
-        )
         // --- Output behavior (roadmap section 10) ------------------------------------------------
         // Press Enter / trigger the editor action automatically after committing a transcription.
         val autoEnter = boolean(
@@ -2112,6 +2107,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             // keyboard's key presses do (Sounds & Vibration), the way the keyboard's microphone always has.
             // Nothing reads the old value any more, so it is dropped rather than carried along.
             "dictate__floating_button_haptic" -> entry.reset()
+
+            // The floating button's Smartbar spotlight is gone (2026-11-05): since 4.2.0 it came back with
+            // every feature release to exactly the people who had already waved it away, and the setup
+            // wizard introduces the button to new users anyway.
+            "dictate__floating_button_spotlight_version" -> entry.reset()
 
             // The offline-fallback switch became one choice of the transcription fallback (issue #455):
             // switched on, it meant the on-device engine; switched off, nothing at all. Runs on load and on

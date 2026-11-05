@@ -1258,8 +1258,6 @@
     <string name="dictate__remember_last_dictation_summary">直前の音声入力を保持し、フローティングボタンで取り消したり、クラシックレイアウトで再挿入したりできるようにします。</string>
     <string name="dictate__remember_last_dictation_title">最後の音声入力を記憶</string>
     <string name="changelog__v4_2_0">• 新機能: フローティング音声入力ボタン — 別のキーボードが有効でも、どのアプリにも直接音声入力できます。3つのスタイル（ピル、リング、オーブ）から選び、話すとライブ波形が表示され、端に吸着させながらどこへでもドラッグでき、色とサイズを設定し、長押しで言い換えられます。設定 ▸ Dictate ▸ フローティングボタンでオンにできます。\n• 新機能：Google Gemini — 文字起こしと書き換えに自分の AI Studio API キーを使えます。\n• プロンプトがデフォルトでキーの上の常時表示の行に表示されるようになりました。\n• ブラウザーや他のキーボードを含む、アプリ全体でのより確実なテキスト挿入。</string>
-    <string name="dictate__promo_floating_button_message">新機能：どのアプリでも音声入力</string>
-    <string name="dictate__promo_floating_button_action">試す</string>
     <string name="setup__floating_button__btn">フローティングボタンを設定</string>
     <string name="setup__nav_back">戻る</string>
     <string name="setup__nav_next">次へ</string>
@@ -2377,7 +2375,14 @@
     <string name="dictate__promo_sayova_message">新アプリ：ウォッチでAIと会話</string>
     <string name="dictate__promo_sayova_action">見てみる</string>
     <string name="about__more_apps__title">その他のアプリ</string>
-    <string name="about__more_apps__summary">SayOVA：ウォッチ向けAI音声アシスタント</string>
+    <string name="about__more_apps__summary">ウォッチ向けの SayOVA と TunerToGo</string>
+    <string name="about__more_apps__tunertogo_tagline">Wear OS 向けチューナー</string>
+    <string name="about__more_apps__tunertogo_description">いつも手首にある正確なチューナー。楽器を手に取ったらすぐに使えます。</string>
+    <string name="about__more_apps__tunertogo_feature_instruments">ギター、ベース、ウクレレ、バイオリンなどに対応。弦は自動で判別</string>
+    <string name="about__more_apps__tunertogo_feature_chromatic">そのほかの楽器や声にはクロマチックモード</string>
+    <string name="about__more_apps__tunertogo_feature_vibration">弦が合うと短く振動。視線をペグから離さずに済みます</string>
+    <string name="about__more_apps__tunertogo_feature_privacy">インターネット接続なし、広告なし。音はウォッチ上で解析され、保存されません</string>
+    <string name="about__more_apps__tunertogo_requirements">マイク付きの Wear OS 3 以降のウォッチが必要です。スマートフォンのアプリは不要です。</string>
     <string name="about__more_apps__intro">Dictate の開発者 DevEmperor のアプリ：</string>
     <string name="about__more_apps__sayova_tagline">Wear OS 向け AI 音声アシスタント</string>
     <string name="about__more_apps__sayova_description">ウォッチから Google Gemini や OpenAI と直接話せます。自然に話しかけ、好きなときに遮り、回答を聞きながら文字でも追えます。</string>
