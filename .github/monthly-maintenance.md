@@ -4,6 +4,7 @@ Monthly upkeep for {{MONTH}}, opened automatically on the 1st. Nothing here runs
 
 - [ ] Run the provider check and go through what differs from the model catalog: models that are new or gone, reasoning values that are refused or newly accepted, audio formats, real-time
 - [ ] Vendor retirement pages: OpenAI deprecations, Scaleway's end-of-life table
+- [ ] Models a vendor is retiring (deprecated, closed to new users, given a shutdown date): listed here with the date. Whoever still has one selected should hear it from the app before it stops working, instead of taking it for a broken app
 - [ ] Lists kept by hand because the vendor has no usable model list: ElevenLabs, AssemblyAI, Deepgram
 - [ ] Catalog changes committed one by one, each with its reason; wiki provider pages updated
 
