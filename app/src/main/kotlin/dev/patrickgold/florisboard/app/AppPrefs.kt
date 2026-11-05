@@ -686,11 +686,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_menu_settings",
             default = false,
         )
-        // Whether the user has opened the floating-button screen at least once (clears the "New" badge).
-        val floatingButtonHintSeen = boolean(
-            key = "dictate__floating_button_hint_seen",
-            default = false,
-        )
         // --- Output behavior (roadmap section 10) ------------------------------------------------
         // Press Enter / trigger the editor action automatically after committing a transcription.
         val autoEnter = boolean(
@@ -2112,6 +2107,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             // every feature release to exactly the people who had already waved it away, and the setup
             // wizard introduces the button to new users anyway.
             "dictate__floating_button_spotlight_version" -> entry.reset()
+            // Its "New" badge in the Dictate settings went the same day, and with it the flag that cleared it.
+            "dictate__floating_button_hint_seen" -> entry.reset()
 
             // The offline-fallback switch became one choice of the transcription fallback (issue #455):
             // switched on, it meant the on-device engine; switched off, nothing at all. Runs on load and on

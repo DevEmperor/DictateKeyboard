@@ -47,7 +47,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,9 +113,6 @@ fun DictateFloatingButtonScreen() = FlorisScreen {
         val appScope by prefs.dictate.floatingButtonAppScope.collectAsState()
         val apps by prefs.dictate.floatingButtonApps.collectAsState()
         val appCount = apps.packages.size
-
-        // Opening this screen clears the "New" badge on the Dictate settings entry.
-        LaunchedEffect(Unit) { prefs.dictate.floatingButtonHintSeen.set(true) }
 
         var serviceEnabled by remember { mutableStateOf(isOverlayServiceEnabled(context)) }
         var micGranted by remember { mutableStateOf(isMicGranted(context)) }
