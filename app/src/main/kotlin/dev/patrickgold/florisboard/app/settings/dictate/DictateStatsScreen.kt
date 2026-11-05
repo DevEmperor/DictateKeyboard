@@ -14,6 +14,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.data.stats.DictateStats
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -160,25 +161,14 @@ fun DictateStatsScreen() = FlorisScreen {
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Icon(Icons.Default.Celebration, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringRes(R.string.dictate__stats_milestones_title), style = MaterialTheme.typography.bodyLarge)
-                        Text(
-                            stringRes(R.string.dictate__stats_milestones_summary),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Switch(
-                        checked = milestonesEnabled,
-                        onCheckedChange = { scope.launch { prefs.dictate.statsMilestonesEnabled.set(it) } },
-                    )
-                }
+                SwitchRow(
+                    title = stringRes(R.string.dictate__stats_milestones_title),
+                    summary = stringRes(R.string.dictate__stats_milestones_summary),
+                    icon = Icons.Default.Celebration,
+                    checked = milestonesEnabled,
+                    onCheckedChange = { scope.launch { prefs.dictate.statsMilestonesEnabled.set(it) } },
+                    contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
+                )
             }
 
             // --- Tracking-since + reset ---

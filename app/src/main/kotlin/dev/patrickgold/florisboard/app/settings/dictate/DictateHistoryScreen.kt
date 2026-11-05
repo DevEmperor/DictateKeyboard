@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -59,7 +60,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -96,6 +96,7 @@ import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.ui.formatHistoryDuration
 import dev.patrickgold.florisboard.dictate.ui.formatHistorySize
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.Dispatchers
@@ -441,23 +442,14 @@ private fun HistoryToggleRow(
     enabled: Boolean = true,
     onToggle: (Boolean) -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                text = summary,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Spacer(Modifier.width(16.dp))
-        Switch(checked = checked, onCheckedChange = onToggle, enabled = enabled)
-    }
+    SwitchRow(
+        title = title,
+        summary = summary,
+        checked = checked,
+        onCheckedChange = onToggle,
+        enabled = enabled,
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+    )
 }
 
 /**
@@ -536,35 +528,22 @@ private fun ExportDialog(
             }
 
             if (folderSet) {
-                Spacer(Modifier.height(8.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = stringRes(R.string.dictate__history_export_audio_title),
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                        Text(
-                            // Says why it is off rather than silently doing nothing: without retention the
-                            // recording is deleted the moment it has been transcribed, so there is no file
-                            // left to put beside the transcript.
-                            text = stringRes(
-                                if (audioRetention) {
-                                    R.string.dictate__history_export_audio_summary
-                                } else {
-                                    R.string.dictate__history_export_audio_needs_retention
-                                }
-                            ),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Spacer(Modifier.width(16.dp))
-                    Switch(
-                        checked = exportAudio && audioRetention,
-                        onCheckedChange = onToggleAudio,
-                        enabled = audioRetention,
-                    )
-                }
+                SwitchRow(
+                    title = stringRes(R.string.dictate__history_export_audio_title),
+                    // Says why it is off rather than silently doing nothing: without retention the
+                    // recording is deleted the moment it has been transcribed, so there is no file
+                    // left to put beside the transcript.
+                    summary = stringRes(
+                        if (audioRetention) {
+                            R.string.dictate__history_export_audio_summary
+                        } else {
+                            R.string.dictate__history_export_audio_needs_retention
+                        }
+                    ),
+                    checked = exportAudio && audioRetention,
+                    onCheckedChange = onToggleAudio,
+                    enabled = audioRetention,
+                )
 
                 Spacer(Modifier.height(8.dp))
                 Text(

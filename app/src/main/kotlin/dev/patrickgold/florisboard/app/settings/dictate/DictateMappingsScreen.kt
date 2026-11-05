@@ -14,7 +14,6 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +29,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,7 +36,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
@@ -50,6 +47,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappings
 import dev.patrickgold.florisboard.dictate.data.mappings.DictateMappingsText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -263,43 +261,20 @@ private fun MappingEditorDialog(
                 label = { Text(stringRes(R.string.dictate__mappings_field_to)) },
                 placeholder = { Text(stringRes(R.string.dictate__mappings_field_to_placeholder)) },
             )
-            Spacer(Modifier.height(12.dp))
-            MappingSwitchRow(
+            Spacer(Modifier.height(4.dp))
+            SwitchRow(
                 title = stringRes(R.string.dictate__mappings_wholeword_title),
                 summary = stringRes(R.string.dictate__mappings_wholeword_summary),
                 checked = wholeWord,
                 onCheckedChange = { wholeWord = it },
             )
-            MappingSwitchRow(
+            SwitchRow(
                 title = stringRes(R.string.dictate__mappings_matchcase_title),
                 summary = stringRes(R.string.dictate__mappings_matchcase_summary),
                 checked = matchCase,
                 onCheckedChange = { matchCase = it },
             )
         }
-    }
-}
-
-@Composable
-private fun MappingSwitchRow(
-    title: String,
-    summary: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                summary,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Switch(checked = checked, onCheckedChange = onCheckedChange)
     }
 }
 

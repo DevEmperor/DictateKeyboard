@@ -57,7 +57,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
@@ -73,7 +72,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -93,6 +91,7 @@ import dev.patrickgold.florisboard.dictate.data.prompts.promptRequiresSelection
 import dev.patrickgold.florisboard.dictate.data.prompts.snippetBodyOf
 import dev.patrickgold.florisboard.dictate.snippet.SnippetTriggers
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import org.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
@@ -726,7 +725,7 @@ private fun PromptEditorDialog(
             Spacer(Modifier.height(12.dp))
             // The two toggles keep only their title inline; the longer description now shows on a
             // long-press as a tooltip, so the (already tall) editor dialog stays compact.
-            SwitchRow(
+            TooltipSwitchRow(
                 title = stringRes(R.string.dictate__prompt_requires_selection_title),
                 tooltip = stringRes(R.string.dictate__prompt_requires_selection_summary),
                 checked = requiresSelection,
@@ -737,7 +736,7 @@ private fun PromptEditorDialog(
                 // set and locked, because off it would only ever see its own instruction.
                 enabled = !isSnippet && !autoApply,
             )
-            SwitchRow(
+            TooltipSwitchRow(
                 title = stringRes(R.string.dictate__prompt_auto_apply_title),
                 tooltip = stringRes(R.string.dictate__prompt_auto_apply_summary),
                 checked = autoApply,
@@ -840,12 +839,12 @@ private fun PromptStatusIcon(
 }
 
 /**
- * A compact toggle row: title + switch, with [tooltip] (the former inline description) surfaced on a
- * long-press so the editor dialog stays short. Tap anywhere on the row toggles it.
+ * A compact toggle row: the shared [SwitchRow] with its title only, and [tooltip] (the former inline
+ * description) surfaced on a long-press so the editor dialog stays short.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SwitchRow(
+private fun TooltipSwitchRow(
     title: String,
     tooltip: String,
     checked: Boolean,
@@ -857,26 +856,7 @@ private fun SwitchRow(
         tooltip = { PlainTooltip { Text(tooltip) } },
         state = rememberTooltipState(isPersistent = false),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(enabled = enabled) { onCheckedChange(!checked) }
-                .padding(vertical = 1.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                text = title,
-                modifier = Modifier.weight(1f).padding(end = 12.dp),
-                // Dim the label along with the switch, so a disabled row reads as one greyed-out unit.
-                color = if (enabled) {
-                    Color.Unspecified
-                } else {
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
-                },
-            )
-            Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
-        }
+        SwitchRow(title = title, checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
     }
 }
 

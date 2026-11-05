@@ -19,13 +19,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.ScrollState
@@ -34,8 +39,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.AltRoute
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Dns
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.filled.Lan
@@ -54,11 +61,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -70,9 +76,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -108,6 +123,7 @@ import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -1151,26 +1167,12 @@ internal fun ProviderEditorDialog(
                 // protocol under /v1/realtime — which several self-hosted transcription servers do. There
                 // is no way to tell without connecting, so this is a switch rather than a guess.
                 if (isCustom) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { customRealtime = !customRealtime }
-                            .padding(top = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
-                            Text(
-                                text = stringRes(R.string.dictate__providers_custom_realtime),
-                                style = MaterialTheme.typography.bodyLarge,
-                            )
-                            Text(
-                                text = stringRes(R.string.dictate__providers_custom_realtime_summary),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Switch(checked = customRealtime, onCheckedChange = { customRealtime = it })
-                    }
+                    SwitchRow(
+                        title = stringRes(R.string.dictate__providers_custom_realtime),
+                        summary = stringRes(R.string.dictate__providers_custom_realtime_summary),
+                        checked = customRealtime,
+                        onCheckedChange = { customRealtime = it },
+                    )
                     // Optional: many self-hosted servers serve whatever model they were started with, so a
                     // blank box means "whatever you have".
                     if (customRealtime) {
@@ -1215,26 +1217,13 @@ internal fun ProviderEditorDialog(
             // mislead, and a wrong warning about a model that works is worse than none. Picking a model
             // that can do both is the user's job here, and it is one the app cannot do for them.
             if (showTranscription && showChat) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            stringRes(R.string.dictate__providers_single_call_title),
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                        Text(
-                            stringRes(R.string.dictate__providers_single_call_summary),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Switch(
-                        checked = transcriptionViaChat,
-                        onCheckedChange = { transcriptionViaChat = it },
-                    )
-                }
+                SwitchRow(
+                    modifier = Modifier.padding(top = 4.dp),
+                    title = stringRes(R.string.dictate__providers_single_call_title),
+                    summary = stringRes(R.string.dictate__providers_single_call_summary),
+                    checked = transcriptionViaChat,
+                    onCheckedChange = { transcriptionViaChat = it },
+                )
             }
             // Wake-on-demand (#189): a machine that sleeps between jobs, or a server that unloads its model
             // when idle, only starts coming back once something reaches it, so the first request otherwise
@@ -1244,50 +1233,22 @@ internal fun ProviderEditorDialog(
             // when single-call folds the two into one request. Offered only for endpoints of the user's
             // own — nowhere else is there a machine to wake.
             if (isCustom) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { customWarmUp = !customWarmUp }
-                        .padding(top = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
-                        Text(
-                            text = stringRes(R.string.dictate__providers_custom_warm_up),
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                        Text(
-                            text = stringRes(R.string.dictate__providers_custom_warm_up_summary),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Switch(checked = customWarmUp, onCheckedChange = { customWarmUp = it })
-                }
+                SwitchRow(
+                    title = stringRes(R.string.dictate__providers_custom_warm_up),
+                    summary = stringRes(R.string.dictate__providers_custom_warm_up_summary),
+                    checked = customWarmUp,
+                    onCheckedChange = { customWarmUp = it },
+                )
             }
             // Per account since #383: the app-wide switch it replaces also opened every cloud provider's
             // traffic to whoever holds a certificate from the CA it was turned on for. Any account may need
             // it, not only a server of the user's own — a company's TLS-inspecting proxy sits in front of all.
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { trustUserCerts = !trustUserCerts }
-                    .padding(top = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
-                    Text(
-                        text = stringRes(R.string.dictate__trust_user_certs_title),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                    Text(
-                        text = stringRes(R.string.dictate__trust_user_certs_summary),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Switch(checked = trustUserCerts, onCheckedChange = { trustUserCerts = it })
-            }
+            SwitchRow(
+                title = stringRes(R.string.dictate__trust_user_certs_title),
+                summary = stringRes(R.string.dictate__trust_user_certs_summary),
+                checked = trustUserCerts,
+                onCheckedChange = { trustUserCerts = it },
+            )
         }
         }
     }
@@ -1416,7 +1377,8 @@ private fun ProviderCheckSection(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val prefs by FlorisPreferenceStore
-    var running by remember { mutableStateOf(false) }
+    // The check in flight: true for the transcription test, false for the connection test, null for none.
+    var running by remember { mutableStateOf<Boolean?>(null) }
     var result by remember { mutableStateOf<CheckOutcome?>(null) }
     // Green and red, not the scheme's primary and error. A verdict is the one place in this app where
     // the colour carries meaning rather than decoration, and `primary` is the user's own accent (#387) —
@@ -1439,7 +1401,7 @@ private fun ProviderCheckSection(
             result = CheckOutcome(false, context.stringRes(R.string.dictate__providers_check_no_key), null)
             return
         }
-        running = true
+        running = transcription
         result = null
         scope.launch {
             result = try {
@@ -1457,32 +1419,35 @@ private fun ProviderCheckSection(
             } catch (e: Exception) {
                 failureOutcome(context, e, transcription)
             } finally {
-                running = false
+                running = null
             }
         }
     }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
-        // A flow rather than a row: the two buttons do not fit side by side in the dialog on a 1080 px phone,
-        // and a row squeezed the second one until its label broke mid-word ("Test transcriptio / n"). Now it
-        // moves to a line of its own, whole.
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            itemVerticalAlignment = Alignment.CenterVertically,
+    Column(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+        // Side by side, half the width each. They used to sit in a flow, right-aligned, because two text
+        // buttons do not fit in the dialog's ~230 dp and a row squeezed the second label until it broke
+        // mid-word ("Test transcriptio / n") — so the flow put each on a line of its own, two full rows for
+        // two buttons (Jannis, 2026-11-05: too much room). Now a label that does not fit wraps between its
+        // words inside its own button, in the smaller label size that keeps every word of the 21 languages
+        // whole, and the row takes the height of the taller one.
+        Row(
+            modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (running) {
-                CircularProgressIndicator(modifier = Modifier.padding(end = 8.dp).size(16.dp))
-            }
-            TextButton(
-                enabled = !running,
+            CheckButton(
+                label = stringRes(R.string.dictate__providers_test),
+                running = running == false,
+                enabled = running == null,
+                modifier = Modifier.weight(1f).fillMaxHeight(),
                 onClick = { startCheck(transcription = false) { it.checkCredentials() } },
-            ) {
-                Text(stringRes(R.string.dictate__providers_test), maxLines = 1)
-            }
+            )
             if (showTranscription) {
-                TextButton(
-                    enabled = !running,
+                CheckButton(
+                    label = stringRes(R.string.dictate__providers_test_transcribe),
+                    running = running == true,
+                    enabled = running == null,
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                     onClick = {
                         startCheck(transcription = true) { client ->
                             client.checkTranscription(
@@ -1492,23 +1457,70 @@ private fun ProviderCheckSection(
                             )
                         }
                     },
-                ) {
-                    Text(stringRes(R.string.dictate__providers_test_transcribe), maxLines = 1)
-                }
+                )
             }
         }
+        // One block instead of two lines in two sizes: the verdict in its colour, then the detail, after a
+        // mark that says pass or fail before a word is read. Announced when it appears, since the buttons
+        // that started it do not move.
         result?.let { outcome ->
-            Text(
-                text = outcome.headline,
-                color = if (outcome.ok) okColor else errColor,
-                style = MaterialTheme.typography.bodyMedium,
-            )
-            outcome.detail?.let { detail ->
+            val color = if (outcome.ok) okColor else errColor
+            Row(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .semantics { liveRegion = LiveRegionMode.Polite },
+                verticalAlignment = Alignment.Top,
+            ) {
+                Icon(
+                    imageVector = if (outcome.ok) Icons.Default.CheckCircle else Icons.Default.Error,
+                    contentDescription = null,
+                    tint = color,
+                    modifier = Modifier.padding(top = 1.dp).size(16.dp),
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
-                    text = detail,
+                    text = buildAnnotatedString {
+                        withStyle(SpanStyle(color = color, fontWeight = FontWeight.Medium)) {
+                            append(outcome.headline)
+                        }
+                        outcome.detail?.let {
+                            append(" – ")
+                            append(it)
+                        }
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+    }
+}
+
+/** One of the two check buttons; while its check runs, a spinner stands in for the label at the same size. */
+@Composable
+private fun CheckButton(
+    label: String,
+    running: Boolean,
+    enabled: Boolean,
+    modifier: Modifier,
+    onClick: () -> Unit,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                modifier = Modifier.alpha(if (running) 0f else 1f),
+            )
+            if (running) {
+                CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
             }
         }
     }

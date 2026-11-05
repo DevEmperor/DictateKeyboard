@@ -57,7 +57,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -104,6 +103,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.SwitchRow
 import org.florisboard.lib.compose.icons.Sticker
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -614,16 +614,11 @@ private fun GifSetupDialog(
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             // On/off switch lives here (the settings list has a single row).
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringRes(R.string.prefs__media__gif_enabled),
-                    modifier = Modifier.weight(1f),
-                )
-                Switch(
-                    checked = enabled,
-                    onCheckedChange = { scope.launch { prefs.gif.enabled.set(it) } },
-                )
-            }
+            SwitchRow(
+                title = stringRes(R.string.prefs__media__gif_enabled),
+                checked = enabled,
+                onCheckedChange = { scope.launch { prefs.gif.enabled.set(it) } },
+            )
             Text(stringRes(R.string.prefs__media__gif_setup__intro))
             GifSetupStep(1, stringRes(R.string.prefs__media__gif_setup__step1))
             GifSetupStep(2, stringRes(R.string.prefs__media__gif_setup__step2))
