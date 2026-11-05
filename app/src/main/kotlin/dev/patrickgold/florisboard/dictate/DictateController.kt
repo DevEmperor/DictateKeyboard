@@ -179,10 +179,11 @@ object DictateController {
         ) : UiState
         /**
          * [attempt] is 1 for the first try, 2/3/… while retrying after a transient failure.
-         * [onDevice] means the on-device engine is doing the work — because it is the chosen provider,
-         * because the offline fallback took over (#104), or because the user held the button to send this
-         * one dictation locally (#228/#270). The bar says so: which engine is running is the difference
-         * between waiting on a network and waiting on this phone.
+         * [localModel] is the on-device model doing the work, null while a provider does it — on-device
+         * because it is the chosen provider, because the offline fallback took over (#104), or because the
+         * user held the button to send this one dictation locally (#228/#270). The bar says so: which
+         * engine is running is the difference between waiting on a network and waiting on this phone. The
+         * model itself is named so the bar can also say whether it is still being loaded into memory.
          *
          * [startedAtMs] is an [SystemClock.elapsedRealtime] stamp driving the elapsed-seconds readout
          * (#355) — the moment the *wait* began, not the moment this particular state object was made, so
@@ -192,14 +193,16 @@ object DictateController {
          */
         data class Transcribing(
             val attempt: Int = 1,
-            val onDevice: Boolean = false,
+            val localModel: String? = null,
             val startedAtMs: Long,
             /**
              * The fallback provider this dictation was handed to because the active one could not be
              * reached (#455), by name; null while the active provider is the one transcribing.
              */
             val via: String? = null,
-        ) : UiState
+        ) : UiState {
+            val onDevice: Boolean get() = localModel != null
+        }
         /** A rewording/GPT request is in flight (manual prompt, auto-apply, auto-format or live). */
         data class Rewording(val label: String) : UiState
         /**
@@ -1153,10 +1156,10 @@ object DictateController {
      * only a transition from another state (Recording, Idle) starts a new one. A hand-over to a fallback
      * provider (#455) is the same wait continued, and keeps the stamp the same way.
      */
-    private fun setTranscribing(attempt: Int = 1, onDevice: Boolean = false, via: String? = null) {
+    private fun setTranscribing(attempt: Int = 1, localModel: String? = null, via: String? = null) {
         val startedAtMs = (_state.value as? UiState.Transcribing)?.startedAtMs
             ?: SystemClock.elapsedRealtime()
-        _state.value = UiState.Transcribing(attempt, onDevice, startedAtMs, via)
+        _state.value = UiState.Transcribing(attempt, localModel, startedAtMs, via)
     }
 
     /** Localized one-line headline for an API error [kind] (roadmap 1.12 specific error messages). */
@@ -1987,7 +1990,7 @@ object DictateController {
         val via = fallbackAccount?.let {
             ProviderListing.displayNameOf(it.providerId, prefs.dictate.providerAccounts.get())
         }
-        setTranscribing(onDevice = localEngine, via = via)
+        setTranscribing(localModel = model.takeIf { localEngine }, via = via)
         // What a held button can still rescue (#270): the recording this request is carrying, for as long
         // as it is in flight. Cleared in the finally below, so the offer disappears with the request.
         inFlightAudio = if (localEngine) null else audioFile
@@ -2261,7 +2264,7 @@ object DictateController {
                         )
                         // Sped-up audio (#272) is for the provider that charges by the second, not for the
                         // engine on this phone: the fallback gets the recording as it was.
-                        setTranscribing(onDevice = true)
+                        setTranscribing(localModel = fallback.model)
                         // From here on any failure is the local engine's, not the provider's — which
                         // decides both the wording of a timeout and whether offering "try on-device"
                         // would be advice to do the thing that just ran out of time (#354).

@@ -231,6 +231,7 @@ class LocalRealtimeSession(
 internal object OnlineRecognizerCache {
     private var key: String? = null
     private var recognizer: OnlineRecognizer? = null
+    private var modelId: String? = null
 
     private var activeUsers = 0
     private var releasePending = false
@@ -263,12 +264,12 @@ internal object OnlineRecognizerCache {
         val rec = if (existing != null && cacheKey == key) {
             existing
         } else {
-            existing?.release()
-            recognizer = null
-            key = null
+            freeNow()
             build(encoder, decoder, joiner, tokens, numThreads).also {
                 recognizer = it
                 key = cacheKey
+                modelId = modelDir.name
+                LocalTranscriptionProvider.markResident(modelDir.name, loaded = true)
             }
         }
         releasePending = false
@@ -299,6 +300,8 @@ internal object OnlineRecognizerCache {
         recognizer?.release()
         recognizer = null
         key = null
+        modelId?.let { LocalTranscriptionProvider.markResident(it, loaded = false) }
+        modelId = null
         releasePending = false
     }
 

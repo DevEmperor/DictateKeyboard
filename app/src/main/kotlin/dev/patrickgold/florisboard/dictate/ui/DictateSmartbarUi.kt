@@ -117,6 +117,7 @@ import dev.patrickgold.florisboard.dictate.DictateLanguages
 import dev.patrickgold.florisboard.dictate.DictateRecordingAnimation
 import dev.patrickgold.florisboard.dictate.PushToTalkPhase
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
+import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -535,12 +536,20 @@ private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
     // phone alongside them says only where: this one is running here, not on a provider's machine. It
     // matters most right after holding the button to escape a hanging request (#270), where it is the
     // confirmation that the escape worked.
-    if (state.onDevice) {
+    //
+    // In the accent once the model is in memory, in the bar's own colour while it is still being loaded:
+    // after the idle unload a 670 MB model takes seconds to come back, and the colour tells that wait
+    // apart from the decode itself, which is the short part.
+    state.localModel?.let { model ->
+        val prefs by FlorisPreferenceStore
+        val resident by LocalTranscriptionProvider.residentModels.collectFlowAsState()
+        val accent by prefs.theme.accentColor.collectAsState()
         Spacer(modifier = Modifier.width(8.dp))
         SnyggIcon(
             imageVector = Icons.Default.PhoneAndroid,
             modifier = Modifier.size(16.dp),
             contentDescription = stringRes(R.string.dictate__status_transcribing_local),
+            tint = accent.takeIf { model in resident },
         )
     }
     // The same idea for a fallback provider (#455): the active one could not be reached, and this one took
