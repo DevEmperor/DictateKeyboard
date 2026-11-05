@@ -1601,6 +1601,8 @@ object DictateController {
         // will follow.
         warmUp(transcriptionAccount())
         if (rewordingWillFollow()) warmUpRewordingServer()
+        // The same head start for the on-device engine (#449): its model loads while the user speaks.
+        preloadLocalModel(appContext)
         startJob = scope.launch {
             try {
                 // Correct any stale active language (e.g. leftover "detect" after auto-detect was
@@ -4808,6 +4810,31 @@ object DictateController {
      * the same head start. One account doing both jobs is woken once.
      */
     private fun warmUpRewordingServer() = warmUp(rewordingAccount(), apiKey = rewordingApiKey())
+
+    /**
+     * Loads the on-device model while a recording runs (#449), so the stop finds it in memory instead of
+     * starting the load. The model is freed after the idle window ("Unload idle model after", 5 min by
+     * default), and reloading Parakeet's 670 MB after the stop is what made the first dictation after a
+     * pause slow. Same model and language as [transcribe] will use, so it fills the very cache entry the
+     * transcription reads. Only for the batch path: a live on-device session loads its streaming model
+     * when it opens, and a cloud account has nothing to load. Fire-and-forget like [warmUp] — a model that
+     * fails to load here is loaded, and reported, by the transcription itself.
+     */
+    private fun preloadLocalModel(appContext: Context) {
+        val account = transcriptionAccount()
+        val preset = presetFor(account)
+        if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return
+        if (localStreamingModelDir(appContext) != null) return
+        val model = transcriptionModelFor(appContext, account, preset)
+        if (!LocalModelManager.isInstalled(appContext, model)) return
+        val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
+        LocalTranscriptionProvider.setIdleUnloadMillis(prefs.dictate.localModelUnloadMinutes.get() * 60_000L)
+        scope.launch {
+            val startedAt = SystemClock.elapsedRealtime()
+            LocalTranscriptionProvider(LocalTranscriptionProvider.modelDir(appContext, model)).preload(language)
+            Log.i(LATENCY_LOG_TAG, "phase=localPreload model=$model ms=${SystemClock.elapsedRealtime() - startedAt}")
+        }
+    }
 
     private fun warmUp(account: ProviderAccount, apiKey: String = account.apiKey) {
         if (!account.customWarmUp) return

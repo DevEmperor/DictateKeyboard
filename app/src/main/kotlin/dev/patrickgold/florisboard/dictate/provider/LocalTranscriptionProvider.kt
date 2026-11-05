@@ -149,9 +149,7 @@ class LocalTranscriptionProvider(
                 )
             }
 
-            // Honor the user's chosen input language like the cloud providers do; null/blank → Whisper
-            // auto-detect. Whisper expects the base ISO code (e.g. "de"), so drop any region suffix.
-            val language = request.language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
+            val language = recognizerLanguage(request.language)
 
             if (streaming) {
                 return@withContext TranscriptionResult(tightened(transcribeStreaming(samples)))
@@ -186,6 +184,37 @@ class LocalTranscriptionProvider(
 
             TranscriptionResult(tightened(text))
         }
+
+    /**
+     * Loads this model into the recognizer cache and hands it straight back, so the next [transcribe] finds
+     * it in memory (#449). Meant for the moment a recording starts: the idle unload frees the model after a
+     * few minutes, and the first dictation after a pause used to pay the whole load after the stop —
+     * seconds for a 670 MB Parakeet, spent watching a spinner. [language] must be what the transcription
+     * will be asked for, since it is part of the cache key for the models that take one; a [transcribe]
+     * that arrives while this is still loading waits on the cache for the rest of it instead of loading a
+     * second copy. Never throws: a model that cannot be loaded here is loaded, and reported, by the
+     * transcription as before.
+     */
+    suspend fun preload(language: String?) = withContext(Dispatchers.Default) {
+        if (requiredFiles(modelDir.name).any { !File(modelDir, it).exists() }) return@withContext
+        runCatching {
+            if (LocalModelCatalog.isStreaming(modelDir.name)) {
+                OnlineRecognizerCache.acquire(modelDir, numThreads)
+                OnlineRecognizerCache.endUse()
+            } else {
+                RecognizerCache.acquire(modelDir, numThreads, recognizerLanguage(language))
+                RecognizerCache.endUse()
+            }
+        }
+    }
+
+    /**
+     * Honours the user's chosen input language like the cloud providers do; null/blank means Whisper's
+     * auto-detect. Whisper expects the base ISO code (e.g. "de"), so any region suffix is dropped. Shared by
+     * [transcribe] and [preload] so both ask the cache for the same entry.
+     */
+    private fun recognizerLanguage(language: String?): String =
+        language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
 
     /**
      * The last thing every on-device transcript passes through: trimmed, and with the space taken back
