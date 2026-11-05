@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CallSplit
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
@@ -160,6 +161,13 @@ fun AboutScreen() = FlorisScreen {
                 },
             )
         }
+        Preference(
+            icon = Icons.Outlined.Apps,
+            modifier = Modifier.settingsSearchAnchor("about__more_apps__title"),
+            title = stringRes(R.string.about__more_apps__title),
+            summary = stringRes(R.string.about__more_apps__summary),
+            onClick = { navController.navigate(Routes.Settings.MoreApps) },
+        )
         Preference(
             icon = Icons.Outlined.Public,
             modifier = Modifier.settingsSearchAnchor("about__website__title"),

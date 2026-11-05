@@ -2085,6 +2085,18 @@
     <string name="dictate__promo_milestone_action" comment="Short label of the accent pill that opens the statistics screen. Must stay short to fit the single-line Smartbar.">Stats</string>
     <string name="dictate__promo_low_credit_message" comment="Smartbar nudge shown once when Dictate Cloud credit is nearly used up">Credit almost gone.</string>
     <string name="dictate__promo_low_credit_action" comment="Short label of the accent pill that opens Dictate Cloud. Must stay short to fit the single-line Smartbar.">Top up</string>
+    <string name="dictate__promo_sayova_message" comment="Smartbar nudge shown once, a few days after the update, about SayOVA, the developer's AI voice assistant for Wear OS watches. Keep short to fit the single-line Smartbar.">New app: AI on your watch</string>
+    <string name="dictate__promo_sayova_action" comment="Short label of the accent pill that opens the More apps page. Must stay short to fit the single-line Smartbar.">Discover</string>
+    <string name="about__more_apps__title" comment="Preference under About, and the title of the page presenting the developer's other apps">More apps</string>
+    <string name="about__more_apps__summary" comment="Summary of the More apps preference under About">SayOVA, an AI voice assistant for your watch</string>
+    <string name="about__more_apps__intro" comment="First line of the More apps page, above the app cards">Also by DevEmperor, the developer of Dictate:</string>
+    <string name="about__more_apps__sayova_tagline" comment="One line under the name SayOVA on the More apps page">AI voice assistant for Wear OS</string>
+    <string name="about__more_apps__sayova_description" comment="Paragraph describing SayOVA on the More apps page">Talk to Google Gemini or OpenAI right from your watch: speak naturally, interrupt whenever you like, and read the answer along while you hear it.</string>
+    <string name="about__more_apps__sayova_feature_interpreter" comment="SayOVA feature bullet on the More apps page">Interpreter between 21 languages, both sides shown as text</string>
+    <string name="about__more_apps__sayova_feature_tasks" comment="SayOVA feature bullet on the More apps page">Sets timers and alarms, saves notes and searches the web</string>
+    <string name="about__more_apps__sayova_feature_phone" comment="SayOVA feature bullet on the More apps page: it prepares these in the phone's apps, the user sends them">Prepares messages, appointments and routes on your phone, ready for you to send</string>
+    <string name="about__more_apps__sayova_feature_privacy" comment="SayOVA feature bullet on the More apps page">Your own API key: no account, no tracking, open source</string>
+    <string name="about__more_apps__sayova_requirements" comment="Small print under the SayOVA features on the More apps page">Needs a watch with Wear OS 3 or newer and a microphone, plus an API key from Google Gemini or OpenAI. Your provider bills the usage.</string>
 
     <!-- Dictate settings screen -->
     <string name="dictate__title" comment="Title of the Dictate settings screen and home tile">Dictate</string>

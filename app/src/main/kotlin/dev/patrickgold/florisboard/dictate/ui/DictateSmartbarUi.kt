@@ -909,6 +909,7 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         // The mark of what is running low, not of the action — the accent pill beside it already
         // says "top up".
         DictateController.PromoKind.LOW_CREDIT -> ImageVector.vectorResource(R.drawable.ic_dictate_cloud)
+        DictateController.PromoKind.SAYOVA -> ImageVector.vectorResource(R.drawable.ic_sayova_mono)
     }
     // Milestone text is dynamic (which milestone), so it arrives via [message]; the rest map to a res.
     val messageRes = when (kind) {
@@ -918,6 +919,7 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_message
         DictateController.PromoKind.MILESTONE -> R.string.dictate__stats_milestone_title
         DictateController.PromoKind.LOW_CREDIT -> R.string.dictate__promo_low_credit_message
+        DictateController.PromoKind.SAYOVA -> R.string.dictate__promo_sayova_message
     }
     val actionRes = when (kind) {
         DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_action
@@ -926,6 +928,7 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_action
         DictateController.PromoKind.MILESTONE -> R.string.dictate__promo_milestone_action
         DictateController.PromoKind.LOW_CREDIT -> R.string.dictate__promo_low_credit_action
+        DictateController.PromoKind.SAYOVA -> R.string.dictate__promo_sayova_action
     }
 
     // Gentle pop-in (fade + slight scale) on top of the Smartbar's own slide transition.

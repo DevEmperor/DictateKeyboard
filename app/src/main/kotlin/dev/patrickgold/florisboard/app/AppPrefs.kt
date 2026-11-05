@@ -905,6 +905,18 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__changelog_nudge_version",
             default = "",
         )
+        // When the Smartbar nudge for SayOVA falls due, in epoch milliseconds. 0 until the first keyboard
+        // open with no other nudge to show; that open schedules it a few days later, so it never arrives
+        // together with the update notice. See DictateController.maybePromptSayova.
+        val sayovaNudgeDueAt = long(
+            key = "dictate__sayova_nudge_due_at",
+            default = 0L,
+        )
+        // Set once the SayOVA nudge was tapped or waved away, so it never reappears.
+        val sayovaNudgeDone = boolean(
+            key = "dictate__sayova_nudge_done",
+            default = false,
+        )
         // Comma-separated dictation language codes the user cycles through on the recording bar
         // (see DictateLanguages; "detect" = auto-detect). Default mirrors the legacy app.
         val inputLanguages = string(

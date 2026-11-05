@@ -22,6 +22,10 @@
     <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/DevEmperor/DictateKeyboard/wiki/Themes-sounds-and-vibration</string>
     <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/DevEmperor/Dictate/blob/main/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
+    <!-- SayOVA on the "More apps" page under About. The referrer lets Play's acquisition report count the
+         installs that came from Dictate. -->
+    <string name="sayova__play_url" translatable="false" formatted="false">https://play.google.com/store/apps/details?id=net.devemperor.sayova&amp;referrer=utm_source%3Ddictate%26utm_medium%3Dapp%26utm_campaign%3Dmore_apps</string>
+    <string name="sayova__website_url" translatable="false">https://sayova.app</string>
 
     <string name="general__system_string_placeholder" translatable="false">%s</string>
     <string name="general__empty_string" translatable="false"/>

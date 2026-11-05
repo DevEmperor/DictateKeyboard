@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SayOVA's mark in one colour, taken from the SayOVA app: the orb, its sky and sea parted by a wave. The
+     Smartbar nudge for SayOVA tints it with the keyboard's accent. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group>
+        <clip-path android:pathData="M2.5,12 a9.5,9.5 0 1,0 19,0 a9.5,9.5 0 1,0 -19,0 z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M0,0 H24 V13.6 C19.5,11.4 15.5,15.8 12,14 C8.5,12.2 4.5,15.8 0,13.8 Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M0,15.2 C4.5,17.2 8.5,13.6 12,15.4 C15.5,17.2 19.5,12.8 24,15 V24 H0 Z" />
+    </group>
+</vector>

@@ -268,9 +268,10 @@ object DictateController {
     /**
      * Which one-time nudge is being shown. RATE/DONATE are usage-gated (see [maybePromptForReview]);
      * CHANGELOG is shown right after an app update (see [maybePromptChangelog]) and opens the in-app
-     * "What's new" dialog instead of a web page.
+     * "What's new" dialog instead of a web page. SAYOVA points at the developer's watch app (see
+     * [maybePromptSayova]).
      */
-    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE, LOW_CREDIT }
+    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE, LOW_CREDIT, SAYOVA }
 
     /**
      * Where the active dictation's output goes: the keyboard editor ([OutputTarget.IME]) or the
@@ -4322,6 +4323,9 @@ object DictateController {
         // Credit running out comes first: it is the only nudge that is about to stop the app working,
         // and asking someone to rate Dictate minutes before it refuses to transcribe is poor timing.
         if (maybeWarnLowCredit()) return
+        // Before rate/donate: those stay until answered, so somebody who never answers them would never
+        // get to see this one.
+        if (maybePromptSayova()) return
         val total = prefs.dictate.totalAudioSeconds.get()
         val kind = when {
             total > DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasDonated.get() -> PromoKind.DONATE
@@ -4329,6 +4333,30 @@ object DictateController {
             else -> return
         }
         _state.value = UiState.Promo(kind)
+    }
+
+    /** How long the SayOVA nudge waits after the keyboard open that scheduled it. */
+    private const val SAYOVA_NUDGE_DELAY_MS = 3 * 24 * 60 * 60 * 1000L
+
+    /**
+     * Points everybody once at SayOVA, the developer's voice assistant for Wear OS watches, and returns true
+     * if it did. Not on the day of the update: the first keyboard open that reaches this point — the update
+     * notice and a feature spotlight come first and hold the Smartbar until answered — only schedules it
+     * [SAYOVA_NUDGE_DELAY_MS] later, so the days are counted from the last of those, not from the install.
+     * Tapping it opens the "More apps" page under About rather than the store, so nobody lands in Play
+     * without having read what the app is and that it needs a watch.
+     */
+    private fun maybePromptSayova(): Boolean {
+        if (prefs.dictate.sayovaNudgeDone.get()) return false
+        val now = System.currentTimeMillis()
+        val dueAt = prefs.dictate.sayovaNudgeDueAt.get()
+        if (dueAt == 0L) {
+            scope.launch { prefs.dictate.sayovaNudgeDueAt.set(now + SAYOVA_NUDGE_DELAY_MS) }
+            return false
+        }
+        if (now < dueAt) return false
+        _state.value = UiState.Promo(PromoKind.SAYOVA)
+        return true
     }
 
     /** Below this much Dictate Cloud credit the Smartbar says so, once per depletion. */
@@ -4427,7 +4455,7 @@ object DictateController {
     /**
      * Acts on the active promo and marks it done: RATE/DONATE open the Play Store / PayPal page,
      * CHANGELOG opens the app (which then shows the "What's new" dialog), FLOATING_BUTTON deep-links to its
-     * settings screen. No-op otherwise.
+     * settings screen, SAYOVA to the "More apps" page under About. No-op otherwise.
      */
     fun acceptPromo(context: Context) {
         val kind = (_state.value as? UiState.Promo)?.kind ?: return
@@ -4452,6 +4480,12 @@ object DictateController {
                 PromoKind.LOW_CREDIT -> Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("ui://florisboard/settings/dictate/cloud"),
+                    context,
+                    FlorisAppActivity::class.java,
+                ).addCategory(Intent.CATEGORY_BROWSABLE)
+                PromoKind.SAYOVA -> Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("ui://florisboard/settings/about/more-apps"),
                     context,
                     FlorisAppActivity::class.java,
                 ).addCategory(Intent.CATEGORY_BROWSABLE)
@@ -4488,6 +4522,7 @@ object DictateController {
                 // The flag was already set when shown, so the nudge cannot come back on the next
                 // keyboard open whether it was acted on or waved away. A purchase clears it again.
                 PromoKind.LOW_CREDIT -> Unit
+                PromoKind.SAYOVA -> prefs.dictate.sayovaNudgeDone.set(true)
             }
         }
     }
