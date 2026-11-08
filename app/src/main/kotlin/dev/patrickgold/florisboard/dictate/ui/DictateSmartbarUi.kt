@@ -92,8 +92,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalContext
@@ -105,6 +107,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -123,6 +126,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.delay
 import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.snygg.ui.OneLineFirstAutoSize
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -131,6 +135,13 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /** Recording red, shared by the indicator dot and the armed slide-to-cancel bin (#235). */
 private val RecordingRed = Color(0xFFE53935)
+
+/**
+ * How far a message on the bar shrinks on one line before it takes a second one, and how far it shrinks
+ * on two before the end is cut off. See [BarMessage].
+ */
+private const val BAR_MESSAGE_ONE_LINE_RATIO = 0.85f
+private const val BAR_MESSAGE_MIN_RATIO = 0.7f
 
 /**
  * Gboard-style in-Smartbar dictation indicator. Rendered in the Smartbar's center area (left of the
@@ -509,7 +520,7 @@ private fun LanguageChip() {
 }
 
 @Composable
-private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
+private fun RowScope.TranscribingContent(state: DictateController.UiState.Transcribing) {
     val transition = rememberInfiniteTransition(label = "transcribing")
     val rotation by transition.animateFloat(
         initialValue = 0f,
@@ -525,12 +536,19 @@ private fun TranscribingContent(state: DictateController.UiState.Transcribing) {
             .then(if (retrying) Modifier else Modifier.rotate(rotation)),
     )
     Spacer(modifier = Modifier.width(10.dp))
+    // Weighted, so the icons and the clock after it are measured first and keep their place when a long
+    // translation takes the second line (see [BarMessage]).
     SnyggText(
         text = if (retrying) {
             stringRes(R.string.dictate__status_retrying, "attempt" to state.attempt)
         } else {
             stringRes(R.string.dictate__status_transcribing)
         },
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        autoSizeMinRatio = BAR_MESSAGE_MIN_RATIO,
+        autoSizeOneLineRatio = BAR_MESSAGE_ONE_LINE_RATIO,
+        modifier = Modifier.weight(1f, fill = false),
     )
     // Transcribing is transcribing — the spinner and the wording stay the same wherever it happens. The
     // phone alongside them says only where: this one is running here, not on a provider's machine. It
@@ -605,7 +623,7 @@ private fun TranscribingElapsed(startedAtMs: Long) {
  * icon plus the active prompt's label. Mirrors [TranscribingContent] visually.
  */
 @Composable
-private fun RewordingContent(state: DictateController.UiState.Rewording) {
+private fun RowScope.RewordingContent(state: DictateController.UiState.Rewording) {
     val transition = rememberInfiniteTransition(label = "rewording")
     val rotation by transition.animateFloat(
         initialValue = 0f,
@@ -620,7 +638,15 @@ private fun RewordingContent(state: DictateController.UiState.Rewording) {
             .rotate(rotation),
     )
     Spacer(modifier = Modifier.width(10.dp))
-    SnyggText(text = state.label.ifBlank { stringRes(R.string.dictate__status_rewording) })
+    // A prompt's label is the user's own and can be a whole phrase, so it may take two lines too.
+    SnyggText(
+        text = state.label.ifBlank { stringRes(R.string.dictate__status_rewording) },
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        autoSizeMinRatio = BAR_MESSAGE_MIN_RATIO,
+        autoSizeOneLineRatio = BAR_MESSAGE_ONE_LINE_RATIO,
+        modifier = Modifier.weight(1f, fill = false),
+    )
 }
 
 /**
@@ -663,11 +689,7 @@ private fun RowScope.ErrorContent(state: DictateController.UiState.Error) {
                 modifier = Modifier.size(18.dp),
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = state.message,
-                color = errorColor,
-                fontWeight = FontWeight.Medium,
-            )
+            BarMessage(text = state.message, color = errorColor, fontWeight = FontWeight.Medium)
         }
         if (detailOpen && hasDetail) {
             ErrorDetailPopup(detail = state.detail.orEmpty(), onDismiss = { detailOpen = false })
@@ -790,17 +812,16 @@ private fun RowScope.InterruptedContent(state: DictateController.UiState.Interru
             modifier = Modifier.size(18.dp),
         )
         Spacer(modifier = Modifier.width(6.dp))
-        // Plain Text (not SnyggText) so we can force a single line + a slightly smaller font: the themed
-        // Smartbar font wrapped onto two lines next to the send/dismiss buttons (looked cramped).
-        Text(
+        // A size smaller than the other messages: at the themed Smartbar size it wrapped onto two lines
+        // next to the three buttons and looked cramped. It still may, but only once one line would have
+        // to shrink further (see [BarMessage]).
+        BarMessage(
             text = stringRes(
                 R.string.dictate__interrupted_recording,
                 "time" to formatElapsed(state.seconds * 1000L),
             ),
             color = rowStyle.foreground(),
             fontSize = 13.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
         )
     }
     // Continue (🎙) resumes recording on top of the interrupted audio; send (↻) transcribes it as-is.
@@ -908,16 +929,19 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
     val prefs by FlorisPreferenceStore
     val rowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarSharedActionsRow.elementName)
     val accent by prefs.theme.accentColor.collectAsState() // follows the user's keyboard accent.
-    val leadingIcon = when (kind) {
-        DictateController.PromoKind.RATE -> Icons.Default.Star
-        DictateController.PromoKind.DONATE -> Icons.Default.Favorite
-        DictateController.PromoKind.CHANGELOG -> Icons.Default.NewReleases
-        DictateController.PromoKind.MILESTONE -> Icons.Default.EmojiEvents
+    val leadingIcon: Painter = when (kind) {
+        DictateController.PromoKind.RATE -> rememberVectorPainter(Icons.Default.Star)
+        DictateController.PromoKind.DONATE -> rememberVectorPainter(Icons.Default.Favorite)
+        DictateController.PromoKind.CHANGELOG -> rememberVectorPainter(Icons.Default.NewReleases)
+        DictateController.PromoKind.MILESTONE -> rememberVectorPainter(Icons.Default.EmojiEvents)
         // The mark of what is running low, not of the action — the accent pill beside it already
         // says "top up".
-        DictateController.PromoKind.LOW_CREDIT -> ImageVector.vectorResource(R.drawable.ic_dictate_cloud)
-        DictateController.PromoKind.SAYOVA -> ImageVector.vectorResource(R.drawable.ic_sayova_mono)
+        DictateController.PromoKind.LOW_CREDIT -> painterResource(R.drawable.ic_dictate_cloud)
+        // Another app's own icon, the orb its users see on their watch, so the nudge is recognisable as
+        // that app rather than as one more of Dictate's glyphs.
+        DictateController.PromoKind.SAYOVA -> painterResource(R.drawable.sayova_icon)
     }
+    val iconTint = if (kind == DictateController.PromoKind.SAYOVA) Color.Unspecified else accent
     // Milestone text is dynamic (which milestone), so it arrives via [message]; the rest map to a res.
     val messageRes = when (kind) {
         DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_message
@@ -957,24 +981,22 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
                 scaleY = s
             },
     ) {
-        // Tinted leading icon (star = rate, heart = donate, badge = update/changelog).
+        // Tinted leading icon (star = rate, heart = donate, badge = update/changelog); SayOVA's in its own
+        // colours.
         Icon(
-            imageVector = leadingIcon,
+            painter = leadingIcon,
             contentDescription = null,
-            tint = accent,
+            tint = iconTint,
             modifier = Modifier.size(20.dp),
         )
         Spacer(modifier = Modifier.width(8.dp))
-        // Plain Text (not SnyggText) constrained with weight + single line + ellipsis: long localized
-        // messages (e.g. German "Dictate unterstützen?") must shrink/ellipsize instead of wrapping and
-        // pushing the accept/dismiss controls off-screen, which would leave the nudge un-dismissable.
-        // fill = false keeps the row compact and centered for short locales.
-        Text(
+        // Weighted, so the accept and dismiss controls are measured first: a long localized message
+        // must never push them off-screen, which would leave the nudge un-dismissable. It takes a second
+        // line instead (see [BarMessage]). fill = false keeps the row compact and centered for short
+        // locales.
+        BarMessage(
             text = message ?: stringRes(messageRes),
             color = rowStyle.foreground(),
-            fontSize = 14.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f, fill = false),
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -1005,6 +1027,42 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
             )
         }
     }
+}
+
+/**
+ * A message on the bar — an error or notice, a nudge, the interrupted-recording chip — in at most two
+ * lines. It stays on one line while it fits at [BAR_MESSAGE_ONE_LINE_RATIO] of [fontSize] and takes the
+ * second line only below that, so a short message looks as it always did and a long one does not lose
+ * its last word to the next line. These were single lines with an ellipsis, and on a Galaxy A55 the
+ * German SayOVA nudge was cut off halfway, with nothing to tap to read the rest.
+ *
+ * The bar's height is part of the fit: where two lines do not fit at the font scale in use, the text
+ * shrinks further, down to [BAR_MESSAGE_MIN_RATIO], before anything is cut.
+ */
+@Composable
+private fun BarMessage(
+    text: String,
+    color: Color,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 14.sp,
+    fontWeight: FontWeight? = null,
+) {
+    val autoSize = remember(fontSize) {
+        OneLineFirstAutoSize(
+            maxFontSize = fontSize,
+            oneLineMinFontSize = fontSize * BAR_MESSAGE_ONE_LINE_RATIO,
+            minFontSize = fontSize * BAR_MESSAGE_MIN_RATIO,
+        )
+    }
+    Text(
+        text = text,
+        color = color,
+        fontWeight = fontWeight,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        autoSize = autoSize,
+        modifier = modifier,
+    )
 }
 
 private fun formatElapsed(ms: Long): String {
