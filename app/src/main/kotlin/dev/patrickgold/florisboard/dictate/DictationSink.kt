@@ -53,6 +53,13 @@ interface DictationSink {
     fun textBeforeCursor(length: Int): String?
 
     /**
+     * Up to [length] characters behind the cursor (behind the selection, when there is one), or null when
+     * the field cannot be read; empty at the end of the field. What a dictation into the middle of a
+     * sentence ends against: whether its full stop goes, and whether a space must follow it (#476).
+     */
+    fun textAfterCursor(length: Int): String?
+
+    /**
      * Presses Enter / triggers the editor action (auto-enter, roadmap 10.1). Returns whether the field
      * accepted it — the keyboard dispatches a real key event and always does, while the overlay can only
      * *ask* the field, and an app that implements no editor action simply refuses (issue #278).
@@ -146,6 +153,15 @@ class ImeDictationSink(context: Context) : DictationSink {
             return current.text.substring(0, current.cursor.coerceIn(0, current.text.length)).takeLast(length)
         }
         return editorInstance.activeContent.textBeforeSelection.takeLast(length)
+    }
+
+    override fun textAfterCursor(length: Int): String? {
+        field()?.let { field ->
+            val current = keyboardManager.fieldText(field) ?: return null
+            val end = current.selection?.last ?: current.cursor
+            return current.text.substring(end.coerceIn(0, current.text.length)).take(length)
+        }
+        return editorInstance.activeContent.textAfterSelection.take(length)
     }
 
     override fun performEnter(): Boolean {

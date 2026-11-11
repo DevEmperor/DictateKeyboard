@@ -37,6 +37,8 @@ class RecognitionSink : DictationSink {
     // The calling app owns its field and joins our result into it itself.
     override fun textBeforeCursor(length: Int): String? = null
 
+    override fun textAfterCursor(length: Int): String? = null
+
     override fun performEnter(): Boolean = true
 
     override fun deleteLastText(text: String): Boolean = false

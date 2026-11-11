@@ -811,6 +811,35 @@ class DictateAccessibilityService : AccessibilityService() {
         }.getOrNull()
     }
 
+    /** Behind the selection, through the input connection when it is usable — see [readBeforeSelection]. */
+    private fun readAfterSelection(length: Int): String? {
+        if (!inputConnectionUsable()) return null
+        val connection = inputMethod?.currentInputConnection ?: return null
+        return runCatching {
+            val window = connection.getSurroundingText(0, length, 0) ?: return null
+            val text = window.text ?: return null
+            text.subSequence(window.selectionEnd.coerceIn(0, text.length), text.length).toString()
+        }.getOrNull()
+    }
+
+    /**
+     * Up to [length] characters behind the cursor of the field a dictation would go into, or null when they
+     * cannot be told — what a dictation into the middle of a sentence ends against (#476). The same
+     * precedence and the same caution as [textBeforeCursorOfFocused].
+     */
+    private fun textAfterCursorOfFocused(length: Int): String? {
+        readAfterSelection(length)?.let { return it }
+        val node = dictationTarget() ?: return null
+        return runCatching {
+            if (!node.refresh()) return null
+            val text = node.editableText()
+            if (text.isEmpty()) return ""
+            val caret = maxOf(node.textSelectionStart, node.textSelectionEnd)
+            if (caret < 0 || caret > text.length) return null
+            text.substring(caret).take(length)
+        }.getOrNull()
+    }
+
     /**
      * The field's text as the *user* sees it, or null when there is no node or it cannot be read.
      *
@@ -1539,6 +1568,9 @@ class DictateAccessibilityService : AccessibilityService() {
 
         /** Text in front of the focused field's cursor; null when it cannot be read or there is no service. */
         fun textBeforeCursor(length: Int): String? = instance?.textBeforeCursorOfFocused(length)
+
+        /** Up to [length] characters behind the focused field's cursor; null when unknown (#476). */
+        fun textAfterCursor(length: Int): String? = instance?.textAfterCursorOfFocused(length)
 
         /** Presses Enter / the editor action on the focused field; false when unavailable. */
         fun performEnter(): Boolean = instance?.performEnterOnFocused() ?: false

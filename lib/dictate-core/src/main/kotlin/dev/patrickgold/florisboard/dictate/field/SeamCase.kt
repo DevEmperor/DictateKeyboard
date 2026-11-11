@@ -141,3 +141,37 @@ fun applySeamCase(piece: String, case: SeamCase, writtenSmall: (String) -> Boole
 
 /** A dot with a letter right behind it: a host name or an address, not a sentence end. */
 private val ADDRESS_DOT = Regex("""\.\p{L}""")
+
+/** Marks that, right after the cursor, show the sentence going on past it, or ending only there. */
+private const val CONTINUING_AFTER = ",;:.!?)]}…–—" // , ; : . ! ? ) ] } … – —
+
+/**
+ * Whether [textAfter], the text right after the cursor, carries on the sentence a dictation is written
+ * into (#476): a small letter, a digit, or a mark that continues or closes the sentence follows, on the
+ * same line. A capital does so only when the cursor is inside a sentence already ([before] is
+ * [SeamCase.MID_SENTENCE]): `Ich habe | Anna gesehen` goes on past the dictation, while after a sentence
+ * end a capital may be a noun, a name or the next sentence. A field that could not be read says nothing.
+ */
+fun continuesSentence(textAfter: String?, before: SeamCase = SeamCase.AS_WRITTEN): Boolean {
+    val next = textAfter?.firstOrNull { it == '\n' || !it.isWhitespace() } ?: return false
+    if (next.isUpperCase() || next.isTitleCase()) return before == SeamCase.MID_SENTENCE
+    return next.isLowerCase() || next.isDigit() || next in CONTINUING_AFTER
+}
+
+/**
+ * [piece] without the full stop a provider ends every utterance with, for a sentence that goes on after
+ * the cursor ([continuesSentence]) — `We met again. on Tuesday.` before this. Only a plain full stop goes:
+ * not `...`, not the dot of an abbreviation, an initial or a word with dots of its own (`etc.`, `U.S.`,
+ * `Plan B.`), and never `?` or `!`, which the speaker may have meant. The same judgement the final full
+ * stop setting makes (#468), minus its one-sentence condition: whatever the dictation held, its last
+ * sentence runs on into the text behind it.
+ */
+fun dropSeamFullStop(piece: String): String {
+    val body = piece.trimEnd()
+    if (body.length < 2 || body.last() != '.' || body[body.length - 2] == '.') return piece
+    val lastWord = body.dropLast(1).takeLastWhile { !it.isWhitespace() }
+    if (lastWord.isEmpty() || '.' in lastWord) return piece
+    // "at 5." before "on Tuesday" is a number, not an ordinal.
+    if (!lastWord.all { it.isDigit() } && isNonBreakingDot(body, body.lastIndex)) return piece
+    return body.dropLast(1) + piece.substring(body.length)
+}

@@ -147,4 +147,65 @@ class SeamCaseTest : FunSpec({
         land("We met ", "") shouldBe ""
         land("", "") shouldBe ""
     }
+
+    context("whether the sentence goes on behind the cursor") {
+        withData(
+            nameFn = { (after, goesOn) -> "${after?.let { "\"${it.replace("\n", "\\n")}\"" } ?: "unread"} → $goesOn" },
+            " on Tuesday." to true,
+            "on Tuesday." to true,
+            " 3 times." to true,
+            ", then we left." to true,
+            "; danach" to true,
+            "." to true,
+            "?" to true,
+            ")" to true,
+            " – und dann" to true,
+            // A capital is a noun, a name or a new sentence: nothing to go by
+            " Anna gesehen." to false,
+            " Then we left." to false,
+            // The sentence ends here
+            "" to false,
+            "   " to false,
+            "\nNext line" to false,
+            " \nnext line" to false,
+            null to false,
+            // Quotes may open or close
+            " \"so\"" to false,
+        ) { (after, goesOn) -> continuesSentence(after) shouldBe goesOn }
+    }
+
+    test("a capital behind the cursor goes on only from inside a sentence") {
+        // "Ich habe | Anna gesehen.": the sentence began before the cursor and ends after "gesehen".
+        continuesSentence(" Anna gesehen.", seamCaseOf("Ich habe")) shouldBe true
+        continuesSentence("Bahnhof gewartet.", seamCaseOf("Wir haben am ")) shouldBe true
+        // After a sentence end, or nothing to go by: the capital may start the next sentence.
+        continuesSentence(" Then we left.", seamCaseOf("We met. ")) shouldBe false
+        continuesSentence(" Anna kam.", seamCaseOf("")) shouldBe false
+        continuesSentence(" Anna kam.", seamCaseOf(null)) shouldBe false
+        continuesSentence(" Anna kam.", seamCaseOf("z.B. ")) shouldBe false
+        // Small letters go on from anywhere, a new line from nowhere.
+        continuesSentence(" on Tuesday.", seamCaseOf("We met. ")) shouldBe true
+        continuesSentence("\nAnna", seamCaseOf("Ich habe")) shouldBe false
+    }
+
+    context("the full stop of a dictation the sentence goes on behind") {
+        withData(
+            nameFn = { (piece, out) -> "\"$piece\" → \"$out\"" },
+            "again." to "again",
+            "gestern angerufen." to "gestern angerufen",
+            "Wir waren da. Dann gestern." to "Wir waren da. Dann gestern",
+            "at 5." to "at 5",
+            // Kept: what the speaker may have meant, and dots that belong to a word
+            "again?" to "again?",
+            "again!" to "again!",
+            "and so on..." to "and so on...",
+            "and so on…" to "and so on…",
+            "apples, pears etc." to "apples, pears etc.",
+            "in the U.S." to "in the U.S.",
+            "Plan B." to "Plan B.",
+            "Obst usw." to "Obst usw.",
+            "." to ".",
+            "" to "",
+        ) { (piece, out) -> dropSeamFullStop(piece) shouldBe out }
+    }
 })
