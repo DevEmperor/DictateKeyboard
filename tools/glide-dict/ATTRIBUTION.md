@@ -68,4 +68,9 @@ has not reached yet.
 
 ## Bundled languages
 English (`en`, from the upstream FlorisBoard dictionary) and German (`de`) ship inside the app; all other
-languages download on demand.
+languages download on demand. The English list came entirely in lowercase; `recase.py` gave it its capitals
+(2026-11, issue #476) with the SCOWL-based Hunspell en_US dictionary as the oracle and en_GB as a second
+opinion for lowercase words (Arch package `hunspell-en_us` 2026.02.25, LGPL/BSD; wordlist.aspell.net), plus
+the mid-sentence casing of the Leipzig English web corpus `eng-com_web-public_2018_1M` (CC BY) for the names
+the dictionaries also know as words, leaving its words and frequencies as they were. The same count wrote
+`en_case_mixed.txt` beside it.

@@ -21,7 +21,12 @@ Casing was restored, and corpus noise filtered out, using Hunspell dictionaries 
 build-time oracle only (github.com/wooorm/dictionaries and, for Afrikaans, Arabic and the
 Indic languages, github.com/LibreOffice/dictionaries); their word lists are not
 redistributed. Where the Afrikaans one accepts a name in lowercase, the casing the Leipzig
-corpus writes it in mid-sentence was used instead. For Polish, the Leipzig word counts also
+corpus writes it in mid-sentence was used instead. The bundled English list, which comes from
+upstream FlorisBoard, had its casing restored the same way with the SCOWL-based Hunspell
+en_US and en_GB dictionaries (wordlist.aspell.net) and the casing the Leipzig English web
+corpus (eng-com_web-public_2018_1M, cited in section 2 below) writes words in mid-sentence;
+ime/dict/en_case_mixed.txt, the words that corpus writes with a capital about as often as
+without, comes from the same count. For Polish, the Leipzig word counts also
 decide which spellings without diacritics are words of their own.
 
 

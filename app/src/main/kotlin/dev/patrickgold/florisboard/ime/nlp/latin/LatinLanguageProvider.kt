@@ -344,6 +344,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
          * the middle of a sentence meant, so it keeps the capital its provider gave it (#476). German formal
          * address, and „Guten Morgen“ — measured on the emulator as „Ich glaube, sie kommen“ and „Guten
          * morgen“ before this list (2026-11-11). The bigram table cannot decide it: it is stored small.
+         * A language with a measured list beside its dictionary has that as well ([mixedCaseFor]).
          */
         internal fun capitalAlsoUsualIn(word: String, language: String): Boolean =
             language.equals("de", ignoreCase = true) && word in GERMAN_CAPITAL_ALSO_USUAL
@@ -687,7 +688,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         /**
          * Whether this dictionary writes any word with a capital at all, i.e. whether a word it stores small
-         * is small for a reason. The bundled English list stores everything small, `tuesday` and `i` included.
+         * is small for a reason. The bundled English list stored everything small, `tuesday` included, until
+         * tools/glide-dict/recase.py gave it its capitals (#476); generate.py still writes a language without
+         * a Hunspell dictionary all in lowercase.
          */
         val knowsCase: Boolean by lazy { canonical.values.any { it.firstOrNull()?.isUpperCase() == true } }
 
@@ -709,6 +712,23 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     private val lowerIndexByLang = guardedByLock { mutableMapOf<String, LowerIndex>() }
+
+    private val mixedCaseByLang = guardedByLock { mutableMapOf<String, Set<String>>() }
+
+    /**
+     * The words [lang]'s dictionary stores small although a corpus writes them with a capital mid-sentence at
+     * least half the time — `ben`, `terry`, `frank`, and `north` from North Carolina (#476). Too often small
+     * to be capitalised when typed, too often a name for a dictation to take a provider's capital off them.
+     * Measured by tools/glide-dict/recase.py --mixed into `ime/dict/<lang>_case_mixed.txt`, so far for the
+     * bundled English list only; empty for every other language.
+     */
+    private suspend fun mixedCaseFor(lang: String): Set<String> = mixedCaseByLang.withLock { cache ->
+        cache.getOrPut(lang) {
+            runCatching { appContext.assets.readText("ime/dict/${lang}_case_mixed.txt") }.getOrNull()
+                ?.lineSequence()?.map { it.trim() }?.filter { it.isNotEmpty() }?.toSet()
+                .orEmpty()
+        }
+    }
 
     // Lexicographically sorted word list per language, used by the beam decoder to prune partial paths that
     // are no longer a prefix of any real word (issue #242). Shares its strings with the LowerIndex, so this
@@ -825,11 +845,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * word capitalised exactly when its lowercase spelling is wrong, so a German noun, a name or English `I`
      * keep their capital; a word no dictionary knows keeps it too.
      *
-     * Only dictionaries that write some words with a capital have a say ([LowerIndex.knowsCase]). The
-     * bundled English list stores every word small, so it cannot tell `again` from `tuesday`; asked anyway,
-     * it took the capital off every name (emulator, 2026-11-11). English `I` keeps its capital by the same
-     * rule that capitalises it when typed ([standaloneCapitalizationIn]), and a word as usual with a capital
-     * as without keeps the provider's ([capitalAlsoUsualIn]).
+     * Only dictionaries that write some words with a capital have a say ([LowerIndex.knowsCase]): the
+     * bundled English list used to store every word small, could not tell `again` from `tuesday`, and took
+     * the capital off every name (emulator, 2026-11-11) until it was re-cased. English `I` keeps its
+     * capital by the same rule that capitalises it when typed ([standaloneCapitalizationIn]), and a word as
+     * usual with a capital as without keeps the provider's ([capitalAlsoUsualIn], [mixedCaseFor]).
      *
      * Every configured keyboard language counts, not just the active one: a dictation is in whichever
      * language the user spoke. Each index is loaded once and then shared with typing.
@@ -838,9 +858,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         val langs = LinkedHashSet<String>()
         runCatching { subtypeManager.subtypes.forEach { s -> dictLangFor(s)?.let { langs.add(it) } } }
         val indexes = langs.map { lowerIndexForLang(it) }.filter { it.freq.isNotEmpty() && it.knowsCase }
+        val mixed = langs.map { mixedCaseFor(it) }
         return { word ->
             val lower = word.lowercase()
-            val standalone = langs.any { standaloneCapitalizationIn(lower, it) != null || capitalAlsoUsualIn(lower, it) }
+            val standalone = mixed.any { lower in it } ||
+                langs.any { standaloneCapitalizationIn(lower, it) != null || capitalAlsoUsualIn(lower, it) }
             val spellings = indexes.mapNotNull { index ->
                 index.formsOf(index.fold(word)).firstOrNull { it.equals(word, ignoreCase = true) }
             }

@@ -90,8 +90,26 @@ internal object EvalKeyboard {
         error("could not locate ime/dict/$name — run from the repository or the app module")
     }
 
-    /** `{"word": 231, …}` into a map. Hand-parsed to keep the test off the serialization runtime. */
-    fun readDict(name: String): Map<String, Int> = parseDict(dictFile(name).readText())
+    /**
+     * A bundled `<lang>.json` as a word→frequency map — English keyed in lowercase, the way the keyboard
+     * looks a word up (LatinLanguageProvider's LowerIndex).
+     *
+     * en.json writes names with their capital since #476, and read as stored those fell out of every
+     * vocabulary built from [typeable] words: `pete` and 6 120 others the app still types, which broke the
+     * auto-commit gate's harm figures. Lowercased, it is exactly the list these evaluations were calibrated
+     * on. de.json is read as stored, as it always was: lowercasing its nouns would put `haus` into the
+     * populations of typed foreign words, which none of the thresholds was measured against.
+     */
+    fun readDict(name: String): Map<String, Int> {
+        val stored = parseDict(dictFile(name).readText())
+        if (name != "en.json") return stored
+        return HashMap<String, Int>(stored.size).also { out ->
+            for ((word, f) in stored) {
+                val key = word.lowercase()
+                if ((out[key] ?: -1) < f) out[key] = f
+            }
+        }
+    }
 
     /** The word→frequency map in a `<lang>.json`, for a file that is not a bundled asset. */
     fun parseDict(text: String): Map<String, Int> {
