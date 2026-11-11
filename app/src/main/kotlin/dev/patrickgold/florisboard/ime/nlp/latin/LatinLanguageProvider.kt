@@ -338,6 +338,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             else -> null
         }
 
+        /**
+         * Whether [word] (lowercase) is as usual with a capital as without in [language], while its
+         * dictionary entry is the small one: nothing about it says which a dictation opening with it in
+         * the middle of a sentence meant, so it keeps the capital its provider gave it (#476). German formal
+         * address, and „Guten Morgen“ — measured on the emulator as „Ich glaube, sie kommen“ and „Guten
+         * morgen“ before this list (2026-11-11). The bigram table cannot decide it: it is stored small.
+         */
+        internal fun capitalAlsoUsualIn(word: String, language: String): Boolean =
+            language.equals("de", ignoreCase = true) && word in GERMAN_CAPITAL_ALSO_USUAL
+
+        private val GERMAN_CAPITAL_ALSO_USUAL =
+            setOf("sie", "ihnen", "ihr", "ihre", "ihrem", "ihren", "ihrer", "ihres", "morgen")
+
         // Legacy ISO-639 codes that java.util.Locale still reports; map them to the modern code the
         // dictionary files use.
         private val LANG_ALIASES = mapOf("iw" to "he", "in" to "id", "ji" to "yi")
@@ -673,6 +686,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         fun formsOf(key: String): List<String> = variants[key] ?: listOfNotNull(canonical[key])
 
         /**
+         * Whether this dictionary writes any word with a capital at all, i.e. whether a word it stores small
+         * is small for a reason. The bundled English list stores everything small, `tuesday` and `i` included.
+         */
+        val knowsCase: Boolean by lazy { canonical.values.any { it.firstOrNull()?.isUpperCase() == true } }
+
+        /**
          * How to show [key] when a context table says the corpus wrote it [written] there (issue #451):
          * the dictionary's own form of that spelling, so a noun keeps its capital; the corpus spelling
          * itself when the dictionary has no such form; and the most frequent spelling without one. Showing
@@ -798,6 +817,35 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             if (lowerIndexForLang(lang).canonical[lower]?.first()?.isLowerCase() == true) return true
         }
         return false
+    }
+
+    /**
+     * Which words a dictation may write small when it opens in the middle of a sentence (#476): those one
+     * of the user's keyboard languages writes small, and none only with a capital. The dictionaries store a
+     * word capitalised exactly when its lowercase spelling is wrong, so a German noun, a name or English `I`
+     * keep their capital; a word no dictionary knows keeps it too.
+     *
+     * Only dictionaries that write some words with a capital have a say ([LowerIndex.knowsCase]). The
+     * bundled English list stores every word small, so it cannot tell `again` from `tuesday`; asked anyway,
+     * it took the capital off every name (emulator, 2026-11-11). English `I` keeps its capital by the same
+     * rule that capitalises it when typed ([standaloneCapitalizationIn]), and a word as usual with a capital
+     * as without keeps the provider's ([capitalAlsoUsualIn]).
+     *
+     * Every configured keyboard language counts, not just the active one: a dictation is in whichever
+     * language the user spoke. Each index is loaded once and then shared with typing.
+     */
+    suspend fun writtenSmallMidSentence(): (String) -> Boolean {
+        val langs = LinkedHashSet<String>()
+        runCatching { subtypeManager.subtypes.forEach { s -> dictLangFor(s)?.let { langs.add(it) } } }
+        val indexes = langs.map { lowerIndexForLang(it) }.filter { it.freq.isNotEmpty() && it.knowsCase }
+        return { word ->
+            val lower = word.lowercase()
+            val standalone = langs.any { standaloneCapitalizationIn(lower, it) != null || capitalAlsoUsualIn(lower, it) }
+            val spellings = indexes.mapNotNull { index ->
+                index.formsOf(index.fold(word)).firstOrNull { it.equals(word, ignoreCase = true) }
+            }
+            !standalone && spellings.isNotEmpty() && spellings.none { it.first().isUpperCase() }
+        }
     }
 
     /**

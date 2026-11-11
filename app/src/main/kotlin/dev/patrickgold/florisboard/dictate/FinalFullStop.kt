@@ -10,6 +10,8 @@
 
 package dev.patrickgold.florisboard.dictate
 
+import dev.patrickgold.florisboard.dictate.field.isNonBreakingDot
+
 /**
  * Leaves the full stop off a dictation that is one sentence, for those who switch it on (issue #468).
  *
@@ -25,7 +27,7 @@ package dev.patrickgold.florisboard.dictate
  *   sentence end is judged as [TranscriptParagraphs] judges one, so "z.B. Tofu kaufen." is one sentence
  *   and "3.50" holds no end. How long the sentence is does not matter. A dictation of several sentences
  *   keeps every mark it has, and so do two dictations in a row: the second puts the first one's stop back
- *   (`DictateController.leadFor`).
+ *   (`DictateController.seamFor`).
  * - **A full stop that is the sentence's:** "?" and "!" stay, and so does a dot that belongs to its word
  *   ("etc.", "p.m.", "Plan B."), an ellipsis, or a mark followed by a closing quote.
  *
@@ -59,7 +61,7 @@ object FinalFullStop {
             if ('.' in lastWord) return false
             // "etc.", "Plan B.". Not a number: "at 5." ends a sentence far more often than it is the
             // ordinal that [TranscriptParagraphs] takes it for in running text.
-            if (!lastWord.all { it.isDigit() } && TranscriptParagraphs.isNonBreakingDot(text, text.lastIndex)) {
+            if (!lastWord.all { it.isDigit() } && isNonBreakingDot(text, text.lastIndex)) {
                 return false
             }
         }
@@ -82,7 +84,7 @@ object FinalFullStop {
             var next = i + 1
             while (next < text.length && TranscriptParagraphs.isTrailing(text[next])) next++
             if (next >= text.length || !text[next].isWhitespace()) continue
-            if (c == '.' && TranscriptParagraphs.isNonBreakingDot(text, i)) continue
+            if (c == '.' && isNonBreakingDot(text, i)) continue
             return true
         }
         return false

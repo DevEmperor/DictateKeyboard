@@ -10,6 +10,8 @@
 
 package dev.patrickgold.florisboard.dictate
 
+import dev.patrickgold.florisboard.dictate.field.isNonBreakingDot
+
 /**
  * Deterministic paragraph splitter for long *plain* transcripts (issue #225): once at least [minWords]
  * words have accumulated, the next sentence end starts a new paragraph (a blank line). No model, no topic
@@ -44,46 +46,6 @@ object TranscriptParagraphs {
 
     /** Characters that glue a word together (so contractions/hyphenated words count once), mid-word only. */
     private fun isWordGlue(c: Char): Boolean = c == '\'' || c == '-' || c == '’' // ' - ’
-
-    /**
-     * Words that routinely end in a dot without ending a sentence (issue #239), stored lowercase and
-     * *without* the trailing dot. German and English are combined rather than selected per language: a
-     * dictation switches language freely, and a wrong entry only ever costs a longer paragraph.
-     *
-     * Single-letter entries are deliberately absent — `s.`, `f.`, `u.` are real abbreviations, but a
-     * lower-case single letter far more often genuinely ends a sentence. Initials are covered by the
-     * capital-letter rule instead. `no.` is left out for the same reason: "the answer is no." is common.
-     */
-    private val ABBREVIATIONS: Set<String> = setOf(
-        // German
-        "usw", "bzw", "z.b", "u.a", "d.h", "i.d.r", "v.a", "z.t", "o.g", "u.g", "ca", "nr", "abs", "bspw",
-        "evtl", "ggf", "inkl", "exkl", "mind", "sog", "vgl", "zzgl", "abzgl", "geb", "gest", "bzgl", "o.ä",
-        "u.ä", "ähnl", "eigtl", "urspr", "jew", "insb", "hrsg", "erw",
-        // English
-        "etc", "e.g", "i.e", "vs", "approx", "mr", "mrs", "ms", "dr", "prof", "st", "jr", "sr", "inc",
-        "ltd", "co", "dept", "est", "fig", "vol", "pp", "ed", "cf", "al", "incl", "min", "max", "sec",
-        "dept", "univ", "assn", "misc", "orig", "esp",
-    )
-
-    /**
-     * True when the dot at [dotIndex] belongs to something other than a sentence end, judged from the
-     * whitespace-delimited token in front of it: an ordinal or date (`29.`), an initial (`J.`), or a known
-     * abbreviation (`usw.`, `z.B.`). [FinalFullStop] asks the same of a dictation's last dot (#468).
-     */
-    internal fun isNonBreakingDot(text: String, dotIndex: Int): Boolean {
-        var start = dotIndex
-        while (start > 0 && !text[start - 1].isWhitespace()) start--
-        // Drop leading punctuation so a bracketed or quoted abbreviation still matches — `(e.g.`, `"Dr.`.
-        while (start < dotIndex && !text[start].isLetterOrDigit()) start++
-        if (start >= dotIndex) return false
-        val token = text.substring(start, dotIndex)
-        // Ordinals and dates: "29. Juli", "3. Platz".
-        if (token.all { it.isDigit() }) return true
-        // Initials: a single capital letter, as in "J. R. R. Tolkien". Lower case is left alone on purpose,
-        // so a sentence genuinely ending in a single letter still breaks.
-        if (token.length == 1 && token[0].isUpperCase()) return true
-        return token.lowercase() in ABBREVIATIONS
-    }
 
     fun split(text: String, minWords: Int): String {
         if (minWords <= 0 || text.length < 2) return text

@@ -49,6 +49,7 @@ import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.ModelTraining
@@ -561,6 +562,13 @@ fun DictateOutputScreen() = FlorisScreen {
             modifier = Modifier.settingsSearchAnchor("dictate__drop_final_full_stop_title"),
             title = stringRes(R.string.dictate__drop_final_full_stop_title),
             summary = stringRes(R.string.dictate__drop_final_full_stop_summary),
+        )
+        SwitchPreference(
+            prefs.dictate.seamCase,
+            icon = Icons.Default.TextFields,
+            modifier = Modifier.settingsSearchAnchor("dictate__seam_case_title"),
+            title = stringRes(R.string.dictate__seam_case_title),
+            summary = stringRes(R.string.dictate__seam_case_summary),
         )
         SwitchPreference(
             prefs.dictate.resendButton,

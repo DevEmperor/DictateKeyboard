@@ -486,10 +486,18 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         // Leave the full stop off a dictation that is a single sentence (issue #468) — notes, list items,
         // chat replies. Off by default: in running text the stop belongs there. Several sentences keep every
-        // mark, and a dictation right behind one puts its stop back (see FinalFullStop, DictateController.leadFor).
+        // mark, and a dictation right behind one puts its stop back (see FinalFullStop, DictateController.seamFor).
         val dropFinalFullStop = boolean(
             key = "dictate__drop_final_full_stop",
             default = false,
+        )
+        // Case a dictation's first letter for where it lands (issue #476): small in the middle of a sentence,
+        // where the dictionaries write the word small; a capital after a sentence end. On by default — a
+        // provider capitalises every utterance, and in the middle of a sentence that is nearly always wrong.
+        // See applySeamCase, DictateController.seamFor.
+        val seamCase = boolean(
+            key = "dictate__seam_case",
+            default = true,
         )
         // Long-press the send (mic) button while recording to transcribe with the on-device model instead
         // of the configured cloud provider (issue #228), for a quick offline one-off without digging

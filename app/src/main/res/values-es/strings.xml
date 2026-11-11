@@ -141,6 +141,7 @@
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">expansión de texto abreviatura atajo fragmento macro autotexto plantilla snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">contar palabras número de palabras caracteres longitud estadísticas</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">recortar espacios eliminar limpiar copiar cortar</string>
+    <string name="settings__search__keywords__seam_case" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which writes a dictation's first letter small inside a sentence and as a capital after its end. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">mayúscula minúscula mayúsculas minúsculas primera letra</string>
     <string name="settings__search__keywords__final_full_stop" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which leaves the full stop off a dictation of one sentence. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">punto puntuación final de frase sin punto signos</string>
     <string name="settings__search__keywords__clear_cache">caché almacenamiento espacio archivos temporales liberar borrar limpiar</string>
     <string name="settings__search__keywords__keyboard_size">altura alto bajo más grande más pequeño redimensionar agrandar reducir</string>
@@ -1511,6 +1512,8 @@
     <string name="dictate__paragraph_split_off">Desactivado</string>
     <string name="dictate__paragraph_split_value">Tras {n} palabras</string>
     <string name="dictate__drop_final_full_stop_title">Omitir el punto final</string>
+    <string name="dictate__seam_case_title">Ajustar la primera letra a la frase</string>
+    <string name="dictate__seam_case_summary">Minúscula en medio de una frase, mayúscula tras su final</string>
     <string name="dictate__drop_final_full_stop_summary">Solo cuando un dictado es una sola frase; varias frases conservan todos los signos</string>
     <string name="dictate__realtime_title">Transcripción en tiempo real</string>
     <string name="dictate__realtime_summary">Transcribe mientras hablas en lugar de hacerlo al parar, para proveedores compatibles</string>

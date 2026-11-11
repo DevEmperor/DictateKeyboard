@@ -235,6 +235,9 @@ object SettingsSearchIndex {
         // English speakers call the mark the title names.
         SettingsSearchEntry(R.string.dictate__drop_final_full_stop_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__drop_final_full_stop_title",
             keywordsRes = R.string.settings__search__keywords__final_full_stop),
+        // Hand-added (issue #476), for the same reason. People look for it as "capital" or "lowercase".
+        SettingsSearchEntry(R.string.dictate__seam_case_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__seam_case_title",
+            keywordsRes = R.string.settings__search__keywords__seam_case),
         SettingsSearchEntry(R.string.dictate__resend_button_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__resend_button_title"),
         SettingsSearchEntry(R.string.dictate__haptic_feedback_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__haptic_feedback_title"),
         SettingsSearchEntry(R.string.dictate__remember_last_dictation_title, R.string.dictate__output_group, Routes.Settings.DictateOutput, parentRes = R.string.dictate__title, anchor = "dictate__remember_last_dictation_title"),

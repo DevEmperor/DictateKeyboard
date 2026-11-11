@@ -60,7 +60,11 @@ import dev.patrickgold.florisboard.dictate.data.history.DictateHistorySource
 import dev.patrickgold.florisboard.dictate.data.history.DictateHistoryStore
 import dev.patrickgold.florisboard.dictate.data.history.HistoryEngine
 import dev.patrickgold.florisboard.dictate.data.stats.DictateStats
+import dev.patrickgold.florisboard.dictate.field.SEAM_CASE_CONTEXT
+import dev.patrickgold.florisboard.dictate.field.SeamCase
 import dev.patrickgold.florisboard.dictate.field.TranscriptHandover
+import dev.patrickgold.florisboard.dictate.field.applySeamCase
+import dev.patrickgold.florisboard.dictate.field.seamCaseOf
 import dev.patrickgold.florisboard.dictate.provider.ChatRequest
 import dev.patrickgold.florisboard.dictate.provider.DictateApiException
 import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
@@ -357,19 +361,20 @@ object DictateController {
     private var realtimeHandedOver = ""
 
     /**
-     * The separator decided for the dictation currently in the field — a space or nothing (issue #443),
-     * see [leadFor]. Decided once, at the dictation's first write: by its second, the text in front of the
-     * cursor is our own. While [realtimeShown] holds a preview it begins with this, so the diff, the
-     * finalize and the cancel all carry the separator along without knowing about it.
+     * How the dictation currently in the field meets the text in front of it — the separator, a space or
+     * nothing (issue #443), and the case of its first letter (#476); see [seamFor]. Decided once, at the
+     * dictation's first write: by its second, the text in front of the cursor is our own. While
+     * [realtimeShown] holds a preview it begins with the separator, so the diff, the finalize and the
+     * cancel all carry it along without knowing about it.
      */
-    private var dictationLead = ""
+    private var dictationSeam = Seam.NONE
 
     /** The separator in front of the last committed dictation, so the bubble's undo takes it back too. */
     private var lastDictationLead = ""
 
     /**
      * The last dictation as it went into the field, separator included, when its full stop was left off
-     * (issue #468) — and that stop. A dictation right behind it puts the stop back ([leadFor]): the setting
+     * (issue #468) — and that stop. A dictation right behind it puts the stop back ([seamFor]): the setting
      * is for a sentence on its own, and two in a row are two sentences, which keep their marks.
      */
     private var heldFullStop: HeldFullStop? = null
@@ -2536,16 +2541,12 @@ object DictateController {
         val outputText = prefs.dictate.customMappings.get().apply(
             if (stopLeftOff) paragraphed.dropLast(1) else paragraphed,
         )
-        // The whole dictation, for what keeps a record of it — the history, the stats, the re-insert cache —
-        // while the field gets only the part that was not handed over (#421). [text] is the tail of [rawText].
-        val dictated = if (text.length == rawText.length) {
-            outputText
-        } else {
-            TranscriptJoin.join(rawText.dropLast(text.length).trimEnd(), outputText, appContext.transcriptTighteningSymbols())
-        }
         // The space in front of it, if the field needs one (#443). Kept out of [outputText] on purpose:
         // the history, the re-insert cache and the clipboard copies hold the dictation, not the seam.
         val lead: String
+        // [outputText] with its first letter cased for where it went (#476) — what the field holds, and so
+        // what the undo has to find again. A live prompt's answer is not a dictation and keeps its case.
+        var casedOutput = outputText
         // What the field now ends in, separator included, when it is this dictation as written (#468).
         var inField = ""
         if (finalizeViaComposing) {
@@ -2555,16 +2556,19 @@ object DictateController {
             // Edited while it was being finished (#421): what the user saw is theirs, finished or not, so
             // the finished text has nothing left to replace. Only words that never reached the field are
             // still to be written, as they were heard.
-            val shownOwn = realtimeShown.toString().removePrefix(dictationLead)
+            val shownOwn = realtimeShown.toString().removePrefix(dictationSeam.lead)
             val edited = handOverIfEdited(outSink)
-            val written = if (edited) TranscriptHandover.continuation(shownOwn, text) else outputText
-            // A preview already on screen carries the separator decided at its first word; asking the field
-            // now would find our own preview in front of the cursor.
-            lead = when {
-                written.isEmpty() -> ""
-                realtimeShown.isNotEmpty() -> dictationLead
-                else -> leadFor(appContext, written)
+            val continued = if (edited) TranscriptHandover.continuation(shownOwn, text) else outputText
+            // A preview already on screen carries the separator and the case decided at its first word;
+            // asking the field now would find our own preview in front of the cursor.
+            val seam = when {
+                continued.isEmpty() -> Seam.NONE
+                realtimeShown.isNotEmpty() -> dictationSeam
+                else -> seamFor(appContext, continued)
             }
+            lead = seam.lead
+            val written = if (isLive) continued else seam.cased(continued)
+            if (!edited) casedOutput = written
             // The always-copy safety net (#214) before the commit, for the reason the batch branch gives:
             // realtime and long-form dictations from the floating button are inserted here, and this
             // branch used to skip the setting that promises "every dictation".
@@ -2607,10 +2611,12 @@ object DictateController {
             ) {
                 copyToSystemClipboard(appContext, outputText)
             }
-            lead = leadFor(appContext, outputText)
-            val committed = commitOutput(appContext, lead + outputText)
+            val seam = seamFor(appContext, outputText)
+            lead = seam.lead
+            if (!isLive) casedOutput = seam.cased(outputText)
+            val committed = commitOutput(appContext, lead + casedOutput)
             if (committed) latencyTrace?.let { logLatency(it, "outputCommitted") }
-            if (committed) inField = lead + outputText
+            if (committed) inField = lead + casedOutput
             // Floating button (#156): the accessibility insert can be silently swallowed by some app fields
             // (Gemini's Compose box, WebViews). Don't flash a false green check — surface an error, and
             // put the text somewhere the user can actually reach.
@@ -2630,6 +2636,13 @@ object DictateController {
                 reportOverlayInsertFailure(appContext, committed, outputText)
                 return
             }
+        }
+        // The whole dictation, for what keeps a record of it — the history, the stats, the re-insert cache —
+        // while the field gets only the part that was not handed over (#421). [text] is the tail of [rawText].
+        val dictated = if (text.length == rawText.length) {
+            casedOutput
+        } else {
+            TranscriptJoin.join(rawText.dropLast(text.length).trimEnd(), outputText, appContext.transcriptTighteningSymbols())
         }
         // Re-insert safety net (issue #111) + lifetime stats (issue #142) + history log (issue #140).
         rememberLastDictation(appContext, dictated)
@@ -2844,10 +2857,11 @@ object DictateController {
             if (realtimeShown.isNotEmpty() && outSink.selectedText().isNotEmpty()) return
             handOverIfEdited(outSink)
             val own = TranscriptHandover.continuation(realtimeHandedOver, full)
-            // The separator is settled before the first word goes in (#443) and then travels with the
-            // preview, so the finalize replaces like with like.
-            if (realtimeShown.isEmpty()) dictationLead = leadFor(appContext, own)
-            val shown = if (own.isEmpty()) "" else dictationLead + own
+            // The separator and the first letter's case are settled before the first word goes in (#443,
+            // #476) and then travel with the preview, so the finalize replaces like with like, and a
+            // provider revising its first word cannot make the capital come and go.
+            if (realtimeShown.isEmpty()) dictationSeam = seamFor(appContext, own)
+            val shown = if (own.isEmpty()) "" else dictationSeam.lead + dictationSeam.cased(own)
             runCatching { outSink.setDictationPreview(shown, realtimeShown.toString()) }
             realtimeShown.setLength(0)
             realtimeShown.append(shown)
@@ -3336,9 +3350,9 @@ object DictateController {
                     handOverIfEdited(outSink)
                     val own = TranscriptHandover.continuation(realtimeHandedOver, realtimeTranscript.toString())
                     val prev = realtimeShown.toString()
-                    // The first segment is the one that meets the field's own text (#443).
-                    if (prev.isEmpty()) dictationLead = leadFor(appContext, own)
-                    val full = dictationLead + own
+                    // The first segment is the one that meets the field's own text (#443, #476).
+                    if (prev.isEmpty()) dictationSeam = seamFor(appContext, own)
+                    val full = dictationSeam.lead + dictationSeam.cased(own)
                     runCatching { outSink.setDictationPreview(full, prev) }
                     realtimeShown.setLength(0)
                     realtimeShown.append(full)
@@ -3621,23 +3635,55 @@ object DictateController {
      * It also puts back the full stop the last dictation went without (#468), when this one carries on right
      * behind it: one sentence on its own goes without, two in a row are two sentences and keep their marks.
      * Not in front of a mark that binds to the word before it — `Buy tofu` + `, milk` wants no stop.
+     *
+     * And it decides how the dictation's first word is cased there (#476): a provider capitalises every
+     * utterance, so one dictated into the middle of a sentence used to read `We met Again on Tuesday.` See
+     * [applySeamCase] for the rules; the dictionaries that keep `Bahnhof` and `Tuesday` capitalised are the
+     * keyboard's, and only asked when the dictation does continue a sentence.
      */
-    private suspend fun leadFor(appContext: Context, text: String): String {
-        if (text.isEmpty() || outputTarget == OutputTarget.RECOGNITION_SERVICE) return ""
+    private suspend fun seamFor(appContext: Context, text: String): Seam {
+        if (text.isEmpty() || outputTarget == OutputTarget.RECOGNITION_SERVICE) return Seam.NONE
         val sink = sink(appContext)
-        // One character is all the separator rule looks at; a held stop needs to see its dictation.
+        val casing = prefs.dictate.seamCase.get()
+        // One character is all the separator rule looks at; a held stop needs to see its dictation, and the
+        // case rule enough to recognise an abbreviation.
         val held = heldFullStop?.takeIf { !TranscriptJoin.DEFAULT_TIGHTENING_SYMBOLS.contains(text.first()) }
-        val length = held?.written?.length?.coerceAtMost(HELD_STOP_MATCH_CHARS) ?: 1
+        val heldLength = held?.written?.length?.coerceAtMost(HELD_STOP_MATCH_CHARS) ?: 1
+        val length = if (casing) maxOf(heldLength, SEAM_CASE_CONTEXT) else heldLength
         val before = if (outputTarget == OutputTarget.OVERLAY) {
             withContext(Dispatchers.IO) { sink.textBeforeCursor(length) }
         } else {
             sink.textBeforeCursor(length)
         }
-        if (held != null && before != null && before == held.written.takeLast(length)) {
-            val mark = held.mark.toString()
-            return mark + appContext.transcriptSeparatorBefore(mark, text)
+        val heldMark = held?.takeIf { before != null && before.takeLast(heldLength) == it.written.takeLast(heldLength) }
+            ?.mark?.toString()
+        val lead = if (heldMark != null) {
+            heldMark + appContext.transcriptSeparatorBefore(heldMark, text)
+        } else {
+            appContext.transcriptSeparatorBefore(before, text)
         }
-        return appContext.transcriptSeparatorBefore(before, text)
+        if (!casing) return Seam(lead, SeamCase.AS_WRITTEN) { false }
+        val case = seamCaseOf(if (heldMark != null) before + heldMark else before)
+        // Off the main thread: the first time, a language's dictionary is read from disk. The lookups after
+        // that are a map access each.
+        val writtenSmall = if (case == SeamCase.MID_SENTENCE) {
+            withContext(Dispatchers.IO) { appContext.writtenSmallMidSentence() }
+        } else {
+            { _: String -> false }
+        }
+        return Seam(lead, case, writtenSmall)
+    }
+
+    /**
+     * How a dictation meets the text in front of the cursor ([seamFor]): the separator that goes in front of
+     * it, and its first letter's case, applied to each version of the text by [cased].
+     */
+    private class Seam(val lead: String, private val case: SeamCase, private val writtenSmall: (String) -> Boolean) {
+        fun cased(text: String): String = applySeamCase(text, case, writtenSmall)
+
+        companion object {
+            val NONE = Seam("", SeamCase.AS_WRITTEN) { false }
+        }
     }
 
     /**

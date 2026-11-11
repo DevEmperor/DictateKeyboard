@@ -176,3 +176,13 @@ internal fun Context.transcriptSeparatorBefore(textBefore: String?, piece: Strin
         followingSymbols = rule?.symbolsFollowingPhantomSpace ?: TranscriptJoin.DEFAULT_SEAM_FOLLOWING,
     )
 }
+
+/**
+ * Which words the keyboard's dictionaries write small inside a sentence (#476), on the same terms as
+ * [transcriptTighteningSymbols]: only while the keyboard is already up. Without it no word is, and a
+ * dictation keeps the capitals its provider gave it.
+ */
+internal suspend fun Context.writtenSmallMidSentence(): (String) -> Boolean = runCatching {
+    val nlp = nlpManager()
+    if (nlp.isInitialized()) nlp.value.writtenSmallMidSentence() else null
+}.getOrNull() ?: { false }

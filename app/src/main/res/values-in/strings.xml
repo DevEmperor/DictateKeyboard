@@ -141,6 +141,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__search__keywords__text_expansion" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the typing-shortcut setting, which lets a short trigger expand into a saved block of text. Translate as the words people in your language would actually type when looking for that feature, separated by spaces. Do not translate word for word; add or drop terms as makes sense.">ekspansi teks singkatan pintasan cuplikan makro teks otomatis templat snippet text expansion</string>
     <string name="settings__search__keywords__selection_metrics" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which shows how many words and characters are selected. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">hitung kata jumlah kata karakter panjang statistik</string>
     <string name="settings__search__keywords__trim_on_copy" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which removes spaces and line breaks at the ends of copied text. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">pangkas spasi hapus bersihkan salin potong</string>
+    <string name="settings__search__keywords__seam_case" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which writes a dictation's first letter small inside a sentence and as a capital after its end. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">huruf besar huruf kecil kapital kapitalisasi huruf pertama</string>
     <string name="settings__search__keywords__final_full_stop" comment="NOT SHOWN ANYWHERE — extra search terms that lead to the setting which leaves the full stop off a dictation of one sentence. Translate as the words people in your language would actually type when looking for it, separated by spaces. Do not translate word for word.">titik tanda baca akhir kalimat tanpa titik</string>
     <string name="settings__search__keywords__clear_cache">cache penyimpanan ruang berkas sementara mengosongkan hapus bersihkan</string>
     <string name="settings__search__keywords__keyboard_size">tinggi pendek lebih besar lebih kecil ubah ukuran perbesar perkecil</string>
@@ -1481,6 +1482,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__paragraph_split_off">Nonaktif</string>
     <string name="dictate__paragraph_split_value">Setelah {n} kata</string>
     <string name="dictate__drop_final_full_stop_title">Hilangkan titik di akhir</string>
+    <string name="dictate__seam_case_title">Sesuaikan huruf pertama dengan kalimat</string>
+    <string name="dictate__seam_case_summary">Huruf kecil di tengah kalimat, huruf besar setelah akhir kalimat</string>
     <string name="dictate__drop_final_full_stop_summary">Hanya jika dikte berupa satu kalimat; beberapa kalimat tetap memakai semua tanda baca</string>
     <string name="dictate__realtime_title">Transkripsi waktu nyata</string>
     <string name="dictate__realtime_summary">Mentranskripsi saat Anda berbicara, bukan setelah berhenti, untuk penyedia yang mendukungnya</string>

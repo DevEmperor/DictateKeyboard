@@ -286,6 +286,12 @@ class NlpManager(context: Context) {
         return runBlocking { getSuggestionProvider(subtype) }.standaloneCapitalization(word, subtype)
     }
 
+    /** See [LatinLanguageProvider.writtenSmallMidSentence]; nothing is written small without that provider. */
+    suspend fun writtenSmallMidSentence(): (String) -> Boolean {
+        val latin = providers.withLock { it[LatinLanguageProvider.ProviderId] }?.provider as? LatinLanguageProvider
+        return latin?.writtenSmallMidSentence() ?: { false }
+    }
+
     fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
         // Using a cache because I have no idea how fast the runBlocking is
         return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
