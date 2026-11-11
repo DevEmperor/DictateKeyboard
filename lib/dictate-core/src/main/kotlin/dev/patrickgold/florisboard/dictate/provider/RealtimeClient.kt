@@ -390,11 +390,21 @@ private class OpenAiRealtimeSession(
 }
 
 /**
- * Soniox streaming transcription over `wss://stt-rt.soniox.com/transcribe-websocket`. The API key and
- * config go in the first JSON message (no auth header); 16 kHz mono PCM16 is streamed as raw binary
- * frames. Each `tokens[]` message carries `is_final` tokens (permanent) plus a replaceable tail; the full
- * text (permanent + tail) is emitted as the partial, and the permanent text as the final on flush. An
- * empty frame flushes; the server replies `finished:true` and closes.
+ * Soniox streaming transcription over `wss://stt-rt.soniox.com/transcribe-websocket`. The API key goes in
+ * the `Authorization: Bearer` header of the upgrade request, the config in the first JSON message; 16 kHz
+ * mono PCM16 is streamed as raw binary frames. Each `tokens[]` message carries `is_final` tokens
+ * (permanent) plus a replaceable tail; the full text (permanent + tail) is emitted as the partial, and the
+ * permanent text as the final on flush. An empty frame flushes; the server replies `finished:true` and
+ * closes.
+ *
+ * The key used to travel as `api_key` in the config message. Soniox refuses that from 2027-01-15 (#475;
+ * docs.soniox.com/authentication/migrate-websocket-authentication, read 2026-11-11). Asked of the endpoint
+ * the same day: the header alone transcribes exactly as the config key did; a key in both places must be
+ * the same one, or the stream is refused with 400.
+ *
+ * A refusal arrives as a frame, not as a failed handshake: the upgrade succeeds, the server answers the
+ * config with `{"error_code":401,"error_type":"unauthenticated","error_message":…}` and closes normally
+ * (1000). Unread, that looked like a dictation that simply said nothing.
  *
  * [wsUrl] is the streaming host of the account's data-residency region (#403), taken as given: Soniox
  * publishes it per region alongside the REST one, and a key is only a credential inside its own region.
@@ -423,7 +433,10 @@ private class SonioxRealtimeSession(
 
     fun connect() {
         val url = wsUrl?.takeIf { it.isNotBlank() } ?: URL
-        ws = client.newWebSocket(Request.Builder().url(url).build(), listener)
+        ws = client.newWebSocket(
+            Request.Builder().url(url).header("Authorization", "Bearer $apiKey").build(),
+            listener,
+        )
     }
 
     private val listener = object : WebSocketListener() {
@@ -439,6 +452,13 @@ private class SonioxRealtimeSession(
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
+            // An error ends the stream, and whatever it had transcribed is not the whole dictation:
+            // failing makes the controller transcribe the recording instead.
+            obj["error_code"]?.let { code ->
+                val message = obj["error_message"]?.jsonPrimitive?.contentOrNull ?: ""
+                emitError(RuntimeException("Soniox realtime error ${code.jsonPrimitive.content}: $message"))
+                return
+            }
             obj["tokens"]?.jsonArray?.let { tokens ->
                 val tail = StringBuilder()
                 for (tk in tokens) {
@@ -459,7 +479,6 @@ private class SonioxRealtimeSession(
     }
 
     private fun config(): String = buildJsonObject {
-        put("api_key", apiKey)
         put("model", model)
         put("audio_format", "pcm_s16le")
         put("sample_rate", 16_000)
