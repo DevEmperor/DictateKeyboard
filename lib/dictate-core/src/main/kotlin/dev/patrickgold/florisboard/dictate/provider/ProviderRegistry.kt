@@ -559,7 +559,8 @@ object ProviderRegistry {
 
     /**
      * AssemblyAI (issue #143): transcription-only, async upload/create/poll flow with a raw `authorization`
-     * header (see [TranscriptionApi.ASSEMBLYAI_ASYNC]).
+     * header (see [TranscriptionApi.ASSEMBLYAI_ASYNC]). The model [ASSEMBLYAI_DICTATION_MODEL] takes the same
+     * key to their Dictation endpoint instead, one request that also cleans the transcript up (#478).
      */
     val ASSEMBLYAI = ProviderPreset(
         id = "assemblyai",
@@ -1034,6 +1035,17 @@ object ProviderRegistry {
      */
     fun isGeminiTranscribeModel(model: String): Boolean =
         model.removePrefix("models/").lowercase().contains("transcribe")
+
+    /**
+     * The model id that picks AssemblyAI's Dictation endpoint (#478) instead of the upload-and-poll job.
+     *
+     * Not a speech model of AssemblyAI's: the endpoint takes no model at all and runs on Universal-3.6 Pro, so
+     * the id only names the route, the way [isGeminiTranscribeModel] picks Google's. Offered in the picker
+     * through [ModelCatalog], and asked here in one place for the client and the check.
+     */
+    const val ASSEMBLYAI_DICTATION_MODEL = "dictation"
+
+    fun isAssemblyAiDictationModel(model: String): Boolean = model.trim() == ASSEMBLYAI_DICTATION_MODEL
 
     // A general "is this a speech-to-text model" check briefly lived here, so the single-call switch and
     // the rewording model could be decided from it. It is gone on purpose: guessing a model's abilities

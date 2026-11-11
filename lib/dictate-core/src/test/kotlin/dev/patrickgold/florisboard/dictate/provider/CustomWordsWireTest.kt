@@ -74,6 +74,14 @@ class CustomWordsWireTest : FunSpec({
         VocabularyField.ASSEMBLYAI.fit(listOf("one two three four five six seven")) shouldBe emptyList()
     }
 
+    test("AssemblyAI's Dictation endpoint takes 100 terms and 8000 characters, an umlaut counting as one") {
+        VocabularyField.ASSEMBLYAI_DICTATION.fit((1..101).map { "Term$it" }).size shouldBe 100
+        // 100 terms of 80 characters were taken at 15 800 bytes; 81 of 99 characters were refused at 8019.
+        VocabularyField.ASSEMBLYAI_DICTATION.fit((10..109).map { "$it" + "ä".repeat(77) }).size shouldBe 100
+        VocabularyField.ASSEMBLYAI_DICTATION.fit((10..90).map { "$it" + "y".repeat(97) }).size shouldBe 80
+        VocabularyField.ASSEMBLYAI_DICTATION.fit(listOf("a b c d e f g h i j k l m n o p q r s t")).size shouldBe 1
+    }
+
     // --- batch ---
 
     test("Deepgram's Nova-3 gets keyterm, Nova-2 keywords, and any other model nothing at all") {

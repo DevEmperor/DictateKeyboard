@@ -83,6 +83,7 @@ object ModelCatalog {
 
     private val NOV_3 = LocalDate.of(2026, 11, 3)
     private val NOV_4 = LocalDate.of(2026, 11, 4)
+    private val NOV_11 = LocalDate.of(2026, 11, 11)
 
     private val T = setOf(ModelRole.TRANSCRIPTION)
     private val R = setOf(ModelRole.REALTIME)
@@ -247,6 +248,13 @@ object ModelCatalog {
         // AssemblyAI's recommended model for recorded audio since the 3.5 generation; the only one of the three
         // to spell both names of the names sample (2026-11-04).
         ModelSpec("universal-3-5-pro", T, verified = NOV_4),
+        // Their Dictation endpoint rather than a model (#478): Universal-3.6 Pro, then their own cleanup of
+        // fillers and self-corrections, in one request of 0.3–1.4 s where the job above takes 3–6.5 s.
+        // $0.62 an hour of audio, three times Universal-3.5 Pro, so not the default.
+        ModelSpec(
+            ProviderRegistry.ASSEMBLYAI_DICTATION_MODEL, T, verified = NOV_11,
+            note = "Not a model id: the Dictation endpoint, which cleans the transcript up as well.",
+        ),
         ModelSpec("universal-3-pro", T, verified = NOV_4),
         ModelSpec("universal-2", T, verified = NOV_4),
         ModelSpec("universal-3-6-pro", R, verified = NOV_3),

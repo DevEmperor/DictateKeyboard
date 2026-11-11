@@ -566,12 +566,8 @@ internal class AssemblyAiRealtimeSession(
     private val speechModel = model.trim().takeUnless { it.isEmpty() || it == LEGACY_MODEL_ID }
         ?: ProviderRegistry.ASSEMBLYAI.defaultRealtimeModel.orEmpty()
 
-    // One code the model does not know fails the whole session, so the list is cut to the ones it does.
     private val languageCodes = if (speechModel in MULTILINGUAL_PRO_MODELS) {
-        languageHintsOf(language, expectedLanguages)
-            .map { it.substringBefore('-').lowercase() }
-            .filter { it in PRO_LANGUAGE_CODES }
-            .distinct()
+        universalProLanguageCodes(language, expectedLanguages)
     } else {
         emptyList()
     }
@@ -591,7 +587,8 @@ internal class AssemblyAiRealtimeSession(
 
         /**
          * Universal-3.6 Pro's languages, as the endpoint lists them when it refuses an unknown one
-         * (2026-10-20). Its docs say 32; the list is 32 plus `multi`, which means nothing to us.
+         * (2026-10-20). Its docs say 32; the list is 32 plus `multi`, which means nothing to us. The
+         * Dictation endpoint, which runs on the same model, refuses with the same 32 (2026-11-11, #478).
          */
         val PRO_LANGUAGE_CODES = setOf(
             "en", "es", "de", "fr", "it", "pt", "tr", "nl", "sv", "no", "da", "fi", "hi", "vi", "ar", "he",
@@ -1542,6 +1539,18 @@ internal fun languageHintsOf(language: String?, expectedLanguages: List<String>)
     return (if (pinned != null) listOf(pinned) else expectedLanguages)
         .filter { it.isNotBlank() && it != "detect" }
 }
+
+/**
+ * [languageHintsOf] as AssemblyAI's Universal-3.6 Pro takes them in `language_codes`, on the streaming
+ * socket and the Dictation endpoint alike: base subtags (`pt-BR` is refused, `pt` taken), and only codes of
+ * [AssemblyAiRealtimeSession.PRO_LANGUAGE_CODES], since one code the model does not know fails the whole
+ * request.
+ */
+internal fun universalProLanguageCodes(language: String?, expectedLanguages: List<String>): List<String> =
+    languageHintsOf(language, expectedLanguages)
+        .map { it.substringBefore('-').lowercase() }
+        .filter { it in AssemblyAiRealtimeSession.PRO_LANGUAGE_CODES }
+        .distinct()
 
 /**
  * The first [len] bytes of [pcm16] in Base64, unwrapped, as the sockets that frame audio as JSON want it.

@@ -34,7 +34,8 @@ import kotlin.time.Duration.Companion.hours
  *
  * Environment:
  * - `DICTATE_PROVIDER_CHECK`: the keys file, `NAME=value` per line (OPENAI, GROQ, …, AZURE_URL).
- * - `DICTATE_PROVIDER_CHECK_FIXTURES`: en.wav, de.wav, names.wav, en.{mp3,m4a,ogg,flac,webm,aac,amr}, {en,de}_<rate>.pcm.
+ * - `DICTATE_PROVIDER_CHECK_FIXTURES`: en.wav, de.wav, names.wav, terms.wav, filler.wav, question.wav,
+ *   en.{mp3,m4a,ogg,flac,webm,aac,amr}, {en,de}_<rate>.pcm.
  * - `DICTATE_PROVIDER_CHECK_OUT`: where report.md and results.json go.
  * - `DICTATE_PROVIDER_CHECK_ONLY`: preset ids to check, comma-separated; all when unset.
  * - `DICTATE_PROVIDER_CHECK_PARTS`: models,batch,formats,chat,reasoning,realtime; all when unset.
@@ -115,6 +116,9 @@ private class Check(
     private val deText = "Hallo, das ist ein kurzer Test der Dictate Tastatur. Wir treffen uns morgen um halb " +
         "zehn am Bahnhof."
 
+    /** What question.wav says (make_fixtures.py). */
+    private val questionText = "What is the capital of France? Answer in one word."
+
     /** Scale the reasoning matrix walks; null is the field left out. */
     private val efforts = listOf(null, "none", "minimal", "low", "medium", "high", "xhigh", "max")
 
@@ -170,7 +174,7 @@ private class Check(
             val sttModels = (listOfNotNull(preset.defaultTranscriptionModel) + preset.curatedTranscriptionModels +
                 extra(preset, "transcription")).distinct()
             if ("batch" in parts) sttModels.forEach { batch(preset, client, it, scrub) }
-            if ("formats" in parts) sttModels.firstOrNull()?.let { formats(preset, client, it, scrub) }
+            if ("formats" in parts) formatModels(sttModels).forEach { formats(preset, client, it, scrub) }
         }
         if (preset.capabilities.chat) {
             val chatModels = (listOfNotNull(preset.defaultChatModel) + preset.curatedChatModels +
@@ -278,7 +282,31 @@ private class Check(
             once("${probe.name}, no words", "${probe.name}.wav", null, emptyList(), null, probe.words)
             once("${probe.name}, custom words", "${probe.name}.wav", null, probe.words, null, probe.words)
         }
+        for (probe in cleanupProbes) {
+            val (text, ms, error) = timed {
+                client.transcribe(TranscriptionRequest(audioFile = File(fixtures, "${probe.name}.wav"), model = model), onRetry = {}).text
+            }
+            if (text == null) add(preset, "batch", model, probe.name, "FAIL", scrub(error.orEmpty()), ms)
+            else add(preset, "batch", model, probe.name, "OK", "\"${scrub(text).take(140)}\" · ${probe.verdict(text)}", ms)
+        }
     }
+
+    /**
+     * What a model makes of a dictation that is not plain prose (#478): a filler-strewn sentence, and a question
+     * that tells whoever reads it to answer. A model that cleans up should take the fillers out; no model may
+     * answer the question, and one that does is noted against the catalog.
+     */
+    private class CleanupProbe(val name: String, val verdict: (String) -> String)
+
+    private val cleanupProbes = listOf(
+        CleanupProbe("filler") { text ->
+            val left = CleanupGuard.wordsOf(text).filter { it in setOf("um", "uh", "er", "erm", "ähm", "äh") }.distinct()
+            "fillers left: ${left.joinToString().ifEmpty { "none" }}"
+        },
+        CleanupProbe("question") { text ->
+            if (CleanupGuard.keepsTheWords(questionText, text)) "kept as said ✓" else "kept as said ✗"
+        },
+    ).filter { File(fixtures, "${it.name}.wav").exists() }
 
     /**
      * Speech with words a model rarely spells right on its own, and the custom words that should fix them
@@ -291,6 +319,13 @@ private class Check(
         WordProbe("names", listOf("Siobhan", "Niamh")),
         WordProbe("terms", listOf("Qwyndra", "Aoibheann", "Caoimhe")),
     ).filter { File(fixtures, "${it.name}.wav").exists() }
+
+    /**
+     * The models whose formats are checked: the first, and each that takes the audio to an endpoint of its own,
+     * which may take other containers (AssemblyAI's Dictation reads the part's content type and refuses AMR).
+     */
+    private fun formatModels(models: List<String>) =
+        models.take(1) + models.drop(1).filter { ProviderRegistry.isAssemblyAiDictationModel(it) }
 
     private suspend fun formats(preset: ProviderPreset, client: OpenAiCompatibleClient, model: String, scrub: (String) -> String) {
         for (ext in listOf("wav", "mp3", "m4a", "ogg", "flac", "webm", "aac", "amr")) {
@@ -515,6 +550,11 @@ private class Check(
                 // The client asked again without the custom words: the field or one of its limits has changed.
                 tried.filter { "fallingBack=without them" in it.detail }.forEach {
                     note("`$model` $part ${it.probe}: refused the custom words (${it.detail.substringAfter("⚠").take(120)})")
+                }
+                // A dictated question answered, or a provider's cleanup the client did not trust or did not get.
+                tried.filter { "kept as said ✗" in it.detail }.forEach { note("`$model` $part ${it.probe}: answered or rewrote it") }
+                tried.filter { "fallingBack=transcript" in it.detail || "cannot take this recording" in it.detail }.forEach {
+                    note("`$model` $part ${it.probe}: ${it.detail.substringAfter("⚠").take(140)}")
                 }
             }
             val claimed = ProviderRegistry.byId(provider)?.acceptedAudioContainers?.map { it.name.lowercase() }.orEmpty()

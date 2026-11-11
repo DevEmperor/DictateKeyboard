@@ -19,8 +19,8 @@ package dev.patrickgold.florisboard.dictate.provider
  * whole request when one is broken. [fit] keeps what a field takes, in the user's order:
  *  - a term longer than [maxChars], of more than [maxWords] words, or holding a character from [refused] is
  *    left out rather than shortened, since half a name biases towards the wrong word;
- *  - the list ends at [maxTerms], or before the term that would take it past [maxTotalWords] or
- *    [maxTotalBytes], so the first words of the list are the ones that count.
+ *  - the list ends at [maxTerms], or before the term that would take it past [maxTotalWords],
+ *    [maxTotalChars] or [maxTotalBytes], so the first words of the list are the ones that count.
  *
  * Each limit is the vendor's own, as their docs give it and the endpoint answered it on 2026-11-04. Where
  * a vendor counts in a unit the app cannot reproduce (Deepgram's tokens), the limit here sits well inside
@@ -38,12 +38,15 @@ internal data class VocabularyField(
     val maxChars: Int = Int.MAX_VALUE,
     val maxWords: Int = Int.MAX_VALUE,
     val maxTotalWords: Int = Int.MAX_VALUE,
+    /** Characters as the vendor counts them: code points, so an umlaut is one. */
+    val maxTotalChars: Int = Int.MAX_VALUE,
     val maxTotalBytes: Int = Int.MAX_VALUE,
     val refused: String = "",
 ) {
     fun fit(words: List<String>): List<String> {
         val terms = mutableListOf<String>()
         var totalWords = 0
+        var totalChars = 0
         var totalBytes = 0
         for (word in words) {
             if (terms.size == maxTerms) break
@@ -52,10 +55,14 @@ internal data class VocabularyField(
             if (term.length > maxChars || term.any { it in refused || it == '\n' || it == '\r' }) continue
             val wordCount = term.split(WHITESPACE).size
             if (wordCount > maxWords) continue
+            val chars = term.codePointCount(0, term.length)
             val bytes = term.toByteArray(Charsets.UTF_8).size
-            if (totalWords + wordCount > maxTotalWords || totalBytes + bytes > maxTotalBytes) break
+            if (totalWords + wordCount > maxTotalWords || totalChars + chars > maxTotalChars ||
+                totalBytes + bytes > maxTotalBytes
+            ) break
             terms += term
             totalWords += wordCount
+            totalChars += chars
             totalBytes += bytes
         }
         return terms
@@ -103,6 +110,14 @@ internal data class VocabularyField(
          * 101 ends the session with error 3006 on every streaming model, Universal-Streaming English too.
          */
         val ASSEMBLYAI_STREAMING = VocabularyField(maxTerms = 100, maxChars = 50)
+
+        /**
+         * AssemblyAI's `keyterms_prompt` on the Dictation endpoint (#478): 100 terms and 8000 characters across
+         * all of them, with no limit a term. Measured 2026-11-11: a 101st term and an 8019th character were
+         * refused by name, 100 terms of 80 umlauts each (8000 characters, 15 800 bytes) and a 20-word term
+         * were taken.
+         */
+        val ASSEMBLYAI_DICTATION = VocabularyField(maxTerms = 100, maxTotalChars = 8000)
 
         /**
          * ElevenLabs' `keyterms` for files, one form field each: up to 1000, 50 characters and 5 words each,
