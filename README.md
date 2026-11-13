@@ -35,14 +35,6 @@ more speech engines, in the cloud or on your phone.
 
 ---
 
-> [!NOTE]
-> This is a complete rebuild of Dictate as a full, standalone keyboard on top of
-> [**FlorisBoard**](https://github.com/florisboard/florisboard), replacing the original Java
-> app that powered Dictate v1–v3. The previous Java codebase is preserved on the
-> [`legacy-java`](https://github.com/DevEmperor/Dictate/tree/legacy-java) branch.
-
----
-
 ## 🎬 See it in action
 
 <table>
@@ -85,10 +77,6 @@ more speech engines, in the cloud or on your phone.
 **The app is available on [Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro%26utm_campaign%3Dreadme)**
 (for a small fee that supports continued development), giving you easy installation and free
 lifetime updates. Just tap the badge above or [this link](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro_link%26utm_campaign%3Dreadme).
-
-> [!TIP]
-> **Existing users:** the new keyboard keeps the same app identity and signing key, so your
-> settings carry over on update — no reinstall, no lost configuration.
 
 <br>
 
