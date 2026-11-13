@@ -28,7 +28,10 @@ corpus (eng-com_web-public_2018_1M, cited in section 2 below) writes words in mi
 ime/dict/en_case_mixed.txt, the words that corpus writes with a capital about as often as
 without, comes from the same count. The Croatian list had its names re-cased the same way
 from the Leipzig Croatian news corpus (hrv_news_2020_1M, cited in section 2 below), which also
-gave ime/dict/hr_case_mixed.txt. For Polish, the Leipzig word counts also
+gave ime/dict/hr_case_mixed.txt. The other ime/dict/<lang>_case_mixed.txt files (Danish,
+German, Esperanto, Spanish, French, Indonesian, Italian, Lithuanian, Dutch, Nynorsk, Polish,
+Portuguese, Romanian, Russian, Slovenian) come from the same count over the Leipzig package
+each language's context tables use (cited in section 2 below). For Polish, the Leipzig word counts also
 decide which spellings without diacritics are words of their own.
 
 

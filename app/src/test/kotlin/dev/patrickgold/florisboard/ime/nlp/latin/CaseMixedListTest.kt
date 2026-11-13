@@ -12,36 +12,57 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * The `<lang>_case_mixed.txt` lists (#476): the words a dictation opening mid-sentence keeps the provider's
- * capital on, because they are a name or a common word about equally often.
+ * The `<lang>_case_mixed.txt` lists (#476, #480): the words a dictation opening mid-sentence keeps the provider's
+ * capital on, because they are a name or a common word about equally often, or because the word list writes
+ * a name small.
  */
 class CaseMixedListTest {
 
-    private fun list(lang: String): List<String> {
-        val name = "${lang}_case_mixed.txt"
-        val file = listOf(File("app/src/main/assets/ime/dict/$name"), File("src/main/assets/ime/dict/$name"))
-            .first { it.isFile }
-        return file.readLines().filter { it.isNotBlank() }
-    }
+    private val dir = listOf(File("app/src/main/assets/ime/dict"), File("src/main/assets/ime/dict")).first { it.isDirectory }
+
+    private fun list(lang: String): Set<String> =
+        File(dir, "${lang}_case_mixed.txt").readLines().filter { it.isNotBlank() }.toSet()
 
     @Test
     fun `every entry is one lowercase word, so the keyboard's lookup finds it`() {
-        for (lang in listOf("en", "hr")) {
-            val bad = list(lang).filter { it != it.lowercase() || it.any(Char::isWhitespace) }
-            assertTrue(bad.isEmpty(), "$lang: $bad")
+        val files = dir.listFiles { f -> f.name.endsWith("_case_mixed.txt") }!!.sortedBy { it.name }
+        assertEquals(17, files.size, files.joinToString { it.name })
+        for (file in files) {
+            val bad = file.readLines().filter { it.isNotBlank() && (it != it.lowercase() || it.any(Char::isWhitespace)) }
+            assertTrue(bad.isEmpty(), "${file.name}: $bad")
         }
     }
 
     @Test
-    fun `Croatian keeps the capital on the words that are a place or a name as well as a word`() {
-        // Reported on #476 against hr.json: river or Rijeka, port or Luka, the adjectives or the countries,
-        // the assembly; and mario, which is also "cared" (nije mario).
-        val mixed = list("hr").toSet()
-        val missing = listOf("rijeka", "rijeci", "luka", "lana", "hrvatska", "hrvatskoj", "njemačka", "sabor", "mario")
-            .filter { it !in mixed }
-        assertTrue(missing.isEmpty(), "missing: $missing")
+    fun `the names and places each list wrote small keep the speech service's capital`() {
+        // The probes of #476 (Croatian, reported) and #480 (one sample per language): the country, cities,
+        // first names and a holiday the language capitalises, each written small by its word list.
+        val probes = mapOf(
+            "hr" to "rijeka rijeci luka lana hrvatska hrvatskoj njemačka sabor mario",
+            "pt" to "joão maria pedro miguel lisboa brasil porto",
+            "es" to "maría juan lucía navidad valencia",
+            "da" to "danmark søren jens mads europa",
+            "ro" to "românia maria elena crăciun ion",
+            "id" to "indonesia bandung agus budi dewi",
+            "lt" to "jonas rūta tomas kalėdos",
+            "nn" to "oslo ola europa",
+            "it" to "marco paolo natale",
+            "eo" to "parizo londono berlino johano ludoviko esperanto",
+            "fr" to "paris pierre marie jean noël",
+            "pl" to "polska warszawa",
+            "sl" to "marko luka",
+            "nl" to "jan kerstmis",
+            "ru" to "иван рождество",
+            // German nouns its list writes small because they are verbs or adverbs as well.
+            "de" to "essen leben zeit liebe angst frage ende schule weihnachten",
+        )
+        for ((lang, words) in probes) {
+            val missing = words.split(" ").filter { it !in list(lang) }
+            assertTrue(missing.isEmpty(), "$lang missing: $missing")
+        }
     }
 }

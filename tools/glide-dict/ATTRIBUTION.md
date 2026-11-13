@@ -72,6 +72,11 @@ has not reached yet.
   news mostly meets as a name (`mario`, `monitor`, `luki`, `zlatan`) keep their casing (`AS_IS` in
   `recase.py`), and `hr_case_mixed.txt`, bundled in the app, holds the 471 words written with a capital
   about as often as without (`rijeka`, `luka`, `hrvatska`).
+- `da`, `de`, `eo`, `es`, `fr`, `id`, `it`, `lt`, `nl`, `nn`, `pl`, `pt`, `ro`, `ru`, `sl` have a
+  `<lang>_case_mixed.txt` bundled in the app (2026-11-13, issue #480): the words their list writes small that
+  the Leipzig package the language's n-gram tables come from writes with a capital mid-sentence at least half
+  the time (Portuguese `maria`, `lisboa`; Danish `danmark`; German `zeit`, `essen`). The word lists themselves
+  are unchanged.
 
 ## Bundled languages
 English (`en`, from the upstream FlorisBoard dictionary) and German (`de`) ship inside the app; all other

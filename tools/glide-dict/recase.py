@@ -55,6 +55,20 @@ took the capital off Rom. AS_IS holds, per language, the words read out of the d
 would capitalise but that are everyday lowercase words as well; they keep the list's casing, and a small
 one can still go into the --mixed list.
 
+--mixed-only writes the --mixed list against the list's casing as it stands and leaves the list alone, for a
+list that has its capitals already and only lacks the words that are both (German Essen/essen, #480); the
+Hunspell argument is then `-`.
+
+--strict (#480, the languages after English and Croatian) adds capitals and never takes one away, and only to
+words Hunspell does not know in lowercase at all: João, Lisboa, Danmark. A word it does know small (Portuguese
+carneiro, a ram, also a surname the news writes with a capital) stays small and goes into the --mixed list,
+so a dictation keeps the speech service's capital on it while typing it does not change. That replaces reading
+every dry run word by word, which English and Croatian got and thirteen more languages would not have. On those
+thirteen (2026-11-13) it found nothing to capitalise: generate.py kept a word small exactly where Hunspell takes
+it small, so every name such a list writes small is one Hunspell also knows as a word (Portuguese maria, Danish
+danmark). Their fix is the --mixed list alone, written with --mixed-only against the lists as published, and so
+is German's (Zeit, Liebe, Essen, small in its list for the verbs).
+
 Requires the `hunspell` binary; a --corpus package is downloaded into dist/corpora on first use (~230 MB).
 The list is rewritten in place in the format it was read in (json.dumps defaults plus a final newline, the
 format en.json has, or generate.py's compact UTF-8 without one); --dry-run prints what would change against
@@ -169,6 +183,19 @@ def casing(lowers: list, dictionary: str, also: list, forms: dict, lang: str) ->
     return cased
 
 
+def strict_casing(lowers: list, words: list, dictionary: str, forms: dict, lang: str) -> dict:
+    """lowercase word → capitalised spelling under --strict: every capital the list has, plus the corpus
+    spelling of each small word that Hunspell rejects in lowercase."""
+    cased = {low: old for low, old in zip(lowers, words) if old != low}
+    candidates = [w for w in lowers if w not in cased and wanted(w, lang)]
+    unknown_small = rejected(candidates, dictionary)
+    spelled = {w: f for w in candidates if w in unknown_small and (f := corpus_spelling(w, forms)) is not None}
+    print(f"strict: {len(unknown_small)} small words Hunspell does not know in lowercase, "
+          f"{len(spelled)} of them capitalised by the corpus", file=sys.stderr)
+    cased.update(spelled)
+    return cased
+
+
 def mixed(lowers: list, cased: dict, forms: dict) -> list:
     """The words that stay small although the corpus capitalises them at least MIXED_SHARE of the time."""
     shares = {w: capital_share(w, forms) for w in lowers if w not in cased}
@@ -178,6 +205,8 @@ def mixed(lowers: list, cased: dict, forms: dict) -> list:
 def main() -> None:
     argv = sys.argv[1:]
     dry_run = "--dry-run" in argv
+    mixed_only = "--mixed-only" in argv
+    strict = "--strict" in argv
     also, corpus, mixed_path, args = [], "", "", []
     i = 0
     while i < len(argv):
@@ -193,7 +222,7 @@ def main() -> None:
         if not argv[i].startswith("--"):
             args.append(argv[i])
         i += 1
-    if len(args) != 2 or (mixed_path and not corpus):
+    if len(args) != 2 or (mixed_path and not corpus) or (mixed_only and not mixed_path) or (strict and not corpus):
         sys.exit(__doc__)
     path, dictionary = args
     text = open(path, encoding="utf-8").read()
@@ -207,7 +236,22 @@ def main() -> None:
 
     lang = os.path.basename(path).split(".")[0]
     forms = load_mid_sentence_forms(corpus) if corpus else None
-    cased = casing(lowers, dictionary, also, forms, lang)
+    if mixed_only:
+        current = {low: old for low, old in zip(lowers, words) if old != low}
+        both = mixed(lowers, current, forms)
+        print(f"mixed: {len(both)} words small in the list, a capital at least half the time in the corpus",
+              file=sys.stderr)
+        if dry_run:
+            for w in both:
+                print(f"mixed\t{w}")
+        else:
+            with open(mixed_path, "w", encoding="utf-8") as f:
+                f.write("\n".join(both) + "\n")
+        return
+    if strict:
+        cased = strict_casing(lowers, list(words), dictionary, forms, lang)
+    else:
+        cased = casing(lowers, dictionary, also, forms, lang)
     for low, old in zip(lowers, words):
         if low in AS_IS.get(lang, ()):
             if old != low:

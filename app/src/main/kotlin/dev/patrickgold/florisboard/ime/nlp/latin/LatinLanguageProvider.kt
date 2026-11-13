@@ -687,12 +687,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         fun formsOf(key: String): List<String> = variants[key] ?: listOfNotNull(canonical[key])
 
         /**
-         * Whether this dictionary writes any word with a capital at all, i.e. whether a word it stores small
-         * is small for a reason. The bundled English list stored everything small, `tuesday` included, until
-         * tools/glide-dict/recase.py gave it its capitals (#476); generate.py still writes a language without
-         * a Hunspell dictionary all in lowercase.
+         * Whether this dictionary writes words with a capital where they take one, i.e. whether a word it
+         * stores small is small for a reason ([listKnowsCase]). The bundled English list stored everything
+         * small, `tuesday` included, until tools/glide-dict/recase.py gave it its capitals (#476);
+         * generate.py still writes a language without a Hunspell dictionary all in lowercase.
          */
-        val knowsCase: Boolean by lazy { canonical.values.any { it.firstOrNull()?.isUpperCase() == true } }
+        val knowsCase: Boolean by lazy { listKnowsCase(canonical.values) }
 
         /**
          * How to show [key] when a context table says the corpus wrote it [written] there (issue #451):
@@ -719,9 +719,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * The words [lang]'s dictionary stores small although a corpus writes them with a capital mid-sentence at
      * least half the time — `ben`, `terry`, `frank`, and `north` from North Carolina (#476). Too often small
      * to be capitalised when typed, too often a name for a dictation to take a provider's capital off them.
-     * Measured by tools/glide-dict/recase.py --mixed into `ime/dict/<lang>_case_mixed.txt`, so far for English
-     * and Croatian (rijeka, luka, hrvatska, sabor; 2026-11-13); empty for every other language. The file
-     * ships in the APK for a downloaded list too, so it needs no download of its own.
+     * Measured by tools/glide-dict/recase.py --mixed into `ime/dict/<lang>_case_mixed.txt`: English and
+     * Croatian (rijeka, luka, hrvatska, sabor) first, then German (Essen, Zeit, Liebe, which its list writes
+     * small for the verbs) and thirteen more whose lists wrote names small (#480: João, Danmark, Paris).
+     * Empty for every other language. The file ships in the APK for a downloaded list too, so it needs no
+     * download of its own.
      */
     private suspend fun mixedCaseFor(lang: String): Set<String> = mixedCaseByLang.withLock { cache ->
         cache.getOrPut(lang) {
