@@ -174,6 +174,12 @@ data class DictateSyncedSettings(
      * (#466). Optional both ways: an older watch ignores the key, and an older phone leaves it out.
      */
     val customWords: List<String> = emptyList(),
+    /**
+     * The reasoning effort a standalone transcription goes out with, resolved on the phone as the keyboard
+     * resolves it (#477; Gemini's chat models); null omits it. Optional both ways: an older watch ignores the
+     * key and transcribes at the model's own default, and an older phone leaves it out.
+     */
+    val transcriptionReasoningEffort: String? = null,
     /** Phone accent color as a packed ARGB int, so the watch UI themes itself like the phone. */
     val accentColorArgb: Int = DEFAULT_ACCENT_ARGB,
     /**

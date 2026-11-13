@@ -1393,6 +1393,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_get_key">Dapatkan kunci API</string>
     <string name="dictate__providers_field_name">Nama</string>
     <string name="dictate__providers_field_transcription_model">Model transkripsi</string>
+    <string name="dictate__providers_field_transcription_reasoning">Upaya penalaran transkripsi</string>
     <string name="dictate__providers_field_chat_model">Model penyusunan ulang</string>
     <string name="dictate__providers_test">Uji koneksi</string>
     <string name="dictate__providers_test_transcribe">Uji transkripsi</string>

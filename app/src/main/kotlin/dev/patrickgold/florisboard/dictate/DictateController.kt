@@ -2208,6 +2208,7 @@ object DictateController {
                     // The same words one by one, for the providers that take a list (#466). Single-call has
                     // them in its instruction already.
                     vocabulary = if (chatAudio) emptyList() else customWordList(prefs),
+                    reasoningEffort = transcriptionReasoningWire(account, preset, model, chatAudio),
                 )
                 val providerStartedNanos = SystemClock.elapsedRealtimeNanos()
                 val result = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {
@@ -3492,6 +3493,7 @@ object DictateController {
         val request = TranscriptionRequest(
             audioFile = packed ?: toUpload, model = model, language = language, prompt = prompt,
             expectedLanguages = expectedLanguages(), vocabulary = customWordList(prefs),
+            reasoningEffort = transcriptionReasoningWire(account, preset, model),
         )
         var fallbackEngine: HistoryEngine? = null
         return try {

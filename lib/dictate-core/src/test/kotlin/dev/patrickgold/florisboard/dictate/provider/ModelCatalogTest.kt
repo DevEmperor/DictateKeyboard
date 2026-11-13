@@ -103,9 +103,18 @@ class ModelCatalogTest : FunSpec({
         for (id in ModelCatalog.providerIds) {
             for (spec in ModelCatalog.modelsOf(id)) {
                 val reasoning = spec.reasoning ?: continue
-                val word = reasoning.sentByDefault ?: continue
-                withClue("$id ${spec.id} $word") { reasoning.values shouldContain word }
+                for (word in listOfNotNull(reasoning.sentByDefault, reasoning.transcriptionDefault)) {
+                    withClue("$id ${spec.id} $word") { reasoning.values shouldContain word }
+                }
             }
+        }
+    }
+
+    test("a default for transcriptions only on a model that transcribes") {
+        for (id in ModelCatalog.providerIds) {
+            ModelCatalog.modelsOf(id)
+                .filter { it.reasoning?.transcriptionDefault != null && ModelRole.TRANSCRIPTION !in it.roles }
+                .map { "$id ${it.id}" }.shouldBeEmpty()
         }
     }
 

@@ -322,7 +322,8 @@ internal fun PreferenceUiScope<FlorisPreferenceModel>.TextInputPreference(
 
 /**
  * A radio-button dialog titled "Reasoning effort" that picks one of [options], each shown by [label]. Shared by
- * an account's reasoning setting (the model's own words) and a prompt's level.
+ * an account's reasoning settings (the model's own words) and a prompt's level. The transcription field's
+ * longer label is not its title: a dialog title is one line, and it ran out of room in English (#477).
  */
 @Composable
 internal fun <T> ReasoningChoiceDialog(

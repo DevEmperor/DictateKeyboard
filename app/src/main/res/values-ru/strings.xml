@@ -1444,6 +1444,7 @@
     <string name="dictate__providers_get_key">Получить API-ключ</string>
     <string name="dictate__providers_field_name">Имя</string>
     <string name="dictate__providers_field_transcription_model">Модель транскрибирования</string>
+    <string name="dictate__providers_field_transcription_reasoning">Усилие рассуждения при транскрибировании</string>
     <string name="dictate__providers_field_chat_model">Модель переформулирования</string>
     <string name="dictate__providers_test">Проверить подключение</string>
     <string name="dictate__providers_test_transcribe">Проверить транскрибирование</string>

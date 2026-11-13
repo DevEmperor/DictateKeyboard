@@ -253,7 +253,7 @@ class OpenAiCompatibleClient(
     ): TranscriptionResult = when {
         // Single-call multimodal (issue #130): route audio through chat/completions with input_audio,
         // overriding the dedicated STT endpoint, so one request transcribes and formats together.
-        config.useChatAudio -> transcribeViaChatAudio(request, onRetry)
+        config.useChatAudio -> transcribeKeepingEffortOptional(request) { transcribeViaChatAudio(it, onRetry) }
         else -> transcribeKeepingVocabularyOptional(request, onRetry)
     }
 
@@ -534,6 +534,7 @@ class OpenAiCompatibleClient(
         val dto = ChatAudioRequestDto(
             model = request.model,
             temperature = 0.0,
+            reasoningEffort = request.reasoningEffort,
             messages = listOf(
                 ChatAudioMessageDto(
                     role = "user",
@@ -1070,9 +1071,22 @@ class OpenAiCompatibleClient(
                     "Gemini STT model=${sanitizeForLog(request.model)} refused status=${e.httpStatus}; " +
                         "fallingBack=$standIn",
                 )
-                transcribeGeminiGenerateContent(request.copy(model = standIn), onRetry)
+                // A speech model has no thinking setting, so the stand-in gets what the catalog sends it (#477).
+                val effort = ReasoningResolver.forTranscription(ModelCatalog.spec(ProviderRegistry.GEMINI.id, standIn), "")
+                transcribeGeminiGenerateContent(request.copy(model = standIn, reasoningEffort = effort), onRetry)
             }
         }
+        return transcribeKeepingEffortOptional(request) { transcribeGeminiChatModel(it, onRetry) }
+    }
+
+    /**
+     * A Gemini chat model transcribing over `generateContent`, its thinking set by [TranscriptionRequest.reasoningEffort]
+     * in `thinkingConfig` ([geminiThinkingConfig]).
+     */
+    private suspend fun transcribeGeminiChatModel(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult {
         val base64 = withContext(Dispatchers.IO) {
             base64EncodeFile(request.audioFile)
         }
@@ -1087,7 +1101,10 @@ class OpenAiCompatibleClient(
                 ),
             ),
             // Temperature 0 keeps the model faithful to the audio and discourages creative rewrites.
-            generationConfig = GeminiGenerationConfigDto(temperature = 0.0),
+            generationConfig = GeminiGenerationConfigDto(
+                temperature = 0.0,
+                thinkingConfig = geminiThinkingConfig(request.reasoningEffort),
+            ),
         )
         val payload = json.encodeToString(GeminiGenerateRequestDto.serializer(), dto)
         // The native URL carries the `models/` prefix itself, so strip any the user/catalog included.
@@ -1102,7 +1119,45 @@ class OpenAiCompatibleClient(
         val text = response.candidates.firstOrNull()?.content?.parts.orEmpty()
             .mapNotNull { it.text }
             .joinToString("")
-        return TranscriptionResult(text.trim())
+        // Gemini leaves the count out when the model did not think.
+        return TranscriptionResult(text.trim(), thinkingTokens = response.usageMetadata?.let { it.thoughtsTokenCount ?: 0 })
+    }
+
+    /**
+     * [send] with [request]'s reasoning effort, and once more without it when the provider refused the request
+     * (#477). Less thinking is a saving, and a saving must never cost the dictation.
+     *
+     * Any bad request counts that is not plainly about something else (a key, a quota), because Gemini refuses
+     * a word three ways and names it in only one: an unknown `thinkingLevel` as an invalid enum value, one the
+     * model lacks as "Thinking level MINIMAL is not supported for this model", and `thinkingBudget: 0` on
+     * gemini-3.5-flash-lite as a bare "Request contains an invalid argument." (asked 2026-11-13). As for a
+     * rewording, the field is remembered as refused only when the second try answers; otherwise the user hears
+     * the first refusal, which may have had nothing to do with it.
+     */
+    private suspend fun transcribeKeepingEffortOptional(
+        request: TranscriptionRequest,
+        send: suspend (TranscriptionRequest) -> TranscriptionResult,
+    ): TranscriptionResult {
+        val effort = acceptedEffort(request.model, request.reasoningEffort)
+            ?: return send(request.copy(reasoningEffort = null))
+        return try {
+            send(request.copy(reasoningEffort = effort))
+        } catch (e: DictateApiException) {
+            val aboutTheField = (e.httpStatus == 400 || e.httpStatus == 422) &&
+                e.kind in setOf(DictateApiException.Kind.UNKNOWN, DictateApiException.Kind.MODEL_UNAVAILABLE)
+            if (!aboutTheField) throw e
+            val answer = try {
+                send(request.copy(reasoningEffort = null))
+            } catch (_: DictateApiException) {
+                throw e
+            }
+            DictateHttpLog.warn(
+                "STT model=${sanitizeForLog(request.model)} refused reasoning=${sanitizeForLog(effort)}; " +
+                    "fallingBack=without it",
+            )
+            reasoningEffortSubstitutes[effortKey(request.model, effort)] = null
+            answer
+        }
     }
 
     /**
@@ -1392,8 +1447,15 @@ class OpenAiCompatibleClient(
      * provider accepting the container. It is a billed request for the same reason, which is why the UI
      * asks for it separately instead of folding it into the button next to the key field.
      */
-    suspend fun checkTranscription(sample: File, model: String, language: String? = null): ConnectionCheck {
-        val result = transcribe(TranscriptionRequest(audioFile = sample, model = model, language = language))
+    suspend fun checkTranscription(
+        sample: File,
+        model: String,
+        language: String? = null,
+        reasoningEffort: String? = null,
+    ): ConnectionCheck {
+        val result = transcribe(
+            TranscriptionRequest(audioFile = sample, model = model, language = language, reasoningEffort = reasoningEffort),
+        )
         return ConnectionCheck(ConnectionCheckScope.TRANSCRIPTION, transcript = result.text.trim())
     }
 
@@ -1782,6 +1844,8 @@ class OpenAiCompatibleClient(
         // 0 → deterministic, accurate transcription (mirrors the Gemini generateContent path); max_tokens
         // is intentionally left unset so a long dictation is never truncated.
         val temperature: Double? = null,
+        // The one model's own setting, as its rewordings send it (#477).
+        @SerialName("reasoning_effort") val reasoningEffort: String? = null,
     )
 
     @Serializable
@@ -1944,12 +2008,26 @@ class OpenAiCompatibleClient(
     )
 
     @Serializable
-    private data class GeminiGenerationConfigDto(val temperature: Double? = null)
+    private data class GeminiGenerationConfigDto(
+        val temperature: Double? = null,
+        val thinkingConfig: GeminiThinkingConfigDto? = null,
+    )
+
+    /** One of the two set: `thinkingBudget` 0 is how this endpoint says "none" (see [geminiThinkingConfig]). */
+    @Serializable
+    internal data class GeminiThinkingConfigDto(
+        val thinkingLevel: String? = null,
+        val thinkingBudget: Int? = null,
+    )
 
     @Serializable
     private data class GeminiGenerateResponseDto(
         val candidates: List<GeminiCandidateDto> = emptyList(),
+        val usageMetadata: GeminiUsageDto? = null,
     )
+
+    @Serializable
+    private data class GeminiUsageDto(val thoughtsTokenCount: Long? = null)
 
     @Serializable
     private data class GeminiCandidateDto(val content: GeminiContentDto? = null)
@@ -2146,6 +2224,21 @@ class OpenAiCompatibleClient(
 
         /** Every effort value this client knows of, least thinking first. */
         private val EFFORT_SCALE = listOf("none", "minimal", "low", "medium", "high", "xhigh", "max")
+
+        /**
+         * [effort], a word of the OpenAI-compatible scale the catalog keeps, as Gemini's native endpoint takes it.
+         *
+         * `thinkingLevel` is an enum with no "none" in it: "NONE" comes back as an invalid value. Thinking is
+         * switched off with `thinkingBudget: 0` instead, which every model that takes "none" on the chat
+         * endpoint also takes here, and the one that refuses it there (gemini-3.5-flash-lite) refuses it here
+         * too (asked 2026-11-13). Any other word goes up as the level it names; one the endpoint does not
+         * know is refused, and [transcribeKeepingEffortOptional] asks again without.
+         */
+        internal fun geminiThinkingConfig(effort: String?): GeminiThinkingConfigDto? {
+            val word = effort?.trim()?.lowercase()?.takeIf { it.isNotEmpty() } ?: return null
+            return if (word == "none") GeminiThinkingConfigDto(thinkingBudget = 0)
+            else GeminiThinkingConfigDto(thinkingLevel = word.uppercase())
+        }
 
         /**
          * The value to ask again with after [rejected] was refused: the one nearest to it among those the

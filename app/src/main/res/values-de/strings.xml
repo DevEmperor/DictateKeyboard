@@ -1368,6 +1368,7 @@
     <string name="dictate__providers_get_key">API-Schlüssel holen</string>
     <string name="dictate__providers_field_name">Name</string>
     <string name="dictate__providers_field_transcription_model">Transkriptionsmodell</string>
+    <string name="dictate__providers_field_transcription_reasoning">Denkaufwand der Transkription</string>
     <string name="dictate__providers_field_chat_model">Umformulierungsmodell</string>
     <string name="dictate__providers_test">Verbindung testen</string>
     <string name="dictate__providers_test_transcribe">Transkription testen</string>

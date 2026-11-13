@@ -1433,6 +1433,7 @@
     <string name="dictate__providers_get_key">获取 API 密钥</string>
     <string name="dictate__providers_field_name">名称</string>
     <string name="dictate__providers_field_transcription_model">转录模型</string>
+    <string name="dictate__providers_field_transcription_reasoning">转录推理力度</string>
     <string name="dictate__providers_field_chat_model">改写模型</string>
     <string name="dictate__providers_test">测试连接</string>
     <string name="dictate__providers_test_transcribe">测试转录</string>

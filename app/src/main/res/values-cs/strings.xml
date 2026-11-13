@@ -1454,6 +1454,7 @@
     <string name="dictate__providers_get_key">Získat API klíč</string>
     <string name="dictate__providers_field_name">Název</string>
     <string name="dictate__providers_field_transcription_model">Model přepisu</string>
+    <string name="dictate__providers_field_transcription_reasoning">Úsilí uvažování při přepisu</string>
     <string name="dictate__providers_field_chat_model">Model přeformulování</string>
     <string name="dictate__providers_test">Otestovat připojení</string>
     <string name="dictate__providers_test_transcribe">Otestovat přepis</string>

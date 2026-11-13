@@ -73,6 +73,33 @@ class ReasoningResolverTest : FunSpec({
         ReasoningResolver.wire(null, "", PromptReasoning.MUCH) shouldBe "high"
     }
 
+    test("a transcription goes out at the account's choice, else the catalog's default for transcriptions (#477)") {
+        val carbon = spec("gemini", "gemini-4-carbon")
+        ReasoningResolver.forTranscription(carbon, "") shouldBe "none"
+        ReasoningResolver.forTranscription(carbon, "medium") shouldBe "medium"
+        // A word the model refuses, left from another model, counts as no choice.
+        ReasoningResolver.forTranscription(carbon, "minimal") shouldBe "none"
+        // The rewording's default is another one: none of its own for this model.
+        ReasoningResolver.wire(carbon, "", PromptReasoning.ACCOUNT) shouldBe null
+    }
+
+    test("a model without a default for transcriptions gets no field unless the account asks") {
+        // The Flash models act on dictated requests more often without thinking, so they keep their own.
+        val flash = spec("gemini", "gemini-3.6-flash")
+        ReasoningResolver.forTranscription(flash, "") shouldBe null
+        ReasoningResolver.forTranscription(flash, "none") shouldBe "none"
+        val lite = spec("gemini", "gemini-3.5-flash-lite")
+        ReasoningResolver.forTranscription(lite, "") shouldBe null
+        ReasoningResolver.forTranscription(lite, "high") shouldBe "high"
+        ReasoningResolver.forTranscription(spec("gemini", "gemini-4-argon"), "") shouldBe null
+    }
+
+    test("a speech model gets no field, and one the catalog does not know gets the word as typed") {
+        ReasoningResolver.forTranscription(spec("gemini", "gemini-3.5-transcribe"), "low") shouldBe null
+        ReasoningResolver.forTranscription(null, " high ") shouldBe "high"
+        ReasoningResolver.forTranscription(null, "") shouldBe null
+    }
+
     test("what prompts stored before the levels existed still means what it meant") {
         PromptReasoning.fromStored("NONE") shouldBe PromptReasoning.NONE
         PromptReasoning.fromStored("MINIMAL") shouldBe PromptReasoning.LITTLE

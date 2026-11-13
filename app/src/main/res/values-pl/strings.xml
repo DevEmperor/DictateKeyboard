@@ -1455,6 +1455,7 @@
     <string name="dictate__providers_get_key">Uzyskaj klucz API</string>
     <string name="dictate__providers_field_name">Nazwa</string>
     <string name="dictate__providers_field_transcription_model">Model transkrypcji</string>
+    <string name="dictate__providers_field_transcription_reasoning">Wysiłek rozumowania przy transkrypcji</string>
     <string name="dictate__providers_field_chat_model">Model przeformułowania</string>
     <string name="dictate__providers_test">Testuj połączenie</string>
     <string name="dictate__providers_test_transcribe">Przetestuj transkrypcję</string>

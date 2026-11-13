@@ -1420,6 +1420,7 @@
     <string name="dictate__providers_get_key">API anahtarı al</string>
     <string name="dictate__providers_field_name">Ad</string>
     <string name="dictate__providers_field_transcription_model">Yazıya dökme modeli</string>
+    <string name="dictate__providers_field_transcription_reasoning">Yazıya dökmede akıl yürütme çabası</string>
     <string name="dictate__providers_field_chat_model">Yeniden ifade etme modeli</string>
     <string name="dictate__providers_test">Bağlantıyı test et</string>
     <string name="dictate__providers_test_transcribe">Yazıya dökmeyi sına</string>

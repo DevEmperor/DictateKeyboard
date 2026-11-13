@@ -111,6 +111,12 @@ data class TranscriptionRequest(
      */
     val vocabulary: List<String> = emptyList(),
     /**
+     * How much the model may think first, in the provider's own word (`none`, `low`…), for the two paths where
+     * a chat model does the transcribing (issue #477): Gemini's `generateContent` and single call (#130).
+     * Null leaves the field out. The speech-to-text wire formats have no such field and never read it.
+     */
+    val reasoningEffort: String? = null,
+    /**
      * Called while the audio is going out, with the bytes sent and the total (issue #337).
      *
      * Only the file-import screen sets one: it is the single place with room to show a percentage and
@@ -122,4 +128,6 @@ data class TranscriptionRequest(
 
 data class TranscriptionResult(
     val text: String,
+    /** The tokens the model spent thinking, where the provider says (Gemini's `generateContent`, #477); else null. */
+    val thinkingTokens: Long? = null,
 )

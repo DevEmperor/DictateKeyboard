@@ -16,6 +16,7 @@ import dev.patrickgold.florisboard.dictate.provider.ModelCatalog
 import dev.patrickgold.florisboard.dictate.provider.PromptReasoning
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
 import dev.patrickgold.florisboard.dictate.provider.ProviderPreset
+import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.ReasoningResolver
 import dev.patrickgold.florisboard.dictate.provider.ReasoningSpec
 import kotlinx.serialization.Serializable
@@ -67,6 +68,30 @@ fun rewordingReasoningWire(
     model: String,
     level: PromptReasoning = PromptReasoning.ACCOUNT,
 ): String? = ReasoningResolver.wire(ModelCatalog.spec(preset.id, model), account.chatReasoning, level)
+
+/**
+ * The reasoning effort a transcription through [account] ([preset], [model]) goes out with (#477); null leaves
+ * the field out.
+ *
+ * With single call ([chatAudio]) one model transcribes and rewords in the same request, and the dialog shows
+ * one setting for it, the rewording's, so that is the one sent. Otherwise only where a chat model does the
+ * transcribing ([ProviderRegistry.transcribesWithChatModel]): the account's transcription setting, or the
+ * catalog's default for transcriptions ([ReasoningResolver.forTranscription]).
+ *
+ * Every transcription path asks this — keyboard, long-form segments, share screen, the dialog's test, the
+ * watch — so they all send the same thing.
+ */
+fun transcriptionReasoningWire(
+    account: ProviderAccount,
+    preset: ProviderPreset,
+    model: String,
+    chatAudio: Boolean = false,
+): String? = when {
+    chatAudio -> rewordingReasoningWire(account, preset, model)
+    ProviderRegistry.transcribesWithChatModel(preset, model) ->
+        ReasoningResolver.forTranscription(ModelCatalog.spec(preset.id, model), account.transcriptionReasoning)
+    else -> null
+}
 
 /**
  * [prompt]'s own effort in the form [DictateRewording.Prompt.reasoningEffort] takes: null when the prompt

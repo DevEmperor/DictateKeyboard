@@ -1283,6 +1283,7 @@
     <string name="dictate__providers_get_key">Отримати API-ключ</string>
     <string name="dictate__providers_field_name">Назва</string>
     <string name="dictate__providers_field_transcription_model">Модель транскрибування</string>
+    <string name="dictate__providers_field_transcription_reasoning">Зусилля міркування під час транскрибування</string>
     <string name="dictate__providers_field_chat_model">Модель переформулювання</string>
     <string name="dictate__providers_test">Перевірити підключення</string>
     <string name="dictate__providers_test_transcribe">Перевірити транскрибування</string>

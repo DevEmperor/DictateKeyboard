@@ -40,7 +40,7 @@ enum class PromptReasoning {
     }
 }
 
-/** What goes out as `reasoning_effort` for one rewording. */
+/** What goes out as `reasoning_effort` for one rewording, and for a transcription by a chat model (#477). */
 object ReasoningResolver {
 
     /**
@@ -63,8 +63,7 @@ object ReasoningResolver {
         if (spec != null && spec.reasoning == null) return null
         val values = spec?.reasoning?.values
         return when (level) {
-            PromptReasoning.ACCOUNT -> accountValue.trim().ifBlank { null }?.takeIf { values == null || it in values }
-                ?: spec?.reasoning?.sentByDefault
+            PromptReasoning.ACCOUNT -> chosen(spec, accountValue) ?: spec?.reasoning?.sentByDefault
             PromptReasoning.NONE -> when {
                 values == null -> "none"
                 "none" in values -> "none"
@@ -80,5 +79,22 @@ object ReasoningResolver {
                 else -> values.lastOrNull { it != "xhigh" && it != "max" } ?: values.last()
             }
         }
+    }
+
+    /**
+     * The value a transcription by a chat model goes out with (#477), null for no field: the account's
+     * transcription setting under the same rules as [wire]'s, and without one the catalog's
+     * [ReasoningSpec.transcriptionDefault] rather than the rewording's default. There are no levels here,
+     * because no prompt picks how much a transcription thinks.
+     */
+    fun forTranscription(spec: ModelSpec?, accountValue: String): String? {
+        if (spec != null && spec.reasoning == null) return null
+        return chosen(spec, accountValue) ?: spec?.reasoning?.transcriptionDefault
+    }
+
+    /** [accountValue] where it is a choice the model takes, else null. */
+    private fun chosen(spec: ModelSpec?, accountValue: String): String? {
+        val values = spec?.reasoning?.values
+        return accountValue.trim().ifBlank { null }?.takeIf { values == null || it in values }
     }
 }

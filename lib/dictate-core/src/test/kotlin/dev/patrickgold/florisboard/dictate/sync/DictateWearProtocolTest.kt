@@ -62,6 +62,14 @@ class DictateWearProtocolTest : FunSpec({
         DictateSyncedSettings.decode(old)!!.rewordingReasoningEffort shouldBe null
         DictateWearProtocol.json.decodeFromString(OldSettings.serializer(), new.encode()).model shouldBe ""
     }
+
+    test("the transcription effort travels to the watch, and an older watch reads the settings regardless (#477)") {
+        val new = DictateSyncedSettings(model = "gemini-3.8-flash", transcriptionReasoningEffort = "none")
+        DictateSyncedSettings.decode(new.encode())!!.transcriptionReasoningEffort shouldBe "none"
+        val old = """{"transcriptionProviderId":"gemini","model":"gemini-3.8-flash"}"""
+        DictateSyncedSettings.decode(old)!!.transcriptionReasoningEffort shouldBe null
+        DictateWearProtocol.json.decodeFromString(OldSettings.serializer(), new.encode()).model shouldBe "gemini-3.8-flash"
+    }
 })
 
 @kotlinx.serialization.Serializable

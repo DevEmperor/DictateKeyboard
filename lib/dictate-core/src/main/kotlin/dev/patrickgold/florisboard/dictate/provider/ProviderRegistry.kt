@@ -1037,6 +1037,14 @@ object ProviderRegistry {
         model.removePrefix("models/").lowercase().contains("transcribe")
 
     /**
+     * True where a transcription with [model] at [preset] is a chat model's job, which may think before it
+     * writes (#477): Gemini's `generateContent`, for every model but the dedicated speech ones. Single call
+     * (#130) is the other such route; whether it applies is the caller's to say.
+     */
+    fun transcribesWithChatModel(preset: ProviderPreset, model: String): Boolean =
+        preset.transcriptionApi == TranscriptionApi.GEMINI_GENERATE_CONTENT && !isGeminiTranscribeModel(model)
+
+    /**
      * The model id that picks AssemblyAI's Dictation endpoint (#478) instead of the upload-and-poll job.
      *
      * Not a speech model of AssemblyAI's: the endpoint takes no model at all and runs on Universal-3.6 Pro, so

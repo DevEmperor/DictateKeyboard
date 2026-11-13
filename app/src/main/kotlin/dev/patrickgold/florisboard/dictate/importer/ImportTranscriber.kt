@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.dictate.provider.ProviderRegistry
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionRequest
 import dev.patrickgold.florisboard.dictate.transcriptTighteningSymbols
+import dev.patrickgold.florisboard.dictate.transcriptionReasoningWire
 import dev.patrickgold.florisboard.dictate.transcriptionStyleBasePrompt
 import dev.patrickgold.florisboard.dictate.transcriptionStylePrompt
 import kotlinx.coroutines.Dispatchers
@@ -319,6 +320,7 @@ object ImportTranscriber {
             // The keyboard's prompt and custom words (#466), with the sample sentence in the file's language.
             prompt = transcriptionStylePrompt(prefs, language),
             vocabulary = customWordList(prefs),
+            reasoningEffort = transcriptionReasoningWire(account, preset, model),
         )
         val text = if (onDevice) {
             LocalTranscriptionProvider(

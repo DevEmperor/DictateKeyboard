@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.rewordingBlocker
 import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
 import dev.patrickgold.florisboard.dictate.rewordingReasoningWire
+import dev.patrickgold.florisboard.dictate.transcriptionReasoningWire
 import dev.patrickgold.florisboard.dictate.transcriptionStyleBasePrompt
 import dev.patrickgold.florisboard.dictate.transcriptionStylePrompt
 import kotlinx.coroutines.Dispatchers
@@ -65,6 +66,7 @@ object PhoneTranscriber {
             // The keyboard's prompt and custom words (#466), as a watch calling the provider itself sends.
             prompt = transcriptionStylePrompt(prefs),
             vocabulary = customWordList(prefs),
+            reasoningEffort = transcriptionReasoningWire(account, preset, model),
         )
 
         val transcript = if (preset.transcriptionApi == TranscriptionApi.LOCAL_ONDEVICE) {

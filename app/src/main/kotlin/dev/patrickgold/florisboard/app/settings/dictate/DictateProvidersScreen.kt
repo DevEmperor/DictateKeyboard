@@ -121,6 +121,7 @@ import dev.patrickgold.florisboard.dictate.provider.TranscriptionApi
 import dev.patrickgold.florisboard.dictate.provider.TranscriptionFallback
 import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.singleCallApplies
+import dev.patrickgold.florisboard.dictate.transcriptionReasoningWire
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.SwitchRow
@@ -873,6 +874,8 @@ internal fun ProviderEditorDialog(
     var chatModel by remember { mutableStateOf(account.chatModel) }
     // The rewording model's reasoning effort, in its own words (provider catalog, 2026-11-04).
     var chatReasoning by remember { mutableStateOf(account.chatReasoning) }
+    // And the transcription model's, where that is a chat model that thinks first (#477).
+    var transcriptionReasoning by remember { mutableStateOf(account.transcriptionReasoning) }
     var realtimeModel by remember {
         mutableStateOf(if (legacyStreamingPick) account.transcriptionModel else account.realtimeModel)
     }
@@ -912,6 +915,23 @@ internal fun ProviderEditorDialog(
     val reasoningAppDefault = reasoningSpec?.reasoning?.sentByDefault
     val cleanReasoning = chatReasoning.trim()
         .takeIf { reasoningValues == null || (it in reasoningValues && it != reasoningAppDefault) }.orEmpty()
+
+    // The same for the model that transcribes (#477), offered only where a chat model does that outside single
+    // call: with single call on, the one model has the one setting above. Its default is the catalog's for
+    // transcriptions, not the rewording's.
+    val transcribingModel = transcriptionModel.trim().ifBlank { effectivePreset.defaultTranscriptionModel.orEmpty() }
+    val transcriptionThinks = !singleCallApplies(transcriptionViaChat, effectivePreset, transcribingModel) &&
+        ProviderRegistry.transcribesWithChatModel(effectivePreset, transcribingModel)
+    val transcriptionSpec = ModelCatalog.spec(effectivePreset.id, transcribingModel)
+    val transcriptionValues = transcriptionSpec?.reasoning?.values
+    val transcriptionAppDefault = transcriptionSpec?.reasoning?.transcriptionDefault
+    val cleanTranscriptionReasoning = transcriptionReasoning.trim()
+        .takeIf { transcriptionValues == null || (it in transcriptionValues && it != transcriptionAppDefault) }.orEmpty()
+    // What Test transcription sends, so it is a test of the dictation the settings make.
+    val testReasoning = transcriptionReasoningWire(
+        account.copy(chatReasoning = cleanReasoning, transcriptionReasoning = cleanTranscriptionReasoning),
+        effectivePreset, transcribingModel, chatAudio = transcriptionViaChat,
+    )
 
     // Nothing here asks what a model can do. Which fields are shown is the switch's business alone, and
     // what belongs in the merged field is the user's — the app cannot know, and a version that guessed
@@ -975,6 +995,7 @@ internal fun ProviderEditorDialog(
                     transcriptionModel = transcriptionModel.trim(),
                     chatModel = chatModel.trim(),
                     chatReasoning = cleanReasoning,
+                    transcriptionReasoning = cleanTranscriptionReasoning,
                     realtimeModel = realtimeModel.trim(),
                     cachedModels = cachedModels,
                     cachedAudioModels = cachedAudioModels,
@@ -1117,6 +1138,7 @@ internal fun ProviderEditorDialog(
                 apiKey.trim(),
                 transcriptionModel.trim(),
                 transcriptionViaChat,
+                testReasoning,
                 trustUserCerts,
             ) {
                 ProviderCheckSection(
@@ -1124,6 +1146,7 @@ internal fun ProviderEditorDialog(
                     apiKey = apiKey,
                     transcriptionModel = transcriptionModel,
                     transcriptionViaChat = transcriptionViaChat,
+                    transcriptionReasoning = testReasoning,
                     trustUserCerts = trustUserCerts,
                     showTranscription = showTranscription,
                 )
@@ -1148,6 +1171,17 @@ internal fun ProviderEditorDialog(
                         ?: stringRes(R.string.dictate__model_placeholder),
                     onBrowse = { pickerKind = ModelKind.TRANSCRIPTION },
                 )
+                // Beside the model it belongs to, like the rewording's; not for a model the catalog knows to have
+                // no setting.
+                if (transcriptionThinks && !(transcriptionSpec != null && transcriptionValues == null)) {
+                    ReasoningField(
+                        label = stringRes(R.string.dictate__providers_field_transcription_reasoning),
+                        values = transcriptionValues,
+                        value = if (transcriptionValues == null) transcriptionReasoning else cleanTranscriptionReasoning,
+                        appDefault = transcriptionAppDefault,
+                        onValueChange = { transcriptionReasoning = it },
+                    )
+                }
                 // Streaming runs over a different endpoint and protocol than batch STT, so it gets its own
                 // field rather than being folded into the picker above (#248, based on #243). It used to be
                 // hidden on the assumption that each provider has exactly one usable streaming model, which
@@ -1371,6 +1405,7 @@ private fun ProviderCheckSection(
     apiKey: String,
     transcriptionModel: String,
     transcriptionViaChat: Boolean,
+    transcriptionReasoning: String?,
     trustUserCerts: Boolean,
     showTranscription: Boolean,
 ) {
@@ -1454,6 +1489,7 @@ private fun ProviderCheckSection(
                                 sample = ConnectionCheckSample.file(context),
                                 model = model,
                                 language = ConnectionCheckSample.LANGUAGE,
+                                reasoningEffort = transcriptionReasoning,
                             )
                         }
                     },
@@ -1606,8 +1642,8 @@ private fun ReasoningField(
     value: String,
     appDefault: String?,
     onValueChange: (String) -> Unit,
+    label: String = stringRes(R.string.dictate__reasoning_effort_title),
 ) {
-    val label = stringRes(R.string.dictate__reasoning_effort_title)
     val defaultLabel = reasoningWordLabel("", appDefault)
     if (values == null) {
         // A model the catalog does not know, or a server of the user's own: its words are unknown, so the

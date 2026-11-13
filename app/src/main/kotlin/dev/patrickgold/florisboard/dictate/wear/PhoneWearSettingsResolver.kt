@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.dictate.provider.chatModelFor
 import dev.patrickgold.florisboard.dictate.provider.rewordingKeyFor
 import dev.patrickgold.florisboard.dictate.rewordingReasoningWire
 import dev.patrickgold.florisboard.dictate.sync.DictateSyncedSettings
+import dev.patrickgold.florisboard.dictate.transcriptionReasoningWire
 import dev.patrickgold.florisboard.dictate.transcriptionStylePrompt
 import dev.patrickgold.florisboard.dictate.sync.DictateWearProtocol
 import dev.patrickgold.florisboard.dictate.sync.SyncedPrompt
@@ -88,6 +89,7 @@ object PhoneWearSettingsResolver {
             // The phone's own, so a standalone watch dictation biases recognition exactly like the phone.
             stylePrompt = transcriptionStylePrompt(prefs),
             customWords = customWordList(prefs),
+            transcriptionReasoningEffort = transcriptionReasoningWire(account, preset, model),
             // The watch is a keyboard, so mirror the *keyboard* accent (theme.accentColor, set on the
             // Theme screen) — not the separate settings-app accent (other.accentColor) — so the watch
             // matches what the user actually sees on the phone keyboard.

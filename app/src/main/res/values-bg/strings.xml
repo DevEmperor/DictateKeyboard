@@ -1440,6 +1440,7 @@
     <string name="dictate__providers_get_key">Вземете API ключ</string>
     <string name="dictate__providers_field_name">Име</string>
     <string name="dictate__providers_field_transcription_model">Модел за транскрибиране</string>
+    <string name="dictate__providers_field_transcription_reasoning">Усилие за разсъждение при транскрибиране</string>
     <string name="dictate__providers_field_chat_model">Модел за преформулиране</string>
     <string name="dictate__providers_test">Тествай връзката</string>
     <string name="dictate__providers_test_transcribe">Тест на транскрибирането</string>

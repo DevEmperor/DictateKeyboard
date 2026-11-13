@@ -1340,6 +1340,7 @@
     <string name="dictate__providers_get_key">API-sleutel ophalen</string>
     <string name="dictate__providers_field_name">Naam</string>
     <string name="dictate__providers_field_transcription_model">Transcriptiemodel</string>
+    <string name="dictate__providers_field_transcription_reasoning">Redeneerinspanning bij transcriptie</string>
     <string name="dictate__providers_field_chat_model">Herformuleringsmodel</string>
     <string name="dictate__providers_test">Verbinding testen</string>
     <string name="dictate__providers_test_transcribe">Transcriptie testen</string>

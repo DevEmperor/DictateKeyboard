@@ -1373,6 +1373,7 @@
     <string name="dictate__providers_get_key">APIキーを取得</string>
     <string name="dictate__providers_field_name">名前</string>
     <string name="dictate__providers_field_transcription_model">文字起こしモデル</string>
+    <string name="dictate__providers_field_transcription_reasoning">文字起こしの推論の労力</string>
     <string name="dictate__providers_field_chat_model">言い換えモデル</string>
     <string name="dictate__providers_test">接続をテスト</string>
     <string name="dictate__providers_test_transcribe">文字起こしをテスト</string>

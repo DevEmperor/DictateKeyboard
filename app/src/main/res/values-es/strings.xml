@@ -1420,6 +1420,7 @@
     <string name="dictate__providers_get_key">Obtener una clave API</string>
     <string name="dictate__providers_field_name">Nombre</string>
     <string name="dictate__providers_field_transcription_model">Modelo de transcripción</string>
+    <string name="dictate__providers_field_transcription_reasoning">Esfuerzo de razonamiento de la transcripción</string>
     <string name="dictate__providers_field_chat_model">Modelo de reformulación</string>
     <string name="dictate__providers_test">Probar conexión</string>
     <string name="dictate__providers_test_transcribe">Probar la transcripción</string>

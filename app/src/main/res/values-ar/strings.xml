@@ -1297,6 +1297,7 @@
     <string name="dictate__providers_get_key">الحصول على مفتاح API</string>
     <string name="dictate__providers_field_name">الاسم</string>
     <string name="dictate__providers_field_transcription_model">نموذج التفريغ النصي</string>
+    <string name="dictate__providers_field_transcription_reasoning">مقدار التفكير في التفريغ النصي</string>
     <string name="dictate__providers_field_chat_model">نموذج إعادة الصياغة</string>
     <string name="dictate__providers_test">اختبار الاتصال</string>
     <string name="dictate__providers_test_transcribe">اختبار التفريغ النصي</string>

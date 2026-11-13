@@ -1383,6 +1383,7 @@
     <string name="dictate__providers_get_key">Iegūt API atslēgu</string>
     <string name="dictate__providers_field_name">Nosaukums</string>
     <string name="dictate__providers_field_transcription_model">Transkribēšanas modelis</string>
+    <string name="dictate__providers_field_transcription_reasoning">Transkribēšanas spriešanas piepūle</string>
     <string name="dictate__providers_field_chat_model">Pārformulēšanas modelis</string>
     <string name="dictate__providers_test">Pārbaudīt savienojumu</string>
     <string name="dictate__providers_test_transcribe">Pārbaudīt transkribēšanu</string>

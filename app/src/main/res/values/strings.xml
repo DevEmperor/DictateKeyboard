@@ -2162,6 +2162,7 @@
     <string name="dictate__providers_get_key" comment="Accessibility label for the key icon beside the provider dialog title; it opens the provider's own page for creating an API key">Get an API key</string>
     <string name="dictate__providers_field_name" comment="Label for the custom endpoint display name field">Name</string>
     <string name="dictate__providers_field_transcription_model" comment="Label for the transcription model field in the provider editor">Transcription model</string>
+    <string name="dictate__providers_field_transcription_reasoning" comment="Label for how much the transcription model thinks before it writes, below the transcription model field (Gemini chat models, #477)">Transcription reasoning effort</string>
     <string name="dictate__providers_field_transcription_rewording_model" comment="Label for the model field when single-call is on, where one model does transcription and rewording">Transcription &amp; rewording model</string>
     <string name="dictate__providers_field_chat_model" comment="Label for the chat/rewording model field in the provider editor">Rewording model</string>
     <string name="dictate__providers_single_call_title" comment="Toggle: send audio directly to a multimodal chat model in one call">Single-call multimodal</string>

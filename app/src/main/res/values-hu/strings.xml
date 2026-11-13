@@ -1436,6 +1436,7 @@
     <string name="dictate__providers_get_key">API-kulcs beszerzése</string>
     <string name="dictate__providers_field_name">Név</string>
     <string name="dictate__providers_field_transcription_model">Átírási modell</string>
+    <string name="dictate__providers_field_transcription_reasoning">Átírási gondolkodási ráfordítás</string>
     <string name="dictate__providers_field_chat_model">Átfogalmazási modell</string>
     <string name="dictate__providers_test">Kapcsolat tesztelése</string>
     <string name="dictate__providers_test_transcribe">Átírás tesztelése</string>

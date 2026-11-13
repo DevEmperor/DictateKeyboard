@@ -45,6 +45,12 @@ data class ProviderAccount(
      */
     val chatReasoning: String = "",
     /**
+     * The same for the transcription model, where that is a chat model that thinks first (#477, Gemini's
+     * chat models); empty is the default, the catalog's where it has one and no field otherwise. Additive,
+     * like [chatReasoning].
+     */
+    val transcriptionReasoning: String = "",
+    /**
      * Chosen real-time streaming model for this provider (issue #128); empty = use the preset's
      * defaultRealtimeModel. Additive field, defaults empty for older stored accounts. Only meaningful
      * when the provider supports realtime and global real-time mode is on.
