@@ -168,7 +168,11 @@ object ModelCatalog {
 
     val GEMINI = listOf(
         // The dedicated speech model first: it is the transcription default, and the list keeps that order.
-        ModelSpec("gemini-3.5-transcribe", T, verified = NOV_3),
+        ModelSpec(
+            "gemini-3.5-transcribe", T, verified = NOV_3,
+            note = "Smart mode reads \"ignore / forget what I said\" as a correction and drops what came before " +
+                "(\"…reply with the word banana\" → \"Banana.\"); known and kept, see transcribeGeminiInteractions.",
+        ),
         // Gemini's chat endpoint reports no thinking tokens, so only acceptance is measured; its refusals name
         // thinking levels ("Thinking level MINIMAL is not supported"), so the field is understood. The native
         // endpoint a transcription goes to takes the same words per model and does count the tokens (#477).
@@ -205,7 +209,10 @@ object ModelCatalog {
         ),
         ModelSpec("gemini-4-argon", CTA, effort("none", "low", "medium", "high"), verified = NOV_13),
         // espeak gave nothing in English and 22 % in German on 2026-11-03; natural speech 100 % and 94 %.
-        ModelSpec("gemini-3.5-transcribe-live", R, verified = NOV_4),
+        ModelSpec(
+            "gemini-3.5-transcribe-live", R, verified = NOV_4,
+            note = "Smart mode, taken to read \"ignore / forget what I said\" as a correction like the batch model.",
+        ),
     )
 
     // Every reasoning value is taken and none changes the tokens, so none is offered (2026-11-04).

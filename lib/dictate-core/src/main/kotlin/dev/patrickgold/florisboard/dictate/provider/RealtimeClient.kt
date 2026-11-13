@@ -938,7 +938,9 @@ private class GeminiRealtimeSession(
                 put("languageCodes", buildJsonArray { languageHints.forEach { add(it) } })
                 // SMART drops "um"/"uh", folds spoken self-corrections into the sentence and punctuates.
                 // VERBATIM would hand all of that to the rewording step instead — for a keyboard, clean
-                // text on arrival is worth more than a faithful record of the stumbles.
+                // text on arrival is worth more than a faithful record of the stumbles. The price is taken to
+                // be the batch model's, unmeasured here: "ignore what I said" reads as a correction too (see
+                // OpenAiCompatibleClient.transcribeGeminiInteractions).
                 put("mode", "SMART")
                 // The custom words (#466), beside the languages as Google documents them.
                 if (customVocabulary.isNotEmpty()) {

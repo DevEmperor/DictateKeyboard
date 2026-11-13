@@ -633,7 +633,7 @@ private class Check(
                 tried.filter { "fallingBack=without them" in it.detail }.forEach {
                     note("`$model` $part ${it.probe}: refused the custom words (${it.detail.substringAfter("⚠").take(120)})")
                 }
-                // A dictated question answered, or a provider's cleanup the client did not trust or did not get.
+                // A dictated request acted on, or a provider's cleanup the client did not trust or did not get.
                 tried.filter { "kept as said ✗" in it.detail }.forEach { note("`$model` $part ${it.probe}: answered or rewrote it") }
                 tried.filter { "fallingBack=transcript" in it.detail || "cannot take this recording" in it.detail }.forEach {
                     note("`$model` $part ${it.probe}: ${it.detail.substringAfter("⚠").take(140)}")

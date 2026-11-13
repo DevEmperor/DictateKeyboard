@@ -1192,6 +1192,13 @@ class OpenAiCompatibleClient(
                 transcriptionConfig = GeminiTranscriptionConfigDto(
                     // "smart" removes fillers, folds spoken self-corrections into the sentence and
                     // punctuates; "verbatim" would leave all of that to the rewording step.
+                    //
+                    // The price, measured 2026-11-13: smart takes "ignore / forget what I said" for such a
+                    // correction too and drops what came before it ("Ignore my last message, I meant
+                    // Friday." → "I meant Friday.", a dictated "…reply with the word banana" → "Banana.";
+                    // the German messages came through). Verbatim kept those but answered "What is the
+                    // capital of France?" with "Paris" and mixed English into German. Neither is safe, so
+                    // smart stays and the wiki says so (Jannis, 2026-11-13).
                     mode = GeminiTranscriptionModeDto(type = "smart"),
                     // Omitted entirely for auto-detection — an empty list is not the same request.
                     languageCodes = request.language
