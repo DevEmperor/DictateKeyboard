@@ -38,11 +38,29 @@ interface DictationSink {
     /** The currently selected text, or empty when nothing is selected. */
     fun selectedText(): String
 
-    /** The full text of the focused field (used by the "rework the whole field" path). */
+    /**
+     * The full text of the focused field. For the keyboard in an app's field this is only the window
+     * around the cursor that the editor keeps, so it says whether there is text, never what all of it is
+     * (issue #473) — that is [selectWholeField].
+     */
     fun fullText(): String
 
     /** Selects the whole field so a subsequent [commitText] replaces its content. */
     fun selectAll()
+
+    /**
+     * Selects the whole field and returns all of its text: what a prompt with nothing selected rewords,
+     * and what the result then replaces. Null when the field is empty or cannot be read in full — a part
+     * of the field taken for the whole of it would have the rest deleted by the commit (issue #473).
+     *
+     * The default suits sinks whose [fullText] is the whole field: the overlay, which refuses a field it
+     * cannot prove (issue #314), and the keyboard's own fields, held whole in memory.
+     */
+    suspend fun selectWholeField(): String? {
+        val whole = fullText().takeIf { it.isNotBlank() } ?: return null
+        selectAll()
+        return whole
+    }
 
     /**
      * Up to [length] characters in front of the cursor (in front of the selection, when there is one),
@@ -146,6 +164,13 @@ class ImeDictationSink(context: Context) : DictationSink {
         }
         editorInstance.performClipboardSelectAll()
     }
+
+    /**
+     * An app's field is read back from the app once it has selected everything; see
+     * [dev.patrickgold.florisboard.ime.editor.EditorInstance.selectAllAndRead].
+     */
+    override suspend fun selectWholeField(): String? =
+        if (field() != null) super.selectWholeField() else editorInstance.selectAllAndRead()
 
     override fun textBeforeCursor(length: Int): String? {
         field()?.let { field ->

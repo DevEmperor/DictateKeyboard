@@ -20,6 +20,8 @@ import android.content.ClipDescription
 import android.net.Uri
 import android.content.ContentUris
 import android.content.Context
+import android.os.SystemClock
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.FileProvider
 import androidx.core.view.inputmethod.InputConnectionCompat
@@ -48,7 +50,11 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import org.florisboard.lib.android.showShortToastSync
 
 /**
@@ -223,9 +229,40 @@ internal fun materializedSpaceSurvives(next: String, symbolsFollowingPhantomSpac
     return next.first().isLetterOrDigit() || symbolsFollowingPhantomSpace.contains(next.first())
 }
 
+/**
+ * The field's entire text when [content] shows all of it selected, or null when it does not — or when
+ * [content] cannot prove it (issue #473).
+ *
+ * The keyboard keeps only a window around the cursor (256 characters before it, 128 after), so its
+ * content is the whole field only where the editor says so itself: a selection that starts at 0 with
+ * nothing behind it. The selected text in such a content was read fresh when the editor reported the
+ * selection, and a read whose length disagreed with the editor's own numbers never became content at
+ * all ([AbstractEditorInstance.handleSelectionUpdate] drops it) — so its length is the field's. A
+ * selection-only content, whose offset is unknown, carries no text and proves nothing.
+ */
+internal fun wholeFieldText(content: EditorContent): String? {
+    val selection = content.selection
+    if (content.offset != 0 || !selection.isSelectionMode || selection.start != 0) return null
+    if (content.textAfterSelection.isNotEmpty()) return null
+    return content.selectedText
+}
+
+/**
+ * Waits for [contents] to show the whole field selected ([wholeFieldText]) and returns its text, or null
+ * when that has not happened within [timeoutMs] (issue #473).
+ */
+internal suspend fun awaitWholeField(contents: Flow<EditorContent>, timeoutMs: Long): String? =
+    withTimeoutOrNull(timeoutMs) { contents.mapNotNull { wholeFieldText(it) }.first() }
+
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
+
+        /**
+         * How long [selectAllAndRead] waits for the app to report its select-all. An app answers within
+         * milliseconds; this only runs out where none comes, and there the prompt is refused.
+         */
+        private const val WholeFieldReadTimeoutMs = 2000L
     }
 
     private val prefs by FlorisPreferenceStore
@@ -970,6 +1007,31 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         } else {
             ic.performContextMenuAction(android.R.id.selectAll)
         }
+    }
+
+    /**
+     * Selects the whole field and returns all of its text, read back once the app reports the selection
+     * — or null when no report proves the whole field in time, with the cursor put back where it was
+     * (issue #473). What a prompt with nothing selected rewords, and what its result replaces.
+     *
+     * [activeContent] cannot stand in for this: it is a window around the cursor, and a prompt that sent
+     * it replaced a long text with the rewording of its last 256 characters. Without a report the editor
+     * may have ignored the select-all, and the result would then land at the cursor, the text twice over.
+     * The cursor is put back through the connection itself: the cached content may still hold it, and
+     * [setSelection] does nothing for a selection it believes is already there.
+     */
+    suspend fun selectAllAndRead(): String? {
+        val before = activeContent.selection
+        val startedAt = SystemClock.elapsedRealtime()
+        val whole = if (performClipboardSelectAll()) awaitWholeField(activeContentFlow, WholeFieldReadTimeoutMs) else null
+        val ms = SystemClock.elapsedRealtime() - startedAt
+        if (whole == null) {
+            Log.i("DictateLatency", "phase=wholeFieldRead result=refused ms=$ms")
+            if (before.isValid) currentInputConnection()?.setSelection(before.start, before.end)
+            return null
+        }
+        Log.i("DictateLatency", "phase=wholeFieldRead chars=${whole.length} ms=$ms")
+        return whole
     }
 
     /**

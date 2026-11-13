@@ -107,6 +107,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Job
@@ -4666,6 +4667,7 @@ object DictateController {
             return
         }
 
+        var wholeField = false
         val input: String? = when {
             selectionOverride != null -> selectionOverride
             !prompt.requiresSelection -> null
@@ -4674,13 +4676,13 @@ object DictateController {
                 if (selected.isNotEmpty()) {
                     selected
                 } else {
-                    // Nothing selected: select the whole field (so the user sees what gets reworded)
-                    // and operate on its full text. The reworded result then replaces the now-selected
-                    // content via commitText. Matches the "tap a prompt with no selection" flow.
-                    val whole = sink.fullText()
-                    if (whole.isBlank()) return // empty field – nothing to operate on
-                    sink.selectAll()
-                    whole
+                    // Nothing selected: the prompt works on the whole field, which is selected (so the
+                    // user sees what gets reworded) and read in the job below, once the request may go.
+                    // The read waits for the app (issue #473), and selecting before the check below left
+                    // a refused prompt's whole text selected under its error, for the next key to replace.
+                    if (sink.fullText().isBlank()) return // empty field – nothing to operate on
+                    wholeField = true
+                    null
                 }
             }
         }
@@ -4701,10 +4703,24 @@ object DictateController {
         }
 
         _state.value = UiState.Rewording(prompt.name ?: appContext.getString(R.string.dictate__status_rewording))
-        // Store the job so the stop button can abort this reword mid-generation (issue #192).
-        rewordJob = scope.launch {
+        // Store the job so the stop button can abort this reword mid-generation (issue #192). Started on the
+        // spot, so a whole field is selected while the finger is still on the chip, as it always was, and
+        // not only once the keyboard has redrawn itself for the new state (issue #473).
+        rewordJob = scope.launch(start = CoroutineStart.UNDISPATCHED) {
             try {
-                val text = requestReword(raw, input, prompt.reasoning)
+                // A field that cannot be read in full is refused rather than reworded in part: the result
+                // replaces the whole selection, so a part sent for the whole deleted the rest (issue #473).
+                val source = if (wholeField) {
+                    sink.selectWholeField() ?: run {
+                        _state.value = UiState.Error(
+                            message = appContext.getString(R.string.dictate__error_prompt_field_unreadable),
+                        )
+                        return@launch
+                    }
+                } else {
+                    input
+                }
+                val text = requestReword(raw, source, prompt.reasoning)
                 // commitText replaces the active selection if any, else inserts at the cursor.
                 val committed = writeToSink(sink, text)
                 // Don't declare success over a write the field refused (issue #277) — the reworded text

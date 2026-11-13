@@ -1363,6 +1363,7 @@
     <string name="dictate__error_transcription_failed">Не удалось выполнить транскрибирование.</string>
     <string name="dictate__error_unknown">Неизвестная ошибка при транскрибировании.</string>
     <string name="dictate__error_rewording_failed">Не удалось переформулировать.</string>
+    <string name="dictate__error_prompt_field_unreadable">Не удалось прочитать весь текст – сначала выделите его</string>
     <string name="dictate__error_rewording_default_model">%1$s — встроенная модель по умолчанию для %2$s, а не выбранная вами. Выберите модель перефразирования в разделе «Поставщики ИИ».</string>
     <string name="dictate__notice_rewording_failed">Не удалось переформулировать – вставлен исходный текст</string>
     <string name="dictate__error_overlay_insert_clipboard">Это приложение не приняло текст. Он в буфере обмена — нажмите и удерживайте поле, затем вставьте.</string>

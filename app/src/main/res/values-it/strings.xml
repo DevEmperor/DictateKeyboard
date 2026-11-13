@@ -1143,6 +1143,7 @@
     <string name="dictate__error_transcription_failed">Trascrizione non riuscita.</string>
     <string name="dictate__error_unknown">Errore sconosciuto durante la trascrizione.</string>
     <string name="dictate__error_rewording_failed">Riformulazione non riuscita.</string>
+    <string name="dictate__error_prompt_field_unreadable">Impossibile leggere tutto il testo – selezionalo prima</string>
     <string name="dictate__error_rewording_default_model">%1$s è il modello predefinito integrato di %2$s, non uno scelto da te. Scegli un modello di riformulazione in Provider IA.</string>
     <string name="dictate__notice_rewording_failed">Riformulazione non riuscita – inserito il testo grezzo</string>
     <string name="dictate__error_overlay_insert_clipboard">Questa app non ha accettato il testo. È negli appunti: tieni premuto il campo e incollalo.</string>
