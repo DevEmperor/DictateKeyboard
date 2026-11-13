@@ -719,8 +719,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
      * The words [lang]'s dictionary stores small although a corpus writes them with a capital mid-sentence at
      * least half the time — `ben`, `terry`, `frank`, and `north` from North Carolina (#476). Too often small
      * to be capitalised when typed, too often a name for a dictation to take a provider's capital off them.
-     * Measured by tools/glide-dict/recase.py --mixed into `ime/dict/<lang>_case_mixed.txt`, so far for the
-     * bundled English list only; empty for every other language.
+     * Measured by tools/glide-dict/recase.py --mixed into `ime/dict/<lang>_case_mixed.txt`, so far for English
+     * and Croatian (rijeka, luka, hrvatska, sabor; 2026-11-13); empty for every other language. The file
+     * ships in the APK for a downloaded list too, so it needs no download of its own.
      */
     private suspend fun mixedCaseFor(lang: String): Set<String> = mixedCaseByLang.withLock { cache ->
         cache.getOrPut(lang) {

@@ -79,10 +79,21 @@ object GlideDictionaryManager {
         // English included — because unlike the bigram table it feeds nothing but suggestions, so a
         // language it has not reached yet simply predicts the way it did before.
         val needTrigram = trigramSpec != null && !trigramInstalled(context, code)
-        if (!needDict && !needBigram && !needTrigram) return
+        // Files installed before checksums were recorded, checked once in the background (see verifyOnce).
+        val unverified = listOfNotNull(
+            dictSpec?.takeIf { !dictBundled && !needDict }
+                ?.let { Fetch(dictFile(context, code), it.url, it.sizeBytes, it.sha256) },
+            bigramSpec?.takeIf { !needBigram }
+                ?.let { Fetch(bigramFile(context, code), it.url, it.sizeBytes, it.sha256) },
+            trigramSpec?.takeIf { !needTrigram }
+                ?.let { Fetch(trigramFile(context, code), it.url, it.sizeBytes, it.sha256) },
+        ).filter { it.file.isFile && !checksumFile(it.file).isFile }
+        val fetching = needDict || needBigram || needTrigram
+        if (!fetching && unverified.isEmpty()) return
         if (!active.add(code)) return
         val appContext = context.applicationContext
-        _progress.value = _progress.value + (code to 0)
+        // A check alone shows no progress: nothing is being downloaded as far as the user can tell.
+        if (fetching) _progress.value = _progress.value + (code to 0)
         scope.launch {
             try {
                 if (needDict) {
@@ -102,6 +113,7 @@ object GlideDictionaryManager {
                         downloadTo(trigramFile(appContext, code), trigramSpec!!.url, trigramSpec.sizeBytes, trigramSpec.sha256)
                     }
                 }
+                unverified.forEach { runCatching { verifyOnce(it) } }
                 _installedVersion.value += 1
             } catch (_: Throwable) {
                 // leave uninstalled; a later activation/add retries
@@ -132,22 +144,26 @@ object GlideDictionaryManager {
      * release changes, but a device that already has the old one would otherwise never fetch it
      * again and keep the bad words forever. That is not hypothetical — the Icelandic list was
      * shipped with `ađ`/`ūađ` where Icelandic writes `að`/`það`, and Georgian with fragments instead
-     * of words. Comparing `length()` costs a stat call and catches a truncated download too; the
-     * SHA-256 is verified when the file is fetched, so a size match is enough here.
+     * of words. Comparing `length()` costs a stat call and catches a truncated download too.
+     *
+     * Size alone is not enough, though: Croatian was re-cased letter for letter (#476), which keeps every
+     * byte count, so the new list would never have replaced the old one. Each download therefore leaves
+     * its verified SHA-256 beside the file ([checksumFile]), and that is compared too. A file from before
+     * has none and passes on its size here; [ensureDownloaded] checks it once in the background.
      */
     fun isInstalled(context: Context, lang: String): Boolean {
         val file = dictFile(context, lang)
         if (!file.isFile || file.length() <= 0) return false
-        val expected = GlideDictionaryCatalog.forLang(lang)?.sizeBytes ?: return true
-        return file.length() == expected
+        val spec = GlideDictionaryCatalog.forLang(lang) ?: return true
+        return matches(file, spec.sizeBytes, spec.sha256)
     }
 
     /** True if a downloaded bigram file for [lang] is present on disk and matches the catalog. */
     fun bigramInstalled(context: Context, lang: String): Boolean {
         val file = bigramFile(context, lang)
         if (!file.isFile || file.length() <= 0) return false
-        val expected = BigramCatalog.forLang(lang)?.sizeBytes ?: return true
-        return file.length() == expected
+        val spec = BigramCatalog.forLang(lang) ?: return true
+        return matches(file, spec.sizeBytes, spec.sha256)
     }
 
     /**
@@ -160,8 +176,52 @@ object GlideDictionaryManager {
      */
     fun trigramInstalled(context: Context, lang: String): Boolean {
         val spec = TrigramCatalog.forLang(lang) ?: return false
-        val file = trigramFile(context, lang)
-        return file.isFile && file.length() == spec.sizeBytes
+        return matches(trigramFile(context, lang), spec.sizeBytes, spec.sha256)
+    }
+
+    /** One file the catalog names, where it goes and what it must be. */
+    private class Fetch(val file: File, val url: String, val sizeBytes: Long, val sha256: String)
+
+    /** Where the verified SHA-256 of a downloaded [file] is kept (see [isInstalled]). */
+    internal fun checksumFile(file: File): File = File(file.parentFile, "${file.name}.sha256")
+
+    /** [file] is [sizeBytes] long and, where its checksum was recorded, has [sha256]. */
+    internal fun matches(file: File, sizeBytes: Long, sha256: String): Boolean {
+        if (!file.isFile || file.length() != sizeBytes) return false
+        val recorded = checksumFile(file).takeIf { it.isFile }?.readText()?.trim() ?: return true
+        return recorded.equals(sha256, ignoreCase = true)
+    }
+
+    /** Hashes [file] and records the checksum when it is [sha256]; false, recording nothing, when it is not. */
+    internal fun recordIfMatching(file: File, sha256: String): Boolean {
+        if (!sha256Of(file).equals(sha256, ignoreCase = true)) return false
+        checksumFile(file).writeText(sha256.lowercase())
+        return true
+    }
+
+    /**
+     * For a file installed before checksums were recorded: records its checksum when it is the catalog's
+     * file, and fetches the catalog's file when it is not. Runs once per file, in the background, because
+     * hashing a few megabytes has no place on the keyboard's path.
+     */
+    private suspend fun verifyOnce(fetch: Fetch) = withContext(Dispatchers.IO) {
+        if (!fetch.file.isFile || checksumFile(fetch.file).isFile) return@withContext
+        if (!recordIfMatching(fetch.file, fetch.sha256)) {
+            downloadTo(fetch.file, fetch.url, fetch.sizeBytes, fetch.sha256)
+        }
+    }
+
+    private fun sha256Of(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().buffered().use { input ->
+            val buffer = ByteArray(64 * 1024)
+            while (true) {
+                val read = input.read(buffer)
+                if (read < 0) break
+                digest.update(buffer, 0, read)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it) }
     }
 
     /** Language codes of all downloaded dictionaries currently on disk. */
@@ -174,6 +234,7 @@ object GlideDictionaryManager {
     /** Removes a downloaded dictionary. Returns true if the file is gone afterwards. */
     fun delete(context: Context, lang: String): Boolean {
         val f = dictFile(context, lang)
+        checksumFile(f).delete()
         return !f.exists() || f.delete()
     }
 
@@ -187,11 +248,13 @@ object GlideDictionaryManager {
         // Remove the downloaded bigram file too (never a bundled one), so removing a language frees its
         // context data as well.
         if (code !in BigramCatalog.BUNDLED && bigramInstalled(context, code)) {
+            checksumFile(bigramFile(context, code)).delete()
             changed = bigramFile(context, code).delete() || changed
         }
         if (code !in TrigramCatalog.BUNDLED && trigramFile(context, code).isFile) {
             // Deleted on presence rather than on trigramInstalled: a file left behind by an earlier
             // catalog entry is exactly the one nothing else will ever clean up.
+            checksumFile(trigramFile(context, code)).delete()
             changed = trigramFile(context, code).delete() || changed
         }
         if (code !in GlideDictionaryCatalog.BUNDLED && isInstalled(context, code) && delete(context, code)) {
@@ -254,8 +317,10 @@ object GlideDictionaryManager {
                 val actual = digest.digest().joinToString("") { "%02x".format(it) }
                 check(actual.equals(sha256, ignoreCase = true)) { "checksum mismatch for ${dest.name}" }
             }
+            checksumFile(dest).delete()
             dest.delete()
             check(tmp.renameTo(dest)) { "could not move ${dest.name} into place" }
+            checksumFile(dest).writeText(sha256.lowercase())
         } catch (t: Throwable) {
             tmp.delete()
             throw t

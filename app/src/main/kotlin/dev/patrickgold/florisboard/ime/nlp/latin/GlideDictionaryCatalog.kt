@@ -39,6 +39,10 @@ data class GlideDict(
  * `tools/glide-dict/ATTRIBUTION.md` for the per-language sources and licences. To (re-)host, upload the
  * generated `<lang>.json` files as assets of the release named below and paste each script-printed catalog
  * line here. Both the size and the SHA-256 are enforced on download, so a stale line fails closed.
+ *
+ * A changed list therefore goes up under a new name (`<lang>.v2.json`) rather than over the old one: the
+ * released versions check the old checksum and would refuse the new file, leaving the language without a
+ * list for everyone who adds it before updating.
  */
 object GlideDictionaryCatalog {
     /** Project-hosted release holding the dictionary files. Single re-point for hosting. */
@@ -64,7 +68,9 @@ object GlideDictionaryCatalog {
         GlideDict("fi", "Finnish · Suomi", "$REL/fi.json", 1609918, "47b3e742b7b0ca32fee67e6c4341cf2246592415a54cabb0b81556c4591fa58e"),
         GlideDict("fr", "French · Français", "$REL/fr.json", 1082093, "ee78ad4cad149c62895fa5f285b638c16bc7ceb908a5d4e7f22ec825a2473ec3"),
         GlideDict("hi", "Hindi · हिन्दी", "$REL/hi.json", 1240633, "f2e2195b0ebb43cc60eba2373a606e38301e6f6900e56aa726bb15b5ff574cec"),
-        GlideDict("hr", "Croatian · Hrvatski", "$REL/hr.json", 1128369, "1f01c211d27380a96564816a41b920980c8447dc30934e3b606422cc381347dd"),
+        // Re-cased with tools/glide-dict/recase.py (#476): names such as Marko and Uskrs got their capitals.
+        // A new file name, so the versions that know the old checksum keep finding the old file.
+        GlideDict("hr", "Croatian · Hrvatski", "$REL/hr.v2.json", 1128369, "7676a53e9264b733fef039c8ce4c24c086ce65cce055f90e9eaadd2c7a44bff6"),
         GlideDict("hu", "Hungarian · Magyar", "$REL/hu.json", 1419533, "d62b994d0f850214cd5d9ef16ff99aa9ac17150fe6bf5ec49b81821b3d3326ad"),
         GlideDict("hy", "Armenian · Հայերեն", "$REL/hy.json", 64323, "a8500f822bf91af56d93661c40cb45c9bbd38913d5d4152d0feeab3a9c8b0201"),
         GlideDict("id", "Indonesian · Bahasa Indonesia", "$REL/id.json", 497306, "5e20ad6ef5e31a9e969320a40bd0a4ee7cbb5ca2b223eb11a09a348951b5e8e8"),

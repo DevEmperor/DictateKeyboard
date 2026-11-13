@@ -26,7 +26,9 @@ upstream FlorisBoard, had its casing restored the same way with the SCOWL-based 
 en_US and en_GB dictionaries (wordlist.aspell.net) and the casing the Leipzig English web
 corpus (eng-com_web-public_2018_1M, cited in section 2 below) writes words in mid-sentence;
 ime/dict/en_case_mixed.txt, the words that corpus writes with a capital about as often as
-without, comes from the same count. For Polish, the Leipzig word counts also
+without, comes from the same count. The Croatian list had its names re-cased the same way
+from the Leipzig Croatian news corpus (hrv_news_2020_1M, cited in section 2 below), which also
+gave ime/dict/hr_case_mixed.txt. For Polish, the Leipzig word counts also
 decide which spellings without diacritics are words of their own.
 
 

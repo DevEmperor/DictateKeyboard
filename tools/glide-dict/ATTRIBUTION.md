@@ -65,6 +65,13 @@ has not reached yet.
   `Zycie`: 87 words); a bare spelling Hunspell accepts and the news text uses is added where only its
   accented twin was listed (`kompozycje` beside `kompozycję`: 247 words). The keyboard restores an accent
   only where the bare spelling is not a word of its own, so this list is what decides it.
+- `hr` was **re-cased** after the fact by `recase.py` (2026-11-13, issue #476, published as `hr.v2.json`): the
+  Croatian Hunspell dictionary takes names such as `marko`, `sara` and `uskrs` in lowercase as readily as
+  with a capital, so the mid-sentence casing of the Leipzig news corpus `hrv_news_2020_1M` (CC BY) decided,
+  at the same 97 % / 50-sighting rule: 79 words changed, words and frequencies stayed. Everyday words the
+  news mostly meets as a name (`mario`, `monitor`, `luki`, `zlatan`) keep their casing (`AS_IS` in
+  `recase.py`), and `hr_case_mixed.txt`, bundled in the app, holds the 471 words written with a capital
+  about as often as without (`rijeka`, `luka`, `hrvatska`).
 
 ## Bundled languages
 English (`en`, from the upstream FlorisBoard dictionary) and German (`de`) ship inside the app; all other

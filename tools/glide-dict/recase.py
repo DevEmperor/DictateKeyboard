@@ -45,9 +45,20 @@ Usage:
         --also <…>/en_GB --corpus eng-com_web-public_2018_1M \\
         --mixed app/src/main/assets/ime/dict/en_case_mixed.txt --dry-run
 
+    recase.py dist/hr.json dist/hunspell/hr --corpus hrv_news_2020_1M \\
+        --mixed app/src/main/assets/ime/dict/hr_case_mixed.txt --dry-run
+
+Croatian (#476, 2026-11-13) is the first generated list it ran on. generate.py had cased it with Hunspell
+alone, and the Croatian dictionary takes marko, sara and uskrs in lowercase as readily as with a capital,
+so only the corpus can tell. THREE_LETTER_NOT_NAMES is English and applies to en.json alone: on Croatian it
+took the capital off Rom. AS_IS holds, per language, the words read out of the dry run that the corpus
+would capitalise but that are everyday lowercase words as well; they keep the list's casing, and a small
+one can still go into the --mixed list.
+
 Requires the `hunspell` binary; a --corpus package is downloaded into dist/corpora on first use (~230 MB).
-The list is rewritten in place in the format it was read in (json.dumps defaults plus a final newline — the
-format en.json has); --dry-run prints what would change against the file as it is instead.
+The list is rewritten in place in the format it was read in (json.dumps defaults plus a final newline, the
+format en.json has, or generate.py's compact UTF-8 without one); --dry-run prints what would change against
+the file as it is instead.
 """
 import json
 import os
@@ -66,6 +77,23 @@ THREE_LETTER_NOT_NAMES = {
     "pfc", "pte", "pty", "que", "rom", "sgt", "snr", "sta", "ste", "sur", "tex", "wac", "wis",
 }
 
+# Per language (the list's file name), words whose casing the list keeps, read out of the dry run: the news
+# corpus writes them with a capital almost always, but people type them as ordinary words too.
+#   hr (2026-11-13): mario (nije mario, "didn't care"), monitor, lokomotivu (a Zagreb club, and a locomotive),
+#   rima/rimu (Rome, and rhyme), luki (the name, and "in the port"), macan (tomcat, a good-looking man),
+#   zlatan (golden, "zlatan si"), nosić (little nose), trut (drone bee), the adjectives latinskoj and
+#   rumunjskoj (Latin, Romanian, beside Latin America and Romania), and the forms of sjedinjen and ujedinjen
+#   (united) that the corpus would capitalise, so each paradigm stays one casing like the forms that are
+#   capitalised only half the time. The other way: Krim (Crimea) keeps the capital Hunspell gave it, which
+#   72 corpus sightings, mostly the abbreviation krim., are too few to take away.
+AS_IS = {
+    "hr": {
+        "mario", "monitor", "lokomotivu", "rima", "rimu", "luki", "macan", "zlatan", "nosić", "trut",
+        "latinskoj", "rumunjskoj", "sjedinjenih", "sjedinjene", "sjedinjenim", "ujedinjenih", "ujedinjenog",
+        "ujedinjenom", "krim",
+    },
+}
+
 LETTER_PLURAL = re.compile(r"^[a-z]'s$")
 
 # The corpus share below which a capital Hunspell asks for stays off: generate.py's reverse rule.
@@ -74,6 +102,10 @@ CORPUS_LOWER_SHARE = 0.6
 # The capitalised share from which a word that stays small goes into the --mixed list: as often a capital
 # as not, so nothing says which one a dictation opening with it meant.
 MIXED_SHARE = 0.5
+
+# The formats a list is read and written back in: en.json's (json.dumps defaults, final newline) and
+# generate.py's (compact, UTF-8 as it is, no final newline).
+FORMATS = [({}, "\n"), ({"ensure_ascii": False, "separators": (",", ":")}, "")]
 
 
 def capital_share(word: str, forms: dict):
@@ -96,19 +128,19 @@ def rejected(words, dictionary: str) -> set:
     return set(proc.stdout.split("\n")) - {""}
 
 
-def wanted(word: str) -> bool:
+def wanted(word: str, lang: str) -> bool:
     """Whether [word] may take a capital at all, before any dictionary is asked (see the module doc)."""
     if LETTER_PLURAL.match(word):
         return False
     if len(word) <= 2:
         return word in TWO_LETTER_TITLES
-    return word not in THREE_LETTER_NOT_NAMES
+    return lang != "en" or word not in THREE_LETTER_NOT_NAMES
 
 
-def casing(lowers: list, dictionary: str, also: list, forms: dict) -> dict:
+def casing(lowers: list, dictionary: str, also: list, forms: dict, lang: str) -> dict:
     """lowercase word → its capitalised spelling, for the words that take one. [forms] from
     load_mid_sentence_forms, or None for Hunspell alone."""
-    candidates = [w for w in lowers if wanted(w)]
+    candidates = [w for w in lowers if wanted(w, lang)]
     not_small = rejected(candidates, dictionary)
     for other in also:
         not_small &= rejected(sorted(not_small), other)
@@ -166,14 +198,22 @@ def main() -> None:
     path, dictionary = args
     text = open(path, encoding="utf-8").read()
     words = json.loads(text)
-    if json.dumps(words) + "\n" != text:
-        sys.exit(f"{path} is not in the format this tool writes back; nothing changed")
+    fmt = next(((opts, end) for opts, end in FORMATS if json.dumps(words, **opts) + end == text), None)
+    if fmt is None:
+        sys.exit(f"{path} is not in a format this tool writes back; nothing changed")
     lowers = [w.lower() for w in words]
     if len(set(lowers)) != len(lowers):
         sys.exit(f"{path} holds a word in two casings; nothing changed")
 
+    lang = os.path.basename(path).split(".")[0]
     forms = load_mid_sentence_forms(corpus) if corpus else None
-    cased = casing(lowers, dictionary, also, forms)
+    cased = casing(lowers, dictionary, also, forms, lang)
+    for low, old in zip(lowers, words):
+        if low in AS_IS.get(lang, ()):
+            if old != low:
+                cased[low] = old
+            else:
+                cased.pop(low, None)
     out = {cased.get(low, low): f for low, f in zip(lowers, words.values())}
 
     changed = [(old, new, f) for (old, f), new in zip(words.items(), out) if old != new]
@@ -190,7 +230,7 @@ def main() -> None:
             print(f"mixed\t{w}")
         return
     with open(path, "w", encoding="utf-8") as f:
-        f.write(json.dumps(out) + "\n")
+        f.write(json.dumps(out, **fmt[0]) + fmt[1])
     if mixed_path:
         with open(mixed_path, "w", encoding="utf-8") as f:
             f.write("\n".join(both) + "\n")
