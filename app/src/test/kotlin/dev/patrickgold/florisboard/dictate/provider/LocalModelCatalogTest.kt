@@ -303,6 +303,7 @@ class LocalModelCatalogTest {
         assertTrue(LocalModelCatalog.GIGAAM_V3_RU.punctuates)
         assertTrue(LocalModelCatalog.KROKO_EN.punctuates)
         assertTrue(LocalModelCatalog.DOLPHIN_BASE.punctuates)
+        assertTrue(LocalModelCatalog.FLUID_SPEECH_PRO.punctuates)
         // Dolphin's export carries an <en> token but Dolphin does not claim English, and on real English
         // speech it answers in Urdu script. Naming it here would send people to a model that cannot.
         assertTrue(
@@ -338,6 +339,8 @@ class LocalModelCatalogTest {
             LocalModelCatalog.PARAKEET_TDT_V3,
             LocalModelCatalog.PARAKEET_TDT_110M_EN,
             LocalModelCatalog.FASTCONFORMER_DE,
+            // FluidVoice documents only 30 s, but it was decoded here at up to 131 s in one pass.
+            LocalModelCatalog.FLUID_SPEECH_PRO,
         )) {
             assertTrue(
                 spec.maxSegmentSeconds >= 60,

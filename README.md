@@ -215,7 +215,7 @@ speech server next to it for dictation — or use the on-device engine below and
 entirely.
 
 **No server at all:** Dictate can also transcribe **fully on your device** with a downloadable
-model (Whisper, Parakeet, FastConformer, Canary, GigaAM, SenseVoice, Dolphin, or a live-typing Kroko model). No account, no
+model (Whisper, Parakeet, Fluid Speech Pro, FastConformer, Canary, GigaAM, SenseVoice, Dolphin, or a live-typing Kroko model). No account, no
 network, no audio leaving the phone — offered right in the setup wizard, and under
 *Settings → AI providers → On-device (offline)*.
 
@@ -290,7 +290,8 @@ Dictate Keyboard is released under the terms of the
   NVIDIA's [Parakeet](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3),
   [Canary](https://huggingface.co/nvidia/canary-180m-flash) and
   [FastConformer](https://huggingface.co/nvidia/stt_de_fastconformer_hybrid_large_pc) models,
-  moondream's [Parakeet Ultra](https://huggingface.co/moondream/parakeet-ultra) post-train and the
+  moondream's [Parakeet Ultra](https://huggingface.co/moondream/parakeet-ultra) post-train,
+  [Fluid Speech Pro](https://huggingface.co/FluidVoice-Labs/fluid-speech-pro) by FluidVoice and the
   primeline German fine-tune (CC-BY-4.0),
   [GigaAM](https://github.com/salute-developers/GigaAM) for Russian (MIT),
   [Dolphin](https://github.com/DataoceanAI/Dolphin) by DataoceanAI and Tsinghua University for 40
@@ -298,7 +299,8 @@ Dictate Keyboard is released under the terms of the
   and — for live transcription — the [Kroko ASR](https://huggingface.co/Banafo/Kroko-ASR)
   community models by Banafo (CC-BY-SA). They are exported to ONNX by
   [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) — except Parakeet Ultra, whose weights are
-  substituted into sherpa-onnx's own Parakeet graph, since upstream publishes no ONNX build.
+  substituted into sherpa-onnx's own Parakeet graph, since upstream publishes no ONNX build, and
+  Fluid Speech Pro, which is FluidVoice's own ONNX build with int8 compute switched on.
 - The Lattice button design is ported from
   [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs) by Jakub Antalik (MIT).
 - Offline translation uses Mozilla's [Firefox Translations](https://github.com/mozilla/translations)

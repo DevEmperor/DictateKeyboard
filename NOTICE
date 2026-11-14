@@ -32,7 +32,8 @@ On-device speech recognition models
 ================================================================================
 
 The on-device models are downloaded on demand and are not part of this source
-distribution. They are mirrored unmodified on the project's GitHub releases.
+distribution. They are mirrored on the project's GitHub releases, unmodified
+except where noted below.
 
     Kroko ASR community models (streaming, issue #233)
     Copyright Banafo — https://huggingface.co/Banafo/Kroko-ASR
@@ -63,6 +64,17 @@ distribution. They are mirrored unmodified on the project's GitHub releases.
 
     All of the above are exported to ONNX by the sherpa-onnx project
     (https://github.com/k2-fsa/sherpa-onnx), licensed under Apache-2.0.
+
+    Parakeet Ultra — Copyright moondream —
+    https://huggingface.co/moondream/parakeet-ultra (CC-BY-4.0). moondream
+    publishes no ONNX build; its weights are substituted into sherpa-onnx's own
+    Parakeet TDT 0.6B v3 graph.
+
+    Fluid Speech Pro by FluidVoice — Copyright FluidVoice —
+    https://huggingface.co/FluidVoice-Labs/fluid-speech-pro (CC-BY-4.0). Repacked
+    from FluidVoice's own ONNX build: int8 compute (accuracy_level 4) set on its
+    quantised layers and the external weight files inlined; the weights are
+    unchanged.
 
 ================================================================================
 Chinese Pinyin language pack

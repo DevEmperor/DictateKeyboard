@@ -60,6 +60,11 @@ One-shot models — these transcribe after you stop speaking:
     https://github.com/openai/whisper
   - Parakeet Ultra — a post-train of NVIDIA Parakeet TDT 0.6B v3 covering the same 25 European
     languages, © moondream, licensed CC BY 4.0. https://huggingface.co/moondream/parakeet-ultra
+  - Fluid Speech Pro by FluidVoice — a post-train of Parakeet Ultra and NVIDIA Parakeet TDT 0.6B v3
+    covering the same 25 European languages, © FluidVoice, licensed CC BY 4.0.
+    https://huggingface.co/FluidVoice-Labs/fluid-speech-pro
+    Repacked from FluidVoice's ONNX build: weights unchanged, int8 compute switched on and the
+    external weight files inlined.
   - Parakeet TDT 0.6B v3 — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
   - Parakeet TDT 110M (English) — © NVIDIA, licensed CC BY 4.0.
