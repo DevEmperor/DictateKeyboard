@@ -2907,6 +2907,16 @@ object DictateController {
                     showLive(realtimeFinal.toString())
                 }
             }
+            // The provider's whole transcript so far (Gemini Live, #488). showLive already works from the
+            // whole text, so the preview follows an edit to earlier words like it follows any other change.
+            override fun onTranscriptReplaced(text: String) {
+                realtimeLastTextAt = SystemClock.elapsedRealtime()
+                scope.launch {
+                    realtimeFinal.setLength(0)
+                    realtimeFinal.append(text.trim())
+                    showLive(realtimeFinal.toString())
+                }
+            }
             override fun onError(t: Throwable) { realtimeFailed = true }
             override fun onClosed() { closed.complete(Unit) }
         }

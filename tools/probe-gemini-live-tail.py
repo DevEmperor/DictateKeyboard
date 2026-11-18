@@ -250,7 +250,8 @@ async def main():
             f"{row['run']:>4} {show(row['last_final']):>11} {show(row['last_text']):>10} "
             f"{show(row['done']):>14} {show(row['closed']):>14}"
         )
-    print("\nsettled text, one line per turn (a turn is never cumulative):")
+    # Each its own turn until 2026-11-16; in SMART mode the whole transcript so far since 2026-11-17 (#488).
+    print("\nsettled text, one line per turn:")
     for row in rows:
         for turn in row["turns"]:
             print(f"  {row['run']}: {turn}")

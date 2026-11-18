@@ -41,6 +41,7 @@ class XaiRealtimeTest : FunSpec({
         val closed = CountDownLatch(1)
         override fun onPartial(text: String) { synchronized(this) { partials += text } }
         override fun onFinalSegment(text: String) { synchronized(this) { finals += text } }
+        override fun onTranscriptReplaced(text: String) { synchronized(this) { finals.clear(); finals += text } }
         override fun onError(t: Throwable) { synchronized(this) { errors += t } }
         override fun onClosed() = closed.countDown()
     }

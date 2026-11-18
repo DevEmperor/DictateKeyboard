@@ -99,8 +99,9 @@ interface RealtimeSession {
  * Callbacks from a [RealtimeSession]. Invoked on background threads (WebSocket/OkHttp dispatcher); the
  * consumer is responsible for thread-hopping to the UI. [onPartial] carries provisional text that may
  * still change; [onFinalSegment] carries a stabilized chunk that should be appended to the running
- * transcript; [onError] means the stream failed (the engine falls back to batch); [onClosed] fires once
- * when the session ends (after the last final segment, or after an error/cancel).
+ * transcript; [onTranscriptReplaced] carries the whole settled transcript instead, for a provider whose
+ * finals are cumulative; [onError] means the stream failed (the engine falls back to batch); [onClosed]
+ * fires once when the session ends (after the last final segment, or after an error/cancel).
  */
 interface RealtimeCallbacks {
     /** Provisional transcript for the current, not-yet-finalized segment. Replaces the previous partial. */
@@ -108,6 +109,13 @@ interface RealtimeCallbacks {
 
     /** A finalized transcript chunk. Append to the accumulated transcript (interim for it is now settled). */
     fun onFinalSegment(text: String)
+
+    /**
+     * Everything the provider has settled so far, replacing whatever earlier finals carried. A later turn
+     * may have rewritten or deleted earlier words, so this cannot be turned into an append. Empty means
+     * the provider deleted it all. Gemini Live in SMART mode answers this way since 2026-11-17 (#488).
+     */
+    fun onTranscriptReplaced(text: String)
 
     /** The stream failed (connection/auth/protocol). The engine should fall back to batch transcription. */
     fun onError(t: Throwable)

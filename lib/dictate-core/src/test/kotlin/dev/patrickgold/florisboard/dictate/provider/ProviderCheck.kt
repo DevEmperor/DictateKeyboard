@@ -116,6 +116,13 @@ private class Check(
     private val deText = "Hallo, das ist ein kurzer Test der Dictate Tastatur. Wir treffen uns morgen um halb " +
         "zehn am Bahnhof."
 
+    /** The realtime stream with a pause (#488): en, 2.5 s of silence, names. One word of each, said once. */
+    private val pausesStream = "pauses"
+    private val pauseMarkers = listOf("station", "invoice")
+
+    /** en, 2.5 s of silence, then "Make it sound more formal." (#488): written down, or obeyed? */
+    private val instructStream = "instruction after a pause"
+
     /**
      * What the dictations that read like a request say (make_fixtures.py): a question (#478) and two orders
      * (#477). Each must come back written down, never answered or obeyed.
@@ -443,17 +450,26 @@ private class Check(
     ) {
         class Stream(val label: String, val file: String, val lang: String, val expected: String?, val words: List<String>)
         val rate = RealtimeClient.sampleRateFor(api)
+        // Two clips with a pause between them, so the provider settles two turns (#488). Gemini Live began to
+        // send each turn's final as the whole transcript so far, and appending that repeated the first
+        // sentence: in "pauses" each marker word must come back exactly once. Its SMART mode also edits across
+        // turns since then, so "instruction after a pause" says whether a dictated order is written or obeyed.
+        val joined = mapOf(pausesStream to listOf("en", "names"), instructStream to listOf("en", "instruct"))
+            .mapValues { (_, parts) -> parts.map { File(fixtures, "${it}_$rate.pcm") } }
+            .filterValues { parts -> parts.all { it.exists() } }
         val streams = listOf(Stream("en", "en", "en", enText, emptyList()), Stream("de", "de", "de", deText, emptyList())) +
             wordProbes.filter { File(fixtures, "${it.name}_$rate.pcm").exists() }.flatMap { probe ->
                 listOf(
                     Stream("${probe.name}, no words", probe.name, "en", null, emptyList()),
                     Stream("${probe.name}, custom words", probe.name, "en", null, probe.words),
                 )
-            }
+            } + joined.keys.map { Stream(it, it, "en", null, emptyList()) }
         for (stream in streams) {
             val lang = stream.lang
             if (!speaks(preset, model, lang)) continue
-            val pcm = File(fixtures, "${stream.file}_$rate.pcm").readBytes()
+            // 2.5 s of silence: longer than any provider's end-of-turn pause, shorter than a stop.
+            val pcm = joined[stream.file]?.let { (first, second) -> first.readBytes() + ByteArray(rate * 5) + second.readBytes() }
+                ?: File(fixtures, "${stream.file}_$rate.pcm").readBytes()
             val finals = StringBuilder()
             var lastPartial = ""
             var failure: Throwable? = null
@@ -466,6 +482,10 @@ private class Check(
                     override fun onPartial(text: String) { lastPartial = text; lastText.set(System.currentTimeMillis()) }
                     override fun onFinalSegment(text: String) {
                         synchronized(finals) { finals.append(text).append(' ') }
+                        lastText.set(System.currentTimeMillis())
+                    }
+                    override fun onTranscriptReplaced(text: String) {
+                        synchronized(finals) { finals.setLength(0); finals.append(text).append(' ') }
                         lastText.set(System.currentTimeMillis())
                     }
                     override fun onError(t: Throwable) { failure = t; closed.countDown() }
@@ -497,13 +517,23 @@ private class Check(
             if (!ended) session.cancel()
             val ms = System.currentTimeMillis() - started
             val text = finals.toString().trim().ifEmpty { lastPartial }
-            val score = stream.expected?.let { " · ${overlap(it, text)}% of words" }
-                ?: wordProbes.first { it.name == stream.file }.words
+            val counts = pauseMarkers.associateWith { Regex(it, RegexOption.IGNORE_CASE).findAll(text).count() }
+            val score = when {
+                stream.file == pausesStream ->
+                    counts.entries.joinToString(prefix = " · once each: ") { (word, n) -> "$word ×$n ${if (n == 1) "✓" else "✗"}" }
+                stream.file == instructStream ->
+                    if (text.contains("more formal", ignoreCase = true)) " · kept as said ✓" else " · acted on ✗"
+                stream.expected != null -> " · ${overlap(stream.expected, text)}% of words"
+                else -> wordProbes.first { it.name == stream.file }.words
                     .joinToString(prefix = " · words: ") { if (text.contains(it, ignoreCase = true)) "$it ✓" else "$it ✗" }
+            }
             val label = stream.label
             when {
                 failure != null -> add(preset, "realtime", model, label, "FAIL", scrub(failure.toString()), ms)
                 text.isBlank() -> add(preset, "realtime", model, label, "EMPTY", if (ended) "closed without text" else "no end after 30 s", ms)
+                // A sentence repeated or lost across the pause is a broken transcript, whatever its words.
+                stream.file == pausesStream && counts.values.any { it != 1 } -> add(preset, "realtime", model, label, "FAIL",
+                    "\"${scrub(text).take(160)}\"$score", ms)
                 else -> add(preset, "realtime", model, label, "OK",
                     "\"${scrub(text).take(120)}\"$score${if (ended) "" else " · no close"}", ms)
             }

@@ -154,7 +154,7 @@ object RealtimeClient {
         RealtimeApi.ELEVENLABS ->
             ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks, vocabulary).also { it.connect() }
         RealtimeApi.GEMINI ->
-            GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages, vocabulary)
+            GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages, vocabulary)
                 .also { it.connect() }
         // Off in the preset (#128) and its protocol unconfirmed, so it gets no words: Voxtral's documented
         // `context_bias` belongs to a session message this one does not send.
@@ -825,9 +825,12 @@ private class ElevenLabsRealtimeSession(
  *
  * The transcription model answers in two fields where the conversational live models had one:
  * `interimInputTranscription` is a speculative hypothesis that keeps changing while someone speaks,
- * `inputTranscription` is what stands once they pause. That maps exactly onto the
- * [RealtimeCallbacks] contract — interim replaces the partial, final appends a segment — so text
- * settles as it is spoken instead of all at once when the session ends.
+ * `inputTranscription` is what stands once they pause. Interim replaces the partial. A settled
+ * transcription replaces the whole transcript ([RealtimeCallbacks.onTranscriptReplaced]), because in SMART
+ * mode it carries everything said so far (#488). So text settles as it is spoken instead of all at once
+ * when the session ends.
+ *
+ * [baseUrl] replaces Google's address, for tests only: the app passes none, Gemini has no regions.
  */
 private class GeminiRealtimeSession(
     private val client: OkHttpClient,
@@ -835,6 +838,7 @@ private class GeminiRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    private val baseUrl: String? = null,
     expectedLanguages: List<String> = emptyList(),
     vocabulary: List<String> = emptyList(),
 ) : RealtimeSession {
@@ -853,9 +857,9 @@ private class GeminiRealtimeSession(
     @Volatile private var done = false
 
     fun connect() {
-        val url = "wss://generativelanguage.googleapis.com/ws/" +
-            "google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=$apiKey"
-        ws = client.newWebSocket(Request.Builder().url(url).build(), listener)
+        val host = baseUrl ?: ("wss://generativelanguage.googleapis.com/ws/" +
+            "google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent")
+        ws = client.newWebSocket(Request.Builder().url("$host?key=$apiKey").build(), listener)
     }
 
     private val listener = object : WebSocketListener() {
@@ -891,8 +895,9 @@ private class GeminiRealtimeSession(
                 callbacks.onPartial(hypothesis)
             }
         }
-        server?.get("inputTranscription")?.jsonObject?.get("text")?.jsonPrimitive?.content?.let { chunk ->
-            if (chunk.isNotEmpty()) emitFinal(chunk)
+        // A settled transcription without text is not nothing: it is what "delete everything" leaves.
+        server?.get("inputTranscription")?.jsonObject?.let { settled ->
+            emitSettled(settled["text"]?.jsonPrimitive?.contentOrNull.orEmpty())
         }
         val ended = server?.get("turnComplete")?.jsonPrimitive?.booleanOrNull == true ||
             server?.get("generationComplete")?.jsonPrimitive?.booleanOrNull == true
@@ -910,18 +915,19 @@ private class GeminiRealtimeSession(
     }
 
     /**
-     * Hands one finalized chunk on. The protocol never stated whether `inputTranscription` carries just the
-     * settled segment or everything settled so far, so this used to forward only the growth over what was
-     * already seen. Measured against the endpoint on 2026-09-14 (#372): a dictation with a two-second
-     * pause in it produces one `inputTranscription` per turn, each carrying **only that turn's** words.
-     * The guard therefore never fired on real growth — the single thing it could match was a turn that
-     * repeated the whole transcript so far, and that one it deleted. Saying the same short sentence twice
-     * is exactly that shape, so the second one silently disappeared.
+     * Hands the settled transcript on, as a replacement of everything before it.
+     *
+     * Until 2026-11-16 each `inputTranscription` carried only its own turn's words (measured 2026-09-14,
+     * #372) and was appended. On 2026-11-17 Google gave SMART mode voice editing: a later turn may rewrite
+     * or delete what an earlier one settled, so each `inputTranscription` now carries the whole cleaned-up
+     * transcript of the session, and Google's docs tell the client to replace its buffer with it. Appending
+     * it typed a dictation with pauses as A, A+B, A+B+C (#488). No prefix check can turn this back into an
+     * append: the earlier words may come back changed.
      */
-    private fun emitFinal(chunk: String) {
+    private fun emitSettled(transcript: String) {
         pendingInterim = ""
         audioSinceFinal = false
-        callbacks.onFinalSegment(chunk)
+        callbacks.onTranscriptReplaced(transcript)
     }
 
     private fun setup(): String = buildJsonObject {
@@ -940,7 +946,9 @@ private class GeminiRealtimeSession(
                 // VERBATIM would hand all of that to the rewording step instead — for a keyboard, clean
                 // text on arrival is worth more than a faithful record of the stumbles. The price is taken to
                 // be the batch model's, unmeasured here: "ignore what I said" reads as a correction too (see
-                // OpenAiCompatibleClient.transcribeGeminiInteractions).
+                // OpenAiCompatibleClient.transcribeGeminiInteractions). Since 2026-11-17 SMART also means
+                // voice editing across turns, with no switch of its own, and cumulative finals (#488).
+                // Kept over VERBATIM on Jannis's word: the clean-up is what this provider is chosen for.
                 put("mode", "SMART")
                 // The custom words (#466), beside the languages as Google documents them.
                 if (customVocabulary.isNotEmpty()) {
