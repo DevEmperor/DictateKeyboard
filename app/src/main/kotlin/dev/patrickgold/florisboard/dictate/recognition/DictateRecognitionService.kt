@@ -32,9 +32,20 @@ class DictateRecognitionService : RecognitionService() {
 
     private var session: RecognitionSession? = null
 
+    /**
+     * Android 15 binds a third-party recognition service with nothing but BIND_AUTO_CREATE (AOSP "Restrict
+     * RecognitionService process capabilities"; Android 14 still passed the caller's capabilities on). Unless
+     * something else keeps Dictate's process in the foreground — the floating button's accessibility service
+     * does — it may not use the microphone, and the framework's own RECORD_AUDIO check after this method
+     * answers the caller with ERROR_INSUFFICIENT_PERMISSIONS (#489, reproduced on an Android 15 emulator).
+     *
+     * Deliberately not done: making the caller's attribution context (`createContext` with
+     * `setNextAttributionSource`) and recording under it. The framework then skips its check, but the audio
+     * policy still silences the capture by Dictate's own process state, so the caller got a silent recording
+     * and "no speech" instead of an honest permission error (measured on the same emulator).
+     */
     override fun onStartListening(recognizerIntent: Intent, listener: Callback) {
         session?.cancel()
-        runCatching { listener.readyForSpeech(Bundle()) }
         session = RecognitionSession(applicationContext, hostFor(listener)).also { it.start() }
     }
 
@@ -54,6 +65,10 @@ class DictateRecognitionService : RecognitionService() {
     }
 
     private fun hostFor(listener: Callback) = object : RecognitionSession.Host {
+        override fun onReadyForSpeech() {
+            runCatching { listener.readyForSpeech(Bundle()) }
+        }
+
         override fun onBeginningOfSpeech() {
             runCatching { listener.beginningOfSpeech() }
         }

@@ -46,6 +46,8 @@ class RecognitionSession(
     /** Receives lifecycle + result callbacks; the service maps these to its `RecognitionService.Callback`,
      *  the activity updates its UI and returns an activity result. Only [onResults]/[onError] are required. */
     interface Host {
+        /** The microphone is open: what the caller says from now on is heard. */
+        fun onReadyForSpeech() {}
         fun onBeginningOfSpeech() {}
         fun onEndOfSpeech() {}
         fun onRmsChanged(rmsdB: Float) {}
@@ -68,10 +70,17 @@ class RecognitionSession(
             val startedMs = System.currentTimeMillis()
             var speechStarted = false
             var lastLoudMs = 0L
+            var ready = false
             // Poll the level rather than collecting it: audioLevel is a StateFlow, and once the user goes
             // quiet it settles on a constant value (exactly 0f) and stops emitting — so a collect-driven
             // check would freeze exactly when the silence timer needs to run.
             while (isActive && !completed && !stopping) {
+                // Ready once the recorder runs, not when the request arrived: audio focus and Bluetooth come
+                // first, and a caller that prompts "speak now" on ready would lose the first words (#489).
+                if (!ready && DictateController.state.value is DictateController.UiState.Recording) {
+                    ready = true
+                    host.onReadyForSpeech()
+                }
                 val level = DictateController.audioLevel.value
                 val now = System.currentTimeMillis()
                 host.onRmsChanged(level * 10f - 2f) // rough dB-ish for the caller's level meter
@@ -157,6 +166,7 @@ class RecognitionSession(
             }
             "noSpeech", "promptEcho" -> host.onError(SpeechRecognizer.ERROR_NO_MATCH)
             "apiError" -> host.onError(SpeechRecognizer.ERROR_NETWORK)
+            "recordingFailed" -> host.onError(SpeechRecognizer.ERROR_AUDIO)
             "cancelled" -> Unit // the caller aborted; nothing to deliver
             else -> host.onError(SpeechRecognizer.ERROR_CLIENT)
         }

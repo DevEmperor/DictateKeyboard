@@ -1335,6 +1335,7 @@ object DictateController {
         ) return
         outputTarget = OutputTarget.RECOGNITION_SERVICE
         recognitionFieldSensitive = sensitiveField
+        pttStopPending = false
         startRecording(context)
     }
 
@@ -1347,7 +1348,14 @@ object DictateController {
 
     /** Stops the recognition recording and transcribes it; the result flows to the recognition callback. */
     fun stopRecognition(context: Context) {
-        if (_state.value is UiState.Recording) stopAndTranscribe(context)
+        if (_state.value is UiState.Recording) {
+            stopAndTranscribe(context)
+        } else if (startJob?.isActive == true) {
+            // Still starting (audio focus, Bluetooth): end it the moment the recorder exists, as a released
+            // push-to-talk does (#489). Dropped here, the recording ran on until the silence timer ended it.
+            pttStopSends = true
+            pttStopPending = true
+        }
     }
 
     /** Aborts a recognition recording without transcribing (the caller cancelled). */
@@ -1703,7 +1711,19 @@ object DictateController {
                     // Most common cause is the missing RECORD_AUDIO permission (granted in onboarding).
                     appContext.getString(R.string.dictate__error_recording_failed, t.message ?: ""),
                 )
+                endRecognitionWithout("recordingFailed")
             }
+        }
+    }
+
+    /**
+     * Ends a system voice-input request that never reached [transcribe], whose outcome hook is the only one
+     * the caller hears (#489). Without it a request whose microphone failed, or that was stopped before a
+     * single sample, left the calling keyboard waiting for a result that never came.
+     */
+    private fun endRecognitionWithout(outcome: String) {
+        if (outputTarget == OutputTarget.RECOGNITION_SERVICE) {
+            dev.patrickgold.florisboard.dictate.recognition.RecognitionBridge.completeOutcome(outcome)
         }
     }
 
@@ -1836,6 +1856,7 @@ object DictateController {
             } else {
                 carry?.delete()
                 _state.value = UiState.Error(context.getString(R.string.dictate__error_no_audio))
+                endRecognitionWithout("noSpeech")
             }
             return
         }
