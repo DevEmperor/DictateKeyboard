@@ -88,6 +88,8 @@ class ProviderConfiguredTest {
     fun `on-device counts only once a model is on disk`() {
         val local = ProviderRegistry.LOCAL.id
         val default = ProviderRegistry.LOCAL.defaultTranscriptionModel!!
+        // The share screen relies on this to let a shared file through to the on-device engine.
+        assertFalse(ProviderAccount(providerId = local).requiresCredential)
         assertFalse(isProviderConfigured(accountsOf(), local, installed()))
         assertTrue(isProviderConfigured(accountsOf(), local, installed(default)))
 

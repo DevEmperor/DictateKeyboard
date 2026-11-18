@@ -224,11 +224,12 @@ fun TranscribeShareScreen(uris: List<Uri>, onClose: () -> Unit) {
         query = ""
         val lang = language
         val account = ImportTranscriber.accountFor(prefs)
-        val preset = ImportTranscriber.presetFor(account)
         refreshProvider()
-        if (account.apiKey.isBlank() && preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) {
+        if (account.apiKey.isBlank() && account.requiresCredential) {
             // Checked before the file is touched: failing at the upload would say the same thing three
-            // seconds later and with a worse message.
+            // seconds later and with a worse message. Asked of what the provider needs, as the keyboard
+            // does: the on-device engine, Ollama and a server of the user's own have no key, and a
+            // keyless one used to be refused here with "No API key set" while it dictated fine.
             busy = false
             needsKey = true
             error = context.getString(R.string.dictate__error_no_api_key)
