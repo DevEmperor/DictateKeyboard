@@ -79,7 +79,7 @@ data class ModelSpec(
  *
  * Filled from the provider check (private/testing/provider-check/) of 2026-11-03 and 2026-11-04: batch,
  * formats and streaming on the 3rd, the chat and reasoning matrix with a real rewording on the 4th; Gemini's
- * thinking on transcriptions on 2026-11-13. The
+ * thinking on transcriptions on 2026-11-13; ElevenLabs' Scribe v3 on 2026-11-18, a week after its release. The
  * presets' curated lists are made from it ([idsOf]), so the order here is the order the pickers offer.
  * Ollama, the on-device engine and servers of the user's own have no entries: their models are the user's.
  */
@@ -89,6 +89,7 @@ object ModelCatalog {
     private val NOV_4 = LocalDate.of(2026, 11, 4)
     private val NOV_11 = LocalDate.of(2026, 11, 11)
     private val NOV_13 = LocalDate.of(2026, 11, 13)
+    private val NOV_18 = LocalDate.of(2026, 11, 18)
 
     private val T = setOf(ModelRole.TRANSCRIPTION)
     private val R = setOf(ModelRole.REALTIME)
@@ -265,8 +266,17 @@ object ModelCatalog {
     )
 
     val ELEVENLABS = listOf(
-        ModelSpec("scribe_v2", T, verified = NOV_3),
-        ModelSpec("scribe_v2_realtime", R, verified = NOV_3),
+        // Scribe v3 (released 2026-11-10) takes the v2 requests unchanged, keyterm limits included, at v2's
+        // price ($0.20 an hour, Live $0.22; pricing page 2026-11-18). ElevenLabs lists v2 as the previous
+        // generation, with no end date.
+        ModelSpec("scribe_v3", T, verified = NOV_18),
+        ModelSpec("scribe_v2", T, verified = NOV_18),
+        ModelSpec(
+            "scribe_v3_live", R, verified = NOV_18,
+            // 60 s of speech without a pause: 149 of ~900 characters (2026-11-18), as with v2.
+            note = "Drops speech that never pauses long enough for its VAD to commit, like v2 Realtime.",
+        ),
+        ModelSpec("scribe_v2_realtime", R, verified = NOV_18),
     )
 
     val DEEPGRAM = listOf(

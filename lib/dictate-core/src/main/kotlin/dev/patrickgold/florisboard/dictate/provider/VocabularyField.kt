@@ -123,12 +123,13 @@ internal data class VocabularyField(
          * ElevenLabs' `keyterms` for files, one form field each: up to 1000, 50 characters and 5 words each,
          * none of `<>{}[]\`; the endpoint refused each of those by name, and a JSON list as one field for its
          * brackets. Past 100 terms every request bills at least 20 seconds, so a dictation never sends more.
+         * scribe_v3 refused a 51st character, a sixth word and braces in the same words (2026-11-18).
          */
         val ELEVENLABS = VocabularyField(maxTerms = 100, maxChars = 50, maxWords = 5, refused = "<>{}[]\\")
 
         /**
          * ElevenLabs' `keyterms` on the streaming socket: 50 terms of 20 characters, as the socket says when
-         * it refuses a 51st or a 21st.
+         * it refuses a 51st or a 21st. Same for scribe_v3_live and scribe_v2_realtime (2026-11-18).
          */
         val ELEVENLABS_STREAMING = VocabularyField(maxTerms = 50, maxChars = 20, maxWords = 5, refused = "<>{}[]\\")
 

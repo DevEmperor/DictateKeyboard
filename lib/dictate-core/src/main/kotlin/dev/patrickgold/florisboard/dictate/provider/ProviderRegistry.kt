@@ -509,12 +509,12 @@ object ProviderRegistry {
         baseUrl = "https://api.elevenlabs.io/v1/",
         capabilities = STT_ONLY,
         transcriptionApi = TranscriptionApi.ELEVENLABS_MULTIPART,
-        // /v1/models mixes TTS + STT models, so no clean STT filter — curated instead. scribe_v1 was
-        // retired on 2026-07-09, leaving scribe_v2.
+        // /v1/models mixes TTS + STT models, so no clean STT filter — curated instead (ModelCatalog). scribe_v1
+        // was retired on 2026-07-09; Scribe v3 came out on 2026-11-10 and is the default since 2026-11-18.
         supportsDynamicModels = false,
         // The keys page left settings for the developers section; the old path redirects (2026-09-21).
         apiKeyUrl = "https://elevenlabs.io/app/developers/api-keys",
-        defaultTranscriptionModel = "scribe_v2",
+        defaultTranscriptionModel = "scribe_v3",
         curatedTranscriptionModels = ModelCatalog.idsOf("elevenlabs", ModelRole.TRANSCRIPTION),
         // Read 2026-09-04: aac, aiff, ogg, mpeg/mp3, opus, wav, webm, flac, mp4/m4a — the most generous
         // list of any provider here, and one of only two that name Opus explicitly.
@@ -522,10 +522,10 @@ object ProviderRegistry {
             AudioContainer.AAC, AudioContainer.OGG, AudioContainer.MP3, AudioContainer.WAV,
             AudioContainer.WEBM, AudioContainer.FLAC, AudioContainer.M4A,
         ),
-        // Realtime (#128): Scribe v2 Realtime WebSocket (~150ms). Model id verified when the session is built.
+        // Realtime (#128): Scribe's realtime WebSocket (~150ms). Model id verified when the session is built.
         supportsRealtime = true,
         realtimeApi = RealtimeApi.ELEVENLABS,
-        defaultRealtimeModel = "scribe_v2_realtime",
+        defaultRealtimeModel = "scribe_v3_live",
         curatedRealtimeModels = ModelCatalog.idsOf("elevenlabs", ModelRole.REALTIME),
     )
 
