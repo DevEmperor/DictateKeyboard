@@ -405,4 +405,56 @@ class LocalModelCatalogTest {
             }
         }
     }
+
+    @Test
+    fun `a dictation language is handed to an installed model that speaks it`() {
+        val both = listOf("canary-180m-flash", "sense-voice-small")
+        // Canary speaks en/de/fr/es; SenseVoice zh/yue/en/ja/ko. Spanish stays on Canary, Chinese —
+        // including the regional variants the picker offers — goes to SenseVoice.
+        assertEquals(
+            "canary-180m-flash",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "es", both),
+        )
+        assertEquals(
+            "sense-voice-small",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "zh", both),
+        )
+        assertEquals(
+            "sense-voice-small",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "zh-CN", both),
+        )
+        assertEquals(
+            "sense-voice-small",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "yue-HK", both),
+        )
+        // And the other direction: the chosen model is the one that does not speak the language.
+        assertEquals(
+            "canary-180m-flash",
+            LocalModelCatalog.resolveForLanguage("sense-voice-small", "es", both),
+        )
+    }
+
+    @Test
+    fun `an unknown language or a model that is not installed keeps the chosen one`() {
+        val both = listOf("canary-180m-flash", "sense-voice-small")
+        // Auto-detect says nothing about the language, and no installed model speaks Galician.
+        assertEquals(
+            "canary-180m-flash",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", DictateLanguages.DETECT, both),
+        )
+        assertEquals(
+            "canary-180m-flash",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "gl", both),
+        )
+        // A chosen model that is missing is replaced by one that speaks the language, and a language
+        // nothing installed speaks keeps the choice rather than inventing one.
+        assertEquals(
+            "sense-voice-small",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "zh", listOf("sense-voice-small")),
+        )
+        assertEquals(
+            "canary-180m-flash",
+            LocalModelCatalog.resolveForLanguage("canary-180m-flash", "zh", listOf("canary-180m-flash")),
+        )
+    }
 }
