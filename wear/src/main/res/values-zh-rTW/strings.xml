@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wear_app_name">Dictate</string>
+    <string name="wear_ime_label">Dictate (Wear)</string>
+
+    <!-- Pager tabs (content descriptions) -->
+    <string name="wear_tab_numbers">123</string>
+    <string name="wear_tab_voice">語音</string>
+    <string name="wear_tab_emoji">表情符號</string>
+
+    <!-- Voice page status line -->
+    <string name="wear_status_tap">點一下開始語音輸入</string>
+    <string name="wear_status_transcribing">轉錄中…</string>
+    <string name="wear_status_rewording">改寫中…</string>
+    <string name="wear_status_error">發生錯誤 — 點一下重試</string>
+    <!-- The keyboard went away mid-dictation; the audio is kept and the big button sends it (#363). -->
+    <string name="wear_status_interrupted">已中斷 · 點一下傳送</string>
+
+    <!-- Content descriptions -->
+    <string name="wear_cd_stop">停止</string>
+    <string name="wear_cd_dictate">語音輸入</string>
+    <string name="wear_cd_cancel">取消</string>
+    <string name="wear_cd_pause">暫停</string>
+    <string name="wear_cd_resume">繼續</string>
+    <string name="wear_cd_backspace">退格</string>
+    <string name="wear_cd_enter">Enter</string>
+    <string name="wear_cd_resend">重新傳送</string>
+    <string name="wear_cd_discard">捨棄</string>
+    <!-- The big button once a dictation is in a field that sends/searches (#294), by the field's action -->
+    <string name="wear_cd_send">傳送</string>
+    <string name="wear_cd_search">搜尋</string>
+    <string name="wear_cd_go">前往</string>
+    <string name="wear_cd_done">完成</string>
+    <!-- The X under it: close the keyboard, the text stays in the field unsent -->
+    <string name="wear_cd_close">關閉</string>
+
+    <!-- Errors -->
+    <string name="wear_err_mic_grant">請在 Dictate 應用程式授予麥克風權限</string>
+    <string name="wear_err_mic_unavailable">無法使用麥克風</string>
+    <string name="wear_err_transcribe_failed">轉錄失敗</string>
+    <string name="wear_err_tap_to_retry">%1$s · 點一下重試</string>
+    <string name="wear_err_empty">空白結果 — 請檢查手機金鑰</string>
+    <string name="wear_err_no_speech">未偵測到語音</string>
+    <string name="wear_err_bad_key">手機金鑰無效</string>
+    <string name="wear_err_offline">手機未連線</string>
+    <string name="wear_err_quota">已達配額上限</string>
+    <string name="wear_err_unknown">未知錯誤</string>
+    <string name="wear_err_no_transport">找不到手機；請在 App 中同步金鑰</string>
+    <!-- The phone took the audio and then stopped reporting back (#363). -->
+    <string name="wear_err_phone_silent">手機沒有回應</string>
+    <!-- The field did not take the dictation (it went away); the text is kept, the big button inserts it (#294) -->
+    <string name="wear_err_not_inserted">尚未插入 · 點一下插入</string>
+
+    <!-- Settings sections -->
+    <string name="wear_sec_try">試試看</string>
+    <string name="wear_sec_setup">設定</string>
+    <string name="wear_sec_advanced">進階</string>
+
+    <!-- Try dictation demo -->
+    <string name="wear_try">試試語音輸入</string>
+    <string name="wear_try_stop">停止並轉錄</string>
+    <string name="wear_try_hint">開口說話，文字會顯示在這裡</string>
+    <string name="wear_try_tap_cancel">點一下取消</string>
+    <string name="wear_you_said">你說了：</string>
+
+    <!-- Setup: microphone -->
+    <string name="wear_mic_ok">麥克風 ✓</string>
+    <string name="wear_mic_grant">授予麥克風權限</string>
+    <string name="wear_mic_required">語音輸入必要權限</string>
+
+    <!-- Setup: keyboard -->
+    <string name="wear_kb_enable">啟用鍵盤</string>
+    <string name="wear_kb_enabled">鍵盤已啟用 ✓</string>
+    <string name="wear_kb_enable_on">可在任何應用程式中使用</string>
+    <string name="wear_kb_enable_off">請在設定中開啟</string>
+
+    <!-- Advanced -->
+    <string name="wear_key">手錶獨立金鑰</string>
+    <string name="wear_key_on">可單獨進行語音輸入</string>
+    <string name="wear_key_off">僅限透過手機連線</string>
+    <string name="wear_reword">自動改寫</string>
+    <string name="wear_reword_on">自動整理語音輸入內容</string>
+    <string name="wear_reword_off">原始文字</string>
+    <string name="wear_auto_send">自動傳送</string>
+    <string name="wear_auto_send_on">語音輸入後立即傳送</string>
+    <string name="wear_auto_send_off">先顯示 ✓ 確認</string>
+    <string name="wear_resync">從手機重新同步</string>
+
+    <!-- Status card -->
+    <string name="wear_conn_checking">正在檢查手機連線…</string>
+    <string name="wear_conn_ok">手機已連線</string>
+    <string name="wear_conn_out">手機超出連線範圍</string>
+    <string name="wear_path_phone">透過手機轉錄</string>
+    <string name="wear_path_watch">在手錶上轉錄</string>
+    <string name="wear_path_sync">請開啟手機 App 進行同步</string>
+
+    <!-- Footer version line. Explicitly "Wear OS" so a self-built / GitHub release APK is clearly the
+         watch build (its versionCode also lives in the +100000 band). Brand + numbers → not translated. -->
+    <string name="wear_version">Wear OS · v%1$s (%2$d)</string>
+</resources>
