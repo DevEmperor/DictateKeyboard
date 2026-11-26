@@ -30,6 +30,7 @@ class RealtimeProxyTest : FunSpec({
     class Recorder : RealtimeCallbacks {
         override fun onPartial(text: String) = Unit
         override fun onFinalSegment(text: String) = Unit
+        override fun onTranscriptReplaced(text: String) = Unit
         override fun onError(t: Throwable) = Unit
         override fun onClosed() = Unit
     }
