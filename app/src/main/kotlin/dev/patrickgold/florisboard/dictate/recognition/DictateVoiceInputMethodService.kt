@@ -25,6 +25,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.compose.ui.graphics.Color as ComposeColor
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.dictate.DictateController
@@ -146,6 +148,22 @@ class DictateVoiceInputMethodService : InputMethodService() {
             setBackgroundColor(bgColor)
             minimumHeight = dp(300)
             setPadding(dp(16), dp(20), dp(16), dp(40))
+            // From Android 15 the IME window is edge to edge, so a 3- or 2-button navigation bar (~48 dp) sat on
+            // "Tap to send" and the error buttons, which the fixed 40 dp only cleared for the gesture pill (#495).
+            // The main keyboard pads with safeDrawingPadding(); this is the same for a plain view. Never less
+            // than the old 40 dp, so a version that reports no inset looks as before.
+            ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+                val bars = insets.getInsets(
+                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+                view.setPadding(
+                    dp(16) + bars.left,
+                    dp(20),
+                    dp(16) + bars.right,
+                    maxOf(dp(40), dp(20) + bars.bottom),
+                )
+                insets
+            }
             addView(orbBox, LinearLayout.LayoutParams(dp(200), dp(200)))
             addView(status, LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
