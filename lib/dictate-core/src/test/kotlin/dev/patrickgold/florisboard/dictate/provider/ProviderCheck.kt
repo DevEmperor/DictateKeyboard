@@ -341,6 +341,11 @@ private class Check(
                 val left = CleanupGuard.wordsOf(text).filter { it in setOf("um", "uh", "er", "erm", "ähm", "äh") }.distinct()
                 "fillers left: ${left.joinToString().ifEmpty { "none" }}"
             },
+            // A keyboard writes what was said (#496): Azure began masking swear words with asterisks in 2026-11.
+            CleanupProbe("swear") { text ->
+                val words = CleanupGuard.wordsOf(text)
+                if ('*' !in text && "ass" in words && "shit" in words) "swear words kept ✓" else "swear words masked ✗"
+            },
         ) + requestTexts.map { (name, said) ->
             // Both ways round: no words of its own ("Paris"), and most of what was said still there, because an
             // order obeyed is made of the dictation's own words ("Banana.", "Ja.").
@@ -665,6 +670,7 @@ private class Check(
                 }
                 // A dictated request acted on, or a provider's cleanup the client did not trust or did not get.
                 tried.filter { "kept as said ✗" in it.detail }.forEach { note("`$model` $part ${it.probe}: answered or rewrote it") }
+                tried.filter { "swear words masked ✗" in it.detail }.forEach { note("`$model` $part ${it.probe}: masked or dropped the words") }
                 tried.filter { "fallingBack=transcript" in it.detail || "cannot take this recording" in it.detail }.forEach {
                     note("`$model` $part ${it.probe}: ${it.detail.substringAfter("⚠").take(140)}")
                 }

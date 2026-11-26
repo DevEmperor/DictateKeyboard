@@ -919,6 +919,8 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             // it would nudge every dictation towards a greeting nobody asked for.
             body shouldContain "\"phrases\":[\"DevEmperor\",\"Dictate\"]"
             body shouldNotContain "Vielen Dank"
+            // Azure masks swear words by default, and MAI honours it since about 2026-11-20 (#496).
+            body shouldContain "\"profanityFilterMode\":\"None\""
         }
     }
 
@@ -950,6 +952,8 @@ class OpenAiCompatibleClientNetworkTest : FunSpec({
             // transcribeStyle is documented for the 2 generation alone, so 1.5 is asked for nothing.
             body shouldNotContain "transcribeStyle"
             body shouldNotContain "phraseList"
+            // Masking applies to 1.5 as well (measured 2026-11-26), so the field goes to every generation.
+            body shouldContain "\"profanityFilterMode\":\"None\""
         }
     }
 

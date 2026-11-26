@@ -932,6 +932,9 @@ class OpenAiCompatibleClient(
      *  - `phraseList` carries the user's custom words, [TranscriptionRequest.vocabulary], as Google's
      *    dedicated model gets them (#292). A dedicated speech-to-text model has nowhere to put prose, so
      *    the style hint itself stays behind.
+     *  - `profanityFilterMode` is `None`: a keyboard writes what was said (#496). Azure's default is
+     *    `Masked`, and since about 2026-11-20 MAI honours it. Measured 2026-11-26 on MAI-Transcribe-2 and
+     *    1.5: "Juicy *** … damn good ****" without the field, the words as spoken with it.
      */
     private suspend fun transcribeAzure(
         request: TranscriptionRequest,
@@ -955,6 +958,7 @@ class OpenAiCompatibleClient(
                 },
             ),
             phraseList = VocabularyField.AZURE.fit(request.vocabulary).ifEmpty { null }?.let(::AzurePhraseListDto),
+            profanityFilterMode = AZURE_PROFANITY_FILTER_NONE,
         )
         val multipart = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -1941,6 +1945,8 @@ class OpenAiCompatibleClient(
         val locales: List<String>? = null,
         val enhancedMode: AzureEnhancedModeDto,
         val phraseList: AzurePhraseListDto? = null,
+        // No default, so it is always written: Azure's own default masks swear words (#496).
+        val profanityFilterMode: String,
     )
 
     @Serializable
@@ -2336,6 +2342,9 @@ class OpenAiCompatibleClient(
 
         /** Azure's readable style: fillers, false starts and self-corrections dropped. See [transcribeAzure]. */
         private const val AZURE_TRANSCRIBE_STYLE_CLEAN = "clean"
+
+        /** Swear words as spoken rather than masked with asterisks (#496). See [transcribeAzure]. */
+        private const val AZURE_PROFANITY_FILTER_NONE = "None"
 
         /** Whether [model] is Mistral's Voxtral, whose field for the custom words is `context_bias` (#466). */
         internal fun usesContextBias(model: String): Boolean = model.trim().lowercase().startsWith("voxtral")
