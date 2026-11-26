@@ -25,6 +25,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,6 +35,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,12 +52,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.AltRoute
 import androidx.compose.material.icons.automirrored.filled.Segment
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContactPage
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
@@ -88,6 +92,7 @@ import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.VerticalSplit
+import androidx.compose.material.icons.filled.Watch
 import androidx.compose.material.icons.outlined.Gif
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -114,14 +119,18 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -299,6 +308,24 @@ internal enum class TourArt {
 
     /** A dictation into a password field that never reaches the history below it (6.4). */
     PRIVATE_FIELD,
+
+    /** The mic, and one mark per page of the release arriving around it — the opening page (6.5). */
+    ICON_RING,
+
+    /** A new model arriving at the top of the on-device list and downloading (6.5). */
+    MODEL_DOWNLOAD,
+
+    /** A dictation that finds the home server gone and takes the detour to the second provider (6.5). */
+    FALLBACK_DETOUR,
+
+    /** The floating button with Next beside it, each cut adding a part to the caption above (6.5). */
+    BUBBLE_SEGMENTS,
+
+    /** Two providers' model chips turning over to the newer model, the custom words following (6.5). */
+    MODEL_TURN,
+
+    /** SayOVA's store banner, the one picture in the tours that is not drawn at runtime (6.5). */
+    SAYOVA_BANNER,
 }
 
 private val WhatsNewPages50: List<WhatsNewPage> = listOf(
@@ -1136,6 +1163,146 @@ private val WhatsNewPages64: List<WhatsNewPage> = listOf(
     ),
 )
 
+/**
+ * 6.5: four pages for what changes how Dictate is used, the list for everything else, and SayOVA.
+ *
+ * The encrypted backups were a page of their own in the first draft; Jannis moved them into the list,
+ * and gave the freed place to SayOVA, just before the outro. That page is the only one that is about
+ * another app, so it shows that app's own store picture rather than a drawing, and its button opens
+ * More apps, where the Play and website links are, instead of leaving for the store from inside a tour.
+ */
+private val WhatsNewPages65: List<WhatsNewPage> = listOf(
+    WhatsNewPage(
+        icon = Icons.Filled.AutoAwesome,
+        eyebrow = R.string.apptour65__intro_eyebrow,
+        title = R.string.apptour65__intro_title,
+        body = R.string.apptour65__intro_body,
+        cta = R.string.apptour__start,
+        route = null,
+        kind = PageKind.INTRO,
+        art = TourArt.ICON_RING,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.CloudOff,
+        eyebrow = R.string.apptour65__pro_eyebrow,
+        title = R.string.apptour65__pro_title,
+        body = R.string.apptour65__pro_body,
+        // The on-device models are a row of the providers list, so that is where the download is.
+        cta = R.string.apptour64__cta_providers,
+        route = Routes.Settings.DictateProviders,
+        highlight = true,
+        art = TourArt.MODEL_DOWNLOAD,
+    ),
+    WhatsNewPage(
+        icon = Icons.AutoMirrored.Filled.AltRoute,
+        eyebrow = R.string.apptour65__fallback_eyebrow,
+        title = R.string.apptour65__fallback_title,
+        body = R.string.apptour65__fallback_body,
+        // The fallback is chosen in the Transcription dialog at the top of the providers list.
+        cta = R.string.apptour64__cta_providers,
+        route = Routes.Settings.DictateProviders,
+        highlight = true,
+        art = TourArt.FALLBACK_DETOUR,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Mic,
+        eyebrow = R.string.apptour65__floating_eyebrow,
+        title = R.string.apptour65__floating_title,
+        body = R.string.apptour65__floating_body,
+        cta = R.string.apptour63__cta_try,
+        route = Routes.Settings.DictateFloatingButton,
+        art = TourArt.BUBBLE_SEGMENTS,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Dns,
+        eyebrow = R.string.apptour65__providers_eyebrow,
+        title = R.string.apptour65__providers_title,
+        body = R.string.apptour65__providers_body,
+        cta = R.string.apptour64__cta_providers,
+        route = Routes.Settings.DictateProviders,
+        art = TourArt.MODEL_TURN,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Bolt,
+        eyebrow = R.string.apptour64__more_eyebrow,
+        title = R.string.apptour65__more_title,
+        body = R.string.apptour64__more_body,
+        cta = R.string.apptour__next,
+        route = null,
+        art = TourArt.SMALL_THINGS,
+        sections = listOf(
+            TourListSection(
+                R.string.apptour64__more_dictation,
+                listOf(
+                    R.string.apptour65__more_dictation_midsentence,
+                    R.string.apptour65__more_dictation_fullstop,
+                    R.string.apptour65__more_dictation_ondevice,
+                    R.string.apptour65__more_dictation_share,
+                    R.string.apptour65__more_dictation_voiceinput,
+                ),
+            ),
+            TourListSection(
+                R.string.apptour65__more_providers,
+                listOf(
+                    R.string.apptour65__more_providers_reasoning,
+                    R.string.apptour65__more_providers_luna,
+                    R.string.apptour65__more_providers_gemini,
+                    R.string.apptour65__more_providers_thinking,
+                    R.string.apptour65__more_providers_models,
+                    R.string.apptour65__more_providers_azure,
+                    R.string.apptour65__more_providers_network,
+                    R.string.apptour65__more_providers_ownserver,
+                ),
+            ),
+            TourListSection(
+                R.string.apptour65__more_prompts,
+                listOf(
+                    R.string.apptour65__more_prompts_instruction,
+                    R.string.apptour65__more_prompts_question,
+                    R.string.apptour65__more_prompts_field,
+                ),
+            ),
+            TourListSection(
+                R.string.apptour64__more_typing,
+                listOf(
+                    R.string.apptour65__more_typing_polish,
+                    R.string.apptour65__more_typing_addresses,
+                    R.string.apptour65__more_typing_inside,
+                    R.string.apptour65__more_typing_enter,
+                ),
+            ),
+            TourListSection(
+                R.string.apptour65__more_settings,
+                listOf(
+                    R.string.apptour65__more_settings_backup,
+                    R.string.apptour65__more_settings_prompts,
+                    R.string.apptour65__more_settings_help,
+                    R.string.apptour65__more_settings_chinese,
+                ),
+            ),
+        ),
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Watch,
+        eyebrow = R.string.apptour65__sayova_eyebrow,
+        title = R.string.apptour65__sayova_title,
+        body = R.string.apptour65__sayova_body,
+        cta = R.string.dictate__promo_sayova_action,
+        route = Routes.Settings.MoreApps,
+        art = TourArt.SAYOVA_BANNER,
+    ),
+    WhatsNewPage(
+        icon = Icons.Filled.Celebration,
+        eyebrow = R.string.apptour65__outro_eyebrow,
+        title = R.string.apptour65__outro_title,
+        body = R.string.apptour65__outro_body,
+        cta = R.string.apptour__done,
+        route = null,
+        kind = PageKind.OUTRO,
+        art = TourArt.DONE_RING,
+    ),
+)
+
 internal val WHATS_NEW_TOURS: List<WhatsNewTourDef> = listOf(
     WhatsNewTourDef(VersionName(5, 0, 0), WhatsNewPages50),
     WhatsNewTourDef(VersionName(5, 1, 0), WhatsNewPages51),
@@ -1146,6 +1313,7 @@ internal val WHATS_NEW_TOURS: List<WhatsNewTourDef> = listOf(
     WhatsNewTourDef(VersionName(6, 2, 0), WhatsNewPages62),
     WhatsNewTourDef(VersionName(6, 3, 0), WhatsNewPages63),
     WhatsNewTourDef(VersionName(6, 4, 0), WhatsNewPages64),
+    WhatsNewTourDef(VersionName(6, 5, 0), WhatsNewPages65),
 )
 
 /**
@@ -4126,6 +4294,536 @@ private fun TourPrivateField() {
     }
 }
 
+/** Between two points, [t] of the way. */
+private fun between(from: Offset, to: Offset, t: Float): Offset =
+    Offset(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t)
+
+/**
+ * The opening page of 6.5: the mic, and around it the marks of the pages that follow arriving one by one —
+ * the offline model, the detour, Next, the providers, the small things, the watch.
+ *
+ * A table of contents again, as on every opening page since 6.2, but laid around the thing all of it
+ * serves rather than on keys: 6.2 lit keys, 6.3 lifted panels out of them, 6.4 turned them over.
+ */
+@Composable
+private fun TourIconRing() {
+    val accent = MaterialTheme.colorScheme.primary
+    val transition = rememberInfiniteTransition(label = "ring")
+    val cycle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(7000, easing = LinearEasing), RepeatMode.Restart),
+        label = "ring-cycle",
+    )
+    val marks = listOf(
+        Icons.Filled.CloudOff,
+        Icons.AutoMirrored.Filled.AltRoute,
+        ImageVector.vectorResource(R.drawable.ic_dictate_overlay_next),
+        Icons.Filled.Dns,
+        Icons.Filled.Bolt,
+        Icons.Filled.Watch,
+    )
+    val back = ((cycle - 0.88f) / 0.10f).coerceIn(0f, 1f)
+    val breath = 0.5f + 0.5f * sin(cycle * 6f * PI.toFloat())
+
+    Box(modifier = Modifier.size(width = 212.dp, height = 150.dp), contentAlignment = Alignment.Center) {
+        marks.forEachIndexed { index, mark ->
+            // From the top, clockwise, on an ellipse that suits the wide frame.
+            val angle = -PI / 2 + index * 2 * PI / marks.size
+            val arrive = ease(((cycle - (0.08f + index * 0.10f)) / 0.10f).coerceIn(0f, 1f)) * (1f - back)
+            Box(
+                modifier = Modifier
+                    .offset(x = (cos(angle) * 78).toFloat().dp, y = (sin(angle) * 54).toFloat().dp)
+                    .graphicsLayer {
+                        scaleX = 0.6f + 0.4f * arrive
+                        scaleY = 0.6f + 0.4f * arrive
+                        alpha = arrive
+                    }
+                    .size(34.dp)
+                    .clip(CircleShape)
+                    .background(accent.copy(alpha = 0.16f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(imageVector = mark, contentDescription = null, tint = accent, modifier = Modifier.size(18.dp))
+            }
+        }
+        Box(
+            modifier = Modifier
+                .size(54.dp)
+                .clip(CircleShape)
+                .background(accent.copy(alpha = 0.18f + 0.10f * breath)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(imageVector = Icons.Filled.Mic, contentDescription = null, tint = accent, modifier = Modifier.size(28.dp))
+        }
+    }
+}
+
+/**
+ * The on-device list with Fluid Speech Pro arriving above Parakeet Ultra and downloading, while Ultra
+ * stays where it was.
+ *
+ * The page's instruction is the picture: download the new one in that list, the old one keeps working.
+ * The names are the models' own and stay as they are in every language.
+ */
+@Composable
+private fun TourModelDownload() {
+    val accent = MaterialTheme.colorScheme.primary
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val transition = rememberInfiniteTransition(label = "download")
+    val cycle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(6500, easing = LinearEasing), RepeatMode.Restart),
+        label = "download-cycle",
+    )
+    val reset = ((cycle - 0.90f) / 0.10f).coerceIn(0f, 1f)
+    val arrive = ease((cycle / 0.14f).coerceIn(0f, 1f)) * (1f - reset)
+    val progress = ((cycle - 0.22f) / 0.42f).coerceIn(0f, 1f)
+    val done = cycle > 0.66f
+
+    Column(
+        modifier = Modifier
+            .width(220.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(muted.copy(alpha = 0.08f))
+            .padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        // Always composed, only faded: a row that came and went would move Ultra up and down.
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .alpha(arrive)
+                .offset(y = (-8).dp * (1f - arrive))
+                .clip(RoundedCornerShape(8.dp))
+                .background(accent.copy(alpha = 0.12f))
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(imageVector = Icons.Filled.PhoneAndroid, contentDescription = null, tint = accent, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = "Fluid Speech Pro",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = accent,
+                )
+                Box(
+                    modifier = Modifier
+                        .size(width = 70.dp, height = 5.dp)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(accent.copy(alpha = 0.30f)),
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Box(modifier = Modifier.size(26.dp), contentAlignment = Alignment.Center) {
+                Canvas(modifier = Modifier.size(26.dp)) {
+                    val stroke = 2.5.dp.toPx()
+                    drawArc(
+                        color = accent.copy(alpha = 0.20f),
+                        startAngle = 0f,
+                        sweepAngle = 360f,
+                        useCenter = false,
+                        style = Stroke(width = stroke),
+                    )
+                    drawArc(
+                        color = accent,
+                        startAngle = -90f,
+                        sweepAngle = 360f * progress,
+                        useCenter = false,
+                        style = Stroke(width = stroke, cap = StrokeCap.Round),
+                    )
+                }
+                Icon(
+                    imageVector = if (done) Icons.Filled.Check else Icons.Filled.ArrowDownward,
+                    contentDescription = null,
+                    tint = accent,
+                    modifier = Modifier.size(14.dp),
+                )
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(imageVector = Icons.Filled.PhoneAndroid, contentDescription = null, tint = muted, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(text = "Parakeet Ultra", style = MaterialTheme.typography.labelLarge, color = muted)
+                Box(
+                    modifier = Modifier
+                        .size(width = 62.dp, height = 5.dp)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(muted.copy(alpha = 0.22f)),
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Box(modifier = Modifier.size(26.dp), contentAlignment = Alignment.Center) {
+                Icon(imageVector = Icons.Filled.Check, contentDescription = null, tint = muted, modifier = Modifier.size(16.dp))
+            }
+        }
+    }
+}
+
+/**
+ * A dictation setting off for the home server, finding it gone, and taking the detour to the second
+ * provider — then the text arriving under it.
+ *
+ * The detour mark appears beside the mic at the moment of the switch, as the Smartbar shows it. The slow
+ * and the failing server are not drawn: they keep the dictation, and a picture cannot say "not this case".
+ */
+@Composable
+private fun TourFallbackDetour() {
+    val accent = MaterialTheme.colorScheme.primary
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val transition = rememberInfiniteTransition(label = "detour")
+    val cycle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(6800, easing = LinearEasing), RepeatMode.Restart),
+        label = "detour-cycle",
+    )
+    val reset = ((cycle - 0.90f) / 0.10f).coerceIn(0f, 1f)
+    val toServer = ((cycle - 0.06f) / 0.20f).coerceIn(0f, 1f)
+    val down = ((cycle - 0.26f) / 0.06f).coerceIn(0f, 1f) * (1f - reset)
+    val badge = ease(((cycle - 0.34f) / 0.06f).coerceIn(0f, 1f)) * (1f - reset)
+    val toCloud = ((cycle - 0.40f) / 0.20f).coerceIn(0f, 1f)
+    val arrived = ease(((cycle - 0.60f) / 0.06f).coerceIn(0f, 1f)) * (1f - reset)
+    val written = ((cycle - 0.66f) / 0.18f).coerceIn(0f, 1f) * (1f - reset)
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(212.dp)) {
+        Box(modifier = Modifier.fillMaxWidth().height(116.dp)) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val mic = Offset(24.dp.toPx(), size.height / 2f)
+                val server = Offset(size.width - 20.dp.toPx(), 20.dp.toPx())
+                val cloud = Offset(size.width - 20.dp.toPx(), size.height - 20.dp.toPx())
+                // Each path from rim to rim, so it does not show through the translucent circles.
+                fun path(to: Offset, color: Color) {
+                    val dx = to.x - mic.x
+                    val dy = to.y - mic.y
+                    val length = kotlin.math.sqrt(dx * dx + dy * dy)
+                    val start = between(mic, to, 26.dp.toPx() / length)
+                    val end = between(mic, to, 1f - 22.dp.toPx() / length)
+                    drawLine(
+                        color = color,
+                        start = start,
+                        end = end,
+                        strokeWidth = 2.dp.toPx(),
+                        cap = StrokeCap.Round,
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 5.dp.toPx())),
+                    )
+                }
+                path(server, muted.copy(alpha = 0.30f))
+                path(cloud, lerp(muted.copy(alpha = 0.30f), accent.copy(alpha = 0.70f), badge))
+                val dot = 5.dp.toPx()
+                if (toServer in 0.001f..0.999f) {
+                    drawCircle(color = accent, radius = dot, center = between(mic, server, toServer * 0.80f))
+                }
+                if (toCloud in 0.001f..0.999f) {
+                    drawCircle(color = accent, radius = dot, center = between(mic, cloud, toCloud * 0.85f))
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(accent.copy(alpha = 0.18f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(imageVector = Icons.Filled.Mic, contentDescription = null, tint = accent, modifier = Modifier.size(24.dp))
+            }
+            // The detour mark, at the mic's shoulder.
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .offset(x = 34.dp, y = (-22).dp)
+                    .alpha(badge)
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .background(accent),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.AltRoute,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(14.dp),
+                )
+            }
+            // The home server, struck through once it does not answer.
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(lerp(accent.copy(alpha = 0.16f), muted.copy(alpha = 0.10f), down)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Dns,
+                    contentDescription = null,
+                    tint = lerp(accent, muted.copy(alpha = 0.45f), down),
+                    modifier = Modifier.size(20.dp),
+                )
+                Canvas(modifier = Modifier.size(26.dp)) {
+                    if (down > 0f) {
+                        drawLine(
+                            color = muted,
+                            start = Offset(0f, 0f),
+                            end = Offset(size.width * down, size.height * down),
+                            strokeWidth = 2.5.dp.toPx(),
+                            cap = StrokeCap.Round,
+                        )
+                    }
+                }
+            }
+            // The second provider, lit once the dictation reaches it.
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(lerp(muted.copy(alpha = 0.10f), accent.copy(alpha = 0.22f), arrived)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Cloud,
+                    contentDescription = null,
+                    tint = lerp(muted.copy(alpha = 0.55f), accent, arrived),
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        // The text the second provider sent back, written into the field.
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.height(8.dp)) {
+            listOf(46f, 64f, 38f).forEachIndexed { index, width ->
+                val grow = ((written - index * 0.28f) / 0.30f).coerceIn(0f, 1f)
+                Box(
+                    modifier = Modifier
+                        .size(width = (width * grow).dp, height = 7.dp)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(accent.copy(alpha = 0.70f)),
+                )
+            }
+        }
+    }
+}
+
+/**
+ * The floating button recording, with Next beside it in the pause's seat: each press cuts a part, and
+ * the part appears in the caption above while the speaking goes on. At the stop the whole text is
+ * taken, which is when the caption turns the accent colour.
+ */
+@Composable
+private fun TourBubbleSegments() {
+    val accent = MaterialTheme.colorScheme.primary
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val onAccent = MaterialTheme.colorScheme.onPrimary
+    val transition = rememberInfiniteTransition(label = "segments")
+    val cycle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(7200, easing = LinearEasing), RepeatMode.Restart),
+        label = "segments-cycle",
+    )
+    val reset = ((cycle - 0.90f) / 0.10f).coerceIn(0f, 1f)
+    val cuts = listOf(0.20f, 0.40f, 0.60f)
+    val stopped = cycle > 0.72f
+    val taken = ease(((cycle - 0.72f) / 0.08f).coerceIn(0f, 1f)) * (1f - reset)
+    // A press is a quick shrink and an overshoot, as pulseNext() does it on the real button.
+    val press = cuts.maxOf { at ->
+        val t = ((cycle - at) / 0.06f).coerceIn(0f, 1f)
+        if (t <= 0f || t >= 1f) 0f else sin(t * PI.toFloat())
+    }
+    val breath = if (stopped) 0f else 0.5f + 0.5f * sin(cycle * 10f * PI.toFloat())
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(212.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(muted.copy(alpha = 0.10f))
+                .padding(horizontal = 12.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            listOf(150f, 112f, 168f).forEachIndexed { index, width ->
+                val shown = ease(((cycle - cuts[index] - 0.04f) / 0.08f).coerceIn(0f, 1f)) * (1f - reset)
+                Box(
+                    modifier = Modifier
+                        .alpha(shown)
+                        .size(width = width.dp, height = 7.dp)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(lerp(muted.copy(alpha = 0.40f), accent, taken)),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(14.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .graphicsLayer {
+                        scaleX = 1f - 0.18f * press
+                        scaleY = 1f - 0.18f * press
+                        alpha = 1f - taken
+                    }
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(lerp(muted.copy(alpha = 0.16f), accent.copy(alpha = 0.30f), press)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_dictate_overlay_next),
+                    contentDescription = null,
+                    tint = accent,
+                    modifier = Modifier.size(16.dp),
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
+                // The recording halo, always composed so the row never shifts.
+                Canvas(modifier = Modifier.size(60.dp)) {
+                    if (breath > 0f) {
+                        drawCircle(color = accent.copy(alpha = 0.10f + 0.10f * breath), radius = size.minDimension / 2f * (0.84f + 0.16f * breath))
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .size(46.dp)
+                        .clip(CircleShape)
+                        .background(accent),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = if (stopped && reset < 1f) Icons.Filled.Check else ImageVector.vectorResource(R.drawable.ic_dictate_overlay_mic),
+                        contentDescription = null,
+                        tint = onAccent,
+                        modifier = Modifier.size(22.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** The providers on [TourModelTurn], each with the model it had and the one it has now. */
+private val TOUR_MODEL_TURNS: List<Triple<Int, String, String>> = listOf(
+    Triple(R.drawable.ic_provider_elevenlabs, "scribe_v2", "scribe_v3"),
+    Triple(R.drawable.ic_provider_assemblyai, "universal-3-5-pro", "dictation"),
+)
+
+/**
+ * Two providers whose model chip turns over to the new one — Scribe v3 and AssemblyAI's Dictation —
+ * and then a few custom words rising into the list, since they now reach every provider.
+ *
+ * The chips carry the real model ids, which are what the model field shows and stay the same in every
+ * language. The words are bars: any real word would be the wrong word for most readers.
+ */
+@Composable
+private fun TourModelTurn() {
+    val accent = MaterialTheme.colorScheme.primary
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val transition = rememberInfiniteTransition(label = "modelturn")
+    val cycle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(7000, easing = LinearEasing), RepeatMode.Restart),
+        label = "modelturn-cycle",
+    )
+    val back = ((cycle - 0.88f) / 0.10f).coerceIn(0f, 1f)
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(220.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(muted.copy(alpha = 0.08f))
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            TOUR_MODEL_TURNS.forEachIndexed { index, (mark, before, after) ->
+                val out = ((cycle - (0.12f + index * 0.18f)) / 0.10f).coerceIn(0f, 1f)
+                val turn = (out - back).coerceIn(0f, 1f)
+                val faceUp = turn > 0.5f
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(mark),
+                        contentDescription = null,
+                        tint = muted,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(width = (48 - index * 10).dp, height = 7.dp)
+                            .clip(RoundedCornerShape(percent = 50))
+                            .background(muted.copy(alpha = 0.40f)),
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer { scaleX = abs(cos(PI.toFloat() * turn)) }
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(if (faceUp) accent.copy(alpha = 0.20f) else muted.copy(alpha = 0.12f))
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                    ) {
+                        Text(
+                            text = if (faceUp) after else before,
+                            style = MaterialTheme.typography.labelMedium,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = if (faceUp) FontWeight.Bold else FontWeight.Normal,
+                            color = if (faceUp) accent else muted,
+                        )
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(14.dp))
+        // The custom words, rising into the list.
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.height(30.dp)) {
+            listOf(38f, 52f, 30f).forEachIndexed { index, width ->
+                val rise = ease(((cycle - (0.54f + index * 0.08f)) / 0.12f).coerceIn(0f, 1f)) * (1f - back)
+                Box(
+                    modifier = Modifier
+                        .offset(y = 12.dp * (1f - rise))
+                        .alpha(rise)
+                        .clip(RoundedCornerShape(percent = 50))
+                        .background(accent.copy(alpha = 0.16f))
+                        .padding(horizontal = 9.dp, vertical = 7.dp),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(width = width.dp, height = 6.dp)
+                            .clip(RoundedCornerShape(percent = 50))
+                            .background(accent.copy(alpha = 0.70f)),
+                    )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * SayOVA's store banner (6.5). The one picture in the tours that is not drawn here: the page is about
+ * another app, and its own picture is what people will meet in the store. English, like the banner on
+ * the More apps page — Jannis's rule for SayOVA's pictures; the text around it is translated.
+ */
+@Composable
+private fun TourSayovaBanner() {
+    Image(
+        painter = painterResource(R.drawable.sayova_feature_graphic),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1024f / 500f)
+            .clip(RoundedCornerShape(16.dp)),
+    )
+}
+
 /**
  * The lists under the "also" page's text (6.4): a card per area, one line per change.
  *
@@ -4255,6 +4953,12 @@ private fun PageContent(page: WhatsNewPage) {
                 TourArt.PROVIDER_ARRIVE -> TourProviderArrive()
                 TourArt.COMMAND_WORD -> TourCommandWord()
                 TourArt.PRIVATE_FIELD -> TourPrivateField()
+                TourArt.ICON_RING -> TourIconRing()
+                TourArt.MODEL_DOWNLOAD -> TourModelDownload()
+                TourArt.FALLBACK_DETOUR -> TourFallbackDetour()
+                TourArt.BUBBLE_SEGMENTS -> TourBubbleSegments()
+                TourArt.MODEL_TURN -> TourModelTurn()
+                TourArt.SAYOVA_BANNER -> TourSayovaBanner()
             }
         } else {
             Box(

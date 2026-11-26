@@ -1211,6 +1211,55 @@
     <string name="apptour64__outro_eyebrow">That is 6.4</string>
     <string name="apptour64__outro_title">More on the phone, more your own</string>
     <string name="apptour64__outro_body">Translation and the new offline model work without a connection, and everything else still runs the way you set it up — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
+    <string name="apptour65__intro_eyebrow">Dictate 6.5</string>
+    <string name="apptour65__intro_title">Fewer mistakes offline, and a plan B for your provider</string>
+    <string name="apptour65__intro_body">Fluid Speech Pro makes fewer mistakes on the phone itself. When your provider can’t be reached, another one takes over. The floating button handles long dictations, the providers bring newer models, and your custom words now reach all of them.</string>
+    <string name="apptour65__pro_eyebrow">New offline model</string>
+    <string name="apptour65__pro_title" comment="Fluid Speech Pro is a model name and stays as it is">Fluid Speech Pro: fewer mistakes, right on the phone</string>
+    <string name="apptour65__pro_body" comment="Fluid Speech Pro and Parakeet Ultra are model names and stay as they are">Fluid Speech Pro is a new on-device model for 25 European languages. It makes about a fifth fewer mistakes than Parakeet Ultra — in German 4.7 words in a hundred instead of 5.7 — and is barely slower. Download it in the list of on-device models (729 MB). Ultra stays and keeps working; delete it once you have switched if you want the space back.</string>
+    <string name="apptour65__fallback_eyebrow">New: fallback</string>
+    <string name="apptour65__fallback_title">When your provider can’t be reached, another one takes over</string>
+    <string name="apptour65__fallback_body">Under AI providers › Transcription, choose a second provider as the fallback. If your main one can’t be reached — you are offline, or the server at home is down — the fallback takes the dictation within seconds, and a detour icon in the Smartbar shows it. A provider that answers slowly or with an error keeps the dictation, so nothing is paid for twice. With On-device as the fallback, you can even dictate where there is no signal at all.</string>
+    <string name="apptour65__floating_eyebrow">Floating button</string>
+    <string name="apptour65__floating_title">Long dictations from the floating button</string>
+    <string name="apptour65__floating_body">With long-form dictation on, the floating button gets Next beside it: each part is transcribed while you keep talking, the caption beside the button shows it, and the whole text goes into the field when you stop. The button can pause too, and you pick its extra buttons in one list. Holding it opens a menu that also switches the transcription language.</string>
+    <string name="apptour65__providers_eyebrow">Providers</string>
+    <string name="apptour65__providers_title">Newer models, and your custom words everywhere</string>
+    <string name="apptour65__providers_body" comment="Scribe v3 and dictation are model names and stay as they are">ElevenLabs now transcribes with Scribe v3, which ElevenLabs says makes 27 % fewer errors at the same price; accounts that chose v2 keep it. AssemblyAI offers the model “dictation”: cleaned-up text in under a second, without fillers and false starts, at about three times the price. And your custom words reach every provider in the field it has for them, real-time transcription included. Deepgram, AssemblyAI and ElevenLabs charge a little extra for them.</string>
+    <string name="apptour65__more_title">Everything else in 6.5</string>
+    <string name="apptour65__more_dictation_midsentence">A dictation into the middle of a sentence starts with a small letter and leaves its full stop off, and names keep their capital.</string>
+    <string name="apptour65__more_dictation_fullstop">New switch under Output: leave off the full stop when a dictation is a single sentence.</string>
+    <string name="apptour65__more_dictation_ondevice">On-device transcription loads its model while you are still speaking, so the text comes sooner after you stop.</string>
+    <string name="apptour65__more_dictation_share">A recording shared to Dictate gets its own language choice, remembered for next time.</string>
+    <string name="apptour65__more_dictation_voiceinput">As Android’s voice input, Dictate is found on phones in any language, answers every app that asks, and stays clear of a button navigation bar.</string>
+    <string name="apptour65__more_providers" comment="Heading of a group of small changes on the what\'s-new page">Providers</string>
+    <string name="apptour65__more_providers_reasoning">Reasoning effort is now set in each provider, offering only the values its model accepts. A choice you had made moves to the nearest one.</string>
+    <string name="apptour65__more_providers_luna" comment="GPT-6 Luna and GPT-4 are model names">OpenAI rewords with GPT-6 Luna by default, as OpenAI switches the GPT-4 models off in January.</string>
+    <string name="apptour65__more_providers_gemini">Gemini’s real-time transcription no longer repeats earlier text after a pause, and carries out instructions you speak, such as “make it more formal”.</string>
+    <string name="apptour65__more_providers_thinking">Gemini’s chat models can transcribe at a thinking level you choose.</string>
+    <string name="apptour65__more_providers_models" comment="Universal-3.5 Pro and stt-async-v6 are model names">AssemblyAI now uses Universal-3.5 Pro by default, and Soniox stt-async-v6.</string>
+    <string name="apptour65__more_providers_azure">Azure writes swear words as spoken instead of as asterisks.</string>
+    <string name="apptour65__more_providers_network" comment="Cloudflare Access is a product name">The proxy also carries real-time transcription and the model lists, and a provider account can present a client certificate, for servers behind Cloudflare Access.</string>
+    <string name="apptour65__more_providers_ownserver">Prompts and shared recordings work with a server of your own that needs no key.</string>
+    <string name="apptour65__more_prompts" comment="Heading of a group of small changes on the what\'s-new page">Prompts</string>
+    <string name="apptour65__more_prompts_instruction">Auto-formatting follows the rewording instruction you wrote.</string>
+    <string name="apptour65__more_prompts_question">A prompt works on a dictated question instead of answering it.</string>
+    <string name="apptour65__more_prompts_field">A prompt with nothing selected works on the whole field, and says so when an app won’t hand the field over.</string>
+    <string name="apptour65__more_typing_polish">Polish suggestions put back the letters people leave off: ą, ć, ę, ł, ń, ó, ś, ź, ż.</string>
+    <string name="apptour65__more_typing_addresses">Email addresses and names with dots appear in the strip, just as you type them.</string>
+    <string name="apptour65__more_typing_inside">A suggestion picked with the cursor inside a word replaces the whole word.</string>
+    <string name="apptour65__more_typing_enter">A long press on Enter sends a real Enter key, for terminals.</string>
+    <string name="apptour65__more_settings" comment="Heading of a group of small changes on the what\'s-new page">Backups and settings</string>
+    <string name="apptour65__more_settings_backup">A backup can include your API keys, locked with a password. Restoring merges without doubling anything and erases only what you ticked.</string>
+    <string name="apptour65__more_settings_prompts">Saved prompts move with Android’s own backup and phone-to-phone transfer.</string>
+    <string name="apptour65__more_settings_help">A Help row on the settings home screen opens the new user guide.</string>
+    <string name="apptour65__more_settings_chinese">Dictate is now available in Traditional Chinese (Taiwan), thanks to a contributor.</string>
+    <string name="apptour65__sayova_eyebrow">From the developer of Dictate</string>
+    <string name="apptour65__sayova_title" comment="SayOVA is an app name and stays as it is">SayOVA: an AI assistant on your watch</string>
+    <string name="apptour65__sayova_body" comment="SayOVA is an app name; Wear OS, Google Gemini and OpenAI are product names">Talk to Google Gemini or OpenAI straight from your Wear OS watch: speak naturally, interrupt whenever you like, and read along as it answers. SayOVA interprets between 21 languages, sets timers, saves notes and prepares messages on your phone. Like Dictate, it runs on your own API key, without an account.</string>
+    <string name="apptour65__outro_eyebrow">That is 6.5</string>
+    <string name="apptour65__outro_title">Steadier, wherever you dictate</string>
+    <string name="apptour65__outro_body">Fluid Speech Pro works without a connection, the fallback steps in when your server is away, and everything still runs the way you set it up — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
     <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
