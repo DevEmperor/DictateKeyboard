@@ -19,6 +19,8 @@ import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.dictateProxyConfig
 import dev.patrickgold.florisboard.dictate.promptReasoningWire
 import dev.patrickgold.florisboard.dictate.provider.DictateRewording
+import dev.patrickgold.florisboard.dictate.provider.LocalModelCatalog
+import dev.patrickgold.florisboard.dictate.provider.LocalModelManager
 import dev.patrickgold.florisboard.dictate.provider.LocalTranscriptionProvider
 import dev.patrickgold.florisboard.dictate.provider.OpenAiCompatibleClient
 import dev.patrickgold.florisboard.dictate.provider.ProviderAccount
@@ -53,8 +55,12 @@ object PhoneTranscriber {
         val id = prefs.dictate.transcriptionProviderId.get()
         val account = prefs.dictate.providerAccounts.get().getOrEmpty(id)
         val preset = presetFor(account)
-        val model = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" }
         val language = prefs.dictate.activeInputLanguage.get().takeIf { it != DictateLanguages.DETECT }
+        val model = LocalModelCatalog.resolveForLanguage(
+            chosen = account.transcriptionModel.ifBlank { preset.defaultTranscriptionModel ?: "" },
+            language = prefs.dictate.activeInputLanguage.get(),
+            installed = LocalModelManager.installedIds(context),
+        )
 
         val request = TranscriptionRequest(
             audioFile = audio, model = model, language = language,

@@ -10,6 +10,9 @@
 
 package dev.patrickgold.florisboard.dictate.provider
 
+import dev.patrickgold.florisboard.dictate.DictateLanguages
+import java.util.Locale
+
 /**
  * One downloadable file of an on-device model. [destName] is the fixed name it is stored under (so the
  * runtime stays variant-agnostic — see [LocalTranscriptionProvider]); [sizeBytes] and [sha256] are
@@ -1042,6 +1045,34 @@ object LocalModelCatalog {
     fun kindOf(id: String): LocalModelKind = byId(id)?.kind ?: LocalModelKind.WHISPER
 
     fun byId(id: String): LocalModelSpec? = all.firstOrNull { it.id == id }
+
+    /**
+     * The on-device model to run for [language], given the model the user picked ([chosen]) and the
+     * catalog ids [installed] on the device.
+     *
+     * A local recognizer only speaks the languages it was trained on, and the app used to hand every
+     * dictation to the one model in the account: Canary forces anything outside en/de/fr/es to English,
+     * and SenseVoice would have to detect the rest. So a user who dictates in two languages had to pick
+     * one and lose the other. When the chosen model does not speak the language and an installed model
+     * does, the latter is used; otherwise [chosen] is kept, so a language no installed model speaks
+     * behaves exactly as before.
+     *
+     * [language] is a dictation code (`es`, `zh-CN`, `yue-HK`, or `detect`); the region is dropped
+     * because a model speaks a language rather than a region. Streaming models qualify — a batch path
+     * may run one — but an offline model is preferred when both speak the language.
+     */
+    fun resolveForLanguage(chosen: String, language: String, installed: Collection<String>): String {
+        val lang = language.lowercase(Locale.ROOT).substringBefore('-')
+        if (lang.isBlank() || lang == DictateLanguages.DETECT) return chosen
+        val chosenSpec = byId(chosen)
+        if (chosenSpec != null && lang in chosenSpec.languages) return chosen
+        val installedSet = installed.toSet()
+        return all
+            .filter { it.id in installedSet && lang in it.languages }
+            .minByOrNull { if (it.isStreaming) 1 else 0 }
+            ?.id
+            ?: chosen
+    }
 
     /** The streaming models, in display order — the "Live" group of the on-device picker (#233). */
     val streaming: List<LocalModelSpec> get() = all.filter { it.isStreaming }

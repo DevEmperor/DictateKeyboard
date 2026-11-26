@@ -5186,7 +5186,17 @@ object DictateController {
             ?: preset.defaultTranscriptionModel
             ?: fallback
         if (preset.transcriptionApi != TranscriptionApi.LOCAL_ONDEVICE) return chosen
-        if (chosen.isNotBlank() && LocalModelManager.isInstalled(context, chosen)) return chosen
+        // The language of this dictation, not the account, decides which local model may run it: a
+        // model never trained on the language cannot transcribe it (Canary forces everything outside
+        // its four to English), so an installed model that speaks it is used instead. Resolved before
+        // the not-installed fallback below, so a language match can also rescue a missing chosen model.
+        val installed = LocalModelManager.installedIds(context)
+        val forLanguage = LocalModelCatalog.resolveForLanguage(
+            chosen = chosen,
+            language = prefs.dictate.activeInputLanguage.get(),
+            installed = installed,
+        )
+        if (forLanguage.isNotBlank() && forLanguage in installed) return forLanguage
         return account.realtimeModel.takeIf {
             it.isNotBlank() && LocalModelManager.isInstalled(context, it)
         } ?: chosen
