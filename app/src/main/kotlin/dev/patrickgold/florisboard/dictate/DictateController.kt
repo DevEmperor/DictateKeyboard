@@ -2253,6 +2253,7 @@ object DictateController {
                             // Single-call multimodal (issue #130): route audio through chat/completions.
                             useChatAudio = chatAudio,
                             trustUserCerts = account.trustUserCerts,
+                            clientCertAlias = account.clientCertAlias,
                             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                             handOverUnreachable = fallbackId != null,
                         ).transcribe(
@@ -2271,6 +2272,7 @@ object DictateController {
                                 proxy = prefs.dictate.dictateProxyConfig(),
                                 useChatAudio = chatAudio,
                                 trustUserCerts = account.trustUserCerts,
+                                clientCertAlias = account.clientCertAlias,
                                 timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                                 handOverUnreachable = fallbackId != null,
                             ).transcribe(
@@ -2963,6 +2965,7 @@ object DictateController {
                     vocabulary = customWordList(prefs),
                     proxy = prefs.dictate.dictateProxyConfig(),
                     trustUserCerts = account.trustUserCerts,
+                    clientCertAlias = account.clientCertAlias,
                 )
             }
         }.getOrElse { realtimeFailed = true; null } ?: return null
@@ -3547,6 +3550,7 @@ object DictateController {
                         proxy = prefs.dictate.dictateProxyConfig(),
                         useChatAudio = false,
                         trustUserCerts = account.trustUserCerts,
+                        clientCertAlias = account.clientCertAlias,
                         timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                         handOverUnreachable = fallbackId != null,
                     ).transcribe(request)
@@ -3560,6 +3564,7 @@ object DictateController {
                             proxy = prefs.dictate.dictateProxyConfig(),
                             useChatAudio = false,
                             trustUserCerts = account.trustUserCerts,
+                            clientCertAlias = account.clientCertAlias,
                             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                             handOverUnreachable = fallbackId != null,
                         ).transcribe(request.copy(audioFile = toUpload))
@@ -5016,6 +5021,7 @@ object DictateController {
                     baseUrlOverride = baseUrl,
                     proxy = prefs.dictate.dictateProxyConfig(),
                     trustUserCerts = account.trustUserCerts,
+                    clientCertAlias = account.clientCertAlias,
                 ).listModels()
             }
         }
@@ -5073,6 +5079,7 @@ object DictateController {
             baseUrlOverride = baseUrlOverrideFor(account),
             proxy = prefs.dictate.dictateProxyConfig(),
             trustUserCerts = account.trustUserCerts,
+            clientCertAlias = account.clientCertAlias,
             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
         )
         // Reasoning (#141): the account's own setting, unless the prompt asks for a level of its own (#155).

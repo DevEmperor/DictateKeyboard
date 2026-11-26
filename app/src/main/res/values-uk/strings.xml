@@ -1726,6 +1726,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Узагалі без обробки; повертається до Розпізнавання мовлення, якщо телефон не підтримує</string>
     <string name="dictate__trust_user_certs_title">Довіряти сертифікатам користувача</string>
     <string name="dictate__trust_user_certs_summary">Довіряти встановленим вами сертифікатам ЦС для власних точок за приватним ЦС.</string>
+    <string name="dictate__client_cert_title">Сертифікат клієнта</string>
     <string name="dictate__stats_title">Статистика</string>
     <string name="dictate__stats_menu_summary">Слова, заощаджений час, серія та більше</string>
     <string name="dictate__history_title">Історія</string>

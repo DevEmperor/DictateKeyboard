@@ -69,6 +69,11 @@ data class ProviderConfig(
      */
     val trustUserCerts: Boolean = false,
     /**
+     * KeyChain alias of the client certificate to present to a server that asks for one (mutual TLS,
+     * #498), or "" for none. See [ClientCertificates].
+     */
+    val clientCertAlias: String = "",
+    /**
      * Curated model ids for providers without an OpenAI-style `/models` catalog (ElevenLabs, Deepgram,
      * AssemblyAI, issue #143): [OpenAiCompatibleClient.listModels] returns these offline so the model
      * picker fills without a live `/models` call. Not a connection test — that has its own authenticated

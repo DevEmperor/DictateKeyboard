@@ -2296,6 +2296,7 @@
     <string name="dictate__proxy_password_title" comment="Label for the proxy password field">密碼</string>
     <string name="dictate__trust_user_certs_title" comment="Title of the setting to trust user-installed CA certificates">信任使用者憑證</string>
     <string name="dictate__trust_user_certs_summary" comment="Summary explaining the user-installed CA trust setting">信任你自行安裝的 CA 憑證，適用於使用私有 CA 的自架端點。</string>
+    <string name="dictate__client_cert_title">用戶端憑證</string>
 
     <!-- Dictate model picker -->
     <string name="dictate__model_picker_title" comment="Title of the model picker dialog">選擇模型</string>

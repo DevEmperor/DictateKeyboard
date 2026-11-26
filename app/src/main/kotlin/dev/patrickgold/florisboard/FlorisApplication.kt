@@ -83,6 +83,17 @@ class FlorisApplication : Application() {
         // preference store, the dictionaries, the Wear publisher would all be a second copy of the
         // keyboard in memory, in the process that exists precisely to keep memory out of the keyboard.
         if (isTranslationEngineProcess()) return
+        // Mutual TLS (#498): the network code asks for a client certificate by its KeyChain alias, during a
+        // handshake and so off the main thread, and KeyChain needs a Context to answer.
+        dev.patrickgold.florisboard.dictate.provider.ClientCertificates.resolver = { alias ->
+            val key = android.security.KeyChain.getPrivateKey(this, alias)
+            val chain = android.security.KeyChain.getCertificateChain(this, alias)
+            if (key != null && !chain.isNullOrEmpty()) {
+                dev.patrickgold.florisboard.dictate.provider.ClientCertificate(key, chain)
+            } else {
+                null
+            }
+        }
         try {
             Flog.install(
                 context = this,

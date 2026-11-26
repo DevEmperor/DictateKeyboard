@@ -1743,6 +1743,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Sense cap processament; recorre al reconeixement de veu si el teu telèfon no ho admet</string>
     <string name="dictate__trust_user_certs_title">Confia en els certificats d\'usuari</string>
     <string name="dictate__trust_user_certs_summary">Confia en certificats de CA que has instal·lat tu mateix, per a punts auto-allotjats darrere d\'una CA privada.</string>
+    <string name="dictate__client_cert_title">Certificat de client</string>
     <string name="dictate__stats_title">Estadístiques</string>
     <string name="dictate__stats_menu_summary">Paraules, temps estalviat, ratxa i més</string>
     <string name="dictate__history_title">Historial</string>

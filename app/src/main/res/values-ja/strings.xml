@@ -1804,6 +1804,7 @@
     <string name="dictate__audio_source_unprocessed_summary">処理は一切なし。スマートフォンが非対応の場合は音声認識に戻ります</string>
     <string name="dictate__trust_user_certs_title">ユーザー証明書を信頼</string>
     <string name="dictate__trust_user_certs_summary">自分でインストールした CA 証明書を信頼します（プライベート CA 配下の自己ホスト型エンドポイント用）。</string>
+    <string name="dictate__client_cert_title">クライアント証明書</string>
     <string name="dictate__stats_title">統計</string>
     <string name="dictate__stats_menu_summary">単語数・節約時間・連続日数など</string>
     <string name="dictate__history_title">履歴</string>

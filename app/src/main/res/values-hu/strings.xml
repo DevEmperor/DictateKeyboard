@@ -1871,6 +1871,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Egyáltalán nincs feldolgozás; ha a telefonod nem támogatja, visszavált Beszédfelismerésre</string>
     <string name="dictate__trust_user_certs_title">Felhasználói tanúsítványok megbízása</string>
     <string name="dictate__trust_user_certs_summary">Megbízik a telepített CA-tanúsítványokban, saját üzemeltetésű végpontokhoz privát CA mögött.</string>
+    <string name="dictate__client_cert_title">Ügyféltanúsítvány</string>
     <string name="dictate__stats_title">Statisztika</string>
     <string name="dictate__stats_menu_summary">Szavak, megspórolt idő, sorozat és több</string>
     <string name="dictate__history_title">Előzmények</string>

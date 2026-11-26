@@ -105,6 +105,13 @@ data class ProviderAccount(
      */
     val trustUserCerts: Boolean = false,
     /**
+     * KeyChain alias of the client certificate this account presents to a server that asks for one (mutual
+     * TLS, #498), for an endpoint behind something like Cloudflare Access; "" for none. Only the alias is
+     * kept: the certificate stays in Android's store, chosen in Android's own dialog, which also grants the
+     * app access to it. Additive field, defaults to none.
+     */
+    val clientCertAlias: String = "",
+    /**
      * Dictate Cloud only — the credit account this device talks to. The wallet's bearer token is not
      * stored here but in [apiKey]: it is what the server authenticates, so putting it anywhere else
      * would mean teaching every call site about a second kind of credential.

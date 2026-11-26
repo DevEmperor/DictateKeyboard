@@ -1887,6 +1887,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Совсем без обработки; возвращается к Распознаванию речи, если телефон не поддерживает</string>
     <string name="dictate__trust_user_certs_title">Доверять сертификатам пользователя</string>
     <string name="dictate__trust_user_certs_summary">Доверять установленным вами сертификатам ЦС для своих эндпоинтов за частным ЦС.</string>
+    <string name="dictate__client_cert_title">Сертификат клиента</string>
     <string name="dictate__stats_title">Статистика</string>
     <string name="dictate__stats_menu_summary">Слова, сэкономленное время, серия и другое</string>
     <string name="dictate__history_title">История</string>

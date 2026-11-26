@@ -1659,6 +1659,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Nessuna elaborazione; ripiega sul Riconoscimento vocale se il telefono non lo supporta</string>
     <string name="dictate__trust_user_certs_title">Considera attendibili i certificati utente</string>
     <string name="dictate__trust_user_certs_summary">Considera attendibili i certificati CA installati, per endpoint self-hosted dietro una CA privata.</string>
+    <string name="dictate__client_cert_title">Certificato client</string>
     <string name="dictate__stats_title">Statistiche</string>
     <string name="dictate__stats_menu_summary">Parole, tempo risparmiato, serie e altro</string>
     <string name="dictate__history_title">Cronologia</string>

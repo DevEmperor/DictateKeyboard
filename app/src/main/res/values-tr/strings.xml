@@ -1855,6 +1855,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Hiç işleme yok; telefonunuz desteklemiyorsa Ses tanımaya geri döner</string>
     <string name="dictate__trust_user_certs_title">Kullanıcı sertifikalarına güven</string>
     <string name="dictate__trust_user_certs_summary">Kendi yüklediğiniz CA sertifikalarına güven — özel CA arkasındaki uç noktalar için.</string>
+    <string name="dictate__client_cert_title">İstemci sertifikası</string>
     <string name="dictate__stats_title">İstatistikler</string>
     <string name="dictate__stats_menu_summary">Kelimeler, kazanılan zaman, seri ve daha fazlası</string>
     <string name="dictate__history_title">Geçmiş</string>

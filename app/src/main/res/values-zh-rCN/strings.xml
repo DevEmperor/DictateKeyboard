@@ -1863,6 +1863,7 @@
     <string name="dictate__audio_source_unprocessed_summary">完全不处理；若手机不支持则回退到语音识别</string>
     <string name="dictate__trust_user_certs_title">信任用户证书</string>
     <string name="dictate__trust_user_certs_summary">信任你自己安装的 CA 证书，用于私有 CA 后的自托管端点。</string>
+    <string name="dictate__client_cert_title">客户端证书</string>
     <string name="dictate__stats_title">统计</string>
     <string name="dictate__stats_menu_summary">字数、节省时间、连续天数等</string>
     <string name="dictate__history_title">历史</string>

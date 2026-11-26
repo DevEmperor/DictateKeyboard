@@ -1749,6 +1749,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Aucun traitement; revient à la reconnaissance vocale si votre téléphone ne le prend pas en charge</string>
     <string name="dictate__trust_user_certs_title">Faire confiance aux certificats utilisateur</string>
     <string name="dictate__trust_user_certs_summary">Faites confiance aux certificats CA que vous avez installés, pour des points auto-hébergés derrière une CA privée.</string>
+    <string name="dictate__client_cert_title">Certificat client</string>
     <string name="dictate__stats_title">Statistiques</string>
     <string name="dictate__stats_menu_summary">Mots, temps gagné, série et plus</string>
     <string name="dictate__history_title">Historique</string>

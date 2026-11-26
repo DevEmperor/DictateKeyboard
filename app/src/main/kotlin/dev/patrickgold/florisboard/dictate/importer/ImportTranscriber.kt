@@ -343,6 +343,7 @@ object ImportTranscriber {
                 } else null,
                 proxy = prefs.dictate.dictateProxyConfig(),
                 trustUserCerts = account.trustUserCerts,
+                clientCertAlias = account.clientCertAlias,
                 // The user's own limit applies here too, but only upwards: someone who raised it for a
                 // slow machine of their own means it here as well, while the default two minutes is
                 // shorter than a file this size can honestly need.

@@ -1855,6 +1855,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Sin ningún procesamiento; recurre a Reconocimiento de voz si tu teléfono no lo admite</string>
     <string name="dictate__trust_user_certs_title">Confiar en certificados de usuario</string>
     <string name="dictate__trust_user_certs_summary">Confía en certificados CA que instalaste, para puntos autoalojados tras una CA privada.</string>
+    <string name="dictate__client_cert_title">Certificado de cliente</string>
     <string name="dictate__stats_title">Estadísticas</string>
     <string name="dictate__stats_menu_summary">Palabras, tiempo ahorrado, racha y más</string>
     <string name="dictate__history_title">Historial</string>

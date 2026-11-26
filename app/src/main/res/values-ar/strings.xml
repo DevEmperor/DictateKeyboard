@@ -1748,6 +1748,7 @@
     <string name="dictate__audio_source_unprocessed_summary">بدون أي معالجة؛ يعود إلى التعرف على الكلام إذا كان هاتفك لا يدعمه</string>
     <string name="dictate__trust_user_certs_title">الوثوق بشهادات المستخدم</string>
     <string name="dictate__trust_user_certs_summary">الوثوق بشهادات CA التي ثبَّتها بنفسك، للنقاط المستضافة ذاتيًا خلف هيئة شهادات خاصة.</string>
+    <string name="dictate__client_cert_title">شهادة العميل</string>
     <string name="dictate__stats_title">الإحصاءات</string>
     <string name="dictate__stats_menu_summary">الكلمات والوقت الموفَّر والتتابع والمزيد</string>
     <string name="dictate__history_title">السجل</string>

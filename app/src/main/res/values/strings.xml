@@ -2298,6 +2298,7 @@
     <string name="dictate__proxy_password_title" comment="Label for the proxy password field">Password</string>
     <string name="dictate__trust_user_certs_title" comment="Title of the setting to trust user-installed CA certificates">Trust user certificates</string>
     <string name="dictate__trust_user_certs_summary" comment="Summary explaining the user-installed CA trust setting">Trust CA certificates you installed, for self-hosted endpoints behind a private CA.</string>
+    <string name="dictate__client_cert_title" comment="Setting in a provider account: the client certificate (mutual TLS) it presents to a server that asks for one; tapping opens Android's certificate picker">Client certificate</string>
 
     <!-- Dictate model picker -->
     <string name="dictate__model_picker_title" comment="Title of the model picker dialog">Choose a model</string>

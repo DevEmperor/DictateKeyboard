@@ -1824,6 +1824,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__audio_source_unprocessed_summary">Tanpa pemrosesan sama sekali; kembali ke Pengenalan suara jika ponsel Anda tidak mendukungnya</string>
     <string name="dictate__trust_user_certs_title">Percayai sertifikat pengguna</string>
     <string name="dictate__trust_user_certs_summary">Percayai sertifikat CA yang Anda pasang, untuk endpoint swakelola di balik CA pribadi.</string>
+    <string name="dictate__client_cert_title">Sertifikat klien</string>
     <string name="dictate__stats_title">Statistik</string>
     <string name="dictate__stats_menu_summary">Kata, waktu hemat, streak, dan lainnya</string>
     <string name="dictate__history_title">Riwayat</string>

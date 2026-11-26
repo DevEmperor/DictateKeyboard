@@ -1775,6 +1775,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Helemaal geen verwerking; valt terug op Spraakherkenning als je telefoon het niet ondersteunt</string>
     <string name="dictate__trust_user_certs_title">Gebruikerscertificaten vertrouwen</string>
     <string name="dictate__trust_user_certs_summary">Vertrouw CA-certificaten die je hebt geïnstalleerd, voor zelf-gehoste eindpunten achter een privé-CA.</string>
+    <string name="dictate__client_cert_title">Clientcertificaat</string>
     <string name="dictate__stats_title">Statistieken</string>
     <string name="dictate__stats_menu_summary">Woorden, bespaarde tijd, reeks en meer</string>
     <string name="dictate__history_title">Geschiedenis</string>

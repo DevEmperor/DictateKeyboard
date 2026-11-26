@@ -1847,6 +1847,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Gar keine Verarbeitung; fällt auf Spracherkennung zurück, falls dein Handy es nicht unterstützt</string>
     <string name="dictate__trust_user_certs_title">Nutzer-Zertifikaten vertrauen</string>
     <string name="dictate__trust_user_certs_summary">Vertraut CA-Zertifikaten, die du installiert hast — für selbst gehostete Endpunkte hinter einer privaten CA.</string>
+    <string name="dictate__client_cert_title">Client-Zertifikat</string>
     <string name="dictate__stats_title">Statistik</string>
     <string name="dictate__stats_menu_summary">Wörter, gesparte Zeit, Streak und mehr</string>
     <string name="dictate__history_title">Verlauf</string>

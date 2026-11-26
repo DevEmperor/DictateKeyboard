@@ -1875,6 +1875,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Без никаква обработка; връща се към Гласово разпознаване, ако телефонът ви не го поддържа</string>
     <string name="dictate__trust_user_certs_title">Доверяване на потребителски сертификати</string>
     <string name="dictate__trust_user_certs_summary">Доверие към CA сертификати, които сте инсталирали сами – за самостоятелно хоствани адреси зад частен CA.</string>
+    <string name="dictate__client_cert_title">Клиентски сертификат</string>
     <string name="dictate__stats_title">Статистика</string>
     <string name="dictate__stats_menu_summary">Думи, спестено време, серия и още</string>
     <string name="dictate__history_title">История</string>

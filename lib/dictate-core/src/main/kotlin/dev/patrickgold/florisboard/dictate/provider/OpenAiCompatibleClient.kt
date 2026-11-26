@@ -79,6 +79,7 @@ class OpenAiCompatibleClient(
                 callTimeoutSeconds = config.callTimeoutSeconds,
                 proxy = config.proxy,
                 trustUserCerts = config.trustUserCerts,
+                clientCertAlias = config.clientCertAlias,
                 connectTimeoutSeconds = connectTimeoutSeconds,
             )
         ) { buildClient() }
@@ -1704,7 +1705,7 @@ class OpenAiCompatibleClient(
             .readTimeout(timeout)
             .writeTimeout(timeout)
             .eventListenerFactory { call -> HttpCallDiagnostics.listenerFor(call.request()) }
-            .applyNetworkSettings(config.proxy, config.trustUserCerts)
+            .applyNetworkSettings(config.proxy, config.trustUserCerts, config.clientCertAlias)
         return builder.build()
     }
 
@@ -2190,6 +2191,7 @@ class OpenAiCompatibleClient(
             val callTimeoutSeconds: Long?,
             val proxy: ProxyConfig?,
             val trustUserCerts: Boolean,
+            val clientCertAlias: String,
             // Shorter while another provider waits to take over (#455); a shared client would otherwise
             // keep whichever connect timeout the first request happened to build it with.
             val connectTimeoutSeconds: Long,
@@ -2429,6 +2431,8 @@ class OpenAiCompatibleClient(
             proxy: ProxyConfig? = null,
             useChatAudio: Boolean = false,
             trustUserCerts: Boolean = false,
+            /** KeyChain alias of a client certificate for mutual TLS, "" for none — see [ProviderConfig.clientCertAlias]. */
+            clientCertAlias: String = "",
             /** Per-read/write limit, which also caps how long the model may stay silent — see [ProviderConfig.timeoutSeconds]. */
             timeoutSeconds: Long = ProviderConfig.DEFAULT_TIMEOUT_SECONDS,
             /** Whole-call budget where the default two minutes is too short — see [ProviderConfig.callTimeoutSeconds]. */
@@ -2446,6 +2450,7 @@ class OpenAiCompatibleClient(
                 transcriptionApi = preset.transcriptionApi,
                 useChatAudio = useChatAudio,
                 trustUserCerts = trustUserCerts,
+                clientCertAlias = clientCertAlias,
                 curatedModels = (preset.curatedTranscriptionModels + preset.curatedChatModels).distinct(),
                 handOverUnreachable = handOverUnreachable,
             )

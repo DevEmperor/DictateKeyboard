@@ -906,6 +906,7 @@ private suspend fun rewordWith(context: Context, prompt: PromptModel, promptBody
         } else null,
         proxy = prefs.dictate.dictateProxyConfig(),
         trustUserCerts = account.trustUserCerts,
+        clientCertAlias = account.clientCertAlias,
         timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
     )
     val chatModel = chatModelFor(account, preset)

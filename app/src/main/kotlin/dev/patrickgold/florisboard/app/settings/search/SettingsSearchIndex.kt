@@ -179,6 +179,7 @@ object SettingsSearchIndex {
         // Hand-added (issue #383): the switch lives in each account's editor dialog now, which no anchor can
         // reach, so the result opens the list of providers the dialog is opened from.
         SettingsSearchEntry(R.string.dictate__trust_user_certs_title, R.string.dictate__providers_title, Routes.Settings.DictateProviders, parentRes = R.string.dictate__title),
+        SettingsSearchEntry(R.string.dictate__client_cert_title, R.string.dictate__providers_title, Routes.Settings.DictateProviders, parentRes = R.string.dictate__title),
         SettingsSearchEntry(R.string.dictate__rewording_enabled_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__rewording_enabled_title"),
         SettingsSearchEntry(R.string.dictate__prompts_layout_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__prompts_layout_title"),
         SettingsSearchEntry(R.string.dictate__manage_prompts_title, R.string.dictate__rewording_title, Routes.Settings.DictateRewording, parentRes = R.string.dictate__title, anchor = "dictate__manage_prompts_title"),

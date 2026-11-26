@@ -69,6 +69,8 @@ fun ModelPickerDialog(
     apiKey: String,
     /** The account's own "Trust user certificates" (#383), as it stands in the editor. */
     trustUserCerts: Boolean,
+    /** The account's client certificate alias for mutual TLS (#498), as it stands in the editor. */
+    clientCertAlias: String = "",
     current: String,
     cachedModels: List<String>,
     cachedAudioModels: List<String>,
@@ -101,6 +103,7 @@ fun ModelPickerDialog(
                     preset, apiKey,
                     baseUrlOverride = preset.baseUrl,
                     trustUserCerts = trustUserCerts,
+                    clientCertAlias = clientCertAlias,
                     proxy = prefs.dictate.dictateProxyConfig(),
                     timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
                 )

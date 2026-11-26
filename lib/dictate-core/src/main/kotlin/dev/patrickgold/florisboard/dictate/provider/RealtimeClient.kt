@@ -99,8 +99,9 @@ object RealtimeClient {
      * terms in its setup, and none as prose; each keeps what its field allows ([VocabularyField]). A
      * session is set up once, so the list is the one the dictation started with.
      *
-     * [proxy] and [trustUserCerts] are the same network settings the batch client gets, so the socket
-     * leaves through the user's proxy and accepts their own CA like every other request does.
+     * [proxy], [trustUserCerts] and [clientCertAlias] are the same network settings the batch client gets,
+     * so the socket leaves through the user's proxy, accepts their own CA and shows their client certificate
+     * (#498) like every other request does.
      */
     fun open(
         api: RealtimeApi,
@@ -113,20 +114,22 @@ object RealtimeClient {
         vocabulary: List<String> = emptyList(),
         proxy: ProxyConfig? = null,
         trustUserCerts: Boolean = false,
+        clientCertAlias: String = "",
     ): RealtimeSession = openWith(
-        clientFor(proxy, trustUserCerts), api, apiKey, model, language, callbacks, baseUrl, expectedLanguages,
+        clientFor(proxy, trustUserCerts, clientCertAlias), api, apiKey, model, language, callbacks, baseUrl, expectedLanguages,
         vocabulary,
     )
 
     /**
-     * The shared socket client, or a sibling of it for a proxy or a user CA. `newBuilder()` keeps the
-     * connection pool and dispatcher, so the sibling costs no more than the settings it adds.
+     * The shared socket client, or a sibling of it for a proxy, a user CA or a client certificate.
+     * `newBuilder()` keeps the connection pool and dispatcher, so the sibling costs no more than the settings
+     * it adds.
      */
-    internal fun clientFor(proxy: ProxyConfig?, trustUserCerts: Boolean): OkHttpClient =
-        if (proxy == null && !trustUserCerts) {
+    internal fun clientFor(proxy: ProxyConfig?, trustUserCerts: Boolean, clientCertAlias: String = ""): OkHttpClient =
+        if (proxy == null && !trustUserCerts && clientCertAlias.isBlank()) {
             wsClient
         } else {
-            wsClient.newBuilder().applyNetworkSettings(proxy, trustUserCerts).build()
+            wsClient.newBuilder().applyNetworkSettings(proxy, trustUserCerts, clientCertAlias).build()
         }
 
     private fun openWith(

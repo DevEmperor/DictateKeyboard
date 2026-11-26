@@ -1897,6 +1897,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Žádné zpracování; když to telefon nepodporuje, použije se Rozpoznávání řeči</string>
     <string name="dictate__trust_user_certs_title">Důvěřovat uživatelským certifikátům</string>
     <string name="dictate__trust_user_certs_summary">Důvěřovat CA certifikátům, které jste sami nainstalovali – pro vlastní koncové body za soukromou CA.</string>
+    <string name="dictate__client_cert_title">Klientský certifikát</string>
     <string name="dictate__stats_title">Statistiky</string>
     <string name="dictate__stats_menu_summary">Slova, ušetřený čas, série a další</string>
     <string name="dictate__history_title">Historie</string>

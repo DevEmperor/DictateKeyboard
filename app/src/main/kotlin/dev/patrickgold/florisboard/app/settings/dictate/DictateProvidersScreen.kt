@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.AltRoute
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Error
@@ -892,6 +893,8 @@ internal fun ProviderEditorDialog(
     var customWarmUp by remember { mutableStateOf(account.customWarmUp) }
     // User-installed CAs, for this endpoint alone (#383).
     var trustUserCerts by remember { mutableStateOf(account.trustUserCerts) }
+    // A client certificate for mutual TLS (#498), by its KeyChain alias.
+    var clientCertAlias by remember { mutableStateOf(account.clientCertAlias) }
     var pickerKind by remember { mutableStateOf<ModelKind?>(null) }
 
     // Effective preset to drive the model picker / connection test. Custom endpoints get a base-URL-only
@@ -992,6 +995,7 @@ internal fun ProviderEditorDialog(
                     customRealtime = customRealtime,
                     customWarmUp = customWarmUp,
                     trustUserCerts = trustUserCerts,
+                    clientCertAlias = clientCertAlias,
                     transcriptionModel = transcriptionModel.trim(),
                     chatModel = chatModel.trim(),
                     chatReasoning = cleanReasoning,
@@ -1140,6 +1144,7 @@ internal fun ProviderEditorDialog(
                 transcriptionViaChat,
                 testReasoning,
                 trustUserCerts,
+                clientCertAlias,
             ) {
                 ProviderCheckSection(
                     preset = effectivePreset,
@@ -1148,6 +1153,7 @@ internal fun ProviderEditorDialog(
                     transcriptionViaChat = transcriptionViaChat,
                     transcriptionReasoning = testReasoning,
                     trustUserCerts = trustUserCerts,
+                    clientCertAlias = clientCertAlias,
                     showTranscription = showTranscription,
                 )
             }
@@ -1283,6 +1289,9 @@ internal fun ProviderEditorDialog(
                 checked = trustUserCerts,
                 onCheckedChange = { trustUserCerts = it },
             )
+            // Mutual TLS (#498), for an endpoint behind Cloudflare Access or similar. Android's own dialog picks
+            // the certificate and grants access to it; only its alias is kept here.
+            ClientCertificateRow(alias = clientCertAlias, onAliasChange = { clientCertAlias = it })
         }
         }
     }
@@ -1293,6 +1302,7 @@ internal fun ProviderEditorDialog(
             preset = effectivePreset,
             apiKey = apiKey,
             trustUserCerts = trustUserCerts,
+            clientCertAlias = clientCertAlias,
             current = if (kind == ModelKind.TRANSCRIPTION) transcriptionModel else chatModel,
             cachedModels = cachedModels,
             cachedAudioModels = cachedAudioModels,
@@ -1407,6 +1417,7 @@ private fun ProviderCheckSection(
     transcriptionViaChat: Boolean,
     transcriptionReasoning: String?,
     trustUserCerts: Boolean,
+    clientCertAlias: String,
     showTranscription: Boolean,
 ) {
     val scope = rememberCoroutineScope()
@@ -1449,6 +1460,7 @@ private fun ProviderCheckSection(
                     proxy = prefs.dictate.dictateProxyConfig(),
                     useChatAudio = transcriptionViaChat,
                     trustUserCerts = trustUserCerts,
+                    clientCertAlias = clientCertAlias,
                 )
                 checkOutcome(context, check(client))
             } catch (e: Exception) {
@@ -1814,3 +1826,50 @@ private fun regionLabelOf(id: String): Int = when (id) {
 
 /** The host of a base URL, which is the whole of what a region actually changes. */
 private fun hostOf(url: String): String = url.substringAfter("://").substringBefore('/')
+
+/**
+ * The client certificate an account presents for mutual TLS (#498). Tapping opens Android's own certificate
+ * picker, which lists the certificates installed on the device, offers to install one, and grants this app
+ * access to the one chosen. Only its alias comes back, and only the alias is stored.
+ */
+@Composable
+private fun ClientCertificateRow(alias: String, onAliasChange: (String) -> Unit) {
+    val context = LocalContext.current
+    val activity = remember(context) { context.findActivity() }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = activity != null) {
+                // The answer arrives on a binder thread; the editor's state belongs to the main one.
+                val main = android.os.Handler(android.os.Looper.getMainLooper())
+                android.security.KeyChain.choosePrivateKeyAlias(
+                    activity!!,
+                    { chosen -> if (chosen != null) main.post { onAliasChange(chosen) } },
+                    null, null, null, -1, alias.ifBlank { null },
+                )
+            }
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(stringRes(R.string.dictate__client_cert_title), style = MaterialTheme.typography.bodyLarge)
+            Text(
+                alias.ifBlank { stringRes(R.string.dictate__value_not_set) },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        if (alias.isNotBlank()) {
+            IconButton(onClick = { onAliasChange("") }) {
+                Icon(Icons.Default.Close, contentDescription = stringRes(R.string.action__clear))
+            }
+        }
+    }
+}
+
+/** The activity behind a Compose context, which Android's certificate picker needs to show itself over. */
+private tailrec fun android.content.Context.findActivity(): android.app.Activity? = when (this) {
+    is android.app.Activity -> this
+    is android.content.ContextWrapper -> baseContext.findActivity()
+    else -> null
+}

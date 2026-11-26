@@ -1853,6 +1853,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Sem qualquer processamento; recorre ao Reconhecimento de voz se o telemóvel não o suportar</string>
     <string name="dictate__trust_user_certs_title">Confiar em certificados do utilizador</string>
     <string name="dictate__trust_user_certs_summary">Confia em certificados de AC que instalou, para endpoints auto-hospedados atrás de uma AC privada.</string>
+    <string name="dictate__client_cert_title">Certificado de cliente</string>
     <string name="dictate__stats_title">Estatísticas</string>
     <string name="dictate__stats_menu_summary">Palavras, tempo poupado, sequência e mais</string>
     <string name="dictate__history_title">Histórico</string>

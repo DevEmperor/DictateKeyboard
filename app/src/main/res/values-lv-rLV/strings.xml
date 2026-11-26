@@ -1822,6 +1822,7 @@
     <string name="dictate__audio_source_unprocessed_summary">Bez jebkādas apstrādes; ja tālrunis to neatbalsta, izmanto Runas atpazīšanu</string>
     <string name="dictate__trust_user_certs_title">Uzticēties lietotāja sertifikātiem</string>
     <string name="dictate__trust_user_certs_summary">Uzticies pašu instalētiem CA sertifikātiem — pašmitinātiem galapunktiem aiz privātas CA.</string>
+    <string name="dictate__client_cert_title">Klienta sertifikāts</string>
     <string name="dictate__stats_title">Statistika</string>
     <string name="dictate__stats_menu_summary">Vārdi, ietaupītais laiks, sērija un vairāk</string>
     <string name="dictate__history_title">Vēsture</string>
